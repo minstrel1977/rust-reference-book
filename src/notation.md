@@ -1,41 +1,36 @@
-# Notation
+# 标记符号
 
-## Grammar
+>[notation.md](https://github.com/rust-lang/reference/blob/master/src/notation.md)\
+>commit b0e0ad6490d6517c19546b1023948986578fc378
 
-The following notations are used by the *Lexer* and *Syntax* grammar snippets:
+## 语法
 
-| Notation          | Examples                      | Meaning                                   |
-|-------------------|-------------------------------|-------------------------------------------|
-| CAPITAL           | KW_IF, INTEGER_LITERAL        | A token produced by the lexer             |
-| _ItalicCamelCase_ | _LetStatement_, _Item_        | A syntactical production                  |
-| `string`          | `x`, `while`, `*`             | The exact character(s)                    |
-| \\x               | \\n, \\r, \\t, \\0            | The character represented by this escape  |
-| x<sup>?</sup>     | `pub`<sup>?</sup>             | An optional item                          |
-| x<sup>\*</sup>    | _OuterAttribute_<sup>\*</sup> | 0 or more of x                            |
-| x<sup>+</sup>     |  _MacroMatch_<sup>+</sup>     | 1 or more of x                            |
-| x<sup>a..b</sup>  | HEX_DIGIT<sup>1..6</sup>      | a to b repetitions of x                   |
-| \|                | `u8` \| `u16`, Block \| Item  | Either one or another                     |
-| [ ]               | [`b` `B`]                     | Any of the characters listed              |
-| [ - ]             | [`a`-`z`]                     | Any of the characters in the range        |
-| ~[ ]              | ~[`b` `B`]                    | Any characters, except those listed       |
-| ~`string`         | ~`\n`, ~`*/`                  | Any characters, except this sequence      |
-| ( )               | (`,` _Parameter_)<sup>?</sup> | Groups items                              |
+下表中的标记符号被用于 *词法* 和 *句法* 的语法片段：
 
-## String table productions
+| 标记符号           | 示例                      | 释义                                 
+|-------------------|-------------------------------|--------------------------------|
+| CAPITAL           | KW_IF, INTEGER_LITERAL        | 由词法分析器生成的标识码(token)    |
+| _ItalicCamelCase_ | _LetStatement_, _Item_        | 句法产物                        |
+| `string`          | `x`, `while`, `*`             | 确切的字符(串)                   |
+| \\x               | \\n, \\r, \\t, \\0            | 转义字符                        |
+| x<sup>?</sup>     | `pub`<sup>?</sup>             | 可选项                          |
+| x<sup>\*</sup>    | _OuterAttribute_<sup>\*</sup> | x 重复零次或多次                  |
+| x<sup>+</sup>     |  _MacroMatch_<sup>+</sup>     | x 重复一次或多次                  |
+| x<sup>a..b</sup>  | HEX_DIGIT<sup>1..6</sup>      | x 重复 a 到 b 次                 |
+| \|                | `u8` \| `u16`, Block \| Item  | 或                              |
+| [ ]               | [`b` `B`]                     | 列举的任意字符                    |
+| [ - ]             | [`a`-`z`]                     | a 到 z 范围内的任意字符(包括 a 和 z)|
+| ~[ ]              | ~[`b` `B`]                    | 列举范围外的任意字符(序列)          |
+| ~`string`         | ~`\n`, ~`*/`                  | 此字符序列外的任意字符(序列)        |
+| ( )               | (`,` _Parameter_)<sup>?</sup> | 分组项                           |
 
-Some rules in the grammar &mdash; notably [unary operators], [binary
-operators], and [keywords] &mdash; are given in a simplified form: as a listing
-of printable strings. These cases form a subset of the rules regarding the
-[token][tokens] rule, and are assumed to be the result of a lexical-analysis
-phase feeding the parser, driven by a <abbr title="Deterministic Finite
-Automaton">DFA</abbr>, operating over the disjunction of all such string table
-entries.
+## 字符串表
 
-When such a string in `monospace` font occurs inside the grammar,
-it is an implicit reference to a single member of such a string table
-production. See [tokens] for more information.
+语法中的一些规则-特别是[单目运算符]，[双目运算符]和[关键字]—会以简化形式给出：作为可打印字符串的列表。这些规则构成了关于[令牌码(token)][tokens]规则的一个子集，并被假定为提供解析器的词法分析阶段的结果。词法分析阶段由一个<abbr title="确定性有限自动机(Deterministic Finite Automaton)">DFA</abbr>驱动，对所有这些字符串表条目进行析取操作。
 
-[binary operators]: expressions/operator-expr.md#arithmetic-and-logical-binary-operators
-[keywords]: keywords.md
+当语法中出现如 `等宽(monospace)` 这样的字符串时，它是对这种字符串表中的单个成员的隐式引用。查阅[令牌码][tokens]以获取更多信息。
+
+[双目运算符]: expressions/operator-expr.md#arithmetic-and-logical-binary-operators
+[关键字]: keywords.md
 [tokens]: tokens.md
-[unary operators]: expressions/operator-expr.md#borrow-operators
+[单目运算符]: expressions/operator-expr.md#borrow-operators
