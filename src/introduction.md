@@ -1,6 +1,7 @@
->[introduction.md](https://doc.rust-lang.org/reference/introduction.html)<br>
->commit 79fcc6e4453919977b8b3bdf5aee71146c89217d
 # 介绍
+
+>[introduction.md](https://doc.rust-lang.org/reference/introduction.html)\
+>commit 79fcc6e4453919977b8b3bdf5aee71146c89217d
 
 本书是 Rust 编程语言的主要参考手册，本书提供了3类资料：
   - 一些章节非正式地介绍了该语言的各种语言结构及其用法。
