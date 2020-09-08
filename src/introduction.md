@@ -21,7 +21,7 @@
 
 这本书也不作为 Rust 语言发行版中包含的[标准库]的参考资料。Rust 的[标准库]文档来源于从其标准库源代码文件中提取的文档属性。许多人们可能认为是语言特性的特性都是 Rust 的[标准库]的特性，所以您要寻找的特性可能在那里，而不是在这里。
 
-类似地，本书通常不能作为记录 rustc 或者 Cargo 细节的工具书。rustc 有自己专门的书：[rustc book]，Cargo 有一本包含参考资料的书：[cargo book]。在本书中，也包含一些诸如[链接]的章节，介绍了 rustc 是如何工作的。
+类似地，本书通常不能作为记录 rustc 或者 Cargo 细节的工具书。rustc 有自己专门的书[rustc book]，Cargo 也有一本书[cargo book]，该书中包含了 [Cargo参考资料]。在本书中，也包含一些诸如[链接]的章节，介绍了 rustc 是如何工作的。
 
 本书也仅作为 Rust 稳定版的参考资料，关于尚在完善的非稳定特性，请阅读[Unstable Book]。
 
@@ -95,8 +95,8 @@
 [Rust参考手册仓库]: https://github.com/rust-lang/reference/
 [Unstable Book]: https://doc.rust-lang.org/nightly/unstable-book/
 [_表达式_]: expressions.md
-[cargo book]: ../cargo/index.html
-[cargo reference]: ../cargo/reference/index.html
+[cargo book]: https://doc.rust-lang.org/cargo/index.html
+[Cargo参考资料]: https://doc.rust-lang.org/cargo/reference/index.html
 [表达式]: expressions.html
 [临时对象的生命周期]: expressions.html#temporaries
 [链接]: linkage.html
