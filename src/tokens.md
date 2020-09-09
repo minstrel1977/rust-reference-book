@@ -153,34 +153,24 @@ assert_eq!(a,b);
 不管是字符字面量，还是非原生字符串字面量，都有一些额外*转义*。转义以一个 `U+005C`（`\`）开始，并后跟如下形式之一：
 
 * *7 位位点转义*以 `U+0078`（`x`）开头，后面紧跟两个*十六进制数字*，其最大值为 `0x7F`。它表示 ASCII 字符，其值等于提供的十六进制值。不允许使用更大的值，因为不能确定其是 Unicode 码点还是字节值。
-* A _24-bit code point escape_ starts with `U+0075` (`u`) and is followed
-  by up to six _hex digits_ surrounded by braces `U+007B` (`{`) and `U+007D`
-  (`}`). It denotes the Unicode code point equal to the provided hex value.
-* A _whitespace escape_ is one of the characters `U+006E` (`n`), `U+0072`
-  (`r`), or `U+0074` (`t`), denoting the Unicode values `U+000A` (LF),
-  `U+000D` (CR) or `U+0009` (HT) respectively.
-* The _null escape_ is the character `U+0030` (`0`) and denotes the Unicode
-  value `U+0000` (NUL).
-* The _backslash escape_ is the character `U+005C` (`\`) which must be
-  escaped in order to denote itself.
+* *24 位码点转义*以 `U+0075`（`u`）开头，后跟多达六位*十六进制数字*，位于大括号 `U+007B`（`{`）和 `U+007D`（`}`）之间。这表示(转义的) Unicode 字符的码点等于大括号里的十六进制值。
+* *空白符转义*以`U+006E` (`n`), `U+0072` (`r`), 或者 `U+0074` (`t`) 之一，依次分别表示 Unicode 值 `U+000A`（LF），`U+000D`（CR），或者 `U+0009`（HT）。
+* *null转义* 是字符 `U+0030`（`0`），表示 Unicode 值 `U+0000`（NUL）。
+* *反斜杠转义* 是字符 `U+005C`（`\`），反斜杠必须通过转义才能表示其自身。
 
-#### Raw string literals
+#### 原生字符串字面量
 
-> **<sup>Lexer</sup>**\
+> **<sup>词法分析</sup>**\
 > RAW_STRING_LITERAL :\
 > &nbsp;&nbsp; `r` RAW_STRING_CONTENT
 >
 > RAW_STRING_CONTENT :\
-> &nbsp;&nbsp; &nbsp;&nbsp; `"` ( ~ _IsolatedCR_ )<sup>* (non-greedy)</sup> `"`\
+> &nbsp;&nbsp; &nbsp;&nbsp; `"` ( ~ _IsolatedCR_ )<sup>* (非贪婪)</sup> `"`\
 > &nbsp;&nbsp; | `#` RAW_STRING_CONTENT `#`
 
-Raw string literals do not process any escapes. They start with the character
-`U+0072` (`r`), followed by zero or more of the character `U+0023` (`#`) and a
-`U+0022` (double-quote) character. The _raw string body_ can contain any sequence
-of Unicode characters and is terminated only by another `U+0022` (double-quote)
-character, followed by the same number of `U+0023` (`#`) characters that preceded
-the opening `U+0022` (double-quote) character.
+原生字符串字面量不处理任何转义。它以字符 `U+0072`（`r`）后跟零个或多个字符 `U+0023`（`#`），以及一个 `U+0022`（双引号）字符开始。*原生字符串正文*可包含任意 Unicode 字符序列，并仅以另一个 `U+0022`（双引号）字符结尾，后跟与开头的 `U+0022`（双引号）字符前同等数量的 `U+0023`（`#`）字符。
 
+所有包含在原生字符串正文中的 Unicode 字符都代表他们自身，字符 `U+0022`（双引号）（当后跟的零个或多个 U+0023（#）字符用于开始原生字符串字面量时除外）或 U+005C（\）并无特殊含义。
 All Unicode characters contained in the raw string body represent themselves,
 the characters `U+0022` (double-quote) (except when followed by at least as
 many `U+0023` (`#`) characters as were used to start the raw string literal) or
