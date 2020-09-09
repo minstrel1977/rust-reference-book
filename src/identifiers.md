@@ -1,34 +1,34 @@
-# Identifiers
+# 标识符
 
-> **<sup>Lexer:<sup>**\
+>[notation.md](https://github.com/rust-lang/reference/blob/master/src/identifiers.md)\
+>commit 34d27fe8bc8b89b55da690484d1e17fbd0f25055
+
+> **<sup>词法分析器:<sup>**\
 > IDENTIFIER_OR_KEYWORD :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [`a`-`z` `A`-`Z`]&nbsp;[`a`-`z` `A`-`Z` `0`-`9` `_`]<sup>\*</sup>\
 > &nbsp;&nbsp; | `_` [`a`-`z` `A`-`Z` `0`-`9` `_`]<sup>+</sup>
 >
-> RAW_IDENTIFIER : `r#` IDENTIFIER_OR_KEYWORD <sub>*Except `crate`, `self`, `super`, `Self`*</sub>
+> RAW_IDENTIFIER : `r#` IDENTIFIER_OR_KEYWORD <sub>*排除 `crate`, `self`, `super`, `Self`*</sub>
 >
-> NON_KEYWORD_IDENTIFIER : IDENTIFIER_OR_KEYWORD <sub>*Except a [strict] or [reserved] keyword*</sub>
+> NON_KEYWORD_IDENTIFIER : IDENTIFIER_OR_KEYWORD <sub>*排除一个[严格]或[保留]关键字 *</sub>
 >
 > IDENTIFIER :\
 > NON_KEYWORD_IDENTIFIER | RAW_IDENTIFIER
 
-An identifier is any nonempty ASCII string of the following form:
+标识符是如下形式的任何非空 ASCII 字符串：
 
-Either
+要么是:
 
-* The first character is a letter.
-* The remaining characters are alphanumeric or `_`.
+* 首字符是字母。
+* 其余字符是字母、数字，或 `_`。
 
-Or
+要么是：
 
-* The first character is `_`.
-* The identifier is more than one character. `_` alone is not an identifier.
-* The remaining characters are alphanumeric or `_`.
+* 首字符是 `_`。
+* 标识符由多个字符组成，单个 `_` 不是有效标识符。
+* 其余字符是字母、数字，或 `_`。
 
-A raw identifier is like a normal identifier, but prefixed by `r#`. (Note that
-the `r#` prefix is not included as part of the actual identifier.)
-Unlike a normal identifier, a raw identifier may be any strict or reserved
-keyword except the ones listed above for `RAW_IDENTIFIER`.
+原生标识符与普通标识符类似，但前缀为 `r#`。（请注意 `r#` 前缀不包括在实际标识符中。）与普通标识符不同，原生标识符可以是除上面列出的 `RAW_IDENTIFIER` 之外的任何严格关键字或保留关键字。
 
-[strict]: keywords.md#strict-keywords
-[reserved]: keywords.md#reserved-keywords
+[严格]: keywords.md#严格关键字
+[保留]: keywords.md#保留关键字

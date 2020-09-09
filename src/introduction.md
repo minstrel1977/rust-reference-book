@@ -1,4 +1,4 @@
->置顶鸣谢：本书的名词翻译和格式设置，以及许多前期翻译都参考了[芽之家](https://books.budshome.com)上的[Rust 参考手册](https://books.budshome.com/rust-reference/)，在此感谢感谢该书作者的无私付出。
+>置顶鸣谢：本书的名词翻译和格式设置，以及多篇前期翻译都参考了[芽之家](https://books.budshome.com)上的[Rust 参考手册](https://books.budshome.com/rust-reference/)，在此感谢感谢该书作者的无私付出。
 
 # 介绍
 
@@ -84,7 +84,7 @@
   > &nbsp;&nbsp; &nbsp;&nbsp; `~` [_表达式_]\
   > &nbsp;&nbsp; | `box` [_表达式_]
 
-  查阅[标记法][Notation]以获取更多细节。
+  查阅[标记符号]以获取更多细节。
 
 ## 贡献力量
 
@@ -104,5 +104,5 @@
 [临时对象的生命周期]: expressions.html#temporaries
 [链接]: linkage.html
 [rustc book]: ../rustc/index.html
-[Notation]: notation.md
+[标记符号]: notation.md
 [Discord]: https://discord.gg/rust-lang

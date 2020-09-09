@@ -5,7 +5,7 @@
 - [标记符号](notation.md)
 
 - [词法结构](lexical-structure.md)
-    - [ 输入格式](input-format.md)
+    - [输入格式](input-format.md)
     - [关键字](keywords.md)
     - [标识符](identifiers.md)
     - [注释](comments.md)
@@ -21,7 +21,7 @@
 
 - [条件编译](conditional-compilation.md)
 
-- [项](items.md)
+- [项目](items.md)
     - [模块](items/modules.md)
     - [外部 crate](items/extern-crates.md)
     - [use 声明](items/use-declarations.md)

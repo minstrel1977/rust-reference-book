@@ -1,26 +1,28 @@
-# Keywords
+# 关键字
 
-Rust divides keywords into three categories:
+>[notation.md](https://github.com/rust-lang/reference/blob/master/src/keywords.md)\
+>commit 64923185890763048d190ce92cb668b58acbc49a
 
-* [strict](#strict-keywords)
-* [reserved](#reserved-keywords)
-* [weak](#weak-keywords)
+Rust 将关键字分为三类：
 
-## Strict keywords
+  - [严格关键字](#严格关键字)
+  - [保留关键字](#保留关键字)
+  - [弱关键字](#弱关键字)
 
-These keywords can only be used in their correct contexts. They cannot
-be used as the names of:
+## 严格关键字
 
-* [Items]
-* [Variables] and function parameters
-* Fields and [variants]
-* [Type parameters]
-* Lifetime parameters or [loop labels]
-* [Macros] or [attributes]
-* [Macro placeholders]
-* [Crates]
+这类关键字只能在正确的上下文中使用。它们不能用作下列名称：
 
-> **<sup>Lexer:<sup>**\
+* [项目]
+* [变量]和函数参数
+* 字段和[枚举的变体]
+* [类型参数]
+* 生命周期参数或者[循环标签]
+* [宏]或[属性]
+* [宏占位符]
+* [crate]
+
+> **<sup>词法分析器:<sup>**\
 > KW_AS             : `as`\
 > KW_BREAK          : `break`\
 > KW_CONST          : `const`\
@@ -57,21 +59,18 @@ be used as the names of:
 > KW_WHERE          : `where`\
 > KW_WHILE          : `while`
 
-The following keywords were added beginning in the 2018 edition.
+以下关键词从 2018 版开始启用。
 
-> **<sup>Lexer 2018+</sup>**\
+> **<sup>词法分析器 2018+</sup>**\
 > KW_ASYNC          : `async`\
 > KW_AWAIT          : `await`\
 > KW_DYN            : `dyn`
 
-## Reserved keywords
+## 保留关键字
 
-These keywords aren't used yet, but they are reserved for future use. They have
-the same restrictions as strict keywords. The reasoning behind this is to make
-current programs forward compatible with future versions of Rust by forbidding
-them to use these keywords.
+这类关键字还没有被使用，但是它们被保留以备将来使用。它们具有与严格关键字相同的限制。这样做的原因是通过禁止当前程序使用这些关键字，从而使当前程序向前兼容 Rust 的未来版本。
 
-> **<sup>Lexer</sup>**\
+> **<sup>词法分析器</sup>**\
 > KW_ABSTRACT       : `abstract`\
 > KW_BECOME         : `become`\
 > KW_BOX            : `box`\
@@ -85,45 +84,39 @@ them to use these keywords.
 > KW_VIRTUAL        : `virtual`\
 > KW_YIELD          : `yield`
 
-The following keywords are reserved beginning in the 2018 edition.
+以下关键词从 2018 版开始保留。
 
-> **<sup>Lexer 2018+</sup>**\
+> **<sup>词法分析器 2018+</sup>**\
 > KW_TRY   : `try`
 
-## Weak keywords
+## 弱关键字
 
-These keywords have special meaning only in certain contexts. For example, it
-is possible to declare a variable or method with the name `union`.
+这类关键词只有在特定的上下文中才有特殊的意义。例如，可以声明名为 `union` 的变量或方法。
 
-* `union` is used to declare a [union] and is only a keyword when used in a
-  union declaration.
-* `'static` is used for the static lifetime and cannot be used as a generic
-  lifetime parameter
+* `union` 用于声明[联合体]，它只有在联合体声明中使用时才是关键字。
+* `'static` 用于静态生命周期，不能用作通用生命周期参数
 
   ```compile_fail
   // error[E0262]: invalid lifetime parameter name: `'static`
   fn invalid_lifetime_parameter<'static>(s: &'static str) -> &'static str { s }
   ```
-* In the 2015 edition, [`dyn`] is a keyword when used in a type position
-  followed by a path that does not start with `::`.
+* 在 2015 版本中，[`dyn`] 是在类型位置后面不是以::开头的路径中使用的关键字。从 2018 版开始，`dyn` 被提升为一个严格关键词。
 
-  Beginning in the 2018 edition, `dyn` has been promoted to a strict keyword.
-
-> **<sup>Lexer</sup>**\
+> **<sup>词法分析器</sup>**\
 > KW_UNION          : `union`\
 > KW_STATICLIFETIME : `'static`
 >
-> **<sup>Lexer 2015</sup>**\
+> **<sup>词法分析器 2015</sup>**\
 > KW_DYN            : `dyn`
 
-[items]: items.md
-[Variables]: variables.md
-[Type parameters]: types/parameters.md
-[loop labels]: expressions/loop-expr.md#loop-labels
-[Macros]: macros.md
-[attributes]: attributes.md
-[Macro placeholders]: macros-by-example.md
-[Crates]: crates-and-source-files.md
-[union]: items/unions.md
-[variants]: items/enumerations.md
+[项目]: items.md
+[变量]: variables.md
+[类型参数]: types/parameters.md
+[循环标签]: expressions/loop-expr.md#loop-labels
+[宏]: macros.md
+[属性]: attributes.md
+[宏占位符]: macros-by-example.md
+[crate]: crates-and-source-files.md
+[联合体]: items/unions.md
+[枚举的变体]: items/enumerations.md
 [`dyn`]: types/trait-object.md
