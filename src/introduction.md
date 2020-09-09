@@ -96,13 +96,13 @@
 [github issues]: https://github.com/rust-lang/reference/issues
 [标准库]: https://doc.rust-lang.org/std/index.html
 [Rust参考手册仓库]: https://github.com/rust-lang/reference/
-[Unstable Book]: https://doc.rust-lang.org/nightly/unstable-book/
+[Unstable Book]: https://doc.rust-lang.org/nightly/unstable-book/index.html
 [_表达式_]: expressions.md
 [cargo book]: https://doc.rust-lang.org/cargo/index.html
 [Cargo参考资料]: https://doc.rust-lang.org/cargo/reference/index.html
 [表达式]: expressions.html
 [临时对象的生命周期]: expressions.html#temporaries
 [链接]: linkage.html
-[rustc book]: ../rustc/index.html
+[rustc book]: https://doc.rust-lang.org/rustc/index.html
 [标记符号]: notation.md
 [Discord]: https://discord.gg/rust-lang

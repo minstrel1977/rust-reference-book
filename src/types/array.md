@@ -28,4 +28,4 @@ always bounds-checked in safe methods and operators.
 [_Type_]: ../types.md#type-expressions
 [`Vec<T>`]: ../../std/vec/struct.Vec.html
 [`usize`]: numeric.md#machine-dependent-integer-types
-[constant expression]: ../const_eval.md#constant-expressions
+[constant expression]: ../const_eval.md#常量表达式

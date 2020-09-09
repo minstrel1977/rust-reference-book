@@ -182,7 +182,7 @@ enum E {
 [`mem::discriminant`]: ../../std/mem/fn.discriminant.html
 [never type]: ../types/never.md
 [numeric cast]: ../expressions/operator-expr.md#semantics
-[constant expression]: ../const_eval.md#constant-expressions
+[constant expression]: ../const_eval.md#常量表达式
 [default representation]: ../type-layout.md#the-default-representation
 [primitive representation]: ../type-layout.md#primitive-representations
 [`C` representation]: ../type-layout.md#the-c-representation

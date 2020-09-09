@@ -1,9 +1,9 @@
 # 标识符
 
->[notation.md](https://github.com/rust-lang/reference/blob/master/src/identifiers.md)\
+>[identifiers.md](https://github.com/rust-lang/reference/blob/master/src/identifiers.md)\
 >commit 34d27fe8bc8b89b55da690484d1e17fbd0f25055
 
-> **<sup>词法分析器:<sup>**\
+> **<sup>词法分析:<sup>**\
 > IDENTIFIER_OR_KEYWORD :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [`a`-`z` `A`-`Z`]&nbsp;[`a`-`z` `A`-`Z` `0`-`9` `_`]<sup>\*</sup>\
 > &nbsp;&nbsp; | `_` [`a`-`z` `A`-`Z` `0`-`9` `_`]<sup>+</sup>

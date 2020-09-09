@@ -88,7 +88,7 @@ m!(const _: () = (););
 ```
 
 [associated]: ../glossary.md#associated-item
-[constant value]: ../const_eval.md#constant-expressions
+[constant value]: ../const_eval.md#常量表达式
 [free]: ../glossary.md#free-item
 [static lifetime elision]: ../lifetime-elision.md#static-lifetime-elision
 [IDENTIFIER]: ../identifiers.md

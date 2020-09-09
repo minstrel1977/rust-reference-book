@@ -72,7 +72,7 @@ following are true:
 
 [constant]: constant-items.md
 [`drop`]: ../destructors.md
-[constant expression]: ../const_eval.md#constant-expressions
+[constant expression]: ../const_eval.md#常量表达式
 [interior mutable]: ../interior-mutability.md
 [IDENTIFIER]: ../identifiers.md
 [_Type_]: ../types.md#type-expressions

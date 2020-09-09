@@ -1,6 +1,6 @@
 # 关键字
 
->[notation.md](https://github.com/rust-lang/reference/blob/master/src/keywords.md)\
+>[keywords.md](https://github.com/rust-lang/reference/blob/master/src/keywords.md)\
 >commit 64923185890763048d190ce92cb668b58acbc49a
 
 Rust 将关键字分为三类：
@@ -22,7 +22,7 @@ Rust 将关键字分为三类：
 * [宏占位符]
 * [crate]
 
-> **<sup>词法分析器:<sup>**\
+> **<sup>词法分析:<sup>**\
 > KW_AS             : `as`\
 > KW_BREAK          : `break`\
 > KW_CONST          : `const`\
@@ -61,7 +61,7 @@ Rust 将关键字分为三类：
 
 以下关键词从 2018 版开始启用。
 
-> **<sup>词法分析器 2018+</sup>**\
+> **<sup>词法分析 2018+</sup>**\
 > KW_ASYNC          : `async`\
 > KW_AWAIT          : `await`\
 > KW_DYN            : `dyn`
@@ -70,7 +70,7 @@ Rust 将关键字分为三类：
 
 这类关键字还没有被使用，但是它们被保留以备将来使用。它们具有与严格关键字相同的限制。这样做的原因是通过禁止当前程序使用这些关键字，从而使当前程序向前兼容 Rust 的未来版本。
 
-> **<sup>词法分析器</sup>**\
+> **<sup>词法分析</sup>**\
 > KW_ABSTRACT       : `abstract`\
 > KW_BECOME         : `become`\
 > KW_BOX            : `box`\
@@ -86,7 +86,7 @@ Rust 将关键字分为三类：
 
 以下关键词从 2018 版开始保留。
 
-> **<sup>词法分析器 2018+</sup>**\
+> **<sup>词法分析 2018+</sup>**\
 > KW_TRY   : `try`
 
 ## 弱关键字
@@ -102,11 +102,11 @@ Rust 将关键字分为三类：
   ```
 * 在 2015 版本中，[`dyn`] 是在类型位置后面不是以::开头的路径中使用的关键字。从 2018 版开始，`dyn` 被提升为一个严格关键词。
 
-> **<sup>词法分析器</sup>**\
+> **<sup>词法分析</sup>**\
 > KW_UNION          : `union`\
 > KW_STATICLIFETIME : `'static`
 >
-> **<sup>词法分析器 2015</sup>**\
+> **<sup>词法分析 2015</sup>**\
 > KW_DYN            : `dyn`
 
 [项目]: items.md

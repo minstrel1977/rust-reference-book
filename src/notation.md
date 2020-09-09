@@ -9,7 +9,7 @@
 
 | 标记符号           | 示例                      | 释义                                 
 |-------------------|-------------------------------|--------------------------------|
-| CAPITAL           | KW_IF, INTEGER_LITERAL        | 由词法分析器生成的[令牌码](token)|
+| CAPITAL           | KW_IF, INTEGER_LITERAL        | 由词法分析生成的[标记码](token)|
 | _ItalicCamelCase_ | _LetStatement_, _Item_        | 句法产物                        |
 | `string`          | `x`, `while`, `*`             | 确切的字符(串)                   |
 | \\x               | \\n, \\r, \\t, \\0            | 转义字符                        |
@@ -26,11 +26,11 @@
 
 ## 字符串表
 
-语法中的一些规则-特别是[单目运算符]，[双目运算符]和[关键字]—会以简化形式给出：作为可打印字符串的列表。这些规则构成了关于[令牌码]规则的一个子集，并被假定为提供解析器的词法分析阶段的结果。词法分析阶段由一个<abbr title="确定性有限自动机(Deterministic Finite Automaton)">DFA</abbr>驱动，对所有这些字符串表条目进行析取操作。
+语法中的一些规则-特别是[单目运算符]，[双目运算符]和[关键字]—会以简化形式给出：作为可打印字符串的列表。这些规则构成了关于[标记码]规则的一个子集，并被假定为提供解析器的词法分析阶段的结果。词法分析阶段由一个<abbr title="确定性有限自动机(Deterministic Finite Automaton)">DFA</abbr>驱动，对所有这些字符串表实体进行析取操作。
 
-当语法中出现如 `等宽(monospace)` 这样的字符串时，它是对这种字符串表中的单个成员的隐式引用。查阅[令牌码]以获取更多信息。
+当语法中出现如 `等宽(monospace)` 这样的字符串时，它代表对这种字符串表中的单个成员的隐式引用。查阅[标记码]以获取更多信息。
 
 [双目运算符]: expressions/operator-expr.md#arithmetic-and-logical-binary-operators
 [关键字]: keywords.md
-[令牌码]: tokens.md
+[标记码]: tokens.md
 [单目运算符]: expressions/operator-expr.md#borrow-operators

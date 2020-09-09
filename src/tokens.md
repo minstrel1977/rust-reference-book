@@ -1,80 +1,76 @@
-# Tokens
+# 标记码
 
-Tokens are primitive productions in the grammar defined by regular
-(non-recursive) languages.  Rust source input can be broken down
-into the following kinds of tokens:
+>[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
+>commit 3dafca50690d3df717e4d1432fb5184877651ad4
 
-* [Keywords]
-* [Identifiers][identifier]
-* [Literals](#literals)
-* [Lifetimes](#lifetimes-and-loop-labels)
-* [Punctuation](#punctuation)
-* [Delimiters](#delimiters)
+标记码是由正则（非递归）语言定义的语法中的基础元素。Rust 源代码可分成以下几种标记码：
 
-Within this documentation's grammar, "simple" tokens are given in [string
-table production] form, and appear in `monospace` font.
+* [关键字]
+* [标识符]
+* [字面量](#字面量)
+* [生命周期](#生命周期和循环标签)
+* [标点符号](#标点符号)
+* [分隔符](#分隔符)
 
-[string table production]: notation.md#string-table-productions
+在本文档的语法中，“简化”标记码以[字符串表]的形式给出，并以`等宽（monospace）`字体显示。
 
-## Literals
+[字符串表]: notation.md#字符串表
 
-A literal is an expression consisting of a single token, rather than a sequence
-of tokens, that immediately and directly denotes the value it evaluates to,
-rather than referring to it by name or some other evaluation rule. A literal is
-a form of [constant expression](const_eval.md#constant-expressions), so is
-evaluated (primarily) at compile time.
+## 字面量
 
-### Examples
+字面量是一个由单个标记码（而不是由一系列标记码）组成的表达式，它直接表示它所赋的值，而不是通过名称或其他一些计算规则来引用它。字面量是[常量表达式](const_eval.md#常量表达式)的一种形式，所以它（主要）在编译时赋值。
 
-#### Characters and strings
+### 示例
 
-|                                              | Example         | `#` sets   | Characters  | Escapes             |
+#### 字符和字符串
+
+|                                              | 举例         | `#` 集合   | 字符集  | 转义             |
 |----------------------------------------------|-----------------|-------------|-------------|---------------------|
-| [Character](#character-literals)             | `'H'`           | 0           | All Unicode | [Quote](#quote-escapes) & [ASCII](#ascii-escapes) & [Unicode](#unicode-escapes) |
-| [String](#string-literals)                   | `"hello"`       | 0           | All Unicode | [Quote](#quote-escapes) & [ASCII](#ascii-escapes) & [Unicode](#unicode-escapes) |
-| [Raw string](#raw-string-literals)           | `r#"hello"#`    | 0 or more\* | All Unicode | `N/A`                                                      |
-| [Byte](#byte-literals)                       | `b'H'`          | 0           | All ASCII   | [Quote](#quote-escapes) & [Byte](#byte-escapes)                               |
-| [Byte string](#byte-string-literals)         | `b"hello"`      | 0           | All ASCII   | [Quote](#quote-escapes) & [Byte](#byte-escapes)                               |
-| [Raw byte string](#raw-byte-string-literals) | `br#"hello"#`   | 0 or more\* | All ASCII   | `N/A`                                                      |
+| [字符](#字符字面量)             | `'H'`           | 0           | 全部 Unicode | [引号](#引号转义) & [ASCII](#ASCII-转义) & [Unicode](#unicode-转义) |
+| [String](#string-literals)                   | `"hello"`       | 0           | 全部 Unicode | [引号](#引号转义) & [ASCII](#ascii-escapes) & [Unicode](#unicode-转义) |
+| [Raw string](#raw-string-literals)           | `r#"hello"#`    | 0 或更多\* | 全部 Unicode | `N/A`                                                      |
+| [Byte](#byte-literals)                       | `b'H'`          | 0           | 全部 ASCII   | [引号](#引号转义) & [Byte](#byte-escapes)                               |
+| [Byte string](#byte-string-literals)         | `b"hello"`      | 0           | 全部 ASCII   | [引号](#引号转义) & [Byte](#byte-escapes)                               |
+| [Raw byte string](#raw-byte-string-literals) | `br#"hello"#`   | 0 或更多\* | 全部 ASCII   | `N/A`                                                      |
 
-\* The number of `#`s on each side of the same literal must be equivalent
+\* 字面量两侧的 `#` 数量必须相同。
 
-#### ASCII escapes
+#### ASCII 转义
 
-|   | Name |
+|   | 名称 |
 |---|------|
-| `\x41` | 7-bit character code (exactly 2 digits, up to 0x7F) |
-| `\n` | Newline |
-| `\r` | Carriage return |
-| `\t` | Tab |
-| `\\` | Backslash |
+| `\x41` | 7 位字符编码（2位数字，最大值为 `0x7F`） |
+| `\n` | 换行符 |
+| `\r` | 回车符 |
+| `\t` | 制表符 |
+| `\\` | 反斜线 |
 | `\0` | Null |
 
-#### Byte escapes
+#### 字节转义
 
-|   | Name |
+|   | 名称 |
 |---|------|
-| `\x7F` | 8-bit character code (exactly 2 digits) |
-| `\n` | Newline |
-| `\r` | Carriage return |
-| `\t` | Tab |
-| `\\` | Backslash |
+| `\x7F` | 8 位字符编码（2位数字）|
+| `\n` | 换行符 |
+| `\r` | 回车符 |
+| `\t` | 制表符 |
+| `\\` | 反斜线 |
 | `\0` | Null |
 
-#### Unicode escapes
+#### unicode 转义
+
+|   | 名称 |
+|---|------|
+| `\u{7FFF}` | 24 位 Unicode 字符编码（最多6个数字） |
+
+#### 引号转义
 
 |   | Name |
 |---|------|
-| `\u{7FFF}` | 24-bit Unicode character code (up to 6 digits) |
+| `\'` | 单引号 |
+| `\"` | 双引号 |
 
-#### Quote escapes
-
-|   | Name |
-|---|------|
-| `\'` | Single quote |
-| `\"` | Double quote |
-
-#### Numbers
+#### 数值
 
 | [Number literals](#number-literals)`*` | Example | Exponentiation | Suffixes |
 |----------------------------------------|---------|----------------|----------|
@@ -109,7 +105,7 @@ and numeric literal tokens are accepted only with suffixes from the list below.
 |---------|----------------|
 | `u8`, `i8`, `u16`, `i16`, `u32`, `i32`, `u64`, `i64`, `u128`, `i128`, `usize`, `isize` | `f32`, `f64` |
 
-### Character and string literals
+### 字符和字符串字面量
 
 #### Character literals
 
@@ -465,7 +461,7 @@ let horse = example.0b10;  // ERROR no field named `0b10`
 > **<sup>Lexer</sup>**\
 > FLOAT_LITERAL :\
 > &nbsp;&nbsp; &nbsp;&nbsp; DEC_LITERAL `.`
->   _(not immediately followed by `.`, `_` or an [identifier]_)\
+>   _(not immediately followed by `.`, `_` or an [标识符]_)\
 > &nbsp;&nbsp; | DEC_LITERAL FLOAT_EXPONENT\
 > &nbsp;&nbsp; | DEC_LITERAL `.` DEC_LITERAL FLOAT_EXPONENT<sup>?</sup>\
 > &nbsp;&nbsp; | DEC_LITERAL (`.` DEC_LITERAL)<sup>?</sup>
@@ -530,15 +526,15 @@ The representation semantics of floating-point numbers are described in
 
 The two values of the boolean type are written `true` and `false`.
 
-## Lifetimes and loop labels
+## 生命周期和循环标签
 
 > **<sup>Lexer</sup>**\
 > LIFETIME_TOKEN :\
-> &nbsp;&nbsp; &nbsp;&nbsp; `'` [IDENTIFIER_OR_KEYWORD][identifier]\
+> &nbsp;&nbsp; &nbsp;&nbsp; `'` [IDENTIFIER_OR_KEYWORD][标识符]\
 > &nbsp;&nbsp; | `'_`
 >
 > LIFETIME_OR_LABEL :\
-> &nbsp;&nbsp; &nbsp;&nbsp; `'` [NON_KEYWORD_IDENTIFIER][identifier]
+> &nbsp;&nbsp; &nbsp;&nbsp; `'` [NON_KEYWORD_IDENTIFIER][标识符]
 
 Lifetime parameters and [loop labels] use LIFETIME_OR_LABEL tokens. Any
 LIFETIME_TOKEN will be accepted by the lexer, and for example, can be used in
@@ -546,7 +542,7 @@ macros.
 
 [loop labels]: expressions/loop-expr.md
 
-## Punctuation
+## 标点符号
 
 Punctuation symbol tokens are listed here for completeness. Their individual
 usages and meanings are defined in the linked pages.
@@ -633,9 +629,9 @@ them are referred to as "token trees" in [macros].  The three types of brackets 
 [function pointer type]: types/function-pointer.md
 [functions]: items/functions.md
 [generics]: items/generics.md
-[identifier]: identifiers.md
+[标识符]: identifiers.md
 [if let]: expressions/if-expr.md#if-let-expressions
-[keywords]: keywords.md
+[关键字]: keywords.md
 [lazy-bool]: expressions/operator-expr.md#lazy-boolean-operators
 [macros]: macros-by-example.md
 [match]: expressions/match-expr.md
