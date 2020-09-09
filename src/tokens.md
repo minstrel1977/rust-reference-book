@@ -27,11 +27,11 @@
 |                                              | 举例         | `#` 集合   | 字符集  | 转义             |
 |----------------------------------------------|-----------------|-------------|-------------|---------------------|
 | [字符](#字符字面量)             | `'H'`           | 0           | 全部 Unicode | [引号](#引号转义) & [ASCII](#ASCII-转义) & [Unicode](#unicode-转义) |
-| [String](#string-literals)                   | `"hello"`       | 0           | 全部 Unicode | [引号](#引号转义) & [ASCII](#ascii-escapes) & [Unicode](#unicode-转义) |
-| [Raw string](#raw-string-literals)           | `r#"hello"#`    | 0 或更多\* | 全部 Unicode | `N/A`                                                      |
-| [Byte](#byte-literals)                       | `b'H'`          | 0           | 全部 ASCII   | [引号](#引号转义) & [Byte](#byte-escapes)                               |
-| [Byte string](#byte-string-literals)         | `b"hello"`      | 0           | 全部 ASCII   | [引号](#引号转义) & [Byte](#byte-escapes)                               |
-| [Raw byte string](#raw-byte-string-literals) | `br#"hello"#`   | 0 或更多\* | 全部 ASCII   | `N/A`                                                      |
+| [字符串](#字符串字面量)                   | `"hello"`       | 0           | 全部 Unicode | [引号](#引号转义) & [ASCII](#ASCII-转义) & [Unicode](#unicode-转义) |
+| [原生字符串](#原生字符串字面量)           | `r#"hello"#`    | 0 或更多\* | 全部 Unicode | `N/A`                                                      |
+| [字节](#字节字面量)                       | `b'H'`          | 0           | 全部 ASCII   | [引号](#引号转义) & [字节](#字节转义)                               |
+| [字节串](#字节串字面量)         | `b"hello"`      | 0           | 全部 ASCII   | [引号](#引号转义) & [字节](#字节转义)                               |
+| [原生字节串](#原生字节串字面量) | `br#"hello"#`   | 0 或更多\* | 全部 ASCII   | `N/A`                                                      |
 
 \* 字面量两侧的 `#` 数量必须相同。
 
@@ -72,24 +72,21 @@
 
 #### 数值
 
-| [Number literals](#number-literals)`*` | Example | Exponentiation | Suffixes |
+| [数字字面量](#数字字面量)`*` | 示例 | 幂 | 后缀 |
 |----------------------------------------|---------|----------------|----------|
-| Decimal integer | `98_222` | `N/A` | Integer suffixes |
-| Hex integer | `0xff` | `N/A` | Integer suffixes |
-| Octal integer | `0o77` | `N/A` | Integer suffixes |
-| Binary integer | `0b1111_0000` | `N/A` | Integer suffixes |
-| Floating-point | `123.0E+77` | `Optional` | Floating-point suffixes |
+| 十进制整数 | `98_222` | `N/A` | 整数后缀 |
+| 十六进制整数 | `0xff` | `N/A` | 整数后缀 |
+| 八进制整数 | `0o77` | `N/A` | 整数后缀 |
+| 二进制整数 | `0b1111_0000` | `N/A` | 整数后缀 |
+| 浮点数 | `123.0E+77` | `Optional` | 浮点数后缀 |
 
-`*` All number literals allow `_` as a visual separator: `1_234.0E+18f64`
+`*` 所有数字字面量允许使用 `_` 作为可视分隔符，比如：`1_234.0E+18f64`
 
-#### Suffixes
+#### 后缀
 
-A suffix is a non-raw identifier immediately (without whitespace)
-following the primary part of a literal.
+后缀是紧跟（无空格）字面量主体部分之后的非原生标识符。
 
-Any kind of literal (string, integer, etc) with any suffix is valid as a token,
-and can be passed to a macro without producing an error.
-The macro itself will decide how to interpret such a token and whether to produce an error or not.
+具有任意后缀的任何类型的字面量（如字符串、整数等）都可以作为有效的标记码，并且可以传递给宏而不会产生错误。宏本身会决定如何解释这种标记码，以及是否产生错误。
 
 ```rust
 macro_rules! blackhole { ($tt:tt) => () }
@@ -97,19 +94,17 @@ macro_rules! blackhole { ($tt:tt) => () }
 blackhole!("string"suffix); // OK
 ```
 
-However, suffixes on literal tokens parsed as Rust code are restricted.
-Any suffixes are rejected on non-numeric literal tokens,
-and numeric literal tokens are accepted only with suffixes from the list below.
+但是，解析为 Rust 代码的字面量标记码上的后缀是受限制的。对于非数字字面量标记码，任何后缀都将被拒绝，而数字字面量标记码只接受下面列表中的后缀。
 
-| Integer | Floating-point |
+| 整数 | 浮点数 |
 |---------|----------------|
 | `u8`, `i8`, `u16`, `i16`, `u32`, `i32`, `u64`, `i64`, `u128`, `i128`, `usize`, `isize` | `f32`, `f64` |
 
 ### 字符和字符串字面量
 
-#### Character literals
+#### 字符字面量
 
-> **<sup>Lexer</sup>**\
+> **<sup>词法分析</sup>**\
 > CHAR_LITERAL :\
 > &nbsp;&nbsp; `'` ( ~[`'` `\` \\n \\r \\t] | QUOTE_ESCAPE | ASCII_ESCAPE | UNICODE_ESCAPE ) `'`
 >
@@ -123,16 +118,14 @@ and numeric literal tokens are accepted only with suffixes from the list below.
 > UNICODE_ESCAPE :\
 > &nbsp;&nbsp; `\u{` ( HEX_DIGIT `_`<sup>\*</sup> )<sup>1..6</sup> `}`
 
-A _character literal_ is a single Unicode character enclosed within two
-`U+0027` (single-quote) characters, with the exception of `U+0027` itself,
-which must be _escaped_ by a preceding `U+005C` character (`\`).
+*字符字面量*是位于两个 `U+0027`（单引号）字符内的单个 Unicode 字符。当它是 `U+0027` 自身时，必须前置*转义*字符 `U+005C`（`\`）。
 
-#### String literals
+#### 字符串字面量
 
-> **<sup>Lexer</sup>**\
+> **<sup>词法分析</sup>**\
 > STRING_LITERAL :\
 > &nbsp;&nbsp; `"` (\
-> &nbsp;&nbsp; &nbsp;&nbsp; ~[`"` `\` _IsolatedCR_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; ~[`"` `\` _IsolatedCR_]&nbsp;&nbsp;(译者注：IsolatedCR：后面没有跟 `\n` 的 `\r`，首次定义见[注释](comments.md))\
 > &nbsp;&nbsp; &nbsp;&nbsp; | QUOTE_ESCAPE\
 > &nbsp;&nbsp; &nbsp;&nbsp; | ASCII_ESCAPE\
 > &nbsp;&nbsp; &nbsp;&nbsp; | UNICODE_ESCAPE\
@@ -140,18 +133,11 @@ which must be _escaped_ by a preceding `U+005C` character (`\`).
 > &nbsp;&nbsp; )<sup>\*</sup> `"`
 >
 > STRING_CONTINUE :\
-> &nbsp;&nbsp; `\` _followed by_ \\n
+> &nbsp;&nbsp; `\` _后跟_ \\n
 
-A _string literal_ is a sequence of any Unicode characters enclosed within two
-`U+0022` (double-quote) characters, with the exception of `U+0022` itself,
-which must be _escaped_ by a preceding `U+005C` character (`\`).
+*字符串字面量*是位于两个 `U+0022` （双引号）字符内的任意 Unicode 字符序列。当它是 `U+0022` 自身时，必须前置*转义*字符 `U+005C`（`\`）。
 
-Line-breaks are allowed in string literals. A line-break is either a newline
-(`U+000A`) or a pair of carriage return and newline (`U+000D`, `U+000A`). Both
-byte sequences are normally translated to `U+000A`, but as a special exception,
-when an unescaped `U+005C` character (`\`) occurs immediately before the
-line-break, then the `U+005C` character, the line-break, and all whitespace at the
-beginning of the next line are ignored. Thus `a` and `b` are equal:
+字符串字面量允许分行。分行符可以是换行符（`U+000A`），也可以是一对回车符换行符（`U+000D`, `U+000A`）的字节序列。这两种字节序列通常都转换为 `U+000A`，但有例外：当分行符前置一个未转义的 `U+005C` 字符（`\`）时，将会导致 `U+005C` 字符、换行符和下一行开头的所有空白都被忽略。因此下述示例中，`a` 和 `b` 是一样的：
 
 ```rust
 let a = "foobar";
@@ -161,17 +147,12 @@ let b = "foo\
 assert_eq!(a,b);
 ```
 
-#### Character escapes
+#### 字符转义
 
-Some additional _escapes_ are available in either character or non-raw string
-literals. An escape starts with a `U+005C` (`\`) and continues with one of the
-following forms:
 
-* A _7-bit code point escape_ starts with `U+0078` (`x`) and is
-  followed by exactly two _hex digits_ with value up to `0x7F`. It denotes the
-  ASCII character with value equal to the provided hex value. Higher values are
-  not permitted because it is ambiguous whether they mean Unicode code points or
-  byte values.
+不管是字符字面量，还是非原生字符串字面量，都有一些额外*转义*。转义以一个 `U+005C`（`\`）开始，并后跟如下形式之一：
+
+* *7 位位点转义*以 `U+0078`（`x`）开头，后面紧跟两个*十六进制数字*，其最大值为 `0x7F`。它表示 ASCII 字符，其值等于提供的十六进制值。不允许使用更大的值，因为不能确定其是 Unicode 码点还是字节值。
 * A _24-bit code point escape_ starts with `U+0075` (`u`) and is followed
   by up to six _hex digits_ surrounded by braces `U+007B` (`{`) and `U+007D`
   (`}`). It denotes the Unicode code point equal to the provided hex value.
@@ -310,7 +291,7 @@ b"\x52"; b"R"; br"R";                // R
 b"\\x52"; br"\x52";                  // \x52
 ```
 
-### Number literals
+### 数字字面量
 
 A _number literal_ is either an _integer literal_ or a _floating-point
 literal_. The grammar for recognizing the two kinds of literals is mixed.
