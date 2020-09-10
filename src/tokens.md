@@ -104,7 +104,7 @@ blackhole!("string"suffix); // OK
 
 #### 字符字面量
 
-> **<sup>词法分析</sup>**\
+> **<sup>词法</sup>**\
 > CHAR_LITERAL :\
 > &nbsp;&nbsp; `'` ( ~[`'` `\` \\n \\r \\t] | QUOTE_ESCAPE | ASCII_ESCAPE | UNICODE_ESCAPE ) `'`
 >
@@ -122,7 +122,7 @@ blackhole!("string"suffix); // OK
 
 #### 字符串字面量
 
-> **<sup>词法分析</sup>**\
+> **<sup>词法</sup>**\
 > STRING_LITERAL :\
 > &nbsp;&nbsp; `"` (\
 > &nbsp;&nbsp; &nbsp;&nbsp; ~[`"` `\` _IsolatedCR_]&nbsp;&nbsp;(译者注：IsolatedCR：后面没有跟 `\n` 的 `\r`，首次定义见[注释](comments.md))\
@@ -156,11 +156,11 @@ assert_eq!(a,b);
 * *24 位码点转义*以 `U+0075`（`u`）开头，后跟多达六位*十六进制数字*，位于大括号 `U+007B`（`{`）和 `U+007D`（`}`）之间。这表示(转义的) Unicode 字符的码点等于大括号里的十六进制值。
 * *空白符转义*以`U+006E` (`n`), `U+0072` (`r`), 或者 `U+0074` (`t`) 之一，依次分别表示 Unicode 值 `U+000A`（LF），`U+000D`（CR），或者 `U+0009`（HT）。
 * *null转义* 是字符 `U+0030`（`0`），表示 Unicode 值 `U+0000`（NUL）。
-* *反斜杠转义* 是字符 `U+005C`（`\`），反斜杠必须通过转义才能表示其自身。
+* *反斜线转义* 是字符 `U+005C`（`\`），反斜线必须通过转义才能表示其自身。
 
 #### 原生字符串字面量
 
-> **<sup>词法分析</sup>**\
+> **<sup>词法</sup>**\
 > RAW_STRING_LITERAL :\
 > &nbsp;&nbsp; `r` RAW_STRING_CONTENT
 >
@@ -189,7 +189,7 @@ r##"foo #"# bar"##;                // foo #"# bar
 
 #### 字节字面量
 
-> **<sup>词法分析</sup>**\
+> **<sup>词法</sup>**\
 > BYTE_LITERAL :\
 > &nbsp;&nbsp; `b'` ( ASCII_FOR_CHAR | BYTE_ESCAPE )  `'`
 >
@@ -204,7 +204,7 @@ r##"foo #"# bar"##;                // foo #"# bar
 
 #### 字节串字面量
 
-> **<sup>词法分析</sup>**\
+> **<sup>词法</sup>**\
 > BYTE_STRING_LITERAL :\
 > &nbsp;&nbsp; `b"` ( ASCII_FOR_STRING | BYTE_ESCAPE | STRING_CONTINUE )<sup>\*</sup> `"`
 >
@@ -218,11 +218,11 @@ r##"foo #"# bar"##;                // foo #"# bar
 * *字节转义*以 `U+0078` (`x`)开始，后跟恰好两个*十六进制数字*来表示十六进制值代表的字节。
 * *空白转义*是字符 `U+006E`（`n`）、`U+0072`（`r`），或 `U+0074`（`t`）之一，分别表示字节值 `0x0A`（ASCII LF）、`0x0D`（ASCII CR），或 `0x09`（ASCII HT）。
 * *null转义*是字符 `U+0030`（`0`），表示字节值 `0x00` （ASCII NUL）。
-* *反斜杠转义*是字符 `U+005C`（`\`），必须被转义以表示其 ASCII 编码 `0x5C`。
+* *反斜线转义*是字符 `U+005C`（`\`），必须被转义以表示其 ASCII 编码 `0x5C`。
 
 #### 原生字节串字面量
 
-> **<sup>词法分析</sup>**\
+> **<sup>词法</sup>**\
 > RAW_BYTE_STRING_LITERAL :\
 > &nbsp;&nbsp; `br` RAW_BYTE_STRING_CONTENT
 >
@@ -256,7 +256,7 @@ b"\\x52"; br"\x52";                  // \x52
 
 #### 整型字面量
 
-> **<sup>词法分析</sup>**\
+> **<sup>词法</sup>**\
 > INTEGER_LITERAL :\
 > &nbsp;&nbsp; ( DEC_LITERAL | BIN_LITERAL | OCT_LITERAL | HEX_LITERAL )
 >              INTEGER_SUFFIX<sup>?</sup>
@@ -352,7 +352,7 @@ let a: u64 = 123;                  // type u64
 
 #### 元组索引
 
-> **<sup>词法分析</sup>**\
+> **<sup>词法</sup>**\
 > TUPLE_INDEX: \
 > &nbsp;&nbsp; INTEGER_LITERAL
 
@@ -373,7 +373,7 @@ let horse = example.0b10;  // 错误：没有 `0b10` 字段
 
 #### 浮点型字面量
 
-> **<sup>词法分析</sup>**\
+> **<sup>词法</sup>**\
 > FLOAT_LITERAL :\
 > &nbsp;&nbsp; &nbsp;&nbsp; DEC_LITERAL `.`
 >   _(紧跟着的不能是 `.`, `_` 或者[标识符]_)\
@@ -412,27 +412,24 @@ let horse = example.0b10;  // 错误：没有 `0b10` 字段
 let x: f64 = 2.; // type f64
 ```
 
-This last example is different because it is not possible to use the suffix
-syntax with a floating point literal ending in a period. `2.f64` would attempt
-to call a method named `f64` on `2`.
+最后一个例子稍显不同，因为不能对一个以句点结尾的浮点型字面量使用后缀语法，`2.f64` 才会尝试在 `2` 上调用名为 `f64` 的方法。
 
-The representation semantics of floating-point numbers are described in
-["Machine Types"].
+浮点数所代表的语义在[“平台类型”]中描述。
 
-["Machine Types"]: types/numeric.md
+[“平台类型”]: types/numeric.md
 
-### Boolean literals
+### 布尔型字面量
 
-> **<sup>词法分析</sup>**\
+> **<sup>词法</sup>**\
 > BOOLEAN_LITERAL :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `true`\
 > &nbsp;&nbsp; | `false`
 
-The two values of the boolean type are written `true` and `false`.
+布尔类型有两个值，写做：`true` 和 `false`。
 
 ## 生命周期和循环标签
 
-> **<sup>词法分析</sup>**\
+> **<sup>词法</sup>**\
 > LIFETIME_TOKEN :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `'` [IDENTIFIER_OR_KEYWORD][标识符]\
 > &nbsp;&nbsp; | `'_`
@@ -440,121 +437,116 @@ The two values of the boolean type are written `true` and `false`.
 > LIFETIME_OR_LABEL :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `'` [NON_KEYWORD_IDENTIFIER][标识符]
 
-Lifetime parameters and [loop labels] use LIFETIME_OR_LABEL tokens. Any
-LIFETIME_TOKEN will be accepted by the lexer, and for example, can be used in
-macros.
+生命周期参数和[循环标签]使用 LIFETIME_OR_LABEL 标记码。词法上接受任何 LIFETIME_TOKEN，比如在宏中使用。
 
-[loop labels]: expressions/loop-expr.md
+[循环标签]: expressions/loop-expr.md
 
 ## 标点符号
 
-Punctuation symbol tokens are listed here for completeness. Their individual
-usages and meanings are defined in the linked pages.
+为了完整起见，这里列出了（Rust 里）所有的标点符号标记码。它们各自的用法和意义在链接页面中都有定义。
 
-| Symbol | Name        | Usage |
+| 符号 | 名称        | 使用方法 |
 |--------|-------------|-------|
-| `+`    | Plus        | [Addition][arith], [Trait Bounds], [Macro Kleene Matcher][macros]
-| `-`    | Minus       | [Subtraction][arith], [Negation]
-| `*`    | Star        | [Multiplication][arith], [Dereference], [Raw Pointers], [Macro Kleene Matcher][macros], [Use wildcards]
-| `/`    | Slash       | [Division][arith]
-| `%`    | Percent     | [Remainder][arith]
-| `^`    | Caret       | [Bitwise and Logical XOR][arith]
-| `!`    | Not         | [Bitwise and Logical NOT][negation], [Macro Calls][macros], [Inner Attributes][attributes], [Never Type], [Negative impls]
-| `&`    | And         | [Bitwise and Logical AND][arith], [Borrow], [References], [Reference patterns]
-| <code>\|</code> | Or | [Bitwise and Logical OR][arith], [Closures], Patterns in [match], [if let], and [while let]
-| `&&`   | AndAnd      | [Lazy AND][lazy-bool], [Borrow], [References], [Reference patterns]
-| <code>\|\|</code> | OrOr | [Lazy OR][lazy-bool], [Closures]
-| `<<`   | Shl         | [Shift Left][arith], [Nested Generics][generics]
-| `>>`   | Shr         | [Shift Right][arith], [Nested Generics][generics]
-| `+=`   | PlusEq      | [Addition assignment][compound]
-| `-=`   | MinusEq     | [Subtraction assignment][compound]
-| `*=`   | StarEq      | [Multiplication assignment][compound]
-| `/=`   | SlashEq     | [Division assignment][compound]
-| `%=`   | PercentEq   | [Remainder assignment][compound]
-| `^=`   | CaretEq     | [Bitwise XOR assignment][compound]
-| `&=`   | AndEq       | [Bitwise And assignment][compound]
-| <code>\|=</code> | OrEq | [Bitwise Or assignment][compound]
-| `<<=`  | ShlEq       | [Shift Left assignment][compound]
-| `>>=`  | ShrEq       | [Shift Right assignment][compound], [Nested Generics][generics]
-| `=`    | Eq          | [Assignment], [Attributes], Various type definitions
-| `==`   | EqEq        | [Equal][comparison]
-| `!=`   | Ne          | [Not Equal][comparison]
-| `>`    | Gt          | [Greater than][comparison], [Generics], [Paths]
-| `<`    | Lt          | [Less than][comparison], [Generics], [Paths]
-| `>=`   | Ge          | [Greater than or equal to][comparison], [Generics]
-| `<=`   | Le          | [Less than or equal to][comparison]
-| `@`    | At          | [Subpattern binding]
-| `_`    | Underscore  | [Wildcard patterns], [Inferred types], Unnamed items in [constants], [extern crates], and [use declarations]
-| `.`    | Dot         | [Field access][field], [Tuple index]
-| `..`   | DotDot      | [Range][range], [Struct expressions], [Patterns]
-| `...`  | DotDotDot   | [Variadic functions][extern], [Range patterns]
-| `..=`  | DotDotEq    | [Inclusive Range][range], [Range patterns]
-| `,`    | Comma       | Various separators
-| `;`    | Semi        | Terminator for various items and statements, [Array types]
-| `:`    | Colon       | Various separators
-| `::`   | PathSep     | [Path separator][paths]
-| `->`   | RArrow      | [Function return type][functions], [Closure return type][closures], [Function pointer type]
-| `=>`   | FatArrow    | [Match arms][match], [Macros]
-| `#`    | Pound       | [Attributes]
-| `$`    | Dollar      | [Macros]
-| `?`    | Question    | [Question mark operator][question], [Questionably sized][sized], [Macro Kleene Matcher][macros]
+| `+`    | Plus        | [算术加法][arith], [trait 约束], [宏 Kleene 匹配器][宏]
+| `-`    | Minus       | [算术减法][arith], [取反]
+| `*`    | Star        | [算术乘法][arith], [解引用], [裸指针], [宏 Kleene 匹配器][宏], [use 通配符]
+| `/`    | Slash       | [算术除法][arith]
+| `%`    | Percent     | [算术取模][arith]
+| `^`    | Caret       | [位和逻辑异或][arith]
+| `!`    | Not         | [位和逻辑非][取反], [宏调用][宏], [内部属性][属性], [never 型], [拒绝 impl]
+| `&`    | And         | [位和逻辑与][arith], [借用], [引用], [引用模式]
+| <code>\|</code> | Or | [位和逻辑或][arith], [闭包], [match]中的模式, [if let], 和 [while let]
+| `&&`   | AndAnd      | [短路与][lazy-bool], [借用], [引用], [引用模式]
+| <code>\|\|</code> | OrOr | [短路或]][lazy-bool], [闭包]
+| `<<`   | Shl         | [左移位][arith], [嵌套泛型][泛型]
+| `>>`   | Shr         | [右移位][arith], [嵌套泛型][泛型]
+| `+=`   | PlusEq      | [加法及赋值][compound]
+| `-=`   | MinusEq     | [减法及赋值][compound]
+| `*=`   | StarEq      | [乘法及赋值][compound]
+| `/=`   | SlashEq     | [除法及赋值][compound]
+| `%=`   | PercentEq   | [取模及赋值][compound]
+| `^=`   | CaretEq     | [按位异或及赋值][compound]
+| `&=`   | AndEq       | [按位与及赋值][compound]
+| <code>\|=</code> | OrEq | [按位或及赋值][compound]
+| `<<=`  | ShlEq       | [左移位及赋值][compound]
+| `>>=`  | ShrEq       | [右移位及赋值][compound], [嵌套泛型][泛型]
+| `=`    | Eq          | [赋值], [属性], 各种类型定义
+| `==`   | EqEq        | [等于][comparison]
+| `!=`   | Ne          | [不等于][comparison]
+| `>`    | Gt          | [大于][comparison], [泛型], [路径]
+| `<`    | Lt          | [小于][comparison], [泛型], [路径]
+| `>=`   | Ge          | [大于或等于][comparison], [泛型]
+| `<=`   | Le          | [小于或等于][comparison]
+| `@`    | At          | [子模式绑定]
+| `_`    | Underscore  | [通配符模式], [类型推断], [常量]中的非命名项, [外部 crate], 和 [use 声明]
+| `.`    | Dot         | [字段存取][field], [元组索引]
+| `..`   | DotDot      | [范围][range], [结构体表达式], [模式]
+| `...`  | DotDotDot   | [可变参数函数][extern], [范围模式]
+| `..=`  | DotDotEq    | [闭区间][range], [范围模式]
+| `,`    | Comma       | 各种分隔符
+| `;`    | Semi        | 各种项和语句的结束符, [数组类型]
+| `:`    | Colon       | 各种分隔符
+| `::`   | PathSep     | [路径分隔符][路径]
+| `->`   | RArrow      | [函数返回类型][functions], [闭包返回类型][闭包], [数组指针类型]
+| `=>`   | FatArrow    | [匹配臂][match], [宏]
+| `#`    | Pound       | [属性]
+| `$`    | Dollar      | [宏]
+| `?`    | Question    | [问号运算符], [非确定性尺寸][sized], [宏 Kleene 匹配器][宏]
 
-## Delimiters
+## 分隔符
 
-Bracket punctuation is used in various parts of the grammar. An open bracket
-must always be paired with a close bracket. Brackets and the tokens within
-them are referred to as "token trees" in [macros].  The three types of brackets are:
+括号用于语法的各个部分，左括号必须始终与右括号配对。括号及其内的标记码在[宏]中被称作“标记树”。括号有三种类型：
 
-| Bracket | Type            |
-|---------|-----------------|
-| `{` `}` | Curly braces    |
-| `[` `]` | Square brackets |
-| `(` `)` | Parentheses     |
+| 括号 | 类型            |
+|---------|-------------|
+| `{` `}` | 花/大括号    |
+| `[` `]` | 方/中括号    |
+| `(` `)` | 圆/小括号    |
 
 
-[Inferred types]: types/inferred.md
-[Range patterns]: patterns.md#range-patterns
-[Reference patterns]: patterns.md#reference-patterns
-[Subpattern binding]: patterns.md#identifier-patterns
+[类型推断]: types/inferred.md
+[范围模式]: patterns.md#range-patterns
+[引用模式]: patterns.md#reference-patterns
+[子模式绑定]: patterns.md#identifier-patterns
 [Wildcard patterns]: patterns.md#wildcard-pattern
 [arith]: expressions/operator-expr.md#arithmetic-and-logical-binary-operators
-[array types]: types/array.md
-[assignment]: expressions/operator-expr.md#assignment-expressions
-[attributes]: attributes.md
-[borrow]: expressions/operator-expr.md#borrow-operators
-[closures]: expressions/closure-expr.md
+[数组类型]: types/array.md
+[赋值]: expressions/operator-expr.md#assignment-expressions
+[属性]: attributes.md
+[借用]: expressions/operator-expr.md#borrow-operators
+[闭包]: expressions/closure-expr.md
 [comparison]: expressions/operator-expr.md#comparison-operators
 [compound]: expressions/operator-expr.md#compound-assignment-expressions
-[constants]: items/constant-items.md
-[dereference]: expressions/operator-expr.md#the-dereference-operator
-[extern crates]: items/extern-crates.md
+[常量]: items/constant-items.md
+[解引用]: expressions/operator-expr.md#the-dereference-operator
+[外部 crate]: items/extern-crates.md
 [extern]: items/external-blocks.md
 [field]: expressions/field-expr.md
-[function pointer type]: types/function-pointer.md
+[数组指针类型]: types/function-pointer.md
 [functions]: items/functions.md
-[generics]: items/generics.md
+[泛型]: items/generics.md
 [标识符]: identifiers.md
 [if let]: expressions/if-expr.md#if-let-expressions
 [关键字]: keywords.md
 [lazy-bool]: expressions/operator-expr.md#lazy-boolean-operators
-[macros]: macros-by-example.md
+[宏]: macros-by-example.md
 [match]: expressions/match-expr.md
-[negation]: expressions/operator-expr.md#negation-operators
-[negative impls]: items/implementations.md
-[never type]: types/never.md
-[paths]: paths.md
-[patterns]: patterns.md
-[question]: expressions/operator-expr.md#the-question-mark-operator
+[取反]: expressions/operator-expr.md#negation-operators
+[拒绝 impl]: items/implementations.md
+[never 型]: types/never.md
+[路径]: paths.md
+[模式]: patterns.md
+[问号运算符]: expressions/operator-expr.md#the-question-mark-operator
 [range]: expressions/range-expr.md
-[raw pointers]: types/pointer.md#raw-pointers-const-and-mut
-[references]: types/pointer.md
+[裸指针]: types/pointer.md#raw-pointers-const-and-mut
+[引用]: types/pointer.md
 [sized]: trait-bounds.md#sized
-[struct expressions]: expressions/struct-expr.md
-[trait bounds]: trait-bounds.md
-[tuple index]: expressions/tuple-expr.md#tuple-indexing-expressions
+[结构体表达式]: expressions/struct-expr.md
+[trait 约束]: trait-bounds.md
+[元组索引]: expressions/tuple-expr.md#tuple-indexing-expressions
 [元组结构体]: items/structs.md
 [元组变体]: items/enumerations.md
 [元组]: types/tuple.md
-[use declarations]: items/use-declarations.md
-[use wildcards]: items/use-declarations.md
+[use 声明]: items/use-declarations.md
+[use 通配符]: items/use-declarations.md
 [while let]: expressions/loop-expr.md#predicate-pattern-loops
