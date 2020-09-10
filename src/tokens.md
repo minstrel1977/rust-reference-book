@@ -24,7 +24,7 @@
 
 #### 字符和字符串
 
-|                                              | 举例         | `#` 集合   | 字符集  | 转义             |
+|                                              | 举例         | `#` 号的数量   | 字符集  | 转义             |
 |----------------------------------------------|-----------------|-------------|-------------|---------------------|
 | [字符](#字符字面量)             | `'H'`           | 0           | 全部 Unicode | [引号](#引号转义) & [ASCII](#ASCII-转义) & [Unicode](#unicode-转义) |
 | [字符串](#字符串字面量)                   | `"hello"`       | 0           | 全部 Unicode | [引号](#引号转义) & [ASCII](#ASCII-转义) & [Unicode](#unicode-转义) |
@@ -70,9 +70,9 @@
 | `\'` | 单引号 |
 | `\"` | 双引号 |
 
-#### 数值
+#### 数字
 
-| [数字字面量](#数字字面量)`*` | 示例 | 幂 | 后缀 |
+| [数字字面量](#数字字面量)`*` | 示例 | 指数 | 后缀 |
 |----------------------------------------|---------|----------------|----------|
 | 十进制整数 | `98_222` | `N/A` | 整数后缀 |
 | 十六进制整数 | `0xff` | `N/A` | 整数后缀 |
@@ -165,18 +165,14 @@ assert_eq!(a,b);
 > &nbsp;&nbsp; `r` RAW_STRING_CONTENT
 >
 > RAW_STRING_CONTENT :\
-> &nbsp;&nbsp; &nbsp;&nbsp; `"` ( ~ _IsolatedCR_ )<sup>* (非贪婪)</sup> `"`\
+> &nbsp;&nbsp; &nbsp;&nbsp; `"` ( ~ _IsolatedCR_ )<sup>* (非贪婪模式)</sup> `"`\
 > &nbsp;&nbsp; | `#` RAW_STRING_CONTENT `#`
 
 原生字符串字面量不处理任何转义。它以字符 `U+0072`（`r`）后跟零个或多个字符 `U+0023`（`#`），以及一个 `U+0022`（双引号）字符开始。*原生字符串正文*可包含任意 Unicode 字符序列，并仅以另一个 `U+0022`（双引号）字符结尾，后跟与开头的 `U+0022`（双引号）字符前同等数量的 `U+0023`（`#`）字符。
 
-所有包含在原生字符串正文中的 Unicode 字符都代表他们自身，字符 `U+0022`（双引号）（当后跟的零个或多个 U+0023（#）字符用于开始原生字符串字面量时除外）或 U+005C（\）并无特殊含义。
-All Unicode characters contained in the raw string body represent themselves,
-the characters `U+0022` (double-quote) (except when followed by at least as
-many `U+0023` (`#`) characters as were used to start the raw string literal) or
-`U+005C` (`\`) do not have any special meaning.
+所有包含在原生字符串正文中的 Unicode 字符都代表他们自身，字符 `U+0022`（双引号）（除非后跟的 `U+0023` (`#`)字符字符串开始前的 `U+0023` (`#`)字符数相同）或 U+005C（\）并无特殊含义。
 
-Examples for string literals:
+字符串字面量示例:
 
 ```rust
 "foo"; r"foo";                     // foo
@@ -189,86 +185,59 @@ r##"foo #"# bar"##;                // foo #"# bar
 "\\x52"; r"\x52";                  // \x52
 ```
 
-### Byte and byte string literals
+### 字节和字节串字面量
 
-#### Byte literals
+#### 字节字面量
 
-> **<sup>Lexer</sup>**\
+> **<sup>词法分析</sup>**\
 > BYTE_LITERAL :\
 > &nbsp;&nbsp; `b'` ( ASCII_FOR_CHAR | BYTE_ESCAPE )  `'`
 >
 > ASCII_FOR_CHAR :\
-> &nbsp;&nbsp; _any ASCII (i.e. 0x00 to 0x7F), except_ `'`, `\`, \\n, \\r or \\t
+> &nbsp;&nbsp; _任何 ASCII 字符 (0x00 到 0x7F 之间的码点), 排除_ `'`, `\`, \\n, \\r 或者 \\t
 >
 > BYTE_ESCAPE :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `\x` HEX_DIGIT HEX_DIGIT\
 > &nbsp;&nbsp; | `\n` | `\r` | `\t` | `\\` | `\0`
 
-A _byte literal_ is a single ASCII character (in the `U+0000` to `U+007F`
-range) or a single _escape_ preceded by the characters `U+0062` (`b`) and
-`U+0027` (single-quote), and followed by the character `U+0027`. If the character
-`U+0027` is present within the literal, it must be _escaped_ by a preceding
-`U+005C` (`\`) character. It is equivalent to a `u8` unsigned 8-bit integer
-_number literal_.
+*字节字面量*是单个 ASCII 字符(在 `U+0000` 到 `U+007F` 范围内)或一个*转义符*前接字符 `U+0062`（`b`）和 `U+0027`（单引号），后接字符 `U+0027`。如果字符`U+0027`出现在字面量中，它必须由前置字符 `U+005C`（`\`）转义。它等价于一个 `u8` 无符号 8 位整型*数字字面量*。
 
-#### Byte string literals
+#### 字节串字面量
 
-> **<sup>Lexer</sup>**\
+> **<sup>词法分析</sup>**\
 > BYTE_STRING_LITERAL :\
 > &nbsp;&nbsp; `b"` ( ASCII_FOR_STRING | BYTE_ESCAPE | STRING_CONTINUE )<sup>\*</sup> `"`
 >
 > ASCII_FOR_STRING :\
-> &nbsp;&nbsp; _any ASCII (i.e 0x00 to 0x7F), except_ `"`, `\` _and IsolatedCR_
+> &nbsp;&nbsp; _任何 ASCII 字符(0x00 到 0x7F 之间的码点), 排除_ `"`, `\` _和 IsolatedCR_
 
-A non-raw _byte string literal_ is a sequence of ASCII characters and _escapes_,
-preceded by the characters `U+0062` (`b`) and `U+0022` (double-quote), and
-followed by the character `U+0022`. If the character `U+0022` is present within
-the literal, it must be _escaped_ by a preceding `U+005C` (`\`) character.
-Alternatively, a byte string literal can be a _raw byte string literal_, defined
-below. The type of a byte string literal of length `n` is `&'static [u8; n]`.
+非原生*字节串字面量*是 ASCII 字符和转义字符组成的字符序列，形式是以字符`U+0062`（`b`）和 `U+0022`（双引号）开头，以字符 `U+0022` 结尾。如果字面量中包含字符 `U+0022` ，则必须由前置的 `U+005C`（`\`）_转义_。另外，字节串字面量也可以是*原生字节串字面量*(下面有其定义)。长度为 `n` 的字节串字面量类型为 `&'static [u8; n]`。
 
-Some additional _escapes_ are available in either byte or non-raw byte string
-literals. An escape starts with a `U+005C` (`\`) and continues with one of the
-following forms:
+一些额外的*转义*可以在字节或非原生字节串字面量中使用，转义以 `U+005C`（`\`）开始，并后跟如下形式之一：
 
-* A _byte escape_ escape starts with `U+0078` (`x`) and is
-  followed by exactly two _hex digits_. It denotes the byte
-  equal to the provided hex value.
-* A _whitespace escape_ is one of the characters `U+006E` (`n`), `U+0072`
-  (`r`), or `U+0074` (`t`), denoting the bytes values `0x0A` (ASCII LF),
-  `0x0D` (ASCII CR) or `0x09` (ASCII HT) respectively.
-* The _null escape_ is the character `U+0030` (`0`) and denotes the byte
-  value `0x00` (ASCII NUL).
-* The _backslash escape_ is the character `U+005C` (`\`) which must be
-  escaped in order to denote its ASCII encoding `0x5C`.
+* *字节转义*以 `U+0078` (`x`)开始，后跟恰好两个*十六进制数字*来表示十六进制值代表的字节。
+* *空白转义*是字符 `U+006E`（`n`）、`U+0072`（`r`），或 `U+0074`（`t`）之一，分别表示字节值 `0x0A`（ASCII LF）、`0x0D`（ASCII CR），或 `0x09`（ASCII HT）。
+* *null转义*是字符 `U+0030`（`0`），表示字节值 `0x00` （ASCII NUL）。
+* *反斜杠转义*是字符 `U+005C`（`\`），必须被转义以表示其 ASCII 编码 `0x5C`。
 
-#### Raw byte string literals
+#### 原生字节串字面量
 
-> **<sup>Lexer</sup>**\
+> **<sup>词法分析</sup>**\
 > RAW_BYTE_STRING_LITERAL :\
 > &nbsp;&nbsp; `br` RAW_BYTE_STRING_CONTENT
 >
 > RAW_BYTE_STRING_CONTENT :\
-> &nbsp;&nbsp; &nbsp;&nbsp; `"` ASCII<sup>* (non-greedy)</sup> `"`\
+> &nbsp;&nbsp; &nbsp;&nbsp; `"` ASCII<sup>* (非贪婪模式)</sup> `"`\
 > &nbsp;&nbsp; | `#` RAW_BYTE_STRING_CONTENT `#`
 >
 > ASCII :\
-> &nbsp;&nbsp; _any ASCII (i.e. 0x00 to 0x7F)_
+> &nbsp;&nbsp; _任何 ASCII 字符(0x00 到 0x7F 之间的码点)_
 
-Raw byte string literals do not process any escapes. They start with the
-character `U+0062` (`b`), followed by `U+0072` (`r`), followed by zero or more
-of the character `U+0023` (`#`), and a `U+0022` (double-quote) character. The
-_raw string body_ can contain any sequence of ASCII characters and is terminated
-only by another `U+0022` (double-quote) character, followed by the same number of
-`U+0023` (`#`) characters that preceded the opening `U+0022` (double-quote)
-character. A raw byte string literal can not contain any non-ASCII byte.
+原生字节串字面量不处理任何转义。它们以字符 `U+0062`（`b`）开头，后跟 `U+0072`（`r`），后跟零个或多个字符 `U+0023`（`#`）及 `U+0022`（双引号）字符。_原生字节串正文_ 可包含任意 ASCII 字符序列，并仅以另一个 `U+0022`（双引号）字符结尾，后面与开头 `U+0022`（双引号）字符之前同等数量的 `U+0023`（`#`）字符。原生字节串字面量不能包含任何非 ASCII 字节。
 
-All characters contained in the raw string body represent their ASCII encoding,
-the characters `U+0022` (double-quote) (except when followed by at least as
-many `U+0023` (`#`) characters as were used to start the raw string literal) or
-`U+005C` (`\`) do not have any special meaning.
+原生字节串正文中的所有字符都表示它们的 ASCII 编码，字符 `U+0022`（双引号）（除非后面跟的 `U+0023`（`#`）字符数与用于开始原生字节串字面量的`#`字符数相同）或 `U+005C`（`\`）并无特殊含义。
 
-Examples for byte string literals:
+字节串字面量示例：
 
 ```rust
 b"foo"; br"foo";                     // foo
@@ -283,12 +252,11 @@ b"\\x52"; br"\x52";                  // \x52
 
 ### 数字字面量
 
-A _number literal_ is either an _integer literal_ or a _floating-point
-literal_. The grammar for recognizing the two kinds of literals is mixed.
+*数字字面量*可以是*整型字面量*，也可以是*浮点型字面量*，用于识别这两种字面量的语法是混合的。
 
-#### Integer literals
+#### 整型字面量
 
-> **<sup>Lexer</sup>**\
+> **<sup>词法分析</sup>**\
 > INTEGER_LITERAL :\
 > &nbsp;&nbsp; ( DEC_LITERAL | BIN_LITERAL | OCT_LITERAL | HEX_LITERAL )
 >              INTEGER_SUFFIX<sup>?</sup>
@@ -317,38 +285,22 @@ literal_. The grammar for recognizing the two kinds of literals is mixed.
 > &nbsp;&nbsp; &nbsp;&nbsp; `u8` | `u16` | `u32` | `u64` | `u128` | `usize`\
 > &nbsp;&nbsp; | `i8` | `i16` | `i32` | `i64` | `i128` | `isize`
 
-An _integer literal_ has one of four forms:
+*整型字面量*具备下述 4 种形式之一：
 
-* A _decimal literal_ starts with a *decimal digit* and continues with any
-  mixture of *decimal digits* and _underscores_.
-* A _hex literal_ starts with the character sequence `U+0030` `U+0078`
-  (`0x`) and continues as any mixture (with at least one digit) of hex digits
-  and underscores.
-* An _octal literal_ starts with the character sequence `U+0030` `U+006F`
-  (`0o`) and continues as any mixture (with at least one digit) of octal digits
-  and underscores.
-* A _binary literal_ starts with the character sequence `U+0030` `U+0062`
-  (`0b`) and continues as any mixture (with at least one digit) of binary digits
-  and underscores.
+* *十进制字面量*以*十进制数*开头，后跟*十进制数*和*下划线(`_`)*的任意组合。
+* *十六进制字面量*以字符序列 `U+0030` `U+0078`（`0x`）开头，后跟十六进制数和下划线的任意组合（至少一个数字）。
+* *八进制字面量*以字符序列 `U+0030` `U+006F`（`0o`）开头，后跟八进制数和下划线的任意组合（至少一个数字）。
+* *二进制字面量*以字符序列 `U+0030` `U+0062`（`0b`）开头，后跟二进制数和下划线的任意组合（至少一个数字）。
 
-Like any literal, an integer literal may be followed (immediately,
-without any spaces) by an _integer suffix_, which forcibly sets the
-type of the literal. The integer suffix must be the name of one of the
-integral types: `u8`, `i8`, `u16`, `i16`, `u32`, `i32`, `u64`, `i64`,
-`u128`, `i128`, `usize`, or `isize`.
+与其它字面量一样，整型字面量后面（紧跟，不带空白）可跟一个*整型后缀*，该后缀强制设定了字面量的类型。整型后缀须为如下整型类型之一：`u8`、`i8`、`u16`、`i16`、`u32`、`i32`、`u64`、`i64`、`u128`、`i128`、`usize` 或 `isize`。
 
-The type of an _unsuffixed_ integer literal is determined by type inference:
+*无后缀*整型字面量的类型通过类型推断确定：
 
-* If an integer type can be _uniquely_ determined from the surrounding
-  program context, the unsuffixed integer literal has that type.
+* 如果整型类型可以通过程序上下文*唯一*确定，则无后缀整型字面量即为该类型。
+* 如果程序上下文对类型做了约束，则默认为带符号 32 位整型为 `i32`。
+* 如果程序上下文过度限制了类型，则将其视为静态类型错误。
 
-* If the program context under-constrains the type, it defaults to the
-  signed 32-bit integer `i32`.
-
-* If the program context over-constrains the type, it is considered a
-  static type error.
-
-Examples of integer literals of various forms:
+各种形式的整型字面量示例:
 
 ```rust
 123;                               // type i32
@@ -370,69 +322,61 @@ let a: u64 = 123;                  // type u64
 0usize;                            // type usize
 ```
 
-Examples of invalid integer literals:
+无效整型字面量示例:
 
 ```rust,compile_fail
-// invalid suffixes
+// 无效后缀
 
 0invalidSuffix;
 
-// uses numbers of the wrong base
+// 数字进制错误
 
 123AFB43;
 0b0102;
 0o0581;
 
-// integers too big for their type (they overflow)
+// 类型溢出
 
 128_i8;
 256_u8;
 
-// bin, hex, and octal literals must have at least one digit
+// 二进制、十六进制、八进制的进制前缀后至少需要一个数字
 
 0b_;
 0b____;
 ```
 
-Note that the Rust syntax considers `-1i8` as an application of the [unary minus
-operator] to an integer literal `1i8`, rather than
-a single integer literal.
+请注意，Rust 语法将 `-1i8` 视为[单目取反运算符]对整型字面量`1i8`的应用，而非单个整型字面量。
 
-[unary minus operator]: expressions/operator-expr.md#negation-operators
+[单目取反运算符]: expressions/operator-expr.md#取反运算符
 
-#### Tuple index
+#### 元组索引
 
-> **<sup>Lexer</sup>**\
+> **<sup>词法分析</sup>**\
 > TUPLE_INDEX: \
 > &nbsp;&nbsp; INTEGER_LITERAL
 
-A tuple index is used to refer to the fields of [tuples], [tuple structs], and
-[tuple variants].
+元组索引用于引用[元组]、[元组结构体]和[元组变体]的字段。
 
-Tuple indices are compared with the literal token directly. Tuple indices
-start with `0` and each successive index increments the value by `1` as a
-decimal value. Thus, only decimal values will match, and the value must not
-have any extra `0` prefix characters.
+元组索引直接与字面量标记符进行比较。元组索引以 `0` 开始，每个后续索引的值以十进制的 `1` 递增。因此，元组索引只能匹配十进制值，并且该值不能有任何额外的 `0` 前缀字符。
 
 ```rust,compile_fail
 let example = ("dog", "cat", "horse");
 let dog = example.0;
 let cat = example.1;
-// The following examples are invalid.
-let cat = example.01;  // ERROR no field named `01`
-let horse = example.0b10;  // ERROR no field named `0b10`
+// 下面的示例非法.
+let cat = example.01;  // 错误：没有 `01` 字段
+let horse = example.0b10;  // 错误：没有 `0b10` 字段
 ```
 
-> **Note**: The tuple index may include an `INTEGER_SUFFIX`, but this is not
-> intended to be valid, and may be removed in a future version. See
-> <https://github.com/rust-lang/rust/issues/60210> for more information.
+> **注意**: 元组索引可能包含一个`INTEGER_SUFFIX`，但是这不是有效的，可能会在将来的版本中被删除。更多信息请参见<https://github.com/rust-lang/rust/issues/60210>。
 
-#### Floating-point literals
+#### 浮点型字面量
 
-> **<sup>Lexer</sup>**\
+> **<sup>词法分析</sup>**\
 > FLOAT_LITERAL :\
 > &nbsp;&nbsp; &nbsp;&nbsp; DEC_LITERAL `.`
->   _(not immediately followed by `.`, `_` or an [标识符]_)\
+>   _(紧跟着的不能是 `.`, `_` 或者[标识符]_)\
 > &nbsp;&nbsp; | DEC_LITERAL FLOAT_EXPONENT\
 > &nbsp;&nbsp; | DEC_LITERAL `.` DEC_LITERAL FLOAT_EXPONENT<sup>?</sup>\
 > &nbsp;&nbsp; | DEC_LITERAL (`.` DEC_LITERAL)<sup>?</sup>
@@ -445,31 +389,20 @@ let horse = example.0b10;  // ERROR no field named `0b10`
 > FLOAT_SUFFIX :\
 > &nbsp;&nbsp; `f32` | `f64`
 
-A _floating-point literal_ has one of two forms:
+*浮点型字面量*具有如下两种形式之一：
 
-* A _decimal literal_ followed by a period character `U+002E` (`.`). This is
-  optionally followed by another decimal literal, with an optional _exponent_.
-* A single _decimal literal_ followed by an _exponent_.
+* *十进制字面量*后跟句点字符`U+002E` (`.`)。可选地，后面跟着另一个十进制文字，也可以再接一个可选的*指数*。
+* *十进制字面量*后跟一个*指数*。
 
-Like integer literals, a floating-point literal may be followed by a
-suffix, so long as the pre-suffix part does not end with `U+002E` (`.`).
-The suffix forcibly sets the type of the literal. There are two valid
-_floating-point suffixes_, `f32` and `f64` (the 32-bit and 64-bit floating point
-types), which explicitly determine the type of the literal.
+如同整型字面量，浮点型字面量也可后跟一个后缀，但后缀之前部分不以 `U+002E`（`.`）结尾。后缀强制设定了字面量类型。有两种有效的*浮点型后缀*——`f32` 和 `f64`（32 位和 64 位浮点类型），它们显式地指定了字面量的类型。
 
-The type of an _unsuffixed_ floating-point literal is determined by
-type inference:
+*无后缀*浮点型字面量的类型通过类型推断确定：
 
-* If a floating-point type can be _uniquely_ determined from the
-  surrounding program context, the unsuffixed floating-point literal
-  has that type.
+* 如果浮点型类型可以通过程序上下文*唯一*确定，则无后缀浮点型字面量即为该类型。
+* 如果程序上下文对类型做了约束，则默认为 `f64`。
+* 如果程序上下文过度限制了类型，则将其视为静态类型错误。
 
-* If the program context under-constrains the type, it defaults to `f64`.
-
-* If the program context over-constrains the type, it is considered a
-  static type error.
-
-Examples of floating-point literals of various forms:
+各种形式的浮点型字面量示例：
 
 ```rust
 123.0f64;        // type f64
@@ -490,7 +423,7 @@ The representation semantics of floating-point numbers are described in
 
 ### Boolean literals
 
-> **<sup>Lexer</sup>**\
+> **<sup>词法分析</sup>**\
 > BOOLEAN_LITERAL :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `true`\
 > &nbsp;&nbsp; | `false`
@@ -499,7 +432,7 @@ The two values of the boolean type are written `true` and `false`.
 
 ## 生命周期和循环标签
 
-> **<sup>Lexer</sup>**\
+> **<sup>词法分析</sup>**\
 > LIFETIME_TOKEN :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `'` [IDENTIFIER_OR_KEYWORD][标识符]\
 > &nbsp;&nbsp; | `'_`
@@ -619,9 +552,9 @@ them are referred to as "token trees" in [macros].  The three types of brackets 
 [struct expressions]: expressions/struct-expr.md
 [trait bounds]: trait-bounds.md
 [tuple index]: expressions/tuple-expr.md#tuple-indexing-expressions
-[tuple structs]: items/structs.md
-[tuple variants]: items/enumerations.md
-[tuples]: types/tuple.md
+[元组结构体]: items/structs.md
+[元组变体]: items/enumerations.md
+[元组]: types/tuple.md
 [use declarations]: items/use-declarations.md
 [use wildcards]: items/use-declarations.md
 [while let]: expressions/loop-expr.md#predicate-pattern-loops

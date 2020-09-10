@@ -151,7 +151,7 @@ assert_eq!(try_option_none(), None);
 
 `?` cannot be overloaded.
 
-## Negation operators
+## 取反运算符
 
 > **<sup>Syntax</sup>**\
 > _NegationExpression_ :\
