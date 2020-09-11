@@ -1,4 +1,4 @@
->置顶鸣谢：本书的名词翻译和格式设置，以及多篇前期翻译都参考了[芽之家](https://books.budshome.com)上的[Rust 参考手册](https://books.budshome.com/rust-reference/)，在此感谢感谢该书作者的无私付出。
+>置顶鸣谢：本书的名词翻译和前面多篇章节的翻译都参考了[芽之家](https://books.budshome.com)上的[Rust 参考手册](https://books.budshome.com/rust-reference/)，在此感谢感谢该书作者的无私付出。
 
 # 介绍
 

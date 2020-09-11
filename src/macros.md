@@ -1,17 +1,18 @@
-# Macros
+# 宏
 
-The functionality and syntax of Rust can be extended with custom definitions
-called macros. They are given names, and invoked through a consistent
-syntax:`some_extension!(...)`.
+>[macros.md](https://github.com/rust-lang/reference/blob/master/src/macros.md)\
+>commit 771c5d10cf944bf7d221f5d6cb7abd2a06c400e4
 
-There are two ways to define new macros:
+Rust 语言的功能和语法可以通过自定义宏进行扩展。宏可以被命名，可通过一致的语法调用：`some_extension!(...)`。
 
-* [Macros by Example] define new syntax in a higher-level, declarative way.
-* [Procedural Macros] can be used to implement custom derive.
+定义新宏有两种方式：
 
-## Macro Invocation
+* [声明宏]以更高级别的声明性的方式定义了一套新语法规则。
+* [过程宏] 可用于实现自定义派生。
 
-> **<sup>Syntax</sup>**\
+## 宏调用
+
+> **<sup>句法</sup>**\
 > _MacroInvocation_ :\
 > &nbsp;&nbsp; [_SimplePath_] `!` _DelimTokenTree_
 >
@@ -21,37 +22,32 @@ There are two ways to define new macros:
 > &nbsp;&nbsp; | `{` _TokenTree_<sup>\*</sup> `}`
 >
 > _TokenTree_ :\
-> &nbsp;&nbsp; [_Token_]<sub>_except [delimiters]_</sub> | _DelimTokenTree_
+> &nbsp;&nbsp; [_Token_]<sub>_排除 [分隔符]_</sub> | _DelimTokenTree_
 >
 > _MacroInvocationSemi_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_SimplePath_] `!` `(` _TokenTree_<sup>\*</sup> `)` `;`\
 > &nbsp;&nbsp; | [_SimplePath_] `!` `[` _TokenTree_<sup>\*</sup> `]` `;`\
 > &nbsp;&nbsp; | [_SimplePath_] `!` `{` _TokenTree_<sup>\*</sup> `}`
 
-A macro invocation executes a macro at compile time and replaces the
-invocation with the result of the macro. Macros may be invoked in the
-following situations:
+宏调用是在编译时执行宏，并用执行结果替换调用。可以在下述情况中调用宏：
 
-* [Expressions] and [statements]
-* [Patterns]
-* [Types]
-* [Items] including [associated items]
-* [`macro_rules`] transcribers
-* [External blocks]
+* [表达式]和[语句]
+* [模式]
+* [类型]
+* [项] 以及 [关联项]
+* [`macro_rules`] 转换器
+* [外部块]
 
-When used as an item or a statement, the _MacroInvocationSemi_ form is used
-where a semicolon is required at the end when not using curly braces.
-[Visibility qualifiers] are never allowed before a macro invocation or
-[`macro_rules`] definition.
+当用作项或语句时，_MacroInvocationSemi_ 形式被使用。_MacroInvocationSemi_ 形式中，如果不使用大括号，则在结尾处需要添加分号。在宏调用或 [`macro_rules`] 定义之前不允许使用[可见性限定符]。
 
 ```rust
-// Used as an expression.
+// 作为表达式使用.
 let x = vec![1,2,3];
 
-// Used as a statement.
+// 作为语句使用.
 println!("Hello!");
 
-// Used in a pattern.
+// 在模式中使用.
 macro_rules! pat {
     ($i:ident) => (Some($i))
 }
@@ -60,18 +56,18 @@ if let pat!(x) = Some(1) {
     assert_eq!(x, 1);
 }
 
-// Used in a type.
+// 在类型中使用.
 macro_rules! Tuple {
     { $A:ty, $B:ty } => { ($A, $B) };
 }
 
 type N2 = Tuple!(i32, i32);
 
-// Used as an item.
+// 作为项使用.
 # use std::cell::RefCell;
 thread_local!(static FOO: RefCell<u32> = RefCell::new(1));
 
-// Used as an associated item.
+// 作为关联项使用.
 macro_rules! const_maker {
     ($t:ty, $v:tt) => { const CONST: $t = $v; };
 }
@@ -79,25 +75,25 @@ trait T {
     const_maker!{i32, 7}
 }
 
-// Macro calls within macros.
+// 宏内调用宏
 macro_rules! example {
     () => { println!("Macro call in a macro!") };
 }
-// Outer macro `example` is expanded, then inner macro `println` is expanded.
+// 外部宏 `example` 展开后, 内部宏 `println` 才会展开.
 example!();
 ```
 
-[Macros by Example]: macros-by-example.md
-[Procedural Macros]: procedural-macros.md
-[_SimplePath_]: paths.md#simple-paths
+[声明宏]: macros-by-example.md
+[过程宏]: procedural-macros.md
+[_SimplePath_]: paths.md#简单路径
 [_Token_]: tokens.md
-[associated items]: items/associated-items.md
-[delimiters]: tokens.md#delimiters
-[expressions]: expressions.md
-[items]: items.md
+[关联项]: items/associated-items.md
+[分隔符]: tokens.md#分隔符
+[表达式]: expressions.md
+[项]: items.md
 [`macro_rules`]: macros-by-example.md
-[patterns]: patterns.md
-[statements]: statements.md
-[types]: types.md
-[visibility qualifiers]: visibility-and-privacy.md
-[External blocks]: items/external-blocks.md
+[模式]: patterns.md
+[语句]: statements.md
+[类型]: types.md
+[可见性限定符]: visibility-and-privacy.md
+[外部块]: items/external-blocks.md
