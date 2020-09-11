@@ -1,12 +1,11 @@
-# Paths
+# 路径
 
-A *path* is a sequence of one or more path segments _logically_ separated by
-a namespace <span class="parenthetical">qualifier (`::`)</span>. If a path
-consists of only one segment, it refers to either an [item] or a [variable] in
-a local control scope. If a path has multiple segments, it always refers to an
-item.
+>[paths.md](https://github.com/rust-lang/reference/blob/master/src/paths.md)\
+>commit ecfd8761829d6b1025f2a0a8df6905043b2c5e8a
 
-Two examples of simple paths consisting of only identifier segments:
+*路径*是一个或多个由命名空间<span class="parenthetical">限定符(`::`)</span>*逻辑*分隔的路径片段组成的序列。如果路径仅由一个路径片段组成，则它引用本地控制域内的项或变量。如果路径包含多个路径片段，则常是引用具体项。
+
+仅由标识符段组成的简单路径的两个示例：
 
 <!-- ignore: syntax fragment -->
 ```rust,ignore
@@ -14,19 +13,18 @@ x;
 x::y::z;
 ```
 
-## Types of paths
+## 路径类型
 
-### Simple Paths
+### 简单路径
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _SimplePath_ :\
 > &nbsp;&nbsp; `::`<sup>?</sup> _SimplePathSegment_ (`::` _SimplePathSegment_)<sup>\*</sup>
 >
 > _SimplePathSegment_ :\
 > &nbsp;&nbsp; [IDENTIFIER] | `super` | `self` | `crate` | `$crate`
 
-Simple paths are used in [visibility] markers, [attributes], [macros], and [`use`] items.
-Examples:
+简单路径用于[可见性]标记、[属性]、[宏]和 [`use`] 项。示例：
 
 ```rust
 use std::io::{self, Write};
@@ -36,9 +34,9 @@ mod m {
 }
 ```
 
-### Paths in expressions
+### 表达式路径
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _PathInExpression_ :\
 > &nbsp;&nbsp; `::`<sup>?</sup> _PathExprSegment_ (`::` _PathExprSegment_)<sup>\*</sup>
 >
@@ -70,20 +68,18 @@ mod m {
 > _GenericArgsBinding_ :\
 > &nbsp;&nbsp; [IDENTIFIER] `=` [_Type_]
 
-Paths in expressions allow for paths with generic arguments to be specified. They are
-used in various places in [expressions] and [patterns].
+表达式路径允许指定带有泛型参数的路径。它们在各种[表达式]和[模式]中都有使用。
 
-The `::` token is required before the opening `<` for generic arguments to avoid
-ambiguity with the less-than operator. This is colloquially known as "turbofish" syntax.
+标记码 `::` 必须在泛型参数的左尖括号 `<` 的前面，以避免和小于操作符产生混淆。这就是俗称的“涡轮鱼（turbofish）”语法。
 
 ```rust
 (0..10).collect::<Vec<_>>();
 Vec::<u8>::with_capacity(1024);
 ```
 
-## Qualified paths
+## 限定路径
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _QualifiedPathInExpression_ :\
 > &nbsp;&nbsp; _QualifiedPathType_ (`::` _PathExprSegment_)<sup>+</sup>
 >
@@ -93,9 +89,7 @@ Vec::<u8>::with_capacity(1024);
 > _QualifiedPathInType_ :\
 > &nbsp;&nbsp; _QualifiedPathType_ (`::` _TypePathSegment_)<sup>+</sup>
 
-Fully qualified paths allow for disambiguating the path for [trait implementations] and
-for specifying [canonical paths](#canonical-paths). When used in a type specification, it
-supports using the type syntax specified below.
+完全限定路径允许为 [trait 实现] 消除路径歧义，并指定[标准路径](#标准路径)。在类型规范中使用时，它支持使用下面所示的类型语法：
 
 ```rust
 struct S;
@@ -110,14 +104,14 @@ trait T2 {
     fn f() { println!("T2 f"); }
 }
 impl T2 for S {}
-S::f();  // Calls the inherent impl.
-<S as T1>::f();  // Calls the T1 trait function.
-<S as T2>::f();  // Calls the T2 trait function.
+S::f();  // 调用本身的实现.
+<S as T1>::f();  // 调用 T1 trait 的函数.
+<S as T2>::f();  // 调用 T2 trait 的函数.
 ```
 
-### Paths in types
+### 类型路径
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _TypePath_ :\
 > &nbsp;&nbsp; `::`<sup>?</sup> _TypePathSegment_ (`::` _TypePathSegment_)<sup>\*</sup>
 >
@@ -130,11 +124,9 @@ S::f();  // Calls the inherent impl.
 > _TypePathFnInputs_ :\
 > [_Type_] (`,` [_Type_])<sup>\*</sup> `,`<sup>?</sup>
 
-Type paths are used within type definitions, trait bounds, type parameter bounds,
-and qualified paths.
+类型路径用于类型定义、trait 约束、类型参数约束，以及限定路径。
 
-Although the `::` token is allowed before the generics arguments, it is not required
-because there is no ambiguity like there is in _PathInExpression_.
+尽管在泛型参数之前允许使用标记码 `::`，但它不是必需的。因为在类型路径中不存在像 _PathInExpression_ 中那样的歧义。
 
 ```rust
 # mod ops {
@@ -152,22 +144,17 @@ fn i<'a>() -> impl Iterator<Item = ops::Example<'a>> {
 type G = std::boxed::Box<dyn std::ops::FnOnce(isize) -> isize>;
 ```
 
-## Path qualifiers
+## 路径限定符
 
-Paths can be denoted with various leading qualifiers to change the meaning of
-how it is resolved.
+路径可以通过多种前导限定符来改变其解析方式的意义。
 
 ### `::`
 
-Paths starting with `::` are considered to be global paths where the segments of the path
-start being resolved from the crate root. Each identifier in the path must resolve to an
-item.
+以 `::` 开头的路径被认为是全局路径，其中路径段从 crate 根位置开始解析。路径中的每个标识符都必须解析为一个项。
 
-> **Edition Differences**: In the 2015 Edition, the crate root contains a variety of
-> different items, including external crates, default crates such as `std` and `core`, and
-> items in the top level of the crate (including `use` imports).
+> **版本差异**: 2015 版中，crate 根包含多种不同的项，包括：外部 crate、默认 crate（如 std 和 core），以及 crate 顶层的项（包括 `use` 导入项）。
 >
-> Beginning with the 2018 Edition, paths starting with `::` can only reference crates.
+>从 2018 版开始，以 `::` 开头的路径仅能引用 crate。
 
 ```rust
 mod a {
@@ -175,8 +162,8 @@ mod a {
 }
 mod b {
     pub fn foo() {
-        ::a::foo(); // call `a`'s foo function
-        // In Rust 2018, `::a` would be interpreted as the crate `a`.
+        ::a::foo(); // 调用 `a`'的 foo 函数
+        // 在 Rust 2018 中, `::a` 会被解析为 crate `a`.
     }
 }
 # fn main() {}
@@ -184,8 +171,7 @@ mod b {
 
 ### `self`
 
-`self` resolves the path relative to the current module. `self` can only be used as the
-first segment, without a preceding `::`.
+`self` 表示路径是相对于当前模块的路径。`self` 仅可以用作路径的首段，没有前置 `::`。
 
 ```rust
 fn foo() {}
@@ -197,37 +183,35 @@ fn bar() {
 
 ### `Self`
 
-`Self`, with a capital "S", is used to refer to the implementing type within
-[traits] and [implementations].
+`Self`（首字母大写）用于表示 [trait] 和[实现]中的类型。
 
-`Self` can only be used as the first segment, without a preceding `::`.
+`Self` 仅可以用作路径的首段，没有前置 `::`。
 
 ```rust
 trait T {
     type Item;
     const C: i32;
-    // `Self` will be whatever type that implements `T`.
+    // `Self`将是实现 `T` 的任何类型。
     fn new() -> Self;
-    // `Self::Item` will be the type alias in the implementation.
+    // `Self::Item` 将是实现中的类型别名。
     fn f(&self) -> Self::Item;
 }
 struct S;
 impl T for S {
     type Item = i32;
     const C: i32 = 9;
-    fn new() -> Self {           // `Self` is the type `S`.
+    fn new() -> Self {           // `Self` 是类型 `S`.
         S
     }
-    fn f(&self) -> Self::Item {  // `Self::Item` is the type `i32`.
-        Self::C                  // `Self::C` is the constant value `9`.
+    fn f(&self) -> Self::Item {  // `Self::Item` 是类型 `i32`.
+        Self::C                  // `Self::C` 是常量值 `9`.
     }
 }
 ```
 
 ### `super`
 
-`super` in a path resolves to the parent module. It may only be used in leading
-segments of the path, possibly after an initial `self` segment.
+`super`在路径中被解析为父模块。它只能用于路径的前导段，可以置于 `self` 路径段之后。
 
 ```rust
 mod a {
@@ -235,14 +219,13 @@ mod a {
 }
 mod b {
     pub fn foo() {
-        super::a::foo(); // call a's foo function
+        super::a::foo(); // 调用 a'的 foo 函数
     }
 }
 # fn main() {}
 ```
 
-`super` may be repeated several times after the first `super` or `self` to refer to
-ancestor modules.
+`super` 可以在第一个 `super` 或 `self` 之后重复多次，以引用祖先模块。
 
 ```rust
 mod a {
@@ -251,8 +234,8 @@ mod a {
     mod b {
         mod c {
             fn foo() {
-                super::super::foo(); // call a's foo function
-                self::super::super::foo(); // call a's foo function
+                super::super::foo(); // 调用 a'的 foo 函数
+                self::super::super::foo(); // 调用 a'的 foo 函数
             }
         }
     }
@@ -262,8 +245,7 @@ mod a {
 
 ### `crate`
 
-`crate` resolves the path relative to the current crate. `crate` can only be used as the
-first segment, without a preceding `::`.
+`crate` 解析相对于当前 crate 的路径。crate 仅能用作路径的首段，没有前置 `::`。
 
 ```rust
 fn foo() {}
@@ -277,10 +259,7 @@ mod a {
 
 ### `$crate`
 
-`$crate` is only used within [macro transcribers], and can only be used as the first
-segment, without a preceding `::`. `$crate` will expand to a path to access items from the
-top level of the crate where the macro is defined, regardless of which crate the macro is
-invoked.
+$crate 仅用在[宏转换器]中，且仅能用作路径首段，没有前置 `::`。`$crate` 将被扩展为从定义宏的 crate 的顶层访问 crate 各项的路径，而不用去考虑被调用宏所属的 crate。
 
 ```rust
 pub fn increment(x: u32) -> u32 {
@@ -294,34 +273,18 @@ macro_rules! inc {
 # fn main() { }
 ```
 
-## Canonical paths
+## 标准路径
 
-Items defined in a module or implementation have a *canonical path* that
-corresponds to where within its crate it is defined. All other paths to these
-items are aliases. The canonical path is defined as a *path prefix* appended by
-the path segment the item itself defines.
+定义在模块或者实现中的项具有一个*标准路径*，该路径对应于其在其 crate 中定义的位置。*标准路径*外所有其它指向这些项的路径都是别名。*标准路径*被定义为附加在项本身定义的路径段之后的*路径前缀*。 
 
-[Implementations] and [use declarations] do not have canonical paths, although
-the items that implementations define do have them. Items defined in
-block expressions do not have canonical paths. Items defined in a module that
-does not have a canonical path do not have a canonical path. Associated items
-defined in an implementation that refers to an item without a canonical path,
-e.g. as the implementing type, the trait being implemented, a type parameter or
-bound on a type parameter, do not have canonical paths.
+尽管实现所定义的项有标准路径，但[实现]和 [use 声明] 没有标准路径。块表达式中定义的项没有标准路径；在不具有标准路径的模块中定义的项也没有标准路径；在实现中定义的关联项引用没有标准路径的项，例如，作为实现内的类型、被实现的 trait、类型参数或绑定在类型参数上的关联项都没有标准路径。
 
-The path prefix for modules is the canonical path to that module. For bare
-implementations, it is the canonical path of the item being implemented
-surrounded by <span class="parenthetical">angle (`<>`)</span> brackets. For
-[trait implementations], it is the canonical path of the item being implemented
-followed by `as` followed by the canonical path to the trait all surrounded in
-<span class="parenthetical">angle (`<>`)</span> brackets.
+模块的路径前缀是该模块的标准路径。对于裸实现，被实现的项的标准路径要使用<span class="parenthetical">尖括号（`<>`）</span>包围。对于 [trait 实现]，在被实现的项的标准路径后面，先跟随 as，然后再跟随 trait 的标准路径，再整个标准路径一起使用<span class="parenthetical">尖括号（`<>`）</span>包围。
 
-The canonical path is only meaningful within a given crate. There is no global
-namespace across crates; an item's canonical path merely identifies it within
-the crate.
+标准路径只在给定的 crate 中有意义。在 crate 之间没有全局命名空间；项的标准路径只在其 crate 中可标识。
 
 ```rust
-// Comments show the canonical path of the item.
+// 注释解释项的标准路径
 
 mod a { // ::a
     pub struct Struct; // ::a::Struct
@@ -368,16 +331,16 @@ mod without { // ::without
 [_Lifetime_]: trait-bounds.md
 [_Type_]: types.md#type-expressions
 [item]: items.md
-[variable]: variables.md
-[implementations]: items/implementations.md
-[use declarations]: items/use-declarations.md
+[变量]: variables.md
+[实现]: items/implementations.md
+[use 声明]: items/use-declarations.md
 [IDENTIFIER]: identifiers.md
 [`use`]: items/use-declarations.md
-[attributes]: attributes.md
-[expressions]: expressions.md
-[macro transcribers]: macros-by-example.md
-[macros]: macros-by-example.md
-[patterns]: patterns.md
-[trait implementations]: items/implementations.md#trait-implementations
-[traits]: items/traits.md
-[visibility]: visibility-and-privacy.md
+[属性]: attributes.md
+[表达式]: expressions.md
+[宏转换器]: macros-by-example.md
+[宏]: macros-by-example.md
+[模式]: patterns.md
+[trait 实现]: items/implementations.md#trait-implementations
+[trait]: items/traits.md
+[可见性]: visibility-and-privacy.md
