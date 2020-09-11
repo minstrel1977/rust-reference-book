@@ -1,6 +1,9 @@
-# Macros By Example
+# 声明宏
 
-> **<sup>Syntax</sup>**\
+>[macros-by-example.md](https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md)\
+>commit 30ccf092c7c1d92b2398e28d4abf8c5ba6c31cba
+
+> **<sup>句法</sup>**\
 > _MacroRulesDefinition_ :\
 > &nbsp;&nbsp; `macro_rules` `!` [IDENTIFIER] _MacroRulesDef_
 >
@@ -21,7 +24,7 @@
 > &nbsp;&nbsp; | `{` _MacroMatch_<sup>\*</sup> `}`
 >
 > _MacroMatch_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; [_Token_]<sub>_except $ and delimiters_</sub>\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_Token_]<sub>_排除 $ 和 定界符_</sub>\
 > &nbsp;&nbsp; | _MacroMatcher_\
 > &nbsp;&nbsp; | `$` [IDENTIFIER] `:` _MacroFragSpec_\
 > &nbsp;&nbsp; | `$` `(` _MacroMatch_<sup>+</sup> `)` _MacroRepSep_<sup>?</sup> _MacroRepOp_
@@ -31,7 +34,7 @@
 > &nbsp;&nbsp; | `meta` | `pat` | `path` | `stmt` | `tt` | `ty` | `vis`
 >
 > _MacroRepSep_ :\
-> &nbsp;&nbsp; [_Token_]<sub>_except delimiters and repetition operators_</sub>
+> &nbsp;&nbsp; [_Token_]<sub>_排除 定界符 和 重复操作符_</sub>
 >
 > _MacroRepOp_ :\
 > &nbsp;&nbsp; `*` | `+` | `?`
@@ -39,49 +42,25 @@
 > _MacroTranscriber_ :\
 > &nbsp;&nbsp; [_DelimTokenTree_]
 
-`macro_rules` allows users to define syntax extension in a declarative way.  We
-call such extensions "macros by example" or simply "macros".
+`macro_rules`允许用户以声明方式定义语法扩展。我们称这种扩展为“声明宏（macros by example）”或简称“宏”。
 
-Each macro by example has a name, and one or more _rules_. Each rule has two
-parts: a _matcher_, describing the syntax that it matches, and a _transcriber_,
-describing the syntax that will replace a successfully matched invocation. Both
-the matcher and the transcriber must be surrounded by delimiters. Macros can
-expand to expressions, statements, items (including traits, impls, and foreign
-items), types, or patterns.
+每个宏都有一个名称和一个或多个*规则*。每个规则都有两个部分：一个*匹配器*，描述它匹配的语法；一个*转换器*，描述成功匹配后的将执行的替代调用语法。匹配器和转换器都必须由定界符包围。宏可以扩展到表达式、语句、项（包括 trait、impl 和外来项）、类型或模式。
 
-## Transcribing
+## 转换
 
-When a macro is invoked, the macro expander looks up macro invocations by name,
-and tries each macro rule in turn. It transcribes the first successful match; if
-this results in an error, then future matches are not tried. When matching, no
-lookahead is performed; if the compiler cannot unambiguously determine how to
-parse the macro invocation one token at a time, then it is an error. In the
-following example, the compiler does not look ahead past the identifier to see
-if the following token is a `)`, even though that would allow it to parse the
-invocation unambiguously:
+当调用宏时，宏扩展程序按名称查找宏调用，并依次尝试每个宏规则。宏会根据第一个成功的匹配进行转换；即使转换结果导致错误，也不会尝试后续的匹配。在匹配时，不执行预判；如果编译器不能明确地确定如何一次解析一个标记码的宏调用，则会导致错误。在下面的示例中，编译器不会提前查看标识符，以查看后跟的标记码是否为 ')'，即使这样可以明确地解析调用：
 
 ```rust,compile_fail
 macro_rules! ambiguity {
     ($($i:ident)* $j:ident) => { };
 }
 
-ambiguity!(error); // Error: local ambiguity
+ambiguity!(error); // 错误: 局部歧义
 ```
 
-In both the matcher and the transcriber, the `$` token is used to invoke special
-behaviours from the macro engine (described below in [Metavariables] and
-[Repetitions]). Tokens that aren't part of such an invocation are matched and
-transcribed literally, with one exception. The exception is that the outer
-delimiters for the matcher will match any pair of delimiters. Thus, for
-instance, the matcher `(())` will match `{()}` but not `{{}}`. The character
-`$` cannot be matched or transcribed literally.
+在匹配器和转换器中，标记码 `$` 用于从宏引擎中调用特殊行为(下文[元变量]和[重复]中有详述)。不属于此类调用的标记码将按字面意义进行匹配和转录，只有一个例外。例外情况是匹配器的外部定界符将匹配任何一对定界符。因此，比如匹配器 `(())` 将匹配'{()}'，而不是 `{{}}`。字符 `$` 不能按字面意义匹配或转换。
 
-When forwarding a matched fragment to another macro-by-example, matchers in
-the second macro will see an opaque AST of the fragment type. The second macro
-can't use literal tokens to match the fragments in the matcher, only a
-fragment specifier of the same type. The `ident`, `lifetime`, and `tt`
-fragment types are an exception, and *can* be matched by literal tokens. The
-following illustrates this restriction:
+当将匹配片段转发给另一个声明宏时，第二个宏中的匹配器看到的将是此匹配片段类型的不透明<abbr title="AST：Abstract Syntax Tree">抽象语法树</abbr>。第二个宏不能使用<abbr title="literal tokens">字面量标记码</abbr>来匹配匹配器中的片段，只能使用相同类型的<abbr title="fragment specifier">片段分类符</abbr>。`ident`, `lifetime`, 和 `tt` 片段类型是一个例外，*可以*与字面量标记码进行匹配。以下代码说明了这一限制：
 
 ```rust,compile_fail
 macro_rules! foo {
@@ -96,11 +75,10 @@ macro_rules! bar {
 foo!(3);
 ```
 
-The following illustrates how tokens can be directly matched after matching a
-`tt` fragment:
+以下代码说明了如何在匹配 `tt` 片段之后直接匹配标记码：
 
 ```rust
-// compiles OK
+// 成功编译
 macro_rules! foo {
     ($l:tt) => { bar!($l); }
 }
@@ -112,74 +90,44 @@ macro_rules! bar {
 foo!(3);
 ```
 
-## Metavariables
+## 元变量
 
-In the matcher, `$` _name_ `:` _fragment-specifier_ matches a Rust syntax
-fragment of the kind specified and binds it to the metavariable `$`_name_. Valid
-fragment specifiers are:
+在匹配器中，`$`*名称*`:`*片段分类符* 匹配指定类型的 Rust 语法片段，并将其绑定到元变量`$`*名称*上。有效的片段分类符是：
 
-  * `item`: an [_Item_]
-  * `block`: a [_BlockExpression_]
-  * `stmt`: a [_Statement_] without the trailing semicolon (except for item
-    statements that require semicolons)
-  * `pat`: a [_Pattern_]
-  * `expr`: an [_Expression_]
-  * `ty`: a [_Type_]
-  * `ident`: an [IDENTIFIER_OR_KEYWORD]
-  * `path`: a [_TypePath_] style path
-  * `tt`: a [_TokenTree_]&nbsp;(a single [token] or tokens in matching delimiters `()`, `[]`, or `{}`)
-  * `meta`: an [_Attr_], the contents of an attribute
-  * `lifetime`: a [LIFETIME_TOKEN]
-  * `vis`: a possibly empty [_Visibility_] qualifier
-  * `literal`: matches `-`<sup>?</sup>[_LiteralExpression_]
+  * `item`: 一个 [_项_]
+  * `block`: 一个 [_块表达式_]
+  * `stmt`: 一条句尾没有分号的[_语句_]（需要分号的项语句除外）
+  * `pat`: 一个 [_模式_]
+  * `expr`: 一个 [_表达式_]
+  * `ty`: 一个 [_类型_]
+  * `ident`: 一个 [标识符或关键字]
+  * `path`: 一条 [_类型路径_] 风格的路径
+  * `tt`: 一个 [_标记树_]&nbsp;(单个[标记码]或匹配型定界符（matching delimiters）`（）`、`[]`、`{}` 中的标记)
+  * `meta`: an [_属性值_], 属性的内容
+  * `lifetime`: 一个 [生命周期标记码]
+  * `vis`: 可能为空的[_可见性_]限定符
+  * `literal`: 匹配 `-`<sup>?</sup>[_字面量表达式_]
 
-In the transcriber, metavariables are referred to simply by `$`_name_, since
-the fragment kind is specified in the matcher. Metavariables are replaced with
-the syntax element that matched them. The keyword metavariable `$crate` can be
-used to refer to the current crate; see [Hygiene] below. Metavariables can be
-transcribed more than once or not at all.
+在转换器中，元变量仅被简单地用`$`*名称* 这种形式引用（因为片段类型是在匹配器中指定的）。元变量最终将被替换为匹配它们的语法元素。元变量关键字 `$crate` 可以用来引用当前的 crate（请参阅下面的[卫生性]章节）。元变量可以被多次转换，也可以完全不转换。
 
-## Repetitions
+## 重复
 
-In both the matcher and transcriber, repetitions are indicated by placing the
-tokens to be repeated inside `$(`…`)`, followed by a repetition operator,
-optionally with a separator token between. The separator token can be any token
-other than a delimiter or one of the repetition operators, but `;` and `,` are
-the most common. For instance, `$( $i:ident ),*` represents any number of
-identifiers separated by commas. Nested repetitions are permitted.
+在匹配器和转换器中，通过将需要重复的标记码放在 `$(`…`)` 内来代表重复，后跟一个重复运算符，这两者之间可以防止一个可选的分隔标记码。分隔标记码可以是除定界符或某个重复运算符之外的任何记号，分号 `;` 和逗号 `,` 是最常见的。例如： `$( $i:ident ),*` 表示用逗号分隔的任何数量的标识符，且允许嵌套式重复。 
 
-The repetition operators are:
+重复运算符为：
 
-- `*` — indicates any number of repetitions.
-- `+` — indicates any number but at least one.
-- `?` — indicates an optional fragment with zero or one occurrences.
+- `*` — 表示重复任意次数。
+- `+` — 表示至少重复一次.
+- `?` — 表示一个可选片段，可以出现零次或一次.
 
-Since `?` represents at most one occurrence, it cannot be used with a
-separator.
+因为 `?` 表示最多出现一次，所以它不能与分隔标记码一起使用。
 
-The repeated fragment both matches and transcribes to the specified number of
-the fragment, separated by the separator token. Metavariables are matched to
-every repetition of their corresponding fragment. For instance, the `$( $i:ident
-),*` example above matches `$i` to all of the identifiers in the list.
+重复片段匹配并转换为指定数量的片段，由分隔标记码分隔。元变量与它们对应的片段的每次重复相匹配。例如，上面的 `$( $i:ident ),*` 示例将 `$i` 匹配到（标识符）列表中的所有标识符。
 
-During transcription, additional restrictions apply to repetitions so that the
-compiler knows how to expand them properly:
+在转换过程中，重复会受到额外的限制，以便于编译器知道该如何正确地扩展它们：
 
-1.  A metavariable must appear in exactly the same number, kind, and nesting
-    order of repetitions in the transcriber as it did in the matcher. So for the
-    matcher `$( $i:ident ),*`, the transcribers `=> { $i }`,
-    `=> { $( $( $i)* )* }`, and `=> { $( $i )+ }` are all illegal, but
-    `=> { $( $i );* }` is correct and replaces a comma-separated list of
-    identifiers with a semicolon-separated list.
-2.  Each repetition in the transcriber must contain at least one metavariable to
-    decide how many times to expand it. If multiple metavariables appear in the
-    same repetition, they must be bound to the same number of fragments. For
-    instance, `( $( $i:ident ),* ; $( $j:ident ),* ) =>( $( ($i,$j) ),*` must
-    bind the same number of `$i` fragments as `$j` fragments. This means that
-    invoking the macro with `(a, b, c; d, e, f`) is legal and expands to
-    `((a,d), (b,e), (c,f))`, but `(a, b, c; d, e)` is illegal because it does
-    not have the same number. This requirement applies to every layer of nested
-    repetitions.
+1.  在转换器中，元变量必须与它在匹配器中出现的重复次数、种类和嵌套顺序完全相同。因此，对于匹配器 `$( $i:ident ),*`，转换器 `=> { $i }`, `=> { $( $( $i)* )* }` 和 `=> { $( $i )+ }` 都是非法的，但是 `=> { $( $i );* }` 是正确的，并用分号分隔的列表替换了逗号分隔的标识符列表。
+2.  转换器中的每个重复必须至少包含一个元变量，以便确定扩展多少次。如果在同一个重复中出现多个元变量，则它们必须绑定到相同数量的片段上。例如，`( $( $i:ident ),* ; $( $j:ident ),* ) =>( $( ($i,$j) ),*` 必须绑定与 `$j` 片段相同数量的 `$i` 片段上。这意味着用 `(a, b, c; d, e, f`) 调用前面的宏是合法的，并且可扩展到 `((a,d), (b,e), (c,f))`，但是 `(a, b, c; d, e)` 是非法的，因为其数量不同。此要求适用于嵌套重复的每一层。
 
 ## Scoping, Exporting, and Importing
 
@@ -477,23 +425,23 @@ For more detail, see the [formal specification].
 
 [Hygiene]: #hygiene
 [IDENTIFIER]: identifiers.md
-[IDENTIFIER_OR_KEYWORD]: identifiers.md
-[LIFETIME_TOKEN]: tokens.md#lifetimes-and-loop-labels
+[标识符或关键字]: identifiers.md
+[生命周期标记码]: tokens.md#lifetimes-and-loop-labels
 [Metavariables]: #metavariables
 [Repetitions]: #repetitions
-[_Attr_]: attributes.md
-[_BlockExpression_]: expressions/block-expr.md
+[_属性值_]: attributes.md
+[_块表达式_]: expressions/block-expr.md
 [_DelimTokenTree_]: macros.md
-[_Expression_]: expressions.md
-[_Item_]: items.md
-[_LiteralExpression_]: expressions/literal-expr.md
+[_表达式_]: expressions.md
+[_项_]: items.md
+[_字面量表达式_]: expressions/literal-expr.md
 [_MetaListIdents_]: attributes.md#meta-item-attribute-syntax
-[_Pattern_]: patterns.md
-[_Statement_]: statements.md
-[_TokenTree_]: macros.md#macro-invocation
+[_模式_]: patterns.md
+[_语句_]: statements.md
+[_标记树_]: macros.md#macro-invocation
 [_Token_]: tokens.md
-[_TypePath_]: paths.md#paths-in-types
-[_Type_]: types.md#type-expressions
-[_Visibility_]: visibility-and-privacy.md
+[_类型路径_]: paths.md#类型路径
+[_类型_]: types.md#type-expressions
+[_可见性_]: visibility-and-privacy.md
 [formal specification]: macro-ambiguity.md
 [token]: tokens.md
