@@ -112,7 +112,7 @@ foo!(3);
 
 ## 重复
 
-在匹配器和转换器中，通过将需要重复的标记码放在 `$(`…`)` 内来代表重复，后跟一个重复运算符，这两者之间可以防止一个可选的分隔标记码。分隔标记码可以是除定界符或某个重复运算符之外的任何记号，分号 `;` 和逗号 `,` 是最常见的。例如： `$( $i:ident ),*` 表示用逗号分隔的任何数量的标识符，且允许嵌套式重复。 
+在匹配器和转换器中，通过将需要重复的标记码放在 `$(`…`)` 内来代表重复，后跟一个重复运算符，这两者之间可以防止一个可选的分隔符标记码()。分隔符标记码可以是除定界符或某个重复运算符之外的任何记号，分号 `;` 和逗号 `,` 是最常见的。例如： `$( $i:ident ),*` 表示用逗号分隔的任何数量的标识符，且允许嵌套式重复。 
 
 重复运算符为：
 
@@ -120,9 +120,9 @@ foo!(3);
 - `+` — 表示至少重复一次.
 - `?` — 表示一个可选片段，可以出现零次或一次.
 
-因为 `?` 表示最多出现一次，所以它不能与分隔标记码一起使用。
+因为 `?` 表示最多出现一次，所以它不能与分隔符一起使用。
 
-重复片段匹配并转换为指定数量的片段，由分隔标记码分隔。元变量与它们对应的片段的每次重复相匹配。例如，上面的 `$( $i:ident ),*` 示例将 `$i` 匹配到（标识符）列表中的所有标识符。
+重复片段匹配并转换为指定数量的片段，由分隔符标记码分隔。元变量与它们对应的片段的每次重复相匹配。例如，上面的 `$( $i:ident ),*` 示例将 `$i` 匹配到（标识符）列表中的所有标识符。
 
 在转换过程中，重复会受到额外的限制，以便于编译器知道该如何正确地扩展它们：
 
@@ -316,24 +316,14 @@ macro_rules! call_foo {
 fn foo() {}
 ```
 
-> **Version & Edition Differences**: Prior to Rust 1.30, `$crate` and
-> `local_inner_macros` (below) were unsupported. They were added alongside
-> path-based imports of macros (described above), to ensure that helper macros
-> did not need to be manually imported by users of a macro-exporting crate.
-> Crates written for earlier versions of Rust that use helper macros need to be
-> modified to use `$crate` or `local_inner_macros` to work well with path-based
-> imports.
+> **版本/版次差异**：在 Rust 1.30 之前，`$crate` 和 `local_inner_macros` （以下）不受支持。该版本开始，它们与基于路径的宏导入（如上所述）一起添加，以确保辅助宏不需要由宏导出 crate 的用户手动导入。如果要让 Rust 的早期版本编写的 crate 使用辅助宏，需要修改为使用 `$crate` 或 `local_inner_macros`，以便与基于路径的导入一起工作。
 
-When a macro is exported, the `#[macro_export]` attribute can have the
-`local_inner_macros` keyword added to automatically prefix all contained macro
-invocations with `$crate::`. This is intended primarily as a tool to migrate
-code written before `$crate` was added to the language to work with Rust 2018's
-path-based imports of macros. Its use is discouraged in new code.
+当一个宏被导出时，`#[macro_export]` 属性里可以添加`local_inner_macros`关键字，可以自动为（该属性修饰的宏）内包含的所有宏调自动添加 `$crate::` 前缀。这主要是作为一个工具，用于迁移那些在引入 `$crate` 之前的版本编写的 Rust 代码，以便它们能与 Rust 2018 版中基于路径的宏导入一起工作。在使用新版本编写的代码中不鼓励使用它。
 
 ```rust
 #[macro_export(local_inner_macros)]
 macro_rules! helped {
-    () => { helper!() } // Automatically converted to $crate::helper!().
+    () => { helper!() } // 自动转换为 $crate::helper!().
 }
 
 #[macro_export]
@@ -342,55 +332,34 @@ macro_rules! helper {
 }
 ```
 
-## Follow-set Ambiguity Restrictions
+## 随集歧义限制（Follow-set Ambiguity Restrictions）
 
-The parser used by the macro system is reasonably powerful, but it is limited in
-order to prevent ambiguity in current or future versions of the language. In
-particular, in addition to the rule about ambiguous expansions, a nonterminal
-matched by a metavariable must be followed by a token which has been decided can
-be safely used after that kind of match.
+宏系统使用的解析器相当强大，但为了防止其与语言的当前或未来版本产生歧义，对它做出了限制。特别地，除了关于歧义性展开的规则外，由元变量匹配的非终结符必须后跟一个已确定可以在这种匹配之后安全使用的标记码。
 
-As an example, a macro matcher like `$i:expr [ , ]` could in theory be accepted
-in Rust today, since `[,]` cannot be part of a legal expression and therefore
-the parse would always be unambiguous. However, because `[` can start trailing
-expressions, `[` is not a character which can safely be ruled out as coming
-after an expression. If `[,]` were accepted in a later version of Rust, this
-matcher would become ambiguous or would misparse, breaking working code.
-Matchers like `$i:expr,` or `$i:expr;` would be legal, however, because `,` and
-`;` are legal expression separators. The specific rules are:
+例如，像 `$i:expr [ , ]` 这样的宏匹配器在现今的 Rust 中理论上是可以接受的，因为`[,]` 不能是合法表达式的一部分，因此解析始终是明确的。但是，由于`[`可以开始尾随表达式，`[`不是一个可以安全排除在表达式后面出现的字符。如果在接下来的 Rust 版本中接受了 `[,]`，那么这个匹配器就会产生歧义或是错误解析，破坏正常代码。但是，像`$i:expr,` 或 `$i:expr;` 这样的匹配符是合法的，因为 `,` 和`;` 是合法的表达式分隔符。具体规则是：
 
-  * `expr` and `stmt` may only be followed by one of: `=>`, `,`, or `;`.
-  * `pat` may only be followed by one of: `=>`, `,`, `=`, `|`, `if`, or `in`.
-  * `path` and `ty` may only be followed by one of: `=>`, `,`, `=`, `|`, `;`,
-    `:`, `>`, `>>`, `[`, `{`, `as`, `where`, or a macro variable of `block`
-    fragment specifier.
-  * `vis` may only be followed by one of: `,`, an identifier other than a
-    non-raw `priv`, any token that can begin a type, or a metavariable with a
-    `ident`, `ty`, or `path` fragment specifier.
-  * All other fragment specifiers have no restrictions.
+  * `expr` 和 `stmt` 或许只能后跟一个： `=>`, `,`, 或 `;`。
+  * `pat` 或许只能后跟一个： `=>`, `,`, `=`, `|`, `if`, 或 `in`。
+  * `path` 和 `ty` 或许只能后跟一个： `=>`, `,`, `=`, `|`, `;`, `:`, `>`, `>>`, `[`, `{`, `as`, `where`, 或 `block` 片段分类符的宏变量。
+  * `vis` 或许只能后跟一个： `,`, 非原生 `priv`以外的标识符，可以开始类型的任何标记码， 或者带有任何 `ident`, `ty`, `path` 片段分类符的元变量。
+  * 其它所有的片段分类符没有限制。
 
-When repetitions are involved, then the rules apply to every possible number of
-expansions, taking separators into account. This means:
+当涉及到重复时，这些规则适用于所有可能的展开次数，注意需将分隔符考虑在内。这意味着：
 
-  * If the repetition includes a separator, that separator must be able to
-    follow the contents of the repetition.
-  * If the repetition can repeat multiple times (`*` or `+`), then the contents
-    must be able to follow themselves.
-  * The contents of the repetition must be able to follow whatever comes
-    before, and whatever comes after must be able to follow the contents of the
-    repetition.
-  * If the repetition can match zero times (`*` or `?`), then whatever comes
-    after must be able to follow whatever comes before.
+  * 如果重复包含分隔符，则分隔符必须能够跟随重复的内容。
+  * 如果重复可以重复多次(`*` 或 `+`)，那么每一层重复里的内容必须形式统一。
+  * 重复的内容必须能够和它前面的内容形式保持一致，后面的内容也必须遵循相同的形式。
+  * 如果重复可以匹配零次(`*` 或 `?`)，那么后面的内容必须能够和前面的内容形式一致。
 
+>（译者注：这几条规则直译很难理解，但是我又对这些规则理解不深刻，所以只能凑合这先这么意译，等以后理解深刻了再来修改，那先在这儿打个TobeModify的标记）。
+有关更多详细信息，请参阅[正式规范]。
 
-For more detail, see the [formal specification].
-
-[Hygiene]: #hygiene
+[卫生性]: #hygiene
 [IDENTIFIER]: identifiers.md
 [标识符或关键字]: identifiers.md
 [生命周期标记码]: tokens.md#lifetimes-and-loop-labels
-[Metavariables]: #metavariables
-[Repetitions]: #repetitions
+[元变量]: #metavariables
+[重复]]: #repetitions
 [_属性值_]: attributes.md
 [_块表达式_]: expressions/block-expr.md
 [_DelimTokenTree_]: macros.md
@@ -405,5 +374,5 @@ For more detail, see the [formal specification].
 [_类型路径_]: paths.md#类型路径
 [_类型_]: types.md#type-expressions
 [_可见性_]: visibility-and-privacy.md
-[formal specification]: macro-ambiguity.md
-[token]: tokens.md
+[正式规范]: macro-ambiguity.md
+[标记码]: tokens.md
