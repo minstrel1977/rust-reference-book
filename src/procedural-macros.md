@@ -1,15 +1,15 @@
-## Procedural Macros
+## 过程宏
 
-*Procedural macros* allow creating syntax extensions as execution of a function.
-Procedural macros come in one of three flavors:
+>[procedural-macros.md](https://github.com/rust-lang/reference/blob/master/src/procedural-macros.md)\
+>a1ef5a09c0281b0f2a65c18670e927ead61eb1b2
 
-* [Function-like macros] - `custom!(...)`
-* [Derive macros] - `#[derive(CustomDerive)]`
-* [Attribute macros] - `#[CustomAttribute]`
+*过程宏*允许在执行函数时创建句法扩展。过程宏有三种形式:
 
-Procedural macros allow you to run code at compile time that operates over Rust
-syntax, both consuming and producing Rust syntax. You can sort of think of
-procedural macros as functions from an AST to another AST.
+* [类函数宏] - `custom!(...)`
+* [派生宏]- `#[derive(CustomDerive)]`
+* [属性宏] - `#[CustomAttribute]`
+
+过程宏允许您在编译时运行对 Rust 句法进行操作的代码，同时使用并生成 Rust 句法。您可以将过程宏看作是从一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 到另一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 的函数。
 
 Procedural macros must be defined in a crate with the [crate type] of
 `proc-macro`.
@@ -271,10 +271,10 @@ fn invoke4() {}
 // out: item: "fn invoke4() {}"
 ```
 
-[Attribute macros]: #attribute-macros
+[属性宏]: #attribute-macros
 [Cargo's build scripts]: ../cargo/reference/build-scripts.html
-[Derive macros]: #derive-macros
-[Function-like macros]: #function-like-procedural-macros
+[派生宏]: #derive-macros
+[类函数宏]: #function-like-procedural-macros
 [`TokenStream`]: ../proc_macro/struct.TokenStream.html
 [`TokenStream`s]: ../proc_macro/struct.TokenStream.html
 [`compile_error`]: ../std/macro.compile_error.html

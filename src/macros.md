@@ -3,11 +3,11 @@
 >[macros.md](https://github.com/rust-lang/reference/blob/master/src/macros.md)\
 >commit 771c5d10cf944bf7d221f5d6cb7abd2a06c400e4
 
-Rust 语言的功能和语法可以通过自定义宏进行扩展。宏可以被命名，可通过一致的语法调用：`some_extension!(...)`。
+Rust 语言的功能和句法可以通过自定义宏进行扩展。宏可以被命名，可通过一致的句法调用：`some_extension!(...)`。
 
 定义新宏有两种方式：
 
-* [声明宏]以更高级别的声明性的方式定义了一套新语法规则。
+* [声明宏]以更高级别的声明性的方式定义了一套新句法规则。
 * [过程宏] 可用于实现自定义派生。
 
 ## 宏调用
