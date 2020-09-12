@@ -34,11 +34,11 @@ Rust 语言的功能和语法可以通过自定义宏进行扩展。宏可以被
 * [表达式]和[语句]
 * [模式]
 * [类型]
-* [项] 以及 [关联项]
+* [数据项] 以及 [关联数据项]
 * [`macro_rules`] 转换器
 * [外部块]
 
-当用作项或语句时，_MacroInvocationSemi_ 形式被使用。_MacroInvocationSemi_ 形式中，如果不使用大括号，则在结尾处需要添加分号。在宏调用或 [`macro_rules`] 定义之前不允许使用[可见性限定符]。
+当用作数据项或语句时，_MacroInvocationSemi_ 形式被使用。_MacroInvocationSemi_ 形式中，如果不使用大括号，则在结尾处需要添加分号。在宏调用或 [`macro_rules`] 定义之前不允许使用[可见性限定符]。
 
 ```rust
 // 作为表达式使用.
@@ -63,11 +63,11 @@ macro_rules! Tuple {
 
 type N2 = Tuple!(i32, i32);
 
-// 作为项使用.
+// 作为数据项使用.
 # use std::cell::RefCell;
 thread_local!(static FOO: RefCell<u32> = RefCell::new(1));
 
-// 作为关联项使用.
+// 作为关联数据项使用.
 macro_rules! const_maker {
     ($t:ty, $v:tt) => { const CONST: $t = $v; };
 }
@@ -87,10 +87,10 @@ example!();
 [过程宏]: procedural-macros.md
 [_SimplePath_]: paths.md#简单路径
 [_Token_]: tokens.md
-[关联项]: items/associated-items.md
+[关联数据项]: items/associated-items.md
 [分隔符]: tokens.md#分隔符
 [表达式]: expressions.md
-[项]: items.md
+[数据项]: items.md
 [`macro_rules`]: macros-by-example.md
 [模式]: patterns.md
 [语句]: statements.md

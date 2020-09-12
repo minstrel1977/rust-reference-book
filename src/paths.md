@@ -3,7 +3,7 @@
 >[paths.md](https://github.com/rust-lang/reference/blob/master/src/paths.md)\
 >commit ecfd8761829d6b1025f2a0a8df6905043b2c5e8a
 
-*路径*是一个或多个由命名空间<span class="parenthetical">限定符(`::`)</span>*逻辑*分隔的路径片段组成的序列。如果路径仅由一个路径片段组成，则它引用本地控制域内的项或变量。如果路径包含多个路径片段，则常是引用具体项。
+*路径*是一个或多个由命名空间<span class="parenthetical">限定符(`::`)</span>*逻辑*分隔的路径片段组成的序列。如果路径仅由一个路径片段组成，则它引用本地控制域内的[数据项]或[变量]。如果路径包含多个路径片段，则常是引用具体数据项。
 
 仅由标识符段组成的简单路径的两个示例：
 
@@ -24,7 +24,7 @@ x::y::z;
 > _SimplePathSegment_ :\
 > &nbsp;&nbsp; [IDENTIFIER] | `super` | `self` | `crate` | `$crate`
 
-简单路径用于[可见性]标记、[属性]、[宏]和 [`use`] 项。示例：
+简单路径用于[可见性]标记、[属性]、[宏]和 [`use`] 数据项。示例：
 
 ```rust
 use std::io::{self, Write};
@@ -150,9 +150,9 @@ type G = std::boxed::Box<dyn std::ops::FnOnce(isize) -> isize>;
 
 ### `::`
 
-以 `::` 开头的路径被认为是全局路径，其中路径段从 crate 根位置开始解析。路径中的每个标识符都必须解析为一个项。
+以 `::` 开头的路径被认为是全局路径，其中路径段从 crate 根位置开始解析。路径中的每个标识符都必须解析为一个数据项。
 
-> **版本差异**: 2015 版中，crate 根包含多种不同的项，包括：外部 crate、默认 crate（如 std 和 core），以及 crate 顶层的项（包括 `use` 导入项）。
+> **版本差异**: 2015 版中，crate 根包含多种不同的数据项，包括：外部 crate、默认 crate（如 std 和 core），以及 crate 顶层的数据项（包括 `use` 导入数据项）。
 >
 >从 2018 版开始，以 `::` 开头的路径仅能引用 crate。
 
@@ -259,7 +259,7 @@ mod a {
 
 ### `$crate`
 
-$crate 仅用在[宏转换器]中，且仅能用作路径首段，没有前置 `::`。`$crate` 将被扩展为从定义宏的 crate 的顶层访问 crate 各项的路径，而不用去考虑被调用宏所属的 crate。
+$crate 仅用在[宏转换器]中，且仅能用作路径首段，没有前置 `::`。`$crate` 将被扩展为从定义宏的 crate 的顶层访问 crate 各数据的路径，而不用去考虑被调用宏所属的 crate。
 
 ```rust
 pub fn increment(x: u32) -> u32 {
@@ -275,16 +275,16 @@ macro_rules! inc {
 
 ## 标准路径
 
-定义在模块或者实现中的项具有一个*标准路径*，该路径对应于其在其 crate 中定义的位置。*标准路径*外所有其它指向这些项的路径都是别名。*标准路径*被定义为附加在项本身定义的路径段之后的*路径前缀*。 
+定义在模块或者实现中的数据项具有一个*标准路径*，该路径对应于其在其 crate 中定义的位置。*标准路径*外所有其它指向这些数据项的路径都是别名。*标准路径*被定义为附加在数据项本身定义的路径段之后的*路径前缀*。 
 
-尽管实现所定义的项有标准路径，但[实现]和 [use 声明] 没有标准路径。块表达式中定义的项没有标准路径；在不具有标准路径的模块中定义的项也没有标准路径；在实现中定义的关联项引用没有标准路径的项，例如，作为实现内的类型、被实现的 trait、类型参数或绑定在类型参数上的关联项都没有标准路径。
+尽管实现所定义的数据项有标准路径，但[实现]和 [use 声明] 没有标准路径。块表达式中定义的数据项没有标准路径；在不具有标准路径的模块中定义的数据项也没有标准路径；在实现中定义的关联数据项引用没有标准路径的数据项，例如，作为实现内的类型、被实现的 trait、类型参数或绑定在类型参数上的关联数据项都没有标准路径。
 
-模块的路径前缀是该模块的标准路径。对于裸实现，被实现的项的标准路径要使用<span class="parenthetical">尖括号（`<>`）</span>包围。对于 [trait 实现]，在被实现的项的标准路径后面，先跟随 as，然后再跟随 trait 的标准路径，再整个标准路径一起使用<span class="parenthetical">尖括号（`<>`）</span>包围。
+模块的路径前缀是该模块的标准路径。对于裸实现，被实现的数据项的标准路径要使用<span class="parenthetical">尖括号（`<>`）</span>包围。对于 [trait 实现]，在被实现的数据项的标准路径后面，先跟随 as，然后再跟随 trait 的标准路径，再整个标准路径一起使用<span class="parenthetical">尖括号（`<>`）</span>包围。
 
-标准路径只在给定的 crate 中有意义。在 crate 之间没有全局命名空间；项的标准路径只在其 crate 中可标识。
+标准路径只在给定的 crate 中有意义。在 crate 之间没有全局命名空间；数据项的标准路径只在其 crate 中可标识。
 
 ```rust
-// 注释解释项的标准路径
+// 注释解释数据项的标准路径
 
 mod a { // ::a
     pub struct Struct; // ::a::Struct
@@ -330,7 +330,7 @@ mod without { // ::without
 [_GenericArgs_]: #paths-in-expressions
 [_Lifetime_]: trait-bounds.md
 [_Type_]: types.md#type-expressions
-[item]: items.md
+[数据项]: items.md
 [变量]: variables.md
 [实现]: items/implementations.md
 [use 声明]: items/use-declarations.md

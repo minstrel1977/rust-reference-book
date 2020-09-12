@@ -13,7 +13,7 @@ Rust 将关键字分为三类：
 
 这类关键字只能在正确的上下文中使用。它们不能用作下列名称：
 
-* [项目]
+* [数据项(item)]
 * [变量]和函数参数
 * 字段和[枚举的变体]
 * [类型参数]
@@ -109,7 +109,7 @@ Rust 将关键字分为三类：
 > **<sup>词法分析 2015</sup>**\
 > KW_DYN            : `dyn`
 
-[项目]: items.md
+[数据项(item)]: items.md
 [变量]: variables.md
 [类型参数]: types/parameters.md
 [循环标签]: expressions/loop-expr.md#loop-labels

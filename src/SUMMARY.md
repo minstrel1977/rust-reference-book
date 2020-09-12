@@ -21,7 +21,7 @@
 
 - [条件编译](conditional-compilation.md)
 
-- [项目](items.md)
+- [数据项](items.md)
     - [模块](items/modules.md)
     - [外部 crate](items/extern-crates.md)
     - [use 声明](items/use-declarations.md)
@@ -30,13 +30,13 @@
     - [结构体](items/structs.md)
     - [枚举](items/enumerations.md)
     - [联合体](items/unions.md)
-    - [常量项](items/constant-items.md)
-    - [静态项](items/static-items.md)
+    - [常量数据项](items/constant-items.md)
+    - [静态数据项](items/static-items.md)
     - [trait](items/traits.md)
     - [实现](items/implementations.md)
     - [外部块](items/external-blocks.md)
     - [类型和生命周期函数](items/generics.md)
-    - [关联项](items/associated-items.md)
+    - [关联数据项](items/associated-items.md)
     - [可见性与私有性](visibility-and-privacy.md)
 
 - [属性](attributes.md)

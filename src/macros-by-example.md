@@ -44,7 +44,7 @@
 
 `macro_rules`允许用户以声明方式定义语法扩展。我们称这种扩展为“声明宏（macros by example）”或简称“宏”。
 
-每个宏都有一个名称和一个或多个*规则*。每个规则都有两个部分：一个*匹配器*，描述它匹配的语法；一个*转换器*，描述成功匹配后的将执行的替代调用语法。匹配器和转换器都必须由定界符包围。宏可以扩展到表达式、语句、项（包括 trait、impl 和外来项）、类型或模式。
+每个宏都有一个名称和一个或多个*规则*。每个规则都有两个部分：一个*匹配器*，描述它匹配的语法；一个*转换器*，描述成功匹配后的将执行的替代调用语法。匹配器和转换器都必须由定界符包围。宏可以扩展到表达式、语句、数据项（包括 trait、impl 和外来数据项）、类型或模式。
 
 ## 转换
 
@@ -94,9 +94,9 @@ foo!(3);
 
 在匹配器中，`$`*名称*`:`*片段分类符* 匹配指定类型的 Rust 语法片段，并将其绑定到元变量`$`*名称*上。有效的片段分类符是：
 
-  * `item`: 一个 [_项_]
+  * `item`: 一个 [_数据项_]
   * `block`: 一个 [_块表达式_]
-  * `stmt`: 一条句尾没有分号的[_语句_]（需要分号的项语句除外）
+  * `stmt`: 一条句尾没有分号的[_语句_]（需要分号的数据项语句除外）
   * `pat`: 一个 [_模式_]
   * `expr`: 一个 [_表达式_]
   * `ty`: 一个 [_类型_]
@@ -129,19 +129,11 @@ foo!(3);
 1.  在转换器中，元变量必须与它在匹配器中出现的重复次数、种类和嵌套顺序完全相同。因此，对于匹配器 `$( $i:ident ),*`，转换器 `=> { $i }`, `=> { $( $( $i)* )* }` 和 `=> { $( $i )+ }` 都是非法的，但是 `=> { $( $i );* }` 是正确的，并用分号分隔的列表替换了逗号分隔的标识符列表。
 2.  转换器中的每个重复必须至少包含一个元变量，以便确定扩展多少次。如果在同一个重复中出现多个元变量，则它们必须绑定到相同数量的片段上。例如，`( $( $i:ident ),* ; $( $j:ident ),* ) =>( $( ($i,$j) ),*` 必须绑定与 `$j` 片段相同数量的 `$i` 片段上。这意味着用 `(a, b, c; d, e, f`) 调用前面的宏是合法的，并且可扩展到 `((a,d), (b,e), (c,f))`，但是 `(a, b, c; d, e)` 是非法的，因为其数量不同。此要求适用于嵌套重复的每一层。
 
-## Scoping, Exporting, and Importing
+## 作用域，导出，以及导入
 
-For historical reasons, the scoping of macros by example does not work entirely
-like items. Macros have two forms of scope: textual scope, and path-based scope.
-Textual scope is based on the order that things appear in source files, or even
-across multiple files, and is the default scoping. It is explained further below.
-Path-based scope works exactly the same way that item scoping does. The scoping,
-exporting, and importing of macros is controlled largely by attributes.
+由于历史原因，声明宏的作用域并不完全像数据项那样工作。宏有两种形式的作用域：文本作用域和基于路径的作用域。文本作用域基于代码在源文件中出现的顺序，甚至是跨多个文件出现的顺序，并且是默认的作用域。下面将进一步解释这个。基于路径的作用域与数据项作用域的工作方式完全相同。宏的范围、导出和导入主要由属性控制。
 
-When a macro is invoked by an unqualified identifier (not part of a multi-part
-path), it is first looked up in textual scoping. If this does not yield any
-results, then it is looked up in path-based scoping. If the macro's name is
-qualified with a path, then it is only looked up in path-based scoping.
+当声明宏被非限定标识符（不是多重路径的一部分）调用时，首先在文本作用域中查找。如果文本作用域中没有任何结果，则继续在基于路径的作用域中查找。如果宏的名称由路径限定，则只在基于路径的作用域中查找。
 
 <!-- ignore: requires external crates -->
 ```rust,ignore
@@ -433,7 +425,7 @@ For more detail, see the [formal specification].
 [_块表达式_]: expressions/block-expr.md
 [_DelimTokenTree_]: macros.md
 [_表达式_]: expressions.md
-[_项_]: items.md
+[_数据项_]: items.md
 [_字面量表达式_]: expressions/literal-expr.md
 [_MetaListIdents_]: attributes.md#meta-item-attribute-syntax
 [_模式_]: patterns.md
