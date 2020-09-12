@@ -11,30 +11,21 @@
 
 过程宏允许您在编译时运行对 Rust 句法进行操作的代码，同时使用并生成 Rust 句法。您可以将过程宏看作是从一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 到另一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 的函数。
 
-Procedural macros must be defined in a crate with the [crate type] of
-`proc-macro`.
+过程宏必须在 [crate 类型]为 `proc-macro` 的 crate 中定义。
 
-> **Note**: When using Cargo, Procedural macro crates are defined with the
-> `proc-macro` key in your manifest:
+> **注意**: 使用 Cargo 时，定义过程宏的 crate 的配置文件里要有如下设置：
 >
 > ```toml
 > [lib]
 > proc-macro = true
 > ```
 
-As functions, they must either return syntax, panic, or loop endlessly. Returned
-syntax either replaces or adds the syntax depending on the kind of procedural
-macro. Panics are caught by the compiler and are turned into a compiler error.
-Endless loops are not caught by the compiler which hangs the compiler.
+作为函数，它们要么有返回句法、panic，要么永无休止地循环。返回的句法根据过程宏的类型替换或添加句法。编译器捕获 panic 并将其转化为编译器错误。编译器不会捕获死循环，而是会被挂起。
 
-Procedural macros run during compilation, and thus have the same resources that
-the compiler has. For example, standard input, error, and output are the same
-that the compiler has access to. Similarly, file access is the same. Because
-of this, procedural macros have the same security concerns that [Cargo's
-build scripts] have.
+过程宏在编译期运行，因此具有与编译器相同的资源。例如，编译器可以访问的标准输入、错误和输出是相同的。类似地，文件访问也是一样的。因此，过程宏与 [Cargo的构建脚本] 具有相同的安全问题。
 
-Procedural macros have two ways of reporting errors. The first is to panic. The
-second is to emit a [`compile_error`] macro invocation.
+过程宏有两种报告错误的方法。首先是 panic；第二个是发出 [`compile_error`] 性质的宏调用。
+Procedural macros have two ways of reporting errors. The first is to panic. The second is to emit a [`compile_error`] macro invocation.
 
 ### The `proc_macro` crate
 
@@ -272,7 +263,7 @@ fn invoke4() {}
 ```
 
 [属性宏]: #attribute-macros
-[Cargo's build scripts]: ../cargo/reference/build-scripts.html
+[Cargo的构建脚本]: ../cargo/reference/build-scripts.html
 [派生宏]: #derive-macros
 [类函数宏]: #function-like-procedural-macros
 [`TokenStream`]: ../proc_macro/struct.TokenStream.html
@@ -285,7 +276,7 @@ fn invoke4() {}
 [attribute]: attributes.md
 [attributes]: attributes.md
 [block]: expressions/block-expr.md
-[crate type]: linkage.md
+[crate 类型]: linkage.md
 [derive macro helper attributes]: #derive-macro-helper-attributes
 [enum]: items/enumerations.md
 [expressions]: expressions.md
