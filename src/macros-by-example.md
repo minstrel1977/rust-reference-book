@@ -137,49 +137,42 @@ foo!(3);
 
 <!-- ignore: requires external crates -->
 ```rust,ignore
-use lazy_static::lazy_static; // Path-based import.
+use lazy_static::lazy_static; // 基于路径的导入.
 
-macro_rules! lazy_static { // Textual definition.
+macro_rules! lazy_static { // 文本定义.
     (lazy) => {};
 }
 
-lazy_static!{lazy} // Textual lookup finds our macro first.
-self::lazy_static!{} // Path-based lookup ignores our macro, finds imported one.
+lazy_static!{lazy} // 首先通过文本作用域来查找我们的宏.
+self::lazy_static!{} // 忽略文本作用域查找，直接使用基于路径的查找方式找到一个导入的宏.
 ```
 
-### Textual Scope
+### 文本作用域
 
-Textual scope is based largely on the order that things appear in source files,
-and works similarly to the scope of local variables declared with `let` except
-it also applies at the module level. When `macro_rules!` is used to define a
-macro, the macro enters the scope after the definition (note that it can still
-be used recursively, since names are looked up from the invocation site), up
-until its surrounding scope, typically a module, is closed. This can enter child
-modules and even span across multiple files:
+文本作用域很大程度上取决于事物在源文件中的出现顺序，其工作方式与用 `let` 声明的局部变量的作用域类似，只不过它也适用于模块级别。当使用 `macro_rules!` 定义宏时，宏在定义之后进入其作用域（请注意，它可以递归使用，因为名称是从调用位置查找的），直到其周围的作用域（通常是模块）关闭为止。文本作用域可以进入子模块，甚至跨越多个文件：
 
 <!-- ignore: requires external modules -->
 ```rust,ignore
 //// src/lib.rs
 mod has_macro {
-    // m!{} // Error: m is not in scope.
+    // m!{} // 报错: m 未在作用域内.
 
     macro_rules! m {
         () => {};
     }
-    m!{} // OK: appears after declaration of m.
+    m!{} // OK: 在声明 m 后使用.
 
     mod uses_macro;
 }
 
-// m!{} // Error: m is not in scope.
+// m!{} // Error: m 未在作用域内.
 
 //// src/has_macro/uses_macro.rs
 
-m!{} // OK: appears after declaration of m in src/lib.rs
+m!{} // OK: m 在上层模块文件 src/lib.rs 中声明后使用
 ```
 
-It is not an error to define a macro multiple times; the most recent declaration
-will shadow the previous one unless it has gone out of scope.
+多次定义宏并不报错；除非超出作用域，否则最近的宏声明将遮蔽前一个声明。
 
 ```rust
 macro_rules! m {
@@ -194,7 +187,7 @@ mod inner {
     macro_rules! m {
         (2) => {};
     }
-    // m!(1); // Error: no rule matches '1'
+    // m!(1); // 报错: 没有设定规则来匹配 '1'
     m!(2);
 
     macro_rules! m {
@@ -206,12 +199,11 @@ mod inner {
 m!(1);
 ```
 
-Macros can be declared and used locally inside functions as well, and work
-similarly:
+宏也可以在函数内部声明和使用，工作原理类似：
 
 ```rust
 fn foo() {
-    // m!(); // Error: m is not in scope.
+    // m!(); // 报错: m 未在作用域内.
     macro_rules! m {
         () => {};
     }
@@ -219,14 +211,12 @@ fn foo() {
 }
 
 
-// m!(); // Error: m is not in scope.
+// m!(); // Error: m 未在作用域内.
 ```
 
-### The `macro_use` attribute
+### `macro_use` 属性
 
-The *`macro_use` attribute* has two purposes. First, it can be used to make a
-module's macro scope not end when the module is closed, by applying it to a
-module:
+*`macro_use` 属性*有两种用途。首先，它可以通过作用于模块的方式让模块内的宏的作用域在模块关闭时不结束：
 
 ```rust
 #[macro_use]
@@ -239,36 +229,26 @@ mod inner {
 m!();
 ```
 
-Second, it can be used to import macros from another crate, by attaching it to
-an `extern crate` declaration appearing in the crate's root module. Macros
-imported this way are imported into the prelude of the crate, not textually,
-which means that they can be shadowed by any other name. While macros imported
-by `#[macro_use]` can be used before the import statement, in case of a
-conflict, the last macro imported wins. Optionally, a list of macros to import
-can be specified using the [_MetaListIdents_] syntax; this is not supported
-when `#[macro_use]` is applied to a module.
+其次，它可以用于从另一个 crate 里导入宏，方法是将它附加到出现在 crate 根模块中的 `extern crate` 声明前。以这种方式导入的宏被导入到当前 crate 的 prelude 里，而不是文本导入，这意味着它们可以被任何其他名称遮蔽。虽然可以在导入语句之前使用 `#[macro_use]` 导入宏，但如果发生冲突，则最后导入的宏将获胜。可选地，可以使用 [_MetaListIdents_] 语法指定要导入的宏列表（如果将 `#[macro_use]` 应用于模块，则不支持此操作）。 
 
 <!-- ignore: requires external crates -->
 ```rust,ignore
-#[macro_use(lazy_static)] // Or #[macro_use] to import all macros.
+#[macro_use(lazy_static)] // 或者使用 #[macro_use] 来导入所有宏.
 extern crate lazy_static;
 
 lazy_static!{}
-// self::lazy_static!{} // Error: lazy_static is not defined in `self`
+// self::lazy_static!{} // 报错: lazy_static 没在 `self` 中定义
 ```
 
-Macros to be imported with `#[macro_use]` must be exported with
-`#[macro_export]`, which is described below.
+要用 `#[macro_use]` 导入的宏必须使用 `#[macro_export]` 导出，下文会有讲解。
 
-### Path-Based Scope
+### 基于路径的作用域
 
-By default, a macro has no path-based scope. However, if it has the
-`#[macro_export]` attribute, then it is declared in the crate root scope and can
-be referred to normally as such:
+默认情况下，宏没有基于路径的作用域。但是，如果它具有 `#[macro_export]` 属性，那么它会在当前 clate 的根作用域中被声明，并且通常可以这样引用：
 
 ```rust
 self::m!();
-m!(); // OK: Path-based lookup finds m in the current module.
+m!(); // OK: 基于路径的查找发现 m 在当前模块中有声明.
 
 mod inner {
     super::m!();
@@ -283,23 +263,18 @@ mod mac {
 }
 ```
 
-Macros labeled with `#[macro_export]` are always `pub` and can be referred to
-by other crates, either by path or by `#[macro_use]` as described above.
+标有 `#[macro_export]` 的宏始终是 `pub` 的，可以通过路径或上面所述的 `#[macro_use]` 的方式让其他 crate 引用。
 
-## Hygiene
+## 卫生性（Hygiene）
 
-By default, all identifiers referred to in a macro are expanded as-is, and are
-looked up at the macro's invocation site. This can lead to issues if a macro
-refers to an item or macro which isn't in scope at the invocation site. To
-alleviate this, the `$crate` metavariable can be used at the start of a path to
-force lookup to occur inside the crate defining the macro.
+默认情况下，宏中引用的所有标识符都按原样展开，并在宏的调用位置上查找。如果宏引用的数据项或宏不在调用位置的作用域内，则这可能会导致问题。为了缓解这种情况，可以在路径的开头使用`$crate` 元变量，以强制在定义宏的 crate 中进行查找。
 
 <!-- ignore: requires external crates -->
 ```rust,ignore
-//// Definitions in the `helper_macro` crate.
+//// 在 `helper_macro` crate 中.
 #[macro_export]
 macro_rules! helped {
-    // () => { helper!() } // This might lead to an error due to 'helper' not being in scope.
+    // () => { helper!() } // 这可能会导致错误，因为 'helper' 在当前作用域之后才定义.
     () => { $crate::helper!() }
 }
 
@@ -308,8 +283,8 @@ macro_rules! helper {
     () => { () }
 }
 
-//// Usage in another crate.
-// Note that `helper_macro::helper` is not imported!
+//// 在另一个 crate 中使用.
+// 注意 `helper_macro::helper` 没有导入!
 use helper_macro::helped;
 
 fn unit() {
@@ -317,8 +292,7 @@ fn unit() {
 }
 ```
 
-Note that, because `$crate` refers to the current crate, it must be used with a
-fully qualified module path when referring to non-macro items:
+请注意，由于 `$crate` 指的是当前的 crate，因此在引用非宏数据项时，它必须与完全限定的模块路径一起使用：
 
 ```rust
 pub mod inner {
@@ -331,11 +305,7 @@ pub mod inner {
 }
 ```
 
-Additionally, even though `$crate` allows a macro to refer to items within its
-own crate when expanding, its use has no effect on visibility. An item or macro
-referred to must still be visible from the invocation site. In the following
-example, any attempt to invoke `call_foo!()` from outside its crate will fail
-because `foo()` is not public.
+此外，尽管 `$crate` 允许宏在扩展时引用其自身 crate 中的数据项，但它的使用对可见性没有影响。引用的数据项或宏必须仍然在调用位置可见。在下面的示例中，任何试图从其 crate 外部调用 `call_foo!()` 的行为都将失败，因为 `foo()` 不是公有的。（译者注：下面的调用是可以，原文上没有给出 crate 外部调用的例子）
 
 ```rust
 #[macro_export]
