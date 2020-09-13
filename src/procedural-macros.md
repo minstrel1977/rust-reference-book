@@ -222,24 +222,22 @@ fn invoke4() {}
 [`extern` blocks]: items/external-blocks.md
 [`macro_rules`]: macros-by-example.md
 [`proc_macro` crate]: ../proc_macro/index.html
-[attribute]: attributes.md
-[attributes]: attributes.md
-[block]: expressions/block-expr.md
+[属性]: attributes.md
+[块]: expressions/block-expr.md
 [crate 类型]: linkage.md
 [派生宏辅助属性]: #derive-macro-helper-attributes
-[enum]: items/enumerations.md
-[expressions]: expressions.md
+[枚举]: items/enumerations.md
+[表达式]: expressions.md
 [函数]: items/functions.md
 [实现]: items/implementations.md
-[inert]: attributes.md#active-and-inert-attributes
-[item]: items.md
-[items]: items.md
-[module]: items/modules.md
-[patterns]: patterns.md
+[惰性的]: attributes.md#active-and-inert-attributes
+[数据项]: items.md
+[模块]: items/modules.md
+[模式]: patterns.md
 [公有]: visibility-and-privacy.md
-[statements]: statements.md
-[struct]: items/structs.md
-[trait definitions]: items/traits.md
-[type expressions]: types.md#type-expressions
-[type]: types.md
-[union]: items/unions.md
+[语句]: statements.md
+[结构体]: items/structs.md
+[trait 定义]: items/traits.md
+[类型表达式]: types.md#type-expressions
+[类型]: types.md
+[联合体]: items/unions.md
