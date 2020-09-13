@@ -1,7 +1,7 @@
 ## 过程宏
 
 >[procedural-macros.md](https://github.com/rust-lang/reference/blob/master/src/procedural-macros.md)\
->a1ef5a09c0281b0f2a65c18670e927ead61eb1b2
+>commit a1ef5a09c0281b0f2a65c18670e927ead61eb1b2
 
 *过程宏*允许在执行函数时创建句法扩展。过程宏有三种形式:
 

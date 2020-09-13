@@ -1,7 +1,7 @@
 # crate 和源文件
 
 >[crates-and-source-files.md](https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md)\
->277587a55aa24d8f6a66ddb43493e150c916ef43
+>commit 277587a55aa24d8f6a66ddb43493e150c916ef43
 
 > **<sup>句法</sup>**\
 > _Crate_ :\
@@ -10,7 +10,7 @@
 > &nbsp;&nbsp; [_InnerAttribute_]<sup>\*</sup>\
 > &nbsp;&nbsp; [_Item_]<sup>\*</sup>
 
-> **<sup>Lexer</sup>**\
+> **<sup>词法</sup>**\
 > UTF8BOM : `\uFEFF`\
 > SHEBANG : `#!` \~`\n`<sup>\+</sup>[†](#shebang)
 
@@ -43,7 +43,7 @@ Rust源文件描述了一个模块，其名称和位置（在当前 crate 的模
 
 ## 字节序标记
 
-可选的[_UTF8字节序标记_](由 UTF8BOM 生成)表示该文件是用 UTF8 编码的。它只能出现在文件的开头，并且编译器会忽略它。
+可选的[_utf8 字节序标记_](由 UTF8BOM 生成)表示该文件是用 UTF8 编码的。它只能出现在文件的开头，并且编译器会忽略它。
 
 ## Shebang
 
@@ -58,13 +58,13 @@ fn main() {
 }
 ```
 
-为了避免与[属性]混淆， Rust 对 shebang 语法做了一个限制， 是 `#!` 字符不能后跟`[` 标记码，忽略中间的[注释]或[空格]。如果此限制失败，则不将其视为 shebang，而将其视为属性的开始。
+为了避免与[属性]混淆， Rust 对 shebang 语法做了一个限制， 是 `#!` 字符不能后跟`[` 标记码，忽略中间的[注释]或[空白]。如果此限制失败，则不将其视为 shebang，而将其视为属性的开始。
 
 ## Preludes 和 `no_std`
 
 所有的 crate 都有一个 *prelude*，它会自动将一个特定模块（*prelude模块*）的名称插入到每个[模块]的作用域内，并将一个 [`extern crate`] 插入到 crate 的根模块中。默认情况下，这个特定的模块为 *standard prelude* 。链接的 crate 是 [`std`]，prelude 模块是 [`std::prelude::v1`]。
 
-在根 crate 模块上使用 `no_std` [属性]，可以将 prelude 改成 *核心 prelude*。连接的板条箱为 [`core`]，prelude 模块为 [`core::prelude::v1`]。当 crate 的目标平台不支持标准库或有意不使用标准库的功能时，使用核心 prelude 而不是标准 prelude 是有用的。这么选择放弃的主要功能是动态内存分配(例如： `Box` 和 `Vec`)、文件和网络功能(例如： `std::fs` and `std::io`)。
+在根 crate 模块上使用 `no_std` [属性]，可以将 prelude 改成 *核心 prelude*。连接的板条箱为 [`core`]，prelude 模块为 [`core::prelude::v1`]。当 crate 的目标平台不支持标准库或有意不使用标准库的功能时，使用核心 prelude 而不是标准 prelude 是有用的。这么做放弃的主要功能是动态内存分配(例如： `Box` 和 `Vec`)、文件和网络功能(例如： `std::fs` and `std::io`)。
 
 <div class="warning">
 
@@ -109,7 +109,7 @@ crate 名称不能为空，只能包含[Unicode字母数字]或 `-` (U+002D)字�
 [_Item_]: items.md
 [_MetaNameValueStr_]: attributes.md#meta-item-attribute-syntax
 [_shebang_]: https://en.wikipedia.org/wiki/Shebang_(Unix)
-[_utf8 byte order mark_]: https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8
+[_utf8 字节序标记_]: https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8
 [`Termination`]: ../std/process/trait.Termination.html
 [`core`]: ../core/index.html
 [`core::prelude::v1`]: ../core/prelude/index.html
@@ -123,4 +123,4 @@ crate 名称不能为空，只能包含[Unicode字母数字]或 `-` (U+002D)字�
 [模块路径]: paths.md
 [trait 或生命周期约束]: trait-bounds.md
 [where 字句]: items/generics.md#where-clauses
-[whitespace]: whitespace.md
+[空白]: whitespace.md

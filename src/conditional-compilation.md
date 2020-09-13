@@ -1,6 +1,9 @@
-# Conditional compilation
+# 条件编译
 
-> **<sup>Syntax</sup>**\
+>[conditional-compilation.md](https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md)\
+>commit 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7
+
+> **<sup>句法</sup>**\
 > _ConfigurationPredicate_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _ConfigurationOption_\
 > &nbsp;&nbsp; | _ConfigurationAll_\
@@ -22,69 +25,40 @@
 > _ConfigurationPredicateList_\
 > &nbsp;&nbsp; _ConfigurationPredicate_ (`,` _ConfigurationPredicate_)<sup>\*</sup> `,`<sup>?</sup>
 
-*Conditionally compiled source code* is source code that may or may not be
-considered a part of the source code depending on certain conditions. <!-- This
-definition is sort of vacuous --> Source code can be conditionally compiled
-using the [attributes] [`cfg`] and [`cfg_attr`] and the built-in [`cfg` macro].
-These conditions are based on the target architecture of the compiled crate,
-arbitrary values passed to the compiler, and a few other miscellaneous things
-further described below in detail.
+根据某些条件， < !——这个定义有点空洞——> *条件编译的源代码*可能被认为是 crate 源代码的一部分，也可能不被认为是 crate 源代码的一部分。可以使用[attributes] [`cfg`] 和 [`cfg_attr`] 以及内置的 [`cfg` macro] 有条件地编译源代码。这些条件基于已编译的 crate 的目标架构、传递给编译器的任意值，以及下面将详细描述的其他一些事项。
 
-Each form of conditional compilation takes a _configuration predicate_ that
-evaluates to true or false. The predicate is one of the following:
+每种形式的条件编译都有一个计算结果为真或假的*配置谓词*。谓词是以下内容之一：
 
-* A configuration option. It is true if the option is set and false if it is
-  unset.
-* `all()` with a comma separated list of configuration predicates. It is false
-  if at least one predicate is false. If there are no predicates, it is true.
-* `any()` with a comma separated list of configuration predicates. It is true
-  if at least one predicate is true. If there are no predicates, it is false.
-* `not()` with a configuration predicate. It is true if its predicate is false
-  and false if its predicate is true.
+* 一个配置选项。如果设置了该选项，则为真，如果未设置则为假。
+* `all()` 这样的配置谓词列表，列表内的项以逗号分隔。如果至少有一个谓词为假，则为假。如果没有谓词，则为真。
+* `any()` 这样的配置谓词列表，列表内的项以逗号分隔。如果至少有一个谓词为真，则为真。如果没有谓词，则为假。
+* `not()` 配置谓词。如果它的谓词为假，整个配置它为真；如果它的谓词为真，整个配置为假。
 
-_Configuration options_ are names and key-value pairs that are either set or
-unset. Names are written as a single identifier such as, for example, `unix`.
-Key-value pairs are written as an identifier, `=`, and then a string. For
-example, `target_arch = "x86_64"` is a configuration option.
+*配置选项*是已设置或未设置的名称和键值对。名称以单个标识符形式写入，例如 `unix`。键值对被写为标识符，`=`，然后是字符串。例如，`target_arch=“x86_64”`是一个配置选项。
 
-> **Note**: Whitespace around the `=` is ignored. `foo="bar"` and `foo = "bar"`
-> are equivalent configuration options.
+> **注意**: `=` 周围的空白将被忽略。`foo="bar"` 和 `foo = "bar"` 是等价的配置选项。
 
-Keys are not unique in the set of key-value configuration options. For example,
-both `feature = "std"` and `feature = "serde"` can be set at the same time.
+键在键-值配置选项集中不是唯一的。例如，`feature = "std"` and `feature = "serde"` 可以同时设置。
 
-## Set Configuration Options
+## 设置配置选项
 
-Which configuration options are set is determined statically during the
-compilation of the crate. Certain options are _compiler-set_ based on data
-about the compilation. Other options are _arbitrarily-set_, set based on input
-passed to the compiler outside of the code. It is not possible to set a
-configuration option from within the source code of the crate being compiled.
+设置哪些配置选项是在 crate 编译期间静态确定的。某些选项是根据相关编译的数据由*编译器设置集*设置的。其他选项是任意设置集，需从代码之外传参给编译器来主观设置。无法在正在编译的 crate 的源代码中设置编译配置选项。
 
-> **Note**: For `rustc`, arbitrary-set configuration options are set using the
-> [`--cfg`] flag.
+> **注意**: 对于 `rustc`，使用 [`--cfg`] 标记设置任意配置集配置选项。
 
-> **Note**: Configuration options with the key `feature` are a convention used
-> by [Cargo][cargo-feature] for specifying compile-time options and optional
-> dependencies.
+> **注意**: 带有关键字 `feature` 的配置选项是 [Cargo][cargo-feature] 用于指定编译时选项和可选依赖项的约定。
 
 <div class="warning">
 
-Warning: It is possible for arbitrarily-set configuration options to have the
-same value as compiler-set configuration options. For example, it is possible
-to do `rustc --cfg "unix" program.rs` while compiling to a Windows target, and
-have both `unix` and `windows` configuration options set at the same time. It
-is unwise to actually do this.
+警告：任意设置的配置选项可能与编译器设置的配置选项具有相同的值。例如，在编译到 Windows 目标时，可以执行 `rustc --cfg "unix" program.rs` ，同时设置了 `unix` 和 `windows` 配置选项。实际上这样做是不明智的。
 
 </div>
 
 ### `target_arch`
 
-Key-value option set once with the target's CPU architecture. The value is
-similar to the first element of the platform's target triple, but not
-identical.
+使用编译目标的 CPU 体系结构来设置一次键值选项。该值类似于平台的目标三元组（the platform's target triple）的第一个元素，但不相同。
 
-Example values:
+示例值：
 
 * `"x86"`
 * `"x86_64"`
@@ -96,10 +70,9 @@ Example values:
 
 ### `target_feature`
 
-Key-value option set for each platform feature available for the current
-compilation target.
+可用于当前编译目标的各个平台特性相关的键-值选项设置。
 
-Example values:
+示例值：
 
 * `"avx"`
 * `"avx2"`
@@ -109,9 +82,7 @@ Example values:
 * `"sse2"`
 * `"sse4.1"`
 
-See the [`target_feature` attribute] for more details on the available
-features. An additional feature of `crt-static` is available to the
-`target_feature` option to indicate that a [static C runtime] is available.
+有关可用特性的更多细节，请参见[`target_feature` 属性]。`target_feature` 选项提供了一个 `crt-static` 的附加特性，用于指示一个[静态 C 运行时]可用。
 
 ### `target_os`
 
