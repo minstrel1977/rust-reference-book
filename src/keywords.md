@@ -15,7 +15,7 @@ Rust 将关键字分为三类：
 
 * [数据项(item)]
 * [变量]和函数参数
-* 字段和[枚举的变体]
+* 字段和[变体]
 * [类型参数]
 * 生命周期参数或者[循环标签]
 * [宏]或[属性]
@@ -118,5 +118,5 @@ Rust 将关键字分为三类：
 [宏占位符]: macros-by-example.md
 [crate]: crates-and-source-files.md
 [联合体]: items/unions.md
-[枚举的变体]: items/enumerations.md
+[枚举变体]: items/enumerations.md
 [`dyn`]: types/trait-object.md
