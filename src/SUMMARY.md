@@ -126,3 +126,4 @@
     - [宏定义规范](macro-ambiguity.md)
     - [影响来源](influences.md)
     - [术语表](glossary.md)
+    - [本书术语翻译对照表](本书术语翻译对照表.md)

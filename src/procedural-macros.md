@@ -147,12 +147,9 @@ struct Struct {
 
 *属性宏*定义可以附加到[数据项]上的新的[外部属性]，这些数据项包括 [`extern` 块]、固有[实现]、trate [实现]， 以及[trait 定义]中的数据项。
 
-属性宏由带有 `proc_macro_attribute` 属性的公有可见性函数定义，该属性的签名为 (TokenStream, TokenStream) -> TokenStream。第一个 TokenStream 是属性名称后面带分隔符的标记树，不包括外部分隔符。如果该属性作为裸属性名写入，则属性 TokenStream 为空。第二个 TokenStream 是项的其余部分，包括该项的其他属性。返回的 TokenStream 将项替换为任意数量的项。
+属性宏由带有 `proc_macro_attribute` 属性和 `(TokenStream, TokenStream) -> TokenStream` 签名的[公有]可见性[函数]定义。签名中的第一个 [`TokenStream`] 是属性名称后面带定界符的标记树，不包括外部定界符。如果该属性作为裸属性给出，则第一个 [`TokenStream`] 值为空。第二个 [`TokenStream`] 是数据项的其余部分，包括该数据项的其他属性。返回的 [`TokenStream`] 将项替换为任意数量的数据项。
 
 例如，这个属性宏接受输入流并按原样返回，实际上对属性并无操作。
-Attribute macros are defined by a [public]&#32;[function] with the `proc_macro_attribute` [attribute] that has a signature of `(TokenStream, TokenStream) -> TokenStream`. The first [`TokenStream`] is the delimited token tree following the attribute's name, not including the outer delimiters. If the attribute is written as a bare attribute name, the attribute [`TokenStream`] is empty. The second [`TokenStream`] is the rest of the [item] including other [attributes] on the [item]. The returned [`TokenStream`] replaces the [item] with an arbitrary number of [items].
-
-For example, this attribute macro takes the input stream and returns it as is, effectively being the no-op of attributes.
 
 <!-- ignore: test doesn't support proc-macro -->
 ```rust,ignore
@@ -166,7 +163,7 @@ pub fn return_as_is(_attr: TokenStream, item: TokenStream) -> TokenStream {
 }
 ```
 
-This following example shows the stringified [`TokenStream`s] that the attribute macros see. The output will show in the output of the compiler. The output is shown in the comments after the function prefixed with "out:".
+下面的示例显示了属性宏看到的字符串化的 [`TokenStream`]。输出将示在编译期的编译器输出窗口中。（具体的以 "out:"为前缀的）输出内容也都在下面每个示例函数后面的注释中给出了。
 
 <!-- ignore: test doesn't support proc-macro -->
 ```rust,ignore
