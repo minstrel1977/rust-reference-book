@@ -25,7 +25,7 @@
 > _ConfigurationPredicateList_\
 > &nbsp;&nbsp; _ConfigurationPredicate_ (`,` _ConfigurationPredicate_)<sup>\*</sup> `,`<sup>?</sup>
 
-根据某些条件， < !——这个定义有点空洞——> *条件编译的源代码*可能被认为是 crate 源代码的一部分，也可能不被认为是 crate 源代码的一部分。可以使用[attributes] [`cfg`] 和 [`cfg_attr`] 以及内置的 [`cfg` macro] 有条件地编译源代码。这些条件基于已编译的 crate 的目标架构、传递给编译器的任意值，以及下面将详细描述的其他一些事项。
+根据某些条件， <!-- 这个定义有点空洞 --> *条件编译的源代码*可能被认为是 crate 源代码的一部分，也可能不被认为是 crate 源代码的一部分。可以使用[attributes] [`cfg`] 和 [`cfg_attr`] 以及内置的 [`cfg` macro] 有条件地编译源代码。这些条件基于已编译的 crate 的目标架构、传递给编译器的任意值，以及下面将详细描述的其他一些事项。
 
 每种形式的条件编译都有一个计算结果为真或假的*配置谓词*。谓词是以下内容之一：
 
@@ -56,7 +56,7 @@
 
 ### `target_arch`
 
-使用编译目标的 CPU 体系结构来设置一次键值选项。该值类似于平台的目标三元组（the platform's target triple）的第一个元素，但不相同。
+一次性键值选项，用于设置编译目标的 CPU 体系架构。该值类似于平台的目标三元组（target triple）[^target-triple]的第一个元素，但不相同。
 
 示例值：
 
@@ -70,7 +70,7 @@
 
 ### `target_feature`
 
-可用于当前编译目标的各个平台特性相关的键-值选项设置。
+键值选项，用于设置当前编译目标的可用平台特性。
 
 示例值：
 
@@ -86,10 +86,9 @@
 
 ### `target_os`
 
-Key-value option set once with the target's operating system. This value is
-similar to the second and third element of the platform's target triple.
+一次性键值选项，用于设置编译目标的操作系统类型。该值类似于平台目标三元组的第二和第三个元素。
 
-Example values:
+示例值：
 
 * `"windows"`
 * `"macos"`
@@ -103,29 +102,22 @@ Example values:
 
 ### `target_family`
 
-Key-value option set at most once with the target's operating system value.
+键值选项，最多设置一次，用于设置编译目标的操作系统类别。
 
-Example values:
+示例值：
 
 * `"unix"`
 * `"windows"`
 
-### `unix` and `windows`
+### `unix` 和 `windows`
 
-`unix` is set if `target_family = "unix"` is set and `windows` is set if
-`target_family = "windows"` is set.
+`如果设置了 `target_family = "unix"` 则谓词 `unix` 为真；如果设置了 `target_family = "windows"` 则谓词 `windows` 为真。
 
 ### `target_env`
 
-Key-value option set with further disambiguating information about the target
-platform with information about the ABI or `libc` used. For historical reasons,
-this value is only defined as not the empty-string when actually needed for
-disambiguation. Thus, for example, on many GNU platforms, this value will be
-empty. This value is similar to the fourth element of the platform's target
-triple. One difference is that embedded ABIs such as `gnueabihf` will simply
-define `target_env` as `"gnu"`.
+键值选项，用来进一步消除编译目标平台信息与所用 ABI 或 `libc` 相关的歧义。由于历史原因，仅当实际需要消除歧义时，才将此值定义为非空字符串。因此，例如在许多 GNU 平台上，此值将为空。该值类似于平台目标三元组的第四个元素，但也有区别，一个区别是在嵌入式 ABI 上，比如在嵌入式系统里 `gnueabihf` 会简单地将 `target_env` 定义为 `"gnu"`。
 
-Example values:
+示例值：
 
 * `""`
 * `"gnu"`
@@ -135,14 +127,13 @@ Example values:
 
 ### `target_endian`
 
-Key-value option set once with either a value of "little" or "big" depending
-on the endianness of the target's CPU.
+一次性键值选项，用于设置编译目标的字节序（endianness），取值为“little”或“big”。
 
 ### `target_pointer_width`
 
-Key-value option set once with the target's pointer width in bits.
+一次性键值选项，用于设置编译目标的指针位宽（pointer width in bits）。
 
-Example values:
+示例值：
 
 * `"16"`
 * `"32"`
@@ -150,9 +141,9 @@ Example values:
 
 ### `target_vendor`
 
-Key-value option set once with the vendor of the target.
+一次性键值选项，用于设置编译目标的供应商。
 
-Example values:
+示例值：
 
 * `"apple"`
 * `"fortanix"`
@@ -161,43 +152,36 @@ Example values:
 
 ### `test`
 
-Enabled when compiling the test harness. Done with `rustc` by using the
-[`--test`] flag. See [Testing] for more on testing support.
+在编译测试代码时启用。通过使用 [`--test`] 参数执行 rustc 编译。有关测试支持的更多信息，请参阅[测试]章节。
 
 ### `debug_assertions`
 
-Enabled by default when compiling without optimizations.
-This can be used to enable extra debugging code in development but not in
-production.  For example, it controls the behavior of the standard library's
-[`debug_assert!`] macro.
+在不进行优化编译时默认启用。这可以用于在开发中启用额外的调试代码，但不能在生产中启用。例如，它控制标准库的 [`debug_assert!`] 宏(是否启用)。
 
 ### `proc_macro`
 
-Set when the crate being compiled is being compiled with the `proc_macro`
-[crate type].
+当正在编译的 crate 使用 `proc_macro` [crate 类型]编译时设置。
 
-## Forms of conditional compilation
+## 条件编译的形式
 
-### The `cfg` attribute
+### `cfg` 属性
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _CfgAttrAttribute_ :\
 > &nbsp;&nbsp; `cfg` `(` _ConfigurationPredicate_ `)`
 
 <!-- should we say they're active attributes here? -->
 
-The `cfg` [attribute] conditionally includes the thing it is attached to based
-on a configuration predicate.
+`cfg` [属性]根据配置谓词有条件地包括它所附加的东西。
 
-It is written as `cfg`, `(`, a configuration predicate, and finally `)`.
+它被写成 `cfg`，`(`，一个配置谓词，最后是 `)`。
 
-If the predicate is true, the thing is rewritten to not have the `cfg` attribute
-on it. If the predicate is false, the thing is removed from the source code.
+如果谓词为真，则重写该内容，使其上没有 `cfg` 属性。如果谓词为假，则从源代码中删除该内容。
 
-Some examples on functions:
+在函数上的一些例子:
 
 ```rust
-// The function is only included in the build when compiling for macOS
+// 该函数只会在编译目标为 macOS 时才会包含在构建中
 #[cfg(target_os = "macos")]
 fn macos_only() {
   // ...
@@ -289,10 +273,17 @@ let machine_kind = if cfg!(unix) {
 println!("I'm running on a {} machine!", machine_kind);
 ```
 
+[^target-triple]: 首先给 *出目标三元组* 的参考资料地址：https://www.bookstack.cn/read/rCore_tutorial_doc/d997e9cbdfeef7d4.md。\
+接下来为防止该地址失效，我用自己的理解简单重复一下我对这个名词的理解:\
+目标三元组可以理解为我们常说的平台信息，包含这些信息：第一项元素：CPU 架构；第二项元素：供应商；第三项元素：操作系统；第四项元素：ABI。\
+Rust 下查看目标三元组可以用 `rustc --version --verbose` 命令行。比如我在我工作机下下执行这行命令行的输出的 `host` 信息为：`host: x86_64-unknown-linux-gnu`，那我都工作机的目标三元组的信息就是：CPU 架构为 x86_64 ，供应商为 unknown ，操作系统为 linux ，ABI 为 gnu 。\
+我另一台windows机器为：`host: x86_64-pc-windows-msvc`，那这台的目标三元组的信息为：CPU 架构为 x86_64 ，供应商为 pwc ，操作系统为 windows ，ABI 为 msvc 。\
+Rust 官方对一些平台提供了默认的目标三元组，我们可以通过 `rustc --print target-list` 命令来查看完整列表。
+
 [IDENTIFIER]: identifiers.md
 [RAW_STRING_LITERAL]: tokens.md#raw-string-literals
 [STRING_LITERAL]: tokens.md#string-literals
-[Testing]: attributes/testing.md
+[测试]: attributes/testing.md
 [_Attr_]: attributes.md
 [`--cfg`]: ../rustc/command-line-arguments.html#--cfg-configure-the-compilation-environment
 [`--test`]: ../rustc/command-line-arguments.html#--test-build-a-test-harness
