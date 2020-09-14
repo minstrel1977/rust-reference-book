@@ -1,6 +1,10 @@
-# Modules
+# 模块
 
-> **<sup>Syntax:</sup>**\
+>[modules.md](https://github.com/rust-lang/reference/blob/master/src/items/modules.md)\
+>commit f8e76ee9368f498f7f044c719de68c7d95da9972
+
+
+> **<sup>句法:</sup>**\
 > _Module_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `mod` [IDENTIFIER] `;`\
 > &nbsp;&nbsp; | `mod` [IDENTIFIER] `{`\
@@ -8,13 +12,11 @@
 > &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; [_Item_]<sup>\*</sup>\
 > &nbsp;&nbsp; &nbsp;&nbsp; `}`
 
-A module is a container for zero or more [items].
+模块是零个或多个[数据项]的容器。
 
-A _module item_ is a module, surrounded in braces, named, and prefixed with the
-keyword `mod`. A module item introduces a new, named module into the tree of
-modules making up a crate. Modules can nest arbitrarily.
+*模块项*是一个用大括号括起来的，有命名的，并以关键字 `mod`作为前缀的模块。模块项将一个新的命名模块引入到组成 crate 的模块树中。模块可以任意嵌套。
 
-An example of a module:
+模块的一个例子：
 
 ```rust
 mod math {
@@ -34,45 +36,27 @@ mod math {
 }
 ```
 
-Modules and types share the same namespace. Declaring a named type with the
-same name as a module in scope is forbidden: that is, a type definition, trait,
-struct, enumeration, union, type parameter or crate can't shadow the name of a
-module in scope, or vice versa. Items brought into scope with `use` also have
-this restriction.
+模块和类型共享相同的命名空间。禁止在作用域中声明与模块同名的命名类型：也就是说，类型定义、trait、结构体、枚举、联合体、类型参数或 crate 不能在作用域中遮蔽模块的名称，反之亦然。使用 `use` 引入到当前作用域的数据项也受这个限制。
 
-## Module Source Filenames
+## 模块的源文件名
 
-A module without a body is loaded from an external file. When the module does
-not have a `path` attribute, the path to the file mirrors the logical [module
-path]. Ancestor module path components are directories, and the module's
-contents are in a file with the name of the module plus the `.rs` extension.
-For example, the following module structure can have this corresponding
-filesystem structure:
+没有代码体的模块是从外部文件加载的。当模块没有 `path` 属性时，文件的路径和逻辑上的[模块路径]互为镜像。祖先模块路径组件是目录，模块的内容在一个文件中，该文件的名称是该模块名加上 `.rs` 的扩展。例如，下面的示例可以反映这种模块结构和文件系统结构相互映射的关系：
 
-Module Path               | Filesystem Path  | File Contents
+模块路径               | 文件系统路径  | 文件内容
 ------------------------- | ---------------  | -------------
 `crate`                   | `lib.rs`         | `mod util;`
 `crate::util`             | `util.rs`        | `mod config;`
 `crate::util::config`     | `util/config.rs` |
 
-Module filenames may also be the name of the module as a directory with the
-contents in a file named `mod.rs` within that directory. The above example can
-alternately be expressed with `crate::util`'s contents in a file named
-`util/mod.rs`. It is not allowed to have both `util.rs` and `util/mod.rs`.
+当一个目录下有一个名为 `mod.rs` 的源文件时，模块的文件名也可以和这个目录互相映射。上面的例子也可以用一个承载同一源码内容的名为 `util/mod.rs`的实体文件来表达模块路径 `crate::util`。注意这两种表达方式都是不允许的 `util.rs` 和 `util/mod.rs` 同时存在。
 
-> **Note**: Previous to `rustc` 1.30, using `mod.rs` files was the way to load
-> a module with nested children. It is encouraged to use the new naming
-> convention as it is more consistent, and avoids having many files named
-> `mod.rs` within a project.
+> **注意**: 在`rustc` 1.30 之前，使用文件 `mod.rs` 是加载嵌套子模块的方法。现在鼓励使用新的命名约定，因为它更一致，并且可以避免在项目中搞出许多名为 `mod.rs` 的文件。
+> 
+### `path` 属性
 
-### The `path` attribute
+用于加载外部文件模块的目录和文件可以受 `path` 属性的影响。
 
-The directories and files used for loading external file modules can be
-influenced with the `path` attribute.
-
-For `path` attributes on modules not inside inline module blocks, the file
-path is relative to the directory the source file is located. For example, the
-following code snippet would use the paths shown based on where it is located:
+对于不在内联模块体内的模块上的`path` 属性，此属性引入的文件的路径为相对于源文件所在的目录。例如，下面的代码片段将使用基于其所在位置的路径:
 
 <!-- ignore: requires external files -->
 ```rust,ignore
@@ -85,16 +69,7 @@ Source File    | `c`'s File Location | `c`'s Module Path
 `src/a/b.rs`   | `src/a/foo.rs`      | `crate::a::b::c`
 `src/a/mod.rs` | `src/a/foo.rs`      | `crate::a::c`
 
-For `path` attributes inside inline module blocks, the relative location of
-the file path depends on the kind of source file the `path` attribute is
-located in. "mod-rs" source files are root modules (such as `lib.rs` or
-`main.rs`) and modules with files named `mod.rs`. "non-mod-rs" source files
-are all other module files. Paths for `path` attributes inside inline module
-blocks in a mod-rs file are relative to the directory of the mod-rs file
-including the inline module components as directories. For non-mod-rs files,
-it is the same except the path starts with a directory with the name of the
-non-mod-rs module. For example, the following code snippet would use the paths
-shown based on where it is located:
+对于内联模块体中的 `path` 属性，此属性引入的文件的路径的相对位置取决于 `path` 属性所在的源文件的类型。（我们知道）“mod-rs”源文件是根模块(如`lib.rs` 或 `main.rs`)和文件名为 `mod.rs` 的模块，非“mod-rs”源文件是所有其他模块文件。（那）在 mod-rs 文件中，内联模块体内的 `path` 属性（引入的文件的）路径相对于 mod-rs 文件的目录（该目录包括作为目录的内联模块组件名）。对于非 mod-rs 文件，除了路径以非 mod-rs 模块名称的目录开始外，情况也是一样的。例如，下面的代码片段将使用基于其所在位置的路径:
 
 <!-- ignore: requires external files -->
 ```rust,ignore
@@ -109,38 +84,27 @@ Source File    | `inner`'s File Location   | `inner`'s Module Path
 `src/a/b.rs`   | `src/a/b/inline/other.rs` | `crate::a::b::inline::inner`
 `src/a/mod.rs` | `src/a/inline/other.rs`   | `crate::a::inline::inner`
 
-An example of combining the above rules of `path` attributes on inline modules
-and nested modules within (applies to both mod-rs and non-mod-rs files):
+在内联模块上和内嵌模块内结合应用上述 `path` 属性规则的一个例子(同时适用于 mod-rs 和非 mod-rs 文件)：
 
 <!-- ignore: requires external files -->
 ```rust,ignore
 #[path = "thread_files"]
 mod thread {
-    // Load the `local_data` module from `thread_files/tls.rs` relative to
-    // this source file's directory.
+    // 从相对于当前源文件的目录下的 `thread_files/tls.rs` 文件里载 `local_data` 模块。
     #[path = "tls.rs"]
     mod local_data;
 }
 ```
 
-## Prelude Items
+## Prelude 项
 
-Modules implicitly have some names in scope. These name are to built-in types,
-macros imported with [`#[macro_use]`][macro_use] on an extern crate, and by the crate's
-[prelude]. These names are all made of a single identifier. These names are not
-part of the module, so for example, any name `name`, `self::name` is not a
-valid path. The names added by the [prelude] can be removed by placing the
-`no_implicit_prelude` [attribute] onto the module or one of its ancestor modules.
+模块在作用域中隐式地有自己的名称。这些名称是内置类型，宏在外部 crate 上用[`#[macro_use]`][macro_use]导入这些名称，其他 crate 通过 [prelude] 导入。这些名称都由唯一的标识符组成。这些名称不是当前模块的一部分，因此，例如，任何名为 `name`、 `self::name` 的路径都不是有效路径。通过 [prelude] 添加的这种模块名称可以通过将 `no_implicit_prelude` [属性]放在当前模块或任意祖先模块上来删除。
 
-## Attributes on Modules
+## 模块上的属性
 
-Modules, like all items, accept outer attributes. They also accept inner
-attributes: either after `{` for a module with a body, or at the beginning of the
-source file, after the optional BOM and shebang.
+模块和所有数据项一样，接受外部属性。它们还接受内部属性：对于带有代码体的模块，在一个模块声明的 `{` 之后或者在模块源文件的开头（须在可选的 BOM 和 shebang 之后）都行。
 
-The built-in attributes that have meaning on a module are [`cfg`],
-[`deprecated`], [`doc`], [the lint check attributes], `path`, and
-`no_implicit_prelude`. Modules also accept macro attributes.
+在模块中有意义的内置属性是[`cfg`]、[`deprecated`]、[`doc`]、[lint 检查属性]、`path` 和 `no_implicit_prelude`。模块也接受宏属性。
 
 [_InnerAttribute_]: ../attributes.md
 [_Item_]: ../items.md
@@ -149,8 +113,8 @@ The built-in attributes that have meaning on a module are [`cfg`],
 [`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
 [`doc`]: ../../rustdoc/the-doc-attribute.html
 [IDENTIFIER]: ../identifiers.md
-[attribute]: ../attributes.md
-[items]: ../items.md
-[module path]: ../paths.md
+[属性]: ../attributes.md
+[数据项]: ../items.md
+[模块路径]: ../paths.md
 [prelude]: ../crates-and-source-files.md#preludes-and-no_std
-[the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
+[lint 检查属性]: ../attributes/diagnostics.md#lint-check-attributes
