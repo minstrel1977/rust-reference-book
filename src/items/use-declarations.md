@@ -1,6 +1,9 @@
-# Use declarations
+# Use 声明
 
-> **<sup>Syntax:</sup>**\
+>[use-declarations.md](https://github.com/rust-lang/reference/blob/master/src/items/use-declarations.md)\
+>commit da3098c49b2f62c878ca9a36099d7dffb4bd9474
+
+> **<sup>句法:</sup>**\
 > _UseDeclaration_ :\
 > &nbsp;&nbsp; `use` _UseTree_ `;`
 >
@@ -9,23 +12,26 @@
 > &nbsp;&nbsp; | ([_SimplePath_]<sup>?</sup> `::`)<sup>?</sup> `{` (_UseTree_ ( `,`  _UseTree_ )<sup>\*</sup> `,`<sup>?</sup>)<sup>?</sup> `}`\
 > &nbsp;&nbsp; | [_SimplePath_]&nbsp;( `as` ( [IDENTIFIER] | `_` ) )<sup>?</sup>
 
-A _use declaration_ creates one or more local name bindings synonymous with
-some other [path]. Usually a `use` declaration is used to shorten the path
-required to refer to a module item. These declarations may appear in [modules]
-and [blocks], usually at the top.
+*use 声明*创建一个或多个与其他[路径]同义的本地名称绑定。通常使用 `use` 声明来缩短引用模块项所需的路径。这些声明可能出现在[模块]和[代码块]中，但通常在顶部。
 
-[path]: ../paths.md
-[modules]: modules.md
-[blocks]: ../expressions/block-expr.md
+[路径]: ../paths.md
+[模块]: modules.md
+[代码块]: ../expressions/block-expr.md
 
-Use declarations support a number of convenient shortcuts:
+*use 声明*支持多种便捷方法:
 
-* Simultaneously binding a list of paths with a common prefix, using the
-  glob-like brace syntax `use a::b::{c, d, e::f, g::h::i};`
-* Simultaneously binding a list of paths with a common prefix and their common
-  parent module, using the `self` keyword, such as `use a::b::{self, c, d::e};`
-* Rebinding the target name as a new local name, using the syntax `use p::q::r
-  as x;`. This can also be used with the last two features:
+* 同时使用公共前缀和带有花括号的 glob-like 语法( `::` )来绑定一系列路径列表，形如：`use a::b::{c, d, e::f, g::h::i};`
+* 同时使用公共前缀以及用 `self` 关键字来引入它们共同的父模块来绑定一系列路径列表，形如：`use a::b::{self, c, d::e};`
+* 将目标名称重新绑定为新的本地名称，使用语法 `use p::q::r as x;`。这也可以和上面两种方法一起使用：`use a::b::{self as ab, c as abc}`。
+* 使用星号通配符语法绑定与给定前缀匹配的所有路径，形如：`use a::b::*;`。
+* 将前面的便捷方法嵌套重复使用，例如：`use a::b::{self as ab, c, d::{*, e::f}};`
+>译者注：可能是因为reference的撰写和修改比较滞后，上列举的便捷方法比std上少两种，所以这里以备注形式补充上：
+>* 用可见性修饰符重新导出所需路径，如：`pub use a::b;`
+>* 导入其他模块的内容时使用`_`来只导入一个 trait 的方法，而不把它绑定到一个名字上(例如为了避免冲突)：`use ::std::io::Read as _;`。
+
+* Simultaneously binding a list of paths with a common prefix, using the glob-like brace syntax `use a::b::{c, d, e::f, g::h::i};`
+* Simultaneously binding a list of paths with a common prefix and their common parent module, using the `self` keyword, such as `use a::b::{self, c, d::e};`
+* Rebinding the target name as a new local name, using the syntax `use p::q::r as x;`. This can also be used with the last two features:
   `use a::b::{self as ab, c as abc}`.
 * Binding all paths matching a given prefix, using the asterisk wildcard syntax
   `use a::b::*;`.

@@ -1,4 +1,7 @@
-# Extern crate declarations
+# 外部 crate 声明
+
+>[extern-crates.md](https://github.com/rust-lang/reference/blob/master/src/items/extern-crates.md)\
+>commit afcf00bbf22f4dec71866a8bd5f385ba1d3b70af
 
 > **<sup>Syntax:<sup>**\
 > _ExternCrate_ :\
