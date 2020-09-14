@@ -187,43 +187,40 @@ fn macos_only() {
   // ...
 }
 
-// This function is only included when either foo or bar is defined
+// 此函数仅在定义了 foo 或 bar 时才会被包含在构建中
 #[cfg(any(foo, bar))]
 fn needs_foo_or_bar() {
   // ...
 }
 
-// This function is only included when compiling for a unixish OS with a 32-bit
-// architecture
+// 此函数仅在编译目标是32位体系架构的类 unix 系统时才会被包含在构建中
 #[cfg(all(unix, target_pointer_width = "32"))]
 fn on_32bit_unix() {
   // ...
 }
 
-// This function is only included when foo is not defined
+// 此函数仅在没有定义 foo 时才会被包含在构建中
 #[cfg(not(foo))]
 fn needs_not_foo() {
   // ...
 }
 ```
 
-The `cfg` attribute is allowed anywhere attributes are allowed.
+`cfg` 属性允许在任何允许属性的地方上使用。
 
-### The `cfg_attr` attribute
+### cfg_attr` 属性
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _CfgAttrAttribute_ :\
 > &nbsp;&nbsp; `cfg_attr` `(` _ConfigurationPredicate_ `,` _CfgAttrs_<sup>?</sup> `)`
 >
 > _CfgAttrs_ :\
 > &nbsp;&nbsp; [_Attr_]&nbsp;(`,` [_Attr_])<sup>\*</sup> `,`<sup>?</sup>
 
-The `cfg_attr` [attribute] conditionally includes [attributes] based on a
-configuration predicate.
+`cfg_attr` [属性]根据配置谓词有条件地包含[属性]。
 
-When the configuration predicate is true, this attribute expands out to the
-attributes listed after the predicate. For example, the following module will
-either be found at `linux.rs` or `windows.rs` based on the target.
+当配置谓词为真时，此属性展开为谓词后列出的属性。例如，下面的模块可以在 `linux.rs` 或 `windows.rs` 中都能找到。
+When the configuration predicate is true, this attribute expands out to the attributes listed after the predicate. For example, the following module will either be found at `linux.rs` or `windows.rs` based on the target.
 
 <!-- ignore: `mod` needs multiple files -->
 ```rust,ignore
@@ -232,34 +229,31 @@ either be found at `linux.rs` or `windows.rs` based on the target.
 mod os;
 ```
 
-Zero, one, or more attributes may be listed. Multiple attributes will each be
-expanded into separate attributes. For example:
+可以列出零个、一个或多个属性。多个属性将各自展开为单独的属性。例如：
 
 <!-- ignore: fake attributes -->
 ```rust,ignore
 #[cfg_attr(feature = "magic", sparkles, crackles)]
 fn bewitched() {}
 
-// When the `magic` feature flag is enabled, the above will expand to:
+// 当启用了 `magic` 功能标志是, 上面的代码将会被展开为:
 #[sparkles]
 #[crackles]
 fn bewitched() {}
 ```
 
-> **Note**: The `cfg_attr` can expand to another `cfg_attr`. For example,
-> `#[cfg_attr(target_os = "linux", cfg_attr(feature = "multithreaded", some_other_attribute))]`
-> is valid. This example would be equivalent to
+> **注意**: `cfg_attr` 能展开为另一个 `cfg_attr`。比如：\
+> `#[cfg_attr(target_os = "linux", cfg_attr(feature = "multithreaded", some_other_attribute))]` \
+> 这个是合法的。这个示例等效于：\
 > `#[cfg_attr(all(target_os = "linux", feature ="multithreaded"), some_other_attribute)]`.
 
-The `cfg_attr` attribute is allowed anywhere attributes are allowed.
+`cfg_attr` 属性允许在任何允许属性的地方上使用。
 
-### The `cfg` macro
+### `cfg` 宏
 
-The built-in `cfg` macro takes in a single configuration predicate and evaluates
-to the `true` literal when the predicate is true and the `false` literal when
-it is false.
+内置的 `cfg` 宏接受单个配置谓词，当谓词为真时计算为 `true` 字面量，当谓词为假时计算为 `false` 字面量。
 
-For example:
+例如：
 
 ```rust
 let machine_kind = if cfg!(unix) {
@@ -292,8 +286,7 @@ Rust 官方对一些平台提供了默认的目标三元组，我们可以通过
 [`cfg_attr`]: #the-cfg_attr-attribute
 [`debug_assert!`]: ../std/macro.debug_assert.html
 [`target_feature` attribute]: attributes/codegen.md#the-target_feature-attribute
-[attribute]: attributes.md
-[attributes]: attributes.md
+[属性]: attributes.md
 [cargo-feature]: ../cargo/reference/features.html
-[crate type]: linkage.md
-[static C runtime]: linkage.md#static-and-dynamic-c-runtimes
+[crate 类型]: linkage.md
+[静态 C 运行时]: linkage.md#static-and-dynamic-c-runtimes
