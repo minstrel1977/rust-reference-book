@@ -359,7 +359,7 @@ macro_rules! helper {
 [标识符或关键字]: identifiers.md
 [生命周期标记码]: tokens.md#lifetimes-and-loop-labels
 [元变量]: #metavariables
-[重复]]: #repetitions
+[重复]: #repetitions
 [_属性值_]: attributes.md
 [_块表达式_]: expressions/block-expr.md
 [_DelimTokenTree_]: macros.md
