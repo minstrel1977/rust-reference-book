@@ -60,11 +60,11 @@ fn main() {
 
 为了避免与[属性]混淆， Rust 对 shebang 语法做了一个限制， 是 `#!` 字符不能后跟`[` 标记码，忽略中间的[注释]或[空白]。如果此限制失败，则不将其视为 shebang，而将其视为属性的开始。
 
-## Preludes 和 `no_std`
+## 预导入包和 `no_std`
 
-所有的 crate 都有一个 *prelude*，它会自动将一个特定模块（*prelude模块*）的名称插入到每个[模块]的作用域内，并将一个 [`extern crate`] 插入到 crate 的根模块中。默认情况下，这个特定的模块为 *standard prelude* 。链接的 crate 是 [`std`]，prelude 模块是 [`std::prelude::v1`]。
+所有的 crate 都有一个 *预导入包*，它会自动将一个特定模块（*预导入包模块*）的名称插入到每个[模块]的作用域内，并将一个 [`extern crate`] 插入到 crate 的根模块中。默认情况下，这个特定的模块为*标准预导入包* 。链接的 crate 是 [`std`]，预导入包模块是 [`std::prelude::v1`]。
 
-在根 crate 模块上使用 `no_std` [属性]，可以将 prelude 改成 *核心 prelude*。连接的板条箱为 [`core`]，prelude 模块为 [`core::prelude::v1`]。当 crate 的目标平台不支持标准库或有意不使用标准库的功能时，使用核心 prelude 而不是标准 prelude 是有用的。这么做放弃的主要功能是动态内存分配(例如： `Box` 和 `Vec`)、文件和网络功能(例如： `std::fs` and `std::io`)。
+在根 crate 模块上使用 `no_std` [属性]，可以将预导入包改成 *核心预导入包*。连接的板条箱为 [`core`]，预导入模块为 [`core::prelude::v1`]。当 crate 的目标平台不支持标准库或有意不使用标准库的功能时，使用核心预导入包而不是标准预导入包是有用的。这么做放弃的主要功能是动态内存分配(例如： `Box` 和 `Vec`)、文件和网络功能(例如： `std::fs` and `std::io`)。
 
 <div class="warning">
 
