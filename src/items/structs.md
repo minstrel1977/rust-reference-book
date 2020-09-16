@@ -1,6 +1,9 @@
-# Structs
+# 结构体
 
-> **<sup>Syntax</sup>**\
+>[structs.md](https://github.com/rust-lang/reference/blob/master/src/items/structs.md)\
+>commit b0e0ad6490d6517c19546b1023948986578fc378
+
+> **<sup>句法</sup>**\
 > _Struct_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _StructStruct_\
 > &nbsp;&nbsp; | _TupleStruct_
@@ -36,9 +39,9 @@
 > &nbsp;&nbsp; [_Visibility_]<sup>?</sup>\
 > &nbsp;&nbsp; [_Type_]
 
-A _struct_ is a nominal [struct type] defined with the keyword `struct`.
+*结构体*是一个用关键字 `struct` 定义的具名[结构体类型]。
 
-An example of a `struct` item and its use:
+`struct` 数据项的一个示例和它的使用演示：
 
 ```rust
 struct Point {x: i32, y: i32}
@@ -46,11 +49,10 @@ let p = Point {x: 10, y: 11};
 let px: i32 = p.x;
 ```
 
-A _tuple struct_ is a nominal [tuple type], also defined with the keyword
-`struct`. For example:
+*元组结构体*是一个具名的[元组类型]，也是用关键字 `struct` 定义的。例如：
 
-[struct type]: ../types/struct.md
-[tuple type]: ../types/tuple.md
+[结构体类型]: ../types/struct.md
+[元组类型]: ../types/tuple.md
 
 ```rust
 struct Point(i32, i32);
@@ -58,16 +60,14 @@ let p = Point(10, 11);
 let px: i32 = match p { Point(x, _) => x };
 ```
 
-A _unit-like struct_ is a struct without any fields, defined by leaving off the
-list of fields entirely. Such a struct implicitly defines a constant of its
-type with the same name. For example:
+*类单元结构体*是没有任何字段的结构体，它的定义完全不包含字段列表。这样的结构体隐式定义了其类型的同名常量。例如:
 
 ```rust
 struct Cookie;
 let c = [Cookie, Cookie {}, Cookie, Cookie {}];
 ```
 
-is equivalent to
+等价于
 
 ```rust
 struct Cookie {}
@@ -75,10 +75,9 @@ const Cookie: Cookie = Cookie {};
 let c = [Cookie, Cookie {}, Cookie, Cookie {}];
 ```
 
-The precise memory layout of a struct is not specified. One can specify a
-particular layout using the [`repr` attribute].
+结构体的精确内存布局还没有规范下来。目前可以使用[`repr` 属性]来指定特定的布局。
 
-[`repr` attribute]: ../type-layout.md#representations
+[`repr` 属性]: ../type-layout.md#representations
 
 [_OuterAttribute_]: ../attributes.md
 [IDENTIFIER]: ../identifiers.md

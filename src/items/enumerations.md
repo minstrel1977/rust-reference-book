@@ -1,6 +1,9 @@
-# Enumerations
+# 枚举
 
-> **<sup>Syntax</sup>**\
+>[enumerations.md](https://github.com/rust-lang/reference/blob/master/src/items/enumerations.md)\
+>commit 2264855271fae0a915a0fa769e57f5a5d09ff5ef
+
+> **<sup>句法</sup>**\
 > _Enumeration_ :\
 > &nbsp;&nbsp; `enum`
 >    [IDENTIFIER]&nbsp;
@@ -25,13 +28,11 @@
 > _EnumItemDiscriminant_ :\
 > &nbsp;&nbsp; `=` [_Expression_]
 
-An *enumeration*, also referred to as *enum* is a simultaneous definition of a
-nominal [enumerated type] as well as a set of *constructors*, that can be used
-to create or pattern-match values of the corresponding enumerated type.
+枚举，英文为 *enumeration*，英文简写为 *enum*，它同时定义了一个具名[枚举类型]和一组*构造器*，这可用于创建相应枚举类型的值或对这些值进行模式匹配。
 
-Enumerations are declared with the keyword `enum`.
+枚举使用关键字 `enum` 来声明。
 
-An example of an `enum` item and its use:
+`enum` 数据项的一个示例和它的使用演示：
 
 ```rust
 enum Animal {
@@ -43,7 +44,7 @@ let mut a: Animal = Animal::Dog;
 a = Animal::Cat;
 ```
 
-Enum constructors can have either named or unnamed fields:
+枚举构造器可以有命名字段或未命名字段：
 
 ```rust
 enum Animal {
@@ -55,23 +56,13 @@ let mut a: Animal = Animal::Dog("Cocoa".to_string(), 37.2);
 a = Animal::Cat { name: "Spotty".to_string(), weight: 2.7 };
 ```
 
-In this example, `Cat` is a _struct-like enum variant_, whereas `Dog` is simply
-called an enum variant. Each enum instance has a _discriminant_ which is an
-integer associated to it that is used to determine which variant it holds. An
-opaque reference to this discriminant can be obtained with the
-[`mem::discriminant`] function.
+在这个例子中，`Cat` 是一个*类结构体枚举变体*，而 `Dog` 则被简单地称为枚举变体。每个枚举实例都有一个*判别值*，它是一个与之关联的整数，用来确定它持有哪个变体。可以通过 [`mem::discriminant`] 函数获得对这个判别值的不透明引用。
 
-## Custom Discriminant Values for Fieldless Enumerations
+## 为无字段枚举自定义判别值
 
-If there is no data attached to *any* of the variants of an enumeration,
-then the discriminant can be directly chosen and accessed.
+如果枚举的*任何*变体都没有附加数据，则可以直接设置和访问判别值。
 
-These enumerations can be cast to integer types with the `as` operator by a
-[numeric cast]. The enumeration can optionally specify which integer each
-discriminant gets by following the variant name with `=` followed by a [constant
-expression]. If the first variant in the declaration is unspecified, then it is
-set to zero. For every other unspecified discriminant, it is set to one higher
-than the previous variant in the declaration.
+可以使用 `as` 操作符通过[数值转换]将这些枚举类型转换为整数类型。枚举可以可选地指定每个判别值的具体（证书）值，方法是在变体名后面加上 `=` 和[常量表达式]。如果声明中的第一个变量未指定，则将其判别值设置为零。对于其他未指定的判别值，它比照前一个变体的判别值按 1 递增。
 
 ```rust
 enum Foo {
@@ -84,12 +75,9 @@ let baz_discriminant = Foo::Baz as u32;
 assert_eq!(baz_discriminant, 123);
 ```
 
-Under the [default representation], the specified discriminant is interpreted as
-an `isize` value although the compiler is allowed to use a smaller type in the
-actual memory layout. The size and thus acceptable values can be changed by
-using a [primitive representation] or the [`C` representation].
+尽管编译器被允许在实际的内存布局中使用较小的类型，但在[默认表示法]下，指定的判别值会被解释为一个 `isize` 值。也可以使用[原语表示法]或[`C`表示法]来更改成大小可接受的值。
 
-It is an error when two variants share the same discriminant.
+两个变量具有相同的判别值是错误的。
 
 ```rust,compile_fail
 enum SharedDiscriminantError {
@@ -100,32 +88,30 @@ enum SharedDiscriminantError {
 enum SharedDiscriminantError2 {
     Zero,       // 0
     One,        // 1
-    OneToo = 1  // 1 (collision with previous!)
+    OneToo = 1  // 1 (和前值冲突！)
 }
 ```
 
-It is also an error to have an unspecified discriminant where the previous
-discriminant is the maximum value for the size of the discriminant.
+当前一个变体的判别值是当前表示法允许的的最大值时，再使用默认判别值也是错误的。
 
 ```rust,compile_fail
 #[repr(u8)]
 enum OverflowingDiscriminantError {
     Max = 255,
-    MaxPlusOne // Would be 256, but that overflows the enum.
+    MaxPlusOne // 应该是256，但枚举溢出了
 }
 
 #[repr(u8)]
 enum OverflowingDiscriminantError2 {
     MaxMinusOne = 254, // 254
     Max,               // 255
-    MaxPlusOne         // Would be 256, but that overflows the enum.
+    MaxPlusOne         // 应该是256，但枚举溢出了。
 }
 ```
 
-## Zero-variant Enums
+## 无变体枚举
 
-Enums with zero variants are known as *zero-variant enums*. As they have
-no valid values, they cannot be instantiated.
+具有零变体的枚举称为*无变体枚举*。因为它们没有有效的值，所以不能被实例化。
 
 ```rust
 enum ZeroVariants {}
