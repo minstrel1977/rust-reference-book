@@ -45,8 +45,8 @@
 * [结构体定义]
 * [枚举定义]
 * [联合体定义]
-* [常量数据项]
-* [静态数据项]
+* [常量项]
+* [静态项]
 * [trait 定义]
 * [实现]
 * [`extern` 块]
@@ -73,13 +73,13 @@ Some items form an implicit scope for the declaration of sub-items. In other wor
 [`extern crate` 声明]: items/extern-crates.md
 [`extern` 块]: items/external-blocks.md
 [`use` 声明]: items/use-declarations.md
-[常量数据项]: items/constant-items.md
+[常量项]: items/constant-items.md
 [枚举定义]: items/enumerations.md
 [函数定义]: items/functions.md
 [实现]: items/implementations.md
 [模块]: items/modules.md
 [路径]: paths.md
-[静态数据项]: items/static-items.md
+[静态项]: items/static-items.md
 [结构体定义]: items/structs.md
 [trait 定义]: items/traits.md
 [类型定义]: items/type-aliases.md
