@@ -104,7 +104,7 @@ mod thread {
 
 模块和所有数据项一样，接受外部属性。它们还接受内部属性：对于带有代码体的模块，在一个模块声明的 `{` 之后或者在模块源文件的开头（须在可选的 BOM 和 shebang 之后）都行。
 
-在模块中有意义的内置属性是[`cfg`]、[`deprecated`]、[`doc`]、[lint 检查属性]、`path` 和 `no_implicit_prelude`。模块也接受宏属性。
+在模块中有意义的内置属性是[`cfg`]、[`deprecated`]、[`doc`]、[lint 检查类属性]、`path` 和 `no_implicit_prelude`。模块也接受宏属性。
 
 [_InnerAttribute_]: ../attributes.md
 [_Item_]: ../items.md
@@ -117,4 +117,4 @@ mod thread {
 [数据项]: ../items.md
 [模块路径]: ../paths.md
 [预导入包]: ../crates-and-source-files.md#preludes-and-no_std
-[lint 检查属性]: ../attributes/diagnostics.md#lint-check-attributes
+[lint 检查类属性]: ../attributes/diagnostics.md#lint-check-attributes

@@ -255,15 +255,13 @@ async fn safe_example() {
 
 请注意，此行为是对返回 `impl Future` 的函数进行脱糖处理的结果——在本例中，我们设计的函数是一个 `unsafe` 函数，但返回值保持不变。
 
-非安全在异步函数上的使用方式与它在其他函数上的使用方式完全相同：它表示该函数的调用者需要遵循一些额外的协议来确保调用执行的可靠性。与任何其他不安全函数一样，这些条件可能会超出初始调用本身——例如，在上面的代码片段中， `unsafe_example` 函数将指针 `x` 作为参数，然后（在执行 await 时）解引用了对该指针的引用。这意味着在 future 完成执行之前， `x` 必须是有效的，调用者有责任确保这一点。#
+非安全在异步函数上的使用方式与它在其他函数上的使用方式完全相同：它表示该函数的调用者需要遵循一些额外的协议来确保调用执行的可靠性。与任何其他不安全函数一样，这些条件可能会超出初始调用本身——例如，在上面的代码片段中， `unsafe_example` 函数将指针 `x` 作为参数，然后（在执行 await 时）解引用了对该指针的引用。这意味着在 future 完成执行之前， `x` 必须是有效的，调用者有责任确保这一点。
 
-## Attributes on functions
+## 函数上的属性
 
-[Outer attributes][attributes] are allowed on functions. [Inner
-attributes][attributes] are allowed directly after the `{` inside its [block].
+函数允许使用[外部属性][attributes]，也允许在[代码块]中的 `{` 后面直接放置[内部属性][attributes]。
 
-This example shows an inner attribute on a function. The function will only be
-available while running tests.
+下面这个例子显示了一个函数的内部属性。该函数仅在运行测试时可用。
 
 ```
 fn test_only() {
@@ -271,20 +269,13 @@ fn test_only() {
 }
 ```
 
-> Note: Except for lints, it is idiomatic to only use outer attributes on
-> function items.
+> 注意：除了 lint 类属性，函数上一般惯用的还是外部属性。
 
-The attributes that have meaning on a function are [`cfg`], [`cfg_attr`], [`deprecated`],
-[`doc`], [`export_name`], [`link_section`], [`no_mangle`], [the lint check
-attributes], [`must_use`], [the procedural macro attributes], [the testing
-attributes], and [the optimization hint attributes]. Functions also accept
-attributes macros.
+在函数上有意义的属性是 [`cfg`]、[`cfg_attr`]、[`deprecated`]、[`doc`]、[`export_name`]、[`link_section`]、[`no_mangle`]、[lint 检查类属性]、[`must_use`]、[过程宏属性]、[测试类属性]和[优化提示类属性]。函数也可以接受属性宏。
 
-## Attributes on function parameters
+## 函数参数上的属性
 
-[Outer attributes][attributes] are allowed on function parameters and the
-permitted [built-in attributes] are restricted to `cfg`, `cfg_attr`, `allow`,
-`warn`, `deny`, and `forbid`.
+函数参数允许使用[外部属性][attributes]，允许的[*内置*属性]仅限于 `cfg`、`cfg_attr`、`allow`、`warn`、`deny` 和 `forbid`。
 
 ```rust
 fn len(
@@ -295,12 +286,9 @@ fn len(
 }
 ```
 
-Inert helper attributes used by procedural macro attributes applied to items are also
-allowed but be careful to not include these inert attributes in your final `TokenStream`.
+应用于数据项的过程宏属性所使用的惰性辅助属性也是允许的，但是要注意不要在最终（输出）的 `TokenStream` 中包含这些惰性属性。
 
-For example, the following code defines an inert `some_inert_attribute` attribute that
-is not formally defined anywhere and the `some_proc_macro_attribute` procedural macro is
-responsible for detecting its presence and removing it from the output token stream.
+例如，下面的代码定义了一个未在任何地方正式定义的惰性属性 `some_inert_attribute`，而 `some_proc_macro_attribute` 过程宏负责检测它的存在，并从输出标记流中删除它。
 
 <!-- ignore: requires proc macro -->
 ```rust,ignore
@@ -318,31 +306,30 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [_Type_]: ../types.md#type-expressions
 [_WhereClause_]: generics.md#where-clauses
 [_OuterAttribute_]: ../attributes.md
-[const context]: ../const_eval.md#const-context
-[tuple struct]: structs.md
-[tuple variant]: enumerations.md
-[external block]: external-blocks.md
-[path]: ../paths.md
-[block]: ../expressions/block-expr.md
-[variables]: ../variables.md
-[type]: ../types.md#type-expressions
+[常量上下文]: ../const_eval.md#const-context
+[元组结构体]: structs.md
+[元祖变体]: enumerations.md
+[外部块]: external-blocks.md
+[路径]: ../paths.md
+[代码块]: ../expressions/block-expr.md
+[变量]: ../variables.md
+[类型]: ../types.md#type-expressions
 [*函数类型(function item type)*]: ../types/function-item.md
-[Trait]: traits.md
+[trait]: traits.md
 [attributes]: ../attributes.md
 [`cfg`]: ../conditional-compilation.md#the-cfg-attribute
 [`cfg_attr`]: ../conditional-compilation.md#the-cfg_attr-attribute
-[the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
-[the procedural macro attributes]: ../procedural-macros.md
-[the testing attributes]: ../attributes/testing.md
-[the optimization hint attributes]: ../attributes/codegen.md#optimization-hints
+[lint 检查类属性]: ../attributes/diagnostics.md#lint-check-attributes
+[过程宏属性]: ../procedural-macros.md
+[测试类属性]: ../attributes/testing.md
+[优化提示类属性]: ../attributes/codegen.md#optimization-hints
 [`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
 [`doc`]: ../../rustdoc/the-doc-attribute.html
 [`must_use`]: ../attributes/diagnostics.md#the-must_use-attribute
-[patterns]: ../patterns.md
+[模式]: ../patterns.md
 [`?Sized`]: ../trait-bounds.md#sized
-[trait bounds]: ../trait-bounds.md
+[trait 约束]: ../trait-bounds.md
 [`export_name`]: ../abi.md#the-export_name-attribute
 [`link_section`]: ../abi.md#the-link_section-attribute
 [`no_mangle`]: ../abi.md#the-no_mangle-attribute
-[external_block_abi]: external-blocks.md#abi
-[built-in attributes]: ../attributes.html#built-in-attributes-index
+[*内置*属性]: ../attributes.html#built-in-attributes-index
