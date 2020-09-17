@@ -253,7 +253,6 @@ let nonsense = circle.radius() * circle.area();
 <!-- https://github.com/rust-lang/rust/issues/35203 -->
 
 在2015版中，trait 的*函数或方法*的参数模式是可选的：
-<!--In the 2015 edition, the pattern for a trait function or method parameter is optional: TobeModify-->
 
 ```rust
 trait T {
