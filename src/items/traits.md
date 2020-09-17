@@ -184,9 +184,9 @@ let obj: Box<dyn WithSelf> = Box::new(S); // 错误: 不能使用 `Self` 作为�
 
 **超类 trait** 是类型为了实现特定 trait 而需要提前实现的 trait。此外，如果[泛型]或 [*trait 对象*]被某个 trait 绑定，那这个 trait 就可以访问这些对象的*超类 trait* 的关联数据项。
 
-Supertraits are declared by trait bounds on the `Self` type of a trait and
-transitively the supertraits of the traits declared in those trait bounds. It is
-an error for a trait to be its own supertrait.
+超类 trait是由特征的“自我”类型上的特征边界来声明的，并且是在这些特征边界中声明的特征的超特征。一个性状成为它自己的超性状是错误的。
+超类 trait 是指一个特质的“自我”类型的特质界限，以及在这些特质界限中所界定的特质的超特质。把一个特质当作它自己的超特质是错误的。
+Supertraits are declared by trait bounds on the `Self` type of a trait and transitively the supertraits of the traits declared in those trait bounds. It is an error for a trait to be its own supertrait.
 
 The trait with a supertrait is called a **subtrait** of its supertrait.
 
