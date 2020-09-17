@@ -80,14 +80,14 @@ trait Seq<T> {
 
 ## 对象安全条款
 
-对象安全的 trait 可以是 [trait 对象] 的基础 trait。如果 trait 具有以下特性（在 [RFC 255] 中定义），则它是*对象安全的*：
+对象安全的 trait 可以是 [trait对象] 的基础 trait。如果 trait 具有以下特性（在 [RFC 255] 中定义），则它是*对象安全的*：
 
 * 它必须不能是 `Self: Sized`
 * 所有的关联函数要么有 `where Self: Sized` 约束，要么
   * 不能有类型参数（生命周期参数不包括在内），并且
   * 作为[方法]不能使用直接 `Self`，除非 `Self` 是方法接收者内部的类型。
 * 它必须没有任何关联常量。
-* 所有的超类 trait 也必须也是安全的。
+* 所有的超类trait 也必须也是安全的。
 
 当方法上没有 `Self: Sized` 绑定时，方法接收者的类型必须是以下类型之一：
 
@@ -119,7 +119,7 @@ trait TraitMethods {
 ```
 
 ```rust,compile_fail
-// 此 trait 是对象安全的，但不能在 trait 对象上调度使用这些方法。
+// 此 trait 是对象安全的，但不能在 trait对象上调度使用这些方法。
 trait NonDispatchable {
     // 非方法不能被调度。
     fn foo() where Self: Sized {}
@@ -180,58 +180,55 @@ impl WithSelf for S {}
 let obj: Box<dyn WithSelf> = Box::new(S); // 错误: 不能使用 `Self` 作为类型参数
 ```
 
-## 超类 trait
+## 超类trait
 
-**超类 trait** 是类型为了实现特定 trait 而需要提前实现的 trait。此外，如果[泛型]或 [*trait 对象*]被某个 trait 绑定，那这个 trait 就可以访问这些对象的*超类 trait* 的关联数据项。
+**超类trait** 是类型为了实现特定 trait 而需要（提前）实现的 trait。此外，任何地方一个[泛型]或 [trait对象]被某个 trait 约束，那这个泛型或 trait对象就可以访问这个*超类trait* 的关联数据项。
 
-超类 trait是由特征的“自我”类型上的特征边界来声明的，并且是在这些特征边界中声明的特征的超特征。一个性状成为它自己的超性状是错误的。
-超类 trait 是指一个特质的“自我”类型的特质界限，以及在这些特质界限中所界定的特质的超特质。把一个特质当作它自己的超特质是错误的。
-Supertraits are declared by trait bounds on the `Self` type of a trait and transitively the supertraits of the traits declared in those trait bounds. It is an error for a trait to be its own supertrait.
+超类trait 是通过 trait 的 `Self` 类型上的 trait 约束来声明的，并且通过这种 trait 约束的方式来传递这种超类trait 声明关系。一个 trait 不能是它自己的超类trait。
 
-The trait with a supertrait is called a **subtrait** of its supertrait.
+有超类trait 的 trait 称其为其超类trait 的**子trait**。
 
-The following is an example of declaring `Shape` to be a supertrait of `Circle`.
+下面是一个声明 `Shape` 是 `Circle` 的超类trait 的例子。
 
 ```rust
 trait Shape { fn area(&self) -> f64; }
 trait Circle : Shape { fn radius(&self) -> f64; }
 ```
 
-And the following is the same example, except using [where clauses].
+下面是同一个示例，除了使用了 [where子句]。
 
 ```rust
 trait Shape { fn area(&self) -> f64; }
 trait Circle where Self: Shape { fn radius(&self) -> f64; }
 ```
 
-This next example gives `radius` a default implementation using the `area`
-function from `Shape`.
+下面例子通过 `Shape` 的 `area` 函数为 `radius` 提供了一个默认实现：
 
 ```rust
 # trait Shape { fn area(&self) -> f64; }
 trait Circle where Self: Shape {
     fn radius(&self) -> f64 {
-        // A = pi * r^2
-        // so algebraically,
+        // 因为 A = pi * r^2
+        // 所以通过代数推导
         // r = sqrt(A / pi)
         (self.area() /std::f64::consts::PI).sqrt()
     }
 }
 ```
 
+下一个示例调用了一个泛型参数的超类trait 的方法。
 This next example calls a supertrait method on a generic parameter.
-
 ```rust
 # trait Shape { fn area(&self) -> f64; }
 # trait Circle : Shape { fn radius(&self) -> f64; }
 fn print_area_and_radius<C: Circle>(c: C) {
-    // Here we call the area method from the supertrait `Shape` of `Circle`.
+    // 这里我们调用 `Circle` 的超类trait 的 area 方法。
     println!("Area: {}", c.area());
     println!("Radius: {}", c.radius());
 }
 ```
 
-Similarly, here is an example of calling supertrait methods on trait objects.
+类似地，这里是一个在 trait对象上调用 超类trait 的方法的例子。
 
 ```rust
 # trait Shape { fn area(&self) -> f64; }
@@ -244,31 +241,27 @@ let circle = Box::new(circle) as Box<dyn Circle>;
 let nonsense = circle.radius() * circle.area();
 ```
 
-## Unsafe traits
+## 非安全trait
 
-Traits items that begin with the `unsafe` keyword indicate that *implementing* the
-trait may be [unsafe]. It is safe to use a correctly implemented unsafe trait.
-The [trait implementation] must also begin with the `unsafe` keyword.
+以关键字 `unsafe` 开头的 trait项表示*实现*该 trait 可能是[非安全]的。使用正确实现的非安全trait 是安全的。[trait实现]扔必须以关键字 `unsafe` 开头。
 
-[`Sync`] and [`Send`] are examples of unsafe traits.
+[`Sync`] 和 [`Send`] 是非安全trait。
 
-## Parameter patterns
+## 参数模式
 
-Function or method declarations without a body only allow [IDENTIFIER] or
-`_` [wild card][WildcardPattern] patterns. `mut` [IDENTIFIER] is currently
-allowed, but it is deprecated and will become a hard error in the future.
+没有代码体的函数或方法声明只允许使用 [IDENTIFIER] 或 `_` [通配符][WildcardPattern]模式。当前 `mut` [IDENTIFIER]是允许的，但它已被弃用，将来将成为一个硬错误。
 <!-- https://github.com/rust-lang/rust/issues/35203 -->
 
-In the 2015 edition, the pattern for a trait function or method parameter is
-optional:
+在2015版中，trait 的*函数或方法*的参数模式是可选的：
+<!--In the 2015 edition, the pattern for a trait function or method parameter is optional: TobeModify-->
 
 ```rust
 trait T {
-    fn f(i32);  // Parameter identifiers are not required.
+    fn f(i32);  // 不需要参数的标识符.
 }
 ```
 
-The kinds of patterns for parameters is limited to one of the following:
+所有的参数模式被限制为下述之一：
 
 * [IDENTIFIER]
 * `mut` [IDENTIFIER]
@@ -276,24 +269,18 @@ The kinds of patterns for parameters is limited to one of the following:
 * `&` [IDENTIFIER]
 * `&&` [IDENTIFIER]
 
-Beginning in the 2018 edition, function or method parameter patterns are no
-longer optional. Also, all irrefutable patterns are allowed as long as there
-is a body. Without a body, the limitations listed above are still in effect.
+从2018版开始，*函数或方法*的参数模式不再是可选的。同时，只要有代码体，所有不可辩驳的模式都是被允许的。如果没有代码体，上面列出的限制仍然有效。
 
 ```rust,edition2018
 trait T {
     fn f1((a, b): (i32, i32)) {}
-    fn f2(_: (i32, i32));  // Cannot use tuple pattern without a body.
+    fn f2(_: (i32, i32));  // 没有代码体不能使用元组模式。
 }
 ```
 
-## Item visibility
+## 数据项可见性
 
-Trait items syntactically allow a [_Visibility_] annotation, but this is
-rejected when the trait is validated. This allows items to be parsed with a
-unified syntax across different contexts where they are used. As an example,
-an empty `vis` macro fragment specifier can be used for trait items, where the
-macro rule may be used in other situations where visibility is allowed.
+trait项在语法上允许使用[_可见性_][_Visibility_]注释，但是当 trait 被验证时，这将被拒绝。这使得数据项可以在使用它们的不同上下文中使用统一的语法进行分析。例如，空的 `vis` 宏片段分类符可用于 trait项，其中宏规则可用于其他允许可见性的情况。
 
 ```rust
 macro_rules! create_method {
@@ -303,14 +290,14 @@ macro_rules! create_method {
 }
 
 trait T1 {
-    // Empty `vis` is allowed.
+    // 只允许空 `vis`。
     create_method! { method_of_t1 }
 }
 
 struct S;
 
 impl S {
-    // Visibility is allowed here.
+    // 这里允许使用可见性。
     create_method! { pub method_of_s }
 }
 
@@ -339,17 +326,17 @@ fn main() {
 [_Type_]: ../types.md#type-expressions
 [_Visibility_]: ../visibility-and-privacy.md
 [_WhereClause_]: generics.md#where-clauses
-[bounds]: ../trait-bounds.md
-[trait object]: ../types/trait-object.md
+[约束]: ../trait-bounds.md
+[trait对象]: ../types/trait-object.md
 [RFC 255]: https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md
-[associated items]: associated-items.md
-[method]: associated-items.md#methods
+[关联数据项]: associated-items.md
+[方法]: associated-items.md#方法
 [实现(implementations)]: implementations.md
-[generics]: generics.md
-[where clauses]: generics.md#where-clauses
-[generic functions]: functions.md#generic-functions
-[unsafe]: ../unsafety.md
-[trait implementation]: implementations.md#trait-implementations
+[泛型]: generics.md
+[where子句]: generics.md#where-clauses
+[泛型函数]: functions.md#generic-functions
+[非安全]: ../unsafety.md
+[trait实现]: implementations.md#trait-implementations
 [`Send`]: ../special-types-and-traits.md#send
 [`Sync`]: ../special-types-and-traits.md#sync
 [`Arc<Self>`]: ../special-types-and-traits.md#arct
