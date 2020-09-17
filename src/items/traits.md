@@ -1,6 +1,9 @@
-# Traits
+# traite
 
-> **<sup>Syntax</sup>**\
+>[traits.md](https://github.com/rust-lang/reference/blob/master/src/items/traits.md)\
+>commit d5cc65a70f66a243d84cd251188d80fbe9926747
+
+> **<sup>句法</sup>**\
 > _Trait_ :\
 > &nbsp;&nbsp; `unsafe`<sup>?</sup> `trait` [IDENTIFIER]&nbsp;
 >              [_Generics_]<sup>?</sup>
@@ -47,33 +50,25 @@
 > _TraitType_ :\
 > &nbsp;&nbsp; `type` [IDENTIFIER] ( `:` [_TypeParamBounds_]<sup>?</sup> )<sup>?</sup> `;`
 
-A _trait_ describes an abstract interface that types can implement. This
-interface consists of [associated items], which come in three varieties:
+_trait_ 描述类型可以实现的抽象接口。该接口由[关联数据项]组成，关联数据项分三种类型:
 
-- [functions](associated-items.md#associated-functions-and-methods)
-- [types](associated-items.md#associated-types)
-- [constants](associated-items.md#associated-constants)
+- [函数](associated-items.md#associated-functions-and-methods)
+- [类型](associated-items.md#associated-types)
+- [常量](associated-items.md#associated-constants)
 
-All traits define an implicit type parameter `Self` that refers to "the type
-that is implementing this interface". Traits may also contain additional type
-parameters. These type parameters, including `Self`, may be constrained by
-other traits and so forth [as usual][generics].
+所有 trait 都定义了一个隐式类型参数 `Self` ，它指向“实现此接口的类型”。trait 还可能包含额外的类型参数。这些类型参数，包括 `Self` 在内，还可能会[像往常一样][泛型]受到其他特征的约束。
 
-Traits are implemented for specific types through separate [implementations].
+trait 是通过特定类型自己的[实现(implementations)]（代码段）来被这些类型实现的。
 
-Items associated with a trait do not need to be defined in the trait, but they
-may be. If the trait provides a definition, then this definition acts as a
-default for any implementation which does not override it. If it does not, then
-any implementation must provide a definition.
+与 trait 相关的数据项不需要在该 trait 中提供具体定义，但也可以提供。如果 trait 提供了定义，那么该定义将作为任何不覆盖它的实现的默认值。如果没有提供，那么任何实现都必须提供具体定义。
 
-## Trait bounds
+## trait 约束
 
-Generic items may use traits as [bounds] on their type parameters.
+泛型约束的数据项可以使用 trait 作为其类型参数的[约束]。
 
-## Generic Traits
+## 泛型 trait
 
-Type parameters can be specified for a trait to make it generic. These appear
-after the trait name, using the same syntax used in [generic functions].
+可以为 trait 指定类型参数，使其成为泛型。它们出现在 trait 名称之后，使用与[泛型函数]相同的语法。
 
 ```rust
 trait Seq<T> {
@@ -83,34 +78,31 @@ trait Seq<T> {
 }
 ```
 
-## Object Safety
+## 对象安全条款
 
-Object safe traits can be the base trait of a [trait object]. A trait is
-*object safe* if it has the following qualities (defined in [RFC 255]):
+对象安全的 trait 可以是 [trait 对象] 的基础 trait。如果 trait 具有以下特性（在 [RFC 255] 中定义），则它是*对象安全的*：
 
-* It must not require `Self: Sized`
-* All associated functions must either have a `where Self: Sized` bound, or
-    * Not have any type parameters (although lifetime parameters are allowed),
-      and
-    * Be a [method] that does not use `Self` except in the type of the receiver.
-* It must not have any associated constants.
-* All supertraits must also be object safe.
+* 它必须不能是 `Self: Sized`
+* 所有的关联函数要么有 `where Self: Sized` 约束，要么
+  * 不能有类型参数（生命周期参数不包括在内），并且
+  * 作为[方法]不能使用直接 `Self`，除非 `Self` 是方法接收者内部的类型。
+* 它必须没有任何关联常量。
+* 所有的超类 trait 也必须也是安全的。
 
-When there isn't a `Self: Sized` bound on a method, the type of a method
-receiver must be one of the following types:
+当方法上没有 `Self: Sized` 绑定时，方法接收者的类型必须是以下类型之一：
 
 * `&Self`
 * `&mut Self`
 * [`Box<Self>`]
 * [`Rc<Self>`]
 * [`Arc<Self>`]
-* [`Pin<P>`] where `P` is one of the types above
+* [`Pin<P>`] 当 `P` 是上面类型中的一种
 
 ```rust
 # use std::rc::Rc;
 # use std::sync::Arc;
 # use std::pin::Pin;
-// Examples of object safe methods.
+// 对象安全的 trait 方法。
 trait TraitMethods {
     fn by_ref(self: &Self) {}
     fn by_ref_mut(self: &mut Self) {}
@@ -127,15 +119,15 @@ trait TraitMethods {
 ```
 
 ```rust,compile_fail
-// This trait is object-safe, but these methods cannot be dispatched on a trait object.
+// 此 trait 是对象安全的，但不能在 trait 对象上调度使用这些方法。
 trait NonDispatchable {
-    // Non-methods cannot be dispatched.
+    // 非方法不能被调度。
     fn foo() where Self: Sized {}
-    // Self type isn't known until runtime.
+    // 在运行之前 Self 类型未知。
     fn returns(&self) -> Self where Self: Sized;
-    // `other` may be a different concrete type of the receiver.
+    // `other` 可能是另一具体类型的接收者。
     fn param(&self, other: Self) where Self: Sized {}
-    // Generics are not compatible with vtables.
+    // 泛型与虚函数指针表(Virtual Function Pointer Table, vtable)不兼容。
     fn typed<T>(&self, x: T) where Self: Sized {}
 }
 
@@ -144,55 +136,53 @@ impl NonDispatchable for S {
     fn returns(&self) -> Self where Self: Sized { S }
 }
 let obj: Box<dyn NonDispatchable> = Box::new(S);
-obj.returns(); // ERROR: cannot call with Self return
-obj.param(S);  // ERROR: cannot call with Self parameter
-obj.typed(1);  // ERROR: cannot call with generic type
+obj.returns(); // 错误: 不能调用带有 Self 返回类型的方法
+obj.param(S);  // 错误: 不能调用带有 Self 类型的参数的方法
+obj.typed(1);  // 错误: 不能调用带有泛型类型的参数的方法
 ```
 
 ```rust,compile_fail
 # use std::rc::Rc;
-// Examples of non-object safe traits.
+// 非对象安全的 trait
 trait NotObjectSafe {
-    const CONST: i32 = 1;  // ERROR: cannot have associated const
+    const CONST: i32 = 1;  // 错误: 不能有关联常量
 
-    fn foo() {}  // ERROR: associated function without Sized
-    fn returns(&self) -> Self; // ERROR: Self in return type
-    fn typed<T>(&self, x: T) {} // ERROR: has generic type parameters
-    fn nested(self: Rc<Box<Self>>) {} // ERROR: nested receiver not yet supported
+    fn foo() {}  // 错误: 关联函数没有 `Sized` 约束
+    fn returns(&self) -> Self; // 错误: `Self` 在返回类型中 
+    fn typed<T>(&self, x: T) {} // 错误: 泛型类型的参数
+    fn nested(self: Rc<Box<Self>>) {} // 错误: 嵌套接受者还未被支持
 }
 
 struct S;
 impl NotObjectSafe for S {
     fn returns(&self) -> Self { S }
 }
-let obj: Box<dyn NotObjectSafe> = Box::new(S); // ERROR
+let obj: Box<dyn NotObjectSafe> = Box::new(S); // 错误
 ```
 
 ```rust,compile_fail
-// Self: Sized traits are not object-safe.
+// Self: Sized trait 非对象安全的。
 trait TraitWithSize where Self: Sized {}
 
 struct S;
 impl TraitWithSize for S {}
-let obj: Box<dyn TraitWithSize> = Box::new(S); // ERROR
+let obj: Box<dyn TraitWithSize> = Box::new(S); // 错误
 ```
 
 ```rust,compile_fail
-// Not object safe if `Self` is a type argument.
+// 如果有 `Self` 这样的泛型参数，那 trait 就是非对象安全的
 trait Super<A> {}
 trait WithSelf: Super<Self> where Self: Sized {}
 
 struct S;
 impl<A> Super<A> for S {}
 impl WithSelf for S {}
-let obj: Box<dyn WithSelf> = Box::new(S); // ERROR: cannot use `Self` type parameter
+let obj: Box<dyn WithSelf> = Box::new(S); // 错误: 不能使用 `Self` 作为类型参数
 ```
 
-## Supertraits
+## 超类 trait
 
-**Supertraits** are traits that are required to be implemented for a type to
-implement a specific trait. Furthermore, anywhere a [generic][generics] or [trait object]
-is bounded by a trait, it has access to the associated items of its supertraits.
+**超类 trait** 是类型为了实现特定 trait 而需要提前实现的 trait。此外，如果[泛型]或 [*trait 对象*]被某个 trait 绑定，那这个 trait 就可以访问这些对象的*超类 trait* 的关联数据项。
 
 Supertraits are declared by trait bounds on the `Self` type of a trait and
 transitively the supertraits of the traits declared in those trait bounds. It is
@@ -354,7 +344,7 @@ fn main() {
 [RFC 255]: https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md
 [associated items]: associated-items.md
 [method]: associated-items.md#methods
-[implementations]: implementations.md
+[实现(implementations)]: implementations.md
 [generics]: generics.md
 [where clauses]: generics.md#where-clauses
 [generic functions]: functions.md#generic-functions
