@@ -1,6 +1,9 @@
-# Implementations
+# 实现
 
-> **<sup>Syntax</sup>**\
+>[implementations.md](https://github.com/rust-lang/reference/blob/master/src/items/implementations.md)\
+>commit 6a78aa5b0b09f78a6fa28b9dc3078c9b134785a9
+
+> **<sup>句法</sup>**\
 > _Implementation_ :\
 > &nbsp;&nbsp; _InherentImpl_ | _TraitImpl_
 >
@@ -31,24 +34,18 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; | ( [_Visibility_]<sup>?</sup> ( [_TypeAlias_] | [_ConstantItem_] | [_Function_] | [_Method_] ) )\
 > &nbsp;&nbsp; )
 
-An _implementation_ is an item that associates items with an _implementing type_.
-Implementations are defined with the keyword `impl` and contain functions
-that belong to an instance of the type that is being implemented or to the
-type statically.
+*实现*是将数据项与*实现类型*关联起来的数据项。实现使用关键字`impl` 定义，并包含了属于正要实现的类型的实例的函数，或者包含了正要实现的类型本身的静态函数。
 
-There are two types of implementations:
+有两种类型的实现:
 
-- inherent implementations
-- [trait] implementations
+- 固有实现
+- [trait]实现
 
-## Inherent Implementations
+## 固有实现
 
-An inherent implementation is defined as the sequence of the `impl` keyword,
-generic type declarations, a path to a nominal type, a where clause, and a
-bracketed set of associable items.
+固有实现被定义为一段由关键字`impl`、泛型类型声明、指向具名类型的路径、where子句和一对花括号括起来的一组关联项组成的序列。
 
-The nominal type is called the _implementing type_ and the associable items are
-the _associated items_ to the implementing type.
+The nominal type is called the _implementing type_ and the associable items are the _associated items_ to the implementing type.
 
 Inherent implementations associate the contained items to the
 implementing type.  Inherent implementations can contain [associated

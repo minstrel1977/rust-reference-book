@@ -17,14 +17,14 @@
     - [声明宏](macros-by-example.md)
     - [过程宏](procedural-macros.md)
 
-- [Crates 和源文件](crates-and-source-files.md)
+- [crate 和源文件](crates-and-source-files.md)
 
 - [条件编译](conditional-compilation.md)
 
 - [数据项](items.md)
     - [模块](items/modules.md)
-    - [外部 crate](items/extern-crates.md)
-    - [use 声明](items/use-declarations.md)
+    - [外部crate](items/extern-crates.md)
+    - [use声明](items/use-declarations.md)
     - [函数](items/functions.md)
     - [类型别名](items/type-aliases.md)
     - [结构体](items/structs.md)
@@ -66,9 +66,9 @@
         - [循环表达式](expressions/loop-expr.md)
         - [区间表达式](expressions/range-expr.md)
         - [if 和 if let 表达式](expressions/if-expr.md)
-        - [match 表达式](expressions/match-expr.md)
-        - [return 表达式](expressions/return-expr.md)
-        - [await 表达式](expressions/await-expr.md)
+        - [match表达式](expressions/match-expr.md)
+        - [return表达式](expressions/return-expr.md)
+        - [await表达式](expressions/await-expr.md)
 
 - [模式](patterns.md)
 
@@ -77,7 +77,7 @@
         - [布尔型](types/boolean.md)
         - [数字型](types/numeric.md)
         - [字符型](types/textual.md)
-        - [Never 型](types/never.md)
+        - [never型](types/never.md)
         - [元组](types/tuple.md)
         - [数组](types/array.md)
         - [切片](types/slice.md)
@@ -88,7 +88,7 @@
         - [闭包](types/closure.md)
         - [指针型](types/pointer.md)
         - [函数指针](types/function-pointer.md)
-        - [trait 对象](types/trait-object.md)
+        - [trait对象](types/trait-object.md)
         - [impl trait](types/impl-trait.md)
         - [类型参数](types/parameters.md)
         - [推导型](types/inferred.md)
