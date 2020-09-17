@@ -65,7 +65,6 @@ const _: () =  { struct _SameNameTwice; };
 ```
 
 与[下划线导入]一样，宏可以多次安全地在同一作用域中发出相同的未命名常量。例如，以下内容不应该产生错误:
-As with [underscore imports], macros may safely emit the same unnamed constant in the same scope more than once. For example, the following should not produce an error:
 
 ```rust
 macro_rules! m {
@@ -73,17 +72,17 @@ macro_rules! m {
 }
 
 m!(const _: () = (););
-// This expands to:
+// 这会展开出：
 // const _: () = ();
 // const _: () = ();
 ```
 
-[associated]: ../glossary.md#associated-item
+[关联]: ../glossary.md#associated-item
 [*常量值*]: ../const_eval.md#常量表达式
-[free]: ../glossary.md#free-item
+[自由]: ../glossary.md#free-item
 [静态生命周期省略]: ../lifetime-elision.md#static-lifetime-elision
 [IDENTIFIER]: ../identifiers.md
-[underscore imports]: use-declarations.md#underscore-imports
+[下划线的导入]: use-declarations.md#underscore-imports
 [_Type_]: ../types.md#type-expressions
 [_Expression_]: ../expressions.md
 [`Copy`]: ../special-types-and-traits.md#copy

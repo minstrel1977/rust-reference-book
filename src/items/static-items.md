@@ -1,79 +1,63 @@
-# Static items
+# 静态项
 
-> **<sup>Syntax</sup>**\
+>[static-items.md](https://github.com/rust-lang/reference/blob/master/src/items/static-items.md)\
+>commit 2f459e22ec30a94bafafe417da4e95044578df73
+
+> **<sup>句法</sup>**\
 > _StaticItem_ :\
 > &nbsp;&nbsp; `static` `mut`<sup>?</sup> [IDENTIFIER] `:` [_Type_]
 >              `=` [_Expression_] `;`
 
-A *static item* is similar to a [constant], except that it represents a precise
-memory location in the program. All references to the static refer to the same
-memory location. Static items have the `static` lifetime, which outlives all
-other lifetimes in a Rust program. Static items do not call [`drop`] at the
-end of the program.
+*静态项*类似于[常量]，除了它在程序中表示一个精确的内存位置。所有对静态项的引用都指向相同的内存位置。静态项有 `static` 生命周期，它比 Rust 程序中的所有其他（数据项）生命周期都要长。静态项不会在程序结束时调用 [`drop`]。
 
-The static initializer is a [constant expression] evaluated at compile time.
-Static initializers may refer to other statics.
+静态初始化器是在编译时计算的[常量表达式]。静态初始化器可以引用其他静态项。
 
-Non-`mut` static items that contain a type that is not [interior mutable] may
-be placed in read-only memory.
+包含非[内部可变]类型的非 `mut` 静态项可以放在只读内存中。
 
-All access to a static is safe, but there are a number of restrictions on
-statics:
+所有访问静态项的操作都是安全的，但对静态项也有一些限制：
 
-* The type must have the `Sync` trait bound to allow thread-safe access.
-* Constants cannot refer to statics.
+* 静态项的数据类型必须拥有 `Sync` trait，这样才可以让线程安全访问。
+* 常量项不能引用静态项。
 
-## Mutable statics
+## 可变静态项
 
-If a static item is declared with the `mut` keyword, then it is allowed to be
-modified by the program. One of Rust's goals is to make concurrency bugs hard
-to run into, and this is obviously a very large source of race conditions or
-other bugs. For this reason, an `unsafe` block is required when either reading
-or writing a mutable static variable. Care should be taken to ensure that
-modifications to a mutable static are safe with respect to other threads
-running in the same process.
+如果静态项是用 `mut` 关键字声明的，则程序允许对其进行修改。Rust 的目标之一是避免并发带来的 bug，可变静态项显然是竞争条件或其他 bug 的一个非常重要的来源。因此，读取或写入可变静态项变量时需要 `unsafe` 块。应注意确保对可变静态项的修改相对于运行在同一进程中的其他线程是安全的。
 
-Mutable statics are still very useful, however. They can be used with C
-libraries and can also be bound from C libraries in an `extern` block.
+然而，可变静态项仍然非常有用。它们可以与 C 库一起使用，也可以在 `extern` 块中与 C 库绑定。
 
 ```rust
 # fn atomic_add(_: &mut u32, _: u32) -> u32 { 2 }
 
 static mut LEVELS: u32 = 0;
 
-// This violates the idea of no shared state, and this doesn't internally
-// protect against races, so this function is `unsafe`
+// 这违反了不共享状态的思想，而且它在内部不能防止竞争，所以这个函数是 `unsafe`
 unsafe fn bump_levels_unsafe1() -> u32 {
     let ret = LEVELS;
     LEVELS += 1;
     return ret;
 }
 
-// Assuming that we have an atomic_add function which returns the old value,
-// this function is "safe" but the meaning of the return value may not be what
-// callers expect, so it's still marked as `unsafe`
+// 假设我们有一个返回旧值的 atomic_add 函数，这个函数是“安全的”，
+// 但是返回值的含义可能不是调用者所期望的，所以它仍然被标记为 `unsafe`
 unsafe fn bump_levels_unsafe2() -> u32 {
     return atomic_add(&mut LEVELS, 1);
 }
 ```
 
-Mutable statics have the same restrictions as normal statics, except that the
-type does not have to implement the `Sync` trait.
+可变静态项与普通静态项具有相同的限制，除了可变静态项的类型不需要实现 `Sync` trait。
 
-## Using Statics or Consts
+## 使用常量项或静态项
 
-It can be confusing whether or not you should use a constant item or a static
-item. Constants should, in general, be preferred over statics unless one of the
-following are true:
+是否应该使用常量项还是静态项可能会令人困惑。一般来说，常量项应优先于静态项，除非以下情况之一成立：
 
-* Large amounts of data are being stored
-* The single-address property of statics is required.
-* Interior mutability is required.
+* 存储大量数据
+* 需要静态项的存储地址不变的特性。
+* 需要内部可变性。
 
-[constant]: constant-items.md
+[常量]: constant-items.md
 [`drop`]: ../destructors.md
-[constant expression]: ../const_eval.md#常量表达式
-[interior mutable]: ../interior-mutability.md
+[常量表达式]: ../const_eval.md#常量表达式
+[内部可变]: ../interior-mutability.md
 [IDENTIFIER]: ../identifiers.md
 [_Type_]: ../types.md#type-expressions
 [_Expression_]: ../expressions.md
