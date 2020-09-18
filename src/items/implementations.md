@@ -43,7 +43,9 @@
 
 ## 固有实现
 
-固有实现被定义为一段由关键字 `impl`、泛型类型声明、指向标称类型(nominal type)的路径、where子句和一对花括号括起来的一组*关联项(associable items)*组成的序列。（这里）*标称类型*被称为*实现类型*；*关联项*可理解为和（固有实现的）实现类型相关联的各种数据项，（是描述数据项到实现类型的关系）。（译者注：这里译者大致采取了意译。首先 nominal type 在目前国内的Rust 社区没有合适的翻译先例，所以译者这里就蹭机器学习的热点翻译为“标称类型”，这种行径虽然降低了Rust的逼格，但在目前状态下，收益可能还是值得的；其次后半句采取意译是因为aassociable item 和  associable items 该怎么区分翻译，该怎么组织语序实在麻烦，译者又不想再创立新名词，所以只能模糊一下。囿于译者本身水平，翻译可能有错，所以本句原文也附上：The nominal type is called the _implementing type_ and the associable items are the _associated items_ to the implementing type.）
+固有实现被定义为一段由关键字 `impl`、泛型类型声明、指向标称类型(nominal type)的路径、where子句和一对花括号括起来的一组*关联项(associable items)*组成的序列。
+
+（这里）*标称类型*也被称作*实现类型*；*关联项*可理解为*实现类型*里的各种关联数据项。（译者注：这里译者大致采取了意译。首先 nominal type 在目前国内的Rust 社区没有合适的翻译先例，所以译者这里就蹭机器学习的热点翻译为“标称类型”，这种行径虽然降低了Rust的逼格，但在目前状态下，收益可能还是值得的；其次后半句采取意译是因为aassociable item 和  associable items 该怎么区分翻译，该怎么组织语序实在麻烦，译者又不想再创立新名词，所以只能模糊一下。囿于译者本身水平，翻译可能有错，所以本句原文也附上：The nominal type is called the _implementing type_ and the associable items are the _associated items_ to the implementing type.）
 
 固有实现将包含的数据项与实现类型关联起来。固有实现可以包含[关联函数]（包括方法）和[关联常量]。固有实现不能包含关联的类型别名。
 
@@ -92,9 +94,9 @@ fn main() {
 
 <!-- 为理解这个，你必须回去查看一下上一节的内容 :( -->
 
-trait 即为*被实现的trait*。实现类型实现了被实现的trait。
+trait 即为*trait接口*。实现类型实现了trait接口。
 
-trait实现必须定义被实现的trait 声明的所有非默认关联数据项，可以重新定义被实现的trait 定义的默认关联数据项，并且不能定义任何其他数据项。
+trait实现必须定义trait接口 声明的所有非默认关联数据项，可以重新定义trait接口 定义的默认关联数据项，并且不能定义任何其他数据项。
 
 关联项的完整路径为 `<` 后接实现类型的路径，再后接 `as`，然后是指向 trait 的路径，再后跟 `>`，这整体作为一个路径组件，然后再接关联数据项自己的路径组件。
 
@@ -136,25 +138,20 @@ impl Shape for Circle {
 
 如果孤儿规则检查失败或存在重叠的实现实例，则认为 trait实现不一致。
 
-当实现了某 trait 的两个实现存在非空交集时即为这两个 *trait实现* 重叠了，（这种非正常情况）可以用相同的类型实例化实现。
-Two trait implementations overlap when there is a non-empty intersection of the traits the implementation is for, the implementations can be instantiated with the same type. <!-- This is probably wrong? Source: No two implementations can be instantiable with the same set of types for the input type parameters. -->
+当两个实现各自的 *trait接口*集之间存在非空交集时即为这两个 *trait实现*重叠了，（这种常情况下）可以用相同的类型来实例化这两种不同实现的实例。<!-- 这有可能是错的?因为对于输入类型参数来说，不能用同一组类型去实例化两个实现-->
 
-#### Orphan rules
+#### 孤儿规则
 
-Given `impl<P1..=Pn> Trait<T1..=Tn> for T0`, an `impl` is valid only if at
-least one of the following is true:
+给定 `impl<P1..=Pn> Trait<T1..=Tn> for T0`，只有以下至少一种情况为真时，此 `impl` 才能成立：
 
-- `Trait` is a [local trait]
-- All of
-  - At least one of the types `T0..=Tn` must be a [local type]. Let `Ti` be the
-    first such type.
-  - No [uncovered type] parameters `P1..=Pn` may appear in `T0..Ti` (excluding
-    `Ti`)
+- `Trait` 是一个[本地 trait]
+- 以下所有
+  - `T0..=Tn` 种的类型至少有一种是[本地类型]。假设 `Ti` 是第一个开始这样的类型。
+  - 没有[无覆盖的类型]参数 `P1..=Pn` 会出现在 `T0..Ti` 里（注意 `Ti` 被排除在外）。
+  - （译者注：然后以同样的规则检测 `Ti+1`，以此类推，直到检测完 `Tn`位置）
 
-Only the appearance of *uncovered* type parameters is restricted.
-Note that for the purposes of coherence, [fundamental types] are
-special. The `T` in `Box<T>` is not considered covered, and `Box<LocalType>` 
-is considered local.
+只有*无覆盖的*类型参数的外观被限制。注意，为了一致性的目的，[基本类型]是特殊的。不认为 `Box<T>` 中的 `T` 被覆盖，而 `Box<LocalType>` 被认为是本地的。
+Only the appearance of *uncovered* type parameters is restricted. Note that for the purposes of coherence, [fundamental types] are special. The `T` in `Box<T>` is not considered covered, and `Box<LocalType>` is considered local.
 
 
 ## Generic Implementations

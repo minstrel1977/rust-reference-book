@@ -1,27 +1,31 @@
-# Glossary
+# 术语表
+
+>[glossary.md](https://github.com/rust-lang/reference/blob/master/src/glossary.md)\
+>commit eadbdafec0c4e302c2e564a773fe5bff60ddac1d
 
 ### Abstract syntax tree
+抽象语法树
 
-An ‘abstract syntax tree’, or ‘AST’, is an intermediate representation of
-the structure of the program when the compiler is compiling it.
+当编译器编译程序时，抽象语法树(AST)是程序结构的中间表示。
+<!-- An ‘abstract syntax tree’, or ‘AST’, is an intermediate representation of the structure of the program when the compiler is compiling it. -->
 
 ### Alignment
+对齐
 
-The alignment of a value specifies what addresses values are preferred to
-start at. Always a power of two. References to a value must be aligned.
-[More][alignment].
+值的对齐方式指定值的首选起始地址。对齐的值总是2的次方数。对值的引用必须对齐（译者理解：值的对齐决定值的起始存储地址，那引用该值就相当于取这个值的存储首地址，正好引用中带有值的类型，那就顺便做一次简单的内存校验）。[更多][alignment]。
+<!-- The alignment of a value specifies what addresses values are preferred to start at. Always a power of two. References to a value must be aligned. [More][alignment]. -->
 
 ### Arity
+元数
 
-Arity refers to the number of arguments a function or operator takes.
-For some examples, `f(2, 3)` and `g(4, 6)` have arity 2, while `h(8, 2, 6)`
-has arity 3. The `!` operator has arity 1.
+元数是指函数或运算符接受的参数个数。例如，`f(2, 3)` 和 `g(4, 6)` 的元数为2，而 `h(8, 2, 6)` 的元数为3。 `!` 运算符的元数为1。
+<!-- Arity refers to the number of arguments a function or operator takes. For some examples, `f(2, 3)` and `g(4, 6)` have arity 2, while `h(8, 2, 6)` has arity 3. The `!` operator has arity 1. -->
 
 ### Array
+数组
 
-An array, sometimes also called a fixed-size array or an inline array, is a value
-describing a collection of elements, each selected by an index that can be computed
-at run time by the program. It occupies a contiguous region of memory.
+数组，有时也称为固定大小数组或内联数组，是描述元素集合的值，每个元素都由可由程序在运行时给出的索引选择。数组占用内存的一个连续区域。
+<!-- An array, sometimes also called a fixed-size array or an inline array, is a value describing a collection of elements, each selected by an index that can be computed at run time by the program. It occupies a contiguous region of memory. -->
 
 ### Associated item
 
