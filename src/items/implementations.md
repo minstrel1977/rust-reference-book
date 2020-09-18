@@ -43,7 +43,7 @@
 
 ## 固有实现
 
-固有实现被定义为一段由关键字 `impl`、泛型类型声明、指向标称类型(nominal type)的路径、where子句和一对花括号括起来的一组*关联项(associable items)*组成的序列。（这里）*标称类型*被称为*实现类型*；*关联项*可理解为和（固有实现的）实现类型相关联的各种数据项，（是从描述数据项到实现类型的关系）。（译者注：这里译者大致采取了意译。首先 nominal type 在目前国内的Rust 社区没有合适的翻译先例，所以译者这里就蹭机器学习的热点翻译为“标称类型”，这种行径虽然降低了Rust的逼格，但在目前状态下，收益可能还是值得的；其次后半句采取意译是因为aassociable item 和  associable items 该怎么区分翻译，该怎么组织语序实在麻烦，译者又不想再创立新名词，所以只能模糊一下。囿于译者本身水平，翻译可能有错，所以本句原文也附上：The nominal type is called the _implementing type_ and the associable items are the _associated items_ to the implementing type.）
+固有实现被定义为一段由关键字 `impl`、泛型类型声明、指向标称类型(nominal type)的路径、where子句和一对花括号括起来的一组*关联项(associable items)*组成的序列。（这里）*标称类型*被称为*实现类型*；*关联项*可理解为和（固有实现的）实现类型相关联的各种数据项，（是描述数据项到实现类型的关系）。（译者注：这里译者大致采取了意译。首先 nominal type 在目前国内的Rust 社区没有合适的翻译先例，所以译者这里就蹭机器学习的热点翻译为“标称类型”，这种行径虽然降低了Rust的逼格，但在目前状态下，收益可能还是值得的；其次后半句采取意译是因为aassociable item 和  associable items 该怎么区分翻译，该怎么组织语序实在麻烦，译者又不想再创立新名词，所以只能模糊一下。囿于译者本身水平，翻译可能有错，所以本句原文也附上：The nominal type is called the _implementing type_ and the associable items are the _associated items_ to the implementing type.）
 
 固有实现将包含的数据项与实现类型关联起来。固有实现可以包含[关联函数]（包括方法）和[关联常量]。固有实现不能包含关联的类型别名。
 
@@ -53,9 +53,9 @@
 
 ``` rust
 pub mod color {
-    // 译者添加的注释：这为 `Color` 的 类型 或 原始类型
+    // 译者添加的注释：这段为 Color类型 或 原始Color类型
     pub struct Color(pub u8, pub u8, pub u8);
-    // 译者添加的注释：这为 `Color` 标称类型 或 实现类型
+    // 译者添加的注释：这里 `Color` 为Color类型的标称类型 或 实现类型
     impl Color {
         pub const WHITE: Color = Color(255, 255, 255);
     }
@@ -78,7 +78,7 @@ fn main() {
     // 类型的实现块和类型的声明不在同一个模块下，此时对实现内的关联数据项的存取仍通过指向类型定义的标准模式
     color::Color::red();
 
-    // 重新导出后的实现类型的路径表示仍然可用。
+    // 实现类型重新导出后，新导出的路径表示也可用。
     Color::red();
 
     // 这个不行, 因为 `values` 非公有.
@@ -86,27 +86,19 @@ fn main() {
 }
 ```
 
-## Trait Implementations
+## trait实现
 
-A _trait implementation_ is defined like an inherent implementation except that
-the optional generic type declarations is followed by a [trait] followed
-by the keyword `for`. Followed by a path to a nominal type.
+*trait实现*的定义与固有实现类似，只是可选的泛型类型声明后跟一个 [trait]，再后跟关键字  `for`。后面是一个指向标称类型的路径。
 
-<!-- To understand this, you have to back-reference to the previous section. :( -->
+<!-- 为理解这个，你必须回去查看一下上一节的内容 :( -->
 
-The trait is known as the _implemented trait_. The implementing type
-implements the implemented trait.
+trait 即为*被实现的trait*。实现类型实现了被实现的trait。
 
-A trait implementation must define all non-default associated items declared
-by the implemented trait, may redefine default associated items defined by the
-implemented trait, and cannot define any other items.
+trait实现必须定义被实现的trait 声明的所有非默认关联数据项，可以重新定义被实现的trait 定义的默认关联数据项，并且不能定义任何其他数据项。
 
-The path to the associated items is `<` followed by a path to the implementing
-type followed by `as` followed by a path to the trait followed by `>` as a path
-component followed by the associated item's path component.
+关联项的完整路径为 `<` 后接实现类型的路径，再后接 `as`，然后是指向 trait 的路径，再后跟 `>`，这整体作为一个路径组件，然后再接关联数据项自己的路径组件。
 
-[Unsafe traits] require the trait implementation to begin with the `unsafe`
-keyword.
+非安全trait 需要trait实现以关键字 `unsafe` 开头。
 
 ```rust
 # #[derive(Copy, Clone)]
@@ -140,15 +132,12 @@ impl Shape for Circle {
 }
 ```
 
-### Trait Implementation Coherence
+### trait实现的一致性
 
-A trait implementation is considered incoherent if either the orphan rules check fails
-or there are overlapping implementation instances.
+如果孤儿规则检查失败或存在重叠的实现实例，则认为 trait实现不一致。
 
-Two trait implementations overlap when there is a non-empty intersection of the
-traits the implementation is for, the implementations can be instantiated with
-the same type. <!-- This is probably wrong? Source: No two implementations can
-be instantiable with the same set of types for the input type parameters. -->
+当实现了某 trait 的两个实现存在非空交集时即为这两个 *trait实现* 重叠了，（这种非正常情况）可以用相同的类型实例化实现。
+Two trait implementations overlap when there is a non-empty intersection of the traits the implementation is for, the implementations can be instantiated with the same type. <!-- This is probably wrong? Source: No two implementations can be instantiable with the same set of types for the input type parameters. -->
 
 #### Orphan rules
 
