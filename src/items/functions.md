@@ -271,7 +271,7 @@ fn test_only() {
 
 > 注意：除了 lint 类属性，函数上一般惯用的还是外部属性。
 
-在函数上有意义的属性是 [`cfg`]、[`cfg_attr`]、[`deprecated`]、[`doc`]、[`export_name`]、[`link_section`]、[`no_mangle`]、[lint 检查类属性]、[`must_use`]、[过程宏属性]、[测试类属性]和[优化提示类属性]。函数也可以接受属性宏。
+在函数上有意义的属性是 [`cfg`]、[`cfg_attr`]、[`deprecated`]、[`doc`]、[`export_name`]、[`link_section`]、[`no_mangle`]、[lint检查类属性]、[`must_use`]、[过程宏属性]、[测试类属性]和[优化提示类属性]。函数也可以接受属性宏。
 
 ## 函数参数上的属性
 
@@ -319,7 +319,7 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [attributes]: ../attributes.md
 [`cfg`]: ../conditional-compilation.md#the-cfg-attribute
 [`cfg_attr`]: ../conditional-compilation.md#the-cfg_attr-attribute
-[lint 检查类属性]: ../attributes/diagnostics.md#lint-check-attributes
+[lint检查类属性]: ../attributes/diagnostics.md#lint-check-attributes
 [过程宏属性]: ../procedural-macros.md
 [测试类属性]: ../attributes/testing.md
 [优化提示类属性]: ../attributes/codegen.md#optimization-hints

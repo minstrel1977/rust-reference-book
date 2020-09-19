@@ -144,41 +144,31 @@ impl Shape for Circle {
 
 给定 `impl<P1..=Pn> Trait<T1..=Tn> for T0`，只有以下至少一种情况为真时，此 `impl` 才能成立：
 
-- `Trait` 是一个[本地 trait]
+- `Trait` 是一个[本地trait]
 - 以下所有
-  - `T0..=Tn` 种的类型至少有一种是[本地类型]。假设 `Ti` 是第一个开始这样的类型。
+  - `T0..=Tn` 中的类型至少有一种是[本地类型]。假设 `Ti` 是第一个这样的类型。
   - 没有[无覆盖类型]参数 `P1..=Pn` 会出现在 `T0..Ti` 里（注意 `Ti` 被排除在外）。
-  - （译者注：然后以同样的规则再检测 `Ti+1`，以此类推，直到检测完 `Tn`）
+  - 译者注：为理解上面两条规则，举几个例子、 `impl<T> ForeignTrait<LocalType> for ForeignType<T>` 这样的实现也是被允许的，而 `impl<Vec<T>> ForeignTrait<LocalType> for ForeignType<T>` 和 `impl<T> ForeignTrait<Vec<T>> for ForeignType<T>` 不被允许。
+  - 
+这里只有*无覆盖*类型参数的外观被限制（译者注：为方便理解“无覆盖类型参数”，译者提醒读者把它想象成上面译者举例中的 `T`）。注意，理解“无覆盖类型参数”时需要注意：为了保持一致性，[基本类型]虽然外观形式特殊的，但仍不认为时有覆盖的，如 `Box<T>` 中的 `T` 就不认为是有覆盖的，`Box<LocalType>` 是被认为是本地的。
 
-只有*无覆盖*类型参数的外观被限制。注意，为了一致性的目的，[基本类型]是特殊的。不认为 `Box<T>` 中的 `T` 是有覆盖的，而 `Box<LocalType>` 有被认为是本地的。
-Only the appearance of *uncovered* type parameters is restricted. Note that for the purposes of coherence, [fundamental types] are special. The `T` in `Box<T>` is not considered covered, and `Box<LocalType>` is considered local.
 
+## 泛型实现
 
-## Generic Implementations
-
-An implementation can take type and lifetime parameters, which can be used in
-the rest of the implementation. Type parameters declared for an implementation
-must be used at least once in either the trait or the implementing type of an
-implementation. Implementation parameters are written directly after the `impl`
-keyword.
-
+实现可以采用类型和生存期作为参数，这些参数可用于实现的其余部分。实现中声明的这些类型参数必须在实现的 trait 或实现类型中至少使用一次。实现的参数直接写在关键字 `impl` 之后。
 ```rust
 # trait Seq<T> { fn dummy(&self, _: T) { } }
 impl<T> Seq<T> for Vec<T> {
     /* ... */
 }
 impl Seq<bool> for u32 {
-    /* Treat the integer as a sequence of bits */
+    /* 将整数视为位序列 */
 }
 ```
 
-## Attributes on Implementations
+## 实现上的属性
 
-Implementations may contain outer [attributes] before the `impl` keyword and
-inner [attributes] inside the brackets that contain the associated items. Inner
-attributes must come before any associated items. That attributes that have
-meaning here are [`cfg`], [`deprecated`], [`doc`], and [the lint check
-attributes].
+实现可以在关键字 `impl` 之前引入外部[属性]，在代码体内引入内部[属性]。内部属性必须位于任何关联数据项之前。这里有意义的属性是[`cfg`]、[`deprecated`]、[`doc`]和[lint检查类属性]。
 
 [_ConstantItem_]: constant-items.md
 [_Function_]: functions.md
@@ -193,16 +183,16 @@ attributes].
 [_Visibility_]: ../visibility-and-privacy.md
 [_WhereClause_]: generics.md#where-clauses
 [trait]: traits.md
-[associated functions]: associated-items.md#associated-functions-and-methods
-[associated constants]: associated-items.md#associated-constants
-[attributes]: ../attributes.md
+[关联函数]: associated-items.md#associated-functions-and-methods
+[关联常量]: associated-items.md#associated-constants
+[属性]: ../attributes.md
 [`cfg`]: ../conditional-compilation.md
 [`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
 [`doc`]: ../../rustdoc/the-doc-attribute.html
-[path]: ../paths.md
-[the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
-[Unsafe traits]: traits.md#unsafe-traits
-[local trait]: ../glossary.md#local-trait
-[local type]: ../glossary.md#local-type
+[路径]: ../paths.md
+[lint检查类属性]: ../attributes/diagnostics.md#lint-check-attributes
+[非安全trait]: traits.md#unsafe-traits
+[本地trait]: ../glossary.md#local-trait
+[本地类型]: ../glossary.md#local-type
 [基本类型]: ../glossary.md#fundamental-type-constructors
 [无覆盖类型]: ../glossary.md#uncovered-type
