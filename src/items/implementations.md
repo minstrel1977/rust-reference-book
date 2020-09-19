@@ -147,10 +147,10 @@ impl Shape for Circle {
 - `Trait` 是一个[本地 trait]
 - 以下所有
   - `T0..=Tn` 种的类型至少有一种是[本地类型]。假设 `Ti` 是第一个开始这样的类型。
-  - 没有[无覆盖的类型]参数 `P1..=Pn` 会出现在 `T0..Ti` 里（注意 `Ti` 被排除在外）。
-  - （译者注：然后以同样的规则检测 `Ti+1`，以此类推，直到检测完 `Tn`位置）
+  - 没有[无覆盖类型]参数 `P1..=Pn` 会出现在 `T0..Ti` 里（注意 `Ti` 被排除在外）。
+  - （译者注：然后以同样的规则再检测 `Ti+1`，以此类推，直到检测完 `Tn`）
 
-只有*无覆盖的*类型参数的外观被限制。注意，为了一致性的目的，[基本类型]是特殊的。不认为 `Box<T>` 中的 `T` 被覆盖，而 `Box<LocalType>` 被认为是本地的。
+只有*无覆盖*类型参数的外观被限制。注意，为了一致性的目的，[基本类型]是特殊的。不认为 `Box<T>` 中的 `T` 是有覆盖的，而 `Box<LocalType>` 有被认为是本地的。
 Only the appearance of *uncovered* type parameters is restricted. Note that for the purposes of coherence, [fundamental types] are special. The `T` in `Box<T>` is not considered covered, and `Box<LocalType>` is considered local.
 
 
@@ -204,5 +204,5 @@ attributes].
 [Unsafe traits]: traits.md#unsafe-traits
 [local trait]: ../glossary.md#local-trait
 [local type]: ../glossary.md#local-type
-[fundamental types]: ../glossary.md#fundamental-type-constructors
-[uncovered type]: ../glossary.md#uncovered-type
+[基本类型]: ../glossary.md#fundamental-type-constructors
+[无覆盖类型]: ../glossary.md#uncovered-type

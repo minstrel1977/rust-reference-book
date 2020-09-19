@@ -28,75 +28,74 @@
 <!-- An array, sometimes also called a fixed-size array or an inline array, is a value describing a collection of elements, each selected by an index that can be computed at run time by the program. It occupies a contiguous region of memory. -->
 
 ### Associated item
+关联数据项
 
-An associated item is an item that is associated with another item. Associated
-items are defined in [implementations] and declared in [traits]. Only
-functions, constants, and type aliases can be associated. Contrast to a [free
-item].
+关联数据项是与另一个数据项关联的数据项。关联数据项在[实现]中定义，并在[traits]中声明。关联数据项只能关联函数、常量和类型别名。与[自由数据项]形成对比。
+<!-- An associated item is an item that is associated with another item. Associated items are defined in [implementations] and declared in [traits]. Only functions, constants, and type aliases can be associated. Contrast to a [free item]. -->
 
 ### Blanket implementation
+blanket implementation
 
-Any implementation where a type appears [uncovered](#uncovered-type). `impl<T> Foo
-for T`, `impl<T> Bar<T> for T`, `impl<T> Bar<Vec<T>> for T`, and `impl<T> Bar<T>
-for Vec<T>` are considered blanket impls. However, `impl<T> Bar<Vec<T>> for
-Vec<T>` is not a blanket impl, as all instances of `T` which appear in this `impl`
-are covered by `Vec`.
+指[无覆盖类型](#uncovered-type)上的任何实现。`impl<T> Foo for T`、`impl<T> Bar<T> for T`、`impl<T> Bar<Vec<T>> for T`、 和 `impl<T> Bar<T> for Vec<T>` 被认为是 blanket implementation。但是，`impl<T> Bar<Vec<T>> for Vec<T>` 不被认为是，因为这个 `impl` 中所有的 `T` 的实例都被 `Vec` 覆盖。
+<!-- Any implementation where a type appears [uncovered](#uncovered-type). `impl<T> Foo for T`, `impl<T> Bar<T> for T`, `impl<T> Bar<Vec<T>> for T`, and `impl<T> Bar<T> for Vec<T>` are considered blanket impls. However, `impl<T> Bar<Vec<T>> for Vec<T>` is not a blanket impl, as all instances of `T` which appear in this `impl` are covered by `Vec`. -->
 
 ### Bound
+约束
 
-Bounds are constraints on a type or trait. For example, if a bound
-is placed on the argument a function takes, types passed to that function
-must abide by that constraint.
+约束是对类型或 trait 的限制。例如，如果在函数接受的参数上设置了约束，则传递给该函数的（值的）类型必须遵守该约束。
+<!-- Bounds are constraints on a type or trait. For example, if a bound is placed on the argument a function takes, types passed to that function must abide by that constraint. -->
 
 ### Combinator
+组合子
 
-Combinators are higher-order functions that apply only functions and
-earlier defined combinators to provide a result from its arguments.
-They can be used to manage control flow in a modular fashion.
+组合子是高阶函数，它的参数全是函数或之前定义的组合子。组合子利用这些函数或组合子返回的结果作为入参进行进一步的逻辑计算和输出。组合子多用于以模块化的方式管理控制流。
+<!-- Combinators are higher-order functions that apply only functions and earlier defined combinators to provide a result from its arguments. They can be used to manage control flow in a modular fashion. -->
 
 ### Dispatch
+分发
 
-Dispatch is the mechanism to determine which specific version of code is actually
-run when it involves polymorphism. Two major forms of dispatch are static dispatch and
-dynamic dispatch. While Rust favors static dispatch, it also supports dynamic dispatch
-through a mechanism called ‘trait objects’.
+分发是一种机制，用于确定涉及到多态性时实际运行的是哪个版本的代码。分发的两种主要形式是静态分发和动态分发。虽然Rust支持静态分发，但它也通过一种称为 trait对象的机制支持动态分发
+<!-- Dispatch is the mechanism to determine which specific version of code is actually run when it involves polymorphism. Two major forms of dispatch are static dispatch and dynamic dispatch. While Rust favors static dispatch, it also supports dynamic dispatch through a mechanism called ‘trait objects’. -->
 
 ### Dynamically sized type
+动态类型
 
-A dynamically sized type (DST) is a type without a statically known size or alignment.
+动态尺寸类型(DST)是一种没有静态已知大小或对齐方式的类型
+<!-- A dynamically sized type (DST) is a type without a statically known size or alignment. -->
 
 ### Expression
+表达式
 
-An expression is a combination of values, constants, variables, operators
-and functions that evaluate to a single value, with or without side-effects.
-
-For example, `2 + (3 * 4)` is an expression that returns the value 14.
+表达式是值、常量、变量、运算符和函数的组合，计算结果为单个值，有或没有副作用都有可能。
+<!-- An expression is a combination of values, constants, variables, operators and functions that evaluate to a single value, with or without side-effects. -->
+比如，`2 + (3 * 4)` 是一个返回值为14的表达式。
+<!-- For example, `2 + (3 * 4)` is an expression that returns the value 14. -->
 
 ### Free item
+自有数据项
 
-An [item] that is not a member of an [implementation], such as a *free
-function* or a *free const*. Contrast to an [associated item].
+不是任何[实现][item]的成员的[数据项][implementation]，如*自由函数*或*自由常量*。常与[关联数据项][associated item]做对比。
+<!-- An [item] that is not a member of an [implementation], such as a *free function* or a *free const*. Contrast to an [associated item]. -->
 
 ### Fundamental traits
+基础trait
 
-A fundamental trait is one where adding an impl of it for an existing type is a breaking change. 
-The `Fn` traits and `Sized` are fundamental.
+基础trait 就是如果为现有的类型再添加一个实现块（impl）就会带来破坏性的改变的 trait。`Fn` 和 `Sized` 这类 trait 就是基础trait。
+<!-- A fundamental trait is one where adding an impl of it for an existing type is a breaking change. The `Fn` traits and `Sized` are fundamental. -->
 
 ### Fundamental type constructors
+基本类型构造器
 
-A fundamental type constructor is a type where implementing a [blanket implementation](#blanket-implementation) over it 
-is a breaking change. `&`, `&mut`, `Box`, and `Pin`  are fundamental. 
-
-Any time a type `T` is considered [local](#local-type), `&T`, `&mut T`, `Box<T>`, and `Pin<T>` 
-are also considered local. Fundamental type constructors cannot [cover](#uncovered-type) other types. 
-Any time the term "covered type" is used, 
-the `T` in `&T`, `&mut T`, `Box<T>`, and `Pin<T>` is not considered covered.
+基本类型构造器是这样一种类型，在它之上实现一个[blanket implementation](#blanket-implementation)是一个突破性的改变。`&`、`&mut`、`Box`、和 `Pin` 是基本类型构造器。
+A fundamental type constructor is a type where implementing a [blanket implementation](#blanket-implementation) over it is a breaking change. `&`, `&mut`, `Box`, and `Pin`  are fundamental. 
+如果任何时候 `T` 都被认为是[本地类型](#local-type)，那 `&T`、`&mut T`、`Box<T>`、和 `Pin<T>` 也被认为是本地类型。基本类型构造器不能[覆盖](#uncovered-type)其他类型。任何时候使用术语“有覆盖类型”时，都默认把`&T`、`&mut T`、`Box<T>`、和`Pin<T>` 排除在外。
+<!-- Any time a type `T` is considered [local](#local-type), `&T`, `&mut T`, `Box<T>`, and `Pin<T>` are also considered local. Fundamental type constructors cannot [cover](#uncovered-type) other types. Any time the term "covered type" is used, the `T` in `&T`, `&mut T`, `Box<T>`, and `Pin<T>` is not considered covered. -->
 
 ### Inhabited
 
-A type is inhabited if it has constructors and therefore can be instantiated. An inhabited type is
-not "empty" in the sense that there can be values of the type. Opposite of
-[Uninhabited](#uninhabited).
+
+如果类型具有构造函数，因此可以实例化，则该类型是有人居住的。有人居住的类型不是“空的”，因为可以有类型的值。相反(无人居住的
+A type is inhabited if it has constructors and therefore can be instantiated. An inhabited type is not "empty" in the sense that there can be values of the type. Opposite of [Uninhabited](#uninhabited).
 
 ### Inherent implementation
 
@@ -121,26 +120,28 @@ or not independent of applied type arguments. Given `trait Foo<T, U>`,
 `Foo` is always local, regardless of the types substituted for `T` and `U`.
 
 ### Local type
+本地类型
 
-A `struct`, `enum`, or `union` which was defined in the current crate.
-This is not affected by applied type arguments. `struct Foo` is considered local, but
-`Vec<Foo>` is not. `LocalType<ForeignType>` is local. Type aliases do not 
-affect locality.
+指在当前 crate 中定义的 `struct`、`enum`、或 `union` 。本地类型不会受到类型参数的影响。`struct Foo` 被认为是本地的，但 `Vec<Foo>` 不是。`LocalType<ForeignType>` 是本地的。类型别名不影响本地性。
+<!-- A `struct`, `enum`, or `union` which was defined in the current crate. This is not affected by applied type arguments. `struct Foo` is considered local, but `Vec<Foo>` is not. `LocalType<ForeignType>` is local. Type aliases do not affect locality. -->
 
 ### Nominal types
+标称类型
 
-Types that can be referred to by a path directly. Specifically [enums],
-[structs], [unions], and [trait objects].
+可用路径直接引用的类型。具体来说就是[枚举][enums]、[结构体][structs]、[联合体][unions]和 [trait对象][trait objects]。
+<!-- Types that can be referred to by a path directly. Specifically [enums], [structs], [unions], and [trait objects]. -->
 
 ### Object safe traits
+对象安全trait
 
-[Traits] that can be used as [trait objects]. Only traits that follow specific
-[rules][object safety] are object safe.
+可以用作 [trait 对象]的 [trait][Traits]。只有遵循特定[规则][object safety]的 trait 才是对象安全的。
+<!-- [Traits] that can be used as [trait objects]. Only traits that follow specific [rules][object safety] are object safe. -->
 
 ### Prelude
+预加载模块集
 
-Prelude, or The Rust Prelude, is a small collection of items - mostly traits - that are
-imported into every module of every crate. The traits in the prelude are pervasive.
+预加载模块集，或者 Rust 预加载模块集，是一个会被导入到每个 crate 中的每个模块的小型数据项集合（其中大部分是 trait）。trait 在预加载模块集中很普遍。
+<!-- Prelude, or The Rust Prelude, is a small collection of items - mostly traits - that are imported into every module of every crate. The traits in the prelude are pervasive. -->
 
 ### Scrutinee
 
@@ -199,10 +200,10 @@ It allows a type to make certain promises about its behavior.
 Generic functions and generic structs can use traits to constrain, or bound, the types they accept.
 
 ### Uncovered type
+无覆盖类型
 
-A type which does not appear as an argument to another type. For example,
-`T` is uncovered, but the `T` in `Vec<T>` is covered. This is only relevant for
-type arguments.
+不作为其他类型的参数出现的类型。例如，`T` 就是无覆盖的，但 `Vec<T>` 中的 `T` 就是有覆盖的。这（种说法）只与类型参数相关。
+<!-- A type which does not appear as an argument to another type. For example, `T` is uncovered, but the `T` in `Vec<T>` is covered. This is only relevant for type arguments. -->
 
 ### Undefined behavior
 
@@ -213,10 +214,8 @@ or unintended computation; or platform-specific results.
 
 ### Uninhabited
 
-A type is uninhabited if it has no constructors and therefore can never be instantiated. An
-uninhabited type is "empty" in the sense that there are no values of the type. The canonical
-example of an uninhabited type is the [never type] `!`, or an enum with no variants
-`enum Never { }`. Opposite of [Inhabited](#inhabited).
+如果类型没有构造函数，因此永远不能实例化，则该类型是无人居住的。一个无人居住的类型是“空的”，意思是该类型没有值。无居民类型的典型例子是[never type] ' !，或不带变体“enum Never{}”的枚举。相反(居住)(#居住
+A type is uninhabited if it has no constructors and therefore can never be instantiated. An uninhabited type is "empty" in the sense that there are no values of the type. The canonical example of an uninhabited type is the [never type] `!`, or an enum with no variants `enum Never { }`. Opposite of [Inhabited](#inhabited).
 
 [alignment]: type-layout.md#size-and-alignment
 [associated item]: #associated-item

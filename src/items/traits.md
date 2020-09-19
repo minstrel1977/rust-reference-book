@@ -80,7 +80,7 @@ trait Seq<T> {
 
 ## 对象安全条款
 
-对象安全的 trait 可以是 [trait对象] 的基础 trait。如果 trait 具有以下特性（在 [RFC 255] 中定义），则它是*对象安全的*：
+对象安全的 trait 可以是 [trait对象] 的底层 trait。如果 trait 具有以下特性（在 [RFC 255] 中定义），则它是*对象安全的*：
 
 * 它必须不能是 `Self: Sized`
 * 所有的关联函数要么有 `where Self: Sized` 约束，要么
