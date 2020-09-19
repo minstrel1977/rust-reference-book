@@ -1,6 +1,9 @@
-# External blocks
+# 外部块
 
-> **<sup>Syntax</sup>**\
+>[external-blocks.md](https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md)\
+>commit 18d7140a96d3d898ccded0cc32a16675681b0846
+
+> **<sup>句法</sup>**\
 > _ExternBlock_ :\
 > &nbsp;&nbsp; `extern` [_Abi_]<sup>?</sup> `{`\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_InnerAttribute_]<sup>\*</sup>\
@@ -30,69 +33,42 @@
 > _NamedFunctionParametersWithVariadics_ :\
 > &nbsp;&nbsp; ( _NamedFunctionParam_ `,` )<sup>\*</sup> _NamedFunctionParam_ `,` [_OuterAttribute_]<sup>\*</sup> `...`
 
-External blocks provide _declarations_ of items that are not _defined_ in the
-current crate and are the basis of Rust's foreign function interface. These are
-akin to unchecked imports.
+外部块提供未在当前 crate 中*定义*的数据项的*声明*；外部块是 Rust 外部函数接口的基础。这类似于未经检查的导入。
 
-Two kind of item _declarations_ are allowed in external blocks: [functions] and
-[statics]. Calling functions or accessing statics that are declared in external
-blocks is only allowed in an `unsafe` context.
+外部块中允许两种类型的数据项*声明*：[函数]和[静态项]。调用在外部块中声明的函数或访问在外部块中声明的静态项都只能在 `unsafe` 上下文中才被允许。
 
-## Functions
+## 函数
 
-Functions within external blocks are declared in the same way as other Rust
-functions, with the exception that they may not have a body and are instead
-terminated by a semicolon. Patterns are not allowed in parameters, only
-[IDENTIFIER] or `_` may be used.
+外部块中的函数与其他 Rust 函数的声明方式相同，但这里中的函数可以没有主体，直接以分号结尾。外部块中的函数的参数不允许使用模式，只能使用[IDENTIFIER]或 `_` 。
 
-Functions within external blocks may be called by Rust code, just like
-functions defined in Rust. The Rust compiler automatically translates between
-the Rust ABI and the foreign ABI.
+外部块中的函数可以由 Rust 代码调用，就像在 Rust 中定义的函数一样。Rust 编译器会自动在Rust ABI 和外部ABI 之间进行转换。
 
-A function declared in an extern block is implicitly `unsafe`. When coerced to
-a function pointer, a function declared in an extern block has type `unsafe
-extern "abi" for<'l1, ..., 'lm> fn(A1, ..., An) -> R`, where `'l1`, ... `'lm`
-are its lifetime parameters, `A1`, ..., `An` are the declared types of its
-parameters and `R` is the declared return type.
+在外部块中声明的函数隐式为 `unsafe`。当强制转换为函数指针时，外部块中声明的函数的类型就为 `unsafe extern "abi" for<'l1, ..., 'lm> fn(A1, ..., An) -> R`，其中 `'l1`，…`'lm` 是其生命周期参数，`A1`，…，`An` 是该声明的参数的类型，`R` 是该声明的返回类型。
 
-## Statics
+## 静态项
 
-Statics within external blocks are declared in the same way as [statics] outside of external blocks,
-except that they do not have an expression initializing their value.
-It is `unsafe` to access a static item declared in an extern block, whether or
-not it's mutable, because there is nothing guaranteeing that the bit pattern at the static's
-memory is valid for the type it is declared with, since some arbitrary (e.g. C) code is in charge
-of initializing the static.
+外部块内的静态项与外部块之外的[静态项]声明方式相同，只是这里没有初始化其值的表达式。访问外部块中声明的静态项是 `unsafe` 的，不管它是否可变，因为无法保证静态项的内存位模式对声明它的类型是有效的，因为初始化这些静态项的可能是任何外部代码（例如C）。
 
-Extern statics can be either immutable or mutable just like [statics] outside of external blocks.
-An immutable static *must* be initialized before any Rust code is executed. It is not enough for
-the static to be initialized before Rust code reads from it.
+外部静态项可以是不可变的，也可以是可变的，就像外部块之外的[静态项]。在执行任何 Rust 代码之前，*必须*初始化不可变静态项。在 Rust 代码读取外部静态项之前对其进行初始化是不够的。
 
 ## ABI
 
-By default external blocks assume that the library they are calling uses the
-standard C ABI on the specific platform. Other ABIs may be specified using an
-`abi` string, as shown here:
+默认情况下，外部块假设它们正在调用的库使用的是特定平台上的标准 C ABI。其他的 ABI 可以使用字符串 `abi` 指定，具体如下所示：
 
 ```rust
-// Interface to the Windows API
+// 指向 Windows API 的接口
 extern "stdcall" { }
 ```
 
-There are three ABI strings which are cross-platform, and which all compilers
-are guaranteed to support:
+有三个 ABI 字符串是跨平台的，并且保证所有编译器都支持它们：
 
-* `extern "Rust"` -- The default ABI when you write a normal `fn foo()` in any
-  Rust code.
-* `extern "C"` -- This is the same as `extern fn foo()`; whatever the default
-  your C compiler supports.
-* `extern "system"` -- Usually the same as `extern "C"`, except on Win32, in
-  which case it's `"stdcall"`, or what you should use to link to the Windows
-  API itself
+* `extern "Rust"` -- 在任何 Rust 代码中编写一个正常的 `fn foo()` 时默认使用的 ABI。
+ * `extern "C"` -- 这等价于 `extern fn foo()`；无论 C编译器支持什么默认值<!--whatever the default your C compiler supports. NeedRecheck-->。
+* `extern "C"` -- 通常等价于 `extern "C"`，除了在 Win32 平台上。在 Win32 平台上，应该使用`"stdcall"` 或者其他应该使用的 ABI 字符串，来链接到 Windows API 自身。
 
-There are also some platform-specific ABI strings:
+还有一些特定于平台的 ABI 字符串：
 
-* `extern "cdecl"` -- The default for x86\_32 C code.
+* `extern "cdecl"` -- 为 x86\_32 C 代码准备的默认值。
 * `extern "stdcall"` -- The default for the Win32 API on x86\_32.
 * `extern "win64"` -- The default for C code on x86\_64 Windows.
 * `extern "sysv64"` -- The default for C code on non-Windows x86\_64.
