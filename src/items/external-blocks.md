@@ -68,20 +68,17 @@ extern "stdcall" { }
 
 还有一些特定于平台的 ABI 字符串：
 
-* `extern "cdecl"` -- 为 x86\_32 C 代码准备的默认值。
-* `extern "stdcall"` -- The default for the Win32 API on x86\_32.
-* `extern "win64"` -- The default for C code on x86\_64 Windows.
-* `extern "sysv64"` -- The default for C code on non-Windows x86\_64.
-* `extern "aapcs"` -- The default for ARM.
-* `extern "fastcall"` -- The `fastcall` ABI -- corresponds to MSVC's
-  `__fastcall` and GCC and clang's `__attribute__((fastcall))`
-* `extern "vectorcall"` -- The `vectorcall` ABI -- corresponds to MSVC's
-  `__vectorcall` and clang's `__attribute__((vectorcall))`
+* `extern "cdecl"` -- x86\_32 上 C代码的默认值。
+* `extern "stdcall"` -- x86\_32 上 Win32 API 的默认值 
+* `extern "win64"` -- x86\_64 Windows 上 C代码的默认值。
+* `extern "sysv64"` -- 非Windows x86\_64 上的 C代码的默认值。
+* `extern "aapcs"` -- ARM 的默认值
+* `extern "fastcall"` -- `fastcall` ABI——对应于 MSVC 的`__fastcall` 和 GCC 以及 clang 的 `__attribute__((fastcall))`。
+* `extern "vectorcall"` -- `vectorcall` ABI ——对应于 MSVC 的 `__vectorcall` 和 clang 的 `__attribute__((vectorcall))`。
 
-## Variadic functions
+## 可变参数函数
 
-Functions within external blocks may be variadic by specifying `...` after one
-or more named arguments in the argument list:
+可以在外部块内的函数的参数列表中的一个或多个命名参数后通过指定 `...` 来让该函数成为可变参数函数：
 
 ```rust
 extern {
@@ -89,30 +86,21 @@ extern {
 }
 ```
 
-## Attributes on extern blocks
+## 外部块上的属性
 
-The following [attributes] control the behavior of external blocks.
+下面的[属性]可以控制外部块的行为。
 
-### The `link` attribute
+### `link`属性
 
-The *`link` attribute* specifies the name of a native library that the
-compiler should link with for the items within an `extern` block. It uses the
-[_MetaListNameValueStr_] syntax to specify its inputs. The `name` key is the
-name of the native library to link. The `kind` key is an optional value which
-specifies the kind of library with the following possible values:
+*`link`属性*为外部块中的数据项指定编译器应该链接的本机库的名称。它使用 [_MetaListNameValueStr_] 句法规则指定其输入。`name` 键指定要链接的本机库的名称。`kind` 键是一个可选值，它指定具有以下可能值的库类型：
 
-- `dylib` — Indicates a dynamic library. This is the default if `kind` is not
-  specified.
-- `static` — Indicates a static library.
-- `framework` — Indicates a macOS framework. This is only valid for macOS
-  targets.
+- `dylib` — 动态库。如果没有指定 `kind`，这是默认值Indicates a dynamic library. This is the default if `kind` is not specified.
+- `static` — 静态库。
+- `framework` —  macOS 框架。这只对 macOS 目标平台有效。
 
-The `name` key must be included if `kind` is specified.
+如果指定了 `kind`，则必须包含 `name`键。
 
-The `wasm_import_module` key may be used to specify the [WebAssembly module]
-name for the items within an `extern` block when importing symbols from the
-host environment. The default module name is `env` if `wasm_import_module` is
-not specified.
+当从主机环境导入 symbols 时，键 `wasm_import_module` 可用于为 `extern`块中的项指定 [WebAssembly模块]名称。如果未指定 `wasm_import_module`，则默认模块名为`env`。
 
 <!-- ignore: requires extern linking -->
 ```rust,ignore
@@ -132,16 +120,11 @@ extern {
 }
 ```
 
-It is valid to add the `link` attribute on an empty extern block. You can use
-this to satisfy the linking requirements of extern blocks elsewhere in your
-code (including upstream crates) instead of adding the attribute to each extern
-block.
+在空的外部块上添加 `link`属性是有效的。可以用这种方式来满足代码中其他地方的外部块的链接需求(包括上游 crate)，而不必向每个外部块都添加属性。
 
-### The `link_name` attribute
+### `link_name`属性
 
-The `link_name` attribute may be specified on declarations inside an `extern`
-block to indicate the symbol to import for the given function or static. It
-uses the [_MetaNameValueStr_] syntax to specify the name of the symbol.
+`link_name`属性可以在 `extern`块内的声明中指定，它用来指示要为给定函数或静态项导入的具体 symbol。它使用 [_MetaNameValueStr_] 句法规则指定 symbol 的名称。
 
 ```rust
 extern {
@@ -150,15 +133,14 @@ extern {
 }
 ```
 
-### Attributes on function parameters
+### 函数参数上的属性
 
-Attributes on extern function parameters follow the same rules and
-restrictions as [regular function parameters].
+外部函数参数上的属性遵循与[常规函数参数]相同的规则和限制。
 
 [IDENTIFIER]: ../identifiers.md
 [WebAssembly module]: https://webassembly.github.io/spec/core/syntax/modules.html
-[functions]: functions.md
-[statics]: static-items.md
+[函数]: functions.md
+[静态项]: static-items.md
 [_Abi_]: functions.md
 [_FunctionReturnType_]: functions.md
 [_Generics_]: generics.md
@@ -170,5 +152,5 @@ restrictions as [regular function parameters].
 [_Type_]: ../types.md#type-expressions
 [_Visibility_]: ../visibility-and-privacy.md
 [_WhereClause_]: generics.md#where-clauses
-[attributes]: ../attributes.md
-[regular function parameters]: functions.md#attributes-on-function-parameters
+[属性]: ../attributes.md
+[常规函数参数]: functions.md#attributes-on-function-parameters
