@@ -54,7 +54,7 @@ struct Ref<'a, T> where T: 'a { r: &'a T }
 
 *where子句*提供了另一种方法来指定类型参数和生命周期参数上的约束，以及一种指定不是类型参数的类型上的约束的方法。
 
-Bounds that don't use the item's parameters or higher-ranked lifetimes are checked when the item is defined. It is an error for such a bound to be false.（译者注：这句译者实在是理解不了，先打个TobeModify的标记，以后懂了再翻）
+当定义项时，约束与数据项的参数或生命周期（包括高阶生命周期）无关也是可以的。但这样做会带来潜在的错误。（译者注：这句译者也不太理解，但为了保持完整性，先这么翻着，但也打个TobeModify的标记，等以后真懂了再改，同时附上原文：Bounds that don't use the item's parameters or higher-ranked lifetimes are checked when the item is defined. It is an error for such a bound to be false.）
 
 在定义数据项时，还会检查某些泛型类型的 [`Copy`]、[`Clone`] 和 [`Sized`] 约束。将 `Copy` 或 `Clone` 作为可变引用、[trait对象]或[切片][数组]的约束上错误的，将 `Sized` 作为 trait对象或切片的约束也是错误的。
 <!-- [`Copy`], [`Clone`], and [`Sized`] bounds are also checked for certain generic types when defining the item. It is an error to have `Copy` or `Clone`as a bound on a mutable reference, [trait object] or [slice][arrays] or `Sized` as a bound on a trait object or slice. -->
@@ -66,26 +66,22 @@ where
     T::Item: Copy,
     String: PartialEq<T>,
     i32: Default,           // 允许，但没什么用
-    i32: Iterator,          // 错误: 这个 trait约束不适合
-    [T]: Copy,              // 错误: 这个 trait约束不适合
+    i32: Iterator,          // 错误: 此 trait约束不适合，i32 没有实现 Iterator
+    [T]: Copy,              // 错误: 此 trait约束不适合，切片上不能有此 trait约束
 {
     f: T,
 }
 ```
 
-## Attributes
+## 属性
 
-Generic lifetime and type parameters allow [attributes] on them. There are no
-built-in attributes that do anything in this position, although custom derive
-attributes may give meaning to it.
+泛型生命周期和类型参数允许[属性]，但在目前这个位置还没有任何任何有意义的内置属性，但用户可能可以通过自定义的派生属性来做些有意义的属性设置。
 
-This example shows using a custom derive attribute to modify the meaning of a
-generic parameter.
+下面示例演示如何使用自定义派生属性修改泛型参数的含义。
 
 <!-- ignore: requires proc macro derive -->
 ```rust,ignore
-// Assume that the derive for MyFlexibleClone declared `my_flexible_clone` as
-// an attribute it understands.
+// 假设 MyFlexibleClone 的派生将 `my_flexible_clone` 声明为它可以理解的属性。
 #[derive(MyFlexibleClone)]
 struct Foo<#[my_flexible_clone(unbounded)] H> {
     a: *const H
@@ -101,13 +97,13 @@ struct Foo<#[my_flexible_clone(unbounded)] H> {
 [_Type_]: ../types.md#type-expressions
 [_TypeParamBounds_]: ../trait-bounds.md
 
-[arrays]: ../types/array.md
-[function pointers]: ../types/function-pointer.md
-[references]: ../types/pointer.md#shared-references-
-[raw pointers]: ../types/pointer.md#raw-pointers-const-and-mut
+[数组]: ../types/array.md
+[函数指针]: ../types/function-pointer.md
+[引用]: ../types/pointer.md#shared-references-
+[裸指针]: ../types/pointer.md#raw-pointers-const-and-mut
 [`Clone`]: ../special-types-and-traits.md#clone
 [`Copy`]: ../special-types-and-traits.md#copy
 [`Sized`]: ../special-types-and-traits.md#sized
-[tuples]: ../types/tuple.md
-[trait object]: ../types/trait-object.md
-[attributes]: ../attributes.md
+[元组]: ../types/tuple.md
+[trait对象]: ../types/trait-object.md
+[属性]: ../attributes.md

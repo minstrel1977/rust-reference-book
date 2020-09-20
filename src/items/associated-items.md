@@ -1,33 +1,26 @@
-# Associated Items
+# 关联数据项
 
-*Associated Items* are the items declared in [traits] or defined in
-[implementations]. They are called this because they are defined on an associate
-type &mdash; the type in the implementation. They are a subset of the kinds of
-items you can declare in a module. Specifically, there are [associated
-functions] (including methods), [associated types], and [associated constants].
+>[associated-items.md](https://github.com/rust-lang/reference/blob/master/src/items/associated-items.md)\
+>commit 136bd7da8b9c509c17c9619813b57dd1a47a8e25
 
-[associated functions]: #associated-functions-and-methods
-[associated types]: #associated-types
-[associated constants]: #associated-constants
+*关联数据项*是在[trait]中声明或在[实现]中定义的数据项。之所以这样称呼它们，是因为它们是在关联类型上定义的，即实现里的类型。它们是可以在模块中声明的数据项的子集。具体来说，有[关联函数]（包括方法）、[关联类型]和[关联常量]。
 
-Associated items are useful when the associated item logically is related to the
-associating item. For example, the `is_some` method on `Option` is intrinsically
-related to Options, so should be associated.
+[关联函数]: #关联函数和类型
+[关联类型]: #关联类型
+[关联常量]: #关联常量
 
-Every associated item kind comes in two varieties: definitions that contain the
-actual implementation and declarations that declare signatures for
-definitions.
+当关联数据项与被关联数据项在逻辑上相关时，关联数据项非常有用。例如，`Option` 上的 `is_some` 方法与 Options 相关，所以应该关联。（译者注：这句翻译过来实在是怪异，那先TobeModify吧 Associated items are useful when the associated item logically is related to the associating item. For example, the `is_some` method on `Option` is intrinsically related to Options, so should be associated.）
 
-It is the declarations that make up the contract of traits and what is available
-on generic types.
+每一种关联数据项都有两种形式：包含实际实现的定义和声明定义签名的声明。
 
-## Associated functions and methods
+正是这些声明构成了 trait 的契约以及泛型类型中可用的内容。
 
-*Associated functions* are [functions] associated with a type.
+## 关联函数和方法
 
-An *associated function declaration* declares a signature for an associated
-function definition. It is written as a function item, except the
-function body is replaced with a `;`.
+*关联函数*是与类型相关联的[函数]。
+
+*关联函数声明*声明关联函数定义的签名。它被写为函数项，但函数体被替换为“；”。
+An *associated function declaration* declares a signature for an associated function definition. It is written as a function item, except the function body is replaced with a `;`.
 
 The identifier is the name of the function. The generics, parameter list,
 return type, and where clause of the associated function must be the same as the
@@ -353,7 +346,7 @@ fn main() {
 [`Pin<P>`]: ../special-types-and-traits.md#pinp
 [`Rc<Self>`]: ../special-types-and-traits.md#rct
 [_OuterAttribute_]: ../attributes.md
-[traits]: traits.md
+[trait]: traits.md
 [type aliases]: type-aliases.md
 [inherent implementations]: implementations.md#inherent-implementations
 [identifier]: ../identifiers.md

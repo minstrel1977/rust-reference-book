@@ -30,7 +30,7 @@
 ### Associated item
 关联数据项
 
-关联数据项是与另一个数据项关联的数据项。关联数据项在[实现]中定义，并在[traits]中声明。关联数据项只能关联函数、常量和类型别名。与[自由数据项]形成对比。
+关联数据项是与另一个数据项关联的数据项。关联数据项在[实现]中定义，并在[traits]中声明。关联数据项只能关联函数、常量和类型别名。它与[自由数据项]形成对比。
 <!-- An associated item is an item that is associated with another item. Associated items are defined in [implementations] and declared in [traits]. Only functions, constants, and type aliases can be associated. Contrast to a [free item]. -->
 
 ### Blanket implementation
