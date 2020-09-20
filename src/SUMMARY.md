@@ -35,7 +35,7 @@
     - [trait](items/traits.md)
     - [实现](items/implementations.md)
     - [外部块](items/external-blocks.md)
-    - [类型和生命周期函数](items/generics.md)
+    - [类型参数和生命周期参数](items/generics.md)
     - [关联数据项](items/associated-items.md)
     - [可见性与私有性](visibility-and-privacy.md)
 
