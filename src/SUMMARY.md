@@ -37,7 +37,7 @@
     - [外部块](items/external-blocks.md)
     - [类型参数和生命周期参数](items/generics.md)
     - [关联数据项](items/associated-items.md)
-    - [可见性与私有性](visibility-and-privacy.md)
+    - [可见性与隐私权](visibility-and-privacy.md)
 
 - [属性](attributes.md)
     - [测试属性](attributes/testing.md)

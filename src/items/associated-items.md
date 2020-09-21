@@ -185,16 +185,15 @@ let bounding_box = circle_shape.bounding_box();
 
 *关联类型声明*为*关联类型定义*声明签名。书写形式为： 先是 `type`，然后是一个[标识符]，最后是一个可选的 trait约束列表。
 
-这里标识符是声明的类型别名的名称。可选的 trait约束必须由类型别名的实现来满足。
-The identifier is the name of the declared type alias. The optional trait bounds must be fulfilled by the implementations of the type alias.
+这里标识符是声明的类型别名的名称；可选的 trait约束必须由类型别名的实现来满足。
 
 *关联类型定义*在另一个类型上定义一个类型别名。书写形式为：先是 `type`，然后是一个[标识符]，然后再是一个 `=`，最后是一个[类型]。
 
-If a type `Item` has an associated type `Assoc` from a trait `Trait`, then `<Item as Trait>::Assoc` is a type that is an alias of the type specified in the associated type definition. Furthermore, if `Item` is a type parameter, then `Item::Assoc` can be used in type parameters.
+如果类型 `Item` 具有来自 trait `Trait`的关联类型 `Assoc`，则表达式 `<Item as Trait>::Assoc` 也是一个类型，具体就是关联类型定义中指定的类型的一个别名。此外，如果 `Item` 是类型参数，则 `Item::Assoc` 也可用作类型参数。
 
 ```rust
 trait AssociatedType {
-    // Associated type declaration
+    // 关联类型声明
     type Assoc;
 }
 
@@ -203,7 +202,7 @@ struct Struct;
 struct OtherStruct;
 
 impl AssociatedType for Struct {
-    // Associated type definition
+    // 关联类型定义
     type Assoc = OtherStruct;
 }
 
@@ -214,15 +213,14 @@ impl OtherStruct {
 }
 
 fn main() {
-    // Usage of the associated type to refer to OtherStruct as <Struct as AssociatedType>::Assoc
+    // 使用 <Struct as AssociatedType>::Assoc 来引用关联类型 OtherStruct
     let _other_struct: OtherStruct = <Struct as AssociatedType>::Assoc::new();
 }
 ```
 
-### Associated Types Container Example
+### 示例展示容器内的关联类型
 
-Consider the following example of a `Container` trait. Notice that the type is
-available for use in the method signatures:
+下面给出一个 `Container` trait 示例。请注意，该类型可用于方法签名：
 
 ```rust
 trait Container {
@@ -232,9 +230,7 @@ trait Container {
 }
 ```
 
-In order for a type to implement this trait, it must not only provide
-implementations for every method, but it must specify the type `E`. Here's an
-implementation of `Container` for the standard library type `Vec`:
+为了使类型实现此 trait，它不仅必须为每个方法提供实现，而且必须指定类型 `E`。下面是标准库类型 `Vec` 的 `Container` 实现：
 
 ```rust
 # trait Container {
@@ -249,23 +245,19 @@ impl<T> Container for Vec<T> {
 }
 ```
 
-## Associated Constants
+## 关联常量
 
-*Associated constants* are [constants] associated with a type.
+*关联常量*是与类型关联的[常量]。
 
-An *associated constant declaration* declares a signature for associated
-constant definitions. It is written as `const`, then an identifier,
-then `:`, then a type, finished by a `;`.
+*关联常量声明*为关联常量定义声明签名。书写形式为：先是 `const` 开头，然后是标识符，然后是 `:`，然后是一个类型，最后是一个 `;`。
 
-The identifier is the name of the constant used in the path. The type is the
-type that the definition has to implement.
+这里标识符是路径中使用的常量的名称；类型是（关联常量）定义必须实现的类型。
 
-An *associated constant definition* defines a constant associated with a
-type. It is written the same as a [constant item].
+*关联常量定义*定义与类型关联的常量。它的编写方式与[常量项]相同。
 
-### Associated Constants Examples
+### 示例展示关联常量
 
-A basic example:
+基本示例：
 
 ```rust
 trait ConstantId {
@@ -283,7 +275,7 @@ fn main() {
 }
 ```
 
-Using default values:
+使用默认值：
 
 ```rust
 trait ConstantIdDefault {
@@ -319,16 +311,16 @@ fn main() {
 [`Rc<Self>`]: ../special-types-and-traits.md#rct
 [_OuterAttribute_]: ../attributes.md
 [trait]: traits.md
-[type aliases]: type-aliases.md
-[inherent implementations]: implementations.md#inherent-implementations
+[类型别名]: type-aliases.md
+[固有实现]: implementations.md#固有实现
 [标识符]: ../identifiers.md
 [标识符模式]: ../patterns.md#identifier-patterns
-[implementations]: implementations.md
-[type]: ../types.md#type-expressions
-[constants]: constant-items.md
-[constant item]: constant-items.md
-[functions]: functions.md
-[function item]: ../types/function-item.md
-[method call operator]: ../expressions/method-call-expr.md
-[path]: ../paths.md
-[regular function parameters]: functions.md#attributes-on-function-parameters
+[实现]: implementations.md
+[类型]: ../types.md#type-expressions
+[常量]: constant-items.md
+[常量项]: constant-items.md
+[函数]: functions.md
+[函数项]: ../types/function-item.md
+[方法调用操作符]: ../expressions/method-call-expr.md
+[路径]: ../paths.md
+[常规函数参数]: functions.md#函数参数上的属性

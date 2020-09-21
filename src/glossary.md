@@ -92,10 +92,10 @@ blanket implementation
 <!-- Any time a type `T` is considered [local](#local-type), `&T`, `&mut T`, `Box<T>`, and `Pin<T>` are also considered local. Fundamental type constructors cannot [cover](#uncovered-type) other types. Any time the term "covered type" is used, the `T` in `&T`, `&mut T`, `Box<T>`, and `Pin<T>` is not considered covered. -->
 
 ### Inhabited
+Inhabited
 
-
-如果类型具有构造函数，因此可以实例化，则该类型是有人居住的。有人居住的类型不是“空的”，因为可以有类型的值。相反(无人居住的
-A type is inhabited if it has constructors and therefore can be instantiated. An inhabited type is not "empty" in the sense that there can be values of the type. Opposite of [Uninhabited](#uninhabited).
+如果类型具有构造函数，因此可以实例化，则该类型是 inhabited。inhabited类型不是“空的”，因为可以有类型对应的值。相对的是 [Uninhabited](#uninhabited)。
+<!-- A type is inhabited if it has constructors and therefore can be instantiated. An inhabited type is not "empty" in the sense that there can be values of the type. Opposite of [Uninhabited](#uninhabited). -->
 
 ### Inherent implementation
 
