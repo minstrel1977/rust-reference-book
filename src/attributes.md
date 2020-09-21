@@ -1,7 +1,10 @@
 {{#include attributes-redirect.html}}
-# Attributes
+# 属性
 
-> **<sup>Syntax</sup>**\
+>[attributes.md](https://github.com/rust-lang/reference/blob/master/src/attributes.md)\
+>commit 814a530db0a3f91821095a830fa321fdd5a41d17
+
+> **<sup>句法</sup>**\
 > _InnerAttribute_ :\
 > &nbsp;&nbsp; `#` `!` `[` _Attr_ `]`
 >
@@ -15,68 +18,53 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; [_DelimTokenTree_]\
 > &nbsp;&nbsp; | `=` [_LiteralExpression_]<sub>_without suffix_</sub>
 
-An _attribute_ is a general, free-form metadatum that is interpreted according
-to name, convention, language, and compiler version. Attributes are modeled
-on Attributes in [ECMA-335], with the syntax coming from [ECMA-334] \(C#).
+*属性*是一种通用的、形式自由的元数据，这种元数据会被（编译器）依据名称、约定、语言和编译器版本进行解释。（Rust 的）属性是根据 [ECMA-335]标准中的属性规范进行建模的，其语法来自 [ECMA-334] \(C#）。
 
-_Inner attributes_, written with a bang (`!`) after the hash (`#`), apply to the
-item that the attribute is declared within. _Outer attributes_, written without
-the bang after the hash, apply to the thing that follows the attribute.
+*内部属性*以 `#!` 开头的方式编写，应用于它在其中声明的数据项。*外部属性*以不后跟感叹号的(`!`)的 `#` 开头的方式编写，应用于属性后面的内容。
 
-The attribute consists of a path to the attribute, followed by an optional
-delimited token tree whose interpretation is defined by the attribute.
-Attributes other than macro attributes also allow the input to be an equals
-sign (`=`) followed by a literal expression. See the [meta item
-syntax](#meta-item-attribute-syntax) below for more details.
+属性由指向属性的路径，和路径后跟的可选的带定界符的标记树（其解释由属性定义）组成。除了宏属性之外，其他属性也允许输入是等号(`=`)后跟文字表达式的格式。更多细节请参见下面的[元数据项句法](#元数据项属性句法)。
 
-Attributes can be classified into the following kinds:
+属性可以分为以下几类：
 
-* [Built-in attributes]
-* [Macro attributes][attribute macros]
-* [Derive macro helper attributes]
-* [Tool attributes](#tool-attributes)
+* [内置属性]
+* [哄属性][attribute macros]
+* [派生宏辅助属性]
+* [外部工具属性](#外部工具属性)
 
-Attributes may be applied to many things in the language:
+属性可以应用于语言中的许多事物：
 
-* All [item declarations] accept outer attributes while [external blocks],
-  [functions], [implementations], and [modules] accept inner attributes.
-* Most [statements] accept outer attributes (see [Expression Attributes] for
-  limitations on expression statements).
-* [Block expressions] accept outer and inner attributes, but only when they are
-  the outer expression of an [expression statement] or the final expression of
-  another block expression.
-* [Enum] variants and [struct] and [union] fields accept outer attributes.
-* [Match expression arms][match expressions] accept outer attributes.
-* [Generic lifetime or type parameter][generics] accept outer attributes.
-* Expressions accept outer attributes in limited situations, see [Expression
-  Attributes] for details.
-* [Function][functions], [closure] and [function pointer]
-  parameters accept outer attributes. This includes attributes on variadic parameters
-  denoted with `...` in function pointers and [external blocks][variadic functions].
+* 所有的[数据项声明]都接受外部属性，同时[外部块]、[函数]、[实现]和[模块]也还接受内部属性。
+* 大多数[语句]接受外部属性(参见[表达式属性]，了解表达式语句的限制)。
+* [块表达式]接受外部和内部属性，但只有当它们是另一个[表达式语句]的外部表达式时或时另一个块表达式的最终表达式(final expression)时才能接受。
+* [枚举]变体和[结构体]、[联合体]的字段接受外部属性。
+* [匹配表达式的匹配臂][match expressions]接受外部属性。
+* [泛型生命周期或类型参数][generics]接受外部属性。
+* 表达式在受限情况下接受外部属性，详见[表达式属性]。
+* [函数][functions]、[闭包]和[函数指针]的参数接受外部属性。这包括函数指针和[外部块]中用 `...` 表示的可变参数上的属性。
 
-Some examples of attributes:
+属性的一些例子：
 
 ```rust
-// General metadata applied to the enclosing module or crate.
+// 应用于封闭模块或 crate 的普通元数据。
 #![crate_type = "lib"]
 
-// A function marked as a unit test
+// 标记为单元测试的函数
 #[test]
 fn test_foo() {
     /* ... */
 }
 
-// A conditionally-compiled module
+// 条件编译模块
 #[cfg(target_os = "linux")]
 mod bar {
     /* ... */
 }
 
-// A lint attribute used to suppress a warning/error
+// 用于取消警告/错误的 lint属性
 #[allow(non_camel_case_types)]
 type int8_t = i8;
 
-// Inner attribute applies to the entire function.
+// 适用于整个函数的内部属性
 fn some_unused_variables() {
   #![allow(unused_variables)]
 
@@ -86,12 +74,11 @@ fn some_unused_variables() {
 }
 ```
 
-## Meta Item Attribute Syntax
+## 元数据项属性句法
 
-A "meta item" is the syntax used for the _Attr_ rule by most [built-in
-attributes]. It has the following grammar:
+“元数据项”是大多数[内置属性]应用 Attr句法规则(见本章头部的句法格式)的句法。它有以下语法格式：
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _MetaItem_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_SimplePath_]\
 > &nbsp;&nbsp; | [_SimplePath_] `=` [_LiteralExpression_]<sub>_without suffix_</sub>\
@@ -104,14 +91,11 @@ attributes]. It has the following grammar:
 > &nbsp;&nbsp; &nbsp;&nbsp; _MetaItem_\
 > &nbsp;&nbsp; | [_LiteralExpression_]<sub>_without suffix_</sub>
 
-Literal expressions in meta items must not include integer or float type
-suffixes.
+元数据项中的文字表达式不能包含整数或浮点类型的后缀。
 
-Various built-in attributes use different subsets of the meta item syntax to
-specify their inputs. The following grammar rules show some commonly used
-forms:
+各种内置属性使用元数据项语法的不同子集来指定它们的输入。下面的语法规则展示了一些常用的使用形式：
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _MetaWord_:\
 > &nbsp;&nbsp; [IDENTIFIER]
 >
@@ -127,9 +111,9 @@ forms:
 > _MetaListNameValueStr_:\
 > &nbsp;&nbsp; [IDENTIFIER] `(` ( _MetaNameValueStr_ (`,` _MetaNameValueStr_)* `,`<sup>?</sup> )<sup>?</sup> `)`
 
-Some examples of meta items are:
+元数据项的一些例子是：
 
-Style | Example
+形式 | 示例
 ------|--------
 _MetaWord_ | `no_std`
 _MetaNameValueStr_ | `doc = "example"`
@@ -137,45 +121,36 @@ _MetaListPaths_ | `allow(unused, clippy::inline_always)`
 _MetaListIdents_ | `macro_use(foo, bar)`
 _MetaListNameValueStr_ | `link(name = "CoreFoundation", kind = "framework")`
 
-## Active and inert attributes
+## 活动属性和惰性属性
 
-An attribute is either active or inert. During attribute processing, *active
-attributes* remove themselves from the thing they are on while *inert attributes*
-stay on.
+属性要么是活动的，要么是惰性的。在属性处理过程中，*活动属性*将自己从它们所在的对象中移除，而*惰性属性*保持不变。
 
-The [`cfg`] and [`cfg_attr`] attributes are active. The [`test`] attribute is
-inert when compiling for tests and active otherwise. [Attribute macros] are
-active. All other attributes are inert.
+[`cfg`] 和 [`cfg_attr`] 属性是活动的。[`test`] 属性在为测试所做的编译中是惰性的，否则是活动的。[属性宏]是活动的。所有其他属性都是惰性的。
 
-## Tool attributes
+## 外部工具属性
 
-The compiler may allow attributes for external tools where each tool resides
-in its own namespace. The first segment of the attribute path is the name of
-the tool, with one or more additional segments whose interpretation is up to
-the tool.
+编译器可能允许外部工具的属性，其中每个工具都驻留在自己的命名空间中。属性路径的第一段是工具的名称，再加上一个或多个工具自己解释的附加段。
 
-When a tool is not in use, the tool's attributes are accepted without a
-warning. When the tool is in use, the tool is responsible for processing and
-interpretation of its attributes.
+当工具未被使用时，该工具的属性将被接受而没有警告。在使用该工具时，该工具负责处理和解释其属性。
 
-Tool attributes are not available if the [`no_implicit_prelude`] attribute is
-used.
+如果使用了 [`no_implicit_prelude`] 属性，则外部工具属性不可用。
 
 ```rust
-// Tells the rustfmt tool to not format the following element.
+// 告诉rustfmt工具不要格式化以下元素。
 #[rustfmt::skip]
 struct S {
 }
 
-// Controls the "cyclomatic complexity" threshold for the clippy tool.
+// 控制clippy工具的“圈复杂度(cyclomatic complexity)”阈值。
 #[clippy::cyclomatic_complexity = "100"]
 pub fn f() {}
 ```
 
-> Note: `rustc` currently recognizes the tools "clippy" and "rustfmt".
+> 注意: `rustc` 目前能识别的工具是 “clippy” 和 “rustfmt”。
 
-## Built-in attributes index
+## 内置属性的索引表
 
+下面是所有内置属性的索引：
 The following is an index of all built-in attributes.
 
 - Conditional compilation
