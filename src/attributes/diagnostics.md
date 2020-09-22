@@ -7,7 +7,7 @@
 
 ## lint检查类属性
 
-lint检查(lint check，译者注：这是一个名词)命名了一些潜在的不合规的编码模式，例如执行不到的代码（unreachable-code）或未提供文档（missing_docs）。lint属性（`allow`、`warn`、`deny` 和 `forbid`）通过使用[_MetaListPaths_]句法格式指定 lint检查的名称列表的方式来更改应用该属性的实体的 lint级别。
+lint检查(lint check，译者注：这是一个名词)命名了一些潜在的不合规的编码模式，例如执行不到的代码（unreachable-code）或未提供文档（missing_docs）。lint属性（`allow`、`warn`、`deny` 和 `forbid`）通过使用[_MetaListPaths_]句法规则指定 lint检查的名称列表的方式来更改应用该属性的实体的 lint级别。
 
 对任何 lint检查 `C`（译者注：这个 `C` 不是C语言的C，应该是原作者取 check 的首字母的大写来代表某一 lint检查的意思）：
 
@@ -94,36 +94,23 @@ fn foo() {
 }
 ```
 
-## The `deprecated` attribute
+## `deprecated`属性
 
-The *`deprecated` attribute* marks an item as deprecated. `rustc` will issue
-warnings on usage of `#[deprecated]` items. `rustdoc` will show item
-deprecation, including the `since` version and `note`, if available.
+*`deprecated`属性*将数据项标记为已弃用。`rustc` 将对使用了被 `#[deprecated]` 限定的数据项的行为发出警告。`rustdoc` 将显示已弃用数据项的弃用信息，包括 `since` 版本和 `note` 提示（如果可用）。
 
-The `deprecated` attribute has several forms:
+`deprecated`属性有几种形式：
 
-- `deprecated` — Issues a generic message.
-- `deprecated = "message"` — Includes the given string in the deprecation
-  message.
-- [_MetaListNameValueStr_] syntax with two optional fields:
-  - `since` — Specifies a version number when the item was deprecated. `rustc`
-    does not currently interpret the string, but external tools like [Clippy]
-    may check the validity of the value.
-  - `note` — Specifies a string that should be included in the deprecation
-    message. This is typically used to provide an explanation about the
-    deprecation and preferred alternatives.
+- `deprecated` — 发出一个通用的消息。
+- `deprecated = "message"` — 在弃用消息中包含给定的字符串。
+- [_MetaListNameValueStr_]句法里带有两个可选字段：
+  - `since` — 指定数据项被弃用时的版本号。`rustc` 目前不解释此字符串，但是像 [Clippy] 这样的外部工具可以检查值的有效性。
+  - `note` — 指定一个应该包含在弃用消息中的字符串。这通常用于提供关于不推荐的解释和推荐首选替代。
 
-The `deprecated` attribute may be applied to any [item], [trait item], [enum
-variant], [struct field], [external block item], or [macro definition]. It
-cannot be applied to [trait implementation items]. When applied to an item
-containing other items, such as a [module] or [implementation], all child
-items inherit the deprecation attribute.
-<!-- NOTE: It is only rejected for trait impl items
-(AnnotationKind::Prohibited). In all other locations, it is silently ignored.
-Tuple struct fields are ignored.
--->
+`deprecated`属性可以应用于任何[数据项]，[trait项]，[枚举变体]，[结构体字段]，[外部项]，或[宏定义]。它不能应用于 [trait实现]。当应用于包含其他数据项的数据项时，如[模块]或[实现]，所有子数据项都继承 deprecation属性。
 
-Here is an example:
+<!-- 注意: 它只被 trait实现(AnnotationKind::Prohibited)拒绝。在这些之外的所有其他位置，它会被静默忽略。应用于元组结构体的字段时，此属性直接被忽略。-->
+
+这有个例子：
 
 ```rust
 #[deprecated(since = "5.2", note = "foo was rarely used. Users should instead use bar")]
@@ -132,42 +119,33 @@ pub fn foo() {}
 pub fn bar() {}
 ```
 
-The [RFC][1270-deprecation.md] contains motivations and more details.
+[RFC][1270-deprecation.md] 内有动机说明和更多细节。
 
 [1270-deprecation.md]: https://github.com/rust-lang/rfcs/blob/master/text/1270-deprecation.md
 
-## The `must_use` attribute
+## `must_use`属性
 
-The *`must_use` attribute* is used to issue a diagnostic warning when a value
-is not "used". It can be applied to user-defined composite types
-([`struct`s][struct], [`enum`s][enum], and [`union`s][union]), [functions],
-and [traits].
+*`must_use`属性* 用于在值未被“使用”时发出诊断警告。它可以应用于用户定义的复合类型([`struct`s][结构体]、[`enum`s][枚举] 和 [`union`s][联合体])、[函数]和 [trait]。
 
-The `must_use` attribute may include a message by using the
-[_MetaNameValueStr_] syntax such as `#[must_use = "example message"]`. The
-message will be given alongside the warning.
+`must_use`属性可以包含使用[_MetaNameValueStr_]句法规则的消息，如 `#[must_use = "example message"]`。该字符串将出现在警告信息里。
 
-When used on user-defined composite types, if the [expression] of an
-[expression statement] has that type, then the `unused_must_use` lint is
-violated.
+在用户定义的复合类型上使用时，如果[表达式语句]里的[表达式]具有该类型，那么 `unused_must_use` 这个lint检查就被违反了。
 
 ```rust
 #[must_use]
 struct MustUse {
-    // some fields
+    // 一些字段
 }
 
 # impl MustUse {
 #   fn new() -> MustUse { MustUse {} }
 # }
 #
-// Violates the `unused_must_use` lint.
+// 违反 `unused_must_use` lint检查.
 MustUse::new();
 ```
 
-When used on a function, if the [expression] of an [expression statement] is a
-[call expression] to that function, then the `unused_must_use` lint is
-violated.
+When used on a function, if the [expression] of an [expression statement] is a [call expression] to that function, then the `unused_must_use` lint is violated.
 
 ```rust
 #[must_use]

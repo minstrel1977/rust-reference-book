@@ -3,7 +3,7 @@
 >[derive.md](https://github.com/rust-lang/reference/blob/master/src/attributes/derive.md)\
 >commit a52543267554541a95088b79f46a8bd36f487603
 
-*`derive`属性*允许为结构数据自动生成新的[数据项]。它使用[_MetaListPaths_]句法格式指定要实现的 trait列表或相关的[派生宏]要处理的路径。
+*`derive`属性*允许为结构数据自动生成新的[数据项]。它使用[_MetaListPaths_]句法规则指定要实现的 trait列表或相关的[派生宏]要处理的路径。
 
 例如，下面将为 `Foo` 创建一个 [`PartialEq`] 和 [`Clone`] 这两个 trait 的 [`impl`数据项]，类型参数 `T` 将被相应的 `impl` 提供 `PartialEq` 或 `Clone` 约束：
 

@@ -1,4 +1,4 @@
-# traite
+# trait
 
 >[traits.md](https://github.com/rust-lang/reference/blob/master/src/items/traits.md)\
 >commit d5cc65a70f66a243d84cd251188d80fbe9926747
@@ -243,7 +243,7 @@ let nonsense = circle.radius() * circle.area();
 
 ## 非安全trait
 
-以关键字 `unsafe` 开头的 trait项表示*实现*该 trait 可能是[非安全]的。使用正确实现的非安全trait 是安全的。[trait实现]扔必须以关键字 `unsafe` 开头。
+以关键字 `unsafe` 开头的 trait数据项表示*实现*该 trait 可能是[非安全]的。使用正确实现的非安全trait 是安全的。[trait实现]扔必须以关键字 `unsafe` 开头。
 
 [`Sync`] 和 [`Send`] 是非安全trait。
 
@@ -277,9 +277,9 @@ trait T {
 }
 ```
 
-## 数据项可见性
+## 内部数据项的可见性
 
-trait项在语法上允许使用[_可见性_][_Visibility_]注释，但是当 trait 被验证时，这将被拒绝。这使得数据项可以在使用它们的不同上下文中使用统一的语法进行分析。例如，空的 `vis` 宏片段分类符可用于 trait项，其中宏规则可用于其他允许可见性的情况。
+trait 里数据项在语法上允许使用 [_Visibility_]句法形式的注释，但是当 trait 被验证（validated，译者注：Rust 要求 trait 内部数据项在不添加 `pub` 的情况下也默认为共有，所以这里存在一个验证的过程）时，这将被弃用。这使得这些数据项可以在使用它们的不同上下文中使用统一的语法进行分析。例如，宏规则内空的 `vis` 可用于 trait 里的数据项，非空的则可用于其他允许可见性的情况。
 
 ```rust
 macro_rules! create_method {
@@ -316,11 +316,11 @@ fn main() {
 [_FunctionQualifiers_]: functions.md
 [_FunctionReturnType_]: functions.md
 [_Generics_]: generics.md
-[_MacroInvocationSemi_]: ../macros.md#macro-invocation
+[_MacroInvocationSemi_]: ../macros.md#宏调用
 [_OuterAttribute_]: ../attributes.md
 [_InnerAttribute_]: ../attributes.md
 [_Pattern_]: ../patterns.md
-[_SelfParam_]: associated-items.md#methods
+[_SelfParam_]: associated-items.md#方法
 [_TypeParamBounds_]: ../trait-bounds.md
 [_Type_]: ../types.md#type-expressions
 [_Visibility_]: ../visibility-and-privacy.md
@@ -332,10 +332,10 @@ fn main() {
 [方法]: associated-items.md#方法
 [实现(implementations)]: implementations.md
 [泛型]: generics.md
-[where子句]: generics.md#where-clauses
-[泛型函数]: functions.md#generic-functions
+[where子句]: generics.md#where子句
+[泛型函数]: functions.md#泛型函数
 [非安全]: ../unsafety.md
-[trait实现]: implementations.md#trait-implementations
+[trait实现]: implementations.md#trait实现
 [`Send`]: ../special-types-and-traits.md#send
 [`Sync`]: ../special-types-and-traits.md#sync
 [`Arc<Self>`]: ../special-types-and-traits.md#arct
