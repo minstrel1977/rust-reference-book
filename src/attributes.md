@@ -27,7 +27,7 @@
 属性可以分为以下几类：
 
 * [内置属性]
-* [哄属性][attribute macros]
+* [宏属性][attribute macros]
 * [派生宏辅助属性]
 * [外部工具属性](#外部工具属性)
 
@@ -40,7 +40,7 @@
 * [匹配表达式的匹配臂][match expressions]接受外部属性。
 * [泛型生命周期或类型参数][generics]接受外部属性。
 * 表达式在受限情况下接受外部属性，详见[表达式属性]。
-* [函数][functions]、[闭包]和[函数指针]的参数接受外部属性。这包括函数指针和[外部块]中用 `...` 表示的可变参数上的属性。
+* [函数][functions]、[闭包]和[函数指针]的参数接受外部属性。这包括函数指针和[外部块][variadic functions]中用 `...` 表示的可变参数上的属性。
 
 属性的一些例子：
 
@@ -125,7 +125,7 @@ _MetaListNameValueStr_ | `link(name = "CoreFoundation", kind = "framework")`
 
 属性要么是活动的，要么是惰性的。在属性处理过程中，*活动属性*将自己从它们所在的对象中移除，而*惰性属性*保持不变。
 
-[`cfg`] 和 [`cfg_attr`] 属性是活动的。[`test`] 属性在为测试所做的编译中是惰性的，否则是活动的。[属性宏]是活动的。所有其他属性都是惰性的。
+[`cfg`] 和 [`cfg_attr`] 属性是活动的。[`test`] 属性在为测试所做的编译中是惰性的，否则是活动的。[宏属性][Attribute macros]是活动的。所有其他属性都是惰性的。
 
 ## 外部工具属性
 
@@ -150,85 +150,74 @@ pub fn f() {}
 
 ## 内置属性的索引表
 
-下面是所有内置属性的索引：
-The following is an index of all built-in attributes.
+下面是所有内置属性的索引表：
 
-- Conditional compilation
-  - [`cfg`] — Controls conditional compilation.
-  - [`cfg_attr`] — Conditionally includes attributes.
-- Testing
-  - [`test`] — Marks a function as a test.
-  - [`ignore`] — Disables a test function.
-  - [`should_panic`] — Indicates a test should generate a panic.
-- Derive
-  - [`derive`] — Automatic trait implementations.
-  - [`automatically_derived`] — Marker for implementations created by
-    `derive`.
-- Macros
-  - [`macro_export`] — Exports a `macro_rules` macro for cross-crate usage.
-  - [`macro_use`] — Expands macro visibility, or imports macros from other
-    crates.
-  - [`proc_macro`] — Defines a function-like macro.
-  - [`proc_macro_derive`] — Defines a derive macro.
-  - [`proc_macro_attribute`] — Defines an attribute macro.
-- Diagnostics
-  - [`allow`], [`warn`], [`deny`], [`forbid`] — Alters the default lint level.
-  - [`deprecated`] — Generates deprecation notices.
-  - [`must_use`] — Generates a lint for unused values.
-- ABI, linking, symbols, and FFI
-  - [`link`] — Specifies a native library to link with an `extern` block.
-  - [`link_name`] — Specifies the name of the symbol for functions or statics
-    in an `extern` block.
-  - [`no_link`] — Prevents linking an extern crate.
-  - [`repr`] — Controls type layout.
-  - [`crate_type`] — Specifies the type of crate (library, executable, etc.).
-  - [`no_main`] — Disables emitting the `main` symbol.
-  - [`export_name`] — Specifies the exported symbol name for a function or
-    static.
-  - [`link_section`] — Specifies the section of an object file to use for a
-    function or static.
-  - [`no_mangle`] — Disables symbol name encoding.
-  - [`used`] — Forces the compiler to keep a static item in the output
-    object file.
-  - [`crate_name`] — Specifies the crate name.
-- Code generation
-  - [`inline`] — Hint to inline code.
-  - [`cold`] — Hint that a function is unlikely to be called.
-  - [`no_builtins`] — Disables use of certain built-in functions.
-  - [`target_feature`] — Configure platform-specific code generation.
-  - [`track_caller`] - Pass the parent call location to `std::panic::Location::caller()`.
-- Documentation
-  - `doc` — Specifies documentation. See [The Rustdoc Book] for more
-    information. [Doc comments] are transformed into `doc` attributes.
-- Preludes
-  - [`no_std`] — Removes std from the prelude.
-  - [`no_implicit_prelude`] — Disables prelude lookups within a module.
-- Modules
-  - [`path`] — Specifies the filename for a module.
-- Limits
-  - [`recursion_limit`] — Sets the maximum recursion limit for certain
-    compile-time operations.
-  - [`type_length_limit`] — Sets the maximum size of a polymorphic type.
-- Runtime
-  - [`panic_handler`] — Sets the function to handle panics.
-  - [`global_allocator`] — Sets the global memory allocator.
-  - [`windows_subsystem`] — Specifies the windows subsystem to link with.
-- Features
-  - `feature` — Used to enable unstable or experimental compiler features. See
-    [The Unstable Book] for features implemented in `rustc`.
-- Type System
-  - [`non_exhaustive`] — Indicate that a type will have more fields/variants
-    added in future.
+- 条件编译
+  - [`cfg`] — 控制条件编译。
+  - [`cfg_attr`] — 有条件地包含属性。
+- 测试
+  - [`test`] — 将函数标记为测试函数。
+  - [`ignore`] — 禁用测试功能。
+  - [`should_panic`] — 表示测试应该产生 panic。
+- 派生
+  - [`derive`] — 自动 trait实现
+  - [`automatically_derived`] — 由 `derive` 创建的实现标记。
+- 宏
+  - [`macro_export`] — 导出 `macro_rules` 宏用于跨 crate 的使用。
+  - [`macro_use`] — 扩展宏可见性，或从其他 crate 导入宏。
+  - [`proc_macro`] — 定义类函数宏。
+  - [`proc_macro_derive`] — 定义派生宏。
+  - [`proc_macro_attribute`] — 定义属性宏。
+- 诊断
+  - [`allow`]、[`warn`]、[`deny`]、[`forbid`] — 更改默认的 lint 级别。
+  - [`deprecated`] — 生成弃用通知。
+  - [`must_use`] — 为未使用的值生成 lint提醒。
+- ABI、链接、symbol、和 FFI
+  - [`link`] — 指定要与 `extern`块链接的本地库。
+  - [`link_name`] — 指定 `extern`块中函数或静态项的 symbol名称。
+  - [`no_link`] — 防止链接外部crate。
+  - [`repr`] — 控制类型的布局。
+  - [`crate_type`] — 指定 crate 的类型(库、可执行文件等)。
+  - [`no_main`] — 禁止发布 `main` symbol。
+  - [`export_name`] — 指定函数或静态项的导出 symbol名。
+  - [`link_section`] — 指定用于函数或静态项的对象文件的部分。
+  - [`no_mangle`] — 禁用 symbol名编码。
+  - [`used`] — 强制编译器在输出对象文件中保留静态项。
+  - [`crate_name`] — 指定 crate名。
+- 代码生成
+  - [`inline`] — 内联代码提示。
+  - [`cold`] — 提示函数不太可能被调用。
+  - [`no_builtins`] — 禁用某些内置函数的使用。
+  - [`target_feature`] — 配置特定于平台的代码生成。
+  - [`track_caller`] - 将父调用位置传递给 `std::panic::Location::caller()`。
+- 文档
+  - `doc` — 指定文档。更多信息见 [The Rustdoc Book]。[Doc注释]被转换为 `doc` 属性。
+- 预导入模块集
+  - [`no_std`] — 从预导入模块集中移除 std。
+  - [`no_implicit_prelude`] — 在模块中禁用预导入模块查找。
+- 模块
+  - [`path`] — 指定模块的文件名。
+- 限制
+  - [`recursion_limit`] — 设置某些编译时操作的最大递归限制。
+  - [`type_length_limit`] — 设置多态类型的最大尺寸。
+- 运行时
+  - [`panic_handler`] — 设置函数来处理 panic。
+  - [`global_allocator`] — 设置全局内存分配器。
+  - [`windows_subsystem`] — 指定要链接的windows子系统。
+- 功能
+  - `feature` — 用于启用非稳定的或实验性的编译器功能。参见 [The Unstable Book] 了解在 `rustc` 中实现的功能。
+- 类型系统
+  - [`non_exhaustive`] — 指示一个类型将来会添加更多的字段/变体。
 
-[Doc comments]: comments.md#doc-comments
+[Doc注释]: comments.md#注释
 [ECMA-334]: https://www.ecma-international.org/publications/standards/Ecma-334.htm
 [ECMA-335]: https://www.ecma-international.org/publications/standards/Ecma-335.htm
-[Expression Attributes]: expressions.md#expression-attributes
+[表达式属性]: expressions.md#表达式属性
 [IDENTIFIER]: identifiers.md
 [RAW_STRING_LITERAL]: tokens.md#raw-string-literals
 [STRING_LITERAL]: tokens.md#string-literals
-[The Rustdoc Book]: ../rustdoc/the-doc-attribute.html
-[The Unstable Book]: ../unstable-book/index.html
+[The Rustdoc Book]: https://doc.rust-lang.org/nightly/rustdoc/
+[The Unstable Book]: https://doc.rust-lang.org/nightly/unstable-book/
 [_DelimTokenTree_]: macros.md
 [_LiteralExpression_]: expressions/literal-expr.md
 [_SimplePath_]: paths.md#simple-paths
@@ -262,8 +251,8 @@ The following is an index of all built-in attributes.
 [`non_exhaustive`]: attributes/type_system.md#the-non_exhaustive-attribute
 [`panic_handler`]: runtime.md#the-panic_handler-attribute
 [`path`]: items/modules.md#the-path-attribute
-[`proc_macro_attribute`]: procedural-macros.md#attribute-macros
-[`proc_macro_derive`]: procedural-macros.md#derive-macros
+[`proc_macro_attribute`]: procedural-macros.md#属性宏
+[`proc_macro_derive`]: procedural-macros.md#派生宏
 [`proc_macro`]: procedural-macros.md#function-like-procedural-macros
 [`recursion_limit`]: attributes/limits.md#the-recursion_limit-attribute
 [`repr`]: type-layout.md#representations
@@ -275,22 +264,22 @@ The following is an index of all built-in attributes.
 [`used`]: abi.md#the-used-attribute
 [`warn`]: attributes/diagnostics.md#lint-check-attributes
 [`windows_subsystem`]: runtime.md#the-windows_subsystem-attribute
-[attribute macros]: procedural-macros.md#attribute-macros
-[block expressions]: expressions/block-expr.md
-[built-in attributes]: #built-in-attributes-index
-[derive macro helper attributes]: procedural-macros.md#derive-macro-helper-attributes
-[enum]: items/enumerations.md
-[expression statement]: statements.md#expression-statements
-[external blocks]: items/external-blocks.md
-[functions]: items/functions.md
-[generics]: items/generics.md
-[implementations]: items/implementations.md
-[item declarations]: items.md
+[attribute macros]: procedural-macros.md#属性宏
+[块表达式]: expressions/block-expr.md
+[内置属性]: #内置属性的索引表
+[派生宏辅助属性]: procedural-macros.md#派生宏辅助属性
+[枚举]: items/enumerations.md
+[表达式语句]: statements.md#expression-statements
+[外部块]: items/external-blocks.md
+[函数]: items/functions.md
+[泛型]: items/generics.md
+[实现]: items/implementations.md
+[数据项声明]: items.md
 [match expressions]: expressions/match-expr.md
-[modules]: items/modules.md
-[statements]: statements.md
-[struct]: items/structs.md
-[union]: items/unions.md
-[closure]: expressions/closure-expr.md
-[function pointer]: types/function-pointer.md
-[variadic functions]: items/external-blocks.html#variadic-functions
+[模块]: items/modules.md
+[语句]: statements.md
+[结构体]: items/structs.md
+[联合体: items/unions.md
+[闭包]: expressions/closure-expr.md
+[函数指针]: types/function-pointer.md
+[variadic functions]: items/external-blocks.md#可变参数函数

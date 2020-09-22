@@ -149,7 +149,7 @@ struct Struct {
 
 属性宏由带有 `proc_macro_attribute` 属性和 `(TokenStream, TokenStream) -> TokenStream` 签名的[公有]可见性[函数]定义。签名中的第一个 [`TokenStream`] 是属性名称后面带定界符的标记树，不包括外部定界符。如果该属性作为裸属性给出，则第一个 [`TokenStream`] 值为空。第二个 [`TokenStream`] 是数据项的其余部分，包括该数据项的其他属性。返回的 [`TokenStream`] 将项替换为任意数量的数据项。
 
-例如，这个属性宏接受输入流并按原样返回，实际上对属性并无操作。
+例如，下面这个属性宏接受输入流并按原样返回，实际上对属性并无操作。
 
 <!-- ignore: test doesn't support proc-macro -->
 ```rust,ignore
@@ -163,7 +163,7 @@ pub fn return_as_is(_attr: TokenStream, item: TokenStream) -> TokenStream {
 }
 ```
 
-下面的示例显示了属性宏看到的字符串化的 [`TokenStream`]。输出将示在编译期的编译器输出窗口中。（具体的以 "out:"为前缀的）输出内容也都在下面每个示例函数后面的注释中给出了。
+下面的示例显示了属性宏看到的字符串化的 [`TokenStream`]。输出将显示在编译时的编译器输出窗口中。（具体的以 "out:"为前缀的）输出内容也都在下面每个示例函数后面的注释中给出了。
 
 <!-- ignore: test doesn't support proc-macro -->
 ```rust,ignore
@@ -211,10 +211,10 @@ fn invoke4() {}
 // out: item: "fn invoke4() {}"
 ```
 
-[属性宏]: #attribute-macros
+[属性宏]: #属性宏
 [Cargo的构建脚本]: ../cargo/reference/build-scripts.html
-[派生宏]: #derive-macros
-[类函数宏]: #function-like-procedural-macros
+[派生宏]: #派生宏
+[类函数宏]: #类函数宏
 [`TokenStream`]: ../proc_macro/struct.TokenStream.html
 [`TokenStream`s]: ../proc_macro/struct.TokenStream.html
 [`compile_error`]: ../std/macro.compile_error.html
@@ -225,12 +225,12 @@ fn invoke4() {}
 [属性]: attributes.md
 [块]: expressions/block-expr.md
 [crate 类型]: linkage.md
-[派生宏辅助属性]: #derive-macro-helper-attributes
+[派生宏辅助属性]: #派生宏辅助属性
 [枚举]: items/enumerations.md
 [表达式]: expressions.md
 [函数]: items/functions.md
 [实现]: items/implementations.md
-[惰性的]: attributes.md#active-and-inert-attributes
+[惰性的]: attributes.md#活动属性和惰性属性
 [数据项]: items.md
 [模块]: items/modules.md
 [模式]: patterns.md
@@ -238,6 +238,6 @@ fn invoke4() {}
 [语句]: statements.md
 [结构体]: items/structs.md
 [trait 定义]: items/traits.md
-[类型表达式]: types.md#type-expressions
+[类型表达式]: types.md#类型表达式
 [类型]: types.md
 [联合体]: items/unions.md
