@@ -129,7 +129,7 @@ pub fn bar() {}
 
 `must_use`属性可以包含使用[_MetaNameValueStr_]句法规则的消息，如 `#[must_use = "example message"]`。该字符串将出现在警告信息里。
 
-在用户定义的复合类型上使用时，如果[表达式语句]里的[表达式]具有该类型，那么 `unused_must_use` 这个lint检查就被违反了。
+在用户定义的复合类型上使用时，如果[表达式语句]里的[表达式]具有该类型，那么 `unused_must_use` 这个lint（检查）就被违反了。
 
 ```rust
 #[must_use]
@@ -141,17 +141,17 @@ struct MustUse {
 #   fn new() -> MustUse { MustUse {} }
 # }
 #
-// 违反 `unused_must_use` lint检查.
+// 违反 `unused_must_use` lint.
 MustUse::new();
 ```
 
-When used on a function, if the [expression] of an [expression statement] is a [call expression] to that function, then the `unused_must_use` lint is violated.
+当在函数上使用时，如果[表达式语句]的[表达式]是该函数的[调用表达式]，那么 `unused_must_use` lint 就被违反
 
 ```rust
 #[must_use]
 fn five() -> i32 { 5i32 }
 
-// Violates the unused_must_use lint.
+// 违反 unused_must_use lint.
 five();
 ```
 
