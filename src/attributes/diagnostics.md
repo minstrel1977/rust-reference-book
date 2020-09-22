@@ -1,103 +1,93 @@
-# Diagnostic attributes
+# 诊断属性
 
-The following [attributes] are used for controlling or generating diagnostic
-messages during compilation.
+>[diagnostics.md](https://github.com/rust-lang/reference/blob/master/src/attributes/diagnostics.md)\
+>commit 2196589ccf8fefc4edeaa0ab430fe2ce6a57dec3
 
-## Lint check attributes
+以下[属性]用于在编译期间控制或生成诊断消息。
 
-A lint check names a potentially undesirable coding pattern, such as
-unreachable code or omitted documentation. The lint attributes `allow`,
-`warn`, `deny`, and `forbid` use the [_MetaListPaths_] syntax to specify a
-list of lint names to change the lint level for the entity to which the
-attribute applies.
+## lint检查类属性
 
-For any lint check `C`:
+lint检查(lint check，译者注：这是一个名词)命名了一些潜在的不合规的编码模式，例如执行不到的代码（unreachable-code）或未提供文档（missing_docs）。lint属性（`allow`、`warn`、`deny` 和 `forbid`）通过使用[_MetaListPaths_]句法格式指定 lint检查的名称列表的方式来更改应用该属性的实体的 lint级别。
 
-* `allow(C)` overrides the check for `C` so that violations will go
-   unreported,
-* `warn(C)` warns about violations of `C` but continues compilation.
-* `deny(C)` signals an error after encountering a violation of `C`,
-* `forbid(C)` is the same as `deny(C)`, but also forbids changing the lint
-   level afterwards,
+对任何 lint检查 `C`（译者注：这个 `C` 不是C语言的C，应该是原作者取 check 的首字母的大写来代表某一 lint检查的意思）：
 
-> Note: The lint checks supported by `rustc` can be found via `rustc -W help`,
-> along with their default settings and are documented in the [rustc book].
+* `allow(C)` 会无视对 `C` 的检查，那这样的违规行为就不会被报告，
+* `warn(C)` 警告违反 `C` ，但继续编译。
+* `deny(C)` 遇到违反 `C` 的情况会触发错误（signals an error），
+* `forbid(C)` 与 `deny(C)` 相同，但同时会禁止以后再更改 lint级别，
+* 
+> 注意：可以通过 `rustc -W help` 找到所有 `rustc` 支持的 lint检查，以及它们的默认设置。也可以在[rustc book]中找到相关文档。
 
 ```rust
 pub mod m1 {
-    // Missing documentation is ignored here
+    // 这里忽略未提供文档的编码行为
     #[allow(missing_docs)]
     pub fn undocumented_one() -> i32 { 1 }
 
-    // Missing documentation signals a warning here
+    // 未提供文档的编码行为在这里将触发一个告警
     #[warn(missing_docs)]
     pub fn undocumented_too() -> i32 { 2 }
 
-    // Missing documentation signals an error here
+    // 未提供文档的编码行为在这里将触发一个错误
     #[deny(missing_docs)]
     pub fn undocumented_end() -> i32 { 3 }
 }
 ```
 
-This example shows how one can use `allow` and `warn` to toggle a particular
-check on and off:
+此示例展示了如何使用 `allow` 和 `warn` 来打开和关闭一个特定的 lint检查：
 
 ```rust
 #[warn(missing_docs)]
 pub mod m2{
     #[allow(missing_docs)]
     pub mod nested {
-        // Missing documentation is ignored here
+        // 这里忽略未提供文档的编码行为
         pub fn undocumented_one() -> i32 { 1 }
 
-        // Missing documentation signals a warning here,
-        // despite the allow above.
+        // 尽管上面允许，但未提供文档的编码行为在这里将触发一个告警
         #[warn(missing_docs)]
         pub fn undocumented_two() -> i32 { 2 }
     }
 
-    // Missing documentation signals a warning here
+    // 未提供文档的编码行为在这里将触发一个告警
     pub fn undocumented_too() -> i32 { 3 }
 }
 ```
 
-This example shows how one can use `forbid` to disallow uses of `allow` for
-that lint check:
+此示例展示了如何使用 `forbid` 来禁止对该 lint检查 使用 `allow`：
+This example shows how one can use `forbid` to disallow uses of `allow` for that lint check:
 
 ```rust,compile_fail
 #[forbid(missing_docs)]
 pub mod m3 {
-    // Attempting to toggle warning signals an error here
+    // 试图从 error级别切换到 allow级别
     #[allow(missing_docs)]
-    /// Returns 2.
+    /// 返回 2。
     pub fn undocumented_too() -> i32 { 2 }
 }
 ```
 
-### Tool lint attributes
+### 工具类lint属性
 
-Tool lints allows using scoped lints, to `allow`, `warn`, `deny` or `forbid`
-lints of certain tools.
+工具类lint 允许为 `allow`、`warn`、`deny` 或 `forbid` 使用当前作用域内可用的特定的外部工具的lint。
 
-Currently `clippy` is the only available lint tool.
+目前，`clippy` 是唯一可用的 lint工具。
 
-Tool lints only get checked when the associated tool is active. If a lint
-attribute, such as `allow`, references a nonexistent tool lint, the compiler
-will not warn about the nonexistent lint until you use the tool.
+工具类lint 只有在相关工具处于活动状态时才会做对应的代码模式检查。如果一个 lint属性，如 `allow`，引用了一个不存在的工具类lint，编译器将不会警告不存在的 lint，除非您使用该工具。
 
-Otherwise, they work just like regular lint attributes:
+否则，他们工作就像常规的 lint属性：
 
 ```rust
-// set the entire `pedantic` clippy lint group to warn
+// 将整个 `pedantic` clippy lint组设置为告警级别
 #![warn(clippy::pedantic)]
-// silence warnings from the `filter_map` clippy lint
+// 使来自 `filter_map` clippy lint 的警告静音
 #![allow(clippy::filter_map)]
 
 fn main() {
     // ...
 }
 
-// silence the `cmp_nan` clippy lint just for this function
+// 使 `cmp_nan` clippy lint 静音，仅用于此函数
 #[allow(clippy::cmp_nan)]
 fn foo() {
     // ...
@@ -273,7 +263,7 @@ When used on a function in a trait implementation, the attribute does nothing.
 [let statement]: ../statements.md#let-statements
 [macro definition]: ../macros-by-example.md
 [module]: ../items/modules.md
-[rustc book]: ../../rustc/lints/index.html
+[rustc book]: https://doc.rust-lang.org/rustc/lints/index.html
 [struct field]: ../items/structs.md
 [struct]: ../items/structs.md
 [trait declaration]: ../items/traits.md
