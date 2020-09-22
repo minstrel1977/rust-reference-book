@@ -74,17 +74,16 @@ fn main() {
 
 ## Main 函数
 
-包含 `main` [函数]的 crate 可以被编译成可执行文件。如果一个 `main` 函数存在，它必须不带参数，不能声明任何 [trait 或生命周期约束]，不能有任何 [where 子句]，并且它的返回类型必须是以下类型之一:
+包含 `main` [函数]的 crate 可以被编译成可执行文件。如果一个 `main` 函数存在，它必须不能有参数，不能声明任何 [trait 或生命周期约束]，不能有任何 [where 子句]，并且它的返回类型必须是以下类型之一:
 
 * `()`
 * `Result<(), E> where E: Error`
 <!-- * `!` -->
 <!-- * Result<!, E> where E: Error` -->
 
-> 注意: 允许哪些返回类型的实现是由暂未稳定的的[`Termination`] trait 决定的。
+> 注意: 允许哪些返回类型的实现是由暂未稳定的[`Termination`] trait 决定的。
 
-<!-- If the previous section needs updating (from "must take no arguments"
-  onwards, also update it in the testing.md file -->
+<!-- 如果前面这节需要更新(从 "必须不能有参数" 开始, 同时需要修改 attributes/testing.md 文件 -->
 
 ### `no_main` 属性
 

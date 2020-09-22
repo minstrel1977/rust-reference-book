@@ -40,7 +40,7 @@
     - [可见性与隐私权](visibility-and-privacy.md)
 
 - [属性](attributes.md)
-    - [测试属性](attributes/testing.md)
+    - [测试类属性](attributes/testing.md)
     - [派生属性](attributes/derive.md)
     - [诊断属性](attributes/diagnostics.md)
     - [代码生成属性](attributes/codegen.md)
