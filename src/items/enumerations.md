@@ -162,7 +162,7 @@ enum E {
 [_StructFields_]: structs.md
 [_Visibility_]: ../visibility-and-privacy.md
 [枚举类型]: ../types/enum.md
-[`mem::discriminant`]: ../../std/mem/fn.discriminant.html
+[`mem::discriminant`]: https://doc.rust-lang.org/std/mem/fn.discriminant.html
 [*never 类型*]: ../types/never.md
 [数值转换]: ../expressions/operator-expr.md#semantics
 [常量表达式]: ../const_eval.md#常量表达式

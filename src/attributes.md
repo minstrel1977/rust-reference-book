@@ -204,8 +204,8 @@ pub fn f() {}
   - [`panic_handler`] — 设置函数来处理 panic。
   - [`global_allocator`] — 设置全局内存分配器。
   - [`windows_subsystem`] — 指定要链接的windows子系统。
-- 功能
-  - `feature` — 用于启用非稳定的或实验性的编译器功能。参见 [The Unstable Book] 了解在 `rustc` 中实现的功能。
+- 特性
+  - `feature` — 用于启用非稳定的或实验性的编译器特性。参见 [The Unstable Book] 了解在 `rustc` 中实现的特性。
 - 类型系统
   - [`non_exhaustive`] — 指示一个类型将来会添加更多的字段/变体。
 

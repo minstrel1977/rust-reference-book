@@ -9,11 +9,11 @@
 
 lint检查(lint check，译者注：这是一个名词)命名了一些潜在的不合规的编码模式，例如执行不到的代码（unreachable-code）或未提供文档（missing_docs）。lint属性（`allow`、`warn`、`deny` 和 `forbid`）通过使用[_MetaListPaths_]句法规则指定 lint检查的名称列表的方式来更改应用该属性的实体的 lint级别。
 
-对任何 lint检查 `C`（译者注：这个 `C` 不是C语言的C，应该是原作者取 check 的首字母的大写来代表某一 lint检查的意思）：
+对任何 lint检查 `C`（译者注：这个 `C` 不是C语言的C，应该是原作者取 check 的首字母的大写来代表某一 lint检查的名字的意思）：
 
 * `allow(C)` 会无视对 `C` 的检查，那这样的违规行为就不会被报告，
 * `warn(C)` 警告违反 `C` ，但继续编译。
-* `deny(C)` 遇到违反 `C` 的情况会触发错误（signals an error），
+* `deny(C)` 遇到违反 `C` 的情况会触发一个表示错误的信号（signals an error），
 * `forbid(C)` 与 `deny(C)` 相同，但同时会禁止以后再更改 lint级别，
 * 
 > 注意：可以通过 `rustc -W help` 找到所有 `rustc` 支持的 lint检查，以及它们的默认设置。也可以在[rustc book]中找到相关文档。
@@ -106,7 +106,7 @@ fn foo() {
   - `since` — 指定数据项被弃用时的版本号。`rustc` 目前不解释此字符串，但是像 [Clippy] 这样的外部工具可以检查值的有效性。
   - `note` — 指定一个应该包含在弃用消息中的字符串。这通常用于提供关于不推荐的解释和推荐首选替代。
 
-`deprecated`属性可以应用于任何[数据项]，[trait项]，[枚举变体]，[结构体字段]，[外部项]，或[宏定义]。它不能应用于 [trait实现]。当应用于包含其他数据项的数据项时，如[模块]或[实现]，所有子数据项都继承 deprecation属性。
+`deprecated`属性可以应用于任何[数据项]，[trait的内部项]，[枚举变体]，[结构体字段]，[外部块的内部项]，或[宏定义]。它不能应用于 [trait实现的内部项]。当应用于包含其他数据项的数据项时，如[模块]或[实现]，所有子数据项都继承 deprecation属性。
 
 <!-- 注意: 它只被 trait实现(AnnotationKind::Prohibited)拒绝。在这些之外的所有其他位置，它会被静默忽略。应用于元组结构体的字段时，此属性直接被忽略。-->
 
@@ -141,7 +141,7 @@ struct MustUse {
 #   fn new() -> MustUse { MustUse {} }
 # }
 #
-// 违反 `unused_must_use` lint.
+// 违反 `unused_must_use` lint。
 MustUse::new();
 ```
 
@@ -151,13 +151,11 @@ MustUse::new();
 #[must_use]
 fn five() -> i32 { 5i32 }
 
-// 违反 unused_must_use lint.
+// 违反 unused_must_use lint。
 five();
 ```
 
-When used on a [trait declaration], a [call expression] of an [expression
-statement] to a function that returns an [impl trait] of that trait violates
-the `unused_must_use` lint.
+在 [trait声明]中使用时，如果[表达式语句]的[调用表达式]返回了 trait 的 [impl trait] ，则违反了 `unused_must_use` lint。
 
 ```rust
 #[must_use]
@@ -168,12 +166,11 @@ fn get_critical() -> impl Critical {
     4i32
 }
 
-// Violates the `unused_must_use` lint.
+// 违反 `unused_must_use` lint。
 get_critical();
 ```
 
-When used on a function in a trait declaration, then the behavior also applies
-when the call expression is a function from an implementation of the trait.
+当在 trait声明中的函数上使用时，同时调用表达式是 trait实现中的函数时，该行为也适用。
 
 ```rust
 trait Trait {
@@ -185,22 +182,19 @@ impl Trait for i32 {
     fn use_me(&self) -> i32 { 0i32 }
 }
 
-// Violates the `unused_must_use` lint.
+// 违反 `unused_must_use` lint。
 5i32.use_me();
 ```
 
-When used on a function in a trait implementation, the attribute does nothing.
+当在 trait实现中的函数上使用时，该属性将被忽略。
 
-> Note: Trivial no-op expressions containing the value will not violate the
-> lint. Examples include wrapping the value in a type that does not implement
-> [`Drop`] and then not using that type and being the final expression of a
-> [block expression] that is not used.
+> 注意：包含值的普通无操作表达式不会违反该 lint。例如，将值包装在没有实现 [`Drop`] 的类型中，然后不使用该类型，并成为未使用的[块表达式]的最后一个表达式。
 >
 > ```rust
 > #[must_use]
 > fn five() -> i32 { 5i32 }
 >
-> // None of these violate the unused_must_use lint.
+> // 这些都不违反 unused_must_use lint。
 > (five(),);
 > Some(five());
 > { five() };
@@ -210,14 +204,13 @@ When used on a function in a trait implementation, the attribute does nothing.
 > };
 > ```
 
-> Note: It is idiomatic to use a [let statement] with a pattern of `_`
-> when a must-used value is purposely discarded.
+> 注意：当一个必须使用的值被故意丢弃时，使用带有模式 `_`的[let语句]是惯用的方法。
 >
 > ```rust
 > #[must_use]
 > fn five() -> i32 { 5i32 }
 >
-> // Does not violate the unused_must_use lint.
+> // 不违反 unused_must_use lint。
 > let _ = five();
 > ```
 
@@ -226,26 +219,26 @@ When used on a function in a trait implementation, the attribute does nothing.
 [_MetaListPaths_]: ../attributes.md#meta-item-attribute-syntax
 [_MetaNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
 [`Drop`]: ../special-types-and-traits.md#drop
-[attributes]: ../attributes.md
-[block expression]: ../expressions/block-expr.md
-[call expression]: ../expressions/call-expr.md
-[enum variant]: ../items/enumerations.md
-[enum]: ../items/enumerations.md
-[expression statement]: ../statements.md#expression-statements
-[expression]: ../expressions.md
-[external block item]: ../items/external-blocks.md
-[functions]: ../items/functions.md
+[属性]: ../attributes.md
+[块表达式]: ../expressions/block-expr.md
+[调用表达式]: ../expressions/call-expr.md
+[枚举变体]: ../items/enumerations.md
+[枚举]: ../items/enumerations.md
+[表达式语句]: ../statements.md#expression-statements
+[表达式]: ../expressions.md
+[外部块的内部项]: ../items/external-blocks.md
+[函数]: ../items/functions.md
 [impl trait]: ../types/impl-trait.md
-[implementation]: ../items/implementations.md
-[item]: ../items.md
-[let statement]: ../statements.md#let-statements
-[macro definition]: ../macros-by-example.md
-[module]: ../items/modules.md
+[实现]: ../items/implementations.md
+[数据项]: ../items.md
+[let语句]: ../statements.md#let语句
+[宏定义]: ../macros-by-example.md
+[模块]: ../items/modules.md
 [rustc book]: https://doc.rust-lang.org/rustc/lints/index.html
-[struct field]: ../items/structs.md
-[struct]: ../items/structs.md
-[trait declaration]: ../items/traits.md
-[trait implementation items]: ../items/implementations.md#trait-implementations
-[trait item]: ../items/traits.md
-[traits]: ../items/traits.md
-[union]: ../items/unions.md
+[结构体字段]: ../items/structs.md
+[结构体]: ../items/structs.md
+[trait声明]: ../items/traits.md
+[trait实现的内部项]: ../items/implementations.md#trait实现
+[trait的内部项]: ../items/traits.md
+[trait]: ../items/traits.md
+[联合体]: ../items/unions.md

@@ -100,8 +100,8 @@ this type is unspecified.
 
 > **Edition differences**: Async blocks are only available beginning with Rust 2018.
 
-[`std::ops::Fn`]: ../../std/ops/trait.Fn.html
-[`std::future::Future`]: ../../std/future/trait.Future.html
+[`std::ops::Fn`]: https://doc.rust-lang.org/std/ops/trait.Fn.html
+[`std::future::Future`]: https://doc.rust-lang.org/std/future/trait.Future.html
 
 ### Capture modes
 

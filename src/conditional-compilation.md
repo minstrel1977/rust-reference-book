@@ -82,7 +82,7 @@
 * `"sse2"`
 * `"sse4.1"`
 
-有关可用特性的更多细节，请参见[`target_feature` 属性]。`target_feature` 选项提供了一个 `crt-static` 的附加特性，用于指示一个[静态 C 运行时]可用。
+有关可用特性的更多细节，请参见[`target_feature`属性]。此外，在[`target_feature`属性]表之外还为`target_feature`选项提供了一个 `crt-static` 特性，可以用它来启用一个[静态的C运行时]。
 
 ### `target_os`
 
@@ -220,7 +220,6 @@ fn needs_not_foo() {
 `cfg_attr` [属性]根据配置谓词有条件地包含[属性]。
 
 当配置谓词为真时，此属性展开为谓词后列出的属性。例如，下面的模块可以在 `linux.rs` 或 `windows.rs` 中都能找到。
-When the configuration predicate is true, this attribute expands out to the attributes listed after the predicate. For example, the following module will either be found at `linux.rs` or `windows.rs` based on the target.
 
 <!-- ignore: `mod` needs multiple files -->
 ```rust,ignore
@@ -285,8 +284,8 @@ Rust 官方对一些平台提供了默认的目标三元组，我们可以通过
 [`cfg` macro]: #the-cfg-macro
 [`cfg_attr`]: #the-cfg_attr-attribute
 [`debug_assert!`]: ../std/macro.debug_assert.html
-[`target_feature` attribute]: attributes/codegen.md#the-target_feature-attribute
+[`target_feature`属性]: attributes/codegen.md#the-target_feature-attribute
 [属性]: attributes.md
 [cargo-feature]: ../cargo/reference/features.html
 [crate 类型]: linkage.md
-[静态 C 运行时]: linkage.md#static-and-dynamic-c-runtimes
+[静态的C运行时]: linkage.md#static-and-dynamic-c-runtimes

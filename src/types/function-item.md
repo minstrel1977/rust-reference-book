@@ -48,9 +48,9 @@ All function items implement [`Fn`], [`FnMut`], [`FnOnce`], [`Copy`],
 
 [`Clone`]: ../special-types-and-traits.md#clone
 [`Copy`]: ../special-types-and-traits.md#copy
-[`FnMut`]: ../../std/ops/trait.FnMut.html
-[`FnOnce`]: ../../std/ops/trait.FnOnce.html
-[`Fn`]: ../../std/ops/trait.Fn.html
+[`FnMut`]: https://doc.rust-lang.org/std/ops/trait.FnMut.html
+[`FnOnce`]: https://doc.rust-lang.org/std/ops/trait.FnOnce.html
+[`Fn`]: https://doc.rust-lang.org/std/ops/trait.Fn.html
 [`Send`]: ../special-types-and-traits.md#send
 [`Sync`]: ../special-types-and-traits.md#sync
 [coercion]: ../type-coercions.md

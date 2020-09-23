@@ -111,7 +111,7 @@ mod thread {
 [macro_use]: ../macros-by-example.md#the-macro_use-attribute
 [`cfg`]: ../conditional-compilation.md
 [`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
-[`doc`]: ../../rustdoc/the-doc-attribute.html
+[`doc`]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
 [IDENTIFIER]: ../identifiers.md
 [属性]: ../attributes.md
 [数据项]: ../items.md

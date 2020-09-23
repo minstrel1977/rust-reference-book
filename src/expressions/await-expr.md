@@ -25,13 +25,13 @@ More specifically, an `<expr>.await` expression has the following effect.
 
 [`async fn`]: ../items/functions.md#async-functions
 [`async` block]: block-expr.md#async-blocks
-[future]: ../../std/future/trait.Future.html
+[future]: https://doc.rust-lang.org/std/future/trait.Future.html
 [_Expression_]: ../expressions.md
-[`Future::poll`]: ../../std/future/trait.Future.html#tymethod.poll
-[`Context`]: ../../std/task/struct.Context.html
-[`Pin::new_unchecked`]: ../../std/pin/struct.Pin.html#method.new_unchecked
-[`Poll::Pending`]: ../../std/task/enum.Poll.html#variant.Pending
-[`Poll::Ready`]: ../../std/task/enum.Poll.html#variant.Ready
+[`Future::poll`]: https://doc.rust-lang.org/std/future/trait.Future.html#tymethod.poll
+[`Context`]: https://doc.rust-lang.org/std/task/struct.Context.html
+[`Pin::new_unchecked`]: https://doc.rust-lang.org/std/pin/struct.Pin.html#method.new_unchecked
+[`Poll::Pending`]: https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Pending
+[`Poll::Ready`]: https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Ready
 
 > **Edition differences**: Await expressions are only available beginning with
 > Rust 2018.
@@ -43,7 +43,7 @@ current [async context] when the async context itself was
 polled. Because `await` expressions are only legal in an async
 context, there must be some task context available.
 
-[`Context`]: ../../std/task/struct.Context.html
+[`Context`]: https://doc.rust-lang.org/std/task/struct.Context.html
 [async context]: ../expressions/block-expr.md#async-context
 
 ## Approximate desugaring

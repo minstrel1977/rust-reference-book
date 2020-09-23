@@ -95,9 +95,9 @@ Refer to [RFC 132] for further details and motivations.
 
 [RFC 132]: https://github.com/rust-lang/rfcs/blob/master/text/0132-ufcs.md
 [_Expression_]: ../expressions.md
-[`default()`]: ../../std/default/trait.Default.html#tymethod.default
-[`size_of()`]: ../../std/mem/fn.size_of.html
-[`std::ops::FnMut`]: ../../std/ops/trait.FnMut.html
-[`std::ops::FnOnce`]: ../../std/ops/trait.FnOnce.html
-[`std::ops::Fn`]: ../../std/ops/trait.Fn.html
+[`default()`]: https://doc.rust-lang.org/std/default/trait.Default.html#tymethod.default
+[`size_of()`]: https://doc.rust-lang.org/std/mem/fn.size_of.html
+[`std::ops::FnMut`]: https://doc.rust-lang.org/std/ops/trait.FnMut.html
+[`std::ops::FnOnce`]: https://doc.rust-lang.org/std/ops/trait.FnOnce.html
+[`std::ops::Fn`]: https://doc.rust-lang.org/std/ops/trait.Fn.html
 [fully-qualified syntax]: ../paths.md#qualified-paths

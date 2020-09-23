@@ -188,7 +188,7 @@ impl Seq<bool> for u32 {
 [属性]: ../attributes.md
 [`cfg`]: ../conditional-compilation.md
 [`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
-[`doc`]: ../../rustdoc/the-doc-attribute.html
+[`doc`]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
 [路径]: ../paths.md
 [lint检查类属性]: ../attributes/diagnostics.md#lint-check-attributes
 [非安全trait]: traits.md#unsafe-traits

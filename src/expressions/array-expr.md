@@ -81,8 +81,8 @@ arr[10];                  // warning: index out of bounds
 The array index expression can be implemented for types other than arrays and slices
 by implementing the [Index] and [IndexMut] traits.
 
-[IndexMut]: ../../std/ops/trait.IndexMut.html
-[Index]: ../../std/ops/trait.Index.html
+[IndexMut]: https://doc.rust-lang.org/std/ops/trait.IndexMut.html
+[Index]: https://doc.rust-lang.org/std/ops/trait.Index.html
 [Inner attributes]: ../attributes.md
 [_Expression_]: ../expressions.md
 [_InnerAttribute_]: ../attributes.md

@@ -324,7 +324,7 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [测试类属性]: ../attributes/testing.md
 [优化提示类属性]: ../attributes/codegen.md#optimization-hints
 [`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
-[`doc`]: ../../rustdoc/the-doc-attribute.html
+[`doc`]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
 [`must_use`]: ../attributes/diagnostics.md#the-must_use-attribute
 [模式]: ../patterns.md
 [`?Sized`]: ../trait-bounds.md#sized
