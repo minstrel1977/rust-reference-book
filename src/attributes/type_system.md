@@ -1,17 +1,14 @@
-# Type system attributes
+# 类型系统属性
 
-The following [attributes] are used for changing how a type can be used.
+以下[属性]用于更改类型的使用方式。
 
-## The `non_exhaustive` attribute
+## `non_exhaustive`属性
 
-The *`non_exhaustive` attribute* indicates that a type or variant may have
-more fields or variants added in the future. It can be applied to
-[`struct`s][struct], [`enum`s][enum], and `enum` variants.
+*`non_exhaustive`属性*表示类型或变体将来可能会添加更多字段或变体。它可以应用于[struct]、[enum] 和 枚举变体。
 
-The `non_exhaustive` attribute uses the [_MetaWord_] syntax and thus does not
-take any inputs.
+`non_exhaustive`属性使用 [_MetaWord_]句法规则，因此不接受任何输入。
 
-Within the defining crate, `non_exhaustive` has no effect.
+在当前（`non_exhaustive`限制的数据项的）定义所在的 crate 内，`non_exhaustive` 没有效果。
 
 ```rust
 #[non_exhaustive]
@@ -32,10 +29,10 @@ pub enum Message {
     #[non_exhaustive] Quit,
 }
 
-// Non-exhaustive structs can be constructed as normal within the defining crate.
+// 非穷尽结构体可以在定义它的 crate 中正常构造。
 let config = Config { window_width: 640, window_height: 480 };
 
-// Non-exhaustive structs can be matched on exhaustively within the defining crate.
+// 非穷尽结构体可以在定义它的 crate 中进行详尽匹配
 if let Config { window_width, window_height } = config {
     // ...
 }
@@ -43,24 +40,23 @@ if let Config { window_width, window_height } = config {
 let error = Error::Other;
 let message = Message::Reaction(3);
 
-// Non-exhaustive enums can be matched on exhaustively within the defining crate.
+// 非穷尽枚举可以在定义它的 crate 中进行详尽匹配
 match error {
     Error::Message(ref s) => { },
     Error::Other => { },
 }
 
 match message {
-    // Non-exhaustive variants can be matched on exhaustively within the defining crate.
+    // 非穷尽变体可以在定义它的 crate 中进行详尽匹配
     Message::Send { from, to, contents } => { },
     Message::Reaction(id) => { },
     Message::Quit => { },
 }
 ```
 
-Outside of the defining crate, types annotated with `non_exhaustive` have limitations that
-preserve backwards compatibility when new fields or variants are added.
+在定义所在的 crate之外，注解为 `non_exhaustive` 的类型须在添加新字段或变体时保持向后兼容性。
 
-Non-exhaustive types cannot be constructed outside of the defining crate:
+非穷尽类型不能在定义它的 crate 之外构造：
 
 - Non-exhaustive variants ([`struct`][struct] or [`enum` variant][enum]) cannot be constructed
   with a [_StructExpression_] \(including with [functional update syntax]).
