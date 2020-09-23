@@ -40,12 +40,12 @@
     - [可见性与隐私权](visibility-and-privacy.md)
 
 - [属性](attributes.md)
-    - [测试类属性](attributes/testing.md)
-    - [派生属性](attributes/derive.md)
-    - [诊断属性](attributes/diagnostics.md)
-    - [代码生成属性](attributes/codegen.md)
-    - [限制性属性](attributes/limits.md)
-    - [类型系统属性](attributes/type_system.md)
+    - [测试](attributes/testing.md)
+    - [派生](attributes/derive.md)
+    - [诊断](attributes/diagnostics.md)
+    - [代码生成](attributes/codegen.md)
+    - [参数极限](attributes/limits.md)
+    - [类型系统](attributes/type_system.md)
 
 - [语句和表达式](statements-and-expressions.md)
     - [语句](statements.md)
