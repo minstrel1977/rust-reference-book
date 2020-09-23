@@ -13,7 +13,7 @@
 
 ### `inline`属性
 
-*`inline`[属性]*建议在调用者中放置带有此属性的函数的副本，而不是在定义函数的地方生成调用此函数的代码。
+*`inline`[属性]*建议在调用者中放置此(属性限定的)函数的副本，而不是在定义函数的地方生成调用此函数的代码。
 
 > ***注意***：`rustc` 编译器会根据启发式算法（internal heuristics，译者注：可字面理解为内部试探）自动内联函数。不正确的内联函数会使程序变慢，所以应该小心使用此属性。
 
@@ -23,11 +23,11 @@
 * `#[inline(always)]` *建议*应该一直执行内联扩展。
 * `#[inline(never)]` *建议*应该从不执行内联扩展。
 
-> ***注意***: `#[inline]` 在每种形式中都是一个提示，在 Rust 中不*需要*在调用者中放置带有此属性的函数的副本。
+> ***注意***: `#[inline]` 在每种形式中都是一个提示，在 Rust 中不*需要*在调用者中放置此(属性限定的)函数的副本。
 
 ### `cold`属性
 
-*`cold`[属性]*表示带有此属性的函数不太可能被调用。
+*`cold`[属性]*表示此(属性限定的)函数不太可能被调用。
 
 ## `no_builtins`属性
 
@@ -122,10 +122,9 @@ unsafe fn foo_avx2() {}
 
 <!-- 当应用于 `extern`块中的函数时，该属性还必须应用于任何此函数的实现，否则将导致未定义行为。当应用于可用于 `extern`块中的函数时，`extern`块中的声明也必须带上此属性，否则将导致未定义行为。When applied to a function which is made available to an `extern` block, the declaration in the `extern` block must also have the attribute, otherwise undefined behavior results. TobeModify-->
 
-### Behavior
+### 表现
 
-将此属性应用到函数 `f` 上将允许 `f` 中的代码获得 `f` 被调用时建立的调用栈里“最顶层”的跟踪调用 [`Location`] 提示。从观察的角度来看，此属性的实现表现地就像从 `f` 的帧向上遍历堆栈，以找到*未分配*函数“outer”的最近帧，并返回“outer”中跟踪调用的[`Location`]。
-Applying the attribute to a function `f` allows code within `f` to get a hint of the [`Location`] of the "topmost" tracked call that led to `f`'s invocation. At the point of observation, an implementation behaves as if it walks up the stack from `f`'s frame to find the nearest frame of an *unattributed* function `outer`, and it returns the [`Location`] of the tracked call in `outer`.
+将此属性应用到函数 `f` 上将允许 `f` 中的代码获得 `f` 被调用时建立的调用栈里“最顶层”的调用 [`Location`] 信息的提示。从观察的角度来看，此属性的实现表现地就像从 `f` 的帧向上遍历堆栈，定位找到最近的有*非此属性限定*的函数 `outer`，并返回 `outer` 的调用 [`Location`] 信息。
 
 ```rust
 #[track_caller]
@@ -136,13 +135,11 @@ fn f() {
 
 > 注意：`core` 提供 [`core::panic::Location::caller`] 来观察调用者的位置。它封装了由 `rustc` 实现的内部函数 [`core::intrinsics::caller_location`]。
 
-> 注意：由于结果 `Location` 是一个提示，所以实现可能会提前停止向堆栈的遍历。（[Limitations]#注意事项]限制。
-> 注意:由于结果的“位置”是一个提示，实现可能会提前停止它在堆栈上的遍历。请参阅[Limitations](# Limitations)以获得重要的注意事项。
-> Note: because the resulting `Location` is a hint, an implementation may halt its walk up the stack early. See [Limitations](#limitations) for important caveats.
+> 注意：由于结果 `Location` 是一个提示，所以具体实现可能会提前终止对堆栈的遍历。请参阅 [限制](#限制) 以获得重要的注意事项。
 
-#### Examples
+#### 示例
 
-When `f` is called directly by `calls_f`, code in `f` observes its callsite within `calls_f`:
+当 `f` 直接被 `calls_f` 调用时，`f` 中的代码观察其在`calls_f` 内的调用位置：
 
 ```rust
 # #[track_caller]
@@ -150,11 +147,11 @@ When `f` is called directly by `calls_f`, code in `f` observes its callsite with
 #     println!("{}", std::panic::Location::caller());
 # }
 fn calls_f() {
-    f(); // <-- f() prints this location
+    f(); // <-- f() 将打印此处的位置信息
 }
 ```
 
-When `f` is called by another attributed function `g` which is in turn called by `calls_g`, code in both `f` and `g` observes `g`'s callsite within `calls_g`: 
+`f` 被另一个有此属性限定的函数 `g` 调用，`g` 又被 `calls_g`' 调用，`f` 和 `g` 内的代码又同时观察 `g` 在 `calls_g` 内的调用位置：
 
 ```rust
 # #[track_caller]
@@ -168,11 +165,11 @@ fn g() {
 }
 
 fn calls_g() {
-    g(); // <-- g() prints this location twice, once itself and once from f()
+    g(); // <-- g() 将两次打印此处的位置信息，一次是它自己，一次是此 f() 里来的
 }
 ```
 
-When `g` is called by another attributed function `h` which is in turn called by `calls_h`, all code in `f`, `g`, and `h` observes `h`'s callsite within `calls_h`:
+当`g` 又被另一个有此属性限定的函数 `h` 调用，而`g` 又被 `calls_h`' 调用，`f`、`g` 和 `h` 内的代码又同时观察 `h` 在 `calls_h` 内的调用位置：
 
 ```rust
 # #[track_caller]
@@ -191,32 +188,34 @@ fn h() {
 }
 
 fn calls_h() {
-    h(); // <-- prints this location three times, once itself, once from g(), once from f()
+    h(); // <-- 将三次打印此处的位置信息，一次是它自己，一次是此 g() 里来，一次是从 f() 里来的
 }
 ```
 
-And so on.
+以此类推。
 
-### Limitations
+### 限制
 
-This information is a hint and implementations are not required to preserve it.
+此信息是一个提示，不需要实现来保存它。
+<!-- This information is a hint and implementations are not required to preserve it. TobeModify-->
 
-In particular, coercing a function with `#[track_caller]` to a function pointer creates a shim which appears to observers to have been called at the attributed function's definition site, losing actual caller information across virtual calls. A common example of this coercion is the creation of a trait object whose methods are attributed.
+特别是，将带有 `#[track_caller]` 的函数强制转换为函数指针会创建一个填充程序，在观察者看来该填充程序似乎是在此(属性限定的)函数的定义处调用的，从而在虚拟调用中丢失实际的调用者信息。这种情况的一个常见示例是创建一个 trait对象，而该对象的方法被此属性限定。
+<!-- In particular, coercing a function with `#[track_caller]` to a function pointer creates a shim which appears to observers to have been called at the attributed function's definition site, losing actual caller information across virtual calls. A common example of this coercion is the creation of a trait object whose methods are attributed. TobeModify-->
 
-> Note: The aforementioned shim for function pointers is necessary because `rustc` implements `track_caller` in a codegen context by appending an implicit parameter to the function ABI, but this would be unsound for an indirect call because the parameter is not a part of the function's type and a given function pointer type may or may not refer to a function with the attribute. The creation of a shim hides the implicit parameter from callers of the function pointer, preserving soundness.
+> 注意：前面提到的函数指针填充程序是必需的，因为 `rustc` 会通过向函数的ABI附加一个隐式参数来实现 codegen上下文中的 `track_caller`，但对于间接调用来说，这是不健全的，因为参数不是函数类型的一部分，给定的函数指针类型可能引用也可能不引用具有此属性的函数。填充程序的创建会对函数指针的调用方隐藏隐式参数，从而保持可靠性。
+<!-- > Note: The aforementioned shim for function pointers is necessary because `rustc` implements `track_caller` in a codegen context by appending an implicit parameter to the function ABI, but this would be unsound for an indirect call because the parameter is not a part of the function's type and a given function pointer type may or may not refer to a function with the attribute. The creation of a shim hides the implicit parameter from callers of the function pointer, preserving soundness. TobeModify-->
 
 [_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
 [`-C target-cpu`]: https://doc.rust-lang.org/rustc/codegen-options/index.html#target-cpu
 [`-C target-feature`]: https://doc.rust-lang.org/rustc/codegen-options/index.html#target-feature
 [`is_x86_feature_detected`]: https://doc.rust-lang.org/std/macro.is_x86_feature_detected.html
 [`target_feature`-条件编译选项]: ../conditional-compilation.md#target_feature
-[attribute]: ../attributes.md
-[attributes]: ../attributes.md
-[functions]: ../items/functions.md
-[target architecture]: ../conditional-compilation.md#target_arch
+[属性]: ../attributes.md
+[函数]: ../items/functions.md
+[目标架构]: ../conditional-compilation.md#target_arch
 [trait]: ../items/traits.md
-[undefined behavior]: ../behavior-considered-undefined.md
-[unsafe function]: ../unsafe-functions.md
+[未定义表现]: ../behavior-considered-undefined.md
+[非安全函数]: ../unsafe-functions.md
 [rust-abi]: ../items/external-blocks.md#abi
 [`core::intrinsics::caller_location`]: https://doc.rust-lang.org/core/intrinsics/fn.caller_location.html
 [`core::panic::Location::caller`]: https://doc.rust-lang.org/core/panic/struct.Location.html#method.caller
