@@ -1,6 +1,9 @@
-# Statements
+# 语句
 
-> **<sup>Syntax</sup>**\
+>[statements.md](https://github.com/rust-lang/reference/blob/master/src/statements.md)\
+>commit 6b90080371ff44d0074a465945dfdb0de4b50774
+
+> **<sup>句法</sup>**\
 > _Statement_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `;`\
 > &nbsp;&nbsp; | [_Item_]\
@@ -8,101 +11,72 @@
 > &nbsp;&nbsp; | [_ExpressionStatement_]\
 > &nbsp;&nbsp; | [_MacroInvocationSemi_]
 
+*语句*是[代码块(block)][^译者注]的一个组件，而代码块又是外部[表达式]或[函数]的组件。
 
-A *statement* is a component of a [block], which is in turn a component of an
-outer [expression] or [function].
+Rust 有两种语句：[声明语句](#声明语句)和[表达式语句](#表达式语句)。
 
-Rust has two kinds of statement: [declaration
-statements](#declaration-statements) and [expression
-statements](#expression-statements).
+## 声明语句
 
-## Declaration statements
+*声明语句*是在封闭语句块中引入一个或多个*名称*的语句。声明的名称可以表示新变量或新的[数据项]。
 
-A *declaration statement* is one that introduces one or more *names* into the
-enclosing statement block. The declared names may denote new variables or new
-[items][item].
+这两种声明语句就是数据项声明和 let声明。
 
-The two kinds of declaration statements are item declarations and `let`
-statements.
+### 数据项声明
 
-### Item declarations
+*数据项声明语句*的语法形式与[模块]中的[数据项声明][数据项]相同。在语句块中声明数据项会将该数据项的作用域限制为包含该语句的代码块，并且此数据项没有给定的[规范路径]，也无法（隐式）指定数据项的父子关系。例外的是由[实现]定义的关联项在外部范围内仍然是可访问的，只要数据项和 trait(如果适用的话)的可见性允许。除了这点儿区别外，它与在模块中声明数据项的意义是相同的。
 
-An *item declaration statement* has a syntactic form identical to an
-[item declaration][item] within a [module]. Declaring an item within a statement
-block restricts its scope to the block containing the statement. The item is not
-given a [canonical path] nor are any sub-items it may declare. The exception to
-this is that associated items defined by [implementations] are still accessible
-in outer scopes as long as the item and, if applicable, trait are accessible.
-It is otherwise identical in meaning to declaring the item inside a module.
-
-There is no implicit capture of the containing function's generic parameters,
-parameters, and local variables. For example, `inner` may not access
-`outer_var`.
+数据项声明不会隐式捕获作用域内的组件，这些组件项包括函数的泛型参数、参数和局部变量。如下，`inner` 可能不能访问 `outer_var`。
+<!-- There is no implicit capture of the containing function's generic parameters, parameters, and local variables. For example, `inner` may not access `outer_var`.TobeModify,这里为明确语义补充进来的“组件”可能不合适，回头可能会修改 -->
 
 ```rust
 fn outer() {
   let outer_var = true;
 
-  fn inner() { /* outer_var is not in scope here */ }
+  fn inner() { /* outer_var 的作用域不包括这里 */ }
 
   inner();
 }
 ```
 
-### `let` statements
+### `let`语句
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _LetStatement_ :\
 > &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> `let` [_Pattern_]
 >     ( `:` [_Type_] )<sup>?</sup> (`=` [_Expression_] )<sup>?</sup> `;`
 
-A *`let` statement* introduces a new set of [variables], given by an
-irrefutable [pattern]. The pattern is followed optionally by a type
-annotation and then optionally by an initializer expression. When no
-type annotation is given, the compiler will infer the type, or signal
-an error if insufficient type information is available for definite
-inference. Any variables introduced by a variable declaration are visible
-from the point of declaration until the end of the enclosing block scope.
+一个*`let`语句*引入了一组新的[变量]，由一个不可反驳的[模式]给出。模式后面有一个可选的类型名称，然后是一个初始值设定项表达式。当没有给出类型名称时，编译器将自行推断类型，如果没有足够的信息来执行类型推断，则将触发编译器报错。从声明点到封闭块作用域的结束，变量声明引入的任何变量都是可见的。
 
-## Expression statements
+## 表达式语句
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _ExpressionStatement_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_ExpressionWithoutBlock_][expression] `;`\
 > &nbsp;&nbsp; | [_ExpressionWithBlock_][expression] `;`<sup>?</sup>
 
-An *expression statement* is one that evaluates an [expression] and ignores its
-result. As a rule, an expression statement's purpose is to trigger the effects
-of evaluating its expression.
-
-An expression that consists of only a [block expression][block] or control flow
-expression, if used in a context where a statement is permitted, can omit the
-trailing semicolon. This can cause an ambiguity between it being parsed as a
-standalone statement and as a part of another expression; in this case, it is
-parsed as a statement. The type of [_ExpressionWithBlock_][expression]
-expressions when used as statements must be the unit type.
+*表达式语句*是对[表达式]求值并忽略其结果的语句。通常，表达式语句的目的是触发对其表达式求值的效果。
 
 ```rust
 # let mut v = vec![1, 2, 3];
-v.pop();          // Ignore the element returned from pop
+v.pop();          // 忽略从 pop 返回的元素
 if v.is_empty() {
     v.push(5);
 } else {
     v.remove(0);
-}                 // Semicolon can be omitted.
-[1];              // Separate expression statement, not an indexing expression.
+}                 // 分号可以省略。
+[1];              // 单独的表达式语句，而不是索引表达式。
 ```
 
-When the trailing semicolon is omitted, the result must be type `()`.
+当省略后面的分号时，结果必须是 `()` 类型。
 
 ```rust
-// bad: the block's type is i32, not ()
-// Error: expected `()` because of default return type
+// bad: 下面代码块的类型是i32，而不是 `()` 
+// Error: 预期表达式语句的返回值是 `()` 
 // if true {
 //   1
 // }
 
-// good: the block's type is i32
+// good: 下面代码块的类型是i32，（加`;`后的语句的返回值就是 `()`了）
 if true {
   1
 } else {
@@ -110,28 +84,30 @@ if true {
 };
 ```
 
-## Attributes on Statements
+## 语句上的属性
 
-Statements accept [outer attributes]. The attributes that have meaning on a
-statement are [`cfg`], and [the lint check attributes].
+语句可以有[外部属性]。在语句中有意义的属性是 [`cfg`] 和[lint检查类属性]。
+Statements accept [outer attributes]. The attributes that have meaning on a statement are [`cfg`], and [lint检查类属性].
 
-[block]: expressions/block-expr.md
-[expression]: expressions.md
-[function]: items/functions.md
-[item]: items.md
-[module]: items/modules.md
-[canonical path]: paths.md#canonical-paths
-[implementations]: items/implementations.md
-[variables]: variables.md
-[outer attributes]: attributes.md
+[^译者注]:为避免汉语中的歧义，单独出现block时，译者一般翻译为“代码块”，但和其他名词复合时，又一般会译为“XX块”。
+
+[代码块]: expressions/block-expr.md
+[表达式]: expressions.md
+[函数]: items/functions.md
+[数据项]: items.md
+[模块]: items/modules.md
+[规范路径]: paths.md#规范路径
+[实现]: items/implementations.md
+[变量]: variables.md
+[外部属性]: attributes.md
 [`cfg`]: conditional-compilation.md
-[the lint check attributes]: attributes/diagnostics.md#lint-check-attributes
-[pattern]: patterns.md
-[_ExpressionStatement_]: #expression-statements
+[lint检查类属性]: attributes/diagnostics.md#lint检查类属性
+[模式]: patterns.md
+[_ExpressionStatement_]: #表达式语句
 [_Expression_]: expressions.md
 [_Item_]: items.md
 [_LetStatement_]: #let-statements
-[_MacroInvocationSemi_]: macros.md#macro-invocation
+[_MacroInvocationSemi_]: macros.md#宏调用
 [_OuterAttribute_]: attributes.md
 [_Pattern_]: patterns.md
 [_Type_]: types.md

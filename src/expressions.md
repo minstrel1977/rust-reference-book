@@ -1,12 +1,15 @@
-# Expressions
+# 表达式
 
-> **<sup>Syntax</sup>**\
+>[expressions.md](https://github.com/rust-lang/reference/blob/master/src/expressions.md)\
+>commit 8c4522851452563b715b11d4cd755b36d8e4bca5
+
+> **<sup>句法</sup>**\
 > _Expression_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _ExpressionWithoutBlock_\
 > &nbsp;&nbsp; | _ExpressionWithBlock_
 >
 > _ExpressionWithoutBlock_ :\
-> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup>[†](#expression-attributes)\
+> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup>[†](#表达式属性)\
 > &nbsp;&nbsp; (\
 > &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_LiteralExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_PathExpression_]\
@@ -31,7 +34,7 @@
 > &nbsp;&nbsp; )
 >
 > _ExpressionWithBlock_ :\
-> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup>[†](#expression-attributes)\
+> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup>[†](#表达式属性)\
 > &nbsp;&nbsp; (\
 > &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_BlockExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_AsyncBlockExpression_]\
@@ -42,50 +45,42 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_MatchExpression_]\
 > &nbsp;&nbsp; )
 
-An expression may have two roles: it always produces a *value*, and it may have
-*effects* (otherwise known as "side effects"). An expression *evaluates to* a
-value, and has effects during *evaluation*. Many expressions contain
-sub-expressions (operands). The meaning of each kind of expression dictates
-several things:
+一个表达式可能有两个角色：它总是产生一个*值*；它可能有*效果*（或者称为“副作用”）。表达式的*计算结果为*值，并在*求值*期间起效果。许多表达式包含子表达式（操作数）。每种表达方式的含义都有以下几点：
 
-* Whether or not to evaluate the sub-expressions when evaluating the expression
-* The order in which to evaluate the sub-expressions
-* How to combine the sub-expressions' values to obtain the value of the
-  expression
+* 在对表达式求值时是否对子表达式求值
+* 对子表达式求值的顺序
+* 如何组合子表达式的值来获得表达式的值
 
-In this way, the structure of expressions dictates the structure of execution.
-Blocks are just another kind of expression, so blocks, statements, expressions,
-and blocks again can recursively nest inside each other to an arbitrary depth.
+这样，表达式的结构决定了执行的结构。代码块只是另一种表达式，所以代码块、语句和表达式可以递归地彼此嵌套到任意深度。
+In this way, the structure of expressions dictates the structure of execution. Blocks are just another kind of expression, so blocks, statements, expressions, and blocks again can recursively nest inside each other to an arbitrary depth.
 
-## Expression precedence
+## 表达式的优先级
 
-The precedence of Rust operators and expressions is ordered as follows, going
-from strong to weak. Binary Operators at the same precedence level are grouped
-in the order given by their associativity.
+Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同优先级的二元运算符按其结合(associativity)顺序做了分组。
 
-| Operator/Expression         | Associativity       |
+| 运算符/表达式         | 结合性       |
 |-----------------------------|---------------------|
-| Paths                       |                     |
-| Method calls                |                     |
-| Field expressions           | left to right       |
-| Function calls, array indexing |                  |
+| Paths（路径）                |                     |
+| Method calls（方法调用）               |                     |
+| Field expressions （字段表达式）          | 从左向右       |
+| Function calls, array indexing（函数调用，数组索引） |                  |
 | `?`                         |                     |
 | Unary `-` `*` `!` `&` `&mut` |                    |
-| `as`                        | left to right       |
-| `*` `/` `%`                 | left to right       |
-| `+` `-`                     | left to right       |
-| `<<` `>>`                   | left to right       |
-| `&`                         | left to right       |
-| `^`                         | left to right       |
-| <code>&#124;</code>         | left to right       |
-| `==` `!=` `<` `>` `<=` `>=` | Require parentheses |
-| `&&`                        | left to right       |
-| <code>&#124;&#124;</code>   | left to right       |
-| `..` `..=`                  | Require parentheses |
-| `=` `+=` `-=` `*=` `/=` `%=` <br> `&=` <code>&#124;=</code> `^=` `<<=` `>>=` | right to left |
-| `return` `break` closures   |                     |
+| `as`                        | 从左向右       |
+| `*` `/` `%`                 | 从左向右       |
+| `+` `-`                     | 从左向右       |
+| `<<` `>>`                   | 从左向右       |
+| `&`                         | 从左向右       |
+| `^`                         | 从左向右       |
+| <code>&#124;</code>         | 从左向右       |
+| `==` `!=` `<` `>` `<=` `>=` | 需要圆括号 |
+| `&&`                        | 从左向右       |
+| <code>&#124;&#124;</code>   | 从左向右       |
+| `..` `..=`                  | 需要圆括号 |
+| `=` `+=` `-=` `*=` `/=` `%=` <br> `&=` <code>&#124;=</code> `^=` `<<=` `>>=` | 从右向左 |
+| `return` `break` closures（返回、中断、闭包）   |                     |
 
-## Place Expressions and Value Expressions
+## 位置表达式和值表达式
 
 Expressions are divided into two main categories: place expressions and
 value expressions. Likewise within each expression, sub-expressions may occur
@@ -201,7 +196,7 @@ Many of the following operators and expressions can also be overloaded for
 other types using traits in `std::ops` or `std::cmp`. These traits also
 exist in `core::ops` and `core::cmp` with the same names.
 
-## Expression Attributes
+## 表达式属性
 
 [Outer attributes][_OuterAttribute_] before an expression are allowed only in
 a few specific cases:
