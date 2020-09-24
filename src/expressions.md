@@ -82,10 +82,8 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 
 ## 位置表达式和值表达式
 
-Expressions are divided into two main categories: place expressions and
-value expressions. Likewise within each expression, sub-expressions may occur
-in either place context or value context. The evaluation of an expression
-depends both on its own category and the context it occurs within.
+表达式分为两大类：位置表达式和值表达式。在每个表达式中，子表达式可以出现在位置上下文或值上下文中。表达式的计算既取决于它自己的类别，也取决于它所处的上下文。
+Expressions are divided into two main categories: place expressions and value expressions. Likewise within each expression, sub-expressions may occur in either place context or value context. The evaluation of an expression depends both on its own category and the context it occurs within.
 
 A *place expression* is an expression that represents a memory location. These
 expressions are [paths] which refer to local variables, [static variables],
