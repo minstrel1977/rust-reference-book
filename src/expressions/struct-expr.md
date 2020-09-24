@@ -56,7 +56,7 @@ colon.
 A value of a [union] type can also be created using this syntax, except that it must
 specify exactly one field.
 
-## Functional update syntax
+## 函数式更新句法
 
 A struct expression can terminate with the syntax `..` followed by an
 expression to denote a functional update. The expression following `..` (the

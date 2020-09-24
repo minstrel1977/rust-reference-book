@@ -65,7 +65,7 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 | Field expressions （字段表达式）          | 从左向右       |
 | Function calls, array indexing（函数调用，数组索引） |                  |
 | `?`                         |                     |
-| Unary `-` `*` `!` `&` `&mut` |                    |
+| Unary（一元运算符） `-` `*` `!` `&` `&mut` |                    |
 | `as`                        | 从左向右       |
 | `*` `/` `%`                 | 从左向右       |
 | `+` `-`                     | 从左向右       |
@@ -82,52 +82,37 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 
 ## 位置表达式和值表达式
 
-表达式分为两大类：位置表达式和值表达式。在每个表达式中，子表达式可以出现在位置上下文或值上下文中。表达式的计算既取决于它自己的类别，也取决于它所处的上下文。
-Expressions are divided into two main categories: place expressions and value expressions. Likewise within each expression, sub-expressions may occur in either place context or value context. The evaluation of an expression depends both on its own category and the context it occurs within.
+表达式分为两大类：位置表达式和值表达式。同样的，在每个表达式中，子表达式可以出现在位置上下文或值上下文中。表达式的求值既取决于它自己的类别，也取决于它所处的上下文。
 
-A *place expression* is an expression that represents a memory location. These
-expressions are [paths] which refer to local variables, [static variables],
-[dereferences][deref] (`*expr`), [array indexing] expressions (`expr[expr]`),
-[field] references (`expr.f`) and parenthesized place expressions. All other
-expressions are value expressions.
+*位置表达式*是表示内存位置的表达式。这些表达式是*引用局部变量、[静态变量]、[解引用][deref] (`*expr`)、[索引数组]表达式(`expr[expr]`)、[字段]引用(`expr.f`) 和圆括号括起来的表达式*的[路径]。所有其他表达式都是值表达式。
 
-A *value expression* is an expression that represents an actual value.
+*值表达式*是表示实际值的表达式。
 
-The following contexts are *place expression* contexts:
+下面的上下文是*位置表达式*上下文：
 
-* The left operand of an [assignment][assign] or [compound assignment]
-  expression.
-* The operand of a unary [borrow] or [dereference][deref] operator.
-* The operand of a field expression.
-* The indexed operand of an array indexing expression.
-* The operand of any [implicit borrow].
-* The initializer of a [let statement].
-* The [scrutinee] of an [`if let`], [`match`][match], or [`while let`]
-  expression.
-* The base of a [functional update] struct expression.
+* [赋值][assign]或[复合赋值]表达式的左操作数。
+* 一元运算符[借用]或[解引用][deref]的操作数。
+* 字段表达式的操作数。
+* 数组索引表达式的索引操作数。
+* 任何[隐式借用]的操作数。
+* [let语句]的初始化表达式。
+* [`if let`]、[`match`][match] 或 [`while let`] 表达式的[检验对象(scrutinee)]。
+* 结构体表达式里的[函数式更新]的基(base)。
 
-> Note: Historically, place expressions were called *lvalues* and value
-> expressions were called *rvalues*.
+> 注意：历史上，位置表达式被称为 *lvalues*，值表达式被称为 *rvalues*。
 
-### Moved and copied types
+### 移动和复制类型
 
-When a place expression is evaluated in a value expression context, or is bound
-by value in a pattern, it denotes the value held _in_ that memory location. If
-the type of that value implements [`Copy`], then the value will be copied. In
-the remaining situations if that type is [`Sized`], then it may be possible to
-move the value. Only the following place expressions may be moved out of:
+当位置表达式在值表达式上下文中求值，或在模式中被值绑定时，这就表示会在这个（新）内存位置保存求出的值。如果该值的类型实现了 [`Copy`]，那么该值将被从原来的内存位置复制过来。如果该值的类型没有实现 [`Copy`]，但实现了 [`Sized`]，那么就可以把值从原来的内存位置里移动到新内存位置。这个动作从原来的内存位置的角度看，被叫做移出（moved out）。那从原来的位置表达式的角度看这个移出有如下限制：<!-- When a place expression is evaluated in a value expression context, or is bound by value in a pattern, it denotes the value held _in_ that memory location. If the type of that value implements [`Copy`], then the value will be copied. In the remaining situations if that type is [`Sized`], then it may be possible to move the value. Only the following place expressions may be moved out of: 这里直译后看不懂，意译又怕理解错误，只能先打个标记 TobeModif-->
 
-* [Variables] which are not currently borrowed.
-* [Temporary values](#temporaries).
-* [Fields][field] of a place expression which can be moved out of and
-  doesn't implement [`Drop`].
-* The result of [dereferencing][deref] an expression with type [`Box<T>`] and
-  that can also be moved out of.
+* [变量]（译者注：位置表达式的一种）当前未被借用。
+* [临时值](#临时空间)。
+* 可以移出的位置表达式的字段且该字段没实现[`Drop`]。<!-- [Fields][field] of a place expression which can be moved out of and doesn't implement [`Drop`]. TobeModify-->
+* 对可移出且类型为 [`Box<T>`] 的表达式做[解引用][deref]解出的结果。<!-- The result of [dereferencing][deref] an expression with type [`Box<T>`] and that can also be moved out of. TobeModify-->
 
-Moving out of a place expression that evaluates to a local variable, the
-location is deinitialized and cannot be read from again until it is
-reinitialized. In all other cases, trying to use a place expression in a value
-expression context is an error.
+移出对位置表达式求值的结果到局部变量中后，原来位置将被去初始化（deinitialized），并且在重新初始化之前无法再次读取。在所有其他情况下，尝试在值表达式上下文中使用位置表达式是错误的 感觉理解不对，需要修改 need to modify
+移出计算为局部变量的位置表达式，
+Moving out of a place expression that evaluates to a local variable, the location is deinitialized and cannot be read from again until it is reinitialized. In all other cases, trying to use a place expression in a value expression context is an error.
 
 ### Mutability
 
@@ -152,12 +137,10 @@ The following expressions can be mutable place expression contexts:
   then evaluates the value being indexed, but not the index, in mutable place
   expression context.
 
-### Temporaries
+### 临时空间
 
-When using a value expression in most place expression contexts, a temporary
-unnamed memory location is created initialized to that value and the expression
-evaluates to that location instead, except if [promoted] to a `static`. The
-[drop scope] of the temporary is usually the end of the enclosing statement.
+在大多数位置表达式上下文中使用值表达式时，会创建一个临时的未命名内存空间，并将该值初始化到该内存空间，而表达式将计算到该位置，除非[升级]为“static”。临时语句的[drop scope]通常是封闭语句的结尾。
+When using a value expression in most place expression contexts, a temporary unnamed memory location is created initialized to that value and the expression evaluates to that location instead, except if [promoted] to a `static`. The [drop scope] of the temporary is usually the end of the enclosing statement.
 
 ### Implicit Borrows
 
@@ -221,7 +204,7 @@ They are never allowed before:
 [call expressions]:     expressions/call-expr.md
 [enum variant]:         expressions/enum-variant-expr.md
 [field]:                expressions/field-expr.md
-[functional update]:    expressions/struct-expr.md#functional-update-syntax
+[函数是更新]:             expressions/struct-expr.md#函数式更新句法
 [`if let`]:             expressions/if-expr.md#if-let-expressions
 [match]:                expressions/match-expr.md
 [method-call]:          expressions/method-call-expr.md
@@ -251,7 +234,7 @@ They are never allowed before:
 [interior mutability]:  interior-mutability.md
 [let statement]:        statements.md#let-statements
 [Mutable `static` items]: items/static-items.md#mutable-statics
-[scrutinee]:            glossary.md#scrutinee
+[检验对象(scrutinee)]:            glossary.md#scrutinee
 [promoted]:             destructors.md#constant-promotion
 [slice]:                types/slice.md
 [statement]:            statements.md

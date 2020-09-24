@@ -144,10 +144,10 @@ or not independent of applied type arguments. Given `trait Foo<T, U>`,
 <!-- Prelude, or The Rust Prelude, is a small collection of items - mostly traits - that are imported into every module of every crate. The traits in the prelude are pervasive. -->
 
 ### Scrutinee
+检验对象
 
-A scrutinee is the expression that is matched on in `match` expressions and
-similar pattern matching constructs. For example, in `match x { A => 1, B => 2 }`,
-the expression `x` is the scrutinee.
+检验对象是在`match`表达式和类似的模式匹配结构上匹配的表达式。例如，在 `match x { A => 1, B => 2 }` 中，表达式 `x` 是scrutinee。
+<!-- A scrutinee is the expression that is matched on in `match` expressions and similar pattern matching constructs. For example, in `match x { A => 1, B => 2 }`, the expression `x` is the scrutinee. -->
 
 ### Size
 
@@ -173,16 +173,19 @@ slice type is `&[T]`, while the mutable slice type is `&mut [T]`, where `T` repr
 the element type.
 
 ### Statement
+语句
 
-A statement is the smallest standalone element of a programming language
-that commands a computer to perform an action.
+语句是编程语言中最小的独立元素，它命令计算机执行一个动作。
+<!-- A statement is the smallest standalone element of a programming language that commands a computer to perform an action. -->
 
 ### String literal
+字符串字面量
 
-A string literal is a string stored directly in the final binary, and so will be
-valid for the `'static` duration.
+字符串字面量是直接存储在最终二进制文件中的字符串，因此在 `'static` 有效期内是有效的。
+<!-- A string literal is a string stored directly in the final binary, and so will be valid for the `'static` duration. -->
 
-Its type is `'static` duration borrowed string slice, `&'static str`.
+它的类型是 `'static`有效期的字符串切片借用，即：`&'static str`。
+<!-- Its type is `'static` duration borrowed string slice, `&'static str`. -->
 
 ### String slice
 
