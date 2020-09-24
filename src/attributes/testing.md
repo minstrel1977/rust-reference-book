@@ -36,7 +36,7 @@ fn test_the_thing() -> io::Result<()> {
 
 ## `ignore`属性
 
-用 `test` 属性注解的函数也可以用 `ignore` 属性注解。*`ignore`属性*告诉测试工具不要将该函数作为测试执行。但在测试模式下，这类函数仍然会被编译。
+被 `test` 属性标注的函数也可以被 `ignore` 属性标注。*`ignore`属性*告诉测试工具不要将该函数作为测试执行。但在测试模式下，这类函数仍然会被编译。
 
 `ignore`属性可以选择使用[_MetaNameValueStr_]句法规则来指定测试被忽略的原因。
 
@@ -48,11 +48,11 @@ fn mytest() {
 }
 ```
 
-> **注意**：`rustc`测试套件支持使用 `--include-ignored` 标志来强制运行被 `ignore`属性注解的测试函数。
+> **注意**：`rustc`测试套件支持使用 `--include-ignored` 标志来强制运行被 `ignore`属性标注的测试函数。
 
 ## `should_panic`属性
 
-用 `test` 属性注解并返回 `()` 的函数也可以用 `should_panic` 属性注解。*`should_panic`属性*使测试函数只有在实际发生 panic 时才算通过。
+被 `test` 属性标注并返回 `()` 的函数也可以被 `should_panic` 属性标注。*`should_panic`属性*使测试函数只有在实际发生 panic 时才算通过。
 
 `should_panic`属性可选输入一条出现在 panic 返回消息中的字符串。如果在返回消息中找不到该字符串，则测试将失败。可以使用[_MetaNameValueStr_]句法规则或带有 `expected` 字段的[_MetaListNameValueStr_]句法规则来传递字符串。
 
