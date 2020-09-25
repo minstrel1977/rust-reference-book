@@ -45,14 +45,13 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_MatchExpression_]\
 > &nbsp;&nbsp; )
 
-一个表达式可能有两个角色：它总是产生一个*值*；它可能有*效果*（或者称为“副作用”）。表达式的*计算结果为*值，并在*求值*期间起效果。许多表达式包含子表达式（操作数）。每种表达方式的含义都有以下几点：
+一个表达式可能有两个角色：它总是产生一个*值*；它可能有*效果*（或者称为“副作用”）。表达式的*计算结果为*值，并在*求值*（译者注：有时也称对表达式进行计算）期间起效果。许多表达式包含子表达式（操作数）。每种表达方式的含义都有以下几点：
 
 * 在对表达式求值时是否对子表达式求值
 * 对子表达式求值的顺序
 * 如何组合子表达式的值来获得表达式的值
 
 这样，表达式的结构决定了执行的结构。代码块只是另一种表达式，所以代码块、语句和表达式可以递归地彼此嵌套到任意深度。
-In this way, the structure of expressions dictates the structure of execution. Blocks are just another kind of expression, so blocks, statements, expressions, and blocks again can recursively nest inside each other to an arbitrary depth.
 
 ## 表达式的优先级
 
@@ -84,7 +83,7 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 
 表达式分为两大类：位置表达式和值表达式。同样的，在每个表达式中，子表达式可以出现在位置上下文或值上下文中。表达式的求值既取决于它自己的类别，也取决于它所处的上下文。
 
-*位置表达式*是表示内存位置的表达式。这些表达式是*引用局部变量、[静态变量]、[解引用][deref] (`*expr`)、[索引数组]表达式(`expr[expr]`)、[字段]引用(`expr.f`) 和圆括号括起来的表达式*的[路径]。所有其他表达式都是值表达式。
+*位置表达式*是表示内存位置的表达式。这些表达式是指向*局部变量、[静态变量]、[解引用][deref] (`*expr`)、[索引数组]表达式(`expr[expr]`)、[字段]引用(`expr.f`) 和圆括号括起来的表达式*的[路径]。所有其他表达式都是值表达式。
 
 *值表达式*是表示实际值的表达式。
 
@@ -106,7 +105,7 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 当位置表达式在值表达式上下文中求值，或在模式中被值绑定时，这就表示会在这个（新）内存位置保存求出的值。如果该值的类型实现了 [`Copy`]，那么该值将被从原来的内存位置复制过来。如果该值的类型没有实现 [`Copy`]，但实现了 [`Sized`]，那么就可以把值从原来的内存位置里移动到新内存位置。这个动作从原来的内存位置的角度看，被叫做移出（moved out）。那从原来的位置表达式的角度看这个移出有如下限制：<!-- When a place expression is evaluated in a value expression context, or is bound by value in a pattern, it denotes the value held _in_ that memory location. If the type of that value implements [`Copy`], then the value will be copied. In the remaining situations if that type is [`Sized`], then it may be possible to move the value. Only the following place expressions may be moved out of: 这里直译后看不懂，意译又怕理解错误，只能先打个标记 TobeModif-->
 
 * [变量]（译者注：位置表达式的一种）当前未被借用。
-* [临时值](#临时空间)。
+* [临时值](#临时位置)。
 * 可以移出的位置表达式的字段且该字段没实现[`Drop`]。<!-- [Fields][field] of a place expression which can be moved out of and doesn't implement [`Drop`]. TobeModify-->
 * 对可移出且类型为 [`Box<T>`] 的表达式做[解引用][deref]解出的结果。<!-- The result of [dereferencing][deref] an expression with type [`Box<T>`] and that can also be moved out of. TobeModify-->
 
@@ -137,9 +136,9 @@ The following expressions can be mutable place expression contexts:
   then evaluates the value being indexed, but not the index, in mutable place
   expression context.
 
-### 临时空间
+### 临时位置
 
-在大多数位置表达式上下文中使用值表达式时，会创建一个临时的未命名内存空间，并将该值初始化到该内存空间，而表达式将计算到该位置，除非[升级]为“static”。临时语句的[drop scope]通常是封闭语句的结尾。
+在大多数位置表达式上下文中使用值表达式时，会创建一个临时的未命名内存位置，并将该值初始化到该内存位置，而表达式将求值结果在存放到该位置，除非把此表达式[提升]为 `static`。临时语句的[drop scope]通常是封闭语句的结尾。
 When using a value expression in most place expression contexts, a temporary unnamed memory location is created initialized to that value and the expression evaluates to that location instead, except if [promoted] to a `static`. The [drop scope] of the temporary is usually the end of the enclosing statement.
 
 ### Implicit Borrows
