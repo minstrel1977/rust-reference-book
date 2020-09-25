@@ -83,7 +83,7 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 
 表达式分为两大类：位置表达式和值表达式。同样的，在每个表达式中，子表达式可以出现在位置上下文或值上下文中。表达式的求值既取决于它自己的类别，也取决于它所处的上下文。
 
-*位置表达式*是表示内存位置的表达式。这些表达式是指向*局部变量、[静态变量]、[解引用][deref] (`*expr`)、[索引数组]表达式(`expr[expr]`)、[字段]引用(`expr.f`) 和圆括号括起来的表达式*的[路径]。所有其他表达式都是值表达式。
+*位置表达式*是表示内存位置的表达式。所以位置表达式本质就是指向内存地址的[路径]，目前的它的形式包括：局部变量、[静态变量]、[解引用][deref] (`*expr`)、[索引数组]表达式(`expr[expr]`)、[字段]引用(`expr.f`) 和圆括号括起来的表达式。那除了上述形式外所有其他形式的表达式都是值表达式。
 
 *值表达式*是表示实际值的表达式。
 
@@ -102,7 +102,7 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 
 ### 移动和复制类型
 
-当位置表达式在值表达式上下文中求值，或在模式中被值绑定时，这就表示会在这个（新）内存位置保存求出的值。如果该值的类型实现了 [`Copy`]，那么该值将被从原来的内存位置复制过来。如果该值的类型没有实现 [`Copy`]，但实现了 [`Sized`]，那么就可以把值从原来的内存位置里移动到新内存位置。这个动作从原来的内存位置的角度看，被叫做移出（moved out）。那从原来的位置表达式的角度看这个移出有如下限制：<!-- When a place expression is evaluated in a value expression context, or is bound by value in a pattern, it denotes the value held _in_ that memory location. If the type of that value implements [`Copy`], then the value will be copied. In the remaining situations if that type is [`Sized`], then it may be possible to move the value. Only the following place expressions may be moved out of: 这里直译后看不懂，意译又怕理解错误，只能先打个标记 TobeModif-->
+当位置表达式在值表达式上下文中求值，或在模式中被值绑定时，这表示求出的值会*保存进*（held in）当前表达式代表的内存地址。如果该值的类型实现了 [`Copy`]，那么该值将被从原来的位置表达式（也可以理解为原来的内存位置）中复制过来。如果该值的类型没有实现 [`Copy`]，但实现了 [`Sized`]，那么就可以把该值从原来的位置表达式里移出（move out）（到新位置表达式中）。移出对位置表达式有如下限制：<!-- When a place expression is evaluated in a value expression context, or is bound by value in a pattern, it denotes the value held _in_ that memory location. If the type of that value implements [`Copy`], then the value will be copied. In the remaining situations if that type is [`Sized`], then it may be possible to move the value. Only the following place expressions may be moved out of: 这里直译后看不懂，意译又怕理解错误，只能先打个标记 TobeModif-->
 
 * [变量]（译者注：位置表达式的一种）当前未被借用。
 * [临时值](#临时位置)。
