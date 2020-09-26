@@ -102,50 +102,37 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 
 ### 移动和复制类型
 
-当位置表达式在值表达式上下文中求值，或在模式中被值绑定时，这表示求出的值会*保存进*（held in）当前表达式代表的内存地址。如果该值的类型实现了 [`Copy`]，那么该值将被从原来的位置表达式（也可以理解为原来的内存位置）中复制过来。如果该值的类型没有实现 [`Copy`]，但实现了 [`Sized`]，那么就可以把该值从原来的位置表达式里移出（move out）（到新位置表达式中）。移出对位置表达式有如下限制：<!-- When a place expression is evaluated in a value expression context, or is bound by value in a pattern, it denotes the value held _in_ that memory location. If the type of that value implements [`Copy`], then the value will be copied. In the remaining situations if that type is [`Sized`], then it may be possible to move the value. Only the following place expressions may be moved out of: 这里直译后看不懂，意译又怕理解错误，只能先打个标记 TobeModif-->
+当位置表达式在值表达式上下文中求值，或在模式中被值绑定时，这表示求出的值会*保存进*（held in）当前表达式代表的内存地址。如果该值的类型实现了 [`Copy`]，那么该值将被从原来的位置表达式（也可以理解为原来的内存位置）中复制一份过来。如果该值的类型没有实现 [`Copy`]，但实现了 [`Sized`]，那么就可以把该值从原来的位置表达式里移出（move out）（到新位置表达式中）。移出对位置表达式也有要求，具体如下的位置表达式里的值才可以被移出：<!-- When a place expression is evaluated in a value expression context, or is bound by value in a pattern, it denotes the value held _in_ that memory location. If the type of that value implements [`Copy`], then the value will be copied. In the remaining situations if that type is [`Sized`], then it may be possible to move the value. Only the following place expressions may be moved out of: 这里直译后看不懂，意译又怕理解错误，只能先打个标记 TobeModif-->
 
 * [变量]（译者注：位置表达式的一种）当前未被借用。
 * [临时值](#临时位置)。
-* 可以移出的位置表达式的字段且该字段没实现[`Drop`]。<!-- [Fields][field] of a place expression which can be moved out of and doesn't implement [`Drop`]. TobeModify-->
-* 对可移出且类型为 [`Box<T>`] 的表达式做[解引用][deref]解出的结果。<!-- The result of [dereferencing][deref] an expression with type [`Box<T>`] and that can also be moved out of. TobeModify-->
+* 可以移出且没实现 [`Drop`] 的位置表达式的字段。<!-- [Fields][field] of a place expression which can be moved out of and doesn't implement [`Drop`]. TobeModify-->
+* 对可移出且类型为 [`Box<T>`] 的表达式[解引用][deref]的结果。<!-- The result of [dereferencing][deref] an expression with type [`Box<T>`] and that can also be moved out of. TobeModify-->
 
-移出对位置表达式求值的结果到局部变量中后，原来位置将被去初始化（deinitialized），并且在重新初始化之前无法再次读取。在所有其他情况下，尝试在值表达式上下文中使用位置表达式是错误的 感觉理解不对，需要修改 need to modify
-移出计算为局部变量的位置表达式，
-Moving out of a place expression that evaluates to a local variable, the location is deinitialized and cannot be read from again until it is reinitialized. In all other cases, trying to use a place expression in a value expression context is an error.
+移出被作为局部变量的位置表达式里的值后，原来的地址将被去初始化（deinitialized），并且该地址在重新初始化之前无法再次读取。除以上列出的情况为外，尝试在值表达式上下文中使用位置表达式都是错误的。
 
-### Mutability
+### 可变性
 
-For a place expression to be [assigned][assign] to, mutably [borrowed][borrow],
-[implicitly mutably borrowed], or bound to a pattern containing `ref mut` it
-must be _mutable_. We call these *mutable place expressions*. In contrast,
-other place expressions are called *immutable place expressions*.
+对于表[示分配][assign]、可变[借用][borrow]、[隐式可变借用]或绑定到包含 `ref mut` 的模式的位置表达式必须是[可变的]。我们称这些为*可变位置表达式*。与之相比，其他位置表达式称为*不可变位置表达式*。
 
-The following expressions can be mutable place expression contexts:
+下面的表达式可以是可变位置表达式上下文：
 
-* Mutable [variables], which are not currently borrowed.
-* [Mutable `static` items].
-* [Temporary values].
-* [Fields][field], this evaluates the subexpression in a mutable place
-  expression context.
-* [Dereferences][deref] of a `*mut T` pointer.
-* Dereference of a variable, or field of a variable, with type `&mut T`. Note:
-  This is an exception to the requirement of the next rule.
-* Dereferences of a type that implements `DerefMut`, this then requires that
-  the value being dereferenced is evaluated is a mutable place expression context.
-* [Array indexing] of a type that implements `IndexMut`, this
-  then evaluates the value being indexed, but not the index, in mutable place
-  expression context.
+* 当前未出借的可变的[变量]。
+* [可变 `static`数据项]。
+* [临时值]。
+* 求值结果是可变位置表达式上下文的[字段][field]。
+* 对 `*mut T` 指针的[解引用][deref]。
+* 对类型为 `&mut T` 的变量或变量的字段的解引用。注意：这是下一条规则的例外情况。
+* 实现 `DerefMut` 的类型的解引用，这就要求被解引用的值是一个可变位置表达式上下文
+* 对于实现 `IndexMut` 的类型的[数组索引]，它将在可变位置表达式上下文中计算被索引到的值，而不是索引本身。
 
 ### 临时位置
 
-在大多数位置表达式上下文中使用值表达式时，会创建一个临时的未命名内存位置，并将该值初始化到该内存位置，而表达式将求值结果在存放到该位置，除非把此表达式[提升]为 `static`。临时语句的[drop scope]通常是封闭语句的结尾。
-When using a value expression in most place expression contexts, a temporary unnamed memory location is created initialized to that value and the expression evaluates to that location instead, except if [promoted] to a `static`. The [drop scope] of the temporary is usually the end of the enclosing statement.
+在大多数位置表达式上下文中使用值表达式时，会创建一个临时的未命名内存位置，并将该值初始化到该内存位置，而表达式将求值结果在存放到该位置。也有例外，就把此表达式[提升]为 `static`。（译者注：这种情况下表达式将直接在编译时就求值了，存储地址会根据编译器要求任意放置，甚至多个位置放置）。临时位置的[销毁点][drop scope]通常在其封闭语句的结尾处。
 
-### Implicit Borrows
+### 隐式借用
 
-Certain expressions will treat an expression as a place expression by implicitly
-borrowing it. For example, it is possible to compare two unsized [slices][slice] for
-equality directly, because the `==` operator implicitly borrows it's operands:
+某些表达式可通过隐式借用表达式来将其视为位置表达式。例如，可以直接比较两个[切片][slice]是否相等，因为 `==` 运算符隐式借用了它的操作数：
 
 ```rust
 # let c = [1, 2, 3];
@@ -155,48 +142,42 @@ let b: &[i32];
 # a = &c;
 # b = &d;
 // ...
-*a == *b;
-// Equivalent form:
+*a == *b; //译者注：&[i32] 解引用后是一个动态尺寸类型，理论上两个动态尺寸类型上无法比较大小的，但这里因为隐式借用此成为可能
+// 等价于下面的形式:
 ::std::cmp::PartialEq::eq(&*a, &*b);
 ```
 
-Implicit borrows may be taken in the following expressions:
+隐式借用可采用以下表达式：
 
-* Left operand in [method-call] expressions.
-* Left operand in [field] expressions.
-* Left operand in [call expressions].
-* Left operand in [array indexing] expressions.
-* Operand of the [dereference operator][deref] (`*`).
-* Operands of [comparison].
-* Left operands of the [compound assignment].
+* [方法调用][method-call]表达式中的左操作数。
+* [字段][field]表达式中的左操作数。
+* [调用表达式][call expressions]中的左操作数。
+* [数组索引][array indexing]表达式中的左操作数。
+* [解引用操作符][deref]（`*`）的操作数。
+* [比较运算][comparison]的操作数。
+* [复合赋值][compound assignment]的左操作数。
 
-## Overloading Traits
+## 重载
 
-Many of the following operators and expressions can also be overloaded for
-other types using traits in `std::ops` or `std::cmp`. These traits also
-exist in `core::ops` and `core::cmp` with the same names.
+本节之后的许多操作符和表达式都可以通过 `std::ops` 或 `std::cmp` 中的 trait 被其他类型重载。这些 trait 也存在于同名的 `core::ops` 和 `core::cmp` 中。
 
 ## 表达式属性
 
-[Outer attributes][_OuterAttribute_] before an expression are allowed only in
-a few specific cases:
+只有在少数特定情况下，才允许在表达式之前使用[外部属性][_OuterAttribute_]：
 
-* Before an expression used as a [statement].
-* Elements of [array expressions], [tuple expressions], [call expressions],
-  and tuple-style [struct] and [enum variant] expressions.
+* 在被用作[语句]的表达式之前。
+* [数组表达式]、[元组表达式]、[调用表达式]和[元组结构体]和[枚举变体]表达式这些中的元素。
   <!--
     These were likely stabilized inadvertently.
     See https://github.com/rust-lang/rust/issues/32796 and
         https://github.com/rust-lang/rust/issues/15701
   -->
-* The tail expression of [block expressions].
+* [块表达式]的尾部表达式.
 <!-- Keep list in sync with block-expr.md -->
 
-They are never allowed before:
-* [Range][_RangeExpression_] expressions.
-* Binary operator expressions ([_ArithmeticOrLogicalExpression_],
-  [_ComparisonExpression_], [_LazyBooleanExpression_], [_TypeCastExpression_],
-  [_AssignmentExpression_], [_CompoundAssignmentExpression_]).
+在下面情形之前是不允许的：
+* [范围][_RangeExpression_]表达式。
+* 二元运算符表达式([_ArithmeticOrLogicalExpression_]、[_ComparisonExpression_]、[_LazyBooleanExpression_]、[_TypeCastExpression_]、[_AssignmentExpression_]、[_CompoundAssignmentExpression_])。
 
 
 [block expressions]:    expressions/block-expr.md
