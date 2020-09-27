@@ -30,4 +30,4 @@ let slice_reverse = <[i32]>::reverse;
 [值表达式]: ../expressions.md#位置表达式和值表达式
 [路径]: ../paths.md
 [`static mut`]: ../items/static-items.md#可变静态项
-[`unsafe`块]: block-expr.md#unsafe-blocks
+[`unsafe`块]: block-expr.md#unsafe块

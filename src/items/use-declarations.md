@@ -12,11 +12,11 @@
 > &nbsp;&nbsp; | ([_SimplePath_]<sup>?</sup> `::`)<sup>?</sup> `{` (_UseTree_ ( `,`  _UseTree_ )<sup>\*</sup> `,`<sup>?</sup>)<sup>?</sup> `}`\
 > &nbsp;&nbsp; | [_SimplePath_]&nbsp;( `as` ( [IDENTIFIER] | `_` ) )<sup>?</sup>
 
-*use 声明*创建一个或多个与其他[路径]同义的本地名称绑定。通常使用 `use` 声明来缩短引用模块项所需的路径。这些声明可能出现在[模块]和[代码块]中，但通常在顶部。
+*use 声明*创建一个或多个与其他[路径]同义的本地名称绑定。通常使用 `use` 声明来缩短引用模块项所需的路径。这些声明可能出现在[模块]和[块]中，但通常在顶部。
 
 [路径]: ../paths.md
 [模块]: modules.md
-[代码块]: ../expressions/block-expr.md
+[块]: ../expressions/block-expr.md
 
 *use 声明*支持多种便捷方法:
 

@@ -28,7 +28,7 @@
 > _FunctionReturnType_ :\
 > &nbsp;&nbsp; `->` [_Type_]
 
-函数由一个[代码块]以及一个名称和一组参数组成。除了名字，所有这些都是可选的。函数用关键字  `fn` 声明。函数可以声明一组*输入*[*变量*][variables]作为参数，调用者通过它向函数传递参数，函数完成后将带有[*类型*][type]的*输出*值返回给调用者。
+函数由一个[块]以及一个名称和一组参数组成。除了名字，所有这些都是可选的。函数用关键字  `fn` 声明。函数可以声明一组*输入*[*变量*][variables]作为参数，调用者通过它向函数传递参数，函数完成后将带有[*类型*][type]的*输出*值返回给调用者。
 
 当*函数*被引用时，会产生相应的零尺寸[*函数类型(function item type)*]的一等*值*，当调用该值时，它的计算结果是对该函数的直接调用。
 
@@ -45,7 +45,7 @@ fn answer_to_life_the_universe_and_everything() -> i32 {
 fn first((value, _): (i32, i32)) -> i32 { value }
 ```
 
-函数的代码块在概念上被包装在一个块中，该块绑定参数模式，然后返回函数块的值。这意味着块的*尾部表达式*如果能进行求值运算，最终会将该运算后的值返回给调用者。通常，函数体中显式的*返回表达式*会缩短隐式返回的时间。
+函数的块在概念上被包装在一个块中，该块绑定参数模式，然后返回函数块的值。这意味着块的*尾部表达式*如果能进行求值运算，最终会将该运算后的值返回给调用者。通常，函数体中显式的*返回表达式*会缩短隐式返回的时间。
 
 例如，上面例子里函数的行为就像下面被改写的这样:
 
@@ -186,7 +186,7 @@ let fptr: extern "C" fn() -> i32 = new_i32;
 * 从常量项（但不能是静态项，甚至不能引用静态项）中读取数据
 * `&` 和 `*`（仅解引用引用，原始指针不行）
 * 除裸指针向整数转换外的类型转换
-* `unsafe` 块和 `const unsafe fn` 可以，但代码体/代码块只能执行以下非安全操作：
+* `unsafe` 块和 `const unsafe fn` 可以，但代码体/块只能执行以下非安全操作：
     * 调用非安全常量函数
 
 ## 异步函数 （async functions）
@@ -200,7 +200,7 @@ async unsafe fn unsafe_example() { }
 
 异步函数在调用时不起作用：相反，它们将参数捕获进 future。当该函数被轮询时，该 future 将执行该函数的函数体。
 
-一个异步函数大致相当于返回一个以 [`async move` 代码块][async-blocks]为代码体的 [`impl Future`] 的函数：
+一个异步函数大致相当于返回一个以 [`async move` 块][async-blocks]为代码体的 [`impl Future`] 的函数：
 
 ```rust,edition2018
 // 源代码
@@ -224,9 +224,9 @@ fn example<'a>(x: &'a str) -> impl Future<Output = usize> + 'a {
 - 假定脱糖过程中的返回类型捕获 *`async fn` 声明*里的所有生命周期。这可以在上面的脱糖示例中看到：（我们）显式地给它添加了一个最小生存期 `'a`，因此捕捉到 `'a`。
 - 代码体中的 [`async move` 块][async blocks]捕获所有函数参数，包括未使用或绑定到 `_` 模式的参数。这可以确保函数参数的销毁顺序与函数非异步时的顺序相同，除了这些销毁动作需要在返回的 future 完全执行(fully awaited)完成后才会发生。
 
-有关异步效果的详细信息，请参见[`async` 块][async-blocks]。
+有关异步效果的详细信息，请参见[`async`块][async-blocks]。
 
-[async-blocks]: ../expressions/block-expr.md#async-blocks
+[async-blocks]: ../expressions/block-expr.md#async块
 [`impl Future`]: ../types/impl-trait.md
 
 > **版本差异**: 异步函数只能在 Rust 2018 版中才有效。
@@ -259,7 +259,7 @@ async fn safe_example() {
 
 ## 函数上的属性
 
-函数允许使用[外部属性][attributes]，也允许在[代码块]中的 `{` 后面直接放置[内部属性][attributes]。
+函数允许使用[外部属性][attributes]，也允许在[块]中的 `{` 后面直接放置[内部属性][attributes]。
 
 下面这个例子显示了一个函数的内部属性。该函数仅在运行测试时可用。
 
@@ -311,7 +311,7 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [元祖变体]: enumerations.md
 [外部块]: external-blocks.md
 [路径]: ../paths.md
-[代码块]: ../expressions/block-expr.md
+[块]: ../expressions/block-expr.md
 [变量]: ../variables.md
 [类型]: ../types.md#type-expressions
 [*函数类型(function item type)*]: ../types/function-item.md

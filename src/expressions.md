@@ -51,7 +51,7 @@
 * 对子表达式求值的顺序
 * 如何组合子表达式的值来获得表达式的值
 
-这样，表达式的结构决定了执行的结构。代码块只是另一种表达式，所以代码块、语句和表达式可以递归地彼此嵌套到任意深度。
+这样，表达式的结构决定了执行的结构。块只是另一种表达式，所以块、语句和表达式可以递归地彼此嵌套到任意深度。
 
 ## 表达式的优先级
 
@@ -123,7 +123,7 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 * 求值结果是可变位置表达式上下文的[字段][field]。
 * 对 `*mut T` 指针的[解引用][deref]。
 * 对类型为 `&mut T` 的变量或变量的字段的解引用。注意：这是下一条规则的例外情况。
-* 实现 `DerefMut` 的类型的解引用，这就要求被解引用的值是一个可变位置表达式上下文
+* 实现 `DerefMut` 的类型的解引用，这就要求被解引用的值是一个可变位置表达式上下文。
 * 对于实现 `IndexMut` 的类型的[数组索引][array indexing]，它将在可变位置表达式上下文中计算被索引到的值，而不是索引本身。
 
 ### 临时位置
@@ -173,7 +173,7 @@ let b: &[i32];
         https://github.com/rust-lang/rust/issues/15701
   -->
 * [块表达式]的尾部表达式.
-<!-- Keep list in sync with block-expr.md -->
+<!-- 本列表需要和 block-expr.md 保持同步-->
 
 在下面情形之前是不允许的：
 * [范围][_RangeExpression_]表达式。
@@ -224,7 +224,7 @@ let b: &[i32];
 
 [_ArithmeticOrLogicalExpression_]: expressions/operator-expr.md#arithmetic-and-logical-binary-operators
 [_ArrayExpression_]:              expressions/array-expr.md
-[_AsyncBlockExpression_]:         expressions/block-expr.md#async-blocks
+[_AsyncBlockExpression_]:         expressions/block-expr.md#async块
 [_AwaitExpression_]:              expressions/await-expr.md
 [_AssignmentExpression_]:         expressions/operator-expr.md#assignment-expressions
 [_BlockExpression_]:              expressions/block-expr.md
@@ -255,4 +255,4 @@ let b: &[i32];
 [_TupleExpression_]:              expressions/tuple-expr.md
 [_TupleIndexingExpression_]:      expressions/tuple-expr.md#tuple-indexing-expressions
 [_TypeCastExpression_]:           expressions/operator-expr.md#type-cast-expressions
-[_UnsafeBlockExpression_]:        expressions/block-expr.md#unsafe-blocks
+[_UnsafeBlockExpression_]:        expressions/block-expr.md#unsafe块

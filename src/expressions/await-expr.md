@@ -24,7 +24,7 @@ More specifically, an `<expr>.await` expression has the following effect.
    of the `await` expression itself.
 
 [`async fn`]: ../items/functions.md#异步函数
-[`async` block]: block-expr.md#async-blocks
+[`async` block]: block-expr.md#async块
 [future]: https://doc.rust-lang.org/std/future/trait.Future.html
 [_Expression_]: ../expressions.md
 [`Future::poll`]: https://doc.rust-lang.org/std/future/trait.Future.html#tymethod.poll
@@ -44,7 +44,7 @@ polled. Because `await` expressions are only legal in an async
 context, there must be some task context available.
 
 [`Context`]: https://doc.rust-lang.org/std/task/struct.Context.html
-[async context]: ../expressions/block-expr.md#async-context
+[async context]: ../expressions/block-expr.md#异步上下文
 
 ## Approximate desugaring
 

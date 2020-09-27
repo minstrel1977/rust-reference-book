@@ -1,6 +1,10 @@
+# 运算符表达式
 # Operator expressions
 
-> **<sup>Syntax</sup>**\
+>[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
+>commit 29d7e4ba448366ace751a9149c1a27ff3470cda9
+
+> **<sup>句法</sup>**\
 > _OperatorExpression_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_BorrowExpression_]\
 > &nbsp;&nbsp; | [_DereferenceExpression_]\
@@ -13,83 +17,63 @@
 > &nbsp;&nbsp; | [_AssignmentExpression_]\
 > &nbsp;&nbsp; | [_CompoundAssignmentExpression_]
 
-Operators are defined for built in types by the Rust language. Many of the
-following operators can also be overloaded using traits in `std::ops` or
-`std::cmp`.
+操作符是由 Rust语言为内建类型定义的。本文后面的许多操作符也都可以使用 `std::ops` 或 `std::cmp` 中的 trait 进行重载。。
 
+## 溢出
 ## Overflow
 
-Integer operators will panic when they overflow when compiled in debug mode.
-The `-C debug-assertions` and `-C overflow-checks` compiler flags can be used
-to control this more directly. The following things are considered to be
-overflow:
+在调试模式下编译整数运算发生溢出时，会出现 panic。可以使用 `-C debug-assertions` 和 `-C overflow-checks` 编译器标志位来更直接地控制这个溢出过程。以下情况被认为是溢出：
 
-* When `+`, `*` or `-` create a value greater than the maximum value, or less
-  than the minimum value that can be stored. This includes unary `-` on the
-  smallest value of any signed integer type.
-* Using `/` or `%`, where the left-hand argument is the smallest integer of a
-  signed integer type and the right-hand argument is `-1`.
-* Using `<<` or `>>` where the right-hand argument is greater than or equal to
-  the number of bits in the type of the left-hand argument, or is negative.
+* 当 `+`、`*` 或 `-` 创建的值大于可存储的最大值或小于最小值。这包括任何带符号整型的最小值上的一元运算符 `-`。
+* 使用 `/` 或 `%`，其中左边的参数是带符号整型的最小整数，右边的参数是 `-1`。
+* 使用 `<<` 或 `>>`，其中右边参数大于或等于左边参数类型的比特数，或为负数。
 
+## 借用/引用操作符
 ## Borrow operators
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _BorrowExpression_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; (`&`|`&&`) [_Expression_]\
 > &nbsp;&nbsp; | (`&`|`&&`) `mut` [_Expression_]
 
-The `&` (shared borrow) and `&mut` (mutable borrow) operators are unary prefix
-operators. When applied to a [place expression], this expressions produces a
-reference (pointer) to the location that the value refers to. The memory
-location is also placed into a borrowed state for the duration of the reference.
-For a shared borrow (`&`), this implies that the place may not be mutated, but
-it may be read or shared again. For a mutable borrow (`&mut`), the place may not
-be accessed in any way until the borrow expires. `&mut` evaluates its operand in
-a mutable place expression context. If the `&` or `&mut` operators are applied
-to a [value expression], then a [temporary value] is created.
-
-These operators cannot be overloaded.
+`&`（共享借用）和 `&mut`（可变借用）运算符是一元前缀运算符。当应用于[位置表达式][place expression]时，此表达式生成指向值所在的位置的引用（指针）。在引用期间，内存位置也被置于借用状态。对于共享借用（`&`），这意味着位置可能不会发生变化，但可能会被再次读取或共享。对于可变借用（`&mut`），在借用到期之前，不能以任何方式访问该位置。`&mut` 在可变位置表达式上下文中计算其操作数。如果 `&` 或 `&mut` 运算符应用于[值表达式][value expression]，则会创建一个[临时值][temporary value]。
+这类操作符不能重载。
 
 ```rust
 {
-    // a temporary with value 7 is created that lasts for this scope.
+    // 将创建一个存值为7的临时位置，该位置在此范围内持续存在
     let shared_reference = &7;
 }
 let mut array = [-2, 3, 9];
 {
-    // Mutably borrows `array` for this scope.
-    // `array` may only be used through `mutable_reference`.
+    // 在当前作用域内可变借用 `array`。
+    // `array` 只能通过 `mutable_reference` 来使用 .
     let mutable_reference = &mut array;
 }
 ```
 
-Even though `&&` is a single token ([the lazy 'and' operator](#lazy-boolean-operators)),
-when used in the context of borrow expressions it works as two borrows:
+尽管 `&&` 是一个单标记码([惰性 'and'操作符](#lazy-boolean-operators))，但在借用表达式上下文中使用时，它作为两个借用使用：
 
 ```rust
-// same meanings:
+// 意义相同：
 let a = &&  10;
 let a = & & 10;
 
-// same meanings:
+// 意义相同：
 let a = &&&&  mut 10;
 let a = && && mut 10;
 let a = & & & & mut 10;
 ```
 
+## 解引用操作符
 ## The dereference operator
 
 > **<sup>Syntax</sup>**\
 > _DereferenceExpression_ :\
 > &nbsp;&nbsp; `*` [_Expression_]
 
-The `*` (dereference) operator is also a unary prefix operator. When applied to
-a [pointer](../types/pointer.md) it denotes the pointed-to location. If
-the expression is of type `&mut T` and `*mut T`, and is either a local
-variable, a (nested) field of a local variable or is a mutable [place
-expression], then the resulting memory location can be assigned to.
-Dereferencing a raw pointer requires `unsafe`.
+`*`（解引用）运算符也是一元前缀运算符。应用于[指针](../types/pointer.md)它表示指向的位置。如果表达式的类型为 `&mut T` 和 `*mut T`，并且是局部变量、局部变量的（嵌套）字段或是可变的[place expression]，则可以将生成的内存位置分配给。取消对原始指针的引用需要“unsafe”。
+The `*` (dereference) operator is also a unary prefix operator. When applied to a [pointer](../types/pointer.md) it denotes the pointed-to location. If the expression is of type `&mut T` and `*mut T`, and is either a local variable, a (nested) field of a local variable or is a mutable [place expression], then the resulting memory location can be assigned to. Dereferencing a raw pointer requires `unsafe`.
 
 On non-pointer types `*x` is equivalent to `*std::ops::Deref::deref(&x)` in an
 [immutable place expression context](../expressions.md#可变性) and
@@ -103,6 +87,7 @@ let y = &mut 9;
 assert_eq!(*y, 11);
 ```
 
+## 问号操作符
 ## The question mark operator
 
 > **<sup>Syntax</sup>**\
@@ -152,6 +137,7 @@ assert_eq!(try_option_none(), None);
 `?` cannot be overloaded.
 
 ## 取反运算符
+## Negation operators
 
 > **<sup>Syntax</sup>**\
 > _NegationExpression_ :\
@@ -180,6 +166,7 @@ assert_eq!(!x, -7);
 assert_eq!(true, !false);
 ```
 
+## 算术和逻辑二元运算符
 ## Arithmetic and Logical Binary Operators
 
 > **<sup>Syntax</sup>**\
@@ -235,6 +222,7 @@ assert_eq!(13 << 3, 104);
 assert_eq!(-10 >> 2, -3);
 ```
 
+## 比较运算符
 ## Comparison Operators
 
 > **<sup>Syntax</sup>**\
@@ -290,6 +278,7 @@ assert!('A' <= 'B');
 assert!("World" >= "Hello");
 ```
 
+## 惰性布尔运算符
 ## Lazy boolean operators
 
 > **<sup>Syntax</sup>**\
@@ -310,6 +299,7 @@ let x = false || true; // true
 let y = false && panic!(); // false, doesn't evaluate `panic!()`
 ```
 
+## 类型转换表达式
 ## Type cast expressions
 
 > **<sup>Syntax</sup>**\
@@ -359,6 +349,7 @@ same trait object.
 
 \*\* only for closures that do not capture (close over) any local variables
 
+### 语义
 ### Semantics
 
 * Numeric cast
@@ -403,6 +394,7 @@ expected.
 number, preferring the one with an even least significant digit if exactly
 halfway between two floating point numbers.
 
+## 赋值表达式
 ## Assignment expressions
 
 > **<sup>Syntax</sup>**\
@@ -426,6 +418,7 @@ than promoting it to a temporary.
 x = y;
 ```
 
+## 复合赋值表达式
 ## Compound assignment expressions
 
 > **<sup>Syntax</sup>**\

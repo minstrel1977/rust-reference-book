@@ -86,6 +86,6 @@ by implementing the [Index] and [IndexMut] traits.
 [Inner attributes]: ../attributes.md
 [_Expression_]: ../expressions.md
 [_InnerAttribute_]: ../attributes.md
-[attributes on block expressions]: block-expr.md#attributes-on-block-expressions
+[attributes on block expressions]: block-expr.md#块表达式上的属性
 [constant expression]: ../const_eval.md#常量表达式
 [memory location]: ../expressions.md#位置表达式和值表达式

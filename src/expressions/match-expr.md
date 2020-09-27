@@ -159,6 +159,6 @@ expressions].
 [pattern]: ../patterns.md
 [Inner attributes]: ../attributes.md
 [Range Pattern]: ../patterns.md#range-patterns
-[attributes on block expressions]: block-expr.md#attributes-on-block-expressions
+[attributes on block expressions]: block-expr.md#块表达式上的属性
 [binding mode]: ../patterns.md#binding-modes
 [scrutinee]: ../glossary.md#scrutinee

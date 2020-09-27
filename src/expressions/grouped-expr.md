@@ -44,4 +44,4 @@ expressions].
 [Inner attributes]: ../attributes.md
 [_Expression_]: ../expressions.md
 [_InnerAttribute_]: ../attributes.md
-[attributes on block expressions]: block-expr.md#attributes-on-block-expressions
+[attributes on block expressions]: block-expr.md#块表达式上的属性

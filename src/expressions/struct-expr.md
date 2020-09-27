@@ -144,7 +144,7 @@ expressions].
 [_Expression_]: ../expressions.md
 [_InnerAttribute_]: ../attributes.md
 [_PathInExpression_]: ../paths.md#表达式中的路径
-[attributes on block expressions]: block-expr.md#attributes-on-block-expressions
+[attributes on block expressions]: block-expr.md#块表达式上的属性
 [call expression]: call-expr.md
 [if let]: if-expr.md#if-let-expressions
 [if]: if-expr.md#if-expressions

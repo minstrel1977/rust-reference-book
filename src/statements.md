@@ -11,7 +11,7 @@
 > &nbsp;&nbsp; | [_ExpressionStatement_]\
 > &nbsp;&nbsp; | [_MacroInvocationSemi_]
 
-*语句*是[代码块(block)][^译者注]的一个组件，而代码块又是外部[表达式]或[函数]的组件。
+*语句*是[块(block)][^译者注]的一个组件，而块又是外部[表达式]或[函数]的组件。
 
 Rust 有两种语句：[声明语句](#声明语句)和[表达式语句](#表达式语句)。
 
@@ -23,7 +23,7 @@ Rust 有两种语句：[声明语句](#声明语句)和[表达式语句](#表达
 
 ### 数据项声明
 
-*数据项声明语句*的语法形式与[模块]中的[数据项声明][数据项]相同。在语句块中声明数据项会将该数据项的作用域限制为包含该语句的代码块，并且此数据项没有给定的[规范路径]，也无法（隐式）指定数据项的父子关系。例外的是由[实现]定义的关联项在外部范围内仍然是可访问的，只要数据项和 trait(如果适用的话)的可见性允许。除了这点儿区别外，它与在模块中声明数据项的意义是相同的。
+*数据项声明语句*的语法形式与[模块]中的[数据项声明][数据项]相同。在语句块中声明数据项会将该数据项的作用域限制为包含该语句的块，并且此数据项没有给定的[规范路径]，也无法（隐式）指定数据项的父子关系。例外的是由[实现]定义的关联项在外部范围内仍然是可访问的，只要数据项和 trait(如果适用的话)的可见性允许。除了这点儿区别外，它与在模块中声明数据项的意义是相同的。
 
 数据项声明不会隐式捕获作用域内的组件，这些组件项包括函数的泛型参数、参数和局部变量。如下，`inner` 可能不能访问 `outer_var`。
 <!-- There is no implicit capture of the containing function's generic parameters, parameters, and local variables. For example, `inner` may not access `outer_var`.TobeModify,这里为明确语义补充进来的“组件”可能不合适，回头可能会修改 -->
@@ -70,13 +70,13 @@ if v.is_empty() {
 当省略后面的分号时，结果必须是 `()` 类型。
 
 ```rust
-// bad: 下面代码块的类型是i32，而不是 `()` 
+// bad: 下面块的类型是i32，而不是 `()` 
 // Error: 预期表达式语句的返回值是 `()` 
 // if true {
 //   1
 // }
 
-// good: 下面代码块的类型是i32，（加`;`后的语句的返回值就是 `()`了）
+// good: 下面块的类型是i32，（加`;`后的语句的返回值就是 `()`了）
 if true {
   1
 } else {
@@ -89,9 +89,9 @@ if true {
 语句可以有[外部属性]。在语句中有意义的属性是 [`cfg`] 和[lint检查类属性]。
 Statements accept [outer attributes]. The attributes that have meaning on a statement are [`cfg`], and [lint检查类属性].
 
-[^译者注]:为避免汉语中的歧义，单独出现block时，译者一般翻译为“代码块”，但和其他名词复合时，又一般会译为“XX块”。
+[^译者注]:我们口语中的说的代码块在本书原文书写为`block of code`,`block of code`的典型情况是`unsafe`块。
 
-[代码块]: expressions/block-expr.md
+[块(block)]: expressions/block-expr.md
 [表达式]: expressions.md
 [函数]: items/functions.md
 [数据项]: items.md
