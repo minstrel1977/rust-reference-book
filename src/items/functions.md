@@ -317,15 +317,15 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [*函数类型(function item type)*]: ../types/function-item.md
 [trait]: traits.md
 [attributes]: ../attributes.md
-[`cfg`]: ../conditional-compilation.md#the-cfg-attribute
-[`cfg_attr`]: ../conditional-compilation.md#the-cfg_attr-attribute
-[lint检查类属性]: ../attributes/diagnostics.md#lint-check-attributes
+[`cfg`]: ../conditional-compilation.md#cfg属性
+[`cfg_attr`]: ../conditional-compilation.md#cfg_attr属性
+[lint检查类属性]: ../attributes/diagnostics.md#lint检查类属性
 [过程宏属性]: ../procedural-macros.md
 [测试类属性]: ../attributes/testing.md
-[优化提示类属性]: ../attributes/codegen.md#optimization-hints
-[`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
+[优化提示类属性]: ../attributes/codegen.md#优化提示
+[`deprecated`]: ../attributes/diagnostics.md#deprecated属性
 [`doc`]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
-[`must_use`]: ../attributes/diagnostics.md#the-must_use-attribute
+[`must_use`]: ../attributes/diagnostics.md#must_use属性
 [模式]: ../patterns.md
 [`?Sized`]: ../trait-bounds.md#sized
 [trait 约束]: ../trait-bounds.md

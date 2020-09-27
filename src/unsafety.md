@@ -13,7 +13,7 @@ Rust:
 - Implementing an [unsafe trait].
 
 [`union`]: items/unions.md
-[mutable]: items/static-items.md#mutable-statics
+[mutable]: items/static-items.md#可变静态项
 [external]: items/external-blocks.md
 [raw pointer]: types/pointer.md
 [unsafe trait]: items/traits.md#unsafe-traits

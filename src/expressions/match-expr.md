@@ -151,7 +151,7 @@ expressions].
 [_InnerAttribute_]: ../attributes.md
 [_OuterAttribute_]: ../attributes.md
 [`cfg`]: ../conditional-compilation.md
-[`cold`]: ../attributes/codegen.md#the-cold-attribute
+[`cold`]: ../attributes/codegen.md#cold属性
 [lint check attributes]: ../attributes/diagnostics.md#lint检查类属性
 [Range Expression]: range-expr.md
 

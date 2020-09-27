@@ -52,7 +52,7 @@
     - [表达式](expressions.md)
         - [字面量表达式](expressions/literal-expr.md)
         - [路径表达式](expressions/path-expr.md)
-        - [快表达式](expressions/block-expr.md)
+        - [块表达式](expressions/block-expr.md)
         - [运算符表达式](expressions/operator-expr.md)
         - [分组表达式](expressions/grouped-expr.md)
         - [数组和索引表达式](expressions/array-expr.md)

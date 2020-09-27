@@ -96,7 +96,7 @@ mod thread {
 }
 ```
 
-## 预导入包项
+## 预导入项
 
 模块在作用域中隐式地有自己的名称。这些名称是内置类型，宏在外部 crate 上用[`#[macro_use]`][macro_use]导入这些名称，其他 crate 通过[预导入包]导入。这些名称都由唯一的标识符组成。这些名称不是当前模块的一部分，因此，例如，任何名为 `name`、 `self::name` 的路径都不是有效路径。通过[预导入包]添加的这种模块名称可以通过将 `no_implicit_prelude` [属性]放在当前模块或任意祖先模块上来删除。
 
@@ -108,13 +108,13 @@ mod thread {
 
 [_InnerAttribute_]: ../attributes.md
 [_Item_]: ../items.md
-[macro_use]: ../macros-by-example.md#the-macro_use-attribute
+[macro_use]: ../macros-by-example.md#macro_use属性
 [`cfg`]: ../conditional-compilation.md
-[`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
+[`deprecated`]: ../attributes/diagnostics.md#deprecated属性
 [`doc`]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
 [IDENTIFIER]: ../identifiers.md
 [属性]: ../attributes.md
 [数据项]: ../items.md
 [模块路径]: ../paths.md
-[预导入包]: ../crates-and-source-files.md#preludes-and-no_std
-[lint检查类属性]: ../attributes/diagnostics.md#lint-check-attributes
+[预导入包]: ../crates-and-source-files.md#预导入包和-no_std
+[lint检查类属性]: ../attributes/diagnostics.md#lint检查类属性

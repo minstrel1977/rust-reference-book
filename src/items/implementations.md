@@ -187,10 +187,10 @@ impl Seq<bool> for u32 {
 [关联常量]: associated-items.md#associated-constants
 [属性]: ../attributes.md
 [`cfg`]: ../conditional-compilation.md
-[`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
+[`deprecated`]: ../attributes/diagnostics.md#deprecated属性
 [`doc`]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
 [路径]: ../paths.md
-[lint检查类属性]: ../attributes/diagnostics.md#lint-check-attributes
+[lint检查类属性]: ../attributes/diagnostics.md#lint检查类属性
 [非安全trait]: traits.md#unsafe-traits
 [本地trait]: ../glossary.md#local-trait
 [本地类型]: ../glossary.md#local-type

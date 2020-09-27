@@ -341,6 +341,6 @@ mod without { // ::without
 [宏转换器]: macros-by-example.md
 [宏]: macros-by-example.md
 [模式]: patterns.md
-[trait 实现]: items/implementations.md#trait-implementations
+[trait 实现]: items/implementations.md#trait实现
 [trait]: items/traits.md
 [可见性]: visibility-and-privacy.md

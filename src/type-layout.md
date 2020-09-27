@@ -558,9 +558,9 @@ used with any other representation.
 [`Sized`]: ../std/marker/trait.Sized.html
 [`Copy`]: ../std/marker/trait.Copy.html
 [dynamically sized types]: dynamically-sized-types.md
-[field-less enums]: items/enumerations.md#custom-discriminant-values-for-fieldless-enumerations
+[field-less enums]: items/enumerations.md#为无字段枚举自定义判别值
 [enumerations]: items/enumerations.md
-[zero-variant enums]: items/enumerations.md#zero-variant-enums
+[zero-variant enums]: items/enumerations.md#无变体枚举
 [undefined behavior]: behavior-considered-undefined.md
 [27060]: https://github.com/rust-lang/rust/issues/27060
 [55149]: https://github.com/rust-lang/rust/issues/55149

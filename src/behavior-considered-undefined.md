@@ -81,7 +81,7 @@ cannot be bigger than `isize::MAX` bytes.
 [noalias]: http://llvm.org/docs/LangRef.html#noalias
 [pointer aliasing rules]: http://llvm.org/docs/LangRef.html#pointer-aliasing-rules
 [undef]: http://llvm.org/docs/LangRef.html#undefined-values
-[`target_feature`]: attributes/codegen.md#the-target_feature-attribute
+[`target_feature`]: attributes/codegen.md#target_feature属性
 [`UnsafeCell<U>`]: ../std/cell/struct.UnsafeCell.html
 [Rustonomicon]: ../nomicon/index.html
 [`NonNull<T>`]: ../core/ptr/struct.NonNull.html

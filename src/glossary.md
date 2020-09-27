@@ -226,7 +226,7 @@ A type is uninhabited if it has no constructors and therefore can never be insta
 [free item]: #free-item
 [implementation]: items/implementations.md
 [implementations]: items/implementations.md
-[inherent implementation]: items/implementations.md#inherent-implementations
+[inherent implementation]: items/implementations.md#固有实现
 [item]: items.md
 [method]: items/associated-items.md#methods
 [never type]: types/never.md

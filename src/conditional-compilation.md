@@ -164,7 +164,7 @@
 
 ## 条件编译的形式
 
-### `cfg` 属性
+### `cfg`属性
 
 > **<sup>句法</sup>**\
 > _CfgAttrAttribute_ :\
@@ -208,7 +208,7 @@ fn needs_not_foo() {
 
 `cfg` 属性允许在任何允许属性的地方上使用。
 
-### cfg_attr` 属性
+### `cfg_attr`属性
 
 > **<sup>句法</sup>**\
 > _CfgAttrAttribute_ :\
@@ -284,7 +284,7 @@ Rust 官方对一些平台提供了默认的目标三元组，我们可以通过
 [`cfg` macro]: #the-cfg-macro
 [`cfg_attr`]: #the-cfg_attr-attribute
 [`debug_assert!`]: ../std/macro.debug_assert.html
-[`target_feature`属性]: attributes/codegen.md#the-target_feature-attribute
+[`target_feature`属性]: attributes/codegen.md#target_feature属性
 [属性]: attributes.md
 [cargo-feature]: ../cargo/reference/features.html
 [crate 类型]: linkage.md

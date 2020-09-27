@@ -72,7 +72,7 @@ fn main() {
 
 </div>
 
-## Main 函数
+## main函数
 
 包含 `main` [函数]的 crate 可以被编译成可执行文件。如果一个 `main` 函数存在，它必须不能有参数，不能声明任何 [trait 或生命周期约束]，不能有任何 [where 子句]，并且它的返回类型必须是以下类型之一:
 
@@ -85,11 +85,11 @@ fn main() {
 
 <!-- 如果前面这节需要更新(从 "必须不能有参数" 开始, 同时需要修改 attributes/testing.md 文件 -->
 
-### `no_main` 属性
+### `no_main`属性
 
 在 crate 层级，可应用*`no_main` [属性]*来禁止对可执行二进制文件发出 `main` 符号——即禁止当前crate的 main 函数的执行。当链接的其他对象定义了 `main` 时，这很有用。
 
-## `crate_name` 属性
+## `crate_name`属性
 
 在 crate 层级，可应用*`crate_name` [属性]*，配对使用 [_MetaNameValueStr_] 语法来指定 crate 的名称。
 

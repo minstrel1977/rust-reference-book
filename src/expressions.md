@@ -128,7 +128,7 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 
 ### 临时位置
 
-在大多数位置表达式上下文中使用值表达式时，会创建一个临时的未命名内存位置，并将该值初始化到该内存位置，而表达式将求值结果在存放到该位置。也有例外，就把此表达式[提升]为 `static`。（译者注：这种情况下表达式将直接在编译时就求值了，存储地址会根据编译器要求任意放置，甚至多个位置放置）。临时位置的[销毁点][drop scope]通常在其封闭语句的结尾处。
+在大多数位置表达式上下文中使用值表达式时，会创建一个临时的未命名内存位置，并将该值初始化到该内存位置，而表达式将求值结果在存放到该位置。也有例外，就把此表达式[提升]为 `static`。（译者注：这种情况下表达式将直接在编译时就求值了，求值的结果会根据编译器要求重新选择地址存储）。临时位置的[销毁点][drop scope]通常在其封闭语句的结尾处。
 
 ### 隐式借用
 
@@ -213,7 +213,7 @@ let b: &[i32];
 [隐式可变借用]: #隐式借用
 [interior mutability]:  interior-mutability.md
 [let语句]:        statements.md#let语句
-[可变静态项]: items/static-items.md#mutable-statics
+[可变静态项]: items/static-items.md#可变静态项
 [检验对象(scrutinee)]:            glossary.md#scrutinee
 [提升]:             destructors.md#constant-promotion
 [slice]:                types/slice.md

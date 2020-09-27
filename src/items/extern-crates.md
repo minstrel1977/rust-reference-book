@@ -74,9 +74,9 @@ See https://github.com/rust-lang/rust/issues/57288 for more about the alloc/test
 
 [IDENTIFIER]: ../identifiers.md
 [RFC 940]: https://github.com/rust-lang/rfcs/blob/master/text/0940-hyphens-considered-harmful.md
-[`macro_use` attribute]: ../macros-by-example.md#the-macro_use-attribute
+[`macro_use` attribute]: ../macros-by-example.md#macro_use属性
 [`alloc`]: https://doc.rust-lang.org/alloc/
-[`no_implicit_prelude`]: modules.md#prelude-items
-[`no_std`]: ../crates-and-source-files.md#preludes-and-no_std
+[`no_implicit_prelude`]: modules.md#预导入项
+[`no_std`]: ../crates-and-source-files.md#预导入包和-no_std
 [`test`]: https://doc.rust-lang.org/test/
 [use declarations]: use-declarations.md

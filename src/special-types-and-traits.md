@@ -175,7 +175,7 @@ compiler, not by [implementation items].
 [Methods]: items/associated-items.md#associated-functions-and-methods
 [method resolution]: expressions/method-call-expr.md
 [operators]: expressions/operator-expr.md
-[orphan rules]: items/implementations.md#trait-implementation-coherence
+[orphan rules]: items/implementations.md#trait实现的一致性
 [Raw pointers]: types/pointer.md#raw-pointers-const-and-mut
 [`static` items]: items/static-items.md
 [Shared references]: types/pointer.md#shared-references-
