@@ -74,7 +74,7 @@ fn some_unused_variables() {
 }
 ```
 
-## 元数据项属性句法
+## 元项属性句法
 
 “元数据项”是大多数[内置属性]遵循 Attr句法规则(见本章头部的句法规则)的句法。它有以下语法格式：
 
@@ -220,7 +220,7 @@ pub fn f() {}
 [The Unstable Book]: https://doc.rust-lang.org/nightly/unstable-book/
 [_DelimTokenTree_]: macros.md
 [_LiteralExpression_]: expressions/literal-expr.md
-[_SimplePath_]: paths.md#simple-paths
+[_SimplePath_]: paths.md#简单路径
 [`allow`]: attributes/diagnostics.md#lint-check-attributes
 [`automatically_derived`]: attributes/derive.md#the-automatically_derived-attribute
 [`cfg_attr`]: conditional-compilation.md#the-cfg_attr-attribute
@@ -244,7 +244,7 @@ pub fn f() {}
 [`must_use`]: attributes/diagnostics.md#the-must_use-attribute
 [`no_builtins`]: attributes/codegen.md#the-no_builtins-attribute
 [`no_implicit_prelude`]: items/modules.md#prelude-items
-[`no_link`]: items/extern-crates.md#the-no_link-attribute
+[`no_link`]: items/extern-crates.md#`no_link`属性
 [`no_main`]: crates-and-source-files.md#the-no_main-attribute
 [`no_mangle`]: abi.md#the-no_mangle-attribute
 [`no_std`]: crates-and-source-files.md#preludes-and-no_std
@@ -253,14 +253,14 @@ pub fn f() {}
 [`path`]: items/modules.md#the-path-attribute
 [`proc_macro_attribute`]: procedural-macros.md#属性宏
 [`proc_macro_derive`]: procedural-macros.md#派生宏
-[`proc_macro`]: procedural-macros.md#function-like-procedural-macros
-[`recursion_limit`]: attributes/limits.md#the-recursion_limit-attribute
+[`proc_macro`]: procedural-macros.md#类函数过程宏
+[`recursion_limit`]: attributes/limits.md#recursion_limit属性
 [`repr`]: type-layout.md#representations
 [`should_panic`]: attributes/testing.md#the-should_panic-attribute
 [`target_feature`]: attributes/codegen.md#the-target_feature-attribute
 [`test`]: attributes/testing.md#the-test-attribute
 [`track_caller`]: attributes/codegen.md#the-track_caller-attribute
-[`type_length_limit`]: attributes/limits.md#the-type_length_limit-attribute
+[`type_length_limit`]: attributes/limits.md#type_length_limit属性
 [`used`]: abi.md#the-used-attribute
 [`warn`]: attributes/diagnostics.md#lint-check-attributes
 [`windows_subsystem`]: runtime.md#the-windows_subsystem-attribute
@@ -269,7 +269,7 @@ pub fn f() {}
 [内置属性]: #内置属性的索引表
 [派生宏辅助属性]: procedural-macros.md#派生宏辅助属性
 [枚举]: items/enumerations.md
-[表达式语句]: statements.md#expression-statements
+[表达式语句]: statements.md#表达式语句
 [外部块]: items/external-blocks.md
 [函数]: items/functions.md
 [泛型]: items/generics.md

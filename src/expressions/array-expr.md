@@ -18,7 +18,7 @@ order they are written.
 Alternatively there can be exactly two expressions inside the brackets,
 separated by a semi-colon. The expression after the `;` must have type
 `usize` and be a [constant expression],
-such as a [literal](../tokens.md#literals) or a [constant
+such as a [literal](../tokens.md#字面量) or a [constant
 item](../items/constant-items.md). `[a; b]` creates an array containing `b`
 copies of the value of `a`. If the expression after the semi-colon has a value
 greater than 1 then this requires that the type of `a` is
@@ -88,4 +88,4 @@ by implementing the [Index] and [IndexMut] traits.
 [_InnerAttribute_]: ../attributes.md
 [attributes on block expressions]: block-expr.md#attributes-on-block-expressions
 [constant expression]: ../const_eval.md#常量表达式
-[memory location]: ../expressions.md#place-expressions-and-value-expressions
+[memory location]: ../expressions.md#位置表达式和值表达式

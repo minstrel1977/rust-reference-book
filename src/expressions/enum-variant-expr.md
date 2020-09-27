@@ -41,7 +41,7 @@ Enum variant expressions have the same syntax, behavior, and restrictions as [st
 expressions][structs], except they do not support base update with the `..` syntax.
 
 [IDENTIFIER]: ../identifiers.md
-[TUPLE_INDEX]: ../tokens.md#tuple-index
+[TUPLE_INDEX]: ../tokens.md#元组索引
 [_Expression_]: ../expressions.md
-[_PathInExpression_]: ../paths.md#paths-in-expressions
+[_PathInExpression_]: ../paths.md#表达式中的路径
 [structs]: struct-expr.md

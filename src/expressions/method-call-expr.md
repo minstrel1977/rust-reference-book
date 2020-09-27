@@ -99,11 +99,11 @@ method and you'll be fine.
 
 [_CallParams_]: call-expr.md
 [_Expression_]: ../expressions.md
-[_PathExprSegment_]: ../paths.md#paths-in-expressions
+[_PathExprSegment_]: ../paths.md#表达式中的路径
 [visible]: ../visibility-and-privacy.md
 [trait objects]: ../types/trait-object.md
 [disambiguate call]: call-expr.md#disambiguating-function-calls
 [disambiguating function call syntax]: call-expr.md#disambiguating-function-calls
 [dereference]: operator-expr.md#the-dereference-operator
-[methods]: ../items/associated-items.md#methods
+[methods]: ../items/associated-items.md#方法
 [unsized coercion]: ../type-coercions.md#unsized-coercions

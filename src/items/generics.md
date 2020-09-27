@@ -89,7 +89,7 @@ struct Foo<#[my_flexible_clone(unbounded)] H> {
 ```
 
 [IDENTIFIER]: ../identifiers.md
-[LIFETIME_OR_LABEL]: ../tokens.md#lifetimes-and-loop-labels
+[LIFETIME_OR_LABEL]: ../tokens.md#生命周期和循环标签
 
 [_LifetimeBounds_]: ../trait-bounds.md
 [_Lifetime_]: ../trait-bounds.md

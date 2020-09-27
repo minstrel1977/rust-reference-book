@@ -146,13 +146,13 @@ expression in the same expression contexts as [attributes on block
 expressions].
 
 [_Expression_]: ../expressions.md
-[place expression]: ../expressions.md#place-expressions-and-value-expressions
-[value expression]: ../expressions.md#place-expressions-and-value-expressions
+[place expression]: ../expressions.md#位置表达式和值表达式
+[value expression]: ../expressions.md#位置表达式和值表达式
 [_InnerAttribute_]: ../attributes.md
 [_OuterAttribute_]: ../attributes.md
 [`cfg`]: ../conditional-compilation.md
 [`cold`]: ../attributes/codegen.md#the-cold-attribute
-[lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
+[lint check attributes]: ../attributes/diagnostics.md#lint检查类属性
 [Range Expression]: range-expr.md
 
 [_Pattern_]: ../patterns.md

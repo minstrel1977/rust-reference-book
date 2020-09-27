@@ -23,7 +23,7 @@ More specifically, an `<expr>.await` expression has the following effect.
    value contained in the [`Poll::Ready`] variant is used as the result
    of the `await` expression itself.
 
-[`async fn`]: ../items/functions.md#async-functions
+[`async fn`]: ../items/functions.md#异步函数
 [`async` block]: block-expr.md#async-blocks
 [future]: https://doc.rust-lang.org/std/future/trait.Future.html
 [_Expression_]: ../expressions.md

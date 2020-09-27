@@ -87,10 +87,10 @@ to specify the symbol name.
 pub fn name_in_rust() { }
 ```
 
-[_MetaNameValueStr_]: attributes.md#meta-item-attribute-syntax
+[_MetaNameValueStr_]: attributes.md#元项属性句法
 [`static` items]: items/static-items.md
 [attribute]: attributes.md
-[extern functions]: items/functions.md#extern-function-qualifier
+[extern functions]: items/functions.md#外部函数限定符
 [external blocks]: items/external-blocks.md
 [function]: items/functions.md
 [item]: items.md

@@ -33,5 +33,5 @@ let _ = TypeAlias(5); // Doesn't work
 
 [IDENTIFIER]: ../identifiers.md
 [_Generics_]: generics.md
-[_WhereClause_]: generics.md#where-clauses
+[_WhereClause_]: generics.md#where子句
 [_Type_]: ../types.md#type-expressions

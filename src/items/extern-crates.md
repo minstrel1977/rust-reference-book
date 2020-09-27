@@ -66,7 +66,7 @@ See https://github.com/rust-lang/rust/issues/57288 for more about the alloc/test
 
 （下划线导入不会影响）[`macro_use` 属性]的正常工作，（此情况下）宏名称将会正常导入到 macro-use prelude 中。
 
-## `no_link` 属性
+## `no_link`属性
 
 可以在 `extern crate` 数据项上指定 *`no_link` 属性*，以防止将 crate 链接到输出中。这通常用于加载一个 crate 而只访问它的宏。
 

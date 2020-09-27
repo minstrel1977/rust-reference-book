@@ -62,7 +62,7 @@ if let
 
 Patterns are used in:
 
-* [`let` declarations](statements.md#let-statements)
+* [`let` declarations](statements.md#let语句)
 * [Function](items/functions.md) and [closure](expressions/closure-expr.md)
   parameters
 * [`match` expressions](expressions/match-expr.md)
@@ -730,13 +730,13 @@ refer to refutable constants or enum variants for enums with multiple variants.
 [_GroupedPattern_]: #grouped-patterns
 [_IdentifierPattern_]: #identifier-patterns
 [_LiteralPattern_]: #literal-patterns
-[_MacroInvocation_]: macros.md#macro-invocation
+[_MacroInvocation_]: macros.md#宏调用
 [_ObsoleteRangePattern_]: #range-patterns
-[_PathInExpression_]: paths.md#paths-in-expressions
+[_PathInExpression_]: paths.md#表达式中的路径
 [_PathPattern_]: #path-patterns
 [_Pattern_]: #patterns
 [_PatternWithoutRange_]: #patterns
-[_QualifiedPathInExpression_]: paths.md#qualified-paths
+[_QualifiedPathInExpression_]: paths.md#限定路径
 [_RangePattern_]: #range-patterns
 [_ReferencePattern_]: #reference-patterns
 [_RestPattern_]: #rest-patterns

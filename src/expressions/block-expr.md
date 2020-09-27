@@ -207,11 +207,11 @@ fn is_unix_platform() -> bool {
 [enum variant]: enum-variant-expr.md
 [function]: ../items/functions.md
 [inner attributes]: ../attributes.md
-[method]: ../items/associated-items.md#methods
+[method]: ../items/associated-items.md#方法
 [statement]: ../statements.md
 [statements]: ../statements.md
 [struct]: struct-expr.md
-[the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
+[the lint check attributes]: ../attributes/diagnostics.md#lint检查类属性
 [tuple expressions]: tuple-expr.md
 [unsafe operations]: ../unsafety.md
-[value expressions]: ../expressions.md#place-expressions-and-value-expressions
+[value expressions]: ../expressions.md#位置表达式和值表达式

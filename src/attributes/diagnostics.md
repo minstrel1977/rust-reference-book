@@ -214,16 +214,16 @@ impl Trait for i32 {
 > ```
 
 [Clippy]: https://github.com/rust-lang/rust-clippy
-[_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
-[_MetaListPaths_]: ../attributes.md#meta-item-attribute-syntax
-[_MetaNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
+[_MetaListNameValueStr_]: ../attributes.md#元项属性句法
+[_MetaListPaths_]: ../attributes.md#元项属性句法
+[_MetaNameValueStr_]: ../attributes.md#元项属性句法
 [`Drop`]: ../special-types-and-traits.md#drop
 [属性]: ../attributes.md
 [块表达式]: ../expressions/block-expr.md
 [调用表达式]: ../expressions/call-expr.md
 [枚举变体]: ../items/enumerations.md
 [枚举]: ../items/enumerations.md
-[表达式语句]: ../statements.md#expression-statements
+[表达式语句]: ../statements.md#表达式语句
 [表达式]: ../expressions.md
 [外部块的内部项]: ../items/external-blocks.md
 [函数]: ../items/functions.md

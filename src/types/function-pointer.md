@@ -50,14 +50,14 @@ Attributes on function pointer parameters follow the same rules and
 restrictions as [regular function parameters].
 
 [IDENTIFIER]: ../identifiers.md
-[_ForLifetimes_]: ../items/generics.md#where-clauses
+[_ForLifetimes_]: ../items/generics.md#where子句
 [_FunctionQualifiers_]: ../items/functions.md
 [_TypeNoBounds_]: ../types.md#type-expressions
 [_Type_]: ../types.md#type-expressions
 [_OuterAttribute_]: ../attributes.md
 [`extern`]: ../items/external-blocks.md
 [closures]: closure.md
-[extern function]: ../items/functions.md#extern-function-qualifier
+[extern function]: ../items/functions.md#函数参数上的属性
 [function items]: function-item.md
 [unsafe function]: ../unsafe-functions.md
-[regular function parameters]: ../items/functions.md#attributes-on-function-parameters
+[regular function parameters]: ../items/functions.md#函数参数上的属性

@@ -24,7 +24,7 @@ x::y::z;
 > _SimplePathSegment_ :\
 > &nbsp;&nbsp; [IDENTIFIER] | `super` | `self` | `crate` | `$crate`
 
-简单路径用于[可见性]标记、[属性]、[宏]和 [`use`] 数据项。示例：
+简单路径用于[可见性]标记、[属性]、[宏]和 [`use`]数据项。示例：
 
 ```rust
 use std::io::{self, Write};
@@ -109,7 +109,7 @@ S::f();  // 调用本身的实现.
 <S as T2>::f();  // 调用 T2 trait 的函数.
 ```
 
-### 类型路径
+### 类型中的路径
 
 > **<sup>句法</sup>**\
 > _TypePath_ :\

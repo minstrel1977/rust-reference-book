@@ -50,6 +50,6 @@ fn f<T>(x: T) {}
 f((1, 2, 3, 4, 5, 6, 7, 8, 9));
 ```
 
-[_MetaNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
+[_MetaNameValueStr_]: ../attributes.md#元项属性句法
 [属性]: ../attributes.md
 [crate]: ../crates-and-source-files.md

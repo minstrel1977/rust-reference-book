@@ -124,10 +124,10 @@ let a: List<i32> = List::Cons(7, Box::new(List::Cons(13, Box::new(List::Nil))));
 [_ImplTraitTypeOneBound_]: types/impl-trait.md
 [_ImplTraitType_]: types/impl-trait.md
 [_InferredType_]: types/inferred.md
-[_MacroInvocation_]: macros.md#macro-invocation
+[_MacroInvocation_]: macros.md#宏调用
 [_NeverType_]: types/never.md
 [_ParenthesizedType_]: types.md#parenthesized-types
-[_QualifiedPathInType_]: paths.md#qualified-paths
+[_QualifiedPathInType_]: paths.md#限定路径
 [_RawPointerType_]: types/pointer.md#raw-pointers-const-and-mut
 [_ReferenceType_]: types/pointer.md#shared-references-
 [_SliceType_]: types/slice.md
@@ -135,7 +135,7 @@ let a: List<i32> = List::Cons(7, Box::new(List::Cons(13, Box::new(List::Nil))));
 [_TraitObjectType_]: types/trait-object.md
 [_TupleType_]: types/tuple.md#tuple-types
 [_TypeNoBounds_]: types.md#type-expressions
-[_TypePath_]: paths.md#paths-in-types
+[_TypePath_]: paths.md#类型中的路径
 [_Type_]: types.md#type-expressions
 
 [Array]: types/array.md
@@ -155,7 +155,7 @@ let a: List<i32> = List::Cons(7, Box::new(List::Cons(13, Box::new(List::Nil))));
 [Textual]: types/textual.md
 [Trait objects]: types/trait-object.md
 [Tuple]: types/tuple.md
-[Type paths]: paths.md#paths-in-types
+[Type paths]: paths.md#类型中的路径
 [Union]: types/union.md
 [`Self` path]: paths.md#self-1
 [arrays]: types/array.md

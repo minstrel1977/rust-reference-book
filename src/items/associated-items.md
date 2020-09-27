@@ -304,7 +304,7 @@ fn main() {
 [_Generics_]: generics.md
 [_Lifetime_]: ../trait-bounds.md
 [_Type_]: ../types.md#type-expressions
-[_WhereClause_]: generics.md#where-clauses
+[_WhereClause_]: generics.md#where子句
 [`Arc<Self>`]: ../special-types-and-traits.md#arct
 [`Box<Self>`]: ../special-types-and-traits.md#boxt
 [`Pin<P>`]: ../special-types-and-traits.md#pinp

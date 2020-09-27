@@ -36,7 +36,7 @@ impl<T: PartialEq> PartialEq for Foo<T> {
 
 *`automatically_derived`属性*被自动添加到由内置 trait 的 `derive`属性创建的[实现]中。它没有直接影响，但是工具和诊断lint 可以使用它来检测这些自动生成的实现。
 
-[_MetaListPaths_]: ../attributes.md#元数据项属性句法
+[_MetaListPaths_]: ../attributes.md#元项属性句法
 [`Clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
 [`PartialEq`]: https://doc.rust-lang.org/std/cmp/trait.PartialEq.html
 [`impl` item]: ../items/implementations.md

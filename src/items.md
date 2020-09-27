@@ -61,7 +61,7 @@
 [_ExternCrate_]: items/extern-crates.md
 [_Function_]: items/functions.md
 [_Implementation_]: items/implementations.md
-[_MacroInvocationSemi_]: macros.md#macro-invocation
+[_MacroInvocationSemi_]: macros.md#宏调用
 [_MacroRulesDefinition_]: macros-by-example.md
 [_Module_]: items/modules.md
 [_OuterAttribute_]: attributes.md

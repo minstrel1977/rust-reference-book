@@ -174,14 +174,14 @@ impl Seq<bool> for u32 {
 [_Function_]: functions.md
 [_Generics_]: generics.md
 [_InnerAttribute_]: ../attributes.md
-[_MacroInvocationSemi_]: ../macros.md#macro-invocation
+[_MacroInvocationSemi_]: ../macros.md#宏调用
 [_Method_]: associated-items.md#methods
 [_OuterAttribute_]: ../attributes.md
 [_TypeAlias_]: type-aliases.md
-[_TypePath_]: ../paths.md#paths-in-types
+[_TypePath_]: ../paths.md#类型中的路径
 [_Type_]: ../types.md#type-expressions
 [_Visibility_]: ../visibility-and-privacy.md
-[_WhereClause_]: generics.md#where-clauses
+[_WhereClause_]: generics.md#where子句
 [trait]: traits.md
 [关联函数]: associated-items.md#associated-functions-and-methods
 [关联常量]: associated-items.md#associated-constants

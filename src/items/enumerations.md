@@ -156,7 +156,7 @@ enum E {
 
 [IDENTIFIER]: ../identifiers.md
 [_Generics_]: generics.md
-[_WhereClause_]: generics.md#where-clauses
+[_WhereClause_]: generics.md#where子句
 [_Expression_]: ../expressions.md
 [_TupleFields_]: structs.md
 [_StructFields_]: structs.md

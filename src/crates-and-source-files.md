@@ -106,7 +106,7 @@ crate 名称不能为空，只能包含[Unicode字母数字]或 `-` (U+002D)字�
 [Unicode alphanumeric]: ../std/primitive.char.html#method.is_alphanumeric
 [_InnerAttribute_]: attributes.md
 [_Item_]: items.md
-[_MetaNameValueStr_]: attributes.md#meta-item-attribute-syntax
+[_MetaNameValueStr_]: attributes.md#元项属性句法
 [_shebang_]: https://en.wikipedia.org/wiki/Shebang_(Unix)
 [_utf8 字节序标记_]: https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8
 [`Termination`]: ../std/process/trait.Termination.html
@@ -121,5 +121,5 @@ crate 名称不能为空，只能包含[Unicode字母数字]或 `-` (U+002D)字�
 [模块]: items/modules.md
 [模块路径]: paths.md
 [trait 或生命周期约束]: trait-bounds.md
-[where 字句]: items/generics.md#where-clauses
+[where 字句]: items/generics.md#where子句
 [空白]: whitespace.md

@@ -366,12 +366,12 @@ macro_rules! helper {
 [_表达式_]: expressions.md
 [_数据项_]: items.md
 [_字面量表达式_]: expressions/literal-expr.md
-[_MetaListIdents_]: attributes.md#meta-item-attribute-syntax
+[_MetaListIdents_]: attributes.md#元项属性句法
 [_模式_]: patterns.md
 [_语句_]: statements.md
-[_标记树_]: macros.md#macro-invocation
+[_标记树_]: macros.md#宏调用
 [_Token_]: tokens.md
-[_类型路径_]: paths.md#类型路径
+[_类型路径_]: paths.md#类型中的路径
 [_类型_]: types.md#type-expressions
 [_可见性_]: visibility-and-privacy.md
 [正式规范]: macro-ambiguity.md

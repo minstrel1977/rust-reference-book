@@ -92,7 +92,7 @@ expression], then the resulting memory location can be assigned to.
 Dereferencing a raw pointer requires `unsafe`.
 
 On non-pointer types `*x` is equivalent to `*std::ops::Deref::deref(&x)` in an
-[immutable place expression context](../expressions.md#mutability) and
+[immutable place expression context](../expressions.md#可变性) and
 `*std::ops::DerefMut::deref_mut(&mut x)` in a mutable place expression context.
 
 ```rust
@@ -415,7 +415,7 @@ the [`unit` type].
 
 Evaluating an assignment expression [drops](../destructors.md) the left-hand
 operand, unless it's an uninitialized local variable or field of a local variable,
-and [either copies or moves](../expressions.md#moved-and-copied-types) its
+and [either copies or moves](../expressions.md#移动和复制类型) its
 right-hand operand to its left-hand operand. The left-hand operand must be a
 place expression: using a value expression results in a compiler error, rather
 than promoting it to a temporary.
@@ -456,9 +456,9 @@ x += 4;
 assert_eq!(x, 14);
 ```
 
-[place expression]: ../expressions.md#place-expressions-and-value-expressions
-[value expression]: ../expressions.md#place-expressions-and-value-expressions
-[temporary value]: ../expressions.md#temporaries
+[place expression]: ../expressions.md#位置表达式和值表达式
+[value expression]: ../expressions.md#位置表达式和值表达式
+[temporary value]: ../expressions.md#临时位置
 [float-float]: https://github.com/rust-lang/rust/issues/15536
 [`unit` type]: ../types/tuple.md
 [Function pointer]: ../types/function-pointer.md

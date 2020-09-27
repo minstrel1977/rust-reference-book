@@ -145,12 +145,12 @@ extern {
 [_FunctionReturnType_]: functions.md
 [_Generics_]: generics.md
 [_InnerAttribute_]: ../attributes.md
-[_MacroInvocationSemi_]: ../macros.md#macro-invocation
-[_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
-[_MetaNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
+[_MacroInvocationSemi_]: ../macros.md#宏调用
+[_MetaListNameValueStr_]: ../attributes.md#元项属性句法
+[_MetaNameValueStr_]: ../attributes.md#元项属性句法
 [_OuterAttribute_]: ../attributes.md
 [_Type_]: ../types.md#type-expressions
 [_Visibility_]: ../visibility-and-privacy.md
-[_WhereClause_]: generics.md#where-clauses
+[_WhereClause_]: generics.md#where子句
 [属性]: ../attributes.md
-[常规函数参数]: functions.md#attributes-on-function-parameters
+[常规函数参数]: functions.md#函数参数上的属性

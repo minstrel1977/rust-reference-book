@@ -67,7 +67,7 @@ for non-`bin` [crate types].
 #![windows_subsystem = "windows"]
 ```
 
-[_MetaNameValueStr_]: attributes.md#meta-item-attribute-syntax
+[_MetaNameValueStr_]: attributes.md#元项属性句法
 [`GlobalAlloc`]: ../alloc/alloc/trait.GlobalAlloc.html
 [`PanicInfo`]: ../core/panic/struct.PanicInfo.html
 [abort]: ../book/ch09-01-unrecoverable-errors-with-panic.html

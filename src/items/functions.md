@@ -93,7 +93,7 @@ foo(&[1, 2]);
 
 类型参数也可以在函数名后面的[路径]组件中显式地提供。如果没有足够的上下文来确定类型参数，那么这可能是必要的。例如：`mem::size_of::<u32>() == 4`。
 
-## 外来函数限定符
+## 外部函数限定符
 
 `extern` 函数限定符允许提供可以通过特定 ABI 调用的函数*定义*：
 <!-- ignore: fake ABI -->
@@ -298,13 +298,13 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 ```
 
 [IDENTIFIER]: ../identifiers.md
-[RAW_STRING_LITERAL]: ../tokens.md#raw-string-literals
-[STRING_LITERAL]: ../tokens.md#string-literals
+[RAW_STRING_LITERAL]: ../tokens.md#原生字符串字面量
+[STRING_LITERAL]: ../tokens.md#字符串字面量
 [_BlockExpression_]: ../expressions/block-expr.md
 [_Generics_]: generics.md
 [_Pattern_]: ../patterns.md
 [_Type_]: ../types.md#type-expressions
-[_WhereClause_]: generics.md#where-clauses
+[_WhereClause_]: generics.md#where子句
 [_OuterAttribute_]: ../attributes.md
 [常量上下文]: ../const_eval.md#const-context
 [元组结构体]: structs.md

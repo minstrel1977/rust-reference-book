@@ -137,7 +137,7 @@ fn call_on_ref_zero<F>(f: F) where F: for<'a> Fn(&'a i32) {
 ```
 
 [LIFETIME_OR_LABEL]: tokens.md#lifetimes-and-loop-labels
-[_TypePath_]: paths.md#paths-in-types
+[_TypePath_]: paths.md#类型中的路径
 [`Sized`]: special-types-and-traits.md#sized
 
 [associated types]: items/associated-items.md#associated-types
@@ -145,4 +145,4 @@ fn call_on_ref_zero<F>(f: F) where F: for<'a> Fn(&'a i32) {
 [generic]: items/generics.md
 [Trait]: items/traits.md#trait-bounds
 [trait objects]: types/trait-object.md
-[where clause]: items/generics.md#where-clauses
+[where clause]: items/generics.md#where子句

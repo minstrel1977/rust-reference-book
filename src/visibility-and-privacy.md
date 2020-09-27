@@ -183,4 +183,4 @@ mod implementation {
 
 当重导出私有数据项时，可以认为它允许通过重导出短路“隐私链”，而不是像通常那样通过命名空间层次结构来传递“隐私链”。
 
-[_SimplePath_]: paths.md#simple-paths
+[_SimplePath_]: paths.md#简单路径

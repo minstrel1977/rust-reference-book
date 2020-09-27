@@ -205,7 +205,7 @@ fn calls_h() {
 > 注意：前面提到的函数指针填充程序是必需的，因为 `rustc` 会通过向函数的ABI附加一个隐式参数来实现 codegen上下文中的 `track_caller`，但对于间接调用来说，这是不健全的，因为参数不是函数类型的一部分，给定的函数指针类型可能引用也可能不引用具有此属性的函数。填充程序的创建会对函数指针的调用方隐藏隐式参数，从而保持可靠性。
 <!-- > Note: The aforementioned shim for function pointers is necessary because `rustc` implements `track_caller` in a codegen context by appending an implicit parameter to the function ABI, but this would be unsound for an indirect call because the parameter is not a part of the function's type and a given function pointer type may or may not refer to a function with the attribute. The creation of a shim hides the implicit parameter from callers of the function pointer, preserving soundness. TobeModify-->
 
-[_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
+[_MetaListNameValueStr_]: ../attributes.md#元项属性句法
 [`-C target-cpu`]: https://doc.rust-lang.org/rustc/codegen-options/index.html#target-cpu
 [`-C target-feature`]: https://doc.rust-lang.org/rustc/codegen-options/index.html#target-feature
 [`is_x86_feature_detected`]: https://doc.rust-lang.org/std/macro.is_x86_feature_detected.html

@@ -51,5 +51,5 @@ let d: String = x.f3;           // Move out of x.f3
 [method call expression]: method-call-expr.md
 [struct]: ../items/structs.md
 [union]: ../items/unions.md
-[place expression]: ../expressions.md#place-expressions-and-value-expressions
-[mutable]: ../expressions.md#mutability
+[place expression]: ../expressions.md#位置表达式和值表达式
+[mutable]: ../expressions.md#可变性

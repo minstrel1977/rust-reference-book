@@ -41,7 +41,7 @@ expressions].
 
 [Tuples](../types/tuple.md) and [struct tuples](../items/structs.md) can be
 indexed using the number corresponding to the position of the field. The index
-must be written as a [decimal literal](../tokens.md#integer-literals) with no
+must be written as a [decimal literal](../tokens.md#整型字面量) with no
 underscores or suffix. Tuple indexing expressions also differ from field
 expressions in that they can unambiguously be called as a function. In all
 other aspects they have the same behavior.
@@ -55,7 +55,7 @@ assert_eq!(unit_x.0, 1.0);
 ```
 
 [Inner attributes]: ../attributes.md
-[TUPLE_INDEX]: ../tokens.md#tuple-index
+[TUPLE_INDEX]: ../tokens.md#元组索引
 [_Expression_]: ../expressions.md
 [_InnerAttribute_]: ../attributes.md
 [attributes on block expressions]: block-expr.md#attributes-on-block-expressions

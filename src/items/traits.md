@@ -324,7 +324,7 @@ fn main() {
 [_TypeParamBounds_]: ../trait-bounds.md
 [_Type_]: ../types.md#type-expressions
 [_Visibility_]: ../visibility-and-privacy.md
-[_WhereClause_]: generics.md#where-clauses
+[_WhereClause_]: generics.md#where子句
 [约束]: ../trait-bounds.md
 [trait对象]: ../types/trait-object.md
 [RFC 255]: https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md

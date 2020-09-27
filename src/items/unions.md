@@ -138,6 +138,6 @@ fn test() {
 
 [IDENTIFIER]: ../identifiers.md
 [_Generics_]: generics.md
-[_WhereClause_]: generics.md#where-clauses
+[_WhereClause_]: generics.md#where子句
 [_StructFields_]: structs.md
 [`transmute`]: https://doc.rust-lang.org/std/mem/fn.transmute.html

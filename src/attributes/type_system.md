@@ -118,7 +118,7 @@ match message {
 非穷尽类型最好放在下游 crate 里。
 
 [_EnumerationVariantExpression_]: ../expressions/enum-variant-expr.md
-[_MetaWord_]: ../attributes.md#meta-item-attribute-syntax
+[_MetaWord_]: ../attributes.md#元项属性句法
 [_StructExpression_]: ../expressions/struct-expr.md
 [_StructPattern_]: ../patterns.md#struct-patterns
 [_TupleStructPattern_]: ../patterns.md#tuple-struct-patterns

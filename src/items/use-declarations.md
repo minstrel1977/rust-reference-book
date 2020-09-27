@@ -174,5 +174,5 @@ m!(use std as _;);
 [IDENTIFIER]: ../identifiers.md
 [_SimplePath_]: ../paths.md#简单路径
 [`extern crate`]: extern-crates.md
-[外部预导入包]: extern-crates.md#extern-prelude
-[path qualifiers]: ../paths.md#path-qualifiers
+[外部预导入包]: extern-crates.md#外部预导入包
+[path qualifiers]: ../paths.md#路径限定符

@@ -1,4 +1,7 @@
-# Path expressions
+# 路径表达式
+
+>[path-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/path-expr.md)\
+>commit b0e0ad6490d6517c19546b1023948986578fc378
 
 > **<sup>Syntax</sup>**\
 > _PathExpression_ :\
@@ -24,10 +27,10 @@ let push_integer = Vec::<i32>::push;
 let slice_reverse = <[i32]>::reverse;
 ```
 
-[_PathInExpression_]: ../paths.md#paths-in-expressions
-[_QualifiedPathInExpression_]: ../paths.md#qualified-paths
-[place expressions]: ../expressions.md#place-expressions-and-value-expressions
-[value expressions]: ../expressions.md#place-expressions-and-value-expressions
+[_PathInExpression_]: ../paths.md#表达式中的路径
+[_QualifiedPathInExpression_]: ../paths.md#限定路径
+[place expressions]: ../expressions.md#位置表达式和值表达式
+[value expressions]: ../expressions.md#位置表达式和值表达式
 [path]: ../paths.md
-[`static mut`]: ../items/static-items.md#mutable-statics
+[`static mut`]: ../items/static-items.md#可变静态项
 [`unsafe` block]: block-expr.md#unsafe-blocks

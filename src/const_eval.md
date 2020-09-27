@@ -93,13 +93,13 @@ Conversely, the following are possible in a const function, but not in a const c
 [cast]:                 expressions/operator-expr.md#type-cast-expressions
 [closure expressions]:  expressions/closure-expr.md
 [comparison]:           expressions/operator-expr.md#comparison-operators
-[const functions]:      items/functions.md#const-functions
+[const functions]:      items/functions.md#常量函数
 [constants]:            items/constant-items.md
 [dereference operator]: expressions/operator-expr.md#the-dereference-operator
 [destructors]:          destructors.md
 [enum discriminants]:   items/enumerations.md#custom-discriminant-values-for-fieldless-enumerations
 [enum variant]:         expressions/enum-variant-expr.md
-[expression statements]: statements.md#expression-statements
+[expression statements]: statements.md#表达式语句
 [expressions]:          expressions.md
 [field]:                expressions/field-expr.md
 [functions]:            items/functions.md
@@ -108,7 +108,7 @@ Conversely, the following are possible in a const function, but not in a const c
 [if]:                   expressions/if-expr.md#if-expressions
 [`if let`]:             expressions/if-expr.md#if-let-expressions
 [lazy boolean]:         expressions/operator-expr.md#lazy-boolean-operators
-[let statements]:       statements.md#let-statements
+[let statements]:       statements.md#let语句
 [literals]:             expressions/literal-expr.md
 [logical]:              expressions/operator-expr.md#arithmetic-and-logical-binary-operators
 [loop]:                 expressions/loop-expr.md#infinite-loops

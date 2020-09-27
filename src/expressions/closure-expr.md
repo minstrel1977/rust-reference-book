@@ -75,12 +75,12 @@ Attributes on closure parameters follow the same rules and restrictions as
 [block]: block-expr.md
 [function definitions]: ../items/functions.md
 [patterns]: ../patterns.md
-[regular function parameters]: ../items/functions.md#attributes-on-function-parameters
+[regular function parameters]: ../items/functions.md#函数参数上的属性
 
 [_Expression_]: ../expressions.md
 [_BlockExpression_]: block-expr.md
 [_TypeNoBounds_]: ../types.md#type-expressions
 [_Pattern_]: ../patterns.md
 [_Type_]: ../types.md#type-expressions
-[`let` binding]: ../statements.md#let-statements
+[`let` binding]: ../statements.md#let语句
 [_OuterAttribute_]: ../attributes.md

@@ -357,11 +357,11 @@ variable or field from being dropped automatically.
 [initialized]: glossary.md#initialized
 [interior mutability]: interior-mutability.md
 [lazy boolean expression]: expressions/operator-expr.md#lazy-boolean-operators
-[place context]: expressions.md#place-expressions-and-value-expressions
+[place context]: expressions.md#位置表达式和值表达式
 [promoted]: destructors.md#constant-promotion
 [scrutinee]: glossary.md#scrutinee
 [statement]: statements.md
-[temporary]: expressions.md#temporaries
+[temporary]: expressions.md#临时位置
 [variable]: variables.md
 
 [array]: types/array.md
@@ -386,7 +386,7 @@ variable or field from being dropped automatically.
 [`for`]: expressions/loop-expr.md#iterator-loops
 [`if let`]: expressions/if-expr.md#if-let-expressions
 [`if`]: expressions/if-expr.md#if-expressions
-[`let` statement]: statements.md#let-statements
+[`let` statement]: statements.md#let语句
 [`loop`]: expressions/loop-expr.md#infinite-loops
 [`match`]: expressions/match-expr.md
 [`while let`]: expressions/loop-expr.md#predicate-pattern-loops

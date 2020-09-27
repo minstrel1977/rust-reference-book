@@ -288,13 +288,13 @@ and the `loop` must have a type compatible with each `break` expression.
 `break` without an expression is considered identical to `break` with
 expression `()`.
 
-[LIFETIME_OR_LABEL]: ../tokens.md#lifetimes-and-loop-labels
+[LIFETIME_OR_LABEL]: ../tokens.md#生命周期和循环标签
 [_BlockExpression_]: block-expr.md
 [_Expression_]: ../expressions.md
 [_MatchArmPatterns_]: match-expr.md
 [_Pattern_]: ../patterns.md
 [`match` expression]: match-expr.md
 [scrutinee]: ../glossary.md#scrutinee
-[temporary values]: ../expressions.md#temporaries
+[temporary values]: ../expressions.md#临时位置
 [_LazyBooleanOperatorExpression_]: operator-expr.md#lazy-boolean-operators
 [`if let` expressions]: if-expr.md#if-let-expressions

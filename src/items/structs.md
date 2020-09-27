@@ -82,6 +82,6 @@ let c = [Cookie, Cookie {}, Cookie, Cookie {}];
 [_OuterAttribute_]: ../attributes.md
 [IDENTIFIER]: ../identifiers.md
 [_Generics_]: generics.md
-[_WhereClause_]: generics.md#where-clauses
+[_WhereClause_]: generics.md#where子句
 [_Visibility_]: ../visibility-and-privacy.md
 [_Type_]: ../types.md#type-expressions

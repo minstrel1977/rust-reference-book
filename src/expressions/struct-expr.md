@@ -140,10 +140,10 @@ expressions].
 
 [IDENTIFIER]: ../identifiers.md
 [Inner attributes]: ../attributes.md
-[TUPLE_INDEX]: ../tokens.md#tuple-index
+[TUPLE_INDEX]: ../tokens.md#元组索引
 [_Expression_]: ../expressions.md
 [_InnerAttribute_]: ../attributes.md
-[_PathInExpression_]: ../paths.md#paths-in-expressions
+[_PathInExpression_]: ../paths.md#表达式中的路径
 [attributes on block expressions]: block-expr.md#attributes-on-block-expressions
 [call expression]: call-expr.md
 [if let]: if-expr.md#if-let-expressions
