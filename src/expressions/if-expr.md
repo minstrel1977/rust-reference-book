@@ -2,7 +2,7 @@
 
 ## `if` expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _IfExpression_ :\
 > &nbsp;&nbsp; `if` [_Expression_]<sub>_except struct expression_</sub> [_BlockExpression_]\
 > &nbsp;&nbsp; (`else` (
@@ -42,7 +42,7 @@ assert_eq!(y, "Bigger");
 
 ## `if let` expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _IfLetExpression_ :\
 > &nbsp;&nbsp; `if` `let` [_MatchArmPatterns_] `=` [_Expression_]<sub>_except struct or lazy boolean operator expression_</sub>
 >              [_BlockExpression_]\

@@ -252,7 +252,7 @@ assert!("World" >= "Hello");
 ## 短路布尔运算符
 ## Lazy boolean operators
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _LazyBooleanExpression_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_Expression_] `||` [_Expression_]\
 > &nbsp;&nbsp; | [_Expression_] `&&` [_Expression_]

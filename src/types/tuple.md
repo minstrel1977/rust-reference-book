@@ -1,6 +1,6 @@
 # Tuple types
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _TupleType_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `(` `)`\
 > &nbsp;&nbsp; | `(` ( [_Type_] `,` )<sup>+</sup> [_Type_]<sup>?</sup> `)`

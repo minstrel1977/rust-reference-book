@@ -1,6 +1,6 @@
 # Method-call expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _MethodCallExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `.` [_PathExprSegment_] `(`[_CallParams_]<sup>?</sup> `)`
 

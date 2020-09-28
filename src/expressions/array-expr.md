@@ -1,8 +1,13 @@
 # Array and array index expressions
+# 数组和数组索引表达式
+
+>[array-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/array-expr.md)\
+>commit 65c523479abb8024672918444ff839426ff5c3a7
 
 ## Array expressions
+## 数组表达式
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _ArrayExpression_ :\
 > &nbsp;&nbsp; `[` [_InnerAttribute_]<sup>\*</sup> _ArrayElements_<sup>?</sup> `]`
 >
@@ -10,37 +15,29 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; [_Expression_] ( `,` [_Expression_] )<sup>\*</sup> `,`<sup>?</sup>\
 > &nbsp;&nbsp; | [_Expression_] `;` [_Expression_]
 
-An _[array](../types/array.md) expression_ can be written by
-enclosing zero or more comma-separated expressions of uniform type in square
-brackets. This produces an array containing each of these values in the
-order they are written.
+[数组](../types/array.md)表达式可以通过在方括号中括起零个或多个统一类型的逗号分隔的表达式来编写。这样编写将生成一个包含这些值的写入顺序的数组。
 
-Alternatively there can be exactly two expressions inside the brackets,
-separated by a semi-colon. The expression after the `;` must have type
-`usize` and be a [constant expression],
-such as a [literal](../tokens.md#字面量) or a [constant
-item](../items/constant-items.md). `[a; b]` creates an array containing `b`
-copies of the value of `a`. If the expression after the semi-colon has a value
-greater than 1 then this requires that the type of `a` is
-[`Copy`](../special-types-and-traits.md#copy).
+也可以方括号内放置两用个分号(`;`)分隔的表达式。这种形式里，分号(`;`)后面的表达式必须具有 `usize` 类型，并且必须是[常量表达式][constant expression]，例如[字面量](../tokens.md#字面量)或[常量项](../items/constant-items.md)。`[a; b]` 形式创建的数组，语义为数组内包含 `b` 个 `a` 值的副本。如果分号后面的表达式的值大于1，则要求 `a` 的类型实现 [`Copy`](../special-types-and-traits.md#copy)。
 
 ```rust
 [1, 2, 3, 4];
 ["a", "b", "c", "d"];
-[0; 128];              // array with 128 zeros
+[0; 128];              // 内含128个0的数组
 [0u8, 0u8, 0u8, 0u8,];
-[[1, 0, 0], [0, 1, 0], [0, 0, 1]]; // 2D array
+[[1, 0, 0], [0, 1, 0], [0, 0, 1]]; // 二维数组
 ```
 
 ### Array expression attributes
+### 数组表达式上的属性
 
 [Inner attributes] are allowed directly after the opening bracket of an array
 expression in the same expression contexts as [attributes on block
 expressions].
 
 ## Array and slice indexing expressions
+## 数组和切片索引表达式
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _IndexExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `[` [_Expression_] `]`
 

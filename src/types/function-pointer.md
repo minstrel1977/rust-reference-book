@@ -1,6 +1,6 @@
 # Function pointer types
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _BareFunctionType_ :\
 > &nbsp;&nbsp; [_ForLifetimes_]<sup>?</sup> [_FunctionQualifiers_] `fn`\
 > &nbsp;&nbsp; &nbsp;&nbsp;  `(` _FunctionParametersMaybeNamedVariadic_<sup>?</sup> `)` _BareFunctionReturnType_<sup>?</sup>

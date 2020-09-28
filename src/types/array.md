@@ -1,6 +1,6 @@
 # Array types
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _ArrayType_ :\
 > &nbsp;&nbsp; `[` [_Type_] `;` [_Expression_] `]`
 

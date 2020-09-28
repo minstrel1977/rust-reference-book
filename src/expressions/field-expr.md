@@ -1,6 +1,6 @@
 # Field access expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _FieldExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `.` [IDENTIFIER]
 

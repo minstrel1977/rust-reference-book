@@ -37,7 +37,7 @@ The list of types is:
 
 ## Type expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _Type_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _TypeNoBounds_\
 > &nbsp;&nbsp; | [_ImplTraitType_]\

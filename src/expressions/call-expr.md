@@ -1,6 +1,6 @@
 # Call expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _CallExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `(` _CallParams_<sup>?</sup> `)`
 >

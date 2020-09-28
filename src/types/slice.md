@@ -1,6 +1,6 @@
 # Slice types
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _SliceType_ :\
 > &nbsp;&nbsp; `[` [_Type_] `]`
 

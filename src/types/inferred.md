@@ -1,6 +1,6 @@
 # Inferred type
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _InferredType_ : `_`
 
 The inferred type asks the compiler to infer the type if possible based on the

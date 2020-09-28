@@ -1,6 +1,6 @@
 # Never type
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _NeverType_ : `!`
 
 The never type `!` is a type with no values, representing the result of

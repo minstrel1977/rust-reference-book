@@ -1,6 +1,6 @@
 # `match` expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _MatchExpression_ :\
 > &nbsp;&nbsp; `match` [_Expression_]<sub>_except struct expression_</sub> `{`\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_InnerAttribute_]<sup>\*</sup>\

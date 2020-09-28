@@ -1,6 +1,6 @@
 # Patterns
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _Pattern_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _PatternWithoutRange_\
 > &nbsp;&nbsp; | [_RangePattern_]
@@ -118,7 +118,7 @@ if let (a, 3) = (1, 2) {           // "(a, 3)" is refutable, and will not match
 
 ## Literal patterns
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _LiteralPattern_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [BOOLEAN_LITERAL]\
 > &nbsp;&nbsp; | [CHAR_LITERAL]\
@@ -170,7 +170,7 @@ for i in -2..5 {
 
 ## Identifier patterns
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _IdentifierPattern_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `ref`<sup>?</sup> `mut`<sup>?</sup> [IDENTIFIER] (`@` [_Pattern_] ) <sup>?</sup>
 
@@ -286,7 +286,7 @@ it is dereferenced and this process repeats.
 
 ## Wildcard pattern
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _WildcardPattern_ :\
 > &nbsp;&nbsp; `_`
 
@@ -327,7 +327,7 @@ The wildcard pattern is always irrefutable.
 
 ## Rest patterns
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _RestPattern_ :\
 > &nbsp;&nbsp; `..`
 
@@ -380,7 +380,7 @@ match tuple {
 
 ## Range patterns
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _RangePattern_ :\
 > &nbsp;&nbsp; _RangePatternBound_ `..=` _RangePatternBound_
 >
@@ -490,7 +490,7 @@ ranges containing all Unicode Scalar Values: `'\u{0000}'..='\u{D7FF}'` and
 
 ## Reference patterns
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _ReferencePattern_ :\
 > &nbsp;&nbsp; (`&`|`&&`) `mut`<sup>?</sup> [_PatternWithoutRange_]
 
@@ -518,7 +518,7 @@ Reference patterns are always irrefutable.
 
 ## Struct patterns
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _StructPattern_ :\
 > &nbsp;&nbsp; [_PathInExpression_] `{`\
 > &nbsp;&nbsp; &nbsp;&nbsp; _StructPatternElements_ <sup>?</sup>\
@@ -617,7 +617,7 @@ A struct pattern is refutable when one of its subpatterns is refutable.
 
 ## Tuple struct patterns
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _TupleStructPattern_ :\
 > &nbsp;&nbsp; [_PathInExpression_] `(` _TupleStructItems_<sup>?</sup> `)`
 >
@@ -632,7 +632,7 @@ A tuple struct pattern is refutable when one of its subpatterns is refutable.
 
 ## Tuple patterns
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _TuplePattern_ :\
 > &nbsp;&nbsp; `(` _TuplePatternItems_<sup>?</sup> `)`
 >
@@ -651,7 +651,7 @@ The tuple pattern is refutable when one of its subpatterns is refutable.
 
 ## Grouped patterns
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _GroupedPattern_ :\
 > &nbsp;&nbsp; `(` [_Pattern_] `)`
 
@@ -670,7 +670,7 @@ match int_reference {
 
 ## Slice patterns
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _SlicePattern_ :\
 > &nbsp;&nbsp; `[` _SlicePatternItems_<sup>?</sup> `]`
 >
@@ -703,7 +703,7 @@ pattern](#identifier-patterns) with the `..` rest pattern as a subpattern.
 
 ## Path patterns
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _PathPattern_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_PathInExpression_]\
 > &nbsp;&nbsp; | [_QualifiedPathInExpression_]

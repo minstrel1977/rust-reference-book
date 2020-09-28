@@ -1,6 +1,6 @@
 # Loops
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _LoopExpression_ :\
 > &nbsp;&nbsp; [_LoopLabel_]<sup>?</sup> (\
 > &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_InfiniteLoopExpression_]\
@@ -29,7 +29,7 @@ Only `loop` supports [evaluation to non-trivial values](#break-and-loop-values).
 
 ## Infinite loops
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _InfiniteLoopExpression_ :\
 > &nbsp;&nbsp; `loop` [_BlockExpression_]
 
@@ -43,7 +43,7 @@ have type compatible with the value of the `break` expression(s).
 
 ## Predicate loops
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _PredicateLoopExpression_ :\
 > &nbsp;&nbsp; `while` [_Expression_]<sub>_except struct expression_</sub> [_BlockExpression_]
 
@@ -65,7 +65,7 @@ while i < 10 {
 
 ## Predicate pattern loops
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > [_PredicatePatternLoopExpression_] :\
 > &nbsp;&nbsp; `while` `let` [_MatchArmPatterns_] `=` [_Expression_]<sub>_except struct or lazy boolean operator expression_</sub>
 >              [_BlockExpression_]
@@ -127,7 +127,7 @@ As is the case in [`if let` expressions], the scrutinee cannot be a [lazy boolea
 
 ## Iterator loops
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _IteratorLoopExpression_ :\
 > &nbsp;&nbsp; `for` [_Pattern_] `in` [_Expression_]<sub>_except struct expression_</sub>
 >              [_BlockExpression_]
@@ -199,7 +199,7 @@ have names the user can type.
 
 ## Loop labels
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _LoopLabel_ :\
 > &nbsp;&nbsp; [LIFETIME_OR_LABEL] `:`
 
@@ -213,7 +213,7 @@ expressions](#continue-expressions).
 
 ## `break` expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _BreakExpression_ :\
 > &nbsp;&nbsp; `break` [LIFETIME_OR_LABEL]<sup>?</sup> [_Expression_]<sup>?</sup>
 
@@ -249,7 +249,7 @@ the forms `break`, `break 'label` or ([see below](#break-and-loop-values))
 
 ## `continue` expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _ContinueExpression_ :\
 > &nbsp;&nbsp; `continue` [LIFETIME_OR_LABEL]<sup>?</sup>
 

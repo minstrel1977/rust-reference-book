@@ -1,6 +1,6 @@
 # Struct expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _StructExpression_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _StructExprStruct_\
 > &nbsp;&nbsp; | _StructExprTuple_\

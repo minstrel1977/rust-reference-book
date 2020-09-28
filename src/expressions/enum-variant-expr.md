@@ -1,6 +1,6 @@
 # Enumeration Variant expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _EnumerationVariantExpression_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _EnumExprStruct_\
 > &nbsp;&nbsp; | _EnumExprTuple_\

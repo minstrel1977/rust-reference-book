@@ -1,6 +1,6 @@
 # `return` expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _ReturnExpression_ :\
 > &nbsp;&nbsp; `return` [_Expression_]<sup>?</sup>
 

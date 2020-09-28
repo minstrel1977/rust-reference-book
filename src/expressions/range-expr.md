@@ -1,6 +1,6 @@
 # Range expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _RangeExpression_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _RangeExpr_\
 > &nbsp;&nbsp; | _RangeFromExpr_\

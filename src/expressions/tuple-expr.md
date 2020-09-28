@@ -2,7 +2,7 @@
 
 ## Tuple expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _TupleExpression_ :\
 > &nbsp;&nbsp; `(` [_InnerAttribute_]<sup>\*</sup> _TupleElements_<sup>?</sup> `)`
 >
@@ -35,7 +35,7 @@ expressions].
 
 ## Tuple indexing expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _TupleIndexingExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `.` [TUPLE_INDEX]
 

@@ -1,6 +1,6 @@
 # Await expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _AwaitExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `.` `await`
 

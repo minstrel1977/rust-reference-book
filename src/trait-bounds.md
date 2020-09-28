@@ -1,6 +1,6 @@
 # Trait and lifetime bounds
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _TypeParamBounds_ :\
 > &nbsp;&nbsp; _TypeParamBound_ ( `+` _TypeParamBound_ )<sup>\*</sup> `+`<sup>?</sup>
 >

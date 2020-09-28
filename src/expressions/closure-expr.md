@@ -1,6 +1,6 @@
 # Closure expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _ClosureExpression_ :\
 > &nbsp;&nbsp; `move`<sup>?</sup>\
 > &nbsp;&nbsp; ( `||` | `|` _ClosureParameters_<sup>?</sup> `|` )\

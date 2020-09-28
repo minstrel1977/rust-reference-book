@@ -1,6 +1,6 @@
 # Trait objects
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _TraitObjectType_ :\
 > &nbsp;&nbsp; `dyn`<sup>?</sup> [_TypeParamBounds_]
 >

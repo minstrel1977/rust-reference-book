@@ -1,6 +1,6 @@
 # Impl trait
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _ImplTraitType_ : `impl` [_TypeParamBounds_]
 >
 > _ImplTraitTypeOneBound_ : `impl` [_TraitBound_]

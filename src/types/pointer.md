@@ -5,7 +5,7 @@ copied, stored into data structs, and returned from functions.
 
 ## References (`&` and `&mut`)
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _ReferenceType_ :\
 > &nbsp;&nbsp; `&` [_Lifetime_]<sup>?</sup> `mut`<sup>?</sup> [_TypeNoBounds_]
 
@@ -29,7 +29,7 @@ borrowed) is the only way to access the value it points to, so is not `Copy`.
 
 ## Raw pointers (`*const` and `*mut`)
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _RawPointerType_ :\
 > &nbsp;&nbsp; `*` ( `mut` | `const` ) [_TypeNoBounds_]
 

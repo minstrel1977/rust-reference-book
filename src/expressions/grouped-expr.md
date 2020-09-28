@@ -1,14 +1,17 @@
 # Grouped expressions
+# 分组表达式
 
-> **<sup>Syntax</sup>**\
+>[grouped-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/grouped-expr.md)\
+>commit b0e0ad6490d6517c19546b1023948986578fc378
+
+
+> **<sup>句法</sup>**\
 > _GroupedExpression_ :\
 > &nbsp;&nbsp; `(` [_InnerAttribute_]<sup>\*</sup> [_Expression_] `)`
 
-An expression enclosed in parentheses evaluates to the result of the enclosed
-expression. Parentheses can be used to explicitly specify evaluation order
-within an expression.
+括在圆括号中的表达式的计算结果是封闭表达式的结果。在表达式内部，圆括号可用于显式地指定子表达式的求值顺序。
 
-An example of a parenthesized expression:
+括号表达式的一个例子：
 
 ```rust
 let x: i32 = 2 + 3 * 4;
@@ -17,8 +20,7 @@ assert_eq!(x, 14);
 assert_eq!(y, 20);
 ```
 
-An example of a necessary use of parentheses is when calling a function pointer
-that is a member of a struct:
+当调用作为结构成员的函数指针时，必须使用括号，示例如下：
 
 ```rust
 # struct A {
@@ -36,12 +38,14 @@ assert_eq!((a.f)(), "The field f");
 ```
 
 ## Group expression attributes
+## 分组表达式上的属性
 
+在与[块表达式上的属性]相同的表达式上下文中，允许在分组表达式的左括号后直接使用[内部属性]。
 [Inner attributes] are allowed directly after the opening parenthesis of a
 group expression in the same expression contexts as [attributes on block
 expressions].
 
-[Inner attributes]: ../attributes.md
+[内部属性]: ../attributes.md
 [_Expression_]: ../expressions.md
 [_InnerAttribute_]: ../attributes.md
-[attributes on block expressions]: block-expr.md#块表达式上的属性
+[块表达式上的属性]: block-expr.md#块表达式上的属性
