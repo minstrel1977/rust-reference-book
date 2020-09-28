@@ -68,16 +68,13 @@ let a = & & & & mut 10;
 ## 解引用操作符
 ## The dereference operator
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _DereferenceExpression_ :\
 > &nbsp;&nbsp; `*` [_Expression_]
 
-`*`（解引用）运算符也是一元前缀运算符。应用于[指针](../types/pointer.md)它表示指向的位置。如果表达式的类型为 `&mut T` 和 `*mut T`，并且是局部变量、局部变量的（嵌套）字段或是可变的[place expression]，则可以将生成的内存位置分配给。取消对原始指针的引用需要“unsafe”。
-The `*` (dereference) operator is also a unary prefix operator. When applied to a [pointer](../types/pointer.md) it denotes the pointed-to location. If the expression is of type `&mut T` and `*mut T`, and is either a local variable, a (nested) field of a local variable or is a mutable [place expression], then the resulting memory location can be assigned to. Dereferencing a raw pointer requires `unsafe`.
+`*`（解引用）运算符也是一元前缀运算符。当应用于[指针](../types/pointer.md)时，它表示指向的内存位置。如果表达式的类型为 `&mut T` 和 `*mut T`，并且该表达式是局部变量（局部变量的（嵌套）字段也可）或是可变的[位置表达式][place expression]，则它代表的内存位置可以被赋值。对原始指针的解引用需要  `unsafe`。
 
-On non-pointer types `*x` is equivalent to `*std::ops::Deref::deref(&x)` in an
-[immutable place expression context](../expressions.md#可变性) and
-`*std::ops::DerefMut::deref_mut(&mut x)` in a mutable place expression context.
+在[不可变位置表达式上下文](../expressions.md#可变性)中对非指针类型作 `*x` 相当于执行 `*std::ops::Deref::deref(&x)`；同样的，在可变位置表达式上下文中这个动作就相当于执行 `*std::ops::DerefMut::deref_mut(&mut x)`。
 
 ```rust
 let x = &7;
@@ -90,25 +87,20 @@ assert_eq!(*y, 11);
 ## 问号操作符
 ## The question mark operator
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _ErrorPropagationExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `?`
 
-The question mark operator (`?`) unwraps valid values or returns erroneous
-values, propagating them to the calling function. It is a unary postfix
-operator that can only be applied to the types `Result<T, E>` and `Option<T>`.
+问号运算符(`?`)打开有效值或返回错误值，并将它们传播给调用函数。问号运算符(`?`)是一个一元后缀操作符，只能应用于类型 `Result<T, E>` 和 `Option<T>`。
 
-When applied to values of the `Result<T, E>` type, it propagates errors. If
-the value is `Err(e)`, then it will return `Err(From::from(e))` from the
-enclosing function or closure. If applied to `Ok(x)`, then it will unwrap the
-value to evaluate to `x`.
+当应用到 `Result<T, E>` 类型的值时，它会传播错误。如果值是 `Err(e)`，那么它将从函数体或闭包中返回 `Err(From::from(e))`。如果应用到 `Ok(x)`，那么它将展开值以求得 `x`。
 
 ```rust
 # use std::num::ParseIntError;
 fn try_to_parse() -> Result<i32, ParseIntError> {
     let x: i32 = "123".parse()?; // x = 123
-    let y: i32 = "24a".parse()?; // returns an Err() immediately
-    Ok(x + y)                    // Doesn't run.
+    let y: i32 = "24a".parse()?; // 立即返回一个 Err()
+    Ok(x + y)                    // 不会执行到这里
 }
 
 let res = try_to_parse();
@@ -116,9 +108,7 @@ println!("{:?}", res);
 # assert!(res.is_err())
 ```
 
-When applied to values of the `Option<T>` type, it propagates `None`s. If the
-value is `None`, then it will return `None`. If applied to `Some(x)`, then it
-will unwrap the value to evaluate to `x`.
+当应用到 `Option<T>` 类型的值时，它能传播 `None`。如果值是 `None`，那么它将返回 `None`。如果应用于 `Some(x)`，那么它将展开值以求得 `x`。
 
 ```rust
 fn try_option_some() -> Option<u8> {
@@ -134,30 +124,27 @@ fn try_option_none() -> Option<u8> {
 assert_eq!(try_option_none(), None);
 ```
 
-`?` cannot be overloaded.
+`?` 不能被重载。
 
 ## 取反运算符
 ## Negation operators
 
-> **<sup>Syntax</sup>**\
+> **<sup>语法</sup>**\
 > _NegationExpression_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `-` [_Expression_]\
 > &nbsp;&nbsp; | `!` [_Expression_]
 
-These are the last two unary operators. This table summarizes the behavior of
-them on primitive types and which traits are used to overload these operators
-for other types. Remember that signed integers are always represented using
-two's complement. The operands of all of these operators are evaluated in
-[value expression context][value expression] so are moved or copied.
+这是最后两个一元运算符。下表总结了它们在基本类型上的行为，以及用于为其他类型重载这些操作符的 trait。记住，有符号整数总是用2的补码表示的。
+所有这些运算符的操作数都在[值表达式上下文][value expression]中求值，因此会被移动或复制。
 
-| Symbol | Integer     | `bool`      | Floating Point | Overloading Trait  |
+| 符号 | 整数     | `bool`      | 浮点数 | 用于重载的 trait  |
 |--------|-------------|-------------|----------------|--------------------|
-| `-`    | Negation*   |             | Negation       | `std::ops::Neg`    |
-| `!`    | Bitwise NOT | Logical NOT |                | `std::ops::Not`    |
+| `-`    | 取负*   |             | 取负       | `std::ops::Neg`    |
+| `!`    | 按位取反 | 逻辑非 |                | `std::ops::Not`    |
 
-\* Only for signed integer types.
+\* 仅适用于有符号整数类型。
 
-Here are some example of these operators
+下面是这些运算符的一些示例：
 
 ```rust
 let x = 6;
@@ -169,7 +156,7 @@ assert_eq!(true, !false);
 ## 算术和逻辑二元运算符
 ## Arithmetic and Logical Binary Operators
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _ArithmeticOrLogicalExpression_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_Expression_] `+` [_Expression_]\
 > &nbsp;&nbsp; | [_Expression_] `-` [_Expression_]\
@@ -182,32 +169,26 @@ assert_eq!(true, !false);
 > &nbsp;&nbsp; | [_Expression_] `<<` [_Expression_]\
 > &nbsp;&nbsp; | [_Expression_] `>>` [_Expression_]
 
-Binary operators expressions are all written with infix notation. This table
-summarizes the behavior of arithmetic and logical binary operators on
-primitive types and which traits are used to overload these operators for other
-types. Remember that signed integers are always represented using two's
-complement. The operands of all of these operators are evaluated in [value
-expression context][value expression] so are moved or copied.
+二元运算符表达式都用中缀表示法书写。下表总结了算术和逻辑二元运算符在原生类型(primitive type)上的行为，以及用于重载其他类型的这些运算符的特征。记住，有符号整数总是用2的补码表示的。所有这些运算符的操作数都在[值表达式上下文][value expression]中求值，因此会被移动或复制。
 
-| Symbol | Integer                 | `bool`      | Floating Point | Overloading Trait  |
+| 符号 | 整数                 | `bool`      | 浮点数 | 用于重载的 trait  |
 |--------|-------------------------|-------------|----------------|--------------------|
-| `+`    | Addition                |             | Addition       | `std::ops::Add`    |
-| `-`    | Subtraction             |             | Subtraction    | `std::ops::Sub`    |
-| `*`    | Multiplication          |             | Multiplication | `std::ops::Mul`    |
-| `/`    | Division*                |             | Division       | `std::ops::Div`    |
-| `%`    | Remainder               |             | Remainder      | `std::ops::Rem`    |
-| `&`    | Bitwise AND             | Logical AND |                | `std::ops::BitAnd` |
-| <code>&#124;</code> | Bitwise OR | Logical OR  |                | `std::ops::BitOr`  |
-| `^`    | Bitwise XOR             | Logical XOR |                | `std::ops::BitXor` |
-| `<<`   | Left Shift              |             |                | `std::ops::Shl`    |
-| `>>`   | Right Shift**            |             |                | `std::ops::Shr`    |
+| `+`    | 加法                |             | 加法       | `std::ops::Add`    |
+| `-`    | 减法             |             | 减法    | `std::ops::Sub`    |
+| `*`    | 乘法          |             | 乘法 | `std::ops::Mul`    |
+| `/`    | 除法*                |             | 取余       | `std::ops::Div`    |
+| `%`    | 取余               |             | Remainder      | `std::ops::Rem`    |
+| `&`    | 按位与             | 逻辑与 |                | `std::ops::BitAnd` |
+| <code>&#124;</code> | 按位或 | 逻辑或  |                | `std::ops::BitOr`  |
+| `^`    | 按位异或             | 逻辑异或 |                | `std::ops::BitXor` |
+| `<<`   | 左移位              |             |                | `std::ops::Shl`    |
+| `>>`   | 右移位**            |             |                | `std::ops::Shr`    |
 
-\* Integer division rounds towards zero.
+\* 整数除法趋零取整。
 
-\*\* Arithmetic right shift on signed integer types, logical right shift on
-unsigned integer types.
+\*\* 有符号整数类型算术右移位，无符号整数类型逻辑右移位。
 
-Here are examples of these operators being used.
+下面是使用这些操作符的示例:
 
 ```rust
 assert_eq!(3 + 6, 9);
@@ -225,7 +206,7 @@ assert_eq!(-10 >> 2, -3);
 ## 比较运算符
 ## Comparison Operators
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _ComparisonExpression_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_Expression_] `==` [_Expression_]\
 > &nbsp;&nbsp; | [_Expression_] `!=` [_Expression_]\
@@ -234,40 +215,30 @@ assert_eq!(-10 >> 2, -3);
 > &nbsp;&nbsp; | [_Expression_] `>=` [_Expression_]\
 > &nbsp;&nbsp; | [_Expression_] `<=` [_Expression_]
 
-Comparison operators are also defined both for primitive types and many type in
-the standard library. Parentheses are required when chaining comparison
-operators. For example, the expression `a == b == c` is invalid and may be
-written as `(a == b) == c`.
+Rust 还为原生类型和标准库中的许多类型定义了比较运算符。在链式比较运算时需要括号。例如，表达式 `a == b == c` 是无效的，（但如果逻辑允许）可以写成 `(a == b) == c`。
 
-Unlike arithmetic and logical operators, the traits for
-overloading the operators the traits for these operators are used more
-generally to show how a type may be compared and will likely be assumed to
-define actual comparisons by functions that use these traits as bounds. Many
-functions and macros in the standard library can then use that assumption
-(although not to ensure safety). Unlike the arithmetic and logical operators
-above, these operators implicitly take shared borrows of their operands,
-evaluating them in [place expression context][place expression]:
+与算术运算符和逻辑运算符不同，比较运算符所使用的 trait(这些 trait 也可以被其他类型所实现)更抽象地用于显示如何比较一个类型，并且很可能会假定使用这些 trait 作为约束条件的函数定义了实际的比较逻辑。（对库API使用者来说，）标准库中的许多函数和宏都可以被认为遵守了这个假定(尽管不能确保它们的实现的安全性)。与上面的算术和逻辑运算符不同，当在[位置表达式上下文][place expression]中对它们进行求值时，这些运算符会隐式地使用对它们的操作数的共享借用：
 
 ```rust
 # let a = 1;
 # let b = 1;
 a == b;
-// is equivalent to
+// 等价于：
 ::std::cmp::PartialEq::eq(&a, &b);
 ```
 
-This means that the operands don't have to be moved out of.
+这意味着不需要将操作数移出。
 
-| Symbol | Meaning                  | Overloading method         |
+| 符号 | 含义                  | 须重载方法         |
 |--------|--------------------------|----------------------------|
-| `==`   | Equal                    | `std::cmp::PartialEq::eq`  |
-| `!=`   | Not equal                | `std::cmp::PartialEq::ne`  |
-| `>`    | Greater than             | `std::cmp::PartialOrd::gt` |
-| `<`    | Less than                | `std::cmp::PartialOrd::lt` |
-| `>=`   | Greater than or equal to | `std::cmp::PartialOrd::ge` |
-| `<=`   | Less than or equal to    | `std::cmp::PartialOrd::le` |
+| `==`   | 等于                    | `std::cmp::PartialEq::eq`  |
+| `!=`   | 不等于                | `std::cmp::PartialEq::ne`  |
+| `>`    | 大于             | `std::cmp::PartialOrd::gt` |
+| `<`    | 小于                | `std::cmp::PartialOrd::lt` |
+| `>=`   | 大于或等于 | `std::cmp::PartialOrd::ge` |
+| `<=`   | 小于或等于    | `std::cmp::PartialOrd::le` |
 
-Here are examples of the comparison operators being used.
+下面是使用比较运算符的示例：
 
 ```rust
 assert!(123 == 123);
@@ -278,7 +249,7 @@ assert!('A' <= 'B');
 assert!("World" >= "Hello");
 ```
 
-## 惰性布尔运算符
+## 短路布尔运算符
 ## Lazy boolean operators
 
 > **<sup>Syntax</sup>**\
@@ -286,17 +257,16 @@ assert!("World" >= "Hello");
 > &nbsp;&nbsp; &nbsp;&nbsp; [_Expression_] `||` [_Expression_]\
 > &nbsp;&nbsp; | [_Expression_] `&&` [_Expression_]
 
-The operators `||` and `&&` may be applied to operands of boolean type. The
-`||` operator denotes logical 'or', and the `&&` operator denotes logical
-'and'. They differ from `|` and `&` in that the right-hand operand is only
-evaluated when the left-hand operand does not already determine the result of
-the expression. That is, `||` only evaluates its right-hand operand when the
-left-hand operand evaluates to `false`, and `&&` only when it evaluates to
-`true`.
+运算符' || '和' && '可以应用于布尔类型的操作数。
+' || '运算符表示逻辑'或'，' && '运算符表示逻辑'和'。
+它们与' | '和' & '的不同之处在于，仅当左操作数尚未确定表达式的结果时，才计算右操作数。
+也就是说，' || '仅在其左操作数计算为' false '时计算其右操作数，而' && '仅在其计算为' true '时计算其右操作数。
+
+运算符 `||` 和 `&&` 可以应用于布尔类型的操作数。运算符 `||` 表示逻辑“或”，运算符 `&&` 表示逻辑“与”。它们与 `|` 和 `&` 的不同之处在于，只有在左侧操作数尚未确定表达式的结果时，才计算右侧操作数。也就是说，`||` 只在左操作数的计算结果为 `false` 时才计算其右侧操作数，而只有在计算结果为 `true` 时才计算 `&&` 的操作数。
 
 ```rust
 let x = false || true; // true
-let y = false && panic!(); // false, doesn't evaluate `panic!()`
+let y = false && panic!(); // false, 不会计算 `panic!()`
 ```
 
 ## 类型转换表达式
