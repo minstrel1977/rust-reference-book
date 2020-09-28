@@ -38,7 +38,7 @@ Rust 语言的功能和句法可以通过自定义宏进行扩展。宏可以被
 * [`macro_rules`] 转换器
 * [外部块]
 
-当用作数据项或语句时，_MacroInvocationSemi_ 形式被使用。_MacroInvocationSemi_ 形式中，如果不使用大括号，则在结尾处需要添加分号。在宏调用或 [`macro_rules`] 定义之前不允许使用[可见性限定符]。
+当用作数据项或语句时，_MacroInvocationSemi_ 形式被使用。_MacroInvocationSemi_ 形式中，如果不使用花括号，则在结尾处需要添加分号。在宏调用或 [`macro_rules`] 定义之前不允许使用[可见性限定符]。
 
 ```rust
 // 作为表达式使用.
