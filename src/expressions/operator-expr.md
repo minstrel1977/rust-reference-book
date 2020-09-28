@@ -272,16 +272,15 @@ let y = false && panic!(); // false, 不会计算 `panic!()`
 ## 类型转换表达式
 ## Type cast expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _TypeCastExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `as` [_TypeNoBounds_]
 
-A type cast expression is denoted with the binary operator `as`.
+类型转换表达式用二元运算符 `as` 表示。
 
-Executing an `as` expression casts the value on the left-hand side to the type
-on the right-hand side.
+执行 `as`表达式将左侧的值强制转换为右侧的类型。
 
-An example of an `as` expression:
+`as`表达式的一个例子：
 
 ```rust
 # fn sum(values: &[f64]) -> f64 { 0.0 }
@@ -293,94 +292,74 @@ fn average(values: &[f64]) -> f64 {
 }
 ```
 
-`as` can be used to explicitly perform [coercions](../type-coercions.md), as
-well as the following additional casts. Here `*T` means either `*const T` or
-`*mut T`.
+`as` 可用于显式执行[强制转换](../type-coercions.md)，以及下列其他强制转换。这里 `*T` 的意思是 `*const T` 或 `*mut T`。
 
-| Type of `e`           | `U`                   | Cast performed by `e as U`       |
+| `e` 的类型          | `U`                   | 通过 `e as U` 执行转换      |
 |-----------------------|-----------------------|----------------------------------|
-| Integer or Float type | Integer or Float type | Numeric cast                     |
-| C-like enum           | Integer type          | Enum cast                        |
-| `bool` or `char`      | Integer type          | Primitive to integer cast        |
-| `u8`                  | `char`                | `u8` to `char` cast              |
-| `*T`                  | `*V` where `V: Sized` \* | Pointer to pointer cast       |
-| `*T` where `T: Sized` | Numeric type          | Pointer to address cast          |
-| Integer type          | `*V` where `V: Sized` | Address to pointer cast          |
-| `&[T; n]`             | `*const T`            | Array to pointer cast            |
-| [Function item]       | [Function pointer]    | Function item to function pointer cast |
-| [Function item]       | `*V` where `V: Sized` | Function item to pointer cast    |
-| [Function item]       | Integer               | Function item to address cast    |
-| [Function pointer]    | `*V` where `V: Sized` | Function pointer to pointer cast |
-| [Function pointer]    | Integer               | Function pointer to address cast |
-| Closure \*\*          | Function pointer      | Closure to function pointer cast |
+| Integer or Float type | Integer or Float type | 数字转换                     |
+| C-like enum           | Integer type          | 枚举转换                        |
+| `bool` or `char`      | Integer type          | 原生类型到整型的转换        |
+| `u8`                  | `char`                | `u8` 到 `char` 的转换              |
+| `*T`                  | `*V` where `V: Sized` \* | 指针到指针的转换       |
+| `*T` where `T: Sized` | Numeric type          |  指针到地址的转换         |
+| Integer type          | `*V` where `V: Sized` | 地址到指针的转换          |
+| `&[T; n]`             | `*const T`            | 数组到指针的转换            |
+| [Function item]       | [Function pointer]    | 函数到函数指针的转换 |
+| [Function item]       | `*V` where `V: Sized` | 函数到指针的转换    |
+| [Function item]       | Integer               | 函数到地址的转换    |
+| [Function pointer]    | `*V` where `V: Sized` | 函数指针到指针的转换  |
+| [Function pointer]    | Integer               | 函数指针到地址的转换 |
+| Closure \*\*          | Function pointer      | 闭包到函数指针的转换 |
 
-\* or `T` and `V` are compatible unsized types, e.g., both slices, both the
-same trait object.
+\* 或者 `T`和`V` 也可以都是兼容的 unsized 类型，例如，两个都是切片，或者都是同一种 trait对象。
 
-\*\* only for closures that do not capture (close over) any local variables
+\*\* 仅适用于不捕获（关闭）任何环境变量的闭包。
 
 ### 语义
 ### Semantics
 
-* Numeric cast
-    * Casting between two integers of the same size (e.g. i32 -> u32) is a no-op
-    * Casting from a larger integer to a smaller integer (e.g. u32 -> u8) will
-      truncate
-    * Casting from a smaller integer to a larger integer (e.g. u8 -> u32) will
-        * zero-extend if the source is unsigned
-        * sign-extend if the source is signed
-    * Casting from a float to an integer will round the float towards zero
-        * `NaN` will return `0`
-        * Values larger than the maximum integer value will saturate to the
-          maximum value of the integer type.
-        * Values smaller than the minimum integer value will saturate to the
-          minimum value of the integer type.
-    * Casting from an integer to float will produce the closest possible float \*
-        * if necessary, rounding is according to `roundTiesToEven` mode \*\*\*
-        * on overflow, infinity (of the same sign as the input) is produced
-        * note: with the current set of numeric types, overflow can only happen
-          on `u128 as f32` for values greater or equal to `f32::MAX + (0.5 ULP)`
-    * Casting from an f32 to an f64 is perfect and lossless
-    * Casting from an f64 to an f32 will produce the closest possible f32 \*\*
-        * if necessary, rounding is according to `roundTiesToEven` mode \*\*\*
-        * on overflow, infinity (of the same sign as the input) is produced
-* Enum cast
-    * Casts an enum to its discriminant, then uses a numeric cast if needed.
-* Primitive to integer cast
-    * `false` casts to `0`, `true` casts to `1`
-    * `char` casts to the value of the code point, then uses a numeric cast if needed.
-* `u8` to `char` cast
-    * Casts to the `char` with the corresponding code point.
+* 数字转换(Numeric cast)
+    * 在两个尺寸(size)相同的整型(例如i32->u32)之间进行转换是一个无操作(no-op)
+    * 从一个较大尺寸的整型转换为较小尺寸的整型(例如 u32 -> u8)将会被截断 [^译者注]
+    * 从较小尺寸的整型转换为较大尺寸的整型(例如 u8->u32)将
+        * 如果源数据是无符号的，则进行零扩展
+        * 如果源数据是有符号的，则进行符号扩展
+    * 从浮点数转换为整型将使浮点数趋零取整
+        * `NaN` 将返回 `0`
+        * 大于转换到的整型类型的最大值时，取该整型类型的最大值。
+        * 小于转换到的整型类型的最小值时，取该整型类型的最小值。
+    * 从整数强制转换为浮点型将产生最接近的浮点数 \*
+        * 如有必要，舍入采用 “roundTiesToEven” 模式 \*\*\*
+        * 在溢出时，将会产生无穷大(与输入符号相同)
+        * 注意：对于当前的数值类型集，溢出只会发生在 `u128 as f32` 这种转换形式，且数字大于或等于 `f32::MAX + (0.5 ULP)` 时。
+    * 从f32到f64的转换是完美和无损的
+    * 从f64到f32的转换将产生最接近的f32 \*\*
+        * 如有必要，舍入采用 “roundTiesToEven” 模式 \*\*\*
+        * 在溢出时，将会产生无穷大(与输入符号相同)
+* 枚举转换(Enum cast)
+    * 先将枚举转换为它的判别值，然后在需要时使用数值转换。
+* 原生类型到整型的转换(Primitive to integer cast)
+    * `false` 转换为 `0`, `true` 转换为 `1`
+    * `char` 会先强制转换为代码点的值，然后在需要时使用数值转换。
+* `u8` 到 `char` 的转换
+    * 转换为具有相应代码点的 `char`。
 
-\* if integer-to-float casts with this rounding mode and overflow behavior are
-not supported natively by the hardware, these casts will likely be slower than
-expected.
+\* 如果硬件本身不支持这种舍入模式和溢出行为，那么这些整数到浮点型的强制转换可能会比预期的要慢。
 
-\*\* if f64-to-f32 casts with this rounding mode and overflow behavior are not
-supported natively by the hardware, these casts will likely be slower than
-expected.
+\*\* 如果硬件本身不支持这种舍入模式和溢出行为，那么这些 f64 到 f32 的强制转换可能会比预期的要慢。
 
-\*\*\* as defined in IEEE 754-2008 &sect;4.3.1: pick the nearest floating point
-number, preferring the one with an even least significant digit if exactly
-halfway between two floating point numbers.
+\*\*\* 按照IEEE 754-2008§4.3.1的定义:选择最接近的浮点数，如果恰好在两个浮点数中间，则优先选择最低有效位为偶数的那个。
 
 ## 赋值表达式
 ## Assignment expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _AssignmentExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `=` [_Expression_]
 
-An _assignment expression_ consists of a [place expression] followed by an
-equals sign (`=`) and a [value expression]. Such an expression always has
-the [`unit` type].
+*赋值表达式*由[位置表达式][place expression]后跟等号 (=) 和[值表达式][value expression]组成。这样的表达式总是具有[`unit`类型]。
 
-Evaluating an assignment expression [drops](../destructors.md) the left-hand
-operand, unless it's an uninitialized local variable or field of a local variable,
-and [either copies or moves](../expressions.md#移动和复制类型) its
-right-hand operand to its left-hand operand. The left-hand operand must be a
-place expression: using a value expression results in a compiler error, rather
-than promoting it to a temporary.
+执行赋值表达式时会先[销毁](../destructors.md)左侧操作数(如果是未初始化的局部变量或局部变量的字段则不会启动这步析构操作)，然后将其右侧操作数[复制或移动](../expressions.md#移动和复制类型)到左侧操作数。左边的操作数必须是位置表达式：使用值表达式会导致编译器错误，不会将其提升为临时位置。
 
 ```rust
 # let mut x = 0;
@@ -391,7 +370,7 @@ x = y;
 ## 复合赋值表达式
 ## Compound assignment expressions
 
-> **<sup>Syntax</sup>**\
+> **<sup>句法</sup>**\
 > _CompoundAssignmentExpression_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_Expression_] `+=` [_Expression_]\
 > &nbsp;&nbsp; | [_Expression_] `-=` [_Expression_]\
@@ -404,26 +383,20 @@ x = y;
 > &nbsp;&nbsp; | [_Expression_] `<<=` [_Expression_]\
 > &nbsp;&nbsp; | [_Expression_] `>>=` [_Expression_]
 
-The `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`, `<<`, and `>>` operators may be
-composed with the `=` operator. The expression `place_exp OP= value` is
-equivalent to `place_expr = place_expr OP val`. For example, `x = x + 1` may be
-written as `x += 1`. Any such expression always has the [`unit` type].
-These operators can all be overloaded using the trait with the same name as for
-the normal operation followed by 'Assign', for example, `std::ops::AddAssign`
-is used to overload `+=`. As with `=`, `place_expr` must be a [place
-expression].
+`+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`, `<<`, 和 `>>`运算符可以和 `=` 运算符复合组成新的运算符。表达式 `place_exp OP= value` 等效于 `place_expr = place_expr OP val`。例如，`x = x + 1` 可以写成 `x += 1`。任何这样的表达式总是具有[`unit`类型]。这些运算符都可以使用与普通操作的相同的 trait 来重载，只是相应的 trait名称后要加上 “Assign”，例如，`std::ops::AddAssign`用于重载 `+=`。因为带有 `=`，所以 `place_expr` 必须是[位置表达式][place expression]。
 
 ```rust
 let mut x = 10;
 x += 4;
 assert_eq!(x, 14);
 ```
+[^译者注]:截断，即一个值范围较大的变量A转换为值范围较小的变量B，如果超出范围，则将A减去B的区间长度。例如，128超出了i8类型的范围（-128,127），截断之后的值等于128-256=-128。
 
 [place expression]: ../expressions.md#位置表达式和值表达式
 [value expression]: ../expressions.md#位置表达式和值表达式
 [temporary value]: ../expressions.md#临时位置
 [float-float]: https://github.com/rust-lang/rust/issues/15536
-[`unit` type]: ../types/tuple.md
+[`unit`类型]: ../types/tuple.md
 [Function pointer]: ../types/function-pointer.md
 [Function item]: ../types/function-item.md
 
