@@ -77,6 +77,7 @@ mod m {
 Vec::<u8>::with_capacity(1024);
 ```
 
+## Qualified paths
 ## 限定路径
 
 > **<sup>句法</sup>**\

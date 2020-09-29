@@ -1,6 +1,10 @@
 # Struct expressions
 # 结构体表达式
 
+>[struct-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/struct-expr.md)\
+>commit 1a3615102993e9f017a44b903ff2277a38a171a8
+
+
 > **<sup>句法</sup>**\
 > _StructExpression_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _StructExprStruct_\

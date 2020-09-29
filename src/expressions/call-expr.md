@@ -1,4 +1,8 @@
 # Call expressions
+# 调用表达式
+
+>[call-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/call-expr.md)\
+>commit e06136b1cd06d3d72dcc0ed7ccf5fbab5574f901
 
 > **<sup>句法</sup>**\
 > _CallExpression_ :\
@@ -7,15 +11,7 @@
 > _CallParams_ :\
 > &nbsp;&nbsp; [_Expression_]&nbsp;( `,` [_Expression_] )<sup>\*</sup> `,`<sup>?</sup>
 
-A _call expression_ consists of an expression followed by a parenthesized
-expression-list. It invokes a function, providing zero or more input variables.
-If the function eventually returns, then the expression completes. For
-[non-function types](../types/function-item.md), the expression f(...) uses
-the method on one of the [`std::ops::Fn`], [`std::ops::FnMut`] or
-[`std::ops::FnOnce`] traits, which differ in whether they take the type by
-reference, mutable reference, or take ownership respectively. An automatic
-borrow will be taken if needed. Rust will also automatically dereference `f` as
-required. Some examples of call expressions:
+*调用表达式*由一个表达式和一个带圆括号的表达式列表组成。它调用一个函数，并给其提供零个或多个输入变量。如果函数最终返回，则表达式完成。对于[非函数类型](../types/function-item.md)的表达式 f(...) 会自动使用 [`std::ops::Fn`]、[`std::ops::FnMut`] 或 [`std::ops::FnOnce`] 这些 trait 上的方法。如何选择这些 trait 要看 `f` 如何获取其输入参数的，具体就是看是通过引用、可变引用还是通过获取所有权的。如有需要，可自动借阅。Rust 也会根据需要自动取消对 `f` 的引用。下面是一些调用表达式的示例：
 
 ```rust
 # fn add(x: i32, y: i32) -> i32 { 0 }
@@ -24,31 +20,22 @@ let name: &'static str = (|| "Rust")();
 ```
 
 ## Disambiguating Function Calls
+## 消除函数调用的歧义
 
-Rust treats all function calls as sugar for a more explicit, [fully-qualified
-syntax]. Upon compilation, Rust will desugar all function calls into the explicit
-form. Rust may sometimes require you to qualify function calls with trait,
-depending on the ambiguity of a call in light of in-scope items.
+Rust 将所有函数调用作糖化处理，以获得更直观的完全限定的语法。而在编译时，Rust 又会把所有函数调用进行脱糖(desugar)，转换为显式形式。Rust 有时可能要求您使用 trait 来限定函数调用，这取决于调用作用域内的数据项时出现的模糊性。
 
-> **Note**: In the past, the Rust community used the terms "Unambiguous
-> Function Call Syntax", "Universal Function Call Syntax", or "UFCS", in
-> documentation, issues, RFCs, and other community writings. However, the term
-> lacks descriptive power and potentially confuses the issue at hand. We mention
-> it here for searchability's sake.
+> **注意**：过去，Rust 社区在文档、议题、RFC和其他社区文章中使用了术语“确定性函数调用句法(Unambiguous Function Call Syntax)”、“通用函数调用语法(Universal Function Call Syntax)” 或 “UFCS”。但是，这个术语缺乏描述力，可能会混淆当前的议题。我们在这里提起它是为了便于搜索。
 
-Several situations often occur which result in ambiguities about the receiver or
-referent of method or associated function calls. These situations may include:
+经常会出现一些导致方法或关联函数调用的接收者或引用对象不明确的情况。这些情况可包括：
 
-* Multiple in-scope traits define methods with the same name for the same types
-* Auto-`deref` is undesirable; for example, distinguishing between methods on a
-  smart pointer itself and the pointer's referent
-* Methods which take no arguments, like [`default()`], and return properties of a
-  type, like [`size_of()`]
+* 作用域内多个 trait 为同一类型定义了相同名称的方法
+* 自动解引用搞不定的；例如，区分智能指针本身的方法和指针的所指对象上的方法
+* 不带参数的方法，如 [`default()`]，并返回类型的属性，如 [`size_of()`]
+* Methods which take no arguments, like [`default()`], and return properties of a type, like [`size_of()`]
 
-To resolve the ambiguity, the programmer may refer to their desired method or
-function using more specific paths, types, or traits.
+为了解决这种模糊性，程序员可以使用更具体的路径、类型或 trait 来引用他们想要的方法或函数。
 
-For example,
+例如：
 
 ```rust
 trait Pretty {
@@ -76,22 +63,22 @@ fn main() {
     let f = Foo;
     let b = Bar;
 
-    // we can do this because we only have one item called `print` for `Foo`s
+    // 我们可以这样做，因为对于`Foo`，我们只有一个名为 `print` 的数据项
     f.print();
-    // more explicit, and, in the case of `Foo`, not necessary
+    // 对于 `Foo`来说，是更明确了，但没必要
     Foo::print(&f);
-    // if you're not into the whole brevity thing
+    // 如果你不喜欢简洁的话，那，也可以这样
     <Foo as Pretty>::print(&f);
 
-    // b.print(); // Error: multiple 'print' found
-    // Bar::print(&b); // Still an error: multiple `print` found
+    // b.print(); // 错误： 发现多个 `print`
+    // Bar::print(&b); // 仍错： 发现多个 `print`
 
-    // necessary because of in-scope items defining `print`
+    // 必要，因为作用域内的多个数据项定义了 `print`
     <Bar as Pretty>::print(&b);
 }
 ```
 
-Refer to [RFC 132] for further details and motivations.
+更多细节和动机请参考[RFC 132]。
 
 [RFC 132]: https://github.com/rust-lang/rfcs/blob/master/text/0132-ufcs.md
 [_Expression_]: ../expressions.md
