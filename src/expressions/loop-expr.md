@@ -173,25 +173,20 @@ assert_eq!(sum, 55);
 }
 ```
 
-`IntoIterator`, `Iterator`, and `Option` are always the standard library items
-here, not whatever those names resolve to in the current scope. The variable
-names `next`, `iter`, and `val` are for exposition only, they do not actually
-have names the user can type.
+(对上面这段代码做一些说明：这里的) `IntoIterator`、`Iterator` 和 `Option` 是标准库数据项(standard library item)，不是当前作用域中解析的的任何名称。变量名`next`、`iter` 和 `val` 也仅用于表述需要，实际上它们不是用户可以输入的名称。
 
-> **Note**: that the outer `match` is used to ensure that any
-> [temporary values] in `iter_expr` don't get dropped before the loop is
-> finished. `next` is declared before being assigned because it results in
-> types being inferred correctly more often.
+> **注意**：上面代码里使用外层 `matche` 来确保 `iter_expr` 中的任何[临时值][temporary values]在循环结束前不会被销毁(get dropped)。`next` 先声明后赋值是因为这样能让给编译器更准确地推断出类型。
 
 ## Loop labels
+## 循环标签
 
 > **<sup>句法</sup>**\
 > _LoopLabel_ :\
 > &nbsp;&nbsp; [LIFETIME_OR_LABEL] `:`
 
+循环表达式可以选择设置一个*标签*。这类标签被写为循环表达式之前的生命周期，如 `'foo: loop { break 'foo; }`、`'bar: while false {}`、`'humbug: for _ in 0..0 {}`。如果循环存在标签，则嵌套在该循环中的带标签的`break`和`continue`表达式可能会退出此循环或将控制权返回到其头部。请参见后面的break表达式和continue表达式。
 A loop expression may optionally have a _label_. The label is written as
-a lifetime preceding the loop expression, as in `'foo: loop { break 'foo; }`,
-`'bar: while false {}`, `'humbug: for _ in 0..0 {}`.
+a lifetime preceding the loop expression, as in `'foo: loop { break 'foo; }`, `'bar: while false {}`, `'humbug: for _ in 0..0 {}`.
 If a label is present, then labeled `break` and `continue` expressions nested
 within this loop may exit out of this loop or return control to its head.
 See [break expressions](#break-expressions) and [continue
