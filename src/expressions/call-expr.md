@@ -11,7 +11,7 @@
 > _CallParams_ :\
 > &nbsp;&nbsp; [_Expression_]&nbsp;( `,` [_Expression_] )<sup>\*</sup> `,`<sup>?</sup>
 
-*调用表达式*由一个表达式和一个带圆括号的表达式列表组成。它调用一个函数，并给其提供零个或多个输入变量。如果函数最终返回，则表达式完成。对于[非函数类型](../types/function-item.md)的表达式 f(...) 会自动使用 [`std::ops::Fn`]、[`std::ops::FnMut`] 或 [`std::ops::FnOnce`] 这些 trait 上的方法。如何选择这些 trait 要看 `f` 如何获取其输入参数的，具体就是看是通过引用、可变引用还是通过获取所有权的。如有需要，可自动借阅。Rust 也会根据需要自动取消对 `f` 的引用。下面是一些调用表达式的示例：
+*调用表达式*由一个表达式和一个带圆括号的表达式列表组成。它调用一个函数，并给其提供零个或多个输入变量。如果函数最终返回，则该表达式执行完成。对于[非函数类型](../types/function-item.md)的表达式 `f(...)` 会自动使用 [`std::ops::Fn`]、[`std::ops::FnMut`] 或 [`std::ops::FnOnce`] 这些 trait 上的方法。如何选择这些 trait 要看 `f` 如何获取其输入参数的，具体就是看是通过引用、可变引用还是通过获取所有权来获取的。如有需要，也可通过自动借用。Rust 也会根据需要自动对 `f` 作解引用处理。下面是一些调用表达式的示例：
 
 ```rust
 # fn add(x: i32, y: i32) -> i32 { 0 }
@@ -20,11 +20,11 @@ let name: &'static str = (|| "Rust")();
 ```
 
 ## Disambiguating Function Calls
-## 消除函数调用的歧义
+## 消除函数调用歧义
 
 Rust 将所有函数调用作糖化处理，以获得更直观的完全限定的语法。而在编译时，Rust 又会把所有函数调用进行脱糖(desugar)，转换为显式形式。Rust 有时可能要求您使用 trait 来限定函数调用，这取决于调用作用域内的数据项时出现的模糊性。
 
-> **注意**：过去，Rust 社区在文档、议题、RFC和其他社区文章中使用了术语“确定性函数调用句法(Unambiguous Function Call Syntax)”、“通用函数调用语法(Universal Function Call Syntax)” 或 “UFCS”。但是，这个术语缺乏描述力，可能会混淆当前的议题。我们在这里提起它是为了便于搜索。
+> **注意**：过去，Rust 社区在文档、议题、RFC和其他社区文章中使用了术语“确定性函数调用句法(Unambiguous Function Call Syntax)”、“通用函数调用句法(Universal Function Call Syntax)” 或 “UFCS”。但是，这个术语缺乏描述力，可能会混淆当前的议题。我们在这里提起它是为了便于搜索。
 
 经常会出现一些导致方法或关联函数调用的接收者或引用对象不明确的情况。这些情况可包括：
 
