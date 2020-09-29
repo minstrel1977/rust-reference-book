@@ -1,7 +1,7 @@
 # Field access expressions
 # 字段存取表达式
 
->[field-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/field-call-expr.md)\
+>[field-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/field-expr.md)\
 >commit f8e76ee9368f498f7f044c719de68c7d95da9972
 
 > **<sup>句法</sup>**\
@@ -23,12 +23,8 @@ mystruct.method();          // 方法表达式
 
 另外，如果点号左侧的表达式类型是指针，则会根据需要自动多次解引用来使字段访问成为可能。在模棱两可的情况下，Rust 倾向于更少的自动解引用。
 
-最后，结构体的字段或对结构体的引用在借用时被视为单独的实体。如果结构体没有实现 [`Drop`](../special-types-and-traits.md#drop) ，同时该结构体存储在局部变量中，（这种被视为分离的单独实体的逻辑）让每个字段的移出（move out）互不影响。如果通过用户定义的类型实现了自动解引用，这也不适用。
-Finally, the fields of a struct or a reference to a struct are treated as
-separate entities when borrowing. If the struct does not implement
-[`Drop`](../special-types-and-traits.md#drop) and is stored in a local variable,
-this also applies to moving out of each of its fields. This also does not apply
-if automatic dereferencing is done though user defined types.
+最后，当借用时，结构体的各个字段或对结构体的引用都被视为单独的实体。如果结构体没有实现 [`Drop`](../special-types-and-traits.md#drop)，同时该结构体存储在局部变量中，（这种被视为分离的单独实体的逻辑）还让每个字段的移出（move out）互不影响。如果通过用户定义的类型实现了自动解引用，这也不适用。
+<!-- Finally, the fields of a struct or a reference to a struct are treated as separate entities when borrowing. If the struct does not implement [`Drop`](../special-types-and-traits.md#drop) and is stored in a local variable, this also applies to moving out of each of its fields. This also does not apply if automatic dereferencing is done though user defined types. TobeModify-->
 
 ```rust
 struct A { f1: String, f2: String, f3: String }
@@ -38,10 +34,10 @@ let mut x: A;
 #     f2: "f2".to_string(),
 #     f3: "f3".to_string()
 # };
-let a: &mut String = &mut x.f1; // x.f1 borrowed mutably
-let b: &String = &x.f2;         // x.f2 borrowed immutably
-let c: &String = &x.f2;         // Can borrow again
-let d: String = x.f3;           // Move out of x.f3
+let a: &mut String = &mut x.f1; // x.f1 被可变借用
+let b: &String = &x.f2;         // x.f2 被不可变借用
+let c: &String = &x.f2;         // 可以被再次借用
+let d: String = x.f3;           // 从 x.f3 中移出
 ```
 
 [_Expression_]: ../expressions.md

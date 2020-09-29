@@ -1,4 +1,8 @@
 # Closure expressions
+# 闭包表达式
+
+>[closure-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/closure-expr.md)\
+>commit 19c718bd0de419892cd6ce87cc7e17ce0280d75c
 
 > **<sup>句法</sup>**\
 > _ClosureExpression_ :\
@@ -12,45 +16,17 @@
 > _ClosureParam_ :\
 > &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> [_Pattern_]&nbsp;( `:` [_Type_] )<sup>?</sup>
 
-A _closure expression_, also know as a lambda expression or a lambda, defines a 
-closure and denotes it as a value, in a single expression. A closure expression 
-is a pipe-symbol-delimited (`|`) list of irrefutable [patterns] followed by an 
-expression. Type annotations may optionally be added for the type of the 
-parameters or for the return type. If there is a return type, the expression
-used for the body of the closure must be a normal [block]. A closure expression
-also may begin with the `move` keyword before the initial `|`.
+*闭包表达式*，也称为 lambda表达式或 lambda，在单个表达式中定义闭包并将其表示为值。闭包表达式是由管道符号(`|`)封闭的不可反驳型[模式][patterns]的列表，后跟一个表达式。可以选择为参数类型或返回类型添加类型标注。如果存在返回类型，则用于闭包主体的表达式必须是普通[块][block]。闭包表达式也可以在初始 `|` 之前以关键字 `move` 开头。
 
-A closure expression denotes a function that maps a list of parameters onto
-the expression that follows the parameters. Just like a [`let` binding], the
-parameters are irrefutable [patterns], whose type annotation is optional and
-will be inferred from context if not given. Each closure expression has a
-unique, anonymous type.
+闭包表达式表示将一组参数映射到参数后面的表达式的函数。与[`let`绑定][`let` binding]一样，这里的参数也是不可反驳型[模式][patterns]，其类型标注是可选的，如果没有给出，则从上下文推断。每个闭包表达式都有一个唯一的匿名类型。
 
-Closure expressions are most useful when passing functions as arguments to other
-functions, as an abbreviation for defining and capturing a separate function.
+闭包表达式在将函数作为参数传递给其他函数时最有用，它是定义和捕获独立函数的简称。
 
-Significantly, closure expressions _capture their environment_, which regular
-[function definitions] do not. Without the `move` keyword, the closure expression
-[infers how it captures each variable from its environment](../types/closure.md#capture-modes),
-preferring to capture by shared reference, effectively borrowing
-all outer variables mentioned inside the closure's body. If needed the compiler
-will infer that instead mutable references should be taken, or that the values
-should be moved or copied (depending on their type) from the environment. A
-closure can be forced to capture its environment by copying or moving values by
-prefixing it with the `move` keyword. This is often used to ensure that the
-closure's type is `'static`.
+值得注意的是，闭包表达式能*捕获它们的环境*，而正常函数定义则不能。如果没有 `move` 关键字，闭包表达式将[推断出它该如何从其环境中捕获每个变量](../types/closure.md#capture-modes)，它会而倾向于通过共享引用来捕获，从而有效地借用闭包体中提到的所有外部变量。如果需要，编译器将推断应该采用可变引用，或者应该从环境中移动或复制值(取决于它们的类型)变量。闭包可以通过前缀 `move` 关键字来强制通过复制值或移动值的方式捕获其环境变量。这通常用来确保当前闭包的类型为 `'static`。
 
-The compiler will determine which of the [closure
-traits](../types/closure.md#call-traits-and-coercions) the closure's type will implement by how it
-acts on its captured variables. The closure will also implement
-[`Send`](../special-types-and-traits.md#send) and/or
-[`Sync`](../special-types-and-traits.md#sync) if all of its captured types do.
-These traits allow functions to accept closures using generics, even though the
-exact types can't be named.
+编译器将通过闭包对其捕获的变量的处置方式来确定闭包类型将实现哪些[闭包trait](../types/closure.md#call-traits-and-coercions)。如果所有捕获的类型都实现了 [`Send`](../special-types-and-traits.md#send) 和/或 [`Sync`](../special-types-and-traits.md#sync)，那么闭包也会实现 `Send` 和/或 `Sync`。即使不能指定确切的类型,这些 trait 也允许函数使用泛型接受闭包。
 
-In this example, we define a function `ten_times` that takes a higher-order
-function argument, and we then call it with a closure expression as an argument,
-followed by a closure expression that moves values from its environment.
+在本例中，我们定义了一个名为 `ten_times` 的函数，它接受高阶函数参数。然后用一个闭包表达式作为参数来调用它。最后还搞了一个从其环境中移进值的闭包表达式来供该函数调用。
 
 ```rust
 fn ten_times<F>(f: F) where F: Fn(i32) {
@@ -60,7 +36,7 @@ fn ten_times<F>(f: F) where F: Fn(i32) {
 }
 
 ten_times(|j| println!("hello, {}", j));
-// With type annotations
+// 带类型标注 i32
 ten_times(|j: i32| -> () { println!("hello, {}", j) });
 
 let word = "konnichiwa".to_owned();
@@ -68,15 +44,14 @@ ten_times(move |j| println!("{}, {}", word, j));
 ```
 
 ## Attributes on closure parameters
+## 闭包参数上的属性
 
-Attributes on closure parameters follow the same rules and restrictions as
-[regular function parameters].
+闭包参数上的属性遵循与[常规函数参数][regular function parameters]上相同的规则和限制。
 
 [block]: block-expr.md
 [function definitions]: ../items/functions.md
 [patterns]: ../patterns.md
 [regular function parameters]: ../items/functions.md#函数参数上的属性
-
 [_Expression_]: ../expressions.md
 [_BlockExpression_]: block-expr.md
 [_TypeNoBounds_]: ../types.md#type-expressions

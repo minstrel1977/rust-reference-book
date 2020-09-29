@@ -39,7 +39,7 @@ fn answer_to_life_the_universe_and_everything() -> i32 {
 }
 ```
 
-和 `let` 绑定一样，函数参数是不可反驳的[模式]，所以任何在 let 绑定中有效的模式作为参数也是有效的:
+和 `let` 绑定一样，函数参数是不可反驳型[模式]，所以任何在 let 绑定中有效的模式作为参数也是有效的:
 
 ```rust
 fn first((value, _): (i32, i32)) -> i32 { value }

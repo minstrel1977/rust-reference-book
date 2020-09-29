@@ -1,4 +1,8 @@
 # Loops
+# 循环
+
+>[loop-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/loop-expr.md)\
+>commit 37f61d3347d0813bce53a25c8ee068650d9a025f
 
 > **<sup>句法</sup>**\
 > _LoopExpression_ :\
@@ -15,44 +19,35 @@
 [_PredicatePatternLoopExpression_]: #predicate-pattern-loops
 [_IteratorLoopExpression_]: #iterator-loops
 
-Rust supports four loop expressions:
+Rust支持四种循环表达式：
+*   [`loop`表达式](#infinite-loops)表示一个无限循环。
+*   [`while`表达式](#predicate-loops)不断循环，直到谓词为假。
+*   [`while let`表达式](#predicate-pattern-loops)循环测试给定模式。
+*   [`for`表达式](#iterator-loops)从迭代器中循环取值，直到迭代器为空。
 
-*   A [`loop` expression](#infinite-loops) denotes an infinite loop.
-*   A [`while` expression](#predicate-loops) loops until a predicate is false.
-*   A [`while let` expression](#predicate-pattern-loops) tests a pattern.
-*   A [`for` expression](#iterator-loops) extracts values from an iterator,
-    looping until the iterator is empty.
-
-All four types of loop support [`break` expressions](#break-expressions),
-[`continue` expressions](#continue-expressions), and [labels](#loop-labels).
-Only `loop` supports [evaluation to non-trivial values](#break-and-loop-values).
+所有四种类型的循环都支持 [`break`表达式](#break-expressions)、[`continue`表达式](#continue-expressions)和[设置循环标签](#loop-labels)。只有 `loop`循环支持对循环体[求得有意义的值](#break-and-loop-values)(valuation to non-trivial values)。
 
 ## Infinite loops
+## 无限循环
 
 > **<sup>句法</sup>**\
 > _InfiniteLoopExpression_ :\
 > &nbsp;&nbsp; `loop` [_BlockExpression_]
 
-A `loop` expression repeats execution of its body continuously:
-`loop { println!("I live."); }`.
+`loop`表达式会不断地重复地执行它代码体内的代码：`loop { println!("I live."); }`。
 
-A `loop` expression without an associated `break` expression is diverging and
-has type [`!`](../types/never.md). A `loop` expression containing
-associated [`break` expression(s)](#break-expressions) may terminate, and must
-have type compatible with the value of the `break` expression(s).
+没有包含关联的 `break`表达式的 `loop`表达式是发散的，并且具有类型 [`!`](../types/never.md)。包含关联的 `break`表达式的 `loop`表达式可以终止，并且其类型必须与 `break`表达式的值兼容。
 
 ## Predicate loops
+## 谓词循环
 
 > **<sup>句法</sup>**\
 > _PredicateLoopExpression_ :\
 > &nbsp;&nbsp; `while` [_Expression_]<sub>_except struct expression_</sub> [_BlockExpression_]
 
-A `while` loop begins by evaluating the boolean loop conditional expression. If
-the loop conditional expression evaluates to `true`, the loop body block
-executes, then control returns to the loop conditional expression. If the loop
-conditional expression evaluates to `false`, the `while` expression completes.
+`while`循环从对布尔型的循环条件表达式求值开始。如果循环条件表达式的求值结果为 `true`，则执行循环体块，然后控制流程返回到循环条件表达式。如果循环条件表达式的求值结果为 `false`，则 `while`表达式完成。
 
-An example:
+举个例子：
 
 ```rust
 let mut i = 0;
@@ -64,18 +59,14 @@ while i < 10 {
 ```
 
 ## Predicate pattern loops
+## 谓词模式循环
 
 > **<sup>句法</sup>**\
 > [_PredicatePatternLoopExpression_] :\
 > &nbsp;&nbsp; `while` `let` [_MatchArmPatterns_] `=` [_Expression_]<sub>_except struct or lazy boolean operator expression_</sub>
 >              [_BlockExpression_]
 
-A `while let` loop is semantically similar to a `while` loop but in place of a
-condition expression it expects the keyword `let` followed by a pattern, an
-`=`, a [scrutinee] expression and a block expression. If the value of the
-scrutinee matches the pattern, the loop body block executes then control
-returns to the pattern matching statement. Otherwise, the while expression
-completes.
+`while let`循环在语义上类似于 `while`循环，但它用 `let`关键字后紧跟着一个模式、一个 `=`、一个[检验(scrutinee)][scrutinee]表达式和一个块表达式，来替代原来的条件表达式。如果检验表达式的值与模式匹配，则执行循环体块，然后控制流程返回到模式匹配语句。否则，`while`表达式完成。
 
 ```rust
 let mut x = vec![1, 2, 3];
@@ -85,13 +76,12 @@ while let Some(y) = x.pop() {
 }
 
 while let _ = 5 {
-    println!("Irrefutable patterns are always true");
+    println!("不可反驳的模式总是会匹配成功的");
     break;
 }
 ```
 
-A `while let` loop is equivalent to a `loop` expression containing a [`match`
-expression] as follows.
+`while let`循环等价于包含 `match`表达式的 `loop`表达式。如下：
 
 <!-- ignore: expansion example -->
 ```rust,ignore
@@ -100,7 +90,7 @@ expression] as follows.
 }
 ```
 
-is equivalent to
+等价于
 
 <!-- ignore: expansion example -->
 ```rust,ignore
@@ -112,25 +102,27 @@ is equivalent to
 }
 ```
 
-Multiple patterns may be specified with the `|` operator. This has the same semantics
-as with `|` in `match` expressions:
+可以使用 `|`操作符指定多个模式。这与 `match`表达式中的 `|` 具有相同的语义：
 
 ```rust
 let mut vals = vec![2, 3, 1, 2, 2];
 while let Some(v @ 1) | Some(v @ 2) = vals.pop() {
-    // Prints 2, 2, then 1
+    // 打印 2, 2, 然后 1
     println!("{}", v);
 }
 ```
 
-As is the case in [`if let` expressions], the scrutinee cannot be a [lazy boolean operator expression][_LazyBooleanOperatorExpression_].
+与 [`if let`表达式][`if let` expressions]的情况一样，检验表达式不能是一个[懒惰布尔运算符表达式][_LazyBooleanOperatorExpression_]。
 
 ## Iterator loops
+## 迭代器循环
 
 > **<sup>句法</sup>**\
 > _IteratorLoopExpression_ :\
 > &nbsp;&nbsp; `for` [_Pattern_] `in` [_Expression_]<sub>_except struct expression_</sub>
 >              [_BlockExpression_]
+
+`for`表达式是一个语法结构，用于在 `std::iter::IntoIterator` 的实现(implementation)提供的元素上循环。如果迭代器生成一个值，该值将与不可反驳的模式进行匹配，执行循环体，然后控制权返回到`for`循环的头部。如果迭代器为空，则`for`表达式完成。
 
 A `for` expression is a syntactic construct for looping over elements provided
 by an implementation of `std::iter::IntoIterator`. If the iterator yields a

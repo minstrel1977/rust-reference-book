@@ -120,7 +120,7 @@
 
 - [ABI](abi.md)
 
-- [Rust 运行时](runtime.md)
+- [Rust运行时](runtime.md)
 
 - [附录](appendices.md)
     - [宏定义规范](macro-ambiguity.md)
