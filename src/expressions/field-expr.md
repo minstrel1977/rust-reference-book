@@ -1,30 +1,27 @@
 # Field access expressions
+# 字段存取表达式
+
+>[field-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/field-call-expr.md)\
+>commit f8e76ee9368f498f7f044c719de68c7d95da9972
 
 > **<sup>句法</sup>**\
 > _FieldExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `.` [IDENTIFIER]
 
-A _field expression_ consists of an expression followed by a single dot and an
-[identifier], when not immediately followed by a parenthesized expression-list
-(the latter is always a [method call expression]). A field expression denotes a
-field of a [struct] or [union]. To call a function stored in a struct,
-parentheses are needed around the field expression.
+*字段表达式*由一个表达式、一个单点号和一个[标识符][identifier]组成，且后面不能再紧跟着一个被圆括号括起来的表达式列表(后者总是一个[方法调用表达式][method call expression])。字段表达式代表[结构体][struct]或[联合体][union]的字段。要调用存储在结构体中的函数(型字段)，需要在字段表达式外加一对圆括号。
 
 <!-- ignore: needs lots of support code -->
 ```rust,ignore
 mystruct.myfield;
 foo().x;
 (Struct {a: 10, b: 20}).a;
-mystruct.method();          // Method expression
-(mystruct.function_field)() // Call expression containing a field expression
+mystruct.method();          // 方法表达式
+(mystruct.function_field)() // 调用表达式里包含一个字段表达式
 ```
 
-A field access is a [place expression] referring to the location of that field.
-When the subexpression is [mutable], the field expression is also mutable.
+字段访问是引用该字段位置的[位置表达式][place expression]。当子表达式是[可变的][mutable]时，此字段表达式也是可变的。
 
-Also, if the type of the expression to the left of the dot is a pointer, it is
-automatically dereferenced as many times as necessary to make the field access
-possible. In cases of ambiguity, we prefer fewer autoderefs to more.
+另外，如果点号左侧的表达式类型是指针，则会根据需要自动多次解引用来使字段访问成为可能。在模棱两可的情况下，Rust 倾向于更少的自动解引用。
 
 Finally, the fields of a struct or a reference to a struct are treated as
 separate entities when borrowing. If the struct does not implement
