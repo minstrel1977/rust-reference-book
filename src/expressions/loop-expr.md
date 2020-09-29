@@ -122,15 +122,9 @@ while let Some(v @ 1) | Some(v @ 2) = vals.pop() {
 > &nbsp;&nbsp; `for` [_Pattern_] `in` [_Expression_]<sub>_except struct expression_</sub>
 >              [_BlockExpression_]
 
-`for`表达式是一个语法结构，用于在 `std::iter::IntoIterator` 的实现(implementation)提供的元素上循环。如果迭代器生成一个值，该值将与不可反驳的模式进行匹配，执行循环体，然后控制权返回到`for`循环的头部。如果迭代器为空，则`for`表达式完成。
+`for`表达式是一个语法结构，用于在 `std::iter::IntoIterator` 的某个迭代器实现提供的元素上循环。如果迭代器生成一个值，该值将与此 `for`表达式提供的不可反驳型的模式进行匹配，执行循环体，然后控制流程返回到 `for`循环的头部。如果迭代器为空，则 `for`表达式执行完成。
 
-A `for` expression is a syntactic construct for looping over elements provided
-by an implementation of `std::iter::IntoIterator`. If the iterator yields a
-value, that value is matched against the irrefutable pattern, the body of the
-loop is executed, and then control returns to the head of the `for` loop. If the
-iterator is empty, the `for` expression completes.
-
-An example of a `for` loop over the contents of an array:
+`for`循环遍历数组内容的示例：
 
 ```rust
 let v = &["apples", "cake", "coffee"];
@@ -140,7 +134,7 @@ for text in v {
 }
 ```
 
-An example of a for loop over a series of integers:
+`for`循环遍历一个整数序列的例子：
 
 ```rust
 let mut sum = 0;
@@ -150,7 +144,7 @@ for n in 1..11 {
 assert_eq!(sum, 55);
 ```
 
-A for loop is equivalent to the following block expression.
+`for`循环等价于后面的块表达式。
 
 <!-- ignore: expansion example -->
 ```rust,ignore
@@ -159,7 +153,7 @@ A for loop is equivalent to the following block expression.
 }
 ```
 
-is equivalent to
+等价于：
 
 <!-- ignore: expansion example -->
 ```rust,ignore
