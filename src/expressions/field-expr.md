@@ -23,6 +23,7 @@ mystruct.method();          // 方法表达式
 
 另外，如果点号左侧的表达式类型是指针，则会根据需要自动多次解引用来使字段访问成为可能。在模棱两可的情况下，Rust 倾向于更少的自动解引用。
 
+最后，结构体的字段或对结构体的引用在借用时被视为单独的实体。如果结构体没有实现 [`Drop`](../special-types-and-traits.md#drop) ，同时该结构体存储在局部变量中，（这种被视为分离的单独实体的逻辑）让每个字段的移出（move out）互不影响。如果通过用户定义的类型实现了自动解引用，这也不适用。
 Finally, the fields of a struct or a reference to a struct are treated as
 separate entities when borrowing. If the struct does not implement
 [`Drop`](../special-types-and-traits.md#drop) and is stored in a local variable,
