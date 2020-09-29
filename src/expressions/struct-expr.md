@@ -81,11 +81,10 @@ let c3 = Color{1: 0, ..c2};  // 使用基的字段值来填写结构体的所有
 ```
 
 ### Struct field init shorthand
+### 初始化结构体字段的快捷方法
 
-When initializing a data structure (struct, enum, union) with named (but not
-numbered) fields, it is allowed to write `fieldname` as a shorthand for
-`fieldname: fieldname`. This allows a compact syntax with less duplication.
-For example:
+当使用字段的名字(序列索引不行)初始化数据结构(结构体、枚举、联合体)时，允许将`fieldname: fieldname` 写成 `fieldname` 这样的简化形式。
+这种语法使代码用更少重复，更加紧凑。例如：
 
 ```rust
 # struct Point3d { x: i32, y: i32, z: i32 }
@@ -97,35 +96,32 @@ Point3d { x, y: y_value, z };
 ```
 
 ## Tuple struct expression
+## 元组结构体表达式
 
-A struct expression with fields enclosed in parentheses constructs a tuple struct. Though
-it is listed here as a specific expression for completeness, it is equivalent to a [call
-expression] to the tuple struct's constructor. For example:
+用圆括号括起字段名的结构体表达式构造出来的结构体为元组结构体。虽然为了完整起见，把它作为一个特定(结构体)表达式列在这里，但它等价于对元组结构体构造器的[调用表达式][call expression]。例如：
 
 ```rust
 struct Position(i32, i32, i32);
-Position(0, 0, 0);  // Typical way of creating a tuple struct.
-let c = Position;  // `c` is a function that takes 3 arguments.
-let pos = c(8, 6, 7);  // Creates a `Position` value.
+Position(0, 0, 0);  // 创建元组结构体的典型方法。
+let c = Position;  // `c` 是一个接收3个参数的函数。
+let pos = c(8, 6, 7);  // 创建一个 `Position` 值。
 ```
 
 ## Unit struct expression
+## 单元结构体表达式
 
-A unit struct expression is just the path to a unit struct item. This refers to the unit
-struct's implicit constant of its value. The unit struct value can also be constructed
-with a fieldless struct expression. For example:
+单元结构表达式只是单元结构数据项的路径。也是指向此单元结构体的值的隐式常量。单元结构体的值也可以用无字段结构体表达式来构造。例如：
 
 ```rust
 struct Gamma;
-let a = Gamma;  // Gamma unit value.
-let b = Gamma{};  // Exact same value as `a`.
+let a = Gamma;  // Gamma的值。
+let b = Gamma{};  // 和`a`的值完全一样。
 ```
 
 ## Struct expression attributes
+## 结构体表达式上的属性
 
-[Inner attributes] are allowed directly after the opening brace or parenthesis
-of a struct expression in the same expression contexts as [attributes on block
-expressions].
+适用于[块表达式上的属性][attributes on block expressions]的表达式上下文同样适用于结构体表达式上的属性，同样也是允许[内部属性][Inner attributes]直接位于表达式的左括号(花括号和圆括号都有可能)之后。
 
 [IDENTIFIER]: ../identifiers.md
 [Inner attributes]: ../attributes.md
