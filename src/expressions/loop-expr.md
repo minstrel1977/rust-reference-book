@@ -184,22 +184,17 @@ assert_eq!(sum, 55);
 > _LoopLabel_ :\
 > &nbsp;&nbsp; [LIFETIME_OR_LABEL] `:`
 
-循环表达式可以选择设置一个*标签*。这类标签被写为循环表达式之前的生命周期，如 `'foo: loop { break 'foo; }`、`'bar: while false {}`、`'humbug: for _ in 0..0 {}`。如果循环存在标签，则嵌套在该循环中的带标签的`break`和`continue`表达式可能会退出此循环或将控制权返回到其头部。请参见后面的break表达式和continue表达式。
-A loop expression may optionally have a _label_. The label is written as
-a lifetime preceding the loop expression, as in `'foo: loop { break 'foo; }`, `'bar: while false {}`, `'humbug: for _ in 0..0 {}`.
-If a label is present, then labeled `break` and `continue` expressions nested
-within this loop may exit out of this loop or return control to its head.
-See [break expressions](#break-expressions) and [continue
-expressions](#continue-expressions).
+循环表达式可以选择设置一个*标签*。这类标签被写为循环表达式之前的生命周期，如 `'foo: loop { break 'foo; }`、`'bar: while false {}`、`'humbug: for _ in 0..0 {}`。如果循环存在标签，则嵌套在该循环中的带标签的 `break`和`continue`表达式可能会退出此循环或将控制流程返回到其头部。请参见后面的 [break表达式](#break-expressions)和 [continue表达式](#continue-expressions)。
+A loop expression may optionally have a _label_. The label is written as a lifetime preceding the loop expression, as in `'foo: loop { break 'foo; }`, `'bar: while false {}`, `'humbug: for _ in 0..0 {}`.If a label is present, then labeled `break` and `continue` expressions nested within this loop may exit out of this loop or return control to its head.See [break expressions] and [continue expressions].
 
 ## `break` expressions
+## `break`表达式
 
 > **<sup>句法</sup>**\
 > _BreakExpression_ :\
 > &nbsp;&nbsp; `break` [LIFETIME_OR_LABEL]<sup>?</sup> [_Expression_]<sup>?</sup>
 
-When `break` is encountered, execution of the associated loop body is
-immediately terminated, for example:
+当遇到 `break` 时，相关的循环体的执行将立即终止，例如：
 
 ```rust
 let mut last = 0;
@@ -212,9 +207,7 @@ for x in 1..100 {
 assert_eq!(last, 12);
 ```
 
-A `break` expression is normally associated with the innermost `loop`, `for` or
-`while` loop enclosing the `break` expression, but a [label](#loop-labels) can
-be used to specify which enclosing loop is affected. Example:
+`break`表达式通常与包含`break`表达式的最内层 `loop`、`for`或 `while`循环相关联，但是可以使用[标签](#loop-labels)来指定受影响的循环(此循环必须是封闭包裹了该 break表达式的循环之一)。例如：
 
 ```rust
 'outer: loop {
@@ -224,31 +217,23 @@ be used to specify which enclosing loop is affected. Example:
 }
 ```
 
-A `break` expression is only permitted in the body of a loop, and has one of
-the forms `break`, `break 'label` or ([see below](#break-and-loop-values))
-`break EXPR` or `break 'label EXPR`.
+`break`表达式只允许在循环体内使用，它有 `break`、`break 'label`([参见后面](#break-and-loop-values))或`break EXPR`或`break 'label EXPR` 这四种形式。
 
 ## `continue` expressions
+## `continue`表达式
 
 > **<sup>句法</sup>**\
 > _ContinueExpression_ :\
 > &nbsp;&nbsp; `continue` [LIFETIME_OR_LABEL]<sup>?</sup>
 
-When `continue` is encountered, the current iteration of the associated loop
-body is immediately terminated, returning control to the loop *head*. In
-the case of a `while` loop, the head is the conditional expression controlling
-the loop. In the case of a `for` loop, the head is the call-expression
-controlling the loop.
+当遇到 `continue` 时，相关的循环体的当前迭代将立即终止，并将控制流程返回给循环头。在 `while`循环的情况下，循环头是控制循环的条件表达式。在 `for`循环的情况下，循环头是控制循环的调用表达式。
 
-Like `break`, `continue` is normally associated with the innermost enclosing
-loop, but `continue 'label` may be used to specify the loop affected.
-A `continue` expression is only permitted in the body of a loop.
+与 `break` 一样，`continue` 通常与最内部的循环相关联，但可以使用 `continue 'label` 来指定受影响的循环。`continue`表达式只允许在循环体内部使用。
 
 ## `break` and loop values
+## `break`和`loop`返回值
 
-When associated with a `loop`, a break expression may be used to return a value
-from that loop, via one of the forms `break EXPR` or `break 'label EXPR`, where
-`EXPR` is an expression whose result is returned from the `loop`. For example:
+当使用 `loop`循环时，可以使用 `break`表达式从循环中返回一个值，通过形如 `break EXPR` 或 `break 'label EXPR` 来返回，其中 `EXPR` 是一个表达式，其结果从 `loop`循环中返回。例如：
 
 ```rust
 let (mut a, mut b) = (1, 1);
@@ -260,14 +245,11 @@ let result = loop {
     a = b;
     b = c;
 };
-// first number in Fibonacci sequence over 10:
+// 斐波那契数列中第一个大于10的值：
 assert_eq!(result, 13);
 ```
 
-In the case a `loop` has an associated `break`, it is not considered diverging,
-and the `loop` must have a type compatible with each `break` expression.
-`break` without an expression is considered identical to `break` with
-expression `()`.
+如果 `loop` 有关联的 `break`，则不认为该循环是发散的，并且 `loop` 必须具有与每个 `break`表达式兼容的类型。不带表达式的 `break` 被认为与带 `()`表达式的 `break` 相同。
 
 [LIFETIME_OR_LABEL]: ../tokens.md#生命周期和循环标签
 [_BlockExpression_]: block-expr.md

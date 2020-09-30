@@ -480,9 +480,9 @@ let x: f64 = 2.; // type f64
 | `@`    | At          | [子模式绑定]
 | `_`    | Underscore  | [通配符模式], [类型推断], [常量]中的非命名数据项, [外部 crate], 和 [use 声明]
 | `.`    | Dot         | [字段存取][field], [元组索引]
-| `..`   | DotDot      | [范围][range], [结构体表达式], [模式]
-| `...`  | DotDotDot   | [可变参数函数][extern], [范围模式]
-| `..=`  | DotDotEq    | [闭区间][range], [范围模式]
+| `..`   | DotDot      | [区间][range], [结构体表达式], [模式]
+| `...`  | DotDotDot   | [可变参数函数][extern], [区间模式]
+| `..=`  | DotDotEq    | [闭区间][range], [区间模式]
 | `,`    | Comma       | 各种分隔符
 | `;`    | Semi        | 各种数据项和语句的结束符, [数组类型]
 | `:`    | Colon       | 各种分隔符
@@ -505,7 +505,7 @@ let x: f64 = 2.; // type f64
 
 
 [类型推断]: types/inferred.md
-[范围模式]: patterns.md#range-patterns
+[区间模式]: patterns.md#range-patterns
 [引用模式]: patterns.md#reference-patterns
 [子模式绑定]: patterns.md#identifier-patterns
 [Wildcard patterns]: patterns.md#wildcard-pattern

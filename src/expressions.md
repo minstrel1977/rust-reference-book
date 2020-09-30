@@ -176,7 +176,7 @@ let b: &[i32];
 <!-- 本列表需要和 block-expr.md 保持同步-->
 
 在下面情形之前是不允许的：
-* [范围][_RangeExpression_]表达式。
+* [区间][_RangeExpression_]表达式。
 * 二元运算符表达式([_ArithmeticOrLogicalExpression_]、[_ComparisonExpression_]、[_LazyBooleanExpression_]、[_TypeCastExpression_]、[_AssignmentExpression_]、[_CompoundAssignmentExpression_])。
 
 

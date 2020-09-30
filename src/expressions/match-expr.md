@@ -1,8 +1,12 @@
 # `match` expressions
+# `match`表达式
+
+>[match-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/match-expr.md)\
+>commit 41cf00929903710a9ce9b1f4c5d8b96e6a511614
 
 > **<sup>句法</sup>**\
 > _MatchExpression_ :\
-> &nbsp;&nbsp; `match` [_Expression_]<sub>_except struct expression_</sub> `{`\
+> &nbsp;&nbsp; `match` [_Expression_]<sub>_排除结构体表达式_</sub> `{`\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_InnerAttribute_]<sup>\*</sup>\
 > &nbsp;&nbsp; &nbsp;&nbsp; _MatchArms_<sup>?</sup>\
 > &nbsp;&nbsp; `}`
@@ -23,13 +27,9 @@
 > _MatchArmGuard_ :\
 > &nbsp;&nbsp; `if` [_Expression_]
 
-A *`match` expression* branches on a pattern. The exact form of matching that
-occurs depends on the [pattern]. A `match`
-expression has a *[scrutinee] expression*, which is the value to compare to the
-patterns. The scrutinee expression and the patterns must have the same type.
+*`match`表达式*在模式上建立分支。匹配的具体形式取决于[模式][pattern]。一个 `match`表达式带有一个 *[检验][scrutinee](scrutinee)表达式*，它是要与模式进行比较的值。检验表达式和模式必须具有相同的类型。
 
-A `match` behaves differently depending on whether or not the scrutinee
-expression is a [place expression or value expression][place expression].
+根据检验表达式是[位置表达式或值表达式][place expression]，`match`的行为会有所不同。如果检验表达式是一个值表达式，则这个表达式首先会在被分配到一个临时位置被求值，然后将这个返回值按顺序与臂中的模式进行比较，直到找到一个成功的匹配。第一个匹配上的臂就被选做这个match的目标分支，当前模式绑定的任何变量将会对应分配给该臂的代码块中的局部变量，同时程序的运行控制权也会进入这个代码块。
 If the scrutinee expression is a [value expression], it is first evaluated into
 a temporary location, and the resulting value is sequentially compared to the
 patterns in the arms until a match is found. The first arm with a matching
