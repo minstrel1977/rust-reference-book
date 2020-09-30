@@ -1,4 +1,8 @@
 # Patterns
+# 模式
+
+>[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
+>commit 589c2163d018b408da173325e02c7b59c139c3d1
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\
@@ -19,6 +23,8 @@
 > &nbsp;&nbsp; | [_SlicePattern_]\
 > &nbsp;&nbsp; | [_PathPattern_]\
 > &nbsp;&nbsp; | [_MacroInvocation_]
+
+模式用于根据类型的结构匹配值，并可选地将变量绑定到这些结构中的值。它们还用于函数和闭包的变量声明和参数中。
 
 Patterns are used to match values against structures and to,
 optionally, bind variables to values inside these structures. They are also
