@@ -24,20 +24,14 @@
 > &nbsp;&nbsp; | [_PathPattern_]\
 > &nbsp;&nbsp; | [_MacroInvocation_]
 
-模式用于根据类型的结构匹配值，并可选地将变量绑定到这些结构中的值。它们还用于函数和闭包的变量声明和参数中。
+模式用于根据给定结构去匹配值，并可选地将变量和这些结构中匹配到的值相互绑定。模式还用在函数和闭包的变量声明和参数中。
 
-Patterns are used to match values against structures and to,
-optionally, bind variables to values inside these structures. They are also
-used in variable declarations and parameters for functions and closures.
+下面示例中的模式完成四件事：
 
-The pattern in the following example does four things:
-
-* Tests if `person` has the `car` field filled with something.
-* Tests if the person's `age` field is between 13 and 19, and binds its value to
-  the `person_age` variable.
-* Binds a reference to the `name` field to the variable `person_name`.
-* Ignores the rest of the fields of `person`. The remaining fields can have any value and
-  are not bound to any variables.
+* 测试 `person` 是否在 `car`字段中填充了内容。
+* 测试变量 `person` 的 `age` 字段(的值)是否在13到19之间，并将其值绑定到变量 `person_age` 上。
+* 将对 `name` 字段的引用绑定到变量 `person_name` 上。
+* 忽略 `person` 的其余字段。其余字段可以有任何值，并且不绑定到任何变量。
 
 ```rust
 # struct Car;
@@ -66,26 +60,19 @@ if let
 }
 ```
 
-Patterns are used in:
+模式用于：
 
-* [`let` declarations](statements.md#let语句)
-* [Function](items/functions.md) and [closure](expressions/closure-expr.md)
-  parameters
-* [`match` expressions](expressions/match-expr.md)
-* [`if let` expressions](expressions/if-expr.md)
-* [`while let` expressions](expressions/loop-expr.md#predicate-pattern-loops)
-* [`for` expressions](expressions/loop-expr.md#iterator-loops)
+* [`let`声明](statements.md#let语句)
+* [函数](items/functions.md)和[闭包](expressions/closure-expr.md)的参数。
+* [匹配(`match`)表达式](expressions/match-expr.md)
+* [`if let`表达式](expressions/if-expr.md)
+* [`while let`表达式](expressions/loop-expr.md#predicate-pattern-loops)
+* [`for`表达式](expressions/loop-expr.md#iterator-loops)
 
 ## Destructuring
+## 解构
 
-Patterns can be used to *destructure* [structs], [enums], and [tuples].
-Destructuring breaks up a value into its component pieces. The syntax used is
-almost the same as when creating such values. In a pattern whose [scrutinee]
-expression has a `struct`, `enum` or `tuple` type, a placeholder (`_`) stands
-in for a *single* data field, whereas a wildcard `..` stands in for *all* the
-remaining fields of a particular variant. When destructuring a data structure
-with named (but not numbered) fields, it is allowed to write `fieldname` as a
-shorthand for `fieldname: fieldname`.
+模式可用于*解构*[结构体][structs]、[枚举][enums]和[元组][tuples]。解构将一个值分解成它的组成部分。使用的句法与创建此类值时的几乎相同。在[检验对象][scrutinee]表达式具有结构体(`struct`)、枚举(`enum`)或元组(`tuple`)类型的模式中，占位符(`_`) 代表*单个*数据字段，而通配符`..` 代表特定变量(variant)的*所有*剩余字段。当使用字段的名称(而不是编号)来解构数据结构时，允许将 `fieldname` 写作 `fieldname: fieldname`的简写形式。
 
 ```rust
 # enum Message {
@@ -107,22 +94,22 @@ match message {
 ```
 
 ## Refutability
+## 可反驳性
 
-A pattern is said to be *refutable* when it has the possibility of not being matched
-by the value it is being matched against. *Irrefutable* patterns, on the other hand,
-always match the value they are being matched against. Examples:
+当一个模式有可能与它所匹配的值不匹配时，我们就说它是*可反驳型的(refutable)*。另一方面，*不可反驳型的(irrefutable)*模式总是与它们所匹配的值相匹配。例如：
 
 ```rust
-let (x, y) = (1, 2);               // "(x, y)" is an irrefutable pattern
+let (x, y) = (1, 2);               // "(x, y)" 是一个不可反驳型模式
 
-if let (a, 3) = (1, 2) {           // "(a, 3)" is refutable, and will not match
+if let (a, 3) = (1, 2) {           // "(a, 3)" 是可反驳型的, 将不会匹配
     panic!("Shouldn't reach here");
-} else if let (a, 4) = (3, 4) {    // "(a, 4)" is refutable, and will match
+} else if let (a, 4) = (3, 4) {    // "(a, 4)" 是可反驳型的, 将会匹配
     println!("Matched ({}, 4)", a);
 }
 ```
 
 ## Literal patterns
+## 字面量模式
 
 > **<sup>句法</sup>**\
 > _LiteralPattern_ :\
@@ -146,22 +133,17 @@ if let (a, 3) = (1, 2) {           // "(a, 3)" is refutable, and will not match
 [INTEGER_LITERAL]: tokens.md#integer-literals
 [FLOAT_LITERAL]: tokens.md#floating-point-literals
 
-_Literal patterns_ match exactly the same value as what is created by the
-literal. Since negative numbers are not [literals], literal patterns also
-accept an optional minus sign before the literal, which acts like the negation
-operator.
+*字面量模式*匹配的值与字面量所创建的值完全相同。由于负数不是[字面量][literals]，字面量模式也接受字面量前的可选负号，它的作用类似于否定运算符。
 
 <div class="warning">
 
-Floating-point literals are currently accepted, but due to the complexity of comparing
-them, they are going to be forbidden on literal patterns in a future version of Rust (see
-[issue #41620](https://github.com/rust-lang/rust/issues/41620)).
+浮点字面量目前还可以使用，但是由于它们在数值比较时带来的复杂性，在将来的 Rust 版本中，它们将被禁止用于字面量模式(参见 [issue #41620](https://github.com/rust-lang/rust/issues/41620))。
 
 </div>
 
-Literal patterns are always refutable.
+字面量模式总是可以反驳型的。
 
-Examples:
+例如：
 
 ```rust
 for i in -2..5 {
@@ -175,19 +157,15 @@ for i in -2..5 {
 ```
 
 ## Identifier patterns
+## 标识符模式
 
 > **<sup>句法</sup>**\
 > _IdentifierPattern_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `ref`<sup>?</sup> `mut`<sup>?</sup> [IDENTIFIER] (`@` [_Pattern_] ) <sup>?</sup>
 
-Identifier patterns bind the value they match to a variable. The identifier
-must be unique within the pattern. The variable will shadow any variables of
-the same name in scope. The scope of the new binding depends on the context of
-where the pattern is used (such as a `let` binding or a `match` arm).
+标识符模式将它们匹配的值绑定到一个变量上。标识符在模式中必须是唯一的。该变量将在作用域中遮蔽同名的任何变量。这种绑定的作用域取决于使用模式的上下文(例如 `let`绑定或匹配(`match`)的匹配臂)。
 
-Patterns that consist of only an identifier, possibly with a `mut`, match any value and
-bind it to that identifier. This is the most commonly used pattern in variable
-declarations and parameters for functions and closures.
+只包含标识符(也可能前带一个 `mut`)的模式能匹配任何值并将其绑定到该标识符。这是函数和闭包的变量声明和传参最常用的模式。
 
 ```rust
 let mut variable = 10;
@@ -196,9 +174,7 @@ fn sum(x: i32, y: i32) -> i32 {
 # }
 ```
 
-To bind the matched value of a pattern to a variable, use the syntax `variable @
-subpattern`. For example, the following binds the value 2 to `e` (not the
-entire range: the range here is a range subpattern).
+要将模式的匹配值绑定到变量，可使用句法 `variable @ subpattern`。例如，下面示例中将值2绑定到 `e` (不是整个区间(range)：这里的区间是一个区间子模式(range subpattern))。
 
 ```rust
 let x = 2;
@@ -209,10 +185,7 @@ match x {
 }
 ```
 
-By default, identifier patterns bind a variable to a copy of or move from the
-matched value depending on whether the matched value implements [`Copy`].
-This can be changed to bind to a reference by using the `ref` keyword,
-or to a mutable reference using `ref mut`. For example:
+默认情况下，标识符模式里变量和匹配值绑定有两种方式，一种是变量和匹配值的副本绑定，一种是将匹配值移动到变量里来完成绑定，具体是拷贝还是移动取决于匹配值是否实现了 [`Copy`]。也可以通过使用 `ref` 关键字将变量和值的引用绑定，或者使用 `ref mut`将变量和值的可变引用绑定。例如：
 
 ```rust
 # let a = Some(10);
@@ -227,10 +200,7 @@ match a {
 }
 ```
 
-In the first match expression, the value is copied (or moved). In the second match,
-a reference to the same memory location is bound to the variable value. This syntax is
-needed because in destructuring subpatterns the `&` operator can't be applied to
-the value's fields. For example, the following is not valid:
+在第一个匹配表达式中，值被复制(或移动)。在第二个匹配中，对相同内存位置的引用被绑定到变量上。之所以需要这种句法，是因为在解构子模式(destructuring subpatterns)中，`&`操作符不能应用于值的字段。例如，以下内容无效:
 
 ```rust,compile_fail
 # struct Person {
@@ -241,7 +211,7 @@ the value's fields. For example, the following is not valid:
 if let Person{name: &person_name, age: 18..=150} = value { }
 ```
 
-To make it valid, write the following:
+要使其有效，请编写以下代码:
 
 ```rust
 # struct Person {
@@ -252,15 +222,12 @@ To make it valid, write the following:
 if let Person{name: ref person_name, age: 18..=150} = value { }
 ```
 
-Thus, `ref` is not something that is being matched against. Its objective is
-exclusively to make the matched binding a reference, instead of potentially
-copying or moving what was matched.
+因此，`ref` 不是被匹配的某个实体。它的目标是使变量和匹配值的引用绑定起来，而不是潜在地复制或移动匹配的内容。
 
-[Path patterns](#path-patterns) take precedence over identifier patterns. It is an error
-if `ref` or `ref mut` is specified and the identifier shadows a constant.
+[路径模式(Path pattern)](#path-patterns)优先于标识符模式。如果 `ref` 或 `ref mut` 被指定，同时标识符遮蔽了某个常量，这将导致错误。
+<!-- [Path patterns](#path-patterns) take precedence over identifier patterns. It is an error if `ref` or `ref mut` is specified and the identifier shadows a constant. TobeModify-->
 
-Identifier patterns are irrefutable if the `@` subpattern is irrefutable or
-the subpattern is not specified.
+如果 `@`子模式是不可反驳型的或子模式未指定，则标识符模式是不可反驳型的。
 
 ### Binding modes
 
