@@ -27,24 +27,13 @@
 > _MatchArmGuard_ :\
 > &nbsp;&nbsp; `if` [_Expression_]
 
-*`match`表达式*在模式上建立分支。匹配的具体形式取决于[模式][pattern]。一个 `match`表达式带有一个 *[检验][scrutinee](scrutinee)表达式*，它是要与模式进行比较的值。检验表达式和模式必须具有相同的类型。
+*`match`表达式*在模式(pattern)上建立控制流程分支(branch)。匹配的具体形式取决于[模式][pattern]。一个 `match`表达式带有一个 *[检验对象][scrutinee](scrutinee)表达式*，它是要与模式进行比较的值。检验对象表达式和模式必须具有相同的类型。
 
-根据检验表达式是[位置表达式或值表达式][place expression]，`match`的行为会有所不同。如果检验表达式是一个值表达式，则这个表达式首先会在被分配到一个临时位置被求值，然后将这个返回值按顺序与臂中的模式进行比较，直到找到一个成功的匹配。第一个匹配上的臂就被选做这个match的目标分支，当前模式绑定的任何变量将会对应分配给该臂的代码块中的局部变量，同时程序的运行控制权也会进入这个代码块。
-If the scrutinee expression is a [value expression], it is first evaluated into
-a temporary location, and the resulting value is sequentially compared to the
-patterns in the arms until a match is found. The first arm with a matching
-pattern is chosen as the branch target of the `match`, any variables bound by
-the pattern are assigned to local variables in the arm's block, and control
-enters the block.
+根据检验对象表达式是[位置表达式或值表达式][place expression]，`match` 的行为会有所不同。如果检验对象表达式是一个[值表达式][value expression]，则这个表达式首先会在被求值到一个临时位置，然后将这个返回值按顺序与匹配臂中的模式进行比较，直到找到一个成功的匹配。带有匹配成功的模式的第一个匹配臂会被选中为当前 `match`表达式的分支目标，然后由该模式匹配绑定到的任何变量都会被赋值给该匹配臂的块中的局部变量，然后控制流程进入该块。
 
-When the scrutinee expression is a [place expression], the match does not
-allocate a temporary location; however, a by-value binding may copy or move
-from the memory location.
-When possible, it is preferable to match on place expressions, as the lifetime
-of these matches inherits the lifetime of the place expression rather than being
-restricted to the inside of the match.
+当检验对象表达式是一个[位置表达式][place expression]时，此 `match`表达式不用先去内存上分配一个临时位置，但是，按值匹配绑定会复制或移动这个(位置表达式代表的)内存位置里面的值。如果可能，最好是在匹配位置表达式上进行匹配，因为这种匹配的生命周期继承了位置表达式的生命周期，而不会(让其生命周期仅)局限于此匹配的内部。
 
-An example of a `match` expression:
+`match`表达式的一个示例：
 
 ```rust
 let x = 1;
@@ -59,11 +48,9 @@ match x {
 }
 ```
 
-Variables bound within the pattern are scoped to the match guard and the arm's
-expression. The [binding mode] (move, copy, or reference) depends on the pattern.
+模式中的变量绑定的作用域是在匹配守卫(match guard)和匹配臂的表达式里。[变量绑定方式][binding mode](移动、复制或引用)取决于模式。
 
-Multiple match patterns may be joined with the `|` operator. Each pattern will be
-tested in left-to-right sequence until a successful match is found.
+可以使用 `|`操作符连接多个匹配模式。每个模式将按照从左到右的顺序进行测试，直到找到一个成功的匹配。
 
 ```rust
 let x = 9;
@@ -75,7 +62,7 @@ let message = match x {
 
 assert_eq!(message, "a few");
 
-// Demonstration of pattern match order.
+// 演示模式匹配顺序。
 struct S(i32, i32);
 
 match S(1, 2) {
@@ -84,23 +71,16 @@ match S(1, 2) {
 }
 ```
 
-> Note: The `2..=9` is a [Range Pattern], not a [Range Expression]. Thus, only
-> those types of ranges supported by range patterns can be used in match arms.
+> 注意: `2..=9` 是一个[区间(Range)模式][Range Pattern]，不是一个[区间表达式][Range Expression]。因此，只有区间模式支持的区间类型才能在匹配臂中使用。
 
-Every binding in each `|` separated pattern must appear in all of the patterns
-in the arm. Every binding of the same name must have the same type, and have
-the same binding mode.
+每个 `|` 分隔的模式里出现的变量绑定必须出现在匹配臂的所有模式里。相同名称的绑定变量必须具有相同的类型和相同的变量绑定模式。
 
 ## Match guards
+## 匹配守卫
 
-Match arms can accept _match guards_ to further refine the
-criteria for matching a case. Pattern guards appear after the pattern and
-consist of a `bool`-typed expression following the `if` keyword.
+匹配臂可以接受*匹配守卫*来进一步细化匹配标准。模式守卫(Pattern guard)出现在模式之后，由 `if`关键字后面的布尔类型表达式组成。
 
-When the pattern matches successfully, the pattern guard expression is executed.
-If the expression evaluates to true, the pattern is successfully matched against.
-Otherwise, the next pattern, including other matches with the `|` operator in
-the same arm, is tested.
+当模式匹配成功时，将执行匹配守卫表达式。如果此表达式的计算结果为真，则模式将进一步匹配成功。否则，将匹配将测试下一个模式，包括同一匹配臂中 `|`运算符分割的后续匹配模式。
 
 ```rust
 # let maybe_digit = Some(0);
@@ -113,8 +93,7 @@ let message = match maybe_digit {
 };
 ```
 
-> Note: Multiple matches using the `|` operator can cause the pattern guard and
-> the side effects it has to execute multiple times. For example:
+> 注意：使用 `|`操作符的多次匹配可能会导致匹配守卫必须多次执行的副作用。例如：
 >
 > ```rust
 > # use std::cell::Cell;
@@ -126,24 +105,14 @@ let message = match maybe_digit {
 > assert_eq!(i.get(), 2);
 > ```
 
-A pattern guard may refer to the variables bound within the pattern they follow.
-Before evaluating the guard, a shared reference is taken to the part of the
-scrutinee the variable matches on. While evaluating the guard,
-this shared reference is then used when accessing the variable.
-Only when the guard evaluates to true is the value moved, or copied,
-from the scrutinee into the variable. This allows shared borrows to be used
-inside guards without moving out of the scrutinee in case guard fails to match.
-Moreover, by holding a shared reference while evaluating the guard,
-mutation inside guards is also prevented.
+匹配守卫可以引用绑定在它们前面的模式里的变量。在计算匹配守卫之前，将对检验对象内部被模式的变量匹配上的那部分进行共享引用。在计算匹配守卫时，在访问变量时使用这个共享引用。只有当匹配守卫最终计算为真时，值才会从检验对象内部移动或复制到变量中。这使得共享借用可以在守卫内部使用，而不会在守卫不匹配的情况下移出检验对象。此外，通过在评估匹配守卫的同时保留共享引用，也可以防止匹配守卫内部去修改检验对象。
 
 ## Attributes on match arms
+## 匹配臂上的属性
 
-Outer attributes are allowed on match arms. The only attributes that have
-meaning on match arms are [`cfg`], [`cold`], and the [lint check attributes].
+在匹配臂上允许使用外部属性，但匹配臂上只有 [`cfg`]、[`cold`] 和 [lint检查类属性][lint check attributes]这些属性才有意义。
 
-[Inner attributes] are allowed directly after the opening brace of the match
-expression in the same expression contexts as [attributes on block
-expressions].
+适用于[块表达式上的属性][attributes on block expressions]的表达式上下文同样适用于匹配表达式上的属性，同样也是允许[内部属性][Inner attributes]直接位于表达式的左括号之后。
 
 [_Expression_]: ../expressions.md
 [place expression]: ../expressions.md#位置表达式和值表达式
