@@ -230,26 +230,24 @@ if let Person{name: ref person_name, age: 18..=150} = value { }
 如果 `@`子模式是不可反驳型的或子模式未指定，则标识符模式是不可反驳型的。
 
 ### Binding modes
+### 绑定方式
 
-To service better ergonomics, patterns operate in different *binding modes* in
-order to make it easier to bind references to values. When a reference value is matched by
-a non-reference pattern, it will be automatically treated as a `ref` or `ref mut` binding.
-Example:
+为了更好地服务于人体工程学，模式会以不同的*绑定方式*操作，以便更容易地绑定引用到值。当一个引用值与一个非引用模式匹配时，它将自动被视为一个“ref”或“ref mut”绑定。例如：
+为了更好地服务于人机工程学，模式以不同的*绑定模式*操作，以便更容易将引用绑定到值。 当引用值与非引用模式匹配时，它将自动被视为`参考`或`参考mut`绑定。 例：
+为了更好地服务于人类工程学，模式会选择不同的*绑定方式*，以便更容易地将引用绑定到值。当引用值与非引用模式匹配时，它将自动地被视为 `ref` 或 `ref mut` 绑定。例如：
+To service better ergonomics, patterns operate in different *binding modes* in order to make it easier to bind references to values. When a reference value is matched by a non-reference pattern, it will be automatically treated as a `ref` or `ref mut` binding. Example:
 
 ```rust
 let x: &Option<i32> = &Some(3);
 if let Some(y) = x {
-    // y was converted to `ref y` and its type is &i32
+    // y 被转换为`ref y` ，其类型为 &i32
 }
 ```
 
-*Non-reference patterns* include all patterns except bindings, [wildcard
-patterns](#wildcard-pattern) (`_`), [`const` patterns](#path-patterns) of reference types,
-and [reference patterns](#reference-patterns).
+*非引用模式*包括除绑定模式、通配符模式(#wildcard-pattern)(`_`)、引用类型的[常量(`const`)模式](#path-patterns)和[引用模式](#reference-patterns)以外的所有模式。
 
-If a binding pattern does not explicitly have `ref`, `ref mut`, or `mut`, then it uses the
-*default binding mode* to determine how the variable is bound. The default binding
-mode starts in "move" mode which uses move semantics. When matching a pattern, the
+如果绑定模式没有显式地包含`ref`、`ref mut`、或 `mut`，那么它将使用*默认绑定模式*来确定如何绑定变量。默认绑定模式以使用移动语义的“移动”模式开始。当匹配模式时，编译器从模式外部开始并向内工作。每次使用非引用模式匹配引用时，它都会自动解引用该值并更新默认绑定模式。引用会将默认绑定模式设置为ref。可变引用会将模式设置为 `ref mut`，除非模式已经是ref，在这种情况下它仍然是ref。如果自动取消引用的值仍然是引用，则会取消引用并重复此过程。
+When matching a pattern, the
 compiler starts from the outside of the pattern and works inwards. Each time a reference
 is matched using a non-reference pattern, it will automatically dereference the value and
 update the default binding mode. References will set the default binding mode to `ref`.
@@ -675,6 +673,7 @@ a single `..` [rest pattern](#rest-patterns) or [identifier
 pattern](#identifier-patterns) with the `..` rest pattern as a subpattern.
 
 ## Path patterns
+## 路径模式
 
 > **<sup>句法</sup>**\
 > _PathPattern_ :\
