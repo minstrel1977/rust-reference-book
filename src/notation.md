@@ -1,11 +1,13 @@
+# Notation
 # 标记符号
 
 >[notation.md](https://github.com/rust-lang/reference/blob/master/src/notation.md)\
 >commit b0e0ad6490d6517c19546b1023948986578fc378
 
+## Grammar
 ## 语法
 
-下表中的各种符号被用于 *词法* 和 *句法* 的语法片段：
+本书中给出的 *词法* 和 *句法* 的语法片段会用到下表中的各种符号：
 
 | 符号           | 示例                      | 释义                                 
 |-------------------|-------------------------------|--------------------------------|
@@ -24,13 +26,14 @@
 | ~`string`         | ~`\n`, ~`*/`                  | 此字符序列外的任意字符(序列)        |
 | ( )               | (`,` _Parameter_)<sup>?</sup> | 数据项分组(Groups items)       |
 
-## 字符串表
+## String table productions
+## 词法分析用字符串列表
 
-语法中的一些规则-特别是[单目运算符]，[双目运算符]和[关键字]—会以简化形式给出：作为可打印字符串的列表。这些规则构成了关于[标记码]规则的一个子集，并被假定为提供解析器的词法分析阶段的结果。词法分析阶段由一个<abbr title="确定性有限自动机(Deterministic Finite Automaton)">DFA</abbr>驱动，对所有这些字符串表实体进行析取操作。
+语法中的一些规则-特别是[一元运算符]，[二元运算符]和[关键字]—会以简化形式给出：作为可打印字符串的列表。这个列表内的成员构成了关于[标记码]规则的一个子集，它们会被假定为词法分析阶段的结果来提供给解析器解释源代码用。词法分析阶段由一个<abbr title="确定性有限自动机(Deterministic Finite Automaton)">DFA</abbr>驱动，来对所有这些字符串表实体进行分离和提取操作。
 
 当语法中出现如 `等宽(monospace)` 这样的字符串时，它代表对这种字符串表中的单个成员的隐式引用。查阅[标记码]以获取更多信息。
 
-[双目运算符]: expressions/operator-expr.md#arithmetic-and-logical-binary-operators
+[二元运算符]: expressions/operator-expr.md#arithmetic-and-logical-binary-operators
 [关键字]: keywords.md
 [标记码]: tokens.md
-[单目运算符]: expressions/operator-expr.md#borrow-operators
+[一元运算符]: expressions/operator-expr.md#borrow-operators

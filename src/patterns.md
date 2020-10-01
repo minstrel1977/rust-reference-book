@@ -143,7 +143,7 @@ if let (a, 3) = (1, 2) {           // "(a, 3)" 是可反驳型的, 将不会匹�
 
 字面量模式总是可以反驳型的。
 
-例如：
+示例：
 
 ```rust
 for i in -2..5 {
@@ -185,7 +185,7 @@ match x {
 }
 ```
 
-默认情况下，标识符模式里匹配值会用一个拷贝副本或自身移动过来和变量完成绑定，具体是拷贝还是移动取决于匹配值是否实现了 [`Copy`]。也可以通过使用 `ref` 关键字将变量和值的引用绑定，或者使用 `ref mut` 将变量和值的可变引用绑定。例如：
+默认情况下，标识符模式里匹配值会用一个拷贝副本或自身移动过来和变量完成绑定，具体是拷贝还是移动取决于匹配值是否实现了 [`Copy`]。也可以通过使用 `ref` 关键字将变量和值的引用绑定，或者使用 `ref mut` 将变量和值的可变引用绑定。示例：
 
 ```rust
 # let a = Some(10);
@@ -232,7 +232,7 @@ if let Person{name: ref person_name, age: 18..=150} = value { }
 ### Binding modes
 ### 绑定方式
 
-（毕竟显示使用 `ref` 或 `ref mut` 绑定有些麻烦，）为了更好地服务于人类工程学，为了让引用(类型的变量)和值的绑定更容易一些，模式会自动选择不同的*绑定方式*。当引用值与非引用模式匹配时，这将自动地被视为 `ref` 或 `ref mut` 绑定。例如：
+（毕竟显示使用 `ref` 或 `ref mut` 绑定有些麻烦，）为了更好地服务于人类工程学，为了让引用(类型的变量)和值的绑定更容易一些，模式会自动选择不同的*绑定方式*。当引用值与非引用模式匹配时，这将自动地被视为 `ref` 或 `ref mut` 绑定。示例：
 To service better ergonomics, patterns operate in different binding modes in order to make it easier to bind references to values. When a reference value is matched by a non-reference pattern, it will be automatically treated as a ref or ref mut binding. Example:
 
 ```rust
@@ -256,7 +256,7 @@ Non-reference patterns include all patterns except bindings, wildcard patterns (
 
 *通配符模式*(下划线符号)能与任何值匹配。常用它来忽略那些无关紧要的值。在其他模式中使用该模式时，它匹配单个数据字段（与和代表和其余字段匹配的 `..` 相对）。与标识符模式不同，它不会复制、移动或借用它匹配的值。
 
-例如：
+示例：
 
 ```rust
 # let x = 20;
@@ -297,7 +297,7 @@ if let Some(_) = x {}
 
 剩余模式总是不可反驳型的。
 
-例如：
+示例：
 
 ```rust
 # let words = vec!["a", "b", "c"];
@@ -309,13 +309,13 @@ match slice {
 }
 
 match slice {
-    // Ignore everything but the last element, which must be "!".
+    // 忽略除最后一个元素以外的所有元素，并且最后一个元素必须是 "!".
     [.., "!"] => println!("!!!"),
 
-    // `start` is a slice of everything except the last element, which must be "z".
+    // `start` 是除最后一个元素之外的所有元素的一个切片，最后一个元素必须是 “z”。
     [start @ .., "z"] => println!("starts with: {:?}", start),
 
-    // `end` is a slice of everything but the first element, which must be "a".
+    // `end` 是除第一个元素之外的所有元素的一个切片，第一个元素必须是 “a”
     ["a", end @ ..] => println!("ends with: {:?}", end),
 
     rest => println!("{:?}", rest),
@@ -326,7 +326,7 @@ if let [.., penultimate, _] = slice {
 }
 
 # let tuple = (1, 2, 3, 4, 5);
-// Rest patterns may also be used in tuple and tuple struct patterns.
+// 剩余模式也可是在元组和元组结构体模式中使用。
 match tuple {
     (1, .., y, z) => println!("y={} z={}", y, z),
     (.., 5) => println!("tail must be 5"),
@@ -335,12 +335,13 @@ match tuple {
 ```
 
 ## Range patterns
+## 区间模式
 
 > **<sup>句法</sup>**\
 > _RangePattern_ :\
 > &nbsp;&nbsp; _RangePatternBound_ `..=` _RangePatternBound_
 >
-> _ObsoleteRangePattern_ :\
+> _ObsoleteRangePattern_ :(译者注：废弃的区间模式句法) \ 
 > &nbsp;&nbsp; _RangePatternBound_ `...` _RangePatternBound_
 >
 > _RangePatternBound_ :\
@@ -351,24 +352,19 @@ match tuple {
 > &nbsp;&nbsp; | [_PathInExpression_]\
 > &nbsp;&nbsp; | [_QualifiedPathInExpression_]
 
-Range patterns match values that are within the closed range defined by its lower and
-upper bounds. For example, a pattern `'m'..='p'` will match only the values `'m'`, `'n'`,
-`'o'`, and `'p'`. The bounds can be literals or paths that point to constant values.
+区间模式匹配在其上下边界定义的封闭区间内的值。例如，一个模式 `'m'..='p'` 将只匹配值`'m'`，`'n'`，`'o'`和 `'p'`。边界可以是字面量，也可以是指向常量值的路径。
 
-A pattern a `..=` b must always have a &le; b. It is an error to have a range pattern
-`10..=0`, for example.
+一个模式 a `..=` b 必须总是有 a &le; b。`10..=0` 这样的区间模式是错误的。例如：
 
-The `...` syntax is kept for backwards compatibility.
+保留 `...`句法只是为了向后兼容。
 
-Range patterns only work on scalar types. The accepted types are:
+区间模式只适用于标量类型(scalar type)。可接受的类型有：
 
-* Integer types (u8, i8, u16, i16, usize, isize, etc.).
-* Character types (char).
-* Floating point types (f32 and f64). This is being deprecated and will not be available
-  in a future version of Rust (see
-  [issue #41620](https://github.com/rust-lang/rust/issues/41620)).
+* 整型 (u8、i8、u16、i16、usize、isize ...)。
+* 字符型 (char)。
+* 浮点类型( f32 和 f64 )。这已被弃用，将不会在未来版本的 Rust 中可用（参见 [issue #41620](https://github.com/rust-lang/rust/issues/41620)）。
 
-Examples:
+示例：
 
 ```rust
 # let c = 'f';
@@ -387,7 +383,7 @@ println!("{}", match ph {
     _ => unreachable!(),
 });
 
-// using paths to constants:
+// 使用指向常量值的路径：
 # const TROPOSPHERE_MIN : u8 = 6;
 # const TROPOSPHERE_MAX : u8 = 20;
 #
@@ -413,7 +409,7 @@ println!("{}", match altitude {
 # let n_items = 20_832_425;
 # let bytes_per_item = 12;
 if let size @ binary::MEGA..=binary::GIGA = n_items * bytes_per_item {
-    println!("It fits and occupies {} bytes", size);
+    println!("这适用并占用{}个字节", size);
 }
 
 # trait MaxValue {
@@ -428,7 +424,7 @@ if let size @ binary::MEGA..=binary::GIGA = n_items * bytes_per_item {
 # impl MaxValue for u32 {
 #     const MAX: u64 = (1 << 32) - 1;
 # }
-// using qualified paths:
+// 使用限定路径：
 println!("{}", match 0xfacade {
     0 ..= <u8 as MaxValue>::MAX => "fits in a u8",
     0 ..= <u16 as MaxValue>::MAX => "fits in a u16",
@@ -437,23 +433,18 @@ println!("{}", match 0xfacade {
 });
 ```
 
-Range patterns for (non-`usize` and -`isize`) integer and `char` types are irrefutable
-when they span the entire set of possible values of a type. For example, `0u8..=255u8`
-is irrefutable. The range of values for an integer type is the closed range from its
-minimum to maximum value. The range of values for a `char` type are precisely those
-ranges containing all Unicode Scalar Values: `'\u{0000}'..='\u{D7FF}'` and
-`'\u{E000}'..='\u{10FFFF}'`.
+当区间模式跨越(非usize 和非isize)整型和字符型(`char`)整个类型的所有值组成的集合时，此模式是不可反驳型的。例如，`0u8..=255u8` 是不可反驳型的。某类整型的值区间是从该类型的最小值到该类型最大值的闭区间。字符型(`char`)的值的区间就是那些包含所有 Unicode 标量值的区间：`'\u{0000}'..='\u{D7FF}'` 和 `'\u{E000}'..='\u{10FFFF}'`。
 
 ## Reference patterns
+## 引用模式
 
 > **<sup>句法</sup>**\
 > _ReferencePattern_ :\
 > &nbsp;&nbsp; (`&`|`&&`) `mut`<sup>?</sup> [_PatternWithoutRange_]
 
-Reference patterns dereference the pointers that are being matched
-and, thus, borrow them.
+引用模式对当前匹配的指针做解引用，从而能借用它们：
 
-For example, these two matches on `x: &i32` are equivalent:
+例如，下面 `x: &i32` 上的两个匹配是等效的：
 
 ```rust
 let int_reference = &3;
@@ -464,15 +455,15 @@ let b = match int_reference { &0 => "zero", _ => "some" };
 assert_eq!(a, b);
 ```
 
-The grammar production for reference patterns has to match the token `&&` to match a
-reference to a reference because it is a token by itself, not two `&` tokens.
+语法上，引用模式必须使用标记符 `&&` 来匹配引用的引用，因为 `&&` 本身就是一个标记符，而不是两个 `&` 标记符。。
 
-Adding the `mut` keyword dereferences a mutable reference. The mutability must match the
-mutability of the reference.
+如果为引用模式上添加 `mut` 关键字来解引用一个可变引用，那模式的可变性必须匹配引用对象的可变性
+<!-- Adding the `mut` keyword dereferences a mutable reference. The mutability must match the mutability of the reference.TobeModify -->
 
-Reference patterns are always irrefutable.
+引用模式总是不可反驳型的。
 
 ## Struct patterns
+## 结构体模式
 
 > **<sup>句法</sup>**\
 > _StructPattern_ :\
@@ -502,9 +493,11 @@ Reference patterns are always irrefutable.
 [_OuterAttribute_]: attributes.md
 [TUPLE_INDEX]: tokens.md#tuple-index
 
+结构体模式匹配满足其子模式定义的所有标准的结构体类型的值。它们也被用来破坏结构
 Struct patterns match struct values that match all criteria defined by its subpatterns.
 They are also used to [destructure](#destructuring) a struct.
 
+在结构模式中，字段通过名称、索引(对于元组结构)引用，或者通过使用忽略
 On a struct pattern, the fields are referenced by name, index (in the case of tuple
 structs) or ignored by use of `..`:
 

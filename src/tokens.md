@@ -14,7 +14,7 @@
 
 在本文档的语法中，“简化”标记码以[字符串表]的形式给出，并以`等宽（monospace）`字体显示。
 
-[字符串表]: notation.md#字符串表
+[字符串表]: notation.md#string-table-productions
 
 ## 字面量
 
@@ -346,10 +346,11 @@ let a: u64 = 123;                  // type u64
 0b____;
 ```
 
-请注意，Rust 句法将 `-1i8` 视为[单目取反运算符]对整型字面量`1i8`的应用，而非单个整型字面量。
+请注意，Rust 句法将 `-1i8` 视为[一元取反运算符]对整型字面量`1i8`的应用，而非单个整型字面量。
 
-[单目取反运算符]: expressions/operator-expr.md#取反运算符
+[一元取反运算符]: expressions/operator-expr.md#取反运算符
 
+#### Tuple index
 #### 元组索引
 
 > **<sup>词法</sup>**\
