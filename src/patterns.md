@@ -24,7 +24,7 @@
 > &nbsp;&nbsp; | [_PathPattern_]\
 > &nbsp;&nbsp; | [_MacroInvocation_]
 
-模式用于根据给定结构去匹配值，并可选地将变量和这些结构中匹配到的值相互绑定。模式还用在函数和闭包的变量声明和参数中。
+模式基于给定结构去匹配值，并可选地将变量和这些结构中匹配到的值相互绑定。模式还用在函数和闭包的变量声明和参数中。
 
 下面示例中的模式完成四件事：
 
@@ -163,9 +163,9 @@ for i in -2..5 {
 > _IdentifierPattern_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `ref`<sup>?</sup> `mut`<sup>?</sup> [IDENTIFIER] (`@` [_Pattern_] ) <sup>?</sup>
 
-标识符模式将它们匹配的值绑定到一个变量上。标识符在模式中必须是唯一的。该变量将在作用域中遮蔽同名的任何变量。这种绑定的作用域取决于使用模式的上下文(例如 `let`绑定或匹配(`match`)的匹配臂)。
+标识符模式将它们匹配的值绑定到一个变量上。此变量的标识符在该模式中必须是唯一的。该变量会在作用域中遮蔽同名的任何变量。这种绑定的作用域取决于使用模式的上下文(例如 `let`绑定或匹配(`match`)的匹配臂上)。
 
-只包含标识符(也可能前带一个 `mut`)的模式能匹配任何值并将其绑定到该标识符。这是函数和闭包的变量声明和传参最常用的模式。
+最常见的标识符模式就是函数和闭包的变量声明和定义参数，这种模式只包含一个标识符(也可能前带一个 `mut`)，能匹配任何值，并将其绑定到该标识符。
 
 ```rust
 let mut variable = 10;
@@ -174,7 +174,7 @@ fn sum(x: i32, y: i32) -> i32 {
 # }
 ```
 
-要将模式的匹配值绑定到变量，可使用句法 `variable @ subpattern`。例如，下面示例中将值2绑定到 `e` (不是整个区间(range)：这里的区间是一个区间子模式(range subpattern))。
+要将模式的匹配值绑定到变量，也可使用句法 `variable @ subpattern`。例如，下面示例中将值2绑定到 `e` (不是整个区间(range)：这里的区间是一个区间子模式(range subpattern))。
 
 ```rust
 let x = 2;
@@ -185,7 +185,7 @@ match x {
 }
 ```
 
-默认情况下，标识符模式里变量和匹配值绑定有两种方式，一种是变量和匹配值的副本绑定，一种是将匹配值移动到变量里来完成绑定，具体是拷贝还是移动取决于匹配值是否实现了 [`Copy`]。也可以通过使用 `ref` 关键字将变量和值的引用绑定，或者使用 `ref mut`将变量和值的可变引用绑定。例如：
+默认情况下，标识符模式里匹配值会用一个拷贝副本或自身移动过来和变量完成绑定，具体是拷贝还是移动取决于匹配值是否实现了 [`Copy`]。也可以通过使用 `ref` 关键字将变量和值的引用绑定，或者使用 `ref mut` 将变量和值的可变引用绑定。例如：
 
 ```rust
 # let a = Some(10);
@@ -200,7 +200,7 @@ match a {
 }
 ```
 
-在第一个匹配表达式中，值被复制(或移动)。在第二个匹配中，对相同内存位置的引用被绑定到变量上。之所以需要这种句法，是因为在解构子模式(destructuring subpatterns)中，`&`操作符不能应用于值的字段。例如，以下内容无效:
+在第一个匹配表达式中，值被复制(或移动)。在第二个匹配中，对相同内存位置的引用被绑定到变量上。之所以需要这种句法，是因为在解构子模式(destructuring subpatterns)中，`&`操作符不能应用于值的字段。例如，以下内容无效：
 
 ```rust,compile_fail
 # struct Person {
@@ -211,7 +211,7 @@ match a {
 if let Person{name: &person_name, age: 18..=150} = value { }
 ```
 
-要使其有效，请编写以下代码:
+要使其有效，请编写以下代码：
 
 ```rust
 # struct Person {
@@ -222,9 +222,9 @@ if let Person{name: &person_name, age: 18..=150} = value { }
 if let Person{name: ref person_name, age: 18..=150} = value { }
 ```
 
-因此，`ref` 不是被匹配的某个实体。它的目标是使变量和匹配值的引用绑定起来，而不是潜在地复制或移动匹配的内容。
+因此，`ref` 不是匹配规则什么的。它唯一的目的就是使变量和匹配值的引用绑定起来，而不是潜在地复制或移动匹配的内容。
 
-[路径模式(Path pattern)](#path-patterns)优先于标识符模式。如果 `ref` 或 `ref mut` 被指定，同时标识符遮蔽了某个常量，这将导致错误。
+[路径模式(Path pattern)](#path-patterns)优先于标识符模式。如果给出了 `ref` 或 `ref mut`，同时它后面的标识符又遮蔽了某个常量，这将导致错误。
 <!-- [Path patterns](#path-patterns) take precedence over identifier patterns. It is an error if `ref` or `ref mut` is specified and the identifier shadows a constant. TobeModify-->
 
 如果 `@`子模式是不可反驳型的或子模式未指定，则标识符模式是不可反驳型的。
@@ -232,10 +232,8 @@ if let Person{name: ref person_name, age: 18..=150} = value { }
 ### Binding modes
 ### 绑定方式
 
-为了更好地服务于人体工程学，模式会以不同的*绑定方式*操作，以便更容易地绑定引用到值。当一个引用值与一个非引用模式匹配时，它将自动被视为一个“ref”或“ref mut”绑定。例如：
-为了更好地服务于人机工程学，模式以不同的*绑定模式*操作，以便更容易将引用绑定到值。 当引用值与非引用模式匹配时，它将自动被视为`参考`或`参考mut`绑定。 例：
-为了更好地服务于人类工程学，模式会选择不同的*绑定方式*，以便更容易地将引用绑定到值。当引用值与非引用模式匹配时，它将自动地被视为 `ref` 或 `ref mut` 绑定。例如：
-To service better ergonomics, patterns operate in different *binding modes* in order to make it easier to bind references to values. When a reference value is matched by a non-reference pattern, it will be automatically treated as a `ref` or `ref mut` binding. Example:
+（毕竟显示使用 `ref` 或 `ref mut` 绑定有些麻烦，）为了更好地服务于人类工程学，为了让引用(类型的变量)和值的绑定更容易一些，模式会自动选择不同的*绑定方式*。当引用值与非引用模式匹配时，这将自动地被视为 `ref` 或 `ref mut` 绑定。例如：
+To service better ergonomics, patterns operate in different binding modes in order to make it easier to bind references to values. When a reference value is matched by a non-reference pattern, it will be automatically treated as a ref or ref mut binding. Example:
 
 ```rust
 let x: &Option<i32> = &Some(3);
@@ -244,39 +242,31 @@ if let Some(y) = x {
 }
 ```
 
-*非引用模式*包括除绑定模式、通配符模式(#wildcard-pattern)(`_`)、引用类型的[常量(`const`)模式](#path-patterns)和[引用模式](#reference-patterns)以外的所有模式。
+*非引用模式*包括**除**绑定模式、通配符模式(#wildcard-pattern)(`_`)、引用类型的[常量(`const`)模式](#path-patterns)和[引用模式](#reference-patterns)以外的所有模式。
+Non-reference patterns include all patterns except bindings, wildcard patterns (_), const patterns of reference types, and reference patterns.
 
-如果绑定模式没有显式地包含`ref`、`ref mut`、或 `mut`，那么它将使用*默认绑定模式*来确定如何绑定变量。默认绑定模式以使用移动语义的“移动”模式开始。当匹配模式时，编译器从模式外部开始并向内工作。每次使用非引用模式匹配引用时，它都会自动解引用该值并更新默认绑定模式。引用会将默认绑定模式设置为ref。可变引用会将模式设置为 `ref mut`，除非模式已经是ref，在这种情况下它仍然是ref。如果自动取消引用的值仍然是引用，则会取消引用并重复此过程。
-When matching a pattern, the
-compiler starts from the outside of the pattern and works inwards. Each time a reference
-is matched using a non-reference pattern, it will automatically dereference the value and
-update the default binding mode. References will set the default binding mode to `ref`.
-Mutable references will set the mode to `ref mut` unless the mode is already `ref` in
-which case it remains `ref`. If the automatically dereferenced value is still a reference,
-it is dereferenced and this process repeats.
+如果绑定模式(binding pattern)没有显式地包含 `ref`、`ref mut`、或 `mut`，那么它将使用*默认绑定方式(the default binding mode)*来确定如何绑定变量。默认绑定方式以使用移动语义的“移动”模式开始。当匹配模式时，编译器对模式从外到内逐层匹配。每次使用非引用模式匹配引用时，它都会自动解引用该值并更新默认绑定方式。引用会将默认绑定模式设置为ref。可变引用会将模式设置为 `ref mut`，除非模式已经是`ref`(在这种情况下它仍然是`ref`)。如果自动解引用的值仍然是引用，则会重复解引用。
 
 ## Wildcard pattern
+## 通配符模式
 
 > **<sup>句法</sup>**\
 > _WildcardPattern_ :\
 > &nbsp;&nbsp; `_`
 
-The _wildcard pattern_ (an underscore symbol) matches any value. It is used to ignore values when they don't
-matter. Inside other patterns it matches a single data field (as opposed to the `..`
-which matches the remaining fields). Unlike identifier patterns, it does not copy, move
-or borrow the value it matches.
+*通配符模式*(下划线符号)能与任何值匹配。常用它来忽略那些无关紧要的值。在其他模式中使用该模式时，它匹配单个数据字段（与和代表和其余字段匹配的 `..` 相对）。与标识符模式不同，它不会复制、移动或借用它匹配的值。
 
-Examples:
+例如：
 
 ```rust
 # let x = 20;
-let (a, _) = (10, x);   // the x is always matched by _
+let (a, _) = (10, x);   // x 一定会被 _ 匹配上
 # assert_eq!(a, 10);
 
-// ignore a function/closure param
+// 忽略一个函数/闭包参数
 let real_part = |a: f64, _: f64| { a };
 
-// ignore a field from a struct
+// 忽略结构体的一个字段
 # struct RGBA {
 #    r: f32,
 #    g: f32,
@@ -289,30 +279,25 @@ let RGBA{r: red, g: green, b: blue, a: _} = color;
 # assert_eq!(color.g, green);
 # assert_eq!(color.b, blue);
 
-// accept any Some, with any value
+// 能接收带任何值的任何 Some
 # let x = Some(10);
 if let Some(_) = x {}
 ```
 
-The wildcard pattern is always irrefutable.
+通配符模式总是不可反驳型的。
 
 ## Rest patterns
+## 剩余模式
 
 > **<sup>句法</sup>**\
 > _RestPattern_ :\
 > &nbsp;&nbsp; `..`
 
-The _rest pattern_ (the `..` token) acts as a variable-length pattern which
-matches zero or more elements that haven't been matched already before and
-after. It may only be used in [tuple](#tuple-patterns), [tuple
-struct](#tuple-struct-patterns), and [slice](#slice-patterns) patterns, and
-may only appear once as one of the elements in those patterns. It is also
-allowed in an [identifier pattern](#identifier-patterns) for [slice
-patterns](#slice-patterns) only.
+*剩余模式*(`..`标记符)充当可变长度模式(variable-length pattern)，它匹配之前之后没有匹配的零个或多个元素。它只能在[元组](#tuple-patterns)模式、[元组结构体](#tuple-struct-patterns)模式和[切片](#slice-patterns)模式中使用，并且在这些模式中只能作为一个元素出现一次。它在[切片模式](#slice-patterns)里也只允许在[标识符模式](#identifier-patterns)中使用。
 
-The rest pattern is always irrefutable.
+剩余模式总是不可反驳型的。
 
-Examples:
+例如：
 
 ```rust
 # let words = vec!["a", "b", "c"];
