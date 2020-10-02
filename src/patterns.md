@@ -493,13 +493,9 @@ assert_eq!(a, b);
 [_OuterAttribute_]: attributes.md
 [TUPLE_INDEX]: tokens.md#tuple-index
 
-结构体模式匹配满足其子模式定义的所有标准的结构体类型的值。它们也被用来破坏结构
-Struct patterns match struct values that match all criteria defined by its subpatterns.
-They are also used to [destructure](#destructuring) a struct.
+结构体模式匹配与子模式定义的所有条件匹配的结构体值。它也被用来解构结构体。
 
-在结构模式中，字段通过名称、索引(对于元组结构)引用，或者通过使用忽略
-On a struct pattern, the fields are referenced by name, index (in the case of tuple
-structs) or ignored by use of `..`:
+在结构体模式中，结构体字段需通过名称、索引(对于元组结构体)来指向(refer to)，或者通过使用 `..` 来忽略：
 
 ```rust
 # struct Point {
@@ -510,7 +506,7 @@ structs) or ignored by use of `..`:
 #
 match s {
     Point {x: 10, y: 20} => (),
-    Point {y: 10, x: 20} => (),    // order doesn't matter
+    Point {y: 10, x: 20} => (),    // 顺序没关系
     Point {x: 10, ..} => (),
     Point {..} => (),
 }
@@ -523,13 +519,13 @@ match s {
 #
 match t {
     PointTuple {0: 10, 1: 20} => (),
-    PointTuple {1: 10, 0: 20} => (),   // order doesn't matter
+    PointTuple {1: 10, 0: 20} => (),   // 顺序没关系
     PointTuple {0: 10, ..} => (),
     PointTuple {..} => (),
 }
 ```
 
-If `..` is not used, it is required to match all fields:
+如果没使用 `..`，需要提供所有字段的详尽匹配：
 
 ```rust
 # struct Struct {
@@ -548,8 +544,8 @@ match struct_value {
 }
 ```
 
-The `ref` and/or `mut` _IDENTIFIER_ syntax matches any value and binds it to
-a variable with the same name as the given field.
+`ref` 和/或 `mut` *标识符*句法匹配任何值，并将其绑定到与给定字段同名的变量上。
+The `ref` and/or `mut` _IDENTIFIER_ syntax matches any value and binds it to a variable with the same name as the given field.
 
 ```rust
 # struct Struct {
@@ -559,12 +555,13 @@ a variable with the same name as the given field.
 # }
 # let struct_value = Struct{a: 10, b: 'X', c: false};
 #
-let Struct{a: x, b: y, c: z} = struct_value;          // destructure all fields
+let Struct{a: x, b: y, c: z} = struct_value;          // 解构所有的字段
 ```
 
-A struct pattern is refutable when one of its subpatterns is refutable.
+当一个结构体模式的子模式是可反驳型的，那这个结构体模式就是可反驳型的。
 
 ## Tuple struct patterns
+## 元组结构体模式
 
 > **<sup>句法</sup>**\
 > _TupleStructPattern_ :\
@@ -573,13 +570,12 @@ A struct pattern is refutable when one of its subpatterns is refutable.
 > _TupleStructItems_ :\
 > &nbsp;&nbsp; [_Pattern_]&nbsp;( `,` [_Pattern_] )<sup>\*</sup> `,`<sup>?</sup>
 
-Tuple struct patterns match tuple struct and enum values that match all criteria defined
-by its subpatterns. They are also used to [destructure](#destructuring) a tuple struct or
-enum value.
+元组结构体模式匹配元组结构体值和枚举值，这些值将与该模式的子模式定义的所有条件进行匹配。它还被用于[析构](#destructuring)元组结构体或枚举值。
 
-A tuple struct pattern is refutable when one of its subpatterns is refutable.
+当元组结构体模式的一个子模式是可反驳型的，则该元组结构体模式就是可反驳型的。
 
 ## Tuple patterns
+## 元组模式
 
 > **<sup>句法</sup>**\
 > _TuplePattern_ :\
@@ -590,24 +586,20 @@ A tuple struct pattern is refutable when one of its subpatterns is refutable.
 > &nbsp;&nbsp; | [_RestPattern_]\
 > &nbsp;&nbsp; | [_Pattern_]&nbsp;(`,` [_Pattern_])<sup>+</sup> `,`<sup>?</sup>
 
-Tuple patterns match tuple values that match all criteria defined by its subpatterns.
-They are also used to [destructure](#destructuring) a tuple.
+元组模式匹配与子模式定义的所有条件匹配的元组值。它们还被用来[解构](#destructuring)元组。
 
-The form `(..)` with a single [_RestPattern_] is a special form that does not
-require a comma, and matches a tuple of any size.
+带有单个剩余模式([_RestPattern_])RestPattern的元组列表 `(..)` 是一种不需要逗号的特殊元组列表，它匹配任意大小的元组。
 
-The tuple pattern is refutable when one of its subpatterns is refutable.
+当元组模式的一个子模式是可反驳型的，那该元组模式就是可反驳型的。
 
 ## Grouped patterns
+## 分组模式
 
 > **<sup>句法</sup>**\
 > _GroupedPattern_ :\
 > &nbsp;&nbsp; `(` [_Pattern_] `)`
 
-Enclosing a pattern in parentheses can be used to explicitly control the
-precedence of compound patterns. For example, a reference pattern next to a
-range pattern such as `&0..=5` is ambiguous and is not allowed, but can be
-expressed with parentheses.
+将模式括在圆括号内可用于显式控制复合模式的优先级。例如，在区间模式(如 `&0..=5`)旁边的引用模式会引起歧义，这时可以用圆括号来消除歧义。
 
 ```rust
 let int_reference = &3;
@@ -618,6 +610,7 @@ match int_reference {
 ```
 
 ## Slice patterns
+## 切片模式
 
 > **<sup>句法</sup>**\
 > _SlicePattern_ :\
@@ -626,9 +619,10 @@ match int_reference {
 > _SlicePatternItems_ :\
 > &nbsp;&nbsp; [_Pattern_] \(`,` [_Pattern_])<sup>\*</sup> `,`<sup>?</sup>
 
-Slice patterns can match both arrays of fixed size and slices of dynamic size.
+片模式可以匹配固定长度的数组和动态长度的切片。
+
 ```rust
-// Fixed size
+// 固定长度
 let arr = [1, 2, 3];
 match arr {
     [1, _, _] => "starts with one",
@@ -636,19 +630,16 @@ match arr {
 };
 ```
 ```rust
-// Dynamic size
+// 动态长度
 let v = vec![1, 2, 3];
 match v[..] {
-    [a, b] => { /* this arm will not apply because the length doesn't match */ }
-    [a, b, c] => { /* this arm will apply */ }
-    _ => { /* this wildcard is required, since the length is not known statically */ }
+    [a, b] => { /* 这个匹配臂不适用，因为长度不匹配 */ }
+    [a, b, c] => { /* 这个匹配臂可以用 */ }
+    _ => { /* 这个通配符是必需的，因为长度不是编译时可知的 */ }
 };
 ```
 
-Slice patterns are irrefutable when matching an array as long as each element
-is irrefutable. When matching a slice, it is irrefutable only in the form with
-a single `..` [rest pattern](#rest-patterns) or [identifier
-pattern](#identifier-patterns) with the `..` rest pattern as a subpattern.
+在匹配数组时，只要每个元素是不可反驳型的，切片模式就是不可反驳型的。当匹配切片时，只有单个 `..` [剩余模式](#rest-patterns)或带有 `..` (剩余模式)作为子模式的[标识符模式](#identifier-patterns)的情况才是不可反驳型的。
 
 ## Path patterns
 ## 路径模式
@@ -658,24 +649,20 @@ pattern](#identifier-patterns) with the `..` rest pattern as a subpattern.
 > &nbsp;&nbsp; &nbsp;&nbsp; [_PathInExpression_]\
 > &nbsp;&nbsp; | [_QualifiedPathInExpression_]
 
-_Path patterns_ are patterns that refer either to constant values or
-to structs or enum variants that have no fields.
+*路径模式*是指向(refer to)常量值或指向没有字段的结构体或没有字段的枚举变体的模式。
 
-Unqualified path patterns can refer to:
+非限定路径模式可以指向：
 
-* enum variants
-* structs
-* constants
-* associated constants
+* 枚举变体
+* 结构体
+* 常量
+* 关联常量
 
-Qualified path patterns can only refer to associated constants.
+限定路径模式只能指向关联常量。
 
-Constants cannot be a union type. Struct and enum constants must have
-`#[derive(PartialEq, Eq)]` (not merely implemented).
+指向的常量不能是联合体类型。结构体和枚举常量必须带有 `#[derive(PartialEq, Eq)]` 属性(不只是实现)。
 
-Path patterns are irrefutable when they refer to structs or an enum variant when the enum
-has only one variant or a constant whose type is irrefutable. They are refutable when they
-refer to refutable constants or enum variants for enums with multiple variants.
+当路径模式指向结构体或枚举变体(枚举只有一个变体)或不可反驳型的常量时，该路径模式是不可反驳型的。当路径模式指向的是可反驳型常量或带有多个变体的枚举时，该路径模式是可反驳型的。
 
 [_GroupedPattern_]: #grouped-patterns
 [_IdentifierPattern_]: #identifier-patterns
