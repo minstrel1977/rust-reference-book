@@ -77,7 +77,7 @@
         - [布尔型](types/boolean.md)
         - [数字型](types/numeric.md)
         - [字符型](types/textual.md)
-        - [never型](types/never.md)
+        - [never类型](types/never.md)
         - [元组](types/tuple.md)
         - [数组](types/array.md)
         - [切片](types/slice.md)

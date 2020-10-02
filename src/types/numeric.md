@@ -1,5 +1,5 @@
 # Numeric types
-# 数字类型
+# 数字类类型
 
 >[mumeric.md](https://github.com/rust-lang/reference/blob/master/src/types/mumeric.md)\
 >commit 73ca198fb3ab52283d67d5fe28c541ee1d169f48

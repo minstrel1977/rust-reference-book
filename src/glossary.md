@@ -58,7 +58,7 @@ blanket implementation
 <!-- Dispatch is the mechanism to determine which specific version of code is actually run when it involves polymorphism. Two major forms of dispatch are static dispatch and dynamic dispatch. While Rust favors static dispatch, it also supports dynamic dispatch through a mechanism called ‘trait objects’. -->
 
 ### Dynamically sized type
-动态类型
+动态尺寸类型
 
 动态尺寸类型(DST)是一种没有静态已知大小或对齐方式的类型
 <!-- A dynamically sized type (DST) is a type without a statically known size or alignment. -->

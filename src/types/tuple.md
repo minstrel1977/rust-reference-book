@@ -1,21 +1,21 @@
 # Tuple types
+# 元组类型
+
+>[tuple.md](https://github.com/rust-lang/reference/blob/master/src/types/tuple.md)\
+>commit b0e0ad6490d6517c19546b1023948986578fc378
 
 > **<sup>句法</sup>**\
 > _TupleType_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `(` `)`\
 > &nbsp;&nbsp; | `(` ( [_Type_] `,` )<sup>+</sup> [_Type_]<sup>?</sup> `)`
 
-A tuple *type* is a heterogeneous product of other types, called the *elements*
-of the tuple. It has no nominal name and is instead structurally typed.
+元组(tuple)*类型*是其他类型的混合异构产物，这些其他类型被称为元组的*元素*。元组没有标称名称(nominal name)（译者注：就是可以使用路径来指向的名称），取而代之的是直接键入其类型结构。
 
-Tuple types and values are denoted by listing the types or values of their
-elements, respectively, in a parenthesized, comma-separated list.
+定义元组类型是通过直接在圆括号里的逗号分隔的列表中列出其元素的类型实现的。定义元组值可以不通过其类型，可以直接在圆括号里的逗号分隔的列表中列出其元素的值来实现。
 
-Because tuple elements don't have a name, they can only be accessed by
-pattern-matching or by using `N` directly as a field to access the `N`th
-element.
+因为元组元素没有名称，所以只能通过模式匹配或直接使用字段的序号 `N` 作为字段来访问第N个元素。
 
-An example of a tuple type and its use:
+元组类型及其使用的示例：
 
 ```rust
 type Pair<'a> = (i32, &'a str);
@@ -28,7 +28,6 @@ assert_eq!(p.0, 10);
 assert_eq!(p.1, "ten");
 ```
 
-For historical reasons and convenience, the tuple type with no elements (`()`)
-is often called ‘unit’ or ‘the unit type’.
+由于历史原因和为了使用方便，代表没有元素(`()`)的元组类型通常被称为单元(`unit`)或单元类型(`the unit type`)。
 
 [_Type_]: ../types.md#type-expressions

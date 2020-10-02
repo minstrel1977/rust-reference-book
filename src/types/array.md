@@ -1,28 +1,28 @@
 # Array types
+# 数组类型
+
+>[array.md](https://github.com/rust-lang/reference/blob/master/src/types/array.md)\
+>commit 2f459e22ec30a94bafafe417da4e95044578df73
 
 > **<sup>句法</sup>**\
 > _ArrayType_ :\
 > &nbsp;&nbsp; `[` [_Type_] `;` [_Expression_] `]`
 
-An array is a fixed-size sequence of `N` elements of type `T`. The array type
-is written as `[T; N]`. The size is a [constant expression] that evaluates to a
-[`usize`].
+数组是 `N`个类型`T` 的固定长度(fixed-size)的元素序列，数组类型写为 `[T; N]`。长度(size)是一个计算结果为 [`usize`] 的[常量表达式][constant expression]。
 
-Examples:
+示例：
 
 ```rust
-// A stack-allocated array
+// 一个栈分配的数组
 let array: [i32; 3] = [1, 2, 3];
 
-// A heap-allocated array, coerced to a slice
+// 一个堆分配的数组，被强转成切片
 let boxed_array: Box<[i32]> = Box::new([1, 2, 3]);
 ```
 
-All elements of arrays are always initialized, and access to an array is
-always bounds-checked in safe methods and operators.
+数组的所有元素总是初始化的，使用 Rust 的安全(safe)方法或操作符来访问数组时总是会做越界检查。
 
-> Note: The [`Vec<T>`] standard library type provides a heap-allocated resizable
-> array type.
+> 注意：标准库类型提供了堆分配的可调整大小的数组类型 [`Vec<T>`]。
 
 [_Expression_]: ../expressions.md
 [_Type_]: ../types.md#type-expressions

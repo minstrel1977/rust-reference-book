@@ -14,8 +14,8 @@ Rust 类型分类列表为：
 * 原生类型(primitive types):
     * [布尔型(Boolean)] — `true` 或 `false`
     * [数字类(Numeric)] — 整型(integer) 和 浮点型(float)
-    * [文本类(Textual)] — `char` 和 `str`
-    * [Never] — `!` — 没有值的类型
+    * [文本类(Textual)] — 字符型(`char`) 和 字符串切片(`str`)
+    * [never类型] — `!` — 没有值的类型
 *  序列类型(sequence types)：
     * [元组(Tuple)]
     * [数组(Array)]
