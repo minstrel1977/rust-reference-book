@@ -1,41 +1,42 @@
 {{#include types-redirect.html}}
 # Types
+# 类型
 
-Every variable, item, and value in a Rust program has a type. The _type_ of a
-*value* defines the interpretation of the memory holding it and the operations
-that may be performed on the value.
+>[types.md](https://github.com/rust-lang/reference/blob/master/src/types.md)\
+>commit af1cf6d3ca3b7a8c434c142148742aa912e37c34
 
-Built-in types are tightly integrated into the language, in nontrivial ways
-that are not possible to emulate in user-defined types. User-defined types have
-limited capabilities.
+Rust 程序中的每个变量、数据项和值都有一个类型。*值*的*类型*定义了保存它的内存的解释信息以及可能对该值执行的操作。
 
-The list of types is:
+内置的类型回忆非平凡的方式(in nontrivial ways)紧密地集成到语言中，这种方式是不可能在用户定义的类型中模拟的。用户定义的类型功能有限。
 
-* Primitive types:
-    * [Boolean] — `true` or `false`
-    * [Numeric] — integer and float
-    * [Textual] — `char` and `str`
-    * [Never] — `!` — a type with no values
-* Sequence types:
-    * [Tuple]
-    * [Array]
-    * [Slice]
-* User-defined types:
-    * [Struct]
-    * [Enum]
-    * [Union]
-* Function types:
-    * [Functions]
-    * [Closures]
-* Pointer types:
-    * [References]
-    * [Raw pointers]
-    * [Function pointers]
-* Trait types:
-    * [Trait objects]
-    * [Impl trait]
+Rust 类型分类列表为：
+
+* 原生类型(primitive types):
+    * [布尔型(Boolean)] — `true` 或 `false`
+    * [数字型(Numeric)] — 整型(integer) 和 浮点型(float)
+    * [文本型(Textual)] — `char` 和 `str`
+    * [Never] — `!` — 没有值的类型
+*  序列类型(sequence types)：
+    * [元组(Tuple)]
+    * [数组(Array)]
+    * [切片(Slice)]
+* 用户自定义类型(user-defined types)：
+    * [结构体(Struct)]
+    * [枚举(Enum)]
+    * [联合体(Union)]
+* 函数类型(function types)：
+    * [函数(Functions)]
+    * [闭包(Closures)]
+* 指针类型(pointer types)：
+    * [引用(References)]
+    * [裸指针(Raw pointers)]
+    * [函数指针(Function pointers)]
+* trait类型(Trait types):
+    * [trait对象(Trait objects)]
+    * [实现对象(Impl trait)]
 
 ## Type expressions
+## 类型表达式
 
 > **<sup>句法</sup>**\
 > _Type_ :\
@@ -59,12 +60,11 @@ The list of types is:
 > &nbsp;&nbsp; | [_BareFunctionType_]\
 > &nbsp;&nbsp; | [_MacroInvocation_]
 
-A _type expression_ as defined in the _Type_ grammar rule above is the syntax
-for referring to a type. It may refer to:
+上面*类型*语法规则中定义的*类型表达式*是引用类型的句法。它可以指向：
 
-* Sequence types ([tuple], [array], [slice]).
-* [Type paths] which can reference:
-    * Primitive types ([boolean], [numeric], [textual]).
+* 序列类型 ([tuple], [array], [slice]).
+* [类型路径(type paths)] 可指：
+    * 原生类型([boolean], [numeric], [textual]).
     * Paths to an [item] ([struct], [enum], [union], [type alias], [trait]).
     * [`Self` path] where `Self` is the implementing type.
     * Generic [type parameters].
