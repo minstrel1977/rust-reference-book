@@ -1,15 +1,17 @@
 # Boolean type
+# 布尔型
 
-The `bool` type is a datatype which can be either `true` or `false`. The boolean
-type uses one byte of memory. It is used in comparisons and bitwise operations
-like `&`, `|`, and `!`.
+>[boolean.md](https://github.com/rust-lang/reference/blob/master/src/types/boolean.md)\
+>commit 0a15f29adb9988fcf4a57754c820332f5b3b214a
+
+布尔(`bool`)型是一种可以为真(`true`)或假(`false`)的数据类型。布尔型使用一个字节的内存。它用于比较和按位操作，如 `&`、`|` 和 `!`。
 
 ```rust
 fn main() {
     let x = true;
-    let y: bool = false; // with the boolean type annotation
+    let y: bool = false; // 使用布尔类型标注
 
-    // Use of booleans in conditional expressions
+    // 在条件表达式中使用布尔值
     if x {
         println!("x is true");
     }

@@ -1,10 +1,15 @@
 # Numeric types
+# 数字类型
+
+>[mumeric.md](https://github.com/rust-lang/reference/blob/master/src/types/mumeric.md)\
+>commit 73ca198fb3ab52283d67d5fe28c541ee1d169f48
 
 ## Integer types
+## 整型/整数类型
 
-The unsigned integer types consist of:
+无符号整数类型：
 
-Type   | Minimum | Maximum
+类型   | 最小值 | 最大值
 -------|---------|-------------------
 `u8`   | 0       | 2<sup>8</sup>-1
 `u16`  | 0       | 2<sup>16</sup>-1
@@ -12,9 +17,9 @@ Type   | Minimum | Maximum
 `u64`  | 0       | 2<sup>64</sup>-1
 `u128` | 0       | 2<sup>128</sup>-1
 
-The signed two's complement integer types consist of:
+有符号整数类型：
 
-Type   | Minimum            | Maximum
+类型   | 最小值            | 最大值
 -------|--------------------|-------------------
 `i8`   | -(2<sup>7</sup>)   | 2<sup>7</sup>-1
 `i16`  | -(2<sup>15</sup>)  | 2<sup>15</sup>-1
@@ -24,24 +29,17 @@ Type   | Minimum            | Maximum
 
 
 ## Floating-point types
+## 浮点型
 
-The IEEE 754-2008 "binary32" and "binary64" floating-point types are `f32` and
-`f64`, respectively.
+Rust 对应 IEEE 754-2008 的“binary32”和“binary64”浮点类型分别是 `f32` 和 `f64`。
 
 ## Machine-dependent integer types
+## 和计算平台相关的整型
 
-The `usize` type is an unsigned integer type with the same number of bits as the
-platform's pointer type. It can represent every memory address in the process.
+`usize`类型是一种无符号整型，其位数与平台的指针类型相同。它可以表示进程中的每个内存地址。
 
-The `isize` type is a signed integer type with the same number of bits as the
-platform's pointer type. The theoretical upper bound on object and array size
-is the maximum `isize` value. This ensures that `isize` can be used to calculate
-differences between pointers into an object or array and can address every byte
-within an object along with one byte past the end.
+`isize`类型是一种有符号整型，其位数与平台的指针类型相同。对象的尺寸和数组的长度的理论上限是 `isize`的最大值。这确保了 `isize` 可以用来计算（指向对象或数组的）指针之间的差异，并且可以寻址对象中的每个字节以及结束后的下一个字节。
 
-`usize` and `isize` are at least 16-bits wide.
+`usize` 和 `isize` 至少是16位宽。
 
-> **Note**: Many pieces of Rust code may assume that pointers, `usize`, and
-> `isize` are either 32-bit or 64-bit. As a consequence, 16-bit
-> pointer support is limited and may require explicit care and acknowledgment
-> from a library to support.
+> **注意**：许多 Rust 代码可能会假设指针、`usize` 和 `isize` 是32位或64位的。因此，16位指针的支持是有限的，可能需要来自库的明确关注和确认才能支持。

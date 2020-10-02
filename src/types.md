@@ -13,8 +13,8 @@ Rust 类型分类列表为：
 
 * 原生类型(primitive types):
     * [布尔型(Boolean)] — `true` 或 `false`
-    * [数字型(Numeric)] — 整型(integer) 和 浮点型(float)
-    * [文本型(Textual)] — `char` 和 `str`
+    * [数字类(Numeric)] — 整型(integer) 和 浮点型(float)
+    * [文本类(Textual)] — `char` 和 `str`
     * [Never] — `!` — 没有值的类型
 *  序列类型(sequence types)：
     * [元组(Tuple)]
@@ -64,28 +64,24 @@ Rust 类型分类列表为：
 
 * 序列类型 ([tuple], [array], [slice]).
 * [类型路径(type paths)] 可指：
-    * 原生类型([boolean], [numeric], [textual]).
-    * Paths to an [item] ([struct], [enum], [union], [type alias], [trait]).
-    * [`Self` path] where `Self` is the implementing type.
-    * Generic [type parameters].
-* Pointer types ([reference], [raw pointer], [function pointer]).
-* The [inferred type] which asks the compiler to determine the type.
-* [Parentheses] which are used for disambiguation.
-* Trait types: [Trait objects] and [impl trait].
-* The [never] type.
-* [Macros] which expand to a type expression.
+    * 原生类型([布尔型][boolean], [数字类][numeric], [文本类][textual]).
+    * [数据项][item]([结构体][struct], [枚举][enum], [联合体][union], [类型别名][type alias], [trait])的路径.
+    * [`Self`路径][`Self` path]，其中 `Self` 是实现类型。
+    * 一般[类型参数][type parameters]。
+* 指针类型([引用][reference], [裸指针][raw pointer], [函数指针][function pointer])。
+* [推断的类型][inferred type]，就是由编译器确定的类型。
+* 用来消除歧义的[圆括号][Parentheses]。
+* Trait类型：[trait对象][Trait objects] 和 [实现对象][impl trait].
+* [never]型。
+* 展开称类型表达式的[宏][Macros]。
 
 ### Parenthesized types
+### 括起来的类型
 
 > _ParenthesizedType_ :\
 > &nbsp;&nbsp; `(` [_Type_] `)`
 
-In some situations the combination of types may be ambiguous. Use parentheses
-around a type to avoid ambiguity. For example, the `+` operator for [type
-boundaries] within a [reference type] is unclear where the
-boundary applies, so the use of parentheses is required. Grammar rules that
-require this disambiguation use the [_TypeNoBounds_] rule instead of
-[_Type_].
+在某些情况下，类型的组合可能会产生歧义。在类型周围使用括号可以避免歧义。例如，有时在[引用类型][reference type]中简单使用 `+`运算符来引入进行[类型约束][type boundaries]会搞不清楚约束该应用于何处，因此需要使用括号。需要这种消除歧义的语法规则使用 [_TypeNoBounds_] 规则替代 [_Type_] 规则。
 
 ```rust
 # use std::any::Any;
@@ -93,22 +89,15 @@ type T<'a> = &'a (dyn Any + Send);
 ```
 
 ## Recursive types
+## 递归类型
 
-Nominal types &mdash; [structs], [enumerations], and [unions] &mdash; may be
-recursive. That is, each `enum` variant or `struct` or `union` field may
-refer, directly or indirectly, to the enclosing `enum` or `struct` type
-itself. Such recursion has restrictions:
+标称类型 &mdash; [结构体][structs]、[枚举][enumerations]和[联合体][unions] &mdash; 可以是递归的。也就是说，每个枚举(`enum`)变体或结构体(`struct`)或联合体(`union`)字段可以直接或间接地引用它归属的枚举(`enum`)或结构体(`struct`)类型本身。这种递归有一些限制：
 
-* Recursive types must include a nominal type in the recursion (not mere [type
-  aliases], or other structural types such as [arrays] or [tuples]). So `type
-  Rec = &'static [Rec]` is not allowed.
-* The size of a recursive type must be finite; in other words the recursive
-  fields of the type must be [pointer types].
-* Recursive type definitions can cross module boundaries, but not module
-  *visibility* boundaries, or crate boundaries (in order to simplify the module
-  system and type checker).
+* 递归类型必须在递归中包含一个标称类型(不能仅是[类型别名][type aliases]或其他结构化的类型，如[数组][arrays]或[元组][tuples])。因此不允许使用 `type Rec = &'static [Rec]`。
+* 递归类型的次数必须是有限的；换句话说，类型的递归字段必须是[指针类型][pointer types]。
+* 递归类型定义可以跨越模块边界，但不能跨越模块*可见性*边界或 crate 边界(为了简化模块系统和类型检查器)。
 
-An example of a *recursive* type and its use:
+*递归*类型及其使用示例：
 
 ```rust
 enum List<T> {
