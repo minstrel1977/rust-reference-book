@@ -84,7 +84,7 @@
         - [结构体](types/struct.md)
         - [枚举](types/enum.md)
         - [联合体](types/union.md)
-        - [函数型](types/function-item.md)
+        - [函数项类型](types/function-item.md)
         - [闭包](types/closure.md)
         - [指针型](types/pointer.md)
         - [函数指针](types/function-pointer.md)
