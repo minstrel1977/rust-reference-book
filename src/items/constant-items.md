@@ -9,9 +9,9 @@
 
 *常量项*是一个可选的命名[*常量值*]，它与程序中的具体内存位置没有关联。常量本质上是内联的，无论它们在哪里使用，这意味着它们在使用时是直接复制到相关的上下文中的。这包括使用来自外部 crate 的常量和非 [`Copy`] 类型值。对相同常量的引用不保证引用相同的内存地址。
 
-常量必须显式指定数据类型。类型必须具有 `'static` 生命周期：程序初始化器(initializer)中的任何引用都必须具有 `'static` 生命周期。
+常量必须显式指定数据类型。类型必须具有 `'static` 生存期：程序初始化器(initializer)中的任何引用都必须具有 `'static` 生存期。
 
-常量可以引用其他常量的地址，在这种情况下，该地址将具有省略（如果适用）的生存期，否则（在大多数情况下）默认为 `'static` 生命周期。（请参阅[静态生命周期省略]）。但是，编译器仍然可以自由地任意次数地转换该常量，因此引用的地址可能不稳定。
+常量可以引用其他常量的地址，在这种情况下，该地址将具有省略（如果适用）的生存期，否则（在大多数情况下）默认为 `'static` 生存期。（请参阅[静态生存期省略]）。但是，编译器仍然可以自由地任意次数地转换该常量，因此引用的地址可能不稳定。
 
 ```rust
 const BIT1: u32 = 1 << 0;
@@ -80,7 +80,7 @@ m!(const _: () = (););
 [关联]: ../glossary.md#associated-item
 [*常量值*]: ../const_eval.md#常量表达式
 [自由]: ../glossary.md#free-item
-[静态生命周期省略]: ../lifetime-elision.md#static-lifetime-elision
+[静态生存期省略]: ../lifetime-elision.md#static-lifetime-elision
 [IDENTIFIER]: ../identifiers.md
 [下划线的导入]: use-declarations.md#underscore-imports
 [_Type_]: ../types.md#type-expressions

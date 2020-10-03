@@ -184,7 +184,7 @@ assert_eq!(sum, 55);
 > _LoopLabel_ :\
 > &nbsp;&nbsp; [LIFETIME_OR_LABEL] `:`
 
-循环表达式可以选择设置一个*标签*。这类标签被写为循环表达式之前的生命周期，如 `'foo: loop { break 'foo; }`、`'bar: while false {}`、`'humbug: for _ in 0..0 {}`。如果循环存在标签，则嵌套在该循环中的带标签的 `break`和`continue`表达式可能会退出此循环或将控制流程返回到其头部。请参见后面的 [break表达式](#break-expressions)和 [continue表达式](#continue-expressions)。
+循环表达式可以选择设置一个*标签*。这类标签被写为循环表达式之前的生存期，如 `'foo: loop { break 'foo; }`、`'bar: while false {}`、`'humbug: for _ in 0..0 {}`。如果循环存在标签，则嵌套在该循环中的带标签的 `break`和`continue`表达式可能会退出此循环或将控制流程返回到其头部。请参见后面的 [break表达式](#break-expressions)和 [continue表达式](#continue-expressions)。
 A loop expression may optionally have a _label_. The label is written as a lifetime preceding the loop expression, as in `'foo: loop { break 'foo; }`, `'bar: while false {}`, `'humbug: for _ in 0..0 {}`.If a label is present, then labeled `break` and `continue` expressions nested within this loop may exit out of this loop or return control to its head.See [break expressions] and [continue expressions].
 
 ## `break` expressions
@@ -251,7 +251,7 @@ assert_eq!(result, 13);
 
 如果 `loop` 有关联的 `break`，则不认为该循环是发散的，并且 `loop` 必须具有与每个 `break`表达式兼容的类型。不带表达式的 `break` 被认为与带 `()`表达式的 `break` 相同。
 
-[LIFETIME_OR_LABEL]: ../tokens.md#生命周期和循环标签
+[LIFETIME_OR_LABEL]: ../tokens.md#生存期和循环标签
 [_BlockExpression_]: block-expr.md
 [_Expression_]: ../expressions.md
 [_MatchArmPatterns_]: match-expr.md

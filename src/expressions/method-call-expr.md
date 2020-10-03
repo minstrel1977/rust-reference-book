@@ -56,7 +56,7 @@ let log_pi = pi.unwrap_or(1.0).log(2.72);
 
 如果这导致了多个可能的候选对象，那么这就是一个错误，并且必须将接收者[转换][disambiguate call]为适当的接收者类型来进行方法调用。
 
-此过程不考虑接收者的可变性或生命周期，也不考虑方法是否为 `unsafe`。一旦查找到了一个方法，如果由于其中一个(或多个)原因而不能调用它，则结果是编译错误。
+此过程不考虑接收者的可变性或生存期，也不考虑方法是否为 `unsafe`。一旦查找到了一个方法，如果由于其中一个(或多个)原因而不能调用它，则结果是编译错误。
 
 如果碰到了一个存在多个可能方法的步骤，比如普通方法或 trait方法被认为是相同的，那么它就会导致编译错误。这些情况就需要使用[消除函数调用歧义的句法][disambiguating function call syntax]来为方法和函数的调用消除歧义。
 <!-- If a step is reached where there is more than one possible method, such as where generic methods or traits are considered the same, then it is a compiler error. These cases require a [disambiguating function call syntax] for method and function invocation. TobeModify-->

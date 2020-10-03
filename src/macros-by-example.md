@@ -104,7 +104,7 @@ foo!(3);
   * `path`: 一条 [_类型路径_] 风格的路径
   * `tt`: 一个 [_标记树_]&nbsp;(单个[标记码]或匹配型定界符（matching delimiters）`（）`、`[]`、`{}` 中的标记)
   * `meta`: an [_属性值_], 属性的内容
-  * `lifetime`: 一个 [生命周期标记码]
+  * `lifetime`: 一个 [生存期标记码]
   * `vis`: 可能为空的[_可见性_]限定符
   * `literal`: 匹配 `-`<sup>?</sup>[_字面量表达式_]
 
@@ -357,7 +357,7 @@ macro_rules! helper {
 [卫生性]: #hygiene
 [IDENTIFIER]: identifiers.md
 [标识符或关键字]: identifiers.md
-[生命周期标记码]: tokens.md#lifetimes-and-loop-labels
+[生存期标记码]: tokens.md#lifetimes-and-loop-labels
 [元变量]: #metavariables
 [重复]: #repetitions
 [_属性值_]: attributes.md

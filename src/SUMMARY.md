@@ -35,7 +35,7 @@
     - [trait](items/traits.md)
     - [实现](items/implementations.md)
     - [外部块](items/external-blocks.md)
-    - [类型参数和生命周期参数](items/generics.md)
+    - [类型参数和生存期参数](items/generics.md)
     - [关联数据项](items/associated-items.md)
     - [可见性与隐私权](visibility-and-privacy.md)
 
@@ -96,15 +96,15 @@
     - [类型布局 ](type-layout.md)
     - [内部可变性](interior-mutability.md)
     - [子类型和型变](subtyping.md)
-    - [trait 及其生命周期约束](trait-bounds.md)
+    - [trait 及其生存期约束](trait-bounds.md)
     - [类型强制转换](type-coercions.md)
     - [析构函数](destructors.md)
-    - [生命周期省略](lifetime-elision.md)
+    - [生存期省略](lifetime-elision.md)
 
 - [特殊类型和 trait](special-types-and-traits.md)
 
 - [内存模型](memory-model.md)
-    - [内存分配和其生命周期](memory-allocation-and-lifetime.md)
+    - [内存分配和其生存期](memory-allocation-and-lifetime.md)
     - [内存所有权](memory-ownership.md)
     - [变量](variables.md)
 

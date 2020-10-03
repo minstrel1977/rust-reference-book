@@ -8,7 +8,7 @@
 * [关键字]
 * [标识符]
 * [字面量](#字面量)
-* [生命周期](#生命周期和循环标签)
+* [生存期](#生存期和循环标签)
 * [标点符号](#标点符号)
 * [分隔符](#分隔符)
 
@@ -428,7 +428,7 @@ let x: f64 = 2.; // type f64
 
 布尔类型有两个值，写做：`true` 和 `false`。
 
-## 生命周期和循环标签
+## 生存期和循环标签
 
 > **<sup>词法</sup>**\
 > LIFETIME_TOKEN :\
@@ -438,7 +438,7 @@ let x: f64 = 2.; // type f64
 > LIFETIME_OR_LABEL :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `'` [NON_KEYWORD_IDENTIFIER][标识符]
 
-生命周期参数和[循环标签]使用 LIFETIME_OR_LABEL 标记码。词法上接受任何 LIFETIME_TOKEN，比如在宏中使用。
+生存期参数和[循环标签]使用 LIFETIME_OR_LABEL 标记码。词法上接受任何 LIFETIME_TOKEN，比如在宏中使用。
 
 [循环标签]: expressions/loop-expr.md
 

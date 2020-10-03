@@ -123,7 +123,7 @@ impl Example {
 `&'lifetime self`     | `self: &'lifetime Self`
 `&'lifetime mut self` | `self: &'lifetime mut Self`
 
-> **注意**: （方法的）生命周期也能，其实也经常是使用这种方式来省略。
+> **注意**: （方法的）生存期也能，其实也经常是使用这种方式来省略。
 
 如果 `self` 参数以 `mut` 为前缀，它就变成了一个可变的变量，类似于使用 `mut` [标识符模式]的常规参数。例如：
 

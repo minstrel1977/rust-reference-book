@@ -168,7 +168,7 @@ let fptr: extern "C" fn() -> i32 = new_i32;
 
 * 类型参数中参数只能有以下类型的 [trait 约束]：
 <!--* Type parameters where the parameters only have any [trait bounds] of the following kind: TobeModify-->
-    * 生命周期
+    * 生存期
     * `Sized` 或 [`?Sized`]
 
     这意味着 `<T: 'a + ?Sized>`、`<T: 'b + Sized>` 和 `<T>` 都是可以的。
@@ -221,7 +221,7 @@ fn example<'a>(x: &'a str) -> impl Future<Output = usize> + 'a {
 
 实际的脱糖过程相当复杂：
 
-- 假定脱糖过程中的返回类型捕获 *`async fn` 声明*里的所有生命周期。这可以在上面的脱糖示例中看到：（我们）显式地给它添加了一个最小生存期 `'a`，因此捕捉到 `'a`。
+- 假定脱糖过程中的返回类型捕获 *`async fn` 声明*里的所有生存期。这可以在上面的脱糖示例中看到：（我们）显式地给它添加了一个最小生存期 `'a`，因此捕捉到 `'a`。
 - 代码体中的 [`async move` 块][async blocks]捕获所有函数参数，包括未使用或绑定到 `_` 模式的参数。这可以确保函数参数的销毁顺序与函数非异步时的顺序相同，除了这些销毁动作需要在返回的 future 完全执行(fully awaited)完成后才会发生。
 
 有关异步效果的详细信息，请参见[`async`块][async-blocks]。
