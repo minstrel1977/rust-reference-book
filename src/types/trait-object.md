@@ -1,4 +1,8 @@
 # Trait objects
+# trait对象
+
+>[trait-object.md](https://github.com/rust-lang/reference/blob/master/src/types/trait-object.md)\
+>commit fd10e7043934711ef96b4dd2009db3e4d0182a33
 
 > **<sup>句法</sup>**\
 > _TraitObjectType_ :\
@@ -7,12 +11,10 @@
 > _TraitObjectTypeOneBound_ :\
 > &nbsp;&nbsp; `dyn`<sup>?</sup> [_TraitBound_]
 
-A *trait object* is an opaque value of another type that implements a set of
-traits. The set of traits is made up of an [object safe] *base trait* plus any
-number of [auto traits].
+*trait对象*是某种类型的不透明值(opaque value)，该类型实现了一些 trait。这些 trait 是由一个[对象安全的][object safe]*基础trait* 加上任意数量的[自动trait][auto traits] 组成的。
 
-Trait objects implement the base trait, its auto traits, and any [supertraits]
-of the base trait.
+trait对象实现基础trait和它的自动trait 以及基础trait 的任何[超类trait][supertraits]。
+
 
 Trait objects are written as the optional keyword `dyn` followed by a set of
 trait bounds, but with the following restrictions on the trait bounds. All

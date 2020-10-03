@@ -1,4 +1,8 @@
 # Function pointer types
+# 函数指针类型
+
+>[function-pointer.md](https://github.com/rust-lang/reference/blob/master/src/types/function-pointer.md)\
+>commit 3d1b9ae5e7a61da43ac83cc42815e29b34b350ba
 
 > **<sup>句法</sup>**\
 > _BareFunctionType_ :\
@@ -20,17 +24,13 @@
 > _MaybeNamedFunctionParametersVariadic_ :\
 > &nbsp;&nbsp; ( _MaybeNamedParam_ `,` )<sup>\*</sup> _MaybeNamedParam_ `,` [_OuterAttribute_]<sup>\*</sup> `...`
 
-Function pointer types, written using the `fn` keyword, refer to a function
-whose identity is not necessarily known at compile-time. They can be created
-via a coercion from both [function items] and non-capturing [closures].
+函数指针类型（使用关键字 `fn` 编写）指的是在编译时不一定知道其标识符的函数。它们可以通过从[函数项][function items]或非捕获( non-capturing)[闭包][closures]来强制创建。
 
-The `unsafe` qualifier indicates that the type's value is an [unsafe
-function], and the `extern` qualifier indicates it is an [extern function].
+非安全(`unsafe`)限定符表示类型的值是一个[非安全函数][unsafe function]，而 `extern` 限定符表示它是一个[外部函数][extern function]。
 
-Variadic parameters can only be specified with [`extern`] function types with
-the `"C"` or `"cdecl"` calling convention.
+可变参数只能通过 [`extern`]函数类型使用 `"C"` 或 `"cdecl"` 的调用约定来指定。
 
-An example where `Binop` is defined as a function pointer type:
+下面示例中 `Binop` 被定义为函数指针类型：
 
 ```rust
 fn add(x: i32, y: i32) -> i32 {
@@ -45,9 +45,9 @@ x = bo(5,7);
 ```
 
 ## Attributes on function pointer parameters
+## 函数指针参数上的属性
 
-Attributes on function pointer parameters follow the same rules and
-restrictions as [regular function parameters].
+函数指针参数上的属性遵循与[常规函数参数][regular function parameters]相同的规则和限制
 
 [IDENTIFIER]: ../identifiers.md
 [_ForLifetimes_]: ../items/generics.md#where子句
