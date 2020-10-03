@@ -1,23 +1,20 @@
 # Enumerated types
+# 枚举类型
 
-An *enumerated type* is a nominal, heterogeneous disjoint union type, denoted
-by the name of an [`enum` item]. [^enumtype]
+>[enum.md](https://github.com/rust-lang/reference/blob/master/src/types/enum.md)\
+>commit b0e0ad6490d6517c19546b1023948986578fc378
 
-An [`enum` item] declares both the type and a number of *variants*, each of
-which is independently named and has the syntax of a struct, tuple struct or
-unit-like struct.
+*枚举类型*是一种标称型(nominal)的异构的不相交的并集类型，枚举类型直接由[枚举(`enum`)项][`enum` item]的名称来表示。[^enumtype]
 
-New instances of an `enum` can be constructed in an [enumeration variant
-expression].
+[枚举(`enum`)项][`enum` item]的声明同时声明它的类型和其*变体(variants)*，其中每个变体都独立命名，可使用定义结构体、元组结构体或类单元结构体的句法来定义它们。
 
-Any `enum` value consumes as much memory as the largest variant for its
-corresponding `enum` type, as well as the size needed to store a discriminant.
+枚举(`enum`)的新实例可以在[枚举变体表达式][enumeration variant expression]中构造。
 
-Enum types cannot be denoted *structurally* as types, but must be denoted by
-named reference to an [`enum` item].
+任何枚举值消耗的内存和其同类型的其他变体都是相同的的，具体都为其枚举类型的最大变体所需的内存加上存储其判别值(discriminant)所需的内存。
 
-[^enumtype]: ../The `enum` type is analogous to a `data` constructor declaration in
-             ML, or a *pick ADT* in Limbo.
+枚举类型不能*结构上(structurally)*表示为类型，必须通过对其[枚举(`enum`)项][`enum` item]的名称的引用来表示。
+
+[^enumtype]: `enum`类型类似于 ML 中的数据(`data`)构造函数声明，或 Limbo 中的 *pick ADT*。
 
 [`enum` item]: ../items/enumerations.md
 [enumeration variant expression]: ../expressions/enum-variant-expr.md

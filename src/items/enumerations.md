@@ -1,3 +1,4 @@
+# Enumerations
 # 枚举
 
 >[enumerations.md](https://github.com/rust-lang/reference/blob/master/src/items/enumerations.md)\
@@ -28,7 +29,7 @@
 > _EnumItemDiscriminant_ :\
 > &nbsp;&nbsp; `=` [_Expression_]
 
-枚举，英文为 *enumeration*，英文简写为 *enum*，它同时定义了一个具名[枚举类型]和一组*构造器*，这可用于创建相应枚举类型的值或对这些值进行模式匹配。
+枚举，英文为 *enumeration*，英文简写为 *enum*，它同时定义了一个标称型(nominal)[枚举类型]和一组*构造器*，这可用于创建相应枚举类型的值或对这些值进行模式匹配。
 
 枚举使用关键字 `enum` 来声明。
 

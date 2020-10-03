@@ -39,7 +39,7 @@
 > &nbsp;&nbsp; [_Visibility_]<sup>?</sup>\
 > &nbsp;&nbsp; [_Type_]
 
-*结构体*是一个用关键字 `struct` 定义的具名[结构体类型]。
+*结构体*是一个用关键字 `struct` 定义的标称型(nominal)[结构体类型]。
 
 `struct` 数据项的一个示例和它的使用演示：
 
@@ -49,7 +49,7 @@ let p = Point {x: 10, y: 11};
 let px: i32 = p.x;
 ```
 
-*元组结构体*是一个具名的[元组类型]，也是用关键字 `struct` 定义的。例如：
+*元组结构体*是一个标称型(nominal)[元组类型]，也是用关键字 `struct` 定义的。例如：
 
 [结构体类型]: ../types/struct.md
 [元组类型]: ../types/tuple.md

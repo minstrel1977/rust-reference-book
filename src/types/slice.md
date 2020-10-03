@@ -26,8 +26,7 @@ let boxed_array: Box<[i32]> = Box::new([1, 2, 3]);
 let slice: &[i32] = &boxed_array[..];
 ```
 
-All elements of slices are always initialized, and access to a slice is always
-bounds-checked in safe methods and operators.
+切片的所有元素总是被初始化过的，使用 Rust 的安全(safe)方法或操作符来访问切片时总是会做越界检查。
 
 [_Type_]: ../types.md#type-expressions
 [dynamically sized type]: ../dynamically-sized-types.md
