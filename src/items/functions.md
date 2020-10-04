@@ -1,7 +1,7 @@
 # 函数
 
 >[functions.md](https://github.com/rust-lang/reference/blob/master/src/items/functions.md)\
->commit e6e7e657e2aae2cc474d1324d3f4508bd7b1d08c
+>commit 6dceee14cd895247c3a272086798083e35b31d06
 
 > **<sup>句法</sup>**\
 > _Function_ :\
@@ -151,43 +151,12 @@ let fptr: extern "C" fn() -> i32 = new_i32;
 非 `"Rust"` 的 ABI 函数不支持与 Rust 函数完全相同的 unwind 方式。因此展开碰到带有这类 ABI 的函数的结束时会导致进程终止。
 <!--TobeModify: Functions with an ABI that differs from `"Rust"` do not support unwinding in the exact same way that Rust does. Therefore, unwinding past the end of functions with such ABIs causes the process to abort.-->
 
-> **注意**: `rustc` 实现背后的 LLVM 会通过执行一个非法指令来中止进程。
+> **注意**: `rustc` 背后的 LLVM 会通过执行一个非法指令来中止进程。
 
+## Const functions
 ## 常量函数
 
-使用关键字 `const` 限定的函数是常量函数，与[元组结构体]和[元祖变体]构造函数一样。*常量函数*可以在[常量上下文]中调用。当从常量上下文中调用这类函数时，编译器会在编译时解释该函数。这种解释发生在(Rust编译器为)编译目标(构建的模拟)环境中，而不是在当前主机环境中。因此，如果您是针对一个 `32` 位系统进行编译，那么 `usize` 就是 `32` 位，这与您在一个 `64` 位还是在一个 `32` 位系统上进行编译无关。
-
-如果在[常量上下文]之外调用常量函数，那么它与任何其他函数没有区别。你可以自由地用常量函数做任何你可以用普通函数做的任何事情。
-
-常量函数有各种限制以确保其可以在编译时对其求值。例如，不可以将随机数生成器编写为常量函数。在编译时调用常量函数将始终产生与运行时调用它相同的结果，即使多次调用也是如此。这个规则有一个例外：如果您在极端情况下执行复杂的浮点运算，那么您可能得到（非常轻微）不同的结果。建议不要使数组长度和枚举判别式依赖于浮点计算。
-
-允许出现在常量函数中的数据结构的详尽列表：
-<!--Exhaustive list of permitted structures in const functions: TobeModify-->
-
-> **注意**: 这个列表比你可以用常规常量写的东西更具限制性
-
-* 类型参数中参数只能有以下类型的 [trait 约束]：
-<!--* Type parameters where the parameters only have any [trait bounds] of the following kind: TobeModify-->
-    * 生存期
-    * `Sized` 或 [`?Sized`]
-
-    这意味着 `<T: 'a + ?Sized>`、`<T: 'b + Sized>` 和 `<T>` 都是可以的。
-    
-    此规则也适用于包含常量方法的 *impl 块*的类型参数。
-    
-    此规则不适用于元组结构体和元组变体构造函数。    
-
-* 整数上的算术和比较运算符
-* 除 `&&` 和 `||` 之外的所有布尔运算符，这俩是因为它们的短路运算而被禁止。
-* 任何类型的聚合构造函数（数组、`struct`、`enum`、元组，…）
-* 对其他*安全*常量函数的调用（无论是通过函数调用还是通过方法调用）
-* 数组和切片上的索引表达式
-* 对结构体和元组的字段的访问
-* 从常量项（但不能是静态项，甚至不能引用静态项）中读取数据
-* `&` 和 `*`（仅解引用引用，原始指针不行）
-* 除裸指针向整数转换外的类型转换
-* `unsafe` 块和 `const unsafe fn` 可以，但代码体/块只能执行以下非安全操作：
-    * 调用非安全常量函数
+使用关键字 `const` 限定的函数是[常量(const)函数][const functions]，[元组结构体][tuple struct]构造器和[元组变体][tuple variant]构造函数也是如此。可以从[常量上下文][const context]中调用*常量函数*。
 
 ## 异步函数 （async functions）
 
@@ -307,7 +276,9 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [_WhereClause_]: generics.md#where子句
 [_OuterAttribute_]: ../attributes.md
 [常量上下文]: ../const_eval.md#const-context
-[元组结构体]: structs.md
+[const functions]: ../const_eval.md#const-functions
+[tuple struct]: structs.md
+[tuple variant]: enumerations.md
 [元祖变体]: enumerations.md
 [外部块]: external-blocks.md
 [路径]: ../paths.md
@@ -328,7 +299,7 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [`must_use`]: ../attributes/diagnostics.md#must_use属性
 [模式]: ../patterns.md
 [`?Sized`]: ../trait-bounds.md#sized
-[trait 约束]: ../trait-bounds.md
+[trait约束]: ../trait-bounds.md
 [`export_name`]: ../abi.md#the-export_name-attribute
 [`link_section`]: ../abi.md#the-link_section-attribute
 [`no_mangle`]: ../abi.md#the-no_mangle-attribute

@@ -1,40 +1,30 @@
 # Type Layout
+# 类型布局
 
-The layout of a type is its size, alignment, and the relative offsets of its
-fields. For enums, how the discriminant is laid out and interpreted is also part
-of type layout.
+>[type-layout.md](https://github.com/rust-lang/reference/blob/master/src/type-layout.md)\
+>commit 66b4d58fc0830757a98be2c5ba390255168056f7
 
-Type layout can be changed with each compilation. Instead of trying to document
-exactly what is done, we only document what is guaranteed today.
+类型的布局描述类型的尺寸、对齐和字段的相对偏移量。对于枚举，如何布局和解释判别值也是类型布局的一部分。
+
+每次编译都可以更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去记录编译器对此做了什么。
 
 ## Size and Alignment
+## 尺寸和对齐
 
-All values have an alignment and size.
+所有值都有对齐和尺寸。
 
-The *alignment* of a value specifies what addresses are valid to store the value
-at. A value of alignment `n` must only be stored at an address that is a
-multiple of n. For example, a value with an alignment of 2 must be stored at an
-even address, while a value with an alignment of 1 can be stored at any address.
-Alignment is measured in bytes, and must be at least 1, and always a power of 2.
-The alignment of a value can be checked with the [`align_of_val`] function.
+值的对齐指定了哪些地址可以有效地存储该值。对齐为n的值只能存储在n的倍数地址上。例如，对齐为2的值必须存储在偶数地址上，而对齐为1的值可以存储在任何地址上。对齐是用字节来度量的，必须至少是1，并且总是2的幂次。值的对齐可以通过 [`align_of_val`] 函数来检查。
 
-The *size* of a value is the offset in bytes between successive elements in an
-array with that item type including alignment padding. The size of a value is
-always a multiple of its alignment. The size of a value can be checked with the
-[`size_of_val`] function.
+值的*尺寸*是同类型的值组成的数组中连续元素之间的字节偏移量。值的尺寸总是其对齐的倍数。值的尺寸可以通过 [`size_of_val`] 函数来检查。
 
-Types where all values have the same size and alignment known at compile time
-implement the [`Sized`] trait and can be checked with the [`size_of`] and
-[`align_of`] functions. Types that are not [`Sized`] are known as [dynamically
-sized types]. Since all values of a `Sized` type share the same size and
-alignment, we refer to those shared values as the size of the type and the
-alignment of the type respectively.
+类型如果实现了 [`Sized`] trait，那它的所有值在编译时都具有相同大小和对齐，并且可以使用函数 [`size_of`] 和 [`align_of`] 对此类型进行检测。没有实现 `Sized` trait 的类型被称为[动态尺寸类型][dynamically sized types]。由于实现了 `Sized` trait某一类型的所有值共享相同的大小和对齐，所以我们分别将这俩共享值称为类型的大小和类型的对齐。
 
 ## Primitive Data Layout
+## 原生数据类型的布局
 
-The size of most primitives is given in this table.
+下表给出了大多数原生数据类型(primitives)的尺寸。
 
-| Type              | `size_of::<Type>()`|
+| 类型              | `size_of::<Type>()`|
 |--                 |--                  |
 | `bool`            | 1                  |
 | `u8` / `i8`       | 1                  |
@@ -46,25 +36,21 @@ The size of most primitives is given in this table.
 | `f64`             | 8                  |
 | `char`            | 4                  |
 
-`usize` and `isize` have a size big enough to contain every address on the
-target platform. For example, on a 32 bit target, this is 4 bytes and on a 64
-bit target, this is 8 bytes.
+`usize` 和 `isize` 的尺寸足以包含目标平台上的每个内存地址。例如，在32位目标上，这是4个字节，而在64位目标上，这是8个字节。
 
-Most primitives are generally aligned to their size, although this is
-platform-specific behavior. In particular, on x86 u64 and f64 are only
-aligned to 32 bits.
+大多数原生数据类型通常与它们的尺寸保持一致，尽管这是特定于平台的行为。具体地，在x86平台上，u64 和 f64 都上32位对齐。
 
 ## Pointers and References Layout
+## 指针和引用的布局
 
-Pointers and references have the same layout. Mutability of the pointer or
-reference does not change the layout.
+指针和引用具有相同的布局。指针或引用的可变性不会改变布局。
 
-Pointers to sized types have the same size and alignment as `usize`.
+指向固定尺寸类型(sized type)的指针具有与 `usize` 相同的尺寸和对齐。
 
-Pointers to unsized types are sized. The size and alignment is guaranteed to be
-at least equal to the size and alignment of a pointer.
+指向非固定尺寸类型的指针是固定尺寸的。其尺寸和对齐至少等于一个指针的尺寸和对齐
 
-> Note: Though you should not rely on this, all pointers to
+> 注意：虽然不应该依赖于此，但是目前所有指向  <abbr title="Dynamically Sized Types">DSTs</abbr> 的指针都是 `usize` 的两倍大小，并且具有相同的对齐方式
+>  Though you should not rely on this, all pointers to
 > <abbr title="Dynamically Sized Types">DSTs</abbr> are currently twice the
 > size of the size of `usize` and have the same alignment.
 
@@ -558,9 +544,9 @@ used with any other representation.
 [`Sized`]: ../std/marker/trait.Sized.html
 [`Copy`]: ../std/marker/trait.Copy.html
 [dynamically sized types]: dynamically-sized-types.md
-[field-less enums]: items/enumerations.md#为无字段枚举自定义判别值
+[field-less enums]: items/enumerations.md#custom-discriminant-values-for-fieldless-enumerations
 [enumerations]: items/enumerations.md
-[zero-variant enums]: items/enumerations.md#无变体枚举
+[zero-variant enums]: items/enumerations.md#zero-variant-enums
 [undefined behavior]: behavior-considered-undefined.md
 [27060]: https://github.com/rust-lang/rust/issues/27060
 [55149]: https://github.com/rust-lang/rust/issues/55149
