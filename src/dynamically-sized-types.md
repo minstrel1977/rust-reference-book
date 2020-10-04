@@ -1,4 +1,8 @@
 # Dynamically Sized Types
+# 动态尺寸类型
+
+>[dynamically-sized-types.md](https://github.com/rust-lang/reference/blob/master/src/dynamically-sized-types.md)\
+>commit af1cf6d3ca3b7a8c434c142148742aa912e37c34
 
 Most types have a fixed size that is known at compile time and implement the
 trait [`Sized`][sized]. A type with a size that is known only at run-time is
