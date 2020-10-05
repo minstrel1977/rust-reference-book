@@ -49,33 +49,32 @@
 
 指向非固定尺寸类型的指针是固定尺寸的。其尺寸和对齐至少等于一个指针的尺寸和对齐
 
-> 注意：虽然不应该依赖于此，但是目前所有指向  <abbr title="Dynamically Sized Types">DSTs</abbr> 的指针都是 `usize` 的两倍大小，并且具有相同的对齐方式
->  Though you should not rely on this, all pointers to
-> <abbr title="Dynamically Sized Types">DSTs</abbr> are currently twice the
-> size of the size of `usize` and have the same alignment.
+> 注意：虽然不应该依赖于此，但是目前所有指向 <abbr title="Dynamically Sized Types">DST</abbr> 的指针都是 `usize` 的两倍大小，并且具有相同的对齐方式。
 
 ## Array Layout
+## 数组的布局
 
-Arrays are laid out so that the `nth` element of the array is offset from the
-start of the array by `n * the size of the type` bytes. An array of `[T; n]`
-has a size of `size_of::<T>() * n` and the same alignment of `T`.
+数组的布局使得数组的第n个(`nth`)元素为从数组开始的位置向后偏移 _n*元素类型的尺寸(`n * the size of the element's type`)_ 个字节数。数组 `[T; n]` 的尺寸为`size_of::<T>() * n`，对齐和 `T` 的对齐相同。
 
 ## Slice Layout
+## 切片的布局
 
-Slices have the same layout as the section of the array they slice.
+切片的布局与它们所切的那部分数组片段相同。
 
-> Note: This is about the raw `[T]` type, not pointers (`&[T]`, `Box<[T]>`,
-> etc.) to slices.
+> 注意：这是关于原生的 `[T]`类型，而不是指向切片的指针`&[T]`、`Box<[T]>`、等等)。
 
 ## `str` Layout
-String slices are a UTF-8 representation of characters that have the same layout as slices of type `[u8]`.
+## 字符串切片(`str`)的布局
+
+字符串切片是与 `[u8]`类型的切片具有相同布局的字符序列的 UTF-8表示形式(representation)。
 
 ## Tuple Layout
+## 元组的布局
 
-Tuples do not have any guarantees about their layout.
+元组对于其布局没有任何保证。
 
-The exception to this is the unit tuple (`()`) which is guaranteed as a
-zero-sized type to have a size of 0 and an alignment of 1.
+这方面的例外是单元结构体(unit tuple)(`()`)，它被保证为大小为0的类型，其大小为0，对齐方式为1
+The exception to this is the unit tuple (`()`) which is guaranteed as a zero-sized type to have a size of 0 and an alignment of 1.
 
 ## Trait Object Layout
 

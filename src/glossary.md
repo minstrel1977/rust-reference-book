@@ -146,7 +146,7 @@ or not independent of applied type arguments. Given `trait Foo<T, U>`,
 ### Scrutinee
 检验对象
 
-检验对象是在`match`表达式和类似的模式匹配结构上匹配的表达式。例如，在 `match x { A => 1, B => 2 }` 中，表达式 `x` 是scrutinee。
+检验对象是在 `match`表达式和类似的模式匹配结构上匹配的表达式。例如，在 `match x { A => 1, B => 2 }` 中，表达式 `x` 是scrutinee。
 <!-- A scrutinee is the expression that is matched on in `match` expressions and similar pattern matching constructs. For example, in `match x { A => 1, B => 2 }`, the expression `x` is the scrutinee. -->
 
 ### Size
