@@ -12,7 +12,7 @@
 ### Alignment
 对齐量
 
-值的对齐量指定值的首选起始地址。对齐量的值总是2的幂次。对值的引用必须对齐的（译者理解：值的对齐量决定值的起始存储地址，那引用该值就相当于取这个值的存储首地址，正好引用中带有值的类型，那就顺便做一次简单的内存校验）。[更多][alignment]。
+值的对齐量指定值的首选起始地址。对齐量总是2的幂次。对值的引用内部必须校验对齐的。[更多][alignment]。
 <!-- The alignment of a value specifies what addresses values are preferred to start at. Always a power of two. References to a value must be aligned. [More][alignment]. -->
 
 ### Arity

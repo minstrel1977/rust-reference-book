@@ -233,7 +233,7 @@ assert_eq!(std::mem::size_of::<SizeRoundedUp>(), 12);  // 首先来自于b的尺
 #### \#[repr(C)] Field-less Enums
 #### \#[repr(C)] 无字段枚举
 
-对于[无字段枚举][field-less enums]，C表形的尺寸和对齐方式与目标平台的 C ABI 的默认枚举尺寸和对齐量相同。
+对于[无字段枚举][field-less enums]，C表形的尺寸和对齐量与目标平台的 C ABI 的默认枚举尺寸和对齐量相同。
 
 > 注意：C中的枚举的表示形式是由实现定义的，所以实际应用中这很可能是一个“最佳猜测”。特别是，当使用某些标志参数来编译感兴趣的C代码时，这可能是不正确的。<!-- Note: The enum representation in C is implementation defined, so this is really a "best guess". In particular, this may be incorrect when the C code of interest is compiled with certain flags. TobeModi-->
 
@@ -314,13 +314,12 @@ struct MyDFields;
 对于[无字段枚举][field-less enums]，原语表形将其尺寸和对齐量设置成与给定表形同名的原生类型的表形的值。例如，一个 `u8`表形的无字段枚举只能有0和255之间的判别值。
 
 #### Primitive Representation of Enums With Fields
-#### 有字段枚举的原语表形
+#### 带字段枚举的原语表形
 
 枚举的原语表形是一个 `repr(C)`版本的联合体。此联合体的每个字段对应一个和原枚举变体对应的 `repr(C)`版本的结构体。这些结构体的第一个字段是原枚举的变体移除了它们所有的字段组成的原语表形版本的枚举（“the tag”），那这些结构体的其余字段是原变体移走的字段。
 
-> 注意：如果标签(“the tag”)在联合体中被赋予自己的成员，那么这种表型是不变的，这应该使操作更加清晰（尽管遵循C++标准，标签成员应该被包装在结构体中）。
-> 注意：如果标签(“the tag”)在联合体中有自己的成员，那么这种表型是不变的，这样操作对您来说会更清晰(尽管遵循c++标准，标签成员应该被包装在结构体中）。
-> Note: This representation is unchanged if the tag is given its own member in the union, should that make manipulation more clear for you (although to follow the C++ standard the tag member should be wrapped in a `struct`).
+> 注意：如果标签(“the tag”)在联合体中被赋予自己的成员，那么这种表型是不变的，这样操作对您来说会更清晰(尽管遵循c++标准，标签成员应该被包装在结构体中）。
+<!-- Note: This representation is unchanged if the tag is given its own member in the union, should that make manipulation more clear for you (although to follow the C++ standard the tag member should be wrapped in a `struct`). -->
 
 ```rust
 // 这个枚举的表形效同于 ...
@@ -366,17 +365,14 @@ struct MyVariantD(MyEnumDiscriminant);
 > Note: `union`s with non-`Copy` fields are unstable, see [55149].
 
 #### Combining primitive representations of enums with fields and \#[repr(C)]
+#### 带字段枚举的原语表形与 \#[repr(C)] 表形的组合使用
 
-For enums with fields, it is also possible to combine `repr(C)` and a
-primitive representation (e.g., `repr(C, u8)`). This modifies the [`repr(C)`] by
-changing the representation of the discriminant enum to the chosen primitive
-instead. So, if you chose the `u8` representation, then the discriminant enum
-would have a size and alignment of 1 byte.
+对于带字段枚举，还可以将 `repr(C)` 和原语表形(例如，`repr(C, u8)`)结合起来使用。这是通过将判别值组成枚举的表形改为原语表形来实现的。因此，如果选择 `u8`表形，那么判别值枚举的尺寸和对齐量将为1个字节。
 
-The discriminant enum from the example [earlier][`repr(C)`] then becomes:
+那么这个判别值枚举就[前面][`repr(C)`]示例中的样子变成：
 
 ```rust
-#[repr(C, u8)] // `u8` was added
+#[repr(C, u8)] // 这里加上了 `u8`
 enum MyEnum {
     A(u32),
     B(f32, u64),
@@ -386,18 +382,16 @@ enum MyEnum {
 
 // ...
 
-#[repr(u8)] // So `u8` is used here instead of `C`
+#[repr(u8)] // 所以这里就用 `u8` 替代了 `C`
 enum MyEnumDiscriminant { A, B, C, D }
 
 // ...
 ```
 
-For example, with a `repr(C, u8)` enum it is not possible to have 257 unique
-discriminants ("tags") whereas the same enum with only a `repr(C)` attribute
-will compile without any problems.
+例如，对于有 `repr(C, u8)`属性的枚举，不可能有257个唯一的判别值（“tags”），而同一个只有 `repr(C)`属性的枚举编译时就不会出现任何问题。
 
-Using a primitive representation in addition to `repr(C)` can change the size of
-an enum from the `repr(C)` form:
+在 `repr(C)` 附加原语表形可以改变 `repr(C)`表形的枚举的尺寸：
+Using a primitive representation in addition to `repr(C)` can change the size of an enum from the `repr(C)` form:
 
 ```rust
 #[repr(C)]
@@ -418,23 +412,22 @@ enum Enum16 {
     Variant1,
 }
 
-// The size of the C representation is platform dependant
+// C表形的尺寸依赖于平台
 assert_eq!(std::mem::size_of::<EnumC>(), 8);
-// One byte for the discriminant and one byte for the value in Enum8::Variant0
+// 一个字节用于判别值，一个字节用于 Enum8::Variant0 中的值
 assert_eq!(std::mem::size_of::<Enum8>(), 2);
-// Two bytes for the discriminant and one byte for the value in Enum16::Variant0
-// plus one byte of padding.
+// 两个字节用于判别值，一个字节用于Enum16::Variant0中的值，加上一个字节的填充
 assert_eq!(std::mem::size_of::<Enum16>(), 4);
 ```
 
 [`repr(C)`]: #reprc-enums-with-fields
 
 ### The alignment modifiers
+### 对齐量的修饰符
 
-The `align` and `packed` modifiers can be used to respectively raise or lower
-the alignment of `struct`s and `union`s. `packed` may also alter the padding
-between fields.
+`align` 和 `packed` 修饰符可分别用于增大或缩小结构体和联合体的对齐量。`packed` 也可以改变字段之间的填充。
 
+对齐量被指定为整型参数，形式为 `#[repr(align(x))]` 或 `#[repr(packed(x))]`。对齐量的值必须是从1到2<sup>29</sup>之间的2的次幂数。对于packed，如果没有给出任何值，如#[repr(packed)]，则值为1
 The alignment is specified as an integer parameter in the form of
 `#[repr(align(x))]` or `#[repr(packed(x))]`. The alignment value must be a
 power of two from 1 up to 2<sup>29</sup>. For `packed`, if no value is given,
