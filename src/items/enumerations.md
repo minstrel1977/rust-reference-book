@@ -76,7 +76,7 @@ let baz_discriminant = Foo::Baz as u32;
 assert_eq!(baz_discriminant, 123);
 ```
 
-尽管编译器被允许在实际的内存布局中使用较小的类型，但在[默认表示法]下，指定的判别值会被解释为一个 `isize` 值。也可以使用[原语表示法]或[`C`表示法]来更改成大小可接受的值。
+尽管编译器被允许在实际的内存布局中使用较小的类型，但在[默认表形]下，指定的判别值会被解释为一个 `isize` 值。也可以使用[原语表形]或[`C`表形]来更改成大小可接受的值。
 
 两个变量具有相同的判别值是错误的。
 
@@ -93,7 +93,7 @@ enum SharedDiscriminantError2 {
 }
 ```
 
-当前一个变体的判别值是当前表示法允许的的最大值时，再使用默认判别值也是错误的。
+当前一个变体的判别值是当前表形允许的的最大值时，再使用默认判别值也是错误的。
 
 ```rust,compile_fail
 #[repr(u8)]
@@ -167,6 +167,6 @@ enum E {
 [*never 类型*]: ../types/never.md
 [数值转换]: ../expressions/operator-expr.md#semantics
 [常量表达式]: ../const_eval.md#常量表达式
-[默认表示法]: ../type-layout.md#the-default-representation
-[原语表示法]: ../type-layout.md#primitive-representations
-[`C` 表示法]: ../type-layout.md#the-c-representation
+[默认表形]: ../type-layout.md#the-default-representation
+[原语表形]: ../type-layout.md#primitive-representations
+[`C`表形]: ../type-layout.md#the-c-representation

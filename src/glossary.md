@@ -10,9 +10,9 @@
 <!-- An ‘abstract syntax tree’, or ‘AST’, is an intermediate representation of the structure of the program when the compiler is compiling it. -->
 
 ### Alignment
-对齐
+对齐量
 
-值的对齐方式指定值的首选起始地址。对齐的值总是2的次方数。对值的引用必须对齐（译者理解：值的对齐决定值的起始存储地址，那引用该值就相当于取这个值的存储首地址，正好引用中带有值的类型，那就顺便做一次简单的内存校验）。[更多][alignment]。
+值的对齐量指定值的首选起始地址。对齐量的值总是2的幂次。对值的引用必须对齐的（译者理解：值的对齐量决定值的起始存储地址，那引用该值就相当于取这个值的存储首地址，正好引用中带有值的类型，那就顺便做一次简单的内存校验）。[更多][alignment]。
 <!-- The alignment of a value specifies what addresses values are preferred to start at. Always a power of two. References to a value must be aligned. [More][alignment]. -->
 
 ### Arity
@@ -60,7 +60,7 @@ blanket implementation
 ### Dynamically sized type
 动态尺寸类型
 
-动态尺寸类型(DST)是一种没有静态已知大小或对齐方式的类型
+动态尺寸类型(DST)是一种没有静态已知尺寸或对齐量的类型
 <!-- A dynamically sized type (DST) is a type without a statically known size or alignment. -->
 
 ### Expression
