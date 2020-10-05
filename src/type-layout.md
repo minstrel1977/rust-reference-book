@@ -246,21 +246,15 @@ assert_eq!(std::mem::size_of::<SizeRoundedUp>(), 12);  // 首先来自于b的尺
 #### \#[repr(C)] Enums With Fields
 #### \#[repr(C)] 带字段枚举
 
-带字段的 `repr(C)`枚举的表形是一个带两个字段的 `repr(C)`结构体，在C语言中也被称为“标签联合(tagged union)”：
-The representation of a `repr(C)` enum with fields is a `repr(C)` struct with two fields, also called a "tagged union" in C:
+带字段的 `repr(C)`枚举的表形相当于一个带两个字段的 `repr(C)`结构体（这种在C语言中也被称为“标签联合(tagged union)”），这两个字段：
 
-- 一个 `repr(C)` 版本的枚举，移除了所有字段(“标签(tag)”)
-- a `repr(C)` version of the enum with all fields removed ("the tag")
-- a `repr(C)` union of `repr(C)` structs for the fields of each variant that had them ("the payload")
+- 一个为 `repr(C)` 版本的枚举（在这个结构体内，它也被叫做“the tag”），它就是原枚举的判别式组成的新类型，也就是它的变体是原枚举变体移除了它们自身所有的字段。
+- 一个为 `repr(C)` 版本的联合体（在这个结构体内，它也被叫做“the payload”），它的各个字段就是原枚举的各个变体的字段组成的 `repr(C)` 版本的结构体。
 
-> Note: Due to the representation of `repr(C)` structs and unions, if a variant
-> has a single field there is no difference between putting that field directly
-> in the union or wrapping it in a struct; any system which wishes to manipulate
-> such an `enum`'s representation may therefore use whichever form is more
-> convenient or consistent for them.
+> 注意：由于是 `repr(C)` 版本的结构体和联合体，如果某变体只单个字段，则直接将该字段放入联合体或将其包装进结构体中没有区别；因此，任何希望操终此类枚举表现形式的系统都可以使用对它们自己来说更方便或更一致的形式。
 
 ```rust
-// This Enum has the same representation as ...
+// 这个枚举的表形等效于 ...
 #[repr(C)]
 enum MyEnum {
     A(u32),
@@ -269,18 +263,18 @@ enum MyEnum {
     D,
  }
 
-// ... this struct.
+// ... 这个结构体
 #[repr(C)]
 struct MyEnumRepr {
     tag: MyEnumDiscriminant,
     payload: MyEnumFields,
 }
 
-// This is the discriminant enum.
+// 这是原判别式组成的新枚举类型.
 #[repr(C)]
 enum MyEnumDiscriminant { A, B, C, D }
 
-// This is the variant union.
+// 这是原变体的字段组成的联合体.
 #[repr(C)]
 union MyEnumFields {
     A: MyAFields,
@@ -301,46 +295,35 @@ struct MyBFields(f32, u64);
 #[derive(Copy, Clone)]
 struct MyCFields { x: u32, y: u8 }
 
-// This struct could be omitted (it is a zero-sized type), and it must be in
-// C/C++ headers.
+// 这个结构体可以被省略(它是一个零尺寸类型)，但它必须在 C/C++ 头文件中
 #[repr(C)]
 #[derive(Copy, Clone)]
 struct MyDFields;
 ```
 
-> Note: `union`s with non-`Copy` fields are unstable, see [55149].
+> 注意： 联合体(`union`)带有未实现 `Copy` trait 的字段的功能还没有纳入稳定版，参见[55149]。
 
 ### Primitive representations
+### 原语表形
 
-The *primitive representations* are the representations with the same names as
-the primitive integer types. That is: `u8`, `u16`, `u32`, `u64`, `u128`,
-`usize`, `i8`, `i16`, `i32`, `i64`, `i128`, and `isize`.
-
-Primitive representations can only be applied to enumerations and have
-different behavior whether the enum has fields or no fields. It is an error
-for [zero-variant enumerations] to have a primitive representation. Combining
-two primitive representations together is an error.
+*原语表形*是与原生整型具有相同名称的表形。也就是：`u8`，`u16`，`u32`，`u64`，`u128`，`usize`，`i8`，`i16`，`i32`，`i64`，`i128`，和 `isize`。
 
 #### Primitive Representation of Field-less Enums
+#### 无字段枚举的原语表形
 
-For [field-less enums], primitive representations set the size and alignment to
-be the same as the primitive type of the same name. For example, a field-less
-enum with a `u8` representation can only have discriminants between 0 and 255
-inclusive.
+对于[无字段枚举][field-less enums]，原语表形将其尺寸和对齐量设置成与给定表形同名的原生类型的表形的值。例如，一个 `u8`表形的无字段枚举只能有0和255之间的判别值。
 
 #### Primitive Representation of Enums With Fields
+#### 有字段枚举的原语表形
 
-The representation of a primitive representation enum is a `repr(C)` union of
-`repr(C)` structs for each variant with a field. The first field of each struct
-in the union is the primitive representation version of the enum with all fields
-removed ("the tag") and the remaining fields are the fields of that variant.
+枚举的原语表形是一个 `repr(C)`版本的联合体。此联合体的每个字段对应一个和原枚举变体对应的 `repr(C)`版本的结构体。这些结构体的第一个字段是原枚举的变体移除了它们所有的字段组成的原语表形版本的枚举（“the tag”），那这些结构体的其余字段是原变体移走的字段。
 
-> Note: This representation is unchanged if the tag is given its own member in
-> the union, should that make manipulation more clear for you (although to
-> follow the C++ standard the tag member should be wrapped in a `struct`).
+> 注意：如果标签(“the tag”)在联合体中被赋予自己的成员，那么这种表型是不变的，这应该使操作更加清晰（尽管遵循C++标准，标签成员应该被包装在结构体中）。
+> 注意：如果标签(“the tag”)在联合体中有自己的成员，那么这种表型是不变的，这样操作对您来说会更清晰(尽管遵循c++标准，标签成员应该被包装在结构体中）。
+> Note: This representation is unchanged if the tag is given its own member in the union, should that make manipulation more clear for you (although to follow the C++ standard the tag member should be wrapped in a `struct`).
 
 ```rust
-// This enum has the same representation as ...
+// 这个枚举的表形效同于 ...
 #[repr(u8)]
 enum MyEnum {
     A(u32),
@@ -349,7 +332,7 @@ enum MyEnum {
     D,
  }
 
-// ... this union.
+// ... 这个联合体.
 #[repr(C)]
 union MyEnumRepr {
     A: MyVariantA,
@@ -358,7 +341,7 @@ union MyEnumRepr {
     D: MyVariantD,
 }
 
-// This is the discriminant enum.
+// 这是那个判别值组成的枚举。
 #[repr(u8)]
 #[derive(Copy, Clone)]
 enum MyEnumDiscriminant { A, B, C, D }
