@@ -1,3 +1,4 @@
+# Type and Lifetime Parameters
 # 类型参数和生存期参数
 
 >[generics.md](https://github.com/rust-lang/reference/blob/master/src/items/generics.md)\

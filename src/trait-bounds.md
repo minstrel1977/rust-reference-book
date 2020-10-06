@@ -1,4 +1,8 @@
 # Trait and lifetime bounds
+# trait约束 和生存期约束
+
+>[trait-bounds.md](https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md)\
+>commit f8e76ee9368f498f7f044c719de68c7d95da9972
 
 > **<sup>句法</sup>**\
 > _TypeParamBounds_ :\
@@ -21,15 +25,11 @@
 > &nbsp;&nbsp; | `'static`\
 > &nbsp;&nbsp; | `'_`
 
-[Trait] and lifetime bounds provide a way for [generic items][generic] to
-restrict which types and lifetimes are used as their parameters. Bounds can be
-provided on any type in a [where clause]. There are also shorter forms for
-certain common cases:
+[trait][Trait]约束和生存期约束为[泛型数据项]提供了一种方法来限制将哪些类型和生存期用作参数。通过 [where子句][where clause]可以为任何类型提供约束。对于某些常见的情况，也可以使用如下简写形式：
 
-* Bounds written after declaring a [generic parameter][generic]:
-  `fn f<A: Copy>() {}` is the same as `fn f<A> where A: Copy () {}`.
-* In trait declarations as [supertraits]: `trait Circle : Shape {}` is
-  equivalent to `trait Circle where Self : Shape {}`.
+* 紧跟在[泛型参数][generic]声明之后的约束：`fn f<A: Copy>() {}` 与 `fn f<A> where A: Copy () {}` 效果一样。
+* 在 trait声明中指定[超类trait][supertraits] 约束时：`trait Circle : Shape {}` 等同于 `trait Circle where Self : Shape {}`。
+* 在作为关联类型的边界的trait声明中：trait A{typeb:Copy；}等同于traita，其中Self:：B:Copy{typeb；}。
 * In trait declarations as bounds on [associated types]:
   `trait A { type B: Copy; }` is equivalent to
   `trait A where Self::B: Copy { type B; }`.
