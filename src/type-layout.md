@@ -425,56 +425,37 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 ### The alignment modifiers
 ### 对齐量的修饰符
 
-`align` 和 `packed` 修饰符可分别用于增大或缩小结构体和联合体的对齐量。`packed` 也可以改变字段之间的填充。
+`align` 和 `packed` 修饰符可分别用于增大和缩小结构体和联合体的对齐量。`packed` 也可以改变字段之间的填充。
 
-对齐量被指定为整型参数，形式为 `#[repr(align(x))]` 或 `#[repr(packed(x))]`。对齐量的值必须是从1到2<sup>29</sup>之间的2的次幂数。对于packed，如果没有给出任何值，如#[repr(packed)]，则值为1
-The alignment is specified as an integer parameter in the form of
-`#[repr(align(x))]` or `#[repr(packed(x))]`. The alignment value must be a
-power of two from 1 up to 2<sup>29</sup>. For `packed`, if no value is given,
-as in `#[repr(packed)]`, then the value is 1.
+对齐量被指定为整型参数，形式为 `#[repr(align(x))]` 或 `#[repr(packed(x))]`。对齐量的值必须是从1到2<sup>29</sup>之间的2的次幂数。对于 `packed`，如果没有给出任何值，如 `#[repr(packed)]`，则对齐量的值为1。
 
-For `align`, if the specified alignment is less than the alignment of the type
-without the `align` modifier, then the alignment is unaffected.
+对于 `align`，如果类型指定的对齐量比其不带 `align`修饰符时的对齐量小，则该指定的对齐量无效。
 
-For `packed`, if the specified alignment is greater than the type's alignment
-without the `packed` modifier, then the alignment and layout is unaffected.
-The alignments of each field, for the purpose of positioning fields, is the
-smaller of the specified alignment and the alignment of the field's type.
+对于 `packed`，如果类型指定的对齐量比其不带 `packed`修饰符时的对齐量大，则该指定的对齐量和布局无效。为了定位字段，每个字段的对齐量是指定的对齐量和字段的类型的对齐量中较小的那个对齐量。
 
-The `align` and `packed` modifiers cannot be applied on the same type and a
-`packed` type cannot transitively contain another `align`ed type. `align` and
-`packed` may only be applied to the [default] and [`C`] representations.
+`align` 和 `packed` 修饰符不能应用于同一类型，且 `packed`类型不能直接或间接地包含另一个 `align`类型。`align` 和 `packed` 修饰符只能应用于[默认表形][default]和[C表形][`C`]。
 
-The `align` modifier can also be applied on an `enum`.
-When it is, the effect on the `enum`'s alignment is the same as if the `enum`
-was wrapped in a newtype `struct` with the same `align` modifier.
+`align`修饰符也可以应用在枚举上。如果这样做了，其对枚举对齐量的影响与使用相同的 `align`修饰符将此枚举包装在一个结构体中的效果相同。
 
 <div class="warning">
 
-***Warning:*** Dereferencing an unaligned pointer is [undefined behavior] and
-it is possible to [safely create unaligned pointers to `packed` fields][27060].
-Like all ways to create undefined behavior in safe Rust, this is a bug.
+***警告：***解引用未对齐的指针是[未定义行为][undefined behavior]，但可以[安全地创建指向 `packed`字段的未对齐指针][27060]。就像在 safe Rust 中所有创建未定义行为的方法一样，这是一个 bug。
 
 </div>
 
 ### The `transparent` Representation
+### 透明表形
 
-The `transparent` representation can only be used on a [`struct`][structs]
-or an [`enum`][enumerations] with a single variant that has:
+透明(`transparent`)表型只能在结构体[structs]或只有一个变体的[枚举][enumerations]上使用，并且这个结构体和这个枚举的唯一变体还需要满足：
 
-- a single field with non-zero size, and
-- any number of fields with size 0 and alignment 1 (e.g. [`PhantomData<T>`]).
+- 只能有一个非零尺寸的字段，和
+- 任意数量的尺寸为零对齐量为1的字段（例如：[`PhantomData<T>`]）
 
-Structs and enums with this representation have the same layout and ABI
-as the single non-zero sized field.
+使用这种表形的结构体和枚举同只有那个非零尺寸的字段具有相同的布局和 ABI。
 
-This is different than the `C` representation because
-a struct with the `C` representation will always have the ABI of a `C` `struct`
-while, for example, a struct with the `transparent` representation with a
-primitive field will have the ABI of the primitive field.
+这与 `C`表形不同，因为带有 `C`表形的结构体将始终拥有C结构体(`C` `struct`)的ABI，而应用透明表形(`transparent` representation)的只有一个原生类型字段的结构体将具有原生类型字段的ABI。
 
-Because this representation delegates type layout to another type, it cannot be
-used with any other representation.
+因为此表形将类型布局委托给另一种类型，所以它不能与任何其他表形一起使用。
 
 [`align_of_val`]: ../std/mem/fn.align_of_val.html
 [`size_of_val`]: ../std/mem/fn.size_of_val.html
