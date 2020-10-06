@@ -1,13 +1,12 @@
 # Subtyping and Variance
+# 子类型化和型变
 
-Subtyping is implicit and can occur at any stage in type checking or
-inference. Subtyping in Rust is very restricted and occurs only due to
-variance with respect to lifetimes and between types with higher ranked
-lifetimes. If we were to erase lifetimes from types, then the only subtyping
-would be due to type equality.
+>[subtyping.md](https://github.com/rust-lang/reference/blob/master/src/subtyping.md)\
+>commit ecb53d2015ce93b3519ee0b358fc13fa9b3f723d
 
-Consider the following example: string literals always have `'static`
-lifetime. Nevertheless, we can assign `s` to `t`:
+子类型化是隐式的，可以出现在类型检查或推断的任何阶段。Rust 中的子类型化是非常受限制的，并且只发生在适配生存期和带高阶生存期的类型时。如果我们要擦除类型的生存期，那么唯一的子类型化将是由于类型相等。If we were to erase lifetimes from types, then the only subtyping would be due to type equality.
+
+考虑下面的例子：字符串字面量总是拥有 `'static`生存期。不过，我们可以把 `s` 赋值给 `t`：
 
 ```rust
 fn bar<'a>() {
@@ -16,9 +15,9 @@ fn bar<'a>() {
 }
 ```
 
-Since `'static` outlives the lifetime parameter `'a`, `&'static str` is a
-subtype of `&'a str`.
+因为 `'static` 比生存期参数 `'a` 的寿命长，所以 `&'static str` 是 `&'a str` 的子类型。
 
+高阶函数指针和 trait对象是另一种子类型关系。它们是类型的子类型，这些类型是通过替换更高级别的生存期而给出的。一些例子
 [Higher-ranked]&#32;[function pointers] and [trait objects] have another
 subtype relation. They are subtypes of types that are given by substitutions of
 the higher-ranked lifetimes. Some examples:
