@@ -88,11 +88,10 @@ fn f<'a, 'b>(x: &'a i32, mut y: &'b i32) where 'a: 'b {
 `T: 'a` 意味着 `T` 的所有生存期参数都比 `'a` 活得长。例如，如果 `'a` 是一个任意的(unconstrained)生存期参数，那么 `i32: 'static` 和 `&'static str: 'a` 合法，但 `Vec<&'a ()>: 'static` 不合法。
 
 ## Higher-ranked trait bounds
-## 高阶 trait约束
+## 高阶trait约束
 
-生存期可以被抽象进*高阶*的类型约束。这些约束指定了一个对*所有*生存期都为真的边界。例如，像 `for<'a> &'a T: PartialEq<i32>` 这样的约束需要一个如下的实现
-Type bounds may be higher ranked over lifetimes. These bounds specify a bound is true *for all* lifetimes. For example, a bound such as `for<'a> &'a T: PartialEq<i32>` would require an implementation like
-
+可以在生存期上再进行更高阶的类型约束。这些高阶约束指定了一个对*所有*生存期都为真的约束。例如，像 `for<'a> &'a T: PartialEq<i32>` 这样的约束需要一个如下的实现
+<!-- 高阶trait约束是对带生存期的类型进行进行进一步约束，像这句的例子就是对`&'a T`加上了PartialEq<i32>的约束。高阶trait约束要求它约束的生命周期必须是独立的，内部生存期进行https://doc.rust-lang.org/stable/std/cmp/trait.PartialEq.html 和 https://doc.rust-lang.org/nightly/nomicon/hrtb.html -->
 ```rust
 # struct T;
 impl<'a> PartialEq<i32> for &'a T {
@@ -101,11 +100,9 @@ impl<'a> PartialEq<i32> for &'a T {
 }
 ```
 
-然后可以用来比较任意生存期的 `&'a T` 和 `i32`。
-and could then be used to compare a `&'a T` with any lifetime to an `i32`.
+然后就可以比较任意生存期的 `&'a T` 和 `i32` 啦。
 
-下面这类场景只能使用更高级别的约束，因为引用的生命周期比函数的生命周期参数短
-Only a higher-ranked bound can be used here as the lifetime of the reference is shorter than a lifetime parameter on the function:
+下面这类场景只能使用高阶trait约束，因为引用的生命周期比函数的生命周期参数短：
 
 ```rust
 fn call_on_ref_zero<F>(f: F) where for<'a> F: Fn(&'a i32) {
@@ -113,9 +110,13 @@ fn call_on_ref_zero<F>(f: F) where for<'a> F: Fn(&'a i32) {
     f(&zero);
 }
 ```
-
-高阶生存期也可以在 trait 之前指定，唯一的区别是生存期参数的作用域，它只扩展到下面的 trait 的末尾，而不是整个范围。下面这个函数和上一个等价。
-Higher-ranked lifetimes may also be specified just before the trait, the only difference is the scope of the lifetime parameter, which extends only to the end of the following trait instead of the whole bound. This function is equivalent to the last one.
+<!-- ```rust compile_error 这里F就没约束'a
+fn call_on_ref_zero<'a, F>(f: F) where  F: Fn(&'a i32) {
+    let zero = 0;
+    f(&zero);
+}
+``` -->
+高阶生存期也可以贴近 trait 来指定，唯一的区别是生存期参数 `'a` 的作用域，像下面这样 `'a` 的作用域只扩展到后面跟的 trait 的末尾，而不是整个约束。下面这个函数和上一个等价。<!-- 这句的意思是如果F的约束有多个trait，那'a的作用域只是扩展它后面紧跟的那个trait的方法 -->
 
 ```rust
 fn call_on_ref_zero<F>(f: F) where F: for<'a> Fn(&'a i32) {
