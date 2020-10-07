@@ -1,37 +1,35 @@
 # Type coercions
+# 类型自动强转
 
-**Type coercions** are implicit operations that change the type of a value.
-They happen automatically at specific locations and are highly restricted in 
-what types actually coerce.
+>[type-coercions.md](https://github.com/rust-lang/reference/blob/master/src/type-coercions.md)\
+>commit d5372c951cc37d76dc5d01e91ebfafdb30e3f50d
 
-Any conversions allowed by coercion can also be explicitly performed by the
-[type cast operator], `as`.
+**类型自动强转**是改变值的类型的隐式操作。它们在特定的位置自动发生，并且在实际自动强转的类型上受到很多限制。
 
-Coercions are originally defined in [RFC 401] and expanded upon in [RFC 1558].
+任何允许自动强转的转换都可以由[类型强制转换操作符][type cast operator] `as` 来显式执行。
+
+自动强转最初是在 [RFC 401] 中定义的，并在[ RFC 1558] 中进行了扩展。
 
 ## Coercion sites
+## 自动强转点
 
-A coercion can only occur at certain coercion sites in a program; these are
-typically places where the desired type is explicit or can be derived by
-propagation from explicit types (without type inference). Possible coercion
-sites are:
+自动强转只能发生在程序中的某些自动强转点上；通常在这些位置上，所需的类型是显式给出了或者可以从显式类型的传播推导(be derived by propagation)得到(不是类型推断)。可能的强制点有：
 
-* `let` statements where an explicit type is given.
+* `let`语句中给出显式的类型。
 
-   For example, `&mut 42` is coerced to have type `&i8` in the following:
+   例如，下面例子中 `&mut 42` 自动强转成 `&i8` 类型：
 
    ```rust
    let _: &i8 = &mut 42;
    ```
 
-* `static` and `const` item declarations (similar to `let` statements).
+* 静态(`static`)和常量(`const`)项声明（类似于 `let`语句）。
 
-* Arguments for function calls
+* 函数调用的参数
 
-  The value being coerced is the actual parameter, and it is coerced to
-  the type of the formal parameter.
+  被强制的值是实参(actual parameter)，它的类型被自动强转为形参(formal parameter)的类型。
 
-  For example, `&mut 42` is coerced to have type `&i8` in the following:
+  例如，下面例子中 `&mut 42` 自动强转成 `&i8` 类型：
 
   ```rust
   fn bar(_: &i8) { }
@@ -41,12 +39,11 @@ sites are:
   }
   ```
 
-  For method calls, the receiver (`self` parameter) can only take advantage
-  of [unsized coercions](#unsized-coercions).
+  对于方法调用，接收者(`self`参数)只能使用[非固定尺寸类型自动强转(unsized coercion)](#unsized-coercions)。
 
-* Instantiations of struct, union, or enum variant fields
+* 实例化结构体、联合体或枚举变体的字段。
 
-  For example, `&mut 42` is coerced to have type `&i8` in the following:
+  例如，下面例子中 `&mut 42` 自动强转成 `&i8` 类型：
 
   ```rust
   struct Foo<'a> { x: &'a i8 }
@@ -56,10 +53,9 @@ sites are:
   }
   ```
  
-* Function results&mdash;either the final line of a block if it is not
-  semicolon-terminated or any expression in a `return` statement
+* 函数返回&mdash;函数体的最后一行如果不是以分号结尾的，函数将返回它的最后一行，或者是 `return`语句中的任何表达式
 
-  For example, `x` is coerced to have type `&dyn Display` in the following:
+  例如，下面例子中 `x` 自动强转成 `&dyn Display` 类型：
 
   ```rust
   use std::fmt::Display;
@@ -68,13 +64,10 @@ sites are:
   }
   ```
 
-If the expression in one of these coercion sites is a coercion-propagating
-expression, then the relevant sub-expressions in that expression are also
-coercion sites. Propagation recurses from these new coercion sites.
-Propagating expressions and their relevant sub-expressions are:
+如果其中一个强制点中的表达式是能传播自动强转的表达式(coercion-propagating expression)，那么该表达式中的相关子表达式也是自动强转点。传播从这些新的自动强转点递归。传播表达式(propagating expressions)及其相关子表达式有：
+If the expression in one of these coercion sites is a coercion-propagating expression, then the relevant sub-expressions in that expression are also coercion sites. Propagation recurses from these new coercion sites. Propagating expressions and their relevant sub-expressions are:
 
-* Array literals, where the array has type `[U; n]`. Each sub-expression in
-the array literal is a coercion site for coercion to type `U`.
+* 数组字面量，其中数组的类型为 `[U; n]`。数组字面量中的每个子表达式都是用于自动强转到类型 `U` 的自动强转点。
 
 * Array literals with repeating syntax, where the array has type `[U; n]`. The
 repeated sub-expression is a coercion site for coercion to type `U`.

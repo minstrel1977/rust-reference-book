@@ -232,7 +232,7 @@ if let Person{name: ref person_name, age: 18..=150} = value { }
 ### Binding modes
 ### 绑定方式
 
-（毕竟显示使用 `ref` 或 `ref mut` 绑定有些麻烦，）为了更好地服务于人类工程学，为了让引用(类型的变量)和值的绑定更容易一些，模式会自动选择不同的*绑定方式*。当引用值与非引用模式匹配时，这将自动地被视为 `ref` 或 `ref mut` 绑定。示例：
+（毕竟显式使用 `ref` 或 `ref mut` 绑定有些麻烦，）为了更好地服务于人类工程学，为了让引用(类型的变量)和值的绑定更容易一些，模式会自动选择不同的*绑定方式*。当引用值与非引用模式匹配时，这将自动地被视为 `ref` 或 `ref mut` 绑定。示例：
 To service better ergonomics, patterns operate in different binding modes in order to make it easier to bind references to values. When a reference value is matched by a non-reference pattern, it will be automatically treated as a ref or ref mut binding. Example:
 
 ```rust

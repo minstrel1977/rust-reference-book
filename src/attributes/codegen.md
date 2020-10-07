@@ -199,7 +199,7 @@ fn calls_h() {
 此信息是一个提示，不需要实现来保存它。
 <!-- This information is a hint and implementations are not required to preserve it. TobeModify-->
 
-特别是，将带有 `#[track_caller]` 的函数强制转换为函数指针会创建一个填充程序，在观察者看来该填充程序似乎是在此(属性限定的)函数的定义处调用的，从而在虚拟调用中丢失实际的调用者信息。这种情况的一个常见示例是创建一个 trait对象，而该对象的方法被此属性限定。
+特别是，将带有 `#[track_caller]` 的函数自动强转为函数指针会创建一个填充程序，在观察者看来该填充程序似乎是在此(属性限定的)函数的定义处调用的，从而在虚拟调用中丢失实际的调用者信息。这种自动强转情况的一个常见示例是创建一个 trait对象，而该对象的方法被此属性限定。
 <!-- In particular, coercing a function with `#[track_caller]` to a function pointer creates a shim which appears to observers to have been called at the attributed function's definition site, losing actual caller information across virtual calls. A common example of this coercion is the creation of a trait object whose methods are attributed. TobeModify-->
 
 > 注意：前面提到的函数指针填充程序是必需的，因为 `rustc` 会通过向函数的ABI附加一个隐式参数来实现 codegen上下文中的 `track_caller`，但对于间接调用来说，这是不健全的，因为参数不是函数类型的一部分，给定的函数指针类型可能引用也可能不引用具有此属性的函数。填充程序的创建会对函数指针的调用方隐藏隐式参数，从而保持可靠性。

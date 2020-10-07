@@ -19,7 +19,7 @@
 示例：
 
 ```rust
-// 一个堆分配的数组，被强转成切片
+// 一个堆分配的数组，被自动强转成切片
 let boxed_array: Box<[i32]> = Box::new([1, 2, 3]);
 
 // 数组中的（共享）切片A (shared) slice into an array

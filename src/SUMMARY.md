@@ -96,8 +96,8 @@
     - [类型布局 ](type-layout.md)
     - [内部可变性](interior-mutability.md)
     - [子类型和型变](subtyping.md)
-    - [trait 及其生存期约束](trait-bounds.md)
-    - [类型强制转换](type-coercions.md)
+    - [trait约束及其生存期约束](trait-bounds.md)
+    - [类型自动强转](type-coercions.md)
     - [析构函数](destructors.md)
     - [生存期省略](lifetime-elision.md)
 

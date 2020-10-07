@@ -24,7 +24,7 @@
 > _MaybeNamedFunctionParametersVariadic_ :\
 > &nbsp;&nbsp; ( _MaybeNamedParam_ `,` )<sup>\*</sup> _MaybeNamedParam_ `,` [_OuterAttribute_]<sup>\*</sup> `...`
 
-函数指针类型（使用关键字 `fn` 编写）指的是在编译时不一定知道其标识符的函数。它们可以通过从[函数项][function items]或非捕获( non-capturing)[闭包][closures]来强制创建。
+函数指针类型（使用关键字 `fn` 编写）指的是在编译时不必知道其标识符的函数。它们可以由[函数项][function items]或非捕获( non-capturing)[闭包][closures]经过一次自动强转来创建。
 
 非安全(`unsafe`)限定符表示类型的值是一个[非安全函数][unsafe function]，而 `extern` 限定符表示它是一个[外部函数][extern function]。
 
