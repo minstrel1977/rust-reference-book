@@ -64,46 +64,37 @@
   }
   ```
 
-如果其中一个强制点中的表达式是能传播自动强转的表达式(coercion-propagating expression)，那么该表达式中的相关子表达式也是自动强转点。传播从这些新的自动强转点递归。传播表达式(propagating expressions)及其相关子表达式有：
-If the expression in one of these coercion sites is a coercion-propagating expression, then the relevant sub-expressions in that expression are also coercion sites. Propagation recurses from these new coercion sites. Propagating expressions and their relevant sub-expressions are:
+如果一个表达式是这些自动强转点中的一个，并且该表达式是传播自动强转的表达式(coercion-propagating expression)，那么该表达式中的相关子表达式也是自动强转点。传播从这些新的自动强转点递归。传播表达式(propagating expressions)及其相关子表达式有：
 
-* 数组字面量，其中数组的类型为 `[U; n]`。数组字面量中的每个子表达式都是用于自动强转到类型 `U` 的自动强转点。
+* 数组字面量，其中数组的类型为 `[U; n]`。数组字面量中的每个子表达式都是自动强转到类型 `U` 的自动强转点。
 
-* Array literals with repeating syntax, where the array has type `[U; n]`. The
-repeated sub-expression is a coercion site for coercion to type `U`.
+* 重复句法声明的数组字面量，其中数组的类型为 `[U; n]`。重复子表达式是用于自动强转到类型 `U` 的自动强转点。
 
-* Tuples, where a tuple is a coercion site to type `(U_0, U_1, ..., U_n)`.
-Each sub-expression is a coercion site to the respective type, e.g. the
-zeroth sub-expression is a coercion site to type `U_0`.
+* 元组，其中如果元组是自动强转到类型 `(U_0, U_1, ..., U_n)` 的强转点，则每个子表达式都是相应类型的自动强转点，比如第0个子表达式是到类型 `U_0`的 自动强转点。
 
-* Parenthesized sub-expressions (`(e)`): if the expression has type `U`, then
-the sub-expression is a coercion site to `U`.
+* 圆括号括起来的子表达式(`(e)`)：如果整个表达式的类型为 `U`，则子表达式 `e` 是自动强转到类型 `U` 的自动强转点。
 
-* Blocks: if a block has type `U`, then the last expression in the block (if
-it is not semicolon-terminated) is a coercion site to `U`. This includes
-blocks which are part of control flow statements, such as `if`/`else`, if
-the block has a known type.
+* 块：如果块的类型是 `U`，那么块中的最后一个表达式(如果它不是以分号结尾的)就是一个自动强转到类型 `U` 的自动强转点。这里的块包括作为控制流语句的一部分的条件分支代码块，比如 `if`/`else`，当然前提是这些块的返回需要有一个已知的类型。
 
 ## Coercion types
+## 自动强转类型
 
-Coercion is allowed between the following types:
+自动强转允许发生在下列类型之间：
 
-* `T` to `U` if `T` is a [subtype] of `U` (*reflexive case*)
+* `T` 到 `U` 如果 `T` 是 `U` 的一个[子类型][subtype] (*反射性场景(reflexive case)*)
 
-* `T_1` to `T_3` where `T_1` coerces to `T_2` and `T_2` coerces to `T_3`
-(*transitive case*)
+* `T_1` 到 `T_3` 当 `T_1` 可自动强转到 `T_2` 同时 `T_2` 又能自动强转到 `T_3` (*传递性场景(transitive case)*)
+    注意这个还没有得到完全支持。
 
-    Note that this is not fully supported yet.
+* `&mut T` 到 `&T`
 
-* `&mut T` to `&T`
+* `*mut T` 到 `*const T`
 
-* `*mut T` to `*const T`
+* `&T` 到 `*const T`
 
-* `&T` to `*const T`
+* `&mut T` 到 `*mut T`
 
-* `&mut T` to `*mut T`
-
-* `&T` or `&mut T` to `&U` if `T` implements `Deref<Target = U>`. For example:
+* `&T` 或 `&mut T` 到 `&U` 如果 `T` 实现了 `Deref<Target = U>`。例如：
 
   ```rust
   use std::ops::Deref;
@@ -124,36 +115,35 @@ Coercion is allowed between the following types:
 
   fn main() {
       let x = &mut CharContainer { value: 'y' };
-      foo(x); //&mut CharContainer is coerced to &char.
+      foo(x); //&mut CharContainer 自动强转成 &char.
   }
   ```
 
-* `&mut T` to `&mut U` if `T` implements `DerefMut<Target = U>`.
+* `&mut T` 到 `&mut U` 如果 `T` 实现 `DerefMut<Target = U>`.
 
-* TyCtor(`T`) to TyCtor(`U`), where TyCtor(`T`) is one of
+* TyCtor(`T`) 到 TyCtor(`U`)，其中 TyCtor(`T`) 是下列之一(译者注：TyCtor为类型构造器 type constructor 的简写)
     - `&T`
     - `&mut T`
     - `*const T`
     - `*mut T`
     - `Box<T>`
 
-    and where `U` can be obtained from `T` by [unsized coercion](#unsized-coercions).
+    并且 `U` 能够通过[非固定尺寸类型自动强转](#unsized-coercions)得到。
 
     <!--In the future, coerce_inner will be recursively extended to tuples and
     structs. In addition, coercions from sub-traits to super-traits will be
     added. See [RFC 401] for more details.-->
 
-* Non capturing closures to `fn` pointers
+* 非捕获闭包(Non capturing closures)到函数指针(`fn` pointers)
 
-* `!` to any `T`
+* `!` 到任意 `T`
 
 ### Unsized Coercions
+### 非固定尺寸类型自动强转
 
-The following coercions are called `unsized coercions`, since they
-relate to converting sized types to unsized types, and are permitted in a few
-cases where other coercions are not, as described above. They can still happen
-anywhere else a coercion can occur.
+下列自动强转被称为非固定尺寸类型自动强转(`unsized coercions`)，因为它们与*将固定尺寸类型转换为非固定尺寸类型*有关，并且在一些其他自动强转不允许的情况（也就是上节罗列的情况之外的情况）下允许使用。也就是他们可以发生在任何自动强转点，甚至自动强转点之外。
 
+两个 trait，[`Unsize`] 和 [`CoerceUnsized`]，被用来协助这个转换发生，并供标准库来使用。以下胁迫内置模板,如果T可以强迫U与其中一个,然后一个实现Unsize < U > T将提供
 Two traits, [`Unsize`] and [`CoerceUnsized`], are used
 to assist in this process and expose it for library use. The following
 coercions are built-ins and, if `T` can be coerced to `U` with one of them, then
