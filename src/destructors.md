@@ -73,22 +73,18 @@ core::mem::forget(partial_move.1);
 * 函数体块包含在整个函数作用域内。
 * 表达式语句中的父表达式是该语句的作用域。
 * [`let`语句][`let` statement]的初始化器的父作用域是 `let`语句的作用域
-* The parent of the initializer of a [`let` statement] is the `let` statement's scope.
-* The parent of a statement scope is the scope of the block that contains the statement.
-* The parent of the expression for a `match` guard is the scope of the arm that
-  the guard is for.
-* The parent of the expression after the `=>` in a `match` expression is the
-  scope of the arm that it's in.
-* The parent of the arm scope is the scope of the `match` expression that it
-  belongs to.
-* The parent of all other scopes is the scope of the immediately enclosing
-  expression.
+* 语句的父作用域是包含该语句的块的作用域。
+* 匹配守卫(`match` guard)表达式的父作用域是该守卫所在的匹配臂的作用域。
+* 在匹配表达式(`match` expression)的 =>` 之后的表达式的父作用域是它所在的匹配臂的作用域。
+* 匹配臂作用域的父作用域是它所在的匹配表达式(`match` expression)的作用域。
+* 所有其他作用域的父作用域都是直接封闭该表达式的作用域。
 
 ### Scopes of function parameters
+### 函数参数的作用域
 
-All function parameters are in the scope of the entire function body, so are
-dropped last when evaluating the function. Each actual function parameter is
-dropped after any bindings introduced in that parameter's pattern.
+所有函数参数都在整个函数体的作用域内，因此在对函数求值时最后销毁。在参数的模式中引入任何绑定之后，实际的每个函数参数都会被销毁
+所有函数参数都在整个函数体的作用域内，因此在计算函数时，它们是最后被销毁的。每个实际的函数参数都会在该参数的模式中引入任何绑定之后删除。
+All function parameters are in the scope of the entire function body, so are dropped last when evaluating the function. Each actual function parameter is dropped after any bindings introduced in that parameter's pattern.
 
 ```rust
 # struct PrintOnDrop(&'static str);
