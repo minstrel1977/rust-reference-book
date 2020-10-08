@@ -1,29 +1,26 @@
 # Destructors
+# 析构函数
 
-When an [initialized]&#32;[variable] or [temporary] goes out of
-[scope](#drop-scopes) its *destructor* is run, or it is *dropped*. [Assignment]
-also runs the destructor of its left-hand operand, if it's initialized. If a
-variable has been partially initialized, only its initialized fields are
-dropped.
+>[destructors.md](https://github.com/rust-lang/reference/blob/master/src/destructors.md)\
+>commit c5648e6303632d99ac96edbc7aee7c032dc28891
 
-The destructor of a type `T` consists of:
+当一个[初始化][initialized]的[变量][variable]或[临时变量][temporary]超出作用域时，它的*析构函数*将运行，或者说它将被*销毁(dropped)*。此外[赋值][Assignment]动作也会运行其左操作数的析构函数(如果它已初始化)。如果变量已部分初始化，则只销毁其已初始化的字段。
 
-1. If `T: Drop`, calling [`<T as std::ops::Drop>::drop`]
-2. Recursively running the destructor of all of its fields.
-    * The fields of a [struct] are dropped in declaration order.
-    * The fields of the active [enum variant] are dropped in declaration order.
-    * The fields of a [tuple] are dropped in order.
-    * The elements of an [array] or owned [slice] are dropped from the
-      first element to the last.
-    * The variables that a [closure] captures by move are dropped in an
-      unspecified order.
-    * [Trait objects] run the destructor of the underlying type.
-    * Other types don't result in any further drops.
+类型 `T` 的析构函数由以下内容组成：
 
-If a destructor must be run manually, such as when implementing your own smart
-pointer, [`std::ptr::drop_in_place`] can be used.
+1. 如果 `T: Drop`, 则调用 [`<T as std::ops::Drop>::drop`]
+2. 递归地运行其所有字段的析构函数。
+    * [结构体][struct]的字段按照声明顺序被销毁。
+    * 活动[枚举变体][enum variant]的字段按声明顺序销毁。
+    * [元组][tuple]中的字段按顺序销毁。
+    * [数组][array]或拥有所有权的[切片][slice]的元素的销毁顺序是从第一个元素到最后一个元素。
+    * [闭包][closure]通过移动(move)方式捕获的变量的销毁顺序未指定。
+    * [trait对象][Trait objects]的销毁会运行其非具名基类(underlying type)的析构函数。
+    * 其他类型不会导致任何进一步的销毁动作发生。
 
-Some examples:
+如果析构函数必须手动运行，比如在实现自定义的智能指针时，可以使用 [`std::ptr::drop_in_place`]
+
+举些例子：
 
 ```rust
 struct PrintOnDrop(&'static str);
@@ -40,54 +37,44 @@ overwritten = PrintOnDrop("drops when scope ends");
 let tuple = (PrintOnDrop("Tuple first"), PrintOnDrop("Tuple second"));
 
 let moved;
-// No destructor run on assignment.
+// 没有析构函数在赋值时运行
 moved = PrintOnDrop("Drops when moved");
-// Drops now, but is then uninitialized.
+// 这里执行销毁，但随后变量进入未初始化状态
 moved;
 
-// Uninitialized does not drop.
+// 未初始化不会被销毁
 let uninitialized: PrintOnDrop;
 
-// After a partial move, only the remaining fields are dropped.
+// 在部分移动之后，后续销毁动作只销毁剩余字段。
 let mut partial_move = (PrintOnDrop("first"), PrintOnDrop("forgotten"));
-// Perform a partial move, leaving only `partial_move.0` initialized.
+// 执行部分移出，只留下 `partial_move.0` 处于初始化状态
 core::mem::forget(partial_move.1);
-// When partial_move's scope ends, only the first field is dropped.
+// 当 partial_move 的作用域结束时, 这里就只有第一个字段被销毁。
 ```
 
 ## Drop scopes
+## 销毁作用域
 
-Each variable or temporary is associated to a *drop scope*. When control flow
-leaves a drop scope all variables associated to that scope are dropped in
-reverse order of declaration (for variables) or creation (for temporaries).
+每个变量或临时变量都与一个*销毁作用域*相关联。当控制流程离开一个销毁作用域时，与该作用域关联的所有变量将按照声明(变量)或创建(临时变量)的相反顺序销毁。
 
-Drop scopes are determined after replacing [`for`], [`if let`], and
-[`while let`] expressions with the equivalent expressions using [`match`].
-Overloaded operators are not distinguished from built-in operators and [binding
-modes] are not considered.
+销毁作用域是在使用 [`match`] 将 [`for`]、[`if let`] 和 [`while let`] 这些表达式替换为等效表达式之后确定的。销毁作用域的确定上重载操作符与内置操作符没有区别，[绑定方式(binding modes)][binding modes]也不用考虑。
 
-Given a function, or closure, there are drop scopes for:
+给定一个函数或闭包，存在以下的销毁作用域：
+* 整个函数
+* 每个[语句][statement]
+* 每个[表达式][expression]
+* 每个块，包括函数体
+    * 在[块表达式][block expression]上，块和表达式的销毁作用域是相同的
+* 匹配(`match`)表达式的每条匹配臂
 
-* The entire function
-* Each [statement]
-* Each [expression]
-* Each block, including the function body
-    * In the case of a [block expression], the scope for the block and the
-      expression are the same scope.
-* Each arm of a `match` expression
+销毁作用域相互嵌套如下。当同时离开多个作用域时，比如从函数返回时，变量会从内部向外销毁。
 
-Drop scopes are nested within one another as follows. When multiple scopes are
-left at once, such as when returning from a function, variables are dropped
-from the inside outwards.
-
-* The entire function scope is the outer most scope.
-* The function body block is contained within the scope of the entire function.
-* The parent of the expression in an expression statement is the scope of the
-  statement.
-* The parent of the initializer of a [`let` statement] is the `let` statement's
-  scope.
-* The parent of a statement scope is the scope of the block that contains the
-  statement.
+* 整个函数作用域是最外层的作用域。
+* 函数体块包含在整个函数作用域内。
+* 表达式语句中的父表达式是该语句的作用域。
+* [`let`语句][`let` statement]的初始化器的父作用域是 `let`语句的作用域
+* The parent of the initializer of a [`let` statement] is the `let` statement's scope.
+* The parent of a statement scope is the scope of the block that contains the statement.
 * The parent of the expression for a `match` guard is the scope of the arm that
   the guard is for.
 * The parent of the expression after the `=>` in a `match` expression is the

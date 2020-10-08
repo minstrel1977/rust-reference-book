@@ -143,30 +143,22 @@
 
 下列自动强转被称为非固定尺寸类型自动强转(`unsized coercions`)，因为它们与*将固定尺寸类型转换为非固定尺寸类型*有关，并且在一些其他自动强转不允许的情况（也就是上节罗列的情况之外的情况）下允许使用。也就是他们可以发生在任何自动强转点，甚至自动强转点之外。
 
-两个 trait，[`Unsize`] 和 [`CoerceUnsized`]，被用来协助这个转换发生，并供标准库来使用。以下胁迫内置模板,如果T可以强迫U与其中一个,然后一个实现Unsize < U > T将提供
-Two traits, [`Unsize`] and [`CoerceUnsized`], are used
-to assist in this process and expose it for library use. The following
-coercions are built-ins and, if `T` can be coerced to `U` with one of them, then
-an implementation of `Unsize<U>` for `T` will be provided:
+[`Unsize`] 和 [`CoerceUnsized`] 这两个 trait 被用来协助这种转换的发生，并公开给标准库来使用。以下自动强转是内置的，如果 `T` 可以用其中一个自动强转到 `U`，则将为 `T` 提供一个 `Unsize<U>` 实现：
 
-* `[T; n]` to `[T]`.
+* `[T; n]` 到 `[T]`.
 
-* `T` to `dyn U`, when `T` implements `U + Sized`, and `U` is [object safe].
+* `T` 到 `dyn U`, 当 `T` 实现 `U + Sized`, 并且 `U` 是[对象安全的][object safe] 时。
 
-* `Foo<..., T, ...>` to `Foo<..., U, ...>`, when:
-    * `Foo` is a struct.
-    * `T` implements `Unsize<U>`.
-    * The last field of `Foo` has a type involving `T`.
-    * If that field has type `Bar<T>`, then `Bar<T>` implements `Unsized<Bar<U>>`.
-    * T is not part of the type of any other fields.
+* `Foo<..., T, ...>` 到 `Foo<..., U, ...>`, 当：
+    * `Foo` 是一个结构体。
+    * `T` 实现了 `Unsize<U>`。
+    * `Foo` 的最后一个字段是和 `T` 相关的类型。
+    * 如果这最后一个字段是类型 `Bar<T>`，那么 `Bar<T>` 实现了 `Unsized<Bar<U>>`。
+    * `T` 不是任何其他字段的类型的一部分。
 
-Additionally, a type `Foo<T>` can implement `CoerceUnsized<Foo<U>>` when `T`
-implements `Unsize<U>` or `CoerceUnsized<Foo<U>>`. This allows it to provide a
-unsized coercion to `Foo<U>`.
+此外，当 `T` 实现了 `Unsize<U>` 或 `CoerceUnsized<Foo<U>>` 时，类型 `Foo<T>` 可以实现 `CoerceUnsized<Foo<U>>`。这给 `Foo<T>` 提供了一个向 `Foo<U>` 的非固定尺寸类型自动强转。
 
-> Note: While the definition of the unsized coercions and their implementation
-> has been stabilized, the traits themselves are not yet stable and therefore
-> can't be used directly in stable Rust.
+> 注：虽然非固定尺寸类型自动强转的定义及其实现已经稳定下来，但两trait本身还没稳定下来，因此不能直接用于稳定版的 Rust。
 
 [RFC 401]: https://github.com/rust-lang/rfcs/blob/master/text/0401-coercions.md
 [RFC 1558]: https://github.com/rust-lang/rfcs/blob/master/text/1558-closure-to-fn-coercion.md
