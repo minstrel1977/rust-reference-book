@@ -55,7 +55,7 @@ core::mem::forget(partial_move.1);
 ## Drop scopes
 ## 销毁作用域
 
-每个变量或临时变量都与一个*销毁作用域*相关联。当控制流程离开一个销毁作用域时，与该作用域关联的所有变量将按照声明(变量)或创建(临时变量)的相反顺序销毁。
+每个变量或临时变量都与一个*销毁作用域（后文有时也直接称做作用域）*相关联。当控制流程离开一个销毁作用域时，与该作用域关联的所有变量将按照声明(变量)或创建(临时变量)的相反顺序销毁。
 
 销毁作用域是在使用 [`match`] 将 [`for`]、[`if let`] 和 [`while let`] 这些表达式替换为等效表达式之后确定的。销毁作用域的确定上重载操作符与内置操作符没有区别，[绑定方式(binding modes)][binding modes]也不用考虑。
 
@@ -65,7 +65,7 @@ core::mem::forget(partial_move.1);
 * 每个[表达式][expression]
 * 每个块，包括函数体
     * 在[块表达式][block expression]上，块和表达式的销毁作用域是相同的
-* 匹配(`match`)表达式的每条匹配臂
+*匹配(`match`)表达式的每条匹配臂
 
 销毁作用域相互嵌套如下。当同时离开多个作用域时，比如从函数返回时，变量会从内部向外销毁。
 
@@ -82,9 +82,9 @@ core::mem::forget(partial_move.1);
 ### Scopes of function parameters
 ### 函数参数的作用域
 
-所有函数参数都在整个函数体的作用域内，因此在对函数求值时最后销毁。在参数的模式中引入任何绑定之后，实际的每个函数参数都会被销毁
-所有函数参数都在整个函数体的作用域内，因此在计算函数时，它们是最后被销毁的。每个实际的函数参数都会在该参数的模式中引入任何绑定之后删除。
-All function parameters are in the scope of the entire function body, so are dropped last when evaluating the function. Each actual function parameter is dropped after any bindings introduced in that parameter's pattern.
+
+所有函数参数都在整个函数体的作用域内，因此在对函数求值时，它们是最后被销毁的。实参会在其内部值被形参的模式绑定之后销毁。
+<!-- All function parameters are in the scope of the entire function body, so are dropped last when evaluating the function. Each actual function parameter is dropped after any bindings introduced in that parameter's pattern. tobemodify-->
 
 ```rust
 # struct PrintOnDrop(&'static str);
@@ -93,13 +93,13 @@ All function parameters are in the scope of the entire function body, so are dro
 #         println!("drop({})", self.0);
 #     }
 # }
-// Drops the second parameter, then `y`, then the first parameter, then `x`
+// 先销毁第二个参数, 接下来是 `y`, 然后是第一个参数r, 最后是 `x`
 fn patterns_in_parameters(
     (x, _): (PrintOnDrop, PrintOnDrop),
     (_, y): (PrintOnDrop, PrintOnDrop),
 ) {}
 
-// drop order is 3 2 0 1
+// 销毁顺序是 3 2 0 1
 patterns_in_parameters(
     (PrintOnDrop("0"), PrintOnDrop("1")),
     (PrintOnDrop("2"), PrintOnDrop("3")),
@@ -107,11 +107,9 @@ patterns_in_parameters(
 ```
 
 ### Scopes of local variables
+### 本地变量的作用域
 
-Local variables declared in a `let` statement are associated to the scope of
-the block that contains the `let` statement. Local variables declared in a
-`match` expression are associated to the arm scope of the `match` arm that they
-are declared in.
+在 `let`语句中声明的局部变量与包含 `let`语句的块的作用域相关联。在匹配(`match`)表达式中声明的局部变量与声明它们的匹配(`match`)臂的匹配臂作用域相关联。
 
 ```rust
 # struct PrintOnDrop(&'static str);
@@ -120,46 +118,40 @@ are declared in.
 #         println!("drop({})", self.0);
 #     }
 # }
-let declared_first = PrintOnDrop("Dropped last in outer scope");
+let declared_first = PrintOnDrop("在外层作用域内最后销毁");
 {
-    let declared_in_block = PrintOnDrop("Dropped in inner scope");
+    let declared_in_block = PrintOnDrop("在内层作用域内销毁");
 }
-let declared_last = PrintOnDrop("Dropped first in outer scope");
+let declared_last = PrintOnDrop("在外层作用域内最先销毁");
 ```
 
-If multiple patterns are used in the same arm for a `match` expression, then an
-unspecified pattern will be used to determine the drop order.
+如果在一个匹配(`match`)表达式的同一个匹配臂中使用了多个模式，那么将使用一个未指定的模式(unspecified pattern)来确定销毁顺序。
+<!-- If multiple patterns are used in the same arm for a `match` expression, then an unspecified pattern will be used to determine the drop order. tobemodify-->
 
 ### Temporary scopes
+### 临时作用域
 
-The *temporary scope* of an expression is the scope that is used for the
-temporary variable that holds the result of that expression when used in a
-[place context], unless it is [promoted].
+表达式的*临时作用域*是用于临时变量的作用域。该临时变量在位置上下文中使用时会用来保存该表达式的结果(在它未被[提升][promoted]的情况下)。
+The *temporary scope* of an expression is the scope that is used for the temporary variable that holds the result of that expression when used in a [place context], unless it is [promoted].
 
-Apart from lifetime extension, the temporary scope of an expression is the
-smallest scope that contains the expression and is for one of the following:
+除了生存期扩展之外，表达式的临时作用域是包含表达式的最小作用域，它适用于以下情况之一:
+Apart from lifetime extension, the temporary scope of an expression is the smallest scope that contains the expression and is for one of the following:
 
-* The entire function body.
-* A statement.
-* The body of a [`if`], [`while`] or [`loop`] expression.
-* The `else` block of an `if` expression.
-* The condition expression of an `if` or `while` expression, or a `match`
-  guard.
-* The expression for a match arm.
-* The second operand of a [lazy boolean expression].
+* 整个函数体。
+* 一个语句。
+* [`if`]、[`while`] 或 [`loop`] 表达式的代码体。
+* `if`表达式的 `else`块。
+* `if`、`while` 表达式 或 匹配守卫的条件表达式。
+* 匹配臂上的表达式。
+* 惰性布尔表达式的第二操作数。
 
-> **Notes**:
+> **注意**:
 > 
-> Temporaries that are created in the final expression of a function
-> body are dropped *after* any named variables bound in the function body, as
-> there is no smaller enclosing temporary scope.
+> 在函数体的最终表达式(final expression)中创建的临时变量会在任何命名变量销毁*之后*销毁，因为这里没有更小的封闭临时作用域啦。
 >
-> The [scrutinee] of a `match` expression is not a temporary scope, so
-> temporaries in the scrutinee can be dropped after the `match` expression. For
-> example, the temporary for `1` in `match 1 { ref mut z => z };` lives until
-> the end of the statement.
+> 匹配表达式的[检验对象][scrutinee]表达式不是一个临时作用域，因此可以在匹配(`match`)表达式之后销毁检验对象表达式中的临时作用域。例如，`match 1 { ref mut z => z };` 中的 `1` 所在的临时变量一直存活到此语句结束。
 
-Some examples:
+一些示例：
 
 ```rust
 # struct PrintOnDrop(&'static str);
@@ -170,25 +162,24 @@ Some examples:
 # }
 let local_var = PrintOnDrop("local var");
 
-// Dropped once the condition has been evaluated
+// 在条件表达式执行后立即销毁
 if PrintOnDrop("If condition").0 == "If condition" {
-    // Dropped at the end of the block
+    // 在此块的末尾处销毁
     PrintOnDrop("If body").0
 } else {
     unreachable!()
 };
 
-// Dropped at the end of the statement
+// 在此条语句的末尾处销毁
 (PrintOnDrop("first operand").0 == ""
-// Dropped at the )
+// 在 ) 处销毁
 || PrintOnDrop("second operand").0 == "")
-// Dropped at the end of the expression
+// 在此表达式的末尾处销毁
 || PrintOnDrop("third operand").0 == "";
 
-// Dropped at the end of the function, after local variables.
-// Changing this to a statement containing a return expression would make the
-// temporary be dropped before the local variables. Binding to a variable
-// which is then returned would also make the temporary be dropped first.
+// 在函数末尾处，局部变量之后销毁之后销毁
+// 将下面更改为一个包含返回(return)表达式的语句将使临时变量在本地变量之前被删除。
+// 绑定到一个变量，然后返回这个变量也会首先删除这个临时变量
 match PrintOnDrop("Matched value in final expression") {
     // Dropped once the condition has been evaluated
     _ if PrintOnDrop("guard condition").0 == "" => (),
@@ -197,6 +188,7 @@ match PrintOnDrop("Matched value in final expression") {
 ```
 
 ### Operands
+### 操作数
 
 Temporaries are also created to hold the result of operands to an expression
 while the other operands are evaluated. The temporaries are associated to the
@@ -326,10 +318,9 @@ let x = (&temp()).use_temp();  // ERROR
 ```
 
 ## Not running destructors
+## 禁止运行析构函数
 
-Not running destructors in Rust is safe even if it has a type that isn't
-`'static`. [`std::mem::ManuallyDrop`] provides a wrapper to prevent a
-variable or field from being dropped automatically.
+在Rust中不运行析构函数是安全的，即使它的类型不是 `'static`。[`std::mem::ManuallyDrop`] 提供了一个包装器来防止变量或字段被自动销毁
 
 [Assignment]: expressions/operator-expr.md#assignment-expressions
 [binding modes]: patterns.md#binding-modes

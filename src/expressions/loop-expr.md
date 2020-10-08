@@ -81,7 +81,7 @@ while let _ = 5 {
 }
 ```
 
-`while let`循环等价于包含 `match`表达式的 `loop`表达式。如下：
+`while let`循环等价于包含匹配(`match`)表达式的 `loop`表达式。如下：
 
 <!-- ignore: expansion example -->
 ```rust,ignore
@@ -102,7 +102,7 @@ while let _ = 5 {
 }
 ```
 
-可以使用 `|`操作符指定多个模式。这与 `match`表达式中的 `|` 具有相同的语义：
+可以使用 `|`操作符指定多个模式。这与匹配(`match`)表达式中的 `|` 具有相同的语义：
 
 ```rust
 let mut vals = vec![2, 3, 1, 2, 2];

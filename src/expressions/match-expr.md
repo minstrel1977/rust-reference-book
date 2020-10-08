@@ -1,5 +1,5 @@
 # `match` expressions
-# `match`表达式
+#匹配(`match`)表达式
 
 >[match-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/match-expr.md)\
 >commit 41cf00929903710a9ce9b1f4c5d8b96e6a511614
@@ -27,11 +27,19 @@
 > _MatchArmGuard_ :\
 > &nbsp;&nbsp; `if` [_Expression_]
 
-*`match`表达式*在模式(pattern)上建立控制流程分支(branch)。匹配的具体形式取决于[模式][pattern]。一个 `match`表达式带有一个 *[检验对象][scrutinee](scrutinee)表达式*，它是要与模式进行比较的值。检验对象表达式和模式必须具有相同的类型。
+*`match`表达式*在模式(pattern)上建立控制流程分支(branch)。匹配的具体形式取决于[模式][pattern]。一个匹配(`match`)表达式带有一个 *[检验对象][scrutinee](scrutinee)表达式*，它是要与模式进行比较的值。检验对象表达式和模式必须具有相同的类型。
 
-根据检验对象表达式是[位置表达式或值表达式][place expression]，`match` 的行为会有所不同。如果检验对象表达式是一个[值表达式][value expression]，则这个表达式首先会在被求值到一个临时位置，然后将这个返回值按顺序与匹配臂中的模式进行比较，直到找到一个成功的匹配。带有匹配成功的模式的第一个匹配臂会被选中为当前 `match`表达式的分支目标，然后由该模式匹配绑定到的任何变量都会被赋值给该匹配臂的块中的局部变量，然后控制流程进入该块。
+根据检验对象表达式是[位置表达式或值表达式][place expression]，`match` 的行为会有所不同。如果检验对象表达式是一个[值表达式][value expression]，则这个表达式首先会在被求值到一个临时位置，然后将这个返回值按顺序与匹配臂中的模式进行比较，直到找到一个成功的匹配。这个第一个匹配成功的模式所在的匹配臂会被选中为当前匹配(`match`)的分支目标，然后由该模式(从检验对象那里)绑定的任何变量又都会被赋值给该匹配臂的块中的局部变量，然后控制流程进入该块。
+A `match` behaves differently depending on whether or not the scrutinee
+expression is a [place expression or value expression][place expression].
+If the scrutinee expression is a [value expression], it is first evaluated into
+a temporary location, and the resulting value is sequentially compared to the
+patterns in the arms until a match is found. The first arm with a matching
+pattern is chosen as the branch target of the `match`, any variables bound by
+the pattern are assigned to local variables in the arm's block, and control
+enters the block.
 
-当检验对象表达式是一个[位置表达式][place expression]时，此 `match`表达式不用先去内存上分配一个临时位置，但是，按值匹配绑定会复制或移动这个(位置表达式代表的)内存位置里面的值。如果可能，最好是在匹配位置表达式上进行匹配，因为这种匹配的生存期继承了位置表达式的生存期，而不会(让其生存期仅)局限于此匹配的内部。
+当检验对象表达式是一个[位置表达式][place expression]时，此匹配(`match`)表达式不用先去内存上分配一个临时位置，但是，按值匹配绑定会复制或移动这个(位置表达式代表的)内存位置里面的值。如果可能，最好是在匹配位置表达式上进行匹配，因为这种匹配的生存期继承了位置表达式的生存期，而不会(让其生存期仅)局限于此匹配的内部。
 
 `match`表达式的一个示例：
 
@@ -48,7 +56,7 @@ match x {
 }
 ```
 
-模式中的变量绑定的作用域是在匹配守卫(match guard)和匹配臂的表达式里。[变量绑定方式][binding mode](移动、复制或引用)取决于模式。
+模式中的变量的作用域是在匹配守卫(match guard)和匹配臂的表达式里。[变量绑定方式][binding mode](移动、复制或引用)取决于模式。
 
 可以使用 `|`操作符连接多个匹配模式。每个模式将按照从左到右的顺序进行测试，直到找到一个成功的匹配。
 
