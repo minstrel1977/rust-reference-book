@@ -1,29 +1,24 @@
 # Lifetime elision
+# 生存期省略
 
-Rust has rules that allow lifetimes to be elided in various places where the
-compiler can infer a sensible default choice.
+>[destructors.md](https://github.com/rust-lang/reference/blob/master/src/destructors.md)\
+>commit f8e76ee9368f498f7f044c719de68c7d95da9972
+
+Rust 有一套在多个位置都允许省略生存期的规则，但要求在这些位置上编译器能推断出合理的默认生存期。
 
 ## Lifetime elision in functions
+## 函数上的生存期省略
 
-In order to make common patterns more ergonomic, lifetime arguments can be
-*elided* in [function item], [function pointer], and [closure trait] signatures.
-The following rules are used to infer lifetime parameters for elided lifetimes.
-It is an error to elide lifetime parameters that cannot be inferred. The
-placeholder lifetime, `'_`, can also be used to have a lifetime inferred in the
-same way. For lifetimes in paths, using `'_` is preferred. Trait object
-lifetimes follow different rules discussed
-[below](#default-trait-object-lifetimes).
+为了使常用模式更符合人体工程学，可以在[函数项][function item]、[函数指针][function pointer]和[闭包trait]签名中*省略*生存期参数。以下规则用于推断出被省略的生存期参数。省略不能推断出的生存期参数是错误的。占位符形式的生存期，`'_`，也可以用同样的方法来推断。对于路径中的生存期，首选使用 `'_`。trait对象的生存期遵循不同的规则，具体[这里](#default-trait-object-lifetimes)讨论。
 
-* Each elided lifetime in the parameters becomes a distinct lifetime parameter.
-* If there is exactly one lifetime used in the parameters (elided or not), that
-  lifetime is assigned to *all* elided output lifetimes.
+* 参数中省略的每个生存期都会成为一个独立的生存期参数。
+* 如果参数中使用了一个生存期(省略或不省略)，则将该生存期分配给*所有*省略了生存期参数的输出。
 
-In method signatures there is another rule
+在方法签名中还有另一条规则
 
-* If the receiver has type `&Self`  or `&mut Self`, then the lifetime of that
-  reference to `Self` is assigned to all elided output lifetime parameters.
+* 如果接收者有类型 `&Self` 或 `&mut Self`，那么对 `Self` 的引用的生存期会被分配给所有省略了生存期参数的输出。
 
-Examples:
+示例：
 
 ```rust
 # trait T {}
@@ -32,78 +27,76 @@ Examples:
 # struct Command;
 #
 # trait Example {
-fn print1(s: &str);                                   // elided
-fn print2(s: &'_ str);                                // also elided
-fn print3<'a>(s: &'a str);                            // expanded
+fn print1(s: &str);                                   // 省略
+fn print2(s: &'_ str);                                // 也省略
+fn print3<'a>(s: &'a str);                            // 未省略
 
-fn debug1(lvl: usize, s: &str);                       // elided
-fn debug2<'a>(lvl: usize, s: &'a str);                // expanded
+fn debug1(lvl: usize, s: &str);                       // 省略
+fn debug2<'a>(lvl: usize, s: &'a str);                // 未省略
 
-fn substr1(s: &str, until: usize) -> &str;            // elided
-fn substr2<'a>(s: &'a str, until: usize) -> &'a str;  // expanded
+fn substr1(s: &str, until: usize) -> &str;            // 省略
+fn substr2<'a>(s: &'a str, until: usize) -> &'a str;  // 未省略
 
-fn get_mut1(&mut self) -> &mut dyn T;                 // elided
-fn get_mut2<'a>(&'a mut self) -> &'a mut dyn T;       // expanded
+fn get_mut1(&mut self) -> &mut dyn T;                 // 省略
+fn get_mut2<'a>(&'a mut self) -> &'a mut dyn T;       // 未省略
 
-fn args1<T: ToCStr>(&mut self, args: &[T]) -> &mut Command;                  // elided
-fn args2<'a, 'b, T: ToCStr>(&'a mut self, args: &'b [T]) -> &'a mut Command; // expanded
+fn args1<T: ToCStr>(&mut self, args: &[T]) -> &mut Command;                  // 省略
+fn args2<'a, 'b, T: ToCStr>(&'a mut self, args: &'b [T]) -> &'a mut Command; // 未省略
 
-fn new1(buf: &mut [u8]) -> Thing<'_>;                 // elided - preferred
-fn new2(buf: &mut [u8]) -> Thing;                     // elided
-fn new3<'a>(buf: &'a mut [u8]) -> Thing<'a>;          // expanded
+fn new1(buf: &mut [u8]) -> Thing<'_>;                 // 省略 - 首选的
+fn new2(buf: &mut [u8]) -> Thing;                     // 省略
+fn new3<'a>(buf: &'a mut [u8]) -> Thing<'a>;          // 未省略
 # }
 
-type FunPtr1 = fn(&str) -> &str;                      // elided
-type FunPtr2 = for<'a> fn(&'a str) -> &'a str;        // expanded
+type FunPtr1 = fn(&str) -> &str;                      // 省略
+type FunPtr2 = for<'a> fn(&'a str) -> &'a str;        // 未省略
 
-type FunTrait1 = dyn Fn(&str) -> &str;                // elided
-type FunTrait2 = dyn for<'a> Fn(&'a str) -> &'a str;  // expanded
+type FunTrait1 = dyn Fn(&str) -> &str;                // 省略
+type FunTrait2 = dyn for<'a> Fn(&'a str) -> &'a str;  // 未省略
 ```
 
 ```rust,compile_fail
-// The following examples show situations where it is not allowed to elide the
-// lifetime parameter.
+// 下面的示例显示了不允许省略生存期参数的情况。
 
 # trait Example {
-// Cannot infer, because there are no parameters to infer from.
-fn get_str() -> &str;                                 // ILLEGAL
+// 无法推断，因为没有可以推断的起始参数。
+fn get_str() -> &str;                                 // 非法
 
-// Cannot infer, ambiguous if it is borrowed from the first or second parameter.
-fn frob(s: &str, t: &str) -> &str;                    // ILLEGAL
+// 无法推断，这里无法确认输出的生存期参数该遵从从第一个还是第二个参数的。
+fn frob(s: &str, t: &str) -> &str;                    // 非法
 # }
 ```
 
 ## Default trait object lifetimes
+## 默认 trait对象的生存期
 
-The assumed lifetime of references held by a [trait object] is called its
-_default object lifetime bound_. These were defined in [RFC 599] and amended in
-[RFC 1156].
+一个 [trait对象][trait object]所持有的引用的假定生存期(assumed lifetime)称为它的默认*对象生存期约束*。这些在 [RFC 599] 中定义，在 [RFC 1156] 中修定增补。
 
-These default object lifetime bounds are used instead of the lifetime parameter
-elision rules defined above when the lifetime bound is omitted entirely. If
-`'_` is used as the lifetime bound then the bound follows the usual elision
-rules.
+当生存期约束被完全省略时，会使用这些默认的对象生存期约束，而不是上面定义的生存期参数省略规则。但如果使用 `'_` 作为生存期约束，则该约束遵循通常的省略规则。
 
-If the trait object is used as a type argument of a generic type then the
-containing type is first used to try to infer a bound.
+如果将 trait对象类型用作泛型类型的类型参数，则首先使用包含的类型来尝试推断一个约束。
+If the trait object is used as a type argument of a generic type then the containing type is first used to try to infer a bound.
 
+* 如果存在来自包含类型的唯一约束，则该约束为默认约束
 * If there is a unique bound from the containing type then that is the default
-* If there is more than one bound from the containing type then an explicit
-  bound must be specified
+* 如果包含类型有多个约束，则必须指定显式约束
+* If there is more than one bound from the containing type then an explicit bound must be specified
 
+如果这两个规则都不适用，则使用该 trait 的下述约束：
 If neither of those rules apply, then the bounds on the trait are used:
 
-* If the trait is defined with a single lifetime _bound_ then that bound is
-  used.
+* 如果 trait 定义为单个生命周期*约束*，则使用该约束。
+* If the trait is defined with a single lifetime _bound_ then that bound is used.
+* 如果 `'static` 用于任何生存期约束，则使用 `'static`。
 * If `'static` is used for any lifetime bound then `'static` is used.
-* If the trait has no lifetime bounds, then the lifetime is inferred in
-  expressions and is `'static` outside of expressions.
+* 如果 trait没有生存期约束，那么生存期在表达式中被推断出来，在表达式之外是  `'static`。
+* If the trait has no lifetime bounds, then the lifetime is inferred in expressions and is `'static` outside of expressions.
 
 ```rust
-// For the following trait...
+// 对下面 trait 来说，...
 trait Foo { }
 
-// These two are the same as Box<T> has no lifetime bound on T
+// 这两个和Box<T>是一样的对T没有生存期约束These two are the same as Box<T> has no lifetime bound on T
 type T1 = Box<dyn Foo>;
 type T2 = Box<dyn Foo + 'static>;
 

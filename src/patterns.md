@@ -165,7 +165,7 @@ for i in -2..5 {
 
 标识符模式将它们匹配的值绑定到一个变量上。此变量的标识符在该模式中必须是唯一的。该变量会在作用域中遮蔽同名的任何变量。这种绑定的作用域取决于使用模式的上下文(例如 `let`绑定或匹配(`match`)的匹配臂上)。
 
-最常见的标识符模式就是函数和闭包的变量声明和定义参数，这种模式只包含一个标识符(也可能前带一个 `mut`)，能匹配任何值，并将其绑定到该标识符。
+最常见的标识符模式就是函数和闭包的变量声明和参数，这种模式只包含一个标识符(也可能前带一个 `mut`)，能匹配任何值，并将其绑定到该标识符。
 
 ```rust
 let mut variable = 10;
@@ -224,8 +224,7 @@ if let Person{name: ref person_name, age: 18..=150} = value { }
 
 因此，`ref` 不是匹配规则什么的。它唯一的目的就是使变量和匹配值的引用绑定起来，而不是潜在地复制或移动匹配的内容。
 
-[路径模式(Path pattern)](#path-patterns)优先于标识符模式。如果给出了 `ref` 或 `ref mut`，同时它后面的标识符又遮蔽了某个常量，这将导致错误。
-<!-- [Path patterns](#path-patterns) take precedence over identifier patterns. It is an error if `ref` or `ref mut` is specified and the identifier shadows a constant. TobeModify-->
+[路径模式(Path pattern)](#path-patterns)优先于标识符模式。如果给某个标识符被限定用上了 `ref` 或 `ref mut`，同时它又遮蔽了某个常量，这会导致错误。
 
 如果 `@`子模式是不可反驳型的或子模式未指定，则标识符模式是不可反驳型的。
 

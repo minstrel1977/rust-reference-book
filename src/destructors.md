@@ -232,53 +232,45 @@ let x = &mut 0;
 println!("{}", x);
 ```
 
-如果一个借用、解引用、字段或元组索引表达式有一个扩展的临时作用域，那么它们的操作数也是如此。如果索引表达式有扩展的临时作用域，那么索引表达式也有扩展的临时作用域。
-If a borrow, dereference, field, or tuple indexing expression has an extended temporary scope then so does its operand. If an indexing expression has an extended temporary scope then the indexed expression also has an extended temporary scope.
+如果一个借用、解引用、字段或元组索引表达式有一个扩展的临时作用域，那么它们的操作数也是如此。如果索引表达式有扩展的临时作用域，那么被索引的表达式也有扩展的临时作用域。
 
 #### Extending based on patterns
+#### 基于模式的扩展
 
-An *extending pattern* is either
+*扩展型模式(extending pattern)*要符合下面两个条件：
 
-* An [identifier pattern] that binds by reference or mutable reference.
-* A [struct][struct pattern], [tuple][tuple pattern], [tuple struct][tuple
-  struct pattern], or [slice][slice pattern] pattern where at least one of the
-  direct subpatterns is a extending pattern.
+* 通过引用或可变引用绑定的[标识符模式][identifier pattern]。
+* [结构体][struct pattern]、[元组][tuple pattern]、[元组结构体][tuple struct pattern]或[切片][slice pattern]模式，其中它们至少有一个直接子模式是扩展模式。
 
-So `ref x`, `V(ref x)` and `[ref x, y]` are all extending patterns, but `x`,
-`&ref x` and `&(ref x,)` are not.
+所以 `ref x`、`V(ref x)` 和 `[ref x, y]` 都是扩展型模式，但是  `x`、`&ref x` 和 `&(ref x,)` 不是。
 
-If the pattern in a `let` statement is an extending pattern then the temporary
-scope of the initializer expression is extended.
+如果 `let`语句中的模式是扩展型模式，那么初始化器表达式的临时作用域将被扩展。。
 
 #### Extending based on expressions
+#### 基于表达式的扩展
 
-For a let statement with an initializer, an *extending expression* is an
-expression which is one of the following:
+对于带有初始化器的 let语句，*扩展型表达式*是以下表达式之一：
 
-* The initializer expression.
-* The operand of an extending [borrow expression].
-* The operand(s) of an extending [array][array expression], [cast][cast
-  expression], [braced struct][struct expression], or [tuple][tuple expression]
-  expression.
-* The final expression of any extending [block expression].
+* 初始化表达式(initializer expression)。
+* 扩展型[借用表达式][borrow expression]的操作数。
+* 扩展型[数组][array expression]、[强制转换(cast)][cast expression]、[花括号括起来的结构体][struct expression]或[元组][tuple expression]表达式的操作数。
+* 任何扩展型[块表达式][block expression]的最终表达式(final expression);
 
-So the borrow expressions in `&mut 0`, `(&1, &mut 2)`, and `Some { 0: &mut 3 }`
-are all extending expressions. The borrows in `&0 + &1` and `Some(&mut 0)` are
-not: the latter is syntactically a function call expression.
+因此，在 `&mut 0`、`(&1, &mut 2)` 和 `Some { 0: &mut 3 }` 中的借用表达式都是扩展型表达式。在 `&0 + &1` 和一些 `Some(&mut 0)` 中的借用不是：它们在语法上是函数调用表达式。
 
-The operand of any extending borrow expression has its temporary scope
-extended.
+任何扩展型借用表达式的操作数都带有扩展的临时作用域。
 
 #### Examples
+#### 示例
 
+这里有一些表达式扩展了临时作用域的例子：
 Here are some examples where expressions have extended temporary scopes:
 
 ```rust
 # fn temp() {}
 # trait Use { fn use_temp(&self) -> &Self { self } }
 # impl Use for () {}
-// The temporary that stores the result of `temp()` lives in the same scope
-// as x in these cases.
+// 在这些情况下，存储 `temp()` 结果的临时变量与x在同一个作用域中。
 let x = &temp();
 let x = &temp() as &dyn Send;
 let x = (&*&temp(),);
@@ -288,14 +280,13 @@ let ref x = *&temp();
 # x;
 ```
 
-Here are some examples where expressions don't have extended temporary scopes:
+下面是一些表达式没有扩展临时作用域的例子：
 
 ```rust,compile_fail
 # fn temp() {}
 # trait Use { fn use_temp(&self) -> &Self { self } }
 # impl Use for () {}
-// The temporary that stores the result of `temp()` only lives until the
-// end of the let statement in these cases.
+// 在这些情况下，存储 `temp()` 结果的临时变量只存在到 let语句结束。
 
 let x = Some(&temp());         // ERROR
 let x = (&temp()).use_temp();  // ERROR
@@ -303,9 +294,9 @@ let x = (&temp()).use_temp();  // ERROR
 ```
 
 ## Not running destructors
-## 禁止运行析构函数
+## 阻断运行析构函数
 
-在Rust中不运行析构函数是安全的，即使它的类型不是 `'static`。[`std::mem::ManuallyDrop`] 提供了一个包装器来防止变量或字段被自动销毁
+在Rust中，即便类型不是 `'static`，不运行析构函数也是允许的，也是安全的。[`std::mem::ManuallyDrop`] 提供了一个包装器来防止变量或字段被自动销毁。
 
 [Assignment]: expressions/operator-expr.md#assignment-expressions
 [binding modes]: patterns.md#binding-modes
