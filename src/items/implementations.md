@@ -1,3 +1,4 @@
+# Implementations
 # 实现
 
 >[implementations.md](https://github.com/rust-lang/reference/blob/master/src/items/implementations.md)\
@@ -41,6 +42,7 @@
 - 固有实现
 - [trait]实现
 
+## Inherent Implementations
 ## 固有实现
 
 固有实现被定义为一段由关键字 `impl`、泛型类型声明、指向标称类型(nominal type)的路径、where子句和一对花括号括起来的一组*关联项(associable items)*组成的序列。
@@ -88,6 +90,7 @@ fn main() {
 }
 ```
 
+## Trait Implementations
 ## trait实现
 
 *trait实现*的定义与固有实现类似，只是可选的泛型类型声明后跟一个 [trait]，再后跟关键字 `for`。后面是一个指向标称类型的路径。
@@ -134,12 +137,14 @@ impl Shape for Circle {
 }
 ```
 
+### Trait Implementation Coherence
 ### trait实现的一致性
 
 如果孤儿规则检查失败或存在重叠的实现实例，则认为 trait实现不一致。
 
-当两个实现各自的 *trait接口*集之间存在非空交集时即为这两个 *trait实现*重叠了，（这种常情况下）可以用相同的类型来实例化这两种不同实现的实例。<!-- 这有可能是错的?因为对于输入类型参数来说，不能用同一组类型去实例化两个实现-->
+当两个实现各自的 *trait接口*集之间存在非空交集时即为这两个 *trait实现*重叠了，（这种常情况下）这两个trait实现可以用相同的类型来实例化。<!-- 这可能是错的？来源：对于输入类型参数，没有两个实现可以用相同的类型集实例化。 -->
 
+#### Orphan rules
 #### 孤儿规则
 
 给定 `impl<P1..=Pn> Trait<T1..=Tn> for T0`，只有以下至少一种情况为真时，此 `impl` 才能成立：
@@ -148,11 +153,11 @@ impl Shape for Circle {
 - 以下所有
   - `T0..=Tn` 中的类型至少有一种是[本地类型]。假设 `Ti` 是第一个这样的类型。
   - 没有[无覆盖类型]参数 `P1..=Pn` 会出现在 `T0..Ti` 里（注意 `Ti` 被排除在外）。
-  - 译者注：为理解上面两条规则，举几个例子、 `impl<T> ForeignTrait<LocalType> for ForeignType<T>` 这样的实现也是被允许的，而 `impl<Vec<T>> ForeignTrait<LocalType> for ForeignType<T>` 和 `impl<T> ForeignTrait<Vec<T>> for ForeignType<T>` 不被允许。
+  （译者注：为理解上面两条规则，举几个例子、 `impl<T> ForeignTrait<LocalType> for ForeignType<T>` 这样的实现也是被允许的，而 `impl<Vec<T>> ForeignTrait<LocalType> for ForeignType<T>` 和 `impl<T> ForeignTrait<Vec<T>> for ForeignType<T>` 不被允许。）
   - 
 这里只有*无覆盖*类型参数的外观被限制（译者注：为方便理解“无覆盖类型参数”，译者提醒读者把它想象成上面译者举例中的 `T`）。注意，理解“无覆盖类型参数”时需要注意：为了保持一致性，[基本类型]虽然外观形式特殊的，但仍不认为时有覆盖的，如 `Box<T>` 中的 `T` 就不认为是有覆盖的，`Box<LocalType>` 是被认为是本地的。
 
-
+## Generic Implementations
 ## 泛型实现
 
 实现可以采用类型和生存期作为参数，这些参数可用于实现的其余部分。实现中声明的这些类型参数必须在实现的 trait 或实现类型中至少使用一次。实现的参数直接写在关键字 `impl` 之后。
@@ -166,6 +171,7 @@ impl Seq<bool> for u32 {
 }
 ```
 
+## Attributes on Implementations
 ## 实现上的属性
 
 实现可以在关键字 `impl` 之前引入外部[属性]，在代码体内引入内部[属性]。内部属性必须位于任何关联数据项之前。这里有意义的属性是[`cfg`]、[`deprecated`]、[`doc`]和[lint检查类属性]。

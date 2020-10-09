@@ -1,7 +1,7 @@
 # Lifetime elision
 # 生存期省略
 
->[destructors.md](https://github.com/rust-lang/reference/blob/master/src/destructors.md)\
+>[lifetime-elision.md](https://github.com/rust-lang/reference/blob/master/src/lifetime-elision.md)\
 >commit f8e76ee9368f498f7f044c719de68c7d95da9972
 
 Rust 有一套在多个位置都允许省略生存期的规则，但要求在这些位置上编译器能推断出合理的默认生存期。
@@ -68,53 +68,46 @@ fn frob(s: &str, t: &str) -> &str;                    // 非法
 ```
 
 ## Default trait object lifetimes
-## 默认 trait对象的生存期
+## 默认的 trait对象的生存期
 
-一个 [trait对象][trait object]所持有的引用的假定生存期(assumed lifetime)称为它的默认*对象生存期约束*。这些在 [RFC 599] 中定义，在 [RFC 1156] 中修定增补。
+一个 [trait对象][trait object]所持有的引用的假定生存期(assumed lifetime)称为它的*默认对象生存期约束(default object lifetime bound)*。这些在 [RFC 599] 中定义，在 [RFC 1156] 中修定增补。
 
-当生存期约束被完全省略时，会使用这些默认的对象生存期约束，而不是上面定义的生存期参数省略规则。但如果使用 `'_` 作为生存期约束，则该约束遵循通常的省略规则。
+当 trait对象的生存期约束被完全省略时，会使用默认对象生存期约束，而不是上面定义的生存期参数省略规则。但如果使用 `'_` 作为生存期约束，则该约束遵循通常的省略规则。
 
-如果将 trait对象类型用作泛型类型的类型参数，则首先使用包含的类型来尝试推断一个约束。
-If the trait object is used as a type argument of a generic type then the containing type is first used to try to infer a bound.
+如果将 trait对象用作泛型类型的类型参数，则首先使用该被包含的（trait对象）类型来尝试为此泛型推断一个约束。
 
-* 如果存在来自包含类型的唯一约束，则该约束为默认约束
-* If there is a unique bound from the containing type then that is the default
-* 如果包含类型有多个约束，则必须指定显式约束
-* If there is more than one bound from the containing type then an explicit bound must be specified
+* 如果存在来自被包含类型的唯一约束，则该约束为默认约束
+* 如果被包含类型有多个约束，则必须指定显式一个约束
 
-如果这两个规则都不适用，则使用该 trait 的下述约束：
-If neither of those rules apply, then the bounds on the trait are used:
+如果这两个规则都不适用，则使用该 trait的下述约束：
 
-* 如果 trait 定义为单个生命周期*约束*，则使用该约束。
-* If the trait is defined with a single lifetime _bound_ then that bound is used.
-* 如果 `'static` 用于任何生存期约束，则使用 `'static`。
-* If `'static` is used for any lifetime bound then `'static` is used.
-* 如果 trait没有生存期约束，那么生存期在表达式中被推断出来，在表达式之外是  `'static`。
-* If the trait has no lifetime bounds, then the lifetime is inferred in expressions and is `'static` outside of expressions.
+* 如果 trait 定义为单生命周期*约束*，则使用该约束。
+* 如果 `'static` 被用于所有的生存期约束，则使用 `'static`。
+* 如果 trait没有生存期约束，那么此泛型的生存期会在表达式中被推断出来，在表达式之外直接用 `'static`。
 
 ```rust
-// 对下面 trait 来说，...
+// 对下面的 trait 来说，...
 trait Foo { }
 
-// 这两个和Box<T>是一样的对T没有生存期约束These two are the same as Box<T> has no lifetime bound on T
+// 这两个是等价的，就如`Box<T>`对没有生存期约束的`T`一样
 type T1 = Box<dyn Foo>;
 type T2 = Box<dyn Foo + 'static>;
 
-// ...and so are these:
+// ...这也是等价的
 impl dyn Foo {}
 impl dyn Foo + 'static {}
 
-// ...so are these, because &'a T requires T: 'a
+// ...这也是等价的, 因为 `&'a T` 需要 `T: 'a`
 type T3<'a> = &'a dyn Foo;
 type T4<'a> = &'a (dyn Foo + 'a);
 
-// std::cell::Ref<'a, T> also requires T: 'a, so these are the same
+// `std::cell::Ref<'a, T>` 也需要 `T: 'a`, 所以这俩也是等价的
 type T5<'a> = std::cell::Ref<'a, dyn Foo>;
 type T6<'a> = std::cell::Ref<'a, dyn Foo + 'a>;
 ```
 
 ```rust,compile_fail
-// This is an example of an error.
+// 这是一个反面示例：
 # trait Foo { }
 struct TwoBounds<'a, 'b, T: ?Sized + 'a + 'b> {
     f1: &'a i32,
@@ -123,31 +116,28 @@ struct TwoBounds<'a, 'b, T: ?Sized + 'a + 'b> {
 }
 type T7<'a, 'b> = TwoBounds<'a, 'b, dyn Foo>;
 //                                  ^^^^^^^
-// Error: the lifetime bound for this object type cannot be deduced from context
+// 错误: 不能从上下文推导出此对象类型的生存期约束
 ```
 
-Note that the innermost object sets the bound, so `&'a Box<dyn Foo>` is still
-`&'a Box<dyn Foo + 'static>`.
+注意，最内层的对象决定了约束，所以像 `&'a Box<dyn Foo>` 仍然是 `&'a Box<dyn Foo + 'static>`
 
 ```rust
-// For the following trait...
+// 对下面的 trait 来说，...
 trait Bar<'a>: 'a { }
 
-// ...these two are the same:
+// ...这两个是等价的：
 type T1<'a> = Box<dyn Bar<'a>>;
 type T2<'a> = Box<dyn Bar<'a> + 'a>;
 
-// ...and so are these:
+// ...这俩也是等价的:
 impl<'a> dyn Bar<'a> {}
 impl<'a> dyn Bar<'a> + 'a {}
 ```
 
 ## `'static` lifetime elision
+## 静态(`'static`)生存期省略
 
-Both [constant] and [static] declarations of reference types have *implicit*
-`'static` lifetimes unless an explicit lifetime is specified. As such, the
-constant declarations involving `'static` above may be written without the
-lifetimes.
+除非指定了显式的生存期,引用类型的[常量][constant]和[静态][static]声明都具有*隐式的*静态(`'static`)生存期。因此，有 `'static`在其上的常量声明在编写是都可以略去其生存期声明。
 
 ```rust
 // STRING: &'static str
@@ -165,20 +155,17 @@ const BITS_N_STRINGS: BitsNStrings<'_> = BitsNStrings {
 };
 ```
 
-Note that if the `static` or `const` items include function or closure
-references, which themselves include references, the compiler will first try
-the standard elision rules. If it is unable to resolve the lifetimes by its
-usual rules, then it will error. By way of example:
+注意，如果静态项(`static`)或常量项(`const`)包含函数引用或闭包引用，而它们本身也包含引用，此时编译器将首先尝试使用标准的省略规则。如果它不能通过其通常的规则来推断出生存期，那么它将报错。举个例子：
 
 ```rust
 # struct Foo;
 # struct Bar;
 # struct Baz;
 # fn somefunc(a: &Foo, b: &Bar, c: &Baz) -> usize {42}
-// Resolved as `fn<'a>(&'a str) -> &'a str`.
+// 解析为 `fn<'a>(&'a str) -> &'a str`.
 const RESOLVED_SINGLE: fn(&str) -> &str = |x| x;
 
-// Resolved as `Fn<'a, 'b, 'c>(&'a Foo, &'b Bar, &'c Baz) -> usize`.
+// 解析为 `Fn<'a, 'b, 'c>(&'a Foo, &'b Bar, &'c Baz) -> usize`.
 const RESOLVED_MULTIPLE: &dyn Fn(&Foo, &Bar, &Baz) -> usize = &somefunc;
 ```
 
@@ -187,12 +174,10 @@ const RESOLVED_MULTIPLE: &dyn Fn(&Foo, &Bar, &Baz) -> usize = &somefunc;
 # struct Bar;
 # struct Baz;
 # fn somefunc<'a,'b>(a: &'a Foo, b: &'b Bar) -> &'a Baz {unimplemented!()}
-// There is insufficient information to bound the return reference lifetime
-// relative to the argument lifetimes, so this is an error.
+// 没有足够的信息将返回值的生存期与参数的生命周期绑定起来，因此这是一个错误
 const RESOLVED_STATIC: &dyn Fn(&Foo, &Bar) -> &Baz = &somefunc;
 //                                            ^
-// this function's return type contains a borrowed value, but the signature
-// does not say whether it is borrowed from argument 1 or argument 2
+// 这个函数的返回类型包含一个借用来的值，但是签名没有说明它是从参数1还是从参数2借用来的
 ```
 
 [closure trait]: types/closure.md

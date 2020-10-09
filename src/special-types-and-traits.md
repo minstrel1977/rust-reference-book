@@ -1,47 +1,42 @@
 # Special types and traits
+# 特殊类型和 trait
 
-Certain types and traits that exist in [the standard library] are known to the
-Rust compiler. This chapter documents the special features of these types and
-traits.
+>[special-types-and-traits.md](https://github.com/rust-lang/reference/blob/master/src/special-types-and-traits.md)\
+>commit fcdc0cab546c10921d66054be25c6afc9dd6b3bc
+
+存在于[标准库][the standard library]中的某些类型和 trait 是 Rust 编译器默认知道的。本章阐述了这些类型和 trait 的特性。
 
 ## `Box<T>`
 
-[`Box<T>`] has a few special features that Rust doesn't currently allow for user
-defined types.
+[`Box<T>`] 有一些特殊的特性，Rust目前还不允许用户定义类型时使用。
+has a few special features that Rust doesn't currently allow for user defined types.
 
-* The [dereference operator] for `Box<T>` produces a place which can be moved
-  from. This means that the `*` operator and the destructor of `Box<T>` are
-  built-in to the language.
-* [Methods] can take `Box<Self>` as a receiver.
-* A trait may be implemented for `Box<T>` in the same crate as `T`, which the
-  [orphan rules] prevent for other generic types.
+* `Box<T>` 的[解引用操作符]会产生一个可移动的位置。这意味着 `*`运算符和 `Box<T>` 的析构函数是语言内置的。
+* [方法][Methods]可以用 `Box<Self>` 作为接收者。
+* `Box<T>`可以在与 `T` 在同一 crate 中实现同一 trait，[孤儿规则][orphan rules]禁止其他泛型类型这么做。
 
 ## `Rc<T>`
 
-[Methods] can take [`Rc<Self>`] as a receiver.
+[方法][Methods]可以用 [`Rc<Self>`] 作为接收者。
 
 ## `Arc<T>`
 
-[Methods] can take [`Arc<Self>`] as a receiver.
+[方法][Methods]可以用 [`Arc<Self>`] 作为接收者。
 
 ## `Pin<P>`
 
-[Methods] can take [`Pin<P>`] as a receiver.
+[方法][Methods]可以用 [`Pin<P>`] 作为接收者。
 
 ## `UnsafeCell<T>`
 
-[`std::cell::UnsafeCell<T>`] is used for [interior mutability]. It ensures that
-the compiler doesn't perform optimisations that are incorrect for such types.
-It also ensures that [`static` items] which have a type with interior
-mutability aren't placed in memory marked as read only.
+[`std::cell::UnsafeCell<T>`] 用于[内部可变性][interior mutability]。它确保编译器不会对此类类型执行不正确的优化。它还确保具有内部可变类型的[静态(`static`)项][`static` items]不会被放在标记为只读的内存中。
 
 ## `PhantomData<T>`
 
-[`std::marker::PhantomData<T>`] is a zero-sized, minimum alignment, type that
-is considered to own a `T` for the purposes of [variance], [drop check], and
-[auto traits](#auto-traits).
+[`std::marker::PhantomData<T>`] 是一个零尺寸零最小对齐量，且被认为拥有 `T` 的类型，这个类型存在目的是应用在[型变][variance]，[销毁检查][drop check]，和[自动trait](#auto-traits)中的。
 
 ## Operator Traits
+## 运算符trait
 
 The traits in [`std::ops`] and [`std::cmp`] are used to overload [operators],
 [indexing expressions], and [call expressions].
