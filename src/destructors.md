@@ -134,7 +134,7 @@ let declared_last = PrintOnDrop("在外层作用域内最先销毁");
 表达式的*临时作用域*是用于临时变量的作用域。该临时变量在位置上下文中使用时会用来保存该表达式的结果(在它未被[提升][promoted]的情况下)。
 The *temporary scope* of an expression is the scope that is used for the temporary variable that holds the result of that expression when used in a [place context], unless it is [promoted].
 
-除了生存期扩展之外，表达式的临时作用域是包含表达式的最小作用域，它适用于以下情况之一:
+除了[生存期扩展](#temporary-lifetime-extension)之外，表达式的临时作用域是包含表达式的最小作用域，它适用于以下情况之一:
 Apart from lifetime extension, the temporary scope of an expression is the smallest scope that contains the expression and is for one of the following:
 
 * 整个函数体。
@@ -178,10 +178,10 @@ if PrintOnDrop("If condition").0 == "If condition" {
 || PrintOnDrop("third operand").0 == "";
 
 // 在函数末尾处，局部变量之后销毁之后销毁
-// 将下面更改为一个包含返回(return)表达式的语句将使临时变量在本地变量之前被删除。
-// 绑定到一个变量，然后返回这个变量也会首先删除这个临时变量
+// 将下面这段更改为一个包含返回(return)表达式的语句将使临时变量在本地变量之前被删除。
+// 如果把此临时变量绑定到一个变量，然后返回这个变量，也会首先删除这个临时变量
 match PrintOnDrop("Matched value in final expression") {
-    // Dropped once the condition has been evaluated
+    // 在条件表达式执行后立即销毁
     _ if PrintOnDrop("guard condition").0 == "" => (),
     _ => (),
 }
@@ -190,11 +190,7 @@ match PrintOnDrop("Matched value in final expression") {
 ### Operands
 ### 操作数
 
-Temporaries are also created to hold the result of operands to an expression
-while the other operands are evaluated. The temporaries are associated to the
-scope of the expression with that operand. Since the temporaries are moved from
-once the expression is evaluated, dropping them has no effect unless one of the
-operands to an expression breaks out of the expression, returns, or panics.
+在同一表达式中，在对其他操作数求值时，也会创建临时变量来将已求值的操作数的结果保存起来。临时变量与该操作数所属的表达式的作用域相关联。因为一旦表达式求值，临时表就被移走了，所以销毁它们没有任何效果和意义，除非整个表达式的某一操作数出现异常，导致表达式求值失败，或提前返回，或出现了 panic。
 
 ```rust
 # struct PrintOnDrop(&'static str);
@@ -204,7 +200,7 @@ operands to an expression breaks out of the expression, returns, or panics.
 #     }
 # }
 loop {
-    // Tuple expression doesn't finish evaluating so operands drop in reverse order
+    // 元组表达式未结束求值就提前返回了，所以其操作数按声明的反序销毁
     (
         PrintOnDrop("Outer tuple first"),
         PrintOnDrop("Outer tuple second"),
@@ -219,36 +215,25 @@ loop {
 ```
 
 ### Constant promotion
+### 常量提升
 
-Promotion of a value expression to a `'static` slot occurs when the expression
-could be written in a constant, borrowed, and dereferencing that borrow where
-the expression was originally written, without changing the runtime behavior.
-That is, the promoted expression can be evaluated at compile-time and the
-resulting value does not contain [interior mutability] or [destructors] (these
-properties are determined based on the value where possible, e.g. `&None`
-always has the type `&'static Option<_>`, as it contains nothing disallowed).
+如果可以将值表达式写入常量，然后能通过引用/借用和解引用来使用，并且如果这种做法也不更改运行时行为，那 Rust 会将值表达式提升到静态(`'static`) slot 作用域内。也就是说，提升的表达式可以在编译时求值，结果值不包含[内部可变性][interior mutability]或[析构函数][destructors] (这些属性是根据可能的值确定的，例如 `&None` 总是具有类型 `&'static Option<_>`，因为这种关系已经被值唯一确定了)。
 
 ### Temporary lifetime extension
+### 临时生存期扩展
 
-> **Note**: The exact rules for temporary lifetime extension are subject to
-> change. This is describing the current behavior only.
+> **注意**：临时生存期扩展的确切规则可能会有所改变。这里只描述了当前的行为表现。
 
-The temporary scopes for expressions in `let` statements are sometimes
-*extended* to the scope of the block containing the `let` statement. This is
-done when the usual temporary scope would be too small, based on certain
-syntactic rules. For example:
+`let`语句中表达式的临时作用域有时会*扩展*到包含此 `let`语句的块作用域。根据某些语法规则，当通常的临时作用域太小时，就会这样做。例如：
 
 ```rust
 let x = &mut 0;
-// Usually a temporary would be dropped by now, but the temporary for `0` lives
-// to the end of the block.
+// 通常上面存储0的临时变量（或者临时位置）到这里就会被丢弃，但这里是一直存在到块的末尾。
 println!("{}", x);
 ```
 
-If a borrow, dereference, field, or tuple indexing expression has an extended
-temporary scope then so does its operand. If an indexing expression has an
-extended temporary scope then the indexed expression also has an extended
-temporary scope.
+如果一个借用、解引用、字段或元组索引表达式有一个扩展的临时作用域，那么它们的操作数也是如此。如果索引表达式有扩展的临时作用域，那么索引表达式也有扩展的临时作用域。
+If a borrow, dereference, field, or tuple indexing expression has an extended temporary scope then so does its operand. If an indexing expression has an extended temporary scope then the indexed expression also has an extended temporary scope.
 
 #### Extending based on patterns
 

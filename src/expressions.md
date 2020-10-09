@@ -1,3 +1,4 @@
+# Expressions
 # 表达式
 
 >[expressions.md](https://github.com/rust-lang/reference/blob/master/src/expressions.md)\
@@ -53,6 +54,7 @@
 
 这样，表达式的结构决定了执行的结构。块只是另一种表达式，所以块、语句和表达式可以递归地彼此嵌套到任意深度。
 
+## Expression precedence
 ## 表达式的优先级
 
 Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同优先级的二元运算符按其结合(associativity)顺序做了分组。
@@ -79,6 +81,7 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 | `=` `+=` `-=` `*=` `/=` `%=` <br> `&=` <code>&#124;=</code> `^=` `<<=` `>>=` | 从右向左 |
 | `return` `break` closures（返回、中断、闭包）   |                     |
 
+## Place Expressions and Value Expressions
 ## 位置表达式和值表达式
 
 表达式分为两大类：位置表达式和值表达式。同样的，在每个表达式中，子表达式可以出现在位置上下文或值上下文中。表达式的求值既取决于它自己的类别，也取决于它所处的上下文。
@@ -100,6 +103,7 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 
 > 注意：历史上，位置表达式被称为 *lvalues*，值表达式被称为 *rvalues*。
 
+### Moved and copied types
 ### 移动和复制类型
 
 当位置表达式在值表达式上下文中求值，或在模式中被值绑定时，这表示求出的值会*保存进*（held in）当前表达式代表的内存地址。如果该值的类型实现了 [`Copy`]，那么该值将被从原来的位置表达式（也可以理解为原来的内存位置）中复制一份过来。如果该值的类型没有实现 [`Copy`]，但实现了 [`Sized`]，那么就可以把该值从原来的位置表达式里移出（move out）（到新位置表达式中）。移出对位置表达式也有要求，具体如下的位置表达式里的值才可以被移出：<!-- When a place expression is evaluated in a value expression context, or is bound by value in a pattern, it denotes the value held _in_ that memory location. If the type of that value implements [`Copy`], then the value will be copied. In the remaining situations if that type is [`Sized`], then it may be possible to move the value. Only the following place expressions may be moved out of: 这里直译后看不懂，意译又怕理解错误，只能先打个标记 TobeModif-->
@@ -111,6 +115,7 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 
 移出被作为局部变量的位置表达式里的值后，原来的地址将被去初始化（deinitialized），并且该地址在重新初始化之前无法再次读取。除以上列出的情况为外，尝试在值表达式上下文中使用位置表达式都是错误的。
 
+### Mutability
 ### 可变性
 
 对于表[示分配][assign]、可变[借用][borrow]、[隐式可变借用]或绑定到包含 `ref mut` 的模式的位置表达式必须是[可变的]。我们称这些为*可变位置表达式*。与之相比，其他位置表达式称为*不可变位置表达式*。
@@ -126,10 +131,12 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 * 实现 `DerefMut` 的类型的解引用，这就要求被解引用的值是一个可变位置表达式上下文。
 * 对于实现 `IndexMut` 的类型的[数组索引][array indexing]，它将在可变位置表达式上下文中计算被索引到的值，而不是索引本身。
 
-### 临时位置
+### Temporaries
+### 临时位置/临时变量
 
-在大多数位置表达式上下文中使用值表达式时，会创建一个临时的未命名内存位置，并将该值初始化到该内存位置，而表达式将求值结果在存放到该位置。也有例外，就把此表达式[提升]为 `static`。（译者注：这种情况下表达式将直接在编译时就求值了，求值的结果会根据编译器要求重新选择地址存储）。临时位置的[销毁点][drop scope]通常在其封闭语句的结尾处。
+在大多数位置表达式上下文中使用值表达式时，会创建一个临时的未命名内存位置，并将该值初始化到该内存位置，而表达式将求值结果在存放到该位置。也有例外，就把此表达式[提升]为 `static`。（译者注：这种情况下表达式将直接在编译时就求值了，求值的结果会根据编译器要求重新选择地址存储）。临时位置/临时变量的[销毁点][drop scope]通常在其封闭语句的结尾处。
 
+### Implicit Borrows
 ### 隐式借用
 
 某些表达式可通过隐式借用表达式来将其视为位置表达式。例如，可以直接比较两个[切片][slice]是否相等，因为 `==` 运算符隐式借用了它的操作数：
@@ -157,10 +164,12 @@ let b: &[i32];
 * [比较运算][comparison]的操作数。
 * [复合赋值][compound assignment]的左操作数。
 
-## 重载
+## Overloading Traits
+## 重载trait
 
 本节之后的许多操作符和表达式都可以通过 `std::ops` 或 `std::cmp` 中的 trait 被其他类型重载。这些 trait 也存在于同名的 `core::ops` 和 `core::cmp` 中。
 
+## Expression Attributes
 ## 表达式属性
 
 只有在少数特定情况下，才允许在表达式之前使用[外部属性][_OuterAttribute_]：
