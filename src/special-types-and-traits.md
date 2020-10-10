@@ -36,103 +36,73 @@ has a few special features that Rust doesn't currently allow for user defined ty
 [`std::marker::PhantomData<T>`] 是一个零尺寸零最小对齐量，且被认为拥有 `T` 的类型，这个类型存在目的是应用在[型变][variance]，[销毁检查][drop check]，和[自动trait](#auto-traits)中的。
 
 ## Operator Traits
-## 运算符trait
+## 运算符/操作符trait
 
-The traits in [`std::ops`] and [`std::cmp`] are used to overload [operators],
-[indexing expressions], and [call expressions].
+[`std::ops`] 和 [`std::cmp`] 中的trait用于重载[运算符/操作符][operators]、[索引表达式][indexing expressions]和[调用表达式][call expressions]。
 
 ## `Deref` and `DerefMut`
+## `Deref` 和 `DerefMut`
 
-As well as overloading the unary `*` operator, [`Deref`] and [`DerefMut`] are
-also used in [method resolution] and [deref coercions].
+除了重载一元 `*`运算符外，[`Deref`] 和 [`DerefMut`] 也用于[方法解析(method resolution)][method resolution]和[利用`Deref`达成自动强转][deref coercions]。
 
 ## `Drop`
 
-The [`Drop`] trait provides a [destructor], to be run whenever a value of this
-type is to be destroyed.
+[`Drop`] trait 提供了一个[析构函数][destructor]，每当要销毁此类值时就会运行它。
 
 ## `Copy`
 
-The [`Copy`] trait changes the semantics of a type implementing it. Values
-whose type implements `Copy` are copied rather than moved upon assignment.
+[`Copy`] trait 改变实现它的类型的语义。其类型实现 `Copy` 的值将在赋值时被复制而不是移动。
 
-`Copy` can only be implemented for types which do not implement `Drop`, and whose fields are all `Copy`.
-For enums, this means all fields of all variants have to be `Copy`.
-For unions, this means all variants have to be `Copy`.
+只能为未实现 `Drop` trait 且字段都是 `Copy` 的类型实现 `Copy`。
+对于枚举，这意味着所有变体的所有字段都必须是 `Copy`。
+对于联合体，这意味着所有的变体都必须是 `Copy`。
 
-`Copy` is implemented by the compiler for
+`Copy` 由编译器已实现给下述类型：
 
-* [Numeric types]
-* `char`, `bool`, and [`!`]
-* [Tuples] of `Copy` types
-* [Arrays] of `Copy` types
-* [Shared references]
-* [Raw pointers]
-* [Function pointers] and [function item types]
+* [数字类类型][Numeric types]
+* `char`, `bool`, 和 [`!`]
+* 由 `Copy` 类型组成的[元组][Tuples]
+* 由 `Copy` 类型组成的[数组][Arrays]
+* [共享引用][Shared references]
+* [裸指针][Raw pointers]
+* [函数指针][Function pointers] 和 [函数项类型][function item types]
 
 ## `Clone`
 
-The [`Clone`] trait is a supertrait of `Copy`, so it also needs compiler
-generated implementations. It is implemented by the compiler for the following
-types:
+[`Clone`] trait 是 `Copy` 的超类trait，所以它也需要编译器生成实现。它被编译器实现给了以下类型：
 
-* Types with a built-in `Copy` implementation (see above)
-* [Tuples] of `Clone` types
-* [Arrays] of `Clone` types
+* 实现了内置的 `Copy` trait 的类型(见上面)
+* 由 `Clone` 类型组成的[元组][Tuples]
+* 由 `Clone` 类型组成的[数组][Arrays]
 
 ## `Send`
 
-The [`Send`] trait indicates that a value of this type is safe to send from one
-thread to another.
+[`Send`] trait 表明这种类型的值可以安全地从一个线程发送到另一个线程。
 
 ## `Sync`
 
-The [`Sync`] trait indicates that a value of this type is safe to share between
-multiple threads. This trait must be implemented for all types used in
-immutable [`static` items].
+[`Sync`] trait 表示在多个线程之间共享这种类型的值是安全的。必须为不可变[静态(`static`)项][`static` items]中使用的所有类型实现此 trait。
 
 ## Auto traits
 
-The [`Send`], [`Sync`], [`Unpin`], [`UnwindSafe`], and [`RefUnwindSafe`] traits are _auto
-traits_. Auto traits have special properties.
+[`Send`]，[`Sync`]，[`Unpin`]，[`UnwindSafe`]，和 [`RefUnwindSafe`] trait 都是*自动trait*。自动trait 具有特殊的属性。
 
-If no explicit implementation or negative implementation is written out for an
-auto trait for a given type, then the compiler implements it automatically
-according to the following rules:
+如果对于给定类型的自动trait 没有显式实现或否定实现，那么编译器会根据以下规则自动此为类型去实现这些自动trait：
 
-* `&T`, `&mut T`, `*const T`, `*mut T`, `[T; n]`, and `[T]` implement the trait
-  if `T` does.
-* Function item types and function pointers automatically implement the trait.
-* Structs, enums, unions, and tuples implement the trait if all of their fields
-  do.
-* Closures implement the trait if the types of all of their captures do. A
-  closure that captures a `T` by shared reference and a `U` by value implements
-  any auto traits that both `&T` and `U` do.
+* 如果 `T` 实现了自动trait，那 `&T`, `&mut T`, `*const T`, `*mut T`, `[T; n]`, 和 `[T]` 也会实现。
+* 函数项类型和函数指针自动实现这些 trait。
+* 如果结构体、枚举、联合体和元组的所有字段都实现了这些 trait，则它们本身也会自动实现这些 trait。
+* 如果闭包捕获的所有类型都实现了这些 trait，那么闭包会自动实现这些 trait。一个闭包通过共享引用捕获了`T`，同时通过所传值的方式捕获 `U`，那么该闭包会自动实现 `&T` 和 `U` 所共同实现的自动trait。
 
-For generic types (counting the built-in types above as generic over `T`), if a
-generic implementation is available, then the compiler does not automatically
-implement it for types that could use the implementation except that they do not
-meet the requisite trait bounds. For instance, the standard library implements
-`Send` for all `&T` where `T` is `Sync`; this means that the compiler will not
-implement `Send` for `&T` if `T` is `Send` but not `Sync`.
+对于泛型类型(上面的这些内置类型也算是建立在 `T` 上的泛型)，如果泛型实现在当前已够用，则编译器不会为其再实现其他的自动trait，除非它们不满足必需的 trait约束。例如，在标准库里，在 `T` 实现了 `Sync` 的地方，那库就为所有 `&T` 实现了 `Send`；这意味着如果 `T` 是 `Send`，而不是 `Sync`，则编译器将不会为 `&T` 实现 `Send`。
 
-Auto traits can also have negative implementations, shown as `impl !AutoTrait
-for T` in the standard library documentation, that override the automatic
-implementations. For example `*mut T` has a negative implementation of `Send`,
-and so `*mut T` is not `Send`, even if `T` is. There is currently no stable way
-to specify additional negative implementations; they exist only in the standard
-library.
+自动trait 也可以有否定实现，在标准库文档中显示为 `impl !AutoTrait for T`，它覆盖了自动实现。例如，`*mut T` 有一个关于 `Send` 的否定实现，所以 `*mut T` 不是 `Send` 的，即使 `T` 是。目前在于标准库外还没有稳定的方法来指定额外的负面实现。
 
-Auto traits may be added as an additional bound to any [trait object], even
-though normally only one trait is allowed. For instance, `Box<dyn Debug + Send +
-UnwindSafe>` is a valid type.
+自动trait 可以附加到任何 [trait对象][trait object]上（通常我们见到的 trait对象的类型名上一般只允许显示一个trait）。例如，`Box<dyn Debug + Send + UnwindSafe>` 是一个有效的类型。
 
 ## `Sized`
 
-The [`Sized`] trait indicates that the size of this type is known at
-compile-time; that is, it's not a [dynamically sized type]. [Type parameters]
-are `Sized` by default. `Sized` is always implemented automatically by the
-compiler, not by [implementation items].
+[`Sized`] trait表明这种类型的尺寸在编译时是已知的；也就是说，它不是一个[动态尺寸类型][dynamically sized type]。[类型参数][Type parameters]默认是 `Sized` 的。`Sized` 总是由编译器自动实现，而不是由[实现项(implementation items)][implementation items]主动实现。
 
 [`Arc<Self>`]: ../std/sync/struct.Arc.html
 [`Box<T>`]: ../std/boxed/struct.Box.html
