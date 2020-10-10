@@ -44,4 +44,4 @@ Rust 中的所有指针都是显式的头等(first-class)值。它们可以被�
 [_TypeNoBounds_]: ../types.md#type-expressions
 [`unsafe` operation]: ../unsafety.md
 [dynamically sized types]: ../dynamically-sized-types.md
-[temporary value]: ../expressions.md#临时位置
+[temporary value]: ../expressions.md#temporaries

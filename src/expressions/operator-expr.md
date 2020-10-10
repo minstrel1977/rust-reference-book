@@ -394,7 +394,7 @@ assert_eq!(x, 14);
 
 [place expression]: ../expressions.md#位置表达式和值表达式
 [value expression]: ../expressions.md#位置表达式和值表达式
-[temporary value]: ../expressions.md#临时位置
+[temporary value]: ../expressions.md#temporaries
 [float-float]: https://github.com/rust-lang/rust/issues/15536
 [`unit`类型]: ../types/tuple.md
 [Function pointer]: ../types/function-pointer.md

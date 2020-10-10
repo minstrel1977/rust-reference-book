@@ -311,7 +311,7 @@ let x = (&temp()).use_temp();  // ERROR
 [promoted]: destructors.md#constant-promotion
 [scrutinee]: glossary.md#scrutinee
 [statement]: statements.md
-[temporary]: expressions.md#临时位置
+[temporary]: expressions.md#temporaries
 [variable]: variables.md
 
 [array]: types/array.md
