@@ -22,50 +22,29 @@
 
 * `--crate-type=cdylib`, `#[crate_type = "cdylib"]` - 将生成一个动态系统库文件。如果编译输出的动态库文件要被另一种语言加载使用，请指定这种编译方式。这种输出类型将在 Linux 上创建 `*.so` 文件，在 macOS 上创建 `*.dylib` 文件，在 Windows 上创建 `*.dll` 文件。
 
-* `--crate-type=rlib`, `#[crate_type = "rlib"]` - 将生成一个“Rust库文件”。它被用作一个中间构件，可以被认为是一个“静态 Rust 库文件”。与 `staticlib` 文件不同，这些 `rlib` 文件由未来现场的编译器在现场的联接中解释。这本质上意味着（那时的） `rustc` 将在（此） `rlib` 文件中查找元数据(metadata)，就像在动态库文件中查找元数据一样。跟 `staticlib` 输出类型一样，这种形式的输出常用于生成静态联接的可执行文件(statically linked executable)。
+* `--crate-type=rlib`, `#[crate_type = "rlib"]` - 将生成一个“Rust库文件”。它被用作一个中间构件，可以被认为是一个“静态 Rust 库文件”。与 `staticlib` 文件不同，这些 `rlib` 文件由未来现场的编译器在现场的联接中解释。这本质上意味着（那时的） `rustc` 将在（此） `rlib` 文件中查找元数据(metadata)，就像在动态库文件中查找元数据一样。跟 `staticlib` 输出类型类似，这种形式的输出常用于生成静态联接的可执行文件(statically linked executable)。
 
 * `--crate-type=proc-macro`, `#[crate_type = "proc-macro"]` - 生成的输出没有被指定，但是如果通过 `-L` 提供了路径参数，编译器将把输出构件识别为宏，输出的宏可以被其他 Rust 程序加载使用。使用此 crate 类型编译的 crate 只能导出[过程宏][procedural macros]。编译器将自动设置 `proc_macro`[属性配置选项][configuration option]。编译 crate 的目标平台总是和当前编译器所在平台一致。例如，如果您在 `x86_64` CPU 的 Linux 平台上执行编译，那么目标平台将是 `x86_64-unknown-linux-gnu`，即使该 crate 是另一个不同构建目标的 crate 的依赖文件。
 
-请注意，这些输出指定是可堆叠使用的，如果指定了多个输出，那么编译器将一次生成所有这些指定形式的输出，而不必反复多次编译。但是，这只适用于由相同方法指定的输出。如果只指定了 `crate_type`属性，则将生成所有属性，但如果指定了一个或多个——crate类型命令行标志，则只生成那些输出
-Note that these outputs are stackable in the sense that if multiple are specified, then the compiler will produce each form of output at once without having to recompile. However, this only applies for outputs specified by the same method. If only `crate_type` attributes are specified, then they will all be built, but if one or more `--crate-type` command line flags are specified, then only those outputs will be built.
+请注意，这些输出指定是可堆叠使用的，如果指定了多个输出，那么编译器将一次生成所有这些指定形式的输出，而不必反复多次编译。但是，这只适用于由相同方法指定的输出。如果只指定了 `crate_type` 属性，则将生成所有类型的输出，但如果指定了一个或多个 `--crate-type` 命令行参数，则只生成这些指定的输出。
 
-对于所有这些不同类型的输出，如果crate A依赖于crate B，那么编译器可以在整个系统中找到各种不同形式的B。但是，编译器寻找的惟一形式是rlib格式和动态库文件格式。有了依赖库文件的这两个选项，编译器在某些时候必须在这两种格式之间做出选择。考虑到这一点，编译器在决定使用哪种依赖关系格式时将遵循这些规则
-With all these different kinds of outputs, if crate A depends on crate B, then
-the compiler could find B in various different forms throughout the system. The
-only forms looked for by the compiler, however, are the `rlib` format and the
-dynamic library format. With these two options for a dependent library, the
-compiler must at some point make a choice between these two formats. With this
-in mind, the compiler follows these rules when determining what format of
-dependencies will be used:
+对于所有这些不同类型的输出，如果 crate A 依赖于 crate B，那么编译器很可能在整个系统中找到多种不同形式的 B。但是，编译器寻找的只有 `rlib` 格式和动态库格式。有了依赖库文件的这两个选项，编译器在某些时候必须在这两种格式之间做出选择。考虑到这一点，编译器在决定使用哪种依赖关系格式时将遵循这些规则：
+有了所有这些不同类型的输出，如果机箱A依赖于机箱B，那么编译器可以在整个系统中找到各种不同形式的B。不过，编译器只查找 `rlib` 格式和动态库格式。对于依赖库有这两个选项，编译器必须在这两种格式之间做出选择。考虑到这一点，编译器在确定将使用的依赖项格式时遵循以下规则：
+With all these different kinds of outputs, if crate A depends on crate B, then the compiler could find B in various different forms throughout the system. The only forms looked for by the compiler, however, are the `rlib` format and the dynamic library format. With these two options for a dependent library, the compiler must at some point make a choice between these two formats. With this in mind, the compiler follows these rules when determining what format of dependencies will be used:
 
-1. 如果要生成静态库文件，则需要所有上游依赖文件都以rlib格式可用。这个需求源于不能将动态库文件转换为静态格式的原因If a static library is being produced, all upstream dependencies are
-   required to be available in `rlib` formats. This requirement stems from the
-   reason that a dynamic library cannot be converted into a static format.
+1. 如果要生成静态库文件，则需要所有上游依赖文件都以 `rlib` 格式可用。这个需求源于不能将动态库文件转换为静态格式的原因
 
-   注意，不可能将本地动态依赖文件联接到静态库文件，在这种情况下，将打印有关所有未联接的本地动态依赖文件的警告Note that it is impossible to link in native dynamic dependencies to a static
-   library, and in this case warnings will be printed about all unlinked native
-   dynamic dependencies.
+   注意，不可能将本地动态依赖文件联接到静态库文件，在这种情况下，将打印有关所有未联接的本地动态依赖文件的警告
 
-2. 如果生成rlib文件，则上游依赖文件的可用格式没有任何限制。只需要求所有上游依赖文件都可以从其中读取元数据If an `rlib` file is being produced, then there are no restrictions on what
-   format the upstream dependencies are available in. It is simply required that
-   all upstream dependencies be available for reading metadata from.
+2. 如果生成 `rlib` 文件，则对上游依赖文件的可用格式没有任何限制，仅需要求所有这些文件都可以从其中读出元数据
 
-   原因是rlib文件不包含它们的任何上游依赖文件。如果所有rlib文件都包含libstd.rlib的副本，那么效率不是很高
-The reason for this is that `rlib` files do not contain any of their upstream
-   dependencies. It wouldn't be very efficient for all `rlib` files to contain a
-   copy of `libstd.rlib`!
+   原因是 `rlib` 文件不包含它们的任何上游依赖文件。但如果所有（上游的） `rlib` 文件都包含 `libstd.rlib` 的副本，那下游文件的编译效率和执行效率将大幅降低。
 
-3. 如果正在生成可执行文件，并且没有指定-C preferred -dynamic标志，则首先尝试以rlib格式查找依赖文件。如果某些依赖文件在rlib格式中不可用，则尝试动态联接(见下面)
-If an executable is being produced and the `-C prefer-dynamic` flag is not
-   specified, then dependencies are first attempted to be found in the `rlib`
-   format. If some dependencies are not available in an rlib format, then
-   dynamic linking is attempted (see below).
+3. 如果当前生成可执行文件，并且没有指定 `-C prefer-dynamic` 参数，则首先尝试以 `rlib` 格式查找依赖文件。如果某些依赖文件在 rlib 格式文件中不可用，则尝试动态联接文件(见下文)。
 
-4. 如果正在生成动态联接的动态库文件或可执行文件，则编译器将尝试协调rlib或dylib格式的可用依赖关系，以创建最终产品If a dynamic library or an executable that is being dynamically linked is
-   being produced, then the compiler will attempt to reconcile the available
-   dependencies in either the rlib or dylib format to create a final product.
+4. 如果当前生成动态联接的动态库文件或可执行文件，则编译器将尝试协调从 rlib 或 dylib 格式的文件里获取可用依赖关系，以创建最终产品。
 
-   编译器的主要目标是确保库文件不会在任何工件中出现不止一次。例如，如果动态库文件B和C都静态地联接到库文件A，那么crate就不能同时联接到B和C，因为A有两个副本。编译器允许混合使用rlib和dylib格式，但必须满足这一限制
+   编译器的主要目标是确保库文件不会在任何构件中出现多次。例如，如果动态库文件B和C都静态地联接到库文件A，那么crate就不能同时联接到B和C，因为A有两个副本。编译器允许混合使用rlib和dylib格式，但必须满足这一限制
    A major goal of the compiler is to ensure that a library never appears more
    than once in any artifact. For example, if dynamic libraries B and C were
    each statically linked to library A, then a crate could not link to B and C
