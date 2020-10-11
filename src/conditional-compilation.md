@@ -160,7 +160,7 @@
 
 ### `proc_macro`
 
-当正在编译的 crate 使用 `proc_macro` [crate 类型]编译时设置。
+当指定当前 crate 的[编译输出文件类型(crate-type)][crate type]为 `proc_macro` 时设置。
 
 ## 条件编译的形式
 

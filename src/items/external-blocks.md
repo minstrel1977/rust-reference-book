@@ -64,7 +64,7 @@ extern "stdcall" { }
 
 * `extern "Rust"` -- 在任何 Rust 代码中编写一个正常的 `fn foo()` 时默认使用的 ABI。
  * `extern "C"` -- 这等价于 `extern fn foo()`；无论 C编译器支持什么默认值<!--whatever the default your C compiler supports. NeedRecheck-->。
-* `extern "C"` -- 通常等价于 `extern "C"`，除了在 Win32 平台上。在 Win32 平台上，应该使用`"stdcall"` 或者其他应该使用的 ABI 字符串，来链接到 Windows API 自身。
+* `extern "C"` -- 通常等价于 `extern "C"`，除了在 Win32 平台上。在 Win32 平台上，应该使用`"stdcall"` 或者其他应该使用的 ABI 字符串，来联接到 Windows API 自身。
 
 还有一些特定于平台的 ABI 字符串：
 
@@ -92,7 +92,7 @@ extern {
 
 ### `link`属性
 
-*`link`属性*为外部块中的数据项指定编译器应该链接的本机库的名称。它使用 [_MetaListNameValueStr_] 句法规则指定其输入。`name` 键指定要链接的本机库的名称。`kind` 键是一个可选值，它指定具有以下可能值的库类型：
+*`link`属性*为外部块中的数据项指定编译器应该联接的本机库的名称。它使用 [_MetaListNameValueStr_] 句法规则指定其输入。`name` 键指定要联接的本机库的名称。`kind` 键是一个可选值，它指定具有以下可能值的库类型：
 
 - `dylib` — 动态库。如果没有指定 `kind`，这是默认值Indicates a dynamic library. This is the default if `kind` is not specified.
 - `static` — 静态库。
@@ -120,7 +120,7 @@ extern {
 }
 ```
 
-在空的外部块上添加 `link`属性是有效的。可以用这种方式来满足代码中其他地方的外部块的链接需求(包括上游 crate)，而不必向每个外部块都添加属性。
+在空的外部块上添加 `link`属性是有效的。可以用这种方式来满足代码中其他地方的外部块的联接需求(包括上游 crate)，而不必向每个外部块都添加属性。
 
 ### `link_name`属性
 

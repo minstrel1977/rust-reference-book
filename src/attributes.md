@@ -172,10 +172,10 @@ pub fn f() {}
   - [`allow`]、[`warn`]、[`deny`]、[`forbid`] — 更改默认的 lint 级别。
   - [`deprecated`] — 生成弃用通知。
   - [`must_use`] — 为未使用的值生成 lint提醒。
-- ABI、链接、symbol、和 FFI
-  - [`link`] — 指定要与 `extern`块链接的本地库。
+- ABI、联接、symbol、和 FFI
+  - [`link`] — 指定要与 `extern`块联接的本地库。
   - [`link_name`] — 指定 `extern`块中函数或静态项的 symbol名称。
-  - [`no_link`] — 防止链接外部crate。
+  - [`no_link`] — 防止联接外部crate。
   - [`repr`] — 控制类型的布局。
   - [`crate_type`] — 指定 crate 的类型(库、可执行文件等)。
   - [`no_main`] — 禁止发布 `main` symbol。
@@ -203,7 +203,7 @@ pub fn f() {}
 - 运行时
   - [`panic_handler`] — 设置函数来处理 panic。
   - [`global_allocator`] — 设置全局内存分配器。
-  - [`windows_subsystem`] — 指定要链接的windows子系统。
+  - [`windows_subsystem`] — 指定要联接的windows子系统。
 - 特性
   - `feature` — 用于启用非稳定的或实验性的编译器特性。参见 [The Unstable Book] 了解在 `rustc` 中实现的特性。
 - 类型系统
