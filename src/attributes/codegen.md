@@ -47,7 +47,7 @@ unsafe fn foo_avx2() {}
 
 调用一个编译时启用了某特性的函数，但当前运行代码的平台并不支持该特性，那这将导致[未定义行为]。
 
-标记为 `target_feature` 的函数不会内联到不支持给定特性的上下文中。`#[inline(always)]` 属性不能与 `target_feature`属性一起使用。
+应用了 `target_feature` 的函数不会内联到不支持给定特性的上下文中。`#[inline(always)]` 属性不能与 `target_feature`属性一起使用。
 
 ### 可用特性
 

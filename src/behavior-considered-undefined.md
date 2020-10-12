@@ -1,58 +1,40 @@
 ## Behavior considered undefined
+## 被认为是未定义的行为
 
-Rust code is incorrect if it exhibits any of the behaviors in the following
-list. This includes code within `unsafe` blocks and `unsafe` functions.
-`unsafe` only means that avoiding undefined behavior is on the programmer; it
-does not change anything about the fact that Rust programs must never cause
-undefined behavior.
+>[behavior-considered-undefined.md](https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md)\
+>commit 8aa6f0f5471a23621f52d16e823c6316fda2b904
 
-It is the programmer's responsibility when writing `unsafe` code to ensure that
-any safe code interacting with the `unsafe` code cannot trigger these
-behaviors. `unsafe` code that satisfies this property for any safe client is
-called *sound*; if `unsafe` code can be misused by safe code to exhibit
-undefined behavior, it is *unsound*.
+如果 Rust 代码里出现了下列列表中的任何行为，则它是不正确的。这包括非安全(`unsafe`)块和非安全(`unsafe`)函数里的代码。非安全(`unsafe`)只意味着避免未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须不能导致未定义行为的事实。
+
+在编写非安全(`unsafe`)代码时，确保任何与非安全(`unsafe`)代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何安全客户端，满足此属性的非安全(`unsafe`)代码称为*健壮的(sound)*；如果非安全(`unsafe`)代码可以被安全代码滥用以致出现未定义的行为，那么此非安全(`unsafe`)代码是*不健壮的(unsound)*。
 
 <div class="warning">
 
-***Warning:*** The following list is not exhaustive. There is no formal model of
-Rust's semantics for what is and is not allowed in unsafe code, so there may be
-more behavior considered unsafe. The following list is just what we know for
-sure is undefined behavior. Please read the [Rustonomicon] before writing unsafe
-code.
+***警告：*** 下面的列表并非详尽无遗。对于非安全代码中什么是允许的，什么是不允许的，Rust 还没有正式的语义模型，因此可能有更多的行为被认为是不安全的。下面的列表是仅仅是我们确定知晓的未定义行为。在编写非安全代码之前，请阅读 [Rustonomicon]。
 
 </div>
 
-* Data races.
-* Dereferencing (using the `*` operator on) a dangling or unaligned raw pointer.
-* Breaking the [pointer aliasing rules]. `&mut T` and `&T` follow LLVM’s scoped
-  [noalias] model, except if the `&T` contains an [`UnsafeCell<U>`].
-* Mutating immutable data. All data inside a [`const`] item is immutable. Moreover, all
-  data reached through a shared reference or data owned by an immutable binding
-  is immutable, unless that data is contained within an [`UnsafeCell<U>`].
-* Invoking undefined behavior via compiler intrinsics.
-* Executing code compiled with platform features that the current platform
-  does not support (see [`target_feature`]).
-* Calling a function with the wrong call ABI or unwinding from a function with the wrong unwind ABI.
-* Producing an invalid value, even in private fields and locals. "Producing" a
-  value happens any time a value is assigned to or read from a place, passed to
-  a function/primitive operation or returned from a function/primitive
-  operation.
-  The following values are invalid (at their respective type):
-  * A value other than `false` (`0`) or `true` (`1`) in a `bool`.
-  * A discriminant in an `enum` not included in the type definition.
-  * A null `fn` pointer.
-  * A value in a `char` which is a surrogate or above `char::MAX`.
-  * A `!` (all values are invalid for this type).
-  * An integer (`i*`/`u*`), floating point value (`f*`), or raw pointer obtained
-    from [uninitialized memory][undef], or uninitialized memory in a `str`.
-  * A reference or `Box<T>` that is dangling, unaligned, or points to an invalid value.
-  * Invalid metadata in a wide reference, `Box<T>`, or raw pointer:
-    * `dyn Trait` metadata is invalid if it is not a pointer to a vtable for
-      `Trait` that matches the actual dynamic trait the pointer or reference points to.
-    * Slice metadata is invalid if the length is not a valid `usize`
-      (i.e., it must not be read from uninitialized memory).
-  * Invalid values for a type with a custom definition of invalid values.
-    In the standard library, this affects [`NonNull<T>`] and [`NonZero*`].
+* 数据竞争。
+* (使用 `*` 操作符)解引用悬垂或未对齐裸指针。
+* 破坏[指针别名规则][pointer aliasing rules]。`&mut T` 和 `&T` 遵循 LLVM 的作用域[无别名(noalias)][noalias]模型，除非 `&T` 内部包含 [`UnsafeCell<U>`] 类型。
+* 修改不可变的数据。[常量(`const`)]项内的所有数据都是不可变的。此外，所有通过共享引用接触到的数据或不可变绑定所拥有的数据都是不可变的，除非该数据包含在 `UnsafeCell<U>`] 中。
+* 通过编译器内部函数调用未定义行为。
+* 执行用当前平台不支持的平台特性编译的代码(参见[`target_feature`])。
+* 用错误的 ABI 调用函数，或从具有错误展开ABI的函数里开启展开操作。
+* 产生无效值，即使在私有字段和本地变量中也是如此。“产生”值发生在任何赋值阶段或从位置表达式里读取值、传递给函数/原语操作(primitive operation)或从函数/原语操作返回值的任何时候。
+  以下值无效（对应其各自的类型）：
+  * 布尔型中除 `false` (`0`) 或 `true` (`1`) 之外的值。
+  * 不包括在该枚举(`enum`)类型定义中的判别值。
+  * 指向为空(null)的函数指针(`fn` pointer)。
+  * 代理项(Surrogate)或码点大于 `char::MAX` 的字符(`char`)值。
+  * `!`类型值 (此类型的所有值都是无效的).
+  * 从[未初始化的内存][undef]中，或从字符串切片(`str`)的未初始化部分获取的整数(i*/u*)、浮点值(f*)或裸指针。
+  * 悬垂、未对齐或指向无效值的引用或 `Box<T>`。
+  * 宽(wide)引用、`Box<T>` 或原始指针中的无效元数据：
+    * 如果 `dyn Trait` 元数据不是指向 `Trait` 的虚函数表(vtable)（该虚函数表与该指针或引用所指向的实际动态 trait 相匹配）的指针，则 `dyn Trait` 元数据无效。
+    * 如果切片的长度不是有效的 `usize`，则该切片元数据是无效的(也就是说，不能从未初始化的内存中读取它)。
+  * 带有无效值的自定义类型的值无效。在标准库中，这会影响 [`NonNull<T>`] 和 [`NonZero*`]。
+Invalid values for a type with a custom definition of invalid values. In the standard library, this affects [`NonNull<T>`] and [`NonZero*`].
 
     > **Note**: `rustc` achieves this with the unstable
     > `rustc_layout_scalar_valid_range_*` attributes.
