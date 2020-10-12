@@ -1,16 +1,18 @@
 # Unsafety
+# 非安全性
 
-Unsafe operations are those that can potentially violate the memory-safety
-guarantees of Rust's static semantics.
+>[unsafety.md](https://github.com/rust-lang/reference/blob/master/src/unsafety.md)\
+>commit  b0e0ad6490d6517c19546b1023948986578fc378
 
-The following language level features cannot be used in the safe subset of
-Rust:
+非安全操作是那些可能违反 Rust 静态语义里和内存安全相关的保证机制的操作。
 
-- Dereferencing a [raw pointer].
-- Reading or writing a [mutable] or [external] static variable.
-- Accessing a field of a [`union`], other than to assign to it.
-- Calling an unsafe function (including an intrinsic or foreign function).
-- Implementing an [unsafe trait].
+以下语言级别的特性不能在 Rust 的 safe 子集中使用:
+
+- 解引用[裸指针][raw pointer].
+- 读取或写入[可变][mutable]或[外部][external]变量。
+- 访问[联合体]的字段，而不是赋值给它。
+- 调用一个非安全(unsafe)函数(包括内部函数和外部函数)。
+- 实现[非安全(unsafe) trait][unsafe trait].
 
 [`union`]: items/unions.md
 [mutable]: items/static-items.md#可变静态项
