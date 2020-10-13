@@ -114,9 +114,9 @@
     - [非安全函数](unsafe-functions.md)
     - [非安全代码块](unsafe-blocks.md)
     - [未定义行为](behavior-considered-undefined.md)
-    - [非安全行为](behavior-not-considered-unsafe.md)
+    - [不被认为是非安全的行为](behavior-not-considered-unsafe.md)
 
-- [常量计算](const_eval.md)
+- [常量求值](const_eval.md)
 
 - [ABI](abi.md)
 

@@ -6,7 +6,7 @@
 
 如果 Rust 代码里出现了下列列表中的任何行为，则它是不正确的。这包括非安全(`unsafe`)块和非安全(`unsafe`)函数里的代码。非安全(`unsafe`)只意味着避免未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须不能导致未定义行为的事实。
 
-在编写非安全(`unsafe`)代码时，确保任何与非安全(`unsafe`)代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何安全客户端，满足此属性的非安全(`unsafe`)代码称为*健壮的(sound)*；如果非安全(`unsafe`)代码可以被安全代码滥用以致出现未定义的行为，那么此非安全(`unsafe`)代码是*不健壮的(unsound)*。
+在编写非安全(`unsafe`)代码时，确保任何与非安全(`unsafe`)代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何安全客户端，满足此属性的非安全(`unsafe`)代码称为*健壮的(sound)*；如果非安全(`unsafe`)代码可以被安全代码滥用以致出现未定义行为，那么此非安全(`unsafe`)代码是*不健壮的(unsound)*。
 
 <div class="warning">
 
@@ -39,15 +39,9 @@
 
 **注意：** 未初始化的内存对于任何具有有限有效值集的类型也隐式无效。换句话说，允许读取未初始化内存的情况只发生在联合体(`union`)内部和“对齐填充区(padding)”里（类型的字段/元素之间的间隙）。
 
-如果一个引用/指针是空的，或者它所指向的字节不是同一个分配的一部分(所以特别地，它们都必须是某个分配的一部分)，那么这个引用/指针就是悬空的。它所指向的字节范围由指针值和pointee类型的大小(使用val的大小)决定。因此，如果span为空，那么“悬空”与“非空”相同。注意，片和字符串指向它们的整个范围，因此长度元数据永远不要太大，这一点很重要。特别是，分配，因此切片和字符串不能大于isize::MAX字节
-如果引用/指针为空或者它指向的所有字节不是同一次分配的一部分（因此，它们都必须是某个分配的一部分），那么它就是“悬垂”的。它指向的字节范围由指针值和指针对象类型的大小决定（使用 `size_of_val`）。因此，如果这个字节范围为空，“悬垂”与“非空”相同。请注意，切片和字符串指向它们的整个范围，因此切片的长度元数据永远不要太大这点很重要。尤其是，分配，因此切片和字符串不能大于isize:：MAX bytes。
-A reference/pointer is "dangling" if it is null or not all of the bytes it points to are part of the same allocation (so in particular they all have to be part of *some* allocation). The span of bytes it points to is determined by the pointer value and the size of the pointee type (using `size_of_val`). As a consequence, if the span is empty, "dangling" is the same as "non-null". Note that slices and strings point to their entire range, so it is important that the length metadata is never too large. In particular, allocations and therefore slices and strings cannot be bigger than `isize::MAX` bytes.
+如果引用/指针为空或者它指向的所有字节不是同一次分配的一部分（因此，它们都必须是某个分配的一部分），那么它就是“悬垂”的。它指向的字节范围由指针值和指针对象类型的大小决定（使用 `size_of_val` 求得）。因此，如果这个字节范围为空，则“悬垂”与“非空”相同。请注意，切片和字符串指向它们的整个区间(range)，因此切片的长度元数据永远不要太大这点很重要。因此切片和字符串的分配不能大于  `isize::MAX`  个字节。
 
-> **Note**: Undefined behavior affects the entire program. For example, calling
-> a function in C that exhibits undefined behavior of C means your entire
-> program contains undefined behaviour that can also affect the Rust code. And
-> vice versa, undefined behavior in Rust can cause adverse affects on code
-> executed by any FFI calls to other languages.
+> **注意**：未定义行为影响整个程序。例如，调用一个显示未定义行为的C函数，意味着包含此调用的整个程序包含未定义行为，并且这些行为也会影响 Rust 代码。反之亦然，Rust 中的未定义行为会对任何对其他语言的通过 FFI 调用所执行的代码造成不利影响。
 
 [`const`]: items/constant-items.html
 [noalias]: http://llvm.org/docs/LangRef.html#noalias

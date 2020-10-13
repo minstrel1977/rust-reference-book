@@ -1,26 +1,20 @@
 # Constant evaluation
+# 常量求值
 
-Constant evaluation is the process of computing the result of
-[expressions] during compilation. Only a subset of all expressions
-can be evaluated at compile-time.
+>[const_eval.md.md](https://github.com/rust-lang/reference/blob/master/src/const_eval.md.md)\
+>commit  7ad799da00dd162638999e38dad10905bf6c7ec6
+
+常量求值是在编译过程中计算[表达式][[expressions]]结果的过程。只有全部表达式形式的一个子集可以在编译时求值。
 
 ## Constant expressions
+## 常量表达式
 
-Certain forms of expressions, called constant expressions, can be evaluated at
-compile time. In [const contexts](#const-context), these are the only allowed
-expressions, and are always evaluated at compile time. In other places, such as
-[let statements], constant expressions *may*
-be, but are not guaranteed to be, evaluated at compile time. Behaviors such as
-out of bounds [array indexing] or [overflow] are compiler errors if the value
-must be evaluated at compile time (i.e. in const contexts). Otherwise, these
-behaviors are warnings, but will likely panic at run-time.
+某些形式的表达式(称为常量表达式)可以在编译时求值。在[常量(const)上下文](#const-context)中，常量表达式是唯一允许的表达式，并且总是在编译时求值。在其他地方(比如 [let语句][let statements])，常量表达式*可以*在编译时求值，但不能保证总是这样。如果值必须在编译时求得(例如在常量上下文中)，则像[数组索引][array indexing]越界或[溢出][overflow]这样的行为都是编译错误。如果不是必须在编译时求值，则这些行为在编译时只是警告（但在运行时可能会引起 panic）。
 
-The following expressions are constant expressions, so long as any operands are
-also constant expressions and do not cause any [`Drop::drop`][destructors] calls
-to be run.
+只要它们的所有操作数也都是常量表达式，并且在求值后不会运行任何 [`Drop::drop`][destructors] 函数，那下列表达式就是常量表达式。
 
-* [Literals].
-* [Paths] to [functions] and [constants].
+* [字面量][Literals]。
+* [函数][functions]和[常量项][constants]的[路径][Paths]。
   Recursively defining constants is not allowed.
 * Paths to [statics]. These are only allowed within the initializer of a static.
 * [Tuple expressions].
