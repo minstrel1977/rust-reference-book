@@ -81,7 +81,7 @@ unsafe fn foo_avx2() {}
 `xsaveopt`  |          | [`xsaveopt`] — Save processor extended states optimized | xsave 指令集的优化版
 `xsaves`    |          | [`xsaves`] — Save processor extended states supervisor | 保存处理器扩展状态监视程序
 
-<!-- 保持各个联接靠近其表格，便于以后的增删改 -->
+<!-- 保持各个链接靠近其表格，便于以后的增删改 -->
 
 [AES]: https://en.wikipedia.org/wiki/AES_instruction_set
 [AVX]: https://en.wikipedia.org/wiki/Advanced_Vector_Extensions

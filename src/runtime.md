@@ -1,16 +1,17 @@
 # The Rust runtime
+# Rust运行时
 
-This section documents features that define some aspects of the Rust runtime.
+>[abi.md.md](https://github.com/rust-lang/reference/blob/master/src/abi.md)\
+>commit  f8e76ee9368f498f7f044c719de68c7d95da9972
+
+本节介绍定义 Rust运行时的某些方面的特性。
 
 ## The `panic_handler` attribute
+## `panic_handler`属性
 
-The *`panic_handler` attribute* can only be applied to a function with signature
-`fn(&PanicInfo) -> !`. The function marked with this [attribute] defines the behavior of panics. The
-[`PanicInfo`] struct contains information about the location of the panic. There must be a single
-`panic_handler` function in the dependency graph of a binary, dylib or cdylib crate.
+*`panic_handler`属性*只能应用于签名为 `fn(&PanicInfo) -> !` 的函数。用此[属性][attribute]标记的函数定义了 panic 的行为。[`PanicInfo`] 结构体包含关于 panic 位置的信息。在二进制、dylib 或 cdylib 类型的 crate 的依赖关系图(dependency graph)中必须有一个`panic_handler` 函数。
 
-Below is shown a `panic_handler` function that logs the panic message and then halts the
-thread.
+下面显示了一个 `panic_handler` 函数，它记录(log)  panic  消息，然后终止线程。
 
 <!-- ignore: test infrastructure can't handle no_std -->
 ```rust,ignore
@@ -44,24 +45,19 @@ fn panic(info: &PanicInfo) -> ! {
 ```
 
 ### Standard behavior
+### 标准行为
 
-The standard library provides an implementation of `panic_handler` that
-defaults to unwinding the stack but that can be [changed to abort the
-process][abort]. The standard library's panic behavior can be modified at
-runtime with the [set_hook] function.
+标准库提供了 `panic_handler` 的实现，默认情况下它是展开堆栈，但也可以[更改为中止进程][abort]。标准库的 panic 行为可以在运行时里使用 [set_hook] 函数去修改。
 
 ## The `global_allocator` attribute
+## `global_allocator`属性
 
-The *`global_allocator` attribute* is used on a [static item] implementing the
-[`GlobalAlloc`] trait to set the global allocator.
+在实现 [`GlobalAlloc`] trait 的[静态项][static item]上使用 *`global_allocator`属性*来设置全局分配器。
 
 ## The `windows_subsystem` attribute
+## `windows_subsystem`属性
 
-The *`windows_subsystem` attribute* may be applied at the crate level to set
-the [subsystem] when linking on a Windows target. It uses the
-[_MetaNameValueStr_] syntax to specify the subsystem with a value of either
-`console` or `windows`. This attribute is ignored on non-Windows targets, and
-for non-`bin` [crate types].
+当链接到 Windows 目标上时，*`windows_subsystem`属性*可以应用于 crate 级别来设置[子系统][subsystem]。它使用 [_MetaNameValueStr_] 句法规则用 `console` 或 `windows` 两个可行值指定子系统。对于 非windows目标和非二进制 [crate类型][crate types]，该属性将被忽略。
 
 ```rust
 #![windows_subsystem = "windows"]

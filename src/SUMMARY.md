@@ -108,7 +108,7 @@
     - [内存所有权](memory-ownership.md)
     - [变量](variables.md)
 
-- [联接](linkage.md)
+- [链接](linkage.md)
 
 - [非安全性](unsafety.md)
     - [非安全函数](unsafe-functions.md)

@@ -1,7 +1,7 @@
 # Constant evaluation
 # 常量求值
 
->[const_eval.md.md](https://github.com/rust-lang/reference/blob/master/src/const_eval.md.md)\
+>[const_eval.md](https://github.com/rust-lang/reference/blob/master/src/const_eval.md)\
 >commit  7ad799da00dd162638999e38dad10905bf6c7ec6
 
 常量求值是在编译过程中计算[表达式][[expressions]]结果的过程。只有全部表达式形式的一个子集可以在编译时求值。
@@ -14,83 +14,67 @@
 只要它们的所有操作数也都是常量表达式，并且在求值后不会运行任何 [`Drop::drop`][destructors] 函数，那下列表达式就是常量表达式。
 
 * [字面量][Literals]。
-* [函数][functions]和[常量项][constants]的[路径][Paths]。
-  Recursively defining constants is not allowed.
-* Paths to [statics]. These are only allowed within the initializer of a static.
-* [Tuple expressions].
-* [Array expressions].
-* [Struct] expressions.
-* [Enum variant] expressions.
-* [Block expressions], including `unsafe` blocks.
-    * [let statements] and thus irrefutable [patterns], including mutable bindings
-    * [assignment expressions]
-    * [compound assignment expressions]
-    * [expression statements]
-* [Field] expressions.
-* Index expressions, [array indexing] or [slice] with a `usize`.
-* [Range expressions].
-* [Closure expressions] which don't capture variables from the environment.
-* Built-in [negation], [arithmetic], [logical], [comparison] or [lazy boolean]
-  operators used on integer and floating point types, `bool`, and `char`.
-* Shared [borrow]s, except if applied to a type with [interior mutability].
-* The [dereference operator] except for raw pointers.
-* [Grouped] expressions.
-* [Cast] expressions, except
-  * pointer to address casts,
-  * function pointer to address casts, and
-  * unsizing casts to trait objects.
-* Calls of [const functions] and const methods.
-* [loop], [while] and [`while let`] expressions.
-* [if], [`if let`] and [match] expressions.
+* [函数][functions]和[常量项][constants]的[路径][Paths]。不允许递归定义常量项。
+* [静态项][statics]的路径。这种路径只允许出现在静态项的初始值设定中。
+* [元组表达式][Tuple expressions]。
+* [数组表达式][Array expressions]。
+* [结构体][Struct]表达式。
+* [枚举变体][Enum variant]表达式。
+* [块表达式][Block expressions]，包括非安全(`unsafe`)块。
+    * [let语句][let statements]以及类似这样的不可反驳的[模式][patterns]绑定，包括可变绑定。
+    * [赋值表达式][assignment expressions]
+    * [复合赋值表达式][compound assignment expressions]
+    * [表达式语句][expression statements]
+* [字段][Field]表达式。
+* 索引表达式，[数组索引][array indexing]或 `usize` 长度的[切片][slice]。
+* [区间表达式][Range expressions]。
+* 未从环境捕获变量的[闭包][Closure expressions]。
+* 使用在整型、浮点型、布尔型(`bool`)和字符型(`char`)上的内置的[取反][negation]，[算术][arithmetic]，[逻辑][logical]，[比较][comparison] 或 [惰性布尔][lazy boolean]运算符表达式。
+* 共享[借用][borrow]，排除借用类型为[内部可变性][interior mutability]的情况。
+* [解引用操作符][dereference operator]，排除解引用裸指针的情况。
+* [分组][Grouped]表达式。
+* [强制转换][Cast]表达式，排除
+  * 指针到地址的强制转换，
+  * 函数指针到地址的强制转换，和
+  * 到 trait对象的非固定尺寸类型强制转换。
+* 调用[常量函数][const functions]和常量方法。
+* [loop], [while] 和 [`while let`] 表达式。
+* [if], [`if let`] 和 [match] 表达式。
 
 ## Const context
+## 常量上下文
 
-A _const context_ is one of the following:
+*常量上下文*是下述表达式之一：
 
-* [Array type length expressions]
-* [Array repeat length expressions][array expressions]
-* The initializer of
-  * [constants]
-  * [statics]
-  * [enum discriminants]
+* [数组类型内的数组长度表达式][Array type length expressions]
+* [逗号分隔的数组表达式][array expressions]
+* 下述表达式的初始化器(initializer)：
+  * [常量项][constants]
+  * [静态项][statics]
+  * [枚举判别值][enum discriminants]
 
 ## Const Functions
+## 常量函数
 
-A _const fn_ is a function that one is permitted to call from a const context. Declaring a function
-`const` has no effect on any existing uses, it only restricts the types that arguments and the
-return type may use, as well as prevent various expressions from being used within it. You can freely do anything with a const function that
-you can do with a regular function.
+*常量函数*可以在常量上下文中调用。给一个函数加一个常量标志(`const`)对该函数的任何现有的使用都没有影响，它只限制参数和返回类型可以使用的类型，并防止在这两个位置上使用不被允许的表达式类型。你可以自由地用常量函数去做任何你可以用常规函数做的事情。
 
-When called from a const context, the function is interpreted by the
-compiler at compile time. The interpretation happens in the
-environment of the compilation target and not the host. So `usize` is
-`32` bits if you are compiling against a `32` bit system, irrelevant
-of whether you are building on a `64` bit or a `32` bit system.
+当从常量上下文中调用这类函数时，编译器会在编译时解释该函数。这种解释发生在(Rust编译器为)编译目标(构建的模拟编译)环境中，而不是在当前主机环境中。因此，如果您是针对一个 `32` 位系统进行编译，那么 `usize` 就是 `32` 位，这与您在一个 `64` 位还是在一个 `32` 位系统上进行编译无关。
 
-Const functions have various restrictions to make sure that they can be
-evaluated at compile-time. It is, for example, not possible to write a random
-number generator as a const function. Calling a const function at compile-time
-will always yield the same result as calling it at runtime, even when called
-multiple times. There's one exception to this rule: if you are doing complex
-floating point operations in extreme situations, then you might get (very
-slightly) different results. It is advisable to not make array lengths and enum
-discriminants depend on floating point computations.
+常量函数有各种限制以确保其可以在编译时对其求值。因此，例如，不可以将随机数生成器编写为常量函数。在编译时调用常量函数将始终产生与运行时调用它相同的结果，即使多次调用也是如此。这个规则有一个例外：如果您在极端情况下执行复杂的浮点运算，那么您可能得到（非常轻微）不同的结果。建议不要使数组长度和枚举判别式依赖于浮点计算。
 
+常量上下文有，但常量函数不具备的显著特性有：
 
-Notable features that const contexts have, but const fn haven't are:
+* 浮点运算
+  * 处理浮点值就像处理只有 `Copy` 这个trait约束的泛型参数一样，你不能用它们做任何事，只能复制/移动它们。
+* `dyn Trait` 类型
+* `Sized` 泛型约束之外的泛型约束
+* 比较裸指针
+* 访问联合体字段
+* 调用 [`transmute`]。
 
-* floating point operations
-  * floating point values are treated just like generic parameters without trait bounds beyond
-  `Copy`. So you cannot do anything with them but copy/move them around.
-* `dyn Trait` types
-* generic bounds on generic parameters beyond `Sized`
-* comparing raw pointers
-* union field access
-* [`transmute`] invocations.
+相反地，以下情况在常量函数中是可能的，但在常量上下文中则不可能：
 
-Conversely, the following are possible in a const function, but not in a const context:
-
-* Use of generic parameters.
+* 使用泛型参数。
 
 [arithmetic]:           expressions/operator-expr.md#arithmetic-and-logical-binary-operators
 [array expressions]:    expressions/array-expr.md
@@ -138,11 +122,6 @@ Conversely, the following are possible in a const function, but not in a const c
 [`while let`]:          expressions/loop-expr.md#predicate-pattern-loops
 
 
-使用关键字 `const` 限定的函数是常量函数，与[元组结构体]和[元祖变体]构造函数一样。*常量函数*可以在[常量上下文]中调用。当从常量上下文中调用这类函数时，编译器会在编译时解释该函数。这种解释发生在(Rust编译器为)编译目标(构建的模拟)环境中，而不是在当前主机环境中。因此，如果您是针对一个 `32` 位系统进行编译，那么 `usize` 就是 `32` 位，这与您在一个 `64` 位还是在一个 `32` 位系统上进行编译无关。
-
-如果在[常量上下文]之外调用常量函数，那么它与任何其他函数没有区别。你可以自由地用常量函数做任何你可以用普通函数做的任何事情。
-
-常量函数有各种限制以确保其可以在编译时对其求值。例如，不可以将随机数生成器编写为常量函数。在编译时调用常量函数将始终产生与运行时调用它相同的结果，即使多次调用也是如此。这个规则有一个例外：如果您在极端情况下执行复杂的浮点运算，那么您可能得到（非常轻微）不同的结果。建议不要使数组长度和枚举判别式依赖于浮点计算。
 
 允许出现在常量函数中的数据结构的详尽列表：
 <!--Exhaustive list of permitted structures in const functions: TobeModify-->

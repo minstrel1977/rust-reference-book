@@ -1,3 +1,4 @@
+# Static items
 # 静态项
 
 >[static-items.md](https://github.com/rust-lang/reference/blob/master/src/items/static-items.md)\
@@ -19,6 +20,7 @@
 * 静态项的数据类型必须拥有 `Sync` trait，这样才可以让线程安全访问。
 * 常量项不能引用静态项。
 
+## Mutable statics
 ## 可变静态项
 
 如果静态项是用 `mut` 关键字声明的，则程序允许对其进行修改。Rust 的目标之一是避免并发带来的 bug，可变静态项显然是竞争条件或其他 bug 的一个非常重要的来源。因此，读取或写入可变静态项变量时需要 `unsafe` 块。应注意确保对可变静态项的修改相对于运行在同一进程中的其他线程是安全的。
@@ -46,6 +48,7 @@ unsafe fn bump_levels_unsafe2() -> u32 {
 
 可变静态项与普通静态项具有相同的限制，除了可变静态项的类型不需要实现 `Sync` trait。
 
+## Using Statics or Consts
 ## 使用常量项或静态项
 
 是否应该使用常量项还是静态项可能会令人困惑。一般来说，常量项应优先于静态项，除非以下情况之一成立：
