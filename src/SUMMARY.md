@@ -2,14 +2,14 @@
 
 [介绍](introduction.md)
 
-- [标记符号](notation.md)
+- [表意符](notation.md)
 
 - [词法结构](lexical-structure.md)
     - [输入格式](input-format.md)
     - [关键字](keywords.md)
     - [标识符](identifiers.md)
     - [注释](comments.md)
-    - [空白](whitespace.md)
+    - [空白符](whitespace.md)
     - [标记码](tokens.md)
     - [路径](paths.md)
 

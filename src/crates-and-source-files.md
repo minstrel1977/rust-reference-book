@@ -58,7 +58,7 @@ fn main() {
 }
 ```
 
-为了避免与[属性]混淆， Rust 对 shebang 语法做了一个限制， 是 `#!` 字符不能后跟`[` 标记码，忽略中间的[注释]或[空白]。如果此限制失败，则不将其视为 shebang，而将其视为属性的开始。
+为了避免与[属性]混淆， Rust 对 shebang 语法做了一个限制， 是 `#!` 字符不能后跟`[` 标记码，忽略中间的[注释]或[空白符][whitespace]。如果此限制失败，则不将其视为 shebang，而将其视为属性的开始。
 
 ## 预导入包和 `no_std`
 
@@ -122,4 +122,4 @@ crate 名称不能为空，只能包含[Unicode字母数字]或 `-` (U+002D)字�
 [模块路径]: paths.md
 [trait 或生存期约束]: trait-bounds.md
 [where 字句]: items/generics.md#where子句
-[空白]: whitespace.md
+[whitespace]: whitespace.md

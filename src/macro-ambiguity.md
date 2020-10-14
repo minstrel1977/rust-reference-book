@@ -11,26 +11,23 @@
   - `macro`：宏，源代码中任何可调用的类似 `foo!(...)` 的东西。
   - `MBE`：macro-by-example，声明宏，由 `macro_rules` 定义的宏。
   - `matcher`：匹配器，`macro_rules`调用中一条规则的左侧部分，或其子部分。
-  - `macro parser`：宏解释器，Rust 解析器中的一段代码，它将收集使用所有匹配器的句法规则来解析输入。 <!-- the bit of code in the Rust parser that will parse the input using a grammar derived from all of the matchers. tobemodify-->
-  - `fragment`：片段，给定匹配器将接受(或“匹配”)的 Rust 句法的类型；例如 `ident`、`tt`、`expr`等。
-  - `repetition` ：重复，遵循规律的重复模式的片段。
-  - `NT`：non-terminal，非终结符，可以出现在匹配器中的各种“元变量”或重复匹配器，在声明宏(MBE)句法中用前导的 `$` 字符指定。
+  - `macro parser`：宏解释器，Rust 解析器中的一段代码，它收集使用所有匹配器的句法规则来解析输入。 <!-- the bit of code in the Rust parser that will parse the input using a grammar derived from all of the matchers. tobemodify-->
+  - `fragment`：代码片段，给定匹配器将接受(或“匹配”)的 Rust 句法的类型；<!-- The class of Rust syntax that a given matcher will accept (or "match"). tobemodify-->
+  - `repetition` ：重复段，遵循常规性重复模式的代码片段。<!-- a fragment that follows a regular repeating pattern. tobemodify-->
+  - `NT`：non-terminal，非终结符，可以出现在匹配器中的各种“元变量”或重复段匹配器，在声明宏(MBE)句法中用前导的 `$` 字符指定。<!-- non-terminal, the various "meta-variables" or repetition matchers that can appear in a matcher, specified in MBE syntax with a leading `$` character. -->
   - `simple NT`：简单NT，“元变量”类型的非终结符(下面会进一步讨论)。
-  - `complex NT`：复杂NT，重复匹配型的非终结符，通过重复操作符(`\*`, `+`, `?`)指定。
-  - `token`：标记符，匹配器中不可再细分的元素；例如，标识符、操作符、开/闭定界符、*和*简单NT(simple NT)。
-  - `token tree`：标记树，标记树由标记符(叶)、复杂NT和子标记树（标记树的有限序列）的组成的树形数据结构。
-  - `delimiter token`：定界符，一种标记，用于划分一个片段的结束和下一个片段的开始。
+  - `complex NT`：复杂NT，有重复段匹配规则的非终结符，通过重复操作符(`\*`, `+`, `?`)指定。<!-- a repetition matching non-terminal, specified via repetition operators (`\*`, `+`, `?`). -->
+  - `token`：标记码，匹配器中不可再细分的元素；例如，标识符、操作符、开/闭定界符、*和*简单NT(simple NT)。
+  - `token tree`：标记树，标记树由标记码(叶)、复杂NT和子标记树（标记树的有限序列）的组成的树形数据结构。
+  - `delimiter token`：定界符，一种标记，用于划分一个代码片段的结束和下一个代码片段的开始。
   - `separator token`：分隔符，复杂NT中的可选定界符，用于在匹配的重复中，以分隔每个元素对。
-  - `separated complex NT`：a complex NT that has its own separator token.
-  - `delimited sequence`：a sequence of token trees with appropriate open- and
-    close-delimiters at the start and end of the sequence.
-  - `empty fragment`：The class of invisible Rust syntax that separates tokens,
-    i.e. whitespace, or (in some lexical contexts), the empty token sequence.
-  - `fragment specifier`：The identifier in a simple NT that specifies which
-    fragment the NT accepts.
-  - `language`：a context-free language.
+  - `separated complex NT`：有自己的分隔符的复杂NT。
+  - `delimited sequence`：有界序列，在序列的开始和结束处使用适当的开闭定界符的标记树序列。
+  - `empty fragment`：空代码片段，一种不可见的Rust句法类型，它分割各种标记，例如空白符(whitespace)，或者(在某些词法上下文中的)空标记序列。
+  - `fragment specifier`：代码片段指示符，简单NT中的标识符，指定NT接受哪个片段类型。<!-- The identifier in a simple NT that specifies which fragment the NT accepts. tobemodify-->
+  - `language`：与上下文无关的语言。
 
-Example:
+示例：
 
 ```rust,compile_fail
 macro_rules! i_am_an_mbe {
@@ -38,24 +35,16 @@ macro_rules! i_am_an_mbe {
 }
 ```
 
-`(start $foo:expr $($i:ident),\* end)` is a matcher. The whole matcher is a
-delimited sequence (with open- and close-delimiters `(` and `)`), and `$foo`
-and `$i` are simple NT's with `expr` and `ident` as their respective fragment
-specifiers.
+`(start $foo:expr $($i:ident),\* end)` 是一个匹配器(matcher)。整个匹配器是一个有界的序列(使用开闭定界符 `(` 和 `)` 界定)，`$foo` 和 `$i` 是简单NT(simple NT)， `expr` 和 `ident` 是它们各自的片段类型指示符(fragment specifiers)。
 
-`$(i:ident),\*` is *also* an NT; it is a complex NT that matches a
-comma-separated repetition of identifiers. The `,` is the separator token for
-the complex NT; it occurs in between each pair of elements (if any) of the
-matched fragment.
+`$(i:ident),\*` *也*是一个 NT;它是一个复杂NT，匹配以逗号分隔的标识符重复段。`,` 是复杂NT的分隔符;
+它发生在匹配上的片段类型的每对元素(如果有的话)之间。
+`$(i:ident),\*` is *also* an NT; it is a complex NT that matches a comma-separated repetition of identifiers. The `,` is the separator token for the complex NT; it occurs in between each pair of elements (if any) of the matched fragment.
 
-Another example of a complex NT is `$(hi $e:expr ;)+`, which matches any
-fragment of the form `hi <expr>; hi <expr>; ...` where `hi <expr>;` occurs at
-least once. Note that this complex NT does not have a dedicated separator
-token.
+复杂NT的另一个例子是 `$(hi $e:expr ;)+`，它匹配表单 `hi <expr>; hi <expr>; ...`，其中 `hi <expr>;` 至少出现一次。注意，这个复杂NT没有专用的分隔符。
+Another example of a complex NT is `$(hi $e:expr ;)+`, which matches any fragment of the form `hi <expr>; hi <expr>; ...` where `hi <expr>;` occurs at least once. Note that this complex NT does not have a dedicated separator token.
 
-(Note that Rust's parser ensures that delimited sequences always occur with
-proper nesting of token tree structure and correct matching of open- and
-close-delimiters.)
+(请注意，Rust的解析器确保有界序列始终具有正确的标记树结构嵌套以及开/闭定界符的正确匹配。Note that Rust's parser ensures that delimited sequences always occur with proper nesting of token tree structure and correct matching of open- and close-delimiters.)
 
 We will tend to use the variable "M" to stand for a matcher, variables "t" and
 "u" for arbitrary individual tokens, and the variables "tt" and "uu" for

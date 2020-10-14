@@ -292,7 +292,7 @@ if let Some(_) = x {}
 > _RestPattern_ :\
 > &nbsp;&nbsp; `..`
 
-*剩余模式*(`..`标记符)充当可变长度模式(variable-length pattern)，它匹配之前之后没有匹配的零个或多个元素。它只能在[元组](#tuple-patterns)模式、[元组结构体](#tuple-struct-patterns)模式和[切片](#slice-patterns)模式中使用，并且在这些模式中只能作为一个元素出现一次。它在[切片模式](#slice-patterns)里也只允许在[标识符模式](#identifier-patterns)中使用。
+*剩余模式*(`..`标记码)充当可变长度模式(variable-length pattern)，它匹配之前之后没有匹配的零个或多个元素。它只能在[元组](#tuple-patterns)模式、[元组结构体](#tuple-struct-patterns)模式和[切片](#slice-patterns)模式中使用，并且在这些模式中只能作为一个元素出现一次。它在[切片模式](#slice-patterns)里也只允许在[标识符模式](#identifier-patterns)中使用。
 
 剩余模式总是不可反驳型的。
 
@@ -454,7 +454,7 @@ let b = match int_reference { &0 => "zero", _ => "some" };
 assert_eq!(a, b);
 ```
 
-语法上，引用模式必须使用标记符 `&&` 来匹配引用的引用，因为 `&&` 本身就是一个标记符，而不是两个 `&` 标记符。。
+语法上，引用模式必须使用标记码 `&&` 来匹配引用的引用，因为 `&&` 本身就是一个标记码，而不是两个 `&` 标记码。。
 
 如果为引用模式上添加 `mut` 关键字来解引用一个可变引用，那模式的可变性必须匹配引用对象的可变性
 <!-- Adding the `mut` keyword dereferences a mutable reference. The mutability must match the mutability of the reference.TobeModify -->

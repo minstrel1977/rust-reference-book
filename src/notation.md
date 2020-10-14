@@ -1,5 +1,5 @@
 # Notation
-# 标记符号
+# 表意符/符号
 
 >[notation.md](https://github.com/rust-lang/reference/blob/master/src/notation.md)\
 >commit b0e0ad6490d6517c19546b1023948986578fc378
@@ -7,12 +7,12 @@
 ## Grammar
 ## 语法
 
-本书中给出的 *词法* 和 *句法* 的语法片段会用到下表中的各种符号：
+本书中给出的 *词法* 和 *句法* 的语法片段会用到下表中的各种表意符：
 
-| 符号           | 示例                      | 释义                                 
+| 表意符             | 示例                      | 释义                                 
 |-------------------|-------------------------------|--------------------------------|
 | CAPITAL           | KW_IF, INTEGER_LITERAL        | 由词法分析生成的[标记码](token)|
-| _ItalicCamelCase_ | _LetStatement_, _Item_        | 句法分析产生的内部语义                        |
+| _ItalicCamelCase_ | _LetStatement_, _Item_        | 句法分析产生的内部语义           |
 | `string`          | `x`, `while`, `*`             | 确切的字符(串)                   |
 | \\x               | \\n, \\r, \\t, \\0            | 转义字符                        |
 | x<sup>?</sup>     | `pub`<sup>?</sup>             | 可选项                          |

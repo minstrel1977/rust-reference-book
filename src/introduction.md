@@ -87,7 +87,7 @@
   > &nbsp;&nbsp; &nbsp;&nbsp; `~` [_表达式_]\
   > &nbsp;&nbsp; | `box` [_表达式_]
 
-  查阅[标记符号]以获取更多细节。
+  查阅[表意符(notation)][Notation]以获取更多细节。
 
 ## Contributing
 ## 贡献力量
@@ -108,5 +108,5 @@
 [临时对象的生存期]: expressions.html#temporaries
 [linkage]: linkage.html
 [rustc book]: https://doc.rust-lang.org/rustc/index.html
-[标记符号]: notation.md
+[Notation]: notation.md
 [Discord]: https://discord.gg/rust-lang
