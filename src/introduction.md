@@ -87,7 +87,7 @@
   > &nbsp;&nbsp; &nbsp;&nbsp; `~` [_表达式_]\
   > &nbsp;&nbsp; | `box` [_表达式_]
 
-  查阅[表意符(notation)][Notation]以获取更多细节。
+  查阅[表义符(notation)][Notation]以获取更多细节。
 
 ## Contributing
 ## 贡献力量

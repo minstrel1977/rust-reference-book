@@ -2,7 +2,7 @@
 
 [介绍](introduction.md)
 
-- [表意符](notation.md)
+- [表义符](notation.md)
 
 - [词法结构](lexical-structure.md)
     - [输入格式](input-format.md)

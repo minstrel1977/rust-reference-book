@@ -12,19 +12,19 @@
   - `MBE`：macro-by-example，声明宏，由 `macro_rules` 定义的宏。
   - `matcher`：匹配器，`macro_rules`调用中一条规则的左侧部分，或其子部分。
   - `macro parser`：宏解释器，Rust 解析器中的一段代码，它收集使用所有匹配器的句法规则来解析输入。 <!-- the bit of code in the Rust parser that will parse the input using a grammar derived from all of the matchers. tobemodify-->
-  - `fragment`：代码片段，给定匹配器将接受(或“匹配”)的 Rust 句法的类型；<!-- The class of Rust syntax that a given matcher will accept (or "match"). tobemodify-->
-  - `repetition` ：重复段，遵循常规性重复模式的代码片段。<!-- a fragment that follows a regular repeating pattern. tobemodify-->
+  - `fragment`：匹配段，给定匹配器将接受(或“匹配”)的 Rust 句法对象；<!-- The class of Rust syntax that a given matcher will accept (or "match"). tobemodify-->
+  - `repetition` ：重复段，遵循常规性重复模式的匹配段。<!-- a fragment that follows a regular repeating pattern. tobemodify-->
   - `NT`：non-terminal，非终结符，可以出现在匹配器中的各种“元变量”或重复段匹配器，在声明宏(MBE)句法中用前导的 `$` 字符指定。<!-- non-terminal, the various "meta-variables" or repetition matchers that can appear in a matcher, specified in MBE syntax with a leading `$` character. -->
   - `simple NT`：简单NT，“元变量”类型的非终结符(下面会进一步讨论)。
   - `complex NT`：复杂NT，有重复段匹配规则的非终结符，通过重复操作符(`\*`, `+`, `?`)指定。<!-- a repetition matching non-terminal, specified via repetition operators (`\*`, `+`, `?`). -->
   - `token`：标记码，匹配器中不可再细分的元素；例如，标识符、操作符、开/闭定界符、*和*简单NT(simple NT)。
   - `token tree`：标记树，标记树由标记码(叶)、复杂NT和子标记树（标记树的有限序列）的组成的树形数据结构。
-  - `delimiter token`：定界符，一种标记，用于划分一个代码片段的结束和下一个代码片段的开始。
+  - `delimiter token`：定界符，一种标记，用于划分一个匹配段的结束和下一个匹配段的开始。
   - `separator token`：分隔符，复杂NT中的可选定界符，用于在匹配的重复中，以分隔每个元素对。
-  - `separated complex NT`：有自己的分隔符的复杂NT。
+  - `separated complex NT`：带分隔符的复杂NT，有自己的分隔符的复杂NT。
   - `delimited sequence`：有界序列，在序列的开始和结束处使用适当的开闭定界符的标记树序列。
-  - `empty fragment`：空代码片段，一种不可见的Rust句法类型，它分割各种标记，例如空白符(whitespace)，或者(在某些词法上下文中的)空标记序列。
-  - `fragment specifier`：代码片段指示符，简单NT中的标识符，指定NT接受哪个片段类型。<!-- The identifier in a simple NT that specifies which fragment the NT accepts. tobemodify-->
+  - `empty fragment`：空匹配段，一种不可见的 Rust 句法对象，它分割各种标记码。例如空白符(whitespace)或者(在某些词法上下文中的)空标记序列。<!-- The class of invisible Rust syntax that separates tokens, i.e. whitespace, or (in some lexical contexts), the empty token sequence. -->
+  - `fragment specifier`：匹配段类型指示符，简单NT中的后段标识符部分，指定NT接受哪个匹配段。<!-- The identifier in a simple NT that specifies which fragment the NT accepts. tobemodify-->
   - `language`：与上下文无关的语言。
 
 示例：
@@ -35,75 +35,46 @@ macro_rules! i_am_an_mbe {
 }
 ```
 
-`(start $foo:expr $($i:ident),\* end)` 是一个匹配器(matcher)。整个匹配器是一个有界的序列(使用开闭定界符 `(` 和 `)` 界定)，`$foo` 和 `$i` 是简单NT(simple NT)， `expr` 和 `ident` 是它们各自的片段类型指示符(fragment specifiers)。
+`(start $foo:expr $($i:ident),\* end)` 是一个匹配器(matcher)。整个匹配器是一个有界序列(使用开闭定界符 `(` 和 `)` 界定)，`$foo` 和 `$i` 是简单NT(simple NT)， `expr` 和 `ident` 是它们各自的匹配段类型指示符(fragment specifiers)。
 
-`$(i:ident),\*` *也*是一个 NT;它是一个复杂NT，匹配以逗号分隔的标识符重复段。`,` 是复杂NT的分隔符;
-它发生在匹配上的片段类型的每对元素(如果有的话)之间。
-`$(i:ident),\*` is *also* an NT; it is a complex NT that matches a comma-separated repetition of identifiers. The `,` is the separator token for the complex NT; it occurs in between each pair of elements (if any) of the matched fragment.
+`$(i:ident),\*` *也*是一个 NT；它是一个复杂NT，匹配标识符类型的以逗号为分隔符的重复段。`,` 是这个复杂NT的分隔符，它出现在匹配段的每对元素（如果有的话）之间。
 
-复杂NT的另一个例子是 `$(hi $e:expr ;)+`，它匹配表单 `hi <expr>; hi <expr>; ...`，其中 `hi <expr>;` 至少出现一次。注意，这个复杂NT没有专用的分隔符。
-Another example of a complex NT is `$(hi $e:expr ;)+`, which matches any fragment of the form `hi <expr>; hi <expr>; ...` where `hi <expr>;` occurs at least once. Note that this complex NT does not have a dedicated separator token.
+复杂NT的另一个例子是 `$(hi $e:expr ;)+`，它匹配 `hi <expr>; hi <expr>; ...` 这种格式的代码，其中 `hi <expr>;` 至少出现一次。注意，这个复杂NT没有专用的分隔符。
 
-(请注意，Rust的解析器确保有界序列始终具有正确的标记树结构嵌套以及开/闭定界符的正确匹配。Note that Rust's parser ensures that delimited sequences always occur with proper nesting of token tree structure and correct matching of open- and close-delimiters.)
+(请注意，Rust的解析器确保有界序列始终具有正确的标记树结构嵌套以及开/闭定界符的正确匹配。)
 
-We will tend to use the variable "M" to stand for a matcher, variables "t" and
-"u" for arbitrary individual tokens, and the variables "tt" and "uu" for
-arbitrary token trees. (The use of "tt" does present potential ambiguity with
-its additional role as a fragment specifier; but it will be clear from context
-which interpretation is meant.)
+我们倾向于使用变量“M”表示匹配器，变量“t”和“u”表示任意单个标记码，变量“tt”和“uu”表示任意标记树。（使用“tt”确实存在潜在的歧义，因为它的额外角色是一个匹配段类型指示符；但不用太担心，因为从上下文中，可以很清楚地看出哪个解释符合语义）
 
-"SEP" will range over separator tokens, "OP" over the repetition operators
-`\*`, `+`, and `?`, "OPEN"/"CLOSE" over matching token pairs surrounding a
-delimited sequence (e.g. `[` and `]`).
+“SEP”将代表分隔符，“OP”将代表重复运算符 `\*`, `+`, 和 `?` “OPEN”/“CLOSE”覆盖围绕定界序列的匹配标记对（例如 `[` 和 `]` ）。
 
-Greek letters "α" "β" "γ" "δ"  stand for potentially empty token-tree sequences.
-(However, the Greek letter "ε" (epsilon) has a special role in the presentation
-and does not stand for a token-tree sequence.)
+希腊字母 "α" "β" "γ" "δ" 代表潜在的空标记树序列。（然而，希腊字母 "ε"(epsilon)在表示形式中有特殊的作用，并不代表标记树序列。）
 
-  * This Greek letter convention is usually just employed when the presence of
-	a sequence is a technical detail; in particular, when we wish to *emphasize*
-	that we are operating on a sequence of token-trees, we will use the notation
-	"tt ..." for the sequence, not a Greek letter.
+  * 这种希腊字母约定通常只是在需要表现一个序列的技术细节时才被引入；特别是，当我们希望*强调*我们操作的是一个标记树序列时，我们将对该序列使用表义符 "tt ..."，而不是一个希腊字母。
 
-Note that a matcher is merely a token tree. A "simple NT", as mentioned above,
-is an meta-variable NT; thus it is a non-repetition. For example, `$foo:ty` is
-a simple NT but `$($foo:ty)+` is a complex NT.
+请注意，匹配器仅仅是一个标记树。如前所述，“简单NT”是一个元变量NT；因此，这是一个非重复段。例如，`$foo:ty` 是一个简单NT，而 `$($foo:ty)+` 是一个复杂NT。
 
-Note also that in the context of this formalism, the term "token" generally
-*includes* simple NTs.
+还请注意，在这种形式的上下文中，术语“标记码(token)”通常*包括*简单NT。
 
-Finally, it is useful for the reader to keep in mind that according to the
-definitions of this formalism, no simple NT matches the empty fragment, and
-likewise no token matches the empty fragment of Rust syntax. (Thus, the *only*
-NT that can match the empty fragment is a complex NT.) This is not actually
-true, because the `vis` matcher can match an empty fragment. Thus, for the
-purposes of the formalism, we will treat `$v:vis` as actually being
-`$($v:vis)?`, with a requirement that the matcher match an empty fragment.
+最后，读者要记住，根据这种形式的定义，没有简单NT会匹配空匹配段，同样也没有标记码会匹配 Rust句法的空匹配段。(因此，能够匹配空匹配段的*唯一的* NT是复杂NT。)这实际上不是真的，因为 `vis` 匹配器可以匹配空匹配段。因此，为了达到形式统一的目的，我们将把 `$v:vis` 看作是 `$($v:vis)?`，来要求匹配器匹配一个空匹配段。
 
 ### The Matcher Invariants
+### 匹配器的不变式
 
-To be valid, a matcher must meet the following three invariants. The definitions
-of FIRST and FOLLOW are described later.
+为了有效，匹配器必须满足以下三个不变式。注意其中 FIRST 和 FOLLOW 的定义将在后面进行描述。
+To be valid, a matcher must meet the following three invariants. The definitions of FIRST and FOLLOW are described later.
 
-1.  For any two successive token tree sequences in a matcher `M` (i.e. `M = ...
-    tt uu ...`) with `uu ...` nonempty, we must have FOLLOW(`... tt`) ∪ {ε} ⊇
-    FIRST(`uu ...`).
-1.  For any separated complex NT in a matcher, `M = ... $(tt ...) SEP OP ...`,
-	we must have `SEP` ∈ FOLLOW(`tt ...`).
-1.  For an unseparated complex NT in a matcher, `M = ... $(tt ...) OP ...`, if
-    OP = `\*` or `+`, we must have FOLLOW(`tt ...`) ⊇ FIRST(`tt ...`).
+1.  对于形式如 `M = ... tt uu ...`，其中 `uu ...` 非空的匹配器 `M` 中的任意两个连续的标记树序列，我们必须遵循 FOLLOW(`... tt`) ∪ {ε} ⊇ FIRST(`uu ...`)
+For any two successive token tree sequences in a matcher `M` (i.e. `M = ... tt uu ...`) with `uu ...` nonempty, we must have FOLLOW(`... tt`) ∪ {ε} ⊇ FIRST(`uu ...`).
+2.  对于匹配器中任何带分隔符的复杂NT，`M = ... $(tt ...) SEP OP ...`，我们必须遵循 `SEP` ∈ FOLLOW(`tt ...`)
+For any separated complex NT in a matcher, `M = ... $(tt ...) SEP OP ...`, we must have `SEP` ∈ FOLLOW(`tt ...`).
+3.  对于匹配器中不带分隔符的复杂NT，`M = ... $(tt ...) OP ...`，如果 OP = `\*` or `+`，我们必须遵循 FOLLOW(`tt ...`) ⊇ FIRST(`tt ...`)
+For an unseparated complex NT in a matcher, `M = ... $(tt ...) OP ...`, if OP = `\*` or `+`, we must have FOLLOW(`tt ...`) ⊇ FIRST(`tt ...`).
 
-The first invariant says that whatever actual token that comes after a matcher,
-if any, must be somewhere in the predetermined follow set.  This ensures that a
-legal macro definition will continue to assign the same determination as to
-where `... tt` ends and `uu ...` begins, even as new syntactic forms are added
-to the language.
+第一个不变式表示，无论匹配器后出现什么标记(如果有的话)，它都必须出现在预先确定的随集(follow set,后续集合)中的某个地方。这确保了合法的宏观定义将继续对 `... tt` 的结束和 `uu ...` 的开始执行相同的解析逻辑，即使在将来语言中添加了新的语法形式。
+The first invariant says that whatever actual token that comes after a matcher, if any, must be somewhere in the predetermined follow set.  This ensures that a legal macro definition will continue to assign the same determination as to where `... tt` ends and `uu ...` begins, even as new syntactic forms are added to the language.
 
-The second invariant says that a separated complex NT must use a separator token
-that is part of the predetermined follow set for the internal contents of the
-NT. This ensures that a legal macro definition will continue to parse an input
-fragment into the same delimited sequence of `tt ...`'s, even as new syntactic
-forms are added to the language.
+第二个不变说分离复杂NT必须使用分隔符令牌是预定的一部分遵循NT的内部内容。这将确保一个合法的宏定义将继续解析输入片段到相同的分隔的一系列“tt…甚至当新的句法形式被添加到语言中
+The second invariant says that a separated complex NT must use a separator token that is part of the predetermined follow set for the internal contents of the NT. This ensures that a legal macro definition will continue to parse an input fragment into the same delimited sequence of `tt ...`'s, even as new syntactic forms are added to the language.
 
 The third invariant says that when we have a complex NT that can match two or
 more copies of the same thing with no separation in between, it must be
