@@ -67,47 +67,42 @@ To be valid, a matcher must meet the following three invariants. The definitions
 For any two successive token tree sequences in a matcher `M` (i.e. `M = ... tt uu ...`) with `uu ...` nonempty, we must have FOLLOW(`... tt`) ∪ {ε} ⊇ FIRST(`uu ...`).
 2.  对于匹配器中任何带分隔符的复杂NT，`M = ... $(tt ...) SEP OP ...`，我们必须遵循 `SEP` ∈ FOLLOW(`tt ...`)
 For any separated complex NT in a matcher, `M = ... $(tt ...) SEP OP ...`, we must have `SEP` ∈ FOLLOW(`tt ...`).
-3.  对于匹配器中不带分隔符的复杂NT，`M = ... $(tt ...) OP ...`，如果 OP = `\*` or `+`，我们必须遵循 FOLLOW(`tt ...`) ⊇ FIRST(`tt ...`)
+3.  对于匹配器中不带分隔符的复杂NT，`M = ... $(tt ...) OP ...`，如果 OP = `\*` 或 `+`，我们必须遵循 FOLLOW(`tt ...`) ⊇ FIRST(`tt ...`)
 For an unseparated complex NT in a matcher, `M = ... $(tt ...) OP ...`, if OP = `\*` or `+`, we must have FOLLOW(`tt ...`) ⊇ FIRST(`tt ...`).
 
-第一个不变式表示，无论匹配器后出现什么标记(如果有的话)，它都必须出现在预先确定的随集(follow set,后续集合)中的某个地方。这确保了合法的宏观定义将继续对 `... tt` 的结束和 `uu ...` 的开始执行相同的解析逻辑，即使在将来语言中添加了新的语法形式。
+第一个不变式表示，无论匹配器后出现什么标记(如果有的话)，它都必须出现在先决随集(predetermined follow set)中的某个地方。这将确保合法的宏观定义将继续对 `... tt` 的结束和 `uu ...` 的开始执行相同的判定(determination)，即使在将来语言中添加了新的语法形式。
 The first invariant says that whatever actual token that comes after a matcher, if any, must be somewhere in the predetermined follow set.  This ensures that a legal macro definition will continue to assign the same determination as to where `... tt` ends and `uu ...` begins, even as new syntactic forms are added to the language.
 
-第二个不变说分离复杂NT必须使用分隔符令牌是预定的一部分遵循NT的内部内容。这将确保一个合法的宏定义将继续解析输入片段到相同的分隔的一系列“tt…甚至当新的句法形式被添加到语言中
+第二个不变式表示一个带分隔符的复杂NT必须使用一个分隔符，它是NT的内部内容的先决随集的一部分。这将确保合法的宏定义将继续将输入匹配段解析成相同的定界序列 `tt ...`，即使在将来语言中添加了新的语法形式。
 The second invariant says that a separated complex NT must use a separator token that is part of the predetermined follow set for the internal contents of the NT. This ensures that a legal macro definition will continue to parse an input fragment into the same delimited sequence of `tt ...`'s, even as new syntactic forms are added to the language.
 
-The third invariant says that when we have a complex NT that can match two or
-more copies of the same thing with no separation in between, it must be
-permissible for them to be placed next to each other as per the first invariant.
-This invariant also requires they be nonempty, which eliminates a possible
-ambiguity.
+第三个不变式说的是，当我们有一个复杂NT，它可以匹配同一事物的两个或多个副本，并且两者之间没有分隔符，那么根据第一个不变式，它们必须被允许放在一起。这个不变式还要求它们是非空的，这消除了可能的歧义。
+The third invariant says that when we have a complex NT that can match two or more copies of the same thing with no separation in between, it must be permissible for them to be placed next to each other as per the first invariant. This invariant also requires they be nonempty, which eliminates a possible ambiguity.
 
-**NOTE：The third invariant is currently unenforced due to historical oversight
-and significant reliance on the behaviour. It is currently undecided what to do
-about this going forward. Macros that do not respect the behaviour may become
-invalid in a future edition of Rust. See the [tracking issue].**
+**注意：由于历史疏忽和对行为的严重依赖，第三个不变式目前没有执行。目前还没有决定下一步该怎么做。不尊重这种行为的宏可能会在Rust的未来版本中失效。参见[跟踪问题][tracking issue]**
+**NOTE：The third invariant is currently unenforced due to historical oversight and significant reliance on the behaviour. It is currently undecided what to do about this going forward. Macros that do not respect the behaviour may become invalid in a future edition of Rust. See the [tracking issue].**
 
 ### FIRST and FOLLOW, informally
 
+给定匹配器 M 映射到三个集合：FIRST(M)，LAST(M) 和 FOLLOW(M)。
 A given matcher M maps to three sets：FIRST(M), LAST(M) and FOLLOW(M).
 
-Each of the three sets is made up of tokens. FIRST(M) and LAST(M) may also
-contain a distinguished non-token element ε ("epsilon"), which indicates that M
-can match the empty fragment. (But FOLLOW(M) is always just a set of tokens.)
+这三个集合中的每一个都是由标记码组成的。FIRST(M) 和 LAST(M) 也可能包含一个可区分的非标记码元素 ε ("epsilon")，这表示 M 可以匹配空匹配段。（但是 FOLLOW(M) 始终只是一组标记码。）
+Each of the three sets is made up of tokens. FIRST(M) and LAST(M) may also contain a distinguished non-token element ε ("epsilon"), which indicates that M can match the empty fragment. (But FOLLOW(M) is always just a set of tokens.)
 
-Informally:
+非正式描述(Informally)：
 
-  * FIRST(M)：collects the tokens potentially used first when matching a
-    fragment to M.
+  * FIRST(M)：收集匹配段与 M 匹配时可能首先使用的标记码。collects the tokens potentially used first when matching a fragment to M.
 
-  * LAST(M)：collects the tokens potentially used last when matching a fragment
-    to M.
+  * LAST(M)：收集匹配段与 M 匹配时可能最后使用的标记码。collects the tokens potentially used last when matching a fragment to M.
 
-  * FOLLOW(M)：the set of tokens allowed to follow immediately after some
-    fragment matched by M.
+  * FOLLOW(M)：允许紧跟在由 M 匹配的某个匹配段之后的标记集。the set of tokens allowed to follow immediately after some fragment matched by M.
 
-    In other words：t ∈ FOLLOW(M) if and only if there exists (potentially
-    empty) token sequences α, β, γ, δ where:
+    换言之：t ∈ FOLLOW(M) 当且仅当存在（可能为空的）标记码序列 α、β、γ、δ，其中：
+      * M匹配β，
+      * t与γ匹配，并且
+      * 连结 α β γ δ 是一个可解析的 Rust程序。
+    In other words：t ∈ FOLLOW(M) if and only if there exists (potentially empty) token sequences α, β, γ, δ where:
 
       * M matches β,
 
@@ -115,14 +110,11 @@ Informally:
 
       * The concatenation α β γ δ is a parseable Rust program.
 
-We use the shorthand ANYTOKEN to denote the set of all tokens (including simple
-NTs). For example, if any token is legal after a matcher M, then FOLLOW(M) =
-ANYTOKEN.
+我们使用简写的 ANYTOKEN 来表示所有标记码(包括简单NT)的集合。例如，如果任何标记码在匹配器 M 之后是合法的，那么 FOLLOW(M) = ANYTOKEN。
+We use the shorthand ANYTOKEN to denote the set of all tokens (including simple NTs). For example, if any token is legal after a matcher M, then FOLLOW(M) = ANYTOKEN.
 
-(To review one's understanding of the above informal descriptions, the reader
-at this point may want to jump ahead to the [examples of
-FIRST/LAST](#examples-of-first-and-last) before reading their formal
-definitions.)
+（为了回顾一下对上述非正式描述的理解，读者在阅读正式定义之前，可以先读一遍 [关于 FIRST 和 LAST 的示例](#examples-of FIRST -and- LAST)。）
+(To review one's understanding of the above informal descriptions, the reader at this point may want to jump ahead to the [examples of FIRST/LAST](#examples-of-first-and-last) before reading their formal definitions.)
 
 ### FIRST, LAST
 
@@ -221,14 +213,13 @@ LAST(M), defined by case analysis on M itself (a sequence of token-trees):
         LAST(`uu ...`).
 
 ### Examples of FIRST and LAST
+### 关于 FIRST 和 LAST 的示例
 
-Below are some examples of FIRST and LAST.
-(Note in particular how the special ε element is introduced and
-eliminated based on the interaction between the pieces of the input.)
+下面是一些关于 FIRST 和 LAST 的例子。（请特别注意，特殊元素 ε 是如何根据输入匹配段之间的相互作用来引入和消除。）
+Below are some examples of FIRST and LAST. (Note in particular how the special ε element is introduced and eliminated based on the interaction between the pieces of the input.)
 
-Our first example is presented in a tree structure to elaborate on how
-the analysis of the matcher composes. (Some of the simpler subtrees
-have been elided.)
+我们的第一个例子以树状结构呈现，以详细说明匹配器的分析是如何组成的。（一些较简单的子树已被删除。）
+Our first example is presented in a tree structure to elaborate on how the analysis of the matcher composes. (Some of the simpler subtrees have been elided.)
 
 ```text
 INPUT： $(  $d:ident   $e:expr   );*    $( $( h )* );*    $( f ; )+   g
