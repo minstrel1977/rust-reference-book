@@ -68,8 +68,8 @@ A dynamically sized type (DST) is a type without a statically known size or alig
 ### 表达式
 
 表达式是值、常量、变量、运算符/操作符和函数的组合，计算/求值结果为单个值，有或没有副作用都有可能。\
-An expression is a combination of values, constants, variables, operators and functions that evaluate to a single value, with or without side-effects.\
 比如，`2 + (3 * 4)` 是一个返回值为14的表达式。\
+An expression is a combination of values, constants, variables, operators and functions that evaluate to a single value, with or without side-effects.\
 For example, `2 + (3 * 4)` is an expression that returns the value 14.
 
 ### Free item
@@ -88,8 +88,8 @@ A fundamental trait is one where adding an impl of it for an existing type is a 
 ### 基本类型构造器
 
 基本类型构造器是这样一种类型，在它之上实现一个 [blanket实现](#blanket-implementation)是一个突破性的改变。`&`、`&mut`、`Box`、和 `Pin` 是基本类型构造器。\
-A fundamental type constructor is a type where implementing a [blanket implementation](#blanket-implementation) over it is a breaking change. `&`, `&mut`, `Box`, and `Pin`  are fundamental. \
 如果任何时候 `T` 都被认为是[本地类型](#local-type)，那 `&T`、`&mut T`、`Box<T>`、和 `Pin<T>` 也被认为是本地类型。基本类型构造器不能[覆盖](#uncovered-type)其他类型。任何时候使用术语“有覆盖类型”时，都默认把`&T`、`&mut T`、`Box<T>`、和`Pin<T>` 排除在外。\
+A fundamental type constructor is a type where implementing a [blanket implementation](#blanket-implementation) over it is a breaking change. `&`, `&mut`, `Box`, and `Pin`  are fundamental. \
 Any time a type `T` is considered [local](#local-type), `&T`, `&mut T`, `Box<T>`, and `Pin<T>` are also considered local. Fundamental type constructors cannot [cover](#uncovered-type) other types. Any time the term "covered type" is used, the `T` in `&T`, `&mut T`, `Box<T>`, and `Pin<T>` is not considered covered.
 
 ### Inhabited
@@ -98,27 +98,27 @@ Any time a type `T` is considered [local](#local-type), `&T`, `&mut T`, `Box<T>`
 A type is inhabited if it has constructors and therefore can be instantiated. An inhabited type is not "empty" in the sense that there can be values of the type. Opposite of [Uninhabited](#uninhabited).
 
 ### Inherent implementation
-### 
+### 固有实现
 
-An [implementation] that applies to a nominal type, not to a trait-type pair.
-[More][inherent implementation].
+一种应用于标称类型，而不是 trait类型对(trait-type pair)的实现。[更多][inherent implementation]。 \
+An [implementation] that applies to a nominal type, not to a trait-type pair. [More][inherent implementation].
 
 ### Inherent method
-### 
+### 固有方法
 
-A [method] defined in an [inherent implementation], not in a trait
-implementation.
+在[固有实现][inherent implementation]中而不是在 trait实现中定义的[方法][method]。\
+A [method] defined in an [inherent implementation], not in a trait implementation.
 
 ### Initialized
-### 
+###  初始化
 
-A variable is initialized if it has been assigned a value and hasn't since been
-moved from. All other memory locations are assumed to be uninitialized. Only
-unsafe Rust can create such a memory without initializing it.
+如果一个变量已经被分配了一个值，并且此值还没有被移动走，那此变量就被初始化了。对此变量而言，它会假设它之外的所有其他内存位置都未初始化。只有非安全Rust 可以在不初始化的情况下开辟内存新区域。\
+A variable is initialized if it has been assigned a value and hasn't since been moved from. All other memory locations are assumed to be uninitialized. Only unsafe Rust can create such a memory without initializing it.
 
 ### Local trait
 ### 本地 trait
 
+本地 trait 是在当前 crate 中定义的 `trait`。它可以在模块局部定义，也可以是依附于其他类型参数而定义。给定 `trait Foo<T, U>`，`Foo` 总是本地的，不管替代 `T` 和 `U` 的类型是什么。\
 A `trait` which was defined in the current crate. A trait definition is local or not independent of applied type arguments. Given `trait Foo<T, U>`, `Foo` is always local, regardless of the types substituted for `T` and `U`.
 
 ### Local type
@@ -155,22 +155,21 @@ A scrutinee is the expression that is matched on in `match` expressions and simi
 ### 类型尺寸/尺寸
 
 值的尺寸有两个定义。\
-The size of a value has two definitions.\
 第一个是必须分配多少内存来存储这个值。\
-The first is that it is how much memory must be allocated to store that value.\
 第二个是它是在具有该项类型的数组中连续元素之间的字节偏移量。\
-The second is that it is the offset in bytes between successive elements in an array with that item type.
-
 它是对齐量的整数倍数，包括零倍。尺寸会根据编译器版本(进行新的优化时)和目标平台(类似于 `usize` 在不同平台上的变化)而变化。\
-It is a multiple of the alignment, including zero. The size can change depending on compiler version (as new optimizations are made) and target platform (similar to how `usize` varies per-platform).\
 查看[更多][alignment].
+The size of a value has two definitions.\
+The first is that it is how much memory must be allocated to store that value.\
+The second is that it is the offset in bytes between successive elements in an array with that item type.
+It is a multiple of the alignment, including zero. The size can change depending on compiler version (as new optimizations are made) and target platform (similar to how `usize` varies per-platform).\
 
 ### Slice
 ### 切片
 
 切片是一段连续的内存序列上的具有动态尺寸视图功能的类型，写为 `[T]`。\
-A slice is dynamically-sized view into a contiguous sequence, written as `[T]`.\
 它经常以借用的形式出现，可变借用和共享借用都有可能。共享借用切片类型是 `&[T]`，可变借用切片类型是 `&mut [T]`，其中 `T` 表示元素类型。\
+A slice is dynamically-sized view into a contiguous sequence, written as `[T]`.\
 It is often seen in its borrowed forms, either mutable or shared. The shared slice type is `&[T]`, while the mutable slice type is `&mut [T]`, where `T` represents the element type.
 
 ### Statement
@@ -183,23 +182,23 @@ A statement is the smallest standalone element of a programming language that co
 ### 字符串字面量
 
 字符串字面量是直接存储在最终二进制文件中的字符串，因此在 `'static` 有效期内是有效的。\
-A string literal is a string stored directly in the final binary, and so will be valid for the `'static` duration.\
 它的类型是借用形式的有效期为 `'static` 的字符串切片，即：`&'static str`。\
+A string literal is a string stored directly in the final binary, and so will be valid for the `'static` duration.\
 Its type is `'static` duration borrowed string slice, `&'static str`.
 
 ### String slice
 ### 字符串切片(`str`)
 
 字符串切片是 Rust 中最基础的字符串类型，写为 `str`。它经常以借用的形式出现，可变借用和共享借用都有可能。共享借用的字符串切片类型是  `&str`，可变借用的字符串切片类型是 `&mut str`。\
-A string slice is the most primitive string type in Rust, written as `str`. It is often seen in its borrowed forms, either mutable or shared. The shared string slice type is `&str`, while the mutable string slice type is `&mut str`.\
 字符串切片总是有效的 UTF-8。\
+A string slice is the most primitive string type in Rust, written as `str`. It is often seen in its borrowed forms, either mutable or shared. The shared string slice type is `&str`, while the mutable string slice type is `&mut str`.\
 Strings slices are always valid UTF-8.
 
 ### Trait
 
 trait 是一种数据项，用于描述类型必须提供的功能。它允许类型对其行为做出某些承诺。\
-A trait is a language item that is used for describing the functionalities a type must provide. It allows a type to make certain promises about its behavior.\
 泛型函数和泛型结构体可以使用 trait 来限制或约束它们所接受的类型。\
+A trait is a language item that is used for describing the functionalities a type must provide. It allows a type to make certain promises about its behavior.\
 Generic functions and generic structs can use traits to constrain, or bound, the types they accept.
 
 ### Uncovered type
