@@ -96,18 +96,15 @@ Each of the three sets is made up of tokens. FIRST(M) and LAST(M) may also conta
 
   * LAST(M)：收集匹配段与 M 匹配时可能最后使用的标记码。collects the tokens potentially used last when matching a fragment to M.
 
-  * FOLLOW(M)：允许紧跟在由 M 匹配的某个匹配段之后的标记集。the set of tokens allowed to follow immediately after some fragment matched by M.
+  * FOLLOW(M)：允许紧跟在由 M 匹配的某个匹配段之后的标记码集。the set of tokens allowed to follow immediately after some fragment matched by M.
 
     换言之：t ∈ FOLLOW(M) 当且仅当存在（可能为空的）标记码序列 α、β、γ、δ，其中：
-      * M匹配β，
-      * t与γ匹配，并且
+      * M 匹配 β，
+      * t 与 γ 匹配，并且
       * 连结 α β γ δ 是一个可解析的 Rust程序。
     In other words：t ∈ FOLLOW(M) if and only if there exists (potentially empty) token sequences α, β, γ, δ where:
-
       * M matches β,
-
       * t matches γ, and
-
       * The concatenation α β γ δ is a parseable Rust program.
 
 我们使用简写的 ANYTOKEN 来表示所有标记码(包括简单NT)的集合。例如，如果任何标记码在匹配器 M 之后是合法的，那么 FOLLOW(M) = ANYTOKEN。
@@ -118,58 +115,36 @@ We use the shorthand ANYTOKEN to denote the set of all tokens (including simple 
 
 ### FIRST, LAST
 
-Below are formal inductive definitions for FIRST and LAST.
+下面是对 FIRST 和 LAST 的正式归纳定义(formal inductive definitions)。
 
-"A ∪ B" denotes set union, "A ∩ B" denotes set intersection, and "A \ B"
-denotes set difference (i.e. all elements of A that are not present in B).
+“A∪B”表示集合并集，“A∩B”表示集合交集，“A\B”表示集合差集（即存在于A中，且不存在于B中的所有元素的集合）。
 
 #### FIRST
 
-FIRST(M) is defined by case analysis on the sequence M and the structure of its
-first token-tree (if any):
+FIRST(M) 是通过对序列 M 及其第一个标记树(如果有的话)的结构进行案例分析来定义的:
+FIRST(M) is defined by case analysis on the sequence M and the structure of its first token-tree (if any):
 
-  * if M is the empty sequence, then FIRST(M) = { ε },
+  * 如果 M 为空序列，则 FIRST(M) = { ε }，if M is the empty sequence, then FIRST(M) = { ε },
 
-  * if M starts with a token t, then FIRST(M) = { t },
+  * 如果 M 以标记码 t 开始，则 FIRST(M) = { t }，if M starts with a token t, then FIRST(M) = { t },
 
-    (Note：this covers the case where M starts with a delimited token-tree
-    sequence, `M = OPEN tt ... CLOSE ...`, in which case `t = OPEN` and thus
-    FIRST(M) = { `OPEN` }.)
+    （注意:这涵盖了这样一种情况：M 以一个定界的标记树序列开始，`M = OPEN tt ... CLOSE ...`，此时 `t = OPEN`，因此 FIRST(M) = { `OPEN` }。）
+    (Note：this covers the case where M starts with a delimited token-tree sequence, `M = OPEN tt ... CLOSE ...`, in which case `t = OPEN` and thus FIRST(M) = { `OPEN` }.)
 
-    (Note：this critically relies on the property that no simple NT matches the
-    empty fragment.)
+    （注意：这主要依赖于没有简单NT与空匹配段匹配这一特性。）
+    (Note：this critically relies on the property that no simple NT matches the empty fragment.)
 
-  * Otherwise, M is a token-tree sequence starting with a complex NT：`M = $( tt
-    ... ) OP α`, or `M = $( tt ... ) SEP OP α`, (where `α` is the (potentially
-    empty) sequence of token trees for the rest of the matcher).
+  * 否则，M 是一个以复杂NT开始的标记树序列：`M = $( tt ... ) OP α`，或 `M = $( tt ... ) SEP OP α`，(其中 `α` 是匹配器其余部分的标记树序列(可能是空的))。Otherwise, M is a token-tree sequence starting with a complex NT：`M = $( tt ... ) OP α`, or `M = $( tt ... ) SEP OP α`, (where `α` is the (potentially empty) sequence of token trees for the rest of the matcher).
 
-      * Let SEP\_SET(M) = { SEP } if SEP is present and ε ∈ FIRST(`tt ...`);
-        otherwise SEP\_SET(M) = {}.
+      * Let SEP\_SET(M) = { SEP } 如果存在 SEP 且 ε ∈ FIRST(`tt ...`)；否则 SEP\_SET(M) = {}。
 
-  * Let ALPHA\_SET(M) = FIRST(`α`) if OP = `\*` or `?` and ALPHA\_SET(M) = {} if
-    OP = `+`.
+  * Let ALPHA\_SET(M) = FIRST(`α`) if OP = `\*` or `?` and ALPHA\_SET(M) = {} if OP = `+`.
   * FIRST(M) = (FIRST(`tt ...`) \\ {ε}) ∪ SEP\_SET(M) ∪ ALPHA\_SET(M).
 
-The definition for complex NTs deserves some justification. SEP\_SET(M) defines
-the possibility that the separator could be a valid first token for M, which
-happens when there is a separator defined and the repeated fragment could be
-empty. ALPHA\_SET(M) defines the possibility that the complex NT could be empty,
-meaning that M's valid first tokens are those of the following token-tree
-sequences `α`. This occurs when either `\*` or `?` is used, in which case there
-could be zero repetitions. In theory, this could also occur if `+` was used with
-a potentially-empty repeating fragment, but this is forbidden by the third
-invariant.
+复杂NT的定义值得商榷。SEP\_SET(M) 定义了分隔符可能是 M 的第一个有效标记码的可能性，当定义了分隔符且重复匹配段可能为空时，就会发生这种情况。ALPHA\_SET(M)定义了复杂NT可能为空的可能性，这意味着 M 的第一个有效标记码集合是后继标记树序列 `α` 。当使用了操作符 `\*` 或 `?` 时，这种情况下可能没有重复段。理论上，如果 `+` 与一个可能为空的重复匹配段一起使用，也会出现这种情况，但是第三个不变式禁止这样做。
+The definition for complex NTs deserves some justification. SEP\_SET(M) defines the possibility that the separator could be a valid first token for M, which happens when there is a separator defined and the repeated fragment could be empty. ALPHA\_SET(M) defines the possibility that the complex NT could be empty, meaning that M's valid first tokens are those of the following token-tree sequences `α`. This occurs when either `\*` or `?` is used, in which case there could be zero repetitions. In theory, this could also occur if `+` was used with a potentially-empty repeating fragment, but this is forbidden by the third invariant.
 
-From there, clearly FIRST(M) can include any token from SEP\_SET(M) or
-ALPHA\_SET(M), and if the complex NT match is nonempty, then any token starting
-FIRST(`tt ...`) could work too. The last piece to consider is ε. SEP\_SET(M) and
-FIRST(`tt ...`) \ {ε} cannot contain ε, but ALPHA\_SET(M) could. Hence, this
-definition allows M to accept ε if and only if ε ∈ ALPHA\_SET(M) does. This is
-correct because for M to accept ε in the complex NT case, both the complex NT
-and α must accept it. If OP = `+`, meaning that the complex NT cannot be empty,
-then by definition ε ∉ ALPHA\_SET(M). Otherwise, the complex NT can accept zero
-repetitions, and then ALPHA\_SET(M) = FOLLOW(`α`). So this definition is correct
-with respect to \varepsilon as well.
+From there, clearly FIRST(M) can include any token from SEP\_SET(M) or ALPHA\_SET(M), and if the complex NT match is nonempty, then any token starting FIRST(`tt ...`) could work too. The last piece to consider is ε. SEP\_SET(M) and FIRST(`tt ...`) \ {ε} cannot contain ε, but ALPHA\_SET(M) could. Hence, this definition allows M to accept ε if and only if ε ∈ ALPHA\_SET(M) does. This is correct because for M to accept ε in the complex NT case, both the complex NT and α must accept it. If OP = `+`, meaning that the complex NT cannot be empty, then by definition ε ∉ ALPHA\_SET(M). Otherwise, the complex NT can accept zero repetitions, and then ALPHA\_SET(M) = FOLLOW(`α`). So this definition is correct with respect to \varepsilon as well.
 
 #### LAST
 
@@ -215,7 +190,7 @@ LAST(M), defined by case analysis on M itself (a sequence of token-trees):
 ### Examples of FIRST and LAST
 ### 关于 FIRST 和 LAST 的示例
 
-下面是一些关于 FIRST 和 LAST 的例子。（请特别注意，特殊元素 ε 是如何根据输入匹配段之间的相互作用来引入和消除。）
+下面是一些关于 FIRST 和 LAST 的例子。（请特别注意，特殊元素 ε 是如何根据输入匹配段之间的相互作用来引入和消除的。）
 Below are some examples of FIRST and LAST. (Note in particular how the special ε element is introduced and eliminated based on the interaction between the pieces of the input.)
 
 我们的第一个例子以树状结构呈现，以详细说明匹配器的分析是如何组成的。（一些较简单的子树已被删除。）

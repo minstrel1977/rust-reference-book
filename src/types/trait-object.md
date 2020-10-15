@@ -11,9 +11,9 @@
 > _TraitObjectTypeOneBound_ :\
 > &nbsp;&nbsp; `dyn`<sup>?</sup> [_TraitBound_]
 
-*trait对象*是某种类型的不透明的值(opaque value)，该类型实现了一组 trait。这组 trait 是由一个[对象安全的][object safe]*基础trait* 加上任意数量的[自动trait][auto traits] 组成的。
+*trait对象*是某种类型的不透明的值(opaque value)，该类型实现了一组 trait。这组 trait 是由一个[对象安全的][object safe]*基础trait(base trait)* 加上任意数量的[自动trait][auto traits] 组成的。
 
-trait对象实现基础trait(base trait) 和它的自动trait 以及基础trait 的任何[超类trait][supertraits]。
+trait对象实现基础trait 和它的自动trait 以及基础trait 的任何[超类trait][supertraits]。
 
 
 trait对象被编写为可选的关键字 `dyn` 后跟一组trait约束，这些trait约束有如此限制：除了第一个 trait 外，所有 trait 都必须是自动trait；生存期不能超过一个；不允许选择退出约束(例如 `?Sized`)。此外，trait 的路径可以用圆括号括起来。
