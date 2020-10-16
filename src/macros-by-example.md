@@ -1,4 +1,4 @@
-# Macros By Example
+#checked# Macros By Example
 # 声明宏
 
 >[macros-by-example.md](https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md)\
@@ -96,7 +96,6 @@ foo!(3);
 ## 元变量
 
 在匹配器中，`$`*名称*`:`*匹配段类型指示符* 匹配符合指定句法类型的 Rust 匹配段，并将其绑定到元变量 `$`*名称*上。有效的匹配段类型指示符是：
-In the matcher, `$` _name_ `:` _fragment-specifier_ matches a Rust syntax fragment of the kind specified and binds it to the metavariable `$`_name_. Valid fragment specifiers are:
 
   * `item`: [_数据项_][_Item_]
   * `block`: [_块表达式_][_BlockExpression_]
@@ -135,6 +134,7 @@ In the matcher, `$` _name_ `:` _fragment-specifier_ matches a Rust syntax fragme
 1.  在转换器中，元变量必须与它在匹配器中出现的次数、指示符类型以及其在重复段内的嵌套顺序都完全相同。因此，对于匹配器 `$( $i:ident ),*`，转换器 `=> { $i }`, `=> { $( $( $i)* )* }` 和 `=> { $( $i )+ }` 都是非法的，但是 `=> { $( $i );* }` 是正确的，它用分号分隔的列表替换了逗号分隔的标识符列表。
 2.  转换器中的每个重复段必须至少包含一个元变量，以便确定扩展多少次。如果在同一个重复段中出现多个元变量，则它们必须绑定到相同数量的匹配段上。例如，`( $( $i:ident ),* ; $( $j:ident ),* ) =>( $( ($i,$j) ),*` 里，绑定到 `$j` 的匹配段的数量必须与绑定到 `$i` 上的相同。这意味着用 `(a, b, c; d, e, f`) 调用这个宏是合法的，并且可扩展到 `((a,d), (b,e), (c,f))`，但是 `(a, b, c; d, e)` 是非法的，因为前后绑定的数量不同。此要求适用于嵌套的重复段的每一层。
 
+## Scoping, Exporting, and Importing
 ## 作用域、导出以及导入
 
 由于历史原因，声明宏的作用域并不完全像数据项那样工作。宏有两种形式的作用域：文本作用域和基于路径的作用域。文本作用域基于宏在源文件中出现的顺序，或是跨多个文件出现的顺序，并且文本作用域是默认的作用域。后本节面将进一步解释这个。基于路径的作用域与其他数据项作用域的运行方式完全相同。宏的作用域、导出和导入主要由其属性控制。
@@ -153,9 +153,10 @@ lazy_static!{lazy} // 首先通过文本作用域来查找我们的宏.
 self::lazy_static!{} // 忽略文本作用域查找，直接使用基于路径的查找方式找到一个导入的宏.
 ```
 
+### Textual Scope
 ### 文本作用域
 
-文本作用域很大程度上取决于宏本身在源文件中的出现顺序，其工作方式与用 `let` 声明的局部变量的作用域类似，只不过它可以直接位于模块下。当使用 `macro_rules!` 定义宏时，宏在定义之后进入其作用域（请注意，它可以递归使用，因为名称是从调用位置查找的），直到封闭它的作用域（通常是模块）结束为止。文本作用域可以覆盖/进入子模块，甚至跨越多个文件：<!-- tobemodify 原文的“note that it can still be used recursively, since names are looked up from the invocation site”这句没搞懂 -->
+文本作用域很大程度上取决于宏本身在源文件中的出现顺序，其工作方式与用 `let` 声明的局部变量的作用域类似，只不过它可以直接位于模块下。当使用 `macro_rules!` 定义宏时，宏在定义之后进入其作用域（请注意，它可以递归使用，因为名称是从调用位置查找的[^请求帮助]），直到封闭它的作用域（通常是模块）结束为止。文本作用域可以覆盖/进入子模块，甚至跨越多个文件：
 
 <!-- ignore: requires external modules -->
 ```rust,ignore
@@ -178,7 +179,7 @@ mod has_macro {
 m!{} // OK: m 在上层模块文件 src/lib.rs 中声明后使用
 ```
 
-多次定义宏并不报错；除非超出作用域，否则最近的宏声明将遮蔽前一个声明。
+多次定义宏并不报错；除非超出作用域，否则最近的宏声明将屏蔽前一个。
 
 ```rust
 macro_rules! m {
@@ -205,7 +206,7 @@ mod inner {
 m!(1);
 ```
 
-宏也可以在函数内部声明和使用，工作原理类似：
+宏也可以在函数内部声明和使用，其工作方式类似：
 
 ```rust
 fn foo() {
@@ -220,9 +221,10 @@ fn foo() {
 // m!(); // Error: m 未在作用域内.
 ```
 
-### `macro_use` 属性
+### The `macro_use` attribute
+### `macro_use`属性
 
-*`macro_use` 属性*有两种用途。首先，它可以通过作用于模块的方式让模块内的宏的作用域在模块关闭时不结束：
+*`macro_use`属性*有两种用途。首先，它可以通过作用于模块的方式让模块内的宏的作用域在模块关闭时不结束：
 
 ```rust
 #[macro_use]
@@ -235,7 +237,7 @@ mod inner {
 m!();
 ```
 
-其次，它可以用于从另一个 crate 里导入宏，方法是将它附加到出现在 crate 根模块中的 `extern crate` 声明前。以这种方式导入的宏被导入到当前 crate 的预导入包里，而不是文本导入，这意味着它们可以被任何其他名称遮蔽。虽然可以在导入语句之前使用 `#[macro_use]` 导入宏，但如果发生冲突，则最后导入的宏将获胜。可选地，可以使用 [_MetaListIdents_] 句法指定要导入的宏列表（如果将 `#[macro_use]` 应用于模块，则不支持此操作）。 
+其次，它可以用于从另一个 crate 里来导入宏，方法是将它附加到当前 crate 根模块中的 `extern crate` 声明前。以这种方式导入的宏会被导入到当前 crate 的预导入包里，而不是直接文本导入，这意味着它们可以被任何其他同名宏屏蔽。虽然可以在导入语句之前使用 `#[macro_use]` 导入宏，但如果发生冲突，则最后导入的宏将胜出。可以使用可选的 [_MetaListIdents_] 句法规则指定要导入的宏列表；（如果将 `#[macro_use]` 应用于模块，则不支持此操作。）
 
 <!-- ignore: requires external crates -->
 ```rust,ignore
@@ -248,9 +250,10 @@ lazy_static!{}
 
 要用 `#[macro_use]` 导入的宏必须使用 `#[macro_export]` 导出，下文会有讲解。
 
+### Path-Based Scope
 ### 基于路径的作用域
 
-默认情况下，宏没有基于路径的作用域。但是，如果它具有 `#[macro_export]` 属性，那么它会在当前 clate 的根作用域中被声明，并且通常可以这样引用：
+默认情况下，宏没有基于路径的作用域。但是如果该宏带有 `#[macro_export]` 属性，则相当于它在当前 crate 的根作用域的顶部被声明，它通常可以这样引用：
 
 ```rust
 self::m!();
@@ -269,11 +272,12 @@ mod mac {
 }
 ```
 
-标有 `#[macro_export]` 的宏始终是 `pub` 的，可以通过路径或上面所述的 `#[macro_use]` 的方式让其他 crate 引用。
+标有 `#[macro_export]` 的宏始终是 `pub` 的，可以通过路径或前面所述的 `#[macro_use]` 方式让其他 crate 引用。
 
-## 卫生性（Hygiene）
+## Hygiene
+## 卫生性
 
-默认情况下，宏中引用的所有标识符都按原样展开，并在宏的调用位置上查找。如果宏引用的数据项或宏不在调用位置的作用域内，则这可能会导致问题。为了缓解这种情况，可以在路径的开头使用`$crate` 元变量，以强制在定义宏的 crate 中进行查找。
+默认情况下，宏中引用的所有标识符都按原样展开，并在宏的调用位置（所在的作用域）上查找。如果宏引用的数据项或宏不在调用位置的作用域内，则这可能会导致问题。为了解决这个问题，可以替代在路径的开头使用`$crate` 元变量，强制在定义宏的 crate 中进行查找。
 
 <!-- ignore: requires external crates -->
 ```rust,ignore
@@ -290,7 +294,7 @@ macro_rules! helper {
 }
 
 //// 在另一个 crate 中使用.
-// 注意 `helper_macro::helper` 没有导入!
+// 注意没有导入 `helper_macro::helper`!
 use helper_macro::helped;
 
 fn unit() {
@@ -311,7 +315,7 @@ pub mod inner {
 }
 ```
 
-此外，尽管 `$crate` 允许宏在扩展时引用其自身 crate 中的数据项，但它的使用对可见性没有影响。引用的数据项或宏必须仍然在调用位置可见。在下面的示例中，任何试图从其 crate 外部调用 `call_foo!()` 的行为都将失败，因为 `foo()` 不是公有的。（译者注：下面的调用是可以，原文上没有给出 crate 外部调用的例子）
+此外，尽管 `$crate` 允许宏在扩展时引用其自身 crate 中的数据项，但它的使用对可见性没有影响。引用的数据项或宏必须仍然在调用位置可见。在下面的示例中，任何试图从其 crate 外部调用 `call_foo!()` 的行为都将失败，因为 `foo()` 不是公有的。
 
 ```rust
 #[macro_export]
@@ -321,10 +325,11 @@ macro_rules! call_foo {
 
 fn foo() {}
 ```
+（译者注：原文给出的这个例子是能正常调用的，原文并没有给出在 crate 外部调用的例子）
 
-> **版本/版次差异**：在 Rust 1.30 之前，`$crate` 和 `local_inner_macros` （以下）不受支持。该版本开始，它们与基于路径的宏导入（如上所述）一起添加，以确保辅助宏不需要由宏导出 crate 的用户手动导入。如果要让 Rust 的早期版本编写的 crate 使用辅助宏，需要修改为使用 `$crate` 或 `local_inner_macros`，以便与基于路径的导入一起工作。
+> **版本/版次差异**：在 Rust 1.30 之前，`$crate` 和 `local_inner_macros` （后面会讲）不受支持。该版本开始，它们与基于路径的宏导入（前面讲过）一起添加，以确保辅助宏不需要由宏导出 crate 的用户手动导入。如果要让 Rust 的早期版本编写的 crate 使用辅助宏，需要修改为使用 `$crate` 或 `local_inner_macros`，以便与基于路径的导入一起工作。
 
-当一个宏被导出时，`#[macro_export]` 属性里可以添加`local_inner_macros`关键字，可以自动为（该属性修饰的宏）内包含的所有宏调自动添加 `$crate::` 前缀。这主要是作为一个工具，用于迁移那些在引入 `$crate` 之前的版本编写的 Rust 代码，以便它们能与 Rust 2018 版中基于路径的宏导入一起工作。在使用新版本编写的代码中不鼓励使用它。
+当一个宏被导出时，可以在 `#[macro_export]` 属性里添加 `local_inner_macros` 关键字，可以自动为该属性修饰的宏内包含的所有宏调用自动添加 `$crate::` 前缀。这主要是作为一个工具来迁移那些在引入 `$crate` 之前的版本编写的 Rust 代码，以便它们能与 Rust 2018 版中基于路径的宏导入一起工作。在使用新版本编写的代码中不鼓励使用它。
 
 ```rust
 #[macro_export(local_inner_macros)]
@@ -341,45 +346,47 @@ macro_rules! helper {
 ## Follow-set Ambiguity Restrictions
 ## 随集歧义限制
 
-宏系统使用的解析器相当强大，但为了防止其与语言的当前或未来版本产生歧义，对它做出了限制。特别地，除了关于歧义性展开的规则外，由元变量匹配的非终结符必须后跟一个已确定可以在这种匹配之后安全使用的标记码。
+宏系统使用的解析器相当强大，但是为了防止其与语言的当前或未来版本的语言出现二义性，对它做出了限制。特别是，除了关于二义性展开的规则外，由[元变量匹配的非终结符](macro-ambiguity.md#Definitions-&-Conventions)必须后跟一个已确定可以在这种匹配之后安全使用的标记码。
 
-例如，像 `$i:expr [ , ]` 这样的宏匹配器在现今的 Rust 中理论上是可以接受的，因为`[,]` 不能是合法表达式的一部分，因此解析始终是明确的。但是，由于`[`可以开始尾随表达式，`[`不是一个可以安全排除在表达式后面出现的字符。如果在接下来的 Rust 版本中接受了 `[,]`，那么这个匹配器就会产生歧义或是错误解析，破坏正常代码。但是，像`$i:expr,` 或 `$i:expr;` 这样的匹配符是合法的，因为 `,` 和`;` 是合法的表达式分隔符。具体规则是：
+例如，像 `$i:expr [ , ]` 这样的宏匹配器在现今的 Rust 中理论上是可以接受的，因为现在 `[,]` 不可能是合法表达式的一部分，因此解析始终是明确的。但是，由于 `[` 可以开始一个尾随表达式(trailing expressions)，因此 `[` 不是一个可以安全排除在表达式后面出现的字符。如果在接下来的 Rust 版本中接受了 `[,]`，那么这个匹配器就会产生歧义或是错误解析，破坏正常代码。但是，像`$i:expr,` 或 `$i:expr;` 这样的匹配符是合法的，因为 `,` 和`;` 是合法的表达式分隔符。目前规范中的规则是：
 
-  * `expr` 和 `stmt` 或许只能后跟一个： `=>`, `,`, 或 `;`。
-  * `pat` 或许只能后跟一个： `=>`, `,`, `=`, `|`, `if`, 或 `in`。
-  * `path` 和 `ty` 或许只能后跟一个： `=>`, `,`, `=`, `|`, `;`, `:`, `>`, `>>`, `[`, `{`, `as`, `where`, 或 `block` 片段分类符的宏变量。
-  * `vis` 或许只能后跟一个： `,`, 非原生 `priv`以外的标识符，可以开始类型的任何标记码， 或者带有任何 `ident`, `ty`, `path` 片段分类符的元变量。
-  * 其它所有的片段分类符没有限制。
+  * `expr` 和 `stmt` 或许只能后跟一个： `=>`、`,` 或 `;`。
+  * `pat` 或许只能后跟一个： `=>`、`,`、`=`、`|`、`if` 或 `in`。
+  * `path` 和 `ty` 或许只能后跟一个： `=>`、`,`、`=`、`|`、`;`、`:`、`>`、`>>`、`[`、`{`、`as`、`where` 或 块表达式匹配段类型指示符(`block`)里的一个宏变量。
+  * `vis` 或许只能后跟一个：`,`、非原生 `priv` 以外的标识符、可以开始类型的任何标记码 或 带有任何 `ident`、`ty`、`path` 匹配段类型指示符的元变量。
+  * 其它所有的匹配段类型指示符没有限制。
 
-当涉及到重复时，这些规则适用于所有可能的展开次数，注意需将分隔符考虑在内。这意味着：
+当涉及到重复段时，这些规则适用于所有可能的展开次数，注意需将分隔符考虑在内。这意味着：
+When repetitions are involved, then the rules apply to every possible number of expansions, taking separators into account. This means:
 
-  * 如果重复包含分隔符，则分隔符必须能够跟随重复的内容。
-  * 如果重复可以重复多次(`*` 或 `+`)，那么每一层重复里的内容必须形式统一。
-  * 重复的内容必须能够和它前面的内容形式保持一致，后面的内容也必须遵循相同的形式。
-  * 如果重复可以匹配零次(`*` 或 `?`)，那么后面的内容必须能够和前面的内容形式一致。
-
->（译者注：这几条规则直译很难理解，但是我又对这些规则理解不深刻，所以只能凑合这先这么意译，等以后理解深刻了再来修改，那先在这儿打个TobeModify的标记）。
+  * 如果重复段包含分隔符，则分隔符必须能够跟随重复段的内容重复。
+  * 如果重复段可以重复多次(`*` 或 `+`)，那么重复段的内容必须能自我重复。
+  * 重复段前后内容必须必须严格匹配匹配器中指定的前后内容。
+  * 如果重复段可以匹配零次(`*` 或 `?`)，那么它后面的内容必须直接跟在它前面的内容后面。
+  
 有关更多详细信息，请参阅[正式规范]。
+
+[^请求帮助]: 这个括号内的原文为：note that it can still be used recursively, since names are looked up from the invocation site。这段译者没搞懂，只是直译了过来，希望懂得这部分知识的读者能帮忙解释一下。
 
 [Hygiene]: #hygiene
 [IDENTIFIER]: identifiers.md
-[标识符或关键字]: identifiers.md
-[生存期标记码]: tokens.md#lifetimes-and-loop-labels
+[IDENTIFIER_OR_KEYWORD]: identifiers.md
+[LIFETIME_TOKEN]: tokens.md#lifetimes-and-loop-labels
 [Metavariables]: #metavariables
 [Repetitions]: #repetitions
-[_属性值_]: attributes.md
-[_块表达式_]: expressions/block-expr.md
+[_Attr_]: attributes.md
+[_BlockExpression_]: expressions/block-expr.md
 [_DelimTokenTree_]: macros.md
-[_表达式_]: expressions.md
-[_数据项_]: items.md
-[_字面量表达式_]: expressions/literal-expr.md
-[_MetaListIdents_]: attributes.md#元项属性句法
-[_模式_]: patterns.md
-[_语句_]: statements.md
-[_标记树_]: macros.md#宏调用
+[_Expression_]: expressions.md
+[_Item_]: items.md
+[_LiteralExpression_]: expressions/literal-expr.md
+[_MetaListIdents_]: attributes.md#meta-item-attribute-syntax
+[_Pattern_]: patterns.md
+[_Statement_]: statements.md
+[_TokenTree_]: macros.md#macro-invocation
 [_Token_]: tokens.md
-[_类型路径_]: paths.md#类型中的路径
-[_类型_]: types.md#type-expressions
-[_可见性_]: visibility-and-privacy.md
-[正式规范]: macro-ambiguity.md
-[标记码]: tokens.md
+[_TypePath_]: paths.md#paths-in-types
+[_Type_]: types.md#type-expressions
+[_Visibility_]: visibility-and-privacy.md
+[formal specification]: macro-ambiguity.md
+[token]: tokens.md

@@ -140,7 +140,7 @@ Types that can be referred to by a path directly. Specifically [enums], [structs
 [Traits] that can be used as [trait objects]. Only traits that follow specific [rules][object safety] are object safe.
 
 ### Prelude
-### 预加载模块集
+### 预加载模块集/预导入包
 
 预加载模块集，或者 Rust 预加载模块集，是一个会被导入到每个 crate 中的每个模块的小型数据项集合（其中大部分是 trait）。trait 在预加载模块集中很普遍。\
 Prelude, or The Rust Prelude, is a small collection of items - mostly traits - that are imported into every module of every crate. The traits in the prelude are pervasive.

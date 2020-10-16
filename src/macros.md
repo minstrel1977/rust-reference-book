@@ -1,9 +1,11 @@
+# Macros
 # 宏
 
 >[macros.md](https://github.com/rust-lang/reference/blob/master/src/macros.md)\
 >commit 771c5d10cf944bf7d221f5d6cb7abd2a06c400e4
 
-Rust 语言的功能和句法可以通过自定义宏进行扩展。宏可以被命名，可通过一致的句法调用：`some_extension!(...)`。
+Rust 语言的功能和句法可以通过宏的方式让用户自行定义扩展。宏需要被命名，并通过一致的句法调用：`some_extension!(...)`。
+The functionality and syntax of Rust can be extended with custom definitions called macros. They are given names, and invoked through a consistent syntax:`some_extension!(...)`.
 
 定义新宏有两种方式：
 
