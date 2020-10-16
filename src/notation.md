@@ -2,7 +2,7 @@
 # 表义符/符号
 
 >[notation.md](https://github.com/rust-lang/reference/blob/master/src/notation.md)\
->commit b0e0ad6490d6517c19546b1023948986578fc378
+>commit dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6
 
 ## Grammar
 ## 语法
@@ -20,9 +20,9 @@
 | x<sup>+</sup>     |  _MacroMatch_<sup>+</sup>     | x 重复一次或多次                  |
 | x<sup>a..b</sup>  | HEX_DIGIT<sup>1..6</sup>      | x 重复 a 到 b 次                 |
 | \|                | `u8` \| `u16`, Block \| Item  | 或                              |
-| [ ]               | [`b` `B`]                     | 列举的任意字符                    |
-| [ - ]             | [`a`-`z`]                     | a 到 z 范围内的任意字符(包括 a 和 z)|
-| ~[ ]              | ~[`b` `B`]                    | 列举范围外的任意字符(序列)          |
+| \[ ]               | \[`b` `B`]                     | 列举的任意字符                    |
+| \[ - ]             | \[`a`-`z`]                     | a 到 z 范围内的任意字符(包括 a 和 z)|
+| ~\[ ]              | ~\[`b` `B`]                    | 列举范围外的任意字符(序列)          |
 | ~`string`         | ~`\n`, ~`*/`                  | 此字符序列外的任意字符(序列)        |
 | ( )               | (`,` _Parameter_)<sup>?</sup> | 数据项分组(Groups items)       |
 
@@ -37,3 +37,4 @@
 [关键字]: keywords.md
 [标记码]: tokens.md
 [一元运算符]: expressions/operator-expr.md#borrow-operators
+<!-- 2020-10-16 -->

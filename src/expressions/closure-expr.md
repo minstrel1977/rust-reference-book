@@ -2,7 +2,7 @@
 # 闭包表达式
 
 >[closure-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/closure-expr.md)\
->commit 19c718bd0de419892cd6ce87cc7e17ce0280d75c
+>commit b2d11240bd9a3a6dd34419d0b0ba74617b23d77e
 
 > **<sup>句法</sup>**\
 > _ClosureExpression_ :\
@@ -59,3 +59,4 @@ ten_times(move |j| println!("{}, {}", word, j));
 [_Type_]: ../types.md#type-expressions
 [`let` binding]: ../statements.md#let语句
 [_OuterAttribute_]: ../attributes.md
+<!-- 2020-10-16 -->

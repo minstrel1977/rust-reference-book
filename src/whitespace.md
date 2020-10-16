@@ -2,7 +2,7 @@
 # 空白符
 
 >[whitespace.md](https://github.com/rust-lang/reference/blob/master/src/whitespace.md)\
->commit 716e04f203c10387bd66aa3bcf1663e75ce208cf
+>commit dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6
 
 空白符是非空字符串，它里面只包含具有 [`Pattern_White_Space`] 属性的 Unicode 字符，即:
 

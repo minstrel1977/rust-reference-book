@@ -1,12 +1,12 @@
 # 标识符
 
 >[identifiers.md](https://github.com/rust-lang/reference/blob/master/src/identifiers.md)\
->commit 34d27fe8bc8b89b55da690484d1e17fbd0f25055
+>commit dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6
 
 > **<sup>词法分析:<sup>**\
 > IDENTIFIER_OR_KEYWORD :\
-> &nbsp;&nbsp; &nbsp;&nbsp; [`a`-`z` `A`-`Z`]&nbsp;[`a`-`z` `A`-`Z` `0`-`9` `_`]<sup>\*</sup>\
-> &nbsp;&nbsp; | `_` [`a`-`z` `A`-`Z` `0`-`9` `_`]<sup>+</sup>
+> &nbsp;&nbsp; &nbsp;&nbsp; \[`a`-`z` `A`-`Z`]&nbsp;\[`a`-`z` `A`-`Z` `0`-`9` `_`]<sup>\*</sup>\
+> &nbsp;&nbsp; | `_` \[`a`-`z` `A`-`Z` `0`-`9` `_`]<sup>+</sup>
 >
 > RAW_IDENTIFIER : `r#` IDENTIFIER_OR_KEYWORD <sub>*排除 `crate`, `self`, `super`, `Self`*</sub>
 >
@@ -32,3 +32,4 @@
 
 [严格]: keywords.md#严格关键字
 [保留]: keywords.md#保留关键字
+<!-- 2020-10-16 -->

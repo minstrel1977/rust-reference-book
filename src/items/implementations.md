@@ -2,7 +2,7 @@
 # 实现
 
 >[implementations.md](https://github.com/rust-lang/reference/blob/master/src/items/implementations.md)\
->commit 6a78aa5b0b09f78a6fa28b9dc3078c9b134785a9
+>commit b2d11240bd9a3a6dd34419d0b0ba74617b23d77e
 
 > **<sup>句法</sup>**\
 > _Implementation_ :\
@@ -202,3 +202,4 @@ impl Seq<bool> for u32 {
 [本地类型]: ../glossary.md#local-type
 [基本类型]: ../glossary.md#fundamental-type-constructors
 [无覆盖类型]: ../glossary.md#uncovered-type
+<!-- 2020-10-16 -->

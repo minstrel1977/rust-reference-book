@@ -2,7 +2,7 @@
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit 29d7e4ba448366ace751a9149c1a27ff3470cda9
+>commit 03dc50769738a643be1451a4ff1516fa5fab92bd
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -72,7 +72,7 @@ let a = & & & & mut 10;
 > _DereferenceExpression_ :\
 > &nbsp;&nbsp; `*` [_Expression_]
 
-`*`（解引用）运算符也是一元前缀运算符。当应用于[指针](../types/pointer.md)时，它表示指向的内存位置。如果表达式的类型为 `&mut T` 和 `*mut T`，并且该表达式是局部变量（局部变量的（嵌套）字段也可）或是可变的[位置表达式][place expression]，则它代表的内存位置可以被赋值。对原始指针的解引用需要  `unsafe`。
+`*`（解引用）运算符也是一元前缀运算符。当应用于[指针](../types/pointer.md)时，它表示指向的内存位置。如果表达式的类型为 `&mut T` 或 `*mut T`，并且该表达式是局部变量（局部变量的（嵌套）字段也可）或是可变的[位置表达式][place expression]，则它代表的内存位置可以被赋值。对原始指针的解引用需要  `unsafe`。
 
 在[不可变位置表达式上下文](../expressions.md#可变性)中对非指针类型作 `*x` 相当于执行 `*std::ops::Deref::deref(&x)`；同样的，在可变位置表达式上下文中这个动作就相当于执行 `*std::ops::DerefMut::deref_mut(&mut x)`。
 
@@ -413,3 +413,4 @@ assert_eq!(x, 14);
 
 [_Expression_]: ../expressions.md
 [_TypeNoBounds_]: ../types.md#type-expressions
+<!-- 2020-10-16 -->

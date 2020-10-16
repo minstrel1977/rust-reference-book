@@ -1,7 +1,7 @@
 # Appendix：Macro Follow-Set Ambiguity Formal Specification
 
 >[macro-ambiguity.md](https://github.com/rust-lang/reference/blob/master/src/macro-ambiguity.md)\
->commit  403738f99b69a6a0186c9151ef1dc846e7e61e9f
+>commit  184b056086757e89d68f41c8c0e42721cb50a4a9
 
 本页介绍了下述[声明宏][Macros By Example]的规则的正式规范。它们最初是在 [RFC550] 中指定的，本文的大部分内容都是从其中复制过来的，并在后续的RFC中进行展开。
 
@@ -293,3 +293,4 @@ why particular matchers are legal and others are not.
 [Macros by Example]：macros-by-example.md
 [RFC 550]：https://github.com/rust-lang/rfcs/blob/master/text/0550-macro-future-proofing.md
 [tracking issue]：https://github.com/rust-lang/rust/issues/56575
+<!-- 2020-10-16 -->

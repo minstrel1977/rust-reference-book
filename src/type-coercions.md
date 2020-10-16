@@ -2,7 +2,7 @@
 # 类型自动强转
 
 >[type-coercions.md](https://github.com/rust-lang/reference/blob/master/src/type-coercions.md)\
->commit d5372c951cc37d76dc5d01e91ebfafdb30e3f50d
+>commit d5a5e32d3cda8a297d2a91a85b91ff2629b0e896
 
 **类型自动强转**是改变值的类型的隐式操作。它们在特定的位置自动发生，并且在实际自动强转的类型上受到很多限制。
 
@@ -160,6 +160,76 @@
 
 > 注：虽然非固定尺寸类型自动强转的定义及其实现已经稳定下来，但两trait本身还没稳定下来，因此不能直接用于稳定版的 Rust。
 
+## Least upper bound coercions
+## 最小上界自动强转
+
+在某些上下文中，编译器必须将多个类型强制在一起，以尝试找到最通用的类型。这被称为“最小上界(Least Upper Bound,简称LUB)”自动强转。LUB自动强转只在以下情况下使用：
+
++ 为一系列 if分支的查找共同的类型。
++ 为一系列的匹配臂查找共同的类型。
++ 为数组元素查找共同的类型。
++ 为带有多个返回项语句的闭包的返回类型查找共同的类型。
++ 检查带有多个返回语句的函数的返回类型。
+
+在这每种情况下，都有一组类型 `T0..Tn` 被共同自动强转到某个未知的目标类型 `T_t`，注意开始时 `T_t` 是为止的。LUB 自动强转的计算过程是不断迭代的。首先把目标类型 `T_t` 定为从类型 `T0` 开始。对于每一种新类型 `Ti`，我们考虑如下步骤：
+
++ 如果 `Ti` 可以自动强转为当前目标类型 `T_t`，则不做任何更改。 
++ 否则，检查 `T_t` 是否可以被自动强转为 `Ti`；如果是这样，`T_t` 就改为 `Ti`。（此检查还取决于到目前为止所考虑的所有源表达式是否带有隐式自动强转。）
++ 如果不是，尝试计算一个 `T_t` 和 `Ti` 的共同的超类型(supertype)，此超类型将成为新的目标类型。
+
+### Examples:
+
+```rust
+# let (a, b, c) = (0, 1, 2);
+// if分支的情况
+let bar = if true {
+    a
+} else if false {
+    b
+} else {
+    c
+};
+
+// 匹配臂的情况
+let baw = match 42 {
+    0 => a,
+    1 => b,
+    _ => c,
+};
+
+// 数组元素的情况
+let bax = [a, b, c];
+
+// 多个返回项语句的闭包的情况
+let clo = || {
+    if true {
+        a
+    } else if false {
+        b
+    } else {
+        c
+    }
+};
+let baz = clo();
+
+// 检查带有多个返回语句的函数的情况
+fn foo() -> i32 {
+    let (a, b, c) = (0, 1, 2);
+    match 42 {
+        0 => a,
+        1 => b,
+        _ => c,
+    }
+}
+```
+
+在这些例子中，`ba*` 的类型可以通过 LUB自动强转找到。编译器检查 LUB自动强转在处理函数 `foo` 时，是否把 `a`，`b`，`c` 的结果转为了 `i32`。
+
+### Caveat
+### 警告
+
+这种描述显然是非正式的。使这种文字描述更精确的工作，目前正作为更精确地指定 Rust 类型检查器的一般性工作的一部分，正在紧锣密鼓的进行中。
+
 [RFC 401]: https://github.com/rust-lang/rfcs/blob/master/text/0401-coercions.md
 [RFC 1558]: https://github.com/rust-lang/rfcs/blob/master/text/1558-closure-to-fn-coercion.md
 [subtype]: subtyping.md
@@ -167,3 +237,4 @@
 [type cast operator]: expressions/operator-expr.md#type-cast-expressions
 [`Unsize`]: ../std/marker/trait.Unsize.html
 [`CoerceUnsized`]: ../std/ops/trait.CoerceUnsized.html
+<!-- 2020-10-16 -->

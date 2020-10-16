@@ -2,7 +2,7 @@
 # 术语表
 
 >[glossary.md](https://github.com/rust-lang/reference/blob/master/src/glossary.md)\
->commit eadbdafec0c4e302c2e564a773fe5bff60ddac1d
+>commit b2d11240bd9a3a6dd34419d0b0ba74617b23d77e
 
 ### Abstract syntax tree
 ### 抽象语法树
@@ -234,3 +234,4 @@ A type is uninhabited if it has no constructors and therefore can never be insta
 [traits]: items/traits.md
 [undefined-behavior]: behavior-considered-undefined.md
 [unions]: items/unions.md
+<!-- 2020-10-16 -->

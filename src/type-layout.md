@@ -2,7 +2,7 @@
 # 类型布局
 
 >[type-layout.md](https://github.com/rust-lang/reference/blob/master/src/type-layout.md)\
->commit 66b4d58fc0830757a98be2c5ba390255168056f7
+>commit dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6
 
 类型的布局描述类型的尺寸(size)、对齐量(alignment)和字段(fields)的*相对偏移量(relative offsets)*。对于枚举，如何布局和解释判别值(discriminant)也是类型布局的一部分。
 
@@ -148,8 +148,8 @@ struct AlignedStruct {
 
 这种表型可以应用于结构体(structs)、联合体(unions)和枚举(enums)。一个例外是[零变体枚举(zero-variant enums)][zero-variant enums]，它的`C`表形是错误的。
 
-#### \#[repr(C)] Structs
-#### \#[repr(C)] 结构体
+#### `#[repr(C)]` Structs
+#### `#[repr(C)]`结构体
 
 结构体的对齐量是其*最大对齐量的字段(most-aligned field)*的对齐量。
 
@@ -203,8 +203,8 @@ struct.size = current_offset + padding_needed_for(current_offset, struct.alignme
 
 > 注意：此算法可以生成零尺寸的结构体。在C语言中，像 `struct Foo { }` 这样的空结构体声明是非法的。然而，gcc 和 clang 都支持启用此类结构体的选项，并将其尺寸指定为零。跟 Rust 不同的是 C++ 给空结构体指定的尺寸为1，并且除非它们是继承的，否则它们是具有 `[[no_unique_address]]` 属性的字段(在这种情况下，它们不会增大结构体的整体尺寸)。
 
-#### \#[repr(C)] Unions
-#### \#[repr(C)] 联合体
+#### `#[repr(C)]` Unions
+#### `#[repr(C)]`联合体
 
 使用 `#[repr(C)]` 声明的联合体将与相同目标平台上的C语言中的 C联合体声明具有相同的尺寸和对齐量。联合体的对齐量等同于其所有字段的最大对齐量，尺寸将为其所有字段的最大对尺寸，再对其向上取整到最近对齐量的整数倍。这些最大值可能来自不同的字段。
 
@@ -230,8 +230,8 @@ assert_eq!(std::mem::size_of::<SizeRoundedUp>(), 12);  // 首先来自于b的尺
 
 ```
 
-#### \#[repr(C)] Field-less Enums
-#### \#[repr(C)] 无字段枚举
+#### `#[repr(C)]` Field-less Enums
+#### `#[repr(C)]`无字段枚举
 
 对于[无字段枚举][field-less enums]，C表形的尺寸和对齐量与目标平台的 C ABI 的默认枚举尺寸和对齐量相同。
 
@@ -243,8 +243,8 @@ assert_eq!(std::mem::size_of::<SizeRoundedUp>(), 12);  // 首先来自于b的尺
 
 </div>
 
-#### \#[repr(C)] Enums With Fields
-#### \#[repr(C)] 带字段枚举
+#### `#[repr(C)]` Enums With Fields
+#### `#[repr(C)]`带字段枚举
 
 带字段的 `repr(C)`枚举的表形相当于一个带两个字段的 `repr(C)`结构体（这种在C语言中也被称为“标签联合(tagged union)”），这两个字段：
 
@@ -364,8 +364,8 @@ struct MyVariantD(MyEnumDiscriminant);
 
 > Note: `union`s with non-`Copy` fields are unstable, see [55149].
 
-#### Combining primitive representations of enums with fields and \#[repr(C)]
-#### 带字段枚举的原语表形与 \#[repr(C)] 表形的组合使用
+#### Combining primitive representations of enums with fields and `#[repr(C)]`
+#### 带字段枚举的原语表形与`#[repr(C)]`表形的组合使用
 
 对于带字段枚举，还可以将 `repr(C)` 和原语表形(例如，`repr(C, u8)`)结合起来使用。这是通过将判别值组成枚举的表形改为原语表形来实现的。因此，如果选择 `u8`表形，那么判别值枚举的尺寸和对齐量将为1个字节。
 
@@ -477,3 +477,4 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 [structs]: items/structs.md
 [`transparent`]: #the-transparent-representation
 [`Layout`]: ../std/alloc/struct.Layout.html
+<!-- 2020-10-16 -->

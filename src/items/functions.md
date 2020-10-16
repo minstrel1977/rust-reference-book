@@ -1,7 +1,7 @@
 # 函数
 
 >[functions.md](https://github.com/rust-lang/reference/blob/master/src/items/functions.md)\
->commit 6dceee14cd895247c3a272086798083e35b31d06
+>commit f35a6003ad9aff52e3cd459917b737bb5b1e56f8
 
 > **<sup>句法</sup>**\
 > _Function_ :\
@@ -232,7 +232,7 @@ async fn safe_example() {
 
 下面这个例子显示了一个函数的内部属性。该函数仅在运行测试时可用。
 
-```
+```rust
 fn test_only() {
     #![test]
 }
@@ -304,3 +304,4 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [`link_section`]: ../abi.md#the-link_section-attribute
 [`no_mangle`]: ../abi.md#the-no_mangle-attribute
 [*内置*属性]: ../attributes.html#built-in-attributes-index
+<!-- 2020-10-16 -->

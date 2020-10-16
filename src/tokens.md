@@ -2,7 +2,7 @@
 # 标记码
 
 >[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
->commit 3dafca50690d3df717e4d1432fb5184877651ad4
+>commit dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6
 
 标记码是由正则（非递归）语言定义的语法中的基础元素。Rust 源代码可分成以下几种标记码：
 
@@ -107,7 +107,7 @@ blackhole!("string"suffix); // OK
 
 > **<sup>词法</sup>**\
 > CHAR_LITERAL :\
-> &nbsp;&nbsp; `'` ( ~[`'` `\` \\n \\r \\t] | QUOTE_ESCAPE | ASCII_ESCAPE | UNICODE_ESCAPE ) `'`
+> &nbsp;&nbsp; `'` ( ~\[`'` `\` \\n \\r \\t] | QUOTE_ESCAPE | ASCII_ESCAPE | UNICODE_ESCAPE ) `'`
 >
 > QUOTE_ESCAPE :\
 > &nbsp;&nbsp; `\'` | `\"`
@@ -126,7 +126,7 @@ blackhole!("string"suffix); // OK
 > **<sup>词法</sup>**\
 > STRING_LITERAL :\
 > &nbsp;&nbsp; `"` (\
-> &nbsp;&nbsp; &nbsp;&nbsp; ~[`"` `\` _IsolatedCR_]&nbsp;&nbsp;(译者注：IsolatedCR：后面没有跟 `\n` 的 `\r`，首次定义见[注释](comments.md))\
+> &nbsp;&nbsp; &nbsp;&nbsp; ~\[`"` `\` _IsolatedCR_]&nbsp;&nbsp;(译者注：IsolatedCR：后面没有跟 `\n` 的 `\r`，首次定义见[注释](comments.md))\
 > &nbsp;&nbsp; &nbsp;&nbsp; | QUOTE_ESCAPE\
 > &nbsp;&nbsp; &nbsp;&nbsp; | ASCII_ESCAPE\
 > &nbsp;&nbsp; &nbsp;&nbsp; | UNICODE_ESCAPE\
@@ -275,13 +275,13 @@ b"\\x52"; br"\x52";                  // \x52
 > HEX_LITERAL :\
 > &nbsp;&nbsp; `0x` (HEX_DIGIT|`_`)<sup>\*</sup> HEX_DIGIT (HEX_DIGIT|`_`)<sup>\*</sup>
 >
-> BIN_DIGIT : [`0`-`1`]
+> BIN_DIGIT : \[`0`-`1`]
 >
-> OCT_DIGIT : [`0`-`7`]
+> OCT_DIGIT : \[`0`-`7`]
 >
-> DEC_DIGIT : [`0`-`9`]
+> DEC_DIGIT : \[`0`-`9`]
 >
-> HEX_DIGIT : [`0`-`9` `a`-`f` `A`-`F`]
+> HEX_DIGIT : \[`0`-`9` `a`-`f` `A`-`F`]
 >
 > INTEGER_SUFFIX :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `u8` | `u16` | `u32` | `u64` | `u128` | `usize`\
@@ -553,3 +553,4 @@ let x: f64 = 2.; // type f64
 [use 声明]: items/use-declarations.md
 [use 通配符]: items/use-declarations.md
 [while let]: expressions/loop-expr.md#predicate-pattern-loops
+<!-- 2020-10-16 -->
