@@ -4,14 +4,14 @@
 >[macros.md](https://github.com/rust-lang/reference/blob/master/src/macros.md)\
 >commit 771c5d10cf944bf7d221f5d6cb7abd2a06c400e4
 
-Rust 语言的功能和句法可以通过宏的方式让用户自行定义扩展。宏需要被命名，并通过一致的句法调用：`some_extension!(...)`。
-The functionality and syntax of Rust can be extended with custom definitions called macros. They are given names, and invoked through a consistent syntax:`some_extension!(...)`.
+Rust 语言的功能和句法可以通过宏的方式让用户自行定义扩展。宏需要被命名，并通过一致的句法去调用：`some_extension!(...)`。
 
 定义新宏有两种方式：
 
-* [声明宏]以更高级别的声明性的方式定义了一套新句法规则。
-* [过程宏] 可用于实现自定义派生。
+* [声明宏(Macros by Example)][Macros by Example]以更高级别的声明性的方式定义了一套新句法规则。
+* [过程宏(Procedural Macros)][Procedural Macros]可用于实现自定义派生。
 
+## Macro Invocation
 ## 宏调用
 
 > **<sup>句法</sup>**\
@@ -24,23 +24,24 @@ The functionality and syntax of Rust can be extended with custom definitions cal
 > &nbsp;&nbsp; | `{` _TokenTree_<sup>\*</sup> `}`
 >
 > _TokenTree_ :\
-> &nbsp;&nbsp; [_Token_]<sub>_排除 [分隔符]_</sub> | _DelimTokenTree_
+> &nbsp;&nbsp; [_Token_]<sub>_排除 [定界符(delimiters)][delimiters]_</sub> | _DelimTokenTree_
 >
 > _MacroInvocationSemi_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_SimplePath_] `!` `(` _TokenTree_<sup>\*</sup> `)` `;`\
 > &nbsp;&nbsp; | [_SimplePath_] `!` `[` _TokenTree_<sup>\*</sup> `]` `;`\
 > &nbsp;&nbsp; | [_SimplePath_] `!` `{` _TokenTree_<sup>\*</sup> `}`
 
-宏调用是在编译时执行宏，并用执行结果替换调用。可以在下述情况中调用宏：
+宏调用是在编译时执行宏，并用执行结果替换该调用。可以在下述情况下调用宏：
 
-* [表达式]和[语句]
-* [模式]
-* [类型]
-* [数据项] 以及 [关联数据项]
+* [表达式][Expressions]和[语句][statements]
+* [模式][Patterns]
+* [类型][Types]
+* [数据项][Items]，包括[关联数据项][associated items]
 * [`macro_rules`] 转换器
-* [外部块]
+* [外部块][External blocks]
 
-当用作数据项或语句时，_MacroInvocationSemi_ 形式被使用。_MacroInvocationSemi_ 形式中，如果不使用花括号，则在结尾处需要添加分号。在宏调用或 [`macro_rules`] 定义之前不允许使用[可见性限定符]。
+
+当宏调用被用作数据项或语句时，此时它使用的 _MacroInvocationSemi_ 句法规则要求如果不使用花括号，则在结尾处须添加分号。在宏调用或[宏(`macro_rules`)][`macro_rules`]定义之前决不允许使用[可见性限定符][Visibility qualifiers]。
 
 ```rust
 // 作为表达式使用.
@@ -85,17 +86,18 @@ macro_rules! example {
 example!();
 ```
 
-[声明宏]: macros-by-example.md
-[过程宏]: procedural-macros.md
-[_SimplePath_]: paths.md#简单路径
+[Macros by Example]: macros-by-example.md
+[Procedural Macros]: procedural-macros.md
+[_SimplePath_]: paths.md#simple-paths
 [_Token_]: tokens.md
-[关联数据项]: items/associated-items.md
-[分隔符]: tokens.md#分隔符
-[表达式]: expressions.md
-[数据项]: items.md
+[associated items]: items/associated-items.md
+[delimiters]: tokens.md#delimiters
+[expressions]: expressions.md
+[items]: items.md
 [`macro_rules`]: macros-by-example.md
-[模式]: patterns.md
-[语句]: statements.md
-[类型]: types.md
-[可见性限定符]: visibility-and-privacy.md
-[外部块]: items/external-blocks.md
+[patterns]: patterns.md
+[statements]: statements.md
+[types]: types.md
+[visibility qualifiers]: visibility-and-privacy.md
+[External blocks]: items/external-blocks.md
+<!-- checked -->

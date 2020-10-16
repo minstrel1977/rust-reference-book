@@ -1,4 +1,4 @@
-#checked# Macros By Example
+# Macros By Example
 # 声明宏
 
 >[macros-by-example.md](https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md)\
@@ -390,3 +390,4 @@ When repetitions are involved, then the rules apply to every possible number of 
 [_Visibility_]: visibility-and-privacy.md
 [formal specification]: macro-ambiguity.md
 [token]: tokens.md
+<!-- checked -->
