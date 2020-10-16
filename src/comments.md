@@ -5,27 +5,27 @@
 
 > **<sup>词法分析</sup>**\
 > LINE_COMMENT :(译者注：行注释)\
-> &nbsp;&nbsp; &nbsp;&nbsp; `//` (~[`/` `!`] | `//`) ~`\n`<sup>\*</sup>\
+> &nbsp;&nbsp; &nbsp;&nbsp; `/*` (~\[`*` `!`] | `**` | _BlockCommentOrDoc_)
 > &nbsp;&nbsp; | `//`
 >
 > BLOCK_COMMENT :(译者注：块注释)\
-> &nbsp;&nbsp; &nbsp;&nbsp; `/*` (~[`*` `!`] | `**` | _BlockCommentOrDoc_)
+> &nbsp;&nbsp; &nbsp;&nbsp; `/*` (~\[`*` `!`] | `**` | _BlockCommentOrDoc_)
 >      (_BlockCommentOrDoc_ | ~`*/`)<sup>\*</sup> `*/`\
 > &nbsp;&nbsp; | `/**/`\
 > &nbsp;&nbsp; | `/***/` 
 >
 > INNER_LINE_DOC :(译者注：内部行文档型注释)\
-> &nbsp;&nbsp; `//!` ~[`\n` _IsolatedCR_]<sup>\*</sup> 
+> &nbsp;&nbsp; `//!` ~\[`\n` _IsolatedCR_]<sup>\*</sup>
 >
 > INNER_BLOCK_DOC :(译者注：内部块文档型注释)\
-> &nbsp;&nbsp; `/*!` ( _BlockCommentOrDoc_ | ~[`*/` _IsolatedCR_] )<sup>\*</sup> `*/`
+> &nbsp;&nbsp; `/*!` ( _BlockCommentOrDoc_ | ~\[`*/` _IsolatedCR_] )<sup>\*</sup> `*/`
 >
 > OUTER_LINE_DOC :(译者注：外部行文档型注释)\
-> &nbsp;&nbsp; `///` (~`/` ~[`\n` _IsolatedCR_]<sup>\*</sup>)<sup>?</sup>
+> &nbsp;&nbsp; `///` (~`/` ~\[`\n` _IsolatedCR_]<sup>\*</sup>)<sup>?</sup>
 >
 > OUTER_BLOCK_DOC :(译者注：外部块文档型注释)\
 > &nbsp;&nbsp; `/**` (~`*` | _BlockCommentOrDoc_ )
->              (_BlockCommentOrDoc_ | ~[`*/` _IsolatedCR_])<sup>\*</sup> `*/`
+>              (_BlockCommentOrDoc_ | ~\[`*/` _IsolatedCR_])<sup>\*</sup> `*/`
 >
 > _BlockCommentOrDoc_ :(译者注：块注释或文档型注释)\
 > &nbsp;&nbsp; &nbsp;&nbsp; BLOCK_COMMENT\
@@ -116,3 +116,4 @@ pub mod outer_module {
 ```
 
 [`doc` 属性]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
+<!-- 2020-10-16 -->

@@ -73,7 +73,7 @@ unsafe fn foo_avx2() {}
 `sse`       |          | [SSE] — Streaming <abbr title="Single Instruction Multiple Data">SIMD</abbr> Extensions | 单指令多数据流扩展指令集
 `sse2`      | `sse`    | [SSE2] — Streaming SIMD Extensions 2 | 单指令多数据流扩展指令集2
 `sse3`      | `sse2`   | [SSE3] — Streaming SIMD Extensions 3 | 单指令多数据流扩展指令集3
-`sse4.1`    | `sse3`   | [SSE4.1] — Streaming SIMD Extensions 4.1 | 单指令多数据流扩展指令集4.1
+`sse4.1`    | `ssse3`  | [SSE4.1] — Streaming SIMD Extensions 4.1 | 单指令多数据流扩展指令集4.1
 `sse4.2`    | `sse4.1` | [SSE4.2] — Streaming SIMD Extensions 4.2 | 单指令多数据流扩展指令集4.2
 `ssse3`     | `sse3`   | [SSSE3] — Supplemental Streaming SIMD Extensions 3 | 增补单指令多数据流扩展指令集3
 `xsave`     |          | [`xsave`] — Save processor extended states | 保存处理器扩展状态
@@ -220,3 +220,4 @@ fn calls_h() {
 [`core::intrinsics::caller_location`]: https://doc.rust-lang.org/core/intrinsics/fn.caller_location.html
 [`core::panic::Location::caller`]: https://doc.rust-lang.org/core/panic/struct.Location.html#method.caller
 [`Location`]: https://doc.rust-lang.org/core/panic/struct.Location.html
+<!-- 2020-10-16 -->
