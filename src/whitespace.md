@@ -19,14 +19,9 @@
 - `U+2028` (行分隔符)
 - `U+2029` (段分隔符)
 
-Rust是一种“自由形式”的语言，这意味着所有形式的空白符在语法中仅用于分隔*标记码(tokens)*的作用，没有语义意义。
+Rust是一种“格式自由(free-form)”的语言，这意味着所有形式的空白符在语法中仅用于分隔*标记码(tokens)*的作用，没有语义意义。
 
 Rust 程序中，如果将一个空白符元素替换为任何其他合法的空白符元素(例如单个空格字符)，它们仍有相同的意义。
-Rust is a "free-form" language, meaning that all forms of whitespace serve only
-to separate _tokens_ in the grammar, and have no semantic significance.
-
-A Rust program has identical meaning if each whitespace element is replaced
-with any other legal whitespace element, such as a single space character.
 
 [`Pattern_White_Space`]: https://www.unicode.org/reports/tr31/
 

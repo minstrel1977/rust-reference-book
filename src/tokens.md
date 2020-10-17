@@ -2,68 +2,77 @@
 # 标记码
 
 >[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
->commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6
+>commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 \
+>本译文最后维护日期：2020-10-17
 
-标记码是由正则（非递归）语言定义的语法中的基础元素。Rust 源代码可分成以下几种标记码：
 
-* [关键字]
-* [标识符]
-* [字面量](#字面量)
-* [生存期](#生存期和循环标签)
-* [标点符号](#标点符号)
-* [分隔符](#分隔符)
+标记码是由正则语言(regular languages)（非递归方式）定义的语法中的基本元素。Rust 源码输入可以被分解成以下几种标记码：
 
-在本文档的语法中，“简化”标记码以[字符串表]的形式给出，并以`等宽（monospace）`字体显示。
+* [关键字][Keywords]
+* [标识符][identifier]
+* [字面量](#literals)
+* [生存期](#lifetimes-and-loop-labels)
+* [标点符号](#punctuation)
+* [分隔符](#delimiters)
 
-[字符串表]: notation.md#string-table-productions
+在本文档的语法中，“简单”标记码以[字符串列表成员][string table production]的形式给出，并以 `monospace` 字体显示。（译者注：如果译者觉得这种标记码需要翻译时，会使用如：等宽(`monospace`) 这种形式来翻译，但读者需要意识到“monospace”是语言里的一个标记码，是以其字面形式出现在源码里的。）
 
+[string table production]: notation.md#string-table-productions
+
+## Literals
 ## 字面量
 
-字面量是一个由单个标记码（而不是由一系列标记码）组成的表达式，它直接表示它所赋的值，而不是通过名称或其他一些计算规则来引用它。字面量是[常量表达式](const_eval.md#常量表达式)的一种形式，所以它（主要）在编译时赋值。
+字面量是一个由单个标记码（而不是由一系列标记码）组成的表达式，它立即和直接表示它所代表的值，而不是通过名称或其他一些求值/计算规则来引用它。字面量是[常量表达式](const_eval.md#constant-expressions)的一种形式，所以它（主要）用在编译时求值。
 
+### Examples
 ### 示例
 
+#### Characters and strings
 #### 字符和字符串
 
 |                                              | 举例         | `#` 号的数量   | 字符集  | 转义             |
 |----------------------------------------------|-----------------|-------------|-------------|---------------------|
-| [字符](#字符字面量)             | `'H'`           | 0           | 全部 Unicode | [引号](#引号转义) & [ASCII](#ASCII-转义) & [Unicode](#unicode-转义) |
-| [字符串](#字符串字面量)                   | `"hello"`       | 0           | 全部 Unicode | [引号](#引号转义) & [ASCII](#ASCII-转义) & [Unicode](#unicode-转义) |
-| [原生字符串](#原生字符串字面量)           | `r#"hello"#`    | 0 或更多\* | 全部 Unicode | `N/A`                                                      |
-| [字节](#字节字面量)                       | `b'H'`          | 0           | 全部 ASCII   | [引号](#引号转义) & [字节](#字节转义)                               |
-| [字节串](#字节串字面量)         | `b"hello"`      | 0           | 全部 ASCII   | [引号](#引号转义) & [字节](#字节转义)                               |
-| [原生字节串](#原生字节串字面量) | `br#"hello"#`   | 0 或更多\* | 全部 ASCII   | `N/A`                                                      |
+| [字符](#character-literals)| `'H'` | 0 | 全部 Unicode | [引号](#quote-escapes) & [ASCII](#ascii-escapes) & [Unicode](#unicode-escapes) |
+| [字符串](#string-literals)| `"hello"`| 0 | 全部 Unicode | [引号](#quote-escapes) & [ASCII](#ascii-escapes) & [Unicode](#unicode-escapes)|
+| [原生字符串](#raw-string-literals)| `r#"hello"#`    | 0 或更多\* | 全部 Unicode | `N/A`                                                      |
+| [字节](#byte-literals)| `b'H'`          | 0           | 全部 ASCII   | [引号](#quote-escapes) & [字节](#byte-escapes) |
+| [字节串](#byte-string-literals)| `b"hello"`      | 0           | 全部 ASCII   | [引号](#quote-escapes) & [字节](#byte-escapes) |
+| [原生字节串](#raw-byte-string-literals)| `br#"hello"#`   | 0 或更多\* | 全部 ASCII   | `N/A`|
 
 \* 字面量两侧的 `#` 数量必须相同。
 
+#### ASCII escapes
 #### ASCII 转义
 
 |   | 名称 |
 |---|------|
-| `\x41` | 7 位字符编码（2位数字，最大值为 `0x7F`） |
+| `\x41` | 7-bit 字符编码（2位数字，最大值为 `0x7F`）|
 | `\n` | 换行符 |
 | `\r` | 回车符 |
 | `\t` | 制表符 |
 | `\\` | 反斜线 |
 | `\0` | Null |
 
+#### Byte escapes
 #### 字节转义
 
 |   | 名称 |
 |---|------|
-| `\x7F` | 8 位字符编码（2位数字）|
+| `\x7F` | 8-bit 字符编码（2位数字）|
 | `\n` | 换行符 |
 | `\r` | 回车符 |
 | `\t` | 制表符 |
 | `\\` | 反斜线 |
 | `\0` | Null |
 
+#### Unicode escapes
 #### unicode 转义
 
 |   | 名称 |
 |---|------|
-| `\u{7FFF}` | 24 位 Unicode 字符编码（最多6个数字） |
+| `\u{7FFF}` | 24-bit Unicode 字符编码（最多6个数字）|
 
+#### Quote escapes
 #### 引号转义
 
 |   | Name |
@@ -71,6 +80,7 @@
 | `\'` | 单引号 |
 | `\"` | 双引号 |
 
+#### Numbers
 #### 数字
 
 | [数字字面量](#数字字面量)`*` | 示例 | 指数 | 后缀 |
@@ -83,11 +93,12 @@
 
 `*` 所有数字字面量允许使用 `_` 作为可视分隔符，比如：`1_234.0E+18f64`
 
+#### Suffixes
 #### 后缀
 
 后缀是紧跟（无空格）字面量主体部分之后的非原生标识符。
 
-具有任意后缀的任何类型的字面量（如字符串、整数等）都可以作为有效的标记码，并且可以传递给宏而不会产生错误。宏本身会决定如何解释这种标记码，以及是否产生错误。
+任何带有后缀的字面量（如字符串、整数等）都可以作为有效的标记码，并且可以传递给宏而不会产生错误。宏本身会决定如何解释这种标记码，以及是否该报错。
 
 ```rust
 macro_rules! blackhole { ($tt:tt) => () }
@@ -95,14 +106,15 @@ macro_rules! blackhole { ($tt:tt) => () }
 blackhole!("string"suffix); // OK
 ```
 
-但是，解析为 Rust 代码的字面量标记码上的后缀是受限制的。对于非数字字面量标记码，任何后缀都将被拒绝，而数字字面量标记码只接受下面列表中的后缀。
+但是，解析为 Rust 代码的字面量标记码上的后缀是受限制的。对于非数字字面量标记码，任何后缀都将被拒绝，而数字字面量标记码只接受下表中的后缀。
 
 | 整数 | 浮点数 |
 |---------|----------------|
 | `u8`, `i8`, `u16`, `i16`, `u32`, `i32`, `u64`, `i64`, `u128`, `i128`, `usize`, `isize` | `f32`, `f64` |
-
+### Character and string literals
 ### 字符和字符串字面量
 
+#### Character literals
 #### 字符字面量
 
 > **<sup>词法</sup>**\
@@ -121,6 +133,7 @@ blackhole!("string"suffix); // OK
 
 *字符字面量*是位于两个 `U+0027`（单引号）字符内的单个 Unicode 字符。当它是 `U+0027` 自身时，必须前置*转义*字符 `U+005C`（`\`）。
 
+#### String literals
 #### 字符串字面量
 
 > **<sup>词法</sup>**\
@@ -553,4 +566,6 @@ let x: f64 = 2.; // type f64
 [use 声明]: items/use-declarations.md
 [use 通配符]: items/use-declarations.md
 [while let]: expressions/loop-expr.md#predicate-pattern-loops
+
 <!-- 2020-10-16 -->
+<!-- checked -->
