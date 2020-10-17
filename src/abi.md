@@ -2,7 +2,7 @@
 # 应用程序二进制接口(ABI)
 
 >[abi.md.md](https://github.com/rust-lang/reference/blob/master/src/abi.md)\
->commit  24137b49a3c02f53e5a7699a78a47501aef3e769
+>commit:  24137b49a3c02f53e5a7699a78a47501aef3e769
 
 本节阐述影响 crate 编译输出的ABI的特性。
 

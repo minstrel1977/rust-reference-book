@@ -2,7 +2,7 @@
 # 影响来源
 
 >[influences.md](https://github.com/rust-lang/reference/blob/master/src/influences.md)\
->commit  dc3808468e37ff4c1f663d26c491a3549a42c201
+>commit:  dc3808468e37ff4c1f663d26c491a3549a42c201
 
 Rust 并不是一种特别原始的语言，它的设计元素来源广泛。下面列出了其中一些（包括已经删除的）：
 

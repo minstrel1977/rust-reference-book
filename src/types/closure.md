@@ -2,7 +2,7 @@
 # 闭包类型
 
 >[closure.md](https://github.com/rust-lang/reference/blob/master/src/types/closure.md)\
->commit 5642af891714145cb2a765f244fff7d6b618a4c7
+>commit: 5642af891714145cb2a765f244fff7d6b618a4c7
 
 [闭包表达式][closure expression]生成的闭包值具有唯一性和无法写出的匿名性。闭包类型大约相当于包含捕获变量的结构体。比如以下闭包示例：
 

@@ -2,7 +2,7 @@
 # 特殊类型和 trait
 
 >[special-types-and-traits.md](https://github.com/rust-lang/reference/blob/master/src/special-types-and-traits.md)\
->commit fcdc0cab546c10921d66054be25c6afc9dd6b3bc
+>commit: fcdc0cab546c10921d66054be25c6afc9dd6b3bc
 
 存在于[标准库][the standard library]中的某些类型和 trait 是 Rust 编译器默认知道的。本章阐述了这些类型和 trait 的特性。
 

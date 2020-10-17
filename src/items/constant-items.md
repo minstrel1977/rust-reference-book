@@ -1,7 +1,7 @@
 # 常量项
 
 >[constant-items.md](https://github.com/rust-lang/reference/blob/master/src/items/constant-items.md)\
->commit da910b725a59ba9bb32c6954074f377589a2a689
+>commit: da910b725a59ba9bb32c6954074f377589a2a689
 
 > **<sup>句法</sup>**\
 > _ConstantItem_ :\

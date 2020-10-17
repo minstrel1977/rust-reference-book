@@ -2,7 +2,7 @@
 # 函数项类型
 
 >[function-item.md](https://github.com/rust-lang/reference/blob/master/src/types/function-item.md)\
->commit b0e0ad6490d6517c19546b1023948986578fc378
+>commit: b0e0ad6490d6517c19546b1023948986578fc378
 
 当引用函数项、元组结构体的构造函数或枚举变量的构造函数时，会产生它们的*函数项类型(function item type)*的值。该值显式标识指代该函数——它的名字、它的带类型的参数，及其早期绑定的生存期参数(不是后期绑定的生存期参数，后期绑定的生存期参数只在函数被调用时才被赋值)——所以该值不需要包含一个实际的函数指针，所以调用函数时就也不需要一个间接的寻址操作去内存中查找要调用的函数。
 

@@ -1,7 +1,7 @@
 # 联合体
 
 >[unions.md](https://github.com/rust-lang/reference/blob/master/src/items/unions.md)\
->commit ad8986882c6b069cfbdca6103746f5a3e8cb9d5b
+>commit: ad8986882c6b069cfbdca6103746f5a3e8cb9d5b
 
 > **<sup>句法</sup>**\
 > _Union_ :\

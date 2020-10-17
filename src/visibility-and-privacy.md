@@ -1,7 +1,7 @@
 # 可见性与隐私权
 
 >[visibility-and-privacy.md](https://github.com/rust-lang/reference/blob/master/src/visibility-and-privacy.md)\
->commit f41afd4f69a7996ac66b01f75e333bccf43337f7
+>commit: f41afd4f69a7996ac66b01f75e333bccf43337f7
 
 > **<sup>句法<sup>**\
 > _Visibility_ :\

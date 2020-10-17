@@ -2,7 +2,7 @@
 # 非安全性
 
 >[unsafety.md](https://github.com/rust-lang/reference/blob/master/src/unsafety.md)\
->commit  b0e0ad6490d6517c19546b1023948986578fc378
+>commit:  b0e0ad6490d6517c19546b1023948986578fc378
 
 非安全操作是那些可能违反 Rust 静态语义里和内存安全相关的保证机制的操作。
 

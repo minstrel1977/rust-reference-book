@@ -2,7 +2,7 @@
 # Rust运行时
 
 >[abi.md.md](https://github.com/rust-lang/reference/blob/master/src/abi.md)\
->commit  f8e76ee9368f498f7f044c719de68c7d95da9972
+>commit:  f8e76ee9368f498f7f044c719de68c7d95da9972
 
 本节介绍定义 Rust运行时的某些方面的特性。
 

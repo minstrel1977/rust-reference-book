@@ -2,7 +2,7 @@
 # 实现
 
 >[implementations.md](https://github.com/rust-lang/reference/blob/master/src/items/implementations.md)\
->commit b2d11240bd9a3a6dd34419d0b0ba74617b23d77e
+>commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e
 
 > **<sup>句法</sup>**\
 > _Implementation_ :\

@@ -1,7 +1,7 @@
 # 条件编译
 
 >[conditional-compilation.md](https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md)\
->commit 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7
+>commit: 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7
 
 > **<sup>句法</sup>**\
 > _ConfigurationPredicate_ :\

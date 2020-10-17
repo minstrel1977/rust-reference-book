@@ -2,7 +2,7 @@
 # 类型参数和生存期参数
 
 >[generics.md](https://github.com/rust-lang/reference/blob/master/src/items/generics.md)\
->commit f8e76ee9368f498f7f044c719de68c7d95da9972
+>commit: f8e76ee9368f498f7f044c719de68c7d95da9972
 
 > **<sup>句法</sup>**\
 > _Generics_ :\

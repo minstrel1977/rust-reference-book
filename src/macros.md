@@ -2,7 +2,7 @@
 # 宏
 
 >[macros.md](https://github.com/rust-lang/reference/blob/master/src/macros.md)\
->commit 771c5d10cf944bf7d221f5d6cb7abd2a06c400e4
+>commit: 771c5d10cf944bf7d221f5d6cb7abd2a06c400e4
 
 Rust 语言的功能和句法可以通过宏的方式让用户自行定义扩展。宏需要被命名，并通过一致的句法去调用：`some_extension!(...)`。
 

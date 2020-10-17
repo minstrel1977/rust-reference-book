@@ -2,7 +2,7 @@
 ## 被认为是未定义的行为
 
 >[behavior-considered-undefined.md](https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md)\
->commit 8aa6f0f5471a23621f52d16e823c6316fda2b904
+>commit: 8aa6f0f5471a23621f52d16e823c6316fda2b904
 
 如果 Rust 代码里出现了下列列表中的任何行为，则它是不正确的。这包括非安全(`unsafe`)块和非安全(`unsafe`)函数里的代码。非安全(`unsafe`)只意味着避免未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须不能导致未定义行为的事实。
 

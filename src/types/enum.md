@@ -2,7 +2,7 @@
 # 枚举类型
 
 >[enum.md](https://github.com/rust-lang/reference/blob/master/src/types/enum.md)\
->commit b0e0ad6490d6517c19546b1023948986578fc378
+>commit: b0e0ad6490d6517c19546b1023948986578fc378
 
 *枚举类型*是一种标称型(nominal)的异构的不相交的并集类型，具体的枚举类型由[枚举(`enum`)数据项][`enum` item]的名称来表示。[^enumtype]
 

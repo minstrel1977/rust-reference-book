@@ -2,7 +2,7 @@
 # 常量求值
 
 >[const_eval.md](https://github.com/rust-lang/reference/blob/master/src/const_eval.md)\
->commit  7ad799da00dd162638999e38dad10905bf6c7ec6
+>commit:  7ad799da00dd162638999e38dad10905bf6c7ec6
 
 常量求值是在编译过程中计算[表达式][[expressions]]结果的过程。只有全部表达式形式的一个子集可以在编译时求值。
 

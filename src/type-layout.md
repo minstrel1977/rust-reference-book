@@ -2,7 +2,7 @@
 # 类型布局
 
 >[type-layout.md](https://github.com/rust-lang/reference/blob/master/src/type-layout.md)\
->commit dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6
+>commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6
 
 类型的布局描述类型的尺寸(size)、对齐量(alignment)和字段(fields)的*相对偏移量(relative offsets)*。对于枚举，如何布局和解释判别值(discriminant)也是类型布局的一部分。
 

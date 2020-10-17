@@ -2,7 +2,7 @@
 # trait对象
 
 >[trait-object.md](https://github.com/rust-lang/reference/blob/master/src/types/trait-object.md)\
->commit fd10e7043934711ef96b4dd2009db3e4d0182a33
+>commit: fd10e7043934711ef96b4dd2009db3e4d0182a33
 
 > **<sup>句法</sup>**\
 > _TraitObjectType_ :\

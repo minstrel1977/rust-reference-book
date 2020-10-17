@@ -2,7 +2,7 @@
 ## 不被认为是非安全的行为
 
 >[behavior-not-considered-unsafe.md](https://github.com/rust-lang/reference/blob/master/src/behavior-not-considered-unsafe.md)\
->commit 75fd23737cd08ec1ae14deae5e2680d9007575ae
+>commit: 75fd23737cd08ec1ae14deae5e2680d9007575ae
 
 虽然程序员可能(应该)发现下列行为是不希望的、意外的或错误的，但 Rust 编译器并不认为这些行为是*非安全的*。
 

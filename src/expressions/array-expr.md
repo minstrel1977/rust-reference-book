@@ -2,7 +2,7 @@
 # 数组和数组索引表达式
 
 >[array-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/array-expr.md)\
->commit 65c523479abb8024672918444ff839426ff5c3a7
+>commit: 65c523479abb8024672918444ff839426ff5c3a7
 
 ## Array expressions
 ## 数组表达式

@@ -1,7 +1,7 @@
 # 类型别名
 
 >[type-aliases.md](https://github.com/rust-lang/reference/blob/master/src/items/type-aliases.md)\
->commit d150e88973ffccc4439111d8e1b26da745670fa8
+>commit: d150e88973ffccc4439111d8e1b26da745670fa8
 
 > **<sup>句法</sup>**\
 > _TypeAlias_ :\

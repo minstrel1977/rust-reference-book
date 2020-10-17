@@ -2,7 +2,7 @@
 # 调用表达式
 
 >[call-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/call-expr.md)\
->commit e06136b1cd06d3d72dcc0ed7ccf5fbab5574f901
+>commit: e06136b1cd06d3d72dcc0ed7ccf5fbab5574f901
 
 > **<sup>句法</sup>**\
 > _CallExpression_ :\

@@ -2,39 +2,41 @@
 # 表义符/符号
 
 >[notation.md](https://github.com/rust-lang/reference/blob/master/src/notation.md)\
->commit dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6
+>commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 \
+>本译文最后维护日期：2020-10-17
 
 ## Grammar
 ## 语法
 
 本书中给出的 *词法* 和 *句法* 的语法片段会用到下表中的各种表义符：
 
-| 表义符             | 示例                      | 释义                                 
+| 表义符             | 示例                           | 释义                                 
 |-------------------|-------------------------------|--------------------------------|
-| CAPITAL           | KW_IF, INTEGER_LITERAL        | 由词法分析生成的[标记码](token)|
-| _ItalicCamelCase_ | _LetStatement_, _Item_        | 句法分析产生的内部语义           |
-| `string`          | `x`, `while`, `*`             | 确切的字符(串)                   |
-| \\x               | \\n, \\r, \\t, \\0            | 转义字符                        |
-| x<sup>?</sup>     | `pub`<sup>?</sup>             | 可选项                          |
+| CAPITAL           | KW_IF, INTEGER_LITERAL        | 由词法分析生成的标记码(token)      |
+| _ItalicCamelCase_ | _LetStatement_, _Item_        | 句法分析产生的内部语义规范          |
+| `string`          | `x`, `while`, `*`             | 确切的字面字符(串)                |
+| \\x               | \\n, \\r, \\t, \\0            | 转义字符                         |
+| x<sup>?</sup>     | `pub`<sup>?</sup>             | 可选项                           |
 | x<sup>\*</sup>    | _OuterAttribute_<sup>\*</sup> | x 重复零次或多次                  |
 | x<sup>+</sup>     |  _MacroMatch_<sup>+</sup>     | x 重复一次或多次                  |
 | x<sup>a..b</sup>  | HEX_DIGIT<sup>1..6</sup>      | x 重复 a 到 b 次                 |
 | \|                | `u8` \| `u16`, Block \| Item  | 或                              |
-| \[ ]               | \[`b` `B`]                     | 列举的任意字符                    |
-| \[ - ]             | \[`a`-`z`]                     | a 到 z 范围内的任意字符(包括 a 和 z)|
-| ~\[ ]              | ~\[`b` `B`]                    | 列举范围外的任意字符(序列)          |
+| \[ ]              | \[`b` `B`]                    | 列举的任意字符                    |
+| \[ - ]            | \[`a`-`z`]                    | a 到 z 范围内的任意字符(包括 a 和 z)|
+| ~\[ ]             | ~\[`b` `B`]                   | 列举范围外的任意字符(序列)          |
 | ~`string`         | ~`\n`, ~`*/`                  | 此字符序列外的任意字符(序列)        |
-| ( )               | (`,` _Parameter_)<sup>?</sup> | 数据项分组(Groups items)       |
+| ( )               | (`,` _Parameter_)<sup>?</sup> | 数据项分组(Groups items)          |
 
 ## String table productions
 ## 词法分析用字符串列表
 
-语法中的一些规则-特别是[一元运算符]，[二元运算符]和[关键字]—会以简化形式给出：作为可打印字符串的列表。这个列表内的成员构成了关于[标记码]规则的一个子集，它们会被假定为词法分析阶段的结果来提供给解析器解释源代码用。词法分析阶段由一个<abbr title="确定性有限自动机(Deterministic Finite Automaton)">DFA</abbr>驱动，来对所有这些字符串表实体进行分离和提取操作。
+语法中的一些规则-特别是[一元运算符][unary operators]，[二元运算符][binary operators]和[关键字][keywords]—会以简化形式 - 作为可打印字符串的列表 - 给出。这个列表内的成员构成了关于[标记码][tokens]规则的一个子集，它们会被假定为词法分析阶段的结果来提供给解析器解释源代码用。词法分析阶段由一个<abbr title="确定性有限自动机(Deterministic Finite Automaton)">DFA</abbr>驱动，来对所有这些字符列串表实体进行分离和提取操作。
 
-当语法中出现如 `等宽(monospace)` 这样的字符串时，它代表对这种字符串表中的单个成员的隐式引用。查阅[标记码]以获取更多信息。
+本书还约定，当语法中出现如 `monospace` 这样的字符串时，它代表对这种字符串列表中的单个成员的隐式引用。查阅[标记码][tokens]以获取更多信息。（译者注：如果译者觉得这种引用需要翻译时，会使用如：等宽(`monospace`) 这种形式来翻译。）
 
-[二元运算符]: expressions/operator-expr.md#arithmetic-and-logical-binary-operators
-[关键字]: keywords.md
-[标记码]: tokens.md
-[一元运算符]: expressions/operator-expr.md#borrow-operators
+[binary operators]: expressions/operator-expr.md#arithmetic-and-logical-binary-operators
+[keywords]: keywords.md
+[tokens]: tokens.md
+[unary operators]: expressions/operator-expr.md#borrow-operators
 <!-- 2020-10-16 -->
+<!-- checked -->

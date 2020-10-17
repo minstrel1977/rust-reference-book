@@ -2,7 +2,7 @@
 # 类型参数
 
 >[parameters.md](https://github.com/rust-lang/reference/blob/master/src/types/parameters.md)\
->commit eb02dd5194a747277bfa46b0185d1f5c248f177b
+>commit: eb02dd5194a747277bfa46b0185d1f5c248f177b
 
 在带有类型参数声明的数据项的代码体内，其类型参数的名称是类型：
 

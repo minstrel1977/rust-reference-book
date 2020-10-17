@@ -2,7 +2,7 @@
 # 诊断属性
 
 >[diagnostics.md](https://github.com/rust-lang/reference/blob/master/src/attributes/diagnostics.md)\
->commit 2196589ccf8fefc4edeaa0ab430fe2ce6a57dec3
+>commit: 2196589ccf8fefc4edeaa0ab430fe2ce6a57dec3
 
 以下[属性][attributes]用于在编译期间控制或生成诊断消息。
 

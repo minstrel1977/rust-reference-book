@@ -2,7 +2,7 @@
 # 子类型化和型变
 
 >[subtyping.md](https://github.com/rust-lang/reference/blob/master/src/subtyping.md)\
->commit ecb53d2015ce93b3519ee0b358fc13fa9b3f723d
+>commit: ecb53d2015ce93b3519ee0b358fc13fa9b3f723d
 
 子类型化是隐式的，可以出现在类型检查或推断的任何阶段。Rust 中的子类型化是非常受限制的，并且只发生在适配生存期和带高阶生存期的类型时。如果我们要擦除类型的生存期，那么唯一的子类型化将是由于类型相等。If we were to erase lifetimes from types, then the only subtyping would be due to type equality.
 

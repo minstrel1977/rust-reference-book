@@ -2,7 +2,7 @@
 # 切片类型
 
 >[slice.md](https://github.com/rust-lang/reference/blob/master/src/types/slice.md)\
->commit b0e0ad6490d6517c19546b1023948986578fc378
+>commit: b0e0ad6490d6517c19546b1023948986578fc378
 
 > **<sup>句法</sup>**\
 > _SliceType_ :\

@@ -2,7 +2,7 @@
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit 03dc50769738a643be1451a4ff1516fa5fab92bd
+>commit: 03dc50769738a643be1451a4ff1516fa5fab92bd
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\

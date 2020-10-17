@@ -1,26 +1,29 @@
+# Keywords
 # 关键字
 
 >[keywords.md](https://github.com/rust-lang/reference/blob/master/src/keywords.md)\
->commit 64923185890763048d190ce92cb668b58acbc49a
+>commit: 64923185890763048d190ce92cb668b58acbc49a
+>本译文最后维护日期：2020-10-17
 
 Rust 将关键字分为三类：
 
-  - [严格关键字](#严格关键字)
-  - [保留关键字](#保留关键字)
-  - [弱关键字](#弱关键字)
+  - [严格关键字](#strict-keywords)
+  - [保留关键字](#reserved-keywords)
+  - [弱关键字](#weak-keywords)
 
+## Strict keywords
 ## 严格关键字
 
-这类关键字只能在正确的上下文中使用。它们不能用作下列名称：
+这类关键字只能在正确的上下文中使用。它们不能用作以下名称：
 
-* [数据项(item)]
-* [变量]和函数参数
-* 字段和[变体]
-* [类型参数]
-* 生存期参数或者[循环标签]
-* [宏]或[属性]
-* [宏占位符]
-* [crate]
+* [数据项(item)][Items]
+* [变量][Variables]和函数参数
+* 字段(field)和[变体][variants]
+* [类型参数][Type parameters]
+* 生存期参数或者[循环标签][loop labels]
+* [宏][Macros]或[属性][attributes]
+* [宏占位符][Macro placeholders]
+* [crate][Crates]
 
 > **<sup>词法分析:<sup>**\
 > KW_AS             : `as`\
@@ -59,16 +62,17 @@ Rust 将关键字分为三类：
 > KW_WHERE          : `where`\
 > KW_WHILE          : `while`
 
-以下关键词从 2018 版开始启用。
+以下关键字从 2018 版开始启用。
 
 > **<sup>词法分析 2018+</sup>**\
 > KW_ASYNC          : `async`\
 > KW_AWAIT          : `await`\
 > KW_DYN            : `dyn`
 
+## Reserved keywords
 ## 保留关键字
 
-这类关键字还没有被使用，但是它们被保留以备将来使用。它们具有与严格关键字相同的限制。这样做的原因是通过禁止当前程序使用这些关键字，从而使当前程序向前兼容 Rust 的未来版本。
+这类关键字还没有被使用，但是它们被保留以备将来使用。它们具有与严格关键字相同的限制。这样做的原因是通过禁止当前程序使用这些关键字，从而使当前程序能兼容 Rust 的未来版本。
 
 > **<sup>词法分析</sup>**\
 > KW_ABSTRACT       : `abstract`\
@@ -84,23 +88,27 @@ Rust 将关键字分为三类：
 > KW_VIRTUAL        : `virtual`\
 > KW_YIELD          : `yield`
 
-以下关键词从 2018 版开始保留。
+以下关键字从 2018 版开始成为保留关键字。
 
 > **<sup>词法分析 2018+</sup>**\
 > KW_TRY   : `try`
 
+## Weak keywords
 ## 弱关键字
 
-这类关键词只有在特定的上下文中才有特殊的意义。例如，可以声明名为 `union` 的变量或方法。
+* In the 2015 edition, [`dyn`] is a keyword when used in a type position followed by a path that does not start with `::`.
 
-* `union` 用于声明[联合体]，它只有在联合体声明中使用时才是关键字。
+  Beginning in the 2018 edition, `dyn` has been promoted to a strict keyword.
+这类关键字只有在特定的上下文中才有特殊的意义。例如，可以声明名为 `union` 的变量或方法。
+
+* `union` 用于声明[联合体][union]，它只有在联合体声明中使用时才是关键字。
 * `'static` 用于静态生存期，不能用作通用生存期参数
 
   ```compile_fail
   // error[E0262]: invalid lifetime parameter name: `'static`
   fn invalid_lifetime_parameter<'static>(s: &'static str) -> &'static str { s }
   ```
-* 在 2015 版本中，[`dyn`] 是在类型位置后面不是以::开头的路径中使用的关键字。从 2018 版开始，`dyn` 被提升为一个严格关键词。
+* 在 2015 版本中，当 [`dyn`] 用在非 `::` 开头的路径限定的类型前时，它是关键字。从 2018 版开始，`dyn` 被提升为一个严格关键字。
 
 > **<sup>词法分析</sup>**\
 > KW_UNION          : `union`\
@@ -109,14 +117,17 @@ Rust 将关键字分为三类：
 > **<sup>词法分析 2015</sup>**\
 > KW_DYN            : `dyn`
 
-[数据项(item)]: items.md
-[变量]: variables.md
-[类型参数]: types/parameters.md
-[循环标签]: expressions/loop-expr.md#loop-labels
-[宏]: macros.md
-[属性]: attributes.md
-[宏占位符]: macros-by-example.md
-[crate]: crates-and-source-files.md
-[联合体]: items/unions.md
-[枚举变体]: items/enumerations.md
+[items]: items.md
+[Variables]: variables.md
+[Type parameters]: types/parameters.md
+[loop labels]: expressions/loop-expr.md#loop-labels
+[Macros]: macros.md
+[attributes]: attributes.md
+[Macro placeholders]: macros-by-example.md
+[Crates]: crates-and-source-files.md
+[union]: items/unions.md
+[variants]: items/enumerations.md
 [`dyn`]: types/trait-object.md
+
+<!-- 2020-10-16 -->
+<!-- checked -->

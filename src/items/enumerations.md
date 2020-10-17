@@ -2,7 +2,7 @@
 # 枚举
 
 >[enumerations.md](https://github.com/rust-lang/reference/blob/master/src/items/enumerations.md)\
->commit 2264855271fae0a915a0fa769e57f5a5d09ff5ef
+>commit: 2264855271fae0a915a0fa769e57f5a5d09ff5ef
 
 > **<sup>句法</sup>**\
 > _Enumeration_ :\

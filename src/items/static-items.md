@@ -2,7 +2,7 @@
 # 静态项
 
 >[static-items.md](https://github.com/rust-lang/reference/blob/master/src/items/static-items.md)\
->commit 2f459e22ec30a94bafafe417da4e95044578df73
+>commit: 2f459e22ec30a94bafafe417da4e95044578df73
 
 > **<sup>句法</sup>**\
 > _StaticItem_ :\

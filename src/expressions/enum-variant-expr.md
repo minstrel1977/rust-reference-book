@@ -2,7 +2,7 @@
 # 枚举变体表达式
 
 >[enum-variant-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/enum-variant-expr.md)\
->commit 1a3615102993e9f017a44b903ff2277a38a171a8
+>commit: 1a3615102993e9f017a44b903ff2277a38a171a8
 
 > **<sup>句法</sup>**\
 > _EnumerationVariantExpression_ :\

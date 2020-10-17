@@ -1,7 +1,7 @@
 # 代码生成属性
 
 >[codegen.md](https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md)\
->commit 646ef8d240a798da5891deb5dbdbebe557f878b8
+>commit: 646ef8d240a798da5891deb5dbdbebe557f878b8
 
 下述[属性]用于控制代码生成。
 

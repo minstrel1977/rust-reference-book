@@ -2,7 +2,7 @@
 # 标记码
 
 >[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
->commit dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6
+>commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6
 
 标记码是由正则（非递归）语言定义的语法中的基础元素。Rust 源代码可分成以下几种标记码：
 

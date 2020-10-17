@@ -2,7 +2,7 @@
 # 循环
 
 >[loop-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/loop-expr.md)\
->commit 37f61d3347d0813bce53a25c8ee068650d9a025f
+>commit: 37f61d3347d0813bce53a25c8ee068650d9a025f
 
 > **<sup>句法</sup>**\
 > _LoopExpression_ :\

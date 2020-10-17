@@ -2,7 +2,7 @@
 # 自动推断类型
 
 >[parameters.md](https://github.com/rust-lang/reference/blob/master/src/types/parameters.md)\
->commit 43dc1a42f19026f580e34a095e91804c3d6da186
+>commit: 43dc1a42f19026f580e34a095e91804c3d6da186
 
 > **<sup>句法</sup>**\
 > _InferredType_ : `_`

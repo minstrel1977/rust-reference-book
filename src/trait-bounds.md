@@ -2,7 +2,7 @@
 # trait约束和生存期约束
 
 >[trait-bounds.md](https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md)\
->commit f8e76ee9368f498f7f044c719de68c7d95da9972
+>commit: f8e76ee9368f498f7f044c719de68c7d95da9972
 
 > **<sup>句法</sup>**\
 > _TypeParamBounds_ :\

@@ -2,7 +2,7 @@
 # 析构函数
 
 >[destructors.md](https://github.com/rust-lang/reference/blob/master/src/destructors.md)\
->commit b2d11240bd9a3a6dd34419d0b0ba74617b23d77e
+>commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e
 
 
 当一个[初始化][initialized]的[变量][variable]或[临时变量][temporary]超出作用域时，它的*析构函数*将运行，或者说它将被*销毁(dropped)*。此外[赋值][Assignment]动作也会运行其左操作数的析构函数(如果它已初始化)。如果变量已部分初始化，则只销毁其已初始化的字段。

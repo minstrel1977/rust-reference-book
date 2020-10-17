@@ -2,7 +2,7 @@
 # 指针类型
 
 >[pointer.md](https://github.com/rust-lang/reference/blob/master/src/types/pointer.md)\
->commit 79fcc6e4453919977b8b3bdf5aee71146c89217d
+>commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d
 
 Rust 中的所有指针都是显式的头等(first-class)值。它们可以被移动或复制，存储到数据结构中，或从函数中返回。
 

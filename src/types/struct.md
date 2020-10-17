@@ -2,7 +2,7 @@
 # 结构体类型
 
 >[struct.md](https://github.com/rust-lang/reference/blob/master/src/types/struct.md)\
->commit b0e0ad6490d6517c19546b1023948986578fc378
+>commit: b0e0ad6490d6517c19546b1023948986578fc378
 
 结构体(`struct`)*类型*是其由他类型异构组合的产物，这些其他类型被称为结构体类型的字段。[^structtype]
 

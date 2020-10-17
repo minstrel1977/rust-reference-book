@@ -1,7 +1,7 @@
 # 函数
 
 >[functions.md](https://github.com/rust-lang/reference/blob/master/src/items/functions.md)\
->commit f35a6003ad9aff52e3cd459917b737bb5b1e56f8
+>commit: f35a6003ad9aff52e3cd459917b737bb5b1e56f8
 
 > **<sup>句法</sup>**\
 > _Function_ :\

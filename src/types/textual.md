@@ -2,7 +2,7 @@
 # 文本类类型
 
 >[textual.md](https://github.com/rust-lang/reference/blob/master/src/types/textual.md)\
->commit 9af5071f876111a09ba54a86655679de83eb464c
+>commit: 9af5071f876111a09ba54a86655679de83eb464c
 
 类型 `char` 和 `str` 保存文本数据。
 

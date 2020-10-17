@@ -2,7 +2,7 @@
 # 非安全块
 
 >[unsafe-blocks.md](https://github.com/rust-lang/reference/blob/master/src/unsafe-blocks.md)\
->commit  4a2bdf896cd2df370a91d14cb8ba04e326cd21db
+>commit:  4a2bdf896cd2df370a91d14cb8ba04e326cd21db
 
 一个代码块可以以关键字 `unsafe` 作为前缀，以允许在安全(safe)函数中调用非安全(`unsafe`)函数或对裸指针做解引用操作。
 

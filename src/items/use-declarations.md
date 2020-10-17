@@ -1,7 +1,7 @@
 # Use 声明
 
 >[use-declarations.md](https://github.com/rust-lang/reference/blob/master/src/items/use-declarations.md)\
->commit da3098c49b2f62c878ca9a36099d7dffb4bd9474
+>commit: da3098c49b2f62c878ca9a36099d7dffb4bd9474
 
 > **<sup>句法:</sup>**\
 > _UseDeclaration_ :\

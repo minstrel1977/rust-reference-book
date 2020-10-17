@@ -2,7 +2,7 @@
 # 术语表
 
 >[glossary.md](https://github.com/rust-lang/reference/blob/master/src/glossary.md)\
->commit b2d11240bd9a3a6dd34419d0b0ba74617b23d77e
+>commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e
 
 ### Abstract syntax tree
 ### 抽象语法树

@@ -2,7 +2,7 @@
 # `return`表达式
 
 >[return-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/return-expr.md)\
->commit b0e0ad6490d6517c19546b1023948986578fc378
+>commit: b0e0ad6490d6517c19546b1023948986578fc378
 
 > **<sup>句法</sup>**\
 > _ReturnExpression_ :\

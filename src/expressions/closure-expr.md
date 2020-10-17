@@ -2,7 +2,7 @@
 # 闭包表达式
 
 >[closure-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/closure-expr.md)\
->commit b2d11240bd9a3a6dd34419d0b0ba74617b23d77e
+>commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e
 
 > **<sup>句法</sup>**\
 > _ClosureExpression_ :\

@@ -2,7 +2,7 @@
 # 区间表达式
 
 >[range-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/range-expr.md)\
->commit 1cc592ee270b4d9ad190a8cacce0a1ed356b54d0
+>commit: 1cc592ee270b4d9ad190a8cacce0a1ed356b54d0
 
 > **<sup>句法</sup>**\
 > _RangeExpression_ :\

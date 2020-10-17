@@ -2,7 +2,7 @@
 #匹配(`match`)表达式
 
 >[match-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/match-expr.md)\
->commit 41cf00929903710a9ce9b1f4c5d8b96e6a511614
+>commit: 41cf00929903710a9ce9b1f4c5d8b96e6a511614
 
 > **<sup>句法</sup>**\
 > _MatchExpression_ :\

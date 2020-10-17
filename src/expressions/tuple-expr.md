@@ -2,7 +2,7 @@
 # 元组和元组索引表达式
 
 >[tuple-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/tuple-expr.md)\
->commit 1a3615102993e9f017a44b903ff2277a38a171a8
+>commit: 1a3615102993e9f017a44b903ff2277a38a171a8
 
 ## Tuple expressions
 ## 元组表达式

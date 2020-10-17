@@ -1,7 +1,7 @@
 # 路径表达式
 
 >[path-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/path-expr.md)\
->commit b0e0ad6490d6517c19546b1023948986578fc378
+>commit: b0e0ad6490d6517c19546b1023948986578fc378
 
 > **<sup>句法</sup>**\
 > _PathExpression_ :\

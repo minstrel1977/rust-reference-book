@@ -1,7 +1,7 @@
 # 测试类属性
 
 >[testing.md](https://github.com/rust-lang/reference/blob/master/src/attributes/testing.md)\
->commit b0e0ad6490d6517c19546b1023948986578fc378
+>commit: b0e0ad6490d6517c19546b1023948986578fc378
 
 以下[属性]用于指定执行测试的函数。在“测试”模式下编译 crate 可以构建测试函数以及执行测试的测试套件。启用测试模式还会启用 [`test`条件编译选项]。
 

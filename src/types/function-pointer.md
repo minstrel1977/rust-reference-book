@@ -2,7 +2,7 @@
 # 函数指针类型
 
 >[function-pointer.md](https://github.com/rust-lang/reference/blob/master/src/types/function-pointer.md)\
->commit 3d1b9ae5e7a61da43ac83cc42815e29b34b350ba
+>commit: 3d1b9ae5e7a61da43ac83cc42815e29b34b350ba
 
 > **<sup>句法</sup>**\
 > _BareFunctionType_ :\

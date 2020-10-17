@@ -1,7 +1,9 @@
+# Identifiers
 # 标识符
 
 >[identifiers.md](https://github.com/rust-lang/reference/blob/master/src/identifiers.md)\
->commit dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6
+>commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 \
+>本译文最后维护日期：2020-10-17
 
 > **<sup>词法分析:<sup>**\
 > IDENTIFIER_OR_KEYWORD :\
@@ -10,7 +12,7 @@
 >
 > RAW_IDENTIFIER : `r#` IDENTIFIER_OR_KEYWORD <sub>*排除 `crate`, `self`, `super`, `Self`*</sub>
 >
-> NON_KEYWORD_IDENTIFIER : IDENTIFIER_OR_KEYWORD <sub>*排除一个[严格]或[保留]关键字 *</sub>
+> NON_KEYWORD_IDENTIFIER : IDENTIFIER_OR_KEYWORD <sub>*排除一个[严格][strict]或[保留][reserved]关键字 *</sub>
 >
 > IDENTIFIER :\
 > NON_KEYWORD_IDENTIFIER | RAW_IDENTIFIER
@@ -25,11 +27,13 @@
 要么是：
 
 * 首字符是 `_`。
-* 标识符由多个字符组成，单个 `_` 不是有效标识符。
+* 整个字符串由多个字符组成。单个 `_` 不是有效标识符。
 * 其余字符是字母、数字，或 `_`。
 
-原生标识符与普通标识符类似，但前缀为 `r#`。（请注意 `r#` 前缀不包括在实际标识符中。）与普通标识符不同，原生标识符可以是除上面列出的 `RAW_IDENTIFIER` 之外的任何严格关键字或保留关键字。
+原生标识符与普通标识符类似，但有前缀 `r#`。（注意 `r#` 前缀不包括在实际标识符中。）与普通标识符不同，原生标识符可以是除上面列出的 `RAW_IDENTIFIER` 之外的任何严格关键字或保留关键字。
 
-[严格]: keywords.md#严格关键字
-[保留]: keywords.md#保留关键字
+[strict]: keywords.md#strict-keywords
+[reserved]: keywords.md#reserved-keywords
+
 <!-- 2020-10-16 -->
+<!-- checked -->

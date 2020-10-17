@@ -2,7 +2,7 @@
 # 字段存取表达式
 
 >[field-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/field-expr.md)\
->commit f8e76ee9368f498f7f044c719de68c7d95da9972
+>commit: f8e76ee9368f498f7f044c719de68c7d95da9972
 
 > **<sup>句法</sup>**\
 > _FieldExpression_ :\

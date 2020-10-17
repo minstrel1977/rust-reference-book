@@ -1,7 +1,7 @@
 # 关联数据项
 
 >[associated-items.md](https://github.com/rust-lang/reference/blob/master/src/items/associated-items.md)\
->commit 136bd7da8b9c509c17c9619813b57dd1a47a8e25
+>commit: 136bd7da8b9c509c17c9619813b57dd1a47a8e25
 
 *关联数据项*是在[trait]中声明或在[实现]中定义的数据项。之所以这样称呼它们，是因为它们是在关联类型上定义的，即实现里的类型。它们是可以在模块中声明的数据项的子集。具体来说，有[关联函数]（包括方法）、[关联类型]和[关联常量]。
 

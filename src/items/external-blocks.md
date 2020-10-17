@@ -1,7 +1,7 @@
 # 外部块
 
 >[external-blocks.md](https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md)\
->commit 18d7140a96d3d898ccded0cc32a16675681b0846
+>commit: 18d7140a96d3d898ccded0cc32a16675681b0846
 
 > **<sup>句法</sup>**\
 > _ExternBlock_ :\

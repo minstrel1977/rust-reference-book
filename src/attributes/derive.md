@@ -1,7 +1,7 @@
 # 派生
 
 >[derive.md](https://github.com/rust-lang/reference/blob/master/src/attributes/derive.md)\
->commit a52543267554541a95088b79f46a8bd36f487603
+>commit: a52543267554541a95088b79f46a8bd36f487603
 
 *`derive`属性*允许为数据结构自动生成新的[数据项]。它使用[_MetaListPaths_]句法规则指定要实现的 trait列表或相关的[派生宏]要处理的路径。
 

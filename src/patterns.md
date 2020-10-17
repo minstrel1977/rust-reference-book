@@ -2,7 +2,7 @@
 # 模式
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
->commit 589c2163d018b408da173325e02c7b59c139c3d1
+>commit: 589c2163d018b408da173325e02c7b59c139c3d1
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\

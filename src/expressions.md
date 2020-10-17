@@ -2,7 +2,7 @@
 # 表达式
 
 >[expressions.md](https://github.com/rust-lang/reference/blob/master/src/expressions.md)\
->commit 8c4522851452563b715b11d4cd755b36d8e4bca5
+>commit: 8c4522851452563b715b11d4cd755b36d8e4bca5
 
 > **<sup>句法</sup>**\
 > _Expression_ :\

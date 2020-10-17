@@ -1,7 +1,7 @@
 # trait
 
 >[traits.md](https://github.com/rust-lang/reference/blob/master/src/items/traits.md)\
->commit d5cc65a70f66a243d84cd251188d80fbe9926747
+>commit: d5cc65a70f66a243d84cd251188d80fbe9926747
 
 > **<sup>句法</sup>**\
 > _Trait_ :\

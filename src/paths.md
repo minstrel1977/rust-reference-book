@@ -1,7 +1,7 @@
 # 路径
 
 >[paths.md](https://github.com/rust-lang/reference/blob/master/src/paths.md)\
->commit ecfd8761829d6b1025f2a0a8df6905043b2c5e8a
+>commit: ecfd8761829d6b1025f2a0a8df6905043b2c5e8a
 
 *路径*是一个或多个由命名空间<span class="parenthetical">限定符(`::`)</span>*逻辑*分隔的路径段组成的序列。如果路径仅由一个路径段组成，则它引用本地控制域内的[数据项]或[变量]。如果路径包含多个路径段，则常是引用具体数据项。
 

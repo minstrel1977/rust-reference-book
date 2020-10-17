@@ -1,7 +1,7 @@
 # 参数极限
 
 >[limits.md](https://github.com/rust-lang/reference/blob/master/src/attributes/limits.md)\
->commit a258c97b95c9c1bf27f4b6684e5b5d080eb8aa69
+>commit: a258c97b95c9c1bf27f4b6684e5b5d080eb8aa69
 
 以下[属性]的设定影响编译期的编译参数的极限
 

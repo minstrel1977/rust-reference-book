@@ -2,7 +2,7 @@
 # never类型
 
 >[never.md](https://github.com/rust-lang/reference/blob/master/src/types/never.md)\
->commit 91486df597a9e8060f9c67587359e9f168dea7ef
+>commit: 91486df597a9e8060f9c67587359e9f168dea7ef
 
 > **<sup>句法</sup>**\
 > _NeverType_ : `!`

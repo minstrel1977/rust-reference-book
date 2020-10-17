@@ -1,7 +1,7 @@
 # 语句
 
 >[statements.md](https://github.com/rust-lang/reference/blob/master/src/statements.md)\
->commit 6b90080371ff44d0074a465945dfdb0de4b50774
+>commit: 6b90080371ff44d0074a465945dfdb0de4b50774
 
 > **<sup>句法</sup>**\
 > _Statement_ :\

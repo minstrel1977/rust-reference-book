@@ -2,7 +2,7 @@
 # 属性
 
 >[attributes.md](https://github.com/rust-lang/reference/blob/master/src/attributes.md)\
->commit 814a530db0a3f91821095a830fa321fdd5a41d17
+>commit: 814a530db0a3f91821095a830fa321fdd5a41d17
 
 > **<sup>句法</sup>**\
 > _InnerAttribute_ :\
