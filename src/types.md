@@ -69,7 +69,7 @@ Rust 类型分类列表为：
     * [`Self`路径][`Self` path]，其中 `Self` 是实现类型。
     * 一般[类型参数][type parameters]。
 * 指针类型([引用][reference], [裸指针][raw pointer], [函数指针][function pointer])。
-* [推断的类型][inferred type]，就是由编译器确定的类型。
+* [自动推断型类型][inferred type]，就是由编译器确定具体的使用类型。
 * 用来消除歧义的[圆括号][Parentheses]。
 * Trait类型：[trait对象][Trait objects] 和 [实现对象][impl trait].
 * [never]型。
@@ -116,7 +116,7 @@ let a: List<i32> = List::Cons(7, Box::new(List::Cons(13, Box::new(List::Nil))));
 [_MacroInvocation_]: macros.md#宏调用
 [_NeverType_]: types/never.md
 [_ParenthesizedType_]: types.md#parenthesized-types
-[_QualifiedPathInType_]: paths.md#限定路径
+[_QualifiedPathInType_]: paths.md#qualified-paths
 [_RawPointerType_]: types/pointer.md#raw-pointers-const-and-mut
 [_ReferenceType_]: types/pointer.md#shared-references-
 [_SliceType_]: types/slice.md

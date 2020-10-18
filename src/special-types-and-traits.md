@@ -87,7 +87,7 @@ has a few special features that Rust doesn't currently allow for user defined ty
 
 [`Send`]，[`Sync`]，[`Unpin`]，[`UnwindSafe`]，和 [`RefUnwindSafe`] trait 都是*自动trait*。自动trait 具有特殊的属性。
 
-如果对于给定类型的自动trait 没有显式实现或否定实现，那么编译器会根据以下规则自动此为类型去实现这些自动trait：
+如果对于给定类型的自动trait 没有显式实现或否定实现(negative implementation)，那么编译器会根据以下规则自动此为类型去实现这些自动trait：
 
 * 如果 `T` 实现了自动trait，那 `&T`, `&mut T`, `*const T`, `*mut T`, `[T; n]`, 和 `[T]` 也会实现。
 * 函数项类型和函数指针自动实现这些 trait。

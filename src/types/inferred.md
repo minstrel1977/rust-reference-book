@@ -1,5 +1,5 @@
 # Inferred type
-# 自动推断类型
+# 自动推断型类型
 
 >[parameters.md](https://github.com/rust-lang/reference/blob/master/src/types/parameters.md)\
 >commit: 43dc1a42f19026f580e34a095e91804c3d6da186
@@ -7,7 +7,7 @@
 > **<sup>句法</sup>**\
 > _InferredType_ : `_`
 
-自动推断类型要求编译器尽可能根据周围可用的信息推断类型。它不能用于数据项的签名。它经常用于一般参数中：
+自动推断型类型要求编译器尽可能根据周围可用的信息推断出实际使用类型。它不能用于数据项的签名。它经常用于一般参数中：
 
 ```rust
 let x: Vec<_> = (0..10).collect();

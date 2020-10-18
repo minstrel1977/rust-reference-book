@@ -2,7 +2,8 @@
 # 声明宏
 
 >[macros-by-example.md](https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md)\
->commit: 30ccf092c7c1d92b2398e28d4abf8c5ba6c31cba
+>commit: 30ccf092c7c1d92b2398e28d4abf8c5ba6c31cba \
+>本译文最后维护日期：2020-10-16
 
 > **<sup>句法</sup>**\
 > _MacroRulesDefinition_ :\
@@ -390,4 +391,6 @@ When repetitions are involved, then the rules apply to every possible number of 
 [_Visibility_]: visibility-and-privacy.md
 [formal specification]: macro-ambiguity.md
 [token]: tokens.md
+
+<!-- 2020-10-16 -->
 <!-- checked -->

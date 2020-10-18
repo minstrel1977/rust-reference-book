@@ -3,7 +3,7 @@
 
 >[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
 >commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 \
->本译文最后维护日期：2020-10-17
+>本译文最后维护日期：2020-10-18
 
 
 标记码是由正则语言(regular languages)（非递归方式）定义的语法中的基本元素。Rust 源码输入可以被分解成以下几种标记码：
@@ -131,7 +131,7 @@ blackhole!("string"suffix); // OK
 > UNICODE_ESCAPE :\
 > &nbsp;&nbsp; `\u{` ( HEX_DIGIT `_`<sup>\*</sup> )<sup>1..6</sup> `}`
 
-*字符字面量*是位于两个 `U+0027`（单引号）字符内的单个 Unicode 字符。当它是 `U+0027` 自身时，必须前置*转义*字符 `U+005C`（`\`）。
+*字符字面量*是位于两个 `U+0027`（单引号 `'`）字符内的单个 Unicode 字符。当它是 `U+0027` 自身时，必须前置*转义*字符 `U+005C`（`\`）。
 
 #### String literals
 #### 字符串字面量
@@ -149,7 +149,7 @@ blackhole!("string"suffix); // OK
 > STRING_CONTINUE :\
 > &nbsp;&nbsp; `\` _后跟_ \\n
 
-*字符串字面量*是位于两个 `U+0022` （双引号）字符内的任意 Unicode 字符序列。当它是 `U+0022` 自身时，必须前置*转义*字符 `U+005C`（`\`）。
+*字符串字面量*是位于两个 `U+0022` （双引号 `"`）字符内的任意 Unicode 字符序列。当它是 `U+0022` 自身时，必须前置*转义*字符 `U+005C`（`\`）。
 
 字符串字面量允许换行书写。换行可以用换行符（`U+000A`），也可以用一对回车符换行符（`U+000D`, `U+000A`）的字节序列。这两种字节序列通常都转换为 `U+000A`，但有例外：当换行符前置一个未转义的字符 `U+005C`（`\`）时，会导致字符 `U+005C`、换行符和下一行开头的所有空白符都被忽略。因此下述示例中，`a` 和 `b` 是一样的：
 
@@ -183,9 +183,9 @@ assert_eq!(a,b);
 > &nbsp;&nbsp; &nbsp;&nbsp; `"` ( ~ _IsolatedCR_ )<sup>* (非贪婪模式)</sup> `"`\
 > &nbsp;&nbsp; | `#` RAW_STRING_CONTENT `#`
 
-原生字符串字面量不做任何转义。它以字符 `U+0072`（`r`）后跟零个或多个字符 `U+0023`（`#`），以及一个 `U+0022`（双引号）字符开始。*原生字符串文本主体*可包含任意的 Unicode 字符序列，并仅以另一个 `U+0022`（双引号）字符结尾，后跟与开头的 `U+0022`（双引号）字符前同等数量的 `U+0023`（`#`）字符。
+原生字符串字面量不做任何转义。它以字符 `U+0072`（`r`）后跟零个或多个字符 `U+0023`（`#`），以及一个 `U+0022`（双引号 `"`）字符开始。*原生字符串文本主体*可包含任意的 Unicode 字符序列，并仅以另一个 `U+0022`（双引号 `"`）字符结尾，后跟与开头的 `U+0022`（双引号 `"`）字符前同等数量的 `U+0023`（`#`）字符。
 
-所有包含在原生字符串文本主体中的 Unicode 字符都代表他们自身，字符 `U+0022`（双引号）（除非后跟的纯 `U+0023` (`#`)字符串与文本主体开始前的对称相等）或 `U+005C`（`\`）并无特殊含义。
+所有包含在原生字符串文本主体中的 Unicode 字符都代表他们自身，字符 `U+0022`（双引号 `"`）（除非后跟的纯 `U+0023` (`#`)字符串与文本主体开始前的对称相等）或 `U+005C`（`\`）并无特殊含义。
 
 字符串字面量示例:
 
@@ -211,7 +211,7 @@ r##"foo #"# bar"##;                // foo #"# bar
 > &nbsp;&nbsp; `b'` ( ASCII_FOR_CHAR | BYTE_ESCAPE )  `'`
 >
 > ASCII_FOR_CHAR :\
-> &nbsp;&nbsp; _任何 ASCII 字符 (0x00 到 0x7F 之间的码点), 排除_ `'`, `\`, \\n, \\r 或者 \\t
+> &nbsp;&nbsp; _任何 ASCII 字符 (0x00 到 0x7F), 排除_ `'`, `\`, \\n, \\r 或者 \\t
 >
 > BYTE_ESCAPE :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `\x` HEX_DIGIT HEX_DIGIT\
@@ -250,11 +250,11 @@ r##"foo #"# bar"##;                // foo #"# bar
 > &nbsp;&nbsp; | `#` RAW_BYTE_STRING_CONTENT `#`
 >
 > ASCII :\
-> &nbsp;&nbsp; _任何 ASCII 字符(0x00 到 0x7F 之间的码点)_
+> &nbsp;&nbsp; _任何 ASCII 字符(0x00 到 0x7F)_
 
-原生字节串字面量不处理任何转义。它们以字符 `U+0062`（`b`）开头，后跟 `U+0072`（`r`），后跟零个或多个字符 `U+0023`（`#`）及 `U+0022`（双引号）字符。_原生字节串文本主体_ 可包含任意 ASCII 字符序列，并仅以另一个 `U+0022`（双引号）字符结尾，后面与开头 `U+0022`（双引号）字符之前同等数量的 `U+0023`（`#`）字符。原生字节串字面量不能包含任何非 ASCII 字节。
+原生字节串字面量不做任何转义。它们以字符 `U+0062`（`b`）开头，后跟 `U+0072`（`r`），后跟零个或多个字符 `U+0023`（`#`）及 `U+0022`（双引号 `"`）字符。_原生字节串文本主体_ 可包含任意的 ASCII 字符序列，并仅以另一个 `U+0022`（双引号 `"`）字符结尾，后跟与开头 `U+0022`（双引号 `"`）字符前同等数量的 `U+0023`（`#`）字符。原生字节串字面量不能包含任何非 ASCII 字节。
 
-原生字节串文本主体中的所有字符都表示它们的 ASCII 编码，字符 `U+0022`（双引号）（除非后面跟的 `U+0023`（`#`）字符数与用于开始原生字节串字面量的`#`字符数相同）或 `U+005C`（`\`）并无特殊含义。
+原生字节串文本主体中的所有字符都代表它们的 ASCII 编码，字符 `U+0022`（双引号 `"`）（除非后跟的纯 `U+0023`（`#`）字符串与文本主体开始前的对称相等）或 `U+005C`（`\`）并无特殊含义。
 
 字节串字面量示例：
 
@@ -269,10 +269,12 @@ b"\x52"; b"R"; br"R";                // R
 b"\\x52"; br"\x52";                  // \x52
 ```
 
+### Number literals
 ### 数字字面量
 
-*数字字面量*可以是*整型字面量*，也可以是*浮点型字面量*，用于识别这两种字面量的语法是混合的。
+*数字字面量*可以是*整型字面量*，也可以是*浮点型字面量*，识别这两种字面量的语法是混合的。
 
+#### Integer literals
 #### 整型字面量
 
 > **<sup>词法</sup>**\
@@ -306,39 +308,39 @@ b"\\x52"; br"\x52";                  // \x52
 
 *整型字面量*具备下述 4 种形式之一：
 
-* *十进制字面量*以*十进制数*开头，后跟*十进制数*和*下划线(`_`)*的任意组合。
-* *十六进制字面量*以字符序列 `U+0030` `U+0078`（`0x`）开头，后跟十六进制数和下划线的任意组合（至少一个数字）。
-* *八进制字面量*以字符序列 `U+0030` `U+006F`（`0o`）开头，后跟八进制数和下划线的任意组合（至少一个数字）。
-* *二进制字面量*以字符序列 `U+0030` `U+0062`（`0b`）开头，后跟二进制数和下划线的任意组合（至少一个数字）。
+* *十进制字面量*以*十进制数字*开头，后跟*十进制数字*和*下划线(`_`)*的任意组合。
+* *十六进制字面量*以字符序列 `U+0030` `U+0078`（`0x`）开头，后跟十六进制数字和下划线的任意组合（至少一个数字）。
+* *八进制字面量*以字符序列 `U+0030` `U+006F`（`0o`）开头，后跟八进制数字和下划线的任意组合（至少一个数字）。
+* *二进制字面量*以字符序列 `U+0030` `U+0062`（`0b`）开头，后跟二进制数字和下划线的任意组合（至少一个数字）。
 
-与其它字面量一样，整型字面量后面（紧跟，不带空白符）可跟一个*整型后缀*，该后缀强制设定了字面量的类型。整型后缀须为如下整型类型之一：`u8`、`i8`、`u16`、`i16`、`u32`、`i32`、`u64`、`i64`、`u128`、`i128`、`usize` 或 `isize`。
+与其它字面量一样，整型字面量后面可紧跟一个*整型后缀*，该后缀强制设定了字面量的数据类型。整型后缀须为如下整型类型之一：`u8`、`i8`、`u16`、`i16`、`u32`、`i32`、`u64`、`i64`、`u128`、`i128`、`usize` 或 `isize`。
 
 *无后缀*整型字面量的类型通过类型推断确定：
 
 * 如果整型类型可以通过程序上下文*唯一*确定，则无后缀整型字面量即为该类型。
-* 如果程序上下文对类型做了约束，则默认为带符号 32 位整型为 `i32`。
+* 如果程序上下文对类型做了约束，则默认为带符号 32 位整型，即 `i32`。
 * 如果程序上下文过度限制了类型，则将其视为静态类型错误。
 
-各种形式的整型字面量示例:
+各种形式的整型字面量示例：
 
 ```rust
-123;                               // type i32
-123i32;                            // type i32
-123u32;                            // type u32
-123_u32;                           // type u32
-let a: u64 = 123;                  // type u64
+123;                               // 类型 i32
+123i32;                            // 类型 i32
+123u32;                            // 类型 u32
+123_u32;                           // 类型 u32
+let a: u64 = 123;                  // 类型 u64
 
-0xff;                              // type i32
-0xff_u8;                           // type u8
+0xff;                              // 类型 i32
+0xff_u8;                           // 类型 u8
 
-0o70;                              // type i32
-0o70_i16;                          // type i16
+0o70;                              // 类型 i32
+0o70_i16;                          // 类型 i16
 
-0b1111_1111_1001_0000;             // type i32
-0b1111_1111_1001_0000i64;          // type i64
-0b________1;                       // type i32
+0b1111_1111_1001_0000;             // 类型 i32
+0b1111_1111_1001_0000i64;          // 类型 i64
+0b________1;                       // 类型 i32
 
-0usize;                            // type usize
+0usize;                            // 类型 usize
 ```
 
 无效整型字面量示例:
@@ -365,9 +367,9 @@ let a: u64 = 123;                  // type u64
 0b____;
 ```
 
-请注意，Rust 句法将 `-1i8` 视为[一元取反运算符]对整型字面量`1i8`的应用，而非单个整型字面量。
+请注意，Rust 句法将 `-1i8` 视为[一元取反运算符][unary minus operator]对整型字面量 `1i8` 的应用，而不是将它视为单个整型字面量。
 
-[一元取反运算符]: expressions/operator-expr.md#取反运算符
+[unary minus operator]: expressions/operator-expr.md#negation-operators
 
 #### Tuple index
 #### 元组索引
@@ -376,9 +378,9 @@ let a: u64 = 123;                  // type u64
 > TUPLE_INDEX: \
 > &nbsp;&nbsp; INTEGER_LITERAL
 
-元组索引用于引用[元组]、[元组结构体]和[元组变体]的字段。
+元组索引用于引用[元组][tuples]、[元组结构体][tuple structs]和[元组变体][tuple variants]的字段。
 
-元组索引直接与字面量标记码进行比较。元组索引以 `0` 开始，每个后续索引的值以十进制的 `1` 递增。因此，元组索引只能匹配十进制值，并且该值不能有任何额外的 `0` 前缀字符。
+元组索引直接与字面量标记码进行比较。元组索引以 `0` 开始，每个后续索引的值以十进制的 `1` 递增。因此，元组索引只能匹配十进制值，并且该值不能有任何额外的 `0` 做前缀字符。
 
 ```rust,compile_fail
 let example = ("dog", "cat", "horse");
@@ -389,14 +391,15 @@ let cat = example.01;  // 错误：没有 `01` 字段
 let horse = example.0b10;  // 错误：没有 `0b10` 字段
 ```
 
-> **注意**: 元组索引可能包含一个`INTEGER_SUFFIX`，但是这不是有效的，可能会在将来的版本中被删除。更多信息请参见<https://github.com/rust-lang/rust/issues/60210>。
+> **注意**: 元组索引可能包含一个 `INTEGER_SUFFIX` ，但是这不是有效的，可能会在将来的版本中被删除。更多信息请参见<https://github.com/rust-lang/rust/issues/60210>。
 
+#### Floating-point literals
 #### 浮点型字面量
 
 > **<sup>词法</sup>**\
 > FLOAT_LITERAL :\
 > &nbsp;&nbsp; &nbsp;&nbsp; DEC_LITERAL `.`
->   _(紧跟着的不能是 `.`, `_` 或者[标识符]_)\
+>   _(紧跟着的不能是 `.`, `_` 或者[标识符][identifier]_)\
 > &nbsp;&nbsp; | DEC_LITERAL FLOAT_EXPONENT\
 > &nbsp;&nbsp; | DEC_LITERAL `.` DEC_LITERAL FLOAT_EXPONENT<sup>?</sup>\
 > &nbsp;&nbsp; | DEC_LITERAL (`.` DEC_LITERAL)<sup>?</sup>
@@ -411,10 +414,10 @@ let horse = example.0b10;  // 错误：没有 `0b10` 字段
 
 *浮点型字面量*具有如下两种形式之一：
 
-* *十进制字面量*后跟句点字符`U+002E` (`.`)。可选地，后面跟着另一个十进制文字，也可以再接一个可选的*指数*。
+* *十进制字面量*后跟句点字符 `U+002E` (`.`)。后面可选地跟着另一个十进制数字，还可以再接一个可选的*指数*。
 * *十进制字面量*后跟一个*指数*。
 
-如同整型字面量，浮点型字面量也可后跟一个后缀，但后缀之前部分不以 `U+002E`（`.`）结尾。后缀强制设定了字面量类型。有两种有效的*浮点型后缀*——`f32` 和 `f64`（32 位和 64 位浮点类型），它们显式地指定了字面量的类型。
+如同整型字面量，浮点型字面量也可后跟一个后缀，但在后缀之前，浮点型字面量部分不以 `U+002E`（`.`）结尾。后缀强制设定了字面量类型。有两种有效的*浮点型后缀*：`f32` 和 `f64`（32 位和 64 位浮点类型），它们显式地指定了字面量的类型。
 
 *无后缀*浮点型字面量的类型通过类型推断确定：
 
@@ -425,19 +428,20 @@ let horse = example.0b10;  // 错误：没有 `0b10` 字段
 各种形式的浮点型字面量示例：
 
 ```rust
-123.0f64;        // type f64
-0.1f64;          // type f64
-0.1f32;          // type f32
-12E+99_f64;      // type f64
-let x: f64 = 2.; // type f64
+123.0f64;        // 类型 f64
+0.1f64;          // 类型 f64
+0.1f32;          // 类型 f32
+12E+99_f64;      // 类型 f64
+let x: f64 = 2.; // 类型 f64
 ```
 
-最后一个例子稍显不同，因为不能对一个以句点结尾的浮点型字面量使用后缀句法，`2.f64` 才会尝试在 `2` 上调用名为 `f64` 的方法。
+最后一个例子稍显不同，因为不能对一个以句点结尾的浮点型字面量使用后缀句法，`2.f64` 会尝试在 `2` 上调用名为 `f64` 的方法。
 
-浮点数所代表的语义在[“平台类型”]中描述。
+浮点数的表形(representation)语义在[“平台类型”]["Machine Types"]中描述。
 
-[“平台类型”]: types/numeric.md
+["Machine Types"]: types/numeric.md
 
+### Boolean literals
 ### 布尔型字面量
 
 > **<sup>词法</sup>**\
@@ -447,39 +451,41 @@ let x: f64 = 2.; // type f64
 
 布尔类型有两个值，写做：`true` 和 `false`。
 
+## Lifetimes and loop labels
 ## 生存期和循环标签
 
 > **<sup>词法</sup>**\
 > LIFETIME_TOKEN :\
-> &nbsp;&nbsp; &nbsp;&nbsp; `'` [IDENTIFIER_OR_KEYWORD][标识符]\
+> &nbsp;&nbsp; &nbsp;&nbsp; `'` [IDENTIFIER_OR_KEYWORD][identifier]\
 > &nbsp;&nbsp; | `'_`
 >
 > LIFETIME_OR_LABEL :\
-> &nbsp;&nbsp; &nbsp;&nbsp; `'` [NON_KEYWORD_IDENTIFIER][标识符]
+> &nbsp;&nbsp; &nbsp;&nbsp; `'` [NON_KEYWORD_IDENTIFIER][identifier]
 
-生存期参数和[循环标签]使用 LIFETIME_OR_LABEL 标记码。词法上接受任何 LIFETIME_TOKEN，比如在宏中使用。
+生存期参数和[循环标签][loop labels]使用 LIFETIME_OR_LABEL 标记码。（虽然 LIFETIME_OR_LABEL 是 LIFETIME_TOKEN的子集，其实）任何 LIFETIME_TOKEN 类型的标记码也都能被此词法分析器所接受，比如 LIFETIME_TOKEN 类型的标记码在宏中就可以畅通无阻的使用。
 
-[循环标签]: expressions/loop-expr.md
+[loop labels]: expressions/loop-expr.md
 
+## Punctuation
 ## 标点符号
 
 为了完整起见，这里列出了（Rust 里）所有的标点符号标记码。它们各自的用法和意义在链接页面中都有定义。
 
 | 符号 | 名称        | 使用方法 |
 |--------|-------------|-------|
-| `+`    | Plus        | [算术加法][arith], [trait 约束], [宏 Kleene 匹配器][宏]
-| `-`    | Minus       | [算术减法][arith], [取反]
-| `*`    | Star        | [算术乘法][arith], [解引用], [裸指针], [宏 Kleene 匹配器][宏], [use 通配符]
+| `+`    | Plus        | [算术加法][arith], [trait约束][Trait Bounds], [宏 Kleene 匹配器][macros]
+| `-`    | Minus       | [算术减法][arith], [取反][Negation]
+| `*`    | Star        | [算术乘法][arith], [解引用][Dereference], [裸指针][Raw Pointers], [宏 Kleene 匹配器][macros], [use 通配符][Use wildcards]
 | `/`    | Slash       | [算术除法][arith]
 | `%`    | Percent     | [算术取模][arith]
 | `^`    | Caret       | [位和逻辑异或][arith]
-| `!`    | Not         | [位和逻辑非][取反], [宏调用][宏], [内部属性][属性], [never 型], [拒绝 impl]
-| `&`    | And         | [位和逻辑与][arith], [借用], [引用], [引用模式]
-| <code>\|</code> | Or | [位和逻辑或][arith], [闭包], [match]中的模式, [if let], 和 [while let]
-| `&&`   | AndAnd      | [短路与][lazy-bool], [借用], [引用], [引用模式]
-| <code>\|\|</code> | OrOr | [短路或]][lazy-bool], [闭包]
-| `<<`   | Shl         | [左移位][arith], [嵌套泛型][泛型]
-| `>>`   | Shr         | [右移位][arith], [嵌套泛型][泛型]
+| `!`    | Not         | [位和逻辑非][Negation], [宏调用][macros], [内部属性][attributes], [never型][Never Type], [否定实现][negative impls]
+| `&`    | And         | [位和逻辑与][arith], [借用][Borrow], [引用][References], [引用模式][Reference patterns]
+| <code>\|</code> | Or | [位和逻辑或][arith], [闭包][Closures], [match] 中的模式, [`if let`], 和 [`while let`]
+| `&&`   | AndAnd      | [短路与][lazy-bool], [借用][Borrow], [引用][References], [引用模式][Reference patterns]
+| <code>\|\|</code> | OrOr | [短路或][lazy-bool], [闭包][Closures]
+| `<<`   | Shl         | [左移位][arith], [嵌套泛型][generics]
+| `>>`   | Shr         | [右移位][arith], [嵌套泛型][generics]
 | `+=`   | PlusEq      | [加法及赋值][compound]
 | `-=`   | MinusEq     | [减法及赋值][compound]
 | `*=`   | StarEq      | [乘法及赋值][compound]
@@ -489,87 +495,88 @@ let x: f64 = 2.; // type f64
 | `&=`   | AndEq       | [按位与及赋值][compound]
 | <code>\|=</code> | OrEq | [按位或及赋值][compound]
 | `<<=`  | ShlEq       | [左移位及赋值][compound]
-| `>>=`  | ShrEq       | [右移位及赋值][compound], [嵌套泛型][泛型]
-| `=`    | Eq          | [赋值], [属性], 各种类型定义
+| `>>=`  | ShrEq       | [右移位及赋值][compound], [嵌套泛型][generics]
+| `=`    | Eq          | [赋值][Assignment], [属性][attributes], 各种类型定义
 | `==`   | EqEq        | [等于][comparison]
 | `!=`   | Ne          | [不等于][comparison]
-| `>`    | Gt          | [大于][comparison], [泛型], [路径]
-| `<`    | Lt          | [小于][comparison], [泛型], [路径]
-| `>=`   | Ge          | [大于或等于][comparison], [泛型]
+| `>`    | Gt          | [大于][comparison], [泛型][generics], [路径][Paths]
+| `<`    | Lt          | [小于][comparison], [泛型][generics], [路径][Paths]
+| `>=`   | Ge          | [大于或等于][comparison], [泛型][generics]
 | `<=`   | Le          | [小于或等于][comparison]
-| `@`    | At          | [子模式绑定]
-| `_`    | Underscore  | [通配符模式], [类型推断], [常量]中的非命名数据项, [外部 crate], 和 [use 声明]
-| `.`    | Dot         | [字段存取][field], [元组索引]
-| `..`   | DotDot      | [区间][range], [结构体表达式], [模式]
-| `...`  | DotDotDot   | [可变参数函数][extern], [区间模式]
-| `..=`  | DotDotEq    | [闭区间][range], [区间模式]
+| `@`    | At          | [子模式绑定][Subpattern binding]
+| `_`    | Underscore  | [通配符模式][Wildcard patterns], [自动推断型类型][Inferred types], [常量项][constants]中的非命名数据项, [外部 crate][extern crates], 和 [use声明][use declarations]
+| `.`    | Dot         | [字段存取][field], [元组索引][Tuple index]
+| `..`   | DotDot      | [区间][range], [结构体表达式][Struct expressions], [模式][Patterns]
+| `...`  | DotDotDot   | [可变参数函数][extern], [区间模式][Range patterns]
+| `..=`  | DotDotEq    | [闭区间][range], [区间模式][Range patterns]
 | `,`    | Comma       | 各种分隔符
-| `;`    | Semi        | 各种数据项和语句的结束符, [数组类型]
+| `;`    | Semi        | 各种数据项和语句的结束符, [数组类型][Array types]
 | `:`    | Colon       | 各种分隔符
-| `::`   | PathSep     | [路径分隔符][路径]
-| `->`   | RArrow      | [函数返回类型][functions], [闭包返回类型][闭包], [数组指针类型]
-| `=>`   | FatArrow    | [匹配臂][match], [宏]
-| `#`    | Pound       | [属性]
-| `$`    | Dollar      | [宏]
-| `?`    | Question    | [问号运算符], [非确定性尺寸][sized], [宏 Kleene 匹配器][宏]
+| `::`   | PathSep     | [路径分隔符][路径][Paths]
+| `->`   | RArrow      | [函数返回类型][functions], [闭包返回类型][Closures], [数组指针类型][Function pointer type]
+| `=>`   | FatArrow    | [匹配臂][match], [宏][macros]
+| `#`    | Pound       | [属性][attributes]
+| `$`    | Dollar      | [宏][macros]
+| `?`    | Question    | [问号运算符][question], [非确定性尺寸][sized], [宏 Kleene 匹配器][macros]
 
+## Delimiters
 ## 定界符
 
-括号用于语法的各个部分，左括号必须始终与右括号配对。括号及其内的标记码在[宏]中被称作“标记树”。括号有三种类型：
+括号用于语法的各个部分，左括号必须始终与右括号配对。括号以及其内的标记码在[宏][macros]中被称作“标记树(token trees)”。括号有三种类型：
 
 | 括号 | 类型            |
 |---------|-------------|
-| `{` `}` | 花/花括号    |
+| `{` `}` | 花/大括号    |
 | `[` `]` | 方/中括号    |
 | `(` `)` | 圆/小括号    |
 
 
-[类型推断]: types/inferred.md
-[区间模式]: patterns.md#range-patterns
-[引用模式]: patterns.md#reference-patterns
-[子模式绑定]: patterns.md#identifier-patterns
+[Inferred types]: types/inferred.md
+[Range patterns]: patterns.md#range-patterns
+[Reference patterns]: patterns.md#reference-patterns
+[Subpattern binding]: patterns.md#identifier-patterns
 [Wildcard patterns]: patterns.md#wildcard-pattern
 [arith]: expressions/operator-expr.md#arithmetic-and-logical-binary-operators
-[数组类型]: types/array.md
-[赋值]: expressions/operator-expr.md#assignment-expressions
-[属性]: attributes.md
-[借用]: expressions/operator-expr.md#borrow-operators
-[闭包]: expressions/closure-expr.md
+[array types]: types/array.md
+[assignment]: expressions/operator-expr.md#assignment-expressions
+[attributes]: attributes.md
+[borrow]: expressions/operator-expr.md#borrow-operators
+[closures]: expressions/closure-expr.md
 [comparison]: expressions/operator-expr.md#comparison-operators
 [compound]: expressions/operator-expr.md#compound-assignment-expressions
-[常量]: items/constant-items.md
-[解引用]: expressions/operator-expr.md#the-dereference-operator
-[外部 crate]: items/extern-crates.md
+[constants]: items/constant-items.md
+[dereference]: expressions/operator-expr.md#the-dereference-operator
+[extern crates]: items/extern-crates.md
 [extern]: items/external-blocks.md
 [field]: expressions/field-expr.md
-[数组指针类型]: types/function-pointer.md
+[function pointer type]: types/function-pointer.md
 [functions]: items/functions.md
-[泛型]: items/generics.md
-[标识符]: identifiers.md
-[if let]: expressions/if-expr.md#if-let-expressions
-[关键字]: keywords.md
+[generics]: items/generics.md
+[identifier]: identifiers.md
+[`if let`]: expressions/if-expr.md#if-let-expressions
+[keywords]: keywords.md
 [lazy-bool]: expressions/operator-expr.md#lazy-boolean-operators
-[宏]: macros-by-example.md
+[macros]: macros-by-example.md
 [match]: expressions/match-expr.md
-[取反]: expressions/operator-expr.md#negation-operators
-[拒绝 impl]: items/implementations.md
-[never 型]: types/never.md
-[路径]: paths.md
-[模式]: patterns.md
-[问号运算符]: expressions/operator-expr.md#the-question-mark-operator
+[negation]: expressions/operator-expr.md#negation-operators
+[negative impls]: items/implementations.md
+[never type]: types/never.md
+[paths]: paths.md
+[patterns]: patterns.md
+[question]: expressions/operator-expr.md#the-question-mark-operator
 [range]: expressions/range-expr.md
-[裸指针]: types/pointer.md#raw-pointers-const-and-mut
-[引用]: types/pointer.md
+[raw pointers]: types/pointer.md#raw-pointers-const-and-mut
+[references]: types/pointer.md
 [sized]: trait-bounds.md#sized
-[结构体表达式]: expressions/struct-expr.md
-[trait 约束]: trait-bounds.md
-[元组索引]: expressions/tuple-expr.md#tuple-indexing-expressions
-[元组结构体]: items/structs.md
-[元组变体]: items/enumerations.md
-[元组]: types/tuple.md
-[use 声明]: items/use-declarations.md
-[use 通配符]: items/use-declarations.md
-[while let]: expressions/loop-expr.md#predicate-pattern-loops
+[struct expressions]: expressions/struct-expr.md
+[trait bounds]: trait-bounds.md
+[tuple index]: expressions/tuple-expr.md#tuple-indexing-expressions
+[tuple structs]: items/structs.md
+[tuple variants]: items/enumerations.md
+[tuples]: types/tuple.md
+[use declarations]: items/use-declarations.md
+[use wildcards]: items/use-declarations.md
+[`while let`]: expressions/loop-expr.md#predicate-pattern-loops
 
 <!-- 2020-10-16 -->
 <!-- checked -->

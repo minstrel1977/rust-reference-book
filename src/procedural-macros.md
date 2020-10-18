@@ -2,7 +2,8 @@
 ## 过程宏
 
 >[procedural-macros.md](https://github.com/rust-lang/reference/blob/master/src/procedural-macros.md)\
->commit: a1ef5a09c0281b0f2a65c18670e927ead61eb1b2
+>commit: a1ef5a09c0281b0f2a65c18670e927ead61eb1b2 \
+>本译文最后维护日期：2020-10-16
 
 *过程宏*允许在执行函数时创建句法扩展。过程宏有三种形式:
 
@@ -250,3 +251,6 @@ fn invoke4() {}
 [type expressions]: types.md#type-expressions
 [type]: types.md
 [union]: items/unions.md
+
+<!-- 2020-10-16 -->
+<!-- checked -->

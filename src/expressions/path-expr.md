@@ -25,7 +25,7 @@ let slice_reverse = <[i32]>::reverse;
 ```
 
 [_PathInExpression_]: ../paths.md#表达式中的路径
-[_QualifiedPathInExpression_]: ../paths.md#限定路径
+[_QualifiedPathInExpression_]: ../paths.md#qualified-paths
 [位置表达式]: ../expressions.md#位置表达式和值表达式
 [值表达式]: ../expressions.md#位置表达式和值表达式
 [路径]: ../paths.md

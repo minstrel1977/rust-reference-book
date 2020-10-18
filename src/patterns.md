@@ -672,7 +672,7 @@ match v[..] {
 [_PathPattern_]: #path-patterns
 [_Pattern_]: #patterns
 [_PatternWithoutRange_]: #patterns
-[_QualifiedPathInExpression_]: paths.md#限定路径
+[_QualifiedPathInExpression_]: paths.md#qualified-paths
 [_RangePattern_]: #range-patterns
 [_ReferencePattern_]: #reference-patterns
 [_RestPattern_]: #rest-patterns

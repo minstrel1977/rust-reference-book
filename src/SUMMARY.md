@@ -91,7 +91,7 @@
         - [trait对象](types/trait-object.md)
         - [impl trait](types/impl-trait.md)
         - [类型参数](types/parameters.md)
-        - [推导型](types/inferred.md)
+        - [推断型](types/inferred.md)
     - [动态尺寸类型(DST)](dynamically-sized-types.md)
     - [类型布局 ](type-layout.md)
     - [内部可变性](interior-mutability.md)

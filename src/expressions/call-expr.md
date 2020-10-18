@@ -87,4 +87,4 @@ fn main() {
 [`std::ops::FnMut`]: https://doc.rust-lang.org/std/ops/trait.FnMut.html
 [`std::ops::FnOnce`]: https://doc.rust-lang.org/std/ops/trait.FnOnce.html
 [`std::ops::Fn`]: https://doc.rust-lang.org/std/ops/trait.Fn.html
-[fully-qualified syntax]: ../paths.md#限定路径
+[fully-qualified syntax]: ../paths.md#qualified-paths
