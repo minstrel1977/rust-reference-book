@@ -1,7 +1,9 @@
-# 外部 crate 声明
+# Extern crate declarations
+# 外部crate 声明
 
 >[extern-crates.md](https://github.com/rust-lang/reference/blob/master/src/items/extern-crates.md)\
->commit: afcf00bbf22f4dec71866a8bd5f385ba1d3b70af
+>commit: afcf00bbf22f4dec71866a8bd5f385ba1d3b70af \
+>本译文最后维护日期：2020-10-19
 
 > **<sup>句法:<sup>**\
 > _ExternCrate_ :\
@@ -13,11 +15,11 @@
 > _AsClause_ :\
 > &nbsp;&nbsp; `as` ( [IDENTIFIER] | `_` )
 
-*`extern crate` 声明*指定对外部 crate 的依赖关系。（这种声明让）外部的 crate 作为 `extern crate` 声明中提供的[标识符]被绑定到当前声明的作用域中。`as` 子句可用于将导入的 crate 绑定到不同的名称上。
+*外部crate(`extern crate`)声明*指定了对外部 crate 的依赖关系。（这种声明让）外部的 crate 作为 `extern crate` 声明中提供的[标识符][identifier]被绑定到当前声明的作用域中。`as`子句可用于将导入的 crate 绑定到不同的名称上。
 
-外部的 crate 在编译时被解析为一个特定的 `soname`[^soname]， 并且该 `soname` 的运行时链接被要求传递给链接器，以便在运行时加载。`soname` 在编译时解析，方法是扫描编译器的库路径，并匹配外部 crate 上（在它编译时）通过可选的 `crateid` 属性声明的`crateid`。如果外部 crate 没有提供 `crateid` ， 则（假想中的）默认的 `name` 属性值来和 `extern crate` 声明中的[标识符]绑定。
+外部crate 在编译时被解析为一个特定的 `soname`[^soname]， 并且一个到此 `soname` 的运行时链接会传递给链接器，以便在运行时加载此 `soname`。`soname` 在编译时解析，方法是扫描编译器的库文件路径，匹配外部crate 的 `crateid`。因为`crateid` 是在编译时通过可选的 `crateid`属性声明的，所以如果外部 crate 没有提供 `crateid` ， 则默认拿该外部crate 的 `name`属性值来和 `extern crate` 声明中的[标识符]绑定。
 
-导入`self` crate 会创建到当前 crate 的一个绑定。在这种情况下，必须使用 `as` 子句指定要绑定到的名称。
+导入`self` crate 会创建到当前 crate 的绑定。在这种情况下，必须使用 `as`子句指定要绑定到的名称。
 
 三种 `extern crate` 声明的示例:
 
@@ -30,8 +32,7 @@ extern crate std; // 等同于: extern crate std as std;
 extern crate std as ruststd; // 使用其他名字去链接 'std'
 ```
 
-当命名 Rust crate时，连字符是不允许的。然而 Cargo 包却可以使用它们。在这种情况下，当 `Cargo.toml` 没有指定 crate 名称时， Cargo 将透明地将（Rust 源文件中的 `extern crate` 声明中的标识符中的） `-` 替换为 `_` (详见[RFC 940])。
-
+当命名 Rust crate 时，不允许使用连字符。然而 Cargo 包却可以使用它们。在这种情况下，当 `Cargo.toml` 文件中没有指定 crate 名称时， Cargo 将透明地将 `-` 替换为 `_` 以供 Rust 源文件内的 `extern crate` 声明引用 (详见 [RFC 940])。
 这有一个示例：
 
 <!-- ignore: requires external crates -->
@@ -40,8 +41,32 @@ extern crate std as ruststd; // 使用其他名字去链接 'std'
 extern crate hello_world; // 连字符被替换为下划线
 ```
 
+## Extern Prelude
 ## 外部预导入包
 
+External crates imported with `extern crate` in the root module or provided to
+the compiler (as with the `--extern` flag with `rustc`) are added to the
+"extern prelude". Crates in the extern prelude are in scope in the entire
+crate, including inner modules. If imported with `extern crate orig_name as
+new_name`, then the symbol `new_name` is instead added to the prelude.
+
+The `core` crate is always added to the extern prelude. The `std` crate
+is added as long as the [`no_std`] attribute is not specified in the crate root.
+
+The [`no_implicit_prelude`] attribute can be used on a module to disable
+prelude lookups within that module.
+
+> **Edition Differences**: In the 2015 edition, crates in the extern prelude
+> cannot be referenced via [use declarations], so it is generally standard
+> practice to include `extern crate` declarations to bring them into scope.
+>
+> Beginning in the 2018 edition, [use declarations] can reference crates in
+> the extern prelude, so it is considered unidiomatic to use `extern crate`.
+
+> **Note**: Additional crates that ship with `rustc`, such as [`alloc`], and
+> [`test`], are not automatically included with the `--extern` flag when using
+> Cargo. They must be brought into scope with an `extern crate` declaration,
+> even in the 2018 edition.
 在根模块的源码中使用 `extern crate` 声明或者给编译命令增加编译参数(`rustc` 下使用 `--extern` 选项)这样导入外部的 crate 的方式是把外部的 crate 导入到“外部预导入包”里。外部预导入包里的 crate 的有效作用域是整个 crate，包括内部模块。如果使用 `extern crate orig_name as new_name` 导入，则标志符 `new_name` 会被替代着添加到在预导入包里。
 
 `core` crate 总是会添加到外部预导入包里。只要没有在 crate 根中指定 [`no_std`] 属性，也会添加 `std` crate （到外部预导入包里）。
@@ -75,9 +100,12 @@ See https://github.com/rust-lang/rust/issues/57288 for more about the alloc/test
 
 [IDENTIFIER]: ../identifiers.md
 [RFC 940]: https://github.com/rust-lang/rfcs/blob/master/text/0940-hyphens-considered-harmful.md
-[`macro_use` attribute]: ../macros-by-example.md#macro_use属性
+[`macro_use` attribute]: ../macros-by-example.md#the-macro_use-attribute
 [`alloc`]: https://doc.rust-lang.org/alloc/
-[`no_implicit_prelude`]: modules.md#预导入项
-[`no_std`]: ../crates-and-source-files.md#预导入包和-no_std
+[`no_implicit_prelude`]: modules.md#prelude-items
+[`no_std`]: ../crates-and-source-files.md#preludes-and-no_std
 [`test`]: https://doc.rust-lang.org/test/
 [use declarations]: use-declarations.md
+
+<!-- 2020-10-16 -->
+<!-- checked -->

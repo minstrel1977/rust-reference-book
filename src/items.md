@@ -33,56 +33,27 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; [_MacroInvocationSemi_]\
 > &nbsp;&nbsp; | [_MacroRulesDefinition_]
 
-*数据项*[^译者注]是 crate 的组成部分。数据项由一套嵌套的[模块][modules]被组织在一个 crate 内。每个 crate 都有一个“最外层”的匿名模块；crate 中的所有数据项都在 crate 的模块树中有它们的[路径][paths]。
+*数据项*[^译者注]是 crate 的组成部分。数据项由一套嵌套的[模块][modules]被组织在一个 crate 内。每个 crate 都有一个“最外层”的匿名模块；crate 中所有的数据项都在其 crate 的模块树中自己的[路径][paths]。
 
-数据项在编译时就完全确定下来了，通常在执行期间保持固定，并可能驻留在只读内存中。
-An _item_ is a component of a crate. Items are organized within a crate by a nested set of [modules]. Every crate has a single "outermost" anonymous module; all further items within the crate have [paths] within the module tree of the crate.
+数据项在编译时就完全确定下来了，通常在执行期间保持结构稳定，并可能驻留在只读内存中。
 
-Items are entirely determined at compile-time, generally remain fixed during
-execution, and may reside in read-only memory.
+有以下几类数据项:
 
-There are several kinds of items:
+* [模块][modules]
+* [外部crate(`extern crate`)声明项][`extern crate` declarations]
+* [`use`声明][`use` declarations]
+* [函数定义][function definitions]
+* [类型定义][type definitions]
+* [结构体定义][struct definitions]
+* [枚举定义][enumeration definitions]
+* [联合体定义][union definitions]
+* [常量项][constant items]
+* [静态项][static items]
+* [trait定义][trait definitions]
+* [实现][implementations]
+* [外部块(`extern` blocks)][`extern` blocks]
 
-* [modules]
-* [`extern crate` declarations]
-* [`use` declarations]
-* [function definitions]
-* [type definitions]
-* [struct definitions]
-* [enumeration definitions]
-* [union definitions]
-* [constant items]
-* [static items]
-* [trait definitions]
-* [implementations]
-* [`extern` blocks]
-
-Some items form an implicit scope for the declaration of sub-items. In other
-words, within a function or module, declarations of items can (in many cases)
-be mixed with the statements, control blocks, and similar artifacts that
-otherwise compose the item body. The meaning of these scoped items is the same
-as if the item was declared outside the scope &mdash; it is still a static item
-&mdash; except that the item's *path name* within the module namespace is
-qualified by the name of the enclosing item, or is private to the enclosing
-item (in the case of functions). The grammar specifies the exact locations in
-which sub-item declarations may appear.
-有几类数据项:
-
-* [模块]
-* [`extern crate` 声明]
-* [`use` 声明]
-* [函数定义]
-* [类型定义]
-* [结构体定义]
-* [枚举定义]
-* [联合体定义]
-* [常量项]
-* [静态项]
-* [trait 定义]
-* [实现]
-* [`extern` 块]
-
-有些数据项会形成子项声明的隐式作用域。换句话说，在一个函数或模块中，数据项的声明可以（在许多情况下）与语句、控制块以及类似的能构成数据项的构件。这些在作用域内的数据项的含义与在作用域外声明的数据项的含义相同（它仍然是静态项），只是该数据项在模块的命名空间中的*路径名*由封闭它数据项的名称限定，当然该数据项也可能是封闭它的数据项的私有数据项（在函数的情况下）。语法规范会指定子项声明可能出现的合法位置。
+有些数据项会形成子（数据）项声明的隐式作用域。换句话说，在一个函数或模块中，数据项的声明可以（在许多情况下）与语句、控制块、以及类似的能构成数据项主体的部件混合在一起。这些在作用域内的数据项的意义与在作用域外声明的数据项的意义相同（它仍然是静态项），只是该数据项在模块的命名空间中的*路径名*由封闭它的数据项的名称限定，或该数据项也可能是封闭它的数据项的私有数据项（比如函数的情况）。语法规范指定了子项声明可能出现的合法位置。
 
 [^译者注]:为方便汉语阅读和避免汉语中的歧义，单独出现item时，译者一般翻译为“数据项”，但和其他名词复合时，又一般会译为“XX项”。
 
