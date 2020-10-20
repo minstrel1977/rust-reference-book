@@ -2,7 +2,8 @@
 # 枚举
 
 >[enumerations.md](https://github.com/rust-lang/reference/blob/master/src/items/enumerations.md)\
->commit: 2264855271fae0a915a0fa769e57f5a5d09ff5ef
+>commit: 2264855271fae0a915a0fa769e57f5a5d09ff5ef \
+>本译文最后维护日期：2020-10-20
 
 > **<sup>句法</sup>**\
 > _Enumeration_ :\
@@ -29,11 +30,11 @@
 > _EnumItemDiscriminant_ :\
 > &nbsp;&nbsp; `=` [_Expression_]
 
-枚举，英文为 *enumeration*，英文简写为 *enum*，它同时定义了一个标称型(nominal)[枚举类型]和一组*构造器*，这可用于创建相应枚举类型的值或对这些值进行模式匹配。
+*枚举*，英文为 *enumeration*，也常用其简写形式 *enum*，它同时定义了一个标称型(nominal)[枚举类型][enumerated type]和一组*构造器*，这可用于创建相应枚举类型的值或使用相应的枚举类型对这些值进行模式匹配。
 
 枚举使用关键字 `enum` 来声明。
 
-`enum` 数据项的一个示例和它的使用演示：
+`enum` 数据项的一个示例和它的使用方法：
 
 ```rust
 enum Animal {
@@ -45,7 +46,7 @@ let mut a: Animal = Animal::Dog;
 a = Animal::Cat;
 ```
 
-枚举构造器可以有命名字段或未命名字段：
+枚举构造器可以带有命名字段或未命名字段：
 
 ```rust
 enum Animal {
@@ -57,13 +58,14 @@ let mut a: Animal = Animal::Dog("Cocoa".to_string(), 37.2);
 a = Animal::Cat { name: "Spotty".to_string(), weight: 2.7 };
 ```
 
-在这个例子中，`Cat` 是一个*类结构体枚举变体*，而 `Dog` 则被简单地称为枚举变体。每个枚举实例都有一个*判别值*，它是一个与之关联的整数，用来确定它持有哪个变体。可以通过 [`mem::discriminant`] 函数获得对这个判别值的不透明引用。
+在这个例子中，`Cat` 是一个*类结构体枚举变体(struct-like enum variant)*，而 `Dog` 则被简单地称为枚举变体。每个枚举实例都有一个*判别值/判别式(iscriminant)*，它是一个与此枚举实例关联的整数，用来确定它持有哪个变体。可以通过 [`mem::discriminant`] 函数来获得对这个判别值的不透明引用。
 
+## Custom Discriminant Values for Fieldless Enumerations
 ## 为无字段枚举自定义判别值
 
-如果枚举的*任何*变体都没有附加数据，则可以直接设置和访问判别值。
+如果枚举的*任何*变体都没有附加字段，则可以直接设置和访问判别值。
 
-可以使用 `as` 操作符通过[数值转换]将这些枚举类型转换为整数类型。枚举可以可选地指定每个判别值的具体（证书）值，方法是在变体名后面加上 `=` 和[常量表达式]。如果声明中的第一个变量未指定，则将其判别值设置为零。对于其他未指定的判别值，它比照前一个变体的判别值按 1 递增。
+可以使用操作符 `as` 通过[数值转换][numeric cast]将这些枚举类型转换为整型。枚举可以可选地指定每个判别值的具体值，方法是在变体名后面追加 `=` 和[常量表达式][constant expression]。如果声明中的第一个变体未指定，则将其判别值设置为零。对于其他未指定的判别值，它比照前一个变体的判别值按 1 递增。
 
 ```rust
 enum Foo {
@@ -76,9 +78,9 @@ let baz_discriminant = Foo::Baz as u32;
 assert_eq!(baz_discriminant, 123);
 ```
 
-尽管编译器被允许在实际的内存布局中使用较小的类型，但在[默认表形]下，指定的判别值会被解释为一个 `isize` 值。也可以使用[原语表形]或[`C`表形]来更改成大小可接受的值。
+尽管编译器被允许在实际的内存布局中使用较小的类型，但在[默认表形(default representation)][default representation]下，指定的判别值会被解释为一个 `isize` 值。也可以使用[原语表形(primitive representation)]或[`C`表形][`C` representation]来更改成大小可接受的值。
 
-两个变量具有相同的判别值是错误的。
+同一枚举中，两个变体使用相同的判别值是错误的。
 
 ```rust,compile_fail
 enum SharedDiscriminantError {
@@ -93,7 +95,7 @@ enum SharedDiscriminantError2 {
 }
 ```
 
-当前一个变体的判别值是当前表形允许的的最大值时，再使用默认判别值也是错误的。
+当前一个变体的判别值是当前表形允许的的最大值时，再使用默认判别值就也是错误的。
 
 ```rust,compile_fail
 #[repr(u8)]
@@ -110,15 +112,16 @@ enum OverflowingDiscriminantError2 {
 }
 ```
 
+## Zero-variant Enums
 ## 无变体枚举
 
-具有零变体的枚举称为*零变体枚举*。因为它们没有有效的值，所以不能被实例化。
+具有零变体的枚举称为*零变体枚举/无变体枚举*。因为它们没有有效的值，所以不能被实例化。
 
 ```rust
 enum ZeroVariants {}
 ```
 
-零变体枚举与 [*never 类型*]等效，但它不能强制转换为其他类型。
+零变体枚举与 [*never类型*][never type]等效，但它不能被强转为其他类型。
 
 ```rust,compile_fail
 # enum ZeroVariants {}
@@ -126,9 +129,13 @@ let x: ZeroVariants = panic!();
 let y: u32 = x; // 类型不匹配错误
 ```
 
+## Variant visibility
 ## 变体的可见性
 
-语法层面枚举变体是允许有自己的[*可见性*][_Visibility_]注解的，但当枚举被验证时，可见性注解又将被拒绝。这允许对各种类型的数据项的在不同上下文中使用统一的句法对项进行解析。
+Enum variants syntactically allow a [_Visibility_] annotation, but this is
+rejected when the enum is validated. This allows items to be parsed with a
+unified syntax across different contexts where they are used.
+依照句法规则，枚举变体是允许有自己的[*可见性(visibility)*][Visibility]注解(annotation)的，但当枚举被（句法法分析程序）验证通过后，可见性注解又将被拒绝。因此，在源码解析层面，允许在不同上下文中对各种类型的数据项使用统一的句法规则进行解析。
 
 ```rust
 macro_rules! mac_variant {
@@ -146,7 +153,7 @@ macro_rules! mac_variant {
 // 允许空 `vis`.
 mac_variant! { E }
 
-// 这种也行，因为这种属性在验证前会被移除。
+// 这种也行，因为这段代码在被验证通过前会被移除。
 #[cfg(FALSE)]
 enum E {
     pub U,
@@ -157,16 +164,19 @@ enum E {
 
 [IDENTIFIER]: ../identifiers.md
 [_Generics_]: generics.md
-[_WhereClause_]: generics.md#where子句
+[_WhereClause_]: generics.md#where-clauses
 [_Expression_]: ../expressions.md
 [_TupleFields_]: structs.md
 [_StructFields_]: structs.md
-[_Visibility_]: ../visibility-and-privacy.md
-[枚举类型]: ../types/enum.md
-[`mem::discriminant`]: https://doc.rust-lang.org/std/mem/fn.discriminant.html
-[*never 类型*]: ../types/never.md
-[数值转换]: ../expressions/operator-expr.md#semantics
-[常量表达式]: ../const_eval.md#常量表达式
-[默认表形]: ../type-layout.md#the-default-representation
-[原语表形]: ../type-layout.md#primitive-representations
-[`C`表形]: ../type-layout.md#the-c-representation
+[Visibility]: ../visibility-and-privacy.md
+[enumerated type]: ../types/enum.md
+[`mem::discriminant`]: ../../std/mem/fn.discriminant.html
+[never type]: ../types/never.md
+[numeric cast]: ../expressions/operator-expr.md#semantics
+[constant expression]: ../const_eval.md#constant-expressions
+[default representation]: ../type-layout.md#the-default-representation
+[primitive representation]: ../type-layout.md#primitive-representations
+[`C` representation]: ../type-layout.md#the-c-representation
+
+<!-- 2020-10-16 -->
+<!-- checked -->

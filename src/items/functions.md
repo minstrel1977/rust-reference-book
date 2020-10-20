@@ -214,15 +214,6 @@ fn example<'a>(x: &'a str) -> impl Future<Output = usize> + 'a {
 声明一个既异步又非安全的函数是合法的。调用这样的函数是非安全的，并且（像任何异步函数一样）会返回一个 future。这个 future 只是一个普通的 future，因此“await”它不需要一个 `unsafe` 的上下文：
 
 ```rust,edition2018
-// Returns a future that, when awaited, dereferences `x`.
-//
-// Soundness condition: `x` must be safe to dereference until
-// the resulting future is complete.
-async unsafe fn unsafe_example(x: *const i32) -> i32 {
-  *x
-}
-
-```rust,edition2018
 // 等待这个返回的 future 相当于解引用 `x`。
 //
 // 安全条件: 直到返回的 future 执行完成，`x` 必须能被安全解引用
@@ -240,15 +231,16 @@ async fn safe_example() {
 }
 ```
 
-请注意，此行为是对返回 `impl Future` 的函数进行脱糖处理的结果——在本例中，我们设计的函数是一个 `unsafe` 函数，但返回值保持不变。
+请注意，此行为是对返回 `impl Future` 的函数进行脱糖处理的结果——在本例中，我们脱糖处理生成的函数是一个 `unsafe`函数，这个 `unsafe`函数返回值与原始定义的函数的返回值仍保持一致。
 
-非安全在异步函数上的使用方式与它在其他函数上的使用方式完全相同：它表示该函数的调用者需要遵循一些额外的协议来确保调用执行的可靠性。与任何其他不安全函数一样，这些条件可能会超出初始调用本身——例如，在上面的代码片段中， `unsafe_example` 函数将指针 `x` 作为参数，然后（在执行 await 时）解引用了对该指针的引用。这意味着在 future 完成执行之前， `x` 必须是有效的，调用者有责任确保这一点。
+非安全在异步函数上的使用方式与它在其他函数上的使用方式完全相同：只是它表示该函数会要求它的调用者提供一些额外的义务/条件来确保该函数的健壮性(soundness)。与任何其他非安全函数一样，这些条件可能会超出初始调用本身——例如，在上面的代码片段中， 函数 `unsafe_example` 将指针 `x` 作为参数，然后（在执行 await 时）解引用了对该指针的引用。这意味着在 future 完成执行之前，`x` 必须是有效的，调用者有责任确保这一点。
 
+## Attributes on functions
 ## 函数上的属性
 
-函数允许使用[外部属性][attributes]，也允许在[块]中的 `{` 后面直接放置[内部属性][attributes]。
+在函数上允许使用[外部属性][attributes]，也允许在[函数体][block]中的 `{` 后面直接放置[内部属性][attributes]。
 
-下面这个例子显示了一个函数的内部属性。该函数仅在运行测试时可用。
+下面这个例子显示了一个函数的内部属性。该函数仅在执行测试时可用。
 
 ```rust
 fn test_only() {
@@ -256,13 +248,14 @@ fn test_only() {
 }
 ```
 
-> 注意：除了 lint 类属性，函数上一般惯用的还是外部属性。
+> 注意：除了 lint检查类属性，函数上一般惯用的还是外部属性。
 
-在函数上有意义的属性是 [`cfg`]、[`cfg_attr`]、[`deprecated`]、[`doc`]、[`export_name`]、[`link_section`]、[`no_mangle`]、[lint检查类属性]、[`must_use`]、[过程宏属性]、[测试类属性]和[优化提示类属性]。函数也可以接受属性宏（定义的）属性。
+在函数上有意义的属性是 [`cfg`]、[`cfg_attr`]、[`deprecated`]、[`doc`]、[`export_name`]、[`link_section`]、[`no_mangle`]、[lint检查类属性][the lint check attributes]、[`must_use`]、[过程宏属性][the procedural macro attributes]、[测试类属性][the testing attributes]和[优化提示类属性][the optimization hint attributes]。函数也可以接受属性宏。
 
+## Attributes on function parameters
 ## 函数参数上的属性
 
-函数参数允许使用[外部属性][attributes]，允许的[*内置*属性]仅限于 `cfg`、`cfg_attr`、`allow`、`warn`、`deny` 和 `forbid`。
+函数参数允许使用[外部属性][attributes]，允许的[内置属性][built-in attributes]仅限于 `cfg`、`cfg_attr`、`allow`、`warn`、`deny` 和 `forbid`。
 
 ```rust
 fn len(
@@ -275,7 +268,7 @@ fn len(
 
 应用于数据项的过程宏属性所使用的惰性辅助属性也是允许的，但是要注意不要在最终（输出）的 `TokenStream` 中包含这些惰性属性。
 
-例如，下面的代码定义了一个未在任何地方正式定义的惰性属性 `some_inert_attribute`，而 `some_proc_macro_attribute` 过程宏负责检测它的存在，并从输出标记流中删除它。
+例如，下面的代码定义了一个未在任何地方正式定义的惰性属性 `some_inert_attribute`，而 `some_proc_macro_attribute` 过程宏负责检测它的存在，并从输出标记流 `TokenStream` 中删除它。
 
 <!-- ignore: requires proc macro -->
 ```rust,ignore
