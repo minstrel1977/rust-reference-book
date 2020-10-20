@@ -1,7 +1,9 @@
+# Functions
 # 函数
 
 >[functions.md](https://github.com/rust-lang/reference/blob/master/src/items/functions.md)\
->commit: f35a6003ad9aff52e3cd459917b737bb5b1e56f8
+>commit: f35a6003ad9aff52e3cd459917b737bb5b1e56f8 \
+>本译文最后维护日期：2020-10-20
 
 > **<sup>句法</sup>**\
 > _Function_ :\
@@ -28,24 +30,24 @@
 > _FunctionReturnType_ :\
 > &nbsp;&nbsp; `->` [_Type_]
 
-函数由一个[块]以及一个名称和一组参数组成。除了名字，所有这些都是可选的。函数用关键字  `fn` 声明。函数可以声明一组*输入*[*变量*][variables]作为参数，调用者通过它向函数传递参数，函数完成后将带有[*类型*][type]的*输出*值返回给调用者。
+*函数*由一个[块][block]以及一个名称和一组参数组成。除了名字，其他的都是可选的。函数使用关键字 `fn` 声明。函数可以声明一组*输入*[*变量*][variables]作为参数，调用者通过它向函数传递参数，函数完成后，它再将带有*输出*[*类型*][type]的结果值返回给调用者。
 
-当*函数*被引用时，会产生相应的零尺寸[*函数类型(function item type)*]的一等*值*，当调用该值时，它的计算结果是对该函数的直接调用。
+当一个*函数*被引用时，该函数会产生一个相应的零尺寸[*函数项类型(function item type)*][*function item type*]的一等(first-class)*值*，调用该值就相当于直接调用该函数。
 
-举个简单的函数例子:
+举个简单的定义函数的例子:
 ```rust
 fn answer_to_life_the_universe_and_everything() -> i32 {
     return 42;
 }
 ```
 
-和 `let` 绑定一样，函数参数是不可反驳型[模式]，所以任何在 let 绑定中有效的模式作为参数也是有效的:
+和 `let`绑定一样，函数参数是不可反驳型[模式][patterns]，所以任何在 let绑定中有效的模式都可以有效应用在函数参数上:
 
 ```rust
 fn first((value, _): (i32, i32)) -> i32 { value }
 ```
 
-函数的块在概念上被包装在一个块中，该块绑定参数模式，然后返回函数块的值。这意味着块的*尾部表达式*如果能进行求值运算，最终会将该运算后的值返回给调用者。通常，函数体中显式的*返回表达式*会缩短隐式返回的时间。
+函数里的块在概念上被包装在一个块中，该块绑定该函数的参数模式，然后返回(`return`)该函数块的值。这意味着块的*尾部表达式(tail expression)*如果轮到它被求值计算了，该块将结束，求得的值将被返回给调用者。通常，如果执行流碰到函数体中的显式返回表达式(return expression)，就会截断那个隐式的尾部表达式的执行。
 
 例如，上面例子里函数的行为就像下面被改写的这样:
 
@@ -58,18 +60,22 @@ return {
 };
 ```
 
+## Generic functions
 ## 泛型函数
 
-*泛型函数*允许在其签名中出现一个或多个*参数化类型*。每个类型参数必须在函数名后面的尖括号和逗号分隔的列表中显式声明。
+A _generic function_ allows one or more _parameterized types_ to appear in its
+signature. Each type parameter must be explicitly declared in an
+angle-bracket-enclosed and comma-separated list, following the function name.
+*泛型函数*允许在其签名中出现一个或多个*参数化类型(parameterized types)*。每个类型参数必须在函数名后面的尖括号封闭逗号分隔的列表中显式声明。
 
 ```rust
-// foo 建立在 A 和 B 基础上的泛型
+// foo 建立在 A 和 B 基础上的泛型函数
 
 fn foo<A, B>(x: A, y: B) {
 # }
 ```
 
-在函数签名和主体内部，类型参数的名称可以用作类型名称。可以为类型参数指定 [trait] 约束，以允许对该类型的值调用具有该 trait 的方法。这是使用 `where` 句法指定的:
+在函数签名上和函数体内部，类型参数的名称可以用作类型名。可以为类型参数指定 [trait][Trait]约束，以允许对该类型的值调用这些 trait 的方法。这种约束是使用 `where` 句法指定的：
 
 ```rust
 # use std::fmt::Debug;
@@ -77,7 +83,7 @@ fn foo<T>(x: T) where T: Debug {
 # }
 ```
 
-当引用泛型函数时，它的类型将基于引用的上下文被实例化。例如，这里调用 `foo` 函数:
+当使用泛型函数时，它的类型将基于调用的上下文被实例化。例如，这里调用 `foo` 函数:
 
 ```rust
 use std::fmt::Debug;
@@ -91,8 +97,13 @@ foo(&[1, 2]);
 
 将用 `i32` 实例化类型参数 `T`。
 
-类型参数也可以在函数名后面的[路径]组件中显式地提供。如果没有足够的上下文来确定类型参数，那么这可能是必要的。例如：`mem::size_of::<u32>() == 4`。
+类型参数也可以在函数名后面的[路径][path]组件中显式地提供。如果没有足够的上下文来确定类型参数，那么这可能是必要的。例如：`mem::size_of::<u32>() == 4`。
+The type parameters can also be explicitly supplied in a trailing [path]
+component after the function name. This might be necessary if there is not
+sufficient context to determine the type parameters. For example,
+`mem::size_of::<u32>() == 4`.
 
+## Extern function qualifier
 ## 外部函数限定符
 
 `extern` 函数限定符允许提供可以通过特定 ABI 调用的函数*定义*：
@@ -267,41 +278,40 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 ```
 
 [IDENTIFIER]: ../identifiers.md
-[RAW_STRING_LITERAL]: ../tokens.md#原生字符串字面量
-[STRING_LITERAL]: ../tokens.md#字符串字面量
+[RAW_STRING_LITERAL]: ../tokens.md#raw-string-literals
+[STRING_LITERAL]: ../tokens.md#string-literals
 [_BlockExpression_]: ../expressions/block-expr.md
 [_Generics_]: generics.md
 [_Pattern_]: ../patterns.md
 [_Type_]: ../types.md#type-expressions
-[_WhereClause_]: generics.md#where子句
+[_WhereClause_]: generics.md#where-clauses
 [_OuterAttribute_]: ../attributes.md
-[常量上下文]: ../const_eval.md#const-context
+[const context]: ../const_eval.md#const-context
 [const functions]: ../const_eval.md#const-functions
 [tuple struct]: structs.md
 [tuple variant]: enumerations.md
-[元祖变体]: enumerations.md
-[外部块]: external-blocks.md
-[路径]: ../paths.md
-[块]: ../expressions/block-expr.md
-[变量]: ../variables.md
-[类型]: ../types.md#type-expressions
-[*函数类型(function item type)*]: ../types/function-item.md
-[trait]: traits.md
+[external block]: external-blocks.md
+[path]: ../paths.md
+[block]: ../expressions/block-expr.md
+[variables]: ../variables.md
+[type]: ../types.md#type-expressions
+[*function item type*]: ../types/function-item.md
+[Trait]: traits.md
 [attributes]: ../attributes.md
-[`cfg`]: ../conditional-compilation.md#cfg属性
-[`cfg_attr`]: ../conditional-compilation.md#cfg_attr属性
-[lint检查类属性]: ../attributes/diagnostics.md#lint检查类属性
-[过程宏属性]: ../procedural-macros.md
-[测试类属性]: ../attributes/testing.md
-[优化提示类属性]: ../attributes/codegen.md#优化提示
-[`deprecated`]: ../attributes/diagnostics.md#deprecated属性
-[`doc`]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
-[`must_use`]: ../attributes/diagnostics.md#must_use属性
-[模式]: ../patterns.md
-[`?Sized`]: ../trait-bounds.md#sized
-[trait约束]: ../trait-bounds.md
+[`cfg`]: ../conditional-compilation.md#the-cfg-attribute
+[`cfg_attr`]: ../conditional-compilation.md#the-cfg_attr-attribute
+[the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
+[the procedural macro attributes]: ../procedural-macros.md
+[the testing attributes]: ../attributes/testing.md
+[the optimization hint attributes]: ../attributes/codegen.md#optimization-hints
+[`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
+[`doc`]: ../../rustdoc/the-doc-attribute.html
+[`must_use`]: ../attributes/diagnostics.md#the-must_use-attribute
+[patterns]: ../patterns.md
 [`export_name`]: ../abi.md#the-export_name-attribute
 [`link_section`]: ../abi.md#the-link_section-attribute
 [`no_mangle`]: ../abi.md#the-no_mangle-attribute
-[*内置*属性]: ../attributes.html#built-in-attributes-index
+[built-in attributes]: ../attributes.html#built-in-attributes-index
+
 <!-- 2020-10-16 -->
+<!-- checked -->

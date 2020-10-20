@@ -44,38 +44,17 @@ extern crate hello_world; // 连字符被替换为下划线
 ## Extern Prelude
 ## 外部预导入包
 
-External crates imported with `extern crate` in the root module or provided to
-the compiler (as with the `--extern` flag with `rustc`) are added to the
-"extern prelude". Crates in the extern prelude are in scope in the entire
-crate, including inner modules. If imported with `extern crate orig_name as
-new_name`, then the symbol `new_name` is instead added to the prelude.
+在根模块的源码中使用 `extern crate` 声明或者给编译命令增加编译参数（`rustc` 下使用 `--extern` 参数选项），这两种导入外部的 crate 的方式都是把外部的 crate 导入到“外部预导入包”里。外部预导入包里的 crate 的有效作用域是整个 crate，包括内部模块。如果使用 `extern crate orig_name as new_name` 导入，则相应地 symbol `new_name` 被添加到在预导入包里。
 
-The `core` crate is always added to the extern prelude. The `std` crate
-is added as long as the [`no_std`] attribute is not specified in the crate root.
-
-The [`no_implicit_prelude`] attribute can be used on a module to disable
-prelude lookups within that module.
-
-> **Edition Differences**: In the 2015 edition, crates in the extern prelude
-> cannot be referenced via [use declarations], so it is generally standard
-> practice to include `extern crate` declarations to bring them into scope.
->
-> Beginning in the 2018 edition, [use declarations] can reference crates in
-> the extern prelude, so it is considered unidiomatic to use `extern crate`.
-
-> **Note**: Additional crates that ship with `rustc`, such as [`alloc`], and
-> [`test`], are not automatically included with the `--extern` flag when using
-> Cargo. They must be brought into scope with an `extern crate` declaration,
-> even in the 2018 edition.
-在根模块的源码中使用 `extern crate` 声明或者给编译命令增加编译参数(`rustc` 下使用 `--extern` 选项)这样导入外部的 crate 的方式是把外部的 crate 导入到“外部预导入包”里。外部预导入包里的 crate 的有效作用域是整个 crate，包括内部模块。如果使用 `extern crate orig_name as new_name` 导入，则标志符 `new_name` 会被替代着添加到在预导入包里。
-
-`core` crate 总是会添加到外部预导入包里。只要没有在 crate 根中指定 [`no_std`] 属性，也会添加 `std` crate （到外部预导入包里）。
+`core` crate 总是会被添加到外部预导入包里。只要没有在 crate 根模块中指定应用 [`no_std`]属性，也会把 `std` crate 添加进来。
 
 可以在模块上使用 [`no_implicit_prelude`] 属性来禁用模块内的预导入包查找。
 
-> **版本差异**：在 2015 版中，在外部预导入包中的 crate 不能通过[use 声明]来引用，因此通常标准做法是用 `extern crate` 将那它们纳入到当前作用域。从 2018 版开始， [use 声明]可以引用外部预导入包里的 crate，所以再使用 `extern crate` 就被认为是不规范的。
+> **版本差异**：在 2015 版中，在外部预导入包中的 crate 不能通过 [use声明][use declarations]来直接引用，因此通常标准做法是用 `extern crate` 将那它们纳入到当前作用域。
+> 
+> 从 2018 版开始， [use声明][use declarations]可以直接引用外部预导入包里的 crate，所以再使用 `extern crate` 就被认为是不规范的。
 
-> **注意**: `rustc` 附带的 crate，如 [`alloc`] 和 [`test`]，在使用 Cargo 时不会自动被包含在 `--extern` 选项中。即使在 2018 版中，也必须通过 `extern crate` 声明来把它们引入到当前作用域内。
+> **注意**: 随 `rustc` 一起引入的 crate，如 [`alloc`] 和 [`test`]，在使用 Cargo 时不会自动被包含在 `--extern` 命令行参数选项中。即使在 2018 版中，也必须通过 `extern crate` 声明来把它们引入到当前作用域内。
 >
 > ```rust
 > extern crate alloc;
@@ -85,18 +64,21 @@ prelude lookups within that module.
 <!--
 See https://github.com/rust-lang/rust/issues/57288 for more about the alloc/test limitation.
 -->
-
+## Underscore Imports
 ## 下划线导入
+The [`macro_use` attribute] works as usual and import the macro names
+into the macro-use prelude.
 
-外部的 crate 依赖可以通过使用带有下划线形如 `extern crate foo as _` 的形式来声明，而无需将其名称绑定在作用域内。这对于只需要链接但从不引用的 crate 可能很有用，并且可以避免被提醒为未使用。
+外部的 crate依赖可以通过使用带有下划线形如 `extern crate foo as _` 的形式来声明，而无需将其名称绑定到当前作用域内。这种声明方式对于只需要 crate 被链接进，但 crate 从不会被当前代码引用的情况可能很有用，并且还可以避免未使用的提醒。
 
-（下划线导入不会影响）[`macro_use` 属性]的正常工作，（此情况下）宏名称将会正常导入到 macro-use prelude 中。
+下划线导入不会影响 [`macro_use`属性][`macro_use` attribute]的正常使用，这情况下使用 `macro_use`属性，宏名称仍会正常导入到 macro-use 预导入包中。
 
+## The `no_link` attribute
 ## `no_link`属性
 
-可以在 `extern crate` 数据项上指定 *`no_link` 属性*，以防止将 crate 链接到输出中。这通常用于加载一个 crate 而只访问它的宏。
+可以在外部项(`extern crate` item)上指定使用 *`no_link`属性*，以防止此 crate 被链接到编译输出中。这通常用于加载一个 crate 而只访问它的宏。
 
-[^soname]:译者注：这里故意使用soname是为了让读者主动联想类比linux系统里的动态库文件的 soname。
+[^soname]:译者注：这里故意使用soname是为了让读者主动去联想类比linux系统里的动态库文件的soname。
 
 [IDENTIFIER]: ../identifiers.md
 [RFC 940]: https://github.com/rust-lang/rfcs/blob/master/text/0940-hyphens-considered-harmful.md
