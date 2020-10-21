@@ -1,4 +1,4 @@
-# 关联数据项
+# 关联数据项/关联项
 
 >[associated-items.md](https://github.com/rust-lang/reference/blob/master/src/items/associated-items.md)\
 >commit: 136bd7da8b9c509c17c9619813b57dd1a47a8e25

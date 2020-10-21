@@ -132,10 +132,7 @@ let y: u32 = x; // 类型不匹配错误
 ## Variant visibility
 ## 变体的可见性
 
-Enum variants syntactically allow a [_Visibility_] annotation, but this is
-rejected when the enum is validated. This allows items to be parsed with a
-unified syntax across different contexts where they are used.
-依照句法规则，枚举变体是允许有自己的[*可见性(visibility)*][Visibility]注解(annotation)的，但当枚举被（句法法分析程序）验证通过后，可见性注解又将被拒绝。因此，在源码解析层面，允许在不同上下文中对各种类型的数据项使用统一的句法规则进行解析。
+依照句法规则，枚举变体是允许有自己的[*可见性(visibility)*][Visibility]注解(annotation)的，但当枚举被（句法法分析程序）验证(validate)通过后，可见性注解又将被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的数据项使用统一的句法规则进行解析。
 
 ```rust
 macro_rules! mac_variant {

@@ -1,7 +1,8 @@
-# trait
+# Trait
 
 >[traits.md](https://github.com/rust-lang/reference/blob/master/src/items/traits.md)\
->commit: d5cc65a70f66a243d84cd251188d80fbe9926747
+>commit: d5cc65a70f66a243d84cd251188d80fbe9926747 \
+>本译文最后维护日期：2020-10-21
 
 > **<sup>句法</sup>**\
 > _Trait_ :\
@@ -50,25 +51,27 @@
 > _TraitType_ :\
 > &nbsp;&nbsp; `type` [IDENTIFIER] ( `:` [_TypeParamBounds_]<sup>?</sup> )<sup>?</sup> `;`
 
-_trait_ 描述类型可以实现的抽象接口。该接口由[关联数据项]组成，关联数据项分三种类型:
+_trait_ 描述类型可以实现的抽象接口。这类接口由三种[关联数据项(associated items)][associated items]组成，它们分别是：
 
 - [函数](associated-items.md#associated-functions-and-methods)
 - [类型](associated-items.md#associated-types)
 - [常量](associated-items.md#associated-constants)
 
-所有 trait 都定义了一个隐式类型参数 `Self` ，它指向“实现此接口的类型”。trait 还可能包含额外的类型参数。这些类型参数，包括 `Self` 在内，还可能会[像往常一样][泛型]受到其他特征的约束。
+所有 trait 都定义了一个隐式类型参数 `Self` ，它指向“实现此接口的类型”。trait 还可能包含额外的类型参数。这些类型参数，包括 `Self` 在内，都可能会[跟正常类型参数一样][generics]受到其他 trait 的约束。
 
-trait 是通过特定类型自己的[实现(implementations)]（代码段）来被这些类型实现的。
+trait 需要具体的类型去实现，具体的实现方法是通过该类型的一个单独实现(implementation)来完成的。
 
-与 trait 相关的数据项不需要在该 trait 中提供具体定义，但也可以提供。如果 trait 提供了定义，那么该定义将作为任何不覆盖它的实现的默认值。如果没有提供，那么任何实现都必须提供具体定义。
+trait 关联数据项/自带的数据项不需要在该 trait 中提供具体定义，但也可以提供。如果 trait 提供了定义，那么该定义将作为任何不覆盖它的实现的默认值。如果没有提供，那么任何实现都必须提供具体定义。
 
-## trait 约束
+## Trait bounds
+## trait约束
 
-泛型约束的数据项可以使用 trait 作为其类型参数的[约束]。
+泛型数据项可以使用 trait 作为其类型参数的[约束][bounds]。
 
+## Generic Traits
 ## 泛型 trait
 
-可以为 trait 指定类型参数，使其成为泛型。它们出现在 trait 名称之后，使用与[泛型函数]相同的语法。
+可以为 trait 指定类型参数来使该 trait 成为泛型。这些类型参数出现在 trait 名称之后，使用与[泛型函数][generic functions]相同的语法规则。
 
 ```rust
 trait Seq<T> {
@@ -78,18 +81,19 @@ trait Seq<T> {
 }
 ```
 
+## Object Safety
 ## 对象安全条款
 
-对象安全的 trait 可以是 [trait对象] 的底层 trait。如果 trait 具有以下特性（在 [RFC 255] 中定义），则它是*对象安全的*：
+对象安全的 trait 可以是 [trait对象][trait object]的底层 trait。如果 trait 符合以下限定条件（在 [RFC 255] 中定义），则认为它是*对象安全的(object safe)*：
 
 * 它必须不能是 `Self: Sized`
 * 所有的关联函数要么有 `where Self: Sized` 约束，要么
-  * 不能有类型参数（生存期参数不包括在内），并且
-  * 作为[方法]不能使用直接 `Self`，除非 `Self` 是方法接收者内部的类型。
+  * 不能有类型参数（生存期参数可以有），并且
+  * `Self` 只能出现在[方法][method]的接收者(receiver)的类型里。
 * 它必须没有任何关联常量。
-* 所有的超类trait 也必须也是安全的。
+* 其所有的超类trait 也必须也是安全的。
 
-当方法上没有 `Self: Sized` 绑定时，方法接收者的类型必须是以下类型之一：
+上述限定条件的第二条的后半部分，也就是当方法上没有 `Self: Sized` 绑定时，方法接收者的类型必须是以下类型之一：
 
 * `&Self`
 * `&mut Self`
@@ -180,11 +184,19 @@ impl WithSelf for S {}
 let obj: Box<dyn WithSelf> = Box::new(S); // 错误: 不能使用 `Self` 作为类型参数
 ```
 
+## Supertraits
 ## 超类trait
 
-**超类trait** 是类型为了实现特定 trait 而需要（提前）实现的 trait。此外，任何地方一个[泛型]或 [trait对象]被某个 trait 约束，那这个泛型或 trait对象就可以访问这个*超类trait* 的关联数据项。
+Supertraits are declared by trait bounds on the `Self` type of a trait and
+transitively the supertraits of the traits declared in those trait bounds. It is
+an error for a trait to be its own supertrait.
 
-超类trait 是通过 trait 的 `Self` 类型上的 trait 约束来声明的，并且通过这种 trait 约束的方式来传递这种超类trait 声明关系。一个 trait 不能是它自己的超类trait。
+The trait with a supertrait is called a **subtrait** of its supertrait.
+
+The following is an example of declaring `Shape` to be a supertrait of `Circle`.
+**超类trait** 是类型为了实现特定 trait 而需要（提前）实现的 trait。此外，在任何地方，如果[泛型][generics]或 [trait对象][trait object]被某个 trait约束，那这个泛型或 trait对象就可以访问这个*超类trait* 的关联数据项。
+
+超类trait 是通过 trait 的 `Self`类型上的 trait约束来声明的，并且通过这种声明 trait约束的方式来传递这种超类trait 关系。一个 trait 不能是它自己的超类trait。
 
 有超类trait 的 trait 称其为其超类trait 的**子trait**。
 
@@ -195,7 +207,7 @@ trait Shape { fn area(&self) -> f64; }
 trait Circle : Shape { fn radius(&self) -> f64; }
 ```
 
-下面是同一个示例，除了使用了 [where子句]。
+下面是同一个示例，除了改成使用 [where子句][where clauses]来等效实现。
 
 ```rust
 trait Shape { fn area(&self) -> f64; }
@@ -228,7 +240,7 @@ fn print_area_and_radius<C: Circle>(c: C) {
 }
 ```
 
-类似地，这里是一个在 trait对象上调用 超类trait 的方法的例子。
+类似地，这里是一个在 trait对象上调用超类trait 的方法的例子。
 
 ```rust
 # trait Shape { fn area(&self) -> f64; }
@@ -241,18 +253,20 @@ let circle = Box::new(circle) as Box<dyn Circle>;
 let nonsense = circle.radius() * circle.area();
 ```
 
+## Unsafe traits
 ## 非安全trait
 
-以关键字 `unsafe` 开头的 trait数据项表示*实现*该 trait 可能是[非安全]的。使用正确实现的非安全trait 是安全的。[trait实现]扔必须以关键字 `unsafe` 开头。
+以关键字 `unsafe` 开头的 trait数据项表示*实现*该 trait 可能是[非安全][unsafe]的。使用正确实现的非安全trait 是安全的。[trait实现][trait implementation]也必须以关键字 `unsafe` 开头。
 
-[`Sync`] 和 [`Send`] 是非安全trait。
+[`Sync`] 和 [`Send`] 是典型的非安全trait。
 
+## Parameter patterns
 ## 参数模式
 
-没有代码体的函数或方法声明只允许使用 [IDENTIFIER] 或 `_` [通配符][WildcardPattern]模式。当前 `mut` [IDENTIFIER]是允许的，但它已被弃用，将来将成为一个硬错误。
+没有代码体的函数或方法声明只允许使用[标识符/IDENTIFIER][IDENTIFIER] 或 `_` [通配符][WildcardPattern]模式。当前 `mut` [IDENTIFIER]是允许的，但它已被弃用，未来将成为一个硬错误(hard error)。
 <!-- https://github.com/rust-lang/rust/issues/35203 -->
 
-在2015版中，trait 的*函数或方法*的参数模式是可选的：
+在2015版中，trait 的函数或方法的参数模式是可选的：
 
 ```rust
 trait T {
@@ -268,7 +282,7 @@ trait T {
 * `&` [IDENTIFIER]
 * `&&` [IDENTIFIER]
 
-从2018版开始，*函数或方法*的参数模式不再是可选的。同时，只要有代码体，所有不可反驳型模式都是被允许的。如果没有代码体，上面列出的限制仍然有效。
+从2018版开始，函数或方法的参数模式不再是可选的。同时，只要有代码体，所有不可反驳型模式都是被允许的。如果没有代码体，上面列出的限制仍然有效。
 
 ```rust,edition2018
 trait T {
@@ -277,9 +291,10 @@ trait T {
 }
 ```
 
-## 内部数据项的可见性
+## Item visibility
+## 数据项的可见性
 
-trait 里数据项在语法上允许使用 [_Visibility_]句法形式的注释，但是当 trait 被验证（validated，译者注：Rust 要求 trait 内部数据项在不添加 `pub` 的情况下也默认为共有，所以这里存在一个验证的过程）时，这将被弃用。这使得这些数据项可以在使用它们的不同上下文中使用统一的语法进行分析。例如，宏规则内空的 `vis` 可用于 trait 里的数据项，非空的则可用于其他允许可见性的情况。
+trait 里数据项在语法上允许使用 [_Visibility_] 句法规则的注释，但是当 trait 被（句法法分析程序）验证(validate)时，这部分又将被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的数据项使用统一的句法规则进行解析。例如，宏规则内空的 `vis` 可用于 trait 里的数据项，非空的则可用于其他允许带非空可见性的数据项上。
 
 ```rust
 macro_rules! create_method {
@@ -296,7 +311,7 @@ trait T1 {
 struct S;
 
 impl S {
-    // 这里允许使用可见性。
+    // 这里允许使用非空可见性。
     create_method! { pub method_of_s }
 }
 
@@ -316,29 +331,32 @@ fn main() {
 [_FunctionQualifiers_]: functions.md
 [_FunctionReturnType_]: functions.md
 [_Generics_]: generics.md
-[_MacroInvocationSemi_]: ../macros.md#宏调用
+[_MacroInvocationSemi_]: ../macros.md#macro-invocation
 [_OuterAttribute_]: ../attributes.md
 [_InnerAttribute_]: ../attributes.md
 [_Pattern_]: ../patterns.md
-[_SelfParam_]: associated-items.md#方法
+[_SelfParam_]: associated-items.md#methods
 [_TypeParamBounds_]: ../trait-bounds.md
 [_Type_]: ../types.md#type-expressions
 [_Visibility_]: ../visibility-and-privacy.md
-[_WhereClause_]: generics.md#where子句
-[约束]: ../trait-bounds.md
-[trait对象]: ../types/trait-object.md
+[_WhereClause_]: generics.md#where-clauses
+[bounds]: ../trait-bounds.md
+[trait object]: ../types/trait-object.md
 [RFC 255]: https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md
-[关联数据项]: associated-items.md
-[方法]: associated-items.md#方法
-[实现(implementations)]: implementations.md
-[泛型]: generics.md
-[where子句]: generics.md#where子句
-[泛型函数]: functions.md#泛型函数
-[非安全]: ../unsafety.md
-[trait实现]: implementations.md#trait实现
+[associated items]: associated-items.md
+[method]: associated-items.md#methods
+[implementations]: implementations.md
+[generics]: generics.md
+[where clauses]: generics.md#where-clauses
+[generic functions]: functions.md#generic-functions
+[unsafe]: ../unsafety.md
+[trait implementation]: implementations.md#trait-implementations
 [`Send`]: ../special-types-and-traits.md#send
 [`Sync`]: ../special-types-and-traits.md#sync
 [`Arc<Self>`]: ../special-types-and-traits.md#arct
 [`Box<Self>`]: ../special-types-and-traits.md#boxt
 [`Pin<P>`]: ../special-types-and-traits.md#pinp
 [`Rc<Self>`]: ../special-types-and-traits.md#rct
+
+<!-- 2020-10-16 -->
+<!-- checked -->

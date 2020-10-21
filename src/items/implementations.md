@@ -2,7 +2,8 @@
 # 实现
 
 >[implementations.md](https://github.com/rust-lang/reference/blob/master/src/items/implementations.md)\
->commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e
+>commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e \
+>本译文最后维护日期：2020-10-21
 
 > **<sup>句法</sup>**\
 > _Implementation_ :\
@@ -35,31 +36,32 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; | ( [_Visibility_]<sup>?</sup> ( [_TypeAlias_] | [_ConstantItem_] | [_Function_] | [_Method_] ) )\
 > &nbsp;&nbsp; )
 
-*实现*是将数据项与*实现类型*关联起来的数据项。实现使用关键字`impl` 定义，并包含了属于正要实现的类型的实例的函数，或者包含了正要实现的类型本身的静态函数。
+*实现*是将数据项与*实现类型(implementing type)*关联起来的数据项。实现使用关键字 `impl` 定义，它包含了属于当前实现的类型的实例的函数，或者包含了当前实现的类型本身的静态函数。（译者注：后一句如果简单意译应该是：实现使用关键字 `impl` 定义，它包含了当前类型的方法和函数）
 
 有两种类型的实现:
 
-- 固有实现
-- [trait]实现
+- 固有实现(inherent implementations)
+- [trait]实现(trait implementations)
 
 ## Inherent Implementations
 ## 固有实现
 
-固有实现被定义为一段由关键字 `impl`、泛型类型声明、指向标称类型(nominal type)的路径、where子句和一对花括号括起来的一组*关联项(associable items)*组成的序列。
+固有实现被定义为一段由关键字 `impl`，泛型类型声明，指向标称类型(nominal type)的路径，一个 where子句和一对花括号括起来的一组*类型关联项(associable items)*组成的序列。
 
-（这里）*标称类型*也被称作*实现类型*；*关联项*可理解为*实现类型*里的各种关联数据项。（译者注：这里译者大致采取了意译。首先 nominal type 在目前国内的Rust 社区没有合适的翻译先例，所以译者这里就蹭机器学习的热点翻译为“标称类型”，这种行径虽然降低了Rust的逼格，但在目前状态下，收益可能还是值得的；其次后半句采取意译是因为aassociable item 和  associable items 该怎么区分翻译，该怎么组织语序实在麻烦，译者又不想再创立新名词，所以只能模糊一下。囿于译者本身水平，翻译可能有错，所以本句原文也附上：The nominal type is called the _implementing type_ and the associable items are the _associated items_ to the implementing type.）
+（这里）*标称类型*也被称作*实现类型(implementing type)*；*类型关联项(associable items)*可理解为实现类型的各种*关联数据项*。（译者注：这里译者大致采取了意译。首先 nominal type 在目前国内 Rust 社区里还没有合适的翻译先例，所以译者这里就蹭机器学习的热点翻译为“标称类型”，这种行径虽然降低了Rust的逼格，但在目前状态下，收益可能还是值得的。）
 
-固有实现将包含的数据项与实现类型关联起来。固有实现可以包含[关联函数]（包括方法）和[关联常量]。固有实现不能包含关联的类型别名。
+固有实现将包含的数据项与实现类型关联起来。固有实现可以包含[关联函数][associated functions]（包括方法）和[关联常量][associated constants]。固有实现不能包含关联类型别名。
+A type can also have multiple inherent implementations. An implementing type
+must be defined within the same crate as the original type definition.
+关联数据项的[路径][path]是其实现类型的所有（形式的）路径中的任一种，然后再拼接上这个关联数据项的标识符来作为整个路径的末段路径组件(final path component)。
 
-关联数据项的[路径]的前半部是其实现类型的所有（形式的）路径中的任一种，然后再拼接上这个关联数据项的标识符（作为的路径组件）。
-
-类型可以有多个固有实现。实现类型的定义与原始类型的定义必须在同一个 crate 里。
+类型可以有多个固有实现。但作为原始类型定义的实现类型与这些固有实现必须在同一个 crate 里。
 
 ``` rust
 pub mod color {
-    // 译者添加的注释：这段为 Color类型 或 原始Color类型
+    // 译者添加的注释：这段为 Color的原始类型，也是后面实现的实现类型
     pub struct Color(pub u8, pub u8, pub u8);
-    // 译者添加的注释：这里 `Color` 为Color类型的标称类型 或 实现类型
+    // 译者添加的注释：下行的 `Color` 为标称类型 或 实现类型
     impl Color {
         pub const WHITE: Color = Color(255, 255, 255);
     }
@@ -76,16 +78,16 @@ mod values {
 
 pub use self::color::Color;
 fn main() {
-    // 实现类型 和其 实现 在同一个模块下，此时关联数据项的路径表示。
+    // 实现类型 和 固有实现 在同一个模块下。
     color::Color::WHITE;
 
-    // 类型的实现块和类型的声明不在同一个模块下，此时对实现内的关联数据项的存取仍通过指向类型定义的标准模式
+    // 固有实现和类型声明不在同一个模块下，此时对固有实现内的关联数据项的存取仍通过指向实现类型的路径
     color::Color::red();
 
-    // 实现类型重导出后，新导出的路径表示也可用。
+    // 实现类型重导出后，使用这类快捷路径效果也一样。
     Color::red();
 
-    // 这个不行, 因为 `values` 非公有.
+    // 这个不行, 因为 `values` 非公有。
     // values::Color::red();
 }
 ```
@@ -93,17 +95,17 @@ fn main() {
 ## Trait Implementations
 ## trait实现
 
-*trait实现*的定义与固有实现类似，只是可选的泛型类型声明后跟一个 [trait]，再后跟关键字 `for`。后面是一个指向标称类型的路径。
+*trait实现*的定义与固有实现类似，只是可选的泛型类型声明后须跟一个 [trait]，再后跟关键字 `for`，之后再跟那个指向标称类型的路径。
 
 <!-- 为理解这个，你必须回去查看一下上一节的内容 :( -->
 
-trait 即为*trait接口*。实现类型实现了trait接口。
+这里讨论的 trait 也被称为*应实现trait(implemented trait)*。实现类型会实现 该应实现trait。
 
-trait实现必须定义trait接口 声明的所有非默认关联数据项，可以重新定义trait接口 定义的默认关联数据项，并且不能定义任何其他数据项。
+trait实现必须定义应实现trait 声明的所有非默认关联数据项，可以重新定义应实现trait 定义的默认关联数据项，但不能定义任何其他数据项。
 
-关联项的完整路径为 `<` 后接实现类型的路径，再后接 `as`，然后是指向 trait 的路径，再后跟 `>`，这整体作为一个路径组件，然后再接关联数据项自己的路径组件。
+关联数据项的完整路径为 `<` 后跟实现类型的路径，再后跟 `as`，然后是指向 trait 的路径，再后跟 `>`，这整体作为一个路径组件，然后再接关联数据项自己的路径组件。
 
-非安全trait 需要trait实现以关键字 `unsafe` 开头。
+非安全trait 需要 trait实现以关键字 `unsafe` 开头。
 
 ```rust
 # #[derive(Copy, Clone)]
@@ -139,7 +141,7 @@ impl Shape for Circle {
 
 ### Trait Implementation Coherence
 ### trait实现的一致性
-
+check from here
 如果孤儿规则检查失败或存在重叠的实现实例，则认为 trait实现不一致。
 
 当两个实现各自的 *trait接口*集之间存在非空交集时即为这两个 *trait实现*重叠了，（这种常情况下）这两个trait实现可以用相同的类型来实例化。<!-- 这可能是错的？来源：对于输入类型参数，没有两个实现可以用相同的类型集实例化。 -->
@@ -180,26 +182,28 @@ impl Seq<bool> for u32 {
 [_Function_]: functions.md
 [_Generics_]: generics.md
 [_InnerAttribute_]: ../attributes.md
-[_MacroInvocationSemi_]: ../macros.md#宏调用
+[_MacroInvocationSemi_]: ../macros.md#macro-invocation
 [_Method_]: associated-items.md#methods
 [_OuterAttribute_]: ../attributes.md
 [_TypeAlias_]: type-aliases.md
-[_TypePath_]: ../paths.md#类型中的路径
+[_TypePath_]: ../paths.md#paths-in-types
 [_Type_]: ../types.md#type-expressions
 [_Visibility_]: ../visibility-and-privacy.md
-[_WhereClause_]: generics.md#where子句
+[_WhereClause_]: generics.md#where-clauses
 [trait]: traits.md
-[关联函数]: associated-items.md#associated-functions-and-methods
-[关联常量]: associated-items.md#associated-constants
-[属性]: ../attributes.md
+[associated functions]: associated-items.md#associated-functions-and-methods
+[associated constants]: associated-items.md#associated-constants
+[attributes]: ../attributes.md
 [`cfg`]: ../conditional-compilation.md
-[`deprecated`]: ../attributes/diagnostics.md#deprecated属性
-[`doc`]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
-[路径]: ../paths.md
-[lint检查类属性]: ../attributes/diagnostics.md#lint检查类属性
-[非安全trait]: traits.md#unsafe-traits
-[本地trait]: ../glossary.md#local-trait
-[本地类型]: ../glossary.md#local-type
-[基本类型]: ../glossary.md#fundamental-type-constructors
-[无覆盖类型]: ../glossary.md#uncovered-type
+[`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
+[`doc`]: ../../rustdoc/the-doc-attribute.html
+[path]: ../paths.md
+[the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
+[Unsafe traits]: traits.md#unsafe-traits
+[local trait]: ../glossary.md#local-trait
+[local type]: ../glossary.md#local-type
+[fundamental types]: ../glossary.md#fundamental-type-constructors
+[uncovered type]: ../glossary.md#uncovered-type
+
 <!-- 2020-10-16 -->
+<!-- checked -->
