@@ -57,44 +57,33 @@
 
 ## ABI
 
-默认情况下，外部块假设它们正在调用的库使用的是特定平台上的标准 C ABI。其他的 ABI 可以使用字符串 `abi` 指定，具体如下所示：
+不指定 ABI 字符串的默认情况下，外部块假设它们当前调用库时所使用的 ABI 约定是使用指定平台上的标准 C ABI。其他的 ABI 约定可以使用字符串 `abi` 指定，具体如下所示：
 
 ```rust
-// 指定 Windows API 接口
+// 指定使用 stdcall 调用约定去调用 Windows API
 extern "stdcall" { }
 ```
 
 有三个 ABI 字符串是跨平台的，并且保证所有编译器都支持它们：
 
-* `extern "Rust"` -- 在任何 Rust 代码中编写一个常用的 `fn foo()` 时默认使用的 ABI。
+* `extern "Rust"` -- 在任何 Rust 语言中编写一个常用函数 `fn foo()` 时默认使用的 ABI。
 * `extern "C"` -- 这等价于 `extern fn foo()`；无论您的 C编译器支持什么默认 ABI。
 * `extern "system"` -- 通常等价于 `extern "C"`，除了在 Win32 平台上。在 Win32 平台上，应该使用`"stdcall"`，或者其他应该使用的 ABI 字符串来链接到 Windows API 自身。
 
 还有一些特定于平台的 ABI 字符串：
 
-* `extern "cdecl"` -- x86\_32 上 C代码的默认值。
-* `extern "stdcall"` -- x86\_32 上使用 Win32 API 的默认值 
-* `extern "win64"` -- x86\_64 Windows 上使用 C代码的默认值。
-* `extern "sysv64"` -- 非Windows x86\_64 上的 C代码的默认值。
-* `extern "aapcs"` -- ARM 的默认值
+* `extern "cdecl"` -- 默认为调用 x86\_32 C 所使用的调用约定。
+* `extern "stdcall"` -- 默认为调用 x86\_32架构下的 Win32 API 所使用的调用约定 
+* `extern "win64"` -- 默认为调用 x86\_64 Windows 平台下的 C 所使用调用约定。
+* `extern "sysv64"` -- 默认为调用 非Windows x86\_64 平台下的 C 所使用的调用约定。
+* `extern "aapcs"` -- 默认为调用 ARM 接口所使用的调用约定
 * `extern "fastcall"` -- `fastcall` ABI——对应于 MSVC 的`__fastcall` 和 GCC 以及 clang 的 `__attribute__((fastcall))`。
 * `extern "vectorcall"` -- `vectorcall` ABI ——对应于 MSVC 的 `__vectorcall` 和 clang 的 `__attribute__((vectorcall))`。
 
-There are also some platform-specific ABI strings:
-
-* `extern "cdecl"` -- The default for x86\_32 C code.
-* `extern "stdcall"` -- The default for the Win32 API on x86\_32.
-* `extern "win64"` -- The default for C code on x86\_64 Windows.
-* `extern "sysv64"` -- The default for C code on non-Windows x86\_64.
-* `extern "aapcs"` -- The default for ARM.
-* `extern "fastcall"` -- The `fastcall` ABI -- corresponds to MSVC's
-  `__fastcall` and GCC and clang's `__attribute__((fastcall))`
-* `extern "vectorcall"` -- The `vectorcall` ABI -- corresponds to MSVC's
-  `__vectorcall` and clang's `__attribute__((vectorcall))`
-
+## Variadic functions
 ## 可变参数函数
 
-可以在外部块内的函数的参数列表中的一个或多个命名参数后通过指定 `...` 来让该函数成为可变参数函数：
+可以在外部块内的函数的参数列表中的一个或多个命名参数后通过引入 `...` 来让该函数成为可变参数函数：
 
 ```rust
 extern {
