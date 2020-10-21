@@ -150,5 +150,5 @@
 * `if`、`if let`、和 `match`
 * `while`、`while let`、和 `loop`
 * 除裸指针向整型和切片转换以外的类型转换
-* `unsafe` 块和 `const unsafe fn` 可以，但代码体/块只能执行以下非安全操作：
+*非安全(`unsafe`)块和 `const unsafe fn` 可以，但代码体/块只能执行以下非安全操作：
     * 调用非安全常量函数

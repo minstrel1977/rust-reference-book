@@ -222,11 +222,11 @@ async unsafe fn unsafe_example(x: *const i32) -> i32 {
 }
 
 async fn safe_example() {
-    // 起初调用上面这个函数时需要一个 `unsafe` 块：
+    // 起初调用上面这个函数时需要一个非安全(`unsafe`)块：
     let p = 22;
     let future = unsafe { unsafe_example(&p) };
 
-    // 但是这里`unsafe` 块就没必要了，这里能正常读到 `p`:
+    // 但是这里非安全(`unsafe`)块就没必要了，这里能正常读到 `p`:
     let q = future.await;
 }
 ```

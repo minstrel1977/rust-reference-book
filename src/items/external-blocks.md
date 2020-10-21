@@ -100,7 +100,7 @@ extern {
 
 如果指定了 `kind`，则必须包含 `name`键。
 
-当从主机环境导入 symbols 时，键 `wasm_import_module` 可用于为 `extern`块中的项指定 [WebAssembly模块]名称。如果未指定 `wasm_import_module`，则默认模块名为`env`。
+当从主机环境导入 symbols 时，键 `wasm_import_module` 可用于为外部(`extern`)块中的项指定 [WebAssembly模块]名称。如果未指定 `wasm_import_module`，则默认模块名为`env`。
 
 <!-- ignore: requires extern linking -->
 ```rust,ignore
@@ -124,7 +124,7 @@ extern {
 
 ### `link_name`属性
 
-`link_name`属性可以在 `extern`块内的声明中指定，它用来指示要为给定函数或静态项导入的具体 symbol。它使用 [_MetaNameValueStr_] 句法规则指定 symbol 的名称。
+`link_name`属性可以在外部(`extern`)块内的声明中指定，它用来指示要为给定函数或静态项导入的具体 symbol。它使用 [_MetaNameValueStr_] 句法规则指定 symbol 的名称。
 
 ```rust
 extern {

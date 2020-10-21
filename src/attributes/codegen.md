@@ -120,7 +120,7 @@ unsafe fn foo_avx2() {}
 
 `track_caller` 属性可以应用于任何带有 [`"Rust"` ABI][rust-abi] 的函数，但程序入口函数 `fn main` 除外。当应用于 crate声明中的函数或方法时，该属性将应用于其所有实现。如果 crate 提供了带有该属性的默认实现，那么该属性也应用于其覆盖实现。
 
-<!-- 当应用于 `extern`块中的函数时，该属性还必须应用于任何此函数的实现，否则将导致未定义行为。当应用于可用于 `extern`块中的函数时，`extern`块中的声明也必须带上此属性，否则将导致未定义行为。When applied to a function which is made available to an `extern` block, the declaration in the `extern` block must also have the attribute, otherwise undefined behavior results. TobeModify-->
+<!-- 当应用于外部(`extern`)块中的函数时，该属性还必须应用于任何此函数的实现，否则将导致未定义行为。当应用于可用于外部(`extern`)块中的函数时，`extern`块中的声明也必须带上此属性，否则将导致未定义行为。When applied to a function which is made available to an `extern` block, the declaration in the `extern` block must also have the attribute, otherwise undefined behavior results. TobeModify-->
 
 ### 表现
 

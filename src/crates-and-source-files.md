@@ -96,7 +96,7 @@ fn main() {
 ### The `no_main` attribute
 ### `no_main`属性
 
-可在 crate 层级使用 *`no_main`[属性][attribute]*来禁止对可执行二进制文件发出 `main` symbol，即禁止当前 crate 的 main 函数的执行。当链接的其他对象定义了 `main` 时，这很有用。
+可在 crate 层级使用 *`no_main`[属性][attribute]*来禁止对可执行二进制文件发布 `main` symbol，即禁止当前 crate 的 main 函数的执行。当链接的其他对象定义了 `main` 时，这很有用。
 
 ## The `crate_name` attribute
 ## `crate_name`属性

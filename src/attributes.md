@@ -173,8 +173,8 @@ pub fn f() {}
   - [`deprecated`] — 生成弃用通知。
   - [`must_use`] — 为未使用的值生成 lint提醒。
 - ABI、链接、symbol、和 FFI
-  - [`link`] — 指定要与 `extern`块链接的本地库。
-  - [`link_name`] — 指定 `extern`块中函数或静态项的 symbol名称。
+  - [`link`] — 指定要与外部(`extern`)块链接的本地库。
+  - [`link_name`] — 指定外部(`extern`)块中函数或静态项的 symbol名称。
   - [`no_link`] — 防止链接外部crate。
   - [`repr`] — 控制类型的布局。
   - [`crate_type`] — 指定 crate 的类型(库、可执行文件等)。
