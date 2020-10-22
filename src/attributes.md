@@ -18,7 +18,7 @@
 >
 > _AttrInput_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_DelimTokenTree_]\
-> &nbsp;&nbsp; | `=` [_LiteralExpression_]<sub>_without suffix_</sub>
+> &nbsp;&nbsp; | `=` [_LiteralExpression_]<sub>_不带后缀_</sub>
 
 *属性*是一种通用的、形式自由的元数据，这种元数据会被（编译器/解释器）依据名称、约定、语言和编译器版本进行解释。（Rust 的）属性是根据 [ECMA-335]标准中的属性规范进行建模的，其语法来自 [ECMA-334] \(C#）。
 
@@ -45,9 +45,9 @@
 * [函数][functions]、[闭包][closure]和[函数指针][function pointer]的参数可接受外部属性。这包括函数指针和[外部块][variadic functions]中用 `...` 表示的可变参数上的属性。
 
 属性的一些例子：
-from here to check
+
 ```rust
-// 应用于封闭模块或 crate 的普通元数据。
+// 应用于当前模块或 crate 的一般性元数据(metadata)。
 #![crate_type = "lib"]
 
 // 标记为单元测试的函数
@@ -56,13 +56,13 @@ fn test_foo() {
     /* ... */
 }
 
-// 条件编译模块
+// 一个条件编译模块
 #[cfg(target_os = "linux")]
 mod bar {
     /* ... */
 }
 
-// 用于取消警告/错误的 lint属性
+// 用于取消警告/错误的 lint检查属性
 #[allow(non_camel_case_types)]
 type int8_t = i8;
 
@@ -76,14 +76,15 @@ fn some_unused_variables() {
 }
 ```
 
-## 元项属性句法
+## Meta Item Attribute Syntax
+## 元数据项/元项属性句法
 
-“元数据项”是大多数[内置属性]遵循 Attr句法规则(见本章头部的句法规则)的句法。它有以下语法格式：
+“元项(meta item)”是遵循 _Attr_ 句法规则(见本章头部的句法规则)的句法，Rust 的大多数[内置属性(built-in attributes)][built-in attributes]都使用了此句法。它有以下语法格式：
 
 > **<sup>句法</sup>**\
 > _MetaItem_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_SimplePath_]\
-> &nbsp;&nbsp; | [_SimplePath_] `=` [_LiteralExpression_]<sub>_without suffix_</sub>\
+> &nbsp;&nbsp; | [_SimplePath_] `=` [_LiteralExpression_]<sub>_不带后缀_</sub>\
 > &nbsp;&nbsp; | [_SimplePath_] `(` _MetaSeq_<sup>?</sup> `)`
 >
 > _MetaSeq_ :\
@@ -91,11 +92,11 @@ fn some_unused_variables() {
 >
 > _MetaItemInner_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _MetaItem_\
-> &nbsp;&nbsp; | [_LiteralExpression_]<sub>_without suffix_</sub>
+> &nbsp;&nbsp; | [_LiteralExpression_]<sub>_不带后缀_</sub>
 
-元数据项中的文字表达式不能包含整数或浮点类型的后缀。
+元项中的字面量表达式不能包含整型或浮点类型的后缀。
 
-各种内置属性使用元数据项语法的不同子集来指定它们的输入。下面的语法规则展示了一些常用的使用形式：
+各种内置属性使用元项句法的不同子集来指定它们的输入。下面的语法规则展示了一些常用的使用形式：
 
 > **<sup>句法</sup>**\
 > _MetaWord_:\
@@ -113,7 +114,7 @@ fn some_unused_variables() {
 > _MetaListNameValueStr_:\
 > &nbsp;&nbsp; [IDENTIFIER] `(` ( _MetaNameValueStr_ (`,` _MetaNameValueStr_)* `,`<sup>?</sup> )<sup>?</sup> `)`
 
-元数据项的一些例子是：
+元项的一些例子是：
 
 形式 | 示例
 ------|--------
@@ -123,19 +124,21 @@ _MetaListPaths_ | `allow(unused, clippy::inline_always)`
 _MetaListIdents_ | `macro_use(foo, bar)`
 _MetaListNameValueStr_ | `link(name = "CoreFoundation", kind = "framework")`
 
+## Active and inert attributes
 ## 活动属性和惰性属性
 
-属性要么是活动的，要么是惰性的。在属性处理过程中，*活动属性*将自己从它们所在的对象中移除，而*惰性属性*保持不变。
+属性要么是活动的，要么是惰性的。在属性处理过程中，*活动属性*将自己从它们所在的对象上移除，而*惰性属性*依然保持原位置不变。
 
-[`cfg`] 和 [`cfg_attr`] 属性是活动的。[`test`] 属性在为测试所做的编译中是惰性的，否则是活动的。[宏属性][Attribute macros]是活动的。所有其他属性都是惰性的。
+[`cfg`] 和 [`cfg_attr`] 属性是活动的。[`test`]属性在为测试所做的编译形式中是惰性的，在其他编译形式中是活动的。[宏属性][Attribute macros]是活动的。所有其他属性都是惰性的。
 
+## Tool attributes
 ## 外部工具属性
 
-编译器可能允许外部工具的属性，其中每个工具都驻留在自己的命名空间中。属性路径的第一段是工具的名称，再加上一个或多个工具自己解释的附加段。
+编译器可以允许和具体外部工具相关的属性，但这些工具在编译和检查过程中必须存在并驻留在编译器为它们提供的命名空间中。这种属性的（命名空间）路径的第一段是工具的名称，后跟一个或多个工具自己解释的附加段。
 
-当工具未被使用时，该工具的属性将被接受而没有警告。在使用该工具时，该工具负责处理和解释其属性。
+当工具在编译时不可用时，该工具的属性将被静默接受而不提示警告。当工具可用时，该工具负责处理和解释这些属性。
 
-如果使用了 [`no_implicit_prelude`] 属性，则外部工具属性不可用。
+如果使用了 [`no_implicit_prelude`]属性，则外部工具属性不可用。
 
 ```rust
 // 告诉rustfmt工具不要格式化以下元素。
@@ -150,31 +153,32 @@ pub fn f() {}
 
 > 注意: `rustc` 目前能识别的工具是 “clippy” 和 “rustfmt”。
 
+## Built-in attributes index
 ## 内置属性的索引表
 
 下面是所有内置属性的索引表：
 
-- 条件编译
+- 条件编译(Conditional compilation)
   - [`cfg`] — 控制条件编译。
-  - [`cfg_attr`] — 有条件地包含属性。
-- 测试
+  - [`cfg_attr`] — 选择性包含属性。
+- 测试(Testing)
   - [`test`] — 将函数标记为测试函数。
-  - [`ignore`] — 禁用测试功能。
+  - [`ignore`] — 禁止测试此函数。
   - [`should_panic`] — 表示测试应该产生 panic。
-- 派生
-  - [`derive`] — 自动 trait实现
-  - [`automatically_derived`] — 由 `derive` 创建的实现标记。
-- 宏
-  - [`macro_export`] — 导出 `macro_rules` 宏用于跨 crate 的使用。
+- 派生(Derive)
+  - [`derive`] — 自动部署 trait实现
+  - [`automatically_derived`] — 用在由 `derive` 创建的实现上的标记。
+- 宏(Macros)
+  - [`macro_export`] — 导出声明宏（`macro_rules`宏），用于跨 crate 的使用。
   - [`macro_use`] — 扩展宏可见性，或从其他 crate 导入宏。
   - [`proc_macro`] — 定义类函数宏。
   - [`proc_macro_derive`] — 定义派生宏。
   - [`proc_macro_attribute`] — 定义属性宏。
-- 诊断
+- 诊断(Diagnostics)
   - [`allow`]、[`warn`]、[`deny`]、[`forbid`] — 更改默认的 lint 级别。
   - [`deprecated`] — 生成弃用通知。
-  - [`must_use`] — 为未使用的值生成 lint提醒。
-- ABI、链接、symbol、和 FFI
+  - [`must_use`] — 为未使用的值生成 lint 提醒。
+- ABI、链接(linking)、symbol、和 FFI
   - [`link`] — 指定要与外部(`extern`)块链接的本地库。
   - [`link_name`] — 指定外部(`extern`)块中函数或静态项的 symbol名称。
   - [`no_link`] — 防止链接外部crate。
@@ -186,29 +190,29 @@ pub fn f() {}
   - [`no_mangle`] — 禁用 symbol名编码。
   - [`used`] — 强制编译器在输出对象文件中保留静态项。
   - [`crate_name`] — 指定 crate名。
-- 代码生成
+- 代码生成(Code generation)
   - [`inline`] — 内联代码提示。
   - [`cold`] — 提示函数不太可能被调用。
   - [`no_builtins`] — 禁用某些内置函数的使用。
   - [`target_feature`] — 配置特定于平台的代码生成。
   - [`track_caller`] - 将父调用位置传递给 `std::panic::Location::caller()`。
-- 文档
+- 文档(Documentation)
   - `doc` — 指定文档。更多信息见 [The Rustdoc Book]。[Doc注释]被转换为 `doc` 属性。
-- 预导入模块集
-  - [`no_std`] — 从预导入模块集中移除 std。
+- 预导入包(Preludes)
+  - [`no_std`] — 从预导入包中移除 std。
   - [`no_implicit_prelude`] — 在模块中禁用预导入模块查找。
-- 模块
+- 模块(Modules)
   - [`path`] — 指定模块的文件名。
-- 限制
+- 阈值设置(Limits)
   - [`recursion_limit`] — 设置某些编译时操作的最大递归限制。
   - [`type_length_limit`] — 设置多态类型的最大尺寸。
-- 运行时
+- 运行时(Runtime)
   - [`panic_handler`] — 设置函数来处理 panic。
   - [`global_allocator`] — 设置全局内存分配器。
   - [`windows_subsystem`] — 指定要链接的windows子系统。
-- 特性
+- 特性(Features)
   - `feature` — 用于启用非稳定的或实验性的编译器特性。参见 [The Unstable Book] 了解在 `rustc` 中实现的特性。
-- 类型系统
+- 类型系统(Type System)
   - [`non_exhaustive`] — 指示一个类型将来会添加更多的字段/变体。
 
 [Doc comments]: comments.md#doc-comments
