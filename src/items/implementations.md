@@ -51,8 +51,7 @@
 （这里）*标称类型*也被称作*实现类型(implementing type)*；*类型关联项(associable items)*可理解为实现类型的各种*关联数据项*。（译者注：这里译者大致采取了意译。首先 nominal type 在目前国内 Rust 社区里还没有合适的翻译先例，所以译者这里就蹭机器学习的热点翻译为“标称类型”，这种行径虽然降低了Rust的逼格，但在目前状态下，收益可能还是值得的。）
 
 固有实现将包含的数据项与实现类型关联起来。固有实现可以包含[关联函数][associated functions]（包括方法）和[关联常量][associated constants]。固有实现不能包含关联类型别名。
-A type can also have multiple inherent implementations. An implementing type
-must be defined within the same crate as the original type definition.
+
 关联数据项的[路径][path]是其实现类型的所有（形式的）路径中的任一种，然后再拼接上这个关联数据项的标识符来作为整个路径的末段路径组件(final path component)。
 
 类型可以有多个固有实现。但作为原始类型定义的实现类型与这些固有实现必须在同一个 crate 里。

@@ -1,8 +1,10 @@
 {{#include attributes-redirect.html}}
+# Attributes
 # 属性
 
 >[attributes.md](https://github.com/rust-lang/reference/blob/master/src/attributes.md)\
->commit: 814a530db0a3f91821095a830fa321fdd5a41d17
+>commit: 814a530db0a3f91821095a830fa321fdd5a41d17 \
+>本译文最后维护日期：2020-10-22
 
 > **<sup>句法</sup>**\
 > _InnerAttribute_ :\
@@ -18,32 +20,32 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; [_DelimTokenTree_]\
 > &nbsp;&nbsp; | `=` [_LiteralExpression_]<sub>_without suffix_</sub>
 
-*属性*是一种通用的、形式自由的元数据，这种元数据会被（编译器）依据名称、约定、语言和编译器版本进行解释。（Rust 的）属性是根据 [ECMA-335]标准中的属性规范进行建模的，其语法来自 [ECMA-334] \(C#）。
+*属性*是一种通用的、形式自由的元数据，这种元数据会被（编译器/解释器）依据名称、约定、语言和编译器版本进行解释。（Rust 的）属性是根据 [ECMA-335]标准中的属性规范进行建模的，其语法来自 [ECMA-334] \(C#）。
 
 *内部属性*以 `#!` 开头的方式编写，应用于它在其中声明的数据项。*外部属性*以不后跟感叹号的(`!`)的 `#` 开头的方式编写，应用于属性后面的内容。
 
-属性由指向属性的路径，和路径后跟的可选的带定界符的标记树（其解释由属性定义）组成。除了宏属性之外，其他属性也允许输入是等号(`=`)后跟文字表达式的格式。更多细节请参见下面的[元数据项句法](#元数据项属性句法)。
+属性由指向属性的路径和路径后跟的可选的带定界符的标记树(delimited token tree)（其解释由属性定义）组成。除了宏属性之外，其他属性的输入也允许使用等号(`=`)后跟文字表达式的格式。更多细节请参见下面的[元数据项句法](#meta-item-attribute-syntax)。
 
 属性可以分为以下几类：
 
-* [内置属性]
+* [内置属性][Built-in attributes]
 * [宏属性][attribute macros]
-* [派生宏辅助属性]
-* [外部工具属性](#外部工具属性)
+* [派生宏辅助属性][Derive macro helper attributes]
+* [外部工具属性](#tool-attributes)
 
-属性可以应用于语言中的许多事物：
+属性可以应用于语言中的许多场景：
 
-* 所有的[数据项声明]都接受外部属性，同时[外部块]、[函数]、[实现]和[模块]也还接受内部属性。
-* 大多数[语句]接受外部属性(参见[表达式属性]，了解表达式语句的限制)。
-* [块表达式]接受外部和内部属性，但只有当它们是另一个[表达式语句]的外部表达式时或时另一个块表达式的最终表达式(final expression)时才能接受。
-* [枚举]变体和[结构体]、[联合体]的字段接受外部属性。
-* [匹配表达式的匹配臂][match expressions]接受外部属性。
-* [泛型生存期或类型参数][generics]接受外部属性。
-* 表达式在受限情况下接受外部属性，详见[表达式属性]。
-* [函数][functions]、[闭包]和[函数指针]的参数接受外部属性。这包括函数指针和[外部块][variadic functions]中用 `...` 表示的可变参数上的属性。
+* 所有的[数据项声明][item declarations]都可接受外部属性，同时[外部块][external blocks]、[函数][functions]、[实现][implementations]和[模块][modules]都可接受内部属性。
+* 大多数[语句][statements]都可接受外部属性(参见[表达式属性][Expression Attributes]，了解表达式语句的限制)。
+* [块表达式][Block expressions]也可接受外部和内部属性，但只有当它们是另一个[表达式语句][expression statement]的外部表达式时或是另一个块表达式的最终表达式(final expression)时才有效。
+* [枚举][Enum]变体和[结构体][struct]、[联合体][union]的字段可接受外部属性。
+* [匹配表达式的匹配臂][match expressions]可接受外部属性。
+* [泛型生存期或类型参数][generics]可接受外部属性。
+* 表达式在有限的情况下可接受外部属性，详见[表达式属性][Expression Attributes]。
+* [函数][functions]、[闭包][closure]和[函数指针][function pointer]的参数可接受外部属性。这包括函数指针和[外部块][variadic functions]中用 `...` 表示的可变参数上的属性。
 
 属性的一些例子：
-
+from here to check
 ```rust
 // 应用于封闭模块或 crate 的普通元数据。
 #![crate_type = "lib"]
@@ -209,77 +211,80 @@ pub fn f() {}
 - 类型系统
   - [`non_exhaustive`] — 指示一个类型将来会添加更多的字段/变体。
 
-[Doc注释]: comments.md#注释
+[Doc comments]: comments.md#doc-comments
 [ECMA-334]: https://www.ecma-international.org/publications/standards/Ecma-334.htm
 [ECMA-335]: https://www.ecma-international.org/publications/standards/Ecma-335.htm
-[表达式属性]: expressions.md#表达式属性
+[Expression Attributes]: expressions.md#expression-attributes
 [IDENTIFIER]: identifiers.md
 [RAW_STRING_LITERAL]: tokens.md#raw-string-literals
 [STRING_LITERAL]: tokens.md#string-literals
-[The Rustdoc Book]: https://doc.rust-lang.org/nightly/rustdoc/
-[The Unstable Book]: https://doc.rust-lang.org/nightly/unstable-book/
+[The Rustdoc Book]: ../rustdoc/the-doc-attribute.html
+[The Unstable Book]: ../unstable-book/index.html
 [_DelimTokenTree_]: macros.md
 [_LiteralExpression_]: expressions/literal-expr.md
-[_SimplePath_]: paths.md#简单路径
-[`allow`]: attributes/diagnostics.md#lint检查类属性
-[`automatically_derived`]: attributes/derive.md#automatically_derived属性
-[`cfg_attr`]: conditional-compilation.md#cfg_attr属性
-[`cfg`]: conditional-compilation.md#cfg属性
-[`cold`]: attributes/codegen.md#cold属性
-[`crate_name`]: crates-and-source-files.md#crate_name属性
+[_SimplePath_]: paths.md#simple-paths
+[`allow`]: attributes/diagnostics.md#lint-check-attributes
+[`automatically_derived`]: attributes/derive.md#the-automatically_derived-attribute
+[`cfg_attr`]: conditional-compilation.md#the-cfg_attr-attribute
+[`cfg`]: conditional-compilation.md#the-cfg-attribute
+[`cold`]: attributes/codegen.md#the-cold-attribute
+[`crate_name`]: crates-and-source-files.md#the-crate_name-attribute
 [`crate_type`]: linkage.md
-[`deny`]: attributes/diagnostics.md#lint检查类属性
-[`deprecated`]: attributes/diagnostics.md#deprecated属性
+[`deny`]: attributes/diagnostics.md#lint-check-attributes
+[`deprecated`]: attributes/diagnostics.md#the-deprecated-attribute
 [`derive`]: attributes/derive.md
 [`export_name`]: abi.md#the-export_name-attribute
-[`forbid`]: attributes/diagnostics.md#lint检查类属性
+[`forbid`]: attributes/diagnostics.md#lint-check-attributes
 [`global_allocator`]: runtime.md#the-global_allocator-attribute
-[`ignore`]: attributes/testing.md#ignore属性
-[`inline`]: attributes/codegen.md#inline属性
-[`link_name`]: items/external-blocks.md#link_name属性
+[`ignore`]: attributes/testing.md#the-ignore-attribute
+[`inline`]: attributes/codegen.md#the-inline-attribute
+[`link_name`]: items/external-blocks.md#the-link_name-attribute
 [`link_section`]: abi.md#the-link_section-attribute
-[`link`]: items/external-blocks.md#link属性
-[`macro_export`]: macros-by-example.md#基于路径的作用域
-[`macro_use`]: macros-by-example.md#macro_use属性
-[`must_use`]: attributes/diagnostics.md#must_use属性
-[`no_builtins`]: attributes/codegen.md#no_builtins属性
-[`no_implicit_prelude`]: items/modules.md#预导入项
-[`no_link`]: items/extern-crates.md#`no_link`属性
-[`no_main`]: crates-and-source-files.md#no_main属性
+[`link`]: items/external-blocks.md#the-link-attribute
+[`macro_export`]: macros-by-example.md#path-based-scope
+[`macro_use`]: macros-by-example.md#the-macro_use-attribute
+[`must_use`]: attributes/diagnostics.md#the-must_use-attribute
+[`no_builtins`]: attributes/codegen.md#the-no_builtins-attribute
+[`no_implicit_prelude`]: items/modules.md#prelude-items
+[`no_link`]: items/extern-crates.md#the-no_link-attribute
+[`no_main`]: crates-and-source-files.md#the-no_main-attribute
 [`no_mangle`]: abi.md#the-no_mangle-attribute
-[`no_std`]: crates-and-source-files.md#预导入包和-no_std
+[`no_std`]: crates-and-source-files.md#preludes-and-no_std
 [`non_exhaustive`]: attributes/type_system.md#the-non_exhaustive-attribute
 [`panic_handler`]: runtime.md#the-panic_handler-attribute
-[`path`]: items/modules.md#path属性
-[`proc_macro_attribute`]: procedural-macros.md#属性宏
-[`proc_macro_derive`]: procedural-macros.md#派生宏
-[`proc_macro`]: procedural-macros.md#类函数过程宏
-[`recursion_limit`]: attributes/limits.md#recursion_limit属性
+[`path`]: items/modules.md#the-path-attribute
+[`proc_macro_attribute`]: procedural-macros.md#attribute-macros
+[`proc_macro_derive`]: procedural-macros.md#derive-macros
+[`proc_macro`]: procedural-macros.md#function-like-procedural-macros
+[`recursion_limit`]: attributes/limits.md#the-recursion_limit-attribute
 [`repr`]: type-layout.md#representations
-[`should_panic`]: attributes/testing.md#should_panic属性
-[`target_feature`]: attributes/codegen.md#target_feature属性
-[`test`]: attributes/testing.md#test属性
-[`track_caller`]: attributes/codegen.md#track_caller属性
-[`type_length_limit`]: attributes/limits.md#type_length_limit属性
+[`should_panic`]: attributes/testing.md#the-should_panic-attribute
+[`target_feature`]: attributes/codegen.md#the-target_feature-attribute
+[`test`]: attributes/testing.md#the-test-attribute
+[`track_caller`]: attributes/codegen.md#the-track_caller-attribute
+[`type_length_limit`]: attributes/limits.md#the-type_length_limit-attribute
 [`used`]: abi.md#the-used-attribute
-[`warn`]: attributes/diagnostics.md#lint检查类属性
+[`warn`]: attributes/diagnostics.md#lint-check-attributes
 [`windows_subsystem`]: runtime.md#the-windows_subsystem-attribute
-[attribute macros]: procedural-macros.md#属性宏
-[块表达式]: expressions/block-expr.md
-[内置属性]: #内置属性的索引表
-[派生宏辅助属性]: procedural-macros.md#派生宏辅助属性
-[枚举]: items/enumerations.md
-[表达式语句]: statements.md#表达式语句
-[外部块]: items/external-blocks.md
-[函数]: items/functions.md
-[泛型]: items/generics.md
-[实现]: items/implementations.md
-[数据项声明]: items.md
+[attribute macros]: procedural-macros.md#attribute-macros
+[block expressions]: expressions/block-expr.md
+[built-in attributes]: #built-in-attributes-index
+[derive macro helper attributes]: procedural-macros.md#derive-macro-helper-attributes
+[enum]: items/enumerations.md
+[expression statement]: statements.md#expression-statements
+[external blocks]: items/external-blocks.md
+[functions]: items/functions.md
+[generics]: items/generics.md
+[implementations]: items/implementations.md
+[item declarations]: items.md
 [match expressions]: expressions/match-expr.md
-[模块]: items/modules.md
-[语句]: statements.md
-[结构体]: items/structs.md
-[联合体: items/unions.md
-[闭包]: expressions/closure-expr.md
-[函数指针]: types/function-pointer.md
-[variadic functions]: items/external-blocks.md#可变参数函数
+[modules]: items/modules.md
+[statements]: statements.md
+[struct]: items/structs.md
+[union]: items/unions.md
+[closure]: expressions/closure-expr.md
+[function pointer]: types/function-pointer.md
+[variadic functions]: items/external-blocks.html#variadic-functions
+
+<!-- 2020-10-16 -->
+<!-- checked -->

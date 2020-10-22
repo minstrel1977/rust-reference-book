@@ -22,9 +22,9 @@
 
 *关联函数*是与具体类型相关联的[函数][functions]。
 
-*关联函数声明*为关联函数定义声明签名。它的书写格式和函数项一样，除了函数体被替换为 `;`。
+*关联函数声明*为*关联函数定义*声明签名。它的书写格式和函数项一样，除了函数体被替换为 `;`。
 
-标识符是函数的名称。关联函数的泛型参数、参数列表、返回类型 和 where子句必须与它们在关联函数声明中声明的相同。
+标识符是函数的名称。关联函数的泛型参数、参数列表、返回类型 和 where子句必须与它们在*关联函数声明*中声明的格式一致。
 
 *关联函数定义*定义与类型相关联的函数。它的编写方式与[函数项][function item]相同。
 
@@ -187,33 +187,16 @@ let bounding_box = circle_shape.bounding_box();
 ## Associated Types
 ## 关联类型
 
-*关联类型*是与另一个类型关联的[类型别名]。关联类型不能在[固有实现]中定义，也不能在 trait 中给它们一个默认实现。
+*关联类型*是与另一个类型关联的[类型别名][type aliases] 。关联类型不能在[固有实现][inherent implementations]中定义，也不能在 trait 中给它们一个默认实现。
 
-*关联类型声明*为*关联类型定义*声明签名。书写形式为：先是 `type`，然后是一个[标识符]，最后是一个可选的 trait约束列表。
+*关联类型声明*为*关联类型定义*声明签名。书写形式为：先是 `type`，然后是一个[标识符][identifier]，最后是一个可选的 trait约束列表。
 
-这里标识符是声明的类型别名的名称；可选的 trait约束必须由类型别名的实现来满足。
+这里的标识符是声明的类型的别名名称；可选的 trait约束必须由此类型别名的实现来履行。
 
-*关联类型定义*在另一个类型上定义一个类型别名。书写形式为：先是 `type`，然后是一个[标识符]，然后再是一个 `=`，最后是一个[类型]。
+*关联类型定义*在另一个类型上定义了一个类型别名。书写形式为：先是 `type`，然后是一个[标识符]，然后再是一个 `=`，最后是一个[类型][type]。
 
-如果类型 `Item` 具有来自 trait `Trait`的关联类型 `Assoc`，则表达式 `<Item as Trait>::Assoc` 也是一个类型，具体就是关联类型定义中指定的类型的一个别名。此外，如果 `Item` 是类型参数，则 `Item::Assoc` 也可用作类型参数。
-*Associated types* are [type aliases] associated with another type. Associated
-types cannot be defined in [inherent implementations] nor can they be given a
-default implementation in traits.
+如果类型 `Item` 有一个来自 trait `Trait`的关联类型 `Assoc`，则表达式 `<Item as Trait>::Assoc` 也是一个类型，具体就是*关联类型定义*中指定的类型的一个别名。此外，如果 `Item` 是类型参数，则 `Item::Assoc` 也可以在类型参数中使用。
 
-An *associated type declaration* declares a signature for associated type
-definitions. It is written as `type`, then an [identifier], and
-finally an optional list of trait bounds.
-
-The identifier is the name of the declared type alias. The optional trait bounds
-must be fulfilled by the implementations of the type alias.
-
-An *associated type definition* defines a type alias on another type. It is
-written as `type`, then an [identifier], then an `=`, and finally a [type].
-
-If a type `Item` has an associated type `Assoc` from a trait `Trait`, then
-`<Item as Trait>::Assoc` is a type that is an alias of the type specified in the
-associated type definition. Furthermore, if `Item` is a type parameter, then
-`Item::Assoc` can be used in type parameters.
 ```rust
 trait AssociatedType {
     // 关联类型声明
@@ -241,9 +224,10 @@ fn main() {
 }
 ```
 
+### Associated Types Container Example
 ### 示例展示容器内的关联类型
 
-下面给出一个 `Container` trait 示例。请注意，该类型可用于方法签名：
+下面给出一个 `Container` trait 示例。请注意，该类型可用在方法签名内：
 
 ```rust
 trait Container {
@@ -253,7 +237,7 @@ trait Container {
 }
 ```
 
-为了使类型实现此 trait，它不仅必须为每个方法提供实现，而且必须指定类型 `E`。下面是标准库类型 `Vec` 的 `Container` 实现：
+为了使类型实现此 trait，它不仅必须为每个方法提供实现，而且必须指定类型 `E`。下面是一个为标准库类型 `Vec` 实现了 `Container` 的实现：
 
 ```rust
 # trait Container {
@@ -268,16 +252,18 @@ impl<T> Container for Vec<T> {
 }
 ```
 
+## Associated Constants
 ## 关联常量
 
-*关联常量*是与类型关联的[常量]。
+*关联常量*是与具体类型关联的[常量][constants]。
 
-*关联常量声明*为关联常量定义声明签名。书写形式为：先是 `const` 开头，然后是标识符，然后是 `:`，然后是一个类型，最后是一个 `;`。
+*关联常量声明*为*关联常量定义*声明签名。书写形式为：先是 `const` 开头，然后是标识符，然后是 `:`，然后是一个类型，最后是一个 `;`。
 
-这里标识符是路径中使用的常量的名称；类型是（关联常量）定义必须实现的类型。
+这里标识符是（外部引用）路径中使用的常量的名称；类型是（关联常量）定义必须实现的类型。
 
-*关联常量定义*定义与类型关联的常量。它的编写方式与[常量项]相同。
+*关联常量定义*定义了与类型关联的常量。它的编写方式与[常量项][constant item]相同。
 
+### Associated Constants Examples
 ### 示例展示关联常量
 
 基本示例：
