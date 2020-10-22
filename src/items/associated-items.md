@@ -1,31 +1,34 @@
+# Associated Items
 # 关联数据项/关联项
 
 >[associated-items.md](https://github.com/rust-lang/reference/blob/master/src/items/associated-items.md)\
->commit: 136bd7da8b9c509c17c9619813b57dd1a47a8e25
+>commit: 136bd7da8b9c509c17c9619813b57dd1a47a8e25 \
+>本译文最后维护日期：2020-10-22
 
-*关联数据项*是在[trait]中声明或在[实现]中定义的数据项。之所以这样称呼它们，是因为它们是在关联类型上定义的，即实现里的类型。它们是可以在模块中声明的数据项的子集。具体来说，有[关联函数]（包括方法）、[关联类型]和[关联常量]。
+*关联数据项*是在 [traits] 中声明或在[实现][implementations]中定义的数据项。之所以这样称呼它们，是因为它们的定义是在类型的关联项里定义的，即类型的实现里定义的。它们是可在模块中声明的数据项的子集。具体来说，有[关联函数][associated functions]（包括方法）、[关联类型][associated types]和[关联常量][associated constants]。
 
-[关联函数]: #关联函数和类型
-[关联类型]: #关联类型
-[关联常量]: #关联常量
+[关联函数]: #associated-functions-and-methods
+[关联类型]: #associated-types
+[关联常量]: #associated-constants
 
-当关联数据项与被关联数据项在逻辑上相关时，关联数据项非常有用。例如，`Option` 上的 `is_some` 方法与 Options 相关，所以应该关联。（译者注：这句翻译过来实在是怪异，那先TobeModify吧 Associated items are useful when the associated item logically is related to the associating item. For example, the `is_some` method on `Option` is intrinsically related to Options, so should be associated.）
+当关联数据项与被关联数据项在逻辑上相关时，关联数据项非常有用。例如，`Option` 上的 `is_some` 方法与 Options 是内在相关的，所以它们应该关联在一起。
 
-每一种关联数据项都有两种形式：包含实际实现的定义和声明定义签名的声明。
+每一种关联数据项都有两种形式：（包含实际实现的）定义和（为定义声明签名的）声明。
 
-正是这些声明构成了 trait 的契约以及泛型类型中可用的内容。
+正是这些声明构成了 trait 的约定(contract)以及其泛型参数中可用的资源。
 
+## Associated functions and methods
 ## 关联函数和方法
 
-*关联函数*是与类型相关联的[函数]。
+*关联函数*是与具体类型相关联的[函数][functions]。
 
-*关联函数声明*为*关联函数定义*声明签名。它被写为函数项，但函数体被替换为 `;`。
+*关联函数声明*为关联函数定义声明签名。它的书写格式和函数项一样，除了函数体被替换为 `;`。
 
-标识符是函数的名称。关联函数的泛型、参数列表、返回类型和 where子句必须与关联函数声明中的这些相同。
+标识符是函数的名称。关联函数的泛型参数、参数列表、返回类型 和 where子句必须与它们在关联函数声明中声明的相同。
 
-*关联函数定义*定义与另一个类型关联的函数。它的编写方式与[函数项]相同。
+*关联函数定义*定义与类型相关联的函数。它的编写方式与[函数项][function item]相同。
 
-常见的关联函数的一个例子是 `new` 函数，它返回与关联函数关联的类型的值。
+常见的关联函数的一个例子是 `new` 函数，它返回此关联函数所关联的类型的值。
 
 ```rust
 struct Struct {
@@ -45,7 +48,7 @@ fn main () {
 }
 ```
 
-当关联函数在一个 trait 上声明时，此函数也可以通过一个[路径]来调用，这个路径是一个附加了 trait 名字的 trait 的路径。当发生这种情况时，可以用实际的路径和标识符按 `<_ as Trait>::function_name` 这样的形式来组织实际的调用路径。
+当关联函数在 trait 上声明时，此函数也可以通过指向 trait，再后跟函数名的[路径][path]来调用。当发生这种情况时，可以用实际的路径和标识符按 `<_ as Trait>::function_name` 这样的形式来组织实际的调用路径。
 
 ```rust
 trait Num {
@@ -63,6 +66,7 @@ let _: f64 = <f64 as Num>::from_i32(42);
 let _: f64 = f64::from_i32(42);
 ```
 
+### Methods
 ### 方法
 
 > _Method_ :\
@@ -80,16 +84,16 @@ let _: f64 = f64::from_i32(42);
 > _TypedSelf_ :\
 > &nbsp;&nbsp; `mut`<sup>?</sup> `self` `:` [_Type_]
 
-参数列表中的第一个参数名为 `self` 的关联函数被称为*方法*，可以使用[方法调用操作符]来调用（例如 `x.foo()`）以及常用的函数调用形式进行调用。
+参数列表中的第一个参数名为 `self` 的关联函数被称为*方法*，方法可以使用[方法调用操作符][method call operator]来调用，例如 `x.foo()`，也可以使用常用的函数调用形式进行调用。
 
-如果 `self` 参数的类型被指定，它就被限制解析为以下语法生成的类型(其中 `'lt` 表示某个任意的生存期)：
+如果 `self` 参数的类型被指定，它就通过以下语法(其中 `'lt` 表示生存期参数)被限制解析成几个相关类型中的一个：
 
 ```text
 P = &'lt S | &'lt mut S | Box<S> | Rc<S> | Arc<S> | Pin<P>
 S = Self | P
 ```
 
-此语法中的 `Self` 表示对实现类型的类型解析。这还可以包括上下文类型别名 `Self`、其他类型别名或对实现类型的关联类型预测解析。（译者注：这句对我来说太难了，只能先加TobeModify了。顺便奉上原文：The `Self` terminal in this grammar denotes a type resolving to the implementing type. This can also include the contextual type alias `Self`, other type aliases, or associated type projections resolving to the implementing type.）
+此语法中的 `Self` 代表对实现类型(implementing type)的类型解析。此解析还可以包括对上下文中的类型别名 `Self`、其他类型别名、或对实现类型采用关联类型预测解析方法解析。（原文：The `Self` terminal in this grammar denotes a type resolving to the implementing type. This can also include the contextual type alias `Self`, other type aliases, or associated type projections resolving to the implementing type. 译者注：这句对译者来说太难了，只能先这么将就着翻译，同时放出原文，请读者中的高手帮忙翻译清楚。感谢感谢）
 
 ```rust
 # use std::rc::Rc;
@@ -115,7 +119,7 @@ impl Example {
 }
 ```
 
-（方法的首参）可以在不指定类型的情况下使用简写句法，具体如下：
+（方法的首参）可以在不指定类型的情况下使用简写句法，具体对比如下：
 
 简写模式               | 等效项
 ----------------------|-----------
@@ -125,7 +129,7 @@ impl Example {
 
 > **注意**: （方法的）生存期也能，其实也经常是使用这种方式来省略。
 
-如果 `self` 参数以 `mut` 为前缀，它就变成了一个可变的变量，类似于使用 `mut` [标识符模式]的常规参数。例如：
+如果 `self` 参数以 `mut` 为前缀，它就变成了一个可变的变量，类似于使用 `mut` [标识符模式][identifier pattern]的常规参数。例如：
 
 ```rust
 trait Changer: Sized {
@@ -145,7 +149,7 @@ trait Shape {
 }
 ```
 
-这定义了一个带有两个方法的trait。当此 trait 在作用域内时，所有具有此 trait[实现]的值都可以调用它们的 `draw` 和 `bounding_box` 方法。
+这里定义了一个带有两个方法的 trait。当此 trait 被引入当前作用域内后，所有拥有此 trait的[实现][implementations]的值都可以调用此 trait 的 `draw` 和 `bounding_box` 方法。
 
 ```rust
 # type Surface = i32;
@@ -173,12 +177,14 @@ let circle_shape = Circle::new();
 let bounding_box = circle_shape.bounding_box();
 ```
 
-> **版本差异**: 在 2015 版种, 使用匿名参数声明 trait方法是可能的 (例如：`fn foo(u8)`)。在 2018 版本中，这被弃用，再用会导致编译错误。新版本种所有的参数都必须有参数名。
+> **版本差异**: 在 2015 版中, 使用匿名参数来声明 trait方法是可能的 (例如：`fn foo(u8)`)。在 2018 版本中，这已被弃用，再用会导致编译错误。新版本种所有的参数都必须有参数名。
 
+#### Attributes on method parameters
 #### 方法参数上的属性
 
-方法参数上的属性遵循与[常规函数参数]相同的规则和限制。
+方法参数上的属性遵循与[常规函数参数][regular function parameters]上相同的规则和限制。
 
+## Associated Types
 ## 关联类型
 
 *关联类型*是与另一个类型关联的[类型别名]。关联类型不能在[固有实现]中定义，也不能在 trait 中给它们一个默认实现。
@@ -190,7 +196,24 @@ let bounding_box = circle_shape.bounding_box();
 *关联类型定义*在另一个类型上定义一个类型别名。书写形式为：先是 `type`，然后是一个[标识符]，然后再是一个 `=`，最后是一个[类型]。
 
 如果类型 `Item` 具有来自 trait `Trait`的关联类型 `Assoc`，则表达式 `<Item as Trait>::Assoc` 也是一个类型，具体就是关联类型定义中指定的类型的一个别名。此外，如果 `Item` 是类型参数，则 `Item::Assoc` 也可用作类型参数。
+*Associated types* are [type aliases] associated with another type. Associated
+types cannot be defined in [inherent implementations] nor can they be given a
+default implementation in traits.
 
+An *associated type declaration* declares a signature for associated type
+definitions. It is written as `type`, then an [identifier], and
+finally an optional list of trait bounds.
+
+The identifier is the name of the declared type alias. The optional trait bounds
+must be fulfilled by the implementations of the type alias.
+
+An *associated type definition* defines a type alias on another type. It is
+written as `type`, then an [identifier], then an `=`, and finally a [type].
+
+If a type `Item` has an associated type `Assoc` from a trait `Trait`, then
+`<Item as Trait>::Assoc` is a type that is an alias of the type specified in the
+associated type definition. Furthermore, if `Item` is a type parameter, then
+`Item::Assoc` can be used in type parameters.
 ```rust
 trait AssociatedType {
     // 关联类型声明
@@ -304,23 +327,26 @@ fn main() {
 [_Generics_]: generics.md
 [_Lifetime_]: ../trait-bounds.md
 [_Type_]: ../types.md#type-expressions
-[_WhereClause_]: generics.md#where子句
+[_WhereClause_]: generics.md#where-clauses
 [`Arc<Self>`]: ../special-types-and-traits.md#arct
 [`Box<Self>`]: ../special-types-and-traits.md#boxt
 [`Pin<P>`]: ../special-types-and-traits.md#pinp
 [`Rc<Self>`]: ../special-types-and-traits.md#rct
 [_OuterAttribute_]: ../attributes.md
-[trait]: traits.md
-[类型别名]: type-aliases.md
-[固有实现]: implementations.md#固有实现
-[标识符]: ../identifiers.md
-[标识符模式]: ../patterns.md#identifier-patterns
-[实现]: implementations.md
-[类型]: ../types.md#type-expressions
-[常量]: constant-items.md
-[常量项]: constant-items.md
-[函数]: functions.md
-[函数项]: ../types/function-item.md
-[方法调用操作符]: ../expressions/method-call-expr.md
-[路径]: ../paths.md
-[常规函数参数]: functions.md#函数参数上的属性
+[traits]: traits.md
+[type aliases]: type-aliases.md
+[inherent implementations]: implementations.md#inherent-implementations
+[identifier]: ../identifiers.md
+[identifier pattern]: ../patterns.md#identifier-patterns
+[implementations]: implementations.md
+[type]: ../types.md#type-expressions
+[constants]: constant-items.md
+[constant item]: constant-items.md
+[functions]: functions.md
+[function item]: ../types/function-item.md
+[method call operator]: ../expressions/method-call-expr.md
+[path]: ../paths.md
+[regular function parameters]: functions.md#attributes-on-function-parameters
+
+<!-- 2020-10-16 -->
+<!-- checked -->

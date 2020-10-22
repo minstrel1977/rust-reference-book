@@ -91,21 +91,23 @@ extern {
 }
 ```
 
+## Attributes on extern blocks
 ## 外部块上的属性
 
-下面的[属性]可以控制外部块的行为。
+下面列出的[属性][attributes]可以控制外部块的行为。
 
+### The `link` attribute
 ### `link`属性
 
-*`link`属性*为外部块中的数据项指定编译器应该链接的本机库的名称。它使用 [_MetaListNameValueStr_] 句法规则指定其输入。`name` 键指定要链接的本机库的名称。`kind` 键是一个可选值，它指定具有以下可能值的库类型：
+*`link`属性*为外部(`extern`)块中的数据项指定编译器应该链接的本机库的名称。它使用 [_MetaListNameValueStr_] 句法规则指定其输入。`name`键指定要链接的本机库的名称。`kind`键是一个可选值，它指定具有以下可能值的库类型：
 
-- `dylib` — 动态库。如果没有指定 `kind`，这是默认值Indicates a dynamic library. This is the default if `kind` is not specified.
-- `static` — 静态库。
-- `framework` —  macOS 框架。这只对 macOS 目标平台有效。
+- `dylib` — 表示库类型是动态库。如果没有指定 `kind`，这是默认值。
+- `static` — 表示库类型是静态库。
+- `framework` — 表示库类型是 macOS 框架。这只对 macOS 目标平台有效。
 
-如果指定了 `kind`，则必须包含 `name`键。
+如果指定了 `kind`，则必须指定 `name`键。
 
-当从主机环境导入 symbols 时，键 `wasm_import_module` 可用于为外部(`extern`)块中的项指定 [WebAssembly模块]名称。如果未指定 `wasm_import_module`，则默认模块名为`env`。
+当从主机环境导入 symbols 时，`wasm_import_module`键可用于为外部(`extern`)块中的数据项指定 [WebAssembly模块][WebAssembly module]名称。如果未指定 `wasm_import_module`，则默认模块名为 `env`。
 
 <!-- ignore: requires extern linking -->
 ```rust,ignore
@@ -125,11 +127,16 @@ extern {
 }
 ```
 
-在空的外部块上添加 `link`属性是有效的。可以用这种方式来满足代码中其他地方的外部块的链接需求(包括上游 crate)，而不必向每个外部块都添加属性。
+在空外部块上添加 `link`属性是有效的。可以用这种方式来满足代码中其他地方的外部块的链接需求(包括上游 crate)，而不必向每个外部块都添加此属性。
 
+### The `link_name` attribute
 ### `link_name`属性
 
-`link_name`属性可以在外部(`extern`)块内的声明中指定，它用来指示要为给定函数或静态项导入的具体 symbol。它使用 [_MetaNameValueStr_] 句法规则指定 symbol 的名称。
+
+The `link_name` attribute may be specified on declarations inside an `extern`
+block to indicate the symbol to import for the given function or static. It
+uses the [_MetaNameValueStr_] syntax to specify the name of the symbol.
+可以在外部(`extern`)块内的数据项声明上指定 `link_name`属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 [_MetaNameValueStr_] 句法规则指定 symbol 的名称。
 
 ```rust
 extern {
@@ -138,9 +145,10 @@ extern {
 }
 ```
 
+### Attributes on function parameters
 ### 函数参数上的属性
 
-外部函数参数上的属性遵循与[常规函数参数]相同的规则和限制。
+外部函数参数上的属性遵循与[常规函数参数][regular function parameters]相同的规则和限制。
 
 [IDENTIFIER]: ../identifiers.md
 [WebAssembly module]: https://webassembly.github.io/spec/core/syntax/modules.html
