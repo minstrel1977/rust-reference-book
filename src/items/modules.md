@@ -105,17 +105,14 @@ mod thread {
 ## Prelude Items
 ## 预导入项
 
-模块在作用域中隐式地就有一些模块名称。这些名称是内置的，除了宏（在外部crate 上是）用 [`#[macro_use]`][macro_use] 导入这些名称，其他都是通过当前 crate 的[预导入包][prelude]导入的。这些名称都由唯一的标识符组成。这些名称不是当前模块的一部分，因此，例如，任何名为 `name`、 `self::name` 的路径都不是有效路径。的这通过[预导入包][prelude]添加进来的各种模块名称可以通过将 `no_implicit_prelude`[属性][attribute]放在当前模块或任意祖先模块上来移除。
+模块在作用域中隐式地就有一些模块名称。这些名称是内置的，除了宏（在外部crate 上是）用 [`#[macro_use]`][macro_use] 导入这些名称，其他都是通过当前 crate 的[预导入包][prelude]导入的。这些名称都由唯一的标识符组成。这些名称不是当前模块的一部分，因此，例如，任何名为 `name`、 `self::name` 的路径都不是有效路径。由[预导入包][prelude]添加进来的各种模块名称可以通过将 `no_implicit_prelude`[属性][attribute]放在当前模块或当前模块的任意祖先模块上来移除。
 
 ## Attributes on Modules
 ## 模块上的属性
 
-The built-in attributes that have meaning on a module are [`cfg`],
-[`deprecated`], [`doc`], [the lint check attributes], `path`, and
-`no_implicit_prelude`. Modules also accept macro attributes.
 模块和所有数据项一样能接受外部属性。它们也能接受内部属性：可以在带有代码体的模块的 `{` 之后，也可以在模块源文件的开头（须在可选的 BOM 和 shebang 之后）。
 
-在模块中有意义的内置属性是[`cfg`]、[`deprecated`]、[`doc`]、[lint检查类属性][the lint check attributes]、`path` 和 `no_implicit_prelude`。模块也接受宏属性。
+在模块中有意义的内置属性是 [`cfg`]、[`deprecated`]、[`doc`]、[lint检查类属性][the lint check attributes]、`path` 和 `no_implicit_prelude`。模块也接受宏属性。
 
 [_InnerAttribute_]: ../attributes.md
 [_Item_]: ../items.md

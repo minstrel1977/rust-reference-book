@@ -180,40 +180,40 @@ pub fn f() {}
   - [`must_use`] — 为未使用的值生成 lint 提醒。
 - ABI、链接(linking)、symbol、和 FFI
   - [`link`] — 指定要与外部(`extern`)块链接的本地库。
-  - [`link_name`] — 指定外部(`extern`)块中函数或静态项的 symbol名称。
+  - [`link_name`] — 指定外部(`extern`)块中的函数或静态项的 symbol 的名称。
   - [`no_link`] — 防止链接外部crate。
   - [`repr`] — 控制类型的布局。
-  - [`crate_type`] — 指定 crate 的类型(库、可执行文件等)。
+  - [`crate_type`] — 指定 crate 的类别(库、可执行文件等)。
   - [`no_main`] — 禁止发布 `main` symbol。
-  - [`export_name`] — 指定函数或静态项的导出 symbol名。
+  - [`export_name`] — 指定函数或静态项导出的 symbol名。
   - [`link_section`] — 指定用于函数或静态项的对象文件的部分。
-  - [`no_mangle`] — 禁用 symbol名编码。
+  - [`no_mangle`] — 禁用对 symbol名编码。
   - [`used`] — 强制编译器在输出对象文件中保留静态项。
   - [`crate_name`] — 指定 crate名。
 - 代码生成(Code generation)
   - [`inline`] — 内联代码提示。
   - [`cold`] — 提示函数不太可能被调用。
-  - [`no_builtins`] — 禁用某些内置函数的使用。
+  - [`no_builtins`] — 禁用某些内置函数。
   - [`target_feature`] — 配置特定于平台的代码生成。
   - [`track_caller`] - 将父调用位置传递给 `std::panic::Location::caller()`。
 - 文档(Documentation)
-  - `doc` — 指定文档。更多信息见 [The Rustdoc Book]。[Doc注释]被转换为 `doc` 属性。
+  - `doc` — 指定文档。更多信息见 [The Rustdoc Book]。[Doc注释][Doc comments]会被转换为 `doc`属性。
 - 预导入包(Preludes)
   - [`no_std`] — 从预导入包中移除 std。
-  - [`no_implicit_prelude`] — 在模块中禁用预导入模块查找。
+  - [`no_implicit_prelude`] — 禁用模块内的预导入包查找。
 - 模块(Modules)
-  - [`path`] — 指定模块的文件名。
+  - [`path`] — 指定模块的源文件名。
 - 阈值设置(Limits)
   - [`recursion_limit`] — 设置某些编译时操作的最大递归限制。
-  - [`type_length_limit`] — 设置多态类型的最大尺寸。
+  - [`type_length_limit`] — 设置多态类型(polymorphic type)单态化过程中构造具体类型时所做的最大类型替换次数。
 - 运行时(Runtime)
-  - [`panic_handler`] — 设置函数来处理 panic。
+  - [`panic_handler`] — 设置处理 panic 的函数。
   - [`global_allocator`] — 设置全局内存分配器。
-  - [`windows_subsystem`] — 指定要链接的windows子系统。
+  - [`windows_subsystem`] — 指定要链接的 windows 子系统。
 - 特性(Features)
   - `feature` — 用于启用非稳定的或实验性的编译器特性。参见 [The Unstable Book] 了解在 `rustc` 中实现的特性。
 - 类型系统(Type System)
-  - [`non_exhaustive`] — 指示一个类型将来会添加更多的字段/变体。
+  - [`non_exhaustive`] — 表明一个类型将来会添加更多的字段/变体。
 
 [Doc comments]: comments.md#doc-comments
 [ECMA-334]: https://www.ecma-international.org/publications/standards/Ecma-334.htm
