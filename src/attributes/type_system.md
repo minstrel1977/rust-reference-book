@@ -6,7 +6,7 @@
 
 *`non_exhaustive`属性*表示类型或变体将来可能会添加更多字段或变体。它可以应用于[struct]、[enum] 和 枚举变体。
 
-`non_exhaustive`属性使用 [_MetaWord_]句法规则，因此不接受任何输入。
+`non_exhaustive`属性使用 [_MetaWord_]元项属性句法规则，因此不接受任何输入。
 
 在当前（`non_exhaustive`限制的类型）定义所在的 crate 内，`non_exhaustive` 没有效果。
 
@@ -58,8 +58,8 @@ match message {
 
 非穷尽类型不能在定义它的 crate 之外构建：
 
-- 非穷尽变体（[结构体]或[枚举变体]）不能用 [_StructExpression_]句法格式（包括[函数更新句法]）构建。
-- [枚举]示例能用[_EnumerationVariantExpression_]句法规则构建。
+- 非穷尽变体（[结构体]或[枚举变体]）不能用 [_StructExpression_]元项属性句法规则格式（包括[函数更新句法]）构建。
+- [枚举]示例能用[_EnumerationVariantExpression_]元项属性句法规则构建。
 
 示例：（译者注：可以把上例看成本例的 `upstream` ）
 <!-- ignore: requires external crates -->
@@ -85,7 +85,7 @@ let message = Message::Quit;
 
 在定义所在的 crate之外对非穷尽类型进行匹配，有如下限制:
 
-- 当模式匹配一个非穷尽变体([结构体]或[枚举变体])时，必须使用 [_StructPattern_]句法规则进行，其匹配臂必须有一个为 `..`。元组变体的构造函数的可见性降低为 `min($vis, pub(crate))`。
+- 当模式匹配一个非穷尽变体([结构体]或[枚举变体])时，必须使用 [_StructPattern_]元项属性句法规则进行，其匹配臂必须有一个为 `..`。元组变体的构造函数的可见性降低为 `min($vis, pub(crate))`。
 - 当模式匹配在一个非穷尽的[枚举]上时，单个变体上的匹配不影响整个枚举的匹配详尽要求。
 
 示例：（译者注：可以把上上例看成本例的 `upstream` ）

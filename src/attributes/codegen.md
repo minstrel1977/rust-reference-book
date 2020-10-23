@@ -35,7 +35,7 @@
 
 ## `target_feature`属性
 
-*`target_feature`[属性]*可应用于[非安全函数]，用来为特定的平台架构特性（platform architecture features）生成该函数的代码。它使用[_MetaListNameValueStr_]句法规则来启用（该平台支持的）特性，这个规则中一个属性名是 `enable` ，对应值是一个逗号分隔的由平台特性名字组成的符串。
+*`target_feature`[属性]*可应用于[非安全函数]，用来为特定的平台架构特性（platform architecture features）生成该函数的代码。它使用[_MetaListNameValueStr_]元项属性句法规则来启用（该平台支持的）特性，这个规则中一个属性名是 `enable` ，对应值是一个逗号分隔的由平台特性名字组成的符串。
 
 ```rust
 # #[cfg(target_feature = "avx2")]

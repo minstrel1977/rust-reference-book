@@ -101,7 +101,7 @@ fn main() {
 ## The `crate_name` attribute
 ## `crate_name`属性
 
-可在 crate 层级应用 *`crate_name`[属性][attribute]*，并通过使用 [_MetaNameValueStr_] 句法规则来指定 crate 的名称。
+可在 crate 层级应用 *`crate_name`[属性][attribute]*，并通过使用 [_MetaNameValueStr_]元项属性句法规则来指定 crate 的名称。
 
 ```rust
 #![crate_name = "mycrate"]

@@ -57,7 +57,7 @@ fn panic(info: &PanicInfo) -> ! {
 ## The `windows_subsystem` attribute
 ## `windows_subsystem`属性
 
-当链接到 Windows 目标上时，*`windows_subsystem`属性*可以应用于 crate 级别来设置[子系统][subsystem]。它使用 [_MetaNameValueStr_] 句法规则用 `console` 或 `windows` 两个可行值指定子系统。对于 非windows目标和非二进制 [crate类型][crate types]，该属性将被忽略。
+当链接到 Windows 目标上时，*`windows_subsystem`属性*可以应用于 crate 级别来设置[子系统][subsystem]。它使用 [_MetaNameValueStr_]元项属性句法规则用 `console` 或 `windows` 两个可行值指定子系统。对于 非windows目标和非二进制 [crate类型][crate types]，该属性将被忽略。
 
 ```rust
 #![windows_subsystem = "windows"]

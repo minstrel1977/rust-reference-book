@@ -62,7 +62,7 @@ mod bar {
     /* ... */
 }
 
-// 用于取消警告/错误的 lint检查属性
+// 用于取消执行了 lint检查后报告的告警/错误提醒 
 #[allow(non_camel_case_types)]
 type int8_t = i8;
 
@@ -77,7 +77,7 @@ fn some_unused_variables() {
 ```
 
 ## Meta Item Attribute Syntax
-## 元数据项/元项属性句法
+## 元项/元数据项属性句法
 
 “元项(meta item)”是遵循 _Attr_ 句法规则(见本章头部的句法规则)的句法，Rust 的大多数[内置属性(built-in attributes)][built-in attributes]都使用了此句法。它有以下语法格式：
 
@@ -175,7 +175,7 @@ pub fn f() {}
   - [`proc_macro_derive`] — 定义派生宏。
   - [`proc_macro_attribute`] — 定义属性宏。
 - 诊断(Diagnostics)
-  - [`allow`]、[`warn`]、[`deny`]、[`forbid`] — 更改默认的 lint 级别。
+  - [`allow`]、[`warn`]、[`deny`]、[`forbid`] — 更改默认的 lint检查级别。
   - [`deprecated`] — 生成弃用通知。
   - [`must_use`] — 为未使用的值生成 lint 提醒。
 - ABI、链接(linking)、symbol、和 FFI

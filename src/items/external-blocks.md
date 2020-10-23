@@ -99,7 +99,7 @@ extern {
 ### The `link` attribute
 ### `link`属性
 
-*`link`属性*为外部(`extern`)块中的数据项指定编译器应该链接的本机库的名称。它使用 [_MetaListNameValueStr_] 句法规则指定其输入。`name`键指定要链接的本机库的名称。`kind`键是一个可选值，它指定具有以下可能值的库类型：
+*`link`属性*为外部(`extern`)块中的数据项指定编译器应该链接的本机库的名称。它使用 [_MetaListNameValueStr_]元项属性句法规则指定其输入。`name`键指定要链接的本机库的名称。`kind`键是一个可选值，它指定具有以下可能值的库类型：
 
 - `dylib` — 表示库类型是动态库。如果没有指定 `kind`，这是默认值。
 - `static` — 表示库类型是静态库。
@@ -136,7 +136,7 @@ extern {
 The `link_name` attribute may be specified on declarations inside an `extern`
 block to indicate the symbol to import for the given function or static. It
 uses the [_MetaNameValueStr_] syntax to specify the name of the symbol.
-可以在外部(`extern`)块内的数据项声明上指定 `link_name`属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 [_MetaNameValueStr_] 句法规则指定 symbol 的名称。
+可以在外部(`extern`)块内的数据项声明上指定 `link_name`属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 [_MetaNameValueStr_]元项属性句法规则指定 symbol 的名称。
 
 ```rust
 extern {
