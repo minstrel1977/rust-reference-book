@@ -44,7 +44,7 @@
     - [派生](attributes/derive.md)
     - [诊断](attributes/diagnostics.md)
     - [代码生成](attributes/codegen.md)
-    - [参数极限](attributes/limits.md)
+    - [阈值设置](attributes/limits.md)
     - [类型系统](attributes/type_system.md)
 
 - [语句和表达式](statements-and-expressions.md)

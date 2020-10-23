@@ -1,41 +1,48 @@
+# Code generation attributes
 # 代码生成属性
 
 >[codegen.md](https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md)\
->commit: 646ef8d240a798da5891deb5dbdbebe557f878b8
+>commit: 646ef8d240a798da5891deb5dbdbebe557f878b8 \
+>本译文最后维护日期：2020-10-23
 
-下述[属性]用于控制代码生成。
+下述[属性][attributes]用于控制代码生成。
 
+## Optimization hints
 ## 优化提示
 
-`cold` 和 `inline`[属性]给出了相关生成代码方式的建议，这种方法可能比没有提示时更快。属性只是提示，可能会被忽略。
+`cold` 和 `inline`[属性][attributes]给出了某种生成代码方式的提示建议，这种方式可能比没有此提示时更快。这些属性只是提示，可能会被忽略。
 
-这两个属性都可以在[函数]上使用。当应用于一个[trait]中的一个函数时，它们只应用于trait实现未覆盖此默认函数的情况，而不是所有trait实现。如果 trait 中，相关函数只有声明，没有实现，那这些属性对trait 函数没任何影响。
+这两个属性都可以在[函数][functions]上使用。当这类属性应用于 [trait] 里的函数上时，它们只在没有被 trait实现所覆盖的默认函数上生效，而不是所有 trait实现里的函数上。如果在 trait 里，相关函数只有声明，没有默认实现，那这些属性对这些 trait函数没任何影响。
 
-### `inline`属性
+### The `inline` attribute
+### `inline`属性/内联(`inline`)属性
 
-*`inline`[属性]*建议在调用者中放置此(属性限定的)函数的副本，而不是在定义函数的地方生成调用此函数的代码。
+*`inline`[属性][attribute]*的意义是暗示在调用者(caller)中放置此（属性限定的）函数的副本，而不是在定义此（属性限定的）函数的地方生此函数的代码，然后去让别处代码来此调用。
 
 > ***注意***：`rustc` 编译器会根据启发式算法（internal heuristics，译者注：可字面理解为内部试探）自动内联函数。不正确的内联函数会使程序变慢，所以应该小心使用此属性。
 
-使用 inline属性有三种方法：
+使用内联(`inline`)属性有三种方法：
 
-* `#[inline]` *建议*执行内联扩展。
-* `#[inline(always)]` *建议*应该一直执行内联扩展。
-* `#[inline(never)]` *建议*应该从不执行内联扩展。
+* `#[inline]` *暗示*执行内联扩展。
+* `#[inline(always)]` *暗示*应该一直执行内联扩展。
+* `#[inline(never)]` *暗示*应该从不执行内联扩展。
 
-> ***注意***: `#[inline]` 在每种形式中都是一个提示，在 Rust 中不*需要*在调用者中放置此(属性限定的)函数的副本。
+> ***注意***: `#[inline]` 在每种形式中都是一个暗示，不是*必须*要在调用者中放置此属性限定的函数的副本。
 
+### The `cold` attribute
 ### `cold`属性
 
-*`cold`[属性]*表示此(属性限定的)函数不太可能被调用。
+*`cold`[属性][attribute]*暗示此(属性限定的)函数不太可能被调用。
 
+## The `no_builtins` attribute
 ## `no_builtins`属性
 
-*`no_builtins`[属性]*可以应用在 crate 级别，用以禁止在某些代码模式下对假定存在的库函数的调用的优化。
+*`no_builtins`[属性][attribute]*可以应用在 crate 级别，用以禁止在某些代码模式下对假定存在的库函数的调用的优化。
 
+## The `target_feature` attribute
 ## `target_feature`属性
 
-*`target_feature`[属性]*可应用于[非安全函数]，用来为特定的平台架构特性（platform architecture features）生成该函数的代码。它使用[_MetaListNameValueStr_]元项属性句法规则来启用（该平台支持的）特性，这个规则中一个属性名是 `enable` ，对应值是一个逗号分隔的由平台特性名字组成的符串。
+*`target_feature`[属性]*可应用于[非安全(unsafe)函数][unsafe function]，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 [_MetaListNameValueStr_]元项属性句法规则来启用（该平台支持的）特性，这次要求这个句法规则里只能有一个键 `enable` ，其对应值是一个逗号分隔的由平台特性名字组成的符串。
 
 ```rust
 # #[cfg(target_feature = "avx2")]
@@ -43,17 +50,18 @@
 unsafe fn foo_avx2() {}
 ```
 
-每个[目标架构]都有一组可能被启用的特性。为不是当前 crate 的构建目标下的CPU架构指定启用特性是错误的。
+每个[目标架构][target architecture]都有一组可以被启用的特性。为不是当前 crate 的构建目标下的CPU架构指定需启用的特性是错误的。
 
-调用一个编译时启用了某特性的函数，但当前运行代码的平台并不支持该特性，那这将导致[未定义行为]。
+调用一个编译时启用了某特性的函数，但当前程序运行的平台并不支持该特性，那这将导致[未定义行为][undefined behavior]。
 
 应用了 `target_feature` 的函数不会内联到不支持给定特性的上下文中。`#[inline(always)]` 属性不能与 `target_feature`属性一起使用。
 
+### Available features
 ### 可用特性
 
 下面是可用特性列表。
 
-#### `x86` 或 `x86_64`
+#### `x86` or `x86_64`
 
 特性     | 隐式启用 | 描述 | 中文描述
 ------------|--------------------|-------------------|-------------------
@@ -108,14 +116,29 @@ unsafe fn foo_avx2() {}
 [`xsaveopt`]: https://www.felixcloutier.com/x86/xsaveopt
 [`xsaves`]: https://www.felixcloutier.com/x86/xsaves
 
+### Additional information
 ### 附加信息
 
-请参阅 [`target_feature`-条件编译选项]，了解如何基于编译时的设置来有选择地启用或禁用编译选项。注意，编译选项不受 `target_feature`属性的影响，只为整个 crate 启用的特性所驱动。
+请参阅 [`target_feature`-条件编译选项][`target_feature` conditional compilation option]，了解如何基于编译时的设置来有选择地启用或禁用编译选项。注意，编译选项不受 `target_feature`属性的影响，只为整个 crate 启用的特性所驱动。
 
 有关x86平台上的运行时特性检测，请参阅标准库中的 [`is_x86_feature_detected`] 宏。
 
 > 注意：`rustc`为每个目标平台和CPU启用了一组默认特性。可以使用 [`-C target-cpu`] 标志选择CPU。单个特性可以通过 [`-C target-feature`] 标志来为整个 crate 启用或禁用。
 
+See the [`target_feature` conditional compilation option] for selectively
+enabling or disabling compilation of code based on compile-time settings. Note
+that this option is not affected by the `target_feature` attribute, and is
+only driven by the features enabled for the entire crate.
+
+See the [`is_x86_feature_detected`] macro in the standard library for runtime
+feature detection on the x86 platforms.
+
+> Note: `rustc` has a default set of features enabled for each target and CPU.
+> The CPU may be chosen with the [`-C target-cpu`] flag. Individual features
+> may be enabled or disabled for an entire crate with the
+> [`-C target-feature`] flag.
+
+## The `track_caller` attribute
 ## `track_caller`属性
 
 `track_caller` 属性可以应用于任何带有 [`"Rust"` ABI][rust-abi] 的函数，但程序入口函数 `fn main` 除外。当应用于 crate声明中的函数或方法时，该属性将应用于其所有实现。如果 crate 提供了带有该属性的默认实现，那么该属性也应用于其覆盖实现。
@@ -205,19 +228,22 @@ fn calls_h() {
 > 注意：前面提到的函数指针填充程序是必需的，因为 `rustc` 会通过向函数的ABI附加一个隐式参数来实现 codegen上下文中的 `track_caller`，但对于间接调用来说，这是不健全的，因为参数不是函数类型的一部分，给定的函数指针类型可能引用也可能不引用具有此属性的函数。填充程序的创建会对函数指针的调用方隐藏隐式参数，从而保持可靠性。
 <!-- > Note: The aforementioned shim for function pointers is necessary because `rustc` implements `track_caller` in a codegen context by appending an implicit parameter to the function ABI, but this would be unsound for an indirect call because the parameter is not a part of the function's type and a given function pointer type may or may not refer to a function with the attribute. The creation of a shim hides the implicit parameter from callers of the function pointer, preserving soundness. TobeModify-->
 
-[_MetaListNameValueStr_]: ../attributes.md#元项属性句法
-[`-C target-cpu`]: https://doc.rust-lang.org/rustc/codegen-options/index.html#target-cpu
-[`-C target-feature`]: https://doc.rust-lang.org/rustc/codegen-options/index.html#target-feature
-[`is_x86_feature_detected`]: https://doc.rust-lang.org/std/macro.is_x86_feature_detected.html
-[`target_feature`-条件编译选项]: ../conditional-compilation.md#target_feature
-[属性]: ../attributes.md
-[函数]: ../items/functions.md
-[目标架构]: ../conditional-compilation.md#target_arch
+[_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
+[`-C target-cpu`]: ../../rustc/codegen-options/index.html#target-cpu
+[`-C target-feature`]: ../../rustc/codegen-options/index.html#target-feature
+[`is_x86_feature_detected`]: ../../std/macro.is_x86_feature_detected.html
+[`target_feature` conditional compilation option]: ../conditional-compilation.md#target_feature
+[attribute]: ../attributes.md
+[attributes]: ../attributes.md
+[functions]: ../items/functions.md
+[target architecture]: ../conditional-compilation.md#target_arch
 [trait]: ../items/traits.md
-[未定义表现]: ../behavior-considered-undefined.md
-[非安全函数]: ../unsafe-functions.md
+[undefined behavior]: ../behavior-considered-undefined.md
+[unsafe function]: ../unsafe-functions.md
 [rust-abi]: ../items/external-blocks.md#abi
-[`core::intrinsics::caller_location`]: https://doc.rust-lang.org/core/intrinsics/fn.caller_location.html
-[`core::panic::Location::caller`]: https://doc.rust-lang.org/core/panic/struct.Location.html#method.caller
-[`Location`]: https://doc.rust-lang.org/core/panic/struct.Location.html
+[`core::intrinsics::caller_location`]: ../../core/intrinsics/fn.caller_location.html
+[`core::panic::Location::caller`]: ../../core/panic/struct.Location.html#method.caller
+[`Location`]: ../../core/panic/struct.Location.html
+
 <!-- 2020-10-16 -->
+<!-- checked -->
