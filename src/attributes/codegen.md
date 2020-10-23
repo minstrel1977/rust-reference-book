@@ -121,33 +121,21 @@ unsafe fn foo_avx2() {}
 
 请参阅 [`target_feature`-条件编译选项][`target_feature` conditional compilation option]，了解如何基于编译时的设置来有选择地启用或禁用编译选项。注意，编译选项不受 `target_feature`属性的影响，只为整个 crate 启用的特性所驱动。
 
-有关x86平台上的运行时特性检测，请参阅标准库中的 [`is_x86_feature_detected`] 宏。
+有关 x86平台上的运行时特性检测，请参阅标准库中的 [`is_x86_feature_detected`]宏。
 
-> 注意：`rustc`为每个目标平台和CPU启用了一组默认特性。可以使用 [`-C target-cpu`] 标志选择CPU。单个特性可以通过 [`-C target-feature`] 标志来为整个 crate 启用或禁用。
-
-See the [`target_feature` conditional compilation option] for selectively
-enabling or disabling compilation of code based on compile-time settings. Note
-that this option is not affected by the `target_feature` attribute, and is
-only driven by the features enabled for the entire crate.
-
-See the [`is_x86_feature_detected`] macro in the standard library for runtime
-feature detection on the x86 platforms.
-
-> Note: `rustc` has a default set of features enabled for each target and CPU.
-> The CPU may be chosen with the [`-C target-cpu`] flag. Individual features
-> may be enabled or disabled for an entire crate with the
-> [`-C target-feature`] flag.
+> 注意：`rustc` 为每个构建目标和CPU启用了一组默认特性。可以使用 [`-C target-cpu`] 命令行参数选择CPU。单个特性可以通过 [`-C target-feature`] 标志来为整个 crate 启用或禁用。
 
 ## The `track_caller` attribute
 ## `track_caller`属性
 
-`track_caller` 属性可以应用于任何带有 [`"Rust"` ABI][rust-abi] 的函数，但程序入口函数 `fn main` 除外。当应用于 crate声明中的函数或方法时，该属性将应用于其所有实现。如果 crate 提供了带有该属性的默认实现，那么该属性也应用于其覆盖实现。
+`track_caller`属性可以应用于除程序入口函数 `fn main` 之外的任何带有 [`"Rust"` ABI][rust-abi] 的函数。当此属性应用于 crate声明中的函数或方法时，该属性将应用在其所有的实现上。如果 trait 提供了带有该属性的默认实现，那么该属性也应用于其覆盖实现。
 
-<!-- 当应用于外部(`extern`)块中的函数时，该属性还必须应用于任何此函数的实现，否则将导致未定义行为。当应用于可用于外部(`extern`)块中的函数时，`extern`块中的声明也必须带上此属性，否则将导致未定义行为。When applied to a function which is made available to an `extern` block, the declaration in the `extern` block must also have the attribute, otherwise undefined behavior results. TobeModify-->
+当应用于外部(`extern`)块中的函数上时，该属性还必须应用于此函数的所有实现上，否则将导致未定义行为。当此属性应用于可被一个外部(`extern`)块使用的函数上时，该外部(`extern`)块中的对该函数的声明也必须带上此属性，否则将导致未定义行为。
 
+### Behavior
 ### 表现
 
-将此属性应用到函数 `f` 上将允许 `f` 中的代码获得 `f` 被调用时建立的调用栈里“最顶层”的调用 [`Location`] 信息的提示。从观察的角度来看，此属性的实现表现地就像从 `f` 的帧向上遍历堆栈，定位找到最近的有*非此属性限定*的函数 `outer`，并返回 `outer` 的调用 [`Location`] 信息。
+将此属性应用到函数 `f` 上将允许 `f` 内的代码获得 `f` 被调用时建立的调用栈的“最顶层”的调用的[位置(`Location`)][`Location`]信息的提示。从观察的角度来看，此属性的实现表现地就像从 `f` 所在的帧向上遍历调用栈，定位找到最近的有*非此属性限定*的调用函数 `outer`，并返回 `outer` 调用时的[位置(`Location`)][`Location`]信息。
 
 ```rust
 #[track_caller]
@@ -158,11 +146,12 @@ fn f() {
 
 > 注意：`core` 提供 [`core::panic::Location::caller`] 来观察调用者的位置。它封装了由 `rustc` 实现的内部函数 [`core::intrinsics::caller_location`]。
 
-> 注意：由于结果 `Location` 是一个提示，所以具体实现可能会提前终止对堆栈的遍历。请参阅 [限制](#限制) 以获得重要的注意事项。
+> 注意：由于结果 `Location` 是一个提示，所以具体实现可能会提前终止对堆栈的遍历。请参阅[限制](#limitations)以了解重要的注意事项。
 
+#### Examples
 #### 示例
 
-当 `f` 直接被 `calls_f` 调用时，`f` 中的代码观察其在`calls_f` 内的调用位置：
+当 `f` 直接被 `calls_f` 调用时，`f` 中的代码观察其在 `calls_f` 内的调用位置：
 
 ```rust
 # #[track_caller]
@@ -217,16 +206,14 @@ fn calls_h() {
 
 以此类推。
 
+### Limitations
 ### 限制
 
-此信息是一个提示，不需要实现来保存它。
-<!-- This information is a hint and implementations are not required to preserve it. TobeModify-->
+`track_caller`属性获得的信息是一个提示信息，不需要具体的代码实现来保存它。
 
-特别是，将带有 `#[track_caller]` 的函数自动强转为函数指针会创建一个填充程序，在观察者看来该填充程序似乎是在此(属性限定的)函数的定义处调用的，从而在虚拟调用中丢失实际的调用者信息。这种自动强转情况的一个常见示例是创建一个 trait对象，而该对象的方法被此属性限定。
-<!-- In particular, coercing a function with `#[track_caller]` to a function pointer creates a shim which appears to observers to have been called at the attributed function's definition site, losing actual caller information across virtual calls. A common example of this coercion is the creation of a trait object whose methods are attributed. TobeModify-->
+特别是，将带有 `#[track_caller]` 的函数自动强转为函数指针会创建一个填充对象，该填充对象在观察者看来似乎是在此(属性限定的)函数的定义处调用的，从而在这层虚拟调用中丢失了实际的调用者信息。这种自动强转情况的一个常见示例是创建方法被此属性限定的 trait对象，因为 trait对象的值不能直接使用，只能自动强转为指针引用，那这里的调用就无法观察到真实的调用位置。
 
-> 注意：前面提到的函数指针填充程序是必需的，因为 `rustc` 会通过向函数的ABI附加一个隐式参数来实现 codegen上下文中的 `track_caller`，但对于间接调用来说，这是不健全的，因为参数不是函数类型的一部分，给定的函数指针类型可能引用也可能不引用具有此属性的函数。填充程序的创建会对函数指针的调用方隐藏隐式参数，从而保持可靠性。
-<!-- > Note: The aforementioned shim for function pointers is necessary because `rustc` implements `track_caller` in a codegen context by appending an implicit parameter to the function ABI, but this would be unsound for an indirect call because the parameter is not a part of the function's type and a given function pointer type may or may not refer to a function with the attribute. The creation of a shim hides the implicit parameter from callers of the function pointer, preserving soundness. TobeModify-->
+> 注意：前面提到的函数指针填充对象是必需的，因为 `rustc` 会通过向函数的ABI附加一个隐式参数来实现代码生成(codegen)上下文中的 `track_caller`，但这种添加是不健壮的(unsound)，因为该隐式参数不是函数类型的一部分，那给定的函数指针类型可能引用也可能不引用具有此属性的函数。这里创建一个填充对象会对函数指针的调用方隐藏隐式参数，从而保持可靠性。
 
 [_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
 [`-C target-cpu`]: ../../rustc/codegen-options/index.html#target-cpu
