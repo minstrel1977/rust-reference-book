@@ -148,7 +148,7 @@ Apart from lifetime extension, the temporary scope of an expression is the small
 
 > **注意**:
 > 
-> 在函数体的最终表达式(final expression)中创建的临时变量会在任何命名变量销毁*之后*销毁，因为这里没有更小的封闭临时作用域啦。
+> 在函数体的尾部表达式(final expression)中创建的临时变量会在任何命名变量销毁*之后*销毁，因为这里没有更小的封闭临时作用域啦。
 >
 > 匹配表达式的[检验对象][scrutinee]表达式不是一个临时作用域，因此可以在匹配(`match`)表达式之后销毁检验对象表达式中的临时作用域。例如，`match 1 { ref mut z => z };` 中的 `1` 所在的临时变量一直存活到此语句结束。
 
@@ -255,7 +255,7 @@ println!("{}", x);
 * 初始化表达式(initializer expression)。
 * 扩展型[借用表达式][borrow expression]的操作数。
 * 扩展型[数组][array expression]、[强制转换(cast)][cast expression]、[花括号括起来的结构体][struct expression]或[元组][tuple expression]表达式的操作数。
-* 任何扩展型[块表达式][block expression]的最终表达式(final expression);
+* 任何扩展型[块表达式][block expression]的尾部表达式(final expression);
 
 因此，在 `&mut 0`、`(&1, &mut 2)` 和 `Some { 0: &mut 3 }` 中的借用表达式都是扩展型表达式。在 `&0 + &1` 和一些 `Some(&mut 0)` 中的借用不是：它们在语法上是函数调用表达式。
 

@@ -17,34 +17,13 @@
 > &nbsp;&nbsp; | [_Statement_]<sup>\+</sup> [_ExpressionWithoutBlock_]\
 > &nbsp;&nbsp; | [_ExpressionWithoutBlock_]
 
-*块表达式*或*块*是数据项和变量声明的控制流表达式和匿名命名空间作用域。作为控制流表达式，块按顺序执行其非数据项声明的语句组件，最后执行可选的尾部表达式(final expression)。作为一个匿名命名空间作用域，在本块内声明的数据项只在块本身围成的作用域内有效，而由 `let` 语句声明的变量的作用域为下一条语句到块末尾。
+*块表达式*或*块*是数据项和变量声明的控制流表达式和匿名命名空间作用域。作为控制流表达式，块按顺序执行其非数据项声明的语句组件，最后执行可选的尾部表达式(final expression)。作为一个匿名命名空间作用域，在本块内声明的数据项只在块本身围成的作用域内有效，而块内由 `let`语句声明的变量的作用域为下一条语句到块尾。
 
-块的书写形式为：先是一个 `{`，然后是[内部属性][inner attributes]，再后是[语句][statements]，再后是一个可选表达式，最后是一个 `}`。语句通常需要后跟分号，但有两个例外。数据项声明语句不需要后跟分号。表达式语句通常需要后面的分号，但它的外层表达式是流控制表达式时不需要。此外，允许在语句之间使用额外的分号，但是这些分号并不影响语义。
+块的书写形式为：先是一个 `{`，然后是[内部属性][inner attributes]，再后是各条[语句][statements]，再后是一个可选表达式，最后是一个 `}`。语句之间通常需要后跟分号，但有两个例外。数据项声明语句不需要后跟分号；表达式语句通常需要后面的分号，但它的外层表达式是控制流表达式时不需要。此外，允许在语句之间使用额外的分号，但是这些分号并不影响语义。
 
-在对块表达式求值时，除了数据项声明语句外，每个语句都是按顺序执行的。如果给出了块尾的可选的最终表达式(final expression)，则最后会执行它。
+在对块表达式求值时，除了数据项声明语句外，每个语句都是按顺序执行的。如果给出了块尾的可选的尾部表达式(final expression)，则最后会执行它。
 
-块的类型是最终表达式的类型，但如果省略了最终表达式(final expression)，则块的类型为 `()`。
-As a control flow
-expression, a block sequentially executes its component non-item declaration
-statements and then its final optional expression. As an anonymous namespace
-scope, item declarations are only in scope inside the block itself and variables
-declared by `let` statements are in scope from the next statement until the end
-of the block.
-
-Blocks are written as `{`, then any [inner attributes], then [statements],
-then an optional expression, and finally a `}`. Statements are usually required
-to be followed by a semicolon, with two exceptions. Item declaration statements do
-not need to be followed by a semicolon. Expression statements usually require
-a following semicolon except if its outer expression is a flow control
-expression. Furthermore, extra semicolons between statements are allowed, but
-these semicolons do not affect semantics.
-
-When evaluating a block expression, each statement, except for item declaration
-statements, is executed sequentially. Then the final expression is executed,
-if given.
-
-The type of a block is the type of the final expression, or `()` if the final
-expression is omitted.
+块的类型是最此块的尾部表达式(final expression)的类型，但如果省略了尾部表达式，则块的类型为 `()`。
 
 ```rust
 # fn fn_call() {}
@@ -60,9 +39,9 @@ let five: i32 = {
 assert_eq!(5, five);
 ```
 
-> 注意：作为控制流表达式，如果块表达式是表达式语句的外层表达式，则该块表达式的预期类型为 `()` ，除非它后面紧跟着一个分号。
+> 注意：作为控制流表达式，如果块表达式是一个表达式语句的外层表达式，则该块表达式的预期类型为 `()` ，除非该块后面紧跟着一个分号。（译者注：译者怀疑源文档这里写错了，所以这里先直译，同时提供原文：Note: As a control flow expression, if a block expression is the outer expression of an expression statement, the expected type is `()` unless it is followed immediately by a semicolon.）
 
-块总是[值表达式][value expressions]，并会在值表达式上下文中对最终表达式求值。如果确实有需要，块可以用于强制移动值。例如，下面的示例在调用 `consume_self` 时失败，因为结构体已经在之前的块表达式里被从 `s` 里移出了。
+块总是[值表达式][value expressions]，并会在值表达式上下文中对尾部表达式求值。如果确实有需要，块可以用于强制移动值。例如，下面的示例在调用 `consume_self` 时失败，因为结构体已经在之前的块表达式里被从 `s` 里移出了。
 
 ```rust,compile_fail
 struct Struct;
@@ -89,7 +68,7 @@ fn move_by_block_expression() {
 > _AsyncBlockExpression_ :\
 > &nbsp;&nbsp; `async` `move`<sup>?</sup> _BlockExpression_
 
-*异步块(async block)*是计算为 *future* 的块表达式。块的最终表达式(如果存在)决定了 future 的结果值。（译者注：单词future对应中文为“未来”。原文里，作为类型的future和字面意义上的future经常混用，所以译者基本保留此单词不翻译，特别强调“未来”的意义时也会加上其英文单词）
+*异步块(async block)*是计算为 *future* 的块表达式。块的尾部表达式(如果存在)决定了 future 的结果值。（译者注：单词future对应中文为“未来”。原文里，作为类型的future和字面意义上的future经常混用，所以译者基本保留此单词不翻译，特别强调“未来”的意义时也会加上其英文单词）
 
 执行一个异步块类似于执行一个闭包表达式：它的直接效果是生成并返回一个匿名类型。类似闭包返回的类型实现了一个或多个 [`std::ops::Fn`] trait，异步块返回的类型实现了 [`std::future::Future`] trait。此类型的实际数据格式的规范还未确定下来。
 
