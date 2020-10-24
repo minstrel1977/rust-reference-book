@@ -18,7 +18,7 @@
 * [静态项][statics]的路径。这种路径只允许出现在静态项的初始值设定中。
 * [元组表达式][Tuple expressions]。
 * [数组表达式][Array expressions]。
-* [结构体][Struct]表达式。
+* [结构体(`struct`)][Struct]表达式。
 * [枚举变体][Enum variant]表达式。
 * [块表达式][Block expressions]，包括非安全(`unsafe`)块。
     * [let语句][let statements]以及类似这样的不可反驳的[模式][patterns]绑定，包括可变绑定。

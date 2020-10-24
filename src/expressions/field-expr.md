@@ -8,7 +8,7 @@
 > _FieldExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `.` [IDENTIFIER]
 
-*字段表达式*由一个表达式、一个单点号和一个[标识符][identifier]组成，且后面不能再紧跟着一个被圆括号括起来的表达式列表(后者总是一个[方法调用表达式][method call expression])。字段表达式代表[结构体][struct]或[联合体][union]的字段。要调用存储在结构体中的函数(型字段)，需要在字段表达式外加一对圆括号。
+*字段表达式*由一个表达式、一个单点号和一个[标识符][identifier]组成，且后面不能再紧跟着一个被圆括号括起来的表达式列表(后者总是一个[方法调用表达式][method call expression])。字段表达式代表[结构体(`struct`)][struct]或[联合体(`union`)][union]的字段。要调用存储在结构体中的函数(型字段)，需要在字段表达式外加一对圆括号。
 
 <!-- ignore: needs lots of support code -->
 ```rust,ignore

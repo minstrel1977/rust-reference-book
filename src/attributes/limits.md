@@ -1,13 +1,16 @@
-# 参数极限
+# Limits
+# 极限值设置
 
 >[limits.md](https://github.com/rust-lang/reference/blob/master/src/attributes/limits.md)\
->commit: a258c97b95c9c1bf27f4b6684e5b5d080eb8aa69
+>commit: a258c97b95c9c1bf27f4b6684e5b5d080eb8aa69 \
+>本译文最后维护日期：2020-10-24
 
-以下[属性]的设定影响编译期的编译参数的极限
+以下[属性][attributes]影响编译期的编译参数的极限值设置。
 
+## The `recursion_limit` attribute
 ## `recursion_limit`属性
 
-*`recursion_limit`属性*可以应用于 [crate] 级别，为可能无限递归的编译期操作（如宏扩展或自动解引用）设置最大深度。它使用 [_MetaNameValueStr_]元项属性句法规则来指定递归深度。
+*`recursion_limit`属性*可以应用于 [crate] 级别，为可能无限递归的编译期操作（如宏扩展或自动解引用）设置最大递归深度。它使用 [_MetaNameValueStr_]元项属性句法规则来指定递归深度。
 
 > 注意：`rustc` 中的这个默认值是128。
 
@@ -33,6 +36,7 @@ a!{}
 (|_: &u8| {})(&&1);
 ```
 
+## The `type_length_limit` attribute
 ## `type_length_limit`属性
 
 *`type_length_limit`属性*限制在单态化过程中构造具体类型时所做的最大类型替换次数。它应用于 [crate] 级别，并使用 [_MetaNameValueStr_]元项属性句法规则来设置类型替换数量的上限。
@@ -50,6 +54,9 @@ fn f<T>(x: T) {}
 f((1, 2, 3, 4, 5, 6, 7, 8, 9));
 ```
 
-[_MetaNameValueStr_]: ../attributes.md#元项属性句法
-[属性]: ../attributes.md
+[_MetaNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
+[attributes]: ../attributes.md
 [crate]: ../crates-and-source-files.md
+
+<!-- 2020-10-16 -->
+<!-- checked -->

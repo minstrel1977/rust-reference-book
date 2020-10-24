@@ -27,7 +27,7 @@
 >
 > _EnumExprFieldless_ : [_PathInExpression_]
 
-枚举变体的构造与[结构体][structs]的构造类似，只是使用枚举变体的路径来替代结构体的路径：
+枚举变体的构造与[结构体(`struct`)][structs]的构造类似，只是使用枚举变体的路径来替代结构体的路径：
 
 ```rust
 # enum Message {

@@ -10,7 +10,7 @@
 
 - 解引用[裸指针][raw pointer].
 - 读取或写入[可变][mutable]或[外部][external]变量。
-- 访问[联合体]的字段，而不是赋值给它。
+- 访问[联合体(`union`)]的字段，而不是赋值给它。
 - 调用一个非安全(unsafe)函数(包括内部函数和外部函数)。
 - 实现[非安全(unsafe) trait][unsafe trait].
 

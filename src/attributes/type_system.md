@@ -1,14 +1,20 @@
+# Type system attributes
 # 类型系统属性
 
-以下[属性]用于更改类型的使用方式。
+>[type_system.md](https://github.com/rust-lang/reference/blob/master/src/attributes/type_system.md)\
+>commit: 363a64a939bf246d7373776826e14065e912131f \
+>本译文最后维护日期：2020-10-24
 
+以下[属性][attributes]用于改变类型的使用方式。
+
+## The `non_exhaustive` attribute
 ## `non_exhaustive`属性
 
-*`non_exhaustive`属性*表示类型或变体将来可能会添加更多字段或变体。它可以应用于[struct]、[enum] 和 枚举变体。
+*`non_exhaustive`属性*表示类型或变体将来可能会添加更多字段或变体。它可以应用在[结构体(`struct`)][struct]上、[枚举(`enum`)][enum]上 和 枚举变体上。
 
 `non_exhaustive`属性使用 [_MetaWord_]元项属性句法规则，因此不接受任何输入。
 
-在当前（`non_exhaustive`限制的类型）定义所在的 crate 内，`non_exhaustive` 没有效果。
+在当前（`non_exhaustive`限制的类型的）定义所在的 crate 内，`non_exhaustive` 没有效果。
 
 ```rust
 #[non_exhaustive]
@@ -25,8 +31,8 @@ pub enum Error {
 
 pub enum Message {
     #[non_exhaustive] Send { from: u32, to: u32, contents: String },
-    #[non_exhaustive] Reaction(u32),  // 译者注：此字段为元组变体型字段
-    #[non_exhaustive] Quit, // 译者注：此字段添加变体后可成元组变体型字段
+    #[non_exhaustive] Reaction(u32),
+    #[non_exhaustive] Quit,
 }
 
 // 非穷尽结构体可以在定义它的 crate 中正常构建。
@@ -58,10 +64,10 @@ match message {
 
 非穷尽类型不能在定义它的 crate 之外构建：
 
-- 非穷尽变体（[结构体]或[枚举变体]）不能用 [_StructExpression_]元项属性句法规则格式（包括[函数更新句法]）构建。
-- [枚举]示例能用[_EnumerationVariantExpression_]元项属性句法规则构建。
+- 非穷尽变体（[结构体(`struct`)][struct]或[枚举变体(`enum` variant)][enum]）不能用 [_StructExpression_]句法规则（包括[函数更新句法][functional update syntax]）构建。
+- 但[枚举(`enum`)]实例能用 [_EnumerationVariantExpression_]句法规则构建。
 
-示例：（译者注：可以把上例看成本例的 `upstream` ）
+示例：（译者注：本例把上例看成本例的 `upstream` ）
 <!-- ignore: requires external crates -->
 ```rust,ignore
 // `Config`、`Error` `Message`是在上游 crate 中定义的类型，这些类型已被标注为 `#[non_exhaustive]`。
@@ -83,10 +89,10 @@ let message = Message::Reaction(0);
 let message = Message::Quit;
 ```
 
-在定义所在的 crate之外对非穷尽类型进行匹配，有如下限制:
+在定义所在的 crate 之外对非穷尽类型进行匹配，有如下限制：
 
-- 当模式匹配一个非穷尽变体([结构体]或[枚举变体])时，必须使用 [_StructPattern_]元项属性句法规则进行，其匹配臂必须有一个为 `..`。元组变体的构造函数的可见性降低为 `min($vis, pub(crate))`。
-- 当模式匹配在一个非穷尽的[枚举]上时，单个变体上的匹配不影响整个枚举的匹配详尽要求。
+- 当模式匹配一个非穷尽变体([结构体(`struct`)][struct]或[枚举变体(`enum` variant)][enum])时，必须使用 [_StructPattern_]句法规则进行匹配，其匹配臂必须有一个为 `..`。元组变体的构造函数的可见性降低为 `min($vis, pub(crate))`。
+- 当模式匹配在一个非穷尽的[枚举(`enum`)][enum]上时，增加对单个变体的匹配无助于匹配臂需满足枚举变体的穷尽性(exhaustiveness)的这一要求。
 
 示例：（译者注：可以把上上例看成本例的 `upstream` ）
 <!-- ignore: requires external crates -->
@@ -118,12 +124,16 @@ match message {
 非穷尽类型最好放在下游 crate 里。
 
 [_EnumerationVariantExpression_]: ../expressions/enum-variant-expr.md
-[_MetaWord_]: ../attributes.md#元项属性句法
+[_MetaWord_]: ../attributes.md#meta-item-attribute-syntax
 [_StructExpression_]: ../expressions/struct-expr.md
 [_StructPattern_]: ../patterns.md#struct-patterns
 [_TupleStructPattern_]: ../patterns.md#tuple-struct-patterns
 [`if let`]: ../expressions/if-expr.md#if-let-expressions
-[属性]: ../attributes.md
-[枚举变体]: ../items/enumerations.md
-[函数更新句法]: ../expressions/struct-expr.md#functional-update-syntax
-[结构体]: ../items/structs.md
+[`match`]: ../expressions/match-expr.md
+[attributes]: ../attributes.md
+[enum]: ../items/enumerations.md
+[functional update syntax]: ../expressions/struct-expr.md#functional-update-syntax
+[struct]: ../items/structs.md
+
+<!-- 2020-10-16 -->
+<!-- checked -->

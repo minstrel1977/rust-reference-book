@@ -38,7 +38,7 @@
 * 所有的[数据项声明][item declarations]都可接受外部属性，同时[外部块][external blocks]、[函数][functions]、[实现][implementations]和[模块][modules]都可接受内部属性。
 * 大多数[语句][statements]都可接受外部属性(参见[表达式属性][Expression Attributes]，了解表达式语句的限制)。
 * [块表达式][Block expressions]也可接受外部和内部属性，但只有当它们是另一个[表达式语句][expression statement]的外部表达式时或是另一个块表达式的最终表达式(final expression)时才有效。
-* [枚举][Enum]变体和[结构体][struct]、[联合体][union]的字段可接受外部属性。
+* [枚举(`enum`)][Enum]变体和[结构体(`struct`)][struct]、[联合体(`union`)][union]的字段可接受外部属性。
 * [匹配表达式的匹配臂][match expressions]可接受外部属性。
 * [泛型生存期或类型参数][generics]可接受外部属性。
 * 表达式在有限的情况下可接受外部属性，详见[表达式属性][Expression Attributes]。
@@ -146,7 +146,7 @@ _MetaListNameValueStr_ | `link(name = "CoreFoundation", kind = "framework")`
 struct S {
 }
 
-// 控制clippy工具的“圈复杂度(cyclomatic complexity)”阈值。
+// 控制clippy工具的“圈复杂度(cyclomatic complexity)”极限值。
 #[clippy::cyclomatic_complexity = "100"]
 pub fn f() {}
 ```
@@ -203,7 +203,7 @@ pub fn f() {}
   - [`no_implicit_prelude`] — 禁用模块内的预导入包查找。
 - 模块(Modules)
   - [`path`] — 指定模块的源文件名。
-- 阈值设置(Limits)
+- 极限值设置(Limits)
   - [`recursion_limit`] — 设置某些编译时操作的最大递归限制。
   - [`type_length_limit`] — 设置多态类型(polymorphic type)单态化过程中构造具体类型时所做的最大类型替换次数。
 - 运行时(Runtime)

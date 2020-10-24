@@ -446,7 +446,7 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 ### The `transparent` Representation
 ### 透明表形
 
-透明(`transparent`)表型只能在结构体[structs]或只有一个变体的[枚举][enumerations]上使用，并且这个结构体和这个枚举的唯一变体还需要满足：
+透明(`transparent`)表型只能在结构体[structs]或只有一个变体的[枚举(`enum`)][enumerations]上使用，并且这个结构体和这个枚举的唯一变体还需要满足：
 
 - 只能有一个非零尺寸的字段，和
 - 任意数量的尺寸为零对齐量为1的字段（例如：[`PhantomData<T>`]）

@@ -83,7 +83,7 @@ fn main() {
 ### Derive macros
 ### 派生宏
 
-*派生宏*为[派生(`derive`)属性][`derive` attribute]定义新输入。这类宏在给定[结构体][struct]、[枚举][enum]或[联合体][union]标记流的情况下创建新[数据项][items]。它们也可以定义[派生宏辅助属性][derive macro helper attributes]。
+*派生宏*为[派生(`derive`)属性][`derive` attribute]定义新输入。这类宏在给定[结构体(`struct`)][struct]、[枚举(`enum`)][enum]或[联合体(`union`)][union]标记流的情况下创建新[数据项][items]。它们也可以定义[派生宏辅助属性][derive macro helper attributes]。
 
 自定义派生宏由带有 `proc_macro_derive` 属性和 `(TokenStream) -> TokenStream` 签名的[公有][public]可见性[函数][function]定义。
 

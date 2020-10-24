@@ -11,7 +11,7 @@
 
 1. 如果 `T: Drop`, 则调用 [`<T as std::ops::Drop>::drop`]
 2. 递归地运行其所有字段的析构函数。
-    * [结构体][struct]的字段按照声明顺序被销毁。
+    * [结构体(`struct`)][struct]的字段按照声明顺序被销毁。
     * 活动[枚举变体][enum variant]的字段按声明顺序销毁。
     * [元组][tuple]中的字段按顺序销毁。
     * [数组][array]或拥有所有权的[切片][slice]的元素的销毁顺序是从第一个元素到最后一个元素。
@@ -241,7 +241,7 @@ println!("{}", x);
 *扩展型模式(extending pattern)*要符合下面两个条件：
 
 * 通过引用或可变引用绑定的[标识符模式][identifier pattern]。
-* [结构体][struct pattern]、[元组][tuple pattern]、[元组结构体][tuple struct pattern]或[切片][slice pattern]模式，其中它们至少有一个直接子模式是扩展模式。
+* [结构体(`struct`)][struct pattern]、[元组][tuple pattern]、[元组结构体][tuple struct pattern]或[切片][slice pattern]模式，其中它们至少有一个直接子模式是扩展模式。
 
 所以 `ref x`、`V(ref x)` 和 `[ref x, y]` 都是扩展型模式，但是  `x`、`&ref x` 和 `&(ref x,)` 不是。
 

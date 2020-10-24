@@ -101,7 +101,7 @@ Rust 将关键字分为三类：
   Beginning in the 2018 edition, `dyn` has been promoted to a strict keyword.
 这类关键字只有在特定的上下文中才有特殊的意义。例如，可以声明名为 `union` 的变量或方法。
 
-* `union` 用于声明[联合体][union]，它只有在联合体声明中使用时才是关键字。
+* `union` 用于声明[联合体(`union`)][union]，它只有在联合体声明中使用时才是关键字。
 * `'static` 用于静态生存期，不能用作通用生存期参数
 
   ```compile_fail

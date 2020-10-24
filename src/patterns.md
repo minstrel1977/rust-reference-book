@@ -72,7 +72,7 @@ if let
 ## Destructuring
 ## 解构
 
-模式可用于*解构*[结构体][structs]、[枚举][enums]和[元组][tuples]。解构将一个值分解成它的组成部分。使用的句法与创建此类值时的几乎相同。在[检验对象][scrutinee]表达式具有结构体(`struct`)、枚举(`enum`)或元组(`tuple`)类型的模式中，占位符(`_`) 代表*单个*数据字段，而通配符`..` 代表特定变量(variant)的*所有*剩余字段。当使用字段的名称(而不是编号)来解构数据结构时，允许将 `fieldname` 写作 `fieldname: fieldname`的简写形式。
+模式可用于*解构*[结构体(`struct`)][structs]、[枚举(`enum`)][enums]和[元组][tuples]。解构将一个值分解成它的组成部分。使用的句法与创建此类值时的几乎相同。在[检验对象][scrutinee]表达式具有结构体(`struct`)、枚举(`enum`)或元组(`tuple`)类型的模式中，占位符(`_`) 代表*单个*数据字段，而通配符`..` 代表特定变量(variant)的*所有*剩余字段。当使用字段的名称(而不是编号)来解构数据结构时，允许将 `fieldname` 写作 `fieldname: fieldname`的简写形式。
 
 ```rust
 # enum Message {

@@ -65,7 +65,7 @@ Rust 类型分类列表为：
 * 序列类型 ([tuple], [array], [slice]).
 * [类型路径(type paths)] 可指：
     * 原生类型([布尔型][boolean], [数字类][numeric], [文本类][textual]).
-    * [数据项][item]([结构体][struct], [枚举][enum], [联合体][union], [类型别名][type alias], [trait])的路径.
+    * [数据项][item]([结构体(`struct`)][struct], [枚举(`enum`)][enum], [联合体(`union`)][union], [类型别名][type alias], [trait])的路径.
     * [`Self`路径][`Self` path]，其中 `Self` 是实现类型。
     * 一般[类型参数][type parameters]。
 * 指针类型([引用][reference], [裸指针][raw pointer], [函数指针][function pointer])。
@@ -91,7 +91,7 @@ type T<'a> = &'a (dyn Any + Send);
 ## Recursive types
 ## 递归类型
 
-标称类型 &mdash; [结构体][structs]、[枚举][enumerations]和[联合体][unions] &mdash; 可以是递归的。也就是说，每个枚举(`enum`)变体或结构体(`struct`)或联合体(`union`)字段可以直接或间接地引用它归属的枚举(`enum`)或结构体(`struct`)类型本身。这种递归有一些限制：
+标称类型 &mdash; [结构体(`struct`)][structs]、[枚举(`enum`)][enumerations]和[联合体(`union`)][unions] &mdash; 可以是递归的。也就是说，每个枚举(`enum`)变体或结构体(`struct`)或联合体(`union`)字段可以直接或间接地引用它归属的枚举(`enum`)或结构体(`struct`)类型本身。这种递归有一些限制：
 
 * 递归类型必须在递归中包含一个标称类型(不能仅是[类型别名][type aliases]或其他结构化的类型，如[数组][arrays]或[元组][tuples])。因此不允许使用 `type Rec = &'static [Rec]`。
 * 递归类型的次数必须是有限的；换句话说，类型的递归字段必须是[指针类型][pointer types]。

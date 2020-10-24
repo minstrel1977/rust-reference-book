@@ -130,7 +130,7 @@ A `struct`, `enum`, or `union` which was defined in the current crate. This is n
 ### Nominal types
 ### 标称类型
 
-可用路径直接引用的类型。具体来说就是[枚举][enums]、[结构体][structs]、[联合体][unions]和 [trait对象][trait objects]。\
+可用路径直接引用的类型。具体来说就是[枚举(`enum`)][enums]、[结构体(`struct`)][structs]、[联合体(`union`)][unions]和 [trait对象][trait objects]。\
 Types that can be referred to by a path directly. Specifically [enums], [structs], [unions], and [trait objects].
 
 ### Object safe traits
