@@ -97,7 +97,7 @@ if true {
 
 语句可以有[外部属性][outer attributes]。在语句中有意义的属性是 [`cfg`] 和 [lint检查类属性][the lint check attributes]。
 
-[^译者注]: 本书原文还有 `block of code` 的写法，这种有些类似于我们口语中说的那种任意的代码段的“代码块”。原文中 `block of code` 的典型情况是 `unsafe`块。
+[^译者注]: 本书原文还有 `block of code` 的写法，这种有些类似于我们口语中说的那种任意的代码段的“代码块”。原文中 `block of code` 的典型情况是非安全(`unsafe`)块。
 
 [block]: expressions/block-expr.md
 [expression]: expressions.md

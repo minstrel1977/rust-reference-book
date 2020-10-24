@@ -1,7 +1,9 @@
+# Block expressions
 # 块表达式
 
 >[block-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/block-expr.md)\
->commit: 6b90080371ff44d0074a465945dfdb0de4b50774
+>commit: 6b90080371ff44d0074a465945dfdb0de4b50774 \
+>本译文最后维护日期：2020-10-24
 
 > **<sup>句法</sup>**\
 > _BlockExpression_ :\
@@ -15,13 +17,34 @@
 > &nbsp;&nbsp; | [_Statement_]<sup>\+</sup> [_ExpressionWithoutBlock_]\
 > &nbsp;&nbsp; | [_ExpressionWithoutBlock_]
 
-*块表达式*或*块*是用于数据项和变量声明的控制流表达式，也是它们的匿名命名空间作用域。作为控制流表达式，块按按顺序执行其组件非数据项声明语句，最后执行最后的可选表达式。作为一个匿名命名空间作用域，在本块内声明的数据项只在块本身围成的作用域内有效，而由 `let` 语句声明的变量的作用域为下一条语句到块末尾。
+*块表达式*或*块*是数据项和变量声明的控制流表达式和匿名命名空间作用域。作为控制流表达式，块按顺序执行其非数据项声明的语句组件，最后执行可选的尾部表达式(final expression)。作为一个匿名命名空间作用域，在本块内声明的数据项只在块本身围成的作用域内有效，而由 `let` 语句声明的变量的作用域为下一条语句到块末尾。
 
 块的书写形式为：先是一个 `{`，然后是[内部属性][inner attributes]，再后是[语句][statements]，再后是一个可选表达式，最后是一个 `}`。语句通常需要后跟分号，但有两个例外。数据项声明语句不需要后跟分号。表达式语句通常需要后面的分号，但它的外层表达式是流控制表达式时不需要。此外，允许在语句之间使用额外的分号，但是这些分号并不影响语义。
 
 在对块表达式求值时，除了数据项声明语句外，每个语句都是按顺序执行的。如果给出了块尾的可选的最终表达式(final expression)，则最后会执行它。
 
 块的类型是最终表达式的类型，但如果省略了最终表达式(final expression)，则块的类型为 `()`。
+As a control flow
+expression, a block sequentially executes its component non-item declaration
+statements and then its final optional expression. As an anonymous namespace
+scope, item declarations are only in scope inside the block itself and variables
+declared by `let` statements are in scope from the next statement until the end
+of the block.
+
+Blocks are written as `{`, then any [inner attributes], then [statements],
+then an optional expression, and finally a `}`. Statements are usually required
+to be followed by a semicolon, with two exceptions. Item declaration statements do
+not need to be followed by a semicolon. Expression statements usually require
+a following semicolon except if its outer expression is a flow control
+expression. Furthermore, extra semicolons between statements are allowed, but
+these semicolons do not affect semantics.
+
+When evaluating a block expression, each statement, except for item declaration
+statements, is executed sequentially. Then the final expression is executed,
+if given.
+
+The type of a block is the type of the final expression, or `()` if the final
+expression is omitted.
 
 ```rust
 # fn fn_call() {}
@@ -105,7 +128,7 @@ loop {
 }
 ```
 
-## `unsafe`块
+##非安全(`unsafe`)块
 
 > **<sup>句法</sup>**\
 > _UnsafeBlockExpression_ :\
@@ -162,10 +185,14 @@ fn is_unix_platform() -> bool {
 [enum variant]: enum-variant-expr.md
 [function]: ../items/functions.md
 [inner attributes]: ../attributes.md
-[method]: ../items/associated-items.md#方法
+[method]: ../items/associated-items.md#methods
+[statement]: ../statements.md
 [statements]: ../statements.md
 [struct]: struct-expr.md
-[the lint check attributes]: ../attributes/diagnostics.md#lint检查类属性
+[the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
 [tuple expressions]: tuple-expr.md
 [unsafe operations]: ../unsafety.md
-[value expressions]: ../expressions.md#位置表达式和值表达式
+[value expressions]: ../expressions.md#place-expressions-and-value-expressions
+
+<!-- 2020-10-16 -->
+<!-- checked -->

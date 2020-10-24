@@ -87,7 +87,7 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 
 表达式分为两大类：位置表达式(place expressions)和值表达式(value expressions)。在每个表达式中，子表达式可以出现在位置上下文或值上下文中。表达式的求值既取决于它自己的类别，也取决于它所处的上下文。
 
-*位置表达式*是表示内存位置的表达式。这类表达式本质就是指向 *局部变量、[静态变量][static variables]、[解引用][deref](`*expr`)、[索引数组][array indexing]表达式(`expr[expr]`)、[字段][field]引用(`expr.f`)、圆括号括起来的位置表达式* 的[路径][paths]。那除了这些形式外所有其他形式的表达式都是值表达式。
+*位置表达式*是表示内存位置的表达式。这类表达式本质就是指向**局部变量、[静态变量][static variables]、[解引用][deref](`*expr`)、[索引数组][array indexing]表达式(`expr[expr]`)、[字段][field]引用(`expr.f`)、圆括号括起来的位置表达式**的[路径][paths]。那除了这些形式外所有其他形式的表达式都是值表达式。
 
 *值表达式*是代表实际值的表达式。
 
@@ -128,26 +128,19 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 * [临时值][Temporary values]。
 * 可变位置表达式上下文中对子表达式求值求出的[字段][field]。
 * 对 `*mut T` 指针的[解引用][deref]。
-* 对类型为 `&mut T` 的变量或变量的字段的解引用。注意：这条是下一条规则的必要条件的例外情况。
-* 对实现 `DerefMut` 的类型的解引用，这条要求此解引用动作需发生在一个可变位置表达式上下文中。
-* 对于实现 `IndexMut` 的类型的[数组索引][array indexing]，它将在可变位置表达式上下文中检索数组中的值，索引本身不用。
+* 对类型为 `&mut T` 的变量或变量的字段的解引用。注意：这条是下一条规则的必要条件的例外情况。（译者注：这里提醒的注意内容，译者没搞懂，所以有请读者能指点一二。）
+* 对实现 `DerefMut` 的类型的解引用，再对此解出的表达式求值就需要一个可变位置表达式上下文。
+* 对于实现 `IndexMut` 的类型的[数组索引][array indexing]，再对此检索出的表达式求值就需要一个可变位置表达式上下文，注意对索引本身的求值不用。
 
-* [Dereferences][deref] of a `*mut T` pointer.
-* Dereference of a variable, or field of a variable, with type `&mut T`. Note:
-  This is an exception to the requirement of the next rule.
-* Dereferences of a type that implements `DerefMut`, this then requires that the value being dereferenced is evaluated is a mutable place expression context.
-* [Array indexing] of a type that implements `IndexMut`, this
-  then evaluates the value being indexed, but not the index, in mutable place
-  expression context.
 ### Temporaries
 ### 临时位置/临时变量
 
-在大多数位置表达式上下文中使用值表达式时，会创建一个临时的未命名内存位置，并将该值初始化到该内存位置，而表达式将求值结果在存放到该位置。也有例外，就把此表达式[提升]为 `static`。（译者注：这种情况下表达式将直接在编译时就求值了，求值的结果会根据编译器要求重新选择地址存储）。临时位置/临时变量的[销毁点][drop scope]通常在其封闭语句的结尾处。
+在大多数位置表达式上下文中使用值表达式时，会创建一个临时的未命名内存位置，并将该值初始化到该内存位置，然后这个临时表达式的求值结果就为该内存位置。此过程也有例外，就是把此临时表达式[提升][promoted]为一个静态项(`static`)。（译者注：这种情况下表达式将直接在编译时就求值了，求值的结果会根据编译器要求重新选择地址存储）。临时位置/临时变量的[销毁点][drop scope]通常在封闭其的语句的结尾处。
 
 ### Implicit Borrows
 ### 隐式借用
 
-某些表达式可通过隐式借用表达式来将其视为位置表达式。例如，可以直接比较两个[切片][slice]是否相等，因为 `==` 运算符隐式借用了它的操作数：
+某些表达式可以通过隐式借用一个表达式来将其视为位置表达式。例如，可以直接比较两个非固定尺寸的[切片][slice]是否相等，因为 `==` 操作符隐式借用了它自身的操作数：
 
 ```rust
 # let c = [1, 2, 3];
@@ -162,7 +155,7 @@ let b: &[i32];
 ::std::cmp::PartialEq::eq(&*a, &*b);
 ```
 
-隐式借用可采用以下表达式：
+以下表达式可以采用隐式借用：
 
 * [方法调用][method-call]表达式中的左操作数。
 * [字段][field]表达式中的左操作数。
@@ -170,32 +163,27 @@ let b: &[i32];
 * [数组索引][array indexing]表达式中的左操作数。
 * [解引用操作符][deref]（`*`）的操作数。
 * [比较运算][comparison]的操作数。
-* [复合赋值][compound assignment]的左操作数。
+* [复合赋值(compound assignment)][compound assignment]的左操作数。
 
 ## Overloading Traits
 ## 重载trait
 
-本节之后的许多操作符和表达式都可以通过 `std::ops` 或 `std::cmp` 中的 trait 被其他类型重载。这些 trait 也存在于同名的 `core::ops` 和 `core::cmp` 中。
+本书后续章节的许多操作符和表达式都可以通过使用 `std::ops` 或 `std::cmp` 中的 trait 被其他类型重载。这些 trait 也存在于同名的 `core::ops` 和 `core::cmp` 中。
 
 ## Expression Attributes
 ## 表达式属性
 
 只有在少数特定情况下，才允许在表达式之前使用[外部属性][_OuterAttribute_]：
 
-* 在被用作[语句]的表达式之前。
-* [数组表达式]、[元组表达式]、[调用表达式][call expressions]和[元组结构体]和[枚举变体]表达式这些中的元素。
-  <!--
-    These were likely stabilized inadvertently.
-    See https://github.com/rust-lang/rust/issues/32796 and
-        https://github.com/rust-lang/rust/issues/15701
-  -->
-* [块表达式]的尾部表达式.
+* 在被当作[语句][statement]用的表达式之前。
+* [数组表达式][array expressions]、[元组表达式][tuple expressions]、[调用表达式][call expressions]、[元组结构体][struct]表达式、[枚举变体][enum variant] 表达式这些中的元素。
+  <!-- These were likely stabilized inadvertently. See https://github.com/rust-lang/rust/issues/32796 and https://github.com/rust-lang/rust/issues/15701 -->
+* [块表达式][block expressions]的尾部表达式(tail expression)。
 <!-- 本列表需要和 block-expr.md 保持同步-->
 
 在下面情形之前是不允许的：
-* [区间][_RangeExpression_]表达式。
+* [区间(Range)][_RangeExpression_]表达式。
 * 二元运算符表达式([_ArithmeticOrLogicalExpression_]、[_ComparisonExpression_]、[_LazyBooleanExpression_]、[_TypeCastExpression_]、[_AssignmentExpression_]、[_CompoundAssignmentExpression_])。
-
 
 [block expressions]:    expressions/block-expr.md
 [call expressions]:     expressions/call-expr.md
