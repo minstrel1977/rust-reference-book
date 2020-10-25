@@ -2,7 +2,7 @@
 # 联合体
 
 >[unions.md](https://github.com/rust-lang/reference/blob/master/src/items/unions.md)\
->commit: ad8986882c6b069cfbdca6103746f5a3e8cb9d5b \
+>commit: 0d6f579859c875371c8cfdd6314bb23b19c7a2e8 \
 >本译文最后维护日期：2020-10-25
 
 > **<sup>句法</sup>**\

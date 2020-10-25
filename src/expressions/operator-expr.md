@@ -1,8 +1,9 @@
-# 运算符表达式
+# 操作符/运算符表达式
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit: 03dc50769738a643be1451a4ff1516fa5fab92bd
+>commit: 03dc50769738a643be1451a4ff1516fa5fab92bd \
+>本译文最后维护日期：2020-10-25
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -17,16 +18,16 @@
 > &nbsp;&nbsp; | [_AssignmentExpression_]\
 > &nbsp;&nbsp; | [_CompoundAssignmentExpression_]
 
-操作符是由 Rust语言为内建类型定义的。本文后面的许多操作符也都可以使用 `std::ops` 或 `std::cmp` 中的 trait 进行重载。。
+操作符是Rust 语言为其内建类型定义的。本文后面的许多操作符都可以使用 `std::ops` 或 `std::cmp` 中的 trait 进行重载。
 
 ## 溢出
 ## Overflow
 
-在调试模式下编译整数运算发生溢出时，会出现 panic。可以使用 `-C debug-assertions` 和 `-C overflow-checks` 编译器标志位来更直接地控制这个溢出过程。以下情况被认为是溢出：
+在调试模式下编译整数运算时，如果发生溢出，会触发 panic。可以使用命令行参数 `-C debug-assertions` 和 `-C overflow-checks` 来设置编译器标志位，来更直接地控制这个溢出过程。以下情况被认为是溢出：
 
-* 当 `+`、`*` 或 `-` 创建的值大于可存储的最大值或小于最小值。这包括任何带符号整型的最小值上的一元运算符 `-`。
-* 使用 `/` 或 `%`，其中左边的参数是带符号整型的最小整数，右边的参数是 `-1`。
-* 使用 `<<` 或 `>>`，其中右边参数大于或等于左边参数类型的比特数，或为负数。
+* 当 `+`、`*` 或 `-` 创建的值大于当前类型可存储的最大值或小于最小值。这包括任何带符号整型的最小值上的一元运算符 `-`。
+* 使用 `/` 或 `%`，其中左边的参数是某类带符号整型的最小整数，右边的参数是 `-1`。
+* 使用 `<<` 或 `>>`，其中右边参数大于或等于左边参数类型的比特数，或右边参数为负数。
 
 ## 借用/引用操作符
 ## Borrow operators
@@ -36,23 +37,23 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; (`&`|`&&`) [_Expression_]\
 > &nbsp;&nbsp; | (`&`|`&&`) `mut` [_Expression_]
 
-`&`（共享借用）和 `&mut`（可变借用）运算符是一元前缀运算符。当应用于[位置表达式][place expression]时，此表达式生成指向值所在的位置的引用（指针）。在引用期间，内存位置也被置于借用状态。对于共享借用（`&`），这意味着位置可能不会发生变化，但可能会被再次读取或共享。对于可变借用（`&mut`），在借用到期之前，不能以任何方式访问该位置。`&mut` 在可变位置表达式上下文中计算其操作数。如果 `&` 或 `&mut` 运算符应用于[值表达式][value expression]，则会创建一个[临时值][temporary value]。
+`&`（共享借用）和 `&mut`（可变借用）运算符是一元前缀运算符。当应用于[位置表达式][place expression]上时，此表达式生成指向值所在的内存位置的引用（指针）。在引用期间，该内存位置也被置于借出状态。对于共享借用（`&`），这意味着该位置可能不会发生变化，但可能会被再次读取或共享。对于可变借用（`&mut`），在借用到期之前，不能以任何方式访问该位置。`&mut` 在可变位置表达式上下文中计算其操作数。如果 `&` 或 `&mut` 运算符应用于[值表达式][value expression]，则会创建一个[临时值][temporary value]。
+
 这类操作符不能重载。
 
 ```rust
 {
-    // 将创建一个存值为7的临时位置，该位置在此作用域内持续存在
+    // 将创建一个存值为7的临时位置，该该临时位置在此作用域内持续存在
     let shared_reference = &7;
 }
 let mut array = [-2, 3, 9];
 {
-    // 在当前作用域内可变借用 `array`。
-    // `array` 只能通过 `mutable_reference` 来使用 .
+    // 在当前作用域内可变借用了 `array`。那 `array` 就只能通过 `mutable_reference` 来使用。
     let mutable_reference = &mut array;
 }
 ```
 
-尽管 `&&` 是一个单标记码([惰性与(`and`)操作符](#lazy-boolean-operators))，但在借用表达式上下文中使用时，它作为两个借用使用：
+尽管 `&&` 是一个单标记码([惰性与(`and`)操作符](#lazy-boolean-operators))，但在借用表达式(borrow expressions)上下文中使用时，它是作为两个借用操作符用的：
 
 ```rust
 // 意义相同：
@@ -72,9 +73,9 @@ let a = & & & & mut 10;
 > _DereferenceExpression_ :\
 > &nbsp;&nbsp; `*` [_Expression_]
 
-`*`（解引用）运算符也是一元前缀运算符。当应用于[指针](../types/pointer.md)时，它表示指向的内存位置。如果表达式的类型为 `&mut T` 或 `*mut T`，并且该表达式是局部变量（局部变量的（嵌套）字段也可）或是可变的[位置表达式][place expression]，则它代表的内存位置可以被赋值。对原始指针的解引用需要  `unsafe`。
+`*`（解引用）操作符也是一元前缀操作符。当应用于[指针](../types/pointer.md)时，它表示该指针指向的内存位置。如果表达式的类型为 `&mut T` 或 `*mut T`，并且该表达式是局部变量（局部变量的（嵌套）字段也可以）或是可变的[位置表达式][place expression]，则它代表的内存位置可以被赋值。解引用原始指针需要在非安全(`unsafe`)块才能进行。
 
-在[不可变位置表达式上下文](../expressions.md#可变性)中对非指针类型作 `*x` 相当于执行 `*std::ops::Deref::deref(&x)`；同样的，在可变位置表达式上下文中这个动作就相当于执行 `*std::ops::DerefMut::deref_mut(&mut x)`。
+在[不可变位置表达式上下文](../expressions.md#mutability)中对非指针类型作 `*x` 相当于执行 `*std::ops::Deref::deref(&x)`；同样的，在可变位置表达式上下文中这个动作就相当于执行 `*std::ops::DerefMut::deref_mut(&mut x)`。
 
 ```rust
 let x = &7;
@@ -91,9 +92,9 @@ assert_eq!(*y, 11);
 > _ErrorPropagationExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `?`
 
-问号运算符(`?`)打开有效值或返回错误值，并将它们传播给调用函数。问号运算符(`?`)是一个一元后缀操作符，只能应用于类型 `Result<T, E>` 和 `Option<T>`。
+问号操作符（`?`）解开(unwrap)有效值或返回错误值，并将它们传播(propagate)给调用函数。问号操作符（`?`）是一个一元后缀操作符，只能应用于类型 `Result<T, E>` 和 `Option<T>`。
 
-当应用到 `Result<T, E>` 类型的值时，它会传播错误。如果值是 `Err(e)`，那么它将从函数体或闭包中返回 `Err(From::from(e))`。如果应用到 `Ok(x)`，那么它将展开值以求得 `x`。
+当应用在 `Result<T, E>` 类型的值上时，它可以传播错误。如果值是 `Err(e)`，那么它将实际从函数体或闭包中返回 `Err(From::from(e))`。如果应用到 `Ok(x)`，那么它将展开值以求得 `x`。
 
 ```rust
 # use std::num::ParseIntError;
@@ -108,7 +109,7 @@ println!("{:?}", res);
 # assert!(res.is_err())
 ```
 
-当应用到 `Option<T>` 类型的值时，它能传播 `None`。如果值是 `None`，那么它将返回 `None`。如果应用于 `Some(x)`，那么它将展开值以求得 `x`。
+当应用到 `Option<T>` 类型的值时，它向调用者传播错误 `None`。如果它应用的值本身是 `None`，那么它将返回 `None`。如果应用于 `Some(x)`，那么它将解开值以求得 `x`。
 
 ```rust
 fn try_option_some() -> Option<u8> {
@@ -124,7 +125,7 @@ fn try_option_none() -> Option<u8> {
 assert_eq!(try_option_none(), None);
 ```
 
-`?` 不能被重载。
+操作符 `?` 不能被重载。
 
 ## 取反运算符
 ## Negation operators
@@ -134,12 +135,11 @@ assert_eq!(try_option_none(), None);
 > &nbsp;&nbsp; &nbsp;&nbsp; `-` [_Expression_]\
 > &nbsp;&nbsp; | `!` [_Expression_]
 
-这是最后两个一元运算符。下表总结了它们在基本类型上的行为，以及用于为其他类型重载这些操作符的 trait。记住，有符号整数总是用2的补码表示的。
-所有这些运算符的操作数都在[值表达式上下文][value expression]中求值，因此会被移动或复制。
+这是最后两个一元运算符。下表总结了它们用在基本类型上的表现，以及指出其他类型要重载这些操作符需要实现哪些 trait。记住，有符号整数总是用2的补码形式表示。所有这些运算符的操作数都在[值表达式上下文][value expression]中被求值，所以这些操作数的值会被移走或复制。
 
 | 符号 | 整数     | `bool`      | 浮点数 | 用于重载的 trait  |
 |--------|-------------|-------------|----------------|--------------------|
-| `-`    | 取负*   |             | 取负       | `std::ops::Neg`    |
+| `-`    | 符号取反*   |             | 符号取反       | `std::ops::Neg`    |
 | `!`    | 按位取反 | 逻辑非 |                | `std::ops::Not`    |
 
 \* 仅适用于有符号整数类型。
@@ -169,7 +169,7 @@ assert_eq!(true, !false);
 > &nbsp;&nbsp; | [_Expression_] `<<` [_Expression_]\
 > &nbsp;&nbsp; | [_Expression_] `>>` [_Expression_]
 
-二元运算符表达式都用中缀表示法(infix notation)书写。下表总结了算术和逻辑二元运算符在原生类型(primitive type)上的行为，以及用于重载其他类型的这些运算符的特征。记住，有符号整数总是用2的补码表示的。所有这些运算符的操作数都在[值表达式上下文][value expression]中求值，因此会被移动或复制。
+二元运算符表达式都用中缀表示法(infix notation)书写。下表总结了算术和逻辑二元运算符在原生类型(primitive type)上的行为，以及指出其他类型要重载这些操作符需要实现哪些 trait。记住，有符号整数总是用2的补码形式表示。所有这些运算符的操作数都在[值表达式上下文][value expression]中求值，因此这些操作数的值会被移走或复制。
 
 | 符号 | 整数                 | `bool`      | 浮点数 | 用于重载的 trait  |
 |--------|-------------------------|-------------|----------------|--------------------|
@@ -215,9 +215,9 @@ assert_eq!(-10 >> 2, -3);
 > &nbsp;&nbsp; | [_Expression_] `>=` [_Expression_]\
 > &nbsp;&nbsp; | [_Expression_] `<=` [_Expression_]
 
-Rust 还为原生类型和标准库中的许多类型定义了比较运算符。在链式比较运算时需要括号。例如，表达式 `a == b == c` 是无效的，（但如果逻辑允许）可以写成 `(a == b) == c`。
+Rust 还为原生类型以及标准库中的许多类型定义了比较运算符。链式比较运算时需要括号，例如，表达式 `a == b == c` 是无效的，（但如果逻辑允许）可以写成 `(a == b) == c`。
 
-与算术运算符和逻辑运算符不同，比较运算符所使用的 trait(这些 trait 也可以被其他类型所实现)更抽象地用于显示如何比较一个类型，并且很可能会假定使用这些 trait 作为约束条件的函数定义了实际的比较逻辑。（对库API使用者来说，）标准库中的许多函数和宏都可以被认为遵守了这个假定(尽管不能确保它们的实现的安全性)。与上面的算术和逻辑运算符不同，当在[位置表达式上下文][place expression]中对它们进行求值时，这些运算符会隐式地使用对它们的操作数的共享借用：
+与算术运算符和逻辑运算符不同，比较运算符所使用的 trait（这些 trait 也可以被其他类型所实现以重载这些比较运算符）更抽象地用于显示/约定如何比较一个类型，并且很可能会假定使用这些 trait 作为约束条件的函数定义了实际的比较逻辑。（对库API使用者来说，）标准库中的许多函数和宏都可以被认为遵守了这个假定(尽管不能确保它们的实现的安全性)。与上面的算术和逻辑运算符不同，这些运算符会隐式地对它们的操作数执行共享借用，并当在[位置表达式上下文][place expression]中对它们进行求值：
 
 ```rust
 # let a = 1;
@@ -227,7 +227,7 @@ a == b;
 ::std::cmp::PartialEq::eq(&a, &b);
 ```
 
-这意味着不需要将操作数移出。
+这意味着不需要将值从操作数移出(moved out of)。
 
 | 符号 | 含义                  | 须重载方法         |
 |--------|--------------------------|----------------------------|
@@ -251,7 +251,7 @@ assert!("World" >= "Hello");
 
 ## 短路布尔运算符
 ## Lazy boolean operators
-
+to be check
 > **<sup>句法</sup>**\
 > _LazyBooleanExpression_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_Expression_] `||` [_Expression_]\
@@ -392,11 +392,11 @@ assert_eq!(x, 14);
 ```
 [^译者注]:截断，即一个值范围较大的变量A转换为值范围较小的变量B，如果超出范围，则将A减去B的区间长度。例如，128超出了i8类型的范围（-128,127），截断之后的值等于128-256=-128。
 
-[place expression]: ../expressions.md#位置表达式和值表达式
-[value expression]: ../expressions.md#位置表达式和值表达式
+[place expression]: ../expressions.md#place-expressions-and-value-expressions
+[value expression]: ../expressions.md#place-expressions-and-value-expressions
 [temporary value]: ../expressions.md#temporaries
 [float-float]: https://github.com/rust-lang/rust/issues/15536
-[`unit`类型]: ../types/tuple.md
+[`unit` type]: ../types/tuple.md
 [Function pointer]: ../types/function-pointer.md
 [Function item]: ../types/function-item.md
 
@@ -413,4 +413,6 @@ assert_eq!(x, 14);
 
 [_Expression_]: ../expressions.md
 [_TypeNoBounds_]: ../types.md#type-expressions
+
 <!-- 2020-10-25 -->
+<!-- checked -->
