@@ -251,5 +251,5 @@ When used on a function in a trait implementation, the attribute does nothing.
 [traits]: ../items/traits.md
 [union]: ../items/unions.md
 
-<!-- 2020-10-16 -->
+<!-- 2020-10-25 -->
 <!-- checked -->

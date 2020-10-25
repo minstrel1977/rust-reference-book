@@ -232,5 +232,5 @@ fn calls_h() {
 [`core::panic::Location::caller`]: ../../core/panic/struct.Location.html#method.caller
 [`Location`]: ../../core/panic/struct.Location.html
 
-<!-- 2020-10-16 -->
+<!-- 2020-10-25 -->
 <!-- checked -->

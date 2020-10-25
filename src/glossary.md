@@ -234,4 +234,4 @@ A type is uninhabited if it has no constructors and therefore can never be insta
 [traits]: items/traits.md
 [undefined-behavior]: behavior-considered-undefined.md
 [unions]: items/unions.md
-<!-- 2020-10-16 -->
+<!-- 2020-10-25 -->

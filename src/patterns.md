@@ -246,6 +246,25 @@ Non-reference patterns include all patterns except bindings, wildcard patterns (
 
 如果绑定模式(binding pattern)没有显式地包含 `ref`、`ref mut`、或 `mut`，那么它将使用*默认绑定方式(the default binding mode)*来确定如何绑定变量。默认绑定方式以使用移动语义的“移动”模式开始。当匹配模式时，编译器对模式从外到内逐层匹配。每次使用非引用模式匹配引用时，它都会自动解引用该值并更新默认绑定方式。引用会将默认绑定模式设置为ref。可变引用会将模式设置为 `ref mut`，除非模式已经是`ref`(在这种情况下它仍然是`ref`)。如果自动解引用的值仍然是引用，则会重复解引用。
 
+Move bindings and reference bindings can be mixed together in the same pattern, doing so will
+result in partial move of the object bound to and the object cannot be used afterwards.
+This applies only if the type cannot be copied.
+
+In the example below, `name` is moved out of `person`, trying to use `person` as a whole or
+`person.name` would result in an error because of *partial move*.
+
+Example:
+
+```rust
+# struct Person {
+#    name: String,
+#    age: u8,
+# }
+# let person = Person{ name: String::from("John"), age: 23 };
+// `name` is moved from person and `age` referenced
+let Person { name, ref age } = person;
+```
+
 ## Wildcard pattern
 ## 通配符模式
 

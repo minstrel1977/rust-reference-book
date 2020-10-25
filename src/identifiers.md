@@ -35,5 +35,5 @@
 [strict]: keywords.md#strict-keywords
 [reserved]: keywords.md#reserved-keywords
 
-<!-- 2020-10-16 -->
+<!-- 2020-10-25 -->
 <!-- checked -->

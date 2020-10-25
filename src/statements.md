@@ -120,5 +120,5 @@ if true {
 [_Pattern_]: patterns.md
 [_Type_]: types.md
 
-<!-- 2020-10-16 -->
+<!-- 2020-10-25 -->
 <!-- checked -->

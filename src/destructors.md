@@ -346,4 +346,4 @@ let x = (&temp()).use_temp();  // ERROR
 [`<T as std::ops::Drop>::drop`]: ../std/ops/trait.Drop.html#tymethod.drop
 [`std::ptr::drop_in_place`]: ../std/ptr/fn.drop_in_place.html
 [`std::mem::ManuallyDrop`]: ../std/mem/struct.ManuallyDrop.html
-<!-- 2020-10-16 -->
+<!-- 2020-10-25 -->

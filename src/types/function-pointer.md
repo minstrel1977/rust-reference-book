@@ -61,4 +61,4 @@ x = bo(5,7);
 [function items]: function-item.md
 [unsafe function]: ../unsafe-functions.md
 [regular function parameters]: ../items/functions.md#函数参数上的属性
-<!-- 2020-10-16 -->
+<!-- 2020-10-25 -->

@@ -127,5 +127,5 @@ mod thread {
 [prelude]: ../crates-and-source-files.md#preludes-and-no_std
 [the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
 
-<!-- 2020-10-16 -->
+<!-- 2020-10-25 -->
 <!-- checked -->

@@ -137,5 +137,5 @@ crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 `-`(U+
 [where clauses]: items/generics.md#where-clauses
 [whitespace]: whitespace.md
 
-<!-- 2020-10-16 -->
+<!-- 2020-10-25 -->
 <!-- checked -->

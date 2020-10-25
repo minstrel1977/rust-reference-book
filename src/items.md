@@ -89,5 +89,5 @@
 [type definitions]: items/type-aliases.md
 [union definitions]: items/unions.md
 
-<!-- 2020-10-16 -->
+<!-- 2020-10-25 -->
 <!-- checked -->

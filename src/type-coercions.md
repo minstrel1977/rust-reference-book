@@ -237,4 +237,4 @@ fn foo() -> i32 {
 [type cast operator]: expressions/operator-expr.md#type-cast-expressions
 [`Unsize`]: ../std/marker/trait.Unsize.html
 [`CoerceUnsized`]: ../std/ops/trait.CoerceUnsized.html
-<!-- 2020-10-16 -->
+<!-- 2020-10-25 -->

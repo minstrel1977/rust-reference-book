@@ -59,4 +59,4 @@ ten_times(move |j| println!("{}, {}", word, j));
 [_Type_]: ../types.md#type-expressions
 [`let` binding]: ../statements.md#let语句
 [_OuterAttribute_]: ../attributes.md
-<!-- 2020-10-16 -->
+<!-- 2020-10-25 -->

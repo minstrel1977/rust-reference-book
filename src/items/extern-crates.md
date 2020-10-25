@@ -89,5 +89,5 @@ into the macro-use prelude.
 [`test`]: https://doc.rust-lang.org/test/
 [use declarations]: use-declarations.md
 
-<!-- 2020-10-16 -->
+<!-- 2020-10-25 -->
 <!-- checked -->

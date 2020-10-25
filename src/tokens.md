@@ -578,5 +578,5 @@ let x: f64 = 2.; // 类型 f64
 [use wildcards]: items/use-declarations.md
 [`while let`]: expressions/loop-expr.md#predicate-pattern-loops
 
-<!-- 2020-10-16 -->
+<!-- 2020-10-25 -->
 <!-- checked -->

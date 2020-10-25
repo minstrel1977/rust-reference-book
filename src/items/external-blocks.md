@@ -168,5 +168,5 @@ extern {
 [attributes]: ../attributes.md
 [regular function parameters]: functions.md#attributes-on-function-parameters
 
-<!-- 2020-10-16 -->
+<!-- 2020-10-25 -->
 <!-- checked -->

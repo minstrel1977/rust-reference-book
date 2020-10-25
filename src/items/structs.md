@@ -88,5 +88,5 @@ let c = [Cookie, Cookie {}, Cookie, Cookie {}];
 [_Visibility_]: ../visibility-and-privacy.md
 [_Type_]: ../types.md#type-expressions
 
-<!-- 2020-10-16 -->
+<!-- 2020-10-25 -->
 <!-- checked -->
