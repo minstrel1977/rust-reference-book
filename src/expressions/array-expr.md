@@ -2,7 +2,8 @@
 # 数组和数组索引表达式
 
 >[array-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/array-expr.md)\
->commit: 65c523479abb8024672918444ff839426ff5c3a7
+>commit: 65c523479abb8024672918444ff839426ff5c3a7 \
+>本译文最后维护日期：2020-10-26
 
 ## Array expressions
 ## 数组表达式
@@ -15,9 +16,9 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; [_Expression_] ( `,` [_Expression_] )<sup>\*</sup> `,`<sup>?</sup>\
 > &nbsp;&nbsp; | [_Expression_] `;` [_Expression_]
 
-[数组](../types/array.md)表达式可以通过在方括号中括起零个或多个统一类型的逗号分隔的表达式来编写。这样编写将生成一个包含这些值的写入顺序的数组。
+[数组](../types/array.md)表达式可以通过在方括号中放置零个或多个统一类型的逗号分隔的表达式来编写。这样编写将生成一个包含这些值的数组，其中元素的顺序就是其写入的顺序。
 
-也可以方括号内放置两用个分号(`;`)分隔的表达式。这种形式里，分号(`;`)后面的表达式必须具有 `usize` 类型，并且必须是[常量表达式][constant expression]，例如[字面量](../tokens.md#字面量)或[常量项](../items/constant-items.md)。`[a; b]` 形式创建的数组，语义为数组内包含 `b` 个 `a` 值的副本。如果分号后面的表达式的值大于1，则要求 `a` 的类型实现了 [`Copy`](../special-types-and-traits.md#copy)。
+也可以方括号内放置两用个分号(`;`)分隔的表达式。这种形式里，分号后面的表达式必须是 `usize` 类型的，并且必须是[常量表达式][constant expression]，例如[字面量](../tokens.md#literals)或[常量项](../items/constant-items.md)。`[a; b]` 形式创建的数组，语义为该数组内包含 `b` 个 `a` 值的副本。如果分号后面的表达式的值大于 1，则要求 `a` 的类型实现了 [`Copy`](../special-types-and-traits.md#copy)。
 
 ```rust
 [1, 2, 3, 4];
@@ -30,11 +31,11 @@
 ### Array expression attributes
 ### 数组表达式上的属性
 
-适用于[块表达式上的属性][attributes on block expressions]的表达式上下文同样适用于数组表达式上的属性，同样也是允许[内部属性][Inner attributes]直接位于表达式的左括号之后。
+允许[块表达式上的属性][attributes on block expressions]的表达式上下文同样允许数组表达式上的属性，即在这种上下文下允许[内部属性][Inner attributes]直接位于表达式的左括号之后。
 
 ## Array and slice indexing expressions
 ## 数组和切片索引表达式
-
+check from here
 > **<sup>句法</sup>**\
 > _IndexExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `[` [_Expression_] `]`
@@ -70,13 +71,16 @@ let arr = ["a", "b"];
 arr[10];                  // 告警：索引越界
 ```
 
-数组索引表达式可以通过实现[Index]和[IndexMut] trait来为数组和切片片以外的类型实现。
+数组索引表达式可以通过实现 [Index] 和 [IndexMut] trait 来为数组和切片片以外的类型实现。
 
-[IndexMut]: https://doc.rust-lang.org/std/ops/trait.IndexMut.html
-[Index]: https://doc.rust-lang.org/std/ops/trait.Index.html
+[IndexMut]: ../../std/ops/trait.IndexMut.html
+[Index]: ../../std/ops/trait.Index.html
 [Inner attributes]: ../attributes.md
 [_Expression_]: ../expressions.md
 [_InnerAttribute_]: ../attributes.md
-[attributes on block expressions]: block-expr.md#块表达式上的属性
-[constant expression]: ../const_eval.md#常量表达式
-[memory location]: ../expressions.md#位置表达式和值表达式
+[attributes on block expressions]: block-expr.md#attributes-on-block-expressions
+[constant expression]: ../const_eval.md#constant-expressions
+[memory location]: ../expressions.md#place-expressions-and-value-expressions
+
+<!-- 2020-10-25 -->
+<!-- checked -->
