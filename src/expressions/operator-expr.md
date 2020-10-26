@@ -3,7 +3,7 @@
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
 >commit: 03dc50769738a643be1451a4ff1516fa5fab92bd \
->本译文最后维护日期：2020-10-25
+>本译文最后维护日期：2020-10-26
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -251,18 +251,13 @@ assert!("World" >= "Hello");
 
 ## 短路布尔运算符
 ## Lazy boolean operators
-to be check
+
 > **<sup>句法</sup>**\
 > _LazyBooleanExpression_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_Expression_] `||` [_Expression_]\
 > &nbsp;&nbsp; | [_Expression_] `&&` [_Expression_]
 
-运算符' || '和' && '可以应用于布尔类型的操作数。
-' || '运算符表示逻辑'或'，' && '运算符表示逻辑'和'。
-它们与' | '和' & '的不同之处在于，仅当左操作数尚未确定表达式的结果时，才计算右操作数。
-也就是说，' || '仅在其左操作数计算为' false '时计算其右操作数，而' && '仅在其计算为' true '时计算其右操作数。
-
-运算符 `||` 和 `&&` 可以应用于布尔类型的操作数。运算符 `||` 表示逻辑“或”，运算符 `&&` 表示逻辑“与”。它们与 `|` 和 `&` 的不同之处在于，只有在左侧操作数尚未确定表达式的结果时，才计算右侧操作数。也就是说，`||` 只在左操作数的计算结果为 `false` 时才计算其右侧操作数，而只有在计算结果为 `true` 时才计算 `&&` 的操作数。
+运算符 `||` 和 `&&` 可以应用在布尔类型的操作数上。运算符 `||` 表示逻辑“或”，运算符 `&&` 表示逻辑“与”。它们与 `|` 和 `&` 的不同之处在于，只有在左操作数尚未确定表达式的结果时，才计算右操作数。也就是说，`||` 只在左操作数的计算结果为 `false` 时才计算其右操作数，而只有在计算结果为 `true` 时才计算 `&&` 的操作数。
 
 ```rust
 let x = false || true; // true
@@ -278,7 +273,7 @@ let y = false && panic!(); // false, 不会计算 `panic!()`
 
 类型转换表达式用二元运算符 `as` 表示。
 
-执行 `as`表达式将左侧的值强制转换为右侧的类型。
+执行 `as`表达式将左侧的值显式转换为右侧的类型。
 
 `as`表达式的一个例子：
 
@@ -292,63 +287,63 @@ fn average(values: &[f64]) -> f64 {
 }
 ```
 
-`as` 可用于显式执行[自动强转](../type-coercions.md)，以及下列其他强制转换。这里 `*T` 的意思是 `*const T` 或 `*mut T`。
+`as` 可用于显式执行[自动强转(coercions)](../type-coercions.md)，以及下列形式的强制转换。下表中 `*T` 代表 `*const T` 或 `*mut T`。
 
 | `e` 的类型          | `U`                   | 通过 `e as U` 执行转换      |
 |-----------------------|-----------------------|----------------------------------|
-| Integer or Float type | Integer or Float type | 数字转换                     |
-| C-like enum           | Integer type          | 枚举转换                        |
-| `bool` or `char`      | Integer type          | 原生类型到整型的转换        |
+| 整型或浮点型           | 整型或浮点型           | 数字转换                     |
+| 类C(C-like)枚举        | 整型          | 枚举转换                        |
+| `bool` 或 `char`      | 整型          | 原生类型到整型的转换        |
 | `u8`                  | `char`                | `u8` 到 `char` 的转换              |
 | `*T`                  | `*V` where `V: Sized` \* | 指针到指针的转换       |
-| `*T` where `T: Sized` | Numeric type          |  指针到地址的转换         |
-| Integer type          | `*V` where `V: Sized` | 地址到指针的转换          |
+| `*T` where `T: Sized` | 数字型(Numeric type)         |  指针到地址的转换         |
+| 整型          | `*V` where `V: Sized` | 地址到指针的转换          |
 | `&[T; n]`             | `*const T`            | 数组到指针的转换            |
-| [Function item]       | [Function pointer]    | 函数到函数指针的转换 |
-| [Function item]       | `*V` where `V: Sized` | 函数到指针的转换    |
-| [Function item]       | Integer               | 函数到地址的转换    |
-| [Function pointer]    | `*V` where `V: Sized` | 函数指针到指针的转换  |
-| [Function pointer]    | Integer               | 函数指针到地址的转换 |
-| Closure \*\*          | Function pointer      | 闭包到函数指针的转换 |
+| [函数项][Function item]       | [函数指针][Function pointer]    | 函数到函数指针的转换 |
+| [函数项][Function item]       | `*V` where `V: Sized` | 函数到指针的转换    |
+| [函数项][Function item]       | 整型               | 函数到地址的转换    |
+| [函数指针][Function pointer]    | `*V` where `V: Sized` | 函数指针到指针的转换  |
+| [函数指针][Function pointer]    | 整型               | 函数指针到地址的转换 |
+| 闭包 \*\*          | 函数指针      | 闭包到函数指针的转换 |
 
 \* 或者 `T`和`V` 也可以都是兼容的 unsized 类型，例如，两个都是切片，或者都是同一种 trait对象。
 
-\*\* 仅适用于不捕获（关闭）任何环境变量的闭包。
+\*\* 仅适用于不捕获（遮蔽(close over)）任何环境变量的闭包。
 
 ### 语义
 ### Semantics
 
 * 数字转换(Numeric cast)
-    * 在两个尺寸(size)相同的整型(例如i32->u32)之间进行转换是一个无操作(no-op)
-    * 从一个较大尺寸的整型转换为较小尺寸的整型(例如 u32 -> u8)将会被截断 [^译者注]
-    * 从较小尺寸的整型转换为较大尺寸的整型(例如 u8->u32)将
-        * 如果源数据是无符号的，则进行零扩展
-        * 如果源数据是有符号的，则进行符号扩展
-    * 从浮点数转换为整型将使浮点数趋零取整
+    * 在两个尺寸(size)相同的整型数值（例如 i32 -> u32）之间进行转换是一个空操作(no-op)
+    * 从一个较大尺寸的整型转换为较小尺寸的整型（例如 u32 -> u8）将会采用截断(truncate)算法 [^译者注]
+    * 从较小尺寸的整型转换为较大尺寸的整型（例如 u8 -> u32）将
+        * 如果源数据是无符号的，则进行零扩展(zero-extend)
+        * 如果源数据是有符号的，则进行符号扩展(sign-extend)
+    * 从浮点数转换为整型将使浮点数趋零取整(round the float towards zero)
         * `NaN` 将返回 `0`
         * 大于转换到的整型类型的最大值时，取该整型类型的最大值。
         * 小于转换到的整型类型的最小值时，取该整型类型的最小值。
-    * 从整数强制转换为浮点型将产生最接近的浮点数 \*
-        * 如有必要，舍入采用 “roundTiesToEven” 模式 \*\*\*
-        * 在溢出时，将会产生无穷大(与输入符号相同)
+    * 从整数强制转换为浮点数将产生最接近的浮点数 \*
+        * 如有必要，舍入采用 `roundTiesToEven` 模式 \*\*\*
+        * 在溢出时，将会产生该浮点型的常量 Infinity(∞)（与输入符号相同）
         * 注意：对于当前的数值类型集，溢出只会发生在 `u128 as f32` 这种转换形式，且数字大于或等于 `f32::MAX + (0.5 ULP)` 时。
-    * 从f32到f64的转换是完美和无损的
-    * 从f64到f32的转换将产生最接近的f32 \*\*
-        * 如有必要，舍入采用 “roundTiesToEven” 模式 \*\*\*
-        * 在溢出时，将会产生无穷大(与输入符号相同)
+    * 从 f32 到 f64 的转换是无损转换
+    * 从 f64 到 f32 的转换将产生最接近的 f32 \*\*
+        * 如有必要，舍入采用 `roundTiesToEven` 模式 \*\*\*
+        * 在溢出时，将会产生 f32 的常量 Infinity(∞)（与输入符号相同）
 * 枚举转换(Enum cast)
-    * 先将枚举转换为它的判别值，然后在需要时使用数值转换。
-* 原生类型到整型的转换(Primitive to integer cast)
+    * 先将枚举转换为它的判别值(discriminant)，然后在需要时使用数值转换。
+* 原生类型到整型的转换
     * `false` 转换为 `0`, `true` 转换为 `1`
     * `char` 会先强制转换为代码点的值，然后在需要时使用数值转换。
 * `u8` 到 `char` 的转换
-    * 转换为具有相应代码点的 `char`。
+    * 转换为具有相应代码点的 `char` 值。
 
-\* 如果硬件本身不支持这种舍入模式和溢出行为，那么这些整数到浮点型的强制转换可能会比预期的要慢。
+\* 如果硬件本身不支持这种舍入模式和溢出行为，那么这些整数到浮点型的转换可能会比预期的要慢。
 
-\*\* 如果硬件本身不支持这种舍入模式和溢出行为，那么这些 f64 到 f32 的强制转换可能会比预期的要慢。
+\*\* 如果硬件本身不支持这种舍入模式和溢出行为，那么这些 f64 到 f32 的转换可能会比预期的要慢。
 
-\*\*\* 按照IEEE 754-2008§4.3.1的定义:选择最接近的浮点数，如果恰好在两个浮点数中间，则优先选择最低有效位为偶数的那个。
+\*\*\* 按照 IEEE 754-2008§4.3.1 的定义：选择最接近的浮点数，如果恰好在两个浮点数中间，则优先选择最低有效位为偶数的那个。
 
 ## 赋值表达式
 ## Assignment expressions
@@ -357,9 +352,9 @@ fn average(values: &[f64]) -> f64 {
 > _AssignmentExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `=` [_Expression_]
 
-*赋值表达式*由[位置表达式][place expression]后跟等号 (=) 和[值表达式][value expression]组成。这样的表达式总是具有[`unit`类型]。
+*赋值表达式*由[位置表达式][place expression]后跟等号（`=`）和[值表达式][value expression]组成。这样的表达式的类型总是[单元(`unit`)类型][`unit` type]。
 
-执行赋值表达式时会先[销毁](../destructors.md)左侧操作数(如果是未初始化的局部变量或局部变量的字段则不会启动这步析构操作)，然后将其右侧操作数[复制或移动](../expressions.md#移动和复制类型)到左侧操作数。左边的操作数必须是位置表达式：使用值表达式会导致编译器错误，不会将其提升为临时位置。
+执行赋值表达式时会先[销毁(drop)](../destructors.md)左操作数（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将其右操作数[复制(copy)或移动(move)](../expressions.md#moved-and-copied-types)到左操作数。左边的操作数必须是位置表达式：使用值表达式不会将其提升为临时位置，而是会导致编译器错误。
 
 ```rust
 # let mut x = 0;
@@ -383,7 +378,7 @@ x = y;
 > &nbsp;&nbsp; | [_Expression_] `<<=` [_Expression_]\
 > &nbsp;&nbsp; | [_Expression_] `>>=` [_Expression_]
 
-`+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`, `<<`, 和 `>>`运算符可以和 `=` 运算符复合组成新的运算符。表达式 `place_exp OP= value` 等效于 `place_expr = place_expr OP val`。例如，`x = x + 1` 可以写成 `x += 1`。任何这样的表达式总是具有[`unit`类型]。这些运算符都可以使用与普通操作的相同的 trait 来重载，只是相应的 trait名称后要加上 “Assign”，例如，`std::ops::AddAssign`用于重载 `+=`。因为带有 `=`，所以 `place_expr` 必须是[位置表达式][place expression]。
+`+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`, `<<`, 和 `>>`运算符可以和 `=` 运算符复合组成新的运算符。表达式 `place_exp OP= value` 等效于 `place_expr = place_expr OP val`。例如，`x = x + 1` 可以写成 `x += 1`。任何这样的表达式的类型总是[单元(`unit`)类型][`unit` type]。这些运算符都可以使用与普通操作的相同的 trait 来重载，只是相应的 trait名称后要加上 “Assign”，例如，`std::ops::AddAssign` 用于重载 `+=`。因为带有 `=`，所以 `place_expr` 必须是[位置表达式][place expression]。
 
 ```rust
 let mut x = 10;

@@ -157,7 +157,7 @@ struct Struct {
 
 属性宏由带有 `proc_macro_attribute`[属性][attribute]和 `(TokenStream, TokenStream) -> TokenStream` 签名的[公有][public]可见性[函数][function]定义。签名中的第一个 [`TokenStream`] 是属性名称后面的定界标记树(delimited token tree)（不包括外层定界符）。如果该属性作为裸属性(bare attribute)给出，则第一个 [`TokenStream`] 值为空。第二个 [`TokenStream`] 是[数据项][item]的其余部分，包括该数据项的其他[属性][attributes]。返回的 [`TokenStream`] 将此属性宏应用的[数据项][item]替换为任意数量的数据项。
 
-例如，下面这个属性宏接受输入流并按原样返回，实际上对属性并无操作。
+例如，下面这个属性宏接受输入流并按原样返回，实际上对属性并空操作。
 
 <!-- ignore: test doesn't support proc-macro -->
 ```rust,ignore
