@@ -505,7 +505,7 @@ let x: f64 = 2.; // 类型 f64
 | `<=`   | Le          | [小于或等于][comparison]
 | `@`    | At          | [子模式绑定][Subpattern binding]
 | `_`    | Underscore  | [通配符模式][Wildcard patterns], [自动推断型类型][Inferred types], [常量项][constants]中的非命名数据项, [外部 crate][extern crates], 和 [use声明][use declarations]
-| `.`    | Dot         | [字段存取][field], [元组索引][Tuple index]
+| `.`    | Dot         | [字段访问][field], [元组索引][Tuple index]
 | `..`   | DotDot      | [区间][range], [结构体表达式][Struct expressions], [模式][Patterns]
 | `...`  | DotDotDot   | [可变参数函数][extern], [区间模式][Range patterns]
 | `..=`  | DotDotEq    | [闭区间][range], [区间模式][Range patterns]

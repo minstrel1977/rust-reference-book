@@ -61,7 +61,7 @@
         - [枚举变体表达式](expressions/enum-variant-expr.md)
         - [调用表达式](expressions/call-expr.md)
         - [方法调用表达式](expressions/method-call-expr.md)
-        - [字段存取表达式](expressions/field-expr.md)
+        - [字段访问表达式](expressions/field-expr.md)
         - [闭包表达式](expressions/closure-expr.md)
         - [循环表达式](expressions/loop-expr.md)
         - [区间表达式](expressions/range-expr.md)
