@@ -507,9 +507,9 @@ assert_eq!(a, b);
 [_OuterAttribute_]: attributes.md
 [TUPLE_INDEX]: tokens.md#tuple-index
 
-结构体模式匹配与子模式定义的所有条件匹配的结构体值。它也被用来解构结构体。
+结构体模式匹配与子模式定义的所有条件匹配的结构体值。它也被用来[解构](#destructuring)结构体。
 
-在结构体模式中，结构体字段需通过名称、索引(对于元组结构体)来指向(refer to)，或者通过使用 `..` 来忽略：
+在结构体模式中，结构体字段需通过名称、索引（对于元组结构体来说）来指向，或者通过使用 `..` 来忽略：
 
 ```rust
 # struct Point {
@@ -558,8 +558,7 @@ match struct_value {
 }
 ```
 
-`ref` 和/或 `mut` *标识符*句法匹配任何值，并将其绑定到与给定字段同名的变量上。
-The `ref` and/or `mut` _IDENTIFIER_ syntax matches any value and binds it to a variable with the same name as the given field.
+_`ref` 和/或 `mut` IDENTIFIER_ 这样的句法格式能匹配任意值，并将其绑定到与给定字段同名的变量上。
 
 ```rust
 # struct Struct {
@@ -584,7 +583,7 @@ let Struct{a: x, b: y, c: z} = struct_value;          // 解构所有的字段
 > _TupleStructItems_ :\
 > &nbsp;&nbsp; [_Pattern_]&nbsp;( `,` [_Pattern_] )<sup>\*</sup> `,`<sup>?</sup>
 
-元组结构体模式匹配元组结构体值和枚举值，这些值将与该模式的子模式定义的所有条件进行匹配。它还被用于[析构](#destructuring)元组结构体或枚举值。
+元组结构体模式匹配元组结构体值和枚举值，这些值将与该模式的子模式定义的所有条件进行匹配。它还被用于[解构](#destructuring)元组结构体值或枚举值。
 
 当元组结构体模式的一个子模式是可反驳型的，则该元组结构体模式就是可反驳型的。
 
@@ -600,9 +599,9 @@ let Struct{a: x, b: y, c: z} = struct_value;          // 解构所有的字段
 > &nbsp;&nbsp; | [_RestPattern_]\
 > &nbsp;&nbsp; | [_Pattern_]&nbsp;(`,` [_Pattern_])<sup>+</sup> `,`<sup>?</sup>
 
-元组模式匹配与子模式定义的所有条件匹配的元组值。它们还被用来[解构](#destructuring)元组。
+元组模式匹配与子模式定义的所有条件匹配的元组值。它们还被用来[解构](#destructuring)元组值。
 
-带有单个剩余模式([_RestPattern_])RestPattern的元组列表 `(..)` 是一种不需要逗号的特殊元组列表，它匹配任意大小的元组。
+带有单个[剩余模式][_RestPattern_](_RestPattern_)的句法结构 `(..)` 是一种内部不需要逗号分割的特殊匹配结构，它可以匹配任意长度的元组。
 
 当元组模式的一个子模式是可反驳型的，那该元组模式就是可反驳型的。
 
@@ -613,7 +612,7 @@ let Struct{a: x, b: y, c: z} = struct_value;          // 解构所有的字段
 > _GroupedPattern_ :\
 > &nbsp;&nbsp; `(` [_Pattern_] `)`
 
-将模式括在圆括号内可用于显式控制复合模式的优先级。例如，在区间模式(如 `&0..=5`)旁边的引用模式会引起歧义，这时可以用圆括号来消除歧义。
+将模式括在圆括号内可用于显式控制复合模式的优先级。例如，在区间模式（如 `&0..=5`）和附近的引用模式会引起歧义，这时可以用圆括号来消除歧义。
 
 ```rust
 let int_reference = &3;
@@ -633,14 +632,14 @@ match int_reference {
 > _SlicePatternItems_ :\
 > &nbsp;&nbsp; [_Pattern_] \(`,` [_Pattern_])<sup>\*</sup> `,`<sup>?</sup>
 
-片模式可以匹配固定长度的数组和动态长度的切片。
+切片模式可以匹配固定长度的数组和动态长度的切片。
 
 ```rust
 // 固定长度
 let arr = [1, 2, 3];
 match arr {
-    [1, _, _] => "starts with one",
-    [a, b, c] => "starts with something else",
+    [1, _, _] => "从 1 开始",
+    [a, b, c] => "从其他值开始",
 };
 ```
 ```rust
@@ -648,12 +647,12 @@ match arr {
 let v = vec![1, 2, 3];
 match v[..] {
     [a, b] => { /* 这个匹配臂不适用，因为长度不匹配 */ }
-    [a, b, c] => { /* 这个匹配臂可以用 */ }
+    [a, b, c] => { /* 这个匹配臂适用 */ }
     _ => { /* 这个通配符是必需的，因为长度不是编译时可知的 */ }
 };
 ```
 
-在匹配数组时，只要每个元素是不可反驳型的，切片模式就是不可反驳型的。当匹配切片时，只有单个 `..` [剩余模式](#rest-patterns)或带有 `..` (剩余模式)作为子模式的[标识符模式](#identifier-patterns)的情况才是不可反驳型的。
+在匹配数组时，只要每个元素是不可反驳型的，切片模式就是不可反驳型的。当匹配切片时，只有单个 `..` [剩余模式](#rest-patterns)或带有 `..`（剩余模式）作为子模式的[标识符模式](#identifier-patterns)的情况才是不可反驳型的。
 
 ## Path patterns
 ## 路径模式
@@ -674,9 +673,9 @@ match v[..] {
 
 限定路径模式只能指向关联常量。
 
-指向的常量不能是联合体类型。结构体和枚举常量必须带有 `#[derive(PartialEq, Eq)]` 属性(不只是实现)。
+常量不能是联合体类型。结构体常量和枚举常量必须带有 `#[derive(PartialEq, Eq)]` 属性（不只是实现）。
 
-当路径模式指向结构体或枚举变体(枚举只有一个变体)或不可反驳型的常量时，该路径模式是不可反驳型的。当路径模式指向的是可反驳型常量或带有多个变体的枚举时，该路径模式是可反驳型的。
+当路径模式指向结构体或枚举变体(枚举只有一个变体)或类型为不可反驳型的常量时，该路径模式是不可反驳型的。当路径模式指向的是可反驳型常量或带有多个变体的枚举时，该路径模式是可反驳型的。
 
 [_GroupedPattern_]: #grouped-patterns
 [_IdentifierPattern_]: #identifier-patterns

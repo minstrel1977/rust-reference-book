@@ -3,10 +3,10 @@
 
 >[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
 >commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 \
->本译文最后维护日期：2020-10-18
+>本译文最后维护日期：2020-10-28
 
 
-标记码是由正则语言(regular languages)（非递归方式）定义的语法中的基本元素。Rust 源码输入可以被分解成以下几种标记码：
+标记码是由正则语言(regular languages)（非递归方式）定义的基本语法生产式(primitive productions)。Rust 源码输入可以被分解成以下几种标记码：
 
 * [关键字][Keywords]
 * [标识符][identifier]
@@ -15,9 +15,7 @@
 * [标点符号](#punctuation)
 * [分隔符](#delimiters)
 
-在本文档的语法中，“简单”标记码以[字符串列表成员][string table production]的形式给出，并以 `monospace` 字体显示。（译者注：如果译者觉得这种标记码需要翻译时，会使用如：等宽(`monospace`) 这种形式来翻译，但读者需要意识到“monospace”是语言里的一个标记码，是以其字面形式出现在源码里的。）
-
-[string table production]: notation.md#string-table-productions
+在本文档的语法中，“简单”标记码以[字符串型生产式][string table production]的形式给出，并以 `monospace` 字体显示。（译者注：如果译者觉得这种标记码需要翻译时，会使用如：等宽(`monospace`) 这种形式来翻译，但读者需要意识到“monospace”是语言里的一个标记码，是以其字面形式出现在源码里的。）
 
 ## Literals
 ## 字面量

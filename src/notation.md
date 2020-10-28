@@ -13,7 +13,7 @@
 | 表义符             | 示例                           | 释义                                 
 |-------------------|-------------------------------|--------------------------------|
 | CAPITAL           | KW_IF, INTEGER_LITERAL        | 由词法分析生成的标记码(token)      |
-| _ItalicCamelCase_ | _LetStatement_, _Item_        | 句法分析产生的内部语义规范          |
+| _ItalicCamelCase_ | _LetStatement_, _Item_        | 句法生产式(syntactical production)|
 | `string`          | `x`, `while`, `*`             | 确切的字面字符(串)                |
 | \\x               | \\n, \\r, \\t, \\0            | 转义字符                         |
 | x<sup>?</sup>     | `pub`<sup>?</sup>             | 可选项                           |
@@ -28,11 +28,11 @@
 | ( )               | (`,` _Parameter_)<sup>?</sup> | 数据项分组(Groups items)          |
 
 ## String table productions
-## 词法分析用字符串列表
+## 字符串表示的句法生产式列表
 
-语法中的一些规则-特别是[一元运算符][unary operators]，[二元运算符][binary operators]和[关键字][keywords]—会以简化形式 - 作为可打印字符串的列表 - 给出。这个列表内的成员构成了关于[标记码][tokens]规则的一个子集，它们会被假定为词法分析阶段的结果来提供给解析器解释源代码用。词法分析阶段由一个<abbr title="确定性有限自动机(Deterministic Finite Automaton)">DFA</abbr>驱动，来对所有这些字符列串表实体进行分离和提取操作。
+语法中的一些规则 &mdash; 特别是[一元运算符][unary operators]，[二元运算符][binary operators]和[关键字][keywords] &mdash; 会以简化形式 - 作为可打印字符串的列表 - 给出。这些规则构成了[标记码][tokens]相关规则的规则子集，并且它们被假定为词法分析阶段的结果。词法分析阶段由<abbr title="确定性有限自动机(Deterministic Finite Automaton)">DFA</abbr>驱动，并应用这些规则来对源码进行析取操作。（译者注：原文在这里并没有给出句法生产式的列表，但本书会假设存在这么一个列表。）
 
-本书还约定，当语法中出现如 `monospace` 这样的字符串时，它代表对这种字符串列表中的单个标记码成员的隐式引用。查阅[标记码][tokens]以获取更多信息。（译者注：如果译者觉得这种引用需要翻译时，会使用如：等宽(`monospace`) 这种形式来翻译，但读者需要意识到“monospace”是语言里的一个标记码，是以其字面形式出现在源码里的。）
+本书还约定，当语法中出现如 `monospace` 这样的字符串时，它代表对这些生产式中的单个标记码成员的隐式引用。查阅[标记码][tokens]以获取更多信息。（译者注：如果译者觉得这种引用需要翻译时，会使用如：等宽(`monospace`) 这种形式来翻译，但读者需要意识到“monospace”是语言里的一个标记码，是以其字面形式出现在源码里的。）
 
 [binary operators]: expressions/operator-expr.md#arithmetic-and-logical-binary-operators
 [keywords]: keywords.md

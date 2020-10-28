@@ -89,7 +89,7 @@
         - [指针型](types/pointer.md)
         - [函数指针](types/function-pointer.md)
         - [trait对象](types/trait-object.md)
-        - [impl trait](types/impl-trait.md)
+        - [实现trait](types/impl-trait.md)
         - [类型参数](types/parameters.md)
         - [推断型](types/inferred.md)
     - [动态尺寸类型(DST)](dynamically-sized-types.md)

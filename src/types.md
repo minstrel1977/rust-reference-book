@@ -3,37 +3,38 @@
 # 类型
 
 >[types.md](https://github.com/rust-lang/reference/blob/master/src/types.md)\
->commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34
+>commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 \
+>本译文最后维护日期：2020-10-28
 
-Rust 程序中的每个变量、数据项和值都有一个类型。*值*的*类型*定义了保存它的内存的解释信息以及可能对该值执行的操作。
+Rust 程序中的每个变量、数据项和值都有一个类型。*值*的*类型*定义了对于保存它的内存的解释，以及定义了可以对该值执行的操作。
 
-内置的类型回忆非平凡的方式(in nontrivial ways)紧密地集成到语言中，这种方式是不可能在用户定义的类型中模拟的。用户定义的类型功能有限。
+内置的类型以非平凡的方式(in nontrivial ways)紧密地集成到语言中，这种方式是不可能在用户定义的类型中模拟的。用户定义的类型功能有限。
 
-Rust 类型分类列表为：
+内置类型列表：
 
 * 原生类型(primitive types):
-    * [布尔型(Boolean)] — `true` 或 `false`
-    * [数字类(Numeric)] — 整型(integer) 和 浮点型(float)
-    * [文本类(Textual)] — 字符型(`char`) 和 字符串切片(`str`)
-    * [never类型] — `!` — 没有值的类型
+    * [布尔型(Boolean)][Boolean] — `true` 或 `false`
+    * [数字类(Numeric)][Numeric] — 整型(integer) 和 浮点型(float)
+    * [文本类(Textual)][Textual] — 字符型(`char`) 和 字符串切片(`str`)
+    * [never类型][Never] — `!` — 没有值的类型
 *  序列类型(sequence types)：
-    * [元组(Tuple)]
-    * [数组(Array)]
-    * [切片(Slice)]
+    * [元组(Tuple)][Tuple]
+    * [数组(Array)][Array]
+    * [切片(Slice)][Slice]
 * 用户自定义类型(user-defined types)：
-    * [结构体(Struct)]
-    * [枚举(Enum)]
-    * [联合体(Union)]
+    * [结构体(Struct)][Struct]
+    * [枚举(Enum)][Enum]
+    * [联合体(Union)][Union]
 * 函数类型(function types)：
-    * [函数(Functions)]
-    * [闭包(Closures)]
+    * [函数(Functions)][Functions]
+    * [闭包(Closures)][Closures]
 * 指针类型(pointer types)：
-    * [引用(References)]
-    * [裸指针(Raw pointers)]
-    * [函数指针(Function pointers)]
+    * [引用(References)][References]
+    * [裸指针(Raw pointers)][Raw pointers]
+    * [函数指针(Function pointers)][Function pointers]
 * trait类型(Trait types):
-    * [trait对象(Trait objects)]
-    * [实现对象(Impl trait)]
+    * [trait对象(Trait objects)][Trait objects]
+    * [实现trait(Impl trait)][Impl trait]
 
 ## Type expressions
 ## 类型表达式
@@ -60,20 +61,20 @@ Rust 类型分类列表为：
 > &nbsp;&nbsp; | [_BareFunctionType_]\
 > &nbsp;&nbsp; | [_MacroInvocation_]
 
-上面*类型*语法规则中定义的*类型表达式*是引用类型的句法。它可以指向：
+上表中的 _Type_ 句法规则中定义的各种*类型表达式*是指向某个具体类型的句法。它们可以指向：
 
-* 序列类型 ([tuple], [array], [slice]).
-* [类型路径(type paths)] 可指：
-    * 原生类型([布尔型][boolean], [数字类][numeric], [文本类][textual]).
-    * [数据项][item]([结构体(`struct`)][struct], [枚举(`enum`)][enum], [联合体(`union`)][union], [类型别名][type alias], [trait])的路径.
+* 序列类型（[tuple], [array], [slice]）。
+* [类型路径(type paths)][Type paths]，这些包括：
+    * 原生类型（[布尔型][boolean], [数字类][numeric], [文本类][textual]）。
+    * 指向[数据项][item]（[结构体(`struct`)][struct], [枚举(`enum`)][enum], [联合体(`union`)][union], [类型别名][type alias], [trait]）的路径。
     * [`Self`路径][`Self` path]，其中 `Self` 是实现类型。
-    * 一般[类型参数][type parameters]。
-* 指针类型([引用][reference], [裸指针][raw pointer], [函数指针][function pointer])。
-* [自动推断型类型][inferred type]，就是由编译器确定具体的使用类型。
+    * 泛型[类型参数][type parameters]。
+* 指针类型（[引用][reference], [裸指针][raw pointer], [函数指针][function pointer]）。
+* [自动推断型类型(inferred type)][inferred type]，就是请求编译器确定类型的类型。
 * 用来消除歧义的[圆括号][Parentheses]。
-* Trait类型：[trait对象][Trait objects] 和 [实现对象][impl trait].
+* Trait类型：[trait对象(trait object)][Trait objects] 和 [实现trait(impl trait)][impl trait].
 * [never]型。
-* 展开称类型表达式的[宏][Macros]。
+* 展开成类型表达式的[宏][Macros]。
 
 ### Parenthesized types
 ### 括起来的类型
@@ -82,6 +83,12 @@ Rust 类型分类列表为：
 > &nbsp;&nbsp; `(` [_Type_] `)`
 
 在某些情况下，类型的组合可能会产生歧义。在类型周围使用括号可以避免歧义。例如，有时在[引用类型][reference type]中简单使用 `+`运算符来引入进行[类型约束][type boundaries]会搞不清楚约束该应用于何处，因此需要使用括号。需要这种消除歧义的语法规则使用 [_TypeNoBounds_] 规则替代 [_Type_] 规则。
+In some situations the combination of types may be ambiguous. Use parentheses
+around a type to avoid ambiguity. For example, the `+` operator for [type
+boundaries] within a [reference type] is unclear where the
+boundary applies, so the use of parentheses is required. Grammar rules that
+require this disambiguation use the [_TypeNoBounds_] rule instead of
+[_Type_].
 
 ```rust
 # use std::any::Any;
@@ -113,7 +120,7 @@ let a: List<i32> = List::Cons(7, Box::new(List::Cons(13, Box::new(List::Nil))));
 [_ImplTraitTypeOneBound_]: types/impl-trait.md
 [_ImplTraitType_]: types/impl-trait.md
 [_InferredType_]: types/inferred.md
-[_MacroInvocation_]: macros.md#宏调用
+[_MacroInvocation_]: macros.md#macro-invocation
 [_NeverType_]: types/never.md
 [_ParenthesizedType_]: types.md#parenthesized-types
 [_QualifiedPathInType_]: paths.md#qualified-paths
@@ -124,7 +131,7 @@ let a: List<i32> = List::Cons(7, Box::new(List::Cons(13, Box::new(List::Nil))));
 [_TraitObjectType_]: types/trait-object.md
 [_TupleType_]: types/tuple.md#tuple-types
 [_TypeNoBounds_]: types.md#type-expressions
-[_TypePath_]: paths.md#类型中的路径
+[_TypePath_]: paths.md#paths-in-types
 [_Type_]: types.md#type-expressions
 
 [Array]: types/array.md
@@ -144,7 +151,7 @@ let a: List<i32> = List::Cons(7, Box::new(List::Cons(13, Box::new(List::Nil))));
 [Textual]: types/textual.md
 [Trait objects]: types/trait-object.md
 [Tuple]: types/tuple.md
-[Type paths]: paths.md#类型中的路径
+[Type paths]: paths.md#paths-in-types
 [Union]: types/union.md
 [`Self` path]: paths.md#self-1
 [arrays]: types/array.md
@@ -165,3 +172,6 @@ let a: List<i32> = List::Cons(7, Box::new(List::Cons(13, Box::new(List::Nil))));
 [type boundaries]: trait-bounds.md
 [type parameters]: types/parameters.md
 [unions]: types/union.md
+
+<!-- 2020-10-25 -->
+<!-- checked -->

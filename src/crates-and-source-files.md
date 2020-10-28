@@ -49,11 +49,11 @@ Rust 源文件描述了一个模块，其名称和位置（在当前 crate 的�
 ## Byte order mark
 ## 字节顺序标记(BOM)
 
-可选的[_UTF8字节序标记_][_UTF8 byte order mark_]（UTF8BOM）表示该文件是用 UTF8 编码的。它只能出现在文件的开头，并且编译器会忽略它。
+可选的[_UTF8字节序标记_][_UTF8 byte order mark_]（UTF8BOM 生产式）表示该文件是用 UTF8 编码的。它只能出现在文件的开头，并且编译器会忽略它。
 
 ## Shebang
 
-源文件可以有一个[_shebang_]（SHEBANG），它指示操作系统使用什么程序来执行此文件。它本质上是将源文件作为可执行脚本处理。shebang 只能出现在文件的开头(但是在可选的 _UTF8BOM_ 之后)。它会被编译器忽略。例如：
+源文件可以有一个[_shebang_]（SHEBANG 生产式），它指示操作系统使用什么程序来执行此文件。它本质上是将源文件作为可执行脚本处理。shebang 只能出现在文件的开头(但是在可选的 _UTF8BOM_ 之后)。它会被编译器忽略。例如：
 
 <!-- ignore: tests don't like shebang -->
 ```rust,ignore

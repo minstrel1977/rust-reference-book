@@ -34,7 +34,7 @@
 
 `..` 和 `..=` 操作符会根据下表中的规则构造 `std::ops::Range`（或 `core::ops::Range`）的某一变体类型的对象：
 
-| 表达式分类              | 句法          | 类型                          | 区间语义              |
+| 生产式/句法规则           | 句法          | 类型                          | 区间语义              |
 |------------------------|---------------|------------------------------|-----------------------|
 | _RangeExpr_            | start`..`end  | [std::ops::Range]            | start &le; x &lt; end |
 | _RangeFromExpr_        | start`..`     | [std::ops::RangeFrom]        | start &le; x          |
