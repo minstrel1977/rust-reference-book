@@ -2,7 +2,8 @@
 #匹配(`match`)表达式
 
 >[match-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/match-expr.md)\
->commit: 41cf00929903710a9ce9b1f4c5d8b96e6a511614
+>commit: 41cf00929903710a9ce9b1f4c5d8b96e6a511614 \
+>本译文最后维护日期：2020-10-28
 
 > **<sup>句法</sup>**\
 > _MatchExpression_ :\
@@ -27,21 +28,13 @@
 > _MatchArmGuard_ :\
 > &nbsp;&nbsp; `if` [_Expression_]
 
-*`match`表达式*在模式(pattern)上建立控制流程分支(branch)。匹配的具体形式取决于[模式][pattern]。一个匹配(`match`)表达式带有一个 *[检验对象][scrutinee](scrutinee)表达式*，它是要与模式进行比较的值。检验对象表达式和模式必须具有相同的类型。
+*匹配(`match`)表达式*在模式(pattern)上建立控制流分支(branch)。匹配的具体形式取决于其应用的[模式][pattern]。一个匹配(`match`)表达式带有一个要与模式进行比较的 *[检验对象][scrutinee](scrutinee)表达式*。检验对象表达式和模式必须具有相同的类型。
 
-根据检验对象表达式是[位置表达式或值表达式][place expression]，`match` 的行为会有所不同。如果检验对象表达式是一个[值表达式][value expression]，则这个表达式首先会在被求值到一个临时位置，然后将这个返回值按顺序与匹配臂中的模式进行比较，直到找到一个成功的匹配。这个第一个匹配成功的模式所在的匹配臂会被选中为当前匹配(`match`)的分支目标，然后由该模式(从检验对象那里)绑定的任何变量又都会被赋值给该匹配臂的块中的局部变量，然后控制流程进入该块。
-A `match` behaves differently depending on whether or not the scrutinee
-expression is a [place expression or value expression][place expression].
-If the scrutinee expression is a [value expression], it is first evaluated into
-a temporary location, and the resulting value is sequentially compared to the
-patterns in the arms until a match is found. The first arm with a matching
-pattern is chosen as the branch target of the `match`, any variables bound by
-the pattern are assigned to local variables in the arm's block, and control
-enters the block.
+根据检验对象表达式是[位置表达式或值表达式][place expression]，匹配(`match`)的行为会有所不同。如果检验对象表达式是一个[值表达式][value expression]，则这个表达式首先会在被求值到一个临时位置，然后将这个结果值按顺序与匹配臂(arms)中的模式进行比较，直到找到一个成功的匹配。第一个匹配成功的模式所在的匹配臂会被选中为当前匹配(`match`)的分支目标，然后由该模式（从检验对象那里）绑定到的任何变量又都会被赋值给该匹配臂的块中的局部变量，然后控制流进入该块。
 
-当检验对象表达式是一个[位置表达式][place expression]时，此匹配(`match`)表达式不用先去内存上分配一个临时位置，但是，按值匹配绑定会复制或移动这个(位置表达式代表的)内存位置里面的值。如果可能，最好是在匹配位置表达式上进行匹配，因为这种匹配的生存期继承了位置表达式的生存期，而不会(让其生存期仅)局限于此匹配的内部。
+当检验对象表达式是一个[位置表达式][place expression]时，此匹配(`match`)表达式不用先去内存上分配一个临时位置，但是，按值匹配绑定(by-value binding)会复制或移动这个（位置表达式代表的）内存位置里面的值。如果可能，最好是在位置表达式上进行匹配，因为这种匹配的生存期继承了该位置表达式的生存期，而不会（让其生存期仅）局限于此匹配的内部。
 
-`match`表达式的一个示例：
+匹配(`match`)表达式的一个示例：
 
 ```rust
 let x = 1;
@@ -56,9 +49,9 @@ match x {
 }
 ```
 
-模式中的变量的作用域是在匹配守卫(match guard)和匹配臂的表达式里。[变量绑定方式][binding mode](移动、复制或引用)取决于模式。
+模式中绑定到的变量的作用域可以覆盖到匹配守卫(match guard)和匹配臂的表达式里。[变量绑定方式][binding mode]（移动、复制或引用）取决于使用的具体模式。
 
-可以使用 `|`操作符连接多个匹配模式。每个模式将按照从左到右的顺序进行测试，直到找到一个成功的匹配。
+可以使用操作符 `|` 连接多个匹配模式。每个模式将按照从左到右的顺序进行测试，直到找到一个成功的匹配。
 
 ```rust
 let x = 9;
@@ -86,9 +79,9 @@ match S(1, 2) {
 ## Match guards
 ## 匹配守卫
 
-匹配臂可以接受*匹配守卫*来进一步细化匹配标准。模式守卫(Pattern guard)出现在模式之后，由 `if`关键字后面的布尔类型表达式组成。
+匹配臂可以接受*匹配守卫(Pattern guard)*来进一步改进匹配标准。模式守卫出现在模式后面，由关键字 `if` 后面的布尔类型表达式组成。
 
-当模式匹配成功时，将执行匹配守卫表达式。如果此表达式的计算结果为真，则模式将进一步匹配成功。否则，将匹配将测试下一个模式，包括同一匹配臂中 `|`运算符分割的后续匹配模式。
+当模式匹配成功时，将执行匹配守卫表达式。如果此表达式的计算结果为真，则此模式将进一步被确认匹配成功。否则，将匹配将测试下一个模式，包括同一匹配臂中运算符 `|` 分割的后续匹配模式。
 
 ```rust
 # let maybe_digit = Some(0);
@@ -101,7 +94,7 @@ let message = match maybe_digit {
 };
 ```
 
-> 注意：使用 `|`操作符的多次匹配可能会导致匹配守卫必须多次执行的副作用。例如：
+> 注意：使用操作符 `|` 的多次匹配可能会导致后跟的匹配守卫必须多次执行的副作用。例如：
 >
 > ```rust
 > # use std::cell::Cell;
@@ -113,29 +106,32 @@ let message = match maybe_digit {
 > assert_eq!(i.get(), 2);
 > ```
 
-匹配守卫可以引用绑定在它们前面的模式里的变量。在计算匹配守卫之前，将对检验对象内部被模式的变量匹配上的那部分进行共享引用。在计算匹配守卫时，在访问变量时使用这个共享引用。只有当匹配守卫最终计算为真时，值才会从检验对象内部移动或复制到变量中。这使得共享借用可以在守卫内部使用，而不会在守卫不匹配的情况下移出检验对象。此外，通过在评估匹配守卫的同时保留共享引用，也可以防止匹配守卫内部去修改检验对象。
+匹配守卫可以引用绑定在它们前面的模式里的变量。在计算匹配守卫之前，将对检验对象内部被模式的变量匹配上的那部分进行共享引用。在计算匹配守卫时，其中的访问该变量动作就会使用这个共享引用。只有当匹配守卫最终计算为真时，此共享引用的值才会从检验对象内部移动或复制到相应的匹配分支的变量中。这使得共享借用可以在守卫内部使用，而不会在守卫不匹配的情况下移出检验对象。此外，通过在评估匹配守卫的同时保留共享引用，也可以防止匹配守卫内部去修改检验对象。
 
 ## Attributes on match arms
 ## 匹配臂上的属性
 
-在匹配臂上允许使用外部属性，但匹配臂上只有 [`cfg`]、[`cold`] 和 [lint检查类属性][lint check attributes]这些属性才有意义。
+在匹配臂上允许使用外部属性，但在匹配臂上只有 [`cfg`]、[`cold`] 和 [lint检查类属性][lint check attributes]这些属性才有意义。
 
-适用于[块表达式上的属性][attributes on block expressions]的表达式上下文同样适用于匹配表达式上的属性，同样也是允许[内部属性][Inner attributes]直接位于表达式的左括号之后。
+允许[块表达式上的属性][attributes on block expressions]的表达式上下文同样允许匹配表达式上的属性，即在这种上下文下[内部属性][Inner attributes]可以直接位于表达式的左括号之后。
 
 [_Expression_]: ../expressions.md
-[place expression]: ../expressions.md#位置表达式和值表达式
-[value expression]: ../expressions.md#位置表达式和值表达式
+[place expression]: ../expressions.md#place-expressions-and-value-expressions
+[value expression]: ../expressions.md#place-expressions-and-value-expressions
 [_InnerAttribute_]: ../attributes.md
 [_OuterAttribute_]: ../attributes.md
 [`cfg`]: ../conditional-compilation.md
-[`cold`]: ../attributes/codegen.md#cold属性
-[lint check attributes]: ../attributes/diagnostics.md#lint检查类属性
+[`cold`]: ../attributes/codegen.md#the-cold-attribute
+[lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
 [Range Expression]: range-expr.md
 
 [_Pattern_]: ../patterns.md
 [pattern]: ../patterns.md
 [Inner attributes]: ../attributes.md
 [Range Pattern]: ../patterns.md#range-patterns
-[attributes on block expressions]: block-expr.md#块表达式上的属性
+[attributes on block expressions]: block-expr.md#attributes-on-block-expressions
 [binding mode]: ../patterns.md#binding-modes
 [scrutinee]: ../glossary.md#scrutinee
+
+<!-- 2020-10-25 -->
+<!-- checked -->

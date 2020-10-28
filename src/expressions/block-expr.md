@@ -102,7 +102,7 @@ fn move_by_block_expression() {
 
 Finally, the `break` and `continue` keywords cannot be used to branch
 out from an async block. Therefore the following is illegal:
-异步块和函数边界类似，或者更类似于闭包。因此 `?`操作符和 `return`表达式也都能影响 future 的输出，且不会影响封闭它的函数或其他上下文。也就是说，future 的输出跟闭包将其中的 `return <expr>` 的表达式 `<expr>` 的计算结果作为输出的做法是一样的。类似地,如果 `<expr>?` 传播一个错误，这个错误会被 future 在未来的某个时候作为返回结果传播出去。
+异步块和函数边界类似，或者更类似于闭包。因此 `?`操作符和 返回(`return`)表达式也都能影响 future 的输出，且不会影响封闭它的函数或其他上下文。也就是说，future 的输出跟闭包将其中的 `return <expr>` 的表达式 `<expr>` 的计算结果作为输出的做法是一样的。类似地,如果 `<expr>?` 传播一个错误，这个错误会被 future 在未来的某个时候作为返回结果传播出去。
 
 最后，关键字 `break` 和 `continue` 不能用于从异步块中跳出分支。因此，以下内容是非法的：
 

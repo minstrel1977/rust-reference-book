@@ -2,7 +2,8 @@
 # 区间表达式
 
 >[range-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/range-expr.md)\
->commit: 1cc592ee270b4d9ad190a8cacce0a1ed356b54d0
+>commit: 1cc592ee270b4d9ad190a8cacce0a1ed356b54d0 \
+>本译文最后维护日期：2020-10-28
 
 > **<sup>句法</sup>**\
 > _RangeExpression_ :\
@@ -31,7 +32,7 @@
 > _RangeToInclusiveExpr_ :\
 > &nbsp;&nbsp; `..=` [_Expression_]
 
-`..`和 `..=`操作符将根据下表构造各种 `std::ops::Range`(或 `core::ops::Range`)的变体的对象：
+`..` 和 `..=` 操作符会根据下表中的规则构造 `std::ops::Range`（或 `core::ops::Range`）的某一变体类型的对象：
 
 | 表达式分类              | 句法          | 类型                          | 区间语义              |
 |------------------------|---------------|------------------------------|-----------------------|
@@ -78,3 +79,6 @@ for i in 1..11 {
 [std::ops::RangeFull]: https://doc.rust-lang.org/std/ops/struct.RangeFull.html
 [std::ops::RangeInclusive]: https://doc.rust-lang.org/std/ops/struct.RangeInclusive.html
 [std::ops::RangeToInclusive]: https://doc.rust-lang.org/std/ops/struct.RangeToInclusive.html
+
+<!-- 2020-10-25 -->
+<!-- checked -->
