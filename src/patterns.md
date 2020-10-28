@@ -2,7 +2,8 @@
 # 模式
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
->commit: 840993a70813e71362dc1f640a1e7e0a9c1d3577
+>commit: 840993a70813e71362dc1f640a1e7e0a9c1d3577 \
+>本译文最后维护日期：2020-10-28
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\
@@ -24,12 +25,12 @@
 > &nbsp;&nbsp; | [_PathPattern_]\
 > &nbsp;&nbsp; | [_MacroInvocation_]
 
-模式基于给定结构去匹配值，并可选地将变量和这些结构中匹配到的值相互绑定。模式还用在函数和闭包的变量声明和参数中。
+模式基于给定结构去匹配值，并可选地将变量和这些结构中匹配到的值绑定起来。模式也用在变量声明上和函数（包括闭包）的参数上。
 
 下面示例中的模式完成四件事：
 
 * 测试 `person` 是否在 `car`字段中填充了内容。
-* 测试变量 `person` 的 `age` 字段(的值)是否在13到19之间，并将其值绑定到变量 `person_age` 上。
+* 测试变量 `person` 的 `age`字段（的值）是否在 13 到 19 之间，并将其值绑定到变量 `person_age` 上。
 * 将对 `name` 字段的引用绑定到变量 `person_name` 上。
 * 忽略 `person` 的其余字段。其余字段可以有任何值，并且不绑定到任何变量。
 
@@ -72,7 +73,7 @@ if let
 ## Destructuring
 ## 解构
 
-模式可用于*解构*[结构体(`struct`)][structs]、[枚举(`enum`)][enums]和[元组][tuples]。解构将一个值分解成它的组成部分。使用的句法与创建此类值时的几乎相同。在[检验对象][scrutinee]表达式具有结构体(`struct`)、枚举(`enum`)或元组(`tuple`)类型的模式中，占位符(`_`) 代表*单个*数据字段，而通配符`..` 代表特定变量(variant)的*所有*剩余字段。当使用字段的名称(而不是编号)来解构数据结构时，允许将 `fieldname` 写作 `fieldname: fieldname`的简写形式。
+模式可用于*解构*[结构体(`struct`)][structs]、[枚举(`enum`)][enums]和[元组][tuples]。解构将一个值分解成它的组成部分，使用的句法与创建此类值时的几乎相同。在[检验对象][scrutinee]表达式具有结构体(`struct`)、枚举(`enum`)或元组(`tuple`)类型的模式中，占位符(`_`) 代表*一个*数据字段，而通配符 `..` 代表特定变量(variant)的*所有*剩余字段。当使用字段的名称（而不是编号）来解构数据结构时，允许将 `fieldname` 当作 `fieldname: fieldname` 的简写形式书写。
 
 ```rust
 # enum Message {
@@ -96,7 +97,7 @@ match message {
 ## Refutability
 ## 可反驳性
 
-当一个模式有可能与它所匹配的值不匹配时，我们就说它是*可反驳型的(refutable)*。另一方面，*不可反驳型的(irrefutable)*模式总是与它们所匹配的值相匹配。例如：
+当一个模式有可能与它所匹配的值不匹配时，我们就说它是*可反驳型的(refutable)*。另一方面，*不可反驳型(irrefutable)*模式总是能与它们所匹配的值匹配成功。例如：
 
 ```rust
 let (x, y) = (1, 2);               // "(x, y)" 是一个不可反驳型模式
@@ -163,9 +164,9 @@ for i in -2..5 {
 > _IdentifierPattern_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `ref`<sup>?</sup> `mut`<sup>?</sup> [IDENTIFIER] (`@` [_Pattern_] ) <sup>?</sup>
 
-标识符模式将它们匹配的值绑定到一个变量上。此变量的标识符在该模式中必须是唯一的。该变量会在作用域中遮蔽同名的任何变量。这种绑定的作用域取决于使用模式的上下文(例如 `let`绑定或匹配(`match`)的匹配臂上)。
+标识符模式将它们匹配的值绑定到一个变量上。此标识符在该模式中必须是唯一的。该变量会在作用域中遮蔽任何同名的变量。这种绑定的作用域取决于使用模式的上下文（例如 `let`绑定或匹配臂(`match` arm)）。
 
-最常见的标识符模式就是函数和闭包的变量声明和参数，这种模式只包含一个标识符(也可能前带一个 `mut`)，能匹配任何值，并将其绑定到该标识符。
+这种模式只包含一个标识符（也可能前带一个 `mut`），能匹配任何值，并将其绑定到该标识符。最常见的标识符模式就是用在变量声明上和函数（包括闭包）的参数上。
 
 ```rust
 let mut variable = 10;
@@ -174,7 +175,7 @@ fn sum(x: i32, y: i32) -> i32 {
 # }
 ```
 
-要将模式的匹配值绑定到变量，也可使用句法 `variable @ subpattern`。例如，下面示例中将值2绑定到 `e` (不是整个区间(range)：这里的区间是一个区间子模式(range subpattern))。
+要将模式的匹配值绑定到变量，也可使用句法 `variable @ subpattern`。例如，下面示例中将值 2 绑定到 `e` 上（不是整个区间(range)：这里的区间是一个区间子模式(range subpattern)）。
 
 ```rust
 let x = 2;
@@ -185,7 +186,7 @@ match x {
 }
 ```
 
-默认情况下，标识符模式里匹配值会用一个拷贝副本或自身移动过来和变量完成绑定，具体是拷贝还是移动取决于匹配值是否实现了 [`Copy`]。也可以通过使用 `ref` 关键字将变量和值的引用绑定，或者使用 `ref mut` 将变量和值的可变引用绑定。示例：
+默认情况下，标识符模式里变量会和匹配值的一个拷贝副本绑定，或匹配值自身移动过来和变量完成绑定，具体是使用拷贝语义还是移动语义取决于匹配值是否实现了 [`Copy`]。也可以通过使用关键字 `ref` 将变量和值的引用绑定，或者使用 `ref mut` 将变量和值的可变引用绑定。示例：
 
 ```rust
 # let a = Some(10);
@@ -200,7 +201,7 @@ match a {
 }
 ```
 
-在第一个匹配表达式中，值被复制(或移动)。在第二个匹配中，对相同内存位置的引用被绑定到变量上。之所以需要这种句法，是因为在解构子模式(destructuring subpatterns)中，`&`操作符不能应用于值的字段。例如，以下内容无效：
+在第一个匹配表达式中，值被拷贝（或移动）。在第二个匹配中，对相同内存位置的引用被绑定到变量上。之所以需要这种句法，是因为在解构子模式(destructuring subpatterns)中，操作符 `&` 不能应用于值的字段。例如，以下内容无效：
 
 ```rust,compile_fail
 # struct Person {
@@ -211,7 +212,7 @@ match a {
 if let Person{name: &person_name, age: 18..=150} = value { }
 ```
 
-要使其有效，请编写以下代码：
+要使其有效，请按如下方式编写代码：
 
 ```rust
 # struct Person {
@@ -222,17 +223,16 @@ if let Person{name: &person_name, age: 18..=150} = value { }
 if let Person{name: ref person_name, age: 18..=150} = value { }
 ```
 
-因此，`ref` 不是匹配规则什么的。它唯一的目的就是使变量和匹配值的引用绑定起来，而不是潜在地复制或移动匹配的内容。
+这里，`ref` 不是被匹配的一部分。这里它唯一的目的就是使变量和匹配值的引用绑定起来，而不是潜在地拷贝或移动匹配的内容。
 
-[路径模式(Path pattern)](#path-patterns)优先于标识符模式。如果给某个标识符被限定用上了 `ref` 或 `ref mut`，同时它又遮蔽了某个常量，这会导致错误。
+[路径模式(Path pattern)](#path-patterns)优先于标识符模式。如果给某个标识符前置用上了 `ref` 或 `ref mut`，同时该标识符又遮蔽了某个常量，这会导致错误。
 
-如果 `@`子模式是不可反驳型的或子模式未指定，则标识符模式是不可反驳型的。
+如果 `@`子模式是不可反驳型的或未指定子模式，则标识符模式是不可反驳型的。
 
 ### Binding modes
 ### 绑定方式
 
-（毕竟显式使用 `ref` 或 `ref mut` 绑定有些麻烦，）为了更好地服务于人类工程学，为了让引用(类型的变量)和值的绑定更容易一些，模式会自动选择不同的*绑定方式*。当引用值与非引用模式匹配时，这将自动地被视为 `ref` 或 `ref mut` 绑定。示例：
-To service better ergonomics, patterns operate in different binding modes in order to make it easier to bind references to values. When a reference value is matched by a non-reference pattern, it will be automatically treated as a ref or ref mut binding. Example:
+（毕竟显式使用 `ref` 或 `ref mut` 绑定有些麻烦，）为了更好地服务于人类工程学，为了让引用和匹配值的绑定更容易一些，模式会自动选择不同的*绑定方式*。当引用值与非引用模式匹配时，这将自动地被视为 `ref` 或 `ref mut` 绑定方式。示例：
 
 ```rust
 let x: &Option<i32> = &Some(3);
@@ -241,19 +241,15 @@ if let Some(y) = x {
 }
 ```
 
-*非引用模式*包括**除**绑定模式、通配符模式(#wildcard-pattern)(`_`)、引用类型的[常量(`const`)模式](#path-patterns)和[引用模式](#reference-patterns)以外的所有模式。
-Non-reference patterns include all patterns except bindings, wildcard patterns (_), const patterns of reference types, and reference patterns.
+*非引用模式(Non-reference patterns)*包括**除**上面的绑定方式、后面的[通配符模式](#wildcard-pattern)（`_`）、引用类型的[常量(`const`)模式](#path-patterns)和[引用模式](#reference-patterns)以外的所有模式。
 
-如果绑定模式(binding pattern)没有显式地包含 `ref`、`ref mut`、或 `mut`，那么它将使用*默认绑定方式(the default binding mode)*来确定如何绑定变量。默认绑定方式以使用移动语义的“移动”模式开始。当匹配模式时，编译器对模式从外到内逐层匹配。每次使用非引用模式匹配引用时，它都会自动解引用该值并更新默认绑定方式。引用会将默认绑定模式设置为ref。可变引用会将模式设置为 `ref mut`，除非模式已经是`ref`(在这种情况下它仍然是`ref`)。如果自动解引用的值仍然是引用，则会重复解引用。
+如果绑定模式(binding pattern)中没有显式地包含 `ref`、`ref mut`、`mut`，那么它将使用*默认绑定方式*来确定如何绑定变量。默认绑定方式以使用移动语义的“移动(move)”方式开始。当匹配一个模式时，编译器对模式从外到内逐层匹配。每次使用非引用模式去匹配引用值时，它都会自动解引用该引用值，并更新默认绑定方式。引用会将默认绑定方式设置为 `ref` 方式。可变引用会将模式设置为 `ref mut` 方式，除非绑定方式已经是 `ref` 了（在这种情况下它仍然是 `ref` 方式）。如果自动解引用的值仍然是引用，则会重复解引用此值。
 
-Move bindings and reference bindings can be mixed together in the same pattern, doing so will
-result in partial move of the object bound to and the object cannot be used afterwards.
-This applies only if the type cannot be copied.
+移动语义的绑定方式和引用语义的绑定方式可以在同一个模式中混合使用，这样做会导致绑定对象的部分被移走，并且之后无法再使用该对象。这只适用于类型无法拷贝的情况下。
 
-In the example below, `name` is moved out of `person`, trying to use `person` as a whole or
-`person.name` would result in an error because of *partial move*.
+下面的示例中，`name` 被移出了 `person`，因此如果再试图把 `person` 作为一个整体使用，或再次使用 `person.name`，将会因为*部分移出(partial move)*的问题而报错。
 
-Example:
+示例：
 
 ```rust
 # struct Person {
@@ -261,7 +257,7 @@ Example:
 #    age: u8,
 # }
 # let person = Person{ name: String::from("John"), age: 23 };
-// `name` is moved from person and `age` referenced
+// 在 `age` 被引用绑定的情况下，`name` 被从 person 中移出
 let Person { name, ref age } = person;
 ```
 
@@ -272,7 +268,7 @@ let Person { name, ref age } = person;
 > _WildcardPattern_ :\
 > &nbsp;&nbsp; `_`
 
-*通配符模式*(下划线符号)能与任何值匹配。常用它来忽略那些无关紧要的值。在其他模式中使用该模式时，它匹配单个数据字段（与和代表和其余字段匹配的 `..` 相对）。与标识符模式不同，它不会复制、移动或借用它匹配的值。
+*通配符模式*（下划线符号）能与任何值匹配。常用它来忽略那些无关紧要的值。在其他模式中使用该模式时，它匹配单个数据字段（与和匹配所有其余字段的 `..` 相反）。与标识符模式不同，它不会复制、移动或借用它匹配的值。
 
 示例：
 
@@ -311,7 +307,7 @@ if let Some(_) = x {}
 > _RestPattern_ :\
 > &nbsp;&nbsp; `..`
 
-*剩余模式*(`..`标记码)充当可变长度模式(variable-length pattern)，它匹配之前之后没有匹配的零个或多个元素。它只能在[元组](#tuple-patterns)模式、[元组结构体](#tuple-struct-patterns)模式和[切片](#slice-patterns)模式中使用，并且在这些模式中只能作为一个元素出现一次。它在[切片模式](#slice-patterns)里也只允许在[标识符模式](#identifier-patterns)中使用。
+*剩余模式*（`..`标记码）充当不定长度模式(variable-length pattern)，它匹配之前之后没有匹配的零个或多个元素。它只能在[元组](#tuple-patterns)模式、[元组结构体](#tuple-struct-patterns)模式和[切片](#slice-patterns)模式中使用，并且在这些模式中只能作为一个元素出现一次。它在[切片模式](#slice-patterns)里也只允许在[标识符模式](#identifier-patterns)中使用。
 
 剩余模式总是不可反驳型的。
 
@@ -370,17 +366,17 @@ match tuple {
 > &nbsp;&nbsp; | [_PathInExpression_]\
 > &nbsp;&nbsp; | [_QualifiedPathInExpression_]
 
-区间模式匹配在其上下边界定义的封闭区间内的值。例如，一个模式 `'m'..='p'` 将只匹配值`'m'`，`'n'`，`'o'`和 `'p'`。边界可以是字面量，也可以是指向常量值的路径。
+区间模式匹配在其上下边界定义的封闭区间内的值。例如，一个模式 `'m'..='p'` 将只能匹配值`'m'`、`'n'`、`'o'` 和 `'p'`。边界可以是字面量，也可以是指向常量值的路径。
 
-一个模式 a `..=` b 必须总是有 a &le; b。`10..=0` 这样的区间模式是错误的。例如：
+一个模式 a `..=` b 必须总是有 a &le; b。例如，`10..=0` 这样的区间模式是错误的。
 
 保留 `...`句法只是为了向后兼容。
 
 区间模式只适用于标量类型(scalar type)。可接受的类型有：
 
-* 整型 (u8、i8、u16、i16、usize、isize ...)。
-* 字符型 (char)。
-* 浮点类型( f32 和 f64 )。这已被弃用，将不会在未来版本的 Rust 中可用（参见 [issue #41620](https://github.com/rust-lang/rust/issues/41620)）。
+* 整型（u8、i8、u16、i16、usize、isize ...）。
+* 字符型（char）。
+* 浮点类型（f32 和 f64）。这已被弃用，在未来版本的 Rust 中将不可用（参见 [issue #41620](https://github.com/rust-lang/rust/issues/41620)）。
 
 示例：
 
@@ -451,7 +447,7 @@ println!("{}", match 0xfacade {
 });
 ```
 
-当区间模式跨越(非usize 和非isize)整型和字符型(`char`)整个类型的所有值组成的集合时，此模式是不可反驳型的。例如，`0u8..=255u8` 是不可反驳型的。某类整型的值区间是从该类型的最小值到该类型最大值的闭区间。字符型(`char`)的值的区间就是那些包含所有 Unicode 标量值的区间：`'\u{0000}'..='\u{D7FF}'` 和 `'\u{E000}'..='\u{10FFFF}'`。
+当区间模式跨越（非usize 和非isize）整型和字符型(`char`)整个类型的所有值组成的集合时，此模式是不可反驳型的。例如，`0u8..=255u8` 是不可反驳型的。某类整型的值区间是从该类型的最小值到该类型最大值的闭区间。字符型(`char`)的值的区间就是那些包含所有 Unicode 标量值的区间，即 `'\u{0000}'..='\u{D7FF}'` 和 `'\u{E000}'..='\u{10FFFF}'`。
 
 ## Reference patterns
 ## 引用模式
@@ -473,10 +469,10 @@ let b = match int_reference { &0 => "zero", _ => "some" };
 assert_eq!(a, b);
 ```
 
-语法上，引用模式必须使用标记码 `&&` 来匹配引用的引用，因为 `&&` 本身就是一个标记码，而不是两个 `&` 标记码。。
+引用模式的语法生产式(grammar production)要求必须使用标记码 `&&` 来匹配对引用的引用，因为 `&&` 本身是一个单独的标记码，而不是两个 `&` 标记码。
 
-如果为引用模式上添加 `mut` 关键字来解引用一个可变引用，那模式的可变性必须匹配引用对象的可变性
-<!-- Adding the `mut` keyword dereferences a mutable reference. The mutability must match the mutability of the reference.TobeModify -->
+
+引用模式中添加关键字 `mut` 可对可变引用做引用。引用模式中的可变性标记必须与引用对象的可变性匹配。
 
 引用模式总是不可反驳型的。
 
@@ -685,9 +681,9 @@ match v[..] {
 [_GroupedPattern_]: #grouped-patterns
 [_IdentifierPattern_]: #identifier-patterns
 [_LiteralPattern_]: #literal-patterns
-[_MacroInvocation_]: macros.md#宏调用
+[_MacroInvocation_]: macros.md#macro-invocation
 [_ObsoleteRangePattern_]: #range-patterns
-[_PathInExpression_]: paths.md#表达式中的路径
+[_PathInExpression_]: paths.md#paths-in-expressions
 [_PathPattern_]: #path-patterns
 [_Pattern_]: #patterns
 [_PatternWithoutRange_]: #patterns
@@ -708,3 +704,6 @@ match v[..] {
 [structs]: items/structs.md
 [tuples]: types/tuple.md
 [scrutinee]: glossary.md#scrutinee
+
+<!-- 2020-10-25 -->
+<!-- checked -->
