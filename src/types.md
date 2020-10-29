@@ -4,7 +4,7 @@
 
 >[types.md](https://github.com/rust-lang/reference/blob/master/src/types.md)\
 >commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 \
->本译文最后维护日期：2020-10-28
+>本译文最后维护日期：2020-10-29
 
 Rust 程序中的每个变量、数据项和值都有一个类型。*值*的*类型*定义了对于保存它的内存的解释，以及定义了可以对该值执行的操作。
 
@@ -77,18 +77,12 @@ Rust 程序中的每个变量、数据项和值都有一个类型。*值*的*类
 * 展开成类型表达式的[宏][Macros]。
 
 ### Parenthesized types
-### 括起来的类型
+### 组合类型
 
 > _ParenthesizedType_ :\
 > &nbsp;&nbsp; `(` [_Type_] `)`
 
-在某些情况下，类型的组合可能会产生歧义。在类型周围使用括号可以避免歧义。例如，有时在[引用类型][reference type]中简单使用 `+`运算符来引入进行[类型约束][type boundaries]会搞不清楚约束该应用于何处，因此需要使用括号。需要这种消除歧义的语法规则使用 [_TypeNoBounds_] 规则替代 [_Type_] 规则。
-In some situations the combination of types may be ambiguous. Use parentheses
-around a type to avoid ambiguity. For example, the `+` operator for [type
-boundaries] within a [reference type] is unclear where the
-boundary applies, so the use of parentheses is required. Grammar rules that
-require this disambiguation use the [_TypeNoBounds_] rule instead of
-[_Type_].
+在某些情况下，类型的组合可能会产生歧义。在类型周围使用括号来避免歧义。例如，[引用类型][reference type]中的[类型边界(type boundaries)][type boundaries]列表中的 `+`运算符搞不清楚其左值的边界位置在哪里，因此需要使用括号来明确其边界。这里需要的消除歧义的语法规则就是使用 [_TypeNoBounds_] 规则替代 [_Type_] 规则。
 
 ```rust
 # use std::any::Any;
@@ -98,11 +92,11 @@ type T<'a> = &'a (dyn Any + Send);
 ## Recursive types
 ## 递归类型
 
-标称类型 &mdash; [结构体(`struct`)][structs]、[枚举(`enum`)][enumerations]和[联合体(`union`)][unions] &mdash; 可以是递归的。也就是说，每个枚举(`enum`)变体或结构体(`struct`)或联合体(`union`)字段可以直接或间接地引用它归属的枚举(`enum`)或结构体(`struct`)类型本身。这种递归有一些限制：
+标称类型 &mdash; [结构体(`struct`)][structs]、[枚举(`enum`)][enumerations]和[联合体(`union`)][unions] &mdash; 可以是递归的。也就是说，每个枚举(`enum`)变体或结构体(`struct`)或联合体(`union`)字段可以直接或间接地指向此枚举(`enum`)或结构体(`struct`)类型本身。这种递归有一些限制：
 
-* 递归类型必须在递归中包含一个标称类型(不能仅是[类型别名][type aliases]或其他结构化的类型，如[数组][arrays]或[元组][tuples])。因此不允许使用 `type Rec = &'static [Rec]`。
-* 递归类型的次数必须是有限的；换句话说，类型的递归字段必须是[指针类型][pointer types]。
-* 递归类型定义可以跨越模块边界，但不能跨越模块*可见性*边界或 crate 边界(为了简化模块系统和类型检查器)。
+* 递归类型必须在递归中包含一个标称类型（不能仅是[类型别名][type aliases]或其他结构化的类型，如[数组][arrays]或[元组][tuples]）。因此不允许使用 `type Rec = &'static [Rec]`。
+* 递归类型的次数必须是有限的；也就是说，类型的递归字段必须是[指针类型][pointer types]。
+* 递归类型定义可以跨越模块边界，但不能跨越模块*可见性*边界或 crate 边界（为了简化模块系统和类型检查）。
 
 *递归*类型及其使用示例：
 
