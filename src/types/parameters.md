@@ -2,7 +2,8 @@
 # 类型参数
 
 >[parameters.md](https://github.com/rust-lang/reference/blob/master/src/types/parameters.md)\
->commit: eb02dd5194a747277bfa46b0185d1f5c248f177b
+>commit: eb02dd5194a747277bfa46b0185d1f5c248f177b \
+>本译文最后维护日期：2020-10-29
 
 在带有类型参数声明的数据项的代码体内，其类型参数的名称是类型：
 
@@ -18,4 +19,10 @@ fn to_vec<A: Clone>(xs: &[A]) -> Vec<A> {
 }
 ```
 
-这里，`first` 的类型为 `A`，引用的是 `to_vec` 的类型参数 `A`；`rest` 的类型为 `Vec<A>`，它是一个带有元素类型为 `A` vector。
+Here, `first` has type `A`, referring to `to_vec`'s `A` type parameter; and
+`rest` has type `Vec<A>`, a vector with element type `A`.
+
+这里，`first` 的类型为 `A`，引用的是 `to_vec` 的类型参数 `A`；`rest` 的类型为 `Vec<A>`，它是一个内部元素类型为 `A` 向量(vector)。
+
+<!-- 2020-10-25 -->
+<!-- checked -->

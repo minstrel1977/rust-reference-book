@@ -2,11 +2,12 @@
 # 类型布局
 
 >[type-layout.md](https://github.com/rust-lang/reference/blob/master/src/type-layout.md)\
->commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6
+>commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 \
+>本译文最后维护日期：2020-10-29
 
 类型的布局描述类型的尺寸(size)、对齐量(alignment)和字段(fields)的*相对偏移量(relative offsets)*。对于枚举，如何布局和解释判别值(discriminant)也是类型布局的一部分。
 
-每次编译都可以更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去记录编译器对此做了什么。
+每次编译都可以更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。
 
 ## Size and Alignment
 ## 尺寸和对齐量
@@ -477,4 +478,6 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 [structs]: items/structs.md
 [`transparent`]: #the-transparent-representation
 [`Layout`]: ../std/alloc/struct.Layout.html
+
 <!-- 2020-10-25 -->
+<!-- checked -->
