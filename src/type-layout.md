@@ -3,7 +3,7 @@
 
 >[type-layout.md](https://github.com/rust-lang/reference/blob/master/src/type-layout.md)\
 >commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 \
->本译文最后维护日期：2020-10-29
+>本译文最后维护日期：2020-10-30
 
 类型的布局描述类型的尺寸(size)、对齐量(alignment)和字段(fields)的*相对偏移量(relative offsets)*。对于枚举，如何布局和解释判别值(discriminant)也是类型布局的一部分。
 
@@ -245,21 +245,13 @@ assert_eq!(std::mem::size_of::<SizeRoundedUp>(), 12);  // 首先来自于b的尺
 #### `#[repr(C)]` Enums With Fields
 #### `#[repr(C)]`带字段枚举
 
-带字段的 `repr(C)`枚举的表形相当于一个带两个字段的 `repr(C)`结构体（这种在C语言中也被称为“标签联合(tagged union)”），这两个字段：
+带字段的 `repr(C)`枚举的表形其实等效于一个带两个字段的 `repr(C)`结构体（这种在C语言中也被称为“标签联合(tagged union)”），这两个字段：
 
-- 一个为 `repr(C)` 版本的枚举（在这个结构体内，它也被叫做“the tag”），它就是原枚举的判别式组成的新枚举类型，也就是它的变体是原枚举变体移除了它们自身所有的字段。
-- 一个为 `repr(C)` 版本的联合体（在这个结构体内，它也被叫做“the payload”），它的各个字段就是原枚举的各个变体的字段组成的 `repr(C)` 版本的结构体。
+- 一个为 `repr(C)`表形的枚举（在这个等效结构体内，它也被叫做“the tag”），它就是原枚举所有的判别值组合成的新枚举，也就是它的变体是原枚举变体移除了它们自身所带的所有字段。
+- 一个为 `repr(C)`表形的联合体（在这个等效结构体内，它也被叫做“the payload”），它的各个字段就是原枚举的各个变体的字段组合成的 `repr(C)` 版本的结构体。
 
-> 注意：由于是 `repr(C)`表型的结构体和联合体，如果某变体只有单个字段，则直接将该字段放入联合体或将其包装进结构体中没有区别；因此，任何希望操作此类枚举表现形式的系统都可以使用对它们自己来说更方便或更一致的形式。
-> 注意：由于 `repr(C)` 结构体和联合体的表示形式，如果变量具有单个字段，则直接将该字段放入联合或将其包装在结构中没有区别；因此，任何希望操作这种“enum”表示的系统都可以使用对它们更方便或更一致的形式。
-The representation of a `repr(C)` enum with fields is a `repr(C)` struct with
-two fields, also called a "tagged union" in C:
+> 注意：由于等效结构体和联合体是 `repr(C)`表形的，因此如果原来某一变体只有单个字段，则直接将该字段放入等效出的联合体或将其包装进一个次级结构体中没有区别；因此，任何希望操作此类枚举表形的系统都可以选择使用这两种形式里对它们来说更方便或更一致的形式。
 
-- a `repr(C)` version of the enum with all fields removed ("the tag")
-- a `repr(C)` union of `repr(C)` structs for the fields of each variant that had
-  them ("the payload")
-
-> Note: Due to the representation of `repr(C)` structs and unions, if a variant has a single field there is no difference between putting that field directly in the union or wrapping it in a struct; any system which wishes to manipulate such an `enum`'s representation may therefore use whichever form is more convenient or consistent for them.
 ```rust
 // 这个枚举的表形等效于 ...
 #[repr(C)]
@@ -284,7 +276,7 @@ enum MyEnumDiscriminant { A, B, C, D }
 // 这是原变体的字段组成的联合体.
 #[repr(C)]
 union MyEnumFields {
-    A: MyAFields,
+    A: MyAFields,   // 译者注：因为原枚举变体A只有一个字段，所以此处的类型标注可以直接替换为 u32,以省略 MyAFields这层封装
     B: MyBFields,
     C: MyCFields,
     D: MyDFields,
@@ -308,12 +300,14 @@ struct MyCFields { x: u32, y: u8 }
 struct MyDFields;
 ```
 
-> 注意： 联合体(`union`)带有未实现 `Copy` trait 的字段的功能还没有纳入稳定版，参见[55149]。
+> 注意： 联合体(`union`)带有未实现 `Copy` trait 的字段的功能还没有纳入稳定版，具体参见 [55149]。
 
 ### Primitive representations
 ### 原语表形
 
-*原语表形*是与原生整型具有相同名称的表形。也就是：`u8`，`u16`，`u32`，`u64`，`u128`，`usize`，`i8`，`i16`，`i32`，`i64`，`i128`，和 `isize`。
+*原语表形*是与原生整型具有相同名称的表形。也就是：`u8`，`u16`，`u32`，`u64`，`u128`，`usize`，`i8`，`i16`，`i32`，`i64`，`i128` 和 `isize`。
+
+原语表形只能应用于枚举，此时枚举有没有字段会给原语表形带来不同的表现。给[零变体枚举][zero-variant enums]应用原始表形是错误的。将两个原语表形组合在一起也是错误的
 
 #### Primitive Representation of Field-less Enums
 #### 无字段枚举的原语表形
@@ -323,10 +317,10 @@ struct MyDFields;
 #### Primitive Representation of Enums With Fields
 #### 带字段枚举的原语表形
 
-枚举的原语表形是一个 `repr(C)`版本的联合体。此联合体的每个字段对应一个和原枚举变体对应的 `repr(C)`版本的结构体。这些结构体的第一个字段是原枚举的变体移除了它们所有的字段组成的原语表形版本的枚举（“the tag”），那这些结构体的其余字段是原变体移走的字段。
+枚举的原语表形是一个 `repr(C)`表形的联合体。此联合体的每个字段对应一个和原枚举变体对应的 `repr(C)`表形的结构体。这些结构体的第一个字段是原枚举的变体移除了它们所有的字段组成的原语表形的枚举（“the tag”），那这些结构体的其余字段是原变体移走的字段。
 
-> 注意：如果标签(“the tag”)在联合体中被赋予自己的成员，那么这种表型是不变的，这样操作对您来说会更清晰(尽管遵循c++标准，标签成员应该被包装在结构体中）。
-<!-- Note: This representation is unchanged if the tag is given its own member in the union, should that make manipulation more clear for you (although to follow the C++ standard the tag member should be wrapped in a `struct`). -->
+
+> 注意：如果在联合体中，直接把标签(“the tag”)的成员被赋予给标签，那么这种表形结构仍不变的，并且这样操作对您来说可能会更清晰（尽管遵循 c++ 的标准，标签也应该被包装在结构体中）。
 
 ```rust
 // 这个枚举的表形效同于 ...
@@ -341,13 +335,13 @@ enum MyEnum {
 // ... 这个联合体.
 #[repr(C)]
 union MyEnumRepr {
-    A: MyVariantA,
+    A: MyVariantA,  //译者注：此字段类型也可直接用 A(u32) 直接替代
     B: MyVariantB,
     C: MyVariantC,
     D: MyVariantD,
 }
 
-// 这是那个判别值组成的枚举。
+// 这是原判别值组合成的新枚举。
 #[repr(u8)]
 #[derive(Copy, Clone)]
 enum MyEnumDiscriminant { A, B, C, D }
@@ -369,14 +363,14 @@ struct MyVariantC { tag: MyEnumDiscriminant, x: u32, y: u8 }
 struct MyVariantD(MyEnumDiscriminant);
 ```
 
-> Note: `union`s with non-`Copy` fields are unstable, see [55149].
+> 注意： 联合体(`union`)带有未实现 `Copy` trait 的字段的功能还没有纳入稳定版，具体参见 [55149]。
 
 #### Combining primitive representations of enums with fields and `#[repr(C)]`
 #### 带字段枚举的原语表形与`#[repr(C)]`表形的组合使用
 
-对于带字段枚举，还可以将 `repr(C)` 和原语表形(例如，`repr(C, u8)`)结合起来使用。这是通过将判别值组成枚举的表形改为原语表形来实现的。因此，如果选择 `u8`表形，那么判别值枚举的尺寸和对齐量将为1个字节。
+对于带字段枚举，还可以将 `repr(C)` 和原语表形（例如，`repr(C, u8)`）结合起来使用。这是通过将判别值组成的枚举的表形改为原语表形来实现的。因此，如果选择组合 `u8`表形，那么组合出的判别值枚举的尺寸和对齐量将为 1 个字节。
 
-那么这个判别值枚举就[前面][`repr(C)`]示例中的样子变成：
+那么这个判别值枚举就从[前面][`repr(C)`]示例中的样子变成：
 
 ```rust
 #[repr(C, u8)] // 这里加上了 `u8`
@@ -395,10 +389,9 @@ enum MyEnumDiscriminant { A, B, C, D }
 // ...
 ```
 
-例如，对于有 `repr(C, u8)`属性的枚举，不可能有257个唯一的判别值（“tags”），而同一个只有 `repr(C)`属性的枚举编译时就不会出现任何问题。
+例如，对于有 `repr(C, u8)`属性的枚举，不可能有257个唯一的判别值（“tags”），而同一个枚举，如果只有单一 `repr(C)`表形属性，那在编译时就不会出任何问题。
 
 在 `repr(C)` 附加原语表形可以改变 `repr(C)`表形的枚举的尺寸：
-Using a primitive representation in addition to `repr(C)` can change the size of an enum from the `repr(C)` form:
 
 ```rust
 #[repr(C)]
@@ -432,7 +425,7 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 ### The alignment modifiers
 ### 对齐量的修饰符
 
-`align` 和 `packed` 修饰符可分别用于增大和缩小结构体和联合体的对齐量。`packed` 也可以改变字段之间的填充。
+`align` 和 `packed` 修饰符可分别用于增大和减小结构体的和联合体的对齐量。`packed` 也可以改变字段之间的填充。
 
 对齐量被指定为整型参数，形式为 `#[repr(align(x))]` 或 `#[repr(packed(x))]`。对齐量的值必须是从1到2<sup>29</sup>之间的2的次幂数。对于 `packed`，如果没有给出任何值，如 `#[repr(packed)]`，则对齐量的值为1。
 
@@ -440,30 +433,45 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 
 对于 `packed`，如果类型指定的对齐量比其不带 `packed`修饰符时的对齐量大，则该指定的对齐量和布局无效。为了定位字段，每个字段的对齐量是指定的对齐量和字段的类型的对齐量中较小的那个对齐量。
 
-`align` 和 `packed` 修饰符不能应用于同一类型，且 `packed`类型不能直接或间接地包含另一个 `align`类型。`align` 和 `packed` 修饰符只能应用于[默认表形][default]和[C表形][`C`]。
+`align` 和 `packed` 修饰符不能应用于同一类型，且 `packed` 修饰的类型不能直接或间接地包含另一个 `align` 修饰的类型。`align` 和 `packed` 修饰符只能应用于[默认表形][default]和 [C表形][`C`]中。
 
-`align`修饰符也可以应用在枚举上。如果这样做了，其对枚举对齐量的影响与使用相同的 `align`修饰符将此枚举包装在一个结构体中的效果相同。
+`align`修饰符也可以应用在枚举上。如果这样做了，其对枚举对齐量的影响与将此枚举包装在一个新的使用了相同的 `align`修饰符的结构体中的效果相同。
 
 <div class="warning">
 
-***警告：***解引用未对齐的指针是[未定义行为][undefined behavior]，但可以[安全地创建指向 `packed`字段的未对齐指针][27060]。就像在 safe Rust 中所有创建未定义行为的方法一样，这是一个 bug。
+***警告：***解引用一个未对齐的指针是[未定义行为][undefined behavior]，但可以[安全地创建指向 `packed`修饰的字段的未对齐指针][27060]。就像在安全(safe) Rust 中所有创建未定义行为的方法一样，这是一个 bug。
 
 </div>
 
 ### The `transparent` Representation
-### 透明表形
+### 透明(`transparent`)表形
 
-透明(`transparent`)表型只能在结构体[structs]或只有一个变体的[枚举(`enum`)][enumerations]上使用，并且这个结构体和这个枚举的唯一变体还需要满足：
+透明(`transparent`)表型只能在[结构体(`struct`)][structs]或只有一个变体的[枚举(`enum`)][enumerations]上使用，并且这个结构体和这个枚举的唯一变体还需要满足：
 
 - 只能有一个非零尺寸的字段，和
 - 任意数量的尺寸为零对齐量为1的字段（例如：[`PhantomData<T>`]）
 
-使用这种表形的结构体和枚举同只有那个非零尺寸的字段具有相同的布局和 ABI。
+使用这种表形的结构体和枚举与只有那个非零尺寸的字段具有相同的布局和 ABI。
 
 这与 `C`表形不同，因为带有 `C`表形的结构体将始终拥有C结构体(`C` `struct`)的ABI，而应用透明表形(`transparent` representation)的只有一个原生类型字段的结构体将具有原生类型字段的ABI。
 
 因为此表形将类型布局委托给另一种类型，所以它不能与任何其他表形一起使用。
+The `transparent` representation can only be used on a [`struct`][structs]
+or an [`enum`][enumerations] with a single variant that has:
 
+- a single field with non-zero size, and
+- any number of fields with size 0 and alignment 1 (e.g. [`PhantomData<T>`]).
+
+Structs and enums with this representation have the same layout and ABI
+as the single non-zero sized field.
+
+This is different than the `C` representation because
+a struct with the `C` representation will always have the ABI of a `C` `struct`
+while, for example, a struct with the `transparent` representation with a
+primitive field will have the ABI of the primitive field.
+
+Because this representation delegates type layout to another type, it cannot be
+used with any other representation.
 [`align_of_val`]: ../std/mem/fn.align_of_val.html
 [`size_of_val`]: ../std/mem/fn.size_of_val.html
 [`align_of`]: ../std/mem/fn.align_of.html
