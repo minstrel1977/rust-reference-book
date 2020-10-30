@@ -238,7 +238,7 @@ assert_eq!(std::mem::size_of::<SizeRoundedUp>(), 12);  // 首先来自于b的尺
 
 > 注意：C中的枚举的表形是由枚举的相应实现定义的，所以在 Rust 中，给无字段枚举应用 C表形得到的表型很可能是一个“最佳猜测”。特别是，当使用某些命令行参数选项来编译感兴趣的 C代码时，这可能是不正确的。
 
-警告：C语言中的枚举与 Rust 中的那些应用了 `#[repr(C)]` 表型的[无字段枚举][field-less enums]之间有着重要的区别。C语言中的枚举主要是 `typedef` 加上一些命名常量；换句话说，枚举(`enum`)类型的对象可以包含任何整数值。例如，C语言中的枚举通常用于指示标志位。相比之下，Rust的[无字段枚举][field-less enums]只能合法地保存判别式的值，其他的都是[未定义行为][undefined behavior]。因此，在 FFI 中使用无字段枚举来建模 C语言中的枚举(`enum`)通常是错误的。
+警告：C语言中的枚举与 Rust 中的那些应用了 `#[repr(C)]`表型的[无字段枚举][field-less enums]之间有着重要的区别。C语言中的枚举主要是 `typedef` 加上一些命名常量；换句话说，枚举(`enum`)类型的对象可以包含任何整数值。例如，C语言中的枚举通常用做标志位。相比之下，Rust的[无字段枚举][field-less enums]只能合法地保存判别式的值，其他的都是[未定义行为][undefined behavior]。因此，在 FFI 中使用无字段枚举来建模 C语言中的枚举(`enum`)通常是错误的。
 
 </div>
 
@@ -247,10 +247,11 @@ assert_eq!(std::mem::size_of::<SizeRoundedUp>(), 12);  // 首先来自于b的尺
 
 带字段的 `repr(C)`枚举的表形相当于一个带两个字段的 `repr(C)`结构体（这种在C语言中也被称为“标签联合(tagged union)”），这两个字段：
 
-- 一个为 `repr(C)` 版本的枚举（在这个结构体内，它也被叫做“the tag”），它就是原枚举的判别式组成的新类型，也就是它的变体是原枚举变体移除了它们自身所有的字段。
+- 一个为 `repr(C)` 版本的枚举（在这个结构体内，它也被叫做“the tag”），它就是原枚举的判别式组成的新枚举类型，也就是它的变体是原枚举变体移除了它们自身所有的字段。
 - 一个为 `repr(C)` 版本的联合体（在这个结构体内，它也被叫做“the payload”），它的各个字段就是原枚举的各个变体的字段组成的 `repr(C)` 版本的结构体。
 
-> 注意：由于是 `repr(C)` 版本的结构体和联合体，如果某变体只单个字段，则直接将该字段放入联合体或将其包装进结构体中没有区别；因此，任何希望操终此类枚举表现形式的系统都可以使用对它们自己来说更方便或更一致的形式。
+> 注意：由于是 `repr(C)`表型的结构体和联合体，如果某变体只有单个字段，则直接将该字段放入联合体或将其包装进结构体中没有区别；因此，任何希望操作此类枚举表现形式的系统都可以使用对它们自己来说更方便或更一致的形式。
+> 注意：由于 `repr(C)` 结构体和联合体的表示形式，如果变量具有单个字段，则直接将该字段放入联合或将其包装在结构中没有区别；因此，任何希望操作这种“enum”表示的系统都可以使用对它们更方便或更一致的形式。
 The representation of a `repr(C)` enum with fields is a `repr(C)` struct with
 two fields, also called a "tagged union" in C:
 
@@ -258,11 +259,7 @@ two fields, also called a "tagged union" in C:
 - a `repr(C)` union of `repr(C)` structs for the fields of each variant that had
   them ("the payload")
 
-> Note: Due to the representation of `repr(C)` structs and unions, if a variant
-> has a single field there is no difference between putting that field directly
-> in the union or wrapping it in a struct; any system which wishes to manipulate
-> such an `enum`'s representation may therefore use whichever form is more
-> convenient or consistent for them.
+> Note: Due to the representation of `repr(C)` structs and unions, if a variant has a single field there is no difference between putting that field directly in the union or wrapping it in a struct; any system which wishes to manipulate such an `enum`'s representation may therefore use whichever form is more convenient or consistent for them.
 ```rust
 // 这个枚举的表形等效于 ...
 #[repr(C)]
