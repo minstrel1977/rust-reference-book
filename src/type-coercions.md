@@ -2,7 +2,8 @@
 # 类型自动强转
 
 >[type-coercions.md](https://github.com/rust-lang/reference/blob/master/src/type-coercions.md)\
->commit: d5a5e32d3cda8a297d2a91a85b91ff2629b0e896
+>commit: d5a5e32d3cda8a297d2a91a85b91ff2629b0e896 \
+>本译文最后维护日期：2020-10-31
 
 **类型自动强转**是改变值的类型的隐式操作。它们在特定的位置自动发生，并且在实际自动强转的类型上受到很多限制。
 
@@ -13,9 +14,9 @@
 ## Coercion sites
 ## 自动强转点
 
-自动强转只能发生在程序中的某些自动强转点上；通常在这些位置上，所需的类型是显式给出了或者可以从显式类型的传播推导(be derived by propagation)得到(不是类型推断)。可能的强制点有：
+自动强转只能发生在程序中的某些自动强转点(coercion sites)上；通常在这些位置上，所需的类型是显式给出了或者可以从给出的显式类型传播推导(be derived by propagation)得到（不是类型推断）。可能的强转点有：
 
-* `let`语句中给出显式的类型。
+* `let`语句中显式给出了类型。
 
    例如，下面例子中 `&mut 42` 自动强转成 `&i8` 类型：
 
@@ -23,7 +24,7 @@
    let _: &i8 = &mut 42;
    ```
 
-* 静态(`static`)和常量(`const`)项声明（类似于 `let`语句）。
+* 静态(`static`)项和常量(`const`)项声明（类似于 `let`语句）。
 
 * 函数调用的参数
 
@@ -39,7 +40,7 @@
   }
   ```
 
-  对于方法调用，接收者(`self`参数)只能使用[非固定尺寸类型自动强转(unsized coercion)](#unsized-coercions)。
+  对于方法调用，接受者（`self`参数）只能使用[非固定尺寸类型自动强转(unsized coercion)](#unsized-coercions)。
 
 * 实例化结构体、联合体或枚举变体的字段。
 
@@ -53,7 +54,7 @@
   }
   ```
  
-* 函数返回&mdash;函数体的最后一行如果不是以分号结尾的，函数将返回它的最后一行，或者是 `return`语句中的任何表达式
+* 函数返回&mdash;函数体的最后一行如果不是以分号结尾的，函数将返回它的最后一行，或者是 `return`语句中的任何表达式。
 
   例如，下面例子中 `x` 自动强转成 `&dyn Display` 类型：
 
@@ -237,4 +238,6 @@ fn foo() -> i32 {
 [type cast operator]: expressions/operator-expr.md#type-cast-expressions
 [`Unsize`]: ../std/marker/trait.Unsize.html
 [`CoerceUnsized`]: ../std/ops/trait.CoerceUnsized.html
+
 <!-- 2020-10-25 -->
+<!-- checked -->

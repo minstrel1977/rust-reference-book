@@ -12,20 +12,20 @@
 has a few special features that Rust doesn't currently allow for user defined types.
 
 * `Box<T>` 的[解引用操作符]会产生一个可移动的位置。这意味着 `*`运算符和 `Box<T>` 的析构函数是语言内置的。
-* [方法][Methods]可以用 `Box<Self>` 作为接收者。
+* [方法][Methods]可以用 `Box<Self>` 作为接受者。
 * `Box<T>`可以在与 `T` 在同一 crate 中实现同一 trait，[孤儿规则][orphan rules]禁止其他泛型类型这么做。
 
 ## `Rc<T>`
 
-[方法][Methods]可以用 [`Rc<Self>`] 作为接收者。
+[方法][Methods]可以用 [`Rc<Self>`] 作为接受者。
 
 ## `Arc<T>`
 
-[方法][Methods]可以用 [`Arc<Self>`] 作为接收者。
+[方法][Methods]可以用 [`Arc<Self>`] 作为接受者。
 
 ## `Pin<P>`
 
-[方法][Methods]可以用 [`Pin<P>`] 作为接收者。
+[方法][Methods]可以用 [`Pin<P>`] 作为接受者。
 
 ## `UnsafeCell<T>`
 

@@ -446,32 +446,17 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 ### The `transparent` Representation
 ### 透明(`transparent`)表形
 
-透明(`transparent`)表型只能在[结构体(`struct`)][structs]或只有一个变体的[枚举(`enum`)][enumerations]上使用，并且这个结构体和这个枚举的唯一变体还需要满足：
+透明(`transparent`)表型只能在只有一个字段的[结构体(`struct`)][structs]上或只有一个变体的[枚举(`enum`)][enumerations]上使用，这里只有一个字段/变体的意思是：
 
-- 只能有一个非零尺寸的字段，和
+- 只能有一个非零尺寸的字段/变体，和
 - 任意数量的尺寸为零对齐量为1的字段（例如：[`PhantomData<T>`]）
 
 使用这种表形的结构体和枚举与只有那个非零尺寸的字段具有相同的布局和 ABI。
 
-这与 `C`表形不同，因为带有 `C`表形的结构体将始终拥有C结构体(`C` `struct`)的ABI，而应用透明表形(`transparent` representation)的只有一个原生类型字段的结构体将具有原生类型字段的ABI。
+这与 `C`表形不同，因为带有 `C`表形的结构体将始终拥有 C结构体(`C` `struct`)的ABI，例如，那些只有一个原生类型字段的结构体如果应用了透明表形(`transparent`)，将具有此原生类型字段的ABI。
 
 因为此表形将类型布局委托给另一种类型，所以它不能与任何其他表形一起使用。
-The `transparent` representation can only be used on a [`struct`][structs]
-or an [`enum`][enumerations] with a single variant that has:
 
-- a single field with non-zero size, and
-- any number of fields with size 0 and alignment 1 (e.g. [`PhantomData<T>`]).
-
-Structs and enums with this representation have the same layout and ABI
-as the single non-zero sized field.
-
-This is different than the `C` representation because
-a struct with the `C` representation will always have the ABI of a `C` `struct`
-while, for example, a struct with the `transparent` representation with a
-primitive field will have the ABI of the primitive field.
-
-Because this representation delegates type layout to another type, it cannot be
-used with any other representation.
 [`align_of_val`]: ../std/mem/fn.align_of_val.html
 [`size_of_val`]: ../std/mem/fn.size_of_val.html
 [`align_of`]: ../std/mem/fn.align_of.html

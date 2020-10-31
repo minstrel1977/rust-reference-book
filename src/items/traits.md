@@ -89,11 +89,11 @@ trait Seq<T> {
 * 它必须不能是 `Self: Sized`
 * 所有的关联函数要么有 `where Self: Sized` 约束，要么
   * 不能有类型参数（生存期参数可以有），并且
-  * `Self` 只能出现在[方法][method]的接收者(receiver)的类型里。
+  * `Self` 只能出现在[方法][method]的接受者(receiver)的类型里。
 * 它必须没有任何关联常量。
 * 其所有的超类trait 也必须也是安全的。
 
-上述限定条件的第二条的后半部分，也就是当方法上没有 `Self: Sized` 绑定时，方法接收者的类型必须是以下类型之一：
+上述限定条件的第二条的后半部分，也就是当方法上没有 `Self: Sized` 绑定时，方法接受者的类型必须是以下类型之一：
 
 * `&Self`
 * `&mut Self`
@@ -129,7 +129,7 @@ trait NonDispatchable {
     fn foo() where Self: Sized {}
     // 在运行之前 Self 类型未知。
     fn returns(&self) -> Self where Self: Sized;
-    // `other` 可能是另一具体类型的接收者。
+    // `other` 可能是另一具体类型的接受者。
     fn param(&self, other: Self) where Self: Sized {}
     // 泛型与虚函数指针表(Virtual Function Pointer Table, vtable)不兼容。
     fn typed<T>(&self, x: T) where Self: Sized {}
