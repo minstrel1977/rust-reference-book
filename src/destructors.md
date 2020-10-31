@@ -16,7 +16,7 @@
     * 活动[枚举变体][enum variant]的字段按声明顺序销毁。
     * [元组][tuple]中的字段按顺序销毁。
     * [数组][array]或拥有所有权的[切片][slice]的元素的销毁顺序是从第一个元素到最后一个元素。
-    * [闭包][closure]通过移动(move)方式捕获的变量的销毁顺序未指定。
+    * [闭包][closure]通过移动(move)方式捕获的变量的销毁顺序未明确指定。
     * [trait对象][Trait objects]的销毁会运行其非具名基类(underlying type)的析构函数。
     * 其他类型不会导致任何进一步的销毁动作发生。
 
@@ -62,66 +62,30 @@ core::mem::forget(partial_move.1);
 销毁作用域是在使用 [`match`] 将 [`for`]、[`if let`] 和 [`while let`] 这些表达式替换为等效表达式之后确定的。销毁作用域的确定上重载操作符与内置操作符没有区别，[绑定方式(binding modes)][binding modes]也不用考虑。
 
 给定一个函数或闭包，存在以下的销毁作用域：
+
 * 整个函数
 * 每个[语句][statement]
 * 每个[表达式][expression]
 * 每个块，包括函数体
-    * 在[块表达式][block expression]上，块和表达式的销毁作用域是相同的
-*匹配(`match`)表达式的每条匹配臂
+    * 当在[块表达式][block expression]上时，整个块和整个块表达式的销毁作用域是相同的
+* 匹配(`match`)表达式的每条匹配臂(arm)
 
-Drop scopes are determined after replacing [`for`], [`if let`], and
-[`while let`] expressions with the equivalent expressions using [`match`].
-Overloaded operators are not distinguished from built-in operators and [binding
-modes] are not considered.
-
-Given a function, or closure, there are drop scopes for:
-
-* The entire function
-* Each [statement]
-* Each [expression]
-* Each block, including the function body
-    * In the case of a [block expression], the scope for the block and the
-      expression are the same scope.
-* Each arm of a `match` expression
-
-Drop scopes are nested within one another as follows. When multiple scopes are
-left at once, such as when returning from a function, variables are dropped
-from the inside outwards.
-
-* The entire function scope is the outer most scope.
-* The function body block is contained within the scope of the entire function.
-* The parent of the expression in an expression statement is the scope of the
-  statement.
-* The parent of the initializer of a [`let` statement] is the `let` statement's
-  scope.
-* The parent of a statement scope is the scope of the block that contains the
-  statement.
-* The parent of the expression for a `match` guard is the scope of the arm that
-  the guard is for.
-* The parent of the expression after the `=>` in a `match` expression is the
-  scope of the arm that it's in.
-* The parent of the arm scope is the scope of the `match` expression that it
-  belongs to.
-* The parent of all other scopes is the scope of the immediately enclosing
-  expression.
-销毁作用域相互嵌套如下。当同时离开多个作用域时，比如从函数返回时，变量会从内部向外销毁。
+销毁作用域相互嵌套如下。当同时离开多个作用域时，比如从函数返回时，变量会从内层的向外销毁。
 
 * 整个函数作用域是最外层的作用域。
 * 函数体块包含在整个函数作用域内。
-* 表达式语句中的父表达式是该语句的作用域。
-* [`let`语句][`let` statement]的初始化器的父作用域是 `let`语句的作用域
-* 语句的父作用域是包含该语句的块的作用域。
+* 表达式语句中的表达式的父表达式是该语句的作用域。
+* [`let`语句][`let` statement]的初始化器(initializer)的父作用域是 `let`语句的作用域。
+* 语句作用域的父作用域是包含该语句的块的作用域。
 * 匹配守卫(`match` guard)表达式的父作用域是该守卫所在的匹配臂的作用域。
-* 在匹配表达式(`match` expression)的 =>` 之后的表达式的父作用域是它所在的匹配臂的作用域。
-* 匹配臂作用域的父作用域是它所在的匹配表达式(`match` expression)的作用域。
+* 在匹配表达式(`match` expression)的 `=>` 之后的表达式的父作用域是它所在的匹配臂的作用域。
+* 匹配臂的作用域的父作用域是它所在的匹配表达式(`match` expression)的作用域。
 * 所有其他作用域的父作用域都是直接封闭该表达式的作用域。
 
 ### Scopes of function parameters
 ### 函数参数的作用域
 
-
-所有函数参数都在整个函数体的作用域内，因此在对函数求值时，它们是最后被销毁的。实参会在其内部值被形参的模式绑定之后销毁。
-<!-- All function parameters are in the scope of the entire function body, so are dropped last when evaluating the function. Each actual function parameter is dropped after any bindings introduced in that parameter's pattern. tobemodify-->
+所有函数参数都在整个函数体的作用域内有效，因此在对函数求值时，它们是最后被销毁的。实参会在其内部值被形参的模式绑定之后销毁。
 
 ```rust
 # struct PrintOnDrop(&'static str);
@@ -148,6 +112,7 @@ patterns_in_parameters(
 
 在 `let`语句中声明的局部变量与包含 `let`语句的块的作用域相关联。在匹配(`match`)表达式中声明的局部变量与声明它们的匹配(`match`)臂的匹配臂作用域相关联。
 
+are declared in.
 ```rust
 # struct PrintOnDrop(&'static str);
 # impl Drop for PrintOnDrop {
@@ -162,29 +127,29 @@ let declared_first = PrintOnDrop("在外层作用域内最后销毁");
 let declared_last = PrintOnDrop("在外层作用域内最先销毁");
 ```
 
-如果在一个匹配(`match`)表达式的同一个匹配臂中使用了多个模式，那么将使用一个未指定的模式(unspecified pattern)来确定销毁顺序。
-<!-- If multiple patterns are used in the same arm for a `match` expression, then an unspecified pattern will be used to determine the drop order. tobemodify-->
+如果在一个匹配(`match`)表达式的同一个匹配臂中使用了多个模式，那么将使用未指定模式(unspecified pattern)来确定销毁顺序。
 
 ### Temporary scopes
 ### 临时作用域
 
-表达式的*临时作用域*是用于临时变量的作用域。该临时变量在位置上下文中使用时会用来保存该表达式的结果(在它未被[提升][promoted]的情况下)。
-The *temporary scope* of an expression is the scope that is used for the temporary variable that holds the result of that expression when used in a [place context], unless it is [promoted].
 
-除了[生存期扩展](#temporary-lifetime-extension)之外，表达式的临时作用域是包含表达式的最小作用域，它适用于以下情况之一:
-Apart from lifetime extension, the temporary scope of an expression is the smallest scope that contains the expression and is for one of the following:
+
+表达式的*临时作用域*用于该表达在位置上下文中求出的结果被保存进的那个临时变量的作用域。有些情况下，此表达式求出的结果会被[提升][promoted]，则此表达式不存在临时作用域。\
+（也不怕更多译者注了，那就把上句按译者自己的理解再翻译一遍：）一个表达式在位置表达式上使用时会被求值，如果此求出的值没有被保存进命名变量里就准备直接使用（比如和其他值做比较），那就会先被存进一个临时变量里（特殊情况下（比如被此值被共享引用），求出的值会被[提升][promoted]为静态项，那这里讨论的临时作用域就不存在）再使用，临时作用域就是此临时变量生效的最小作用域，它通常在此表达式所在的语句结束时也结束。
+
+除了[生存期扩展](#temporary-lifetime-extension)之外，表达式的临时作用域是包含该表达式的最小作用域，它适用于以下情况之一:
 
 * 整个函数体。
-* 一个语句。
+* 一条语句。
 * [`if`]、[`while`] 或 [`loop`] 表达式的代码体。
 * `if`表达式的 `else`块。
-* `if`、`while` 表达式 或 匹配守卫的条件表达式。
+* `if`表达式的条件表达式，`while`表达式的条件表达式，或匹配表达式中的匹配(`match`)守卫。
 * 匹配臂上的表达式。
-* 惰性布尔表达式的第二操作数。
+* [惰性布尔表达式][lazy boolean expression]的第二操作数。
 
-> **注意**:
+> **注意**：
 > 
-> 在函数体的尾部表达式(final expression)中创建的临时变量会在任何命名变量销毁*之后*销毁，因为这里没有更小的封闭临时作用域啦。
+> 在函数体的尾部表达式(final expression)中创建的临时变量会在任何命名变量销毁*之后*销毁，因为这里没有更小的封闭它的临时作用域。
 >
 > 匹配表达式的[检验对象][scrutinee]表达式不是一个临时作用域，因此可以在匹配(`match`)表达式之后销毁检验对象表达式中的临时作用域。例如，`match 1 { ref mut z => z };` 中的 `1` 所在的临时变量一直存活到此语句结束。
 
@@ -216,7 +181,7 @@ if PrintOnDrop("If condition").0 == "If condition" {
 
 // 在函数末尾处，局部变量之后销毁之后销毁
 // 将下面这段更改为一个包含返回(return)表达式的语句将使临时变量在本地变量之前被删除。
-// 如果把此临时变量绑定到一个变量，然后返回这个变量，也会首先删除这个临时变量
+// 如果把此临时变量绑定到一个变量，然后返回这个变量，也会先删除这个临时变量
 match PrintOnDrop("Matched value in final expression") {
     // 在条件表达式执行后立即销毁
     _ if PrintOnDrop("guard condition").0 == "" => (),
@@ -227,7 +192,7 @@ match PrintOnDrop("Matched value in final expression") {
 ### Operands
 ### 操作数
 
-在同一表达式中，在对其他操作数求值时，也会创建临时变量来将已求值的操作数的结果保存起来。临时变量与该操作数所属的表达式的作用域相关联。因为一旦表达式求值，临时表就被移走了，所以销毁它们没有任何效果和意义，除非整个表达式的某一操作数出现异常，导致表达式求值失败，或提前返回，或出现了 panic。
+在同一表达式中，在对其他操作数求值时，也会创建临时变量来将已求值的操作数的结果保存起来。临时变量与该操作数所属的表达式的作用域相关联。因为一旦表达式求值，临时变量就被移走了，所以销毁它们没有任何效果和意义，除非整个表达式的某一操作数出现异常，导致表达式求值失败，或提前返回，或出现了 panic。
 
 ```rust
 # struct PrintOnDrop(&'static str);
@@ -254,8 +219,14 @@ loop {
 ### Constant promotion
 ### 常量提升
 
-如果可以将值表达式写入常量，然后能通过引用/借用和解引用来使用，并且如果这种做法也不更改运行时行为，那 Rust 会将值表达式提升到静态(`'static`) slot 作用域内。也就是说，提升的表达式可以在编译时求值，结果值不包含[内部可变性][interior mutability]或[析构函数][destructors] (这些属性是根据可能的值确定的，例如 `&None` 总是具有类型 `&'static Option<_>`，因为这种关系已经被值唯一确定了)。
-
+如果可以将值表达式写入常量，然后能通过引用/借用和解引用来使用，并且如果这种做法也不更改运行时行为，那 Rust 会将值表达式提升到静态(`'static`) slot 作用域内。也就是说，提升的表达式可以在编译时求值，这求得的值不具备[内部可变性][interior mutability]且不包含[析构函数][destructors] (这些属性是根据可能的值确定的，例如 `&None` 总是具有类型 `&'static Option<_>`，因为这种关系已经被值唯一确定了)。
+Promotion of a value expression to a `'static` slot occurs when the expression
+could be written in a constant, borrowed, and dereferencing that borrow where
+the expression was originally written, without changing the runtime behavior.
+That is, the promoted expression can be evaluated at compile-time and the
+resulting value does not contain [interior mutability] or [destructors] (these
+properties are determined based on the value where possible, e.g. `&None`
+always has the type `&'static Option<_>`, as it contains nothing disallowed).
 ### Temporary lifetime extension
 ### 临时生存期扩展
 

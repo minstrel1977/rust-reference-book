@@ -220,7 +220,7 @@ if let Person{name: &person_name, age: 18..=150} = value { }
 #    age: u8,
 # }
 # let value = Person{ name: String::from("John"), age: 23 };
-if let Person{name: ref person_name, age: 18..=150} = value { }
+if let Person{ name: ref person_name, age: 18..=150 } = value { }
 ```
 
 这里，`ref` 不是被匹配的一部分。这里它唯一的目的就是使变量和匹配值的引用绑定起来，而不是潜在地拷贝或移动匹配的内容。
