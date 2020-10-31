@@ -2,14 +2,15 @@
 # 析构函数
 
 >[destructors.md](https://github.com/rust-lang/reference/blob/master/src/destructors.md)\
->commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e
+>commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e \
+>本译文最后维护日期：2020-10-31
 
 
-当一个[初始化][initialized]的[变量][variable]或[临时变量][temporary]超出作用域时，它的*析构函数*将运行，或者说它将被*销毁(dropped)*。此外[赋值][Assignment]动作也会运行其左操作数的析构函数(如果它已初始化)。如果变量已部分初始化，则只销毁其已初始化的字段。
+当一个[初始化][initialized]了的[变量][variable]或[临时变量][temporary]超出作用域时，它的*析构函数(destructor)*将运行，或者说它将被*销毁(dropped)*。此外[赋值][Assignment]操作也会运行其左操作数的析构函数（如果它已经初始化了）。如果变量已部分初始化了，则只销毁其已初始化的字段。
 
 类型 `T` 的析构函数由以下内容组成：
 
-1. 如果 `T: Drop`, 则调用 [`<T as std::ops::Drop>::drop`]
+1. 如果有约束 `T: Drop`, 则调用 [`<T as std::ops::Drop>::drop`]
 2. 递归地运行其所有字段的析构函数。
     * [结构体(`struct`)][struct]的字段按照声明顺序被销毁。
     * 活动[枚举变体][enum variant]的字段按声明顺序销毁。
@@ -19,7 +20,7 @@
     * [trait对象][Trait objects]的销毁会运行其非具名基类(underlying type)的析构函数。
     * 其他类型不会导致任何进一步的销毁动作发生。
 
-如果析构函数必须手动运行，比如在实现自定义的智能指针时，可以使用 [`std::ptr::drop_in_place`]
+如果析构函数必须手动运行，比如在实现自定义的智能指针时，可以使用标准库函数 [`std::ptr::drop_in_place`]。
 
 举些例子：
 
@@ -56,7 +57,7 @@ core::mem::forget(partial_move.1);
 ## Drop scopes
 ## 销毁作用域
 
-每个变量或临时变量都与一个*销毁作用域（后文有时也直接称做作用域）*相关联。当控制流程离开一个销毁作用域时，与该作用域关联的所有变量将按照其声明(变量)或创建(临时变量)的相反顺序销毁。
+每个变量或临时变量都与一个*销毁作用域(drop scope)*（译者注：后文有时也直接称做作用域）相关联。当控制流离开一个销毁作用域时，与该作用域关联的所有变量将按照其声明（变量）或创建（临时变量）的相反顺序销毁。
 
 销毁作用域是在使用 [`match`] 将 [`for`]、[`if let`] 和 [`while let`] 这些表达式替换为等效表达式之后确定的。销毁作用域的确定上重载操作符与内置操作符没有区别，[绑定方式(binding modes)][binding modes]也不用考虑。
 
@@ -68,6 +69,41 @@ core::mem::forget(partial_move.1);
     * 在[块表达式][block expression]上，块和表达式的销毁作用域是相同的
 *匹配(`match`)表达式的每条匹配臂
 
+Drop scopes are determined after replacing [`for`], [`if let`], and
+[`while let`] expressions with the equivalent expressions using [`match`].
+Overloaded operators are not distinguished from built-in operators and [binding
+modes] are not considered.
+
+Given a function, or closure, there are drop scopes for:
+
+* The entire function
+* Each [statement]
+* Each [expression]
+* Each block, including the function body
+    * In the case of a [block expression], the scope for the block and the
+      expression are the same scope.
+* Each arm of a `match` expression
+
+Drop scopes are nested within one another as follows. When multiple scopes are
+left at once, such as when returning from a function, variables are dropped
+from the inside outwards.
+
+* The entire function scope is the outer most scope.
+* The function body block is contained within the scope of the entire function.
+* The parent of the expression in an expression statement is the scope of the
+  statement.
+* The parent of the initializer of a [`let` statement] is the `let` statement's
+  scope.
+* The parent of a statement scope is the scope of the block that contains the
+  statement.
+* The parent of the expression for a `match` guard is the scope of the arm that
+  the guard is for.
+* The parent of the expression after the `=>` in a `match` expression is the
+  scope of the arm that it's in.
+* The parent of the arm scope is the scope of the `match` expression that it
+  belongs to.
+* The parent of all other scopes is the scope of the immediately enclosing
+  expression.
 销毁作用域相互嵌套如下。当同时离开多个作用域时，比如从函数返回时，变量会从内部向外销毁。
 
 * 整个函数作用域是最外层的作用域。
@@ -308,7 +344,7 @@ let x = (&temp()).use_temp();  // ERROR
 [initialized]: glossary.md#initialized
 [interior mutability]: interior-mutability.md
 [lazy boolean expression]: expressions/operator-expr.md#lazy-boolean-operators
-[place context]: expressions.md#位置表达式和值表达式
+[place context]: expressions.md#place-expressions-and-value-expressions
 [promoted]: destructors.md#constant-promotion
 [scrutinee]: glossary.md#scrutinee
 [statement]: statements.md
@@ -337,7 +373,7 @@ let x = (&temp()).use_temp();  // ERROR
 [`for`]: expressions/loop-expr.md#iterator-loops
 [`if let`]: expressions/if-expr.md#if-let-expressions
 [`if`]: expressions/if-expr.md#if-expressions
-[`let` statement]: statements.md#let语句
+[`let` statement]: statements.md#let-statements
 [`loop`]: expressions/loop-expr.md#infinite-loops
 [`match`]: expressions/match-expr.md
 [`while let`]: expressions/loop-expr.md#predicate-pattern-loops
@@ -346,4 +382,6 @@ let x = (&temp()).use_temp();  // ERROR
 [`<T as std::ops::Drop>::drop`]: ../std/ops/trait.Drop.html#tymethod.drop
 [`std::ptr::drop_in_place`]: ../std/ptr/fn.drop_in_place.html
 [`std::mem::ManuallyDrop`]: ../std/mem/struct.ManuallyDrop.html
+
 <!-- 2020-10-25 -->
+<!-- checked -->
