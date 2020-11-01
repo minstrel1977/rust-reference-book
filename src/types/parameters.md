@@ -19,9 +19,6 @@ fn to_vec<A: Clone>(xs: &[A]) -> Vec<A> {
 }
 ```
 
-Here, `first` has type `A`, referring to `to_vec`'s `A` type parameter; and
-`rest` has type `Vec<A>`, a vector with element type `A`.
-
 这里，`first` 的类型为 `A`，引用的是 `to_vec` 的类型参数 `A`；`rest` 的类型为 `Vec<A>`，它是一个内部元素类型为 `A` 向量(vector)。
 
 <!-- 2020-10-25 -->

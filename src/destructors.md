@@ -3,7 +3,7 @@
 
 >[destructors.md](https://github.com/rust-lang/reference/blob/master/src/destructors.md)\
 >commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e \
->本译文最后维护日期：2020-10-31
+>本译文最后维护日期：2020-11-1
 
 
 当一个[初始化][initialized]了的[变量][variable]或[临时变量][temporary]超出作用域时，它的*析构函数(destructor)*将运行，或者说它将被*销毁(dropped)*。此外[赋值][Assignment]操作也会运行其左操作数的析构函数（如果它已经初始化了）。如果变量已部分初始化了，则只销毁其已初始化的字段。
@@ -132,10 +132,8 @@ let declared_last = PrintOnDrop("在外层作用域内最先销毁");
 ### Temporary scopes
 ### 临时作用域
 
-
-
 表达式的*临时作用域*用于该表达在位置上下文中求出的结果被保存进的那个临时变量的作用域。有些情况下，此表达式求出的结果会被[提升][promoted]，则此表达式不存在临时作用域。\
-（也不怕更多译者注了，那就把上句按译者自己的理解再翻译一遍：）一个表达式在位置表达式上使用时会被求值，如果此求出的值没有被保存进命名变量里就准备直接使用（比如和其他值做比较），那就会先被存进一个临时变量里（特殊情况下（比如被此值被共享引用），求出的值会被[提升][promoted]为静态项，那这里讨论的临时作用域就不存在）再使用，临时作用域就是此临时变量生效的最小作用域，它通常在此表达式所在的语句结束时也结束。
+（也不怕更多译者注了，那就把上句按译者自己的理解再翻译一遍：）一个表达式在位置表达式上使用时会被求值，如果此时没有命名变量和此值绑定，那就会先被保存进一个临时变量里，临时作用域就是伴随这此临时变量而生成。此作用域通常在此表达式所在的语句结束时结束，但如果求出的值被通过借用绑定给命名变量，此作用域会扩展到此命名变量的作用域（后面[生存期扩展](#temporary-lifetime-extension)会讲到）。如果求出的值比较特殊，这个作用域还会提升到全局作用域，这就是所谓的[常量提升][promoted]。
 
 除了[生存期扩展](#temporary-lifetime-extension)之外，表达式的临时作用域是包含该表达式的最小作用域，它适用于以下情况之一:
 
@@ -219,20 +217,14 @@ loop {
 ### Constant promotion
 ### 常量提升
 
-如果可以将值表达式写入常量，然后能通过引用/借用和解引用来使用，并且如果这种做法也不更改运行时行为，那 Rust 会将值表达式提升到静态(`'static`) slot 作用域内。也就是说，提升的表达式可以在编译时求值，这求得的值不具备[内部可变性][interior mutability]且不包含[析构函数][destructors] (这些属性是根据可能的值确定的，例如 `&None` 总是具有类型 `&'static Option<_>`，因为这种关系已经被值唯一确定了)。
-Promotion of a value expression to a `'static` slot occurs when the expression
-could be written in a constant, borrowed, and dereferencing that borrow where
-the expression was originally written, without changing the runtime behavior.
-That is, the promoted expression can be evaluated at compile-time and the
-resulting value does not contain [interior mutability] or [destructors] (these
-properties are determined based on the value where possible, e.g. `&None`
-always has the type `&'static Option<_>`, as it contains nothing disallowed).
+如果可以将值表达式写入常量，然后能通过引用/借用和解引用来使用，并且如果这种做法也不更改运行时行为，那 Rust 会将值表达式提升到静态(`'static`) slot 作用域内。也就是说，提升的表达式可以在编译时求值，这求得的值不具备[内部可变性][interior mutability]或不包含[析构函数][destructors] (这些属性是根据值来确定的，例如 `&None` 的类型总是 `&'static Option<_>`，因为 `None` 的值是唯一确定的)。
+
 ### Temporary lifetime extension
 ### 临时生存期扩展
 
 > **注意**：临时生存期扩展的确切规则可能会有所改变。这里只描述了当前的行为表现。
 
-`let`语句中表达式的临时作用域有时会*扩展*到包含此 `let`语句的块作用域。根据某些语法规则，当通常的临时作用域太小时，就会这样做。例如：
+`let`语句中表达式的临时作用域有时会*扩展*到与包含此 `let`语句的块作用域等同。根据某些语法规则，当通常的临时作用域太小时，就会这样做。例如：
 
 ```rust
 let x = &mut 0;
@@ -240,39 +232,38 @@ let x = &mut 0;
 println!("{}", x);
 ```
 
-如果一个借用、解引用、字段或元组索引表达式有一个扩展的临时作用域，那么它们的操作数也是如此。如果索引表达式有扩展的临时作用域，那么被索引的表达式也有扩展的临时作用域。
+如果一个借用、解引用、字段或元组索引表达式有一个扩展的临时作用域，那么它们的操作数在此作用域中也有效。如果索引表达式有扩展的临时作用域，那么被索引的表达式在此扩展的临时作用域也一直有效。
 
 #### Extending based on patterns
 #### 基于模式的扩展
 
-*扩展型模式(extending pattern)*要符合下面两个条件：
+*扩展临时作用域的模式(extending pattern)*是：
 
-* 通过引用或可变引用绑定的[标识符模式][identifier pattern]。
-* [结构体(`struct`)][struct pattern]、[元组][tuple pattern]、[元组结构体][tuple struct pattern]或[切片][slice pattern]模式，其中它们至少有一个直接子模式是扩展模式。
+* 绑定方式为引用或可变引用的[标识符模式][identifier pattern]。
+* [结构体(`struct`)][struct pattern]、[元组][tuple pattern]、[元组结构体][tuple struct pattern]或[切片][slice pattern]模式，其中它们至少有一个直接子模式是扩展临时作用域的模式。
 
-所以 `ref x`、`V(ref x)` 和 `[ref x, y]` 都是扩展型模式，但是  `x`、`&ref x` 和 `&(ref x,)` 不是。
+所以 `ref x`、`V(ref x)` 和 `[ref x, y]` 都是扩展临时作用域的模式，但是  `x`、`&ref x` 和 `&(ref x,)` 不是。
 
-如果 `let`语句中的模式是扩展型模式，那么初始化器表达式的临时作用域将被扩展。。
+如果 `let`语句中的模式是扩展临时作用域的模式，那么初始化器表达式中的临时作用域将被扩展。
 
 #### Extending based on expressions
 #### 基于表达式的扩展
 
-对于带有初始化器的 let语句，*扩展型表达式*是以下表达式之一：
+对于带有初始化器的 let语句来说，*扩展临时作用域的表达式(extending expression)*是以下表达式之一：
 
 * 初始化表达式(initializer expression)。
-* 扩展型[借用表达式][borrow expression]的操作数。
-* 扩展型[数组][array expression]、[强制转换(cast)][cast expression]、[花括号括起来的结构体][struct expression]或[元组][tuple expression]表达式的操作数。
-* 任何扩展型[块表达式][block expression]的尾部表达式(final expression);
+* 扩展临时作用域的[借用表达式][borrow expression]的操作数。
+* 扩展临时作用域的[数组][array expression]、[强制转换(cast)][cast expression]、[花括号括起来的结构体][struct expression]或[元组][tuple expression]表达式的操作数。
+* 任何扩展临时作用域的[块表达式][block expression]的尾部表达式(final expression);
 
-因此，在 `&mut 0`、`(&1, &mut 2)` 和 `Some { 0: &mut 3 }` 中的借用表达式都是扩展型表达式。在 `&0 + &1` 和一些 `Some(&mut 0)` 中的借用不是：它们在语法上是函数调用表达式。
+因此，在 `&mut 0`、`(&1, &mut 2)` 和 `Some { 0: &mut 3 }` 中的借用表达式都是扩展临时作用域的表达式。在 `&0 + &1` 和一些 `Some(&mut 0)` 中的借用不是：它们在句法上是函数调用表达式。
 
-任何扩展型借用表达式的操作数都带有扩展的临时作用域。
+任何扩展了临时作用域的借用表达式的操作数的临时作用域都随此表达式的临时作用域的扩展而扩展。
 
 #### Examples
 #### 示例
 
-这里有一些表达式扩展了临时作用域的例子：
-Here are some examples where expressions have extended temporary scopes:
+这是一些带有扩展的临时作用域的表达式：
 
 ```rust
 # fn temp() {}
@@ -294,7 +285,7 @@ let ref x = *&temp();
 # fn temp() {}
 # trait Use { fn use_temp(&self) -> &Self { self } }
 # impl Use for () {}
-// 在这些情况下，存储 `temp()` 结果的临时变量只存在到 let语句结束。
+// 在这些情况下，存储 `temp()` 结果的临时变量只存活到 let语句结束。
 
 let x = Some(&temp());         // ERROR
 let x = (&temp()).use_temp();  // ERROR
@@ -304,7 +295,7 @@ let x = (&temp()).use_temp();  // ERROR
 ## Not running destructors
 ## 阻断运行析构函数
 
-在Rust中，即便类型不是 `'static`，不运行析构函数也是允许的，也是安全的。[`std::mem::ManuallyDrop`] 提供了一个包装器来防止变量或字段被自动销毁。
+在 Rust 中，即便类型不是 `'static`，禁止运行析构函数也是允许的，也是安全的。[`std::mem::ManuallyDrop`] 提供了一个包装器(wrapper)来防止变量或字段被自动销毁。
 
 [Assignment]: expressions/operator-expr.md#assignment-expressions
 [binding modes]: patterns.md#binding-modes
