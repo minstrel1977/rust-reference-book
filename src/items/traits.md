@@ -123,9 +123,9 @@ trait TraitMethods {
 ```
 
 ```rust,compile_fail
-// 此 trait 是对象安全的，但不能在 trait对象上调度使用这些方法。
+// 此 trait 是对象安全的，但不能在 trait对象上分发使用这些方法。
 trait NonDispatchable {
-    // 非方法不能被调度。
+    // 非方法不能被分发。
     fn foo() where Self: Sized {}
     // 在运行之前 Self 类型未知。
     fn returns(&self) -> Self where Self: Sized;

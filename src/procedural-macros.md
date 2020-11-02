@@ -32,7 +32,7 @@
 
 过程宏 crate 几乎总是会去链接编译器提供的 [`proc_macro` crate]。`proc_macro` crate 提供编写过程宏所需的类型和工具来让编写更容易。
 
-这个 crate 主要包含一个 [`TokenStream`] 类型。过程宏在*标记流(token streams)*上操作，而不是在 AST 节点上操作，因为这对于编译器和过程宏的构建目标来说，这是一个随着时间推移要稳定得多的接口。*标记流*大致相当于 `Vec<TokenTree>`，其中 `TokenTree` 可以大致视为词法标记码。例如，`foo` 是 `Ident` 标记码， `.` 是 `Punct` 标记码， `1.2` 是一个 `Literal` 标记码。不同于 `Vec<TokenTree>`，`TokenStream` 的克隆成本很低。
+这个 crate 主要包含一个 [`TokenStream`] 类型。过程宏在*标记流(token streams)*上操作，而不是在 AST 节点上操作，因为这对于编译器和过程宏的编译目标来说，这是一个随着时间推移要稳定得多的接口。*标记流*大致相当于 `Vec<TokenTree>`，其中 `TokenTree` 可以大致视为词法标记码。例如，`foo` 是 `Ident` 标记码， `.` 是 `Punct` 标记码， `1.2` 是一个 `Literal` 标记码。不同于 `Vec<TokenTree>`，`TokenStream` 的克隆成本很低。
 
 所有标记码都有一个关联的 `Span`。 `Span` 是一个不透明的值，不能被修改，但可以被制造。 `Span` 表示程序内的源代码范围，主要用于错误报告。可以修改任何标记码的 `Span`。
 

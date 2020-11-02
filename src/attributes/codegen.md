@@ -50,7 +50,7 @@
 unsafe fn foo_avx2() {}
 ```
 
-每个[目标架构][target architecture]都有一组可以被启用的特性。为不是当前 crate 的构建目标下的CPU架构指定需启用的特性是错误的。
+每个[目标架构][target architecture]都有一组可以被启用的特性。为不是当前 crate 的编译目标下的CPU架构指定需启用的特性是错误的。
 
 调用一个编译时启用了某特性的函数，但当前程序运行的平台并不支持该特性，那这将导致[未定义行为][undefined behavior]。
 
@@ -123,7 +123,7 @@ unsafe fn foo_avx2() {}
 
 有关 x86平台上的运行时特性检测，请参阅标准库中的 [`is_x86_feature_detected`]宏。
 
-> 注意：`rustc` 为每个构建目标和CPU启用了一组默认特性。可以使用 [`-C target-cpu`] 命令行参数选择CPU。单个特性可以通过 [`-C target-feature`] 标志来为整个 crate 启用或禁用。
+> 注意：`rustc` 为每个编译目标和CPU启用了一组默认特性。可以使用 [`-C target-cpu`] 命令行参数选择CPU。单个特性可以通过 [`-C target-feature`] 标志来为整个 crate 启用或禁用。
 
 ## The `track_caller` attribute
 ## `track_caller`属性
