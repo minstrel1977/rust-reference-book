@@ -358,7 +358,6 @@ macro_rules! helper {
   * 其它所有的匹配段类型指示符没有限制。
 
 当涉及到重复段时，这些规则适用于所有可能的展开次数，注意需将分隔符考虑在内。这意味着：
-When repetitions are involved, then the rules apply to every possible number of expansions, taking separators into account. This means:
 
   * 如果重复段包含分隔符，则分隔符必须能够跟随重复段的内容重复。
   * 如果重复段可以重复多次(`*` 或 `+`)，那么重复段的内容必须能自我重复。

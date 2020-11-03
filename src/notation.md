@@ -18,14 +18,14 @@
 | \\x               | \\n, \\r, \\t, \\0            | 转义字符                         |
 | x<sup>?</sup>     | `pub`<sup>?</sup>             | 可选项                           |
 | x<sup>\*</sup>    | _OuterAttribute_<sup>\*</sup> | x 重复零次或多次                  |
-| x<sup>+</sup>     |  _MacroMatch_<sup>+</sup>     | x 重复一次或多次                  |
+| x<sup>+</sup>     | _MacroMatch_<sup>+</sup>      | x 重复一次或多次                  |
 | x<sup>a..b</sup>  | HEX_DIGIT<sup>1..6</sup>      | x 重复 a 到 b 次                 |
 | \|                | `u8` \| `u16`, Block \| Item  | 或                              |
 | \[ ]              | \[`b` `B`]                    | 列举的任意字符                    |
 | \[ - ]            | \[`a`-`z`]                    | a 到 z 范围内的任意字符(包括 a 和 z)|
 | ~\[ ]             | ~\[`b` `B`]                   | 列举范围外的任意字符(序列)          |
 | ~`string`         | ~`\n`, ~`*/`                  | 此字符序列外的任意字符(序列)        |
-| ( )               | (`,` _Parameter_)<sup>?</sup> | 数据项分组(Groups items)          |
+| ( )               | (`,` _Parameter_)<sup>?</sup> | 数据项分组         |
 
 ## String table productions
 ## 字符串表示的句法生产式列表

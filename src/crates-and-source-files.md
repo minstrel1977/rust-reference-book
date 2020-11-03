@@ -16,24 +16,19 @@
 > SHEBANG : `#!` \~`\n`<sup>\+</sup>[†](#shebang)
 
 
-> 注意：尽管像任何其他语言一样，Rust 可以通过解释器和编译器实现，但现在唯一存在的实现是编译器，并且该语言也是一直被设计为可编译的。因为这些原因，所以本章节所有的讨论都是基于编译器这条路径的。
+> 注意：尽管像任何其他语言一样，Rust 也都可以通过解释器和编译器实现，但现在唯一存在的实现是编译器，并且该语言也是一直被设计为可编译的。因为这些原因，所以本章节所有的讨论都是基于编译器这条路径的。
 
 Rust 的语义有编译时和运行时之间的*阶段差异(phase distinction)*。[^phase-distinction] 其中*静态解释*的语义规则控制编译的成败，而*动态解释*的语义规则控制程序在运行时的行为。
 
 编译模型以 _crate_ 为中心。每次编译都以源码的形式处理单个的 crate，如果成功，将生成二进制形式的单个 crate：可执行文件或某种类型的库文件。[^cratesourcefile]
 
-Each source file contains a sequence of zero or more [_Item_] definitions, and
-may optionally begin with any number of [attributes]
-that apply to the containing module, most of which influence the behavior of
-the compiler. The anonymous crate module can have additional attributes that
-apply to the crate as a whole.
 crate 是编译和链接的单元，也是版本控制、版本分发和运行时加载的基本单元。一个 crate 包含一个嵌套的带作用域的[模块][module]*树*。这个树的顶层是一个匿名的模块(从模块内部路径的角度来看)，并且一个 crate 中的任何数据项都有一个规范的[模块路径][module path]，表示它在 crate 的模块树中的位置。
 
 Rust 编译器总是使用单个源文件作为输入来开启编译过程的，并且总是生成单个输出 crate。对输入源文件的处理可能导致其他源文件作为模块被加载进来。源文件的扩展名为 `.rs`。
 
 Rust 源文件描述了一个模块，其名称和位置（在当前 crate 的模块树中）是从源文件外部定义的：要么通过引用源文件中的显式[模块(_Module_)][module]项，要么由 crate 本身的名称定义。每个源文件都是一个模块，但并非每个模块都需要自己的源文件：多个[模块定义][module]可以嵌套在同一个文件中。
 
-每个源文件包含一个由零个或多个[*数据项*][_Item_]定义组成的序列，并且这些源文件都可选地从应用于其内部模块的任意数量的[属性][attributes]开始，大部分这些属性都会会影响编译器行为。匿名的 crate 根模块可带有应用于整个 crate 的附加属性。
+每个源文件包含一个由零个或多个[数据项][_Item_]定义组成的序列，并且这些源文件都可选地从应用于其内部模块的任意数量的[属性][attributes]开始，大部分这些属性都会会影响编译器行为。匿名的 crate 根模块可带有应用于整个 crate 的附加属性。
 
 ```rust
 // 指定 crate 名称.

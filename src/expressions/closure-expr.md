@@ -23,7 +23,7 @@
 
 闭包表达式在将函数作为参数传递给其他函数时非常有用，因此它常被用来作为定义和捕获独立函数(separate function)的便捷手段。
 
-特别值得注意的是闭包表达式能*捕获它们被定义时的环境中的变量(capture their environment)*，而正常函数定义则不能。如果没有 `move` 关键字，闭包表达式将[推断出它该如何从其环境中捕获每个变量](../types/closure.md#capture-modes)，它会而倾向于通过共享引用来捕获，从而有效地借用闭包体中用到的所有外部变量。如果有必要，编译器将推断出应该采用可变引用，或者应该从环境中移动或复制值（取决于它们的类型）变量。闭包可以通过前缀 `move` 关键字来强制通过复制值或移动值的方式捕获其环境变量。这通常用来确保当前闭包的生存期类型为 `'static`。
+特别值得注意的是闭包表达式能*捕获它们被定义时的环境中的变量(capture their environment)*，而正常函数定义则不能。如果没有关键字 `move`，闭包表达式将[推断出它该如何从其环境中捕获每个变量](../types/closure.md#capture-modes)，它会而倾向于通过共享引用来捕获，从而有效地借用闭包体中用到的所有外部变量。如果有必要，编译器将推断出应该采用可变引用，或者应该从环境中移动或复制值（取决于它们的类型）变量。闭包可以通过前缀关键字 `move` 来强制通过复制值或移动值的方式捕获其环境变量。这通常用来确保当前闭包的生存期类型为 `'static`。
 
 In this example, we define a function `ten_times` that takes a higher-order
 function argument, and we then call it with a closure expression as an argument,
