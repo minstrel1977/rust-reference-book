@@ -1,0 +1,286 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>翻译说明 - Rust 参考手册 - The Rust Language Reference</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="翻译说明.html">翻译说明</a></li><li class="chapter-item expanded affix "><a href="introduction.html">介绍</a></li><li class="chapter-item expanded "><a href="notation.html"><strong aria-hidden="true">1.</strong> 表义符</a></li><li class="chapter-item expanded "><a href="lexical-structure.html"><strong aria-hidden="true">2.</strong> 词法结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="input-format.html"><strong aria-hidden="true">2.1.</strong> 输入格式</a></li><li class="chapter-item expanded "><a href="keywords.html"><strong aria-hidden="true">2.2.</strong> 关键字</a></li><li class="chapter-item expanded "><a href="identifiers.html"><strong aria-hidden="true">2.3.</strong> 标识符</a></li><li class="chapter-item expanded "><a href="comments.html"><strong aria-hidden="true">2.4.</strong> 注释</a></li><li class="chapter-item expanded "><a href="whitespace.html"><strong aria-hidden="true">2.5.</strong> 空白符</a></li><li class="chapter-item expanded "><a href="tokens.html"><strong aria-hidden="true">2.6.</strong> 标记码</a></li><li class="chapter-item expanded "><a href="paths.html"><strong aria-hidden="true">2.7.</strong> 路径</a></li></ol></li><li class="chapter-item expanded "><a href="macros.html"><strong aria-hidden="true">3.</strong> 宏</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="macros-by-example.html"><strong aria-hidden="true">3.1.</strong> 声明宏</a></li><li class="chapter-item expanded "><a href="procedural-macros.html"><strong aria-hidden="true">3.2.</strong> 过程宏</a></li></ol></li><li class="chapter-item expanded "><a href="crates-and-source-files.html"><strong aria-hidden="true">4.</strong> crate 和源文件</a></li><li class="chapter-item expanded "><a href="conditional-compilation.html"><strong aria-hidden="true">5.</strong> 条件编译</a></li><li class="chapter-item expanded "><a href="items.html"><strong aria-hidden="true">6.</strong> 数据项</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="items/modules.html"><strong aria-hidden="true">6.1.</strong> 模块</a></li><li class="chapter-item expanded "><a href="items/extern-crates.html"><strong aria-hidden="true">6.2.</strong> 外部crate</a></li><li class="chapter-item expanded "><a href="items/use-declarations.html"><strong aria-hidden="true">6.3.</strong> use声明</a></li><li class="chapter-item expanded "><a href="items/functions.html"><strong aria-hidden="true">6.4.</strong> 函数</a></li><li class="chapter-item expanded "><a href="items/type-aliases.html"><strong aria-hidden="true">6.5.</strong> 类型别名</a></li><li class="chapter-item expanded "><a href="items/structs.html"><strong aria-hidden="true">6.6.</strong> 结构体(struct)</a></li><li class="chapter-item expanded "><a href="items/enumerations.html"><strong aria-hidden="true">6.7.</strong> 枚举(enum)</a></li><li class="chapter-item expanded "><a href="items/unions.html"><strong aria-hidden="true">6.8.</strong> 联合体(union)</a></li><li class="chapter-item expanded "><a href="items/constant-items.html"><strong aria-hidden="true">6.9.</strong> 常量项</a></li><li class="chapter-item expanded "><a href="items/static-items.html"><strong aria-hidden="true">6.10.</strong> 静态项</a></li><li class="chapter-item expanded "><a href="items/traits.html"><strong aria-hidden="true">6.11.</strong> trait</a></li><li class="chapter-item expanded "><a href="items/implementations.html"><strong aria-hidden="true">6.12.</strong> 实现</a></li><li class="chapter-item expanded "><a href="items/external-blocks.html"><strong aria-hidden="true">6.13.</strong> 外部块</a></li><li class="chapter-item expanded "><a href="items/generics.html"><strong aria-hidden="true">6.14.</strong> 类型参数和生存期参数</a></li><li class="chapter-item expanded "><a href="items/associated-items.html"><strong aria-hidden="true">6.15.</strong> 关联数据项</a></li><li class="chapter-item expanded "><a href="visibility-and-privacy.html"><strong aria-hidden="true">6.16.</strong> 可见性与隐私权</a></li></ol></li><li class="chapter-item expanded "><a href="attributes.html"><strong aria-hidden="true">7.</strong> 属性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="attributes/testing.html"><strong aria-hidden="true">7.1.</strong> 测试</a></li><li class="chapter-item expanded "><a href="attributes/derive.html"><strong aria-hidden="true">7.2.</strong> 派生</a></li><li class="chapter-item expanded "><a href="attributes/diagnostics.html"><strong aria-hidden="true">7.3.</strong> 诊断</a></li><li class="chapter-item expanded "><a href="attributes/codegen.html"><strong aria-hidden="true">7.4.</strong> 代码生成</a></li><li class="chapter-item expanded "><a href="attributes/limits.html"><strong aria-hidden="true">7.5.</strong> 极限值设置</a></li><li class="chapter-item expanded "><a href="attributes/type_system.html"><strong aria-hidden="true">7.6.</strong> 类型系统</a></li></ol></li><li class="chapter-item expanded "><a href="statements-and-expressions.html"><strong aria-hidden="true">8.</strong> 语句和表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="statements.html"><strong aria-hidden="true">8.1.</strong> 语句</a></li><li class="chapter-item expanded "><a href="expressions.html"><strong aria-hidden="true">8.2.</strong> 表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="expressions/literal-expr.html"><strong aria-hidden="true">8.2.1.</strong> 字面量表达式</a></li><li class="chapter-item expanded "><a href="expressions/path-expr.html"><strong aria-hidden="true">8.2.2.</strong> 路径表达式</a></li><li class="chapter-item expanded "><a href="expressions/block-expr.html"><strong aria-hidden="true">8.2.3.</strong> 块表达式</a></li><li class="chapter-item expanded "><a href="expressions/operator-expr.html"><strong aria-hidden="true">8.2.4.</strong> 运算符表达式</a></li><li class="chapter-item expanded "><a href="expressions/grouped-expr.html"><strong aria-hidden="true">8.2.5.</strong> 分组表达式</a></li><li class="chapter-item expanded "><a href="expressions/array-expr.html"><strong aria-hidden="true">8.2.6.</strong> 数组和索引表达式</a></li><li class="chapter-item expanded "><a href="expressions/tuple-expr.html"><strong aria-hidden="true">8.2.7.</strong> 元组和索引表达式</a></li><li class="chapter-item expanded "><a href="expressions/struct-expr.html"><strong aria-hidden="true">8.2.8.</strong> 结构体表达式</a></li><li class="chapter-item expanded "><a href="expressions/enum-variant-expr.html"><strong aria-hidden="true">8.2.9.</strong> 枚举变体表达式</a></li><li class="chapter-item expanded "><a href="expressions/call-expr.html"><strong aria-hidden="true">8.2.10.</strong> 调用表达式</a></li><li class="chapter-item expanded "><a href="expressions/method-call-expr.html"><strong aria-hidden="true">8.2.11.</strong> 方法调用表达式</a></li><li class="chapter-item expanded "><a href="expressions/field-expr.html"><strong aria-hidden="true">8.2.12.</strong> 字段访问表达式</a></li><li class="chapter-item expanded "><a href="expressions/closure-expr.html"><strong aria-hidden="true">8.2.13.</strong> 闭包表达式</a></li><li class="chapter-item expanded "><a href="expressions/loop-expr.html"><strong aria-hidden="true">8.2.14.</strong> 循环表达式</a></li><li class="chapter-item expanded "><a href="expressions/range-expr.html"><strong aria-hidden="true">8.2.15.</strong> 区间表达式</a></li><li class="chapter-item expanded "><a href="expressions/if-expr.html"><strong aria-hidden="true">8.2.16.</strong> if 和 if let 表达式</a></li><li class="chapter-item expanded "><a href="expressions/match-expr.html"><strong aria-hidden="true">8.2.17.</strong> 匹配表达式</a></li><li class="chapter-item expanded "><a href="expressions/return-expr.html"><strong aria-hidden="true">8.2.18.</strong> 返回表达式</a></li><li class="chapter-item expanded "><a href="expressions/await-expr.html"><strong aria-hidden="true">8.2.19.</strong> 等待表达式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="patterns.html"><strong aria-hidden="true">9.</strong> 模式</a></li><li class="chapter-item expanded "><a href="type-system.html"><strong aria-hidden="true">10.</strong> 类型系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types.html"><strong aria-hidden="true">10.1.</strong> 类型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types/boolean.html"><strong aria-hidden="true">10.1.1.</strong> 布尔型</a></li><li class="chapter-item expanded "><a href="types/numeric.html"><strong aria-hidden="true">10.1.2.</strong> 数字型</a></li><li class="chapter-item expanded "><a href="types/textual.html"><strong aria-hidden="true">10.1.3.</strong> 字符型</a></li><li class="chapter-item expanded "><a href="types/never.html"><strong aria-hidden="true">10.1.4.</strong> never类型</a></li><li class="chapter-item expanded "><a href="types/tuple.html"><strong aria-hidden="true">10.1.5.</strong> 元组</a></li><li class="chapter-item expanded "><a href="types/array.html"><strong aria-hidden="true">10.1.6.</strong> 数组</a></li><li class="chapter-item expanded "><a href="types/slice.html"><strong aria-hidden="true">10.1.7.</strong> 切片</a></li><li class="chapter-item expanded "><a href="types/struct.html"><strong aria-hidden="true">10.1.8.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="types/enum.html"><strong aria-hidden="true">10.1.9.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="types/union.html"><strong aria-hidden="true">10.1.10.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="types/function-item.html"><strong aria-hidden="true">10.1.11.</strong> 函数项类型</a></li><li class="chapter-item expanded "><a href="types/closure.html"><strong aria-hidden="true">10.1.12.</strong> 闭包</a></li><li class="chapter-item expanded "><a href="types/pointer.html"><strong aria-hidden="true">10.1.13.</strong> 指针型</a></li><li class="chapter-item expanded "><a href="types/function-pointer.html"><strong aria-hidden="true">10.1.14.</strong> 函数指针</a></li><li class="chapter-item expanded "><a href="types/trait-object.html"><strong aria-hidden="true">10.1.15.</strong> trait对象</a></li><li class="chapter-item expanded "><a href="types/impl-trait.html"><strong aria-hidden="true">10.1.16.</strong> 实现trait</a></li><li class="chapter-item expanded "><a href="types/parameters.html"><strong aria-hidden="true">10.1.17.</strong> 类型参数</a></li><li class="chapter-item expanded "><a href="types/inferred.html"><strong aria-hidden="true">10.1.18.</strong> 推断型</a></li></ol></li><li class="chapter-item expanded "><a href="dynamically-sized-types.html"><strong aria-hidden="true">10.2.</strong> 动态尺寸类型(DST)</a></li><li class="chapter-item expanded "><a href="type-layout.html"><strong aria-hidden="true">10.3.</strong> 类型布局 </a></li><li class="chapter-item expanded "><a href="interior-mutability.html"><strong aria-hidden="true">10.4.</strong> 内部可变性</a></li><li class="chapter-item expanded "><a href="subtyping.html"><strong aria-hidden="true">10.5.</strong> 子类型和型变</a></li><li class="chapter-item expanded "><a href="trait-bounds.html"><strong aria-hidden="true">10.6.</strong> trait约束及其生存期约束</a></li><li class="chapter-item expanded "><a href="type-coercions.html"><strong aria-hidden="true">10.7.</strong> 类型自动强转</a></li><li class="chapter-item expanded "><a href="destructors.html"><strong aria-hidden="true">10.8.</strong> 析构函数</a></li><li class="chapter-item expanded "><a href="lifetime-elision.html"><strong aria-hidden="true">10.9.</strong> 生存期省略</a></li></ol></li><li class="chapter-item expanded "><a href="special-types-and-traits.html"><strong aria-hidden="true">11.</strong> 特殊类型和 trait</a></li><li class="chapter-item expanded "><a href="memory-model.html"><strong aria-hidden="true">12.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory-allocation-and-lifetime.html"><strong aria-hidden="true">12.1.</strong> 内存分配和其生存期</a></li><li class="chapter-item expanded "><a href="memory-ownership.html"><strong aria-hidden="true">12.2.</strong> 内存所有权</a></li><li class="chapter-item expanded "><a href="variables.html"><strong aria-hidden="true">12.3.</strong> 变量</a></li></ol></li><li class="chapter-item expanded "><a href="linkage.html"><strong aria-hidden="true">13.</strong> 链接</a></li><li class="chapter-item expanded "><a href="unsafety.html"><strong aria-hidden="true">14.</strong> 非安全性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="unsafe-functions.html"><strong aria-hidden="true">14.1.</strong> 非安全函数</a></li><li class="chapter-item expanded "><a href="unsafe-blocks.html"><strong aria-hidden="true">14.2.</strong> 非安全代码块</a></li><li class="chapter-item expanded "><a href="behavior-considered-undefined.html"><strong aria-hidden="true">14.3.</strong> 未定义行为</a></li><li class="chapter-item expanded "><a href="behavior-not-considered-unsafe.html"><strong aria-hidden="true">14.4.</strong> 不被认为是非安全的行为</a></li></ol></li><li class="chapter-item expanded "><a href="const_eval.html"><strong aria-hidden="true">15.</strong> 常量求值</a></li><li class="chapter-item expanded "><a href="abi.html"><strong aria-hidden="true">16.</strong> ABI</a></li><li class="chapter-item expanded "><a href="runtime.html"><strong aria-hidden="true">17.</strong> Rust运行时</a></li><li class="chapter-item expanded "><a href="appendices.html"><strong aria-hidden="true">18.</strong> 附录</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="macro-ambiguity.html"><strong aria-hidden="true">18.1.</strong> 宏定义规范</a></li><li class="chapter-item expanded "><a href="influences.html"><strong aria-hidden="true">18.2.</strong> 影响来源</a></li><li class="chapter-item expanded "><a href="glossary.html"><strong aria-hidden="true">18.3.</strong> 术语表</a></li><li class="chapter-item expanded "><a href="本书术语翻译对照表.html"><strong aria-hidden="true">18.4.</strong> 本书术语翻译对照表</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#前言" id="前言">前言</a></h1>
+<p>本译作是译者自己在学习 Rust 时，有感于国内 Rust 中文学习资源贫乏的激情之作。</p>
+<p>译者在阅读和练习完了 Rust 的入门经典 <a href="https://doc.rust-lang.org/book/">The Rust Programming Language</a> 和 <a href="https://doc.rust-lang.org/stable/rust-by-example/">Rust by Example</a> 之后，发现自己对 Rust 非常感兴趣，就一发不可收拾地继续投入精力来深入学习。在这个继续学习的过程中译者发现自己在不断的翻阅官网的 <a href="https://doc.rust-lang.org/stable/reference/">参考手册(Reference)</a>。</p>
+<p>直接查看英语原文的确对理解 Rust 的基础概念很有帮助，但毕竟看英文效率太低；并且原文作为专业的工具书在读者设定上对阅读者做了较高的基础知识储备和 Rust 领域知识的假设；以及由于原文并未正式完工，还在不断增补中，所以其为追求效率导致其使用的英语语法比较简略随意，对基础知识和背景知识的省略严重，导致对译者这样的非英语母语者阅读起来体验并不好。所以译者就萌生了自己对阅读理解做翻译笔记的想法。</p>
+<p>在做翻译笔记的时候发现很多技术坎要过，需要核对一下自己的理解到底对不对，就想偷懒看看中文网内有没有业内大佬把这些资源翻译为中文的，或者这本书的直接翻译版。很遗憾，Rust 在国内不怎么流行，中文资源不多，又很零碎分散，所以很长一段时间之内，译者并没有发现，后来通过 <a href="https://rustcc.cn/">Rust语言中文社区</a>发现国内站点-<a href="https://books.budshome.com">芽之家</a>上有<a href="https://books.budshome.com/rust-reference/">Rust Reference</a>的翻译版。小激动了一番之后发现此版本的翻译者在翻译完前几章后中途弃坑了。</p>
+<p>此发现虽有遗憾，但也激发了译者的勇气，既然有人敢开头，那我就敢给他接力翻译几篇。但遗憾的是译者发现<a href="https://books.budshome.com">芽之家</a>的译本对译者来说仍不是很好理解，也不能及时的和 Rust 官网上的 <a href="https://doc.rust-lang.org/stable/reference/">参考手册(Reference)</a>保持同步。所以译者就依仗着有道翻译决定单干，所以本书的前期的格式和部分名词的译法参照了此版本。所以译者在此特别感谢此版本的翻译者给译者的勇气。</p>
+<p>因为译者本身非计算机专科出身，又只是 Rust 的入门学习者，又是首次尝试这么大的翻译量，所以书中难免有不少翻译错误或者译者理解错误的地方，但译者的对热爱还在，对 Rust 学习的热情还在，所以就直接厚着脸皮拿出来献丑。译者这样做一是致敬 Rust，一是希望为国内 Rust 社区的繁荣尽些热心，更是为了提高译者自己的学习水平。当然也希望能激发更多学习者的热情；同时也希望读者能帮助译者进步，不止于帮助译者改进本书。</p>
+<p>最后，因为译者实在是水平有限，对本书附录的 <a href="macro-ambiguity.html">Macro Follow-Set Ambiguity Formal Specification</a> 实在是无能为力了，只能翻译一半停下，希望读者中的高手能帮忙继续翻译，或者直接重新翻译，或者给译者指点一下也行。</p>
+<h2><a class="header" href="#翻译说明" id="翻译说明">翻译说明</a></h2>
+<h3><a class="header" href="#翻译风格" id="翻译风格">翻译风格</a></h3>
+<p>本书基本是忠于原文的直译，但针对比较晦涩的地方，本书采用了译者自己的理解的意译。但译者本身也是 Rust 的一个入门学习者，所以这里难免出错，所以这里恳请读者及时指正，以免译者贻害其他读者。</p>
+<p>也因为大部分是直译，所以行文并不是很符合中文的阅读习惯，比如同一句话里的定语过多，比如前后两句话没有明显的承接关系等。开始时译者也想把这些修改为符合中文阅读的行文方式，但一是发现工作量有些大，再则，也是主要的，就是在修改的过程中难免加入译者过多的演绎，这样很可能偏离原作的语义，所以暂时没改。其实根据后来译者的检查阅读体验发现，这样的行文反倒是有助于提高阅读时的专注力，比如，停下来对一句话里“...的...的”划分反倒是能让读者更深入理解语义。所以译者愿意相信这百分之十几的阅读磕顿有助于提升这作为一部工具书的价值。</p>
+<p>一个问题是译者对原文章节段落标题的翻译。这样做是原文的文档链接仍然有效，这样能有效降低译者对文档链接的维护，也能降低译者对一些名词的专门维护，还能有效提醒读者本章节段落的主题。</p>
+<p>再一个问题是译文中的“译者注”，这里原本是译者加入的自我理解，以便降低新手的阅读门槛。但后来发现有些泛滥，并且译者的过分演绎发挥可能影响阅读体验，甚至曲解原意，所以译者删除了一部分，后续翻译也尽量克制了这一冲动。</p>
+<p>再有就是对一些名词的翻译，译者基本上是遵循了 <a href="https://learnku.com/">LearnKu</a> 上的 <a href="https://learnku.com/articles/43623">Rust 语言术语中英文对照表</a>上的约定，但也有一些译者按自己的理解做了新的翻译，这些<a href="#%E7%BA%A6%E5%AE%9A">下节</a>和本书最后的<a href="%E6%9C%AC%E4%B9%A6%E6%9C%AF%E8%AF%AD%E7%BF%BB%E8%AF%91%E5%AF%B9%E7%85%A7%E8%A1%A8.html">本书术语翻译对照表</a>中说明。</p>
+<p>Rust 的每种句法都有自己独特的句法规则，前期译者对这部分内容做了翻译，但发现翻译后无法保持句法规则的清晰性，严重妨碍读者对其的理解，尤其是其中的<a href="tokens.html">标记码</a>和<a href="notation.html#Grammar">生产式</a>如果翻译了就完全丢失了其中蕴含的格式意义，所以这部分译者就放弃了，直接拷贝了原文。</p>
+<blockquote>
+<p>待续</p>
+</blockquote>
+<h3><a class="header" href="#约定" id="约定">约定</a></h3>
+<p>如果一些词译者觉得只使用中文行文可能会导致读者迷惑，那译者就会使用半角的圆括号把原英文带出，比如：标称类型(nominal type)，但有一类虽然比较浅显，译者还是采用了这种格式，比如：结构体(<code>struct</code>)，这类是因为原文中用 <code>struct</code> 这种形式强调这是一个<a href="tokens.html">标记码</a>，译者这里也特意带出。总的来说半角的圆括号是提醒读者此处译者翻译可能不专业或括号的英文原文是带有格式意义的。</p>
+<p>译文中还有许多全角圆括号，这些有可能是原文行文中就有的括号，也可能是译者为中文行文方便添加进来的，也有是译者为补充语义、方便阅读特意添加进来的。</p>
+<p>一些不确定该如何翻译的名词，译者也遵循一般原则没有强翻。但如果一个专有名词又有中文又有英文，译者就有意没在这两个次词/字中间留有空格，例如：“trait对象”。尤其是那些原文带有标记码含义的名词，译者也一般把它们“紧密结合”在一起，比如：<code>let</code>语句、<code>cfg</code>属性等。</p>
+<p>每章节译文开头，译者都把其对应的原文链接地址和本译文对应的 commit id 给放上了。同时也把译者最后维护的时间给放上。这些是希望将来有其他贡献者能共同遵守。</p>
+<blockquote>
+<p>待续</p>
+</blockquote>
+<h4><a class="header" href="#常用词翻译" id="常用词翻译">常用词翻译</a></h4>
+<ol>
+<li>lifetime，国内一般译为“生命周期”，但在本书原文中有行文用到 lifecycle，本译作为何此词译义分开，选择翻译为“生存期”。并且译者在翻译中发现使用“生存期”在中文中行文更合适。</li>
+<li>Syntax，这个词很多译者的随意的翻译为“语法”，但在 Rust 里它大部分时候特指单一语言部件内部的标记码/生产式组成格式，所以本书统一翻译为“句法”。在它之上一层的语言组织方式才翻译为“语法”。</li>
+<li>nominal type：标称类型。这是译者自创的一个翻译方法，首先 nominal type 在目前国内 Rust 社区里还没有合适的翻译先例，所以译者这里就蹭机器学习的热点翻译为“标称类型”，这种行径虽然降低了Rust的逼格，但在目前状态下，收益可能还是值得的。</li>
+<li>item，这个一般翻译为“项”或“条目”，译者期初为了读起来更符合习惯，选择了“项”的翻译方法，但后来发现这个方法太容易引起歧义，无法体现出其作为语法单元的特殊含义，所以又给它添了两个字，变成了“数据项”。然后和其他名词复合时，又一般会简化翻译为“XX项”，如：“static item”，译者就翻译为“静态项”。</li>
+<li>待续</li>
+</ol>
+<h2><a class="header" href="#阅读建议" id="阅读建议">阅读建议</a></h2>
+<p>本译作原文主语省略很严重，但基本规律是省略的主语大部分是本节的标题，所以译者也很多时候继承了这个风格，所以阅读某一具体章节的时候，请读者主动把语义范围缩小为当前讲述的话题点上。</p>
+<blockquote>
+<p><strong>建议</strong>：译者希望本书的读者中，那些有一定水平或有能力直接进行英文阅读的读者还是要读一读阅读英文原文，顺便也请这部分读者在对比阅读的同时本书提高翻译质量。</p>
+</blockquote>
+<blockquote>
+<p>待续</p>
+</blockquote>
+<h2><a class="header" href="#贡献力量" id="贡献力量">贡献力量</a></h2>
+<p>译者欢迎各种形式的贡献和指导。</p>
+<blockquote>
+<p>待续</p>
+</blockquote>
+<h2><a class="header" href="#版权说明" id="版权说明">版权说明</a></h2>
+<p>Nightly 版本放在国内 Gitee 上，采用 <a href="https://gitee.com/minstrel1977/rust-reference/blob/master/LICENSE">MulanPSL-2.0</a>；未来 stable 版放在 github 上，预备采用 MIT。</p>
+<!-- 2020-11-3 -->
+<!-- checked -->
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+                            <a rel="next" href="introduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+                    <a rel="next" href="introduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+        <script src="ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
