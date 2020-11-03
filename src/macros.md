@@ -102,5 +102,5 @@ example!();
 [visibility qualifiers]: visibility-and-privacy.md
 [External blocks]: items/external-blocks.md
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

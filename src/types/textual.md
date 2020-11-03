@@ -17,5 +17,5 @@
 [Undefined Behavior]: ../behavior-considered-undefined.md
 [dynamically sized type]: ../dynamically-sized-types.md
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

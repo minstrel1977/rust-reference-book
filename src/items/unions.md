@@ -156,5 +156,5 @@ fn test() {
 [`transmute`]: https://doc.rust-lang.org/std/mem/fn.transmute.html
 [`ManuallyDrop<_>`]: https://doc.rust-lang.org/std/mem/struct.ManuallyDrop.html
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

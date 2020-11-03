@@ -47,5 +47,5 @@ let foo_ptr_2 = if want_i32 {
 [coercion]: ../type-coercions.md
 [function pointers]: function-pointer.md
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

@@ -27,5 +27,5 @@
 
 [RFC 560]: https://github.com/rust-lang/rfcs/blob/master/text/0560-integer-overflow.md
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

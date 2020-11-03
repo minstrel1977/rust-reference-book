@@ -78,5 +78,5 @@ let log_pi = pi.unwrap_or(1.0).log(2.72);
 [methods]: ../items/associated-items.md#methods
 [unsized coercion]: ../type-coercions.md#unsized-coercions
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

@@ -242,7 +242,7 @@ When used on a function in a trait implementation, the attribute does nothing.
 [let statement]: ../statements.md#let-statements
 [macro definition]: ../macros-by-example.md
 [module]: ../items/modules.md
-[rustc book]: ../../rustc/lints/index.html
+[rustc book]: https://doc.rust-lang.org/rustc/lints/index.html
 [struct field]: ../items/structs.md
 [struct]: ../items/structs.md
 [trait declaration]: ../items/traits.md
@@ -251,5 +251,5 @@ When used on a function in a trait implementation, the attribute does nothing.
 [traits]: ../items/traits.md
 [union]: ../items/unions.md
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

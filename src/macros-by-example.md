@@ -392,5 +392,5 @@ When repetitions are involved, then the rules apply to every possible number of 
 [formal specification]: macro-ambiguity.md
 [token]: tokens.md
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

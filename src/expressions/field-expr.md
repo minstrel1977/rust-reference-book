@@ -48,5 +48,5 @@ let d: String = x.f3;           // 从 x.f3 中移出
 [place expression]: ../expressions.md#place-expressions-and-value-expressions
 [mutable]: ../expressions.md#mutability
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

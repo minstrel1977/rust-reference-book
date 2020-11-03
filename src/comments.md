@@ -123,5 +123,5 @@ pub mod outer_module {
 
 [`doc` attributes]: ../rustdoc/the-doc-attribute.html
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

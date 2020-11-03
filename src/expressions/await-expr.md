@@ -21,13 +21,13 @@
 
 [`async fn`]: ../items/functions.md#async-functions
 [`async` block]: block-expr.md#async-blocks
-[future]: ../../std/future/trait.Future.html
+[future]: https://doc.rust-lang.org/std/future/trait.Future.html
 [_Expression_]: ../expressions.md
-[`Future::poll`]: ../../std/future/trait.Future.html#tymethod.poll
-[`Context`]: ../../std/task/struct.Context.html
-[`Pin::new_unchecked`]: ../../std/pin/struct.Pin.html#method.new_unchecked
-[`Poll::Pending`]: ../../std/task/enum.Poll.html#variant.Pending
-[`Poll::Ready`]: ../../std/task/enum.Poll.html#variant.Ready
+[`Future::poll`]: https://doc.rust-lang.org/std/future/trait.Future.html#tymethod.poll
+[`Context`]: https://doc.rust-lang.org/std/task/struct.Context.html
+[`Pin::new_unchecked`]: https://doc.rust-lang.org/std/pin/struct.Pin.html#method.new_unchecked
+[`Poll::Pending`]: https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Pending
+[`Poll::Ready`]: https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Ready
 
 > **版本差异**： 等待表达式只能从 Rust 2018 版开始才可用
 
@@ -36,7 +36,7 @@
 
 任务上下文是指在对[异步上下文][async context]本身进行轮询时提供给当前异步上下文的[上下文(`Context`)][`Context`]。因为等待(`await`)表达式只能在异步上下文中才能使用，所以此时必须有一些任务上下文可用。
 
-[`Context`]: ../../std/task/struct.Context.html
+[`Context`]: https://doc.rust-lang.org/std/task/struct.Context.html
 [async context]: ../expressions/block-expr.md#async-context
 
 ## Approximate desugaring
@@ -59,5 +59,5 @@ match /* <expr> */ {
 
 其中，`yield`伪代码返回 `Poll::Pending`，当再次调用时，从该点继续执行。变量 `current_context` 是指从异步环境中获取的上下文。
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

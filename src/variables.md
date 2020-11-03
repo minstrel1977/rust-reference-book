@@ -37,5 +37,5 @@ fn initialization_example() {
 
 [`if` expression]: expressions/if-expr.md#if-expressions
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

@@ -196,7 +196,7 @@ impl Seq<bool> for u32 {
 [attributes]: ../attributes.md
 [`cfg`]: ../conditional-compilation.md
 [`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
-[`doc`]: ../../rustdoc/the-doc-attribute.html
+[`doc`]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
 [path]: ../paths.md
 [the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
 [Unsafe traits]: traits.md#unsafe-traits
@@ -205,5 +205,5 @@ impl Seq<bool> for u32 {
 [fundamental types]: ../glossary.md#fundamental-type-constructors
 [uncovered type]: ../glossary.md#uncovered-type
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

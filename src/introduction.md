@@ -1,11 +1,9 @@
->置顶鸣谢：本书的名词翻译和前面多篇章节的翻译都参考对比了[芽之家](https://books.budshome.com)上的[Rust 参考手册](https://books.budshome.com/rust-reference/)，在此感谢感谢该书作者的无私付出。
-
 # Introduction
 # 介绍
 
 >[introduction.md](https://github.com/rust-lang/reference/blob/master/src/introduction.md)\
 >commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d \
->本译文最后维护日期：2020-10-17
+>本译文最后维护日期：2020-11-3
 
 本书是 Rust 编程语言的主要参考手册，本书提供了3类资料：
   - 一些章节非正式地介绍了该语言的各种语言结构及其用法。
@@ -84,9 +82,9 @@
 * 句法和词法结构放在块引用中，第一行为粗体上标的 <sup>**词法**</sup> 或 <sup>**句法**</sup>。
 
   > **<sup>句法</sup>**\
-  > _示例语法_:\
-  > &nbsp;&nbsp; &nbsp;&nbsp; `~` [_表达式_]\
-  > &nbsp;&nbsp; | `box` [_表达式_]
+  > _ExampleGrammar_:\
+  > &nbsp;&nbsp; &nbsp;&nbsp; `~` [_Expression_]\
+  > &nbsp;&nbsp; | `box` [_Expression_]
 
   查阅[表义符(notation)][Notation]以获取更多细节。
 
@@ -111,5 +109,6 @@
 [rustc book]: ../rustc/index.html
 [Notation]: notation.md
 [Discord]: https://discord.gg/rust-lang
-<!-- 2020-10-25 -->
+
+<!-- 2020-11-3 -->
 <!-- checked -->

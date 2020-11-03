@@ -1,5 +1,6 @@
 # Rust 参考手册
 
+[翻译说明](翻译说明.md)
 [介绍](introduction.md)
 
 - [表义符](notation.md)

@@ -21,5 +21,5 @@
 [raw pointer]: types/pointer.md
 [unsafe trait]: items/traits.md#unsafe-traits
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

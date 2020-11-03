@@ -71,9 +71,9 @@ fn mytest() {
 
 [_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
 [_MetaNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
-[`Termination`]: ../../std/process/trait.Termination.html
+[`Termination`]: https://doc.rust-lang.org/std/process/trait.Termination.html
 [`test` conditional compilation option]: ../conditional-compilation.md#test
 [attributes]: ../attributes.md
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

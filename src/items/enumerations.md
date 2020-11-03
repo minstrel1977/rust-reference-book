@@ -167,7 +167,7 @@ enum E {
 [_StructFields_]: structs.md
 [Visibility]: ../visibility-and-privacy.md
 [enumerated type]: ../types/enum.md
-[`mem::discriminant`]: ../../std/mem/fn.discriminant.html
+[`mem::discriminant`]: https://doc.rust-lang.org/std/mem/fn.discriminant.html
 [never type]: ../types/never.md
 [numeric cast]: ../expressions/operator-expr.md#semantics
 [constant expression]: ../const_eval.md#constant-expressions
@@ -175,5 +175,5 @@ enum E {
 [primitive representation]: ../type-layout.md#primitive-representations
 [`C` representation]: ../type-layout.md#the-c-representation
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

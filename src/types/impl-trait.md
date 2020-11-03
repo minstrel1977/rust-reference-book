@@ -35,5 +35,5 @@
 [_TraitBound_]: ../trait-bounds.md
 [_TypeParamBounds_]: ../trait-bounds.md
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

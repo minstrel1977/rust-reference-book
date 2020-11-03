@@ -43,36 +43,18 @@ Rust 编译器支持多种将 crate 以静态方式和动态方式链接起来�
 
 4. 如果当前生成动态链接的动态库或可执行文件，则编译器将尝试协调从 rlib 或 dylib 类型的文件里获取可用依赖关系，以创建最终产品。
 
-If a dynamic library or an executable that is being dynamically linked is
-   being produced, then the compiler will attempt to reconcile the available
-   dependencies in either the rlib or dylib format to create a final product.
+   编译器的主要目标是确保任何一个库不会在任何构件中出现多次。例如，如果动态库 B 和 C 都静态地去链接了库 A，那么当前 crate 就不能同时链接到 B 和 C，因为 A 有两个副本。编译器允许混合使用 rlib 和 dylib 类型，但这一限制必须被满足。
 
-   A major goal of the compiler is to ensure that a library never appears more
-   than once in any artifact. For example, if dynamic libraries B and C were
-   each statically linked to library A, then a crate could not link to B and C
-   together because there would be two copies of A. The compiler allows mixing
-   the rlib and dylib formats, but this restriction must be satisfied.
+   编译器目前没有实现任何方法来提示库应该链接到哪种类型的库。当选择动态链接时，编译器将尝试最大化动态依赖，同时仍然允许通过 rlib 类型链接某些依赖。
 
-   The compiler currently implements no method of hinting what format a library
-   should be linked with. When dynamically linking, the compiler will attempt to
-   maximize dynamic dependencies while still allowing some dependencies to be
-   linked in via an rlib.
+   对于大多数情况，如果所有的可用库都是 dylib 类型的动态库，则推荐选择动态链接。对于其他情况，如果编译器无法确定一个库到底应该去链接它的哪种类型的版本，则会发布警告。
 
-   For most situations, having all libraries available as a dylib is recommended
-   if dynamically linking. For other situations, the compiler will emit a
-   warning if it is unable to determine which formats to link each library with.
-   编译器的主要目标是确保库不会在任何一个构件中出现多次。例如，如果动态库 B 和 C 都静态地链接到库 A，那么当前 crate 就不能同时链接到 B 和 C，因为 A 有两个副本。编译器允许混合使用 rlib 和 dylib 类型，但这一限制必须被满足。
-
-   编译器目前没有实现任何方法来提示库应该链接到哪种类型。当动态链接时，编译器将尝试最大化动态依赖，同时仍然允许通过 rlib 类型链接某些依赖。
-
-   对于大多数情况，如果动态链接，建议将所有库作为动态库使用。对于其他情况，如果编译器无法确定将每个库链接到哪种类型，则会发布警告。
-
-通常，`--crate-type=bin` 或 `--crate-type=lib` 应该足以满足所有的编译需求，只有在需要对 crate 的输出类型进行更细粒度的控制时，才可以使用其他选项。
+通常，`--crate-type=bin` 或 `--crate-type=lib` 应该足以满足所有的编译需求，只有在需要对 crate 的输出类型进行更细粒度的控制时，才需要使用其他选项。
 
 ## Static and dynamic C runtimes
 ## 静态C运行时和动态C运行时
 
-一般来说，标准库会同时尽力支持编译目标的静态链接C运行时和动态链接的C运行时。例如，目标 `x86_64-pc-windows-msvc` 和 `x86_64-unknown-linux-musl` 通常都带有C运行时，用户可以按自己的偏好选择静态还是动态链接到此运行时。编译器中所有的编译目标都有一个链接到C运行时的默认模式。默认情况下，常见的编译目标都是默认设置动态链接的，但也存在默认情况下是静态链接的情况，例如：
+一般来说，标准库会同时尽力支持编译目标的静态链接型C运行时和动态链接型C运行时。例如，目标 `x86_64-pc-windows-msvc` 和 `x86_64-unknown-linux-musl` 通常都带有C运行时，用户可以按自己的偏好去选择静态链接或动态链接到此运行时。编译器中所有的编译目标都有一个链接到 C运行时的默认模式。默认情况下，常见的编译目标都默认是选择动态链接的，但也存在默认情况下是静态链接的情况，例如：
 
 * `arm-unknown-linux-musleabi`
 * `arm-unknown-linux-musleabihf`
@@ -92,13 +74,9 @@ rustc -C target-feature=+crt-static foo.rs
 rustc -C target-feature=-crt-static foo.rs
 ```
 
-不支持在到C运行时的链接类型之间切换的目标将忽略这个标志。建议检查生成的二进制文件，以确保在编译成功之后，如您预期的那样链接了C运行时
+不支持在到 C运行时的链接类型之间切换的编译目标将忽略这个标志。建议检查生成的二进制文件，以确保在编译成功之后，如预期的那样链接了 C运行时。
 
-crate 也可以预检C运行时是如何链接的。例如，MSVC平台上的代码需要根据链接的运行时进行不同的编译(例如使用 `/MT` 或 `/MD`)。目前可以通过 [`cfg`属性 `target_feature`选项]导出检测结果：
-Crates may also learn about how the C runtime is being linked. Code on MSVC, for
-example, needs to be compiled differently (e.g. with `/MT` or `/MD`) depending
-on the runtime being linked. This is exported currently through the
-[`cfg` attribute `target_feature` option][`cfg` attribute `target_feature` option]:
+crate 本身也可以检测如何链接 C运行时。例如，MSVC平台上的代码需要根据链接运行时的方式进行差异性的编译（例如选择使用 `/MT` 或 `/MD`）。目前可通过 [`cfg`属性的 `target_feature`选项][`cfg` attribute `target_feature` option]导出检测结果：
 
 ```rust
 #[cfg(target_feature = "crt-static")]
@@ -112,7 +90,7 @@ fn foo() {
 }
 ```
 
-还要注意，Cargo构建脚本可以通过[环境变量][cargo]来预检此特性。在构建脚本中，您可以通过如下代码探测链接类型：
+还请注意，Cargo构建脚本可以通过[环境变量][cargo]来检测此特性。在构建脚本中，您可以通过如下代码检测链接类型：
 
 ```rust
 use std::env;
@@ -130,7 +108,7 @@ fn main() {
 
 [cargo]: https://doc.rust-lang.org/cargo/reference/environment-variables.html#environment-variables-cargo-sets-for-build-scripts
 
-要在本地使用此特性，通常需要使用 `RUSTFLAGS` 环境变量通过 Cargo 为编译器指定参数。例如，要在 MSVC 平台上编译静态链接的二进制文件，就需要执行：
+要在本地使用此特性，通常需要使用 `RUSTFLAGS` 环境变量通过 Cargo 来为编译器指定参数。例如，要在 MSVC 平台上编译静态链接的二进制文件，需要执行：
 
 ```sh
 RUSTFLAGS='-C target-feature=+crt-static' cargo build --target x86_64-pc-windows-msvc
@@ -140,5 +118,5 @@ RUSTFLAGS='-C target-feature=+crt-static' cargo build --target x86_64-pc-windows
 [configuration option]: conditional-compilation.md
 [procedural macros]: procedural-macros.md
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

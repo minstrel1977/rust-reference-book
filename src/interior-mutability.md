@@ -17,5 +17,5 @@
 [`std::cell::RefCell<T>`]: ../std/cell/struct.RefCell.html
 [`std::sync::atomic`]: ../std/sync/atomic/index.html
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

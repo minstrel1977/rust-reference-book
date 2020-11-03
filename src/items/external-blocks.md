@@ -2,12 +2,12 @@
 # 外部块
 
 >[external-blocks.md](https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md)\
->commit: 18d7140a96d3d898ccded0cc32a16675681b0846 \
->本译文最后维护日期：2020-10-21
+>commit: fbf34356b709cfc0debb01acaaff038d4e339aab \
+>本译文最后维护日期：2020-11-3
 
 > **<sup>句法</sup>**\
 > _ExternBlock_ :\
-> &nbsp;&nbsp; `extern` [_Abi_]<sup>?</sup> `{`\
+> &nbsp;&nbsp; `unsafe`<sup>?</sup> `extern` [_Abi_]<sup>?</sup> `{`\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_InnerAttribute_]<sup>\*</sup>\
 > &nbsp;&nbsp; &nbsp;&nbsp; _ExternalItem_<sup>\*</sup>\
 > &nbsp;&nbsp; `}`
@@ -39,6 +39,8 @@
 
 外部块中允许两种形式的数据项*声明*：[函数][functions]和[静态项][statics]。只有在非安全(`unsafe`)上下文中才能调用在外部块中声明的函数或访问在外部块中声明的静态项。
 
+在句法上，关键字 `unsafe` 允许出现在关键字 `extern`之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 `unsafe` 从标记流中移除之前利用此句法来使用此关键字。
+
 ## Functions
 ## 函数
 
@@ -66,17 +68,17 @@ extern "stdcall" { }
 
 有三个 ABI 字符串是跨平台的，并且保证所有编译器都支持它们：
 
-* `extern "Rust"` -- 在任何 Rust 语言中编写一个常用函数 `fn foo()` 时默认使用的 ABI。
+* `extern "Rust"` -- 在任何 Rust 语言中编写一个普通函数 `fn foo()` 时默认使用的 ABI。
 * `extern "C"` -- 这等价于 `extern fn foo()`；无论您的 C编译器支持什么默认 ABI。
 * `extern "system"` -- 通常等价于 `extern "C"`，除了在 Win32 平台上。在 Win32 平台上，应该使用`"stdcall"`，或者其他应该使用的 ABI 字符串来链接到 Windows API 自身。
 
 还有一些特定于平台的 ABI 字符串：
 
-* `extern "cdecl"` -- 默认为调用 x86\_32 C 所使用的调用约定。
-* `extern "stdcall"` -- 默认为调用 x86\_32架构下的 Win32 API 所使用的调用约定 
-* `extern "win64"` -- 默认为调用 x86\_64 Windows 平台下的 C 所使用调用约定。
-* `extern "sysv64"` -- 默认为调用 非Windows x86\_64 平台下的 C 所使用的调用约定。
-* `extern "aapcs"` -- 默认为调用 ARM 接口所使用的调用约定
+* `extern "cdecl"` -- 通过 FFI 调用 x86\_32 C 资源所使用的默认调用约定。
+* `extern "stdcall"` -- 通过 FFI 调用 x86\_32架构下的 Win32 API 所使用的默认调用约定 
+* `extern "win64"` -- 通过 FFI 调用 x86\_64 Windows 平台下的 C 资源所使用的默认调用约定。
+* `extern "sysv64"` -- 通过 FFI 调用 非Windows x86\_64 平台下的 C 资源所使用的默认调用约定。
+* `extern "aapcs"` --通过 FFI 调用 ARM 接口所使用的默认调用约定
 * `extern "fastcall"` -- `fastcall` ABI——对应于 MSVC 的`__fastcall` 和 GCC 以及 clang 的 `__attribute__((fastcall))`。
 * `extern "vectorcall"` -- `vectorcall` ABI ——对应于 MSVC 的 `__vectorcall` 和 clang 的 `__attribute__((vectorcall))`。
 
@@ -168,5 +170,5 @@ extern {
 [attributes]: ../attributes.md
 [regular function parameters]: functions.md#attributes-on-function-parameters
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

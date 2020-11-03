@@ -3,13 +3,13 @@
 
 >[modules.md](https://github.com/rust-lang/reference/blob/master/src/items/modules.md)\
 >commit: f8e76ee9368f498f7f044c719de68c7d95da9972 \
->本译文最后维护日期：2020-10-19
+>本译文最后维护日期：2020-11-3
 
 
 > **<sup>句法:</sup>**\
 > _Module_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; `mod` [IDENTIFIER] `;`\
-> &nbsp;&nbsp; | `mod` [IDENTIFIER] `{`\
+> &nbsp;&nbsp; &nbsp;&nbsp; `unsafe`<sup>?</sup> `mod` [IDENTIFIER] `;`\
+> &nbsp;&nbsp; | `unsafe`<sup>?</sup> `mod` [IDENTIFIER] `{`\
 > &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; [_InnerAttribute_]<sup>\*</sup>\
 > &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; [_Item_]<sup>\*</sup>\
 > &nbsp;&nbsp; &nbsp;&nbsp; `}`
@@ -39,6 +39,8 @@ mod math {
 ```
 
 模块和类型共享相同的命名空间。禁止在同一个作用域中声明与此作用域下模块同名的命名类型(named type)：也就是说，类型定义、trait、结构体、枚举、联合体、类型参数或 crate 不能在其作用域中屏蔽此作用域中也生效的模块名称，反之亦然。使用 `use` 引入到当前作用域的数据项也受这个限制。
+
+在句法上，关键字 `unsafe` 允许出现在关键字 `mod`之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 `unsafe` 从标记流中移除之前利用此句法来使用此关键字。
 
 ## Module Source Filenames
 ## 模块的源文件名
@@ -119,7 +121,7 @@ mod thread {
 [macro_use]: ../macros-by-example.md#the-macro_use-attribute
 [`cfg`]: ../conditional-compilation.md
 [`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
-[`doc`]: ../../rustdoc/the-doc-attribute.html
+[`doc`]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
 [IDENTIFIER]: ../identifiers.md
 [attribute]: ../attributes.md
 [items]: ../items.md
@@ -127,5 +129,5 @@ mod thread {
 [prelude]: ../crates-and-source-files.md#preludes-and-no_std
 [the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

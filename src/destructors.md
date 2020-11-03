@@ -345,5 +345,5 @@ let x = (&temp()).use_temp();  // ERROR
 [`std::ptr::drop_in_place`]: ../std/ptr/fn.drop_in_place.html
 [`std::mem::ManuallyDrop`]: ../std/mem/struct.ManuallyDrop.html
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

@@ -478,5 +478,5 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 [`transparent`]: #the-transparent-representation
 [`Layout`]: ../std/alloc/struct.Layout.html
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

@@ -305,7 +305,7 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [the testing attributes]: ../attributes/testing.md
 [the optimization hint attributes]: ../attributes/codegen.md#optimization-hints
 [`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
-[`doc`]: ../../rustdoc/the-doc-attribute.html
+[`doc`]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
 [`must_use`]: ../attributes/diagnostics.md#the-must_use-attribute
 [patterns]: ../patterns.md
 [`export_name`]: ../abi.md#the-export_name-attribute
@@ -313,5 +313,5 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [`no_mangle`]: ../abi.md#the-no_mangle-attribute
 [built-in attributes]: ../attributes.html#built-in-attributes-index
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

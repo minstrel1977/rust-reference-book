@@ -34,5 +34,5 @@ assert_eq!(p.1, "ten");
 
 [_Type_]: ../types.md#type-expressions
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

@@ -27,9 +27,9 @@ let boxed_array: Box<[i32]> = Box::new([1, 2, 3]);
 > 
 [_Expression_]: ../expressions.md
 [_Type_]: ../types.md#type-expressions
-[`Vec<T>`]: ../../std/vec/struct.Vec.html
+[`Vec<T>`]: https://doc.rust-lang.org/std/vec/struct.Vec.html
 [`usize`]: numeric.md#machine-dependent-integer-types
 [constant expression]: ../const_eval.md#constant-expressions
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

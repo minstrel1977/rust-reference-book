@@ -151,5 +151,5 @@
 [variance]: subtyping.md#variance
 [`!`]: types/never.md
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

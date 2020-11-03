@@ -2,18 +2,19 @@
 # 应用程序二进制接口(ABI)
 
 >[abi.md.md](https://github.com/rust-lang/reference/blob/master/src/abi.md)\
->commit:  24137b49a3c02f53e5a7699a78a47501aef3e769
+>commit:  24137b49a3c02f53e5a7699a78a47501aef3e769 \
+>本译文最后维护日期：2020-11-3
 
-本节阐述影响 crate 编译输出的ABI的特性。
+本节介绍影响 crate 编译输出的 ABI 的各种特性。
 
-有关指定用于导出函数(exporting functions)的ABI的信息，请参阅[*外部函数*][extern functions]。有关指定用于链接外部库的ABI的信息，请参阅[*外部块*][external blocks]。
+有关为导出函数(exporting functions)指定 ABI 的信息，请参阅[*外部函数*][extern functions]。参阅[*外部块*]][external blocks]了解关于指定 ABI 来链接外部库的信息。
 
 ## The `used` attribute
 ## `used`属性
 
-*`used`属性*只能应用于[静态(`static`)项][`static` items]。此[属性][attribute]强制编译器将该变量保留在输出对象文件中(.o，.rlib等，不包括最终二进制文件)，即便该变量没有被 crate 中的任何其他项使用或引用。但是链接器(linker)仍有权移除此类变量。
+*`used`属性*只能用在[静态(`static`)项][`static` items]上。此[属性][attribute]强制编译器将该变量保留在输出对象文件中(.o、.rlib等，不包括最终的二进制文件)，即使该变量没有被 crate 中的任何其他项使用或引用。注意，链接器(linker)仍有权移除此类变量。
 
-下面的示例显示了编译器在什么条件下在输出对象文件中保留静态项。
+下面的示例显示了编译器在什么条件下在输出对象文件中保留静态(`static`)项。
 
 ``` rust
 // foo.rs
@@ -36,7 +37,7 @@ pub fn quux() -> &'static u32 {
     &QUUX
 }
 
-// 可移除，因为被私有，未被使用的函数引用:
+// 可移除，因为被私有且未被使用的函数引用:
 static CORGE: u32 = 0;
 
 #[allow(dead_code)]
@@ -58,12 +59,12 @@ $ nm -C foo.o
 ## The `no_mangle` attribute
 ## `no_mangle`属性
 
-可以在任何[数据项][item]上使用 *`no_mangle`属性*来禁用标准符号名称混淆(standard symbol name mangling)。数据项的符号是数据项的名称的标识符。
+可以在任何[数据项][item]上使用 *`no_mangle`属性*来禁用标准名称符号化改编(standard symbol name mangling。禁用此功能后，此数据项的导出 symbol 将直接是此数据项的原来的名称标识符。
 
 ## The `link_section` attribute
 ## `link_section`属性
 
-`link_section`属性指定了对象文件中[函数][function]或[静态项][static]的内容将被放置到的节点位置。它使用 [_MetaNameValueStr_]元项属性句法规则指定节点名称。
+`link_section`属性指定了输出对象文件中[函数][function]或[静态项][static]的内容将被放置到的节点位置。它使用 [_MetaNameValueStr_]元项属性句法规则指定节点名称。
 
 <!-- no_run: don't link. The format of the section name is platform-specific. -->
 ```rust,no_run
@@ -82,11 +83,14 @@ pub static VAR1: u32 = 1;
 pub fn name_in_rust() { }
 ```
 
-[_MetaNameValueStr_]: attributes.md#元项属性句法
+[_MetaNameValueStr_]: attributes.md#meta-item-attribute-syntax
 [`static` items]: items/static-items.md
 [attribute]: attributes.md
-[extern functions]: items/functions.md#外部函数限定符
+[extern functions]: items/functions.md#extern-function-qualifier
 [external blocks]: items/external-blocks.md
 [function]: items/functions.md
 [item]: items.md
 [static]: items/static-items.md
+
+<!-- 2020-11-3 -->
+<!-- checked -->

@@ -187,7 +187,7 @@ pub fn f() {}
   - [`no_main`] — 禁止发布 `main` symbol。
   - [`export_name`] — 指定函数或静态项导出的 symbol名。
   - [`link_section`] — 指定用于函数或静态项的对象文件的部分。
-  - [`no_mangle`] — 禁用对 symbol名编码。
+  - [`no_mangle`] — 禁用对 symbol名重新编码。
   - [`used`] — 强制编译器在输出对象文件中保留静态项。
   - [`crate_name`] — 指定 crate名。
 - 代码生成(Code generation)
@@ -290,5 +290,5 @@ pub fn f() {}
 [function pointer]: types/function-pointer.md
 [variadic functions]: items/external-blocks.html#variadic-functions
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

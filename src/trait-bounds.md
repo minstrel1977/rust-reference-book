@@ -135,5 +135,5 @@ fn call_on_ref_zero<F>(f: F) where F: for<'a> Fn(&'a i32) {
 [trait objects]: types/trait-object.md
 [where clause]: items/generics.md#where-clauses
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

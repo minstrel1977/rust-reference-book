@@ -73,8 +73,8 @@ arr[10];                  // 告警：索引越界
 
 数组索引表达式可以被数组和切片片以外的类型通过实现 [Index] trait 和 [IndexMut] trait 来实现。
 
-[IndexMut]: ../../std/ops/trait.IndexMut.html
-[Index]: ../../std/ops/trait.Index.html
+[IndexMut]: https://doc.rust-lang.org/std/ops/trait.IndexMut.html
+[Index]: https://doc.rust-lang.org/std/ops/trait.Index.html
 [Inner attributes]: ../attributes.md
 [_Expression_]: ../expressions.md
 [_InnerAttribute_]: ../attributes.md
@@ -82,5 +82,5 @@ arr[10];                  // 告警：索引越界
 [constant expression]: ../const_eval.md#constant-expressions
 [memory location]: ../expressions.md#place-expressions-and-value-expressions
 
-<!-- 2020-10-25 -->
+<!-- 2020-11-3 -->
 <!-- checked -->

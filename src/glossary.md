@@ -2,7 +2,8 @@
 # 术语表
 
 >[glossary.md](https://github.com/rust-lang/reference/blob/master/src/glossary.md)\
->commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e
+>commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e \
+>本译文最后维护日期：2020-11-3
 
 ### Abstract syntax tree
 ### 抽象语法树
@@ -13,11 +14,11 @@ An ‘abstract syntax tree’, or ‘AST’, is an intermediate representation o
 ### Alignment
 ### 对齐量
 
-值的对齐量指定值的首选起始地址。对齐量总是2的幂次。值的引用必须是对齐的。[更多][alignment]。\
+值的对齐量指定值的首选起始存储地址。对齐量总是2的幂次。值的引用必须是对齐的。[更多][alignment]。\
 The alignment of a value specifies what addresses values are preferred to start at. Always a power of two. References to a value must be aligned. [More][alignment].
 
 ### Arity
-元数
+### 元数
 
 元数是指函数或运算符接受的参数个数。例如，`f(2, 3)` 和 `g(4, 6)` 的元数为2，而 `h(8, 2, 6)` 的元数为3。 `!` 运算符的元数为1。\
 Arity refers to the number of arguments a function or operator takes. For some examples, `f(2, 3)` and `g(4, 6)` have arity 2, while `h(8, 2, 6)` has arity 3. The `!` operator has arity 1.
@@ -100,7 +101,7 @@ A type is inhabited if it has constructors and therefore can be instantiated. An
 ### Inherent implementation
 ### 固有实现
 
-一种应用于标称类型，而不是 trait类型对(trait-type pair)的实现。[更多][inherent implementation]。 \
+单独标称类型上的[实现][implementation] ，注意关键字 `impl` 后直接是标称类型，而非 trait-标称类型对(trait-type pair)上的实现。[更多][inherent implementation]。 \
 An [implementation] that applies to a nominal type, not to a trait-type pair. [More][inherent implementation].
 
 ### Inherent method
@@ -234,4 +235,6 @@ A type is uninhabited if it has no constructors and therefore can never be insta
 [traits]: items/traits.md
 [undefined-behavior]: behavior-considered-undefined.md
 [unions]: items/unions.md
-<!-- 2020-10-25 -->
+
+<!-- 2020-11-3 -->
+<!-- checked -->
