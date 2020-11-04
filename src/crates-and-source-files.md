@@ -103,9 +103,7 @@ fn main() {
 ```
 
 crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 `-`(U+002D)。
-[^cratesourcefile]: A crate is somewhat analogous to an *assembly* in the
-    ECMA-335 CLI model, a *library* in the SML/NJ Compilation Manager, a *unit*
-    in the Owens and Flatt module system, or a *configuration* in Mesa.
+
 [^phase-distinction]: 这种区别也存在于解释器中。静态检查，如语法分析、类型检查和 lint检查，都应该在程序执行之前进行，而不要去管程序何时执行。
 
 [^cratesourcefile]: crate 有点类似于 ECMA-335 CLI 模型中的 *assembly*、SML/NJ 编译管理器中的 *library*、Owens 和 Flatt 模块系统中的 *unit*， 或 Mesa 中的 *configuration*。

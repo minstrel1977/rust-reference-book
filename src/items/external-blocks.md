@@ -134,10 +134,6 @@ extern {
 ### The `link_name` attribute
 ### `link_name`属性
 
-
-The `link_name` attribute may be specified on declarations inside an `extern`
-block to indicate the symbol to import for the given function or static. It
-uses the [_MetaNameValueStr_] syntax to specify the name of the symbol.
 可以在外部(`extern`)块内的数据项声明上指定 `link_name`属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 [_MetaNameValueStr_]元项属性句法规则指定 symbol 的名称。
 
 ```rust

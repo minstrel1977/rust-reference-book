@@ -187,18 +187,11 @@ let obj: Box<dyn WithSelf> = Box::new(S); // 错误: 不能使用 `Self` 作为�
 ## Supertraits
 ## 超类trait
 
-Supertraits are declared by trait bounds on the `Self` type of a trait and
-transitively the supertraits of the traits declared in those trait bounds. It is
-an error for a trait to be its own supertrait.
-
-The trait with a supertrait is called a **subtrait** of its supertrait.
-
-The following is an example of declaring `Shape` to be a supertrait of `Circle`.
-**超类trait** 是类型为了实现特定 trait 而需要（提前）实现的 trait。此外，在任何地方，如果[泛型][generics]或 [trait对象][trait object]被某个 trait约束，那这个泛型或 trait对象就可以访问这个*超类trait* 的关联数据项。
+超类trait 是类型为了实现特定 trait 而需要（提前）实现的 trait。此外，在任何地方，如果[泛型][generics]或 [trait对象][trait object]被某个 trait约束，那这个泛型或 trait对象就可以访问这个*超类trait* 的关联数据项。
 
 超类trait 是通过 trait 的 `Self`类型上的 trait约束来声明的，并且通过这种声明 trait约束的方式来传递这种超类trait 关系。一个 trait 不能是它自己的超类trait。
 
-有超类trait 的 trait 称其为其超类trait 的**子trait**。
+有超类trait 的 trait 称其为其超类trait 的**子trait(subtrait)**。
 
 下面是一个声明 `Shape` 是 `Circle` 的超类trait 的例子。
 

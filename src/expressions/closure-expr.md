@@ -25,9 +25,6 @@
 
 特别值得注意的是闭包表达式能*捕获它们被定义时的环境中的变量(capture their environment)*，而正常函数定义则不能。如果没有关键字 `move`，闭包表达式将[推断出它该如何从其环境中捕获每个变量](../types/closure.md#capture-modes)，它会而倾向于通过共享引用来捕获，从而有效地借用闭包体中用到的所有外部变量。如果有必要，编译器将推断出应该采用可变引用，或者应该从环境中移动或复制值（取决于它们的类型）变量。闭包可以通过前缀关键字 `move` 来强制通过复制值或移动值的方式捕获其环境变量。这通常用来确保当前闭包的生存期类型为 `'static`。
 
-In this example, we define a function `ten_times` that takes a higher-order
-function argument, and we then call it with a closure expression as an argument,
-followed by a closure expression that moves values from its environment.
 编译器将通过闭包对其捕获的变量的处置方式来确定闭包类型将实现哪些[闭包trait](../types/closure.md#call-traits-and-coercions)。如果所有捕获的类型都实现了 [`Send`](../special-types-and-traits.md#send) 和/或 [`Sync`](../special-types-and-traits.md#sync)，那么闭包也实现了 `Send` 和/或 `Sync`。因为存在这些 trait，函数可以方便的使用泛型来接受闭包类型的参数，即使闭包的类型名称无法被显式指定。
 
 在本例中，我们定义了一个名为 `ten_times` 的函数，它接受高阶函数参数，然后我们用一个闭包表达式作为实参来调用它，后面还定义了一个使用移动语义从环境中捕获变量的闭包表达式来供该函数调用。

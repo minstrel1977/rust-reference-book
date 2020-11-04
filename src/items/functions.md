@@ -63,9 +63,6 @@ return {
 ## Generic functions
 ## 泛型函数
 
-A _generic function_ allows one or more _parameterized types_ to appear in its
-signature. Each type parameter must be explicitly declared in an
-angle-bracket-enclosed and comma-separated list, following the function name.
 *泛型函数*允许在其签名中出现一个或多个*参数化类型(parameterized types)*。每个类型参数必须在函数名后面的尖括号封闭逗号分隔的列表中显式声明。
 
 ```rust

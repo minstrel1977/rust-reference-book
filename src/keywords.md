@@ -96,9 +96,6 @@ Rust 将关键字分为三类：
 ## Weak keywords
 ## 弱关键字
 
-* In the 2015 edition, [`dyn`] is a keyword when used in a type position followed by a path that does not start with `::`.
-
-  Beginning in the 2018 edition, `dyn` has been promoted to a strict keyword.
 这类关键字只有在特定的上下文中才有特殊的意义。例如，可以声明名为 `union` 的变量或方法。
 
 * `union` 用于声明[联合体(`union`)][union]，它只有在联合体声明中使用时才是关键字。
@@ -108,7 +105,9 @@ Rust 将关键字分为三类：
   // error[E0262]: invalid lifetime parameter name: `'static`
   fn invalid_lifetime_parameter<'static>(s: &'static str) -> &'static str { s }
   ```
-* 在 2015 版本中，当 [`dyn`] 用在非 `::` 开头的路径限定的类型前时，它是关键字。从 2018 版开始，`dyn` 被提升为一个严格关键字。
+* 在 2015 版本中，当 [`dyn`] 用在非 `::` 开头的路径限定的类型前时，它是关键字。
+  
+  从 2018 版开始，`dyn` 被提升为一个严格关键字。
 
 > **<sup>词法分析</sup>**\
 > KW_UNION          : `union`\

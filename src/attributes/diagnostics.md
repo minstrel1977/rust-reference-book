@@ -194,7 +194,6 @@ impl Trait for i32 {
 ```
 
 当在 trait实现中的函数上使用 `must_use`属性时，此属性将被忽略。
-When used on a function in a trait implementation, the attribute does nothing.
 
 > 注意：包含值的普通空操作表达式不会违反该 lint。例如，将值包装在没有实现 [`Drop`] 的类型中，然后不使用该类型，并成为未使用的[块表达式][block expression]的尾部表达式(final expression)。
 >
