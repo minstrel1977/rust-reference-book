@@ -262,12 +262,8 @@ KW_TRY   : <code>try</code></p>
 </blockquote>
 <h2><a class="header" href="#weak-keywords" id="weak-keywords">Weak keywords</a></h2>
 <h2><a class="header" href="#弱关键字" id="弱关键字">弱关键字</a></h2>
+<p>这类关键字只有在特定的上下文中才有特殊的意义。例如，可以声明名为 <code>union</code> 的变量或方法。</p>
 <ul>
-<li>
-<p>In the 2015 edition, <a href="types/trait-object.html"><code>dyn</code></a> is a keyword when used in a type position followed by a path that does not start with <code>::</code>.</p>
-<p>Beginning in the 2018 edition, <code>dyn</code> has been promoted to a strict keyword.
-这类关键字只有在特定的上下文中才有特殊的意义。例如，可以声明名为 <code>union</code> 的变量或方法。</p>
-</li>
 <li>
 <p><code>union</code> 用于声明<a href="items/unions.html">联合体(<code>union</code>)</a>，它只有在联合体声明中使用时才是关键字。</p>
 </li>
@@ -278,7 +274,8 @@ fn invalid_lifetime_parameter&lt;'static&gt;(s: &amp;'static str) -&gt; &amp;'st
 </code></pre>
 </li>
 <li>
-<p>在 2015 版本中，当 <a href="types/trait-object.html"><code>dyn</code></a> 用在非 <code>::</code> 开头的路径限定的类型前时，它是关键字。从 2018 版开始，<code>dyn</code> 被提升为一个严格关键字。</p>
+<p>在 2015 版本中，当 <a href="types/trait-object.html"><code>dyn</code></a> 用在非 <code>::</code> 开头的路径限定的类型前时，它是关键字。</p>
+<p>从 2018 版开始，<code>dyn</code> 被提升为一个严格关键字。</p>
 </li>
 </ul>
 <blockquote>

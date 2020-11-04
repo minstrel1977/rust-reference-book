@@ -353,14 +353,9 @@ let obj: Box&lt;dyn WithSelf&gt; = Box::new(S); // 错误: 不能使用 `Self` �
 </span></code></pre></pre>
 <h2><a class="header" href="#supertraits" id="supertraits">Supertraits</a></h2>
 <h2><a class="header" href="#超类trait" id="超类trait">超类trait</a></h2>
-<p>Supertraits are declared by trait bounds on the <code>Self</code> type of a trait and
-transitively the supertraits of the traits declared in those trait bounds. It is
-an error for a trait to be its own supertrait.</p>
-<p>The trait with a supertrait is called a <strong>subtrait</strong> of its supertrait.</p>
-<p>The following is an example of declaring <code>Shape</code> to be a supertrait of <code>Circle</code>.
-<strong>超类trait</strong> 是类型为了实现特定 trait 而需要（提前）实现的 trait。此外，在任何地方，如果<a href="generics.html">泛型</a>或 <a href="../types/trait-object.html">trait对象</a>被某个 trait约束，那这个泛型或 trait对象就可以访问这个<em>超类trait</em> 的关联数据项。</p>
+<p>超类trait 是类型为了实现特定 trait 而需要（提前）实现的 trait。此外，在任何地方，如果<a href="generics.html">泛型</a>或 <a href="../types/trait-object.html">trait对象</a>被某个 trait约束，那这个泛型或 trait对象就可以访问这个<em>超类trait</em> 的关联数据项。</p>
 <p>超类trait 是通过 trait 的 <code>Self</code>类型上的 trait约束来声明的，并且通过这种声明 trait约束的方式来传递这种超类trait 关系。一个 trait 不能是它自己的超类trait。</p>
-<p>有超类trait 的 trait 称其为其超类trait 的<strong>子trait</strong>。</p>
+<p>有超类trait 的 trait 称其为其超类trait 的<strong>子trait(subtrait)</strong>。</p>
 <p>下面是一个声明 <code>Shape</code> 是 <code>Circle</code> 的超类trait 的例子。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]

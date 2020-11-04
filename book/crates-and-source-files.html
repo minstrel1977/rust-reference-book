@@ -253,11 +253,10 @@ fn main() {
 <span class="boring">fn main() {
 </span><span class="boring">}
 </span></code></pre></pre>
-<p>crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 <code>-</code>(U+002D)。
-<sup class="footnote-reference"><a href="#cratesourcefile">2</a></sup>: A crate is somewhat analogous to an <em>assembly</em> in the
-ECMA-335 CLI model, a <em>library</em> in the SML/NJ Compilation Manager, a <em>unit</em>
-in the Owens and Flatt module system, or a <em>configuration</em> in Mesa.
-<sup class="footnote-reference"><a href="#phase-distinction">1</a></sup>: 这种区别也存在于解释器中。静态检查，如语法分析、类型检查和 lint检查，都应该在程序执行之前进行，而不要去管程序何时执行。</p>
+<p>crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 <code>-</code>(U+002D)。</p>
+<div class="footnote-definition" id="phase-distinction"><sup class="footnote-definition-label">1</sup>
+<p>这种区别也存在于解释器中。静态检查，如语法分析、类型检查和 lint检查，都应该在程序执行之前进行，而不要去管程序何时执行。</p>
+</div>
 <div class="footnote-definition" id="cratesourcefile"><sup class="footnote-definition-label">2</sup>
 <p>crate 有点类似于 ECMA-335 CLI 模型中的 <em>assembly</em>、SML/NJ 编译管理器中的 <em>library</em>、Owens 和 Flatt 模块系统中的 <em>unit</em>， 或 Mesa 中的 <em>configuration</em>。</p>
 </div>

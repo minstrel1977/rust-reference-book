@@ -354,8 +354,7 @@ impl Trait for i32 {
 5i32.use_me();
 <span class="boring">}
 </span></code></pre></pre>
-<p>当在 trait实现中的函数上使用 <code>must_use</code>属性时，此属性将被忽略。
-When used on a function in a trait implementation, the attribute does nothing.</p>
+<p>当在 trait实现中的函数上使用 <code>must_use</code>属性时，此属性将被忽略。</p>
 <blockquote>
 <p>注意：包含值的普通空操作表达式不会违反该 lint。例如，将值包装在没有实现 <a href="../special-types-and-traits.html#drop"><code>Drop</code></a> 的类型中，然后不使用该类型，并成为未使用的<a href="../expressions/block-expr.html">块表达式</a>的尾部表达式(final expression)。</p>
 <pre><pre class="playground"><code class="language-rust">

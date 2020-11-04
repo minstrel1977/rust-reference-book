@@ -444,12 +444,8 @@ KW_TRY   : <code>try</code></p>
 </blockquote>
 <h2><a class="header" href="#weak-keywords" id="weak-keywords">Weak keywords</a></h2>
 <h2><a class="header" href="#弱关键字" id="弱关键字">弱关键字</a></h2>
+<p>这类关键字只有在特定的上下文中才有特殊的意义。例如，可以声明名为 <code>union</code> 的变量或方法。</p>
 <ul>
-<li>
-<p>In the 2015 edition, <a href="types/trait-object.html"><code>dyn</code></a> is a keyword when used in a type position followed by a path that does not start with <code>::</code>.</p>
-<p>Beginning in the 2018 edition, <code>dyn</code> has been promoted to a strict keyword.
-这类关键字只有在特定的上下文中才有特殊的意义。例如，可以声明名为 <code>union</code> 的变量或方法。</p>
-</li>
 <li>
 <p><code>union</code> 用于声明<a href="items/unions.html">联合体(<code>union</code>)</a>，它只有在联合体声明中使用时才是关键字。</p>
 </li>
@@ -460,7 +456,8 @@ fn invalid_lifetime_parameter&lt;'static&gt;(s: &amp;'static str) -&gt; &amp;'st
 </code></pre>
 </li>
 <li>
-<p>在 2015 版本中，当 <a href="types/trait-object.html"><code>dyn</code></a> 用在非 <code>::</code> 开头的路径限定的类型前时，它是关键字。从 2018 版开始，<code>dyn</code> 被提升为一个严格关键字。</p>
+<p>在 2015 版本中，当 <a href="types/trait-object.html"><code>dyn</code></a> 用在非 <code>::</code> 开头的路径限定的类型前时，它是关键字。</p>
+<p>从 2018 版开始，<code>dyn</code> 被提升为一个严格关键字。</p>
 </li>
 </ul>
 <blockquote>
@@ -485,7 +482,7 @@ IDENTIFIER_OR_KEYWORD :<br />
       [<code>a</code>-<code>z</code> <code>A</code>-<code>Z</code>] [<code>a</code>-<code>z</code> <code>A</code>-<code>Z</code> <code>0</code>-<code>9</code> <code>_</code>]<sup>*</sup><br />
    | <code>_</code> [<code>a</code>-<code>z</code> <code>A</code>-<code>Z</code> <code>0</code>-<code>9</code> <code>_</code>]<sup>+</sup></p>
 <p>RAW_IDENTIFIER : <code>r#</code> IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>crate</code>, <code>self</code>, <code>super</code>, <code>Self</code></em></sub></p>
-<p>NON_KEYWORD_IDENTIFIER : IDENTIFIER_OR_KEYWORD <sub>*排除一个<a href="keywords.html#strict-keywords">严格</a>或<a href="keywords.html#reserved-keywords">保留</a>关键字 *</sub></p>
+<p>NON_KEYWORD_IDENTIFIER : IDENTIFIER_OR_KEYWORD <sub>*排除<a href="keywords.html#strict-keywords">严格关键字</a>和<a href="keywords.html#reserved-keywords">保留关键字</a> *</sub></p>
 <p>IDENTIFIER :<br />
 NON_KEYWORD_IDENTIFIER | RAW_IDENTIFIER</p>
 </blockquote>
@@ -543,9 +540,7 @@ LINE_COMMENT :(译者注：行注释)<br />
 <p>非文档型注释(Non-doc comments)被解释为某种形式的空白符。</p>
 <h2><a class="header" href="#doc-comments" id="doc-comments">Doc comments</a></h2>
 <h2><a class="header" href="#文档型注释" id="文档型注释">文档型注释</a></h2>
-<p>Isolated CRs (<code>\r</code>), i.e. not followed by LF (<code>\n</code>), are not allowed in doc
-comments.
-以<em>三个</em>斜线（<code>///</code>）开始的行文档型注释，以及块文档型注释（<code>/** ... */</code>），均为内部文档型注释。它们被当做 <a href="../rustdoc/the-doc-attribute.html"><code>doc</code>属性</a>的特殊句法解析。也就是说，它们等同于把注释内容写入 <code>#[doc=&quot;...&quot;]</code> 里。例如：<code>/// Foo</code> 等同于 <code>#[doc=&quot;Foo&quot;]</code>，<code>/** Bar */</code> 等同于 <code>#[doc=&quot;Bar&quot;]</code>。</p>
+<p>以<em>三个</em>斜线（<code>///</code>）开始的行文档型注释，以及块文档型注释（<code>/** ... */</code>），均为内部文档型注释。它们被当做 <a href="../rustdoc/the-doc-attribute.html"><code>doc</code>属性</a>的特殊句法解析。也就是说，它们等同于把注释内容写入 <code>#[doc=&quot;...&quot;]</code> 里。例如：<code>/// Foo</code> 等同于 <code>#[doc=&quot;Foo&quot;]</code>，<code>/** Bar */</code> 等同于 <code>#[doc=&quot;Bar&quot;]</code>。</p>
 <p>以 <code>//!</code> 开始的行文档型注释，以及 <code>/*! ... */</code> 形式的块文档型注释属于注释体所在对象的文档型注释，而非注释体之后的数据项的。也就是说，它们等同于把注释内容写入 <code>#![doc=&quot;...&quot;]</code> 里。<code>//!</code> 注释通常用于标注模块位于的文件。</p>
 <p>孤立的 CRs（<code>\r</code>），如果其后没有紧跟有 LF（<code>\n</code>），则不能出现在文档型注释中。</p>
 <h2><a class="header" href="#示例" id="示例">示例</a></h2>
@@ -2079,11 +2074,10 @@ fn main() {
 <span class="boring">fn main() {
 </span><span class="boring">}
 </span></code></pre></pre>
-<p>crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 <code>-</code>(U+002D)。
-<sup class="footnote-reference"><a href="#cratesourcefile">2</a></sup>: A crate is somewhat analogous to an <em>assembly</em> in the
-ECMA-335 CLI model, a <em>library</em> in the SML/NJ Compilation Manager, a <em>unit</em>
-in the Owens and Flatt module system, or a <em>configuration</em> in Mesa.
-<sup class="footnote-reference"><a href="#phase-distinction">1</a></sup>: 这种区别也存在于解释器中。静态检查，如语法分析、类型检查和 lint检查，都应该在程序执行之前进行，而不要去管程序何时执行。</p>
+<p>crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 <code>-</code>(U+002D)。</p>
+<div class="footnote-definition" id="phase-distinction"><sup class="footnote-definition-label">1</sup>
+<p>这种区别也存在于解释器中。静态检查，如语法分析、类型检查和 lint检查，都应该在程序执行之前进行，而不要去管程序何时执行。</p>
+</div>
 <div class="footnote-definition" id="cratesourcefile"><sup class="footnote-definition-label">2</sup>
 <p>crate 有点类似于 ECMA-335 CLI 模型中的 <em>assembly</em>、SML/NJ 编译管理器中的 <em>library</em>、Owens 和 Flatt 模块系统中的 <em>unit</em>， 或 Mesa 中的 <em>configuration</em>。</p>
 </div>
@@ -2756,10 +2750,7 @@ return {
 </code></pre>
 <h2><a class="header" href="#generic-functions" id="generic-functions">Generic functions</a></h2>
 <h2><a class="header" href="#泛型函数" id="泛型函数">泛型函数</a></h2>
-<p>A <em>generic function</em> allows one or more <em>parameterized types</em> to appear in its
-signature. Each type parameter must be explicitly declared in an
-angle-bracket-enclosed and comma-separated list, following the function name.
-<em>泛型函数</em>允许在其签名中出现一个或多个<em>参数化类型(parameterized types)</em>。每个类型参数必须在函数名后面的尖括号封闭逗号分隔的列表中显式声明。</p>
+<p><em>泛型函数</em>允许在其签名中出现一个或多个<em>参数化类型(parameterized types)</em>。每个类型参数必须在函数名后面的尖括号封闭逗号分隔的列表中显式声明。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3715,14 +3706,9 @@ let obj: Box&lt;dyn WithSelf&gt; = Box::new(S); // 错误: 不能使用 `Self` �
 </span></code></pre></pre>
 <h2><a class="header" href="#supertraits" id="supertraits">Supertraits</a></h2>
 <h2><a class="header" href="#超类trait" id="超类trait">超类trait</a></h2>
-<p>Supertraits are declared by trait bounds on the <code>Self</code> type of a trait and
-transitively the supertraits of the traits declared in those trait bounds. It is
-an error for a trait to be its own supertrait.</p>
-<p>The trait with a supertrait is called a <strong>subtrait</strong> of its supertrait.</p>
-<p>The following is an example of declaring <code>Shape</code> to be a supertrait of <code>Circle</code>.
-<strong>超类trait</strong> 是类型为了实现特定 trait 而需要（提前）实现的 trait。此外，在任何地方，如果<a href="items/generics.html">泛型</a>或 <a href="items/../types/trait-object.html">trait对象</a>被某个 trait约束，那这个泛型或 trait对象就可以访问这个<em>超类trait</em> 的关联数据项。</p>
+<p>超类trait 是类型为了实现特定 trait 而需要（提前）实现的 trait。此外，在任何地方，如果<a href="items/generics.html">泛型</a>或 <a href="items/../types/trait-object.html">trait对象</a>被某个 trait约束，那这个泛型或 trait对象就可以访问这个<em>超类trait</em> 的关联数据项。</p>
 <p>超类trait 是通过 trait 的 <code>Self</code>类型上的 trait约束来声明的，并且通过这种声明 trait约束的方式来传递这种超类trait 关系。一个 trait 不能是它自己的超类trait。</p>
-<p>有超类trait 的 trait 称其为其超类trait 的<strong>子trait</strong>。</p>
+<p>有超类trait 的 trait 称其为其超类trait 的<strong>子trait(subtrait)</strong>。</p>
 <p>下面是一个声明 <code>Shape</code> 是 <code>Circle</code> 的超类trait 的例子。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -4121,10 +4107,7 @@ extern {
 <p>在空外部块上添加 <code>link</code>属性是有效的。可以用这种方式来满足代码中其他地方的外部块的链接需求(包括上游 crate)，而不必向每个外部块都添加此属性。</p>
 <h3><a class="header" href="#the-link_name-attribute" id="the-link_name-attribute">The <code>link_name</code> attribute</a></h3>
 <h3><a class="header" href="#link_name属性" id="link_name属性"><code>link_name</code>属性</a></h3>
-<p>The <code>link_name</code> attribute may be specified on declarations inside an <code>extern</code>
-block to indicate the symbol to import for the given function or static. It
-uses the <a href="items/../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a> syntax to specify the name of the symbol.
-可以在外部(<code>extern</code>)块内的数据项声明上指定 <code>link_name</code>属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 <a href="items/../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法规则指定 symbol 的名称。</p>
+<p>可以在外部(<code>extern</code>)块内的数据项声明上指定 <code>link_name</code>属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 <a href="items/../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法规则指定 symbol 的名称。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -5244,8 +5227,7 @@ impl Trait for i32 {
 5i32.use_me();
 <span class="boring">}
 </span></code></pre></pre>
-<p>当在 trait实现中的函数上使用 <code>must_use</code>属性时，此属性将被忽略。
-When used on a function in a trait implementation, the attribute does nothing.</p>
+<p>当在 trait实现中的函数上使用 <code>must_use</code>属性时，此属性将被忽略。</p>
 <blockquote>
 <p>注意：包含值的普通空操作表达式不会违反该 lint。例如，将值包装在没有实现 <a href="attributes/../special-types-and-traits.html#drop"><code>Drop</code></a> 的类型中，然后不使用该类型，并成为未使用的<a href="attributes/../expressions/block-expr.html">块表达式</a>的尾部表达式(final expression)。</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -7067,10 +7049,7 @@ commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
 <p>闭包表达式表示将一组参数映射到参数后面的表达式的函数。与 <a href="expressions/../statements.html#let-statements"><code>let</code>绑定</a>一样，这里的参数也是不可反驳型<a href="expressions/../patterns.html">模式</a>，其类型标注是可选的，如果没有给出，则从上下文推断。每个闭包表达式都有一个唯一的匿名类型。</p>
 <p>闭包表达式在将函数作为参数传递给其他函数时非常有用，因此它常被用来作为定义和捕获独立函数(separate function)的便捷手段。</p>
 <p>特别值得注意的是闭包表达式能<em>捕获它们被定义时的环境中的变量(capture their environment)</em>，而正常函数定义则不能。如果没有关键字 <code>move</code>，闭包表达式将<a href="expressions/../types/closure.html#capture-modes">推断出它该如何从其环境中捕获每个变量</a>，它会而倾向于通过共享引用来捕获，从而有效地借用闭包体中用到的所有外部变量。如果有必要，编译器将推断出应该采用可变引用，或者应该从环境中移动或复制值（取决于它们的类型）变量。闭包可以通过前缀关键字 <code>move</code> 来强制通过复制值或移动值的方式捕获其环境变量。这通常用来确保当前闭包的生存期类型为 <code>'static</code>。</p>
-<p>In this example, we define a function <code>ten_times</code> that takes a higher-order
-function argument, and we then call it with a closure expression as an argument,
-followed by a closure expression that moves values from its environment.
-编译器将通过闭包对其捕获的变量的处置方式来确定闭包类型将实现哪些<a href="expressions/../types/closure.html#call-traits-and-coercions">闭包trait</a>。如果所有捕获的类型都实现了 <a href="expressions/../special-types-and-traits.html#send"><code>Send</code></a> 和/或 <a href="expressions/../special-types-and-traits.html#sync"><code>Sync</code></a>，那么闭包也实现了 <code>Send</code> 和/或 <code>Sync</code>。因为存在这些 trait，函数可以方便的使用泛型来接受闭包类型的参数，即使闭包的类型名称无法被显式指定。</p>
+<p>编译器将通过闭包对其捕获的变量的处置方式来确定闭包类型将实现哪些<a href="expressions/../types/closure.html#call-traits-and-coercions">闭包trait</a>。如果所有捕获的类型都实现了 <a href="expressions/../special-types-and-traits.html#send"><code>Send</code></a> 和/或 <a href="expressions/../special-types-and-traits.html#sync"><code>Sync</code></a>，那么闭包也实现了 <code>Send</code> 和/或 <code>Sync</code>。因为存在这些 trait，函数可以方便的使用泛型来接受闭包类型的参数，即使闭包的类型名称无法被显式指定。</p>
 <p>在本例中，我们定义了一个名为 <code>ten_times</code> 的函数，它接受高阶函数参数，然后我们用一个闭包表达式作为实参来调用它，后面还定义了一个使用移动语义从环境中捕获变量的闭包表达式来供该函数调用。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
