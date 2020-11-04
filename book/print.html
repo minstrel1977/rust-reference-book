@@ -9389,6 +9389,7 @@ assert_eq!(std::mem::size_of::&lt;SizeRoundedUp&gt;(), 12);  // 首先来自于b
 <blockquote>
 <p>注意：C中的枚举的表形是由枚举的相应实现定义的，所以在 Rust 中，给无字段枚举应用 C表形得到的表型很可能是一个“最佳猜测”。特别是，当使用某些命令行参数选项来编译感兴趣的 C代码时，这可能是不正确的。</p>
 </blockquote>
+<div class="warning">
 <p>警告：C语言中的枚举与 Rust 中的那些应用了 <code>#[repr(C)]</code>表型的<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举</a>之间有着重要的区别。C语言中的枚举主要是 <code>typedef</code> 加上一些命名常量；换句话说，枚举(<code>enum</code>)类型的对象可以包含任何整数值。例如，C语言中的枚举通常用做标志位。相比之下，Rust的<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举</a>只能合法地保存判别式的值，其他的都是<a href="behavior-considered-undefined.html">未定义行为</a>。因此，在 FFI 中使用无字段枚举来建模 C语言中的枚举(<code>enum</code>)通常是错误的。</p>
 </div>
 <h4><a class="header" href="#reprc-enums-with-fields" id="reprc-enums-with-fields"><code>#[repr(C)]</code> Enums With Fields</a></h4>
