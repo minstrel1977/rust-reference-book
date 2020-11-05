@@ -408,9 +408,9 @@ macro_rules! inc {
 </span></code></pre></pre>
 <h2><a class="header" href="#canonical-paths" id="canonical-paths">Canonical paths</a></h2>
 <h2><a class="header" href="#规范路径" id="规范路径">规范路径</a></h2>
-<p>定义在模块或者实现中的数据项都有一个<em>规范路径</em>，该路径对应于其在其 crate 中定义的位置。在该路径之外，所有指向这些数据项的路径都是别名（路径）。规范路径被定义为附加在代表数据项自身的那段路径段之前的一个<em>路径前缀</em>。</p>
-<p>尽管实现中所定义的数据项有规范路径，但<a href="items/implementations.html">实现</a>自身没有规范路径。<a href="items/use-declarations.html">use声明</a>也没有规范路径。块表达式中定义的数据项也没有规范路径。在没有规范路径的模块中定义的数据项也没有规范路径。在实现中定义的关联项(associated items)引用没有规范路径的数据项 - 例如，实现类型(implementing type)、被实现的 trait、类型参数或类型参数上的约束 - 都没有规范路径。</p>
-<p>对于模块来说，模块的路径前缀就是该模块的规范路径。对于裸实现(bare implementations)来说，它下面数据项的路径前缀是它实现的数据项的规范路径，语义格式上要使用<span class="parenthetical">尖括号（<code>&lt;&gt;</code>）</span>括起来。对于 <a href="items/implementations.html#trait-implementations">trait实现</a>来说，它内部的数据项的路径前缀是被实现的数据项的规范路径后面，先跟一个 <code>as</code>，再跟 trait 本身的规范路径，然后整个使用<span class="parenthetical">尖括号（<code>&lt;&gt;</code>）</span>括起来。</p>
+<p>定义在模块或者实现中的数据项都有一个<em>规范路径</em>，该路径对应于其在其 crate 中定义的位置。在该路径之外，所有指向这些数据项的路径都是别名（路径）。规范路径被定义为一个<em>路径前缀</em>后跟一个代表数据项本身的那段路径段。</p>
+<p>尽管实现所定义/实现的数据项有规范路径，但<a href="items/implementations.html">实现</a>作为一个整体，自身没有规范路径。<a href="items/use-declarations.html">use声明</a>也没有规范路径。块表达式中定义的数据项也没有规范路径。在没有规范路径的模块中定义的数据项也没有规范路径。在实现中定义的关联项(associated items)如果它指向没有规范路径的数据项——例如，实现类型(implementing type)、被实现的 trait、类型参数或类型参数上的约束——那它也没有规范路径。</p>
+<p>模块的路径前缀就是该模块的规范路径。对于裸实现(bare implementations)来说，它里面的数据项的路径前缀是：它当前实现的数据项的规范路径，再用<span class="parenthetical">尖括号（<code>&lt;&gt;</code>）</span>括把此路径括起来。对于 <a href="items/implementations.html#trait-implementations">trait实现</a>来说，它内部的数据项的路径前缀是：<em>当前实现的数据项的规范路径后跟一个 <code>as</code>，再后跟 trait 本身的规范路径，然后整个使用<span class="parenthetical">尖括号（<code>&lt;&gt;</code>）</span>括起来。</em></p>
 <p>规范路径只在给定的 crate 中有意义。在 crate 之间没有全局命名空间，所以数据项的规范路径只在其 crate 中可标识。</p>
 <pre><pre class="playground"><code class="language-rust">// 注释解释了数据项的规范路径
 

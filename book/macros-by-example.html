@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md">macros-by-example.md</a><br />
 commit: 30ccf092c7c1d92b2398e28d4abf8c5ba6c31cba <br />
-本译文最后维护日期：2020-10-16</p>
+本译文最后维护日期：2020-11-5</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -203,11 +203,11 @@ commit: 30ccf092c7c1d92b2398e28d4abf8c5ba6c31cba <br />
 <p><em>MacroTranscriber</em> :<br />
    <a href="macros.html"><em>DelimTokenTree</em></a></p>
 </blockquote>
-<p><code>macro_rules</code> 允许用户以声明方式定义句法扩展。我们称这种扩展为“声明宏（macros by example）”或简称“宏”。</p>
-<p>每个宏都有一个名称和一条或多条<em>规则</em>。每条规则都有两部分：一个<em>匹配器(matcher)</em>，描述它匹配的句法；一个<em>转换器(transcriber_)</em>，描述成功匹配后的将执行的替代调用句法。匹配器和转换器都必须由定界符包围。宏可以扩展到表达式、语句、数据项（包括 trait、impl 和外来数据项）、类型或模式。</p>
+<p><code>macro_rules</code> 允许用户以声明方式定义句法扩展。我们称这种扩展形式为“声明宏（macros by example）”或简称“宏”。</p>
+<p>每个声明宏都有一个名称和一条或多条<em>规则</em>。每条规则都有两部分：一个<em>匹配器(matcher)</em>，描述它匹配的句法；一个<em>转换器(transcriber)</em>，描述成功匹配后将执行的替代调用句法。匹配器和转换器都必须由定界符包围。宏可以扩展为表达式、语句、数据项（包括 trait、impl 和外来数据项）、类型或模式。</p>
 <h2><a class="header" href="#transcribing" id="transcribing">Transcribing</a></h2>
 <h2><a class="header" href="#转换" id="转换">转换</a></h2>
-<p>当宏被调用时，宏扩展器(macro expander)按名称查找宏调用，并依次尝试其每条宏规则。宏会根据第一个成功的匹配进行转换；即使转换结果导致错误，也不会尝试进行后续匹配。在匹配时，不执行预判；如果编译器不能明确地确定如何一个标记码一个标记码地解析宏调用，则会报错。在下面的示例中，编译器不会提前查看标识符，以查看后跟的标记码是否为 <code>)</code>，尽管这将允许它明确地解析调用：</p>
+<p>当宏被调用时，宏扩展器(macro expander)按名称查找宏调用，并依次尝试此宏中的每条宏规则。宏会根据第一个成功的匹配进行转换；如果当前转换结果导致错误，也不会再尝试进行后续匹配。在匹配时，不会执行预判；如果编译器不能明确地确定如何一个标记码一个标记码地解析宏调用，则会报错。在下面的示例中，编译器不会越过标识符，去提前查看后跟的标记码是 <code>)</code>，尽管这能帮助它明确地解析调用：</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

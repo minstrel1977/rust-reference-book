@@ -170,9 +170,9 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macros.md">macros.md</a><br />
 commit: 771c5d10cf944bf7d221f5d6cb7abd2a06c400e4 <br />
-本译文最后维护日期：2020-10-16</p>
+本译文最后维护日期：2020-11-5</p>
 </blockquote>
-<p>Rust 语言的功能和句法可以通过宏的方式让用户自行定义扩展。宏需要被命名，并通过一致的句法去调用：<code>some_extension!(...)</code>。</p>
+<p>可以使用称被为宏的自定义句法形式来扩展 Rust 的功能和句法。宏需要被命名，并通过一致的句法去调用：<code>some_extension!(...)</code>。</p>
 <p>定义新宏有两种方式：</p>
 <ul>
 <li><a href="macros-by-example.html">声明宏(Macros by Example)</a>以更高级别的声明性的方式定义了一套新句法规则。</li>
@@ -195,7 +195,7 @@ commit: 771c5d10cf944bf7d221f5d6cb7abd2a06c400e4 <br />
    | <a href="paths.html#simple-paths"><em>SimplePath</em></a> <code>!</code> <code>[</code> <em>TokenTree</em><sup>*</sup> <code>]</code> <code>;</code><br />
    | <a href="paths.html#simple-paths"><em>SimplePath</em></a> <code>!</code> <code>{</code> <em>TokenTree</em><sup>*</sup> <code>}</code></p>
 </blockquote>
-<p>宏调用是在编译时执行宏，并用执行结果替换该调用。可以在下述情况下调用宏：</p>
+<p>宏调用是在编译时执行宏，并用执行结果替换该调用。可以在下述情况里调用宏：</p>
 <ul>
 <li><a href="expressions.html">表达式</a>和<a href="statements.html">语句</a></li>
 <li><a href="patterns.html">模式</a></li>
@@ -204,7 +204,7 @@ commit: 771c5d10cf944bf7d221f5d6cb7abd2a06c400e4 <br />
 <li><a href="macros-by-example.html"><code>macro_rules</code></a> 转换器</li>
 <li><a href="items/external-blocks.html">外部块</a></li>
 </ul>
-<p>当宏调用被用作数据项或语句时，此时它使用的 <em>MacroInvocationSemi</em> 句法规则要求如果不使用花括号，则在结尾处须添加分号。在宏调用或<a href="macros-by-example.html">宏(<code>macro_rules</code>)</a>定义之前决不允许使用<a href="visibility-and-privacy.html">可见性限定符</a>。</p>
+<p>当宏调用被用作数据项或语句时，此时它应用的 <em>MacroInvocationSemi</em> 句法规则要求它如果不使用花括号，则在结尾处须添加分号。在宏调用或<a href="macros-by-example.html">宏(<code>macro_rules</code>)</a>定义之前不允许使用<a href="visibility-and-privacy.html">可见性限定符</a>。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

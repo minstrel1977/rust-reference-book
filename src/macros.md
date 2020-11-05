@@ -3,9 +3,9 @@
 
 >[macros.md](https://github.com/rust-lang/reference/blob/master/src/macros.md)\
 >commit: 771c5d10cf944bf7d221f5d6cb7abd2a06c400e4 \
->本译文最后维护日期：2020-10-16
+>本译文最后维护日期：2020-11-5
 
-Rust 语言的功能和句法可以通过宏的方式让用户自行定义扩展。宏需要被命名，并通过一致的句法去调用：`some_extension!(...)`。
+可以使用称被为宏的自定义句法形式来扩展 Rust 的功能和句法。宏需要被命名，并通过一致的句法去调用：`some_extension!(...)`。
 
 定义新宏有两种方式：
 
@@ -32,7 +32,7 @@ Rust 语言的功能和句法可以通过宏的方式让用户自行定义扩展
 > &nbsp;&nbsp; | [_SimplePath_] `!` `[` _TokenTree_<sup>\*</sup> `]` `;`\
 > &nbsp;&nbsp; | [_SimplePath_] `!` `{` _TokenTree_<sup>\*</sup> `}`
 
-宏调用是在编译时执行宏，并用执行结果替换该调用。可以在下述情况下调用宏：
+宏调用是在编译时执行宏，并用执行结果替换该调用。可以在下述情况里调用宏：
 
 * [表达式][Expressions]和[语句][statements]
 * [模式][Patterns]
@@ -42,7 +42,7 @@ Rust 语言的功能和句法可以通过宏的方式让用户自行定义扩展
 * [外部块][External blocks]
 
 
-当宏调用被用作数据项或语句时，此时它使用的 _MacroInvocationSemi_ 句法规则要求如果不使用花括号，则在结尾处须添加分号。在宏调用或[宏(`macro_rules`)][`macro_rules`]定义之前决不允许使用[可见性限定符][Visibility qualifiers]。
+当宏调用被用作数据项或语句时，此时它应用的 _MacroInvocationSemi_ 句法规则要求它如果不使用花括号，则在结尾处须添加分号。在宏调用或[宏(`macro_rules`)][`macro_rules`]定义之前不允许使用[可见性限定符][Visibility qualifiers]。
 
 ```rust
 // 作为表达式使用.
