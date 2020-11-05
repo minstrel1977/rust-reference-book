@@ -3,7 +3,7 @@
 
 >[whitespace.md](https://github.com/rust-lang/reference/blob/master/src/whitespace.md)\
 >commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 \
->本译文最后维护日期：2020-10-17
+>本译文最后维护日期：2020-11-5
 
 空白符是非空字符串，它里面只包含具有 [`Pattern_White_Space`] 属性的 Unicode 字符，即:
 
@@ -21,7 +21,7 @@
 
 Rust是一种“格式自由(free-form)”的语言，这意味着所有形式的空白符在语法中仅用于分隔*标记码(tokens)*的作用，没有语义意义。
 
-Rust 程序中，如果将一个空白符元素替换为任何其他合法的空白符元素(例如单个空格字符)，它们仍有相同的意义。
+Rust 程序中，如果将一个空白符元素替换为任何其他合法的空白符元素（例如单个空格字符），它们仍有相同的意义。
 
 [`Pattern_White_Space`]: https://www.unicode.org/reports/tr31/
 

@@ -191,8 +191,8 @@ commit: 03dc50769738a643be1451a4ff1516fa5fab92bd <br />
 <h2><a class="header" href="#overflow" id="overflow">Overflow</a></h2>
 <p>在调试模式下编译整数运算时，如果发生溢出，会触发 panic。可以使用命令行参数 <code>-C debug-assertions</code> 和 <code>-C overflow-checks</code> 来设置编译器标志位，来更直接地控制这个溢出过程。以下情况被认为是溢出：</p>
 <ul>
-<li>当 <code>+</code>、<code>*</code> 或 <code>-</code> 创建的值大于当前类型可存储的最大值或小于最小值。这包括任何带符号整型的最小值上的一元运算符 <code>-</code>。</li>
-<li>使用 <code>/</code> 或 <code>%</code>，其中左边的参数是某类带符号整型的最小整数，右边的参数是 <code>-1</code>。</li>
+<li>当 <code>+</code>、<code>*</code> 或 <code>-</code> 创建的值大于当前类型可存储的最大值或小于最小值。这包括任何有符号整型的最小值上的一元运算符 <code>-</code>。</li>
+<li>使用 <code>/</code> 或 <code>%</code>，其中左边的参数是某类有符号整型的最小整数，右边的参数是 <code>-1</code>。</li>
 <li>使用 <code>&lt;&lt;</code> 或 <code>&gt;&gt;</code>，其中右边参数大于或等于左边参数类型的比特数，或右边参数为负数。</li>
 </ul>
 <h2><a class="header" href="#借用引用操作符" id="借用引用操作符">借用/引用操作符</a></h2>

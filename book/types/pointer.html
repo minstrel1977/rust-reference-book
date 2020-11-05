@@ -193,7 +193,7 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 <em>RawPointerType</em> :<br />
    <code>*</code> ( <code>mut</code> | <code>const</code> ) <a href="../types.html#type-expressions"><em>TypeNoBounds</em></a></p>
 </blockquote>
-<p>裸指针是没有安全性或可用性(liveness)保证的指针。裸指针写为 <code>*const T</code> 或 <code>*mut T</code>，例如，<code>*const i32</code> 表示指向有符号32位整数的裸指针。复制或销毁裸指针对任何其他值的生命周期都没有影响。对裸指针的解引用是<a href="../unsafety.html">非安全(<code>unsafe</code>)操作</a>，可以通过重新借用裸指针（<code>&amp;*</code> 或 <code>&amp;mut *</code>）将其转换为引用。在 Rust 代码中通常不鼓励使用裸指针；它们的存在是为了支持与外部代码的互操作性，以及编写对性能要求很高的函数或低级的函数。</p>
+<p>裸指针是没有安全性或可用性(liveness)保证的指针。裸指针写为 <code>*const T</code> 或 <code>*mut T</code>，例如，<code>*const i32</code> 表示指向 32-bit 有符号整数的裸指针。复制或销毁裸指针对任何其他值的生命周期都没有影响。对裸指针的解引用是<a href="../unsafety.html">非安全(<code>unsafe</code>)操作</a>，可以通过重新借用裸指针（<code>&amp;*</code> 或 <code>&amp;mut *</code>）将其转换为引用。在 Rust 代码中通常不鼓励使用裸指针；它们的存在是为了支持与外部代码的互操作性，以及编写对性能要求很高的函数或低级的函数。</p>
 <p>在比较裸指针时，比较的是它们的地址，而不是它们指向的数据。当比较裸指针和<a href="../dynamically-sized-types.html">动态尺寸类型</a>时，还会比较它们指针上的附加/元数据。</p>
 <h2><a class="header" href="#smart-pointers" id="smart-pointers">Smart Pointers</a></h2>
 <h2><a class="header" href="#智能指针" id="智能指针">智能指针</a></h2>

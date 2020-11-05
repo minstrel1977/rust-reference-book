@@ -170,9 +170,9 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/paths.md">paths.md</a><br />
 commit: ecfd8761829d6b1025f2a0a8df6905043b2c5e8a <br />
-本译文最后维护日期：2020-10-18</p>
+本译文最后维护日期：2020-11-5</p>
 </blockquote>
-<p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">数据项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用数据项。</p>
+<p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，<code>::</code> 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">数据项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用数据项。</p>
 <p>仅由标识符段组成的简单路径(simple paths)的两个示例：</p>
 <!-- ignore: syntax fragment -->
 <pre><code class="language-rust ignore">x;
@@ -189,7 +189,7 @@ x::y::z;
 <p><em>SimplePathSegment</em> :<br />
    <a href="identifiers.html">IDENTIFIER</a> | <code>super</code> | <code>self</code> | <code>crate</code> | <code>$crate</code></p>
 </blockquote>
-<p>简单路径用于<a href="visibility-and-privacy.html">可见性</a>标记、<a href="attributes.html">属性</a>、<a href="macros-by-example.html">宏</a>和 <a href="items/use-declarations.html"><code>use</code></a> 数据项。示例：</p>
+<p>简单路径可用于<a href="visibility-and-privacy.html">可见性</a>标记、<a href="attributes.html">属性</a>、<a href="macros-by-example.html">宏</a>和 <a href="items/use-declarations.html"><code>use</code></a>数据项中。示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -229,7 +229,7 @@ mod m {
    <a href="identifiers.html">IDENTIFIER</a> <code>=</code> <a href="types.html#type-expressions"><em>Type</em></a></p>
 </blockquote>
 <p>表达式中的路径允许指定带有泛型参数的路径。它们在各种<a href="expressions.html">表达式</a>和<a href="patterns.html">模式</a>中都有使用。</p>
-<p>标记码 <code>::</code> 必须在泛型参数的左尖括号 <code>&lt;</code> 的前面，以避免和小于号操作符产生混淆。这就是俗称的“涡轮鱼(turbofish)”句法。</p>
+<p>标记码 <code>::</code> 必须在泛型参数的左尖括号（<code>&lt;</code>）的前面，以避免和小于号操作符产生混淆。这就是俗称的“涡轮鱼(turbofish)”句法。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -248,7 +248,7 @@ Vec::&lt;u8&gt;::with_capacity(1024);
 <p><em>QualifiedPathInType</em> :<br />
    <em>QualifiedPathType</em> (<code>::</code> <em>TypePathSegment</em>)<sup>+</sup></p>
 </blockquote>
-<p>完全限定性路径可以用来为 <a href="items/implementations.html#trait-implementations">trait实现</a>消除路径歧义，也可以用来指定<a href="#canonical-paths">规范路径</a>。用在指定具体类型时，它支持使用如下所示的类型指定句法：</p>
+<p>完全限定性路径可以用来为 <a href="items/implementations.html#trait-implementations">trait实现(trait implementations)</a>消除路径歧义，也可以用来指定<a href="#canonical-paths">规范路径</a>。用在指定具体类型时，它支持使用如下所示的类型句法：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -282,8 +282,8 @@ S::f();  // 调用本身的实现.
 <p><em>TypePathFnInputs</em> :<br />
 <a href="types.html#type-expressions"><em>Type</em></a> (<code>,</code> <a href="types.html#type-expressions"><em>Type</em></a>)<sup>*</sup> <code>,</code><sup>?</sup></p>
 </blockquote>
-<p>类型路径用于类型定义、trait约束、类型参数约束，以及限定性路径。</p>
-<p>尽管在泛型参数之前允许使用标记码 <code>::</code>，但它不是必需的，因为在类型路径中不存在像 <em>PathInExpression</em> 中那样的歧义。</p>
+<p>类型路径用于类型定义、trait约束(trait bound)、类型参数约束，以及限定性路径。</p>
+<p>尽管在泛型参数之前允许使用标记码 <code>::</code>，但它不是必需的，因为在类型路径中不存在像 <em>PathInExpression</em> 句法中那样的歧义。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -308,7 +308,7 @@ type G = std::boxed::Box&lt;dyn std::ops::FnOnce(isize) -&gt; isize&gt;;
 <h3><a class="header" href="#" id=""><code>::</code></a></h3>
 <p>以 <code>::</code> 开头的路径被认为是全局路径，其中的路径首段从当前 crate 根位置/模块开始解析。路径中的每个标识符都必须解析为一个数据项。</p>
 <blockquote>
-<p><strong>版本差异</strong>: 2015 版中，crate 根（模块）包含多种不同的数据项，包括：外部 crate、默认 crate（如 <code>std</code> 和 <code>core</code>），以及 crate 顶层的数据项（包括各种 <code>use</code> 导入数据项）。</p>
+<p><strong>版本差异</strong>: 2015 版中，crate 根（模块）包含多种不同的数据项，包括：外部crate、默认crate（如 <code>std</code> 和 <code>core</code>），以及 crate 顶层内的各种数据项（包括 <code>use</code> 导入的各种数据项）。</p>
 <p>从 2018 版开始，以 <code>::</code> 开头的路径仅能引用 crate。</p>
 </blockquote>
 <pre><pre class="playground"><code class="language-rust">mod a {
@@ -339,7 +339,7 @@ fn bar() {
 </span>trait T {
     type Item;
     const C: i32;
-    // `Self`将是实现 `T` 的任何类型。
+    // `Self` 将是实现 `T` 的任何类型。
     fn new() -&gt; Self;
     // `Self::Item` 将是实现中指定的类型的别名。
     fn f(&amp;self) -&gt; Self::Item;
@@ -395,7 +395,7 @@ mod a {
 <span class="boring">fn main() {}
 </span></code></pre></pre>
 <h3><a class="header" href="#crate-1" id="crate-1"><code>$crate</code></a></h3>
-<p>$crate 仅用在<a href="macros-by-example.html">宏转换器</a>中，且仅能用作路径首段，没有前置 <code>::</code>。<code>$crate</code> 将被扩展为从定义宏的 crate 的顶层访问该 crate 中的各数据项的路径，而不用去考虑宏调用发生时所在的现场 crate。</p>
+<p>$crate 仅用在<a href="macros-by-example.html">宏转换器(macro transcriber)</a>中，且仅能用作路径首段，不能有前置 <code>::</code>。<code>$crate</code> 将被扩展为从定义宏的 crate 的顶层访问该 crate 中的各数据项的路径，而不用去考虑宏调用发生时所在的现场 crate。</p>
 <pre><pre class="playground"><code class="language-rust">pub fn increment(x: u32) -&gt; u32 {
     x + 1
 }
@@ -408,8 +408,8 @@ macro_rules! inc {
 </span></code></pre></pre>
 <h2><a class="header" href="#canonical-paths" id="canonical-paths">Canonical paths</a></h2>
 <h2><a class="header" href="#规范路径" id="规范路径">规范路径</a></h2>
-<p>定义在模块或者实现中的数据项都有一个<em>规范路径</em>，该路径对应于其在其 crate 中定义的位置。该路径之外所有指向这些数据项的路径都是别名（路径）。规范路径被定义为附加在代表数据项自身定义路径段之前的一个<em>路径前缀</em>。</p>
-<p>尽管实现中所定义的数据项有规范路径，但<a href="items/implementations.html">实现</a>本身和 <a href="items/use-declarations.html">use声明</a>没有规范路径。块表达式中定义的数据项没有规范路径。在没有规范路径的模块中定义的数据项也没有规范路径。在实现中定义的关联项(associated items)引用没有规范路径的数据项 - 例如，实现类型(implementing type)、被实现的 trait、类型参数或类型参数上的约束 - 都没有规范路径。</p>
+<p>定义在模块或者实现中的数据项都有一个<em>规范路径</em>，该路径对应于其在其 crate 中定义的位置。在该路径之外，所有指向这些数据项的路径都是别名（路径）。规范路径被定义为附加在代表数据项自身的那段路径段之前的一个<em>路径前缀</em>。</p>
+<p>尽管实现中所定义的数据项有规范路径，但<a href="items/implementations.html">实现</a>自身没有规范路径。<a href="items/use-declarations.html">use声明</a>也没有规范路径。块表达式中定义的数据项也没有规范路径。在没有规范路径的模块中定义的数据项也没有规范路径。在实现中定义的关联项(associated items)引用没有规范路径的数据项 - 例如，实现类型(implementing type)、被实现的 trait、类型参数或类型参数上的约束 - 都没有规范路径。</p>
 <p>对于模块来说，模块的路径前缀就是该模块的规范路径。对于裸实现(bare implementations)来说，它下面数据项的路径前缀是它实现的数据项的规范路径，语义格式上要使用<span class="parenthetical">尖括号（<code>&lt;&gt;</code>）</span>括起来。对于 <a href="items/implementations.html#trait-implementations">trait实现</a>来说，它内部的数据项的路径前缀是被实现的数据项的规范路径后面，先跟一个 <code>as</code>，再跟 trait 本身的规范路径，然后整个使用<span class="parenthetical">尖括号（<code>&lt;&gt;</code>）</span>括起来。</p>
 <p>规范路径只在给定的 crate 中有意义。在 crate 之间没有全局命名空间，所以数据项的规范路径只在其 crate 中可标识。</p>
 <pre><pre class="playground"><code class="language-rust">// 注释解释了数据项的规范路径

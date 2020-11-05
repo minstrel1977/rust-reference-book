@@ -196,10 +196,12 @@
 </blockquote>
 <h4><a class="header" href="#常用词翻译" id="常用词翻译">常用词翻译</a></h4>
 <ol>
-<li>lifetime，国内一般译为“生命周期”，但在本书原文中有行文用到 lifecycle，本译作为何此词译义分开，选择翻译为“生存期”。并且译者在翻译中发现使用“生存期”在中文中行文更合适。</li>
+<li>lifetime，社区一般译为“生命周期”，但在本书原文中有行文用到 lifecycle，本译作为何此词译义分开，选择翻译为“生存期”。并且译者在翻译中发现使用“生存期”在中文中行文更合适。</li>
 <li>Syntax，这个词很多译者的随意的翻译为“语法”，但在 Rust 里它大部分时候特指单一语言部件内部的标记码/生产式组成格式，所以本书统一翻译为“句法”。在它之上一层的语言组织方式才翻译为“语法”。</li>
 <li>nominal type：标称类型。这是译者自创的一个翻译方法，首先 nominal type 在目前国内 Rust 社区里还没有合适的翻译先例，所以译者这里就蹭机器学习的热点翻译为“标称类型”，这种行径虽然降低了Rust的逼格，但在目前状态下，收益可能还是值得的。</li>
-<li>item，这个一般翻译为“项”或“条目”，译者期初为了读起来更符合习惯，选择了“项”的翻译方法，但后来发现这个方法太容易引起歧义，无法体现出其作为语法单元的特殊含义，所以又给它添了两个字，变成了“数据项”。然后和其他名词复合时，又一般会简化翻译为“XX项”，如：“static item”，译者就翻译为“静态项”。</li>
+<li>item，这个一般翻译为“项”或“条目”，译者期初为了读起来更符合习惯，选择了“项”的翻译方法，但后来发现这个方法太容易引起歧义，无法体现出其作为语法单元的特殊含义，所以又给它添了两个字，变成了“数据项”。而其他名词复合时，又一般会简化翻译为“XX项”，如：“static item”，译者就翻译为“静态项”。</li>
+<li>size，社区内常把这个词在表示 Rust 数据类型的位宽时也译做“大小”，但在中文语境中，有时无法把其和数值大小，以及比较意义的大小，或长度等含义快速区分开来，所以本文在表示 Rust 数据类型的位宽时统一译做“尺寸”。</li>
+<li>bit，这个通常译为“位”，但有时它会和中文中的“两位数”的“位”混淆，所以在代表二进制位宽时译者干脆保持不译。</li>
 <li>待续</li>
 </ol>
 <h2><a class="header" href="#阅读建议" id="阅读建议">阅读建议</a></h2>
@@ -298,7 +300,7 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 <h2><a class="header" href="#contributing" id="contributing">Contributing</a></h2>
 <h2><a class="header" href="#贡献力量-1" id="贡献力量-1">贡献力量</a></h2>
 <p>我们欢迎各种形式的贡献。</p>
-<p>您可以通过打开一个问题或向 <a href="https://github.com/rust-lang/reference/">Rust 参考手册仓库</a>发送一个 PR 来为本书做出贡献。如果这本书没有回答您的问题，并且您认为它的答案应该在本书的范围内，请不要犹豫，提交问题或在<a href="https://discord.gg/rust-lang">Discord</a>的 <code>#docs</code> 频道上询问。知道人们最喜欢用这本书来做什么将有助于引导我们的注意力来让这些部分变得更好。</p>
+<p>您可以通过打开一个问题或向 <a href="https://github.com/rust-lang/reference/">Rust 参考手册仓库</a>发送一个 PR 来为本书做出贡献。如果这本书没有回答您的问题，并且您认为它的答案应该在本书的范围内，请不要犹豫，提交问题或在 <a href="https://discord.gg/rust-lang">Discord</a> 的 <code>#docs</code> 频道上询问。知道人们最喜欢用这本书来做什么将有助于引导我们的注意力来让这些部分变得更好。</p>
 <!-- 2020-11-3 -->
 <!-- checked --><h1><a class="header" href="#notation" id="notation">Notation</a></h1>
 <h1><a class="header" href="#表义符符号" id="表义符符号">表义符/符号</a></h1>
@@ -311,7 +313,7 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <h2><a class="header" href="#语法" id="语法">语法</a></h2>
 <p>本书中给出的 <em>词法</em> 和 <em>句法</em> 的语法片段会用到下表中的各种表义符：</p>
 <table><thead><tr><th>表义符</th><th>示例</th><th>释义</th></tr></thead><tbody>
-<tr><td>CAPITAL</td><td>KW_IF, INTEGER_LITERAL</td><td>由词法分析生成的标记码(token)</td></tr>
+<tr><td>CAPITAL</td><td>KW_IF, INTEGER_LITERAL</td><td>由词法分析生成的单个标记码(token)</td></tr>
 <tr><td><em>ItalicCamelCase</em></td><td><em>LetStatement</em>, <em>Item</em></td><td>句法生产式(syntactical production)</td></tr>
 <tr><td><code>string</code></td><td><code>x</code>, <code>while</code>, <code>*</code></td><td>确切的字面字符(串)</td></tr>
 <tr><td>\x</td><td>\n, \r, \t, \0</td><td>转义字符</td></tr>
@@ -497,7 +499,7 @@ NON_KEYWORD_IDENTIFIER | RAW_IDENTIFIER</p>
 <li>整个字符串由多个字符组成。单个 <code>_</code> 不是有效标识符。</li>
 <li>其余字符是字母、数字，或 <code>_</code>。</li>
 </ul>
-<p>原生标识符与普通标识符类似，但有前缀 <code>r#</code>。（注意 <code>r#</code> 前缀不包括在实际标识符中。）与普通标识符不同，原生标识符可以是除上面列出的 <code>RAW_IDENTIFIER</code> 之外的任何严格关键字或保留关键字。</p>
+<p>除了有形式前缀 <code>r#</code> 修饰外，原生标识符(raw identifier)与普通标识符类似。（注意形式前缀 <code>r#</code> 不包括在实际标识符中。）与普通标识符不同，原生标识符可以是除上面列出的 <code>RAW_IDENTIFIER</code> 之外的任何严格关键字或保留关键字。</p>
 <!-- 2020-11-3 -->
 <!-- checked -->
 <h1><a class="header" href="#comments" id="comments">Comments</a></h1>
@@ -616,7 +618,7 @@ pub mod outer_module {
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/whitespace.md">whitespace.md</a><br />
 commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
-本译文最后维护日期：2020-10-17</p>
+本译文最后维护日期：2020-11-5</p>
 </blockquote>
 <p>空白符是非空字符串，它里面只包含具有 <a href="https://www.unicode.org/reports/tr31/"><code>Pattern_White_Space</code></a> 属性的 Unicode 字符，即:</p>
 <ul>
@@ -633,7 +635,7 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <li><code>U+2029</code> (段分隔符)</li>
 </ul>
 <p>Rust是一种“格式自由(free-form)”的语言，这意味着所有形式的空白符在语法中仅用于分隔*标记码(tokens)*的作用，没有语义意义。</p>
-<p>Rust 程序中，如果将一个空白符元素替换为任何其他合法的空白符元素(例如单个空格字符)，它们仍有相同的意义。</p>
+<p>Rust 程序中，如果将一个空白符元素替换为任何其他合法的空白符元素（例如单个空格字符），它们仍有相同的意义。</p>
 <!-- 2020-11-3 -->
 <!-- checked -->
 <h1><a class="header" href="#tokens" id="tokens">Tokens</a></h1>
@@ -641,9 +643,9 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/tokens.md">tokens.md</a><br />
 commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
-本译文最后维护日期：2020-10-28</p>
+本译文最后维护日期：2020-11-5</p>
 </blockquote>
-<p>标记码是由正则语言(regular languages)（非递归方式）定义的基本语法生产式(primitive productions)。Rust 源码输入可以被分解成以下几种标记码：</p>
+<p>标记码是由正则语言(regular languages)（非递归方式）定义的基本语法生产式(primitive productions)。Rust 源码输入可以被分解成以下几类标记码：</p>
 <ul>
 <li><a href="keywords.html">关键字</a></li>
 <li><a href="identifiers.html">标识符</a></li>
@@ -655,7 +657,7 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <p>在本文档的语法中，“简单”标记码以[字符串型生产式][string table production]的形式给出，并以 <code>monospace</code> 字体显示。（译者注：如果译者觉得这种标记码需要翻译时，会使用如：等宽(<code>monospace</code>) 这种形式来翻译，但读者需要意识到“monospace”是语言里的一个标记码，是以其字面形式出现在源码里的。）</p>
 <h2><a class="header" href="#literals" id="literals">Literals</a></h2>
 <h2><a class="header" href="#字面量" id="字面量">字面量</a></h2>
-<p>字面量是一个由单个标记码（而不是由一系列标记码）组成的表达式，它立即和直接表示它所代表的值，而不是通过名称或其他一些求值/计算规则来引用它。字面量是<a href="const_eval.html#constant-expressions">常量表达式</a>的一种形式，所以它（主要）用在编译时求值。</p>
+<p>字面量是一个由单个标记码（而不是由一系列标记码）组成的表达式，它立即、直接表示它所代表的值，而不是通过名称或其他一些求值/计算规则来引用它。字面量是<a href="const_eval.html#constant-expressions">常量表达式</a>的一种形式，所以它（主要）用在编译时求值。</p>
 <h3><a class="header" href="#examples" id="examples">Examples</a></h3>
 <h3><a class="header" href="#示例-1" id="示例-1">示例</a></h3>
 <h4><a class="header" href="#characters-and-strings" id="characters-and-strings">Characters and strings</a></h4>
@@ -712,8 +714,8 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <p><code>*</code> 所有数字字面量允许使用 <code>_</code> 作为可视分隔符，比如：<code>1_234.0E+18f64</code></p>
 <h4><a class="header" href="#suffixes" id="suffixes">Suffixes</a></h4>
 <h4><a class="header" href="#后缀" id="后缀">后缀</a></h4>
-<p>后缀是紧跟（无空格）字面量主体部分之后的非原生标识符。</p>
-<p>任何带有后缀的字面量（如字符串、整数等）都可以作为有效的标记码，并且可以传递给宏而不会产生错误。宏本身会决定如何解释这种标记码，以及是否该报错。</p>
+<p>后缀是紧跟（无空白符）在字面量主体部分之后的非<a href="identifiers.html">原生标识符</a>(non-raw identifier)。</p>
+<p>任何带有后缀的字面量（如字符串、整数等）都可以作为有效的标记码，并且可以传递给宏而不会产生错误。宏自己决定如何解释这种标记码，以及是否该报错。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -722,7 +724,7 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 blackhole!(&quot;string&quot;suffix); // OK
 <span class="boring">}
 </span></code></pre></pre>
-<p>但是，解析为 Rust 代码的字面量标记码上的后缀是受限制的。对于非数字字面量标记码，任何后缀都将被拒绝，而数字字面量标记码只接受下表中的后缀。</p>
+<p>但是，最终被解析为 Rust 代码的字面量标记码上的后缀是受限制的。对于非数字字面量标记码，任何后缀都最终将被弃用，而数字字面量标记码只接受下表中的后缀。</p>
 <table><thead><tr><th>整数</th><th>浮点数</th></tr></thead><tbody>
 <tr><td><code>u8</code>, <code>i8</code>, <code>u16</code>, <code>i16</code>, <code>u32</code>, <code>i32</code>, <code>u64</code>, <code>i64</code>, <code>u128</code>, <code>i128</code>, <code>usize</code>, <code>isize</code></td><td><code>f32</code>, <code>f64</code></td></tr>
 </tbody></table>
@@ -759,7 +761,7 @@ STRING_LITERAL :<br />
    <code>\</code> <em>后跟</em> \n</p>
 </blockquote>
 <p><em>字符串字面量</em>是位于两个 <code>U+0022</code> （双引号 <code>&quot;</code>）字符内的任意 Unicode 字符序列。当它是 <code>U+0022</code> 自身时，必须前置<em>转义</em>字符 <code>U+005C</code>（<code>\</code>）。</p>
-<p>字符串字面量允许换行书写。换行可以用换行符（<code>U+000A</code>），也可以用一对回车符换行符（<code>U+000D</code>, <code>U+000A</code>）的字节序列。这两种字节序列通常都转换为 <code>U+000A</code>，但有例外：当换行符前置一个未转义的字符 <code>U+005C</code>（<code>\</code>）时，会导致字符 <code>U+005C</code>、换行符和下一行开头的所有空白符都被忽略。因此下述示例中，<code>a</code> 和 <code>b</code> 是一样的：</p>
+<p>字符串字面量允许换行书写。换行可以用换行符（<code>U+000A</code>）表示，也可以用一对回车符换行符（<code>U+000D</code>, <code>U+000A</code>）的字节序列表示。这两种字节序列通常都会被转换为 <code>U+000A</code>，但有例外：当换行符前置一个未转义的字符 <code>U+005C</code>（<code>\</code>）时，会导致字符 <code>U+005C</code>、换行符和下一行开头的所有空白符都被忽略。因此下述示例中，<code>a</code> 和 <code>b</code> 是一样的：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -776,8 +778,8 @@ assert_eq!(a,b);
 <ul>
 <li><em>7-bit 码点转义</em>以 <code>U+0078</code>（<code>x</code>）开头，后面紧跟两个<em>十六进制数字</em>，其最大值为 <code>0x7F</code>。它表示 ASCII 字符，其码值就等于字面提供的十六进制值。不允许使用更大的值，因为不能确定其是 Unicode 码点还是字节值(byte values)。</li>
 <li><em>24-bit 码点转义</em>以 <code>U+0075</code>（<code>u</code>）开头，后跟多达六位<em>十六进制数字</em>，位于花括号 <code>U+007B</code>（<code>{</code>）和 <code>U+007D</code>（<code>}</code>）之间。这表示（需转义到的）Unicode 字符的码点等于花括号里的十六进制值。</li>
-<li><em>空白符转义</em>是 <code>U+006E</code> (<code>n</code>)、<code>U+0072</code> (<code>r</code>) 或者 <code>U+0074</code> (<code>t</code>) 之一，依次分别表示 Unicode 值 <code>U+000A</code>（LF），<code>U+000D</code>（CR），或者 <code>U+0009</code>（HT）。</li>
-<li><em>null转义</em> 是字符 <code>U+0030</code>（<code>0</code>），表示 Unicode 值 <code>U+0000</code>（NUL）。</li>
+<li><em>空白符转义</em>是 <code>U+006E</code> (<code>n</code>)、<code>U+0072</code> (<code>r</code>) 或者 <code>U+0074</code> (<code>t</code>) 之一，依次分别表示 Unicode 码点 <code>U+000A</code>（LF），<code>U+000D</code>（CR），或者 <code>U+0009</code>（HT）。</li>
+<li><em>null转义</em> 是字符 <code>U+0030</code>（<code>0</code>），表示 Unicode 码点 <code>U+0000</code>（NUL）。</li>
 <li><em>反斜线转义</em> 是字符 <code>U+005C</code>（<code>\</code>），反斜线必须通过转义才能表示其自身。</li>
 </ul>
 <h4><a class="header" href="#raw-string-literals" id="raw-string-literals">Raw string literals</a></h4>
@@ -790,8 +792,8 @@ RAW_STRING_LITERAL :<br />
       <code>&quot;</code> ( ~ <em>IsolatedCR</em> )<sup>* (非贪婪模式)</sup> <code>&quot;</code><br />
    | <code>#</code> RAW_STRING_CONTENT <code>#</code></p>
 </blockquote>
-<p>原生字符串字面量不做任何转义。它以字符 <code>U+0072</code>（<code>r</code>）后跟零个或多个字符 <code>U+0023</code>（<code>#</code>），以及一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符开始。<em>原生字符串文本主体</em>可包含任意的 Unicode 字符序列，并仅以另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符结尾，后跟与开头的 <code>U+0022</code>（双引号 <code>&quot;</code>）字符前同等数量的 <code>U+0023</code>（<code>#</code>）字符。</p>
-<p>所有包含在原生字符串文本主体中的 Unicode 字符都代表他们自身，字符 <code>U+0022</code>（双引号 <code>&quot;</code>）（除非后跟的纯 <code>U+0023</code> (<code>#</code>)字符串与文本主体开始前的对称相等）或 <code>U+005C</code>（<code>\</code>）并无特殊含义。</p>
+<p>原生字符串字面量不做任何转义。它以字符 <code>U+0072</code>（<code>r</code>）后跟零个或多个字符 <code>U+0023</code>（<code>#</code>），以及一个字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；中间<em>原生字符串文本主体</em>部分可包含任意的 Unicode 字符序列；再后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。</p>
+<p>所有包含在原生字符串文本主体中的 Unicode 字符都代表他们自身：字符 <code>U+0022</code>（双引号 <code>&quot;</code>）（除非后跟的纯 <code>U+0023</code> (<code>#</code>)字符串与文本主体开始前的对称相等）或字符 <code>U+005C</code>（<code>\</code>）此时都没有特殊含义。</p>
 <p>字符串字面量示例:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -815,12 +817,12 @@ r##&quot;foo #&quot;# bar&quot;##;                // foo #&quot;# bar
 BYTE_LITERAL :<br />
    <code>b'</code> ( ASCII_FOR_CHAR | BYTE_ESCAPE )  <code>'</code></p>
 <p>ASCII_FOR_CHAR :<br />
-   <em>任何 ASCII 字符 (0x00 到 0x7F), 排除</em> <code>'</code>, <code>\</code>, \n, \r 或者 \t</p>
+   <em>任何 ASCII 字符 （0x00 到 0x7F）, 排除</em> <code>'</code>, <code>\</code>, \n, \r 或者 \t</p>
 <p>BYTE_ESCAPE :<br />
       <code>\x</code> HEX_DIGIT HEX_DIGIT<br />
    | <code>\n</code> | <code>\r</code> | <code>\t</code> | <code>\\</code> | <code>\0</code></p>
 </blockquote>
-<p><em>字节字面量</em>是单个 ASCII 字符(码值在 <code>U+0000</code> 到 <code>U+007F</code> 区间内)或一个<em>转义符</em>前接字符 <code>U+0062</code>（<code>b</code>）和 <code>U+0027</code>（单引号 <code>'</code>），后接字符 <code>U+0027</code>。如果字符 <code>U+0027</code> 出现在字面量中，它必须由前置字符 <code>U+005C</code>（<code>\</code>）转义。字节字面量等价于一个 <code>u8</code> 无符号 8-bit 整型<em>数字字面量</em>。</p>
+<p><em>字节字面量</em>是单个 ASCII 字符（码值在 <code>U+0000</code> 到 <code>U+007F</code> 区间内）或一个<em>转义字节</em>作为字节字面量的真实主体跟在表示形式意义的字符 <code>U+0062</code>（<code>b</code>）和字符 <code>U+0027</code>（单引号 <code>'</code>）组合之后，然后再后接字符 <code>U+0027</code>。如果字符 <code>U+0027</code> 本身要出现在字面量中，它必须经由前置字符 <code>U+005C</code>（<code>\</code>）<em>转义</em>。字节字面量等价于一个 <code>u8</code> 8-bit 无符号整型<em>数字字面量</em>。</p>
 <h4><a class="header" href="#byte-string-literals" id="byte-string-literals">Byte string literals</a></h4>
 <h4><a class="header" href="#字节串字面量" id="字节串字面量">字节串字面量</a></h4>
 <blockquote>
@@ -830,7 +832,7 @@ BYTE_STRING_LITERAL :<br />
 <p>ASCII_FOR_STRING :<br />
    <em>任何 ASCII 字符(码值位于 0x00 到 0x7F 之间), 排除</em> <code>&quot;</code>, <code>\</code> <em>和 IsolatedCR</em></p>
 </blockquote>
-<p>非原生<em>字节串字面量</em>是 ASCII 字符和转义字符组成的字符序列，形式是以字符 <code>U+0062</code>（<code>b</code>）和 <code>U+0022</code>（双引号 <code>&quot;</code>）开头，以字符 <code>U+0022</code> 结尾。如果字面量中包含字符 <code>U+0022</code>，则必须由前置的 <code>U+005C</code>（<code>\</code>）<em>转义</em>。此外，字节串字面量也可以是<em>原生字节串字面量</em>(下面有其定义)。长度为 <code>n</code> 的字节串字面量类型为 <code>&amp;'static [u8; n]</code>。</p>
+<p>非原生<em>字节串字面量</em>是 ASCII 字符和转义字符组成的字符序列，形式是以字符 <code>U+0062</code>（<code>b</code>）和字符 <code>U+0022</code>（双引号 <code>&quot;</code>）组合开头，以字符 <code>U+0022</code> 结尾。如果字面量中包含字符 <code>U+0022</code>，则必须由前置的 <code>U+005C</code>（<code>\</code>）<em>转义</em>。此外，字节串字面量也可以是<em>原生字节串字面量</em>（下面有其定义）。长度为 <code>n</code> 的字节串字面量类型为 <code>&amp;'static [u8; n]</code>。</p>
 <p>一些额外的<em>转义</em>可以在字节或非原生字节串字面量中使用，转义以 <code>U+005C</code>（<code>\</code>）开始，并后跟如下形式之一：</p>
 <ul>
 <li><em>字节转义</em>以 <code>U+0078</code> (<code>x</code>)开始，后跟恰好两位<em>十六进制数字</em>来表示十六进制值代表的字节。</li>
@@ -848,10 +850,10 @@ RAW_BYTE_STRING_LITERAL :<br />
       <code>&quot;</code> ASCII<sup>* (非贪婪模式)</sup> <code>&quot;</code><br />
    | <code>#</code> RAW_BYTE_STRING_CONTENT <code>#</code></p>
 <p>ASCII :<br />
-   <em>任何 ASCII 字符(0x00 到 0x7F)</em></p>
+   <em>任何 ASCII 字符（0x00 到 0x7F）</em></p>
 </blockquote>
-<p>原生字节串字面量不做任何转义。它们以字符 <code>U+0062</code>（<code>b</code>）开头，后跟 <code>U+0072</code>（<code>r</code>），后跟零个或多个字符 <code>U+0023</code>（<code>#</code>）及 <code>U+0022</code>（双引号 <code>&quot;</code>）字符。<em>原生字节串文本主体</em> 可包含任意的 ASCII 字符序列，并仅以另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符结尾，后跟与开头 <code>U+0022</code>（双引号 <code>&quot;</code>）字符前同等数量的 <code>U+0023</code>（<code>#</code>）字符。原生字节串字面量不能包含任何非 ASCII 字节。</p>
-<p>原生字节串文本主体中的所有字符都代表它们的 ASCII 编码，字符 <code>U+0022</code>（双引号 <code>&quot;</code>）（除非后跟的纯 <code>U+0023</code>（<code>#</code>）字符串与文本主体开始前的对称相等）或 <code>U+005C</code>（<code>\</code>）并无特殊含义。</p>
+<p>原生字节串字面量不做任何转义。它们以字符 <code>U+0062</code>（<code>b</code>）后跟 <code>U+0072</code>（<code>r</code>），再后跟零个或多个字符 <code>U+0023</code>（<code>#</code>）及字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；之后是<em>原生字节串文本主体</em>，这部分可包含任意的 ASCII 字符序列；后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。原生字节串字面量不能包含任何非 ASCII 字节。</p>
+<p>原生字节串文本主体中的所有字符都代表它们自身的 ASCII 编码，字符 <code>U+0022</code>（双引号 <code>&quot;</code>）（除非后跟的纯 <code>U+0023</code>（<code>#</code>）字符串与文本主体开始前的对称相等）或字符 <code>U+005C</code>（<code>\</code>）此时都没有特殊含义。</p>
 <p>字节串字面量示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -868,7 +870,7 @@ b&quot;\\x52&quot;; br&quot;\x52&quot;;                  // \x52
 </span></code></pre></pre>
 <h3><a class="header" href="#number-literals" id="number-literals">Number literals</a></h3>
 <h3><a class="header" href="#数字字面量" id="数字字面量">数字字面量</a></h3>
-<p><em>数字字面量</em>可以是<em>整型字面量</em>，也可以是<em>浮点型字面量</em>，识别这两种字面量的语法是混合的。</p>
+<p><em>数字字面量</em>可以是<em>整型字面量</em>，也可以是<em>浮点型字面量</em>，识别这两种字面量的语法是混合在一起的。</p>
 <h4><a class="header" href="#integer-literals" id="integer-literals">Integer literals</a></h4>
 <h4><a class="header" href="#整型字面量" id="整型字面量">整型字面量</a></h4>
 <blockquote>
@@ -902,9 +904,9 @@ INTEGER_SUFFIX<sup>?</sup></p>
 <p>与其它字面量一样，整型字面量后面可紧跟一个<em>整型后缀</em>，该后缀强制设定了字面量的数据类型。整型后缀须为如下整型类型之一：<code>u8</code>、<code>i8</code>、<code>u16</code>、<code>i16</code>、<code>u32</code>、<code>i32</code>、<code>u64</code>、<code>i64</code>、<code>u128</code>、<code>i128</code>、<code>usize</code> 或 <code>isize</code>。</p>
 <p><em>无后缀</em>整型字面量的类型通过类型推断确定：</p>
 <ul>
-<li>如果整型类型可以通过程序上下文<em>唯一</em>确定，则无后缀整型字面量即为该类型。</li>
-<li>如果程序上下文对类型做了约束，则默认为带符号 32 位整型，即 <code>i32</code>。</li>
-<li>如果程序上下文过度限制了类型，则将其视为静态类型错误。</li>
+<li>如果整型类型可以通过程序上下文<em>唯一</em>确定，则无后缀整型字面量的类型即为该类型。</li>
+<li>如果程序上下文对类型约束不足，则默认为 32-bit 有符号整型，即 <code>i32</code>。</li>
+<li>如果程序上下文对类型约束过度，则报静态类型错误。</li>
 </ul>
 <p>各种形式的整型字面量示例：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -963,7 +965,7 @@ TUPLE_INDEX: <br />
    INTEGER_LITERAL</p>
 </blockquote>
 <p>元组索引用于引用<a href="types/tuple.html">元组</a>、<a href="items/structs.html">元组结构体</a>和<a href="items/enumerations.html">元组变体</a>的字段。</p>
-<p>元组索引直接与字面量标记码进行比较。元组索引以 <code>0</code> 开始，每个后续索引的值以十进制的 <code>1</code> 递增。因此，元组索引只能匹配十进制值，并且该值不能有任何额外的 <code>0</code> 做前缀字符。</p>
+<p>元组索引直接与字面量标记码进行比较。元组索引以 <code>0</code> 开始，每个后续索引的值以十进制的 <code>1</code> 递增。因此，元组索引只能匹配十进制值，并且该值不能用 <code>0</code> 做前缀字符。</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -984,7 +986,7 @@ let horse = example.0b10;  // 错误：没有 `0b10` 字段
 <p><strong><sup>词法</sup></strong><br />
 FLOAT_LITERAL :<br />
       DEC_LITERAL <code>.</code>
-<em>(紧跟着的不能是 <code>.</code>, <code>_</code> 或者<a href="identifiers.html">标识符</a></em>)<br />
+<em>（紧跟着的不能是 <code>.</code>, <code>_</code> 或者<a href="identifiers.html">标识符</a>）</em><br />
    | DEC_LITERAL FLOAT_EXPONENT<br />
    | DEC_LITERAL <code>.</code> DEC_LITERAL FLOAT_EXPONENT<sup>?</sup><br />
    | DEC_LITERAL (<code>.</code> DEC_LITERAL)<sup>?</sup>
@@ -995,17 +997,30 @@ FLOAT_EXPONENT<sup>?</sup> FLOAT_SUFFIX</p>
 <p>FLOAT_SUFFIX :<br />
    <code>f32</code> | <code>f64</code></p>
 </blockquote>
-<p><em>浮点型字面量</em>具有如下两种形式之一：</p>
+<p><em>浮点型字面量</em>有如下两种形式：</p>
 <ul>
 <li><em>十进制字面量</em>后跟句点字符 <code>U+002E</code> (<code>.</code>)。后面可选地跟着另一个十进制数字，还可以再接一个可选的<em>指数</em>。</li>
 <li><em>十进制字面量</em>后跟一个<em>指数</em>。</li>
 </ul>
-<p>如同整型字面量，浮点型字面量也可后跟一个后缀，但在后缀之前，浮点型字面量部分不以 <code>U+002E</code>（<code>.</code>）结尾。后缀强制设定了字面量类型。有两种有效的<em>浮点型后缀</em>：<code>f32</code> 和 <code>f64</code>（32 位和 64 位浮点类型），它们显式地指定了字面量的类型。</p>
-<p><em>无后缀</em>浮点型字面量的类型通过类型推断确定：</p>
+<p>如同整型字面量，浮点型字面量也可后跟一个后缀，但在后缀之前，浮点型字面量部分不以 <code>U+002E</code>（<code>.</code>）结尾。后缀强制设定了字面量类型。有两种有效的<em>浮点型后缀</em>：<code>f32</code> 和 <code>f64</code>（32-bit 和 64-bit 浮点类型），它们显式地指定了字面量的类型。</p>
 <ul>
-<li>如果浮点型类型可以通过程序上下文<em>唯一</em>确定，则无后缀浮点型字面量即为该类型。</li>
-<li>如果程序上下文对类型做了约束，则默认为 <code>f64</code>。</li>
-<li>如果程序上下文过度限制了类型，则将其视为静态类型错误。</li>
+<li>
+<p>If the program context under-constrains the type, it defaults to <code>f64</code>.</p>
+</li>
+<li>
+<p>If the program context over-constrains the type, it is considered a
+static type error.
+<em>无后缀</em>浮点型字面量的类型通过类型推断确定：</p>
+</li>
+<li>
+<p>如果浮点型类型可以通过程序上下文<em>唯一</em>确定，则无后缀浮点型字面量的类型即为该类型。</p>
+</li>
+<li>
+<p>如果程序上下文对类型约束不足，则默认为 <code>f64</code>。</p>
+</li>
+<li>
+<p>如果程序上下文对类型过度约束，则报静态类型错误。</p>
+</li>
 </ul>
 <p>各种形式的浮点型字面量示例：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -1019,7 +1034,7 @@ let x: f64 = 2.; // 类型 f64
 <span class="boring">}
 </span></code></pre></pre>
 <p>最后一个例子稍显不同，因为不能对一个以句点结尾的浮点型字面量使用后缀句法，<code>2.f64</code> 会尝试在 <code>2</code> 上调用名为 <code>f64</code> 的方法。</p>
-<p>浮点数的表形(representation)语义在<a href="types/numeric.html">“平台类型”</a>中描述。</p>
+<p>浮点数的表形(representation)语义在<a href="types/numeric.html">“和平台相关的类型”</a>中有描述。</p>
 <h3><a class="header" href="#boolean-literals" id="boolean-literals">Boolean literals</a></h3>
 <h3><a class="header" href="#布尔型字面量" id="布尔型字面量">布尔型字面量</a></h3>
 <blockquote>
@@ -1028,7 +1043,7 @@ BOOLEAN_LITERAL :<br />
       <code>true</code><br />
    | <code>false</code></p>
 </blockquote>
-<p>布尔类型有两个值，写做：<code>true</code> 和 <code>false</code>。</p>
+<p>布尔类型有两个值，写为：<code>true</code> 和 <code>false</code>。</p>
 <h2><a class="header" href="#lifetimes-and-loop-labels" id="lifetimes-and-loop-labels">Lifetimes and loop labels</a></h2>
 <h2><a class="header" href="#生存期和循环标签" id="生存期和循环标签">生存期和循环标签</a></h2>
 <blockquote>
@@ -1039,10 +1054,10 @@ LIFETIME_TOKEN :<br />
 <p>LIFETIME_OR_LABEL :<br />
       <code>'</code> <a href="identifiers.html">NON_KEYWORD_IDENTIFIER</a></p>
 </blockquote>
-<p>生存期参数和<a href="expressions/loop-expr.html">循环标签</a>使用 LIFETIME_OR_LABEL 标记码。（虽然 LIFETIME_OR_LABEL 是 LIFETIME_TOKEN的子集，其实）任何 LIFETIME_TOKEN 类型的标记码也都能被此词法分析器所接受，比如 LIFETIME_TOKEN 类型的标记码在宏中就可以畅通无阻的使用。</p>
+<p>生存期参数和<a href="expressions/loop-expr.html">循环标签</a>使用 LIFETIME_OR_LABEL 类型的标记码。（尽管 LIFETIME_OR_LABEL 是 LIFETIME_TOKEN 的子集，但）任何符合 LIFETIME_TOKEN 约定的标记码也都能被上述词法分析规则所接受，比如 LIFETIME_TOKEN 类型的标记码在宏中就可以畅通无阻的使用。</p>
 <h2><a class="header" href="#punctuation" id="punctuation">Punctuation</a></h2>
 <h2><a class="header" href="#标点符号" id="标点符号">标点符号</a></h2>
-<p>为了完整起见，这里列出了（Rust 里）所有的标点符号标记码。它们各自的用法和意义在链接页面中都有定义。</p>
+<p>为了完整起见，这里列出了（Rust 里）所有的标点符号标记码。它们各自的用法和含义在链接页面中都有定义。</p>
 <table><thead><tr><th>符号</th><th>名称</th><th>使用方法</th></tr></thead><tbody>
 <tr><td><code>+</code></td><td>Plus</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">算术加法</a>, <a href="trait-bounds.html">trait约束</a>, <a href="macros-by-example.html">宏 Kleene 匹配器</a></td></tr>
 <tr><td><code>-</code></td><td>Minus</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">算术减法</a>, <a href="expressions/operator-expr.html#negation-operators">取反</a></td></tr>
@@ -1104,9 +1119,9 @@ LIFETIME_TOKEN :<br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/paths.md">paths.md</a><br />
 commit: ecfd8761829d6b1025f2a0a8df6905043b2c5e8a <br />
-本译文最后维护日期：2020-10-18</p>
+本译文最后维护日期：2020-11-5</p>
 </blockquote>
-<p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">数据项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用数据项。</p>
+<p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，<code>::</code> 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">数据项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用数据项。</p>
 <p>仅由标识符段组成的简单路径(simple paths)的两个示例：</p>
 <!-- ignore: syntax fragment -->
 <pre><code class="language-rust ignore">x;
@@ -1123,7 +1138,7 @@ x::y::z;
 <p><em>SimplePathSegment</em> :<br />
    <a href="identifiers.html">IDENTIFIER</a> | <code>super</code> | <code>self</code> | <code>crate</code> | <code>$crate</code></p>
 </blockquote>
-<p>简单路径用于<a href="visibility-and-privacy.html">可见性</a>标记、<a href="attributes.html">属性</a>、<a href="macros-by-example.html">宏</a>和 <a href="items/use-declarations.html"><code>use</code></a> 数据项。示例：</p>
+<p>简单路径可用于<a href="visibility-and-privacy.html">可见性</a>标记、<a href="attributes.html">属性</a>、<a href="macros-by-example.html">宏</a>和 <a href="items/use-declarations.html"><code>use</code></a>数据项中。示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -1163,7 +1178,7 @@ mod m {
    <a href="identifiers.html">IDENTIFIER</a> <code>=</code> <a href="types.html#type-expressions"><em>Type</em></a></p>
 </blockquote>
 <p>表达式中的路径允许指定带有泛型参数的路径。它们在各种<a href="expressions.html">表达式</a>和<a href="patterns.html">模式</a>中都有使用。</p>
-<p>标记码 <code>::</code> 必须在泛型参数的左尖括号 <code>&lt;</code> 的前面，以避免和小于号操作符产生混淆。这就是俗称的“涡轮鱼(turbofish)”句法。</p>
+<p>标记码 <code>::</code> 必须在泛型参数的左尖括号（<code>&lt;</code>）的前面，以避免和小于号操作符产生混淆。这就是俗称的“涡轮鱼(turbofish)”句法。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -1182,7 +1197,7 @@ Vec::&lt;u8&gt;::with_capacity(1024);
 <p><em>QualifiedPathInType</em> :<br />
    <em>QualifiedPathType</em> (<code>::</code> <em>TypePathSegment</em>)<sup>+</sup></p>
 </blockquote>
-<p>完全限定性路径可以用来为 <a href="items/implementations.html#trait-implementations">trait实现</a>消除路径歧义，也可以用来指定<a href="paths.html#canonical-paths">规范路径</a>。用在指定具体类型时，它支持使用如下所示的类型指定句法：</p>
+<p>完全限定性路径可以用来为 <a href="items/implementations.html#trait-implementations">trait实现(trait implementations)</a>消除路径歧义，也可以用来指定<a href="paths.html#canonical-paths">规范路径</a>。用在指定具体类型时，它支持使用如下所示的类型句法：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -1216,8 +1231,8 @@ S::f();  // 调用本身的实现.
 <p><em>TypePathFnInputs</em> :<br />
 <a href="types.html#type-expressions"><em>Type</em></a> (<code>,</code> <a href="types.html#type-expressions"><em>Type</em></a>)<sup>*</sup> <code>,</code><sup>?</sup></p>
 </blockquote>
-<p>类型路径用于类型定义、trait约束、类型参数约束，以及限定性路径。</p>
-<p>尽管在泛型参数之前允许使用标记码 <code>::</code>，但它不是必需的，因为在类型路径中不存在像 <em>PathInExpression</em> 中那样的歧义。</p>
+<p>类型路径用于类型定义、trait约束(trait bound)、类型参数约束，以及限定性路径。</p>
+<p>尽管在泛型参数之前允许使用标记码 <code>::</code>，但它不是必需的，因为在类型路径中不存在像 <em>PathInExpression</em> 句法中那样的歧义。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -1242,7 +1257,7 @@ type G = std::boxed::Box&lt;dyn std::ops::FnOnce(isize) -&gt; isize&gt;;
 <h3><a class="header" href="#" id=""><code>::</code></a></h3>
 <p>以 <code>::</code> 开头的路径被认为是全局路径，其中的路径首段从当前 crate 根位置/模块开始解析。路径中的每个标识符都必须解析为一个数据项。</p>
 <blockquote>
-<p><strong>版本差异</strong>: 2015 版中，crate 根（模块）包含多种不同的数据项，包括：外部 crate、默认 crate（如 <code>std</code> 和 <code>core</code>），以及 crate 顶层的数据项（包括各种 <code>use</code> 导入数据项）。</p>
+<p><strong>版本差异</strong>: 2015 版中，crate 根（模块）包含多种不同的数据项，包括：外部crate、默认crate（如 <code>std</code> 和 <code>core</code>），以及 crate 顶层内的各种数据项（包括 <code>use</code> 导入的各种数据项）。</p>
 <p>从 2018 版开始，以 <code>::</code> 开头的路径仅能引用 crate。</p>
 </blockquote>
 <pre><pre class="playground"><code class="language-rust">mod a {
@@ -1273,7 +1288,7 @@ fn bar() {
 </span>trait T {
     type Item;
     const C: i32;
-    // `Self`将是实现 `T` 的任何类型。
+    // `Self` 将是实现 `T` 的任何类型。
     fn new() -&gt; Self;
     // `Self::Item` 将是实现中指定的类型的别名。
     fn f(&amp;self) -&gt; Self::Item;
@@ -1329,7 +1344,7 @@ mod a {
 <span class="boring">fn main() {}
 </span></code></pre></pre>
 <h3><a class="header" href="#crate-1" id="crate-1"><code>$crate</code></a></h3>
-<p>$crate 仅用在<a href="macros-by-example.html">宏转换器</a>中，且仅能用作路径首段，没有前置 <code>::</code>。<code>$crate</code> 将被扩展为从定义宏的 crate 的顶层访问该 crate 中的各数据项的路径，而不用去考虑宏调用发生时所在的现场 crate。</p>
+<p>$crate 仅用在<a href="macros-by-example.html">宏转换器(macro transcriber)</a>中，且仅能用作路径首段，不能有前置 <code>::</code>。<code>$crate</code> 将被扩展为从定义宏的 crate 的顶层访问该 crate 中的各数据项的路径，而不用去考虑宏调用发生时所在的现场 crate。</p>
 <pre><pre class="playground"><code class="language-rust">pub fn increment(x: u32) -&gt; u32 {
     x + 1
 }
@@ -1342,8 +1357,8 @@ macro_rules! inc {
 </span></code></pre></pre>
 <h2><a class="header" href="#canonical-paths" id="canonical-paths">Canonical paths</a></h2>
 <h2><a class="header" href="#规范路径" id="规范路径">规范路径</a></h2>
-<p>定义在模块或者实现中的数据项都有一个<em>规范路径</em>，该路径对应于其在其 crate 中定义的位置。该路径之外所有指向这些数据项的路径都是别名（路径）。规范路径被定义为附加在代表数据项自身定义路径段之前的一个<em>路径前缀</em>。</p>
-<p>尽管实现中所定义的数据项有规范路径，但<a href="items/implementations.html">实现</a>本身和 <a href="items/use-declarations.html">use声明</a>没有规范路径。块表达式中定义的数据项没有规范路径。在没有规范路径的模块中定义的数据项也没有规范路径。在实现中定义的关联项(associated items)引用没有规范路径的数据项 - 例如，实现类型(implementing type)、被实现的 trait、类型参数或类型参数上的约束 - 都没有规范路径。</p>
+<p>定义在模块或者实现中的数据项都有一个<em>规范路径</em>，该路径对应于其在其 crate 中定义的位置。在该路径之外，所有指向这些数据项的路径都是别名（路径）。规范路径被定义为附加在代表数据项自身的那段路径段之前的一个<em>路径前缀</em>。</p>
+<p>尽管实现中所定义的数据项有规范路径，但<a href="items/implementations.html">实现</a>自身没有规范路径。<a href="items/use-declarations.html">use声明</a>也没有规范路径。块表达式中定义的数据项也没有规范路径。在没有规范路径的模块中定义的数据项也没有规范路径。在实现中定义的关联项(associated items)引用没有规范路径的数据项 - 例如，实现类型(implementing type)、被实现的 trait、类型参数或类型参数上的约束 - 都没有规范路径。</p>
 <p>对于模块来说，模块的路径前缀就是该模块的规范路径。对于裸实现(bare implementations)来说，它下面数据项的路径前缀是它实现的数据项的规范路径，语义格式上要使用<span class="parenthetical">尖括号（<code>&lt;&gt;</code>）</span>括起来。对于 <a href="items/implementations.html#trait-implementations">trait实现</a>来说，它内部的数据项的路径前缀是被实现的数据项的规范路径后面，先跟一个 <code>as</code>，再跟 trait 本身的规范路径，然后整个使用<span class="parenthetical">尖括号（<code>&lt;&gt;</code>）</span>括起来。</p>
 <p>规范路径只在给定的 crate 中有意义。在 crate 之间没有全局命名空间，所以数据项的规范路径只在其 crate 中可标识。</p>
 <pre><pre class="playground"><code class="language-rust">// 注释解释了数据项的规范路径
@@ -6130,8 +6145,8 @@ commit: 03dc50769738a643be1451a4ff1516fa5fab92bd <br />
 <h2><a class="header" href="#overflow" id="overflow">Overflow</a></h2>
 <p>在调试模式下编译整数运算时，如果发生溢出，会触发 panic。可以使用命令行参数 <code>-C debug-assertions</code> 和 <code>-C overflow-checks</code> 来设置编译器标志位，来更直接地控制这个溢出过程。以下情况被认为是溢出：</p>
 <ul>
-<li>当 <code>+</code>、<code>*</code> 或 <code>-</code> 创建的值大于当前类型可存储的最大值或小于最小值。这包括任何带符号整型的最小值上的一元运算符 <code>-</code>。</li>
-<li>使用 <code>/</code> 或 <code>%</code>，其中左边的参数是某类带符号整型的最小整数，右边的参数是 <code>-1</code>。</li>
+<li>当 <code>+</code>、<code>*</code> 或 <code>-</code> 创建的值大于当前类型可存储的最大值或小于最小值。这包括任何有符号整型的最小值上的一元运算符 <code>-</code>。</li>
+<li>使用 <code>/</code> 或 <code>%</code>，其中左边的参数是某类有符号整型的最小整数，右边的参数是 <code>-1</code>。</li>
 <li>使用 <code>&lt;&lt;</code> 或 <code>&gt;&gt;</code>，其中右边参数大于或等于左边参数类型的比特数，或右边参数为负数。</li>
 </ul>
 <h2><a class="header" href="#借用引用操作符" id="借用引用操作符">借用/引用操作符</a></h2>
@@ -8587,7 +8602,7 @@ commit: 73ca198fb3ab52283d67d5fe28c541ee1d169f48 <br />
 <p><code>isize</code>类型是一种有符号整型，其位数与平台的指针类型的位数相同。（Rust 规定）对象的尺寸和数组的长度的理论上限是 <code>isize</code>的最大值。这确保了 <code>isize</code> 可以用来计算指向对象或数组内部的指针之间的差异，并且可以寻址对象中的每个字节以及末尾的那个字节。</p>
 <p><code>usize</code> 和 <code>isize</code> 至少是 16-bits 宽。</p>
 <blockquote>
-<p><strong>注意</strong>：许多 Rust 代码可能会假设指针、<code>usize</code> 和 <code>isize</code> 是32位或64位的。因此，16位指针的支持是有限的，这部分支持可能需要来自库的明确关注和确认。</p>
+<p><strong>注意</strong>：许多 Rust 代码可能会假设指针、<code>usize</code> 和 <code>isize</code> 是 32-bit 或 64-bit 的。因此，16-bit 指针的支持是有限的，这部分支持可能需要来自库的明确关注和确认。</p>
 </blockquote>
 <!-- 2020-11-3 -->
 <!-- checked -->
@@ -8599,8 +8614,8 @@ commit: 9af5071f876111a09ba54a86655679de83eb464c <br />
 本译文最后维护日期：2020-10-29</p>
 </blockquote>
 <p>类型 <code>char</code> 和 <code>str</code> 用于保存文本数据。</p>
-<p>字符型(<code>char</code>)的值是 <a href="http://www.unicode.org/glossary/#unicode_scalar_value">Unicode 标量(scalar)值</a>（即不是代理项(surrogate)的代码点），可以表示为 0x0000 到 0xD7FF 或 0xE000 到 0x10FFFF 范围内的32位无符号字符。创建超出此范围的字符直接触发<a href="types/../behavior-considered-undefined.html">未定义行为(Undefined Behavior)</a>。一个 <code>[char]</code> 实际上是长度为1的 UCS-4 / UTF-32 字符串。</p>
-<p><code>str</code>类型的值的表示方法与 <code>[u8]</code> 相同，它是一个8位无符号字节类型的切片。但是，Rust 标准库对 <code>str</code> 做了额外的假定：<code>str</code> 上的方法会假定并确保其中的数据是有效的 UTF-8。调用 <code>str</code> 的方法来处理非UTF-8 缓冲区上的数据可能或早或晚地出现<a href="types/../behavior-considered-undefined.html">未定义行为</a>。</p>
+<p>字符型(<code>char</code>)的值是 <a href="http://www.unicode.org/glossary/#unicode_scalar_value">Unicode 标量(scalar)值</a>（即不是代理项(surrogate)的代码点），可以表示为 0x0000 到 0xD7FF 或 0xE000 到 0x10FFFF 范围内的 32-bit 无符号字符。创建超出此范围的字符直接触发<a href="types/../behavior-considered-undefined.html">未定义行为(Undefined Behavior)</a>。一个 <code>[char]</code> 实际上是长度为1的 UCS-4 / UTF-32 字符串。</p>
+<p><code>str</code>类型的值的表示方法与 <code>[u8]</code> 相同，它是一个 8-bit 无符号字节类型的切片。但是，Rust 标准库对 <code>str</code> 做了额外的假定：<code>str</code> 上的方法会假定并确保其中的数据是有效的 UTF-8。调用 <code>str</code> 的方法来处理非UTF-8 缓冲区上的数据可能或早或晚地出现<a href="types/../behavior-considered-undefined.html">未定义行为</a>。</p>
 <p>由于 <code>str</code> 是一个<a href="types/../dynamically-sized-types.html">动态尺寸类型</a>，所以它只能通过指针类型实例化，比如 <code>&amp;str</code>。</p>
 <!-- 2020-11-3 -->
 <!-- checked -->
@@ -8969,7 +8984,7 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 <em>RawPointerType</em> :<br />
    <code>*</code> ( <code>mut</code> | <code>const</code> ) <a href="types/../types.html#type-expressions"><em>TypeNoBounds</em></a></p>
 </blockquote>
-<p>裸指针是没有安全性或可用性(liveness)保证的指针。裸指针写为 <code>*const T</code> 或 <code>*mut T</code>，例如，<code>*const i32</code> 表示指向有符号32位整数的裸指针。复制或销毁裸指针对任何其他值的生命周期都没有影响。对裸指针的解引用是<a href="types/../unsafety.html">非安全(<code>unsafe</code>)操作</a>，可以通过重新借用裸指针（<code>&amp;*</code> 或 <code>&amp;mut *</code>）将其转换为引用。在 Rust 代码中通常不鼓励使用裸指针；它们的存在是为了支持与外部代码的互操作性，以及编写对性能要求很高的函数或低级的函数。</p>
+<p>裸指针是没有安全性或可用性(liveness)保证的指针。裸指针写为 <code>*const T</code> 或 <code>*mut T</code>，例如，<code>*const i32</code> 表示指向 32-bit 有符号整数的裸指针。复制或销毁裸指针对任何其他值的生命周期都没有影响。对裸指针的解引用是<a href="types/../unsafety.html">非安全(<code>unsafe</code>)操作</a>，可以通过重新借用裸指针（<code>&amp;*</code> 或 <code>&amp;mut *</code>）将其转换为引用。在 Rust 代码中通常不鼓励使用裸指针；它们的存在是为了支持与外部代码的互操作性，以及编写对性能要求很高的函数或低级的函数。</p>
 <p>在比较裸指针时，比较的是它们的地址，而不是它们指向的数据。当比较裸指针和<a href="types/../dynamically-sized-types.html">动态尺寸类型</a>时，还会比较它们指针上的附加/元数据。</p>
 <h2><a class="header" href="#smart-pointers" id="smart-pointers">Smart Pointers</a></h2>
 <h2><a class="header" href="#智能指针" id="智能指针">智能指针</a></h2>
@@ -9223,8 +9238,8 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <tr><td><code>f64</code></td><td>8</td></tr>
 <tr><td><code>char</code></td><td>4</td></tr>
 </tbody></table>
-<p><code>usize</code> 和 <code>isize</code> 的尺寸足以包含目标平台上的每个内存地址。例如，在 32 位目标上，它们是 4 个字节，而在 64 位目标上，它们是 8 个字节。</p>
-<p>大多数原生类型的对齐量通常与它们的尺寸保持一致，尽管这是特定于平台的行为。典型的特定于平台的就是在 x86 平台上，u64 和 f64 都上 32 位对齐量。</p>
+<p><code>usize</code> 和 <code>isize</code> 的尺寸足以包含目标平台上的每个内存地址。例如，在 32-bit 目标上，它们是 4 个字节，而在 64-bit 目标上，它们是 8 个字节。</p>
+<p>大多数原生类型的对齐量通常与它们的尺寸保持一致，尽管这是特定于平台的行为。典型的特定于平台的就是在 x86 平台上，u64 和 f64 都上 32-bit 对齐量。</p>
 <h2><a class="header" href="#pointers-and-references-layout" id="pointers-and-references-layout">Pointers and References Layout</a></h2>
 <h2><a class="header" href="#指针和引用的布局" id="指针和引用的布局">指针和引用的布局</a></h2>
 <p>指针和引用具有相同的布局。指针或引用的可变性不会改变布局。</p>
