@@ -116,18 +116,18 @@ mod thread {
 
 在模块中有意义的内置属性是 [`cfg`]、[`deprecated`]、[`doc`]、[lint检查类属性][the lint check attributes]、`path` 和 `no_implicit_prelude`。模块也接受宏属性。
 
-[_InnerAttribute_]: ../attributes.md
-[_Item_]: ../items.md
-[macro_use]: ../macros-by-example.md#the-macro_use-attribute
-[`cfg`]: ../conditional-compilation.md
-[`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
+[_InnerAttribute_]: https://doc.rust-lang.org/attributes.md
+[_Item_]: https://doc.rust-lang.org/items.md
+[macro_use]: https://doc.rust-lang.org/macros-by-example.md#the-macro_use-attribute
+[`cfg`]: https://doc.rust-lang.org/conditional-compilation.md
+[`deprecated`]: https://doc.rust-lang.org/attributes/diagnostics.md#the-deprecated-attribute
 [`doc`]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
-[IDENTIFIER]: ../identifiers.md
-[attribute]: ../attributes.md
-[items]: ../items.md
-[module path]: ../paths.md
-[prelude]: ../crates-and-source-files.md#preludes-and-no_std
-[the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
+[IDENTIFIER]: https://doc.rust-lang.org/identifiers.md
+[attribute]: https://doc.rust-lang.org/attributes.md
+[items]: https://doc.rust-lang.org/items.md
+[module path]: https://doc.rust-lang.org/paths.md
+[prelude]: https://doc.rust-lang.org/crates-and-source-files.md#preludes-and-no_std
+[the lint check attributes]: https://doc.rust-lang.org/attributes/diagnostics.md#lint-check-attributes
 
 <!-- 2020-11-3 -->
 <!-- checked -->

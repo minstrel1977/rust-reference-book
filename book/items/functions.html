@@ -176,25 +176,25 @@ commit: f35a6003ad9aff52e3cd459917b737bb5b1e56f8 <br />
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>Function</em> :<br />
-   <em>FunctionQualifiers</em> <code>fn</code> <a href="../identifiers.html">IDENTIFIER</a> <a href="generics.html"><em>Generics</em></a><sup>?</sup><br />
+   <em>FunctionQualifiers</em> <code>fn</code> <a href="https://doc.rust-lang.org/identifiers.md">IDENTIFIER</a> <a href="generics.html"><em>Generics</em></a><sup>?</sup><br />
       <code>(</code> <em>FunctionParameters</em><sup>?</sup> <code>)</code><br />
       <em>FunctionReturnType</em><sup>?</sup> <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup><br />
-      <a href="../expressions/block-expr.html"><em>BlockExpression</em></a></p>
+      <a href="https://doc.rust-lang.org/expressions/block-expr.md"><em>BlockExpression</em></a></p>
 <p><em>FunctionQualifiers</em> :<br />
    <em>AsyncConstQualifiers</em><sup>?</sup> <code>unsafe</code><sup>?</sup> (<code>extern</code> <em>Abi</em><sup>?</sup>)<sup>?</sup></p>
 <p><em>AsyncConstQualifiers</em> :<br />
    <code>async</code> | <code>const</code></p>
 <p><em>Abi</em> :<br />
-   <a href="../tokens.html#string-literals">STRING_LITERAL</a> | <a href="../tokens.html#raw-string-literals">RAW_STRING_LITERAL</a></p>
+   <a href="https://doc.rust-lang.org/tokens.md#string-literals">STRING_LITERAL</a> | <a href="https://doc.rust-lang.org/tokens.md#raw-string-literals">RAW_STRING_LITERAL</a></p>
 <p><em>FunctionParameters</em> :<br />
    <em>FunctionParam</em> (<code>,</code> <em>FunctionParam</em>)<sup>*</sup> <code>,</code><sup>?</sup></p>
 <p><em>FunctionParam</em> :<br />
-   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <a href="../patterns.html"><em>Pattern</em></a> <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a></p>
+   <a href="https://doc.rust-lang.org/attributes.md"><em>OuterAttribute</em></a><sup>*</sup> <a href="https://doc.rust-lang.org/patterns.md"><em>Pattern</em></a> <code>:</code> <a href="https://doc.rust-lang.org/types.md#type-expressions"><em>Type</em></a></p>
 <p><em>FunctionReturnType</em> :<br />
-   <code>-&gt;</code> <a href="../types.html#type-expressions"><em>Type</em></a></p>
+   <code>-&gt;</code> <a href="https://doc.rust-lang.org/types.md#type-expressions"><em>Type</em></a></p>
 </blockquote>
-<p><em>函数</em>由一个<a href="../expressions/block-expr.html">块</a>以及一个名称和一组参数组成。除了名字，其他的都是可选的。函数使用关键字 <code>fn</code> 声明。函数可以声明一组<em>输入</em><a href="../variables.html"><em>变量</em></a>作为参数，调用者通过它向函数传递参数，函数完成后，它再将带有<em>输出</em><a href="../types.html#type-expressions"><em>类型</em></a>的结果值返回给调用者。</p>
-<p>当一个<em>函数</em>被引用时，该函数会产生一个相应的零尺寸<a href="../types/function-item.html"><em>函数项类型(function item type)</em></a>的一等(first-class)<em>值</em>，调用该值就相当于直接调用该函数。</p>
+<p><em>函数</em>由一个<a href="https://doc.rust-lang.org/expressions/block-expr.md">块</a>以及一个名称和一组参数组成。除了名字，其他的都是可选的。函数使用关键字 <code>fn</code> 声明。函数可以声明一组<em>输入</em><a href="https://doc.rust-lang.org/variables.md"><em>变量</em></a>作为参数，调用者通过它向函数传递参数，函数完成后，它再将带有<em>输出</em><a href="https://doc.rust-lang.org/types.md#type-expressions"><em>类型</em></a>的结果值返回给调用者。</p>
+<p>当一个<em>函数</em>被引用时，该函数会产生一个相应的零尺寸<a href="https://doc.rust-lang.org/types/function-item.md"><em>函数项类型(function item type)</em></a>的一等(first-class)<em>值</em>，调用该值就相当于直接调用该函数。</p>
 <p>举个简单的定义函数的例子:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -204,7 +204,7 @@ commit: f35a6003ad9aff52e3cd459917b737bb5b1e56f8 <br />
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>和 <code>let</code>绑定一样，函数参数是不可反驳型<a href="../patterns.html">模式</a>，所以任何在 let绑定中有效的模式都可以有效应用在函数参数上:</p>
+<p>和 <code>let</code>绑定一样，函数参数是不可反驳型<a href="https://doc.rust-lang.org/patterns.md">模式</a>，所以任何在 let绑定中有效的模式都可以有效应用在函数参数上:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -255,7 +255,7 @@ foo(&amp;[1, 2]);
 <span class="boring">}
 </span></code></pre></pre>
 <p>将用 <code>i32</code> 实例化类型参数 <code>T</code>。</p>
-<p>类型参数也可以在函数名之后的尾部<a href="../paths.html">路径</a>组件(trailing path component,即 <code>::&lt;type&gt;</code>)中显式地提供。如果没有足够的上下文来确定类型参数，那么这可能是必要的。例如：<code>mem::size_of::&lt;u32&gt;() == 4</code>。</p>
+<p>类型参数也可以在函数名之后的尾部<a href="https://doc.rust-lang.org/paths.md">路径</a>组件(trailing path component,即 <code>::&lt;type&gt;</code>)中显式地提供。如果没有足够的上下文来确定类型参数，那么这可能是必要的。例如：<code>mem::size_of::&lt;u32&gt;() == 4</code>。</p>
 <h2><a class="header" href="#extern-function-qualifier" id="extern-function-qualifier">Extern function qualifier</a></h2>
 <h2><a class="header" href="#外部函数限定符" id="外部函数限定符">外部函数限定符</a></h2>
 <p>使用外部(<code>extern</code>)函数限定符可以限定能通过特定 ABI 调用的函数<em>定义</em>：</p>
@@ -317,7 +317,7 @@ let fptr: extern &quot;C&quot; fn() -&gt; i32 = new_i32;
 </blockquote>
 <h2><a class="header" href="#const-functions" id="const-functions">Const functions</a></h2>
 <h2><a class="header" href="#常量函数" id="常量函数">常量函数</a></h2>
-<p>使用关键字 <code>const</code> 限定的函数是<a href="../const_eval.html#const-functions">常量(const)函数</a>，<a href="structs.html">元组结构体</a>构造函数和<a href="enumerations.html">元组变体</a>构造函数也是如此。可以从<a href="../const_eval.html#const-context">常量上下文</a>中调用<em>常量函数</em>。</p>
+<p>使用关键字 <code>const</code> 限定的函数是<a href="https://doc.rust-lang.org/const_eval.md#const-functions">常量(const)函数</a>，<a href="structs.html">元组结构体</a>构造函数和<a href="enumerations.html">元组变体</a>构造函数也是如此。可以从<a href="https://doc.rust-lang.org/const_eval.md#const-context">常量上下文</a>中调用<em>常量函数</em>。</p>
 <h2><a class="header" href="#async-functions" id="async-functions">Async functions</a></h2>
 <h2><a class="header" href="#异步函数" id="异步函数">异步函数</a></h2>
 <p>函数可以限定为异步的，这还可以与 <code>unsafe</code> 限定符结合在一起使用：</p>
@@ -329,7 +329,7 @@ async unsafe fn unsafe_example() { }
 <span class="boring">}
 </span></code></pre></pre>
 <p>异步函数在调用时不起作用：相反，它们将参数捕获进一个 future。当该函数被轮询(polled)时，该 future 将执行该函数的函数体。</p>
-<p>一个异步函数大致相当于返回一个以 <a href="../expressions/block-expr.html#async-blocks"><code>async move</code>块</a>为代码体的 <a href="../types/impl-trait.html"><code>impl Future</code></a> 的函数：</p>
+<p>一个异步函数大致相当于返回一个以 <a href="https://doc.rust-lang.org/expressions/block-expr.md#async-blocks"><code>async move</code>块</a>为代码体的 <a href="https://doc.rust-lang.org/types/impl-trait.md"><code>impl Future</code></a> 的函数：</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -355,7 +355,7 @@ fn example&lt;'a&gt;(x: &amp;'a str) -&gt; impl Future&lt;Output = usize&gt; + '
 <li>脱糖过程中的返回类型被假定捕获了 <em><code>async fn</code>声明</em>中的所有的生存期参数（包括省略的）。这可以在上面的脱糖示例中看到：（我们）显式地给它补上了一个生存期参数 <code>'a</code>，因此捕捉到 <code>'a</code>。</li>
 <li>代码体中的 [<code>async move</code>块][async blocks]捕获所有函数参数，包括未使用或绑定到 <code>_</code> 模式的参数。参数销毁方面，除了销毁动作需要在返回的 future 完全执行(fully awaited)完成后才会发生外，可以确保异步函数参数的销毁顺序与函数非异步时的顺序相同。</li>
 </ul>
-<p>有关异步效果的详细信息，请参见 <a href="../expressions/block-expr.html#async-blocks"><code>async</code>块</a>。</p>
+<p>有关异步效果的详细信息，请参见 <a href="https://doc.rust-lang.org/expressions/block-expr.md#async-blocks"><code>async</code>块</a>。</p>
 <blockquote>
 <p><strong>版本差异</strong>: 异步函数只能从 Rust 2018 版才开始可用。</p>
 </blockquote>
@@ -386,7 +386,7 @@ async fn safe_example() {
 <p>非安全在异步函数上的使用方式与它在其他函数上的使用方式完全相同：只是它表示该函数会要求它的调用者提供一些额外的义务/条件来确保该函数的健壮性(soundness)。与任何其他非安全函数一样，这些条件可能会超出初始调用本身——例如，在上面的代码片段中， 函数 <code>unsafe_example</code> 将指针 <code>x</code> 作为参数，然后（在执行 await 时）解引用了对该指针的引用。这意味着在 future 完成执行之前，<code>x</code> 必须是有效的，调用者有责任确保这一点。</p>
 <h2><a class="header" href="#attributes-on-functions" id="attributes-on-functions">Attributes on functions</a></h2>
 <h2><a class="header" href="#函数上的属性" id="函数上的属性">函数上的属性</a></h2>
-<p>在函数上允许使用<a href="../attributes.html">外部属性</a>，也允许在<a href="../expressions/block-expr.html">函数体</a>中的 <code>{</code> 后面直接放置<a href="../attributes.html">内部属性</a>。</p>
+<p>在函数上允许使用<a href="https://doc.rust-lang.org/attributes.md">外部属性</a>，也允许在<a href="https://doc.rust-lang.org/expressions/block-expr.md">函数体</a>中的 <code>{</code> 后面直接放置<a href="https://doc.rust-lang.org/attributes.md">内部属性</a>。</p>
 <p>下面这个例子显示了一个函数的内部属性。该函数仅在执行测试时可用。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -399,10 +399,10 @@ async fn safe_example() {
 <blockquote>
 <p>注意：除了 lint检查类属性，函数上一般惯用的还是外部属性。</p>
 </blockquote>
-<p>在函数上有意义的属性是 <a href="../conditional-compilation.html#the-cfg-attribute"><code>cfg</code></a>、<a href="../conditional-compilation.html#the-cfg_attr-attribute"><code>cfg_attr</code></a>、<a href="../attributes/diagnostics.html#the-deprecated-attribute"><code>deprecated</code></a>、<a href="https://doc.rust-lang.org/rustdoc/the-doc-attribute.html"><code>doc</code></a>、<a href="../abi.html#the-export_name-attribute"><code>export_name</code></a>、<a href="../abi.html#the-link_section-attribute"><code>link_section</code></a>、<a href="../abi.html#the-no_mangle-attribute"><code>no_mangle</code></a>、<a href="../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>、<a href="../attributes/diagnostics.html#the-must_use-attribute"><code>must_use</code></a>、<a href="../procedural-macros.html">过程宏属性</a>、<a href="../attributes/testing.html">测试类属性</a>和<a href="../attributes/codegen.html#optimization-hints">优化提示类属性</a>。函数也可以接受属性宏。</p>
+<p>在函数上有意义的属性是 <a href="https://doc.rust-lang.org/conditional-compilation.md#the-cfg-attribute"><code>cfg</code></a>、<a href="https://doc.rust-lang.org/conditional-compilation.md#the-cfg_attr-attribute"><code>cfg_attr</code></a>、<a href="https://doc.rust-lang.org/attributes/diagnostics.md#the-deprecated-attribute"><code>deprecated</code></a>、<a href="https://doc.rust-lang.org/rustdoc/the-doc-attribute.html"><code>doc</code></a>、<a href="https://doc.rust-lang.org/abi.md#the-export_name-attribute"><code>export_name</code></a>、<a href="https://doc.rust-lang.org/abi.md#the-link_section-attribute"><code>link_section</code></a>、<a href="https://doc.rust-lang.org/abi.md#the-no_mangle-attribute"><code>no_mangle</code></a>、<a href="https://doc.rust-lang.org/attributes/diagnostics.md#lint-check-attributes">lint检查类属性</a>、<a href="https://doc.rust-lang.org/attributes/diagnostics.md#the-must_use-attribute"><code>must_use</code></a>、<a href="https://doc.rust-lang.org/procedural-macros.md">过程宏属性</a>、<a href="https://doc.rust-lang.org/attributes/testing.md">测试类属性</a>和<a href="https://doc.rust-lang.org/attributes/codegen.md#optimization-hints">优化提示类属性</a>。函数也可以接受属性宏。</p>
 <h2><a class="header" href="#attributes-on-function-parameters" id="attributes-on-function-parameters">Attributes on function parameters</a></h2>
 <h2><a class="header" href="#函数参数上的属性" id="函数参数上的属性">函数参数上的属性</a></h2>
-<p>函数参数允许使用<a href="../attributes.html">外部属性</a>，允许的<a href="../attributes.html#built-in-attributes-index">内置属性</a>仅限于 <code>cfg</code>、<code>cfg_attr</code>、<code>allow</code>、<code>warn</code>、<code>deny</code> 和 <code>forbid</code>。</p>
+<p>函数参数允许使用<a href="https://doc.rust-lang.org/attributes.md">外部属性</a>，允许的<a href="https://doc.rust-lang.org/attributes.html#built-in-attributes-index">内置属性</a>仅限于 <code>cfg</code>、<code>cfg_attr</code>、<code>allow</code>、<code>warn</code>、<code>deny</code> 和 <code>forbid</code>。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

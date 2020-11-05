@@ -178,11 +178,11 @@ commit: da3098c49b2f62c878ca9a36099d7dffb4bd9474 <br />
 <em>UseDeclaration</em> :<br />
    <code>use</code> <em>UseTree</em> <code>;</code></p>
 <p><em>UseTree</em> :<br />
-      (<a href="../paths.html#simple-paths"><em>SimplePath</em></a><sup>?</sup> <code>::</code>)<sup>?</sup> <code>*</code><br />
-   | (<a href="../paths.html#simple-paths"><em>SimplePath</em></a><sup>?</sup> <code>::</code>)<sup>?</sup> <code>{</code> (<em>UseTree</em> ( <code>,</code>  <em>UseTree</em> )<sup>*</sup> <code>,</code><sup>?</sup>)<sup>?</sup> <code>}</code><br />
-   | <a href="../paths.html#simple-paths"><em>SimplePath</em></a> ( <code>as</code> ( <a href="../identifiers.html">IDENTIFIER</a> | <code>_</code> ) )<sup>?</sup></p>
+      (<a href="https://doc.rust-lang.org/paths.md#simple-paths"><em>SimplePath</em></a><sup>?</sup> <code>::</code>)<sup>?</sup> <code>*</code><br />
+   | (<a href="https://doc.rust-lang.org/paths.md#simple-paths"><em>SimplePath</em></a><sup>?</sup> <code>::</code>)<sup>?</sup> <code>{</code> (<em>UseTree</em> ( <code>,</code>  <em>UseTree</em> )<sup>*</sup> <code>,</code><sup>?</sup>)<sup>?</sup> <code>}</code><br />
+   | <a href="https://doc.rust-lang.org/paths.md#simple-paths"><em>SimplePath</em></a> ( <code>as</code> ( <a href="https://doc.rust-lang.org/identifiers.md">IDENTIFIER</a> | <code>_</code> ) )<sup>?</sup></p>
 </blockquote>
-<p><em>use声明</em>用来创建一个或多个与数据项<a href="../paths.html">路径</a>同义的本地名称绑定。通常使用 <code>use</code>声明来缩短引用模块所需的路径。这些声明可以出现在<a href="modules.html">模块</a>和<a href="../expressions/block-expr.html">块</a>中，但通常在作用域顶部。</p>
+<p><em>use声明</em>用来创建一个或多个与数据项<a href="https://doc.rust-lang.org/paths.md">路径</a>同义的本地名称绑定。通常使用 <code>use</code>声明来缩短引用模块所需的路径。这些声明可以出现在<a href="modules.html">模块</a>和<a href="https://doc.rust-lang.org/expressions/block-expr.md">块</a>中，但通常在作用域顶部。</p>
 <p>use声明支持多种便捷方法:</p>
 <ul>
 <li>使用带有花括号的 glob-like(<code>::</code>) 句法 <code>use a::b::{c, d, e::f, g::h::i};</code> 来同时绑定一个系列有共同前缀的路径。</li>

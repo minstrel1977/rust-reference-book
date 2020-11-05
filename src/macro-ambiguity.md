@@ -40,7 +40,7 @@ macro_rules! i_am_an_mbe {
 
 `$(i:ident),\*` *也*是一个 NT；它是一个复杂NT，匹配标识符类型的以逗号为分隔符的重复段。`,` 是这个复杂NT的分隔符，它出现在匹配段的每对元素（如果有的话）之间。
 
-复杂NT的另一个例子是 `$(hi $e:expr ;)+`，它匹配 `hi <expr>; hi <expr>; ...` 这种格式的代码，其中 `hi <expr>;` 至少出现一次。注意，这个复杂NT没有专用的分隔符。
+复杂NT 的另一个例子是 `$(hi $e:expr ;)+`，它匹配 `hi <expr>; hi <expr>; ...` 这种格式的代码，其中 `hi <expr>;` 至少出现一次。注意，这个复杂NT没有专用的分隔符。
 
 (请注意，Rust的解析器确保有界序列始终具有正确的标记树结构嵌套以及开/闭定界符的正确匹配。)
 
@@ -291,9 +291,9 @@ why particular matchers are legal and others are not.
 
  * `($($e:expr)*)` ：illegal, because expr NTs are not in FOLLOW(expr NT).
 
-[Macros by Example]：macros-by-example.md
-[RFC 550]：https://github.com/rust-lang/rfcs/blob/master/text/0550-macro-future-proofing.md
-[tracking issue]：https://github.com/rust-lang/rust/issues/56575
+[Macros by Example]: macros-by-example.md
+[RFC 550]: https://github.com/rust-lang/rfcs/blob/master/text/0550-macro-future-proofing.md
+[tracking issue]: https://github.com/rust-lang/rust/issues/56575
 
 <!-- 2020-11-3 -->
 <!-- checked -->

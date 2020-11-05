@@ -176,12 +176,12 @@ commit: 2f459e22ec30a94bafafe417da4e95044578df73 <br />
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>StaticItem</em> :<br />
-   <code>static</code> <code>mut</code><sup>?</sup> <a href="../identifiers.html">IDENTIFIER</a> <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a>
-<code>=</code> <a href="../expressions.html"><em>Expression</em></a> <code>;</code></p>
+   <code>static</code> <code>mut</code><sup>?</sup> <a href="https://doc.rust-lang.org/identifiers.md">IDENTIFIER</a> <code>:</code> <a href="https://doc.rust-lang.org/types.md#type-expressions"><em>Type</em></a>
+<code>=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>;</code></p>
 </blockquote>
-<p><em>静态项</em>类似于<a href="constant-items.html">常量项</a>，除了它在程序中表示一个精确的内存位置。所有对静态项的引用都指向相同的内存位置。静态项拥有 <code>static</code> 生存期，它比 Rust 程序中的所有其他生存期都要长。静态项不会在程序结束时调用析构动作 <a href="../destructors.html"><code>drop</code></a>。</p>
-<p>静态初始化器是在编译时求值的<a href="../const_eval.html#constant-expressions">常量表达式</a>。静态初始化器可以引用其他静态项。</p>
-<p>包含非<a href="../interior-mutability.html">内部可变</a>类型的非 <code>mut</code> 静态项可以放在只读内存中。</p>
+<p><em>静态项</em>类似于<a href="constant-items.html">常量项</a>，除了它在程序中表示一个精确的内存位置。所有对静态项的引用都指向相同的内存位置。静态项拥有 <code>static</code> 生存期，它比 Rust 程序中的所有其他生存期都要长。静态项不会在程序结束时调用析构动作 <a href="https://doc.rust-lang.org/destructors.md"><code>drop</code></a>。</p>
+<p>静态初始化器是在编译时求值的<a href="https://doc.rust-lang.org/const_eval.md#constant-expressions">常量表达式</a>。静态初始化器可以引用其他静态项。</p>
+<p>包含非<a href="https://doc.rust-lang.org/interior-mutability.md">内部可变</a>类型的非 <code>mut</code> 静态项可以放在只读内存中。</p>
 <p>所有访问静态项的操作都是安全的，但对静态项有一些限制：</p>
 <ul>
 <li>静态项的数据类型必须实现 <code>Sync</code> trait，这样才可以让线程安全访问。</li>

@@ -37,7 +37,7 @@ Rust支持四种循环表达式：
 
 `loop`表达式会不断地重复地执行它代码体内的代码：`loop { println!("I live."); }`。
 
-没有包含关联的 `break`表达式的 `loop`表达式是发散的，并且具有类型 [`!`](../types/never.md)。包含相应 `break`表达式的 `loop`表达式可以结束循环，并且此表达式的类型必须与 `break`表达式的值兼容。
+没有包含关联的 `break`表达式的 `loop`表达式是发散的，并且具有类型 [`!`](https://doc.rust-lang.org/types/never.md)。包含相应 `break`表达式的 `loop`表达式可以结束循环，并且此表达式的类型必须与 `break`表达式的值兼容。
 
 ## Predicate loops
 ## 谓词循环
@@ -251,14 +251,14 @@ assert_eq!(result, 13);
 
 如果 `loop` 有关联的 `break`，则不认为该循环是发散的，并且 `loop`表达式的类型必须与每个 `break`表达式的类型兼容。不后跟表达式的 `break` 被认为与后跟 `()` 的`break`表达式的效果相同。
 
-[LIFETIME_OR_LABEL]: ../tokens.md#lifetimes-and-loop-labels
+[LIFETIME_OR_LABEL]: https://doc.rust-lang.org/tokens.md#lifetimes-and-loop-labels
 [_BlockExpression_]: block-expr.md
-[_Expression_]: ../expressions.md
+[_Expression_]: https://doc.rust-lang.org/expressions.md
 [_MatchArmPatterns_]: match-expr.md
-[_Pattern_]: ../patterns.md
+[_Pattern_]: https://doc.rust-lang.org/patterns.md
 [`match` expression]: match-expr.md
-[scrutinee]: ../glossary.md#scrutinee
-[temporary values]: ../expressions.md#temporaries
+[scrutinee]: https://doc.rust-lang.org/glossary.md#scrutinee
+[temporary values]: https://doc.rust-lang.org/expressions.md#temporaries
 [_LazyBooleanOperatorExpression_]: operator-expr.md#lazy-boolean-operators
 [`if let` expressions]: if-expr.md#if-let-expressions
 

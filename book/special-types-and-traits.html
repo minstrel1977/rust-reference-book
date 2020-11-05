@@ -173,34 +173,34 @@
 commit: fcdc0cab546c10921d66054be25c6afc9dd6b3bc <br />
 本译文最后维护日期：2020-11-2</p>
 </blockquote>
-<p><a href="../std/index.html">标准库</a>中的某些类型和 trait 在 Rust 编译器中也直接能用。本章就阐述了这些类型和 trait 的特殊特性。</p>
+<p><a href="https://doc.rust-lang.org/std/index.html">标准库</a>中的某些类型和 trait 在 Rust 编译器中也直接能用。本章就阐述了这些类型和 trait 的特殊特性。</p>
 <h2><a class="header" href="#boxt" id="boxt"><code>Box&lt;T&gt;</code></a></h2>
-<p><a href="../std/boxed/struct.Box.html"><code>Box&lt;T&gt;</code></a> 有一些特殊的特性，Rust 目前还不允许用户定义类型时使用。</p>
+<p><a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box&lt;T&gt;</code></a> 有一些特殊的特性，Rust 目前还不允许用户定义类型时使用。</p>
 <ul>
 <li><code>Box&lt;T&gt;</code> 的[解引用操作符]会产生一个可移动的位置。这意味着 <code>*</code>运算符和 <code>Box&lt;T&gt;</code> 的析构函数是语言内置的。</li>
 <li><a href="items/associated-items.html#associated-functions-and-methods">方法</a>可以使用 <code>Box&lt;Self&gt;</code> 作为接受者。</li>
 <li><code>Box&lt;T&gt;</code> 可以绕过<a href="items/implementations.html#trait-implementation-coherence">孤儿规则(orphan rules)</a>，与 <code>T</code> 在同一 crate 中实现同一 trait，其他泛型类型无法绕过。</li>
 </ul>
 <h2><a class="header" href="#rct" id="rct"><code>Rc&lt;T&gt;</code></a></h2>
-<p><a href="items/associated-items.html#associated-functions-and-methods">方法</a>可以使用 <a href="../std/rc/struct.Rc.html"><code>Rc&lt;Self&gt;</code></a> 作为接受者。</p>
+<p><a href="items/associated-items.html#associated-functions-and-methods">方法</a>可以使用 <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc&lt;Self&gt;</code></a> 作为接受者。</p>
 <h2><a class="header" href="#arct" id="arct"><code>Arc&lt;T&gt;</code></a></h2>
-<p><a href="items/associated-items.html#associated-functions-and-methods">方法</a>可以使用 <a href="../std/sync/struct.Arc.html"><code>Arc&lt;Self&gt;</code></a> 作为接受者。</p>
+<p><a href="items/associated-items.html#associated-functions-and-methods">方法</a>可以使用 <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc&lt;Self&gt;</code></a> 作为接受者。</p>
 <h2><a class="header" href="#pinp" id="pinp"><code>Pin&lt;P&gt;</code></a></h2>
-<p><a href="items/associated-items.html#associated-functions-and-methods">方法</a>可以使用 <a href="../std/pin/struct.Pin.html"><code>Pin&lt;P&gt;</code></a> 作为接受者。</p>
+<p><a href="items/associated-items.html#associated-functions-and-methods">方法</a>可以使用 <a href="https://doc.rust-lang.org/std/pin/struct.Pin.html"><code>Pin&lt;P&gt;</code></a> 作为接受者。</p>
 <h2><a class="header" href="#unsafecellt" id="unsafecellt"><code>UnsafeCell&lt;T&gt;</code></a></h2>
-<p><a href="../std/cell/struct.UnsafeCell.html"><code>std::cell::UnsafeCell&lt;T&gt;</code></a> 用于<a href="interior-mutability.html">内部可变性</a>。它确保编译器不会对此类类型执行不正确的优化。它还确保具有内部可变类型的<a href="items/static-items.html">静态(<code>static</code>)项</a>不会被放在标记为只读的内存中。</p>
+<p><a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>std::cell::UnsafeCell&lt;T&gt;</code></a> 用于<a href="interior-mutability.html">内部可变性</a>。它确保编译器不会对此类类型执行不正确的优化。它还确保具有内部可变类型的<a href="items/static-items.html">静态(<code>static</code>)项</a>不会被放在标记为只读的内存中。</p>
 <h2><a class="header" href="#phantomdatat" id="phantomdatat"><code>PhantomData&lt;T&gt;</code></a></h2>
-<p><a href="../std/marker/struct.PhantomData.html"><code>std::marker::PhantomData&lt;T&gt;</code></a> 是一个零尺寸零的、最小对齐量的、被认为拥有(own) <code>T</code> 的类型，这个类型存在目的是应用在确定<a href="subtyping.html#variance">型变</a>关系、<a href="../nomicon/dropck.html">销毁检查</a>和<a href="#auto-traits">自动trait</a>中的。</p>
+<p><a href="https://doc.rust-lang.org/std/marker/struct.PhantomData.html"><code>std::marker::PhantomData&lt;T&gt;</code></a> 是一个零尺寸零的、最小对齐量的、被认为拥有(own) <code>T</code> 的类型，这个类型存在目的是应用在确定<a href="subtyping.html#variance">型变</a>关系、<a href="https://doc.rust-lang.org/nomicon/dropck.html">销毁检查</a>和<a href="#auto-traits">自动trait</a>中的。</p>
 <h2><a class="header" href="#operator-traits" id="operator-traits">Operator Traits</a></h2>
 <h2><a class="header" href="#运算符操作符trait" id="运算符操作符trait">运算符/操作符trait</a></h2>
-<p><a href="../std/ops/index.html"><code>std::ops</code></a> 和 <a href="../std/cmp/index.html"><code>std::cmp</code></a> 中的 trait 用于重载 Rust 的<a href="expressions/operator-expr.html">运算符/操作符</a>、<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">索引表达式</a>和<a href="expressions/call-expr.html">调用表达式</a>。</p>
+<p><a href="https://doc.rust-lang.org/std/ops/index.html"><code>std::ops</code></a> 和 <a href="https://doc.rust-lang.org/std/cmp/index.html"><code>std::cmp</code></a> 中的 trait 用于重载 Rust 的<a href="expressions/operator-expr.html">运算符/操作符</a>、<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">索引表达式</a>和<a href="expressions/call-expr.html">调用表达式</a>。</p>
 <h2><a class="header" href="#deref-and-derefmut" id="deref-and-derefmut"><code>Deref</code> and <code>DerefMut</code></a></h2>
 <h2><a class="header" href="#deref-和-derefmut" id="deref-和-derefmut"><code>Deref</code> 和 <code>DerefMut</code></a></h2>
-<p>除了重载一元 <code>*</code>运算符外，<a href="../std/ops/trait.Deref.html"><code>Deref</code></a> 和 <a href="../std/ops/trait.DerefMut.html"><code>DerefMut</code></a> 也用于<a href="expressions/method-call-expr.html">方法解析(method resolution)</a>和<a href="type-coercions.html#coercion-types">利用 <code>Deref</code> 达成自动强转</a>。</p>
+<p>除了重载一元 <code>*</code>运算符外，<a href="https://doc.rust-lang.org/std/ops/trait.Deref.html"><code>Deref</code></a> 和 <a href="https://doc.rust-lang.org/std/ops/trait.DerefMut.html"><code>DerefMut</code></a> 也用于<a href="expressions/method-call-expr.html">方法解析(method resolution)</a>和<a href="type-coercions.html#coercion-types">利用 <code>Deref</code> 达成自动强转</a>。</p>
 <h2><a class="header" href="#drop" id="drop"><code>Drop</code></a></h2>
-<p><a href="../std/ops/trait.Drop.html"><code>Drop</code></a> trait 提供了一个<a href="destructors.html">析构函数</a>，每当要销毁此类型的值时就会运行它。</p>
+<p><a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> trait 提供了一个<a href="destructors.html">析构函数</a>，每当要销毁此类型的值时就会运行它。</p>
 <h2><a class="header" href="#copy" id="copy"><code>Copy</code></a></h2>
-<p><a href="../std/marker/trait.Copy.html"><code>Copy</code></a> trait 改变实现它的类型的语义。其类型实现了 <code>Copy</code> 的值在赋值时将被复制而不是移动。</p>
+<p><a href="https://doc.rust-lang.org/std/marker/trait.Copy.html"><code>Copy</code></a> trait 改变实现它的类型的语义。其类型实现了 <code>Copy</code> 的值在赋值时将被复制而不是移动。</p>
 <p>只能为未实现 <code>Drop</code> trait 且字段都是 <code>Copy</code> 的类型实现 <code>Copy</code>。
 对于枚举，这意味着所有变体的所有字段都必须是 <code>Copy</code> 的。
 对于联合体，这意味着所有的变体都必须是 <code>Copy</code> 的。</p>
@@ -215,18 +215,18 @@ commit: fcdc0cab546c10921d66054be25c6afc9dd6b3bc <br />
 <li><a href="types/function-pointer.html">函数指针</a> 和 <a href="types/function-item.html">函数项类型</a></li>
 </ul>
 <h2><a class="header" href="#clone" id="clone"><code>Clone</code></a></h2>
-<p><a href="../std/clone/trait.Clone.html"><code>Clone</code></a> trait 是 <code>Copy</code> 的超类trait，所以它也需要编译器生成实现。它被编译器实现给了以下类型：</p>
+<p><a href="https://doc.rust-lang.org/std/clone/trait.Clone.html"><code>Clone</code></a> trait 是 <code>Copy</code> 的超类trait，所以它也需要编译器生成实现。它被编译器实现给了以下类型：</p>
 <ul>
 <li>实现了内置的 <code>Copy</code> trait 的类型（见上面）</li>
 <li>由 <code>Clone</code> 类型的元素组成的<a href="types/tuple.html">元组</a></li>
 <li>由 <code>Clone</code> 类型的元素组成的<a href="types/array.html">数组</a></li>
 </ul>
 <h2><a class="header" href="#send" id="send"><code>Send</code></a></h2>
-<p><a href="../std/marker/trait.Send.html"><code>Send</code></a> trait 表明这种类型的值可以安全地从一个线程发送到另一个线程。</p>
+<p><a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> trait 表明这种类型的值可以安全地从一个线程发送到另一个线程。</p>
 <h2><a class="header" href="#sync" id="sync"><code>Sync</code></a></h2>
-<p><a href="../std/marker/trait.Sync.html"><code>Sync</code></a> trait 表示在多个线程之间共享这种类型的值是安全的。必须为不可变<a href="items/static-items.html">静态(<code>static</code>)项</a>中使用的所有类型实现此 trait。</p>
+<p><a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> trait 表示在多个线程之间共享这种类型的值是安全的。必须为不可变<a href="items/static-items.html">静态(<code>static</code>)项</a>中使用的所有类型实现此 trait。</p>
 <h2><a class="header" href="#auto-traits" id="auto-traits">Auto traits</a></h2>
-<p><a href="../std/marker/trait.Send.html"><code>Send</code></a>、<a href="../std/marker/trait.Sync.html"><code>Sync</code></a>、<a href="../std/marker/trait.Unpin.html"><code>Unpin</code></a>、<a href="../std/panic/trait.UnwindSafe.html"><code>UnwindSafe</code></a> 和 <a href="../std/panic/trait.RefUnwindSafe.html"><code>RefUnwindSafe</code></a> trait 都是<em>自动trait(auto traits)</em>。自动trait 具有特殊的属性。</p>
+<p><a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a>、<a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a>、<a href="https://doc.rust-lang.org/std/marker/trait.Unpin.html"><code>Unpin</code></a>、<a href="https://doc.rust-lang.org/std/panic/trait.UnwindSafe.html"><code>UnwindSafe</code></a> 和 <a href="https://doc.rust-lang.org/std/panic/trait.RefUnwindSafe.html"><code>RefUnwindSafe</code></a> trait 都是<em>自动trait(auto traits)</em>。自动trait 具有特殊的属性。</p>
 <p>对于给定类型，如果没有显式实现或否定实现(negative implementation)某自动trait，那么编译器就会根据以下规则去自动此为类型实现该自动trait：</p>
 <ul>
 <li>如果 <code>T</code> 实现了某自动trait，那 <code>&amp;T</code>、<code>&amp;mut T</code>、<code>*const T</code>、<code>*mut T</code>、<code>[T; n]</code> 和 <code>[T]</code> 也会实现此自动trait。</li>
@@ -238,7 +238,7 @@ commit: fcdc0cab546c10921d66054be25c6afc9dd6b3bc <br />
 <p>自动trait 也可以有否定实现，在标准库文档中表示为 <code>impl !AutoTrait for T</code>，它覆盖了自动实现。例如，<code>*mut T</code> 有一个关于 <code>Send</code> 的否定实现，所以 <code>*mut T</code> 不是 <code>Send</code> 的，即使 <code>T</code> 是。目前还没有稳下来的方法来指定其他类型的否定实现；目前否定实现只能在标准库里可以稳定使用。（译者注：标准库外使用需要引入先声明 <code>#![feature(negative_impls)]</code>）</p>
 <p>自动trait 可以作为额外的约束添加到任何 <a href="types/trait-object.html">trait对象</a>上（通常我们见到的 trait对象的类型名上一般只允许显示一个 trait）。例如，<code>Box&lt;dyn Debug + Send + UnwindSafe&gt;</code> 就是一个有效的类型。</p>
 <h2><a class="header" href="#sized" id="sized"><code>Sized</code></a></h2>
-<p><a href="../std/marker/trait.Sized.html"><code>Sized</code></a> trait表明这种类型的尺寸在编译时是已知的；也就是说，它不是一个<a href="dynamically-sized-types.html">动态尺寸类型</a>。<a href="types/parameters.html">类型参数</a>默认是 <code>Sized</code> 的。<code>Sized</code> 总是由编译器自动实现，而不是由<a href="items/implementations.html">实现(implementation items)</a>主动实现的。</p>
+<p><a href="https://doc.rust-lang.org/std/marker/trait.Sized.html"><code>Sized</code></a> trait表明这种类型的尺寸在编译时是已知的；也就是说，它不是一个<a href="dynamically-sized-types.html">动态尺寸类型</a>。<a href="types/parameters.html">类型参数</a>默认是 <code>Sized</code> 的。<code>Sized</code> 总是由编译器自动实现，而不是由<a href="items/implementations.html">实现(implementation items)</a>主动实现的。</p>
 <!-- 2020-11-3 -->
 <!-- checked -->
 

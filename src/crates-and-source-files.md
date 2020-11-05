@@ -108,18 +108,18 @@ crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 `-`(U+
 
 [^cratesourcefile]: crate 有点类似于 ECMA-335 CLI 模型中的 *assembly*、SML/NJ 编译管理器中的 *library*、Owens 和 Flatt 模块系统中的 *unit*， 或 Mesa 中的 *configuration*。
 
-[Unicode alphanumeric]: ../std/primitive.char.html#method.is_alphanumeric
+[Unicode alphanumeric]: https://doc.rust-lang.org/std/primitive.char.html#method.is_alphanumeric
 [_InnerAttribute_]: attributes.md
 [_Item_]: items.md
 [_MetaNameValueStr_]: attributes.md#meta-item-attribute-syntax
 [_shebang_]: https://en.wikipedia.org/wiki/Shebang_(Unix)
 [_utf8 byte order mark_]: https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8
-[`Termination`]: ../std/process/trait.Termination.html
-[`core`]: ../core/index.html
-[`core::prelude::v1`]: ../core/prelude/index.html
+[`Termination`]: https://doc.rust-lang.org/std/process/trait.Termination.html
+[`core`]: https://doc.rust-lang.org/core/index.html
+[`core::prelude::v1`]: https://doc.rust-lang.org/core/prelude/index.html
 [`extern crate`]: items/extern-crates.md
-[`std`]: ../std/index.html
-[`std::prelude::v1`]: ../std/prelude/index.html
+[`std`]: https://doc.rust-lang.org/std/index.html
+[`std::prelude::v1`]: https://doc.rust-lang.org/std/prelude/index.html
 [attribute]: attributes.md
 [attributes]: attributes.md
 [comments]: comments.md

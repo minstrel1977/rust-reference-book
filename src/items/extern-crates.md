@@ -80,12 +80,12 @@ into the macro-use prelude.
 
 [^soname]:译者注：这里故意使用soname是为了让读者主动去联想类比linux系统里的动态库文件的soname。
 
-[IDENTIFIER]: ../identifiers.md
+[IDENTIFIER]: https://doc.rust-lang.org/identifiers.md
 [RFC 940]: https://github.com/rust-lang/rfcs/blob/master/text/0940-hyphens-considered-harmful.md
-[`macro_use` attribute]: ../macros-by-example.md#the-macro_use-attribute
+[`macro_use` attribute]: https://doc.rust-lang.org/macros-by-example.md#the-macro_use-attribute
 [`alloc`]: https://doc.rust-lang.org/alloc/
 [`no_implicit_prelude`]: modules.md#prelude-items
-[`no_std`]: ../crates-and-source-files.md#preludes-and-no_std
+[`no_std`]: https://doc.rust-lang.org/crates-and-source-files.md#preludes-and-no_std
 [`test`]: https://doc.rust-lang.org/test/
 [use declarations]: use-declarations.md
 

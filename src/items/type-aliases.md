@@ -12,7 +12,7 @@
 
 *类型别名*为现有的[类型][type]定义一个新名称。类型别名用关键字 `type` 声明。每个值都有一个唯一的特定的类型，但是可以实现几个不同的 trait，或者兼容几个不同的类型约束。
 
-[type]: ../types.md
+[type]: https://doc.rust-lang.org/types.md
 
 例如，下面将类型 `Point` 定义为类型 `(u8, u8)` 的同义词/别名：
 
@@ -33,10 +33,10 @@ let _ = UseAlias(5); // OK
 let _ = TypeAlias(5); // 不能正常执行
 ```
 
-[IDENTIFIER]: ../identifiers.md
+[IDENTIFIER]: https://doc.rust-lang.org/identifiers.md
 [_Generics_]: generics.md
 [_WhereClause_]: generics.md#where-clauses
-[_Type_]: ../types.md#type-expressions
+[_Type_]: https://doc.rust-lang.org/types.md#type-expressions
 
 <!-- 2020-11-3 -->
 <!-- checked -->

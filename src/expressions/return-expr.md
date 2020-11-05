@@ -22,7 +22,7 @@ fn max(a: i32, b: i32) -> i32 {
 }
 ```
 
-[_Expression_]: ../expressions.md
+[_Expression_]: https://doc.rust-lang.org/expressions.md
 
 <!-- 2020-11-3 -->
 <!-- checked -->

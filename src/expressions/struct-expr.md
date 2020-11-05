@@ -127,12 +127,12 @@ let b = Gamma{};  // 和`a`的值完全一样。
 
 允许于[块表达式上的属性][attributes on block expressions]的表达式上下文同样也允许结构体表达式上的属性，即在这种上下文下[内部属性][Inner attributes]可以直接位于表达式的左括号（花括号和圆括号都有可能）之后。
 
-[IDENTIFIER]: ../identifiers.md
-[Inner attributes]: ../attributes.md
-[TUPLE_INDEX]: ../tokens.md#tuple-index
-[_Expression_]: ../expressions.md
-[_InnerAttribute_]: ../attributes.md
-[_PathInExpression_]: ../paths.md#paths-in-expressions
+[IDENTIFIER]: https://doc.rust-lang.org/identifiers.md
+[Inner attributes]: https://doc.rust-lang.org/attributes.md
+[TUPLE_INDEX]: https://doc.rust-lang.org/tokens.md#tuple-index
+[_Expression_]: https://doc.rust-lang.org/expressions.md
+[_InnerAttribute_]: https://doc.rust-lang.org/attributes.md
+[_PathInExpression_]: https://doc.rust-lang.org/paths.md#paths-in-expressions
 [attributes on block expressions]: block-expr.md#attributes-on-block-expressions
 [call expression]: call-expr.md
 [if let]: if-expr.md#if-let-expressions
@@ -140,10 +140,10 @@ let b = Gamma{};  // 和`a`的值完全一样。
 [loop]: loop-expr.md
 [match]: match-expr.md
 [parentheses]: grouped-expr.md
-[struct]: ../items/structs.md
-[union]: ../items/unions.md
-[visible]: ../visibility-and-privacy.md
-[scrutinee]: ../glossary.md#scrutinee
+[struct]: https://doc.rust-lang.org/items/structs.md
+[union]: https://doc.rust-lang.org/items/unions.md
+[visible]: https://doc.rust-lang.org/visibility-and-privacy.md
+[scrutinee]: https://doc.rust-lang.org/glossary.md#scrutinee
 
 <!-- 2020-11-3 -->
 <!-- checked -->

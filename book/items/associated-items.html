@@ -182,7 +182,7 @@ commit: 136bd7da8b9c509c17c9619813b57dd1a47a8e25 <br />
 <p><em>关联函数</em>是与具体类型相关联的<a href="functions.html">函数</a>。</p>
 <p><em>关联函数声明</em>为<em>关联函数定义</em>声明签名。它的书写格式和函数项一样，除了函数体被替换为 <code>;</code>。</p>
 <p>标识符是函数的名称。关联函数的泛型参数、参数列表、返回类型 和 where子句必须与它们在<em>关联函数声明</em>中声明的格式一致。</p>
-<p><em>关联函数定义</em>定义与类型相关联的函数。它的编写方式与<a href="../types/function-item.html">函数项</a>相同。</p>
+<p><em>关联函数定义</em>定义与类型相关联的函数。它的编写方式与<a href="https://doc.rust-lang.org/types/function-item.md">函数项</a>相同。</p>
 <p>常见的关联函数的一个例子是 <code>new</code> 函数，它返回此关联函数所关联的类型的值。</p>
 <pre><pre class="playground"><code class="language-rust">struct Struct {
     field: i32
@@ -200,7 +200,7 @@ fn main () {
     let _struct = Struct::new();
 }
 </code></pre></pre>
-<p>当关联函数在 trait 上声明时，此函数也可以通过指向 trait，再后跟函数名的<a href="../paths.html">路径</a>来调用。当发生这种情况时，可以用实际的路径和标识符按 <code>&lt;_ as Trait&gt;::function_name</code> 这样的形式来组织实际的调用路径。</p>
+<p>当关联函数在 trait 上声明时，此函数也可以通过指向 trait，再后跟函数名的<a href="https://doc.rust-lang.org/paths.md">路径</a>来调用。当发生这种情况时，可以用实际的路径和标识符按 <code>&lt;_ as Trait&gt;::function_name</code> 这样的形式来组织实际的调用路径。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -223,18 +223,18 @@ let _: f64 = f64::from_i32(42);
 <h3><a class="header" href="#方法" id="方法">方法</a></h3>
 <blockquote>
 <p><em>Method</em> :<br />
-   <a href="functions.html"><em>FunctionQualifiers</em></a> <code>fn</code> <a href="../identifiers.html">IDENTIFIER</a> <a href="generics.html"><em>Generics</em></a><sup>?</sup><br />
+   <a href="functions.html"><em>FunctionQualifiers</em></a> <code>fn</code> <a href="https://doc.rust-lang.org/identifiers.md">IDENTIFIER</a> <a href="generics.html"><em>Generics</em></a><sup>?</sup><br />
       <code>(</code> <em>SelfParam</em> (<code>,</code> <a href="functions.html"><em>FunctionParam</em></a>)<sup>*</sup> <code>,</code><sup>?</sup> <code>)</code><br />
       <a href="functions.html"><em>FunctionReturnType</em></a><sup>?</sup> <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup><br />
-      <a href="../expressions/block-expr.html"><em>BlockExpression</em></a></p>
+      <a href="https://doc.rust-lang.org/expressions/block-expr.md"><em>BlockExpression</em></a></p>
 <p><em>SelfParam</em> :<br />
-   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> ( <em>ShorthandSelf</em> | <em>TypedSelf</em> )</p>
+   <a href="https://doc.rust-lang.org/attributes.md"><em>OuterAttribute</em></a><sup>*</sup> ( <em>ShorthandSelf</em> | <em>TypedSelf</em> )</p>
 <p><em>ShorthandSelf</em> :<br />
-    (<code>&amp;</code> | <code>&amp;</code> <a href="../trait-bounds.html"><em>Lifetime</em></a>)<sup>?</sup> <code>mut</code><sup>?</sup> <code>self</code></p>
+    (<code>&amp;</code> | <code>&amp;</code> <a href="https://doc.rust-lang.org/trait-bounds.md"><em>Lifetime</em></a>)<sup>?</sup> <code>mut</code><sup>?</sup> <code>self</code></p>
 <p><em>TypedSelf</em> :<br />
-   <code>mut</code><sup>?</sup> <code>self</code> <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a></p>
+   <code>mut</code><sup>?</sup> <code>self</code> <code>:</code> <a href="https://doc.rust-lang.org/types.md#type-expressions"><em>Type</em></a></p>
 </blockquote>
-<p>参数列表中的第一个参数名为 <code>self</code> 的关联函数被称为<em>方法</em>，方法可以使用<a href="../expressions/method-call-expr.html">方法调用操作符</a>来调用，例如 <code>x.foo()</code>，也可以使用常用的函数调用形式进行调用。</p>
+<p>参数列表中的第一个参数名为 <code>self</code> 的关联函数被称为<em>方法</em>，方法可以使用<a href="https://doc.rust-lang.org/expressions/method-call-expr.md">方法调用操作符</a>来调用，例如 <code>x.foo()</code>，也可以使用常用的函数调用形式进行调用。</p>
 <p>如果 <code>self</code> 参数的类型被指定，它就通过以下语法(其中 <code>'lt</code> 表示生存期参数)被限制解析成几个相关类型中的一个：</p>
 <pre><code class="language-text">P = &amp;'lt S | &amp;'lt mut S | Box&lt;S&gt; | Rc&lt;S&gt; | Arc&lt;S&gt; | Pin&lt;P&gt;
 S = Self | P
@@ -275,7 +275,7 @@ impl Example {
 <blockquote>
 <p><strong>注意</strong>: （方法的）生存期也能，其实也经常是使用这种方式来省略。</p>
 </blockquote>
-<p>如果 <code>self</code> 参数以 <code>mut</code> 为前缀，它就变成了一个可变的变量，类似于使用 <code>mut</code> <a href="../patterns.html#identifier-patterns">标识符模式</a>的常规参数。例如：</p>
+<p>如果 <code>self</code> 参数以 <code>mut</code> 为前缀，它就变成了一个可变的变量，类似于使用 <code>mut</code> <a href="https://doc.rust-lang.org/patterns.md#identifier-patterns">标识符模式</a>的常规参数。例如：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -335,9 +335,9 @@ let bounding_box = circle_shape.bounding_box();
 <h2><a class="header" href="#associated-types" id="associated-types">Associated Types</a></h2>
 <h2><a class="header" href="#关联类型" id="关联类型">关联类型</a></h2>
 <p><em>关联类型</em>是与另一个类型关联的<a href="type-aliases.html">类型别名</a> 。关联类型不能在<a href="implementations.html#inherent-implementations">固有实现</a>中定义，也不能在 trait 中给它们一个默认实现。</p>
-<p><em>关联类型声明</em>为<em>关联类型定义</em>声明签名。书写形式为：先是 <code>type</code>，然后是一个<a href="../identifiers.html">标识符</a>，最后是一个可选的 trait约束列表。</p>
+<p><em>关联类型声明</em>为<em>关联类型定义</em>声明签名。书写形式为：先是 <code>type</code>，然后是一个<a href="https://doc.rust-lang.org/identifiers.md">标识符</a>，最后是一个可选的 trait约束列表。</p>
 <p>这里的标识符是声明的类型的别名名称；可选的 trait约束必须由此类型别名的实现来履行。</p>
-<p><em>关联类型定义</em>在另一个类型上定义了一个类型别名。书写形式为：先是 <code>type</code>，然后是一个[标识符]，然后再是一个 <code>=</code>，最后是一个<a href="../types.html#type-expressions">类型</a>。</p>
+<p><em>关联类型定义</em>在另一个类型上定义了一个类型别名。书写形式为：先是 <code>type</code>，然后是一个[标识符]，然后再是一个 <code>=</code>，最后是一个<a href="https://doc.rust-lang.org/types.md#type-expressions">类型</a>。</p>
 <p>如果类型 <code>Item</code> 有一个来自 trait <code>Trait</code>的关联类型 <code>Assoc</code>，则表达式 <code>&lt;Item as Trait&gt;::Assoc</code> 也是一个类型，具体就是<em>关联类型定义</em>中指定的类型的一个别名。此外，如果 <code>Item</code> 是类型参数，则 <code>Item::Assoc</code> 也可以在类型参数中使用。</p>
 <pre><pre class="playground"><code class="language-rust">trait AssociatedType {
     // 关联类型声明

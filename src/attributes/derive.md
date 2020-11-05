@@ -41,15 +41,15 @@ impl<T: PartialEq> PartialEq for Foo<T> {
 
 [^or-and]: 原文后半句是："and the type parameter `T` will be given the `PartialEq` or `Clone` constraints for the appropriate `impl`:"，这里译者搞不清楚为什么 `PartialEq` 和 `Clone` 之间用了"or"，而不是"and"？这里译者就先采用直译。
 
-[_MetaListPaths_]: ../attributes.md#meta-item-attribute-syntax
+[_MetaListPaths_]: https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax
 [`Clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
 [`PartialEq`]: https://doc.rust-lang.org/std/cmp/trait.PartialEq.html
-[`impl` item]: ../items/implementations.md
-[items]: ../items.md
-[derive macros]: ../procedural-macros.md#derive-macros
-[implementations]: ../items/implementations.md
-[items]: ../items.md
-[procedural macros]: ../procedural-macros.md#derive-macros
+[`impl` item]: https://doc.rust-lang.org/items/implementations.md
+[items]: https://doc.rust-lang.org/items.md
+[derive macros]: https://doc.rust-lang.org/procedural-macros.md#derive-macros
+[implementations]: https://doc.rust-lang.org/items/implementations.md
+[items]: https://doc.rust-lang.org/items.md
+[procedural macros]: https://doc.rust-lang.org/procedural-macros.md#derive-macros
 
 <!-- 2020-11-3 -->
 <!-- checked -->

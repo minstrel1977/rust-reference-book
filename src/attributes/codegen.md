@@ -215,19 +215,19 @@ fn calls_h() {
 
 > 注意：前面提到的函数指针填充对象是必需的，因为 `rustc` 会通过向函数的ABI附加一个隐式参数来实现代码生成(codegen)上下文中的 `track_caller`，但这种添加是不健壮的(unsound)，因为该隐式参数不是函数类型的一部分，那给定的函数指针类型可能引用也可能不引用具有此属性的函数。这里创建一个填充对象会对函数指针的调用方隐藏隐式参数，从而保持可靠性。
 
-[_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
+[_MetaListNameValueStr_]: https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax
 [`-C target-cpu`]: https://doc.rust-lang.org/rustc/codegen-options/index.html#target-cpu
 [`-C target-feature`]: https://doc.rust-lang.org/rustc/codegen-options/index.html#target-feature
 [`is_x86_feature_detected`]: https://doc.rust-lang.org/std/macro.is_x86_feature_detected.html
-[`target_feature` conditional compilation option]: ../conditional-compilation.md#target_feature
-[attribute]: ../attributes.md
-[attributes]: ../attributes.md
-[functions]: ../items/functions.md
-[target architecture]: ../conditional-compilation.md#target_arch
-[trait]: ../items/traits.md
-[undefined behavior]: ../behavior-considered-undefined.md
-[unsafe function]: ../unsafe-functions.md
-[rust-abi]: ../items/external-blocks.md#abi
+[`target_feature` conditional compilation option]: https://doc.rust-lang.org/conditional-compilation.md#target_feature
+[attribute]: https://doc.rust-lang.org/attributes.md
+[attributes]: https://doc.rust-lang.org/attributes.md
+[functions]: https://doc.rust-lang.org/items/functions.md
+[target architecture]: https://doc.rust-lang.org/conditional-compilation.md#target_arch
+[trait]: https://doc.rust-lang.org/items/traits.md
+[undefined behavior]: https://doc.rust-lang.org/behavior-considered-undefined.md
+[unsafe function]: https://doc.rust-lang.org/unsafe-functions.md
+[rust-abi]: https://doc.rust-lang.org/items/external-blocks.md#abi
 [`core::intrinsics::caller_location`]: https://doc.rust-lang.org/core/intrinsics/fn.caller_location.html
 [`core::panic::Location::caller`]: https://doc.rust-lang.org/core/panic/struct.Location.html#method.caller
 [`Location`]: https://doc.rust-lang.org/core/panic/struct.Location.html

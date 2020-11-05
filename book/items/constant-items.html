@@ -176,11 +176,11 @@ commit: da910b725a59ba9bb32c6954074f377589a2a689 <br />
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ConstantItem</em> :<br />
-   <code>const</code> ( <a href="../identifiers.html">IDENTIFIER</a> | <code>_</code> ) <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a> <code>=</code> <a href="../expressions.html"><em>Expression</em></a> <code>;</code></p>
+   <code>const</code> ( <a href="https://doc.rust-lang.org/identifiers.md">IDENTIFIER</a> | <code>_</code> ) <code>:</code> <a href="https://doc.rust-lang.org/types.md#type-expressions"><em>Type</em></a> <code>=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>;</code></p>
 </blockquote>
-<p><em>常量项</em>是一个可选的命名 <em><a href="../const_eval.html#constant-expressions">常量值</a></em>，它与程序中的具体内存位置没有关联。常量本质上是内联的，无论它们在哪里使用，这意味着它们在使用时是直接复制到相关的上下文中的。这包括使用来自外部的 crate 的常量和非复制(on-<a href="../special-types-and-traits.html#copy"><code>Copy</code></a>)类型的值。对相同常量的引用不保证引用相同的内存地址。</p>
+<p><em>常量项</em>是一个可选的命名 <em><a href="https://doc.rust-lang.org/const_eval.md#constant-expressions">常量值</a></em>，它与程序中的具体内存位置没有关联。常量本质上是内联的，无论它们在哪里使用，这意味着它们在使用时是直接复制到相关的上下文中的。这包括使用来自外部的 crate 的常量和非复制(on-<a href="https://doc.rust-lang.org/special-types-and-traits.md#copy"><code>Copy</code></a>)类型的值。对相同常量的引用不保证引用相同的内存地址。</p>
 <p>常量必须显式指定数据类型。类型必须具有 <code>'static</code> 生存期：程序初始化器(initializer)中的任何引用都必须具有 <code>'static</code> 生存期。</p>
-<p>常量可以引用其他常量的地址，在这种情况下，该地址将具有省略（如果适用）的生存期，否则（在大多数情况下）默认为 <code>'static</code> 生存期。（请参阅<a href="../lifetime-elision.html#static-lifetime-elision">静态生存期省略</a>）。但是，编译器仍然可以自由地任意次数地转换该常量，因此引用的地址可能并不固定。</p>
+<p>常量可以引用其他常量的地址，在这种情况下，该地址将具有省略（如果适用）的生存期，否则（在大多数情况下）默认为 <code>'static</code> 生存期。（请参阅<a href="https://doc.rust-lang.org/lifetime-elision.md#static-lifetime-elision">静态生存期省略</a>）。但是，编译器仍然可以自由地任意次数地转换该常量，因此引用的地址可能并不固定。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -226,7 +226,7 @@ fn create_and_drop_zero_with_destructor() {
 </span></code></pre></pre>
 <h2><a class="header" href="#unnamed-constant" id="unnamed-constant">Unnamed constant</a></h2>
 <h2><a class="header" href="#未命名常量" id="未命名常量">未命名常量</a></h2>
-<p>不同于<a href="../glossary.html#associated-item">关联</a>常量(associated constant)，<a href="../glossary.html#free-item">自由</a>常量(free constant)可以使用下划线来命名。例如:</p>
+<p>不同于<a href="https://doc.rust-lang.org/glossary.md#associated-item">关联</a>常量(associated constant)，<a href="https://doc.rust-lang.org/glossary.md#free-item">自由</a>常量(free constant)可以使用下划线来命名。例如:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

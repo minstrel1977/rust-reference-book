@@ -3,7 +3,7 @@
 
 >[identifiers.md](https://github.com/rust-lang/reference/blob/master/src/identifiers.md)\
 >commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 \
->本译文最后维护日期：2020-10-17
+>本译文最后维护日期：2020-11-5
 
 > **<sup>词法分析:<sup>**\
 > IDENTIFIER_OR_KEYWORD :\

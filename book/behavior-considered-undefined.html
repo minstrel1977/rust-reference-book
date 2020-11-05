@@ -176,12 +176,12 @@ commit: 8aa6f0f5471a23621f52d16e823c6316fda2b904 <br />
 <p>如果 Rust 代码出现了下列列表中的任何行为，则此代码被认为不正确。这包括非安全(<code>unsafe</code>)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。</p>
 <p>在编写非安全代码时，确保任何与非安全代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何使用非安全代码的安全代码(safe client)，如果当前条件满足了此非安全代码对于安全条件的要求，那此此非安全代码对于此安全代码就是<em>健壮的(sound)</em>；如果非安全(<code>unsafe</code>)代码可以被安全代码滥用以致出现未定义行为，那么此非安全(<code>unsafe</code>)代码对这些安全代码来说就是<em>不健壮的(unsound)</em>。</p>
 <div class="warning">
-<p><em><strong>警告：</strong></em> 下面的列表并非详尽无遗地罗列了 Rust 中的未定义行为。而且对于在非安全代码中什么是明确不允许的，目前 Rust 还没有正式的语义模型，因此将来可能会有更多的行为被认为是不安全的。下面的列表是仅仅是我们当前确定知晓的未定义行为。在编写非安全代码之前，请阅读 <a href="../nomicon/index.html">Rustonomicon</a>。</p>
+<p><em><strong>警告：</strong></em> 下面的列表并非详尽无遗地罗列了 Rust 中的未定义行为。而且对于在非安全代码中什么是明确不允许的，目前 Rust 还没有正式的语义模型，因此将来可能会有更多的行为被认为是不安全的。下面的列表是仅仅是我们当前确定知晓的未定义行为。在编写非安全代码之前，请阅读 <a href="https://doc.rust-lang.org/nomicon/index.html">Rustonomicon</a>。</p>
 </div>
 <ul>
 <li>数据竞争。</li>
 <li>解引用（使用 <code>*</code> 操作符）悬垂或未对齐裸指针。</li>
-<li>破坏<a href="http://llvm.org/docs/LangRef.html#pointer-aliasing-rules">指针别名规则</a>。<code>&amp;mut T</code> 和 <code>&amp;T</code> 遵循 LLVM 的作用域<a href="http://llvm.org/docs/LangRef.html#noalias">无别名(noalias)</a>模型，除非 <code>&amp;T</code> 内部包含 <a href="../std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 类型。</li>
+<li>破坏<a href="http://llvm.org/docs/LangRef.html#pointer-aliasing-rules">指针别名规则</a>。<code>&amp;mut T</code> 和 <code>&amp;T</code> 遵循 LLVM 的作用域<a href="http://llvm.org/docs/LangRef.html#noalias">无别名(noalias)</a>模型，除非 <code>&amp;T</code> 内部包含 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 类型。</li>
 <li>修改不可变的数据。[常量(<code>const</code>)]项内的所有数据都是不可变的。此外，所有通过共享引用接触到的数据或不可变绑定所拥有的数据都是不可变的，除非该数据包含在 <code>UnsafeCell&lt;U&gt;</code>] 中。</li>
 <li>通过编译器内部函数(compiler intrinsics)调用未定义行为。</li>
 <li>执行用当前平台不支持的平台特性编译的代码（参见 <a href="attributes/codegen.html#the-target_feature-attribute"><code>target_feature</code></a>）。</li>
@@ -218,7 +218,7 @@ commit: 8aa6f0f5471a23621f52d16e823c6316fda2b904 <br />
 </ul>
 </li>
 <li>
-<p>带有非法值的自定义类型的值非法。在标准库中，这条促成了 <a href="../core/ptr/struct.NonNull.html"><code>NonNull&lt;T&gt;</code></a> 和 <a href="../core/num/index.html"><code>NonZero*</code></a> 的出现。</p>
+<p>带有非法值的自定义类型的值非法。在标准库中，这条促成了 <a href="https://doc.rust-lang.org/core/ptr/struct.NonNull.html"><code>NonNull&lt;T&gt;</code></a> 和 <a href="https://doc.rust-lang.org/core/num/index.html"><code>NonZero*</code></a> 的出现。</p>
 <blockquote>
 <p><strong>注意</strong>：<code>rustc</code> 是通过还未稳定下来的属性 <code>rustc_layout_scalar_valid_range_*</code> 来验证这条规则的。</p>
 </blockquote>

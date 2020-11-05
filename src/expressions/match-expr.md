@@ -115,23 +115,23 @@ let message = match maybe_digit {
 
 允许[块表达式上的属性][attributes on block expressions]的表达式上下文同样允许匹配表达式上的属性，即在这种上下文下[内部属性][Inner attributes]可以直接位于表达式的左括号之后。
 
-[_Expression_]: ../expressions.md
-[place expression]: ../expressions.md#place-expressions-and-value-expressions
-[value expression]: ../expressions.md#place-expressions-and-value-expressions
-[_InnerAttribute_]: ../attributes.md
-[_OuterAttribute_]: ../attributes.md
-[`cfg`]: ../conditional-compilation.md
-[`cold`]: ../attributes/codegen.md#the-cold-attribute
-[lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
+[_Expression_]: https://doc.rust-lang.org/expressions.md
+[place expression]: https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions
+[value expression]: https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions
+[_InnerAttribute_]: https://doc.rust-lang.org/attributes.md
+[_OuterAttribute_]: https://doc.rust-lang.org/attributes.md
+[`cfg`]: https://doc.rust-lang.org/conditional-compilation.md
+[`cold`]: https://doc.rust-lang.org/attributes/codegen.md#the-cold-attribute
+[lint check attributes]: https://doc.rust-lang.org/attributes/diagnostics.md#lint-check-attributes
 [Range Expression]: range-expr.md
 
-[_Pattern_]: ../patterns.md
-[pattern]: ../patterns.md
-[Inner attributes]: ../attributes.md
-[Range Pattern]: ../patterns.md#range-patterns
+[_Pattern_]: https://doc.rust-lang.org/patterns.md
+[pattern]: https://doc.rust-lang.org/patterns.md
+[Inner attributes]: https://doc.rust-lang.org/attributes.md
+[Range Pattern]: https://doc.rust-lang.org/patterns.md#range-patterns
 [attributes on block expressions]: block-expr.md#attributes-on-block-expressions
-[binding mode]: ../patterns.md#binding-modes
-[scrutinee]: ../glossary.md#scrutinee
+[binding mode]: https://doc.rust-lang.org/patterns.md#binding-modes
+[scrutinee]: https://doc.rust-lang.org/glossary.md#scrutinee
 
 <!-- 2020-11-3 -->
 <!-- checked -->

@@ -119,7 +119,7 @@ pub mod outer_module {
 }
 ```
 
-[`doc` attributes]: ../rustdoc/the-doc-attribute.html
+[`doc` attributes]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
 
 <!-- 2020-11-3 -->
 <!-- checked -->

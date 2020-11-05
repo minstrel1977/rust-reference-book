@@ -176,9 +176,9 @@ commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>AwaitExpression</em> :<br />
-   <a href="../expressions.html"><em>Expression</em></a> <code>.</code> <code>await</code></p>
+   <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>.</code> <code>await</code></p>
 </blockquote>
-<p>等待表达式仅在<a href="../expressions/block-expr.html#async-context">异步上下文</a>中才能使用，例如 <a href="../items/functions.html#async-functions">异步函数(<code>async fn</code>)</a> 或 <a href="block-expr.html#async-blocks">异步(<code>async</code>)块</a>。等待表达式内部操作一个 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">future</a> 。它的作用是暂停当前计算，直到给定的 future 准备好生成返回值。</p>
+<p>等待表达式仅在<a href="https://doc.rust-lang.org/expressions/block-expr.md#async-context">异步上下文</a>中才能使用，例如 <a href="https://doc.rust-lang.org/items/functions.md#async-functions">异步函数(<code>async fn</code>)</a> 或 <a href="block-expr.html#async-blocks">异步(<code>async</code>)块</a>。等待表达式内部操作一个 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">future</a> 。它的作用是暂停当前计算，直到给定的 future 准备好生成返回值。</p>
 <p>更具体地说 <code>&lt;expr&gt;.await</code>表达式有以下效果。</p>
 <ol>
 <li>计算 <code>&lt;expr&gt;</code> 到一个 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">future</a> <code>tmp</code>；</li>
@@ -192,7 +192,7 @@ commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
 </blockquote>
 <h2><a class="header" href="#task-context" id="task-context">Task context</a></h2>
 <h2><a class="header" href="#任务上下文" id="任务上下文">任务上下文</a></h2>
-<p>任务上下文是指在对<a href="../expressions/block-expr.html#async-context">异步上下文</a>本身进行轮询时提供给当前异步上下文的<a href="https://doc.rust-lang.org/std/task/struct.Context.html">上下文(<code>Context</code>)</a>。因为等待(<code>await</code>)表达式只能在异步上下文中才能使用，所以此时必须有一些任务上下文可用。</p>
+<p>任务上下文是指在对<a href="https://doc.rust-lang.org/expressions/block-expr.md#async-context">异步上下文</a>本身进行轮询时提供给当前异步上下文的<a href="https://doc.rust-lang.org/std/task/struct.Context.html">上下文(<code>Context</code>)</a>。因为等待(<code>await</code>)表达式只能在异步上下文中才能使用，所以此时必须有一些任务上下文可用。</p>
 <h2><a class="header" href="#approximate-desugaring" id="approximate-desugaring">Approximate desugaring</a></h2>
 <h2><a class="header" href="#近似脱糖" id="近似脱糖">近似脱糖</a></h2>
 <p>实际上,一个 <code>&lt;expr&gt;.await</code>表达式大致相当于如下代码（此脱糖不规范）：</p>

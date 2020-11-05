@@ -71,7 +71,7 @@ struct Variance<'a, 'b, T, U: 'a> {
 ```
 
 [function pointers]: types/function-pointer.md
-[Higher-ranked]: ../nomicon/hrtb.html
+[Higher-ranked]: https://doc.rust-lang.org/nomicon/hrtb.html
 [trait objects]: types/trait-object.md
 
 <!-- 2020-11-3 -->

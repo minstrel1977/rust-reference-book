@@ -19,7 +19,7 @@
 
 > 注意：允许哪些返回类型是由暂未稳定的 [`Termination`] trait 决定的。
 
-<!-- 如果前面这节需要更新(从 "不能有参数" 开始, 同时需要修改 ../crates-and-source-files.md 文件 -->
+<!-- 如果前面这节需要更新(从 "不能有参数" 开始, 同时需要修改 https://doc.rust-lang.org/crates-and-source-files.md 文件 -->
 
 > 注意：测试模式是通过将 `--test` 参数选项传递给 `rustc` 或使用 `cargo test` 来启用的。
 
@@ -69,11 +69,11 @@ fn mytest() {
 }
 ```
 
-[_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
-[_MetaNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
+[_MetaListNameValueStr_]: https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax
+[_MetaNameValueStr_]: https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax
 [`Termination`]: https://doc.rust-lang.org/std/process/trait.Termination.html
-[`test` conditional compilation option]: ../conditional-compilation.md#test
-[attributes]: ../attributes.md
+[`test` conditional compilation option]: https://doc.rust-lang.org/conditional-compilation.md#test
+[attributes]: https://doc.rust-lang.org/attributes.md
 
 <!-- 2020-11-3 -->
 <!-- checked -->

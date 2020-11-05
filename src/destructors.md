@@ -341,9 +341,9 @@ let x = (&temp()).use_temp();  // ERROR
 [`while let`]: expressions/loop-expr.md#predicate-pattern-loops
 [`while`]: expressions/loop-expr.md#predicate-loops
 
-[`<T as std::ops::Drop>::drop`]: ../std/ops/trait.Drop.html#tymethod.drop
-[`std::ptr::drop_in_place`]: ../std/ptr/fn.drop_in_place.html
-[`std::mem::ManuallyDrop`]: ../std/mem/struct.ManuallyDrop.html
+[`<T as std::ops::Drop>::drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html#tymethod.drop
+[`std::ptr::drop_in_place`]: https://doc.rust-lang.org/std/ptr/fn.drop_in_place.html
+[`std::mem::ManuallyDrop`]: https://doc.rust-lang.org/std/mem/struct.ManuallyDrop.html
 
 <!-- 2020-11-3 -->
 <!-- checked -->

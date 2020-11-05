@@ -286,16 +286,16 @@ Rust 官方对一些平台提供了默认的目标三元组，我们可以通过
 [STRING_LITERAL]: tokens.md#string-literals
 [Testing]: attributes/testing.md
 [_Attr_]: attributes.md
-[`--cfg`]: ../rustc/command-line-arguments.html#--cfg-configure-the-compilation-environment
-[`--test`]: ../rustc/command-line-arguments.html#--test-build-a-test-harness
+[`--cfg`]: https://doc.rust-lang.org/rustc/command-line-arguments.html#--cfg-configure-the-compilation-environment
+[`--test`]: https://doc.rust-lang.org/rustc/command-line-arguments.html#--test-build-a-test-harness
 [`cfg`]: #the-cfg-attribute
 [`cfg` macro]: #the-cfg-macro
 [`cfg_attr`]: #the-cfg_attr-attribute
-[`debug_assert!`]: ../std/macro.debug_assert.html
+[`debug_assert!`]: https://doc.rust-lang.org/std/macro.debug_assert.html
 [`target_feature` attribute]: attributes/codegen.md#the-target_feature-attribute
 [attribute]: attributes.md
 [attributes]: attributes.md
-[cargo-feature]: ../cargo/reference/features.html
+[cargo-feature]: https://doc.rust-lang.org/cargo/reference/features.html
 [crate type]: linkage.md
 [static C runtime]: linkage.md#static-and-dynamic-c-runtimes
 

@@ -172,7 +172,7 @@
 commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 <br />
 本译文最后维护日期：2020-11-3</p>
 </blockquote>
-<p>本页介绍了下述[声明宏][Macros By Example]的规则的正式规范。它们最初是在 [RFC550] 中指定的，本文的大部分内容都是从其中复制过来的，并在后续的RFC中进行展开。</p>
+<p>本页介绍了下述<a href="macros-by-example.html">声明宏</a>的规则的正式规范。它们最初是在 [RFC550] 中指定的，本文的大部分内容都是从其中复制过来的，并在后续的RFC中进行展开。</p>
 <h2><a class="header" href="#definitions--conventions" id="definitions--conventions">Definitions &amp; Conventions</a></h2>
 <h2><a class="header" href="#定义和约定" id="定义和约定">定义和约定</a></h2>
 <ul>
@@ -206,7 +206,7 @@ commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 <br />
 </span></code></pre></pre>
 <p><code>(start $foo:expr $($i:ident),\* end)</code> 是一个匹配器(matcher)。整个匹配器是一个有界序列(使用开闭定界符 <code>(</code> 和 <code>)</code> 界定)，<code>$foo</code> 和 <code>$i</code> 是简单NT(simple NT)， <code>expr</code> 和 <code>ident</code> 是它们各自的匹配段类型指示符(fragment specifiers)。</p>
 <p><code>$(i:ident),\*</code> <em>也</em>是一个 NT；它是一个复杂NT，匹配标识符类型的以逗号为分隔符的重复段。<code>,</code> 是这个复杂NT的分隔符，它出现在匹配段的每对元素（如果有的话）之间。</p>
-<p>复杂NT的另一个例子是 <code>$(hi $e:expr ;)+</code>，它匹配 <code>hi &lt;expr&gt;; hi &lt;expr&gt;; ...</code> 这种格式的代码，其中 <code>hi &lt;expr&gt;;</code> 至少出现一次。注意，这个复杂NT没有专用的分隔符。</p>
+<p>复杂NT 的另一个例子是 <code>$(hi $e:expr ;)+</code>，它匹配 <code>hi &lt;expr&gt;; hi &lt;expr&gt;; ...</code> 这种格式的代码，其中 <code>hi &lt;expr&gt;;</code> 至少出现一次。注意，这个复杂NT没有专用的分隔符。</p>
 <p>(请注意，Rust的解析器确保有界序列始终具有正确的标记树结构嵌套以及开/闭定界符的正确匹配。)</p>
 <p>我们倾向于使用变量“M”表示匹配器，变量“t”和“u”表示任意单个标记码，变量“tt”和“uu”表示任意标记树。（使用“tt”确实存在潜在的歧义，因为它的额外角色是一个匹配段类型指示符；但不用太担心，因为从上下文中，可以很清楚地看出哪个解释符合语义）</p>
 <p>“SEP”将代表分隔符，“OP”将代表重复运算符 <code>\*</code>, <code>+</code>, 和 <code>?</code> “OPEN”/“CLOSE”覆盖围绕定界序列的匹配标记对（例如 <code>[</code> 和 <code>]</code> ）。</p>
@@ -235,8 +235,8 @@ The first invariant says that whatever actual token that comes after a matcher, 
 The second invariant says that a separated complex NT must use a separator token that is part of the predetermined follow set for the internal contents of the NT. This ensures that a legal macro definition will continue to parse an input fragment into the same delimited sequence of <code>tt ...</code>‘s, even as new syntactic forms are added to the language.</p>
 <p>第三个不变式说的是，当我们有一个复杂NT，它可以匹配同一事物的两个或多个副本，并且两者之间没有分隔符，那么根据第一个不变式，它们必须被允许放在一起。这个不变式还要求它们是非空的，这消除了可能的歧义。
 The third invariant says that when we have a complex NT that can match two or more copies of the same thing with no separation in between, it must be permissible for them to be placed next to each other as per the first invariant. This invariant also requires they be nonempty, which eliminates a possible ambiguity.</p>
-<p><strong>注意：由于历史疏忽和对行为的严重依赖，第三个不变式目前没有执行。目前还没有决定下一步该怎么做。不尊重这种行为的宏可能会在Rust的未来版本中失效。参见[跟踪问题][tracking issue]</strong>
-<strong>NOTE：The third invariant is currently unenforced due to historical oversight and significant reliance on the behaviour. It is currently undecided what to do about this going forward. Macros that do not respect the behaviour may become invalid in a future edition of Rust. See the [tracking issue].</strong></p>
+<p><strong>注意：由于历史疏忽和对行为的严重依赖，第三个不变式目前没有执行。目前还没有决定下一步该怎么做。不尊重这种行为的宏可能会在Rust的未来版本中失效。参见<a href="https://github.com/rust-lang/rust/issues/56575">跟踪问题</a></strong>
+<strong>NOTE：The third invariant is currently unenforced due to historical oversight and significant reliance on the behaviour. It is currently undecided what to do about this going forward. Macros that do not respect the behaviour may become invalid in a future edition of Rust. See the <a href="https://github.com/rust-lang/rust/issues/56575">tracking issue</a>.</strong></p>
 <h3><a class="header" href="#first-and-follow-informally" id="first-and-follow-informally">FIRST and FOLLOW, informally</a></h3>
 <p>给定匹配器 M 映射到三个集合：FIRST(M)，LAST(M) 和 FOLLOW(M)。
 A given matcher M maps to three sets：FIRST(M), LAST(M) and FOLLOW(M).</p>
@@ -469,9 +469,6 @@ why particular matchers are legal and others are not.</p>
 <p><code>($($e:expr)*)</code> ：illegal, because expr NTs are not in FOLLOW(expr NT).</p>
 </li>
 </ul>
-<p>[Macros by Example]：macros-by-example.md
-[RFC 550]：https://github.com/rust-lang/rfcs/blob/master/text/0550-macro-future-proofing.md
-[tracking issue]：https://github.com/rust-lang/rust/issues/56575</p>
 <!-- 2020-11-3 -->
 <!-- checked -->
 

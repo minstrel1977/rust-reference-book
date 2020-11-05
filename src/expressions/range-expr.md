@@ -71,7 +71,7 @@ for i in 1..11 {
 }
 ```
 
-[_Expression_]: ../expressions.md
+[_Expression_]: https://doc.rust-lang.org/expressions.md
 
 [std::ops::Range]: https://doc.rust-lang.org/std/ops/struct.Range.html
 [std::ops::RangeFrom]: https://doc.rust-lang.org/std/ops/struct.RangeFrom.html

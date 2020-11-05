@@ -24,7 +24,7 @@ mystruct.method();          // 方法表达式
 
 另外，如果点号左侧的表达式类型是指针，则会根据需要自动应用多次解引用来使字段访问成为可能。在存在歧义的情况下，Rust 倾向于较少次数的自动解引用。
 
-最后，当用于借用时，对结构体的各个字段的借用或对整个结构体的引用都被视为彼此分离的实体。如果结构体没有实现 [`Drop`](../special-types-and-traits.md#drop)，同时该结构体存储在局部变量中，（这种各个字段被视为彼此分离的单独实体的逻辑）还让每个字段的移出（move out）互不影响。如果对该结构体实现了户定义的自动解引用，这（种各个字段被视为彼此分离的单独实体的逻辑）就也不适用了。
+最后，当用于借用时，对结构体的各个字段的借用或对整个结构体的引用都被视为彼此分离的实体。如果结构体没有实现 [`Drop`](https://doc.rust-lang.org/special-types-and-traits.md#drop)，同时该结构体存储在局部变量中，（这种各个字段被视为彼此分离的单独实体的逻辑）还让每个字段的移出（move out）互不影响。如果对该结构体实现了户定义的自动解引用，这（种各个字段被视为彼此分离的单独实体的逻辑）就也不适用了。
 
 ```rust
 struct A { f1: String, f2: String, f3: String }
@@ -40,13 +40,13 @@ let c: &String = &x.f2;         // 可以被再次借用
 let d: String = x.f3;           // 从 x.f3 中移出
 ```
 
-[_Expression_]: ../expressions.md
-[IDENTIFIER]: ../identifiers.md
+[_Expression_]: https://doc.rust-lang.org/expressions.md
+[IDENTIFIER]: https://doc.rust-lang.org/identifiers.md
 [method call expression]: method-call-expr.md
-[struct]: ../items/structs.md
-[union]: ../items/unions.md
-[place expression]: ../expressions.md#place-expressions-and-value-expressions
-[mutable]: ../expressions.md#mutability
+[struct]: https://doc.rust-lang.org/items/structs.md
+[union]: https://doc.rust-lang.org/items/unions.md
+[place expression]: https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions
+[mutable]: https://doc.rust-lang.org/expressions.md#mutability
 
 <!-- 2020-11-3 -->
 <!-- checked -->

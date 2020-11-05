@@ -188,11 +188,11 @@ proc-macro = true
 </code></pre>
 </blockquote>
 <p>作为函数，它们要么有返回句法，要么 panic，要么永无休止地循环。返回句法根据过程宏的类型替换或添加句法；panic 会被编译器捕获，并将其转化为编译器错误；无限循，不会被编译器不会捕获，但会导致编译器被挂起。</p>
-<p>过程宏在编译期运行，因此具有与编译器相同的资源。例如，它可以访问的标准输入、标准错误输出和标准输出与编译器可以访问的相同。类似地，文件访问也是一样的。因此，过程宏与 <a href="../cargo/reference/build-scripts.html">Cargo 的构建脚本</a> 具有相同的安全考量。</p>
-<p>过程宏有两种报告错误的方法。首先是 panic；第二个是发布 <a href="../std/macro.compile_error.html"><code>compile_error</code></a> 性质的宏调用。</p>
+<p>过程宏在编译期运行，因此具有与编译器相同的资源。例如，它可以访问的标准输入、标准错误输出和标准输出与编译器可以访问的相同。类似地，文件访问也是一样的。因此，过程宏与 <a href="https://doc.rust-lang.org/cargo/reference/build-scripts.html">Cargo 的构建脚本</a> 具有相同的安全考量。</p>
+<p>过程宏有两种报告错误的方法。首先是 panic；第二个是发布 <a href="https://doc.rust-lang.org/std/macro.compile_error.html"><code>compile_error</code></a> 性质的宏调用。</p>
 <h3><a class="header" href="#the-proc_macro-crate" id="the-proc_macro-crate">The <code>proc_macro</code> crate</a></h3>
-<p>过程宏 crate 几乎总是会去链接编译器提供的 <a href="../proc_macro/index.html"><code>proc_macro</code> crate</a>。<code>proc_macro</code> crate 提供编写过程宏所需的类型和工具来让编写更容易。</p>
-<p>这个 crate 主要包含一个 <a href="../proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 类型。过程宏在*标记流(token streams)*上操作，而不是在 AST 节点上操作，因为这对于编译器和过程宏的编译目标来说，这是一个随着时间推移要稳定得多的接口。<em>标记流</em>大致相当于 <code>Vec&lt;TokenTree&gt;</code>，其中 <code>TokenTree</code> 可以大致视为词法标记码。例如，<code>foo</code> 是 <code>Ident</code> 标记码， <code>.</code> 是 <code>Punct</code> 标记码， <code>1.2</code> 是一个 <code>Literal</code> 标记码。不同于 <code>Vec&lt;TokenTree&gt;</code>，<code>TokenStream</code> 的克隆成本很低。</p>
+<p>过程宏 crate 几乎总是会去链接编译器提供的 <a href="https://doc.rust-lang.org/proc_macro/index.html"><code>proc_macro</code> crate</a>。<code>proc_macro</code> crate 提供编写过程宏所需的类型和工具来让编写更容易。</p>
+<p>这个 crate 主要包含一个 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 类型。过程宏在*标记流(token streams)*上操作，而不是在 AST 节点上操作，因为这对于编译器和过程宏的编译目标来说，这是一个随着时间推移要稳定得多的接口。<em>标记流</em>大致相当于 <code>Vec&lt;TokenTree&gt;</code>，其中 <code>TokenTree</code> 可以大致视为词法标记码。例如，<code>foo</code> 是 <code>Ident</code> 标记码， <code>.</code> 是 <code>Punct</code> 标记码， <code>1.2</code> 是一个 <code>Literal</code> 标记码。不同于 <code>Vec&lt;TokenTree&gt;</code>，<code>TokenStream</code> 的克隆成本很低。</p>
 <p>所有标记码都有一个关联的 <code>Span</code>。 <code>Span</code> 是一个不透明的值，不能被修改，但可以被制造。 <code>Span</code> 表示程序内的源代码范围，主要用于错误报告。可以修改任何标记码的 <code>Span</code>。</p>
 <h3><a class="header" href="#procedural-macro-hygiene" id="procedural-macro-hygiene">Procedural macro hygiene</a></h3>
 <h3><a class="header" href="#过程宏的卫生性" id="过程宏的卫生性">过程宏的卫生性</a></h3>
@@ -201,7 +201,7 @@ proc-macro = true
 <h3><a class="header" href="#function-like-procedural-macros" id="function-like-procedural-macros">Function-like procedural macros</a></h3>
 <h3><a class="header" href="#类函数过程宏" id="类函数过程宏">类函数过程宏</a></h3>
 <p><em>类函数过程宏</em>是使用宏调用运算符（<code>!</code>）调用的过程宏。</p>
-<p>这种宏是由一个带有 <code>proc_macro</code> <a href="attributes.html">属性</a>和 <code>(TokenStream) -&gt; TokenStream</code> 签名的 <a href="visibility-and-privacy.html">公有</a>可见性<a href="items/functions.html">函数</a>定义。输入 <a href="../proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是由宏调用的定界符界定的内容，输出 <a href="../proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 将替换整个宏调用。</p>
+<p>这种宏是由一个带有 <code>proc_macro</code> <a href="attributes.html">属性</a>和 <code>(TokenStream) -&gt; TokenStream</code> 签名的 <a href="visibility-and-privacy.html">公有</a>可见性<a href="items/functions.html">函数</a>定义。输入 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是由宏调用的定界符界定的内容，输出 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 将替换整个宏调用。</p>
 <p>例如，下面的宏定义忽略它的输入，并将函数 <code>answer</code> 输出到它的作用域。</p>
 <!-- ignore: test doesn't support proc-macro -->
 <pre><code class="language-rust ignore"><span class="boring">#![crate_type = &quot;proc-macro&quot;]
@@ -229,7 +229,7 @@ fn main() {
 <h3><a class="header" href="#派生宏" id="派生宏">派生宏</a></h3>
 <p><em>派生宏</em>为<a href="attributes/derive.html">派生(<code>derive</code>)属性</a>定义新输入。这类宏在给定<a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/enumerations.html">枚举(<code>enum</code>)</a>或<a href="items/unions.html">联合体(<code>union</code>)</a>标记流的情况下创建新<a href="items.html">数据项</a>。它们也可以定义<a href="#derive-macro-helper-attributes">派生宏辅助属性</a>。</p>
 <p>自定义派生宏由带有 <code>proc_macro_derive</code> 属性和 <code>(TokenStream) -&gt; TokenStream</code> 签名的<a href="visibility-and-privacy.html">公有</a>可见性<a href="items/functions.html">函数</a>定义。</p>
-<p>输入 <a href="../proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是带有 <code>derive</code> 属性的数据项的标记流。输出 <a href="../proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 必须是一组数据项，然后将这组数据项追加到输入 <a href="../proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 中的那条数据项所在的<a href="items/modules.html">模块</a>或<a href="expressions/block-expr.html">块</a>中。</p>
+<p>输入 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是带有 <code>derive</code> 属性的数据项的标记流。输出 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 必须是一组数据项，然后将这组数据项追加到输入 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 中的那条数据项所在的<a href="items/modules.html">模块</a>或<a href="expressions/block-expr.html">块</a>中。</p>
 <p>下面是派生宏的一个示例。它没有对输入执行任何有用的操作，只是追加了一个函数 <code>answer</code>。</p>
 <!-- ignore: test doesn't support proc-macro -->
 <pre><code class="language-rust ignore"><span class="boring">#![crate_type = &quot;proc-macro&quot;]
@@ -279,7 +279,7 @@ struct Struct {
 <h3><a class="header" href="#属性宏" id="属性宏">属性宏</a></h3>
 <p>属性宏定义了可以附加到项上的新的外部属性，包括extern块、固有和trait实现以及trait定义中的项。
 <em>属性宏</em>定义可以附加到<a href="items.html">数据项</a>上的新的<a href="attributes.html">外部属性</a>，这些数据项包括<a href="items/external-blocks.html">外部(<code>extern</code>)块</a>、固有<a href="items/implementations.html">实现</a>、trate实现，以及 <a href="items/traits.html">trait定义</a>中的数据项。</p>
-<p>属性宏由带有 <code>proc_macro_attribute</code><a href="attributes.html">属性</a>和 <code>(TokenStream, TokenStream) -&gt; TokenStream</code> 签名的<a href="visibility-and-privacy.html">公有</a>可见性<a href="items/functions.html">函数</a>定义。签名中的第一个 <a href="../proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是属性名称后面的定界标记树(delimited token tree)（不包括外层定界符）。如果该属性作为裸属性(bare attribute)给出，则第一个 <a href="../proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 值为空。第二个 <a href="../proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是<a href="items.html">数据项</a>的其余部分，包括该数据项的其他<a href="attributes.html">属性</a>。返回的 <a href="../proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 将此属性宏应用的<a href="items.html">数据项</a>替换为任意数量的数据项。</p>
+<p>属性宏由带有 <code>proc_macro_attribute</code><a href="attributes.html">属性</a>和 <code>(TokenStream, TokenStream) -&gt; TokenStream</code> 签名的<a href="visibility-and-privacy.html">公有</a>可见性<a href="items/functions.html">函数</a>定义。签名中的第一个 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是属性名称后面的定界标记树(delimited token tree)（不包括外层定界符）。如果该属性作为裸属性(bare attribute)给出，则第一个 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 值为空。第二个 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是<a href="items.html">数据项</a>的其余部分，包括该数据项的其他<a href="attributes.html">属性</a>。返回的 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 将此属性宏应用的<a href="items.html">数据项</a>替换为任意数量的数据项。</p>
 <p>例如，下面这个属性宏接受输入流并按原样返回，实际上对属性并空操作。</p>
 <!-- ignore: test doesn't support proc-macro -->
 <pre><code class="language-rust ignore"><span class="boring">#![crate_type = &quot;proc-macro&quot;]
@@ -291,7 +291,7 @@ pub fn return_as_is(_attr: TokenStream, item: TokenStream) -&gt; TokenStream {
     item
 }
 </code></pre>
-<p>下面示例显示了属性宏看到的字符串化的 <a href="../proc_macro/struct.TokenStream.html"><code>TokenStream</code></a>。输出将显示在编译时的编译器输出窗口中。（具体格式是以 “out:”为前缀的）输出内容也都在后面每个示例函数后面的注释中给出了。</p>
+<p>下面示例显示了属性宏看到的字符串化的 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a>。输出将显示在编译时的编译器输出窗口中。（具体格式是以 “out:”为前缀的）输出内容也都在后面每个示例函数后面的注释中给出了。</p>
 <!-- ignore: test doesn't support proc-macro -->
 <pre><code class="language-rust ignore">// my-macro/src/lib.rs
 <span class="boring">extern crate proc_macro;

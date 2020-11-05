@@ -136,16 +136,16 @@ x = bo(5,7);
 * 如果所有非唯一不可变引用捕获的变量都实现了 [`Sync`]，并且所有由唯一不可变、可变引用、复制或移动语义捕获的值都实现了 [`Send`]，则此闭包就也实现了 [`Send`]。
 * 如果一个闭包没有通过唯一不可变引用或可变引用捕获任何值，并且它通过复制或移动语义捕获的所有值都分别实现了 [`Clone`] 或 [`Copy`]，则此闭包就也实现了 [`Clone`] 或 [`Copy`]。
 
-[`Clone`]: ../special-types-and-traits.md#clone
-[`Copy`]: ../special-types-and-traits.md#copy
+[`Clone`]: https://doc.rust-lang.org/special-types-and-traits.md#clone
+[`Copy`]: https://doc.rust-lang.org/special-types-and-traits.md#copy
 [`FnMut`]: https://doc.rust-lang.org/std/ops/trait.FnMut.html
 [`FnOnce`]: https://doc.rust-lang.org/std/ops/trait.FnOnce.html
 [`Fn`]: https://doc.rust-lang.org/std/ops/trait.Fn.html
-[`Send`]: ../special-types-and-traits.md#send
-[`Sized`]: ../special-types-and-traits.md#sized
-[`Sync`]: ../special-types-and-traits.md#sync
-[closure expression]: ../expressions/closure-expr.md
-[derived]: ../attributes/derive.md
+[`Send`]: https://doc.rust-lang.org/special-types-and-traits.md#send
+[`Sized`]: https://doc.rust-lang.org/special-types-and-traits.md#sized
+[`Sync`]: https://doc.rust-lang.org/special-types-and-traits.md#sync
+[closure expression]: https://doc.rust-lang.org/expressions/closure-expr.md
+[derived]: https://doc.rust-lang.org/attributes/derive.md
 
 <!-- 2020-11-3 -->
 <!-- checked -->

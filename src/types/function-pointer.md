@@ -50,18 +50,18 @@ x = bo(5,7);
 
 函数指针参数上的属性遵循与[常规函数参数][regular function parameters]相同的规则和限制。
 
-[IDENTIFIER]: ../identifiers.md
-[_ForLifetimes_]: ../items/generics.md#where-clauses
-[_FunctionQualifiers_]: ../items/functions.md
-[_TypeNoBounds_]: ../types.md#type-expressions
-[_Type_]: ../types.md#type-expressions
-[_OuterAttribute_]: ../attributes.md
-[`extern`]: ../items/external-blocks.md
+[IDENTIFIER]: https://doc.rust-lang.org/identifiers.md
+[_ForLifetimes_]: https://doc.rust-lang.org/items/generics.md#where-clauses
+[_FunctionQualifiers_]: https://doc.rust-lang.org/items/functions.md
+[_TypeNoBounds_]: https://doc.rust-lang.org/types.md#type-expressions
+[_Type_]: https://doc.rust-lang.org/types.md#type-expressions
+[_OuterAttribute_]: https://doc.rust-lang.org/attributes.md
+[`extern`]: https://doc.rust-lang.org/items/external-blocks.md
 [closures]: closure.md
-[extern function]: ../items/functions.md#extern-function-qualifier
+[extern function]: https://doc.rust-lang.org/items/functions.md#extern-function-qualifier
 [function items]: function-item.md
-[unsafe function]: ../unsafe-functions.md
-[regular function parameters]: ../items/functions.md#attributes-on-function-parameters
+[unsafe function]: https://doc.rust-lang.org/unsafe-functions.md
+[regular function parameters]: https://doc.rust-lang.org/items/functions.md#attributes-on-function-parameters
 
 <!-- 2020-11-3 -->
 <!-- checked -->

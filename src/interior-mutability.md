@@ -13,9 +13,9 @@
 
 [shared reference]: types/pointer.md#shared-references-
 [ub]: behavior-considered-undefined.md
-[`std::cell::UnsafeCell<T>`]: ../std/cell/struct.UnsafeCell.html
-[`std::cell::RefCell<T>`]: ../std/cell/struct.RefCell.html
-[`std::sync::atomic`]: ../std/sync/atomic/index.html
+[`std::cell::UnsafeCell<T>`]: https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html
+[`std::cell::RefCell<T>`]: https://doc.rust-lang.org/std/cell/struct.RefCell.html
+[`std::sync::atomic`]: https://doc.rust-lang.org/std/sync/atomic/index.html
 
 <!-- 2020-11-3 -->
 <!-- checked -->

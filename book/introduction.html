@@ -171,7 +171,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/introduction.md">introduction.md</a><br />
 commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
-本译文最后维护日期：2020-11-3</p>
+本译文最后维护日期：2020-11-5</p>
 </blockquote>
 <p>本书是 Rust 编程语言的主要参考手册，本书提供了3类资料：</p>
 <ul>
@@ -185,9 +185,9 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 </div>
 <h2><a class="header" href="#what-the-reference-is-not" id="what-the-reference-is-not">What <em>The Reference</em> is Not</a></h2>
 <h2><a class="header" href="#参考手册-并非" id="参考手册-并非"><em>参考手册</em> 并非——</a></h2>
-<p>这本书不是对这门语言的入门介绍。本书假设您熟悉该语言。若您需要学习该语言的基础知识，请阅读 <a href="../book/index.html">Rust程序设计语言</a>。</p>
-<p>这本书也不作为 Rust 语言发行版中包含的<a href="../std/index.html">标准库</a>的参考资料。Rust 的库文档是从其源代码文件中提取的文档属性。此外，有许多可能被可能认为是语言自带特性(features)的特性其实都是 Rust 的标准库的特性，所以您要寻找的特性可能在那里，而不是在这里。</p>
-<p>类似地，本书通常不能作为记录 rustc 或者 Cargo 细节的工具书。rustc 有自己专门的书 <a href="../rustc/index.html">rustc book</a>，Cargo 也有一本书 <a href="../cargo/index.html">cargo book</a>，该书中包含了 Cargo 的[参考手册] <a href="../cargo/reference/index.html">cargo reference</a>。本书也涉及了少量和它们的相关知识，比如<a href="linkage.html">链接</a>的章节，介绍了 rustc 是如何工作的。</p>
+<p>这本书不是对这门语言的入门介绍。本书假设您熟悉该语言。若您需要学习该语言的基础知识，请阅读 <a href="https://doc.rust-lang.org/book/index.html">Rust程序设计语言</a>。</p>
+<p>这本书也不作为 Rust 语言发行版中包含的<a href="https://doc.rust-lang.org/std/index.html">标准库</a>的参考资料。Rust 的库文档是从其源代码文件中提取的文档属性。此外，有许多可能被可能认为是语言自带特性(features)的特性其实都是 Rust 的标准库的特性，所以您要寻找的特性可能在那里，而不是在这里。</p>
+<p>类似地，本书通常不能作为记录 rustc 或者 Cargo 细节的工具书。rustc 有自己专门的书 <a href="https://doc.rust-lang.org/rustc/index.md">rustc book</a>，Cargo 也有一本书 <a href="https://doc.rust-lang.org/cargo/index.html">cargo book</a>，该书中包含了 Cargo 的[参考手册] <a href="https://doc.rust-lang.org/cargo/reference/index.html">cargo reference</a>。本书也涉及了少量和它们的相关知识，比如<a href="linkage.html">链接</a>的章节，介绍了 rustc 是如何工作的。</p>
 <p>本书仅作为稳定版 Rust 的参考资料存在，关于尚在开发中的非稳定特性，请参阅 <a href="https://doc.rust-lang.org/nightly/unstable-book/">Unstable Book</a>。</p>
 <p>最后，本书并非 Rust 语言规范。它可能包含特定于 <code>rustc</code> 的细节，这不应该被当作 Rust 语言的规范。我们打算以后出版这样一本书，但在那之前，本手册是最接近的东西。</p>
 <h2><a class="header" href="#how-to-use-this-book" id="how-to-use-this-book">How to Use This Book</a></h2>
@@ -226,7 +226,7 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 <li>
 <p>文本中内联的代码片段在 <code>&lt;code&gt;</code> 标签里。</p>
 <p>较长的示例代码放在句法高亮的代码框内，其右上角有用于复制、运行和显示隐藏行的控件。</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">// This is a hidden line.
+<pre><pre class="playground"><code class="language-rust"><span class="boring">// 这是隐藏行。
 </span>fn main() {
     println!(&quot;This is a code example&quot;);
 }

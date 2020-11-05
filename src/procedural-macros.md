@@ -220,16 +220,16 @@ fn invoke4() {}
 ```
 
 [Attribute macros]: #attribute-macros
-[Cargo's build scripts]: ../cargo/reference/build-scripts.html
+[Cargo's build scripts]: https://doc.rust-lang.org/cargo/reference/build-scripts.html
 [Derive macros]: #derive-macros
 [Function-like macros]: #function-like-procedural-macros
-[`TokenStream`]: ../proc_macro/struct.TokenStream.html
-[`TokenStream`s]: ../proc_macro/struct.TokenStream.html
-[`compile_error`]: ../std/macro.compile_error.html
+[`TokenStream`]: https://doc.rust-lang.org/proc_macro/struct.TokenStream.html
+[`TokenStream`s]: https://doc.rust-lang.org/proc_macro/struct.TokenStream.html
+[`compile_error`]: https://doc.rust-lang.org/std/macro.compile_error.html
 [`derive` attribute]: attributes/derive.md
 [`extern` blocks]: items/external-blocks.md
 [`macro_rules`]: macros-by-example.md
-[`proc_macro` crate]: ../proc_macro/index.html
+[`proc_macro` crate]: https://doc.rust-lang.org/proc_macro/index.html
 [attribute]: attributes.md
 [attributes]: attributes.md
 [block]: expressions/block-expr.md

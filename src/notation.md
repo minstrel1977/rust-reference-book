@@ -3,7 +3,7 @@
 
 >[notation.md](https://github.com/rust-lang/reference/blob/master/src/notation.md)\
 >commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 \
->本译文最后维护日期：2020-10-17
+>本译文最后维护日期：2020-11-5
 
 ## Grammar
 ## 语法
@@ -20,12 +20,12 @@
 | x<sup>\*</sup>    | _OuterAttribute_<sup>\*</sup> | x 重复零次或多次                  |
 | x<sup>+</sup>     | _MacroMatch_<sup>+</sup>      | x 重复一次或多次                  |
 | x<sup>a..b</sup>  | HEX_DIGIT<sup>1..6</sup>      | x 重复 a 到 b 次                 |
-| \|                | `u8` \| `u16`, Block \| Item  | 或                              |
+| \|                | `u8` \| `u16`, Block \| Item  | 或                               |
 | \[ ]              | \[`b` `B`]                    | 列举的任意字符                    |
 | \[ - ]            | \[`a`-`z`]                    | a 到 z 范围内的任意字符(包括 a 和 z)|
 | ~\[ ]             | ~\[`b` `B`]                   | 列举范围外的任意字符(序列)          |
 | ~`string`         | ~`\n`, ~`*/`                  | 此字符序列外的任意字符(序列)        |
-| ( )               | (`,` _Parameter_)<sup>?</sup> | 数据项分组         |
+| ( )               | (`,` _Parameter_)<sup>?</sup> | 数据项分组                        |
 
 ## String table productions
 ## 字符串表示的句法生产式列表

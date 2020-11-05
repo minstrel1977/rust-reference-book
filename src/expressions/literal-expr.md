@@ -17,7 +17,7 @@
 > &nbsp;&nbsp; | [FLOAT_LITERAL]\
 > &nbsp;&nbsp; | [BOOLEAN_LITERAL]
 
-*字面量表达式*由上面的句法规则里给定的任一[字面量](../tokens.md#literals)形式组成。它直接描述一个数字、字符、字符串或布尔值。
+*字面量表达式*由上面的句法规则里给定的任一[字面量](https://doc.rust-lang.org/tokens.md#literals)形式组成。它直接描述一个数字、字符、字符串或布尔值。
 
 ```rust
 "hello";   // 字符串类型
@@ -25,15 +25,15 @@
 5;         // 整型
 ```
 
-[CHAR_LITERAL]: ../tokens.md#character-literals
-[STRING_LITERAL]: ../tokens.md#string-literals
-[RAW_STRING_LITERAL]: ../tokens.md#raw-string-literals
-[BYTE_LITERAL]: ../tokens.md#byte-literals
-[BYTE_STRING_LITERAL]: ../tokens.md#byte-string-literals
-[RAW_BYTE_STRING_LITERAL]: ../tokens.md#raw-byte-string-literals
-[INTEGER_LITERAL]: ../tokens.md#integer-literals
-[FLOAT_LITERAL]: ../tokens.md#floating-point-literals
-[BOOLEAN_LITERAL]: ../tokens.md#boolean-literals
+[CHAR_LITERAL]: https://doc.rust-lang.org/tokens.md#character-literals
+[STRING_LITERAL]: https://doc.rust-lang.org/tokens.md#string-literals
+[RAW_STRING_LITERAL]: https://doc.rust-lang.org/tokens.md#raw-string-literals
+[BYTE_LITERAL]: https://doc.rust-lang.org/tokens.md#byte-literals
+[BYTE_STRING_LITERAL]: https://doc.rust-lang.org/tokens.md#byte-string-literals
+[RAW_BYTE_STRING_LITERAL]: https://doc.rust-lang.org/tokens.md#raw-byte-string-literals
+[INTEGER_LITERAL]: https://doc.rust-lang.org/tokens.md#integer-literals
+[FLOAT_LITERAL]: https://doc.rust-lang.org/tokens.md#floating-point-literals
+[BOOLEAN_LITERAL]: https://doc.rust-lang.org/tokens.md#boolean-literals
 
 <!-- 2020-11-3 -->
 <!-- checked -->

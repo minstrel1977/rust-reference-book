@@ -178,17 +178,17 @@ commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
 <em>ClosureExpression</em> :<br />
    <code>move</code><sup>?</sup><br />
    ( <code>||</code> | <code>|</code> <em>ClosureParameters</em><sup>?</sup> <code>|</code> )<br />
-   (<a href="../expressions.html"><em>Expression</em></a> | <code>-&gt;</code> <a href="../types.html#type-expressions"><em>TypeNoBounds</em></a> <a href="block-expr.html"><em>BlockExpression</em></a>)</p>
+   (<a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> | <code>-&gt;</code> <a href="https://doc.rust-lang.org/types.md#type-expressions"><em>TypeNoBounds</em></a> <a href="block-expr.html"><em>BlockExpression</em></a>)</p>
 <p><em>ClosureParameters</em> :<br />
    <em>ClosureParam</em> (<code>,</code> <em>ClosureParam</em>)<sup>*</sup> <code>,</code><sup>?</sup></p>
 <p><em>ClosureParam</em> :<br />
-   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <a href="../patterns.html"><em>Pattern</em></a> ( <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
+   <a href="https://doc.rust-lang.org/attributes.md"><em>OuterAttribute</em></a><sup>*</sup> <a href="https://doc.rust-lang.org/patterns.md"><em>Pattern</em></a> ( <code>:</code> <a href="https://doc.rust-lang.org/types.md#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
 </blockquote>
-<p><em>闭包表达式</em>，也称为 lambda表达式或 lambda。每个闭包表达式都定义了一个单独类型的闭包，其值就是闭包本身。闭包表达式是由管道符号(<code>|</code>)封闭的不可反驳型<a href="../patterns.html">模式</a>的参数列表再后跟一个表达式组成，可以选择为参数类型或返回类型添加类型标注(type annotations)。如果存在返回类型，则用于闭包主体的表达式必须是一个普通的<a href="block-expr.html">块</a>。闭包表达式也可以在初始 <code>|</code> 之前以关键字 <code>move</code> 开头。</p>
-<p>闭包表达式表示将一组参数映射到参数后面的表达式的函数。与 <a href="../statements.html#let-statements"><code>let</code>绑定</a>一样，这里的参数也是不可反驳型<a href="../patterns.html">模式</a>，其类型标注是可选的，如果没有给出，则从上下文推断。每个闭包表达式都有一个唯一的匿名类型。</p>
+<p><em>闭包表达式</em>，也称为 lambda表达式或 lambda。每个闭包表达式都定义了一个单独类型的闭包，其值就是闭包本身。闭包表达式是由管道符号(<code>|</code>)封闭的不可反驳型<a href="https://doc.rust-lang.org/patterns.md">模式</a>的参数列表再后跟一个表达式组成，可以选择为参数类型或返回类型添加类型标注(type annotations)。如果存在返回类型，则用于闭包主体的表达式必须是一个普通的<a href="block-expr.html">块</a>。闭包表达式也可以在初始 <code>|</code> 之前以关键字 <code>move</code> 开头。</p>
+<p>闭包表达式表示将一组参数映射到参数后面的表达式的函数。与 <a href="https://doc.rust-lang.org/statements.md#let-statements"><code>let</code>绑定</a>一样，这里的参数也是不可反驳型<a href="https://doc.rust-lang.org/patterns.md">模式</a>，其类型标注是可选的，如果没有给出，则从上下文推断。每个闭包表达式都有一个唯一的匿名类型。</p>
 <p>闭包表达式在将函数作为参数传递给其他函数时非常有用，因此它常被用来作为定义和捕获独立函数(separate function)的便捷手段。</p>
-<p>特别值得注意的是闭包表达式能<em>捕获它们被定义时的环境中的变量(capture their environment)</em>，而正常函数定义则不能。如果没有关键字 <code>move</code>，闭包表达式将<a href="../types/closure.html#capture-modes">推断出它该如何从其环境中捕获每个变量</a>，它会而倾向于通过共享引用来捕获，从而有效地借用闭包体中用到的所有外部变量。如果有必要，编译器将推断出应该采用可变引用，或者应该从环境中移动或复制值（取决于它们的类型）变量。闭包可以通过前缀关键字 <code>move</code> 来强制通过复制值或移动值的方式捕获其环境变量。这通常用来确保当前闭包的生存期类型为 <code>'static</code>。</p>
-<p>编译器将通过闭包对其捕获的变量的处置方式来确定闭包类型将实现哪些<a href="../types/closure.html#call-traits-and-coercions">闭包trait</a>。如果所有捕获的类型都实现了 <a href="../special-types-and-traits.html#send"><code>Send</code></a> 和/或 <a href="../special-types-and-traits.html#sync"><code>Sync</code></a>，那么闭包也实现了 <code>Send</code> 和/或 <code>Sync</code>。因为存在这些 trait，函数可以方便的使用泛型来接受闭包类型的参数，即使闭包的类型名称无法被显式指定。</p>
+<p>特别值得注意的是闭包表达式能<em>捕获它们被定义时的环境中的变量(capture their environment)</em>，而正常函数定义则不能。如果没有关键字 <code>move</code>，闭包表达式将<a href="https://doc.rust-lang.org/types/closure.md#capture-modes">推断出它该如何从其环境中捕获每个变量</a>，它会而倾向于通过共享引用来捕获，从而有效地借用闭包体中用到的所有外部变量。如果有必要，编译器将推断出应该采用可变引用，或者应该从环境中移动或复制值（取决于它们的类型）变量。闭包可以通过前缀关键字 <code>move</code> 来强制通过复制值或移动值的方式捕获其环境变量。这通常用来确保当前闭包的生存期类型为 <code>'static</code>。</p>
+<p>编译器将通过闭包对其捕获的变量的处置方式来确定闭包类型将实现哪些<a href="https://doc.rust-lang.org/types/closure.md#call-traits-and-coercions">闭包trait</a>。如果所有捕获的类型都实现了 <a href="https://doc.rust-lang.org/special-types-and-traits.md#send"><code>Send</code></a> 和/或 <a href="https://doc.rust-lang.org/special-types-and-traits.md#sync"><code>Sync</code></a>，那么闭包也实现了 <code>Send</code> 和/或 <code>Sync</code>。因为存在这些 trait，函数可以方便的使用泛型来接受闭包类型的参数，即使闭包的类型名称无法被显式指定。</p>
 <p>在本例中，我们定义了一个名为 <code>ten_times</code> 的函数，它接受高阶函数参数，然后我们用一个闭包表达式作为实参来调用它，后面还定义了一个使用移动语义从环境中捕获变量的闭包表达式来供该函数调用。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -209,7 +209,7 @@ ten_times(move |j| println!(&quot;{}, {}&quot;, word, j));
 </span></code></pre></pre>
 <h2><a class="header" href="#attributes-on-closure-parameters" id="attributes-on-closure-parameters">Attributes on closure parameters</a></h2>
 <h2><a class="header" href="#闭包参数上的属性" id="闭包参数上的属性">闭包参数上的属性</a></h2>
-<p>闭包参数上的属性遵循与<a href="../items/functions.html#attributes-on-function-parameters">常规函数参数</a>上相同的规则和限制。</p>
+<p>闭包参数上的属性遵循与<a href="https://doc.rust-lang.org/items/functions.md#attributes-on-function-parameters">常规函数参数</a>上相同的规则和限制。</p>
 <!-- 2020-11-3 -->
 <!-- checked -->
 

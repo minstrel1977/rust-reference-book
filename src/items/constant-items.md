@@ -81,15 +81,15 @@ m!(const _: () = (););
 // const _: () = ();
 ```
 
-[associated]: ../glossary.md#associated-item
-[constant value]: ../const_eval.md#constant-expressions
-[free]: ../glossary.md#free-item
-[static lifetime elision]: ../lifetime-elision.md#static-lifetime-elision
-[IDENTIFIER]: ../identifiers.md
+[associated]: https://doc.rust-lang.org/glossary.md#associated-item
+[constant value]: https://doc.rust-lang.org/const_eval.md#constant-expressions
+[free]: https://doc.rust-lang.org/glossary.md#free-item
+[static lifetime elision]: https://doc.rust-lang.org/lifetime-elision.md#static-lifetime-elision
+[IDENTIFIER]: https://doc.rust-lang.org/identifiers.md
 [underscore imports]: use-declarations.md#underscore-imports
-[_Type_]: ../types.md#type-expressions
-[_Expression_]: ../expressions.md
-[`Copy`]: ../special-types-and-traits.md#copy
+[_Type_]: https://doc.rust-lang.org/types.md#type-expressions
+[_Expression_]: https://doc.rust-lang.org/expressions.md
+[`Copy`]: https://doc.rust-lang.org/special-types-and-traits.md#copy
 
 <!-- 2020-11-3 -->
 <!-- checked -->

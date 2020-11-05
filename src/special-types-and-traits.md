@@ -104,32 +104,32 @@
 
 [`Sized`] trait表明这种类型的尺寸在编译时是已知的；也就是说，它不是一个[动态尺寸类型][dynamically sized type]。[类型参数][Type parameters]默认是 `Sized` 的。`Sized` 总是由编译器自动实现，而不是由[实现(implementation items)][implementation items]主动实现的。
 
-[`Arc<Self>`]: ../std/sync/struct.Arc.html
-[`Box<T>`]: ../std/boxed/struct.Box.html
-[`Clone`]: ../std/clone/trait.Clone.html
-[`Copy`]: ../std/marker/trait.Copy.html
-[`Deref`]: ../std/ops/trait.Deref.html
-[`DerefMut`]: ../std/ops/trait.DerefMut.html
-[`Drop`]: ../std/ops/trait.Drop.html
-[`Pin<P>`]: ../std/pin/struct.Pin.html
-[`Rc<Self>`]: ../std/rc/struct.Rc.html
-[`RefUnwindSafe`]: ../std/panic/trait.RefUnwindSafe.html
-[`Send`]: ../std/marker/trait.Send.html
-[`Sized`]: ../std/marker/trait.Sized.html
-[`std::cell::UnsafeCell<T>`]: ../std/cell/struct.UnsafeCell.html
-[`std::cmp`]: ../std/cmp/index.html
-[`std::marker::PhantomData<T>`]: ../std/marker/struct.PhantomData.html
-[`std::ops`]: ../std/ops/index.html
-[`UnwindSafe`]: ../std/panic/trait.UnwindSafe.html
-[`Sync`]: ../std/marker/trait.Sync.html
-[`Unpin`]: ../std/marker/trait.Unpin.html
+[`Arc<Self>`]: https://doc.rust-lang.org/std/sync/struct.Arc.html
+[`Box<T>`]: https://doc.rust-lang.org/std/boxed/struct.Box.html
+[`Clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
+[`Copy`]: https://doc.rust-lang.org/std/marker/trait.Copy.html
+[`Deref`]: https://doc.rust-lang.org/std/ops/trait.Deref.html
+[`DerefMut`]: https://doc.rust-lang.org/std/ops/trait.DerefMut.html
+[`Drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html
+[`Pin<P>`]: https://doc.rust-lang.org/std/pin/struct.Pin.html
+[`Rc<Self>`]: https://doc.rust-lang.org/std/rc/struct.Rc.html
+[`RefUnwindSafe`]: https://doc.rust-lang.org/std/panic/trait.RefUnwindSafe.html
+[`Send`]: https://doc.rust-lang.org/std/marker/trait.Send.html
+[`Sized`]: https://doc.rust-lang.org/std/marker/trait.Sized.html
+[`std::cell::UnsafeCell<T>`]: https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html
+[`std::cmp`]: https://doc.rust-lang.org/std/cmp/index.html
+[`std::marker::PhantomData<T>`]: https://doc.rust-lang.org/std/marker/struct.PhantomData.html
+[`std::ops`]: https://doc.rust-lang.org/std/ops/index.html
+[`UnwindSafe`]: https://doc.rust-lang.org/std/panic/trait.UnwindSafe.html
+[`Sync`]: https://doc.rust-lang.org/std/marker/trait.Sync.html
+[`Unpin`]: https://doc.rust-lang.org/std/marker/trait.Unpin.html
 
 [Arrays]: types/array.md
 [call expressions]: expressions/call-expr.md
 [deref coercions]: type-coercions.md#coercion-types
 [dereference operator]: expressions/operator-expr.md#the-dereference-operator
 [destructor]: destructors.md
-[drop check]: ../nomicon/dropck.html
+[drop check]: https://doc.rust-lang.org/nomicon/dropck.html
 [dynamically sized type]: dynamically-sized-types.md
 [Function pointers]: types/function-pointer.md
 [function item types]: types/function-item.md
@@ -144,7 +144,7 @@
 [Raw pointers]: types/pointer.md#raw-pointers-const-and-mut
 [`static` items]: items/static-items.md
 [Shared references]: types/pointer.md#shared-references-
-[the standard library]: ../std/index.html
+[the standard library]: https://doc.rust-lang.org/std/index.html
 [trait object]: types/trait-object.md
 [Tuples]: types/tuple.md
 [Type parameters]: types/parameters.md

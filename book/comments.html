@@ -205,7 +205,7 @@ LINE_COMMENT :(译者注：行注释)<br />
 <p>非文档型注释(Non-doc comments)被解释为某种形式的空白符。</p>
 <h2><a class="header" href="#doc-comments" id="doc-comments">Doc comments</a></h2>
 <h2><a class="header" href="#文档型注释" id="文档型注释">文档型注释</a></h2>
-<p>以<em>三个</em>斜线（<code>///</code>）开始的行文档型注释，以及块文档型注释（<code>/** ... */</code>），均为内部文档型注释。它们被当做 <a href="../rustdoc/the-doc-attribute.html"><code>doc</code>属性</a>的特殊句法解析。也就是说，它们等同于把注释内容写入 <code>#[doc=&quot;...&quot;]</code> 里。例如：<code>/// Foo</code> 等同于 <code>#[doc=&quot;Foo&quot;]</code>，<code>/** Bar */</code> 等同于 <code>#[doc=&quot;Bar&quot;]</code>。</p>
+<p>以<em>三个</em>斜线（<code>///</code>）开始的行文档型注释，以及块文档型注释（<code>/** ... */</code>），均为内部文档型注释。它们被当做 <a href="https://doc.rust-lang.org/rustdoc/the-doc-attribute.html"><code>doc</code>属性</a>的特殊句法解析。也就是说，它们等同于把注释内容写入 <code>#[doc=&quot;...&quot;]</code> 里。例如：<code>/// Foo</code> 等同于 <code>#[doc=&quot;Foo&quot;]</code>，<code>/** Bar */</code> 等同于 <code>#[doc=&quot;Bar&quot;]</code>。</p>
 <p>以 <code>//!</code> 开始的行文档型注释，以及 <code>/*! ... */</code> 形式的块文档型注释属于注释体所在对象的文档型注释，而非注释体之后的数据项的。也就是说，它们等同于把注释内容写入 <code>#![doc=&quot;...&quot;]</code> 里。<code>//!</code> 注释通常用于标注模块位于的文件。</p>
 <p>孤立的 CRs（<code>\r</code>），如果其后没有紧跟有 LF（<code>\n</code>），则不能出现在文档型注释中。</p>
 <h2><a class="header" href="#示例" id="示例">示例</a></h2>

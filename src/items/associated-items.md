@@ -306,32 +306,32 @@ fn main() {
 }
 ```
 
-[_BlockExpression_]: ../expressions/block-expr.md
+[_BlockExpression_]: https://doc.rust-lang.org/expressions/block-expr.md
 [_FunctionParam_]: functions.md
 [_FunctionQualifiers_]: functions.md
 [_FunctionReturnType_]: functions.md
 [_Generics_]: generics.md
-[_Lifetime_]: ../trait-bounds.md
-[_Type_]: ../types.md#type-expressions
+[_Lifetime_]: https://doc.rust-lang.org/trait-bounds.md
+[_Type_]: https://doc.rust-lang.org/types.md#type-expressions
 [_WhereClause_]: generics.md#where-clauses
-[`Arc<Self>`]: ../special-types-and-traits.md#arct
-[`Box<Self>`]: ../special-types-and-traits.md#boxt
-[`Pin<P>`]: ../special-types-and-traits.md#pinp
-[`Rc<Self>`]: ../special-types-and-traits.md#rct
-[_OuterAttribute_]: ../attributes.md
+[`Arc<Self>`]: https://doc.rust-lang.org/special-types-and-traits.md#arct
+[`Box<Self>`]: https://doc.rust-lang.org/special-types-and-traits.md#boxt
+[`Pin<P>`]: https://doc.rust-lang.org/special-types-and-traits.md#pinp
+[`Rc<Self>`]: https://doc.rust-lang.org/special-types-and-traits.md#rct
+[_OuterAttribute_]: https://doc.rust-lang.org/attributes.md
 [traits]: traits.md
 [type aliases]: type-aliases.md
 [inherent implementations]: implementations.md#inherent-implementations
-[identifier]: ../identifiers.md
-[identifier pattern]: ../patterns.md#identifier-patterns
+[identifier]: https://doc.rust-lang.org/identifiers.md
+[identifier pattern]: https://doc.rust-lang.org/patterns.md#identifier-patterns
 [implementations]: implementations.md
-[type]: ../types.md#type-expressions
+[type]: https://doc.rust-lang.org/types.md#type-expressions
 [constants]: constant-items.md
 [constant item]: constant-items.md
 [functions]: functions.md
-[function item]: ../types/function-item.md
-[method call operator]: ../expressions/method-call-expr.md
-[path]: ../paths.md
+[function item]: https://doc.rust-lang.org/types/function-item.md
+[method call operator]: https://doc.rust-lang.org/expressions/method-call-expr.md
+[path]: https://doc.rust-lang.org/paths.md
 [regular function parameters]: functions.md#attributes-on-function-parameters
 
 <!-- 2020-11-3 -->

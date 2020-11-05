@@ -118,7 +118,7 @@
 [statics]:              items/static-items.md
 [struct]:               expressions/struct-expr.md
 [tuple expressions]:    expressions/tuple-expr.md
-[`transmute`]:          ../std/mem/fn.transmute.html
+[`transmute`]:          https://doc.rust-lang.org/std/mem/fn.transmute.html
 [while]:                expressions/loop-expr.md#predicate-loops
 [`while let`]:          expressions/loop-expr.md#predicate-pattern-loops
 

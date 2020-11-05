@@ -236,8 +236,8 @@ fn foo() -> i32 {
 [subtype]: subtyping.md
 [object safe]: items/traits.md#object-safety
 [type cast operator]: expressions/operator-expr.md#type-cast-expressions
-[`Unsize`]: ../std/marker/trait.Unsize.html
-[`CoerceUnsized`]: ../std/ops/trait.CoerceUnsized.html
+[`Unsize`]: https://doc.rust-lang.org/std/marker/trait.Unsize.html
+[`CoerceUnsized`]: https://doc.rust-lang.org/std/ops/trait.CoerceUnsized.html
 
 <!-- 2020-11-3 -->
 <!-- checked -->

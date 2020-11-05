@@ -9,7 +9,7 @@
 
 Rust 编译器支持多种将 crate 以静态方式和动态方式链接起来使用的方法。本节将探索各种将 crate 链接在一起的方法，关于本地库的更多信息请参阅 [The Book 中的 FFI 相关章节][ffi]。
 
-[ffi]: ../book/ffi.html
+[ffi]: https://doc.rust-lang.org/book/ffi.html
 
 在一个编译会话中，编译器可以通过使用命令行参数或内部 `crate_type`属性来生成多个构件(artifacts)。如果指定了一个或多个命令行参数，则将忽略所有 `crate_type`属性，以便只构建由命令行指定的构件。
 

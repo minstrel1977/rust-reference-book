@@ -32,7 +32,7 @@ assert_eq!(p.1, "ten");
 
 由于历史原因和为了使用方便，代表没有元素(`()`)的元组类型通常被称为单元(`unit`)或单元类型(`the unit type`)。
 
-[_Type_]: ../types.md#type-expressions
+[_Type_]: https://doc.rust-lang.org/types.md#type-expressions
 
 <!-- 2020-11-3 -->
 <!-- checked -->

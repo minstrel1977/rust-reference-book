@@ -459,12 +459,12 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 
 因为此表形将类型布局委托给另一种类型，所以它不能与任何其他表形一起使用。
 
-[`align_of_val`]: ../std/mem/fn.align_of_val.html
-[`size_of_val`]: ../std/mem/fn.size_of_val.html
-[`align_of`]: ../std/mem/fn.align_of.html
-[`size_of`]: ../std/mem/fn.size_of.html
-[`Sized`]: ../std/marker/trait.Sized.html
-[`Copy`]: ../std/marker/trait.Copy.html
+[`align_of_val`]: https://doc.rust-lang.org/std/mem/fn.align_of_val.html
+[`size_of_val`]: https://doc.rust-lang.org/std/mem/fn.size_of_val.html
+[`align_of`]: https://doc.rust-lang.org/std/mem/fn.align_of.html
+[`size_of`]: https://doc.rust-lang.org/std/mem/fn.size_of.html
+[`Sized`]: https://doc.rust-lang.org/std/marker/trait.Sized.html
+[`Copy`]: https://doc.rust-lang.org/std/marker/trait.Copy.html
 [dynamically sized types]: dynamically-sized-types.md
 [field-less enums]: items/enumerations.md#custom-discriminant-values-for-fieldless-enumerations
 [enumerations]: items/enumerations.md
@@ -478,7 +478,7 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 [primitive representations]: #primitive-representations
 [structs]: items/structs.md
 [`transparent`]: #the-transparent-representation
-[`Layout`]: ../std/alloc/struct.Layout.html
+[`Layout`]: https://doc.rust-lang.org/std/alloc/struct.Layout.html
 
 <!-- 2020-11-3 -->
 <!-- checked -->

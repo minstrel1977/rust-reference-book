@@ -26,12 +26,12 @@ let push_integer = Vec::<i32>::push;
 let slice_reverse = <[i32]>::reverse;
 ```
 
-[_PathInExpression_]: ../paths.md#paths-in-expressions
-[_QualifiedPathInExpression_]: ../paths.md#qualified-paths
-[place expressions]: ../expressions.md#place-expressions-and-value-expressions
-[value expressions]: ../expressions.md#place-expressions-and-value-expressions
-[path]: ../paths.md
-[`static mut`]: ../items/static-items.md#mutable-statics
+[_PathInExpression_]: https://doc.rust-lang.org/paths.md#paths-in-expressions
+[_QualifiedPathInExpression_]: https://doc.rust-lang.org/paths.md#qualified-paths
+[place expressions]: https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions
+[value expressions]: https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions
+[path]: https://doc.rust-lang.org/paths.md
+[`static mut`]: https://doc.rust-lang.org/items/static-items.md#mutable-statics
 [`unsafe` block]: block-expr.md#unsafe-blocks
 
 <!-- 2020-11-3 -->

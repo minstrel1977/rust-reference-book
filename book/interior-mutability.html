@@ -174,8 +174,8 @@ commit: e7dd3618d78928322f53a20e2947e428b12eda2b <br />
 本译文最后维护日期：2020-10-31</p>
 </blockquote>
 <p>有时一个类型需要在存在多个别名时进行更改。在 Rust 中，这是通过一种叫做<em>内部可变性</em>的模式实现的。如果一个类型的内部状态可以通过对它的<a href="types/pointer.html#shared-references-">共享引用</a>来进行更改，那么就说这个类型就具有内部可变性。这违背了共享引用所引向的值不能被更改的通常<a href="behavior-considered-undefined.html">要求</a>。</p>
-<p><a href="../std/cell/struct.UnsafeCell.html"><code>std::cell::UnsafeCell&lt;T&gt;</code></a>类型是 Rust 中唯一可以合法违反此要求的方法。当 <code>UnsafeCell&lt;T&gt;</code> 具有不变的别名时，仍然可以安全地对它包含的 <code>T</code> 进行更改或获得 <code>T</code> 的一个可变引用。与所有其他类型一样，拥有多个 <code>&amp;mut UnsafeCell&lt;T&gt;</code> 别名是未定义行为。</p>
-<p>通过使用 <code>UnsafeCell&lt;T&gt;</code> 作为字段，可以创建具有内部可变性的其他类型。标准库提供了几种这样的类型，这些类型都提供了安全的内部变更的 API。例如，<a href="../std/cell/struct.RefCell.html"><code>std::cell::RefCell&lt;T&gt;</code></a> 使用运行时借用检查来确保多个引用存在时的常规规则的执行。<a href="../std/sync/atomic/index.html"><code>std::sync::atomic</code></a>模块包含了一些类型，这些类型包装了一个只能通过原子操作访问的值，以允许在线程之间共享和修改该值。</p>
+<p><a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>std::cell::UnsafeCell&lt;T&gt;</code></a>类型是 Rust 中唯一可以合法违反此要求的方法。当 <code>UnsafeCell&lt;T&gt;</code> 具有不变的别名时，仍然可以安全地对它包含的 <code>T</code> 进行更改或获得 <code>T</code> 的一个可变引用。与所有其他类型一样，拥有多个 <code>&amp;mut UnsafeCell&lt;T&gt;</code> 别名是未定义行为。</p>
+<p>通过使用 <code>UnsafeCell&lt;T&gt;</code> 作为字段，可以创建具有内部可变性的其他类型。标准库提供了几种这样的类型，这些类型都提供了安全的内部变更的 API。例如，<a href="https://doc.rust-lang.org/std/cell/struct.RefCell.html"><code>std::cell::RefCell&lt;T&gt;</code></a> 使用运行时借用检查来确保多个引用存在时的常规规则的执行。<a href="https://doc.rust-lang.org/std/sync/atomic/index.html"><code>std::sync::atomic</code></a>模块包含了一些类型，这些类型包装了一个只能通过原子操作访问的值，以允许在线程之间共享和修改该值。</p>
 <!-- 2020-11-3 -->
 <!-- checked -->
 

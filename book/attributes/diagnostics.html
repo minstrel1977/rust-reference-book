@@ -173,11 +173,11 @@
 commit: 2196589ccf8fefc4edeaa0ab430fe2ce6a57dec3 <br />
 本译文最后维护日期：2020-10-23</p>
 </blockquote>
-<p>以下<a href="../attributes.html">属性</a>用于在编译期间控制或生成诊断消息。</p>
+<p>以下<a href="https://doc.rust-lang.org/attributes.md">属性</a>用于在编译期间控制或生成诊断消息。</p>
 <h2><a class="header" href="#lint-check-attributes" id="lint-check-attributes">Lint check attributes</a></h2>
 <h2><a class="header" href="#lint检查类属性" id="lint检查类属性">lint检查类属性</a></h2>
 <p>（译者注：lint在原文里有时当名词用，有时当动词用，本文统一翻译成名词，意思就是一种被命名的 lint检查模式）</p>
-<p>lint检查(lint check)系统命名了一些潜在的不良编码模式，这些被命名的 lint检查就是一个一个的lint，例如编写了执行不到的代码，就被命名为unreachable-code lint，编写未提供文档的代码就被命名为 missing_docs lint。<code>allow</code>、<code>warn</code>、<code>deny</code> 和 <code>forbid</code> 这些能调整代码检查级别的属性被称为 lint级别属性，它可以通过使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListPaths</em></a>元项属性句法规则来添加指定 lint 的列表。代码实体应用了这些带上了具体 lint名的 lint级别属性，编译器或相关代码检查工具就可以对这段代码执行该 lint 定义的代码检查，当然该检查也和这些 lint级别息息相关。</p>
+<p>lint检查(lint check)系统命名了一些潜在的不良编码模式，这些被命名的 lint检查就是一个一个的lint，例如编写了执行不到的代码，就被命名为unreachable-code lint，编写未提供文档的代码就被命名为 missing_docs lint。<code>allow</code>、<code>warn</code>、<code>deny</code> 和 <code>forbid</code> 这些能调整代码检查级别的属性被称为 lint级别属性，它可以通过使用 <a href="https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax"><em>MetaListPaths</em></a>元项属性句法规则来添加指定 lint 的列表。代码实体应用了这些带上了具体 lint名的 lint级别属性，编译器或相关代码检查工具就可以对这段代码执行该 lint 定义的代码检查，当然该检查也和这些 lint级别息息相关。</p>
 <p>对带有任何 lint名为 <code>C</code> 的 lint级别来说：</p>
 <ul>
 <li><code>allow(C)</code> 会压制对 <code>C</code> 的检查，那这样的违规行为就不会被报告，</li>
@@ -269,14 +269,14 @@ fn foo() {
 <ul>
 <li><code>deprecated</code> — 发布一个通用的弃用消息。</li>
 <li><code>deprecated = &quot;message&quot;</code> — 在弃用消息中包含给定的字符串。</li>
-<li><a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法形式里带有两个可选字段：
+<li><a href="https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法形式里带有两个可选字段：
 <ul>
 <li><code>since</code> — 指定数据项被弃用时的版本号。<code>rustc</code> 目前不解释此字符串，但是像 <a href="https://github.com/rust-lang/rust-clippy">Clippy</a> 这样的外部工具可以检查此值的有效性。</li>
 <li><code>note</code> — 指定一个应该包含在弃用消息中的字符串。这通常用于提供关于不推荐的解释和推荐首选替代。</li>
 </ul>
 </li>
 </ul>
-<p><code>deprecated</code>属性可以应用于任何<a href="../items.html">数据项</a>，<a href="../items/traits.html">trait项</a>，<a href="../items/enumerations.html">枚举变体</a>，<a href="../items/structs.html">结构体字段</a>，<a href="../items/external-blocks.html">外部块项</a>，或<a href="../macros-by-example.html">宏定义</a>。它不能应用于 <a href="../items/implementations.html#trait-implementations">trait实现项</a>。当应用于包含其他数据项的数据项时，如<a href="../items/modules.html">模块</a>或<a href="../items/implementations.html">实现</a>，所有子数据项都继承此 deprecation属性。</p>
+<p><code>deprecated</code>属性可以应用于任何<a href="https://doc.rust-lang.org/items.md">数据项</a>，<a href="https://doc.rust-lang.org/items/traits.md">trait项</a>，<a href="https://doc.rust-lang.org/items/enumerations.md">枚举变体</a>，<a href="https://doc.rust-lang.org/items/structs.md">结构体字段</a>，<a href="https://doc.rust-lang.org/items/external-blocks.md">外部块项</a>，或<a href="https://doc.rust-lang.org/macros-by-example.md">宏定义</a>。它不能应用于 <a href="https://doc.rust-lang.org/items/implementations.md#trait-implementations">trait实现项</a>。当应用于包含其他数据项的数据项时，如<a href="https://doc.rust-lang.org/items/modules.md">模块</a>或<a href="https://doc.rust-lang.org/items/implementations.md">实现</a>，所有子数据项都继承此 deprecation属性。</p>
 <!-- 注意: 它只被 trait实现(AnnotationKind::Prohibited)拒绝。在这些之外的所有其他位置，它会被静默忽略。应用于元组结构体的字段时，此属性直接也被忽略。-->
 <p>这有个例子：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -291,9 +291,9 @@ pub fn bar() {}
 <p><a href="https://github.com/rust-lang/rfcs/blob/master/text/1270-deprecation.md">RFC</a> 内有动机说明和更多细节。</p>
 <h2><a class="header" href="#the-must_use-attribute" id="the-must_use-attribute">The <code>must_use</code> attribute</a></h2>
 <h2><a class="header" href="#must_use属性" id="must_use属性"><code>must_use</code>属性</a></h2>
-<p><em><code>must_use</code>属性</em> 用于在值未被“使用”时发出诊断警告。它可以应用于用户定义的复合类型(<a href="../items/structs.html">结构体(<code>struct</code>)</a>、<a href="../items/enumerations.html">枚举(<code>enum</code>)</a> 和 <a href="../items/unions.html">联合体(<code>union</code>)</a>)、<a href="../items/functions.html">函数</a>和 <a href="../items/traits.html">trait</a>。</p>
-<p><code>must_use</code>属性可以使用<a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法规则添加一些附加消息，如 <code>#[must_use = &quot;example message&quot;]</code>。该字符串将出现在告警消息里。</p>
-<p>在用户定义的复合类型上使用时，如果<a href="../statements.html#expression-statements">表达式语句</a>里的<a href="../expressions.html">表达式</a>具有该类型，那么就违反了 <code>unused_must_use</code> 这个lint检查。</p>
+<p><em><code>must_use</code>属性</em> 用于在值未被“使用”时发出诊断警告。它可以应用于用户定义的复合类型(<a href="https://doc.rust-lang.org/items/structs.md">结构体(<code>struct</code>)</a>、<a href="https://doc.rust-lang.org/items/enumerations.md">枚举(<code>enum</code>)</a> 和 <a href="https://doc.rust-lang.org/items/unions.md">联合体(<code>union</code>)</a>)、<a href="https://doc.rust-lang.org/items/functions.md">函数</a>和 <a href="https://doc.rust-lang.org/items/traits.md">trait</a>。</p>
+<p><code>must_use</code>属性可以使用<a href="https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法规则添加一些附加消息，如 <code>#[must_use = &quot;example message&quot;]</code>。该字符串将出现在告警消息里。</p>
+<p>在用户定义的复合类型上使用时，如果<a href="https://doc.rust-lang.org/statements.md#expression-statements">表达式语句</a>里的<a href="https://doc.rust-lang.org/expressions.md">表达式</a>具有该类型，那么就违反了 <code>unused_must_use</code> 这个lint检查。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -310,7 +310,7 @@ struct MustUse {
 MustUse::new();
 <span class="boring">}
 </span></code></pre></pre>
-<p>当在函数上使用时，如果<a href="../statements.html#expression-statements">表达式语句</a>的<a href="../expressions.html">表达式</a>是该函数的<a href="../expressions/call-expr.html">调用表达式</a>，那就违反了 <code>unused_must_use</code> lint。</p>
+<p>当在函数上使用时，如果<a href="https://doc.rust-lang.org/statements.md#expression-statements">表达式语句</a>的<a href="https://doc.rust-lang.org/expressions.md">表达式</a>是该函数的<a href="https://doc.rust-lang.org/expressions/call-expr.md">调用表达式</a>，那就违反了 <code>unused_must_use</code> lint。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -321,7 +321,7 @@ fn five() -&gt; i32 { 5i32 }
 five();
 <span class="boring">}
 </span></code></pre></pre>
-<p>在 [trait声明]中使用时，如果<a href="../statements.html#expression-statements">表达式语句</a>的<a href="../expressions/call-expr.html">调用表达式</a>返回了 trait 的 <a href="../types/impl-trait.html">trait实现(impl trait)</a> ，则违反了 <code>unused_must_use</code> lint。</p>
+<p>在 [trait声明]中使用时，如果<a href="https://doc.rust-lang.org/statements.md#expression-statements">表达式语句</a>的<a href="https://doc.rust-lang.org/expressions/call-expr.md">调用表达式</a>返回了 trait 的 <a href="https://doc.rust-lang.org/types/impl-trait.md">trait实现(impl trait)</a> ，则违反了 <code>unused_must_use</code> lint。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -356,7 +356,7 @@ impl Trait for i32 {
 </span></code></pre></pre>
 <p>当在 trait实现中的函数上使用 <code>must_use</code>属性时，此属性将被忽略。</p>
 <blockquote>
-<p>注意：包含值的普通空操作表达式不会违反该 lint。例如，将值包装在没有实现 <a href="../special-types-and-traits.html#drop"><code>Drop</code></a> 的类型中，然后不使用该类型，并成为未使用的<a href="../expressions/block-expr.html">块表达式</a>的尾部表达式(final expression)。</p>
+<p>注意：包含值的普通空操作表达式不会违反该 lint。例如，将值包装在没有实现 <a href="https://doc.rust-lang.org/special-types-and-traits.md#drop"><code>Drop</code></a> 的类型中，然后不使用该类型，并成为未使用的<a href="https://doc.rust-lang.org/expressions/block-expr.md">块表达式</a>的尾部表达式(final expression)。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -375,7 +375,7 @@ match true {
 </span></code></pre></pre>
 </blockquote>
 <blockquote>
-<p>注意：当一个必须使用的值被故意丢弃时，使用带有模式 <code>_</code> 的<a href="../statements.html#let-statements">let语句</a>是惯用的方法。</p>
+<p>注意：当一个必须使用的值被故意丢弃时，使用带有模式 <code>_</code> 的<a href="https://doc.rust-lang.org/statements.md#let-statements">let语句</a>是惯用的方法。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

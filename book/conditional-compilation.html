@@ -208,10 +208,10 @@ commit: 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7 <br />
 <h2><a class="header" href="#设置配置选项" id="设置配置选项">设置配置选项</a></h2>
 <p>设置哪些配置选项是在 crate 编译期间静态确定的。一些选项属于<em>编译器设置集(compiler-set)</em>，这部分选项是编译器根据相关编译数据设置的。其他选项属于<em>任意设置集(arbitrarily-set)</em>，这部分设置必须从代码之外传参给编译器来自主设置。无法在正在编译的 crate 的源代码中设置编译配置选项。</p>
 <blockquote>
-<p><strong>注意</strong>: 对于 <code>rustc</code>，任意配置集的配置选项要使用命令行参数 <a href="../rustc/command-line-arguments.html#--cfg-configure-the-compilation-environment"><code>--cfg</code></a> 来设置。</p>
+<p><strong>注意</strong>: 对于 <code>rustc</code>，任意配置集的配置选项要使用命令行参数 <a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#--cfg-configure-the-compilation-environment"><code>--cfg</code></a> 来设置。</p>
 </blockquote>
 <blockquote>
-<p><strong>注意</strong>: 键名为 <code>feature</code> 的配置选项一般被 <a href="../cargo/reference/features.html">Cargo</a> 约定用于指定编译时选项和可选依赖项。</p>
+<p><strong>注意</strong>: 键名为 <code>feature</code> 的配置选项一般被 <a href="https://doc.rust-lang.org/cargo/reference/features.html">Cargo</a> 约定用于指定编译时选项和可选依赖项。</p>
 </blockquote>
 <div class="warning">
 <p>警告：任意配置集的配置选项可能与编译器设置集的配置选项设置相同的值。例如，在编译一个 Windows 目标时，可以执行命令行 <code>rustc --cfg &quot;unix&quot; program.rs</code>，这样就同时设置了 <code>unix</code> 和 <code>windows</code> 配置选项。但实际上这样做是不明智的。</p>
@@ -295,9 +295,9 @@ commit: 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7 <br />
 <li><code>&quot;unknown&quot;</code></li>
 </ul>
 <h3><a class="header" href="#test" id="test"><code>test</code></a></h3>
-<p>在编译测试套件时启用。通过在 <code>rustc</code> 里使用 <a href="../rustc/command-line-arguments.html#--test-build-a-test-harness"><code>--test</code></a> 命令行参数来完成此启用。请参阅<a href="attributes/testing.html">测试</a>章节来获取更多和测试支持相关的信息。</p>
+<p>在编译测试套件时启用。通过在 <code>rustc</code> 里使用 <a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#--test-build-a-test-harness"><code>--test</code></a> 命令行参数来完成此启用。请参阅<a href="attributes/testing.html">测试</a>章节来获取更多和测试支持相关的信息。</p>
 <h3><a class="header" href="#debug_assertions" id="debug_assertions"><code>debug_assertions</code></a></h3>
-<p>在进行非优化编译时默认启用。这可以用于在开发中启用额外的代码调试功能，但不能在生产中启用。例如，它控制着标准库的 <a href="../std/macro.debug_assert.html"><code>debug_assert!</code></a>宏(是否可用)。</p>
+<p>在进行非优化编译时默认启用。这可以用于在开发中启用额外的代码调试功能，但不能在生产中启用。例如，它控制着标准库的 <a href="https://doc.rust-lang.org/std/macro.debug_assert.html"><code>debug_assert!</code></a>宏(是否可用)。</p>
 <h3><a class="header" href="#proc_macro" id="proc_macro"><code>proc_macro</code></a></h3>
 <p>当须要指定当前 crate 的<a href="linkage.html">编译输出文件类型(crate-type)</a>为 <code>proc_macro</code> 时设置。</p>
 <h2><a class="header" href="#forms-of-conditional-compilation" id="forms-of-conditional-compilation">Forms of conditional compilation</a></h2>

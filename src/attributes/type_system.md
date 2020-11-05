@@ -123,17 +123,17 @@ match message {
 
 非穷尽类型最好放在下游 crate 里。
 
-[_EnumerationVariantExpression_]: ../expressions/enum-variant-expr.md
-[_MetaWord_]: ../attributes.md#meta-item-attribute-syntax
-[_StructExpression_]: ../expressions/struct-expr.md
-[_StructPattern_]: ../patterns.md#struct-patterns
-[_TupleStructPattern_]: ../patterns.md#tuple-struct-patterns
-[`if let`]: ../expressions/if-expr.md#if-let-expressions
-[`match`]: ../expressions/match-expr.md
-[attributes]: ../attributes.md
-[enum]: ../items/enumerations.md
-[functional update syntax]: ../expressions/struct-expr.md#functional-update-syntax
-[struct]: ../items/structs.md
+[_EnumerationVariantExpression_]: https://doc.rust-lang.org/expressions/enum-variant-expr.md
+[_MetaWord_]: https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax
+[_StructExpression_]: https://doc.rust-lang.org/expressions/struct-expr.md
+[_StructPattern_]: https://doc.rust-lang.org/patterns.md#struct-patterns
+[_TupleStructPattern_]: https://doc.rust-lang.org/patterns.md#tuple-struct-patterns
+[`if let`]: https://doc.rust-lang.org/expressions/if-expr.md#if-let-expressions
+[`match`]: https://doc.rust-lang.org/expressions/match-expr.md
+[attributes]: https://doc.rust-lang.org/attributes.md
+[enum]: https://doc.rust-lang.org/items/enumerations.md
+[functional update syntax]: https://doc.rust-lang.org/expressions/struct-expr.md#functional-update-syntax
+[struct]: https://doc.rust-lang.org/items/structs.md
 
 <!-- 2020-11-3 -->
 <!-- checked -->

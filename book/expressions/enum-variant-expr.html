@@ -180,17 +180,17 @@ commit: 1a3615102993e9f017a44b903ff2277a38a171a8 <br />
    | <em>EnumExprTuple</em><br />
    | <em>EnumExprFieldless</em></p>
 <p><em>EnumExprStruct</em> :<br />
-   <a href="../paths.html#paths-in-expressions"><em>PathInExpression</em></a> <code>{</code> <em>EnumExprFields</em><sup>?</sup> <code>}</code></p>
+   <a href="https://doc.rust-lang.org/paths.md#paths-in-expressions"><em>PathInExpression</em></a> <code>{</code> <em>EnumExprFields</em><sup>?</sup> <code>}</code></p>
 <p><em>EnumExprFields</em> :<br />
       <em>EnumExprField</em> (<code>,</code> <em>EnumExprField</em>)<sup>*</sup> <code>,</code><sup>?</sup></p>
 <p><em>EnumExprField</em> :<br />
-      <a href="../identifiers.html">IDENTIFIER</a><br />
-   | (<a href="../identifiers.html">IDENTIFIER</a> | <a href="../tokens.html#tuple-index">TUPLE_INDEX</a>) <code>:</code> <a href="../expressions.html"><em>Expression</em></a></p>
+      <a href="https://doc.rust-lang.org/identifiers.md">IDENTIFIER</a><br />
+   | (<a href="https://doc.rust-lang.org/identifiers.md">IDENTIFIER</a> | <a href="https://doc.rust-lang.org/tokens.md#tuple-index">TUPLE_INDEX</a>) <code>:</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a></p>
 <p><em>EnumExprTuple</em> :<br />
-   <a href="../paths.html#paths-in-expressions"><em>PathInExpression</em></a> <code>(</code><br />
-      ( <a href="../expressions.html"><em>Expression</em></a> (<code>,</code> <a href="../expressions.html"><em>Expression</em></a>)<sup>*</sup> <code>,</code><sup>?</sup> )<sup>?</sup><br />
+   <a href="https://doc.rust-lang.org/paths.md#paths-in-expressions"><em>PathInExpression</em></a> <code>(</code><br />
+      ( <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> (<code>,</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a>)<sup>*</sup> <code>,</code><sup>?</sup> )<sup>?</sup><br />
    <code>)</code></p>
-<p><em>EnumExprFieldless</em> : <a href="../paths.html#paths-in-expressions"><em>PathInExpression</em></a></p>
+<p><em>EnumExprFieldless</em> : <a href="https://doc.rust-lang.org/paths.md#paths-in-expressions"><em>PathInExpression</em></a></p>
 </blockquote>
 <p>枚举变体的构造与<a href="struct-expr.html">结构体(<code>struct</code>)</a>的构造类似，只是使用枚举变体的路径来替代结构体的路径：</p>
 <pre><pre class="playground"><code class="language-rust">

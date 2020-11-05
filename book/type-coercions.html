@@ -319,7 +319,7 @@ fn main() {
 <h3><a class="header" href="#unsized-coercions" id="unsized-coercions">Unsized Coercions</a></h3>
 <h3><a class="header" href="#非固定尺寸类型自动强转" id="非固定尺寸类型自动强转">非固定尺寸类型自动强转</a></h3>
 <p>下列自动强转被称为非固定尺寸类型自动强转(<code>unsized coercions</code>)，因为它们与<em>将固定尺寸类型转换为非固定尺寸类型</em>有关，并且在一些其他自动强转不允许的情况（也就是上面罗列的情况之外的情况）下允许使用。也就是他们可以发生在任何自动强转发生的地方。</p>
-<p><a href="../std/marker/trait.Unsize.html"><code>Unsize</code></a> 和 <a href="../std/ops/trait.CoerceUnsized.html"><code>CoerceUnsized</code></a> 这两个 trait 被用来协助这种转换的发生，并公开给标准库来使用。以下自动强转形式是内置的，并且——如果 <code>T</code> 可以用其中一个自动强转转换成 <code>U</code>——会为 <code>T</code> 提供一个 <code>Unsize&lt;U&gt;</code> 内置实现：
+<p><a href="https://doc.rust-lang.org/std/marker/trait.Unsize.html"><code>Unsize</code></a> 和 <a href="https://doc.rust-lang.org/std/ops/trait.CoerceUnsized.html"><code>CoerceUnsized</code></a> 这两个 trait 被用来协助这种转换的发生，并公开给标准库来使用。以下自动强转形式是内置的，并且——如果 <code>T</code> 可以用其中一个自动强转转换成 <code>U</code>——会为 <code>T</code> 提供一个 <code>Unsize&lt;U&gt;</code> 内置实现：
 The following coercions are built-ins and, if <code>T</code> can be coerced to <code>U</code> with one of them, then an implementation of <code>Unsize&lt;U&gt;</code> for <code>T</code> will be provided:</p>
 <ul>
 <li>
@@ -341,7 +341,7 @@ The following coercions are built-ins and, if <code>T</code> can be coerced to <
 </ul>
 <p>此外，当 <code>T</code> 实现了 <code>Unsize&lt;U&gt;</code> 或 <code>CoerceUnsized&lt;Foo&lt;U&gt;&gt;</code> 时，类型 <code>Foo&lt;T&gt;</code> 可以实现 <code>CoerceUnsized&lt;Foo&lt;U&gt;&gt;</code>。这为 <code>Foo&lt;T&gt;</code> 提供了一个向 <code>Foo&lt;U&gt;</code> 的非固定尺寸类型自动强转的实现。</p>
 <blockquote>
-<p>注：虽然非固定尺寸类型自动强转的定义及其实现已经稳定下来，但 <a href="../std/marker/trait.Unsize.html"><code>Unsize</code></a> 和 <a href="../std/ops/trait.CoerceUnsized.html"><code>CoerceUnsized</code></a> 这两个 trait 本身还没稳定下来，因此还不能直接用于稳定版的 Rust。</p>
+<p>注：虽然非固定尺寸类型自动强转的定义及其实现已经稳定下来，但 <a href="https://doc.rust-lang.org/std/marker/trait.Unsize.html"><code>Unsize</code></a> 和 <a href="https://doc.rust-lang.org/std/ops/trait.CoerceUnsized.html"><code>CoerceUnsized</code></a> 这两个 trait 本身还没稳定下来，因此还不能直接用于稳定版的 Rust。</p>
 </blockquote>
 <h2><a class="header" href="#least-upper-bound-coercions" id="least-upper-bound-coercions">Least upper bound coercions</a></h2>
 <h2><a class="header" href="#最小上界自动强转" id="最小上界自动强转">最小上界自动强转</a></h2>

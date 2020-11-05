@@ -59,12 +59,12 @@ unsafe fn bump_levels_unsafe2() -> u32 {
 * 需要内部可变性。
 
 [constant]: constant-items.md
-[`drop`]: ../destructors.md
-[constant expression]: ../const_eval.md#constant-expressions
-[interior mutable]: ../interior-mutability.md
-[IDENTIFIER]: ../identifiers.md
-[_Type_]: ../types.md#type-expressions
-[_Expression_]: ../expressions.md
+[`drop`]: https://doc.rust-lang.org/destructors.md
+[constant expression]: https://doc.rust-lang.org/const_eval.md#constant-expressions
+[interior mutable]: https://doc.rust-lang.org/interior-mutability.md
+[IDENTIFIER]: https://doc.rust-lang.org/identifiers.md
+[_Type_]: https://doc.rust-lang.org/types.md#type-expressions
+[_Expression_]: https://doc.rust-lang.org/expressions.md
 
 <!-- 2020-11-3 -->
 <!-- checked -->

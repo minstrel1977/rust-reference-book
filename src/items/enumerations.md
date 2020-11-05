@@ -159,21 +159,21 @@ enum E {
 }
 ```
 
-[IDENTIFIER]: ../identifiers.md
+[IDENTIFIER]: https://doc.rust-lang.org/identifiers.md
 [_Generics_]: generics.md
 [_WhereClause_]: generics.md#where-clauses
-[_Expression_]: ../expressions.md
+[_Expression_]: https://doc.rust-lang.org/expressions.md
 [_TupleFields_]: structs.md
 [_StructFields_]: structs.md
-[Visibility]: ../visibility-and-privacy.md
-[enumerated type]: ../types/enum.md
+[Visibility]: https://doc.rust-lang.org/visibility-and-privacy.md
+[enumerated type]: https://doc.rust-lang.org/types/enum.md
 [`mem::discriminant`]: https://doc.rust-lang.org/std/mem/fn.discriminant.html
-[never type]: ../types/never.md
-[numeric cast]: ../expressions/operator-expr.md#semantics
-[constant expression]: ../const_eval.md#constant-expressions
-[default representation]: ../type-layout.md#the-default-representation
-[primitive representation]: ../type-layout.md#primitive-representations
-[`C` representation]: ../type-layout.md#the-c-representation
+[never type]: https://doc.rust-lang.org/types/never.md
+[numeric cast]: https://doc.rust-lang.org/expressions/operator-expr.md#semantics
+[constant expression]: https://doc.rust-lang.org/const_eval.md#constant-expressions
+[default representation]: https://doc.rust-lang.org/type-layout.md#the-default-representation
+[primitive representation]: https://doc.rust-lang.org/type-layout.md#primitive-representations
+[`C` representation]: https://doc.rust-lang.org/type-layout.md#the-c-representation
 
 <!-- 2020-11-3 -->
 <!-- checked -->

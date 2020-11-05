@@ -9,7 +9,7 @@
 > _MethodCallExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `.` [_PathExprSegment_] `(`[_CallParams_]<sup>?</sup> `)`
 
-*方法调用*由一个表达式（*接受者(receiver)*）后跟一个单点号(`.`)、一个表达式路径段(path segment)和一个圆括号封闭的的表达式列表组成。方法调用被解析为特定 trait 上的关联[方法][methods]时，如果点号左边表达式有确切的已知的 `self` 类型，则会静态地分发(dispatch)给某个查找到的同名方法来执行；如果点号左边表达式是间接的 [trait对象](../types/trait-object.md)，则会采用动态分发。
+*方法调用*由一个表达式（*接受者(receiver)*）后跟一个单点号(`.`)、一个表达式路径段(path segment)和一个圆括号封闭的的表达式列表组成。方法调用被解析为特定 trait 上的关联[方法][methods]时，如果点号左边表达式有确切的已知的 `self` 类型，则会静态地分发(dispatch)给某个查找到的同名方法来执行；如果点号左边表达式是间接的 [trait对象](https://doc.rust-lang.org/types/trait-object.md)，则会采用动态分发。
 
 ```rust
 let pi: Result<f32, _> = "3.14".parse();
@@ -68,15 +68,15 @@ let log_pi = pi.unwrap_or(1.0).log(2.72);
 </div>
 
 [_CallParams_]: call-expr.md
-[_Expression_]: ../expressions.md
-[_PathExprSegment_]: ../paths.md#paths-in-expressions
-[visible]: ../visibility-and-privacy.md
-[trait objects]: ../types/trait-object.md
+[_Expression_]: https://doc.rust-lang.org/expressions.md
+[_PathExprSegment_]: https://doc.rust-lang.org/paths.md#paths-in-expressions
+[visible]: https://doc.rust-lang.org/visibility-and-privacy.md
+[trait objects]: https://doc.rust-lang.org/types/trait-object.md
 [disambiguate call]: call-expr.md#disambiguating-function-calls
 [disambiguating function call syntax]: call-expr.md#disambiguating-function-calls
 [dereference]: operator-expr.md#the-dereference-operator
-[methods]: ../items/associated-items.md#methods
-[unsized coercion]: ../type-coercions.md#unsized-coercions
+[methods]: https://doc.rust-lang.org/items/associated-items.md#methods
+[unsized coercion]: https://doc.rust-lang.org/type-coercions.md#unsized-coercions
 
 <!-- 2020-11-3 -->
 <!-- checked -->

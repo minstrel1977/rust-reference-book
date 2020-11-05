@@ -49,10 +49,10 @@
 [pointer aliasing rules]: http://llvm.org/docs/LangRef.html#pointer-aliasing-rules
 [undef]: http://llvm.org/docs/LangRef.html#undefined-values
 [`target_feature`]: attributes/codegen.md#the-target_feature-attribute
-[`UnsafeCell<U>`]: ../std/cell/struct.UnsafeCell.html
-[Rustonomicon]: ../nomicon/index.html
-[`NonNull<T>`]: ../core/ptr/struct.NonNull.html
-[`NonZero*`]: ../core/num/index.html
+[`UnsafeCell<U>`]: https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html
+[Rustonomicon]: https://doc.rust-lang.org/nomicon/index.html
+[`NonNull<T>`]: https://doc.rust-lang.org/core/ptr/struct.NonNull.html
+[`NonZero*`]: https://doc.rust-lang.org/core/num/index.html
 
 <!-- 2020-11-3 -->
 <!-- checked -->

@@ -185,7 +185,7 @@ commit: ecb53d2015ce93b3519ee0b358fc13fa9b3f723d <br />
 <span class="boring">}
 </span></code></pre></pre>
 <p>因为 <code>'static</code> 比生存期参数 <code>'a</code> 的寿命长，所以 <code>&amp;'static str</code> 是 <code>&amp;'a str</code> 的子类型。</p>
-<p><a href="../nomicon/hrtb.html">高阶</a><a href="types/function-pointer.html">函数指针</a>和<a href="types/trait-object.html">trait对象</a>它们都可以形成另一种子父子类型的关系。它们是那些通过替换高阶生存期而得出的类型的子类型。举些例子：</p>
+<p><a href="https://doc.rust-lang.org/nomicon/hrtb.html">高阶</a><a href="types/function-pointer.html">函数指针</a>和<a href="types/trait-object.html">trait对象</a>它们都可以形成另一种子父子类型的关系。它们是那些通过替换高阶生存期而得出的类型的子类型。举些例子：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

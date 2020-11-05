@@ -25,11 +25,11 @@ let boxed_array: Box<[i32]> = Box::new([1, 2, 3]);
 
 > 注意：标准库类型 [`Vec<T>`] 提供了堆分配方案的可调整大小的数组类型。
 > 
-[_Expression_]: ../expressions.md
-[_Type_]: ../types.md#type-expressions
+[_Expression_]: https://doc.rust-lang.org/expressions.md
+[_Type_]: https://doc.rust-lang.org/types.md#type-expressions
 [`Vec<T>`]: https://doc.rust-lang.org/std/vec/struct.Vec.html
 [`usize`]: numeric.md#machine-dependent-integer-types
-[constant expression]: ../const_eval.md#constant-expressions
+[constant expression]: https://doc.rust-lang.org/const_eval.md#constant-expressions
 
 <!-- 2020-11-3 -->
 <!-- checked -->

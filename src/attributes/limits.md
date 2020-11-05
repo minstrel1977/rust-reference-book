@@ -54,9 +54,9 @@ fn f<T>(x: T) {}
 f((1, 2, 3, 4, 5, 6, 7, 8, 9));
 ```
 
-[_MetaNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
-[attributes]: ../attributes.md
-[crate]: ../crates-and-source-files.md
+[_MetaNameValueStr_]: https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax
+[attributes]: https://doc.rust-lang.org/attributes.md
+[crate]: https://doc.rust-lang.org/crates-and-source-files.md
 
 <!-- 2020-11-3 -->
 <!-- checked -->

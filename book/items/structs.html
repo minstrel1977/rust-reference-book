@@ -180,13 +180,13 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
    | <em>TupleStruct</em></p>
 <p><em>StructStruct</em> :<br />
    <code>struct</code>
-<a href="../identifiers.html">IDENTIFIER</a> 
+<a href="https://doc.rust-lang.org/identifiers.md">IDENTIFIER</a> 
 <a href="generics.html"><em>Generics</em></a><sup>?</sup>
 <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup>
 ( <code>{</code> <em>StructFields</em><sup>?</sup> <code>}</code> | <code>;</code> )</p>
 <p><em>TupleStruct</em> :<br />
    <code>struct</code>
-<a href="../identifiers.html">IDENTIFIER</a> 
+<a href="https://doc.rust-lang.org/identifiers.md">IDENTIFIER</a> 
 <a href="generics.html"><em>Generics</em></a><sup>?</sup>
 <code>(</code> <em>TupleFields</em><sup>?</sup> <code>)</code>
 <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup>
@@ -194,17 +194,17 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <p><em>StructFields</em> :<br />
    <em>StructField</em> (<code>,</code> <em>StructField</em>)<sup>*</sup> <code>,</code><sup>?</sup></p>
 <p><em>StructField</em> :<br />
-   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup><br />
-   <a href="../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup><br />
-   <a href="../identifiers.html">IDENTIFIER</a> <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a></p>
+   <a href="https://doc.rust-lang.org/attributes.md"><em>OuterAttribute</em></a><sup>*</sup><br />
+   <a href="https://doc.rust-lang.org/visibility-and-privacy.md"><em>Visibility</em></a><sup>?</sup><br />
+   <a href="https://doc.rust-lang.org/identifiers.md">IDENTIFIER</a> <code>:</code> <a href="https://doc.rust-lang.org/types.md#type-expressions"><em>Type</em></a></p>
 <p><em>TupleFields</em> :<br />
    <em>TupleField</em> (<code>,</code> <em>TupleField</em>)<sup>*</sup> <code>,</code><sup>?</sup></p>
 <p><em>TupleField</em> :<br />
-   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup><br />
-   <a href="../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup><br />
-   <a href="../types.html#type-expressions"><em>Type</em></a></p>
+   <a href="https://doc.rust-lang.org/attributes.md"><em>OuterAttribute</em></a><sup>*</sup><br />
+   <a href="https://doc.rust-lang.org/visibility-and-privacy.md"><em>Visibility</em></a><sup>?</sup><br />
+   <a href="https://doc.rust-lang.org/types.md#type-expressions"><em>Type</em></a></p>
 </blockquote>
-<p><em>结构体</em>是一个使用关键字 <code>struct</code> 定义的标称型(nominal)<a href="../types/struct.html">结构体类型</a>。</p>
+<p><em>结构体</em>是一个使用关键字 <code>struct</code> 定义的标称型(nominal)<a href="https://doc.rust-lang.org/types/struct.md">结构体类型</a>。</p>
 <p>结构体(<code>struct</code>)数据项的一个示例和它的使用方法：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -214,7 +214,7 @@ let p = Point {x: 10, y: 11};
 let px: i32 = p.x;
 <span class="boring">}
 </span></code></pre></pre>
-<p><em>元组结构体</em>是一个标称型(nominal)<a href="../types/tuple.html">元组类型</a>，也是用关键字 <code>struct</code> 定义的。例如：</p>
+<p><em>元组结构体</em>是一个标称型(nominal)<a href="https://doc.rust-lang.org/types/tuple.md">元组类型</a>，也是用关键字 <code>struct</code> 定义的。例如：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -240,7 +240,7 @@ const Cookie: Cookie = Cookie {};
 let c = [Cookie, Cookie {}, Cookie, Cookie {}];
 <span class="boring">}
 </span></code></pre></pre>
-<p>结构体的精确内存布局还没有规范下来。目前可以使用 <a href="../type-layout.html#representations"><code>repr</code>属性</a>来指定特定的布局。</p>
+<p>结构体的精确内存布局还没有规范下来。目前可以使用 <a href="https://doc.rust-lang.org/type-layout.md#representations"><code>repr</code>属性</a>来指定特定的布局。</p>
 <!-- 2020-11-3 -->
 <!-- checked -->
 

@@ -222,8 +222,8 @@ pub fn f() {}
 [IDENTIFIER]: identifiers.md
 [RAW_STRING_LITERAL]: tokens.md#raw-string-literals
 [STRING_LITERAL]: tokens.md#string-literals
-[The Rustdoc Book]: ../rustdoc/the-doc-attribute.html
-[The Unstable Book]: ../unstable-book/index.html
+[The Rustdoc Book]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
+[The Unstable Book]: https://doc.rust-lang.org/unstable-book/index.html
 [_DelimTokenTree_]: macros.md
 [_LiteralExpression_]: expressions/literal-expr.md
 [_SimplePath_]: paths.md#simple-paths
