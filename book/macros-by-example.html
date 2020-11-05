@@ -204,7 +204,7 @@ commit: 30ccf092c7c1d92b2398e28d4abf8c5ba6c31cba <br />
    <a href="macros.html"><em>DelimTokenTree</em></a></p>
 </blockquote>
 <p><code>macro_rules</code> 允许用户以声明性的(declarative)方式定义句法扩展。我们称这种扩展形式为“声明宏（macros by example）”或简称“宏”。</p>
-<p>每个声明宏都有一个名称和一条或多条<em>规则</em>。每条规则都有两部分：一个<em>匹配器(matcher)</em>，描述它匹配的句法；一个<em>转换器(transcriber)</em>，描述成功匹配后将执行的替代调用句法。匹配器和转换器都必须由定界符包围。宏可以扩展为表达式、语句、数据项（包括 trait、impl 和外来数据项）、类型或模式。</p>
+<p>每个声明宏都有一个名称和一条或多条<em>规则</em>。每条规则都有两部分：一个<em>匹配器(matcher)</em>，描述它匹配的句法；一个<em>转换器(transcriber)</em>，描述成功匹配后将执行的替代调用句法。匹配器和转换器都必须由定界符(delimiter)包围。宏可以扩展为表达式、语句、数据项（包括 trait、impl 和外来数据项）、类型或模式。</p>
 <h2><a class="header" href="#transcribing" id="transcribing">Transcribing</a></h2>
 <h2><a class="header" href="#转换" id="转换">转换</a></h2>
 <p>当宏被调用时，宏扩展器(macro expander)按名称查找宏调用，并依次尝试此宏中的每条宏规则。宏会根据第一个成功的匹配进行转换；如果当前转换结果导致错误，也不会再尝试进行后续匹配。在匹配时，不会执行预判；如果编译器不能明确地确定如何一个标记码一个标记码地解析宏调用，则会报错。在下面的示例中，编译器不会越过标识符，去提前查看后跟的标记码是 <code>)</code>，尽管这能帮助它明确地解析调用：</p>
@@ -218,7 +218,7 @@ commit: 30ccf092c7c1d92b2398e28d4abf8c5ba6c31cba <br />
 ambiguity!(error); // 错误: 局部歧义(local ambiguity)
 <span class="boring">}
 </span></code></pre></pre>
-<p>在匹配器和转换器中，标记码 <code>$</code> 用于从宏引擎中调用特殊行为（下文<a href="#metavariables">元变量</a>和<a href="#repetitions">重复段</a>中有详述）。不属于此类调用的标记码将按字面意义进行匹配和转换，除了一个例外。这个例外是匹配器的外层定界符将匹配任何一对定界符。因此，比如匹配器 <code>(())</code> 将匹配 <code>{()}</code>，而 <code>{{}}</code> 不行。字符 <code>$</code> 不能按字面意义匹配或转换。</p>
+<p>在匹配器和转换器中，标记码 <code>$</code> 用于从宏引擎中调用特殊行为（下文<a href="#metavariables">元变量</a>和<a href="#repetitions">重复元</a>中有详述）。不属于此类调用的标记码将按字面意义进行匹配和转换，除了一个例外。这个例外是匹配器的外层定界符将匹配任何一对定界符。因此，比如匹配器 <code>(())</code> 将匹配 <code>{()}</code>，而 <code>{{}}</code> 不行。字符 <code>$</code> 不能按字面意义匹配或转换。</p>
 <p>当将当前匹配的匹配段转发给另一个声明宏时，第二个宏中的匹配器看到的将是此匹配段类型的不透明抽象句法树(opaque AST)。第二个宏不能使用字面量标记码来匹配匹配器中的这个匹配段，唯一可看到/使用的就是此匹配段类型一样的匹配段类型指示符(fragment specifier)。但匹配段类型 <code>ident</code>、<code>lifetime</code>、和 <code>tt</code> 是几个例外，它们<em>可以</em>通过字面量标记码进行匹配。下面示例展示了这一限制：（译者注：匹配段类型指示符和匹配段可以看做是同一回事儿，宏中各部件的定义可以凑合着看看译者未能翻译完成的<a href="macro-ambiguity.html">宏定义规范</a>）</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
@@ -269,22 +269,22 @@ foo!(3);
 <li><code>vis</code>: 可能为空的<a href="visibility-and-privacy.html"><em>可见性</em></a>限定符</li>
 <li><code>literal</code>: 匹配 <code>-</code><sup>?</sup><a href="expressions/literal-expr.html"><em>字面量表达式</em></a></li>
 </ul>
-<p>因为匹配段类型已在匹配器中指定了，则在转换器中，元变量只简单地用 <code>$</code><em>名称</em> 这种形式来指代就行了。元变量最终将被替换为跟它们匹配上的句法元素。元变量关键字 <code>$crate</code> 可以用来指代当前的 crate（请参阅后面的<a href="#hygiene">卫生性</a>）。元变量可以被多次转换，也可以完全不转换。</p>
+<p>因为匹配段类型已在匹配器中指定了，则在转换器中，元变量只简单地用 <code>$</code><em>名称</em> 这种形式来指代就行了。元变量最终将被替换为跟它们匹配上的句法元素。元变量关键字 <code>$crate</code> 可以用来指代当前的 crate（请参阅后面的<a href="#hygiene">卫生性(hygiene)</a>章节）。元变量可以被多次转换，也可以完全不转换。</p>
 <h2><a class="header" href="#repetitions" id="repetitions">Repetitions</a></h2>
-<h2><a class="header" href="#重复段" id="重复段">重复段</a></h2>
-<p>在匹配器和转换器中，重复段被表示为通过将需要重复的标记码放在 <code>$(</code>…<code>)</code> 内，然后后跟一个重复运算符，这两者之间可以放置一个可选的分隔符。分隔符可以是除定界符或重复运算符之外的任何标记码，其中分号(<code>;</code>)和逗号(<code>,</code>)最常见。例如： <code>$( $i:ident ),*</code> 表示用逗号分隔的任何数量的标识符。嵌套的重复段是合法的。</p>
-<p>重复运算符为：</p>
+<h2><a class="header" href="#重复元" id="重复元">重复元</a></h2>
+<p>无论在匹配器中，还是在转换器中，都是通过将需要重复的标记码放在 <code>$(</code>…<code>)</code> 内，然后后跟一个重复元运算符(repetition operator)，这两者之间可以放置一个可选的分隔符(separator token)来表示重复元。分隔符可以是除定界符或重复元运算符之外的任何标记码，其中分号(<code>;</code>)和逗号(<code>,</code>)最常见。例如： <code>$( $i:ident ),*</code> 表示用逗号分隔的任何数量的标识符。嵌套的重复元是合法的。</p>
+<p>重复元运算符为：</p>
 <ul>
-<li><code>*</code> — 表示重复任意次数。</li>
-<li><code>+</code> — 表示至少重复一次。</li>
-<li><code>?</code> — 表示一个可选匹配段，可以出现零次或一次。</li>
+<li><code>*</code> — 表示任意数量的重复元。</li>
+<li><code>+</code> — 表示至少有一个重复元。</li>
+<li><code>?</code> — 表示一个可选的匹配段，可以出现零次或一次。</li>
 </ul>
 <p>因为 <code>?</code> 表示最多出现一次，所以它不能与分隔符一起使用。</p>
-<p>重复的匹配段匹配并转换为指定数量的匹配段，由分隔符分隔。元变量与它们对应的匹配段的每次重复段相匹配。例如，上面示例中的 <code>$( $i:ident ),*</code> 将 <code>$i</code> 去匹配列表中的所有标识符。</p>
-<p>在转换过程中，重复段会受到额外的限制，以便于编译器知道该如何正确地扩展它们：</p>
+<p>通过分隔符的分隔，重复的匹配段都会被匹配和转换为指定的数量的匹配段。元变量就和这些每个段中的重复元相匹配。例如，之前示例中的 <code>$( $i:ident ),*</code> 将 <code>$i</code> 去匹配列表中的所有标识符。</p>
+<p>在转换过程中，重复元会受到额外的限制，以便于编译器知道该如何正确地扩展它们：</p>
 <ol>
-<li>在转换器中，元变量必须与它在匹配器中出现的次数、指示符类型以及其在重复段内的嵌套顺序都完全相同。因此，对于匹配器 <code>$( $i:ident ),*</code>，转换器 <code>=&gt; { $i }</code>, <code>=&gt; { $( $( $i)* )* }</code> 和 <code>=&gt; { $( $i )+ }</code> 都是非法的，但是 <code>=&gt; { $( $i );* }</code> 是正确的，它用分号分隔的列表替换了逗号分隔的标识符列表。</li>
-<li>转换器中的每个重复段必须至少包含一个元变量，以便确定扩展多少次。如果在同一个重复段中出现多个元变量，则它们必须绑定到相同数量的匹配段上。例如，<code>( $( $i:ident ),* ; $( $j:ident ),* ) =&gt;( $( ($i,$j) ),*</code> 里，绑定到 <code>$j</code> 的匹配段的数量必须与绑定到 <code>$i</code> 上的相同。这意味着用 <code>(a, b, c; d, e, f</code>) 调用这个宏是合法的，并且可扩展到 <code>((a,d), (b,e), (c,f))</code>，但是 <code>(a, b, c; d, e)</code> 是非法的，因为前后绑定的数量不同。此要求适用于嵌套的重复段的每一层。</li>
+<li>在转换器中，元变量必须与它在匹配器中出现的次数、指示符类型以及其在重复元内的嵌套顺序都完全相同。因此，对于匹配器 <code>$( $i:ident ),*</code>，转换器 <code>=&gt; { $i }</code>, <code>=&gt; { $( $( $i)* )* }</code> 和 <code>=&gt; { $( $i )+ }</code> 都是非法的，但是 <code>=&gt; { $( $i );* }</code> 是正确的，它用分号分隔的标识符列表替换了逗号分隔的标识符列表。</li>
+<li>转换器中的每个重复元必须至少包含一个元变量，以便确定扩展多少次。如果在同一个重复元中出现多个元变量，则它们必须绑定到相同数量的匹配段上，不能有的多，有的少。例如，<code>( $( $i:ident ),* ; $( $j:ident ),* ) =&gt;( $( ($i,$j) ),*</code> 里，绑定到 <code>$j</code> 的匹配段的数量必须与绑定到 <code>$i</code> 上的相同。这意味着用 <code>(a, b, c; d, e, f</code>) 调用这个宏是合法的，并且可扩展到 <code>((a,d), (b,e), (c,f))</code>，但是 <code>(a, b, c; d, e)</code> 是非法的，因为前后绑定的数量不同。此要求适用于嵌套的重复元的每一层。</li>
 </ol>
 <h2><a class="header" href="#scoping-exporting-and-importing" id="scoping-exporting-and-importing">Scoping, Exporting, and Importing</a></h2>
 <h2><a class="header" href="#作用域导出以及导入" id="作用域导出以及导入">作用域、导出以及导入</a></h2>
@@ -494,12 +494,12 @@ macro_rules! helper {
 <li><code>vis</code> 或许只能后跟一个：<code>,</code>、非原生 <code>priv</code> 以外的标识符、可以开始类型的任何标记码 或 带有任何 <code>ident</code>、<code>ty</code>、<code>path</code> 匹配段类型指示符的元变量。</li>
 <li>其它所有的匹配段类型指示符没有限制。</li>
 </ul>
-<p>当涉及到重复段时，这些规则适用于所有可能的展开次数，注意需将分隔符考虑在内。这意味着：</p>
+<p>当涉及到重复元时，这些规则适用于所有可能的展开次数，注意需将分隔符考虑在内。这意味着：</p>
 <ul>
-<li>如果重复段包含分隔符，则分隔符必须能够跟随重复段的内容重复。</li>
-<li>如果重复段可以重复多次(<code>*</code> 或 <code>+</code>)，那么重复段的内容必须能自我重复。</li>
-<li>重复段前后内容必须必须严格匹配匹配器中指定的前后内容。</li>
-<li>如果重复段可以匹配零次(<code>*</code> 或 <code>?</code>)，那么它后面的内容必须直接跟在它前面的内容后面。</li>
+<li>如果重复元包含分隔符，则分隔符必须能够跟随重复元的内容重复。</li>
+<li>如果重复元可以重复多次(<code>*</code> 或 <code>+</code>)，那么重复元的内容必须能自我重复。</li>
+<li>重复元前后内容必须必须严格匹配匹配器中指定的前后内容。</li>
+<li>如果重复元可以匹配零次(<code>*</code> 或 <code>?</code>)，那么它后面的内容必须直接跟在它前面的内容后面。</li>
 </ul>
 <p>有关更多详细信息，请参阅[正式规范]。</p>
 <div class="footnote-definition" id="请求帮助"><sup class="footnote-definition-label">1</sup>

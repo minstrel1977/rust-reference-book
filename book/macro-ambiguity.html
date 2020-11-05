@@ -180,10 +180,10 @@ commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 <br />
 <li><code>matcher</code>：匹配器，<code>macro_rules</code>调用中一条规则的左侧部分，或其子部分。</li>
 <li><code>macro parser</code>：宏解释器，Rust 解析器中的一段代码，它收集使用所有匹配器的句法规则来解析输入。 <!-- the bit of code in the Rust parser that will parse the input using a grammar derived from all of the matchers. tobemodify--></li>
 <li><code>fragment</code>：匹配段，给定匹配器将接受(或“匹配”)的 Rust 句法对象；<!-- The class of Rust syntax that a given matcher will accept (or "match"). tobemodify--></li>
-<li><code>repetition</code> ：重复段，遵循常规性重复模式的匹配段。<!-- a fragment that follows a regular repeating pattern. tobemodify--></li>
-<li><code>NT</code>：non-terminal，非终结符，可以出现在匹配器中的各种“元变量”或重复段匹配器，在声明宏(MBE)句法中用前导的 <code>$</code> 字符指定。<!-- non-terminal, the various "meta-variables" or repetition matchers that can appear in a matcher, specified in MBE syntax with a leading `$` character. --></li>
+<li><code>repetition</code> ：重复元，遵循常规性重复模式的匹配段。<!-- a fragment that follows a regular repeating pattern. tobemodify--></li>
+<li><code>NT</code>：non-terminal，非终结符，可以出现在匹配器中的各种“元变量”或重复元匹配器，在声明宏(MBE)句法中用前导的 <code>$</code> 字符指定。<!-- non-terminal, the various "meta-variables" or repetition matchers that can appear in a matcher, specified in MBE syntax with a leading `$` character. --></li>
 <li><code>simple NT</code>：简单NT，“元变量”类型的非终结符(下面会进一步讨论)。</li>
-<li><code>complex NT</code>：复杂NT，有重复段匹配规则的非终结符，通过重复操作符(<code>\*</code>, <code>+</code>, <code>?</code>)指定。<!-- a repetition matching non-terminal, specified via repetition operators (`\*`, `+`, `?`). --></li>
+<li><code>complex NT</code>：复杂NT，有重复元匹配规则的非终结符，通过重复操作符(<code>\*</code>, <code>+</code>, <code>?</code>)指定。<!-- a repetition matching non-terminal, specified via repetition operators (`\*`, `+`, `?`). --></li>
 <li><code>token</code>：标记码，匹配器中不可再细分的元素；例如，标识符、操作符、开/闭定界符、<em>和</em>简单NT(simple NT)。</li>
 <li><code>token tree</code>：标记树，标记树由标记码(叶)、复杂NT和子标记树（标记树的有限序列）的组成的树形数据结构。</li>
 <li><code>delimiter token</code>：定界符，一种标记，用于划分一个匹配段的结束和下一个匹配段的开始。</li>
@@ -204,16 +204,16 @@ commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 <br />
 <span class="boring">}
 </span></code></pre></pre>
 <p><code>(start $foo:expr $($i:ident),\* end)</code> 是一个匹配器(matcher)。整个匹配器是一个有界序列(使用开闭定界符 <code>(</code> 和 <code>)</code> 界定)，<code>$foo</code> 和 <code>$i</code> 是简单NT(simple NT)， <code>expr</code> 和 <code>ident</code> 是它们各自的匹配段类型指示符(fragment specifiers)。</p>
-<p><code>$(i:ident),\*</code> <em>也</em>是一个 NT；它是一个复杂NT，匹配标识符类型的以逗号为分隔符的重复段。<code>,</code> 是这个复杂NT的分隔符，它出现在匹配段的每对元素（如果有的话）之间。</p>
+<p><code>$(i:ident),\*</code> <em>也</em>是一个 NT；它是一个复杂NT，匹配标识符类型的以逗号为分隔符的重复元。<code>,</code> 是这个复杂NT的分隔符，它出现在匹配段的每对元素（如果有的话）之间。</p>
 <p>复杂NT 的另一个例子是 <code>$(hi $e:expr ;)+</code>，它匹配 <code>hi &lt;expr&gt;; hi &lt;expr&gt;; ...</code> 这种格式的代码，其中 <code>hi &lt;expr&gt;;</code> 至少出现一次。注意，这个复杂NT没有专用的分隔符。</p>
 <p>(请注意，Rust的解析器确保有界序列始终具有正确的标记树结构嵌套以及开/闭定界符的正确匹配。)</p>
 <p>我们倾向于使用变量“M”表示匹配器，变量“t”和“u”表示任意单个标记码，变量“tt”和“uu”表示任意标记树。（使用“tt”确实存在潜在的歧义，因为它的额外角色是一个匹配段类型指示符；但不用太担心，因为从上下文中，可以很清楚地看出哪个解释符合语义）</p>
-<p>“SEP”将代表分隔符，“OP”将代表重复运算符 <code>\*</code>, <code>+</code>, 和 <code>?</code> “OPEN”/“CLOSE”覆盖围绕定界序列的匹配标记对（例如 <code>[</code> 和 <code>]</code> ）。</p>
+<p>“SEP”将代表分隔符，“OP”将代表重复元运算符 <code>\*</code>, <code>+</code>, 和 <code>?</code> “OPEN”/“CLOSE”覆盖围绕定界序列的匹配标记对（例如 <code>[</code> 和 <code>]</code> ）。</p>
 <p>希腊字母 &quot;α&quot; &quot;β&quot; &quot;γ&quot; &quot;δ&quot; 代表潜在的空标记树序列。（然而，希腊字母 &quot;ε&quot;(epsilon)在表示形式中有特殊的作用，并不代表标记树序列。）</p>
 <ul>
 <li>这种希腊字母约定通常只是在需要表现一个序列的技术细节时才被引入；特别是，当我们希望<em>强调</em>我们操作的是一个标记树序列时，我们将对该序列使用表义符 &quot;tt ...&quot;，而不是一个希腊字母。</li>
 </ul>
-<p>请注意，匹配器仅仅是一个标记树。如前所述，“简单NT”是一个元变量NT；因此，这是一个非重复段。例如，<code>$foo:ty</code> 是一个简单NT，而 <code>$($foo:ty)+</code> 是一个复杂NT。</p>
+<p>请注意，匹配器仅仅是一个标记树。如前所述，“简单NT”是一个元变量NT；因此，这是一个非重复元。例如，<code>$foo:ty</code> 是一个简单NT，而 <code>$($foo:ty)+</code> 是一个复杂NT。</p>
 <p>还请注意，在这种形式的上下文中，术语“标记码(token)”通常<em>包括</em>简单NT。</p>
 <p>最后，读者要记住，根据这种形式的定义，没有简单NT 会匹配空匹配段，同样也没有标记码会匹配 Rust句法的空匹配段。(因此，能够匹配空匹配段的<em>唯一的</em> NT是复杂NT。)这实际上不是真的，因为 <code>vis</code> 匹配器可以匹配空匹配段。因此，为了达到形式统一的目的，我们将把 <code>$v:vis</code> 看作是 <code>$($v:vis)?</code>，来要求匹配器匹配一个空匹配段。</p>
 <h3><a class="header" href="#the-matcher-invariants" id="the-matcher-invariants">The Matcher Invariants</a></h3>
@@ -297,7 +297,7 @@ FIRST(M) is defined by case analysis on the sequence M and the structure of its 
 <p>FIRST(M) = (FIRST(<code>tt ...</code>) \ {ε}) ∪ SEP_SET(M) ∪ ALPHA_SET(M).</p>
 </li>
 </ul>
-<p>复杂NT的定义值得商榷。SEP_SET(M) 定义了分隔符可能是 M 的第一个有效标记码的可能性，当定义了分隔符且重复匹配段可能为空时，就会发生这种情况。ALPHA_SET(M)定义了复杂NT可能为空的可能性，这意味着 M 的第一个有效标记码集合是后继标记树序列 <code>α</code> 。当使用了操作符 <code>\*</code> 或 <code>?</code> 时，这种情况下可能没有重复段。理论上，如果 <code>+</code> 与一个可能为空的重复匹配段一起使用，也会出现这种情况，但是第三个不变式禁止这样做。
+<p>复杂NT的定义值得商榷。SEP_SET(M) 定义了分隔符可能是 M 的第一个有效标记码的可能性，当定义了分隔符且重复匹配段可能为空时，就会发生这种情况。ALPHA_SET(M)定义了复杂NT可能为空的可能性，这意味着 M 的第一个有效标记码集合是后继标记树序列 <code>α</code> 。当使用了操作符 <code>\*</code> 或 <code>?</code> 时，这种情况下可能没有重复元。理论上，如果 <code>+</code> 与一个可能为空的重复匹配段一起使用，也会出现这种情况，但是第三个不变式禁止这样做。
 The definition for complex NTs deserves some justification. SEP_SET(M) defines the possibility that the separator could be a valid first token for M, which happens when there is a separator defined and the repeated fragment could be empty. ALPHA_SET(M) defines the possibility that the complex NT could be empty, meaning that M's valid first tokens are those of the following token-tree sequences <code>α</code>. This occurs when either <code>\*</code> or <code>?</code> is used, in which case there could be zero repetitions. In theory, this could also occur if <code>+</code> was used with a potentially-empty repeating fragment, but this is forbidden by the third invariant.</p>
 <p>From there, clearly FIRST(M) can include any token from SEP_SET(M) or ALPHA_SET(M), and if the complex NT match is nonempty, then any token starting FIRST(<code>tt ...</code>) could work too. The last piece to consider is ε. SEP_SET(M) and FIRST(<code>tt ...</code>) \ {ε} cannot contain ε, but ALPHA_SET(M) could. Hence, this definition allows M to accept ε if and only if ε ∈ ALPHA_SET(M) does. This is correct because for M to accept ε in the complex NT case, both the complex NT and α must accept it. If OP = <code>+</code>, meaning that the complex NT cannot be empty, then by definition ε ∉ ALPHA_SET(M). Otherwise, the complex NT can accept zero repetitions, and then ALPHA_SET(M) = FOLLOW(<code>α</code>). So this definition is correct with respect to \varepsilon as well.</p>
 <h4><a class="header" href="#last" id="last">LAST</a></h4>
