@@ -203,7 +203,7 @@ commit: 30ccf092c7c1d92b2398e28d4abf8c5ba6c31cba <br />
 <p><em>MacroTranscriber</em> :<br />
    <a href="macros.html"><em>DelimTokenTree</em></a></p>
 </blockquote>
-<p><code>macro_rules</code> 允许用户以声明方式定义句法扩展。我们称这种扩展形式为“声明宏（macros by example）”或简称“宏”。</p>
+<p><code>macro_rules</code> 允许用户以声明性的(declarative)方式定义句法扩展。我们称这种扩展形式为“声明宏（macros by example）”或简称“宏”。</p>
 <p>每个声明宏都有一个名称和一条或多条<em>规则</em>。每条规则都有两部分：一个<em>匹配器(matcher)</em>，描述它匹配的句法；一个<em>转换器(transcriber)</em>，描述成功匹配后将执行的替代调用句法。匹配器和转换器都必须由定界符包围。宏可以扩展为表达式、语句、数据项（包括 trait、impl 和外来数据项）、类型或模式。</p>
 <h2><a class="header" href="#transcribing" id="transcribing">Transcribing</a></h2>
 <h2><a class="header" href="#转换" id="转换">转换</a></h2>
@@ -218,8 +218,8 @@ commit: 30ccf092c7c1d92b2398e28d4abf8c5ba6c31cba <br />
 ambiguity!(error); // 错误: 局部歧义(local ambiguity)
 <span class="boring">}
 </span></code></pre></pre>
-<p>在匹配器和转换器中，标记码 <code>$</code> 用于从宏引擎中调用特殊行为(下文<a href="#metavariables">元变量</a>和<a href="#repetitions">重复段</a>中有详述)。不属于此类调用的标记码将按字面意义进行匹配和转换，除了一个例外。这个例外情况是匹配器的外层定界符将匹配任何一对定界符。因此，比如匹配器 <code>(())</code> 将匹配 <code>{()}</code>，而 <code>{{}}</code> 不行。字符 <code>$</code> 不能按字面意义匹配或转换。</p>
-<p>当将当前匹配的匹配段转发给另一个声明宏时，第二个宏中的匹配器看到的将是此匹配段的不透明抽象句法树(opaque AST)。第二个宏不能使用字面量标记码来匹配匹配器中的匹配段，只能使用相同类型的匹配段类型指示符(fragment specifier)。片段类型 <code>ident</code>、<code>lifetime</code>、和 <code>tt</code> 是几个例外，它们<em>可以</em>通过字面量标记码进行匹配。下面示例展示了这一限制：</p>
+<p>在匹配器和转换器中，标记码 <code>$</code> 用于从宏引擎中调用特殊行为（下文<a href="#metavariables">元变量</a>和<a href="#repetitions">重复段</a>中有详述）。不属于此类调用的标记码将按字面意义进行匹配和转换，除了一个例外。这个例外是匹配器的外层定界符将匹配任何一对定界符。因此，比如匹配器 <code>(())</code> 将匹配 <code>{()}</code>，而 <code>{{}}</code> 不行。字符 <code>$</code> 不能按字面意义匹配或转换。</p>
+<p>当将当前匹配的匹配段转发给另一个声明宏时，第二个宏中的匹配器看到的将是此匹配段类型的不透明抽象句法树(opaque AST)。第二个宏不能使用字面量标记码来匹配匹配器中的这个匹配段，唯一可看到/使用的就是此匹配段类型一样的匹配段类型指示符(fragment specifier)。但匹配段类型 <code>ident</code>、<code>lifetime</code>、和 <code>tt</code> 是几个例外，它们<em>可以</em>通过字面量标记码进行匹配。下面示例展示了这一限制：（译者注：匹配段类型指示符和匹配段可以看做是同一回事儿，宏中各部件的定义可以凑合着看看译者未能翻译完成的<a href="macro-ambiguity.html">宏定义规范</a>）</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -253,11 +253,11 @@ foo!(3);
 </span></code></pre></pre>
 <h2><a class="header" href="#metavariables" id="metavariables">Metavariables</a></h2>
 <h2><a class="header" href="#元变量" id="元变量">元变量</a></h2>
-<p>在匹配器中，<code>$</code><em>名称</em><code>:</code><em>匹配段类型指示符</em> 匹配符合指定句法类型的 Rust 匹配段，并将其绑定到元变量 <code>$</code><em>名称</em>上。有效的匹配段类型指示符是：</p>
+<p>在匹配器中，<code>$</code><em>名称</em><code>:</code><em>匹配段类型指示符</em> 这种句法格式匹配符合指定句法类型的 Rust 句法段，并将其绑定到元变量 <code>$</code><em>名称</em>上。有效的匹配段类型指示符包括：</p>
 <ul>
 <li><code>item</code>: <a href="items.html"><em>数据项</em></a></li>
 <li><code>block</code>: <a href="expressions/block-expr.html"><em>块表达式</em></a></li>
-<li><code>stmt</code>: 句尾没有分号的<a href="statements.html"><em>语句</em></a>（需要分号的数据项语句除外）</li>
+<li><code>stmt</code>: 去除了句尾分号的<a href="statements.html"><em>语句</em></a>（排除需要分号的数据项语句）</li>
 <li><code>pat</code>: <a href="patterns.html"><em>模式</em></a></li>
 <li><code>expr</code>: <a href="expressions.html"><em>表达式</em></a></li>
 <li><code>ty</code>: <a href="types.html#type-expressions"><em>类型</em></a></li>
