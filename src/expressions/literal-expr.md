@@ -17,7 +17,7 @@
 > &nbsp;&nbsp; | [FLOAT_LITERAL]\
 > &nbsp;&nbsp; | [BOOLEAN_LITERAL]
 
-*字面量表达式*由上面的句法规则里给定的任一[字面量](https://doc.rust-lang.org/tokens.md#literals)形式组成。它直接描述一个数字、字符、字符串或布尔值。
+*字面量表达式*由上面的句法规则里给定的任一[字面量][literal]形式组成。它直接描述一个数字、字符、字符串或布尔值。
 
 ```rust
 "hello";   // 字符串类型
