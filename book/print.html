@@ -1862,8 +1862,8 @@ proc-macro = true
 <p>所有标记码都有一个关联的 <code>Span</code>。 <code>Span</code> 是一个不透明的值，不能被修改，但可以被制造。 <code>Span</code> 表示程序内的源代码范围，主要用于错误报告。可以修改任何标记码的 <code>Span</code>。</p>
 <h3><a class="header" href="#procedural-macro-hygiene" id="procedural-macro-hygiene">Procedural macro hygiene</a></h3>
 <h3><a class="header" href="#过程宏的卫生性" id="过程宏的卫生性">过程宏的卫生性</a></h3>
-<p>过程宏是<em>非卫生的(unhygienic)</em>。这意味着它的行为就好像它的输出令牌流是直接内联写入它前后的代码中一样。这意味着它会受到外部数据项的影响，也会影响外部导入。</p>
-<p>鉴于此限制，宏作者需要小心地确保他们的宏能在尽可能多的上下文中正常工作。这通常包括对库中数据项使用绝对路径(例如，使用 <code>::std::option::Option</code> 而不是 <code>Option</code>)，或者确保生成的函数具有不太可能与其他函数冲突的名称(如 <code>__internal_foo</code>，而不是 <code>foo</code>)。</p>
+<p>过程宏是<em>非卫生的(unhygienic)</em>。这意味着它的行为就好像它输出的标记流是直接内联写入它周围的代码中一样。这意味着它会受到外部数据项的影响，也会影响外部导入。</p>
+<p>鉴于此限制，宏作者需要小心地确保他们的宏能在尽可能多的上下文中正常工作。这通常包括对库中数据项使用绝对路径(例如，使用 <code>::std::option::Option</code> 而不是 <code>Option</code>)，或者确保生成的函数具有不太可能与其他函数冲突的名称（如 <code>__internal_foo</code>，而不是 <code>foo</code>）。</p>
 <h3><a class="header" href="#function-like-procedural-macros" id="function-like-procedural-macros">Function-like procedural macros</a></h3>
 <h3><a class="header" href="#类函数过程宏" id="类函数过程宏">类函数过程宏</a></h3>
 <p><em>类函数过程宏</em>是使用宏调用运算符（<code>!</code>）调用的过程宏。</p>
