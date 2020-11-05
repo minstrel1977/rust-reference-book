@@ -43,10 +43,10 @@ let m = Message::Move { x: 50, y: 200 };
 
 枚举变体表达式具有与[结构体表达式][structs]相同的语法、行为和限制，除了它不支持使用 `..` 句法。
 
-[IDENTIFIER]: https://doc.rust-lang.org/identifiers.md
-[TUPLE_INDEX]: https://doc.rust-lang.org/tokens.md#tuple-index
-[_Expression_]: https://doc.rust-lang.org/expressions.md
-[_PathInExpression_]: https://doc.rust-lang.org/paths.md#paths-in-expressions
+[IDENTIFIER]: ../identifiers.md
+[TUPLE_INDEX]: ../tokens.md#tuple-index
+[_Expression_]: ../expressions.md
+[_PathInExpression_]: ../paths.md#paths-in-expressions
 [structs]: struct-expr.md
 
 <!-- 2020-11-3 -->

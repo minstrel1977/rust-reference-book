@@ -67,16 +67,18 @@ let log_pi = pi.unwrap_or(1.0).log(2.72);
 
 </div>
 
+[trait object]: ../types/trait-object.md
+<!-- 上面这几个链接从原文来替换时小心 -->
 [_CallParams_]: call-expr.md
-[_Expression_]: https://doc.rust-lang.org/expressions.md
-[_PathExprSegment_]: https://doc.rust-lang.org/paths.md#paths-in-expressions
-[visible]: https://doc.rust-lang.org/visibility-and-privacy.md
-[trait objects]: https://doc.rust-lang.org/types/trait-object.md
+[_Expression_]: ../expressions.md
+[_PathExprSegment_]: ../paths.md#paths-in-expressions
+[visible]: ../visibility-and-privacy.md
+[trait objects]: ../types/trait-object.md
 [disambiguate call]: call-expr.md#disambiguating-function-calls
 [disambiguating function call syntax]: call-expr.md#disambiguating-function-calls
 [dereference]: operator-expr.md#the-dereference-operator
-[methods]: https://doc.rust-lang.org/items/associated-items.md#methods
-[unsized coercion]: https://doc.rust-lang.org/type-coercions.md#unsized-coercions
+[methods]: ../items/associated-items.md#methods
+[unsized coercion]: ../type-coercions.md#unsized-coercions
 
 <!-- 2020-11-3 -->
 <!-- checked -->

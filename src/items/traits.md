@@ -317,24 +317,24 @@ fn main() {
 }
 ```
 
-[IDENTIFIER]: https://doc.rust-lang.org/identifiers.md
-[WildcardPattern]: https://doc.rust-lang.org/patterns.md#wildcard-pattern
-[_BlockExpression_]: https://doc.rust-lang.org/expressions/block-expr.md
-[_Expression_]: https://doc.rust-lang.org/expressions.md
+[IDENTIFIER]: ../identifiers.md
+[WildcardPattern]: ../patterns.md#wildcard-pattern
+[_BlockExpression_]: ../expressions/block-expr.md
+[_Expression_]: ../expressions.md
 [_FunctionQualifiers_]: functions.md
 [_FunctionReturnType_]: functions.md
 [_Generics_]: generics.md
-[_MacroInvocationSemi_]: https://doc.rust-lang.org/macros.md#macro-invocation
-[_OuterAttribute_]: https://doc.rust-lang.org/attributes.md
-[_InnerAttribute_]: https://doc.rust-lang.org/attributes.md
-[_Pattern_]: https://doc.rust-lang.org/patterns.md
+[_MacroInvocationSemi_]: ../macros.md#macro-invocation
+[_OuterAttribute_]: ../attributes.md
+[_InnerAttribute_]: ../attributes.md
+[_Pattern_]: ../patterns.md
 [_SelfParam_]: associated-items.md#methods
-[_TypeParamBounds_]: https://doc.rust-lang.org/trait-bounds.md
-[_Type_]: https://doc.rust-lang.org/types.md#type-expressions
-[_Visibility_]: https://doc.rust-lang.org/visibility-and-privacy.md
+[_TypeParamBounds_]: ../trait-bounds.md
+[_Type_]: ../types.md#type-expressions
+[_Visibility_]: ../visibility-and-privacy.md
 [_WhereClause_]: generics.md#where-clauses
-[bounds]: https://doc.rust-lang.org/trait-bounds.md
-[trait object]: https://doc.rust-lang.org/types/trait-object.md
+[bounds]: ../trait-bounds.md
+[trait object]: ../types/trait-object.md
 [RFC 255]: https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md
 [associated items]: associated-items.md
 [method]: associated-items.md#methods
@@ -342,14 +342,14 @@ fn main() {
 [generics]: generics.md
 [where clauses]: generics.md#where-clauses
 [generic functions]: functions.md#generic-functions
-[unsafe]: https://doc.rust-lang.org/unsafety.md
+[unsafe]: ../unsafety.md
 [trait implementation]: implementations.md#trait-implementations
-[`Send`]: https://doc.rust-lang.org/special-types-and-traits.md#send
-[`Sync`]: https://doc.rust-lang.org/special-types-and-traits.md#sync
-[`Arc<Self>`]: https://doc.rust-lang.org/special-types-and-traits.md#arct
-[`Box<Self>`]: https://doc.rust-lang.org/special-types-and-traits.md#boxt
-[`Pin<P>`]: https://doc.rust-lang.org/special-types-and-traits.md#pinp
-[`Rc<Self>`]: https://doc.rust-lang.org/special-types-and-traits.md#rct
+[`Send`]: ../special-types-and-traits.md#send
+[`Sync`]: ../special-types-and-traits.md#sync
+[`Arc<Self>`]: ../special-types-and-traits.md#arct
+[`Box<Self>`]: ../special-types-and-traits.md#boxt
+[`Pin<P>`]: ../special-types-and-traits.md#pinp
+[`Rc<Self>`]: ../special-types-and-traits.md#rct
 
 <!-- 2020-11-3 -->
 <!-- checked -->

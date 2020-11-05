@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>函数指针 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>函数指针</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -176,22 +175,22 @@ commit: 3d1b9ae5e7a61da43ac83cc42815e29b34b350ba <br />
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>BareFunctionType</em> :<br />
-   <a href="https://doc.rust-lang.org/items/generics.md#where-clauses"><em>ForLifetimes</em></a><sup>?</sup> <a href="https://doc.rust-lang.org/items/functions.md"><em>FunctionQualifiers</em></a> <code>fn</code><br />
+   <a href="../items/generics.html#where-clauses"><em>ForLifetimes</em></a><sup>?</sup> <a href="../items/functions.html"><em>FunctionQualifiers</em></a> <code>fn</code><br />
        <code>(</code> <em>FunctionParametersMaybeNamedVariadic</em><sup>?</sup> <code>)</code> <em>BareFunctionReturnType</em><sup>?</sup></p>
 <p><em>BareFunctionReturnType</em>:<br />
-   <code>-&gt;</code> <a href="https://doc.rust-lang.org/types.md#type-expressions"><em>TypeNoBounds</em></a></p>
+   <code>-&gt;</code> <a href="../types.html#type-expressions"><em>TypeNoBounds</em></a></p>
 <p><em>FunctionParametersMaybeNamedVariadic</em> :<br />
    <em>MaybeNamedFunctionParameters</em> | <em>MaybeNamedFunctionParametersVariadic</em></p>
 <p><em>MaybeNamedFunctionParameters</em> :<br />
    <em>MaybeNamedParam</em> ( <code>,</code> <em>MaybeNamedParam</em> )<sup>*</sup> <code>,</code><sup>?</sup></p>
 <p><em>MaybeNamedParam</em> :<br />
-   <a href="https://doc.rust-lang.org/attributes.md"><em>OuterAttribute</em></a><sup>*</sup> ( ( <a href="https://doc.rust-lang.org/identifiers.md">IDENTIFIER</a> | <code>_</code> ) <code>:</code> )<sup>?</sup> <a href="https://doc.rust-lang.org/types.md#type-expressions"><em>Type</em></a></p>
+   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> ( ( <a href="../identifiers.html">IDENTIFIER</a> | <code>_</code> ) <code>:</code> )<sup>?</sup> <a href="../types.html#type-expressions"><em>Type</em></a></p>
 <p><em>MaybeNamedFunctionParametersVariadic</em> :<br />
-   ( <em>MaybeNamedParam</em> <code>,</code> )<sup>*</sup> <em>MaybeNamedParam</em> <code>,</code> <a href="https://doc.rust-lang.org/attributes.md"><em>OuterAttribute</em></a><sup>*</sup> <code>...</code></p>
+   ( <em>MaybeNamedParam</em> <code>,</code> )<sup>*</sup> <em>MaybeNamedParam</em> <code>,</code> <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <code>...</code></p>
 </blockquote>
 <p>函数指针类型（使用关键字 <code>fn</code> 写出）指的是在编译时不必知道其标识符的函数。它们也可以由<a href="function-item.html">函数项</a>类型或非捕获(non-capturing)<a href="closure.html">闭包</a>经过一次自动强转来创建。</p>
-<p>非安全(<code>unsafe</code>)限定符表示类型的值是一个<a href="https://doc.rust-lang.org/unsafe-functions.md">非安全函数</a>，而外部(<code>extern</code>)限定符表示它是一个<a href="https://doc.rust-lang.org/items/functions.md#extern-function-qualifier">外部函数</a>。</p>
-<p>可变参数只能通过 <a href="https://doc.rust-lang.org/items/external-blocks.md"><code>extern</code></a> 函数类型使用 <code>&quot;C&quot;</code> 或 <code>&quot;cdecl&quot;</code> 的调用约定来指定。</p>
+<p>非安全(<code>unsafe</code>)限定符表示类型的值是一个<a href="../unsafe-functions.html">非安全函数</a>，而外部(<code>extern</code>)限定符表示它是一个<a href="../items/functions.html#extern-function-qualifier">外部函数</a>。</p>
+<p>可变参数只能通过 <a href="../items/external-blocks.html"><code>extern</code></a> 函数类型使用 <code>&quot;C&quot;</code> 或 <code>&quot;cdecl&quot;</code> 的调用约定来指定。</p>
 <p>下面示例中 <code>Binop</code> 被定义为函数指针类型：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -209,7 +208,7 @@ x = bo(5,7);
 </span></code></pre></pre>
 <h2><a class="header" href="#attributes-on-function-pointer-parameters" id="attributes-on-function-pointer-parameters">Attributes on function pointer parameters</a></h2>
 <h2><a class="header" href="#函数指针参数上的属性" id="函数指针参数上的属性">函数指针参数上的属性</a></h2>
-<p>函数指针参数上的属性遵循与<a href="https://doc.rust-lang.org/items/functions.md#attributes-on-function-parameters">常规函数参数</a>相同的规则和限制。</p>
+<p>函数指针参数上的属性遵循与<a href="../items/functions.html#attributes-on-function-parameters">常规函数参数</a>相同的规则和限制。</p>
 <!-- 2020-11-3 -->
 <!-- checked -->
 
@@ -262,12 +261,6 @@ x = bo(5,7);
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

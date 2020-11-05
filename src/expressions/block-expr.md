@@ -86,9 +86,9 @@ fn move_by_block_expression() {
 异步块使用与闭包相同的[捕获模式][capture modes]从其环境中捕获变量。跟闭包一样，当编写 `async { .. }` 时，每个变量的捕获模式将从该块里的内容中推断出来。
 而 `async move { .. }` 类型的异步块将把所有需要捕获的变量应用移动语义移入(move)到相应的结果 future 中。
 
-[capture modes]: https://doc.rust-lang.org/types/closure.md#capture-modes
-[shared references]: https://doc.rust-lang.org/types/pointer.md#shared-references-
-[mutable reference]: https://doc.rust-lang.org/types/pointer.md#mutables-references-
+[capture modes]: ../types/closure.md#capture-modes
+[shared references]: ../types/pointer.md#shared-references-
+[mutable reference]: ../types/pointer.md#mutables-references-
 
 ### Async context
 ### 异步上下文
@@ -121,7 +121,7 @@ loop {
 > _UnsafeBlockExpression_ :\
 > &nbsp;&nbsp; `unsafe` _BlockExpression_
 
-_查看 [`unsafe`块](https://doc.rust-lang.org/unsafe-blocks.md)以了解更多该何时使用` unsafe` 的信息_
+_查看 [`unsafe`块][`unsafe` block]以了解更多该何时使用` unsafe` 的信息_
 
 可以在代码块前面加上关键字 `unsafe` 以允许[非安全操作][unsafe operations][unsafe operations]。例如：
 
@@ -160,10 +160,12 @@ fn is_unix_platform() -> bool {
 }
 ```
 
-[_ExpressionWithoutBlock_]: https://doc.rust-lang.org/expressions.md
-[_InnerAttribute_]: https://doc.rust-lang.org/attributes.md
-[_Statement_]: https://doc.rust-lang.org/statements.md
-[`cfg`]: https://doc.rust-lang.org/conditional-compilation.md
+[`unsafe` block]: ../unsafe-blocks.md
+<!-- 上面这几个链接从原文来替换时小心 -->
+[_ExpressionWithoutBlock_]: ../expressions.md
+[_InnerAttribute_]: ../attributes.md
+[_Statement_]: ../statements.md
+[`cfg`]: ../conditional-compilation.md
 [`for`]: loop-expr.md#iterator-loops
 [`loop`]: loop-expr.md#infinite-loops
 [`while let`]: loop-expr.md#predicate-pattern-loops
@@ -171,16 +173,16 @@ fn is_unix_platform() -> bool {
 [array expressions]: array-expr.md
 [call expressions]: call-expr.md
 [enum variant]: enum-variant-expr.md
-[function]: https://doc.rust-lang.org/items/functions.md
-[inner attributes]: https://doc.rust-lang.org/attributes.md
-[method]: https://doc.rust-lang.org/items/associated-items.md#methods
-[statement]: https://doc.rust-lang.org/statements.md
-[statements]: https://doc.rust-lang.org/statements.md
+[function]: ../items/functions.md
+[inner attributes]: ../attributes.md
+[method]: ../items/associated-items.md#methods
+[statement]: ../statements.md
+[statements]: ../statements.md
 [struct]: struct-expr.md
-[the lint check attributes]: https://doc.rust-lang.org/attributes/diagnostics.md#lint-check-attributes
+[the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
 [tuple expressions]: tuple-expr.md
-[unsafe operations]: https://doc.rust-lang.org/unsafety.md
-[value expressions]: https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions
+[unsafe operations]: ../unsafety.md
+[value expressions]: ../expressions.md#place-expressions-and-value-expressions
 
 <!-- 2020-11-3 -->
 <!-- checked -->

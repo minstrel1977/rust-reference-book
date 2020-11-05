@@ -148,22 +148,22 @@ extern {
 
 外部函数参数上的属性遵循与[常规函数参数][regular function parameters]相同的规则和限制。
 
-[IDENTIFIER]: https://doc.rust-lang.org/identifiers.md
+[IDENTIFIER]: ../identifiers.md
 [WebAssembly module]: https://webassembly.github.io/spec/core/syntax/modules.html
 [functions]: functions.md
 [statics]: static-items.md
 [_Abi_]: functions.md
 [_FunctionReturnType_]: functions.md
 [_Generics_]: generics.md
-[_InnerAttribute_]: https://doc.rust-lang.org/attributes.md
-[_MacroInvocationSemi_]: https://doc.rust-lang.org/macros.md#macro-invocation
-[_MetaListNameValueStr_]: https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax
-[_MetaNameValueStr_]: https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax
-[_OuterAttribute_]: https://doc.rust-lang.org/attributes.md
-[_Type_]: https://doc.rust-lang.org/types.md#type-expressions
-[_Visibility_]: https://doc.rust-lang.org/visibility-and-privacy.md
+[_InnerAttribute_]: ../attributes.md
+[_MacroInvocationSemi_]: ../macros.md#macro-invocation
+[_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
+[_MetaNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
+[_OuterAttribute_]: ../attributes.md
+[_Type_]: ../types.md#type-expressions
+[_Visibility_]: ../visibility-and-privacy.md
 [_WhereClause_]: generics.md#where-clauses
-[attributes]: https://doc.rust-lang.org/attributes.md
+[attributes]: ../attributes.md
 [regular function parameters]: functions.md#attributes-on-function-parameters
 
 <!-- 2020-11-3 -->

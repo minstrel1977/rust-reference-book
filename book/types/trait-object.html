@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>trait对象 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>trait对象</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -176,12 +175,12 @@ commit: fd10e7043934711ef96b4dd2009db3e4d0182a33 <br />
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>TraitObjectType</em> :<br />
-   <code>dyn</code><sup>?</sup> <a href="https://doc.rust-lang.org/trait-bounds.md"><em>TypeParamBounds</em></a></p>
+   <code>dyn</code><sup>?</sup> <a href="../trait-bounds.html"><em>TypeParamBounds</em></a></p>
 <p><em>TraitObjectTypeOneBound</em> :<br />
-   <code>dyn</code><sup>?</sup> <a href="https://doc.rust-lang.org/trait-bounds.md"><em>TraitBound</em></a></p>
+   <code>dyn</code><sup>?</sup> <a href="../trait-bounds.html"><em>TraitBound</em></a></p>
 </blockquote>
-<p><em>trait对象</em>是某种实现了一组 trait 的类型的不透明的值(opaque value)。这组 trait 是由一个<a href="https://doc.rust-lang.org/items/traits.md#object-safety">对象安全的</a><em>基础trait(base trait)</em> 加上任意数量的<a href="https://doc.rust-lang.org/special-types-and-traits.md#auto-traits">自动trait(auto traits)</a>组成。</p>
-<p>trait对象实现了基础trait 和它的自动trait 以及基础trait 的任何<a href="https://doc.rust-lang.org/items/traits.md#supertraits">超类trait(supertraits)</a>。</p>
+<p><em>trait对象</em>是某种实现了一组 trait 的类型的不透明的值(opaque value)。这组 trait 是由一个<a href="../items/traits.html#object-safety">对象安全的</a><em>基础trait(base trait)</em> 加上任意数量的<a href="../special-types-and-traits.html#auto-traits">自动trait(auto traits)</a>组成。</p>
+<p>trait对象实现了基础trait 和它的自动trait 以及基础trait 的任何<a href="../items/traits.html#supertraits">超类trait(supertraits)</a>。</p>
 <p>trait对象被写为为可选的关键字 <code>dyn</code> 后跟一组 trait约束，这些 trait约束有如此限制：除了第一个 trait 外，其他所有 trait 都必须是自动trait；生存期不能超过一个；不允许选择退出约束(opt-out bounds)（例如 <code>?Sized</code>）。此外，trait 的路径可以用圆括号括起来。</p>
 <p>例如，给定一个trait <code>Trait</code>，下面所有的形式都是 trait对象：</p>
 <ul>
@@ -201,10 +200,10 @@ commit: fd10e7043934711ef96b4dd2009db3e4d0182a33 <br />
 <p>注意：为了清晰起见，建议总是在 trait对象上使用关键字 <code>dyn</code>，除非你的代码库支持用Rust 1.26 或更低的版本来编译。</p>
 </blockquote>
 <p>如果基础trait 互为别名，并且自动trait 相同，生存期约束也相同，则这两种 trait对象类型互为别名。例如，<code>dyn Trait + Send + UnwindSafe</code> 和 <code>dyn Trait + UnwindSafe + Send</code> 是一样的。</p>
-<p>由于值的具体类型是不透明的，trait对象是<a href="https://doc.rust-lang.org/dynamically-sized-types.md">动态尺寸类型</a>。像所有的 <abbr title="dynamically sized types">DST</abbr> 一样，trait对象常被用在某种类型的指针后面；例如 <code>&amp;dyn SomeTrait</code> 或 <code>Box&lt;dyn SomeTrait&gt;</code>。每个指向 trait对象的指针的实例包括：</p>
+<p>由于值的具体类型是不透明的，trait对象是<a href="../dynamically-sized-types.html">动态尺寸类型</a>。像所有的 <abbr title="dynamically sized types">DST</abbr> 一样，trait对象常被用在某种类型的指针后面；例如 <code>&amp;dyn SomeTrait</code> 或 <code>Box&lt;dyn SomeTrait&gt;</code>。每个指向 trait对象的指针的实例包括：</p>
 <ul>
 <li>一个指向实现 <code>SomeTrait</code> 的（那个真实的不透明的）类型 <code>T</code> 的实例的指针</li>
-<li>一个<em>虚拟方法表(virtual method table_)</em>，它也通常被称为 <em>虚函数表(vtable)</em>，它包含了 <code>T</code> 实现的 <code>SomeTrait</code> 的所有方法，<code>T</code> 实现的 <code>SomeTrait</code> 的<a href="https://doc.rust-lang.org/items/traits.md#supertraits">超类trait</a> 的每个方法，还有一个指向 <code>T</code> 的实现的指针（即函数指针）。</li>
+<li>一个<em>虚拟方法表(virtual method table_)</em>，它也通常被称为 <em>虚函数表(vtable)</em>，它包含了 <code>T</code> 实现的 <code>SomeTrait</code> 的所有方法，<code>T</code> 实现的 <code>SomeTrait</code> 的<a href="../items/traits.html#supertraits">超类trait</a> 的每个方法，还有一个指向 <code>T</code> 的实现的指针（即函数指针）。</li>
 </ul>
 <p>trait对象的目的是允许方法的“延迟绑定(late binding)”。在 trait对象上调用一个方法会导致运行时的虚拟分发：也就是说，一个函数指针从 trait对象的虚函数表(vtable)中被加载进来，并被间接调用。每个虚函数表实体的实际实现可能因对象的不同而不同。</p>
 <p>一个 trait对象的例子：</p>
@@ -227,7 +226,7 @@ fn main() {
 <p>在本例中，trait <code>Printable</code> 作为 trait对象出现在 以 <code>print</code> 为类型签名的函数的参数中 和 <code>main</code> 中的类型转换表达式(cast expression)中。</p>
 <h2><a class="header" href="#trait-object-lifetime-bounds" id="trait-object-lifetime-bounds">Trait Object Lifetime Bounds</a></h2>
 <h2><a class="header" href="#trait对象的生存期约束" id="trait对象的生存期约束">trait对象的生存期约束</a></h2>
-<p>因为 trait对象可以包含引用，所以这些引用的生存期需要表示为 trait对象的一部分。这种生存期被写为 <code>Trait + 'a</code>。<a href="https://doc.rust-lang.org/lifetime-elision.md#default-trait-object-lifetimes">默认情况</a>下，可以通过合理的选择来推断此生存期。</p>
+<p>因为 trait对象可以包含引用，所以这些引用的生存期需要表示为 trait对象的一部分。这种生存期被写为 <code>Trait + 'a</code>。<a href="../lifetime-elision.html#default-trait-object-lifetimes">默认情况</a>下，可以通过合理的选择来推断此生存期。</p>
 <!-- 2020-11-3 -->
 <!-- checked -->
 
@@ -280,12 +279,6 @@ fn main() {
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

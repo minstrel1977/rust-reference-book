@@ -93,7 +93,7 @@
 
 我们欢迎各种形式的贡献。
 
-您可以通过打开一个问题或向 [Rust 参考手册仓库][the Rust Reference repository]发送一个 PR 来为本书做出贡献。如果这本书没有回答您的问题，并且您认为它的答案应该在本书的范围内，请不要犹豫，提交问题或在[Discord]的 `#docs` 频道上询问。知道人们最喜欢用这本书来做什么将有助于引导我们的注意力来使这些部分变得更好。
+您可以通过打开一个问题或向 [Rust 参考手册仓库][the Rust Reference repository]发送一个 PR 来为本书做出贡献。如果这本书没有回答您的问题，并且您认为它的答案应该在本书的范围内，请不要犹豫，提交问题或在[Discord]的 `#docs` 频道上询问。知道人们最喜欢用这本书来做什么将有助于引导我们的注意力来让这些部分变得更好。
 
 [book]: https://doc.rust-lang.org/book/index.html
 [github issues]: https://github.com/rust-lang/reference/issues
@@ -103,10 +103,10 @@
 [_Expression_]: expressions.md
 [cargo book]: https://doc.rust-lang.org/cargo/index.html
 [cargo reference]: https://doc.rust-lang.org/cargo/reference/index.html
-[expressions chapter]: expressions.md
-[lifetime of temporaries]: expressions.md#temporaries
-[linkage]: linkage.md
-[rustc book]: https://doc.rust-lang.org/rustc/index.md
+[expressions chapter]: expressions.html
+[lifetime of temporaries]: expressions.html#temporaries
+[linkage]: linkage.html
+[rustc book]: https://doc.rust-lang.org/rustc/index.html
 [Notation]: notation.md
 [Discord]: https://discord.gg/rust-lang
 

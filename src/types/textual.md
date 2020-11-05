@@ -14,8 +14,8 @@
 由于 `str` 是一个[动态尺寸类型][dynamically sized type]，所以它只能通过指针类型实例化，比如 `&str`。
 
 [Unicode scalar value]: http://www.unicode.org/glossary/#unicode_scalar_value
-[Undefined Behavior]: https://doc.rust-lang.org/behavior-considered-undefined.md
-[dynamically sized type]: https://doc.rust-lang.org/dynamically-sized-types.md
+[Undefined Behavior]: ../behavior-considered-undefined.md
+[dynamically sized type]: ../dynamically-sized-types.md
 
 <!-- 2020-11-3 -->
 <!-- checked -->

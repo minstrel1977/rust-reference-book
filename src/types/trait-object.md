@@ -72,13 +72,13 @@ fn main() {
 
 因为 trait对象可以包含引用，所以这些引用的生存期需要表示为 trait对象的一部分。这种生存期被写为 `Trait + 'a`。[默认情况][defaults]下，可以通过合理的选择来推断此生存期。
 
-[_TraitBound_]: https://doc.rust-lang.org/trait-bounds.md
-[_TypeParamBounds_]: https://doc.rust-lang.org/trait-bounds.md
-[auto traits]: https://doc.rust-lang.org/special-types-and-traits.md#auto-traits
-[defaults]: https://doc.rust-lang.org/lifetime-elision.md#default-trait-object-lifetimes
-[dynamically sized types]: https://doc.rust-lang.org/dynamically-sized-types.md
-[object safe]: https://doc.rust-lang.org/items/traits.md#object-safety
-[supertraits]: https://doc.rust-lang.org/items/traits.md#supertraits
+[_TraitBound_]: ../trait-bounds.md
+[_TypeParamBounds_]: ../trait-bounds.md
+[auto traits]: ../special-types-and-traits.md#auto-traits
+[defaults]: ../lifetime-elision.md#default-trait-object-lifetimes
+[dynamically sized types]: ../dynamically-sized-types.md
+[object safe]: ../items/traits.md#object-safety
+[supertraits]: ../items/traits.md#supertraits
 
 <!-- 2020-11-3 -->
 <!-- checked -->

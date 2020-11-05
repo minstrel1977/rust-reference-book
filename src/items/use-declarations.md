@@ -16,9 +16,9 @@
 
 *use声明*用来创建一个或多个与数据项[路径][path]同义的本地名称绑定。通常使用 `use`声明来缩短引用模块所需的路径。这些声明可以出现在[模块][modules]和[块][blocks]中，但通常在作用域顶部。
 
-[path]: https://doc.rust-lang.org/paths.md
+[path]: ../paths.md
 [modules]: modules.md
-[blocks]: https://doc.rust-lang.org/expressions/block-expr.md
+[blocks]: ../expressions/block-expr.md
 
 use声明支持多种便捷方法:
 
@@ -173,11 +173,11 @@ m!(use std as _;);
 // use std as _;
 ```
 
-[IDENTIFIER]: https://doc.rust-lang.org/identifiers.md
-[_SimplePath_]: https://doc.rust-lang.org/paths.md#simple-paths
+[IDENTIFIER]: ../identifiers.md
+[_SimplePath_]: ../paths.md#simple-paths
 [`extern crate`]: extern-crates.md
 [extern prelude]: extern-crates.md#extern-prelude
-[path qualifiers]: https://doc.rust-lang.org/paths.md#path-qualifiers
+[path qualifiers]: ../paths.md#path-qualifiers
 
 <!-- 2020-11-3 -->
 <!-- checked -->

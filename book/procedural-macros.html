@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>过程宏 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>过程宏</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -291,7 +290,7 @@ pub fn return_as_is(_attr: TokenStream, item: TokenStream) -&gt; TokenStream {
     item
 }
 </code></pre>
-<p>下面示例显示了属性宏看到的字符串化的 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a>。输出将显示在编译时的编译器输出窗口中。（具体格式是以 “out:”为前缀的）输出内容也都在后面每个示例函数后面的注释中给出了。</p>
+<p>下面示例显示了属性宏看到的字符串化的 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a>。输出将显示在编译时的编译器输出窗口中。（具体格式是以 &quot;out:&quot;为前缀的）输出内容也都在后面每个示例函数后面的注释中给出了。</p>
 <!-- ignore: test doesn't support proc-macro -->
 <pre><code class="language-rust ignore">// my-macro/src/lib.rs
 <span class="boring">extern crate proc_macro;
@@ -385,12 +384,6 @@ fn invoke4() {}
         </script>
         
 
-        
-        <script src="ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

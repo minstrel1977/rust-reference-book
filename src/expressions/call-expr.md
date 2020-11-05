@@ -12,7 +12,7 @@
 > _CallParams_ :\
 > &nbsp;&nbsp; [_Expression_]&nbsp;( `,` [_Expression_] )<sup>\*</sup> `,`<sup>?</sup>
 
-*调用表达式*由一个表达式和一个圆括号封闭的表达式列表组成。它调用一个函数，并给其提供零个或多个输入变量。如果函数最终返回，则该表达式执行完成。对于[非函数类型](https://doc.rust-lang.org/types/function-item.md)，表达式 `f(...)` 会使用 [`std::ops::Fn`]、[`std::ops::FnMut`] 或 [`std::ops::FnOnce`] 这些 trait 上的方法，选择使用其中的哪些 trait 要看 `f` 如何获取其输入参数的，具体就是看是通过引用、可变引用、还是通过获取所有权来获取的。如有需要，也可通过自动借用。Rust 也会根据需要自动对 `f` 作解引用处理。下面是一些调用表达式的示例：
+*调用表达式*由一个表达式和一个圆括号封闭的表达式列表组成。它调用一个函数，并给其提供零个或多个输入变量。如果函数最终返回，则该表达式执行完成。对于[非函数类型][non-function types]，表达式 `f(...)` 会使用 [`std::ops::Fn`]、[`std::ops::FnMut`] 或 [`std::ops::FnOnce`] 这些 trait 上的方法，选择使用其中的哪些 trait 要看 `f` 如何获取其输入参数的，具体就是看是通过引用、可变引用、还是通过获取所有权来获取的。如有需要，也可通过自动借用。Rust 也会根据需要自动对 `f` 作解引用处理。下面是一些调用表达式的示例：
 
 ```rust
 # fn add(x: i32, y: i32) -> i32 { 0 }
@@ -80,14 +80,16 @@ fn main() {
 
 更多细节和动机说明请参考[RFC 132]。
 
+[non-function types]: ../types/function-item.md
+<!-- 上面这几个链接从原文来替换时小心 -->
 [RFC 132]: https://github.com/rust-lang/rfcs/blob/master/text/0132-ufcs.md
-[_Expression_]: https://doc.rust-lang.org/expressions.md
+[_Expression_]: ../expressions.md
 [`default()`]: https://doc.rust-lang.org/std/default/trait.Default.html#tymethod.default
 [`size_of()`]: https://doc.rust-lang.org/std/mem/fn.size_of.html
 [`std::ops::FnMut`]: https://doc.rust-lang.org/std/ops/trait.FnMut.html
 [`std::ops::FnOnce`]: https://doc.rust-lang.org/std/ops/trait.FnOnce.html
 [`std::ops::Fn`]: https://doc.rust-lang.org/std/ops/trait.Fn.html
-[fully-qualified syntax]: https://doc.rust-lang.org/paths.md#qualified-paths
+[fully-qualified syntax]: ../paths.md#qualified-paths
 
 <!-- 2020-11-3 -->
 <!-- checked -->

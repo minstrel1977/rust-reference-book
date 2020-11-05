@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>函数项类型 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>函数项类型</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -184,7 +183,7 @@ let x = &amp;mut foo::&lt;i32&gt;;
 *x = foo::&lt;u32&gt;; //~ 错误：类型不匹配
 <span class="boring">}
 </span></code></pre></pre>
-<p>但确实存在从函数项类型到具有相同签名的函数指针的<a href="https://doc.rust-lang.org/type-coercions.md">自动强转(coercion)</a>，这种自动强转一般发生在使用函数项类型却直接预期函数指针时；另一种发生情况是 <code>if</code>表达式或匹配(<code>match</code>)表达式的不同分支返回使用了具有相同签名却使用了不同函数项类型的情况：</p>
+<p>但确实存在从函数项类型到具有相同签名的函数指针的<a href="../type-coercions.html">自动强转(coercion)</a>，这种自动强转一般发生在使用函数项类型却直接预期函数指针时；另一种发生情况是 <code>if</code>表达式或匹配(<code>match</code>)表达式的不同分支返回使用了具有相同签名却使用了不同函数项类型的情况：</p>
 <p><code>match</code>:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -203,7 +202,7 @@ let foo_ptr_2 = if want_i32 {
 };
 <span class="boring">}
 </span></code></pre></pre>
-<p>所有的函数项类型都实现了 <a href="https://doc.rust-lang.org/std/ops/trait.Fn.html"><code>Fn</code></a>、<a href="https://doc.rust-lang.org/std/ops/trait.FnMut.html"><code>FnMut</code></a>、<a href="https://doc.rust-lang.org/std/ops/trait.FnOnce.html"><code>FnOnce</code></a>、<a href="https://doc.rust-lang.org/special-types-and-traits.md#copy"><code>Copy</code></a>、<a href="https://doc.rust-lang.org/special-types-and-traits.md#clone"><code>Clone</code></a>、<a href="https://doc.rust-lang.org/special-types-and-traits.md#send"><code>Send</code></a> 和 <a href="https://doc.rust-lang.org/special-types-and-traits.md#sync"><code>Sync</code></a>。</p>
+<p>所有的函数项类型都实现了 <a href="https://doc.rust-lang.org/std/ops/trait.Fn.html"><code>Fn</code></a>、<a href="https://doc.rust-lang.org/std/ops/trait.FnMut.html"><code>FnMut</code></a>、<a href="https://doc.rust-lang.org/std/ops/trait.FnOnce.html"><code>FnOnce</code></a>、<a href="../special-types-and-traits.html#copy"><code>Copy</code></a>、<a href="../special-types-and-traits.html#clone"><code>Clone</code></a>、<a href="../special-types-and-traits.html#send"><code>Send</code></a> 和 <a href="../special-types-and-traits.html#sync"><code>Sync</code></a>。</p>
 <!-- 2020-11-3 -->
 <!-- checked -->
 
@@ -256,12 +255,6 @@ let foo_ptr_2 = if want_i32 {
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>闭包 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>闭包</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -173,7 +172,7 @@
 commit: 5642af891714145cb2a765f244fff7d6b618a4c7 <br />
 本译文最后维护日期：2020-10-29</p>
 </blockquote>
-<p><a href="https://doc.rust-lang.org/expressions/closure-expr.md">闭包表达式</a>生成的闭包值具有唯一性和无法写出的匿名性。闭包类型近似相当于包含捕获变量的结构体。比如以下闭包示例：</p>
+<p><a href="../expressions/closure-expr.html">闭包表达式</a>生成的闭包值具有唯一性和无法写出的匿名性。闭包类型近似相当于包含捕获变量的结构体。比如以下闭包示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -283,19 +282,19 @@ x = bo(5,7);
 </span></code></pre></pre>
 <h2><a class="header" href="#other-traits" id="other-traits">Other traits</a></h2>
 <h2><a class="header" href="#其他-trait" id="其他-trait">其他 trait</a></h2>
-<p>所有闭包类型都实现了 <a href="https://doc.rust-lang.org/special-types-and-traits.md#sized"><code>Sized</code></a>。此外，闭包捕获的变量的类型如果实现了如下 trait，此闭包类型也可能会自动实现这些 trait：</p>
+<p>所有闭包类型都实现了 <a href="../special-types-and-traits.html#sized"><code>Sized</code></a>。此外，闭包捕获的变量的类型如果实现了如下 trait，此闭包类型也可能会自动实现这些 trait：</p>
 <ul>
-<li><a href="https://doc.rust-lang.org/special-types-and-traits.md#clone"><code>Clone</code></a></li>
-<li><a href="https://doc.rust-lang.org/special-types-and-traits.md#copy"><code>Copy</code></a></li>
-<li><a href="https://doc.rust-lang.org/special-types-and-traits.md#sync"><code>Sync</code></a></li>
-<li><a href="https://doc.rust-lang.org/special-types-and-traits.md#send"><code>Send</code></a></li>
+<li><a href="../special-types-and-traits.html#clone"><code>Clone</code></a></li>
+<li><a href="../special-types-and-traits.html#copy"><code>Copy</code></a></li>
+<li><a href="../special-types-and-traits.html#sync"><code>Sync</code></a></li>
+<li><a href="../special-types-and-traits.html#send"><code>Send</code></a></li>
 </ul>
-<p>闭包类型实现 <a href="https://doc.rust-lang.org/special-types-and-traits.md#send"><code>Send</code></a> 和 <a href="https://doc.rust-lang.org/special-types-and-traits.md#sync"><code>Sync</code></a> 的规则与普通结构体类型实现这俩 trait 的规则一样，而 <a href="https://doc.rust-lang.org/special-types-and-traits.md#clone"><code>Clone</code></a> 和 <a href="https://doc.rust-lang.org/special-types-and-traits.md#copy"><code>Copy</code></a> 就像它们在 <a href="https://doc.rust-lang.org/attributes/derive.md"><code>derived</code></a>属性中表现的一样。对于 <a href="https://doc.rust-lang.org/special-types-and-traits.md#clone"><code>Clone</code></a>，捕获变量的克隆顺序目前还没正式的规范出来。</p>
+<p>闭包类型实现 <a href="../special-types-and-traits.html#send"><code>Send</code></a> 和 <a href="../special-types-and-traits.html#sync"><code>Sync</code></a> 的规则与普通结构体类型实现这俩 trait 的规则一样，而 <a href="../special-types-and-traits.html#clone"><code>Clone</code></a> 和 <a href="../special-types-and-traits.html#copy"><code>Copy</code></a> 就像它们在 <a href="../attributes/derive.html"><code>derived</code></a>属性中表现的一样。对于 <a href="../special-types-and-traits.html#clone"><code>Clone</code></a>，捕获变量的克隆顺序目前还没正式的规范出来。</p>
 <p>由于捕获通常是通过引用进行的，因此会出现以下一般规则：</p>
 <ul>
-<li>如果所有的捕获变量都实现了 <a href="https://doc.rust-lang.org/special-types-and-traits.md#sync"><code>Sync</code></a>，则此闭包就也实现了 <a href="https://doc.rust-lang.org/special-types-and-traits.md#sync"><code>Sync</code></a> 。</li>
-<li>如果所有非唯一不可变引用捕获的变量都实现了 <a href="https://doc.rust-lang.org/special-types-and-traits.md#sync"><code>Sync</code></a>，并且所有由唯一不可变、可变引用、复制或移动语义捕获的值都实现了 <a href="https://doc.rust-lang.org/special-types-and-traits.md#send"><code>Send</code></a>，则此闭包就也实现了 <a href="https://doc.rust-lang.org/special-types-and-traits.md#send"><code>Send</code></a>。</li>
-<li>如果一个闭包没有通过唯一不可变引用或可变引用捕获任何值，并且它通过复制或移动语义捕获的所有值都分别实现了 <a href="https://doc.rust-lang.org/special-types-and-traits.md#clone"><code>Clone</code></a> 或 <a href="https://doc.rust-lang.org/special-types-and-traits.md#copy"><code>Copy</code></a>，则此闭包就也实现了 <a href="https://doc.rust-lang.org/special-types-and-traits.md#clone"><code>Clone</code></a> 或 <a href="https://doc.rust-lang.org/special-types-and-traits.md#copy"><code>Copy</code></a>。</li>
+<li>如果所有的捕获变量都实现了 <a href="../special-types-and-traits.html#sync"><code>Sync</code></a>，则此闭包就也实现了 <a href="../special-types-and-traits.html#sync"><code>Sync</code></a> 。</li>
+<li>如果所有非唯一不可变引用捕获的变量都实现了 <a href="../special-types-and-traits.html#sync"><code>Sync</code></a>，并且所有由唯一不可变、可变引用、复制或移动语义捕获的值都实现了 <a href="../special-types-and-traits.html#send"><code>Send</code></a>，则此闭包就也实现了 <a href="../special-types-and-traits.html#send"><code>Send</code></a>。</li>
+<li>如果一个闭包没有通过唯一不可变引用或可变引用捕获任何值，并且它通过复制或移动语义捕获的所有值都分别实现了 <a href="../special-types-and-traits.html#clone"><code>Clone</code></a> 或 <a href="../special-types-and-traits.html#copy"><code>Copy</code></a>，则此闭包就也实现了 <a href="../special-types-and-traits.html#clone"><code>Clone</code></a> 或 <a href="../special-types-and-traits.html#copy"><code>Copy</code></a>。</li>
 </ul>
 <!-- 2020-11-3 -->
 <!-- checked -->
@@ -349,12 +348,6 @@ x = bo(5,7);
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

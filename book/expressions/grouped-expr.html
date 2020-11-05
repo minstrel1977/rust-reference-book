@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>分组表达式 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>分组表达式</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -176,7 +175,7 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>GroupedExpression</em> :<br />
-   <code>(</code> <a href="https://doc.rust-lang.org/attributes.md"><em>InnerAttribute</em></a><sup>*</sup> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>)</code></p>
+   <code>(</code> <a href="../attributes.html"><em>InnerAttribute</em></a><sup>*</sup> <a href="../expressions.html"><em>Expression</em></a> <code>)</code></p>
 </blockquote>
 <p>由圆括号封闭的表达式的求值结果就是在期内的表达式的求值结果。在表达式内部，圆括号可用于显式地指定表达式内部的求值顺序。</p>
 <p>圆括号表达式的一个例子：</p>
@@ -209,7 +208,7 @@ assert_eq!((a.f)(), &quot;The field f&quot;);
 </span></code></pre></pre>
 <h2><a class="header" href="#group-expression-attributes" id="group-expression-attributes">Group expression attributes</a></h2>
 <h2><a class="header" href="#分组表达式上的属性" id="分组表达式上的属性">分组表达式上的属性</a></h2>
-<p>在与<a href="https://doc.rust-lang.org/attributes.md">块表达式上的属性</a>相同的表达式上下文中，允许在分组表达式的左括号后直接使用<a href="block-expr.html#attributes-on-block-expressions">内部属性</a>。</p>
+<p>在与<a href="../attributes.html">块表达式上的属性</a>相同的表达式上下文中，允许在分组表达式的左括号后直接使用<a href="block-expr.html#attributes-on-block-expressions">内部属性</a>。</p>
 <!-- 2020-11-3 -->
 <!-- checked -->
 
@@ -262,12 +261,6 @@ assert_eq!((a.f)(), &quot;The field f&quot;);
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

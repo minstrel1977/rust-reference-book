@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>if 和 if let 表达式 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>if 和 if let 表达式</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -178,7 +177,7 @@ commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>IfExpression</em> :<br />
-   <code>if</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><sub><em>排除结构体表达式</em></sub> <a href="block-expr.html"><em>BlockExpression</em></a><br />
+   <code>if</code> <a href="../expressions.html"><em>Expression</em></a><sub><em>排除结构体表达式</em></sub> <a href="block-expr.html"><em>BlockExpression</em></a><br />
    (<code>else</code> (
 <a href="block-expr.html"><em>BlockExpression</em></a>
 | <em>IfExpression</em>
@@ -210,14 +209,14 @@ assert_eq!(y, &quot;Bigger&quot;);
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>IfLetExpression</em> :<br />
-   <code>if</code> <code>let</code> <a href="match-expr.html"><em>MatchArmPatterns</em></a> <code>=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><sub><em>除了结构体表达式和惰性布尔运算符表达式</em></sub>
+   <code>if</code> <code>let</code> <a href="match-expr.html"><em>MatchArmPatterns</em></a> <code>=</code> <a href="../expressions.html"><em>Expression</em></a><sub><em>除了结构体表达式和惰性布尔运算符表达式</em></sub>
 <a href="block-expr.html"><em>BlockExpression</em></a><br />
    (<code>else</code> (
 <a href="block-expr.html"><em>BlockExpression</em></a>
 | <em>IfExpression</em>
 | <em>IfLetExpression</em> ) )<sup>?</sup></p>
 </blockquote>
-<p><code>if let</code>表达式在语义上类似于 <code>if</code>表达式，但是代替条件表达式的是一个关键字 <code>let</code>，再后面是一个模式、一个 <code>=</code> 和一个<a href="https://doc.rust-lang.org/glossary.md#scrutinee">检验对象(scrutinee)</a>表达式。如果检验对象表达式的值与模式匹配，则执行相应的块。否则，如果存在 <code>else</code>块，则继续处理后面的 <code>else</code>块。和 <code>if</code>表达式一样，<code>if let</code>表达式也可以有返回值，这个返回值是由被求值的块确定。</p>
+<p><code>if let</code>表达式在语义上类似于 <code>if</code>表达式，但是代替条件表达式的是一个关键字 <code>let</code>，再后面是一个模式、一个 <code>=</code> 和一个<a href="../glossary.html#scrutinee">检验对象(scrutinee)</a>表达式。如果检验对象表达式的值与模式匹配，则执行相应的块。否则，如果存在 <code>else</code>块，则继续处理后面的 <code>else</code>块。和 <code>if</code>表达式一样，<code>if let</code>表达式也可以有返回值，这个返回值是由被求值的块确定。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -354,12 +353,6 @@ if let PAT = ( EXPR || EXPR ) { .. }
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

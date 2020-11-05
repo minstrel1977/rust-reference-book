@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>指针型 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>指针型</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -179,11 +178,11 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ReferenceType</em> :<br />
-   <code>&amp;</code> <a href="https://doc.rust-lang.org/trait-bounds.md"><em>Lifetime</em></a><sup>?</sup> <code>mut</code><sup>?</sup> <a href="https://doc.rust-lang.org/types.md#type-expressions"><em>TypeNoBounds</em></a></p>
+   <code>&amp;</code> <a href="../trait-bounds.html"><em>Lifetime</em></a><sup>?</sup> <code>mut</code><sup>?</sup> <a href="../types.html#type-expressions"><em>TypeNoBounds</em></a></p>
 </blockquote>
 <h3><a class="header" href="#shared-references-" id="shared-references-">Shared references (<code>&amp;</code>)</a></h3>
 <h3><a class="header" href="#共享引用" id="共享引用">共享引用(<code>&amp;</code>)</a></h3>
-<p>共享引用(<code>&amp;</code>)指向<em>由其他值拥有的</em>内存。创建了对值的共享引用可以防止对该值的直接更改。<a href="https://doc.rust-lang.org/interior-mutability.md">内部可变性</a>提供了在某些特定情况下的一种例外。顾名思义，对一个值的共享引用的次数没有限制。当需要指定显式的生存期时，共享引用类型被写为 <code>&amp;type</code>，或者 <code>&amp;'a type</code>。复制引用是一个“浅(shallow)”操作：它只涉及复制指针本身，也就是说，指针实现了 <code>Copy</code> trait。释放引用对共享引用所指向的值没有影响，但是引用<a href="https://doc.rust-lang.org/expressions.md#temporaries">临时值</a>将使此临时值在引用本身的作用域内保持存活状态。</p>
+<p>共享引用(<code>&amp;</code>)指向<em>由其他值拥有的</em>内存。创建了对值的共享引用可以防止对该值的直接更改。<a href="../interior-mutability.html">内部可变性</a>提供了在某些特定情况下的一种例外。顾名思义，对一个值的共享引用的次数没有限制。当需要指定显式的生存期时，共享引用类型被写为 <code>&amp;type</code>，或者 <code>&amp;'a type</code>。复制引用是一个“浅(shallow)”操作：它只涉及复制指针本身，也就是说，指针实现了 <code>Copy</code> trait。释放引用对共享引用所指向的值没有影响，但是引用<a href="../expressions.html#temporaries">临时值</a>将使此临时值在引用本身的作用域内保持存活状态。</p>
 <h3><a class="header" href="#mutable-references-mut" id="mutable-references-mut">Mutable references (<code>&amp;mut</code>)</a></h3>
 <h3><a class="header" href="#可变引用mut" id="可变引用mut">可变引用(<code>&amp;mut</code>)</a></h3>
 <p>可变引用(<code>&amp;mut</code>)也指向其他值所拥有的内存。可变引用类型被写为 <code>&amp;mut type</code> 或 <code>&amp;'a mut type</code>。可变引用（其还未被借出）是访问它所指向的值的唯一方法，当然此值没有实现 <code>Copy</code> trait。</p>
@@ -192,10 +191,10 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>RawPointerType</em> :<br />
-   <code>*</code> ( <code>mut</code> | <code>const</code> ) <a href="https://doc.rust-lang.org/types.md#type-expressions"><em>TypeNoBounds</em></a></p>
+   <code>*</code> ( <code>mut</code> | <code>const</code> ) <a href="../types.html#type-expressions"><em>TypeNoBounds</em></a></p>
 </blockquote>
-<p>裸指针是没有安全性或可用性(liveness)保证的指针。裸指针写为 <code>*const T</code> 或 <code>*mut T</code>，例如，<code>*const i32</code> 表示指向有符号32位整数的裸指针。复制或销毁裸指针对任何其他值的生命周期都没有影响。对裸指针的解引用是<a href="https://doc.rust-lang.org/unsafety.md">非安全(<code>unsafe</code>)操作</a>，可以通过重新借用裸指针（<code>&amp;*</code> 或 <code>&amp;mut *</code>）将其转换为引用。在 Rust 代码中通常不鼓励使用裸指针；它们的存在是为了支持与外部代码的互操作性，以及编写对性能要求很高的函数或低级的函数。</p>
-<p>在比较裸指针时，比较的是它们的地址，而不是它们指向的数据。当比较裸指针和<a href="https://doc.rust-lang.org/dynamically-sized-types.md">动态尺寸类型</a>时，还会比较它们指针上的附加/元数据。</p>
+<p>裸指针是没有安全性或可用性(liveness)保证的指针。裸指针写为 <code>*const T</code> 或 <code>*mut T</code>，例如，<code>*const i32</code> 表示指向有符号32位整数的裸指针。复制或销毁裸指针对任何其他值的生命周期都没有影响。对裸指针的解引用是<a href="../unsafety.html">非安全(<code>unsafe</code>)操作</a>，可以通过重新借用裸指针（<code>&amp;*</code> 或 <code>&amp;mut *</code>）将其转换为引用。在 Rust 代码中通常不鼓励使用裸指针；它们的存在是为了支持与外部代码的互操作性，以及编写对性能要求很高的函数或低级的函数。</p>
+<p>在比较裸指针时，比较的是它们的地址，而不是它们指向的数据。当比较裸指针和<a href="../dynamically-sized-types.html">动态尺寸类型</a>时，还会比较它们指针上的附加/元数据。</p>
 <h2><a class="header" href="#smart-pointers" id="smart-pointers">Smart Pointers</a></h2>
 <h2><a class="header" href="#智能指针" id="智能指针">智能指针</a></h2>
 <p>标准库包含了额外的“智能指针”类型，它们提供了在引用和裸指针这类低级指针之外的更多的功能。</p>
@@ -251,12 +250,6 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

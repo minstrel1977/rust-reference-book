@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>类型系统 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>类型系统</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -173,11 +172,11 @@
 commit: 363a64a939bf246d7373776826e14065e912131f <br />
 本译文最后维护日期：2020-10-24</p>
 </blockquote>
-<p>以下<a href="https://doc.rust-lang.org/attributes.md">属性</a>用于改变类型的使用方式。</p>
+<p>以下<a href="../attributes.html">属性</a>用于改变类型的使用方式。</p>
 <h2><a class="header" href="#the-non_exhaustive-attribute" id="the-non_exhaustive-attribute">The <code>non_exhaustive</code> attribute</a></h2>
 <h2><a class="header" href="#non_exhaustive属性" id="non_exhaustive属性"><code>non_exhaustive</code>属性</a></h2>
-<p><em><code>non_exhaustive</code>属性</em>表示类型或变体将来可能会添加更多字段或变体。它可以应用在<a href="https://doc.rust-lang.org/items/structs.md">结构体(<code>struct</code>)</a>上、<a href="https://doc.rust-lang.org/items/enumerations.md">枚举(<code>enum</code>)</a>上 和 枚举变体上。</p>
-<p><code>non_exhaustive</code>属性使用 <a href="https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax"><em>MetaWord</em></a>元项属性句法规则，因此不接受任何输入。</p>
+<p><em><code>non_exhaustive</code>属性</em>表示类型或变体将来可能会添加更多字段或变体。它可以应用在<a href="../items/structs.html">结构体(<code>struct</code>)</a>上、<a href="../items/enumerations.html">枚举(<code>enum</code>)</a>上 和 枚举变体上。</p>
+<p><code>non_exhaustive</code>属性使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaWord</em></a>元项属性句法规则，因此不接受任何输入。</p>
 <p>在当前（<code>non_exhaustive</code>限制的类型的）定义所在的 crate 内，<code>non_exhaustive</code> 没有效果。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -228,8 +227,8 @@ match message {
 <p>在定义所在的 crate之外，标注为 <code>non_exhaustive</code> 的类型须在添加新字段或变体时保持向后兼容性。</p>
 <p>非穷尽类型不能在定义它的 crate 之外构建：</p>
 <ul>
-<li>非穷尽变体（<a href="https://doc.rust-lang.org/items/structs.md">结构体(<code>struct</code>)</a>或<a href="https://doc.rust-lang.org/items/enumerations.md">枚举变体(<code>enum</code> variant)</a>）不能用 <a href="https://doc.rust-lang.org/expressions/struct-expr.md"><em>StructExpression</em></a>句法规则（包括<a href="https://doc.rust-lang.org/expressions/struct-expr.md#functional-update-syntax">函数更新句法</a>）构建。</li>
-<li>但[枚举(<code>enum</code>)]实例能用 <a href="https://doc.rust-lang.org/expressions/enum-variant-expr.md"><em>EnumerationVariantExpression</em></a>句法规则构建。</li>
+<li>非穷尽变体（<a href="../items/structs.html">结构体(<code>struct</code>)</a>或<a href="../items/enumerations.html">枚举变体(<code>enum</code> variant)</a>）不能用 <a href="../expressions/struct-expr.html"><em>StructExpression</em></a>句法规则（包括<a href="../expressions/struct-expr.html#functional-update-syntax">函数更新句法</a>）构建。</li>
+<li>但[枚举(<code>enum</code>)]实例能用 <a href="../expressions/enum-variant-expr.html"><em>EnumerationVariantExpression</em></a>句法规则构建。</li>
 </ul>
 <p>示例：（译者注：本例把上例看成本例的 <code>upstream</code> ）</p>
 <!-- ignore: requires external crates -->
@@ -253,8 +252,8 @@ let message = Message::Quit;
 </code></pre>
 <p>在定义所在的 crate 之外对非穷尽类型进行匹配，有如下限制：</p>
 <ul>
-<li>当模式匹配一个非穷尽变体(<a href="https://doc.rust-lang.org/items/structs.md">结构体(<code>struct</code>)</a>或<a href="https://doc.rust-lang.org/items/enumerations.md">枚举变体(<code>enum</code> variant)</a>)时，必须使用 <a href="https://doc.rust-lang.org/patterns.md#struct-patterns"><em>StructPattern</em></a>句法规则进行匹配，其匹配臂必须有一个为 <code>..</code>。元组变体的构造函数的可见性降低为 <code>min($vis, pub(crate))</code>。</li>
-<li>当模式匹配在一个非穷尽的<a href="https://doc.rust-lang.org/items/enumerations.md">枚举(<code>enum</code>)</a>上时，增加对单个变体的匹配无助于匹配臂需满足枚举变体的穷尽性(exhaustiveness)的这一要求。</li>
+<li>当模式匹配一个非穷尽变体(<a href="../items/structs.html">结构体(<code>struct</code>)</a>或<a href="../items/enumerations.html">枚举变体(<code>enum</code> variant)</a>)时，必须使用 <a href="../patterns.html#struct-patterns"><em>StructPattern</em></a>句法规则进行匹配，其匹配臂必须有一个为 <code>..</code>。元组变体的构造函数的可见性降低为 <code>min($vis, pub(crate))</code>。</li>
+<li>当模式匹配在一个非穷尽的<a href="../items/enumerations.html">枚举(<code>enum</code>)</a>上时，增加对单个变体的匹配无助于匹配臂需满足枚举变体的穷尽性(exhaustiveness)的这一要求。</li>
 </ul>
 <p>示例：（译者注：可以把上上例看成本例的 <code>upstream</code> ）</p>
 <!-- ignore: requires external crates -->
@@ -334,12 +333,6 @@ match message {
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>介绍 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>介绍</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -187,7 +186,7 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 <h2><a class="header" href="#参考手册-并非" id="参考手册-并非"><em>参考手册</em> 并非——</a></h2>
 <p>这本书不是对这门语言的入门介绍。本书假设您熟悉该语言。若您需要学习该语言的基础知识，请阅读 <a href="https://doc.rust-lang.org/book/index.html">Rust程序设计语言</a>。</p>
 <p>这本书也不作为 Rust 语言发行版中包含的<a href="https://doc.rust-lang.org/std/index.html">标准库</a>的参考资料。Rust 的库文档是从其源代码文件中提取的文档属性。此外，有许多可能被可能认为是语言自带特性(features)的特性其实都是 Rust 的标准库的特性，所以您要寻找的特性可能在那里，而不是在这里。</p>
-<p>类似地，本书通常不能作为记录 rustc 或者 Cargo 细节的工具书。rustc 有自己专门的书 <a href="https://doc.rust-lang.org/rustc/index.md">rustc book</a>，Cargo 也有一本书 <a href="https://doc.rust-lang.org/cargo/index.html">cargo book</a>，该书中包含了 Cargo 的[参考手册] <a href="https://doc.rust-lang.org/cargo/reference/index.html">cargo reference</a>。本书也涉及了少量和它们的相关知识，比如<a href="linkage.html">链接</a>的章节，介绍了 rustc 是如何工作的。</p>
+<p>类似地，本书通常不能作为记录 rustc 或者 Cargo 细节的工具书。rustc 有自己专门的书 <a href="https://doc.rust-lang.org/rustc/index.html">rustc book</a>，Cargo 也有一本书 <a href="https://doc.rust-lang.org/cargo/index.html">cargo book</a>，该书中包含了 Cargo 的[参考手册] <a href="https://doc.rust-lang.org/cargo/reference/index.html">cargo reference</a>。本书也涉及了少量和它们的相关知识，比如<a href="linkage.html">链接</a>的章节，介绍了 rustc 是如何工作的。</p>
 <p>本书仅作为稳定版 Rust 的参考资料存在，关于尚在开发中的非稳定特性，请参阅 <a href="https://doc.rust-lang.org/nightly/unstable-book/">Unstable Book</a>。</p>
 <p>最后，本书并非 Rust 语言规范。它可能包含特定于 <code>rustc</code> 的细节，这不应该被当作 Rust 语言的规范。我们打算以后出版这样一本书，但在那之前，本手册是最接近的东西。</p>
 <h2><a class="header" href="#how-to-use-this-book" id="how-to-use-this-book">How to Use This Book</a></h2>
@@ -246,7 +245,7 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 <h2><a class="header" href="#contributing" id="contributing">Contributing</a></h2>
 <h2><a class="header" href="#贡献力量" id="贡献力量">贡献力量</a></h2>
 <p>我们欢迎各种形式的贡献。</p>
-<p>您可以通过打开一个问题或向 <a href="https://github.com/rust-lang/reference/">Rust 参考手册仓库</a>发送一个 PR 来为本书做出贡献。如果这本书没有回答您的问题，并且您认为它的答案应该在本书的范围内，请不要犹豫，提交问题或在<a href="https://discord.gg/rust-lang">Discord</a>的 <code>#docs</code> 频道上询问。知道人们最喜欢用这本书来做什么将有助于引导我们的注意力来使这些部分变得更好。</p>
+<p>您可以通过打开一个问题或向 <a href="https://github.com/rust-lang/reference/">Rust 参考手册仓库</a>发送一个 PR 来为本书做出贡献。如果这本书没有回答您的问题，并且您认为它的答案应该在本书的范围内，请不要犹豫，提交问题或在<a href="https://discord.gg/rust-lang">Discord</a>的 <code>#docs</code> 频道上询问。知道人们最喜欢用这本书来做什么将有助于引导我们的注意力来让这些部分变得更好。</p>
 <!-- 2020-11-3 -->
 <!-- checked -->
                     </main>
@@ -298,12 +297,6 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
         </script>
         
 
-        
-        <script src="ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

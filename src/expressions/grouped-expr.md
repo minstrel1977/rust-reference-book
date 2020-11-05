@@ -43,9 +43,9 @@ assert_eq!((a.f)(), "The field f");
 
 在与[块表达式上的属性][Inner attributes]相同的表达式上下文中，允许在分组表达式的左括号后直接使用[内部属性][attributes on block expressions]。
 
-[Inner attributes]: https://doc.rust-lang.org/attributes.md
-[_Expression_]: https://doc.rust-lang.org/expressions.md
-[_InnerAttribute_]: https://doc.rust-lang.org/attributes.md
+[Inner attributes]: ../attributes.md
+[_Expression_]: ../expressions.md
+[_InnerAttribute_]: ../attributes.md
 [attributes on block expressions]: block-expr.md#attributes-on-block-expressions
 
 <!-- 2020-11-3 -->

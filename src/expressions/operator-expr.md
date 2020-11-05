@@ -73,9 +73,9 @@ let a = & & & & mut 10;
 > _DereferenceExpression_ :\
 > &nbsp;&nbsp; `*` [_Expression_]
 
-`*`（解引用）操作符也是一元前缀操作符。当应用于[指针](https://doc.rust-lang.org/types/pointer.md)时，它表示该指针指向的内存位置。如果表达式的类型为 `&mut T` 或 `*mut T`，并且该表达式是局部变量（局部变量的（嵌套）字段也可以）或是可变的[位置表达式][place expression]，则它代表的内存位置可以被赋值。解引用原始指针需要在非安全(`unsafe`)块才能进行。
+`*`（解引用）操作符也是一元前缀操作符。当应用于[指针][pointer]时，它表示该指针指向的内存位置。如果表达式的类型为 `&mut T` 或 `*mut T`，并且该表达式是局部变量（局部变量的（嵌套）字段也可以）或是可变的[位置表达式][place expression]，则它代表的内存位置可以被赋值。解引用原始指针需要在非安全(`unsafe`)块才能进行。
 
-在[不可变位置表达式上下文](https://doc.rust-lang.org/expressions.md#mutability)中对非指针类型作 `*x` 相当于执行 `*std::ops::Deref::deref(&x)`；同样的，在可变位置表达式上下文中这个动作就相当于执行 `*std::ops::DerefMut::deref_mut(&mut x)`。
+在[不可变位置表达式上下文][immutable place expression context]中对非指针类型作 `*x` 相当于执行 `*std::ops::Deref::deref(&x)`；同样的，在可变位置表达式上下文中这个动作就相当于执行 `*std::ops::DerefMut::deref_mut(&mut x)`。
 
 ```rust
 let x = &7;
@@ -287,7 +287,7 @@ fn average(values: &[f64]) -> f64 {
 }
 ```
 
-`as` 可用于显式执行[自动强转(coercions)](https://doc.rust-lang.org/type-coercions.md)，以及下列形式的强制转换。下表中 `*T` 代表 `*const T` 或 `*mut T`。
+`as` 可用于显式执行[自动强转(coercions)][coercions]，以及下列形式的强制转换。下表中 `*T` 代表 `*const T` 或 `*mut T`。
 
 | `e` 的类型          | `U`                   | 通过 `e as U` 执行转换      |
 |-----------------------|-----------------------|----------------------------------|
@@ -354,7 +354,7 @@ fn average(values: &[f64]) -> f64 {
 
 *赋值表达式*由[位置表达式][place expression]后跟等号（`=`）和[值表达式][value expression]组成。这样的表达式的类型总是[单元(`unit`)类型][`unit` type]。
 
-执行赋值表达式时会先[销毁(drop)](https://doc.rust-lang.org/destructors.md)左操作数（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将其右操作数[复制(copy)或移动(move)](https://doc.rust-lang.org/expressions.md#moved-and-copied-types)到左操作数。左边的操作数必须是位置表达式：使用值表达式不会将其提升为临时位置，而是会导致编译器错误。
+执行赋值表达式时会先[销毁(drop)][drops]左操作数（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将其右操作数[复制(copy)或移动(move)][either copies or moves]到左操作数。左边的操作数必须是位置表达式：使用值表达式不会将其提升为临时位置，而是会导致编译器错误。
 
 ```rust
 # let mut x = 0;
@@ -387,13 +387,19 @@ assert_eq!(x, 14);
 ```
 [^译者注]:截断，即一个值范围较大的变量A转换为值范围较小的变量B，如果超出范围，则将A减去B的区间长度。例如，128超出了i8类型的范围（-128,127），截断之后的值等于128-256=-128。
 
-[place expression]: https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions
-[value expression]: https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions
-[temporary value]: https://doc.rust-lang.org/expressions.md#temporaries
+[pointer]: ../types/pointer.md
+[immutable place expression context]: ../expressions.md#mutability
+[coercions]: ../type-coercions.md
+[drops]: ../destructors.md
+[either copies or moves]: ../expressions.md#moved-and-copied-types
+<!-- 上面这几个链接从原文来替换时小心 -->
+[place expression]: ../expressions.md#place-expressions-and-value-expressions
+[value expression]: ../expressions.md#place-expressions-and-value-expressions
+[temporary value]: ../expressions.md#temporaries
 [float-float]: https://github.com/rust-lang/rust/issues/15536
-[`unit` type]: https://doc.rust-lang.org/types/tuple.md
-[Function pointer]: https://doc.rust-lang.org/types/function-pointer.md
-[Function item]: https://doc.rust-lang.org/types/function-item.md
+[`unit` type]: ../types/tuple.md
+[Function pointer]: ../types/function-pointer.md
+[Function item]: ../types/function-item.md
 
 [_BorrowExpression_]: #borrow-operators
 [_DereferenceExpression_]: #the-dereference-operator
@@ -406,8 +412,7 @@ assert_eq!(x, 14);
 [_AssignmentExpression_]: #assignment-expressions
 [_CompoundAssignmentExpression_]: #compound-assignment-expressions
 
-[_Expression_]: https://doc.rust-lang.org/expressions.md
-[_TypeNoBounds_]: https://doc.rust-lang.org/types.md#type-expressions
-
+[_Expression_]: ../expressions.md
+[_TypeNoBounds_]: ../types.md#type-expressions
 <!-- 2020-11-3 -->
 <!-- checked -->

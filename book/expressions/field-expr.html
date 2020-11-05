@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>字段访问表达式 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>字段访问表达式</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -176,9 +175,9 @@ commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>FieldExpression</em> :<br />
-   <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>.</code> <a href="https://doc.rust-lang.org/identifiers.md">IDENTIFIER</a></p>
+   <a href="../expressions.html"><em>Expression</em></a> <code>.</code> <a href="../identifiers.html">IDENTIFIER</a></p>
 </blockquote>
-<p>*字段表达式(field expression)*由一个表达式、一个单点号(<code>.</code>)和一个<a href="https://doc.rust-lang.org/identifiers.md">标识符</a>组成，且后面不能再紧跟着一个被圆括号封闭起来的表达式列表（后者总是一个<a href="method-call-expr.html">方法调用表达式</a>）。字段表达式代表<a href="https://doc.rust-lang.org/items/structs.md">结构体(<code>struct</code>)</a>或<a href="https://doc.rust-lang.org/items/unions.md">联合体(<code>union</code>)</a>的字段。要调用存储在结构体的字段中的函数，需要在字段表达式外加一对圆括号。</p>
+<p>*字段表达式(field expression)*由一个表达式、一个单点号(<code>.</code>)和一个<a href="../identifiers.html">标识符</a>组成，且后面不能再紧跟着一个被圆括号封闭起来的表达式列表（后者总是一个<a href="method-call-expr.html">方法调用表达式</a>）。字段表达式代表<a href="../items/structs.html">结构体(<code>struct</code>)</a>或<a href="../items/unions.html">联合体(<code>union</code>)</a>的字段。要调用存储在结构体的字段中的函数，需要在字段表达式外加一对圆括号。</p>
 <!-- ignore: needs lots of support code -->
 <pre><code class="language-rust ignore">mystruct.myfield;
 foo().x;
@@ -186,9 +185,9 @@ foo().x;
 mystruct.method();          // 方法表达式
 (mystruct.function_field)() // 调用表达式里包含一个字段表达式
 </code></pre>
-<p>字段访问是引用该字段位置的<a href="https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions">位置表达式</a>。当子表达式是<a href="https://doc.rust-lang.org/expressions.md#mutability">可变的</a>时，此字段表达式也是可变的。</p>
+<p>字段访问是引用该字段位置的<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>。当子表达式是<a href="../expressions.html#mutability">可变的</a>时，此字段表达式也是可变的。</p>
 <p>另外，如果点号左侧的表达式类型是指针，则会根据需要自动应用多次解引用来使字段访问成为可能。在存在歧义的情况下，Rust 倾向于较少次数的自动解引用。</p>
-<p>最后，当用于借用时，对结构体的各个字段的借用或对整个结构体的引用都被视为彼此分离的实体。如果结构体没有实现 <a href="https://doc.rust-lang.org/special-types-and-traits.md#drop"><code>Drop</code></a>，同时该结构体存储在局部变量中，（这种各个字段被视为彼此分离的单独实体的逻辑）还让每个字段的移出（move out）互不影响。如果对该结构体实现了户定义的自动解引用，这（种各个字段被视为彼此分离的单独实体的逻辑）就也不适用了。</p>
+<p>最后，当用于借用时，对结构体的各个字段的借用或对整个结构体的引用都被视为彼此分离的实体。如果结构体没有实现 <a href="../special-types-and-traits.html#drop"><code>Drop</code></a>，同时该结构体存储在局部变量中，（这种各个字段被视为彼此分离的单独实体的逻辑）还让每个字段的移出（move out）互不影响。如果对该结构体实现了户定义的自动解引用，这（种各个字段被视为彼此分离的单独实体的逻辑）就也不适用了。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -205,6 +204,7 @@ let c: &amp;String = &amp;x.f2;         // 可以被再次借用
 let d: String = x.f3;           // 从 x.f3 中移出
 <span class="boring">}
 </span></code></pre></pre>
+<!-- 上面这几个链接从原文来替换时小心 -->
 <!-- 2020-11-3 -->
 <!-- checked -->
 
@@ -257,12 +257,6 @@ let d: String = x.f3;           // 从 x.f3 中移出
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

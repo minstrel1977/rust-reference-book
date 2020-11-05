@@ -17,8 +17,8 @@
 
 [^enumtype]: `enum`类型类似于 ML 中的数据(`data`)构造函数声明，或 Limbo 中的 *pick ADT*。
 
-[`enum` item]: https://doc.rust-lang.org/items/enumerations.md
-[enumeration variant expression]: https://doc.rust-lang.org/expressions/enum-variant-expr.md
+[`enum` item]: ../items/enumerations.md
+[enumeration variant expression]: ../expressions/enum-variant-expr.md
 
 <!-- 2020-11-3 -->
 <!-- checked -->

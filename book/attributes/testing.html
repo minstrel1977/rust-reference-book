@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>测试 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>测试</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -173,7 +172,7 @@
 commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 本译文最后维护日期：2020-10-23</p>
 </blockquote>
-<p>以下<a href="https://doc.rust-lang.org/attributes.md">属性</a>用于指定函数来执行测试。在“测试(test)”模式下编译 crate 可以构建测试函数以及构建用于执行测试的测试套件(test harness)。启用测试模式还会启用 <a href="https://doc.rust-lang.org/conditional-compilation.md#test"><code>test</code>条件编译选项</a>。</p>
+<p>以下<a href="../attributes.html">属性</a>用于指定函数来执行测试。在“测试(test)”模式下编译 crate 可以构建测试函数以及构建用于执行测试的测试套件(test harness)。启用测试模式还会启用 <a href="../conditional-compilation.html#test"><code>test</code>条件编译选项</a>。</p>
 <h2><a class="header" href="#the-test-attribute" id="the-test-attribute">The <code>test</code> attribute</a></h2>
 <h2><a class="header" href="#test属性" id="test属性"><code>test</code>属性</a></h2>
 <p><em><code>test</code>属性</em>标记一个用来执行测试的函数。这些函数只在测试模式下编译。测试函数必须是自由函数和单态函数，不能有参数，返回类型必须是以下类型之一：</p>
@@ -186,7 +185,7 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <blockquote>
 <p>注意：允许哪些返回类型是由暂未稳定的 <a href="https://doc.rust-lang.org/std/process/trait.Termination.html"><code>Termination</code></a> trait 决定的。</p>
 </blockquote>
-<!-- 如果前面这节需要更新(从 "不能有参数" 开始, 同时需要修改 https://doc.rust-lang.org/crates-and-source-files.md 文件 -->
+<!-- 如果前面这节需要更新(从 "不能有参数" 开始, 同时需要修改 crates-and-source-files.md 文件 -->
 <blockquote>
 <p>注意：测试模式是通过将 <code>--test</code> 参数选项传递给 <code>rustc</code> 或使用 <code>cargo test</code> 来启用的。</p>
 </blockquote>
@@ -208,7 +207,7 @@ fn test_the_thing() -&gt; io::Result&lt;()&gt; {
 <h2><a class="header" href="#the-ignore-attribute" id="the-ignore-attribute">The <code>ignore</code> attribute</a></h2>
 <h2><a class="header" href="#ignore属性" id="ignore属性"><code>ignore</code>属性</a></h2>
 <p>被 <code>test</code>属性标注的(annotated with)函数也可以被 <code>ignore</code>属性标注。<em><code>ignore</code>属性</em>告诉测试套件不要将该函数作为测试执行。但在测试模式下，这类函数仍然会被编译。</p>
-<p><code>ignore</code>属性可以选择使用 <a href="https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法规则来指定测试被忽略的原因。</p>
+<p><code>ignore</code>属性可以选择使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法规则来指定测试被忽略的原因。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -225,7 +224,7 @@ fn mytest() {
 <h2><a class="header" href="#the-should_panic-attribute" id="the-should_panic-attribute">The <code>should_panic</code> attribute</a></h2>
 <h2><a class="header" href="#should_panic属性" id="should_panic属性"><code>should_panic</code>属性</a></h2>
 <p>被 <code>test</code>属性标注并返回 <code>()</code> 的函数也可以被 <code>should_panic</code>属性标注。<em><code>should_panic</code>属性</em>使测试函数只有在实际发生 panic 时才算通过。</p>
-<p><code>should_panic</code>属性可选输入一条出现在 panic消息中的字符串。如果在 panic消息中找不到该字符串，则测试将失败。可以使用 <a href="https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法规则或带有 <code>expected</code>字段的 <a href="https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法规则来传递字符串。</p>
+<p><code>should_panic</code>属性可选输入一条出现在 panic消息中的字符串。如果在 panic消息中找不到该字符串，则测试将失败。可以使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法规则或带有 <code>expected</code>字段的 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法规则来传递字符串。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -288,12 +287,6 @@ fn mytest() {
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>结构体 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>结构体</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -174,11 +173,11 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 本译文最后维护日期：2020-10-29</p>
 </blockquote>
 <p>结构体(<code>struct</code>)<em>类型</em>是其由他类型异构组合的数据结构，这些其他类型被称为结构体类型的字段。<sup class="footnote-reference"><a href="#structtype">1</a></sup></p>
-<p>结构体(<code>struct</code>)的实例可以用<a href="https://doc.rust-lang.org/expressions/struct-expr.md">结构体表达式</a>来构造。</p>
-<p>默认情况下，结构体(<code>struct</code>)的内存布局是未定义的（这样就允许进行一些编译器优化，比如字段重排），但也可以使用<a href="https://doc.rust-lang.org/type-layout.md#representations"><code>repr</code>属性</a> <sup class="footnote-reference"><a href="#译者注">2</a></sup>来使其布局在定义时就固定下来。在这两种布局规则下，字段可以在相应的结构体<em>表达式</em>中以任何顺序给出，（但在相同的编译目标中，）这两种布局规则下生成的结构体(<code>struct</code>)值将始终具有相同的内存布局。</p>
-<p>结构体(<code>struct</code>)的字段可以由<a href="https://doc.rust-lang.org/visibility-and-privacy.md">可见性修饰符</a>限定，以允许从模块之外来访问结构体中的数据。</p>
+<p>结构体(<code>struct</code>)的实例可以用<a href="../expressions/struct-expr.html">结构体表达式</a>来构造。</p>
+<p>默认情况下，结构体(<code>struct</code>)的内存布局是未定义的（这样就允许进行一些编译器优化，比如字段重排），但也可以使用<a href="../type-layout.html#representations"><code>repr</code>属性</a> <sup class="footnote-reference"><a href="#译者注">2</a></sup>来使其布局在定义时就固定下来。在这两种布局规则下，字段可以在相应的结构体<em>表达式</em>中以任何顺序给出，（但在相同的编译目标中，）这两种布局规则下生成的结构体(<code>struct</code>)值将始终具有相同的内存布局。</p>
+<p>结构体(<code>struct</code>)的字段可以由<a href="../visibility-and-privacy.html">可见性修饰符</a>限定，以允许从模块之外来访问结构体中的数据。</p>
 <p>*元组结构体(uple struct)*类型与结构体类型类似，只是字段是匿名的。</p>
-<p>*单元结构体(unit-like struct)*类型类似于结构体类型，只是它没有字段。由相关<a href="https://doc.rust-lang.org/expressions/struct-expr.md">结构体表达式</a>构造的值是驻留在此类类型中的惟一值。</p>
+<p>*单元结构体(unit-like struct)*类型类似于结构体类型，只是它没有字段。由相关<a href="../expressions/struct-expr.html">结构体表达式</a>构造的值是驻留在此类类型中的惟一值。</p>
 <div class="footnote-definition" id="structtype"><sup class="footnote-definition-label">1</sup>
 <p>https://doc.rust-lang.org/<code>struct</code> 类型类似于 C 中的 <code>struct</code> 类型、ML家族的 <em>record</em> 类型或 Lisp家族的 <em>struct</em> 类型。
 <sup class="footnote-reference"><a href="#译者注">2</a></sup>: 注意这里是不带参数的 <code>repr</code>属性，这种不带参数的属性只是把在编译阶段才做的布局优化给提前了。</p>
@@ -235,12 +234,6 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

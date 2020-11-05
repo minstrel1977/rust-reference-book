@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>元组和索引表达式 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>元组和索引表达式</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -178,11 +177,11 @@ commit: 1a3615102993e9f017a44b903ff2277a38a171a8 <br />
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>TupleExpression</em> :<br />
-   <code>(</code> <a href="https://doc.rust-lang.org/attributes.md"><em>InnerAttribute</em></a><sup>*</sup> <em>TupleElements</em><sup>?</sup> <code>)</code></p>
+   <code>(</code> <a href="../attributes.html"><em>InnerAttribute</em></a><sup>*</sup> <em>TupleElements</em><sup>?</sup> <code>)</code></p>
 <p><em>TupleElements</em> :<br />
-   ( <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>,</code> )<sup>+</sup> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><sup>?</sup></p>
+   ( <a href="../expressions.html"><em>Expression</em></a> <code>,</code> )<sup>+</sup> <a href="../expressions.html"><em>Expression</em></a><sup>?</sup></p>
 </blockquote>
-<p>元组是通过将零个或多个以逗号分隔的表达式括在圆括号中来编写的。可用它们来创建<a href="https://doc.rust-lang.org/types/tuple.md">元组类型</a>的值。</p>
+<p>元组是通过将零个或多个以逗号分隔的表达式括在圆括号中来编写的。可用它们来创建<a href="../types/tuple.html">元组类型</a>)的值。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -201,15 +200,15 @@ commit: 1a3615102993e9f017a44b903ff2277a38a171a8 <br />
 </span></code></pre></pre>
 <h3><a class="header" href="#tuple-expression-attributes" id="tuple-expression-attributes">Tuple expression attributes</a></h3>
 <h3><a class="header" href="#元组表达式上的属性" id="元组表达式上的属性">元组表达式上的属性</a></h3>
-<p>允许<a href="block-expr.html#attributes-on-block-expressions">块表达式上的属性</a>的表达式上下文同样允许元组表达式上的属性，即在这种上下文下<a href="https://doc.rust-lang.org/attributes.md">内部属性</a>可以直接位于表达式的左括号之后。</p>
+<p>允许<a href="block-expr.html#attributes-on-block-expressions">块表达式上的属性</a>的表达式上下文同样允许元组表达式上的属性，即在这种上下文下<a href="../attributes.html">内部属性</a>可以直接位于表达式的左括号之后。</p>
 <h2><a class="header" href="#tuple-indexing-expressions" id="tuple-indexing-expressions">Tuple indexing expressions</a></h2>
 <h2><a class="header" href="#元组索引表达式" id="元组索引表达式">元组索引表达式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>TupleIndexingExpression</em> :<br />
-   <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>.</code> <a href="https://doc.rust-lang.org/tokens.md#tuple-index">TUPLE_INDEX</a></p>
+   <a href="../expressions.html"><em>Expression</em></a> <code>.</code> <a href="../tokens.html#tuple-index">TUPLE_INDEX</a></p>
 </blockquote>
-<p><a href="https://doc.rust-lang.org/types/tuple.md">元组</a>和<a href="https://doc.rust-lang.org/items/structs.md">元组结构体</a>可以使用与字段位置相对应的数字来编制索引。索引必须写成不带下划线或后缀的<a href="https://doc.rust-lang.org/tokens.md#integer-literals">十进制字面量</a>。元组索引表达式也不同于字段表达式，因为元组索引表达式可以明确地作为函数来调用。在所有其他方面，它们有相同的行为。</p>
+<p><a href="../types/tuple.html">元组</a>和<a href="../items/structs.html">元组结构体</a>可以使用与字段位置相对应的数字来编制索引。索引必须写成不带下划线或后缀的<a href="../tokens.html#integer-literals">十进制字面量</a>。元组索引表达式也不同于字段表达式，因为元组索引表达式可以明确地作为函数来调用。在所有其他方面，它们有相同的行为。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -220,6 +219,7 @@ let unit_x = Point(1.0, 0.0);
 assert_eq!(unit_x.0, 1.0);
 <span class="boring">}
 </span></code></pre></pre>
+<!-- 上面这几个链接从原文来替换时小心 -->
 <!-- 2020-11-3 -->
 <!-- checked -->
 
@@ -272,12 +272,6 @@ assert_eq!(unit_x.0, 1.0);
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

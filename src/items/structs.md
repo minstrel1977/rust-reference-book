@@ -53,8 +53,8 @@ let px: i32 = p.x;
 
 *元组结构体*是一个标称型(nominal)[元组类型][tuple type]，也是用关键字 `struct` 定义的。例如：
 
-[struct type]: https://doc.rust-lang.org/types/struct.md
-[tuple type]: https://doc.rust-lang.org/types/tuple.md
+[struct type]: ../types/struct.md
+[tuple type]: ../types/tuple.md
 
 ```rust
 struct Point(i32, i32);
@@ -79,14 +79,14 @@ let c = [Cookie, Cookie {}, Cookie, Cookie {}];
 
 结构体的精确内存布局还没有规范下来。目前可以使用 [`repr`属性][`repr` attribute]来指定特定的布局。
 
-[`repr` attribute]: https://doc.rust-lang.org/type-layout.md#representations
+[`repr` attribute]: ../type-layout.md#representations
 
-[_OuterAttribute_]: https://doc.rust-lang.org/attributes.md
-[IDENTIFIER]: https://doc.rust-lang.org/identifiers.md
+[_OuterAttribute_]: ../attributes.md
+[IDENTIFIER]: ../identifiers.md
 [_Generics_]: generics.md
 [_WhereClause_]: generics.md#where-clauses
-[_Visibility_]: https://doc.rust-lang.org/visibility-and-privacy.md
-[_Type_]: https://doc.rust-lang.org/types.md#type-expressions
+[_Visibility_]: ../visibility-and-privacy.md
+[_Type_]: ../types.md#type-expressions
 
 <!-- 2020-11-3 -->
 <!-- checked -->

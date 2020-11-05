@@ -32,8 +32,8 @@
 
 它们被写成 `impl` 后跟一组 trait约束。
 
-[_TraitBound_]: https://doc.rust-lang.org/trait-bounds.md
-[_TypeParamBounds_]: https://doc.rust-lang.org/trait-bounds.md
+[_TraitBound_]: ../trait-bounds.md
+[_TypeParamBounds_]: ../trait-bounds.md
 
 <!-- 2020-11-3 -->
 <!-- checked -->

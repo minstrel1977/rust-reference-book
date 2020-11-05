@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>术语表 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>术语表</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -232,10 +231,10 @@ A fundamental trait is one where adding an impl of it for an existing type is a 
 <p>基本类型构造器是这样一种类型，在它之上实现一个 <a href="#blanket-implementation">blanket实现</a>是一个突破性的改变。<code>&amp;</code>、<code>&amp;mut</code>、<code>Box</code>、和 <code>Pin</code> 是基本类型构造器。<br />
 如果任何时候 <code>T</code> 都被认为是<a href="#local-type">本地类型</a>，那 <code>&amp;T</code>、<code>&amp;mut T</code>、<code>Box&lt;T&gt;</code>、和 <code>Pin&lt;T&gt;</code> 也被认为是本地类型。基本类型构造器不能<a href="#uncovered-type">覆盖</a>其他类型。任何时候使用术语“有覆盖类型”时，都默认把<code>&amp;T</code>、<code>&amp;mut T</code>、<code>Box&lt;T&gt;</code>、和<code>Pin&lt;T&gt;</code> 排除在外。<br />
 A fundamental type constructor is a type where implementing a <a href="#blanket-implementation">blanket implementation</a> over it is a breaking change. <code>&amp;</code>, <code>&amp;mut</code>, <code>Box</code>, and <code>Pin</code>  are fundamental. <br />
-Any time a type <code>T</code> is considered <a href="#local-type">local</a>, <code>&amp;T</code>, <code>&amp;mut T</code>, <code>Box&lt;T&gt;</code>, and <code>Pin&lt;T&gt;</code> are also considered local. Fundamental type constructors cannot <a href="#uncovered-type">cover</a> other types. Any time the term “covered type” is used, the <code>T</code> in <code>&amp;T</code>, <code>&amp;mut T</code>, <code>Box&lt;T&gt;</code>, and <code>Pin&lt;T&gt;</code> is not considered covered.</p>
+Any time a type <code>T</code> is considered <a href="#local-type">local</a>, <code>&amp;T</code>, <code>&amp;mut T</code>, <code>Box&lt;T&gt;</code>, and <code>Pin&lt;T&gt;</code> are also considered local. Fundamental type constructors cannot <a href="#uncovered-type">cover</a> other types. Any time the term &quot;covered type&quot; is used, the <code>T</code> in <code>&amp;T</code>, <code>&amp;mut T</code>, <code>Box&lt;T&gt;</code>, and <code>Pin&lt;T&gt;</code> is not considered covered.</p>
 <h3><a class="header" href="#inhabited" id="inhabited">Inhabited</a></h3>
 <p>如果类型具有构造函数，因此可以实例化，则该类型是 inhabited。inhabited 类型不是“空的”，因为可以有类型对应的值。与之相对的是 <a href="#uninhabited">Uninhabited</a>。<br />
-A type is inhabited if it has constructors and therefore can be instantiated. An inhabited type is not “empty” in the sense that there can be values of the type. Opposite of <a href="#uninhabited">Uninhabited</a>.</p>
+A type is inhabited if it has constructors and therefore can be instantiated. An inhabited type is not &quot;empty&quot; in the sense that there can be values of the type. Opposite of <a href="#uninhabited">Uninhabited</a>.</p>
 <h3><a class="header" href="#inherent-implementation" id="inherent-implementation">Inherent implementation</a></h3>
 <h3><a class="header" href="#固有实现" id="固有实现">固有实现</a></h3>
 <p>单独标称类型上的<a href="items/implementations.html">实现</a> ，注意关键字 <code>impl</code> 后直接是标称类型，而非 trait-标称类型对(trait-type pair)上的实现。<a href="items/implementations.html#inherent-implementations">更多</a>。 <br />
@@ -247,7 +246,7 @@ A <a href="items/associated-items.html#methods">method</a> defined in an <a href
 <h3><a class="header" href="#initialized" id="initialized">Initialized</a></h3>
 <h3><a class="header" href="#初始化" id="初始化">初始化</a></h3>
 <p>如果一个变量已经被分配了一个值，并且此值还没有被移动走，那此变量就被初始化了。对此变量而言，它会假设它之外的所有其他内存位置都未初始化。只有非安全Rust 可以在不初始化的情况下开辟内存新区域。<br />
-A variable is initialized if it has been assigned a value and hasn’t since been moved from. All other memory locations are assumed to be uninitialized. Only unsafe Rust can create such a memory without initializing it.</p>
+A variable is initialized if it has been assigned a value and hasn't since been moved from. All other memory locations are assumed to be uninitialized. Only unsafe Rust can create such a memory without initializing it.</p>
 <h3><a class="header" href="#local-trait" id="local-trait">Local trait</a></h3>
 <h3><a class="header" href="#本地-trait" id="本地-trait">本地 trait</a></h3>
 <p>本地 trait 是在当前 crate 中定义的 <code>trait</code>。它可以在模块局部定义，也可以是依附于其他类型参数而定义。给定 <code>trait Foo&lt;T, U&gt;</code>，<code>Foo</code> 总是本地的，不管替代 <code>T</code> 和 <code>U</code> 的类型是什么。<br />
@@ -320,7 +319,7 @@ A type which does not appear as an argument to another type. For example, <code>
 Compile-time or run-time behavior that is not specified. This may result in, but is not limited to: process termination or corruption; improper, incorrect, or unintended computation; or platform-specific results. <a href="behavior-considered-undefined.html">More</a>.</p>
 <h3><a class="header" href="#uninhabited" id="uninhabited">Uninhabited</a></h3>
 <p>如果类型没有构造函数，因此永远不能实例化，则该类型是 Uninhabited。一个 Uninhabited 类型是“空的”，意思是该类型没有值。Uninhabited 类型的典型例子是 <a href="types/never.html">never type</a> <code>!</code>，或不带变体的 <code>enum Never { }</code>。与之相对的是 <a href="#inhabited">Inhabited</a>。<br />
-A type is uninhabited if it has no constructors and therefore can never be instantiated. An uninhabited type is “empty” in the sense that there are no values of the type. The canonical example of an uninhabited type is the <a href="types/never.html">never type</a> <code>!</code>, or an enum with no variants <code>enum Never { }</code>. Opposite of <a href="#inhabited">Inhabited</a>.</p>
+A type is uninhabited if it has no constructors and therefore can never be instantiated. An uninhabited type is &quot;empty&quot; in the sense that there are no values of the type. The canonical example of an uninhabited type is the <a href="types/never.html">never type</a> <code>!</code>, or an enum with no variants <code>enum Never { }</code>. Opposite of <a href="#inhabited">Inhabited</a>.</p>
 <!-- 2020-11-3 -->
 <!-- checked -->
 
@@ -373,12 +372,6 @@ A type is uninhabited if it has no constructors and therefore can never be insta
         </script>
         
 
-        
-        <script src="ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

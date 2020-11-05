@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>匹配表达式 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>匹配表达式</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -176,26 +175,26 @@ commit: 41cf00929903710a9ce9b1f4c5d8b96e6a511614 <br />
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>MatchExpression</em> :<br />
-   <code>match</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><sub><em>排除结构体表达式</em></sub> <code>{</code><br />
-      <a href="https://doc.rust-lang.org/attributes.md"><em>InnerAttribute</em></a><sup>*</sup><br />
+   <code>match</code> <a href="../expressions.html"><em>Expression</em></a><sub><em>排除结构体表达式</em></sub> <code>{</code><br />
+      <a href="../attributes.html"><em>InnerAttribute</em></a><sup>*</sup><br />
       <em>MatchArms</em><sup>?</sup><br />
    <code>}</code></p>
 <p><em>MatchArms</em> :<br />
    ( <em>MatchArm</em> <code>=&gt;</code>
-( <a href="https://doc.rust-lang.org/expressions.md"><em>ExpressionWithoutBlock</em></a> <code>,</code>
-| <a href="https://doc.rust-lang.org/expressions.md"><em>ExpressionWithBlock</em></a> <code>,</code><sup>?</sup> )
+( <a href="../expressions.html"><em>ExpressionWithoutBlock</em></a> <code>,</code>
+| <a href="../expressions.html"><em>ExpressionWithBlock</em></a> <code>,</code><sup>?</sup> )
 )<sup>*</sup><br />
-   <em>MatchArm</em> <code>=&gt;</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>,</code><sup>?</sup></p>
+   <em>MatchArm</em> <code>=&gt;</code> <a href="../expressions.html"><em>Expression</em></a> <code>,</code><sup>?</sup></p>
 <p><em>MatchArm</em> :<br />
-   <a href="https://doc.rust-lang.org/attributes.md"><em>OuterAttribute</em></a><sup>*</sup> <em>MatchArmPatterns</em> <em>MatchArmGuard</em><sup>?</sup></p>
+   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <em>MatchArmPatterns</em> <em>MatchArmGuard</em><sup>?</sup></p>
 <p><em>MatchArmPatterns</em> :<br />
-   <code>|</code><sup>?</sup> <a href="https://doc.rust-lang.org/patterns.md"><em>Pattern</em></a> ( <code>|</code> <a href="https://doc.rust-lang.org/patterns.md"><em>Pattern</em></a> )<sup>*</sup></p>
+   <code>|</code><sup>?</sup> <a href="../patterns.html"><em>Pattern</em></a> ( <code>|</code> <a href="../patterns.html"><em>Pattern</em></a> )<sup>*</sup></p>
 <p><em>MatchArmGuard</em> :<br />
-   <code>if</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a></p>
+   <code>if</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><em>匹配(<code>match</code>)表达式</em>在模式(pattern)上建立控制流分支(branch)。匹配的具体形式取决于其应用的<a href="https://doc.rust-lang.org/patterns.md">模式</a>。一个匹配(<code>match</code>)表达式带有一个要与模式进行比较的 <em><a href="https://doc.rust-lang.org/glossary.md#scrutinee">检验对象</a>(scrutinee)表达式</em>。检验对象表达式和模式必须具有相同的类型。</p>
-<p>根据检验对象表达式是<a href="https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions">位置表达式或值表达式</a>，匹配(<code>match</code>)的行为会有所不同。如果检验对象表达式是一个<a href="https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions">值表达式</a>，则这个表达式首先会在被求值到一个临时位置，然后将这个结果值按顺序与匹配臂(arms)中的模式进行比较，直到找到一个成功的匹配。第一个匹配成功的模式所在的匹配臂会被选中为当前匹配(<code>match</code>)的分支目标，然后由该模式（从检验对象那里）绑定到的任何变量又都会被赋值给该匹配臂的块中的局部变量，然后控制流进入该块。</p>
-<p>当检验对象表达式是一个<a href="https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions">位置表达式</a>时，此匹配(<code>match</code>)表达式不用先去内存上分配一个临时位置，但是，按值匹配绑定(by-value binding)会复制或移动这个（位置表达式代表的）内存位置里面的值。如果可能，最好是在位置表达式上进行匹配，因为这种匹配的生存期继承了该位置表达式的生存期，而不会（让其生存期仅）局限于此匹配的内部。</p>
+<p><em>匹配(<code>match</code>)表达式</em>在模式(pattern)上建立控制流分支(branch)。匹配的具体形式取决于其应用的<a href="../patterns.html">模式</a>。一个匹配(<code>match</code>)表达式带有一个要与模式进行比较的 <em><a href="../glossary.html#scrutinee">检验对象</a>(scrutinee)表达式</em>。检验对象表达式和模式必须具有相同的类型。</p>
+<p>根据检验对象表达式是<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式或值表达式</a>，匹配(<code>match</code>)的行为会有所不同。如果检验对象表达式是一个<a href="../expressions.html#place-expressions-and-value-expressions">值表达式</a>，则这个表达式首先会在被求值到一个临时位置，然后将这个结果值按顺序与匹配臂(arms)中的模式进行比较，直到找到一个成功的匹配。第一个匹配成功的模式所在的匹配臂会被选中为当前匹配(<code>match</code>)的分支目标，然后由该模式（从检验对象那里）绑定到的任何变量又都会被赋值给该匹配臂的块中的局部变量，然后控制流进入该块。</p>
+<p>当检验对象表达式是一个<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>时，此匹配(<code>match</code>)表达式不用先去内存上分配一个临时位置，但是，按值匹配绑定(by-value binding)会复制或移动这个（位置表达式代表的）内存位置里面的值。如果可能，最好是在位置表达式上进行匹配，因为这种匹配的生存期继承了该位置表达式的生存期，而不会（让其生存期仅）局限于此匹配的内部。</p>
 <p>匹配(<code>match</code>)表达式的一个示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -212,7 +211,7 @@ match x {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>模式中绑定到的变量的作用域可以覆盖到匹配守卫(match guard)和匹配臂的表达式里。<a href="https://doc.rust-lang.org/patterns.md#binding-modes">变量绑定方式</a>（移动、复制或引用）取决于使用的具体模式。</p>
+<p>模式中绑定到的变量的作用域可以覆盖到匹配守卫(match guard)和匹配臂的表达式里。<a href="../patterns.html#binding-modes">变量绑定方式</a>（移动、复制或引用）取决于使用的具体模式。</p>
 <p>可以使用操作符 <code>|</code> 连接多个匹配模式。每个模式将按照从左到右的顺序进行测试，直到找到一个成功的匹配。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -236,7 +235,7 @@ match S(1, 2) {
 <span class="boring">}
 </span></code></pre></pre>
 <blockquote>
-<p>注意: <code>2..=9</code> 是一个<a href="https://doc.rust-lang.org/patterns.md#range-patterns">区间(Range)模式</a>，不是一个<a href="range-expr.html">区间表达式</a>。因此，只有区间模式支持的区间类型才能在匹配臂中使用。</p>
+<p>注意: <code>2..=9</code> 是一个<a href="../patterns.html#range-patterns">区间(Range)模式</a>，不是一个<a href="range-expr.html">区间表达式</a>。因此，只有区间模式支持的区间类型才能在匹配臂中使用。</p>
 </blockquote>
 <p>每个 <code>|</code> 分隔的模式里出现的变量绑定必须出现在匹配臂的所有模式里。相同名称的绑定变量必须具有相同的类型和相同的变量绑定模式。</p>
 <h2><a class="header" href="#match-guards" id="match-guards">Match guards</a></h2>
@@ -274,8 +273,8 @@ assert_eq!(i.get(), 2);
 <p>匹配守卫可以引用绑定在它们前面的模式里的变量。在计算匹配守卫之前，将对检验对象内部被模式的变量匹配上的那部分进行共享引用。在计算匹配守卫时，其中的访问该变量动作就会使用这个共享引用。只有当匹配守卫最终计算为真时，此共享引用的值才会从检验对象内部移动或复制到相应的匹配臂的变量中。这使得共享借用可以在守卫内部使用，而不会在守卫不匹配的情况下移出检验对象。此外，通过在评估匹配守卫的同时保留共享引用，也可以防止匹配守卫内部去修改检验对象。</p>
 <h2><a class="header" href="#attributes-on-match-arms" id="attributes-on-match-arms">Attributes on match arms</a></h2>
 <h2><a class="header" href="#匹配臂上的属性" id="匹配臂上的属性">匹配臂上的属性</a></h2>
-<p>在匹配臂上允许使用外部属性，但在匹配臂上只有 <a href="https://doc.rust-lang.org/conditional-compilation.md"><code>cfg</code></a>、<a href="https://doc.rust-lang.org/attributes/codegen.md#the-cold-attribute"><code>cold</code></a> 和 <a href="https://doc.rust-lang.org/attributes/diagnostics.md#lint-check-attributes">lint检查类属性</a>这些属性才有意义。</p>
-<p>允许<a href="block-expr.html#attributes-on-block-expressions">块表达式上的属性</a>的表达式上下文同样允许匹配表达式上的属性，即在这种上下文下<a href="https://doc.rust-lang.org/attributes.md">内部属性</a>可以直接位于表达式的左括号之后。</p>
+<p>在匹配臂上允许使用外部属性，但在匹配臂上只有 <a href="../conditional-compilation.html"><code>cfg</code></a>、<a href="../attributes/codegen.html#the-cold-attribute"><code>cold</code></a> 和 <a href="../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>这些属性才有意义。</p>
+<p>允许<a href="block-expr.html#attributes-on-block-expressions">块表达式上的属性</a>的表达式上下文同样允许匹配表达式上的属性，即在这种上下文下<a href="../attributes.html">内部属性</a>可以直接位于表达式的左括号之后。</p>
 <!-- 2020-11-3 -->
 <!-- checked -->
 
@@ -328,12 +327,6 @@ assert_eq!(i.get(), 2);
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

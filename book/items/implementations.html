@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>实现 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>实现</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -178,27 +177,27 @@ commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
 <em>Implementation</em> :<br />
    <em>InherentImpl</em> | <em>TraitImpl</em></p>
 <p><em>InherentImpl</em> :<br />
-   <code>impl</code> <a href="generics.html"><em>Generics</em></a><sup>?</sup> <a href="https://doc.rust-lang.org/types.md#type-expressions"><em>Type</em></a> <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup> <code>{</code><br />
-      <a href="https://doc.rust-lang.org/attributes.md"><em>InnerAttribute</em></a><sup>*</sup><br />
+   <code>impl</code> <a href="generics.html"><em>Generics</em></a><sup>?</sup> <a href="../types.html#type-expressions"><em>Type</em></a> <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup> <code>{</code><br />
+      <a href="../attributes.html"><em>InnerAttribute</em></a><sup>*</sup><br />
       <em>InherentImplItem</em><sup>*</sup><br />
    <code>}</code></p>
 <p><em>InherentImplItem</em> :<br />
-   <a href="https://doc.rust-lang.org/attributes.md"><em>OuterAttribute</em></a><sup>*</sup> (<br />
-         <a href="https://doc.rust-lang.org/macros.md#macro-invocation"><em>MacroInvocationSemi</em></a><br />
-      | ( <a href="https://doc.rust-lang.org/visibility-and-privacy.md"><em>Visibility</em></a><sup>?</sup> ( <a href="constant-items.html"><em>ConstantItem</em></a> | <a href="functions.html"><em>Function</em></a> | <a href="associated-items.html#methods"><em>Method</em></a> ) )<br />
+   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> (<br />
+         <a href="../macros.html#macro-invocation"><em>MacroInvocationSemi</em></a><br />
+      | ( <a href="../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup> ( <a href="constant-items.html"><em>ConstantItem</em></a> | <a href="functions.html"><em>Function</em></a> | <a href="associated-items.html#methods"><em>Method</em></a> ) )<br />
    )</p>
 <p><em>TraitImpl</em> :<br />
    <code>unsafe</code><sup>?</sup> <code>impl</code> <a href="generics.html"><em>Generics</em></a><sup>?</sup> <code>!</code><sup>?</sup>
-<a href="https://doc.rust-lang.org/paths.md#paths-in-types"><em>TypePath</em></a> <code>for</code> <a href="https://doc.rust-lang.org/types.md#type-expressions"><em>Type</em></a><br />
+<a href="../paths.html#paths-in-types"><em>TypePath</em></a> <code>for</code> <a href="../types.html#type-expressions"><em>Type</em></a><br />
    <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup><br />
    <code>{</code><br />
-      <a href="https://doc.rust-lang.org/attributes.md"><em>InnerAttribute</em></a><sup>*</sup><br />
+      <a href="../attributes.html"><em>InnerAttribute</em></a><sup>*</sup><br />
       <em>TraitImplItem</em><sup>*</sup><br />
    <code>}</code></p>
 <p><em>TraitImplItem</em> :<br />
-   <a href="https://doc.rust-lang.org/attributes.md"><em>OuterAttribute</em></a><sup>*</sup> (<br />
-         <a href="https://doc.rust-lang.org/macros.md#macro-invocation"><em>MacroInvocationSemi</em></a><br />
-      | ( <a href="https://doc.rust-lang.org/visibility-and-privacy.md"><em>Visibility</em></a><sup>?</sup> ( <a href="type-aliases.html"><em>TypeAlias</em></a> | <a href="constant-items.html"><em>ConstantItem</em></a> | <a href="functions.html"><em>Function</em></a> | <a href="associated-items.html#methods"><em>Method</em></a> ) )<br />
+   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> (<br />
+         <a href="../macros.html#macro-invocation"><em>MacroInvocationSemi</em></a><br />
+      | ( <a href="../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup> ( <a href="type-aliases.html"><em>TypeAlias</em></a> | <a href="constant-items.html"><em>ConstantItem</em></a> | <a href="functions.html"><em>Function</em></a> | <a href="associated-items.html#methods"><em>Method</em></a> ) )<br />
    )</p>
 </blockquote>
 <p><em>实现</em>是将数据项与*实现类型(implementing type)*关联起来的数据项。实现使用关键字 <code>impl</code> 定义，它包含了属于当前实现的类型的实例的函数，或者包含了当前实现的类型本身的静态函数。（译者注：后一句如果简单意译应该是：实现使用关键字 <code>impl</code> 定义，它包含了当前类型的方法和函数）</p>
@@ -212,7 +211,7 @@ commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
 <p>固有实现被定义为一段由关键字 <code>impl</code>，泛型类型声明，指向标称类型(nominal type)的路径，一个 where子句和一对花括号括起来的一组*类型关联项(associable items)*组成的序列。</p>
 <p>（这里）<em>标称类型</em>也被称作<em>实现类型(implementing type)</em>；<em>类型关联项(associable items)<em>可理解为实现类型的各种</em>关联数据项</em>。</p>
 <p>固有实现将包含的数据项与实现类型关联起来。固有实现可以包含<a href="associated-items.html#associated-functions-and-methods">关联函数</a>（包括方法）和<a href="associated-items.html#associated-constants">关联常量</a>。固有实现不能包含关联类型别名。</p>
-<p>关联数据项的<a href="https://doc.rust-lang.org/paths.md">路径</a>是其实现类型的所有（形式的）路径中的任一种，然后再拼接上这个关联数据项的标识符来作为整个路径的末段路径组件(final path component)。</p>
+<p>关联数据项的<a href="../paths.html">路径</a>是其实现类型的所有（形式的）路径中的任一种，然后再拼接上这个关联数据项的标识符来作为整个路径的末段路径组件(final path component)。</p>
 <p>类型可以有多个固有实现。但作为原始类型定义的实现类型与这些固有实现必须在同一个 crate 里。</p>
 <pre><pre class="playground"><code class="language-rust">pub mod color {
     // 译者添加的注释：这段为 Color的原始类型，也是后面实现的实现类型
@@ -297,16 +296,16 @@ impl Shape for Circle {
 <h4><a class="header" href="#孤儿规则" id="孤儿规则">孤儿规则</a></h4>
 <p>给定 <code>impl&lt;P1..=Pn&gt; Trait&lt;T1..=Tn&gt; for T0</code>，只有以下至少一种情况为真时，此 <code>impl</code> 才能成立：</p>
 <ul>
-<li><code>Trait</code> 是一个<a href="https://doc.rust-lang.org/glossary.md#local-trait">本地trait</a></li>
+<li><code>Trait</code> 是一个<a href="../glossary.html#local-trait">本地trait</a></li>
 <li>以下所有
 <ul>
-<li><code>T0..=Tn</code> 中的类型至少有一种是<a href="https://doc.rust-lang.org/glossary.md#local-type">本地类型</a>。假设 <code>Ti</code> 是第一个这样的类型。</li>
-<li>没有<a href="https://doc.rust-lang.org/glossary.md#uncovered-type">无覆盖类型</a>参数 <code>P1..=Pn</code> 会出现在 <code>T0..Ti</code> 里（注意 <code>Ti</code> 被排除在外）。
+<li><code>T0..=Tn</code> 中的类型至少有一种是<a href="../glossary.html#local-type">本地类型</a>。假设 <code>Ti</code> 是第一个这样的类型。</li>
+<li>没有<a href="../glossary.html#uncovered-type">无覆盖类型</a>参数 <code>P1..=Pn</code> 会出现在 <code>T0..Ti</code> 里（注意 <code>Ti</code> 被排除在外）。
 （译者注：为理解上面两条规则，举几个例子、 <code>impl&lt;T&gt; ForeignTrait&lt;LocalType&gt; for ForeignType&lt;T&gt;</code> 这样的实现也是被允许的，而 <code>impl&lt;Vec&lt;T&gt;&gt; ForeignTrait&lt;LocalType&gt; for ForeignType&lt;T&gt;</code> 和 <code>impl&lt;T&gt; ForeignTrait&lt;Vec&lt;T&gt;&gt; for ForeignType&lt;T&gt;</code> 不被允许。）</li>
 </ul>
 </li>
 </ul>
-<p>这里只有<em>无覆盖</em>类型参数的外观被限制（译者注：为方便理解“无覆盖类型参数”，译者提醒读者把它想象成上面译者举例中的 <code>T</code>）。注意，理解“无覆盖类型参数”时需要注意：为了保持一致性，<a href="https://doc.rust-lang.org/glossary.md#fundamental-type-constructors">基本类型</a>虽然外观形式特殊，但仍不认为是有覆盖的，比如 <code>Box&lt;T&gt;</code> 中的 <code>T</code> 就不认为是有覆盖的，<code>Box&lt;LocalType&gt;</code> 这样的就被认为是本地的。</p>
+<p>这里只有<em>无覆盖</em>类型参数的外观被限制（译者注：为方便理解“无覆盖类型参数”，译者提醒读者把它想象成上面译者举例中的 <code>T</code>）。注意，理解“无覆盖类型参数”时需要注意：为了保持一致性，<a href="../glossary.html#fundamental-type-constructors">基本类型</a>虽然外观形式特殊，但仍不认为是有覆盖的，比如 <code>Box&lt;T&gt;</code> 中的 <code>T</code> 就不认为是有覆盖的，<code>Box&lt;LocalType&gt;</code> 这样的就被认为是本地的。</p>
 <h2><a class="header" href="#generic-implementations" id="generic-implementations">Generic Implementations</a></h2>
 <h2><a class="header" href="#泛型实现" id="泛型实现">泛型实现</a></h2>
 <p>实现可以采用类型和生存期作为参数，这些参数可用在实现中（，也可以不用）。为实现所声明的类型参数必须在 trait 中或实现类型中至少使用一次。实现的参数直接写在关键字 <code>impl</code> 之后。</p>
@@ -324,7 +323,7 @@ impl Seq&lt;bool&gt; for u32 {
 </span></code></pre></pre>
 <h2><a class="header" href="#attributes-on-implementations" id="attributes-on-implementations">Attributes on Implementations</a></h2>
 <h2><a class="header" href="#实现上的属性" id="实现上的属性">实现上的属性</a></h2>
-<p>实现可以在关键字 <code>impl</code> 之前引入外部<a href="https://doc.rust-lang.org/attributes.md">属性</a>，在代码体内引入内部<a href="https://doc.rust-lang.org/attributes.md">属性</a>。内部属性必须位于任何关联数据项之前。这里有意义的属性有 <a href="https://doc.rust-lang.org/conditional-compilation.md"><code>cfg</code></a>、<a href="https://doc.rust-lang.org/attributes/diagnostics.md#the-deprecated-attribute"><code>deprecated</code></a>、<a href="https://doc.rust-lang.org/rustdoc/the-doc-attribute.html"><code>doc</code></a> 和 <a href="https://doc.rust-lang.org/attributes/diagnostics.md#lint-check-attributes">lint检查类属性</a>。</p>
+<p>实现可以在关键字 <code>impl</code> 之前引入外部<a href="../attributes.html">属性</a>，在代码体内引入内部<a href="../attributes.html">属性</a>。内部属性必须位于任何关联数据项之前。这里有意义的属性有 <a href="../conditional-compilation.html"><code>cfg</code></a>、<a href="../attributes/diagnostics.html#the-deprecated-attribute"><code>deprecated</code></a>、<a href="https://doc.rust-lang.org/rustdoc/the-doc-attribute.html"><code>doc</code></a> 和 <a href="../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>。</p>
 <!-- 2020-11-3 -->
 <!-- checked -->
 
@@ -377,12 +376,6 @@ impl Seq&lt;bool&gt; for u32 {
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

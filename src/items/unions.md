@@ -149,7 +149,7 @@ fn test() {
 
 [^译者备注]: 这句译者简单理解就是对已经初始化的变量再去覆写的时候要先去读一下这个变量代表的地址上的值的状态，如果有值，并且允许覆写，那 Rust 为防止内存泄漏就先执行那变量的析构行为（drop()），清空那个地址上的数据的关联数据，再写入。我们这里的预设条件是那值有 Copy 特性，有Copy 特性了，对值的直接覆写不会造成内存泄漏，就不必调用析构行为，也不需要事先的非安全读操作了。对于这个问题[nomicon](https://learnku.com/docs/nomicon/2018)的“未初始化内存”章有讲述，博主[CrLF0710](https://www.zhihu.com/people/crlf0710)的两篇“学一点 Rust 内存模型会发生什么呢？”里也都有精彩讲解。
 
-[IDENTIFIER]: https://doc.rust-lang.org/identifiers.md
+[IDENTIFIER]: ../identifiers.md
 [_Generics_]: generics.md
 [_WhereClause_]: generics.md#where-clauses
 [_StructFields_]: structs.md

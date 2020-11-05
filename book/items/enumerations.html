@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>枚举(enum) - Rust 参考手册 - The Rust Language Reference</title>
+        <title>枚举(enum)</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -177,24 +176,24 @@ commit: 2264855271fae0a915a0fa769e57f5a5d09ff5ef <br />
 <p><strong><sup>句法</sup></strong><br />
 <em>Enumeration</em> :<br />
    <code>enum</code>
-<a href="https://doc.rust-lang.org/identifiers.md">IDENTIFIER</a> 
+<a href="../identifiers.html">IDENTIFIER</a> 
 <a href="generics.html"><em>Generics</em></a><sup>?</sup>
 <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup>
 <code>{</code> <em>EnumItems</em><sup>?</sup> <code>}</code></p>
 <p><em>EnumItems</em> :<br />
    <em>EnumItem</em> ( <code>,</code> <em>EnumItem</em> )<sup>*</sup> <code>,</code><sup>?</sup></p>
 <p><em>EnumItem</em> :<br />
-   <em>OuterAttribute</em><sup>*</sup> [<em>Visibility</em>]<sup>?</sup><br />
-   <a href="https://doc.rust-lang.org/identifiers.md">IDENTIFIER</a> ( <em>EnumItemTuple</em> | <em>EnumItemStruct</em>
+   <em>OuterAttribute</em><sup>*</sup> <a href="../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup><br />
+   <a href="../identifiers.html">IDENTIFIER</a> ( <em>EnumItemTuple</em> | <em>EnumItemStruct</em>
 | <em>EnumItemDiscriminant</em> )<sup>?</sup></p>
 <p><em>EnumItemTuple</em> :<br />
    <code>(</code> <a href="structs.html"><em>TupleFields</em></a><sup>?</sup> <code>)</code></p>
 <p><em>EnumItemStruct</em> :<br />
    <code>{</code> <a href="structs.html"><em>StructFields</em></a><sup>?</sup> <code>}</code></p>
 <p><em>EnumItemDiscriminant</em> :<br />
-   <code>=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a></p>
+   <code>=</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><em>枚举</em>，英文为 <em>enumeration</em>，也常用其简写形式 <em>enum</em>，它同时定义了一个标称型(nominal)<a href="https://doc.rust-lang.org/types/enum.md">枚举类型</a>和一组<em>构造器</em>，这可用于创建相应枚举类型的值或使用相应的枚举类型对这些值进行模式匹配。</p>
+<p><em>枚举</em>，英文为 <em>enumeration</em>，也常用其简写形式 <em>enum</em>，它同时定义了一个标称型(nominal)<a href="../types/enum.html">枚举类型</a>和一组<em>构造器</em>，这可用于创建相应枚举类型的值或使用相应的枚举类型对这些值进行模式匹配。</p>
 <p>枚举使用关键字 <code>enum</code> 来声明。</p>
 <p><code>enum</code> 数据项的一个示例和它的使用方法：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -226,7 +225,7 @@ a = Animal::Cat { name: &quot;Spotty&quot;.to_string(), weight: 2.7 };
 <h2><a class="header" href="#custom-discriminant-values-for-fieldless-enumerations" id="custom-discriminant-values-for-fieldless-enumerations">Custom Discriminant Values for Fieldless Enumerations</a></h2>
 <h2><a class="header" href="#为无字段枚举自定义判别值" id="为无字段枚举自定义判别值">为无字段枚举自定义判别值</a></h2>
 <p>如果枚举的<em>任何</em>变体都没有附加字段，则可以直接设置和访问判别值。</p>
-<p>可以使用操作符 <code>as</code> 通过<a href="https://doc.rust-lang.org/expressions/operator-expr.md#semantics">数值转换</a>将这些枚举类型转换为整型。枚举可以可选地指定每个判别值的具体值，方法是在变体名后面追加 <code>=</code> 和<a href="https://doc.rust-lang.org/const_eval.md#constant-expressions">常量表达式</a>。如果声明中的第一个变体未指定，则将其判别值设置为零。对于其他未指定的判别值，它比照前一个变体的判别值按 1 递增。</p>
+<p>可以使用操作符 <code>as</code> 通过<a href="../expressions/operator-expr.html#semantics">数值转换</a>将这些枚举类型转换为整型。枚举可以可选地指定每个判别值的具体值，方法是在变体名后面追加 <code>=</code> 和<a href="../const_eval.html#constant-expressions">常量表达式</a>。如果声明中的第一个变体未指定，则将其判别值设置为零。对于其他未指定的判别值，它比照前一个变体的判别值按 1 递增。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -240,7 +239,7 @@ let baz_discriminant = Foo::Baz as u32;
 assert_eq!(baz_discriminant, 123);
 <span class="boring">}
 </span></code></pre></pre>
-<p>尽管编译器被允许在实际的内存布局中使用较小的类型，但在<a href="https://doc.rust-lang.org/type-layout.md#the-default-representation">默认表形(default representation)</a>下，指定的判别值会被解释为一个 <code>isize</code> 值。也可以使用[原语表形(primitive representation)]或<a href="https://doc.rust-lang.org/type-layout.md#the-c-representation"><code>C</code>表形</a>来更改成大小可接受的值。</p>
+<p>尽管编译器被允许在实际的内存布局中使用较小的类型，但在<a href="../type-layout.html#the-default-representation">默认表形(default representation)</a>下，指定的判别值会被解释为一个 <code>isize</code> 值。也可以使用[原语表形(primitive representation)]或<a href="../type-layout.html#the-c-representation"><code>C</code>表形</a>来更改成大小可接受的值。</p>
 <p>同一枚举中，两个变体使用相同的判别值是错误的。</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
@@ -284,7 +283,7 @@ enum OverflowingDiscriminantError2 {
 </span>enum ZeroVariants {}
 <span class="boring">}
 </span></code></pre></pre>
-<p>零变体枚举与 <a href="https://doc.rust-lang.org/types/never.md"><em>never类型</em></a>等效，但它不能被强转为其他类型。</p>
+<p>零变体枚举与 <a href="../types/never.html"><em>never类型</em></a>等效，但它不能被强转为其他类型。</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -295,7 +294,7 @@ let y: u32 = x; // 类型不匹配错误
 </span></code></pre></pre>
 <h2><a class="header" href="#variant-visibility" id="variant-visibility">Variant visibility</a></h2>
 <h2><a class="header" href="#变体的可见性" id="变体的可见性">变体的可见性</a></h2>
-<p>依照句法规则，枚举变体是允许有自己的<a href="https://doc.rust-lang.org/visibility-and-privacy.md"><em>可见性(visibility)</em></a>注解(annotation)的，但当枚举被（句法法分析程序）验证(validate)通过后，可见性注解又将被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的数据项使用统一的句法规则进行解析。</p>
+<p>依照句法规则，枚举变体是允许有自己的[<em>可见性(visibility)</em>][Visibility]注解(annotation)的，但当枚举被（句法法分析程序）验证(validate)通过后，可见性注解又将被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的数据项使用统一的句法规则进行解析。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -375,12 +374,6 @@ enum E {
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

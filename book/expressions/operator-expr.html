@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>运算符表达式 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>运算符表达式</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -201,10 +200,10 @@ commit: 03dc50769738a643be1451a4ff1516fa5fab92bd <br />
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>BorrowExpression</em> :<br />
-      (<code>&amp;</code>|<code>&amp;&amp;</code>) <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | (<code>&amp;</code>|<code>&amp;&amp;</code>) <code>mut</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a></p>
+      (<code>&amp;</code>|<code>&amp;&amp;</code>) <a href="../expressions.html"><em>Expression</em></a><br />
+   | (<code>&amp;</code>|<code>&amp;&amp;</code>) <code>mut</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><code>&amp;</code>（共享借用）和 <code>&amp;mut</code>（可变借用）运算符是一元前缀运算符。当应用于<a href="https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions">位置表达式</a>上时，此表达式生成指向值所在的内存位置的引用（指针）。在引用期间，该内存位置也被置于借出状态。对于共享借用（<code>&amp;</code>），这意味着该位置可能不会发生变化，但可能会被再次读取或共享。对于可变借用（<code>&amp;mut</code>），在借用到期之前，不能以任何方式访问该位置。<code>&amp;mut</code> 在可变位置表达式上下文中计算其操作数。如果 <code>&amp;</code> 或 <code>&amp;mut</code> 运算符应用于<a href="https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions">值表达式</a>，则会创建一个<a href="https://doc.rust-lang.org/expressions.md#temporaries">临时值</a>。</p>
+<p><code>&amp;</code>（共享借用）和 <code>&amp;mut</code>（可变借用）运算符是一元前缀运算符。当应用于<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>上时，此表达式生成指向值所在的内存位置的引用（指针）。在引用期间，该内存位置也被置于借出状态。对于共享借用（<code>&amp;</code>），这意味着该位置可能不会发生变化，但可能会被再次读取或共享。对于可变借用（<code>&amp;mut</code>），在借用到期之前，不能以任何方式访问该位置。<code>&amp;mut</code> 在可变位置表达式上下文中计算其操作数。如果 <code>&amp;</code> 或 <code>&amp;mut</code> 运算符应用于<a href="../expressions.html#place-expressions-and-value-expressions">值表达式</a>，则会创建一个<a href="../expressions.html#temporaries">临时值</a>。</p>
 <p>这类操作符不能重载。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -239,10 +238,10 @@ let a = &amp; &amp; &amp; &amp; mut 10;
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>DereferenceExpression</em> :<br />
-   <code>*</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a></p>
+   <code>*</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><code>*</code>（解引用）操作符也是一元前缀操作符。当应用于<a href="https://doc.rust-lang.org/types/pointer.md">指针</a>时，它表示该指针指向的内存位置。如果表达式的类型为 <code>&amp;mut T</code> 或 <code>*mut T</code>，并且该表达式是局部变量（局部变量的（嵌套）字段也可以）或是可变的<a href="https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions">位置表达式</a>，则它代表的内存位置可以被赋值。解引用原始指针需要在非安全(<code>unsafe</code>)块才能进行。</p>
-<p>在<a href="https://doc.rust-lang.org/expressions.md#mutability">不可变位置表达式上下文</a>中对非指针类型作 <code>*x</code> 相当于执行 <code>*std::ops::Deref::deref(&amp;x)</code>；同样的，在可变位置表达式上下文中这个动作就相当于执行 <code>*std::ops::DerefMut::deref_mut(&amp;mut x)</code>。</p>
+<p><code>*</code>（解引用）操作符也是一元前缀操作符。当应用于<a href="../types/pointer.html">指针</a>时，它表示该指针指向的内存位置。如果表达式的类型为 <code>&amp;mut T</code> 或 <code>*mut T</code>，并且该表达式是局部变量（局部变量的（嵌套）字段也可以）或是可变的<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>，则它代表的内存位置可以被赋值。解引用原始指针需要在非安全(<code>unsafe</code>)块才能进行。</p>
+<p>在<a href="../expressions.html#mutability">不可变位置表达式上下文</a>中对非指针类型作 <code>*x</code> 相当于执行 <code>*std::ops::Deref::deref(&amp;x)</code>；同样的，在可变位置表达式上下文中这个动作就相当于执行 <code>*std::ops::DerefMut::deref_mut(&amp;mut x)</code>。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -258,7 +257,7 @@ assert_eq!(*y, 11);
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ErrorPropagationExpression</em> :<br />
-   <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>?</code></p>
+   <a href="../expressions.html"><em>Expression</em></a> <code>?</code></p>
 </blockquote>
 <p>问号操作符（<code>?</code>）解开(unwrap)有效值或返回错误值，并将它们传播(propagate)给调用函数。问号操作符（<code>?</code>）是一个一元后缀操作符，只能应用于类型 <code>Result&lt;T, E&gt;</code> 和 <code>Option&lt;T&gt;</code>。</p>
 <p>当应用在 <code>Result&lt;T, E&gt;</code> 类型的值上时，它可以传播错误。如果值是 <code>Err(e)</code>，那么它将实际从函数体或闭包中返回 <code>Err(From::from(e))</code>。如果应用到 <code>Ok(x)</code>，那么它将展开值以求得 <code>x</code>。</p>
@@ -300,10 +299,10 @@ assert_eq!(try_option_none(), None);
 <blockquote>
 <p><strong><sup>语法</sup></strong><br />
 <em>NegationExpression</em> :<br />
-      <code>-</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <code>!</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a></p>
+      <code>-</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <code>!</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p>这是最后两个一元运算符。下表总结了它们用在基本类型上的表现，以及指出其他类型要重载这些操作符需要实现哪些 trait。记住，有符号整数总是用2的补码形式表示。所有这些运算符的操作数都在<a href="https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions">值表达式上下文</a>中被求值，所以这些操作数的值会被移走或复制。</p>
+<p>这是最后两个一元运算符。下表总结了它们用在基本类型上的表现，以及指出其他类型要重载这些操作符需要实现哪些 trait。记住，有符号整数总是用2的补码形式表示。所有这些运算符的操作数都在<a href="../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中被求值，所以这些操作数的值会被移走或复制。</p>
 <table><thead><tr><th>符号</th><th>整数</th><th><code>bool</code></th><th>浮点数</th><th>用于重载的 trait</th></tr></thead><tbody>
 <tr><td><code>-</code></td><td>符号取反*</td><td></td><td>符号取反</td><td><code>std::ops::Neg</code></td></tr>
 <tr><td><code>!</code></td><td>按位取反</td><td>逻辑非</td><td></td><td><code>std::ops::Not</code></td></tr>
@@ -324,18 +323,18 @@ assert_eq!(true, !false);
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ArithmeticOrLogicalExpression</em> :<br />
-      <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>+</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>-</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>*</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>/</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>%</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>&amp;</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>|</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>^</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>&lt;&lt;</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>&gt;&gt;</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a></p>
+      <a href="../expressions.html"><em>Expression</em></a> <code>+</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>-</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>*</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>/</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>%</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>&amp;</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>|</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>^</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>&lt;&lt;</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>&gt;&gt;</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p>二元运算符表达式都用中缀表示法(infix notation)书写。下表总结了算术和逻辑二元运算符在原生类型(primitive type)上的行为，以及指出其他类型要重载这些操作符需要实现哪些 trait。记住，有符号整数总是用2的补码形式表示。所有这些运算符的操作数都在<a href="https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions">值表达式上下文</a>中求值，因此这些操作数的值会被移走或复制。</p>
+<p>二元运算符表达式都用中缀表示法(infix notation)书写。下表总结了算术和逻辑二元运算符在原生类型(primitive type)上的行为，以及指出其他类型要重载这些操作符需要实现哪些 trait。记住，有符号整数总是用2的补码形式表示。所有这些运算符的操作数都在<a href="../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中求值，因此这些操作数的值会被移走或复制。</p>
 <table><thead><tr><th>符号</th><th>整数</th><th><code>bool</code></th><th>浮点数</th><th>用于重载的 trait</th></tr></thead><tbody>
 <tr><td><code>+</code></td><td>加法</td><td></td><td>加法</td><td><code>std::ops::Add</code></td></tr>
 <tr><td><code>-</code></td><td>减法</td><td></td><td>减法</td><td><code>std::ops::Sub</code></td></tr>
@@ -371,15 +370,15 @@ assert_eq!(-10 &gt;&gt; 2, -3);
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ComparisonExpression</em> :<br />
-      <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>==</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>!=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>&gt;</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>&lt;</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>&gt;=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>&lt;=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a></p>
+      <a href="../expressions.html"><em>Expression</em></a> <code>==</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>!=</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>&gt;</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>&lt;</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>&gt;=</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>&lt;=</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
 <p>Rust 还为原生类型以及标准库中的许多类型定义了比较运算符。链式比较运算时需要括号，例如，表达式 <code>a == b == c</code> 是无效的，（但如果逻辑允许）可以写成 <code>(a == b) == c</code>。</p>
-<p>与算术运算符和逻辑运算符不同，比较运算符所使用的 trait（这些 trait 也可以被其他类型所实现以重载这些比较运算符）更抽象地用于显示/约定如何比较一个类型，并且很可能会假定使用这些 trait 作为约束条件的函数定义了实际的比较逻辑。（对库API使用者来说，）标准库中的许多函数和宏都可以被认为遵守了这个假定(尽管不能确保它们的实现的安全性)。与上面的算术和逻辑运算符不同，这些运算符会隐式地对它们的操作数执行共享借用，并当在<a href="https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions">位置表达式上下文</a>中对它们进行求值：</p>
+<p>与算术运算符和逻辑运算符不同，比较运算符所使用的 trait（这些 trait 也可以被其他类型所实现以重载这些比较运算符）更抽象地用于显示/约定如何比较一个类型，并且很可能会假定使用这些 trait 作为约束条件的函数定义了实际的比较逻辑。（对库API使用者来说，）标准库中的许多函数和宏都可以被认为遵守了这个假定(尽管不能确保它们的实现的安全性)。与上面的算术和逻辑运算符不同，这些运算符会隐式地对它们的操作数执行共享借用，并当在<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式上下文</a>中对它们进行求值：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -416,8 +415,8 @@ assert!(&quot;World&quot; &gt;= &quot;Hello&quot;);
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>LazyBooleanExpression</em> :<br />
-      <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>||</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>&amp;&amp;</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a></p>
+      <a href="../expressions.html"><em>Expression</em></a> <code>||</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>&amp;&amp;</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
 <p>运算符 <code>||</code> 和 <code>&amp;&amp;</code> 可以应用在布尔类型的操作数上。运算符 <code>||</code> 表示逻辑“或”，运算符 <code>&amp;&amp;</code> 表示逻辑“与”。它们与 <code>|</code> 和 <code>&amp;</code> 的不同之处在于，只有在左操作数尚未确定表达式的结果时，才计算右操作数。也就是说，<code>||</code> 只在左操作数的计算结果为 <code>false</code> 时才计算其右操作数，而只有在计算结果为 <code>true</code> 时才计算 <code>&amp;&amp;</code> 的操作数。</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -432,7 +431,7 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>TypeCastExpression</em> :<br />
-   <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>as</code> <a href="https://doc.rust-lang.org/types.md#type-expressions"><em>TypeNoBounds</em></a></p>
+   <a href="../expressions.html"><em>Expression</em></a> <code>as</code> <a href="../types.html#type-expressions"><em>TypeNoBounds</em></a></p>
 </blockquote>
 <p>类型转换表达式用二元运算符 <code>as</code> 表示。</p>
 <p>执行 <code>as</code>表达式将左侧的值显式转换为右侧的类型。</p>
@@ -449,7 +448,7 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>as</code> 可用于显式执行<a href="https://doc.rust-lang.org/type-coercions.md">自动强转(coercions)</a>，以及下列形式的强制转换。下表中 <code>*T</code> 代表 <code>*const T</code> 或 <code>*mut T</code>。</p>
+<p><code>as</code> 可用于显式执行<a href="../type-coercions.html">自动强转(coercions)</a>，以及下列形式的强制转换。下表中 <code>*T</code> 代表 <code>*const T</code> 或 <code>*mut T</code>。</p>
 <table><thead><tr><th><code>e</code> 的类型</th><th><code>U</code></th><th>通过 <code>e as U</code> 执行转换</th></tr></thead><tbody>
 <tr><td>整型或浮点型</td><td>整型或浮点型</td><td>数字转换</td></tr>
 <tr><td>类C(C-like)枚举</td><td>整型</td><td>枚举转换</td></tr>
@@ -459,11 +458,11 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <tr><td><code>*T</code> where <code>T: Sized</code></td><td>数字型(Numeric type)</td><td>指针到地址的转换</td></tr>
 <tr><td>整型</td><td><code>*V</code> where <code>V: Sized</code></td><td>地址到指针的转换</td></tr>
 <tr><td><code>&amp;[T; n]</code></td><td><code>*const T</code></td><td>数组到指针的转换</td></tr>
-<tr><td><a href="https://doc.rust-lang.org/types/function-item.md">函数项</a></td><td><a href="https://doc.rust-lang.org/types/function-pointer.md">函数指针</a></td><td>函数到函数指针的转换</td></tr>
-<tr><td><a href="https://doc.rust-lang.org/types/function-item.md">函数项</a></td><td><code>*V</code> where <code>V: Sized</code></td><td>函数到指针的转换</td></tr>
-<tr><td><a href="https://doc.rust-lang.org/types/function-item.md">函数项</a></td><td>整型</td><td>函数到地址的转换</td></tr>
-<tr><td><a href="https://doc.rust-lang.org/types/function-pointer.md">函数指针</a></td><td><code>*V</code> where <code>V: Sized</code></td><td>函数指针到指针的转换</td></tr>
-<tr><td><a href="https://doc.rust-lang.org/types/function-pointer.md">函数指针</a></td><td>整型</td><td>函数指针到地址的转换</td></tr>
+<tr><td><a href="../types/function-item.html">函数项</a></td><td><a href="../types/function-pointer.html">函数指针</a></td><td>函数到函数指针的转换</td></tr>
+<tr><td><a href="../types/function-item.html">函数项</a></td><td><code>*V</code> where <code>V: Sized</code></td><td>函数到指针的转换</td></tr>
+<tr><td><a href="../types/function-item.html">函数项</a></td><td>整型</td><td>函数到地址的转换</td></tr>
+<tr><td><a href="../types/function-pointer.html">函数指针</a></td><td><code>*V</code> where <code>V: Sized</code></td><td>函数指针到指针的转换</td></tr>
+<tr><td><a href="../types/function-pointer.html">函数指针</a></td><td>整型</td><td>函数指针到地址的转换</td></tr>
 <tr><td>闭包 **</td><td>函数指针</td><td>闭包到函数指针的转换</td></tr>
 </tbody></table>
 <p>* 或者 <code>T</code>和<code>V</code> 也可以都是兼容的 unsized 类型，例如，两个都是切片，或者都是同一种 trait对象。</p>
@@ -529,10 +528,10 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>AssignmentExpression</em> :<br />
-   <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a></p>
+   <a href="../expressions.html"><em>Expression</em></a> <code>=</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><em>赋值表达式</em>由<a href="https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions">位置表达式</a>后跟等号（<code>=</code>）和<a href="https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions">值表达式</a>组成。这样的表达式的类型总是<a href="https://doc.rust-lang.org/types/tuple.md">单元(<code>unit</code>)类型</a>。</p>
-<p>执行赋值表达式时会先<a href="https://doc.rust-lang.org/destructors.md">销毁(drop)</a>左操作数（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将其右操作数<a href="https://doc.rust-lang.org/expressions.md#moved-and-copied-types">复制(copy)或移动(move)</a>到左操作数。左边的操作数必须是位置表达式：使用值表达式不会将其提升为临时位置，而是会导致编译器错误。</p>
+<p><em>赋值表达式</em>由<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>后跟等号（<code>=</code>）和<a href="../expressions.html#place-expressions-and-value-expressions">值表达式</a>组成。这样的表达式的类型总是<a href="../types/tuple.html">单元(<code>unit</code>)类型</a>。</p>
+<p>执行赋值表达式时会先<a href="../destructors.html">销毁(drop)</a>左操作数（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将其右操作数<a href="../expressions.html#moved-and-copied-types">复制(copy)或移动(move)</a>到左操作数。左边的操作数必须是位置表达式：使用值表达式不会将其提升为临时位置，而是会导致编译器错误。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -546,18 +545,18 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>CompoundAssignmentExpression</em> :<br />
-      <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>+=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>-=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>*=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>/=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>%=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>&amp;=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>|=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>^=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>&lt;&lt;=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>&gt;&gt;=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a></p>
+      <a href="../expressions.html"><em>Expression</em></a> <code>+=</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>-=</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>*=</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>/=</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>%=</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>&amp;=</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>|=</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>^=</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>&lt;&lt;=</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>&gt;&gt;=</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, <code>&amp;</code>, <code>|</code>, <code>^</code>, <code>&lt;&lt;</code>, 和 <code>&gt;&gt;</code>运算符可以和 <code>=</code> 运算符复合组成新的运算符。表达式 <code>place_exp OP= value</code> 等效于 <code>place_expr = place_expr OP val</code>。例如，<code>x = x + 1</code> 可以写成 <code>x += 1</code>。任何这样的表达式的类型总是<a href="https://doc.rust-lang.org/types/tuple.md">单元(<code>unit</code>)类型</a>。这些运算符都可以使用与普通操作的相同的 trait 来重载，只是相应的 trait名称后要加上 “Assign”，例如，<code>std::ops::AddAssign</code> 用于重载 <code>+=</code>。因为带有 <code>=</code>，所以 <code>place_expr</code> 必须是<a href="https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions">位置表达式</a>。</p>
+<p><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, <code>&amp;</code>, <code>|</code>, <code>^</code>, <code>&lt;&lt;</code>, 和 <code>&gt;&gt;</code>运算符可以和 <code>=</code> 运算符复合组成新的运算符。表达式 <code>place_exp OP= value</code> 等效于 <code>place_expr = place_expr OP val</code>。例如，<code>x = x + 1</code> 可以写成 <code>x += 1</code>。任何这样的表达式的类型总是<a href="../types/tuple.html">单元(<code>unit</code>)类型</a>。这些运算符都可以使用与普通操作的相同的 trait 来重载，只是相应的 trait名称后要加上 “Assign”，例如，<code>std::ops::AddAssign</code> 用于重载 <code>+=</code>。因为带有 <code>=</code>，所以 <code>place_expr</code> 必须是<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -569,6 +568,7 @@ assert_eq!(x, 14);
 <div class="footnote-definition" id="译者注"><sup class="footnote-definition-label">1</sup>
 <p>截断，即一个值范围较大的变量A转换为值范围较小的变量B，如果超出范围，则将A减去B的区间长度。例如，128超出了i8类型的范围（-128,127），截断之后的值等于128-256=-128。</p>
 </div>
+<!-- 上面这几个链接从原文来替换时小心 -->
 <!-- 2020-11-3 -->
 <!-- checked -->
 
@@ -621,12 +621,6 @@ assert_eq!(x, 14);
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

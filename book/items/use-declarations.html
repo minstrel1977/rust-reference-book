@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>use声明 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>use声明</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -178,11 +177,11 @@ commit: da3098c49b2f62c878ca9a36099d7dffb4bd9474 <br />
 <em>UseDeclaration</em> :<br />
    <code>use</code> <em>UseTree</em> <code>;</code></p>
 <p><em>UseTree</em> :<br />
-      (<a href="https://doc.rust-lang.org/paths.md#simple-paths"><em>SimplePath</em></a><sup>?</sup> <code>::</code>)<sup>?</sup> <code>*</code><br />
-   | (<a href="https://doc.rust-lang.org/paths.md#simple-paths"><em>SimplePath</em></a><sup>?</sup> <code>::</code>)<sup>?</sup> <code>{</code> (<em>UseTree</em> ( <code>,</code>  <em>UseTree</em> )<sup>*</sup> <code>,</code><sup>?</sup>)<sup>?</sup> <code>}</code><br />
-   | <a href="https://doc.rust-lang.org/paths.md#simple-paths"><em>SimplePath</em></a> ( <code>as</code> ( <a href="https://doc.rust-lang.org/identifiers.md">IDENTIFIER</a> | <code>_</code> ) )<sup>?</sup></p>
+      (<a href="../paths.html#simple-paths"><em>SimplePath</em></a><sup>?</sup> <code>::</code>)<sup>?</sup> <code>*</code><br />
+   | (<a href="../paths.html#simple-paths"><em>SimplePath</em></a><sup>?</sup> <code>::</code>)<sup>?</sup> <code>{</code> (<em>UseTree</em> ( <code>,</code>  <em>UseTree</em> )<sup>*</sup> <code>,</code><sup>?</sup>)<sup>?</sup> <code>}</code><br />
+   | <a href="../paths.html#simple-paths"><em>SimplePath</em></a> ( <code>as</code> ( <a href="../identifiers.html">IDENTIFIER</a> | <code>_</code> ) )<sup>?</sup></p>
 </blockquote>
-<p><em>use声明</em>用来创建一个或多个与数据项<a href="https://doc.rust-lang.org/paths.md">路径</a>同义的本地名称绑定。通常使用 <code>use</code>声明来缩短引用模块所需的路径。这些声明可以出现在<a href="modules.html">模块</a>和<a href="https://doc.rust-lang.org/expressions/block-expr.md">块</a>中，但通常在作用域顶部。</p>
+<p><em>use声明</em>用来创建一个或多个与数据项<a href="../paths.html">路径</a>同义的本地名称绑定。通常使用 <code>use</code>声明来缩短引用模块所需的路径。这些声明可以出现在<a href="modules.html">模块</a>和<a href="../expressions/block-expr.html">块</a>中，但通常在作用域顶部。</p>
 <p>use声明支持多种便捷方法:</p>
 <ul>
 <li>使用带有花括号的 glob-like(<code>::</code>) 句法 <code>use a::b::{c, d, e::f, g::h::i};</code> 来同时绑定一个系列有共同前缀的路径。</li>
@@ -369,12 +368,6 @@ m!(use std as _;);
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

@@ -20,9 +20,9 @@
 [^structtype]: https://doc.rust-lang.org/`struct` 类型类似于 C 中的 `struct` 类型、ML家族的 *record* 类型或 Lisp家族的 *struct* 类型。
 [^译者注]: 注意这里是不带参数的 `repr`属性，这种不带参数的属性只是把在编译阶段才做的布局优化给提前了。
 
-[`repr` attribute]: https://doc.rust-lang.org/type-layout.md#representations
-[struct expression]: https://doc.rust-lang.org/expressions/struct-expr.md
-[visibility modifiers]: https://doc.rust-lang.org/visibility-and-privacy.md
+[`repr` attribute]: ../type-layout.md#representations
+[struct expression]: ../expressions/struct-expr.md
+[visibility modifiers]: ../visibility-and-privacy.md
 
 <!-- 2020-11-3 -->
 <!-- checked -->

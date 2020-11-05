@@ -91,25 +91,25 @@ struct Foo<#[my_flexible_clone(unbounded)] H> {
 }
 ```
 
-[IDENTIFIER]: https://doc.rust-lang.org/identifiers.md
-[LIFETIME_OR_LABEL]: https://doc.rust-lang.org/tokens.md#lifetimes-and-loop-labels
+[IDENTIFIER]: ../identifiers.md
+[LIFETIME_OR_LABEL]: ../tokens.md#lifetimes-and-loop-labels
 
-[_LifetimeBounds_]: https://doc.rust-lang.org/trait-bounds.md
-[_Lifetime_]: https://doc.rust-lang.org/trait-bounds.md
-[_OuterAttribute_]: https://doc.rust-lang.org/attributes.md
-[_Type_]: https://doc.rust-lang.org/types.md#type-expressions
-[_TypeParamBounds_]: https://doc.rust-lang.org/trait-bounds.md
+[_LifetimeBounds_]: ../trait-bounds.md
+[_Lifetime_]: ../trait-bounds.md
+[_OuterAttribute_]: ../attributes.md
+[_Type_]: ../types.md#type-expressions
+[_TypeParamBounds_]: ../trait-bounds.md
 
-[arrays]: https://doc.rust-lang.org/types/array.md
-[function pointers]: https://doc.rust-lang.org/types/function-pointer.md
-[references]: https://doc.rust-lang.org/types/pointer.md#shared-references-
-[raw pointers]: https://doc.rust-lang.org/types/pointer.md#raw-pointers-const-and-mut
-[`Clone`]: https://doc.rust-lang.org/special-types-and-traits.md#clone
-[`Copy`]: https://doc.rust-lang.org/special-types-and-traits.md#copy
-[`Sized`]: https://doc.rust-lang.org/special-types-and-traits.md#sized
-[tuples]: https://doc.rust-lang.org/types/tuple.md
-[trait object]: https://doc.rust-lang.org/types/trait-object.md
-[attributes]: https://doc.rust-lang.org/attributes.md
+[arrays]: ../types/array.md
+[function pointers]: ../types/function-pointer.md
+[references]: ../types/pointer.md#shared-references-
+[raw pointers]: ../types/pointer.md#raw-pointers-const-and-mut
+[`Clone`]: ../special-types-and-traits.md#clone
+[`Copy`]: ../special-types-and-traits.md#copy
+[`Sized`]: ../special-types-and-traits.md#sized
+[tuples]: ../types/tuple.md
+[trait object]: ../types/trait-object.md
+[attributes]: ../attributes.md
 
 <!-- 2020-11-3 -->
 <!-- checked -->

@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>数组和索引表达式 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>数组和索引表达式</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -178,13 +177,13 @@ commit: 65c523479abb8024672918444ff839426ff5c3a7 <br />
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ArrayExpression</em> :<br />
-   <code>[</code> <a href="https://doc.rust-lang.org/attributes.md"><em>InnerAttribute</em></a><sup>*</sup> <em>ArrayElements</em><sup>?</sup> <code>]</code></p>
+   <code>[</code> <a href="../attributes.html"><em>InnerAttribute</em></a><sup>*</sup> <em>ArrayElements</em><sup>?</sup> <code>]</code></p>
 <p><em>ArrayElements</em> :<br />
-      <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> ( <code>,</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> )<sup>*</sup> <code>,</code><sup>?</sup><br />
-   | <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>;</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a></p>
+      <a href="../expressions.html"><em>Expression</em></a> ( <code>,</code> <a href="../expressions.html"><em>Expression</em></a> )<sup>*</sup> <code>,</code><sup>?</sup><br />
+   | <a href="../expressions.html"><em>Expression</em></a> <code>;</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><a href="https://doc.rust-lang.org/types/array.md">数组</a>表达式可以通过在方括号中放置零个或多个统一类型的逗号分隔的表达式来编写。这样编写将生成一个包含这些值的数组，其中元素的顺序就是其写入的顺序。</p>
-<p>也可以方括号内放置两用个分号(<code>;</code>)分隔的表达式。这种形式里，分号后面的表达式必须是 <code>usize</code> 类型的，并且必须是<a href="https://doc.rust-lang.org/const_eval.md#constant-expressions">常量表达式</a>，例如<a href="https://doc.rust-lang.org/tokens.md#literals">字面量</a>或<a href="https://doc.rust-lang.org/items/constant-items.md">常量项</a>。<code>[a; b]</code> 形式创建的数组，语义为该数组内包含 <code>b</code> 个 <code>a</code> 值的副本。如果分号后面的表达式的值大于 1，则要求 <code>a</code> 的类型实现了 <a href="https://doc.rust-lang.org/special-types-and-traits.md#copy"><code>Copy</code></a>。</p>
+<p><a href="../types/array.html">数组</a>表达式可以通过在方括号中放置零个或多个统一类型的逗号分隔的表达式来编写。这样编写将生成一个包含这些值的数组，其中元素的顺序就是其写入的顺序。</p>
+<p>也可以方括号内放置两用个分号(<code>;</code>)分隔的表达式。这种形式里，分号后面的表达式必须是 <code>usize</code> 类型的，并且必须是<a href="../const_eval.html#constant-expressions">常量表达式</a>，例如<a href="../tokens.html#literals">字面量</a>或<a href="../items/constant-items.html">常量项</a>。<code>[a; b]</code> 形式创建的数组，语义为该数组内包含 <code>b</code> 个 <code>a</code> 值的副本。如果分号后面的表达式的值大于 1，则要求 <code>a</code> 的类型实现了 <a href="../special-types-and-traits.html#copy"><code>Copy</code></a>。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -197,17 +196,17 @@ commit: 65c523479abb8024672918444ff839426ff5c3a7 <br />
 </span></code></pre></pre>
 <h3><a class="header" href="#array-expression-attributes" id="array-expression-attributes">Array expression attributes</a></h3>
 <h3><a class="header" href="#数组表达式上的属性" id="数组表达式上的属性">数组表达式上的属性</a></h3>
-<p>允许<a href="block-expr.html#attributes-on-block-expressions">块表达式上的属性</a>的表达式上下文同样允许数组表达式上的属性，即在这种上下文下<a href="https://doc.rust-lang.org/attributes.md">内部属性</a>可直接位于表达式的左括号之后。</p>
+<p>允许<a href="block-expr.html#attributes-on-block-expressions">块表达式上的属性</a>的表达式上下文同样允许数组表达式上的属性，即在这种上下文下<a href="../attributes.html">内部属性</a>可直接位于表达式的左括号之后。</p>
 <h2><a class="header" href="#array-and-slice-indexing-expressions" id="array-and-slice-indexing-expressions">Array and slice indexing expressions</a></h2>
 <h2><a class="header" href="#数组和切片索引表达式" id="数组和切片索引表达式">数组和切片索引表达式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>IndexExpression</em> :<br />
-   <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>[</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a> <code>]</code></p>
+   <a href="../expressions.html"><em>Expression</em></a> <code>[</code> <a href="../expressions.html"><em>Expression</em></a> <code>]</code></p>
 </blockquote>
-<p><a href="https://doc.rust-lang.org/types/array.md">数组</a>表达式和<a href="https://doc.rust-lang.org/types/slice.md">切片</a>类型的表达式可以通过后跟一个由方括号封闭一个类型为 <code>usize</code> 的表达式(索引)的方式来对此数组或切片进行索引检索。如果数组是可变的，则其检索出的<a href="https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions">内存位置</a>还可以被赋值。</p>
+<p><a href="../types/array.html">数组</a>表达式和<a href="https://doc.rust-lang.org/types/slice.md">切片</a>类型的表达式可以通过后跟一个由方括号封闭一个类型为 <code>usize</code> 的表达式(索引)的方式来对此数组或切片进行索引检索。如果数组是可变的，则其检索出的<a href="../expressions.html#place-expressions-and-value-expressions">内存位置</a>还可以被赋值。</p>
 <p>对于非数组/切片类型之外的索引表达式 <code>a[b]</code> 其实相当于 <code>*std::ops::Index::index(&amp;a, b)</code>， 或者在可变位置表达式上下文中相当于 <code>*std::ops::IndexMut::index_mut(&amp;mut a, b)</code>。与普通方法一样，Rust也将在 <code>a</code> 上反复插入解引用操作，直到查找到对上述方法的实现。</p>
-<p>数组和切片的索引是从零开始的。数组访问是一个<a href="https://doc.rust-lang.org/const_eval.md#constant-expressions">常量表达式</a>，因此数组索引的越界检查可以在编译时通过检查常量索引值进行。否则，越界检查将在运行时执行，如果越界检查未通过，那将把当时线程置于 <em>panicked 状态</em>。</p>
+<p>数组和切片的索引是从零开始的。数组访问是一个<a href="../const_eval.html#constant-expressions">常量表达式</a>，因此数组索引的越界检查可以在编译时通过检查常量索引值进行。否则，越界检查将在运行时执行，如果越界检查未通过，那将把当时线程置于 <em>panicked 状态</em>。</p>
 <pre><pre class="playground"><code class="language-rust should_panic">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -236,6 +235,7 @@ arr[10];                  // 告警：索引越界
 <span class="boring">}
 </span></code></pre></pre>
 <p>数组索引表达式可以被数组和切片片以外的类型通过实现 <a href="https://doc.rust-lang.org/std/ops/trait.Index.html">Index</a> trait 和 <a href="https://doc.rust-lang.org/std/ops/trait.IndexMut.html">IndexMut</a> trait 来实现。</p>
+<!-- 上面这几个链接从原文来替换时小心 -->
 <!-- 2020-11-3 -->
 <!-- checked -->
 
@@ -288,12 +288,6 @@ arr[10];                  // 告警：索引越界
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

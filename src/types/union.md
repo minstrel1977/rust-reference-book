@@ -11,8 +11,8 @@
 
 默认情况下，联合体(`union`)的内存布局是未定义的，但是可以使用 `#[repr(...)]`属性来固定为某一类型布局。
 
-[`Copy`]: https://doc.rust-lang.org/special-types-and-traits.md#copy
-[item]: https://doc.rust-lang.org/items/unions.md
+[`Copy`]: ../special-types-and-traits.md#copy
+[item]: ../items/unions.md
 
 <!-- 2020-11-3 -->
 <!-- checked -->

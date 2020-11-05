@@ -37,14 +37,14 @@ let foo_ptr_2 = if want_i32 {
 
 所有的函数项类型都实现了 [`Fn`]、[`FnMut`]、[`FnOnce`]、[`Copy`]、[`Clone`]、[`Send`] 和 [`Sync`]。
 
-[`Clone`]: https://doc.rust-lang.org/special-types-and-traits.md#clone
-[`Copy`]: https://doc.rust-lang.org/special-types-and-traits.md#copy
+[`Clone`]: ../special-types-and-traits.md#clone
+[`Copy`]: ../special-types-and-traits.md#copy
 [`FnMut`]: https://doc.rust-lang.org/std/ops/trait.FnMut.html
 [`FnOnce`]: https://doc.rust-lang.org/std/ops/trait.FnOnce.html
 [`Fn`]: https://doc.rust-lang.org/std/ops/trait.Fn.html
-[`Send`]: https://doc.rust-lang.org/special-types-and-traits.md#send
-[`Sync`]: https://doc.rust-lang.org/special-types-and-traits.md#sync
-[coercion]: https://doc.rust-lang.org/type-coercions.md
+[`Send`]: ../special-types-and-traits.md#send
+[`Sync`]: ../special-types-and-traits.md#sync
+[coercion]: ../type-coercions.md
 [function pointers]: function-pointer.md
 
 <!-- 2020-11-3 -->

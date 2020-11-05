@@ -15,7 +15,7 @@
 > _TupleElements_ :\
 > &nbsp;&nbsp; ( [_Expression_] `,` )<sup>+</sup> [_Expression_]<sup>?</sup>
 
-元组是通过将零个或多个以逗号分隔的表达式括在圆括号中来编写的。可用它们来创建[元组类型](https://doc.rust-lang.org/types/tuple.md)的值。
+元组是通过将零个或多个以逗号分隔的表达式括在圆括号中来编写的。可用它们来创建[元组类型][tuple-typed])的值。
 
 ```rust
 (0.0, 4.5);
@@ -42,7 +42,7 @@
 > _TupleIndexingExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `.` [TUPLE_INDEX]
 
-[元组](https://doc.rust-lang.org/types/tuple.md)和[元组结构体](https://doc.rust-lang.org/items/structs.md)可以使用与字段位置相对应的数字来编制索引。索引必须写成不带下划线或后缀的[十进制字面量](https://doc.rust-lang.org/tokens.md#integer-literals)。元组索引表达式也不同于字段表达式，因为元组索引表达式可以明确地作为函数来调用。在所有其他方面，它们有相同的行为。
+[元组][Tuples]和[元组结构体][struct tuples]可以使用与字段位置相对应的数字来编制索引。索引必须写成不带下划线或后缀的[十进制字面量][decimal literal]。元组索引表达式也不同于字段表达式，因为元组索引表达式可以明确地作为函数来调用。在所有其他方面，它们有相同的行为。
 
 ```rust
 # struct Point(f32, f32);
@@ -52,10 +52,15 @@ let unit_x = Point(1.0, 0.0);
 assert_eq!(unit_x.0, 1.0);
 ```
 
-[Inner attributes]: https://doc.rust-lang.org/attributes.md
-[TUPLE_INDEX]: https://doc.rust-lang.org/tokens.md#tuple-index
-[_Expression_]: https://doc.rust-lang.org/expressions.md
-[_InnerAttribute_]: https://doc.rust-lang.org/attributes.md
+[tuple-typed]: ../types/tuple.md
+[Tuples]: ../types/tuple.md
+[struct tuples]: ../items/structs.md
+[decimal literal]: ../tokens.md#integer-literals
+<!-- 上面这几个链接从原文来替换时小心 -->
+[Inner attributes]: ../attributes.md
+[TUPLE_INDEX]: ../tokens.md#tuple-index
+[_Expression_]: ../expressions.md
+[_InnerAttribute_]: ../attributes.md
 [attributes on block expressions]: block-expr.md#attributes-on-block-expressions
 
 <!-- 2020-11-3 -->

@@ -200,8 +200,8 @@ fn example<'a>(x: &'a str) -> impl Future<Output = usize> + 'a {
 
 有关异步效果的详细信息，请参见 [`async`块][async-blocks]。
 
-[async-blocks]: https://doc.rust-lang.org/expressions/block-expr.md#async-blocks
-[`impl Future`]: https://doc.rust-lang.org/types/impl-trait.md
+[async-blocks]: ../expressions/block-expr.md#async-blocks
+[`impl Future`]: ../types/impl-trait.md
 
 > **版本差异**: 异步函数只能从 Rust 2018 版才开始可用。
 
@@ -274,41 +274,41 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 }
 ```
 
-[IDENTIFIER]: https://doc.rust-lang.org/identifiers.md
-[RAW_STRING_LITERAL]: https://doc.rust-lang.org/tokens.md#raw-string-literals
-[STRING_LITERAL]: https://doc.rust-lang.org/tokens.md#string-literals
-[_BlockExpression_]: https://doc.rust-lang.org/expressions/block-expr.md
+[IDENTIFIER]: ../identifiers.md
+[RAW_STRING_LITERAL]: ../tokens.md#raw-string-literals
+[STRING_LITERAL]: ../tokens.md#string-literals
+[_BlockExpression_]: ../expressions/block-expr.md
 [_Generics_]: generics.md
-[_Pattern_]: https://doc.rust-lang.org/patterns.md
-[_Type_]: https://doc.rust-lang.org/types.md#type-expressions
+[_Pattern_]: ../patterns.md
+[_Type_]: ../types.md#type-expressions
 [_WhereClause_]: generics.md#where-clauses
-[_OuterAttribute_]: https://doc.rust-lang.org/attributes.md
-[const context]: https://doc.rust-lang.org/const_eval.md#const-context
-[const functions]: https://doc.rust-lang.org/const_eval.md#const-functions
+[_OuterAttribute_]: ../attributes.md
+[const context]: ../const_eval.md#const-context
+[const functions]: ../const_eval.md#const-functions
 [tuple struct]: structs.md
 [tuple variant]: enumerations.md
 [external block]: external-blocks.md
-[path]: https://doc.rust-lang.org/paths.md
-[block]: https://doc.rust-lang.org/expressions/block-expr.md
-[variables]: https://doc.rust-lang.org/variables.md
-[type]: https://doc.rust-lang.org/types.md#type-expressions
-[*function item type*]: https://doc.rust-lang.org/types/function-item.md
+[path]: ../paths.md
+[block]: ../expressions/block-expr.md
+[variables]: ../variables.md
+[type]: ../types.md#type-expressions
+[*function item type*]: ../types/function-item.md
 [Trait]: traits.md
-[attributes]: https://doc.rust-lang.org/attributes.md
-[`cfg`]: https://doc.rust-lang.org/conditional-compilation.md#the-cfg-attribute
-[`cfg_attr`]: https://doc.rust-lang.org/conditional-compilation.md#the-cfg_attr-attribute
-[the lint check attributes]: https://doc.rust-lang.org/attributes/diagnostics.md#lint-check-attributes
-[the procedural macro attributes]: https://doc.rust-lang.org/procedural-macros.md
-[the testing attributes]: https://doc.rust-lang.org/attributes/testing.md
-[the optimization hint attributes]: https://doc.rust-lang.org/attributes/codegen.md#optimization-hints
-[`deprecated`]: https://doc.rust-lang.org/attributes/diagnostics.md#the-deprecated-attribute
+[attributes]: ../attributes.md
+[`cfg`]: ../conditional-compilation.md#the-cfg-attribute
+[`cfg_attr`]: ../conditional-compilation.md#the-cfg_attr-attribute
+[the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
+[the procedural macro attributes]: ../procedural-macros.md
+[the testing attributes]: ../attributes/testing.md
+[the optimization hint attributes]: ../attributes/codegen.md#optimization-hints
+[`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
 [`doc`]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
-[`must_use`]: https://doc.rust-lang.org/attributes/diagnostics.md#the-must_use-attribute
-[patterns]: https://doc.rust-lang.org/patterns.md
-[`export_name`]: https://doc.rust-lang.org/abi.md#the-export_name-attribute
-[`link_section`]: https://doc.rust-lang.org/abi.md#the-link_section-attribute
-[`no_mangle`]: https://doc.rust-lang.org/abi.md#the-no_mangle-attribute
-[built-in attributes]: https://doc.rust-lang.org/attributes.html#built-in-attributes-index
+[`must_use`]: ../attributes/diagnostics.md#the-must_use-attribute
+[patterns]: ../patterns.md
+[`export_name`]: ../abi.md#the-export_name-attribute
+[`link_section`]: ../abi.md#the-link_section-attribute
+[`no_mangle`]: ../abi.md#the-no_mangle-attribute
+[built-in attributes]: ../attributes.html#built-in-attributes-index
 
 <!-- 2020-11-3 -->
 <!-- checked -->

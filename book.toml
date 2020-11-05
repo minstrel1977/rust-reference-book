@@ -1,31 +1,10 @@
 [book]
+
 title = "Rust 参考手册 - The Rust Language Reference"
-authors = ["minstrel1977"]
+authors = "minstrel1977"
 language = "zh"
 description = "rust reference 中文, Rust 参考手册"
-src = "src"
-multilingual = true
-
-# [build]
-# build-dir = "docs"
 
 [output.html]
-theme = "theme"
-# default-theme = "rust"
+additional-css = ["theme/reference.css"]
 git-repository-url = "https://gitee.com/minstrel1977/rust-reference"
-curly-quotes = true
-mathjax-support = true
-
-[output.html.playpen]
-editable = true
-copy-js = true
-
-[output.html.search]
-limit-results = 20
-use-boolean-and = true
-boost-title = 2
-boost-hierarchy = 2
-boost-paragraph = 1
-expand = true
-heading-split-level = 3
-copy-js = true

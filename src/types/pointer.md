@@ -40,12 +40,12 @@ Rust 中所有的指针都是显式的头等(first-class)值。它们可以被�
 
 标准库包含了额外的“智能指针”类型，它们提供了在引用和裸指针这类低级指针之外的更多的功能。
 
-[Interior mutability]: https://doc.rust-lang.org/interior-mutability.md
-[_Lifetime_]: https://doc.rust-lang.org/trait-bounds.md
-[_TypeNoBounds_]: https://doc.rust-lang.org/types.md#type-expressions
-[`unsafe` operation]: https://doc.rust-lang.org/unsafety.md
-[dynamically sized types]: https://doc.rust-lang.org/dynamically-sized-types.md
-[temporary value]: https://doc.rust-lang.org/expressions.md#temporaries
+[Interior mutability]: ../interior-mutability.md
+[_Lifetime_]: ../trait-bounds.md
+[_TypeNoBounds_]: ../types.md#type-expressions
+[`unsafe` operation]: ../unsafety.md
+[dynamically sized types]: ../dynamically-sized-types.md
+[temporary value]: ../expressions.md#temporaries
 
 <!-- 2020-11-3 -->
 <!-- checked -->

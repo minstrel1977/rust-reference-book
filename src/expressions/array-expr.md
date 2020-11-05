@@ -16,9 +16,9 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; [_Expression_] ( `,` [_Expression_] )<sup>\*</sup> `,`<sup>?</sup>\
 > &nbsp;&nbsp; | [_Expression_] `;` [_Expression_]
 
-[数组](https://doc.rust-lang.org/types/array.md)表达式可以通过在方括号中放置零个或多个统一类型的逗号分隔的表达式来编写。这样编写将生成一个包含这些值的数组，其中元素的顺序就是其写入的顺序。
+[数组][Array]表达式可以通过在方括号中放置零个或多个统一类型的逗号分隔的表达式来编写。这样编写将生成一个包含这些值的数组，其中元素的顺序就是其写入的顺序。
 
-也可以方括号内放置两用个分号(`;`)分隔的表达式。这种形式里，分号后面的表达式必须是 `usize` 类型的，并且必须是[常量表达式][constant expression]，例如[字面量](https://doc.rust-lang.org/tokens.md#literals)或[常量项](https://doc.rust-lang.org/items/constant-items.md)。`[a; b]` 形式创建的数组，语义为该数组内包含 `b` 个 `a` 值的副本。如果分号后面的表达式的值大于 1，则要求 `a` 的类型实现了 [`Copy`](https://doc.rust-lang.org/special-types-and-traits.md#copy)。
+也可以方括号内放置两用个分号(`;`)分隔的表达式。这种形式里，分号后面的表达式必须是 `usize` 类型的，并且必须是[常量表达式][constant expression]，例如[字面量][literal]或[常量项][constant item]。`[a; b]` 形式创建的数组，语义为该数组内包含 `b` 个 `a` 值的副本。如果分号后面的表达式的值大于 1，则要求 `a` 的类型实现了 [`Copy`][`Copy`]。
 
 ```rust
 [1, 2, 3, 4];
@@ -40,7 +40,7 @@
 > _IndexExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `[` [_Expression_] `]`
 
-[数组](https://doc.rust-lang.org/types/array.md)表达式和[切片](https://doc.rust-lang.org/types/slice.md)类型的表达式可以通过后跟一个由方括号封闭一个类型为 `usize` 的表达式(索引)的方式来对此数组或切片进行索引检索。如果数组是可变的，则其检索出的[内存位置][memory location]还可以被赋值。
+[数组][Array]表达式和[切片][slice]类型的表达式可以通过后跟一个由方括号封闭一个类型为 `usize` 的表达式(索引)的方式来对此数组或切片进行索引检索。如果数组是可变的，则其检索出的[内存位置][memory location]还可以被赋值。
 
 对于非数组/切片类型之外的索引表达式 `a[b]` 其实相当于 `*std::ops::Index::index(&a, b)`， 或者在可变位置表达式上下文中相当于 `*std::ops::IndexMut::index_mut(&mut a, b)`。与普通方法一样，Rust也将在 `a` 上反复插入解引用操作，直到查找到对上述方法的实现。
 
@@ -73,14 +73,20 @@ arr[10];                  // 告警：索引越界
 
 数组索引表达式可以被数组和切片片以外的类型通过实现 [Index] trait 和 [IndexMut] trait 来实现。
 
+[Array]: ../types/array.md
+[literal]: ../tokens.md#literals
+[slice]: https://doc.rust-lang.org/types/slice.md
+[constant item]: ../items/constant-items.md
+[`Copy`]: ../special-types-and-traits.md#copy
+<!-- 上面这几个链接从原文来替换时小心 -->
 [IndexMut]: https://doc.rust-lang.org/std/ops/trait.IndexMut.html
 [Index]: https://doc.rust-lang.org/std/ops/trait.Index.html
-[Inner attributes]: https://doc.rust-lang.org/attributes.md
-[_Expression_]: https://doc.rust-lang.org/expressions.md
-[_InnerAttribute_]: https://doc.rust-lang.org/attributes.md
+[Inner attributes]: ../attributes.md
+[_Expression_]: ../expressions.md
+[_InnerAttribute_]: ../attributes.md
 [attributes on block expressions]: block-expr.md#attributes-on-block-expressions
-[constant expression]: https://doc.rust-lang.org/const_eval.md#constant-expressions
-[memory location]: https://doc.rust-lang.org/expressions.md#place-expressions-and-value-expressions
+[constant expression]: ../const_eval.md#constant-expressions
+[memory location]: ../expressions.md#place-expressions-and-value-expressions
 
 <!-- 2020-11-3 -->
 <!-- checked -->

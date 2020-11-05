@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>外部块 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>外部块</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -177,33 +176,33 @@ commit: fbf34356b709cfc0debb01acaaff038d4e339aab <br />
 <p><strong><sup>句法</sup></strong><br />
 <em>ExternBlock</em> :<br />
    <code>unsafe</code><sup>?</sup> <code>extern</code> <a href="functions.html"><em>Abi</em></a><sup>?</sup> <code>{</code><br />
-      <a href="https://doc.rust-lang.org/attributes.md"><em>InnerAttribute</em></a><sup>*</sup><br />
+      <a href="../attributes.html"><em>InnerAttribute</em></a><sup>*</sup><br />
       <em>ExternalItem</em><sup>*</sup><br />
    <code>}</code></p>
 <p><em>ExternalItem</em> :<br />
-   <a href="https://doc.rust-lang.org/attributes.md"><em>OuterAttribute</em></a><sup>*</sup> (<br />
-         <a href="https://doc.rust-lang.org/macros.md#macro-invocation"><em>MacroInvocationSemi</em></a><br />
-      | ( <a href="https://doc.rust-lang.org/visibility-and-privacy.md"><em>Visibility</em></a><sup>?</sup> ( <em>ExternalStaticItem</em> | <em>ExternalFunctionItem</em> ) )<br />
+   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> (<br />
+         <a href="../macros.html#macro-invocation"><em>MacroInvocationSemi</em></a><br />
+      | ( <a href="../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup> ( <em>ExternalStaticItem</em> | <em>ExternalFunctionItem</em> ) )<br />
    )</p>
 <p><em>ExternalStaticItem</em> :<br />
-   <code>static</code> <code>mut</code><sup>?</sup> <a href="https://doc.rust-lang.org/identifiers.md">IDENTIFIER</a> <code>:</code> <a href="https://doc.rust-lang.org/types.md#type-expressions"><em>Type</em></a> <code>;</code></p>
+   <code>static</code> <code>mut</code><sup>?</sup> <a href="../identifiers.html">IDENTIFIER</a> <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a> <code>;</code></p>
 <p><em>ExternalFunctionItem</em> :<br />
-   <code>fn</code> <a href="https://doc.rust-lang.org/identifiers.md">IDENTIFIER</a> <a href="generics.html"><em>Generics</em></a><sup>?</sup><br />
+   <code>fn</code> <a href="../identifiers.html">IDENTIFIER</a> <a href="generics.html"><em>Generics</em></a><sup>?</sup><br />
    <code>(</code> ( <em>NamedFunctionParameters</em> | <em>NamedFunctionParametersWithVariadics</em> )<sup>?</sup> <code>)</code><br />
    <a href="functions.html"><em>FunctionReturnType</em></a><sup>?</sup> <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup> <code>;</code></p>
 <p><em>NamedFunctionParameters</em> :<br />
    <em>NamedFunctionParam</em> ( <code>,</code> <em>NamedFunctionParam</em> )<sup>*</sup> <code>,</code><sup>?</sup></p>
 <p><em>NamedFunctionParam</em> :<br />
-   <a href="https://doc.rust-lang.org/attributes.md"><em>OuterAttribute</em></a><sup>*</sup> ( <a href="https://doc.rust-lang.org/identifiers.md">IDENTIFIER</a> | <code>_</code> ) <code>:</code> <a href="https://doc.rust-lang.org/types.md#type-expressions"><em>Type</em></a></p>
+   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> ( <a href="../identifiers.html">IDENTIFIER</a> | <code>_</code> ) <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a></p>
 <p><em>NamedFunctionParametersWithVariadics</em> :<br />
-   ( <em>NamedFunctionParam</em> <code>,</code> )<sup>*</sup> <em>NamedFunctionParam</em> <code>,</code> <a href="https://doc.rust-lang.org/attributes.md"><em>OuterAttribute</em></a><sup>*</sup> <code>...</code></p>
+   ( <em>NamedFunctionParam</em> <code>,</code> )<sup>*</sup> <em>NamedFunctionParam</em> <code>,</code> <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <code>...</code></p>
 </blockquote>
 <p>外部块提供未在当前 crate 中<em>定义</em>的数据项的<em>声明</em>，外部块是 Rust 外部函数接口的基础。这其实是某种类型的不受安全检查的导入。</p>
 <p>外部块中允许两种形式的数据项<em>声明</em>：<a href="functions.html">函数</a>和<a href="static-items.html">静态项</a>。只有在非安全(<code>unsafe</code>)上下文中才能调用在外部块中声明的函数或访问在外部块中声明的静态项。</p>
 <p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>extern</code>之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从标记流中移除之前利用此句法来使用此关键字。</p>
 <h2><a class="header" href="#functions" id="functions">Functions</a></h2>
 <h2><a class="header" href="#函数" id="函数">函数</a></h2>
-<p>外部块中的函数与其他 Rust 函数的声明方式相同，但这里中的函数可以没有主体，直接以分号结尾。外部块中的函数的参数不允许使用模式，只能使用<a href="https://doc.rust-lang.org/identifiers.md">标识符/IDENTIFIER</a>或 <code>_</code> 。</p>
+<p>外部块中的函数与其他 Rust 函数的声明方式相同，但这里中的函数可以没有主体，直接以分号结尾。外部块中的函数的参数不允许使用模式，只能使用<a href="../identifiers.html">标识符/IDENTIFIER</a>或 <code>_</code> 。</p>
 <p>外部块中的函数可以被 Rust 代码调用，就像在 Rust 中定义的函数一样。Rust 编译器会自动在 Rust ABI 和外部 ABI 之间进行转换。</p>
 <p>在外部块中声明的函数隐式为非安全(<code>unsafe</code>)的。当强转为函数指针时，外部块中声明的函数的类型就为 <code>unsafe extern &quot;abi&quot; for&lt;'l1, ..., 'lm&gt; fn(A1, ..., An) -&gt; R</code>，其中 <code>'l1</code>，…<code>'lm</code> 是其生存期参数，<code>A1</code>，…，<code>An</code> 是该声明的参数的类型，<code>R</code> 是该声明的返回类型。</p>
 <h2><a class="header" href="#statics" id="statics">Statics</a></h2>
@@ -248,10 +247,10 @@ extern &quot;stdcall&quot; { }
 </span></code></pre></pre>
 <h2><a class="header" href="#attributes-on-extern-blocks" id="attributes-on-extern-blocks">Attributes on extern blocks</a></h2>
 <h2><a class="header" href="#外部块上的属性" id="外部块上的属性">外部块上的属性</a></h2>
-<p>下面列出的<a href="https://doc.rust-lang.org/attributes.md">属性</a>可以控制外部块的行为。</p>
+<p>下面列出的<a href="../attributes.html">属性</a>可以控制外部块的行为。</p>
 <h3><a class="header" href="#the-link-attribute" id="the-link-attribute">The <code>link</code> attribute</a></h3>
 <h3><a class="header" href="#link属性" id="link属性"><code>link</code>属性</a></h3>
-<p><em><code>link</code>属性</em>为外部(<code>extern</code>)块中的数据项指定编译器应该链接的本机库的名称。它使用 <a href="https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法规则指定其输入。<code>name</code>键指定要链接的本机库的名称。<code>kind</code>键是一个可选值，它指定具有以下可能值的库类型：</p>
+<p><em><code>link</code>属性</em>为外部(<code>extern</code>)块中的数据项指定编译器应该链接的本机库的名称。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法规则指定其输入。<code>name</code>键指定要链接的本机库的名称。<code>kind</code>键是一个可选值，它指定具有以下可能值的库类型：</p>
 <ul>
 <li><code>dylib</code> — 表示库类型是动态库。如果没有指定 <code>kind</code>，这是默认值。</li>
 <li><code>static</code> — 表示库类型是静态库。</li>
@@ -278,7 +277,7 @@ extern {
 <p>在空外部块上添加 <code>link</code>属性是有效的。可以用这种方式来满足代码中其他地方的外部块的链接需求(包括上游 crate)，而不必向每个外部块都添加此属性。</p>
 <h3><a class="header" href="#the-link_name-attribute" id="the-link_name-attribute">The <code>link_name</code> attribute</a></h3>
 <h3><a class="header" href="#link_name属性" id="link_name属性"><code>link_name</code>属性</a></h3>
-<p>可以在外部(<code>extern</code>)块内的数据项声明上指定 <code>link_name</code>属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 <a href="https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法规则指定 symbol 的名称。</p>
+<p>可以在外部(<code>extern</code>)块内的数据项声明上指定 <code>link_name</code>属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法规则指定 symbol 的名称。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -343,12 +342,6 @@ extern {
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

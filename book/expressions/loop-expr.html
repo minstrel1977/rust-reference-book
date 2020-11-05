@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>循环表达式 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>循环表达式</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -199,13 +198,13 @@ commit: 37f61d3347d0813bce53a25c8ee068650d9a025f <br />
    <code>loop</code> <a href="block-expr.html"><em>BlockExpression</em></a></p>
 </blockquote>
 <p><code>loop</code>表达式会不断地重复地执行它代码体内的代码：<code>loop { println!(&quot;I live.&quot;); }</code>。</p>
-<p>没有包含关联的 <code>break</code>表达式的 <code>loop</code>表达式是发散的，并且具有类型 <a href="https://doc.rust-lang.org/types/never.md"><code>!</code></a>。包含相应 <code>break</code>表达式的 <code>loop</code>表达式可以结束循环，并且此表达式的类型必须与 <code>break</code>表达式的值兼容。</p>
+<p>没有包含关联的 <code>break</code>表达式的 <code>loop</code>表达式是发散的，并且具有类型 <a href="../types/never.html"><code>!</code></a>。包含相应 <code>break</code>表达式的 <code>loop</code>表达式可以结束循环，并且此表达式的类型必须与 <code>break</code>表达式的值兼容。</p>
 <h2><a class="header" href="#predicate-loops" id="predicate-loops">Predicate loops</a></h2>
 <h2><a class="header" href="#谓词循环" id="谓词循环">谓词循环</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>PredicateLoopExpression</em> :<br />
-   <code>while</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><sub><em>排除结构体表达式</em></sub> <a href="block-expr.html"><em>BlockExpression</em></a></p>
+   <code>while</code> <a href="../expressions.html"><em>Expression</em></a><sub><em>排除结构体表达式</em></sub> <a href="block-expr.html"><em>BlockExpression</em></a></p>
 </blockquote>
 <p><code>while</code>循环从对布尔型的循环条件表达式求值开始。如果循环条件表达式的求值结果为 <code>true</code>，则执行循环体块，然后控制流返回到循环条件表达式。如果循环条件表达式的求值结果为 <code>false</code>，则 <code>while</code>表达式完成。</p>
 <p>举个例子：</p>
@@ -225,10 +224,10 @@ while i &lt; 10 {
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <a href="#predicate-pattern-loops"><em>PredicatePatternLoopExpression</em></a> :<br />
-   <code>while</code> <code>let</code> <a href="match-expr.html"><em>MatchArmPatterns</em></a> <code>=</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><sub><em>排除结构体表达式和惰性布尔运算符表达式</em></sub>
+   <code>while</code> <code>let</code> <a href="match-expr.html"><em>MatchArmPatterns</em></a> <code>=</code> <a href="../expressions.html"><em>Expression</em></a><sub><em>排除结构体表达式和惰性布尔运算符表达式</em></sub>
 <a href="block-expr.html"><em>BlockExpression</em></a></p>
 </blockquote>
-<p><code>while let</code>循环在语义上类似于 <code>while</code>循环，但它用 <code>let</code>关键字后紧跟着一个模式、一个 <code>=</code>、一个<a href="https://doc.rust-lang.org/glossary.md#scrutinee">检验对象(scrutinee)</a>表达式和一个块表达式，来替代原来的条件表达式。如果检验对象表达式的值与模式匹配，则执行循环体块，然后控制流返回到模式匹配语句。如果不匹配，则 <code>while</code>表达式完成。</p>
+<p><code>while let</code>循环在语义上类似于 <code>while</code>循环，但它用 <code>let</code>关键字后紧跟着一个模式、一个 <code>=</code>、一个<a href="../glossary.html#scrutinee">检验对象(scrutinee)</a>表达式和一个块表达式，来替代原来的条件表达式。如果检验对象表达式的值与模式匹配，则执行循环体块，然后控制流返回到模式匹配语句。如果不匹配，则 <code>while</code>表达式完成。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -276,7 +275,7 @@ while let Some(v @ 1) | Some(v @ 2) = vals.pop() {
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>IteratorLoopExpression</em> :<br />
-   <code>for</code> <a href="https://doc.rust-lang.org/patterns.md"><em>Pattern</em></a> <code>in</code> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><sub><em>排除结构体表达式</em></sub>
+   <code>for</code> <a href="../patterns.html"><em>Pattern</em></a> <code>in</code> <a href="../expressions.html"><em>Expression</em></a><sub><em>排除结构体表达式</em></sub>
 <a href="block-expr.html"><em>BlockExpression</em></a></p>
 </blockquote>
 <p><code>for</code>表达式是一个语法结构，用于在 <code>std::iter::IntoIterator</code> 的某个迭代器实现提供的元素上循环。如果迭代器生成一个值，该值将与此 <code>for</code>表达式提供的不可反驳型模式进行匹配，执行循环体，然后控制流返回到 <code>for</code>循环的头部。如果迭代器为空了，则 <code>for</code>表达式执行完成。</p>
@@ -327,14 +326,14 @@ assert_eq!(sum, 55);
 </code></pre>
 <p>这里的 <code>IntoIterator</code>、<code>Iterator</code> 和 <code>Option</code> 是标准库的数据项(standard library item)，不是当前作用域中解析的的任何名称。变量名 <code>next</code>、<code>iter</code> 和 <code>val</code> 也仅用于表述需要，实际上它们不是用户可以输入的名称。</p>
 <blockquote>
-<p><strong>注意</strong>：上面代码里使用外层 <code>matche</code> 来确保 <code>iter_expr</code> 中的任何<a href="https://doc.rust-lang.org/expressions.md#temporaries">临时值</a>在循环结束前不会被销毁。<code>next</code> 先声明后赋值是因为这样能让给编译器更准确地推断出类型。</p>
+<p><strong>注意</strong>：上面代码里使用外层 <code>matche</code> 来确保 <code>iter_expr</code> 中的任何<a href="../expressions.html#temporaries">临时值</a>在循环结束前不会被销毁。<code>next</code> 先声明后赋值是因为这样能让给编译器更准确地推断出类型。</p>
 </blockquote>
 <h2><a class="header" href="#loop-labels" id="loop-labels">Loop labels</a></h2>
 <h2><a class="header" href="#循环标签" id="循环标签">循环标签</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>LoopLabel</em> :<br />
-   <a href="https://doc.rust-lang.org/tokens.md#lifetimes-and-loop-labels">LIFETIME_OR_LABEL</a> <code>:</code></p>
+   <a href="../tokens.html#lifetimes-and-loop-labels">LIFETIME_OR_LABEL</a> <code>:</code></p>
 </blockquote>
 <p>一个循环表达式可以选择设置一个<em>标签</em>。这类标签被标记为循环表达式之前的生存期，如 <code>'foo: loop { break 'foo; }</code>、<code>'bar: while false {}</code>、<code>'humbug: for _ in 0..0 {}</code>。如果循环存在标签，则嵌套在该循环中的带标签的 <code>break</code>表达式和 <code>continue</code>表达式可以退出此层循环或将控制流返回至其头部。具体请参见后面的 <a href="#break-expressions">break表达式</a>和 <a href="#continue-expressions">continue表达式</a>。</p>
 <h2><a class="header" href="#break-expressions" id="break-expressions"><code>break</code> expressions</a></h2>
@@ -342,7 +341,7 @@ assert_eq!(sum, 55);
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>BreakExpression</em> :<br />
-   <code>break</code> <a href="https://doc.rust-lang.org/tokens.md#lifetimes-and-loop-labels">LIFETIME_OR_LABEL</a><sup>?</sup> <a href="https://doc.rust-lang.org/expressions.md"><em>Expression</em></a><sup>?</sup></p>
+   <code>break</code> <a href="../tokens.html#lifetimes-and-loop-labels">LIFETIME_OR_LABEL</a><sup>?</sup> <a href="../expressions.html"><em>Expression</em></a><sup>?</sup></p>
 </blockquote>
 <p>当遇到 <code>break</code> 时，相关的循环体的执行将立即结束，例如：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -375,7 +374,7 @@ assert_eq!(last, 12);
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ContinueExpression</em> :<br />
-   <code>continue</code> <a href="https://doc.rust-lang.org/tokens.md#lifetimes-and-loop-labels">LIFETIME_OR_LABEL</a><sup>?</sup></p>
+   <code>continue</code> <a href="../tokens.html#lifetimes-and-loop-labels">LIFETIME_OR_LABEL</a><sup>?</sup></p>
 </blockquote>
 <p>当遇到 <code>continue</code> 时，相关的循环体的当前迭代将立即结束，并将控制流返回到循环头。在 <code>while</code>循环的情况下，循环头是控制循环的条件表达式。在 <code>for</code>循环的情况下，循环头是控制循环的调用表达式。</p>
 <p>与 <code>break</code> 一样，<code>continue</code> 通常与最内部的循环相关联，但可以使用 <code>continue 'label</code> 来指定受影响的循环。<code>continue</code>表达式只允许在循环体内部使用。</p>
@@ -399,6 +398,7 @@ assert_eq!(result, 13);
 <span class="boring">}
 </span></code></pre></pre>
 <p>如果 <code>loop</code> 有关联的 <code>break</code>，则不认为该循环是发散的，并且 <code>loop</code>表达式的类型必须与每个 <code>break</code>表达式的类型兼容。不后跟表达式的 <code>break</code> 被认为与后跟 <code>()</code> 的<code>break</code>表达式的效果相同。</p>
+<!-- 上面这几个链接从原文来替换时小心 -->
 <!-- 2020-11-3 -->
 <!-- checked -->
 
@@ -451,12 +451,6 @@ assert_eq!(result, 13);
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

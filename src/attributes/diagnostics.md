@@ -222,33 +222,33 @@ impl Trait for i32 {
 > ```
 
 [Clippy]: https://github.com/rust-lang/rust-clippy
-[_MetaListNameValueStr_]: https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax
-[_MetaListPaths_]: https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax
-[_MetaNameValueStr_]: https://doc.rust-lang.org/attributes.md#meta-item-attribute-syntax
-[`Drop`]: https://doc.rust-lang.org/special-types-and-traits.md#drop
-[attributes]: https://doc.rust-lang.org/attributes.md
-[block expression]: https://doc.rust-lang.org/expressions/block-expr.md
-[call expression]: https://doc.rust-lang.org/expressions/call-expr.md
-[enum variant]: https://doc.rust-lang.org/items/enumerations.md
-[enum]: https://doc.rust-lang.org/items/enumerations.md
-[expression statement]: https://doc.rust-lang.org/statements.md#expression-statements
-[expression]: https://doc.rust-lang.org/expressions.md
-[external block item]: https://doc.rust-lang.org/items/external-blocks.md
-[functions]: https://doc.rust-lang.org/items/functions.md
-[impl trait]: https://doc.rust-lang.org/types/impl-trait.md
-[implementation]: https://doc.rust-lang.org/items/implementations.md
-[item]: https://doc.rust-lang.org/items.md
-[let statement]: https://doc.rust-lang.org/statements.md#let-statements
-[macro definition]: https://doc.rust-lang.org/macros-by-example.md
-[module]: https://doc.rust-lang.org/items/modules.md
+[_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
+[_MetaListPaths_]: ../attributes.md#meta-item-attribute-syntax
+[_MetaNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
+[`Drop`]: ../special-types-and-traits.md#drop
+[attributes]: ../attributes.md
+[block expression]: ../expressions/block-expr.md
+[call expression]: ../expressions/call-expr.md
+[enum variant]: ../items/enumerations.md
+[enum]: ../items/enumerations.md
+[expression statement]: ../statements.md#expression-statements
+[expression]: ../expressions.md
+[external block item]: ../items/external-blocks.md
+[functions]: ../items/functions.md
+[impl trait]: ../types/impl-trait.md
+[implementation]: ../items/implementations.md
+[item]: ../items.md
+[let statement]: ../statements.md#let-statements
+[macro definition]: ../macros-by-example.md
+[module]: ../items/modules.md
 [rustc book]: https://doc.rust-lang.org/rustc/lints/index.html
-[struct field]: https://doc.rust-lang.org/items/structs.md
-[struct]: https://doc.rust-lang.org/items/structs.md
-[trait declaration]: https://doc.rust-lang.org/items/traits.md
-[trait implementation items]: https://doc.rust-lang.org/items/implementations.md#trait-implementations
-[trait item]: https://doc.rust-lang.org/items/traits.md
-[traits]: https://doc.rust-lang.org/items/traits.md
-[union]: https://doc.rust-lang.org/items/unions.md
+[struct field]: ../items/structs.md
+[struct]: ../items/structs.md
+[trait declaration]: ../items/traits.md
+[trait implementation items]: ../items/implementations.md#trait-implementations
+[trait item]: ../items/traits.md
+[traits]: ../items/traits.md
+[union]: ../items/unions.md
 
 <!-- 2020-11-3 -->
 <!-- checked -->

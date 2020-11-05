@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>字符型 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>字符型</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -41,10 +41,9 @@
 
         <!-- Custom theme stylesheets -->
         
-
+        <link rel="stylesheet" href="../theme/reference.css">
         
-        <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
         
     </head>
     <body>
@@ -128,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -174,9 +173,9 @@ commit: 9af5071f876111a09ba54a86655679de83eb464c <br />
 本译文最后维护日期：2020-10-29</p>
 </blockquote>
 <p>类型 <code>char</code> 和 <code>str</code> 用于保存文本数据。</p>
-<p>字符型(<code>char</code>)的值是 <a href="http://www.unicode.org/glossary/#unicode_scalar_value">Unicode 标量(scalar)值</a>（即不是代理项(surrogate)的代码点），可以表示为 0x0000 到 0xD7FF 或 0xE000 到 0x10FFFF 范围内的32位无符号字符。创建超出此范围的字符直接触发<a href="https://doc.rust-lang.org/behavior-considered-undefined.md">未定义行为(Undefined Behavior)</a>。一个 <code>[char]</code> 实际上是长度为1的 UCS-4 / UTF-32 字符串。</p>
-<p><code>str</code>类型的值的表示方法与 <code>[u8]</code> 相同，它是一个8位无符号字节类型的切片。但是，Rust 标准库对 <code>str</code> 做了额外的假定：<code>str</code> 上的方法会假定并确保其中的数据是有效的 UTF-8。调用 <code>str</code> 的方法来处理非UTF-8 缓冲区上的数据可能或早或晚地出现<a href="https://doc.rust-lang.org/behavior-considered-undefined.md">未定义行为</a>。</p>
-<p>由于 <code>str</code> 是一个<a href="https://doc.rust-lang.org/dynamically-sized-types.md">动态尺寸类型</a>，所以它只能通过指针类型实例化，比如 <code>&amp;str</code>。</p>
+<p>字符型(<code>char</code>)的值是 <a href="http://www.unicode.org/glossary/#unicode_scalar_value">Unicode 标量(scalar)值</a>（即不是代理项(surrogate)的代码点），可以表示为 0x0000 到 0xD7FF 或 0xE000 到 0x10FFFF 范围内的32位无符号字符。创建超出此范围的字符直接触发<a href="../behavior-considered-undefined.html">未定义行为(Undefined Behavior)</a>。一个 <code>[char]</code> 实际上是长度为1的 UCS-4 / UTF-32 字符串。</p>
+<p><code>str</code>类型的值的表示方法与 <code>[u8]</code> 相同，它是一个8位无符号字节类型的切片。但是，Rust 标准库对 <code>str</code> 做了额外的假定：<code>str</code> 上的方法会假定并确保其中的数据是有效的 UTF-8。调用 <code>str</code> 的方法来处理非UTF-8 缓冲区上的数据可能或早或晚地出现<a href="../behavior-considered-undefined.html">未定义行为</a>。</p>
+<p>由于 <code>str</code> 是一个<a href="../dynamically-sized-types.html">动态尺寸类型</a>，所以它只能通过指针类型实例化，比如 <code>&amp;str</code>。</p>
 <!-- 2020-11-3 -->
 <!-- checked -->
 
@@ -229,12 +228,6 @@ commit: 9af5071f876111a09ba54a86655679de83eb464c <br />
         </script>
         
 
-        
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         

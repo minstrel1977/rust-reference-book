@@ -19,10 +19,10 @@
 4. 如果轮询(`poll`)调用返回 [`Poll::Pending`]，那么这个 future 就也返回 `Poll::Pending`，并相应地挂起它的状态，这样，当包围它的异步上下文被再次轮询时，执行流返回到步骤2；
 5. 否则，轮询(`poll`)调用必定返回了 [`Poll::Ready`]，在这种情况下，[`Poll::Ready`] 变体中包含的值将被当作这个 `await`表达式本身的求值结果。
 
-[`async fn`]: https://doc.rust-lang.org/items/functions.md#async-functions
+[`async fn`]: ../items/functions.md#async-functions
 [`async` block]: block-expr.md#async-blocks
 [future]: https://doc.rust-lang.org/std/future/trait.Future.html
-[_Expression_]: https://doc.rust-lang.org/expressions.md
+[_Expression_]: ../expressions.md
 [`Future::poll`]: https://doc.rust-lang.org/std/future/trait.Future.html#tymethod.poll
 [`Context`]: https://doc.rust-lang.org/std/task/struct.Context.html
 [`Pin::new_unchecked`]: https://doc.rust-lang.org/std/pin/struct.Pin.html#method.new_unchecked
@@ -37,7 +37,7 @@
 任务上下文是指在对[异步上下文][async context]本身进行轮询时提供给当前异步上下文的[上下文(`Context`)][`Context`]。因为等待(`await`)表达式只能在异步上下文中才能使用，所以此时必须有一些任务上下文可用。
 
 [`Context`]: https://doc.rust-lang.org/std/task/struct.Context.html
-[async context]: https://doc.rust-lang.org/expressions/block-expr.md#async-context
+[async context]: ../expressions/block-expr.md#async-context
 
 ## Approximate desugaring
 ## 近似脱糖

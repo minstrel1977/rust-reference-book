@@ -181,29 +181,29 @@ impl Seq<bool> for u32 {
 [_ConstantItem_]: constant-items.md
 [_Function_]: functions.md
 [_Generics_]: generics.md
-[_InnerAttribute_]: https://doc.rust-lang.org/attributes.md
-[_MacroInvocationSemi_]: https://doc.rust-lang.org/macros.md#macro-invocation
+[_InnerAttribute_]: ../attributes.md
+[_MacroInvocationSemi_]: ../macros.md#macro-invocation
 [_Method_]: associated-items.md#methods
-[_OuterAttribute_]: https://doc.rust-lang.org/attributes.md
+[_OuterAttribute_]: ../attributes.md
 [_TypeAlias_]: type-aliases.md
-[_TypePath_]: https://doc.rust-lang.org/paths.md#paths-in-types
-[_Type_]: https://doc.rust-lang.org/types.md#type-expressions
-[_Visibility_]: https://doc.rust-lang.org/visibility-and-privacy.md
+[_TypePath_]: ../paths.md#paths-in-types
+[_Type_]: ../types.md#type-expressions
+[_Visibility_]: ../visibility-and-privacy.md
 [_WhereClause_]: generics.md#where-clauses
 [trait]: traits.md
 [associated functions]: associated-items.md#associated-functions-and-methods
 [associated constants]: associated-items.md#associated-constants
-[attributes]: https://doc.rust-lang.org/attributes.md
-[`cfg`]: https://doc.rust-lang.org/conditional-compilation.md
-[`deprecated`]: https://doc.rust-lang.org/attributes/diagnostics.md#the-deprecated-attribute
+[attributes]: ../attributes.md
+[`cfg`]: ../conditional-compilation.md
+[`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
 [`doc`]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
-[path]: https://doc.rust-lang.org/paths.md
-[the lint check attributes]: https://doc.rust-lang.org/attributes/diagnostics.md#lint-check-attributes
+[path]: ../paths.md
+[the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
 [Unsafe traits]: traits.md#unsafe-traits
-[local trait]: https://doc.rust-lang.org/glossary.md#local-trait
-[local type]: https://doc.rust-lang.org/glossary.md#local-type
-[fundamental types]: https://doc.rust-lang.org/glossary.md#fundamental-type-constructors
-[uncovered type]: https://doc.rust-lang.org/glossary.md#uncovered-type
+[local trait]: ../glossary.md#local-trait
+[local type]: ../glossary.md#local-type
+[fundamental types]: ../glossary.md#fundamental-type-constructors
+[uncovered type]: ../glossary.md#uncovered-type
 
 <!-- 2020-11-3 -->
 <!-- checked -->

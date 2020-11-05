@@ -29,8 +29,8 @@ let slice: &[i32] = &boxed_array[..];
 
 切片的所有元素总是被初始化过的，使用 Rust 的安全(safe)方法或操作符来访问切片时总是会做越界检查。
 
-[_Type_]: https://doc.rust-lang.org/types.md#type-expressions
-[dynamically sized type]: https://doc.rust-lang.org/dynamically-sized-types.md
+[_Type_]: ../types.md#type-expressions
+[dynamically sized type]: ../dynamically-sized-types.md
 
 <!-- 2020-11-3 -->
 <!-- checked -->
