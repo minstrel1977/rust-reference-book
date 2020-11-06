@@ -117,7 +117,7 @@ foo!(3);
 ## Repetitions
 ## 重复元
 
-无论在匹配器中，还是在转换器中，都是通过将需要重复的标记码放在 `$(`…`)` 内，然后后跟一个重复元运算符(repetition operator)，这两者之间可以放置一个可选的分隔符(separator token)来表示重复元。分隔符可以是除定界符或重复元运算符之外的任何标记码，其中分号(`;`)和逗号(`,`)最常见。例如： `$( $i:ident ),*` 表示用逗号分隔的任何数量的标识符。嵌套的重复元是合法的。
+在匹配器和转换器中，重复元被表示为：将需要重复的标记码放在 `$(`…`)` 内，然后后跟一个重复元运算符(repetition operator)，这两者之间可以放置一个可选的分隔符(separator token)。分隔符可以是除定界符或重复元运算符之外的任何标记码，其中分号(`;`)和逗号(`,`)最常见。例如： `$( $i:ident ),*` 表示用逗号分隔的任何数量的标识符。嵌套的重复元是合法的。
 
 重复元运算符为：
 
@@ -346,17 +346,28 @@ macro_rules! helper {
 ## Follow-set Ambiguity Restrictions
 ## 随集歧义限制
 
-宏系统使用的解析器相当强大，但是为了防止其与 Rust 的当前或未来版本中的语法出现二义性，则对它做出了限制。特别是，除了关于二义性展开的规则外，增加了一条：用于元变量匹配的非终结符(nonterminal)必须后跟一个已经确定为可以用来安全分隔匹配段的分隔符标记码。
+宏系统使用的解析器相当强大，但是为了防止其在 Rust 的当前或未来版本中出现二义性解析，对它做出了限制。特别地，在二义性展开的规则之外，增加了一条：非终结符(nonterminal)（可简单的理解为匹配器中元变量的匹配器，具体在本书的附录[宏定义规范](macro-ambiguity.md)中有定义）必须后跟一个已经确定为可以用来安全分隔匹配段的分隔符标记码。
 
-例如，像 `$i:expr [ , ]` 这样的宏匹配器在现今的 Rust 中理论上是可以接受的，因为现在 `[,]` 不可能是合法表达式的一部分，因此解析始终是明确的。但是，由于 `[` 可以开始一个尾随表达式(trailing expressions)，因此 `[` 不是一个可以安全排除在表达式后面出现的字符。如果在接下来的 Rust 版本中接受了 `[,]`，那么这个匹配器就会产生歧义或是错误解析，破坏正常代码。但是，像`$i:expr,` 或 `$i:expr;` 这样的匹配符是合法的，因为 `,` 和`;` 是合法的表达式分隔符。目前规范中的规则是：（译者注：下面的规则不是绝对的，因为宏的基础理论还在发展中。）
+例如，像 `$i:expr [ , ]` 这样的宏匹配器在现今的 Rust 中理论上是可以接受的，因为现在 `[,]` 不可能是合法表达式的一部分，因此解析始终是明确的。但是，由于 `[` 可以开始一个尾随表达式(trailing expressions)，因此 `[` 不是一个可以安全排除在表达式后面出现的字符。如果在接下来的 Rust 版本中接受了 `[,]`，那么这个匹配器就会产生歧义或是错误解析，破坏正常代码。但是，像`$i:expr,` 或 `$i:expr;` 这样的匹配符始终是合法的，因为 `,` 和`;` 是合法的表达式分隔符。目前规范中的规则是：（译者注：下面的规则不是绝对的，因为宏的基础理论还在发展中。）
 
-  * `expr` 和 `stmt` 只能后跟一个： `=>`、`,` 或 `;`。
-  * `pat` 只能后跟一个： `=>`、`,`、`=`、`|`、`if` 或 `in`。
-  * `path` 和 `ty` 只能后跟一个： `=>`、`,`、`=`、`|`、`;`、`:`、`>`、`>>`、`[`、`{`、`as`、`where` 或一个宏带 `:block` 匹配段类型指示符的元变量。
-  * `vis` 只能后跟一个：`,`、非原生字符串 `priv` 以外的标识符、可以表示类型开始的任何标记码、带有`ident`或`ty`或`path`这类匹配段类型指示符的元变量。
+  * `expr` 和 `stmt` 只能后跟一个： `=>`、`,`、`;`。
+  * `pat` 只能后跟一个： `=>`、`,`、`=`、`|`、`if`、`in`。
+  * `path` 和 `ty` 只能后跟一个： `=>`、`,`、`=`、`|`、`;`、`:`、`>`、`>>`、`[`、`{`、`as`、`where`、块(`block`)型非终结符(block nonterminals)。
+  * `vis` 只能后跟一个：`,`、非原生字符串 `priv` 以外的任何标识符和关键字、可以表示类型开始的任何标记码、`ident`或`ty`或`path`型非终结符。
   * 其它所有的匹配段类型指示符没有限制。
 
-当涉及到重复元时，这些规则适用于所有可能的展开次数，注意需将分隔符考虑在内。这意味着：
+（译者注：可以表示类型开始的标记码有：{`(`, `[`, `!`, `\*`,`&`, `&&`, `?`, 生存期, `>`, `>>`, `::`, 非关键字标识符, `super`,`self`, `Self`, `extern`, `crate`, `$crate`, `_`, `for`, `impl`, `fn`, `unsafe`,`typeof`, `dyn`}。注意这个列表也不一定全。）
+
+  * If the repetition includes a separator, that separator must be able to
+    follow the contents of the repetition.
+  * If the repetition can repeat multiple times (`*` or `+`), then the contents
+    must be able to follow themselves.
+  * The contents of the repetition must be able to follow whatever comes
+    before, and whatever comes after must be able to follow the contents of the
+    repetition.
+  * If the repetition can match zero times (`*` or `?`), then whatever comes
+    after must be able to follow whatever comes before.
+当涉及到重复元时，随集歧义限制适用于所有可能的展开次数，注意需将重复元中的分隔符考虑在内。这意味着：
 
   * 如果重复元包含分隔符，则分隔符必须能够跟随重复元的内容重复。
   * 如果重复元可以重复多次（`*` 或 `+`），那么重复元的内容必须能自我重复。
