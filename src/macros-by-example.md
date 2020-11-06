@@ -353,20 +353,12 @@ macro_rules! helper {
   * `expr` 和 `stmt` 只能后跟一个： `=>`、`,`、`;`。
   * `pat` 只能后跟一个： `=>`、`,`、`=`、`|`、`if`、`in`。
   * `path` 和 `ty` 只能后跟一个： `=>`、`,`、`=`、`|`、`;`、`:`、`>`、`>>`、`[`、`{`、`as`、`where`、块(`block`)型非终结符(block nonterminals)。
-  * `vis` 只能后跟一个：`,`、非原生字符串 `priv` 以外的任何标识符和关键字、可以表示类型开始的任何标记码、`ident`或`ty`或`path`型非终结符。
+  * `vis` 只能后跟一个：`,`、非原生字符串 `priv` 以外的任何标识符和关键字、可以表示类型开始的任何标记码、`ident`或`ty`或`path`型非终结符。    
+    
+    （译者注：可以表示类型开始的标记码有：{`(`, `[`, `!`, `\*`,`&`, `&&`, `?`, 生存期, `>`, `>>`, `::`, 非关键字标识符, `super`,`self`, `Self`, `extern`, `crate`, `$crate`, `_`, `for`, `impl`, `fn`, `unsafe`,`typeof`, `dyn`}。注意这个列表也不一定全。）
+  
   * 其它所有的匹配段类型指示符没有限制。
 
-（译者注：可以表示类型开始的标记码有：{`(`, `[`, `!`, `\*`,`&`, `&&`, `?`, 生存期, `>`, `>>`, `::`, 非关键字标识符, `super`,`self`, `Self`, `extern`, `crate`, `$crate`, `_`, `for`, `impl`, `fn`, `unsafe`,`typeof`, `dyn`}。注意这个列表也不一定全。）
-
-  * If the repetition includes a separator, that separator must be able to
-    follow the contents of the repetition.
-  * If the repetition can repeat multiple times (`*` or `+`), then the contents
-    must be able to follow themselves.
-  * The contents of the repetition must be able to follow whatever comes
-    before, and whatever comes after must be able to follow the contents of the
-    repetition.
-  * If the repetition can match zero times (`*` or `?`), then whatever comes
-    after must be able to follow whatever comes before.
 当涉及到重复元时，随集歧义限制适用于所有可能的展开次数，注意需将重复元中的分隔符考虑在内。这意味着：
 
   * 如果重复元包含分隔符，则分隔符必须能够跟随重复元的内容重复。
