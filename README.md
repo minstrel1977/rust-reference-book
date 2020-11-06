@@ -10,7 +10,7 @@ what we have for now.
 ## Dependencies
 
 - rustc (the Rust compiler).
-- mdbook (use `cargo install mdbook` to install it).
+- [mdbook](https://github.com/rust-lang/mdBook) (use `cargo install mdbook` to install it).
 
 ## Build steps
 
@@ -29,3 +29,6 @@ mdbook build
 ```
 
 The generated HTML will be in the `book` folder.
+
+## Online Reading
+You can preview the whole content on [Web](https://minstrel1977.gitee.io/rust-reference).
