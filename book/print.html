@@ -1598,7 +1598,7 @@ foo!(3);
 <p>因为匹配段类型已在匹配器中指定了，则在转换器中，元变量只简单地用 <code>$</code><em>名称</em> 这种形式来指代就行了。元变量最终将被替换为跟它们匹配上的句法元素。元变量关键字 <code>$crate</code> 可以用来指代当前的 crate（请参阅后面的<a href="macros-by-example.html#hygiene">卫生性(hygiene)</a>章节）。元变量可以被多次转换，也可以完全不转换。</p>
 <h2><a class="header" href="#repetitions" id="repetitions">Repetitions</a></h2>
 <h2><a class="header" href="#重复元" id="重复元">重复元</a></h2>
-<p>无论在匹配器中，还是在转换器中，都是通过将需要重复的标记码放在 <code>$(</code>…<code>)</code> 内，然后后跟一个重复元运算符(repetition operator)，这两者之间可以放置一个可选的分隔符(separator token)来表示重复元。分隔符可以是除定界符或重复元运算符之外的任何标记码，其中分号(<code>;</code>)和逗号(<code>,</code>)最常见。例如： <code>$( $i:ident ),*</code> 表示用逗号分隔的任何数量的标识符。嵌套的重复元是合法的。</p>
+<p>在匹配器和转换器中，重复元被表示为：将需要重复的标记码放在 <code>$(</code>…<code>)</code> 内，然后后跟一个重复元运算符(repetition operator)，这两者之间可以放置一个可选的分隔符(separator token)。分隔符可以是除定界符或重复元运算符之外的任何标记码，其中分号(<code>;</code>)和逗号(<code>,</code>)最常见。例如： <code>$( $i:ident ),*</code> 表示用逗号分隔的任何数量的标识符。嵌套的重复元是合法的。</p>
 <p>重复元运算符为：</p>
 <ul>
 <li><code>*</code> — 表示任意数量的重复元。</li>
@@ -1810,17 +1810,28 @@ macro_rules! helper {
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#follow-set-ambiguity-restrictions" id="follow-set-ambiguity-restrictions">Follow-set Ambiguity Restrictions</a></h2>
-<h2><a class="header" href="#随集歧义限制" id="随集歧义限制">随集歧义限制</a></h2>
-<p>宏系统使用的解析器相当强大，但是为了防止其与 Rust 的当前或未来版本中的语法出现二义性，则对它做出了限制。特别是，除了关于二义性展开的规则外，增加了一条：用于元变量匹配的非终结符(nonterminal)必须后跟一个已经确定为可以用来安全分隔匹配段的分隔符标记码。</p>
-<p>例如，像 <code>$i:expr [ , ]</code> 这样的宏匹配器在现今的 Rust 中理论上是可以接受的，因为现在 <code>[,]</code> 不可能是合法表达式的一部分，因此解析始终是明确的。但是，由于 <code>[</code> 可以开始一个尾随表达式(trailing expressions)，因此 <code>[</code> 不是一个可以安全排除在表达式后面出现的字符。如果在接下来的 Rust 版本中接受了 <code>[,]</code>，那么这个匹配器就会产生歧义或是错误解析，破坏正常代码。但是，像<code>$i:expr,</code> 或 <code>$i:expr;</code> 这样的匹配符是合法的，因为 <code>,</code> 和<code>;</code> 是合法的表达式分隔符。目前规范中的规则是：（译者注：下面的规则不是绝对的，因为宏的基础理论还在发展中。）</p>
+<h2><a class="header" href="#随集歧义限制译者注该节还需要继续校对打磨主要难点还是因为附录的宏定义规范译者还没有能全部搞懂" id="随集歧义限制译者注该节还需要继续校对打磨主要难点还是因为附录的宏定义规范译者还没有能全部搞懂">随集歧义限制（译者注：该节还需要继续校对打磨，主要难点还是因为附录的宏定义规范译者还没有能全部搞懂）</a></h2>
+<p>宏系统使用的解析器相当强大，但是为了防止其在 Rust 的当前或未来版本中出现二义性解析，对它做出了限制。特别地，在二义性展开的规则之外，增加了一条：非终结符(nonterminal)（可简单的理解为匹配器中元变量的匹配器，具体在本书的附录<a href="macro-ambiguity.html">宏定义规范</a>中有定义）必须后跟一个已经确定为可以用来安全分隔匹配段的分隔符标记码。</p>
+<p>例如，像 <code>$i:expr [ , ]</code> 这样的宏匹配器在现今的 Rust 中理论上是可以接受的，因为现在 <code>[,]</code> 不可能是合法表达式的一部分，因此解析始终是明确的。但是，由于 <code>[</code> 可以开始一个尾随表达式(trailing expressions)，因此 <code>[</code> 不是一个可以安全排除在表达式后面出现的字符。如果在接下来的 Rust 版本中接受了 <code>[,]</code>，那么这个匹配器就会产生歧义或是错误解析，破坏正常代码。但是，像<code>$i:expr,</code> 或 <code>$i:expr;</code> 这样的匹配符始终是合法的，因为 <code>,</code> 和<code>;</code> 是合法的表达式分隔符。目前规范中的规则是：（译者注：下面的规则不是绝对的，因为宏的基础理论还在发展中。）</p>
 <ul>
-<li><code>expr</code> 和 <code>stmt</code> 只能后跟一个： <code>=&gt;</code>、<code>,</code> 或 <code>;</code>。</li>
-<li><code>pat</code> 只能后跟一个： <code>=&gt;</code>、<code>,</code>、<code>=</code>、<code>|</code>、<code>if</code> 或 <code>in</code>。</li>
-<li><code>path</code> 和 <code>ty</code> 只能后跟一个： <code>=&gt;</code>、<code>,</code>、<code>=</code>、<code>|</code>、<code>;</code>、<code>:</code>、<code>&gt;</code>、<code>&gt;&gt;</code>、<code>[</code>、<code>{</code>、<code>as</code>、<code>where</code> 或一个宏带 <code>:block</code> 匹配段类型指示符的元变量。</li>
-<li><code>vis</code> 只能后跟一个：<code>,</code>、非原生字符串 <code>priv</code> 以外的标识符、可以表示类型开始的任何标记码、带有<code>ident</code>或<code>ty</code>或<code>path</code>这类匹配段类型指示符的元变量。</li>
-<li>其它所有的匹配段类型指示符没有限制。</li>
+<li>
+<p><code>expr</code> 和 <code>stmt</code> 只能后跟一个： <code>=&gt;</code>、<code>,</code>、<code>;</code>。</p>
+</li>
+<li>
+<p><code>pat</code> 只能后跟一个： <code>=&gt;</code>、<code>,</code>、<code>=</code>、<code>|</code>、<code>if</code>、<code>in</code>。</p>
+</li>
+<li>
+<p><code>path</code> 和 <code>ty</code> 只能后跟一个： <code>=&gt;</code>、<code>,</code>、<code>=</code>、<code>|</code>、<code>;</code>、<code>:</code>、<code>&gt;</code>、<code>&gt;&gt;</code>、<code>[</code>、<code>{</code>、<code>as</code>、<code>where</code>、块(<code>block</code>)型非终结符(block nonterminals)。</p>
+</li>
+<li>
+<p><code>vis</code> 只能后跟一个：<code>,</code>、非原生字符串 <code>priv</code> 以外的任何标识符和关键字、可以表示类型开始的任何标记码、<code>ident</code>或<code>ty</code>或<code>path</code>型非终结符。</p>
+<p>（译者注：可以表示类型开始的标记码有：{<code>(</code>, <code>[</code>, <code>!</code>, <code>\*</code>,<code>&amp;</code>, <code>&amp;&amp;</code>, <code>?</code>, 生存期, <code>&gt;</code>, <code>&gt;&gt;</code>, <code>::</code>, 非关键字标识符, <code>super</code>,<code>self</code>, <code>Self</code>, <code>extern</code>, <code>crate</code>, <code>$crate</code>, <code>_</code>, <code>for</code>, <code>impl</code>, <code>fn</code>, <code>unsafe</code>,<code>typeof</code>, <code>dyn</code>}。注意这个列表也不一定全。）</p>
+</li>
+<li>
+<p>其它所有的匹配段类型指示符没有限制。</p>
+</li>
 </ul>
-<p>当涉及到重复元时，这些规则适用于所有可能的展开次数，注意需将分隔符考虑在内。这意味着：</p>
+<p>当涉及到重复元时，随集歧义限制适用于所有可能的展开次数，注意需将重复元中的分隔符考虑在内。这意味着：</p>
 <ul>
 <li>如果重复元包含分隔符，则分隔符必须能够跟随重复元的内容重复。</li>
 <li>如果重复元可以重复多次（<code>*</code> 或 <code>+</code>），那么重复元的内容必须能自我重复。</li>
@@ -1834,7 +1845,7 @@ macro_rules! helper {
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/procedural-macros.md">procedural-macros.md</a><br />
 commit: a1ef5a09c0281b0f2a65c18670e927ead61eb1b2 <br />
-本译文最后维护日期：2020-10-16</p>
+本译文最后维护日期：2020-11-6</p>
 </blockquote>
 <p><em>过程宏</em>允许在执行函数时创建句法扩展。过程宏有三种形式:</p>
 <ul>
@@ -1842,7 +1853,7 @@ commit: a1ef5a09c0281b0f2a65c18670e927ead61eb1b2 <br />
 <li><a href="procedural-macros.html#derive-macros">派生宏(derive macros)</a>- <code>#[derive(CustomDerive)]</code></li>
 <li><a href="procedural-macros.html#attribute-macros">属性宏(attribute macros)</a> - <code>#[CustomAttribute]</code></li>
 </ul>
-<p>过程宏允许您在编译时运行对 Rust 句法进行操作的代码，同时消费并生成 Rust 句法。您可以将过程宏看作是从一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 到另一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 的函数。</p>
+<p>过程宏允许在编译时运行对 Rust 句法进行操作的代码，它可以在消费掉一些 Rust 句法输入的同时产生新的 Rust 句法输出。可以将过程宏想象成是从一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 到另一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 的映射函数。</p>
 <p>过程宏必须在 <a href="linkage.html">crate 类型</a>为 <code>proc-macro</code> 的 crate 中定义。</p>
 <blockquote>
 <p><strong>注意</strong>: 使用 Cargo 时，定义过程宏的 crate 的配置文件里要使用 <code>proc-macro</code>键做如下设置：</p>
@@ -1850,21 +1861,21 @@ commit: a1ef5a09c0281b0f2a65c18670e927ead61eb1b2 <br />
 proc-macro = true
 </code></pre>
 </blockquote>
-<p>作为函数，它们要么有返回句法，要么 panic，要么永无休止地循环。返回句法根据过程宏的类型替换或添加句法；panic 会被编译器捕获，并将其转化为编译器错误；无限循，不会被编译器不会捕获，但会导致编译器被挂起。</p>
-<p>过程宏在编译期运行，因此具有与编译器相同的资源。例如，它可以访问的标准输入、标准错误输出和标准输出与编译器可以访问的相同。类似地，文件访问也是一样的。因此，过程宏与 <a href="https://doc.rust-lang.org/cargo/reference/build-scripts.html">Cargo 的构建脚本</a> 具有相同的安全考量。</p>
+<p>作为函数，它们要么有返回句法，要么触发 panic，要么永无休止地循环。返回句法根据过程宏的类型替换或添加句法；panic 会被编译器捕获，并将其转化为编译器错误；无限循环不会被编译器不会捕获，但会导致编译器被挂起。</p>
+<p>过程宏在编译时运行，因此具有与编译器相同的环境资源。例如，它可以访问的标准输入、标准输出和标准错误输出等，这些编译器可以访问的资源。类似地，文件访问也是一样的。因此，过程宏与 <a href="https://doc.rust-lang.org/cargo/reference/build-scripts.html">Cargo构建脚本</a> 具有相同的安全考量。</p>
 <p>过程宏有两种报告错误的方法。首先是 panic；第二个是发布 <a href="https://doc.rust-lang.org/std/macro.compile_error.html"><code>compile_error</code></a> 性质的宏调用。</p>
 <h3><a class="header" href="#the-proc_macro-crate" id="the-proc_macro-crate">The <code>proc_macro</code> crate</a></h3>
-<p>过程宏 crate 几乎总是会去链接编译器提供的 <a href="https://doc.rust-lang.org/proc_macro/index.html"><code>proc_macro</code> crate</a>。<code>proc_macro</code> crate 提供编写过程宏所需的类型和工具来让编写更容易。</p>
-<p>这个 crate 主要包含一个 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 类型。过程宏在*标记流(token streams)*上操作，而不是在 AST 节点上操作，因为这对于编译器和过程宏的编译目标来说，这是一个随着时间推移要稳定得多的接口。<em>标记流</em>大致相当于 <code>Vec&lt;TokenTree&gt;</code>，其中 <code>TokenTree</code> 可以大致视为词法标记码。例如，<code>foo</code> 是 <code>Ident</code> 标记码， <code>.</code> 是 <code>Punct</code> 标记码， <code>1.2</code> 是一个 <code>Literal</code> 标记码。不同于 <code>Vec&lt;TokenTree&gt;</code>，<code>TokenStream</code> 的克隆成本很低。</p>
-<p>所有标记码都有一个关联的 <code>Span</code>。 <code>Span</code> 是一个不透明的值，不能被修改，但可以被制造。 <code>Span</code> 表示程序内的源代码范围，主要用于错误报告。可以修改任何标记码的 <code>Span</code>。</p>
+<p>过程宏类型的 crate 几乎总是会去链接编译器提供的 <a href="https://doc.rust-lang.org/proc_macro/index.html"><code>proc_macro</code> crate</a>。<code>proc_macro</code> crate 提供了编写过程宏所需的各种类型和工具来让编写更容易。</p>
+<p>此 crate 主要包含了一个 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 类型。过程宏其实是在*标记流(token streams)*上操作，而不是在某个或某些 AST 节点上操作，因为这对于编译器和过程宏的编译目标来说，这是一个随着时间推移要稳定得多的接口。<em>标记流</em>大致相当于 <code>Vec&lt;TokenTree&gt;</code>，其中 <code>TokenTree</code> 可以大致视为词法标记码。例如，<code>foo</code> 是标识符(<code>Ident</code>)类型的标记码，<code>.</code> 是一个标点符号(<code>Punct</code>)类型的标记码，<code>1.2</code> 是一个字面量(<code>Literal</code>)类型的标记码。不同于 <code>Vec&lt;TokenTree&gt;</code> 的是 <code>TokenStream</code> 的克隆成本很低。</p>
+<p>所有类型的标记码都有一个与之关联的 <code>Span</code>。<code>Span</code> 是一个不透明的值，不能被修改，但可以被制造。<code>Span</code> 表示程序内的源代码范围，主要用于错误报告。可以事先（通过函数 <code>set_span</code>）配置任何标记码的 <code>Span</code>。</p>
 <h3><a class="header" href="#procedural-macro-hygiene" id="procedural-macro-hygiene">Procedural macro hygiene</a></h3>
 <h3><a class="header" href="#过程宏的卫生性" id="过程宏的卫生性">过程宏的卫生性</a></h3>
-<p>过程宏是<em>非卫生的(unhygienic)</em>。这意味着它的行为就好像它输出的标记流是直接内联写入它周围的代码中一样。这意味着它会受到外部数据项的影响，也会影响外部导入。</p>
+<p>过程宏是<em>非卫生的(unhygienic)</em>。这意味着它的行为就好像它输出的标记流是被简单地内联写入它周围的代码中一样。这意味着它会受到外部数据项的影响，也会影响外部导入。</p>
 <p>鉴于此限制，宏作者需要小心地确保他们的宏能在尽可能多的上下文中正常工作。这通常包括对库中数据项使用绝对路径(例如，使用 <code>::std::option::Option</code> 而不是 <code>Option</code>)，或者确保生成的函数具有不太可能与其他函数冲突的名称（如 <code>__internal_foo</code>，而不是 <code>foo</code>）。</p>
 <h3><a class="header" href="#function-like-procedural-macros" id="function-like-procedural-macros">Function-like procedural macros</a></h3>
 <h3><a class="header" href="#类函数过程宏" id="类函数过程宏">类函数过程宏</a></h3>
 <p><em>类函数过程宏</em>是使用宏调用运算符（<code>!</code>）调用的过程宏。</p>
-<p>这种宏是由一个带有 <code>proc_macro</code> <a href="attributes.html">属性</a>和 <code>(TokenStream) -&gt; TokenStream</code> 签名的 <a href="visibility-and-privacy.html">公有</a>可见性<a href="items/functions.html">函数</a>定义。输入 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是由宏调用的定界符界定的内容，输出 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 将替换整个宏调用。</p>
+<p>这种宏是由一个带有 <code>proc_macro</code><a href="attributes.html">属性</a>和 <code>(TokenStream) -&gt; TokenStream</code>签名的 <a href="visibility-and-privacy.html">公有</a>可见性<a href="items/functions.html">函数</a>定义。输入 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是由宏调用的定界符界定的内容，输出 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 将替换整个宏调用。</p>
 <p>例如，下面的宏定义忽略它的输入，并将函数 <code>answer</code> 输出到它的作用域。</p>
 <!-- ignore: test doesn't support proc-macro -->
 <pre><code class="language-rust ignore"><span class="boring">#![crate_type = &quot;proc-macro&quot;]
@@ -1887,11 +1898,11 @@ fn main() {
     println!(&quot;{}&quot;, answer());
 }
 </code></pre>
-<p>类函数过程宏可以在任何宏调用位置调用，这些位置包括<a href="statements.html">语句</a>、<a href="expressions.html">表达式</a>、<a href="patterns.html">模式</a>、<a href="types.html#type-expressions">类型表达式</a>、<a href="items.html">数据项</a>可以出现的位置（包括<a href="items/external-blocks.html"><code>extern</code>块</a>里、固有<a href="items/implementations.html">实现</a>和 trait实现里、以及 <a href="items/traits.html">trait定义</a>里）。</p>
+<p>类函数过程宏可以在任何宏调用位置调用，这些位置包括<a href="statements.html">语句</a>、<a href="expressions.html">表达式</a>、<a href="patterns.html">模式</a>、<a href="types.html#type-expressions">类型表达式</a>、<a href="items.html">数据项</a>可以出现的位置（包括<a href="items/external-blocks.html"><code>extern</code>块</a>里、固有(inherent)<a href="items/implementations.html">实现</a>里和 trait实现里、以及 <a href="items/traits.html">trait声明</a>里）。</p>
 <h3><a class="header" href="#derive-macros" id="derive-macros">Derive macros</a></h3>
 <h3><a class="header" href="#派生宏" id="派生宏">派生宏</a></h3>
-<p><em>派生宏</em>为<a href="attributes/derive.html">派生(<code>derive</code>)属性</a>定义新输入。这类宏在给定<a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/enumerations.html">枚举(<code>enum</code>)</a>或<a href="items/unions.html">联合体(<code>union</code>)</a>标记流的情况下创建新<a href="items.html">数据项</a>。它们也可以定义<a href="procedural-macros.html#derive-macro-helper-attributes">派生宏辅助属性</a>。</p>
-<p>自定义派生宏由带有 <code>proc_macro_derive</code> 属性和 <code>(TokenStream) -&gt; TokenStream</code> 签名的<a href="visibility-and-privacy.html">公有</a>可见性<a href="items/functions.html">函数</a>定义。</p>
+<p><em>派生宏</em>为<a href="attributes/derive.html">派生(<code>derive</code>)属性</a>定义新输入。这类宏在给定输入<a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/enumerations.html">枚举(<code>enum</code>)</a>或<a href="items/unions.html">联合体(<code>union</code>)</a>标记流的情况下创建新<a href="items.html">数据项</a>。它们也可以定义<a href="procedural-macros.html#derive-macro-helper-attributes">派生宏辅助属性</a>。</p>
+<p>自定义派生宏由带有 <code>proc_macro_derive</code>属性和 <code>(TokenStream) -&gt; TokenStream</code>签名的<a href="visibility-and-privacy.html">公有</a>可见性<a href="items/functions.html">函数</a>定义。</p>
 <p>输入 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是带有 <code>derive</code> 属性的数据项的标记流。输出 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 必须是一组数据项，然后将这组数据项追加到输入 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 中的那条数据项所在的<a href="items/modules.html">模块</a>或<a href="expressions/block-expr.html">块</a>中。</p>
 <p>下面是派生宏的一个示例。它没有对输入执行任何有用的操作，只是追加了一个函数 <code>answer</code>。</p>
 <!-- ignore: test doesn't support proc-macro -->
@@ -1940,10 +1951,9 @@ struct Struct {
 </code></pre>
 <h3><a class="header" href="#attribute-macros" id="attribute-macros">Attribute macros</a></h3>
 <h3><a class="header" href="#属性宏" id="属性宏">属性宏</a></h3>
-<p>属性宏定义了可以附加到项上的新的外部属性，包括extern块、固有和trait实现以及trait定义中的项。
-<em>属性宏</em>定义可以附加到<a href="items.html">数据项</a>上的新的<a href="attributes.html">外部属性</a>，这些数据项包括<a href="items/external-blocks.html">外部(<code>extern</code>)块</a>、固有<a href="items/implementations.html">实现</a>、trate实现，以及 <a href="items/traits.html">trait定义</a>中的数据项。</p>
-<p>属性宏由带有 <code>proc_macro_attribute</code><a href="attributes.html">属性</a>和 <code>(TokenStream, TokenStream) -&gt; TokenStream</code> 签名的<a href="visibility-and-privacy.html">公有</a>可见性<a href="items/functions.html">函数</a>定义。签名中的第一个 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是属性名称后面的定界标记树(delimited token tree)（不包括外层定界符）。如果该属性作为裸属性(bare attribute)给出，则第一个 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 值为空。第二个 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是<a href="items.html">数据项</a>的其余部分，包括该数据项的其他<a href="attributes.html">属性</a>。返回的 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 将此属性宏应用的<a href="items.html">数据项</a>替换为任意数量的数据项。</p>
-<p>例如，下面这个属性宏接受输入流并按原样返回，实际上对属性并空操作。</p>
+<p><em>属性宏</em>定义可以附加到<a href="items.html">数据项</a>上的新的<a href="attributes.html">外部属性</a>，这些数据项包括<a href="items/external-blocks.html">外部(<code>extern</code>)块</a>、固有<a href="items/implementations.html">实现</a>、trate实现，以及 <a href="items/traits.html">trait声明</a>中的各类数据项。</p>
+<p>属性宏由带有 <code>proc_macro_attribute</code><a href="attributes.html">属性</a>和 <code>(TokenStream, TokenStream) -&gt; TokenStream</code>签名的<a href="visibility-and-privacy.html">公有</a>可见性<a href="items/functions.html">函数</a>定义。签名中的第一个 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是属性名称后面的定界标记树(delimited token tree)（不包括外层定界符）。如果该属性作为裸属性(bare attribute)给出，则第一个 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 值为空。第二个 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是<a href="items.html">数据项</a>的其余部分，包括该数据项的其他<a href="attributes.html">属性</a>。输出的 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 将此属性宏应用的<a href="items.html">数据项</a>替换为任意数量的数据项。</p>
+<p>例如，下面这个属性宏接受输入流并按原样返回，实际上对属性并无操作。</p>
 <!-- ignore: test doesn't support proc-macro -->
 <pre><code class="language-rust ignore"><span class="boring">#![crate_type = &quot;proc-macro&quot;]
 </span><span class="boring">extern crate proc_macro;
@@ -11164,18 +11174,18 @@ commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 <br />
 <ul>
 <li><code>macro</code>：宏，源代码中任何可调用的类似 <code>foo!(...)</code> 的东西。</li>
 <li><code>MBE</code>：macro-by-example，声明宏，由 <code>macro_rules</code> 定义的宏。</li>
-<li><code>matcher</code>：匹配器，<code>macro_rules</code>调用中一条规则的左侧部分，或其子部分。</li>
+<li><code>matcher</code>：匹配器，<code>macro_rules</code>调用中一条规则的左侧部分，或其子部分。（译者注：匹配器可嵌套，可互相包含）</li>
 <li><code>macro parser</code>：宏解释器，Rust 解析器中的一段代码，它收集使用所有匹配器的句法规则来解析输入。 <!-- the bit of code in the Rust parser that will parse the input using a grammar derived from all of the matchers. tobemodify--></li>
 <li><code>fragment</code>：匹配段，给定匹配器将接受(或“匹配”)的 Rust 句法对象；<!-- The class of Rust syntax that a given matcher will accept (or "match"). tobemodify--></li>
-<li><code>repetition</code> ：重复元，遵循常规性重复模式的匹配段。<!-- a fragment that follows a regular repeating pattern. tobemodify--></li>
+<li><code>repetition</code> ：重复元，遵循正则重复模式的匹配段。<!-- a fragment that follows a regular repeating pattern. tobemodify--></li>
 <li><code>NT</code>：non-terminal，非终结符，可以出现在匹配器中的各种“元变量”或重复元匹配器，在声明宏(MBE)句法中用前导的 <code>$</code> 字符指定。<!-- non-terminal, the various "meta-variables" or repetition matchers that can appear in a matcher, specified in MBE syntax with a leading `$` character. --></li>
-<li><code>simple NT</code>：简单NT，“元变量”类型的非终结符(下面会进一步讨论)。</li>
-<li><code>complex NT</code>：复杂NT，有重复元匹配规则的非终结符，通过重复操作符(<code>\*</code>, <code>+</code>, <code>?</code>)指定。<!-- a repetition matching non-terminal, specified via repetition operators (`\*`, `+`, `?`). --></li>
+<li><code>simple NT</code>：简单NT，“元变量”类型的非终结符（下面会进一步讨论）。</li>
+<li><code>complex NT</code>：复杂NT，有重复元匹配规则可应用非终结符，通过重复操作符（<code>\*</code>, <code>+</code>, <code>?</code>）指定重复草书。<!-- a repetition matching non-terminal, specified via repetition operators (`\*`, `+`, `?`). --></li>
 <li><code>token</code>：标记码，匹配器中不可再细分的元素；例如，标识符、操作符、开/闭定界符、<em>和</em>简单NT(simple NT)。</li>
 <li><code>token tree</code>：标记树，标记树由标记码(叶)、复杂NT和子标记树（标记树的有限序列）的组成的树形数据结构。</li>
 <li><code>delimiter token</code>：定界符，一种标记，用于划分一个匹配段的结束和下一个匹配段的开始。</li>
 <li><code>separator token</code>：分隔符，复杂NT中的可选定界符，用于在匹配的重复中，以分隔每个元素对。</li>
-<li><code>separated complex NT</code>：带分隔符的复杂NT，有自己的分隔符的复杂NT。</li>
+<li><code>separated complex NT</code>：带分隔符的复杂NT，有自己的分隔符的复杂NT。<!-- a complex NT that has its own separator token. --></li>
 <li><code>delimited sequence</code>：有界序列，在序列的开始和结束处使用适当的开闭定界符的标记树序列。</li>
 <li><code>empty fragment</code>：空匹配段，一种不可见的 Rust 句法对象，它分割各种标记码。例如空白符(whitespace)或者(在某些词法上下文中的)空标记序列。<!-- The class of invisible Rust syntax that separates tokens, i.e. whitespace, or (in some lexical contexts), the empty token sequence. --></li>
 <li><code>fragment specifier</code>：匹配段类型指示符，简单NT中的后段标识符部分，指定NT接受哪个匹配段。<!-- The identifier in a simple NT that specifies which fragment the NT accepts. tobemodify--></li>
@@ -11190,11 +11200,11 @@ commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 <br />
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>(start $foo:expr $($i:ident),\* end)</code> 是一个匹配器(matcher)。整个匹配器是一个有界序列(使用开闭定界符 <code>(</code> 和 <code>)</code> 界定)，<code>$foo</code> 和 <code>$i</code> 是简单NT(simple NT)， <code>expr</code> 和 <code>ident</code> 是它们各自的匹配段类型指示符(fragment specifiers)。</p>
-<p><code>$(i:ident),\*</code> <em>也</em>是一个 NT；它是一个复杂NT，匹配标识符类型的以逗号为分隔符的重复元。<code>,</code> 是这个复杂NT的分隔符，它出现在匹配段的每对元素（如果有的话）之间。</p>
-<p>复杂NT 的另一个例子是 <code>$(hi $e:expr ;)+</code>，它匹配 <code>hi &lt;expr&gt;; hi &lt;expr&gt;; ...</code> 这种格式的代码，其中 <code>hi &lt;expr&gt;;</code> 至少出现一次。注意，这个复杂NT没有专用的分隔符。</p>
-<p>(请注意，Rust的解析器确保有界序列始终具有正确的标记树结构嵌套以及开/闭定界符的正确匹配。)</p>
-<p>我们倾向于使用变量“M”表示匹配器，变量“t”和“u”表示任意单个标记码，变量“tt”和“uu”表示任意标记树。（使用“tt”确实存在潜在的歧义，因为它的额外角色是一个匹配段类型指示符；但不用太担心，因为从上下文中，可以很清楚地看出哪个解释符合语义）</p>
+<p><code>(start $foo:expr $($i:ident),\* end)</code> 是一个匹配器(matcher)。整个匹配器是一个有界序列（使用开闭定界符 <code>(</code> 和 <code>)</code> 界定），<code>$foo</code> 和 <code>$i</code> 是简单NT(simple NT)， <code>expr</code> 和 <code>ident</code> 是它们各自的匹配段类型指示符(fragment specifiers)。</p>
+<p><code>$(i:ident),\*</code> <em>也</em>是一个 NT；它是一个复杂NT，匹配那些被逗号分隔成的标识符类型的重复元。<code>,</code> 是这个复杂NT 的分隔符；它出现在匹配段的每对元素（如果有的话）之间。</p>
+<p>复杂NT 的另一个例子是 <code>$(hi $e:expr ;)+</code>，它匹配 <code>hi &lt;expr&gt;; hi &lt;expr&gt;; ...</code> 这种格式的代码，其中 <code>hi &lt;expr&gt;;</code> 至少出现一次。注意，这个复杂NT 没有专用的分隔符。</p>
+<p>(请注意，Rust 解析器确保有界序列始终具有正确的标记树结构嵌套以及开/闭定界符的正确匹配。)</p>
+<p>我们倾向于使用变量“M”表示匹配器，变量“t”和“u”表示任意单个标记码，变量“tt”和“uu”表示任意标记树。（使用“tt”确实存在潜在的歧义，因为它的额外角色是一个匹配段类型指示符；但不用太担心，因为从上下文中，可以很清楚地看出哪个解释更符合语义）</p>
 <p>“SEP”将代表分隔符，“OP”将代表重复元运算符 <code>\*</code>, <code>+</code>, 和 <code>?</code> “OPEN”/“CLOSE”覆盖围绕定界序列的匹配标记对（例如 <code>[</code> 和 <code>]</code> ）。</p>
 <p>希腊字母 &quot;α&quot; &quot;β&quot; &quot;γ&quot; &quot;δ&quot; 代表潜在的空标记树序列。（然而，希腊字母 &quot;ε&quot;(epsilon)在表示形式中有特殊的作用，并不代表标记树序列。）</p>
 <ul>
@@ -11237,7 +11247,7 @@ Each of the three sets is made up of tokens. FIRST(M) and LAST(M) may also conta
 <p>LAST(M)：收集匹配段与 M 匹配时可能最后使用的标记码。collects the tokens potentially used last when matching a fragment to M.</p>
 </li>
 <li>
-<p>FOLLOW(M)：允许紧跟在由 M 匹配的某个匹配段之后的标记码集。the set of tokens allowed to follow immediately after some fragment matched by M.</p>
+<p>FOLLOW(M)：允许紧跟在由 M 匹配的某个匹配段之后的标记码集合。the set of tokens allowed to follow immediately after some fragment matched by M.</p>
 <p>换言之：t ∈ FOLLOW(M) 当且仅当存在（可能为空的）标记码序列 α、β、γ、δ，其中：</p>
 <ul>
 <li>M 匹配 β，</li>
@@ -11284,7 +11294,7 @@ FIRST(M) is defined by case analysis on the sequence M and the structure of its 
 <p>FIRST(M) = (FIRST(<code>tt ...</code>) \ {ε}) ∪ SEP_SET(M) ∪ ALPHA_SET(M).</p>
 </li>
 </ul>
-<p>复杂NT的定义值得商榷。SEP_SET(M) 定义了分隔符可能是 M 的第一个有效标记码的可能性，当定义了分隔符且重复匹配段可能为空时，就会发生这种情况。ALPHA_SET(M)定义了复杂NT可能为空的可能性，这意味着 M 的第一个有效标记码集合是后继标记树序列 <code>α</code> 。当使用了操作符 <code>\*</code> 或 <code>?</code> 时，这种情况下可能没有重复元。理论上，如果 <code>+</code> 与一个可能为空的重复匹配段一起使用，也会出现这种情况，但是第三个不变式禁止这样做。
+<p>复杂NT 的定义值得商榷。SEP_SET(M) 定义了分隔符可能是 M 的第一个有效标记码的可能性，当定义了分隔符且重复匹配段可能为空时，就会发生这种情况。ALPHA_SET(M)定义了复杂NT可能为空的可能性，这意味着 M 的第一个有效标记码集合是后继标记树序列 <code>α</code> 。当使用了操作符 <code>\*</code> 或 <code>?</code> 时，这种情况下可能没有重复元。理论上，如果 <code>+</code> 与一个可能为空的重复匹配段一起使用，也会出现这种情况，但是第三个不变式禁止这样做。
 The definition for complex NTs deserves some justification. SEP_SET(M) defines the possibility that the separator could be a valid first token for M, which happens when there is a separator defined and the repeated fragment could be empty. ALPHA_SET(M) defines the possibility that the complex NT could be empty, meaning that M's valid first tokens are those of the following token-tree sequences <code>α</code>. This occurs when either <code>\*</code> or <code>?</code> is used, in which case there could be zero repetitions. In theory, this could also occur if <code>+</code> was used with a potentially-empty repeating fragment, but this is forbidden by the third invariant.</p>
 <p>From there, clearly FIRST(M) can include any token from SEP_SET(M) or ALPHA_SET(M), and if the complex NT match is nonempty, then any token starting FIRST(<code>tt ...</code>) could work too. The last piece to consider is ε. SEP_SET(M) and FIRST(<code>tt ...</code>) \ {ε} cannot contain ε, but ALPHA_SET(M) could. Hence, this definition allows M to accept ε if and only if ε ∈ ALPHA_SET(M) does. This is correct because for M to accept ε in the complex NT case, both the complex NT and α must accept it. If OP = <code>+</code>, meaning that the complex NT cannot be empty, then by definition ε ∉ ALPHA_SET(M). Otherwise, the complex NT can accept zero repetitions, and then ALPHA_SET(M) = FOLLOW(<code>α</code>). So this definition is correct with respect to \varepsilon as well.</p>
 <h4><a class="header" href="#last" id="last">LAST</a></h4>
