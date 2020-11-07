@@ -32,14 +32,14 @@
 
 过程宏类型的 crate 几乎总是会去链接编译器提供的 [`proc_macro` crate]。`proc_macro` crate 提供了编写过程宏所需的各种类型和工具来让编写更容易。
 
-此 crate 主要包含了一个 [`TokenStream`] 类型。过程宏其实是在 *token流(token streams)*上操作，而不是在某个或某些 AST 节点上操作，因为这对于编译器和过程宏的编译目标来说，这是一个随着时间推移要稳定得多的接口。*标记流*大致相当于 `Vec<TokenTree>`，其中 `TokenTree` 可以大致视为词法 token。例如，`foo` 是标识符(`Ident`)类型的 token，`.` 是一个标点符号(`Punct`)类型的 token，`1.2` 是一个字面量(`Literal`)类型的 token。不同于 `Vec<TokenTree>` 的是 `TokenStream` 的克隆成本很低。
+此 crate 主要包含了一个 [`TokenStream`] 类型。过程宏其实是在 *token流(token streams)*上操作，而不是在某个或某些 AST 节点上操作，因为这对于编译器和过程宏的编译目标来说，这是一个随着时间推移要稳定得多的接口。*token流*大致相当于 `Vec<TokenTree>`，其中 `TokenTree` 可以大致视为词法 token。例如，`foo` 是标识符(`Ident`)类型的 token，`.` 是一个标点符号(`Punct`)类型的 token，`1.2` 是一个字面量(`Literal`)类型的 token。不同于 `Vec<TokenTree>` 的是 `TokenStream` 的克隆成本很低。
 
 所有类型的 token 都有一个与之关联的 `Span`。`Span` 是一个不透明的值，不能被修改，但可以被制造。`Span` 表示程序内的源代码范围，主要用于错误报告。可以事先（通过函数 `set_span`）配置任何 token 的 `Span`。
 
 ### Procedural macro hygiene
 ### 过程宏的卫生性
 
-过程宏是*非卫生的(unhygienic)*。这意味着它的行为就好像它输出的标记流是被简单地内联写入它周围的代码中一样。这意味着它会受到外部数据项的影响，也会影响外部导入。
+过程宏是*非卫生的(unhygienic)*。这意味着它的行为就好像它输出的token流是被简单地内联写入它周围的代码中一样。这意味着它会受到外部数据项的影响，也会影响外部导入。
 
 鉴于此限制，宏作者需要小心地确保他们的宏能在尽可能多的上下文中正常工作。这通常包括对库中数据项使用绝对路径(例如，使用 `::std::option::Option` 而不是 `Option`)，或者确保生成的函数具有不太可能与其他函数冲突的名称（如 `__internal_foo`，而不是 `foo`）。
 
@@ -83,11 +83,11 @@ fn main() {
 ### Derive macros
 ### 派生宏
 
-*派生宏*为[派生(`derive`)属性][`derive` attribute]定义新输入。这类宏在给定输入[结构体(`struct`)][struct]、[枚举(`enum`)][enum]或[联合体(`union`)][union]标记流的情况下创建新[数据项][items]。它们也可以定义[派生宏辅助属性][derive macro helper attributes]。
+*派生宏*为[派生(`derive`)属性][`derive` attribute]定义新输入。这类宏在给定输入[结构体(`struct`)][struct]、[枚举(`enum`)][enum]或[联合体(`union`)][union]token流的情况下创建新[数据项][items]。它们也可以定义[派生宏辅助属性][derive macro helper attributes]。
 
 自定义派生宏由带有 `proc_macro_derive`属性和 `(TokenStream) -> TokenStream`签名的[公有][public]可见性[函数][function]定义。
 
-输入 [`TokenStream`] 是带有 `derive` 属性的数据项的标记流。输出 [`TokenStream`] 必须是一组数据项，然后将这组数据项追加到输入 [`TokenStream`] 中的那条数据项所在的[模块][module]或[块][block]中。
+输入 [`TokenStream`] 是带有 `derive` 属性的数据项的token流。输出 [`TokenStream`] 必须是一组数据项，然后将这组数据项追加到输入 [`TokenStream`] 中的那条数据项所在的[模块][module]或[块][block]中。
 
 下面是派生宏的一个示例。它没有对输入执行任何有用的操作，只是追加了一个函数 `answer`。
 
