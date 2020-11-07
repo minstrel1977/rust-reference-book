@@ -24,13 +24,10 @@
   - `separator token`：分隔符，复杂NT 中的可选定界符，用在重复元里以分隔元素。
   - `separated complex NT`：带分隔符的复杂NT，分隔符是重复元的一部分的复杂NT。
   - `delimited sequence`：有界序列，在序列的开始和结束处使用了适当的开闭定界符的 token树。
-  - `empty fragment`：空匹配段，一种不可见的 Rust 句法对象，它分割各种token，例如空白符(whitespace)或者（在某些词法上下文中的）空标记序列。
-  - `fragment specifier`：匹配段选择器，简单NT中的后段标识符部分，指定NT接受哪个匹配段。<!-- The identifier in a simple NT that specifies which fragment the NT accepts. tobemodify-->
+  - `empty fragment`：空匹配段，一种不可见的 Rust 句法对象，它分割各种 token，例如空白符(whitespace)或者（在某些词法上下文中的）空标记序列。
+  - `fragment specifier`：匹配段选择器，简单NT 中的后段标识符部分，指定 NT 接受哪种类型的匹配段。<!-- The identifier in a simple NT that specifies which fragment the NT accepts. tobemodify-->
   - `language`：与上下文无关的语言。
 
-  - `fragment specifier`: The identifier in a simple NT that specifies which
-    fragment the NT accepts.
-  - `language`: a context-free language.
 示例：
 
 ```rust,compile_fail
