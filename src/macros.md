@@ -38,7 +38,7 @@
 * [模式][Patterns]
 * [类型][Types]
 * [数据项][Items]，包括[关联数据项][associated items]
-* [`macro_rules`] 转换器
+* [`macro_rules`] 转码器
 * [外部块][External blocks]
 
 

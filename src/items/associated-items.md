@@ -86,14 +86,15 @@ let _: f64 = f64::from_i32(42);
 
 参数列表中的第一个参数名为 `self` 的关联函数被称为*方法*，方法可以使用[方法调用操作符][method call operator]来调用，例如 `x.foo()`，也可以使用常用的函数调用形式进行调用。
 
-如果 `self` 参数的类型被指定，它就通过以下语法(其中 `'lt` 表示生存期参数)被限制解析成几个相关类型中的一个：
+如果 `self` 参数的类型被指定，它就通过以下文法规则（其中 `'lt` 表示生存期参数）被限制解析成其中几个相关类型中的一个：
 
 ```text
 P = &'lt S | &'lt mut S | Box<S> | Rc<S> | Arc<S> | Pin<P>
 S = Self | P
 ```
 
-此语法中的 `Self` 代表对实现类型(implementing type)的类型解析。此解析还可以包括对上下文中的类型别名 `Self`、其他类型别名、或对实现类型采用关联类型预测解析方法解析。（原文：The `Self` terminal in this grammar denotes a type resolving to the implementing type. This can also include the contextual type alias `Self`, other type aliases, or associated type projections resolving to the implementing type. 译者注：这句对译者来说太难了，只能先这么将就着翻译，同时放出原文，请读者中的高手帮忙翻译清楚。感谢感谢）
+此文法规则中的 `Self`终结符表示解析为实现类型的类型。此解析还可以包括对上下文中的类型别名 `Self`、其他类型别名、或对实现类型采用关联类型预测解析方法解析。（原文：
+The `Self` terminal in this grammar denotes a type resolving to the implementing type. This can also include the contextual type alias `Self`, other type aliases, or associated type projections resolving to the implementing type. 译者注：这句对译者来说太难了，只能先这么将就着翻译，同时放出原文，请读者中的高手帮忙翻译清楚。感谢感谢）
 
 ```rust
 # use std::rc::Rc;

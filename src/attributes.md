@@ -24,7 +24,7 @@
 
 *内部属性*以 `#!` 开头的方式编写，应用于它在其中声明的数据项。*外部属性*以不后跟感叹号的(`!`)的 `#` 开头的方式编写，应用于属性后面的内容。
 
-属性由指向属性的路径和路径后跟的可选的带定界符的标记树(delimited token tree)（其解释由属性定义）组成。除了宏属性之外，其他属性的输入也允许使用等号(`=`)后跟文字表达式的格式。更多细节请参见下面的[元数据项句法](#meta-item-attribute-syntax)。
+属性由指向属性的路径和路径后跟的可选的带定界符的 token树(delimited token tree)（其解释由属性定义）组成。除了宏属性之外，其他属性的输入也允许使用等号(`=`)后跟文字表达式的格式。更多细节请参见下面的[元数据项句法](#meta-item-attribute-syntax)。
 
 属性可以分为以下几类：
 
@@ -79,7 +79,7 @@ fn some_unused_variables() {
 ## Meta Item Attribute Syntax
 ## 元项/元数据项属性句法
 
-“元项(meta item)”是遵循 _Attr_ 句法规则(见本章头部的句法规则)的句法，Rust 的大多数[内置属性(built-in attributes)][built-in attributes]都使用了此句法。它有以下语法格式：
+“元项(meta item)”是遵循 _Attr_ 句法规则(见本章头部的句法规则)的句法，Rust 的大多数[内置属性(built-in attributes)][built-in attributes]都使用了此句法。它有以下文法格式：
 
 > **<sup>句法</sup>**\
 > _MetaItem_ :\
@@ -96,7 +96,7 @@ fn some_unused_variables() {
 
 元项中的字面量表达式不能包含整型或浮点类型的后缀。
 
-各种内置属性使用元项句法的不同子集来指定它们的输入。下面的语法规则展示了一些常用的使用形式：
+各种内置属性使用元项句法的不同子集来指定它们的输入。下面的文法规则展示了一些常用的使用形式：
 
 > **<sup>句法</sup>**\
 > _MetaWord_:\

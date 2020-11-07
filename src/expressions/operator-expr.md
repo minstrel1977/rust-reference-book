@@ -53,7 +53,7 @@ let mut array = [-2, 3, 9];
 }
 ```
 
-尽管 `&&` 是一个单标记码([惰性与(`and`)操作符](#lazy-boolean-operators))，但在借用表达式(borrow expressions)上下文中使用时，它是作为两个借用操作符用的：
+尽管 `&&` 是一个单一 token（[惰性与(`and`)操作符](#lazy-boolean-operators))，但在借用表达式(borrow expressions)上下文中使用时，它是作为两个借用操作符用的：
 
 ```rust
 // 意义相同：

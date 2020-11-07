@@ -1,12 +1,11 @@
 # Tokens
-# 标记码
 
 >[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
 >commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 \
 >本译文最后维护日期：2020-11-5
 
 
-标记码是由正则语言(regular languages)（非递归方式）定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类标记码：
+token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：
 
 * [关键字][Keywords]
 * [标识符][identifier]
@@ -15,12 +14,12 @@
 * [标点符号](#punctuation)
 * [分隔符](#delimiters)
 
-在本文档的语法中，“简单”标记码以[字符串型产生式][string table production]的形式给出，并以 `monospace` 字体显示。（译者注：如果译者觉得这种标记码需要翻译时，会使用如：等宽(`monospace`) 这种形式来翻译，但读者需要意识到“monospace”是语言里的一个标记码，是以其字面形式出现在源码里的。）
+在本文档的文法表中，“简单”token以[字符串型产生式(production)][string table production]的形式给出，并以 `monospace` 字体显示。（译者注：本译作的原文中，在文法表之外的行文中也会大量出现这种直接使用简单token 来替代相关名词的做法，一般此时如果译者觉得这种 token 需要翻译时，会使用如：结构体(`struct`) 这种形式来翻译，但读者需要意识到“struct”是文法里的一个 token，能以其字面形式出现在源码里的。）
 
 ## Literals
 ## 字面量
 
-字面量是一个由单个标记码（而不是由一系列标记码）组成的表达式，它立即、直接表示它所代表的值，而不是通过名称或其他一些求值/计算规则来引用它。字面量是[常量表达式](const_eval.md#constant-expressions)的一种形式，所以它（主要）用在编译时求值。
+字面量是一个由单一 token（而不是由一连串 token）组成的表达式，它立即、直接表示它所代表的值，而不是通过名称或其他一些求值/计算规则来引用它。字面量是[常量表达式](const_eval.md#constant-expressions)的一种形式，所以它（主要）用在编译时求值。
 
 ### Examples
 ### 示例
@@ -96,7 +95,7 @@
 
 后缀是紧跟（无空白符）在字面量主体部分之后的非[原生标识符][identifier](non-raw identifier)。
 
-任何带有后缀的字面量（如字符串、整数等）都可以作为有效的标记码，并且可以传递给宏而不会产生错误。宏自己决定如何解释这种标记码，以及是否该报错。
+任何带有后缀的字面量（如字符串、整数等）都可以作为有效的 token，并且可以传递给宏而不会产生错误。宏自己决定如何解释这种 token，以及是否该报错。
 
 ```rust
 macro_rules! blackhole { ($tt:tt) => () }
@@ -104,7 +103,7 @@ macro_rules! blackhole { ($tt:tt) => () }
 blackhole!("string"suffix); // OK
 ```
 
-但是，最终被解析为 Rust 代码的字面量标记码上的后缀是受限制的。对于非数字字面量标记码，任何后缀都最终将被弃用，而数字字面量标记码只接受下表中的后缀。
+但是，最终被解析为 Rust 代码的字面量token 上的后缀是受限制的。对于非数字字面量token，任何后缀都最终将被弃用，而数字字面量token 只接受下表中的后缀。
 
 | 整数 | 浮点数 |
 |---------|----------------|
@@ -270,7 +269,7 @@ b"\\x52"; br"\x52";                  // \x52
 ### Number literals
 ### 数字字面量
 
-*数字字面量*可以是*整型字面量*，也可以是*浮点型字面量*，识别这两种字面量的语法是混合在一起的。
+*数字字面量*可以是*整型字面量*，也可以是*浮点型字面量*，识别这两种字面量的文法是混合在一起的。
 
 #### Integer literals
 #### 整型字面量
@@ -378,7 +377,7 @@ let a: u64 = 123;                  // 类型 u64
 
 元组索引用于引用[元组][tuples]、[元组结构体][tuple structs]和[元组变体][tuple variants]的字段。
 
-元组索引直接与字面量标记码进行比较。元组索引以 `0` 开始，每个后续索引的值以十进制的 `1` 递增。因此，元组索引只能匹配十进制值，并且该值不能用 `0` 做前缀字符。
+元组索引直接与字面量token 进行比较。元组索引以 `0` 开始，每个后续索引的值以十进制的 `1` 递增。因此，元组索引只能匹配十进制值，并且该值不能用 `0` 做前缀字符。
 
 ```rust,compile_fail
 let example = ("dog", "cat", "horse");
@@ -465,20 +464,20 @@ let x: f64 = 2.; // 类型 f64
 > LIFETIME_OR_LABEL :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `'` [NON_KEYWORD_IDENTIFIER][identifier]
 
-生存期参数和[循环标签][loop labels]使用 LIFETIME_OR_LABEL 类型的标记码。（尽管 LIFETIME_OR_LABEL 是 LIFETIME_TOKEN 的子集，但）任何符合 LIFETIME_TOKEN 约定的标记码也都能被上述词法分析规则所接受，比如 LIFETIME_TOKEN 类型的标记码在宏中就可以畅通无阻的使用。
+生存期参数和[循环标签][loop labels]使用 LIFETIME_OR_LABEL 类型的 token。（尽管 LIFETIME_OR_LABEL 是 LIFETIME_TOKEN 的子集，但）任何符合 LIFETIME_TOKEN 约定的 token 也都能被上述词法分析规则所接受，比如 LIFETIME_TOKEN 类型的 token 在宏中就可以畅通无阻的使用。
 
 [loop labels]: expressions/loop-expr.md
 
 ## Punctuation
 ## 标点符号
 
-为了完整起见，这里列出了（Rust 里）所有的标点符号标记码。它们各自的用法和含义在链接页面中都有定义。
+为了完整起见，这里列出了（Rust 里）所有的标点符号的 symbol token。它们各自的用法和含义在链接页面中都有定义。
 
 | 符号 | 名称        | 使用方法 |
 |--------|-------------|-------|
-| `+`    | Plus        | [算术加法][arith], [trait约束][Trait Bounds], [宏 Kleene 匹配器][macros]
+| `+`    | Plus        | [算术加法][arith], [trait约束][Trait Bounds], [可匹配空的宏匹配器][macros](Macro Kleene Matcher)
 | `-`    | Minus       | [算术减法][arith], [取反][Negation]
-| `*`    | Star        | [算术乘法][arith], [解引用][Dereference], [裸指针][Raw Pointers], [宏 Kleene 匹配器][macros], [use 通配符][Use wildcards]
+| `*`    | Star        | [算术乘法][arith], [解引用][Dereference], [裸指针][Raw Pointers], [可匹配空的宏匹配器][macros], [use 通配符][Use wildcards]
 | `/`    | Slash       | [算术除法][arith]
 | `%`    | Percent     | [算术取模][arith]
 | `^`    | Caret       | [位和逻辑异或][arith]
@@ -520,12 +519,12 @@ let x: f64 = 2.; // 类型 f64
 | `=>`   | FatArrow    | [匹配臂][match], [宏][macros]
 | `#`    | Pound       | [属性][attributes]
 | `$`    | Dollar      | [宏][macros]
-| `?`    | Question    | [问号运算符][question], [非确定性尺寸][sized], [宏 Kleene 匹配器][macros]
+| `?`    | Question    | [问号运算符][question], [非确定性尺寸][sized], [可匹配空的宏匹配器][macros]
 
 ## Delimiters
 ## 定界符
 
-括号用于语法的各个部分，左括号必须始终与右括号配对。括号以及其内的标记码在[宏][macros]中被称作“标记树(token trees)”。括号有三种类型：
+括号用于文法的各个部分，左括号必须始终与右括号配对。括号以及其内的 token 在[宏][macros]中被称作“token树(token trees)”。括号有三种类型：
 
 | 括号 | 类型            |
 |---------|-------------|

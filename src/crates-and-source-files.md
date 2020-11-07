@@ -59,7 +59,7 @@ fn main() {
 }
 ```
 
-为了避免与[属性][attribute]混淆， Rust 对 shebang 语法做了一个限制， 是 `#!` 字符不能后跟标记码 `[`，忽略中间的[注释][comments]或[空白符][whitespace]。如果违反此限制，则不会将其视为 shebang，而会将其视为属性的开始。
+为了避免与[属性][attribute]混淆， Rust 对 shebang 语法做了一个限制， 是 `#!` 字符不能后跟 token `[`，忽略中间的[注释][comments]或[空白符][whitespace]。如果违反此限制，则不会将其视为 shebang，而会将其视为属性的开始。
 
 ## Preludes and `no_std`
 ## 预导入包和 `no_std`

@@ -307,7 +307,7 @@ if let Some(_) = x {}
 > _RestPattern_ :\
 > &nbsp;&nbsp; `..`
 
-*剩余模式*（`..`标记码）充当不定长度模式(variable-length pattern)，它匹配之前之后没有匹配的零个或多个元素。它只能在[元组](#tuple-patterns)模式、[元组结构体](#tuple-struct-patterns)模式和[切片](#slice-patterns)模式中使用，并且在这些模式中只能作为一个元素出现一次。它在[切片模式](#slice-patterns)里也只允许在[标识符模式](#identifier-patterns)中使用。
+*剩余模式*（`..`token）充当不定长度模式(variable-length pattern)，它匹配之前之后没有匹配的零个或多个元素。它只能在[元组](#tuple-patterns)模式、[元组结构体](#tuple-struct-patterns)模式和[切片](#slice-patterns)模式中使用，并且在这些模式中只能作为一个元素出现一次。它在[切片模式](#slice-patterns)里也只允许在[标识符模式](#identifier-patterns)中使用。
 
 剩余模式总是不可反驳型的。
 
@@ -469,7 +469,7 @@ let b = match int_reference { &0 => "zero", _ => "some" };
 assert_eq!(a, b);
 ```
 
-引用模式的语法产生式(grammar production)要求必须使用标记码 `&&` 来匹配对引用的引用，因为 `&&` 本身是一个单独的标记码，而不是两个 `&` 标记码。
+引用模式的文法产生式(grammar production)要求必须使用 token `&&` 来匹配对引用的引用，因为 `&&` 本身是一个单独的 token，而不是两个 `&` token。
 
 
 引用模式中添加关键字 `mut` 可对可变引用做引用。引用模式中的可变性标记必须与引用对象的可变性匹配。

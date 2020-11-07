@@ -11,7 +11,7 @@
     - [标识符](identifiers.md)
     - [注释](comments.md)
     - [空白符](whitespace.md)
-    - [标记码](tokens.md)
+    - [token](tokens.md)
     - [路径](paths.md)
 
 - [宏](macros.md)

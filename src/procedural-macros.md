@@ -32,9 +32,9 @@
 
 过程宏类型的 crate 几乎总是会去链接编译器提供的 [`proc_macro` crate]。`proc_macro` crate 提供了编写过程宏所需的各种类型和工具来让编写更容易。
 
-此 crate 主要包含了一个 [`TokenStream`] 类型。过程宏其实是在*标记流(token streams)*上操作，而不是在某个或某些 AST 节点上操作，因为这对于编译器和过程宏的编译目标来说，这是一个随着时间推移要稳定得多的接口。*标记流*大致相当于 `Vec<TokenTree>`，其中 `TokenTree` 可以大致视为词法标记码。例如，`foo` 是标识符(`Ident`)类型的标记码，`.` 是一个标点符号(`Punct`)类型的标记码，`1.2` 是一个字面量(`Literal`)类型的标记码。不同于 `Vec<TokenTree>` 的是 `TokenStream` 的克隆成本很低。
+此 crate 主要包含了一个 [`TokenStream`] 类型。过程宏其实是在 *token流(token streams)*上操作，而不是在某个或某些 AST 节点上操作，因为这对于编译器和过程宏的编译目标来说，这是一个随着时间推移要稳定得多的接口。*标记流*大致相当于 `Vec<TokenTree>`，其中 `TokenTree` 可以大致视为词法 token。例如，`foo` 是标识符(`Ident`)类型的 token，`.` 是一个标点符号(`Punct`)类型的 token，`1.2` 是一个字面量(`Literal`)类型的 token。不同于 `Vec<TokenTree>` 的是 `TokenStream` 的克隆成本很低。
 
-所有类型的标记码都有一个与之关联的 `Span`。`Span` 是一个不透明的值，不能被修改，但可以被制造。`Span` 表示程序内的源代码范围，主要用于错误报告。可以事先（通过函数 `set_span`）配置任何标记码的 `Span`。
+所有类型的 token 都有一个与之关联的 `Span`。`Span` 是一个不透明的值，不能被修改，但可以被制造。`Span` 表示程序内的源代码范围，主要用于错误报告。可以事先（通过函数 `set_span`）配置任何 token 的 `Span`。
 
 ### Procedural macro hygiene
 ### 过程宏的卫生性
@@ -154,7 +154,7 @@ struct Struct {
 
 *属性宏*定义可以附加到[数据项][items]上的新的[外部属性][attributes]，这些数据项包括[外部(`extern`)块][`extern` blocks]、固有[实现][implementations]、trate实现，以及 [trait声明][trait definitions]中的各类数据项。
 
-属性宏由带有 `proc_macro_attribute`[属性][attribute]和 `(TokenStream, TokenStream) -> TokenStream`签名的[公有][public]可见性[函数][function]定义。签名中的第一个 [`TokenStream`] 是属性名称后面的定界标记树(delimited token tree)（不包括外层定界符）。如果该属性作为裸属性(bare attribute)给出，则第一个 [`TokenStream`] 值为空。第二个 [`TokenStream`] 是[数据项][item]的其余部分，包括该数据项的其他[属性][attributes]。输出的 [`TokenStream`] 将此属性宏应用的[数据项][item]替换为任意数量的数据项。
+属性宏由带有 `proc_macro_attribute`[属性][attribute]和 `(TokenStream, TokenStream) -> TokenStream`签名的[公有][public]可见性[函数][function]定义。签名中的第一个 [`TokenStream`] 是属性名称后面的定界 token树(delimited token tree)（不包括外层定界符）。如果该属性作为裸属性(bare attribute)给出，则第一个 [`TokenStream`] 值为空。第二个 [`TokenStream`] 是[数据项][item]的其余部分，包括该数据项的其他[属性][attributes]。输出的 [`TokenStream`] 将此属性宏应用的[数据项][item]替换为任意数量的数据项。
 
 例如，下面这个属性宏接受输入流并按原样返回，实际上对属性并无操作。
 
@@ -193,25 +193,25 @@ extern crate my_macro;
 
 use my_macro::show_streams;
 
-// Example: Basic function
+// 示例: 基础函数
 #[show_streams]
 fn invoke1() {}
 // out: attr: ""
 // out: item: "fn invoke1() { }"
 
-// Example: Attribute with input
+// 示例: 带输入参数的属性
 #[show_streams(bar)]
 fn invoke2() {}
 // out: attr: "bar"
 // out: item: "fn invoke2() {}"
 
-// Example: Multiple tokens in the input
+// 示例: 输入参数中有多个 token 的
 #[show_streams(multiple => tokens)]
 fn invoke3() {}
 // out: attr: "multiple => tokens"
 // out: item: "fn invoke3() {}"
 
-// Example:
+// 示例:
 #[show_streams { delimiters }]
 fn invoke4() {}
 // out: attr: "delimiters"

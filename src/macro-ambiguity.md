@@ -18,14 +18,14 @@
   - `NT`：non-terminal，非终结符，可以出现在匹配器中的各种“元变量”或重复元匹配器，在声明宏(MBE)句法中用前导字符 `$` 标明。
   - `simple NT`：简单NT，“元变量”类型的非终结符（下面会进一步讨论）。
   - `complex NT`：复杂NT，重复元类型的非终结符，通过重复元操作符（`\*`, `+`, `?`）指定重复次数。 <!-- a repetition matching non-terminal, specified via repetition operators (`\*`, `+`, `?`). -->
-  - `token`：标记码，匹配器中不可再细分的元素；例如，标识符、操作符、开/闭定界符*和*简单NT(simple NT)。
-  - `token tree`：标记树，标记树由标记码(叶)、复杂NT和子标记树（标记树的有限序列）组成的树形数据结构。
-  - `delimiter token`：定界符，一种用于划分一个匹配段的结束和下一个匹配段的开始的标记码。
+  - `token`：匹配器中不可再细分的元素；例如，标识符、操作符、开/闭定界符*和*简单NT(simple NT)。
+  - `token tree`：token树，token树由 token(叶)、复杂NT和子token树（token树的有限序列）组成的树形数据结构。
+  - `delimiter token`：定界符，一种用于划分一个匹配段的结束和下一个匹配段的开始的 token。
   - `separator token`：分隔符，复杂NT 中的可选定界符，用在重复元里以分隔元素。
   - `separated complex NT`：带分隔符的复杂NT，分隔符是重复元的一部分的复杂NT。
-  - `delimited sequence`：有界序列，在序列的开始和结束处使用了适当的开闭定界符的标记树。
-  - `empty fragment`：空匹配段，一种不可见的 Rust 句法对象，它分割各种标记码，例如空白符(whitespace)或者（在某些词法上下文中的）空标记序列。
-  - `fragment specifier`：匹配段类型指示符，简单NT中的后段标识符部分，指定NT接受哪个匹配段。<!-- The identifier in a simple NT that specifies which fragment the NT accepts. tobemodify-->
+  - `delimited sequence`：有界序列，在序列的开始和结束处使用了适当的开闭定界符的 token树。
+  - `empty fragment`：空匹配段，一种不可见的 Rust 句法对象，它分割各种token，例如空白符(whitespace)或者（在某些词法上下文中的）空标记序列。
+  - `fragment specifier`：匹配段选择器，简单NT中的后段标识符部分，指定NT接受哪个匹配段。<!-- The identifier in a simple NT that specifies which fragment the NT accepts. tobemodify-->
   - `language`：与上下文无关的语言。
 
   - `fragment specifier`: The identifier in a simple NT that specifies which
@@ -39,27 +39,27 @@ macro_rules! i_am_an_mbe {
 }
 ```
 
-`(start $foo:expr $($i:ident),\* end)` 是一个匹配器(matcher)。整个匹配器是一个有界序列（使用开闭定界符 `(` 和 `)` 界定），`$foo` 和 `$i` 是简单NT(simple NT)， `expr` 和 `ident` 是它们各自的匹配段类型指示符(fragment specifiers)。
+`(start $foo:expr $($i:ident),\* end)` 是一个匹配器(matcher)。整个匹配器是一个有界序列（使用开闭定界符 `(` 和 `)` 界定），`$foo` 和 `$i` 是简单NT(simple NT)， `expr` 和 `ident` 是它们各自的匹配段选择器(fragment specifiers)。
 
 `$(i:ident),\*` *也*是一个 NT；它是一个复杂NT，匹配那些被逗号分隔成的标识符类型的重复元。`,` 是这个复杂NT 的分隔符；它出现在匹配段的每对元素（如果有的话）之间。
 
 复杂NT 的另一个例子是 `$(hi $e:expr ;)+`，它匹配 `hi <expr>; hi <expr>; ...` 这种格式的代码，其中 `hi <expr>;` 至少出现一次。注意，这个复杂NT 没有专用的分隔符。
 
-(请注意，Rust 解析器确保有界序列始终具有正确的标记树结构嵌套以及开/闭定界符的正确匹配。)
+(请注意，Rust 解析器确保有界序列始终具有正确的token树结构嵌套以及开/闭定界符的正确匹配。)
 
-我们倾向于使用变量“M”表示匹配器，变量“t”和“u”表示任意单个标记码，变量“tt”和“uu”表示任意标记树。（使用“tt”确实存在潜在的歧义，因为它的额外角色是一个匹配段类型指示符；但不用太担心，因为从上下文中，可以很清楚地看出哪个解释更符合语义）
+我们倾向于使用变量“M”表示匹配器，变量“t”和“u”表示任意单个token，变量“tt”和“uu”表示任意token树。（使用“tt”确实存在潜在的歧义，因为它的额外角色是一个匹配段选择器；但不用太担心，因为从上下文中，可以很清楚地看出哪个解释更符合语义）
 
 “SEP”将代表分隔符，“OP”将代表重复元运算符 `\*`, `+`, 和 `?` “OPEN”/“CLOSE”覆盖围绕定界序列的匹配标记对（例如 `[` 和 `]` ）。
 
-希腊字母 "α" "β" "γ" "δ" 代表潜在的空标记树序列。（然而，希腊字母 "ε"(epsilon)在表示形式中有特殊的作用，并不代表标记树序列。）
+希腊字母 "α" "β" "γ" "δ" 代表潜在的空token树序列。（然而，希腊字母 "ε"(epsilon)在表示形式中有特殊的作用，并不代表token树序列。）
 
-  * 这种希腊字母约定通常只是在需要表现一个序列的技术细节时才被引入；特别是，当我们希望*强调*我们操作的是一个标记树序列时，我们将对该序列使用表义符 "tt ..."，而不是一个希腊字母。
+  * 这种希腊字母约定通常只是在需要表现一个序列的技术细节时才被引入；特别是，当我们希望*强调*我们操作的是一个token树序列时，我们将对该序列使用表义符 "tt ..."，而不是一个希腊字母。
 
-请注意，匹配器仅仅是一个标记树。如前所述，“简单NT”是一个元变量NT；因此，这是一个非重复元。例如，`$foo:ty` 是一个简单NT，而 `$($foo:ty)+` 是一个复杂NT。
+请注意，匹配器仅仅是一个token树。如前所述，“简单NT”是一个元变量NT；因此，这是一个非重复元。例如，`$foo:ty` 是一个简单NT，而 `$($foo:ty)+` 是一个复杂NT。
 
-还请注意，在这种形式的上下文中，术语“标记码(token)”通常*包括*简单NT。
+还请注意，在这种形式的上下文中，术语“token”通常*包括*简单NT。
 
-最后，读者要记住，根据这种形式的定义，没有简单NT 会匹配空匹配段，同样也没有标记码会匹配 Rust句法的空匹配段。(因此，能够匹配空匹配段的*唯一的* NT是复杂NT。)这实际上不是真的，因为 `vis` 匹配器可以匹配空匹配段。因此，为了达到形式统一的目的，我们将把 `$v:vis` 看作是 `$($v:vis)?`，来要求匹配器匹配一个空匹配段。
+最后，读者要记住，根据这种形式的定义，没有简单NT 会匹配空匹配段，同样也没有token会匹配 Rust句法的空匹配段。(因此，能够匹配空匹配段的*唯一的* NT是复杂NT。)这实际上不是真的，因为 `vis` 匹配器可以匹配空匹配段。因此，为了达到形式统一的目的，我们将把 `$v:vis` 看作是 `$($v:vis)?`，来要求匹配器匹配一个空匹配段。
 
 ### The Matcher Invariants
 ### 匹配器的不变式
@@ -67,7 +67,7 @@ macro_rules! i_am_an_mbe {
 为了有效，匹配器必须满足以下三个不变式。注意其中 FIRST 和 FOLLOW 的定义将在后面进行描述。
 To be valid, a matcher must meet the following three invariants. The definitions of FIRST and FOLLOW are described later.
 
-1.  对于形式如 `M = ... tt uu ...`，其中 `uu ...` 非空的匹配器 `M` 中的任意两个连续的标记树序列，我们必须遵循 FOLLOW(`... tt`) ∪ {ε} ⊇ FIRST(`uu ...`)
+1.  对于形式如 `M = ... tt uu ...`，其中 `uu ...` 非空的匹配器 `M` 中的任意两个连续的token树序列，我们必须遵循 FOLLOW(`... tt`) ∪ {ε} ⊇ FIRST(`uu ...`)
 For any two successive token tree sequences in a matcher `M` (i.e. `M = ... tt uu ...`) with `uu ...` nonempty, we must have FOLLOW(`... tt`) ∪ {ε} ⊇ FIRST(`uu ...`).
 2.  对于匹配器中任何带分隔符的复杂NT，`M = ... $(tt ...) SEP OP ...`，我们必须遵循 `SEP` ∈ FOLLOW(`tt ...`)
 For any separated complex NT in a matcher, `M = ... $(tt ...) SEP OP ...`, we must have `SEP` ∈ FOLLOW(`tt ...`).
@@ -91,18 +91,18 @@ The third invariant says that when we have a complex NT that can match two or mo
 给定匹配器 M 映射到三个集合：FIRST(M)，LAST(M) 和 FOLLOW(M)。
 A given matcher M maps to three sets：FIRST(M), LAST(M) and FOLLOW(M).
 
-这三个集合中的每一个都是由标记码组成的。FIRST(M) 和 LAST(M) 也可能包含一个可区分的非标记码元素 ε ("epsilon")，这表示 M 可以匹配空匹配段。（但是 FOLLOW(M) 始终只是一组标记码。）
+这三个集合中的每一个都是由 token组成的。FIRST(M) 和 LAST(M) 也可能包含一个可区分的非token元素 ε ("epsilon")，这表示 M 可以匹配空匹配段。（但是 FOLLOW(M) 始终只是一组token。）
 Each of the three sets is made up of tokens. FIRST(M) and LAST(M) may also contain a distinguished non-token element ε ("epsilon"), which indicates that M can match the empty fragment. (But FOLLOW(M) is always just a set of tokens.)
 
 非正式描述(Informally)：
 
-  * FIRST(M)：收集匹配段与 M 匹配时可能首先使用的标记码。collects the tokens potentially used first when matching a fragment to M.
+  * FIRST(M)：收集匹配段与 M 匹配时可能首先使用的token。collects the tokens potentially used first when matching a fragment to M.
 
-  * LAST(M)：收集匹配段与 M 匹配时可能最后使用的标记码。collects the tokens potentially used last when matching a fragment to M.
+  * LAST(M)：收集匹配段与 M 匹配时可能最后使用的token。collects the tokens potentially used last when matching a fragment to M.
 
-  * FOLLOW(M)：允许紧跟在由 M 匹配的某个匹配段之后的标记码集合。the set of tokens allowed to follow immediately after some fragment matched by M.
+  * FOLLOW(M)：允许紧跟在由 M 匹配的某个匹配段之后的token集合。the set of tokens allowed to follow immediately after some fragment matched by M.
 
-    换言之：t ∈ FOLLOW(M) 当且仅当存在（可能为空的）标记码序列 α、β、γ、δ，其中：
+    换言之：t ∈ FOLLOW(M) 当且仅当存在（可能为空的）token序列 α、β、γ、δ，其中：
       * M 匹配 β，
       * t 与 γ 匹配，并且
       * 连结 α β γ δ 是一个可解析的 Rust程序。
@@ -111,7 +111,7 @@ Each of the three sets is made up of tokens. FIRST(M) and LAST(M) may also conta
       * t matches γ, and
       * The concatenation α β γ δ is a parseable Rust program.
 
-我们使用简写的 ANYTOKEN 来表示所有标记码(包括简单NT)的集合。例如，如果任何标记码在匹配器 M 之后是合法的，那么 FOLLOW(M) = ANYTOKEN。
+我们使用简写的 ANYTOKEN 来表示所有 token(包括简单NT)的集合。例如，如果任何 token 在匹配器 M 之后是合法的，那么 FOLLOW(M) = ANYTOKEN。
 We use the shorthand ANYTOKEN to denote the set of all tokens (including simple NTs). For example, if any token is legal after a matcher M, then FOLLOW(M) = ANYTOKEN.
 
 （为了回顾一下对上述非正式描述的理解，读者在阅读正式定义之前，可以先读一遍 [关于 FIRST 和 LAST 的示例](#examples-of FIRST -and- LAST)。）
@@ -125,27 +125,27 @@ We use the shorthand ANYTOKEN to denote the set of all tokens (including simple 
 
 #### FIRST
 
-FIRST(M) 是通过对序列 M 及其第一个标记树(如果有的话)的结构进行案例分析来定义的:
+FIRST(M) 是通过对序列 M 及其第一个 token树(如果有的话)的结构进行案例分析来定义的:
 FIRST(M) is defined by case analysis on the sequence M and the structure of its first token-tree (if any):
 
   * 如果 M 为空序列，则 FIRST(M) = { ε }，if M is the empty sequence, then FIRST(M) = { ε },
 
-  * 如果 M 以标记码 t 开始，则 FIRST(M) = { t }，if M starts with a token t, then FIRST(M) = { t },
+  * 如果 M 以 token t 开始，则 FIRST(M) = { t }，if M starts with a token t, then FIRST(M) = { t },
 
-    （注意:这涵盖了这样一种情况：M 以一个定界的标记树序列开始，`M = OPEN tt ... CLOSE ...`，此时 `t = OPEN`，因此 FIRST(M) = { `OPEN` }。）
+    （注意:这涵盖了这样一种情况：M 以一个定界的token树序列开始，`M = OPEN tt ... CLOSE ...`，此时 `t = OPEN`，因此 FIRST(M) = { `OPEN` }。）
     (Note：this covers the case where M starts with a delimited token-tree sequence, `M = OPEN tt ... CLOSE ...`, in which case `t = OPEN` and thus FIRST(M) = { `OPEN` }.)
 
     （注意：这主要依赖于没有简单NT与空匹配段匹配这一特性。）
     (Note：this critically relies on the property that no simple NT matches the empty fragment.)
 
-  * 否则，M 是一个以复杂NT开始的标记树序列：`M = $( tt ... ) OP α`，或 `M = $( tt ... ) SEP OP α`，(其中 `α` 是匹配器其余部分的标记树序列(可能是空的))。Otherwise, M is a token-tree sequence starting with a complex NT：`M = $( tt ... ) OP α`, or `M = $( tt ... ) SEP OP α`, (where `α` is the (potentially empty) sequence of token trees for the rest of the matcher).
+  * 否则，M 是一个以复杂NT开始的token树序列：`M = $( tt ... ) OP α`，或 `M = $( tt ... ) SEP OP α`，(其中 `α` 是匹配器其余部分的token树序列(可能是空的))。Otherwise, M is a token-tree sequence starting with a complex NT：`M = $( tt ... ) OP α`, or `M = $( tt ... ) SEP OP α`, (where `α` is the (potentially empty) sequence of token trees for the rest of the matcher).
 
       * Let SEP\_SET(M) = { SEP } 如果存在 SEP 且 ε ∈ FIRST(`tt ...`)；否则 SEP\_SET(M) = {}。
 
   * Let ALPHA\_SET(M) = FIRST(`α`) if OP = `\*` or `?` and ALPHA\_SET(M) = {} if OP = `+`.
   * FIRST(M) = (FIRST(`tt ...`) \\ {ε}) ∪ SEP\_SET(M) ∪ ALPHA\_SET(M).
 
-复杂NT 的定义值得商榷。SEP\_SET(M) 定义了分隔符可能是 M 的第一个有效标记码的可能性，当定义了分隔符且重复匹配段可能为空时，就会发生这种情况。ALPHA\_SET(M)定义了复杂NT可能为空的可能性，这意味着 M 的第一个有效标记码集合是后继标记树序列 `α` 。当使用了操作符 `\*` 或 `?` 时，这种情况下可能没有重复元。理论上，如果 `+` 与一个可能为空的重复匹配段一起使用，也会出现这种情况，但是第三个不变式禁止这样做。
+复杂NT 的定义值得商榷。SEP\_SET(M) 定义了分隔符可能是 M 的第一个有效token的可能性，当定义了分隔符且重复匹配段可能为空时，就会发生这种情况。ALPHA\_SET(M)定义了复杂NT可能为空的可能性，这意味着 M 的第一个有效token集合是后继token树序列 `α` 。当使用了操作符 `\*` 或 `?` 时，这种情况下可能没有重复元。理论上，如果 `+` 与一个可能为空的重复匹配段一起使用，也会出现这种情况，但是第三个不变式禁止这样做。
 The definition for complex NTs deserves some justification. SEP\_SET(M) defines the possibility that the separator could be a valid first token for M, which happens when there is a separator defined and the repeated fragment could be empty. ALPHA\_SET(M) defines the possibility that the complex NT could be empty, meaning that M's valid first tokens are those of the following token-tree sequences `α`. This occurs when either `\*` or `?` is used, in which case there could be zero repetitions. In theory, this could also occur if `+` was used with a potentially-empty repeating fragment, but this is forbidden by the third invariant.
 
 From there, clearly FIRST(M) can include any token from SEP\_SET(M) or ALPHA\_SET(M), and if the complex NT match is nonempty, then any token starting FIRST(`tt ...`) could work too. The last piece to consider is ε. SEP\_SET(M) and FIRST(`tt ...`) \ {ε} cannot contain ε, but ALPHA\_SET(M) could. Hence, this definition allows M to accept ε if and only if ε ∈ ALPHA\_SET(M) does. This is correct because for M to accept ε in the complex NT case, both the complex NT and α must accept it. If OP = `+`, meaning that the complex NT cannot be empty, then by definition ε ∉ ALPHA\_SET(M). Otherwise, the complex NT can accept zero repetitions, and then ALPHA\_SET(M) = FOLLOW(`α`). So this definition is correct with respect to \varepsilon as well.

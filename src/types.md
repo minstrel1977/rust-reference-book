@@ -61,7 +61,7 @@ Rust 程序中的每个变量、数据项和值都有一个类型。*值*的*类
 > &nbsp;&nbsp; | [_BareFunctionType_]\
 > &nbsp;&nbsp; | [_MacroInvocation_]
 
-上表中的 _Type_ 句法规则中定义的各种*类型表达式*是指向某个具体类型的句法。它们可以指向：
+上表中的 _Type_ 文法规则中定义的各种*类型表达式*是指向某个具体类型的句法。它们可以指向：
 
 * 序列类型（[tuple], [array], [slice]）。
 * [类型路径(type paths)][Type paths]，这些包括：
@@ -82,7 +82,7 @@ Rust 程序中的每个变量、数据项和值都有一个类型。*值*的*类
 > _ParenthesizedType_ :\
 > &nbsp;&nbsp; `(` [_Type_] `)`
 
-在某些情况下，类型的组合可能会产生歧义。在类型周围使用括号来避免歧义。例如，[引用类型][reference type]中的[类型边界(type boundaries)][type boundaries]列表中的 `+`运算符搞不清楚其左值的边界位置在哪里，因此需要使用括号来明确其边界。这里需要的消除歧义的语法规则就是使用 [_TypeNoBounds_] 规则替代 [_Type_] 规则。
+在某些情况下，类型的组合可能会产生歧义。在类型周围使用括号来避免歧义。例如，[引用类型][reference type]中的[类型边界(type boundaries)][type boundaries]列表中的 `+`运算符搞不清楚其左值的边界位置在哪里，因此需要使用括号来明确其边界。这里需要的消除歧义的文法规则就是使用 [_TypeNoBounds_] 规则替代 [_Type_] 规则。
 
 ```rust
 # use std::any::Any;

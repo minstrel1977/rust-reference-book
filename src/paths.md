@@ -74,7 +74,7 @@ mod m {
 
 表达式中的路径允许指定带有泛型参数的路径。它们在各种[表达式][expressions]和[模式][patterns]中都有使用。
 
-标记码 `::` 必须在泛型参数的左尖括号（`<`）的前面，以避免和小于号操作符产生混淆。这就是俗称的“涡轮鱼(turbofish)”句法。
+token `::` 必须在泛型参数的左尖括号（`<`）的前面，以避免和小于号操作符产生混淆。这就是俗称的“涡轮鱼(turbofish)”句法。
 
 ```rust
 (0..10).collect::<Vec<_>>();
@@ -132,7 +132,7 @@ S::f();  // 调用本身的实现.
 
 类型路径用于类型定义、trait约束(trait bound)、类型参数约束，以及限定性路径。
 
-尽管在泛型参数之前允许使用标记码 `::`，但它不是必需的，因为在类型路径中不存在像 _PathInExpression_ 句法中那样的歧义。
+尽管在泛型参数之前允许使用 token `::`，但它不是必需的，因为在类型路径中不存在像 _PathInExpression_ 句法中那样的歧义。
 
 ```rust
 # mod ops {
@@ -266,7 +266,7 @@ mod a {
 
 ### `$crate`
 
-$crate 仅用在[宏转换器(macro transcriber)][macro transcribers]中，且仅能用作路径首段，不能有前置 `::`。`$crate` 将被扩展为从定义宏的 crate 的顶层访问该 crate 中的各数据项的路径，而不用去考虑宏调用发生时所在的现场 crate。
+$crate 仅用在[宏转码器(macro transcriber)][macro transcribers]中，且仅能用作路径首段，不能有前置 `::`。`$crate` 将被扩展为从定义宏的 crate 的顶层访问该 crate 中的各数据项的路径，而不用去考虑宏调用发生时所在的现场 crate。
 
 ```rust
 pub fn increment(x: u32) -> u32 {
