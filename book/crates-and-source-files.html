@@ -209,9 +209,9 @@ SHEBANG : <code>#!</code> ~<code>\n</code><sup>+</sup><a href="#shebang">†</a>
 </span></code></pre></pre>
 <h2><a class="header" href="#byte-order-mark" id="byte-order-mark">Byte order mark</a></h2>
 <h2><a class="header" href="#字节顺序标记bom" id="字节顺序标记bom">字节顺序标记(BOM)</a></h2>
-<p>可选的<a href="https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8"><em>UTF8字节序标记</em></a>（UTF8BOM 生产式）表示该文件是用 UTF8 编码的。它只能出现在文件的开头，并且编译器会忽略它。</p>
+<p>可选的<a href="https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8"><em>UTF8字节序标记</em></a>（UTF8BOM 产生式）表示该文件是用 UTF8 编码的。它只能出现在文件的开头，并且编译器会忽略它。</p>
 <h2><a class="header" href="#shebang" id="shebang">Shebang</a></h2>
-<p>源文件可以有一个<a href="https://en.wikipedia.org/wiki/Shebang_(Unix)"><em>shebang</em></a>（SHEBANG 生产式），它指示操作系统使用什么程序来执行此文件。它本质上是将源文件作为可执行脚本处理。shebang 只能出现在文件的开头(但是在可选的 <em>UTF8BOM</em> 之后)。它会被编译器忽略。例如：</p>
+<p>源文件可以有一个<a href="https://en.wikipedia.org/wiki/Shebang_(Unix)"><em>shebang</em></a>（SHEBANG 产生式），它指示操作系统使用什么程序来执行此文件。它本质上是将源文件作为可执行脚本处理。shebang 只能出现在文件的开头(但是在可选的 <em>UTF8BOM</em> 之后)。它会被编译器忽略。例如：</p>
 <!-- ignore: tests don't like shebang -->
 <pre><code class="language-rust ignore">#!/usr/bin/env rustx
 

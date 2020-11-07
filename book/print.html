@@ -182,7 +182,7 @@
 <p>一个问题是译者对原文章节段落标题的翻译。这样做是原文的文档链接仍然有效，这样能有效降低译者对文档链接的维护，也能降低译者对一些名词的专门维护，还能有效提醒读者本章节段落的主题。</p>
 <p>再一个问题是译文中的“译者注”，这里原本是译者加入的自我理解，以便降低新手的阅读门槛。但后来发现有些泛滥，并且译者的过分演绎发挥可能影响阅读体验，甚至曲解原意，所以译者删除了一部分，后续翻译也尽量克制了这一冲动。</p>
 <p>再有就是对一些名词的翻译，译者基本上是遵循了 <a href="https://learnku.com/">LearnKu</a> 上的 <a href="https://learnku.com/articles/43623">Rust 语言术语中英文对照表</a>上的约定，但也有一些译者按自己的理解做了新的翻译，这些<a href="%E7%BF%BB%E8%AF%91%E8%AF%B4%E6%98%8E.html#%E7%BA%A6%E5%AE%9A">下节</a>和本书最后的<a href="%E6%9C%AC%E4%B9%A6%E6%9C%AF%E8%AF%AD%E7%BF%BB%E8%AF%91%E5%AF%B9%E7%85%A7%E8%A1%A8.html">本书术语翻译对照表</a>中说明。</p>
-<p>Rust 的每种句法都有自己独特的句法规则，前期译者对这部分内容做了翻译，但发现翻译后无法保持句法规则的清晰性，严重妨碍读者对其的理解，尤其是其中的<a href="tokens.html">标记码</a>和<a href="notation.html#Grammar">生产式</a>如果翻译了就完全丢失了其中蕴含的格式意义，所以这部分译者就放弃了，直接拷贝了原文。</p>
+<p>Rust 的每种句法都有自己独特的句法规则，前期译者对这部分内容做了翻译，但发现翻译后无法保持句法规则的清晰性，严重妨碍读者对其的理解，尤其是其中的<a href="tokens.html">标记码</a>和<a href="notation.html#Grammar">产生式</a>如果翻译了就完全丢失了其中蕴含的格式意义，所以这部分译者就放弃了，直接拷贝了原文。</p>
 <blockquote>
 <p>待续</p>
 </blockquote>
@@ -197,7 +197,7 @@
 <h4><a class="header" href="#常用词翻译" id="常用词翻译">常用词翻译</a></h4>
 <ol>
 <li>lifetime，社区一般译为“生命周期”，但在本书原文中有行文用到 lifecycle，本译作为何此词译义分开，选择翻译为“生存期”。并且译者在翻译中发现使用“生存期”在中文中行文更合适。</li>
-<li>Syntax，这个词很多译者的随意的翻译为“语法”，但在 Rust 里它大部分时候特指单一语言部件内部的标记码/生产式组成格式，所以本书统一翻译为“句法”。在它之上一层的语言组织方式才翻译为“语法”。</li>
+<li>Syntax，这个词很多译者的随意的翻译为“语法”，但在 Rust 里它大部分时候特指单一语言部件内部的标记码/产生式组成格式，所以本书统一翻译为“句法”。在它之上一层的语言组织方式才翻译为“语法”。</li>
 <li>nominal type：标称类型。这是译者自创的一个翻译方法，首先 nominal type 在目前国内 Rust 社区里还没有合适的翻译先例，所以译者这里就蹭机器学习的热点翻译为“标称类型”，这种行径虽然降低了Rust的逼格，但在目前状态下，收益可能还是值得的。</li>
 <li>item，这个一般翻译为“项”或“条目”，译者期初为了读起来更符合习惯，选择了“项”的翻译方法，但后来发现这个方法太容易引起歧义，无法体现出其作为语法单元的特殊含义，所以又给它添了两个字，变成了“数据项”。而其他名词复合时，又一般会简化翻译为“XX项”，如：“static item”，译者就翻译为“静态项”。</li>
 <li>size，社区内常把这个词在表示 Rust 数据类型的位宽时也译做“大小”，但在中文语境中，有时无法把其和数值大小，以及比较意义的大小，或长度等含义快速区分开来，所以本文在表示 Rust 数据类型的位宽时统一译做“尺寸”。</li>
@@ -314,7 +314,7 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <p>本书中给出的 <em>词法</em> 和 <em>句法</em> 的语法片段会用到下表中的各种表义符：</p>
 <table><thead><tr><th>表义符</th><th>示例</th><th>释义</th></tr></thead><tbody>
 <tr><td>CAPITAL</td><td>KW_IF, INTEGER_LITERAL</td><td>由词法分析生成的单个标记码(token)</td></tr>
-<tr><td><em>ItalicCamelCase</em></td><td><em>LetStatement</em>, <em>Item</em></td><td>句法生产式(syntactical production)</td></tr>
+<tr><td><em>ItalicCamelCase</em></td><td><em>LetStatement</em>, <em>Item</em></td><td>句法产生式(syntactical production)</td></tr>
 <tr><td><code>string</code></td><td><code>x</code>, <code>while</code>, <code>*</code></td><td>确切的字面字符(串)</td></tr>
 <tr><td>\x</td><td>\n, \r, \t, \0</td><td>转义字符</td></tr>
 <tr><td>x<sup>?</sup></td><td><code>pub</code><sup>?</sup></td><td>可选项</td></tr>
@@ -329,9 +329,9 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <tr><td>( )</td><td>(<code>,</code> <em>Parameter</em>)<sup>?</sup></td><td>数据项分组</td></tr>
 </tbody></table>
 <h2><a class="header" href="#string-table-productions" id="string-table-productions">String table productions</a></h2>
-<h2><a class="header" href="#字符串表示的句法生产式列表" id="字符串表示的句法生产式列表">字符串表示的句法生产式列表</a></h2>
-<p>语法中的一些规则 — 特别是<a href="expressions/operator-expr.html#borrow-operators">一元运算符</a>，<a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">二元运算符</a>和<a href="keywords.html">关键字</a> — 会以简化形式 - 作为可打印字符串的列表 - 给出。这些规则构成了<a href="tokens.html">标记码</a>相关规则的规则子集，并且它们被假定为词法分析阶段的结果。词法分析阶段由<abbr title="确定性有限自动机(Deterministic Finite Automaton)">DFA</abbr>驱动，并应用这些规则来对源码进行析取操作。（译者注：原文在这里并没有给出句法生产式的列表，但本书会假设存在这么一个列表。）</p>
-<p>本书还约定，当语法中出现如 <code>monospace</code> 这样的字符串时，它代表对这些生产式中的单个标记码成员的隐式引用。查阅<a href="tokens.html">标记码</a>以获取更多信息。（译者注：如果译者觉得这种引用需要翻译时，会使用如：等宽(<code>monospace</code>) 这种形式来翻译，但读者需要意识到“monospace”是语言里的一个标记码，是以其字面形式出现在源码里的。）</p>
+<h2><a class="header" href="#字符串表示的句法产生式列表" id="字符串表示的句法产生式列表">字符串表示的句法产生式列表</a></h2>
+<p>语法中的一些规则 — 特别是<a href="expressions/operator-expr.html#borrow-operators">一元运算符</a>，<a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">二元运算符</a>和<a href="keywords.html">关键字</a> — 会以简化形式 - 作为可打印字符串的列表 - 给出。这些规则构成了<a href="tokens.html">标记码</a>相关规则的规则子集，并且它们被假定为词法分析阶段的结果。词法分析阶段由<abbr title="确定性有限自动机(Deterministic Finite Automaton)">DFA</abbr>驱动，并应用这些规则来对源码进行析取操作。（译者注：原文在这里并没有给出句法产生式的列表，但本书会假设存在这么一个列表。）</p>
+<p>本书还约定，当语法中出现如 <code>monospace</code> 这样的字符串时，它代表对这些产生式中的单个标记码成员的隐式引用。查阅<a href="tokens.html">标记码</a>以获取更多信息。（译者注：如果译者觉得这种引用需要翻译时，会使用如：等宽(<code>monospace</code>) 这种形式来翻译，但读者需要意识到“monospace”是语言里的一个标记码，是以其字面形式出现在源码里的。）</p>
 <!-- 2020-11-3 -->
 <!-- checked --><h1><a class="header" href="#词法结构" id="词法结构">词法结构</a></h1>
 <blockquote>
@@ -645,7 +645,7 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 本译文最后维护日期：2020-11-5</p>
 </blockquote>
-<p>标记码是由正则语言(regular languages)（非递归方式）定义的基本语法生产式(primitive productions)。Rust 源码输入可以被分解成以下几类标记码：</p>
+<p>标记码是由正则语言(regular languages)（非递归方式）定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类标记码：</p>
 <ul>
 <li><a href="keywords.html">关键字</a></li>
 <li><a href="identifiers.html">标识符</a></li>
@@ -654,7 +654,7 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <li><a href="tokens.html#punctuation">标点符号</a></li>
 <li><a href="tokens.html#delimiters">分隔符</a></li>
 </ul>
-<p>在本文档的语法中，“简单”标记码以[字符串型生产式][string table production]的形式给出，并以 <code>monospace</code> 字体显示。（译者注：如果译者觉得这种标记码需要翻译时，会使用如：等宽(<code>monospace</code>) 这种形式来翻译，但读者需要意识到“monospace”是语言里的一个标记码，是以其字面形式出现在源码里的。）</p>
+<p>在本文档的语法中，“简单”标记码以[字符串型产生式][string table production]的形式给出，并以 <code>monospace</code> 字体显示。（译者注：如果译者觉得这种标记码需要翻译时，会使用如：等宽(<code>monospace</code>) 这种形式来翻译，但读者需要意识到“monospace”是语言里的一个标记码，是以其字面形式出现在源码里的。）</p>
 <h2><a class="header" href="#literals" id="literals">Literals</a></h2>
 <h2><a class="header" href="#字面量" id="字面量">字面量</a></h2>
 <p>字面量是一个由单个标记码（而不是由一系列标记码）组成的表达式，它立即、直接表示它所代表的值，而不是通过名称或其他一些求值/计算规则来引用它。字面量是<a href="const_eval.html#constant-expressions">常量表达式</a>的一种形式，所以它（主要）用在编译时求值。</p>
@@ -2052,9 +2052,9 @@ SHEBANG : <code>#!</code> ~<code>\n</code><sup>+</sup><a href="crates-and-source
 </span></code></pre></pre>
 <h2><a class="header" href="#byte-order-mark" id="byte-order-mark">Byte order mark</a></h2>
 <h2><a class="header" href="#字节顺序标记bom" id="字节顺序标记bom">字节顺序标记(BOM)</a></h2>
-<p>可选的<a href="https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8"><em>UTF8字节序标记</em></a>（UTF8BOM 生产式）表示该文件是用 UTF8 编码的。它只能出现在文件的开头，并且编译器会忽略它。</p>
+<p>可选的<a href="https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8"><em>UTF8字节序标记</em></a>（UTF8BOM 产生式）表示该文件是用 UTF8 编码的。它只能出现在文件的开头，并且编译器会忽略它。</p>
 <h2><a class="header" href="#shebang" id="shebang">Shebang</a></h2>
-<p>源文件可以有一个<a href="https://en.wikipedia.org/wiki/Shebang_(Unix)"><em>shebang</em></a>（SHEBANG 生产式），它指示操作系统使用什么程序来执行此文件。它本质上是将源文件作为可执行脚本处理。shebang 只能出现在文件的开头(但是在可选的 <em>UTF8BOM</em> 之后)。它会被编译器忽略。例如：</p>
+<p>源文件可以有一个<a href="https://en.wikipedia.org/wiki/Shebang_(Unix)"><em>shebang</em></a>（SHEBANG 产生式），它指示操作系统使用什么程序来执行此文件。它本质上是将源文件作为可执行脚本处理。shebang 只能出现在文件的开头(但是在可选的 <em>UTF8BOM</em> 之后)。它会被编译器忽略。例如：</p>
 <!-- ignore: tests don't like shebang -->
 <pre><code class="language-rust ignore">#!/usr/bin/env rustx
 
@@ -2401,8 +2401,8 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <h1><a class="header" href="#模块" id="模块">模块</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/modules.md">modules.md</a><br />
-commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
-本译文最后维护日期：2020-11-3</p>
+commit: fbf34356b709cfc0debb01acaaff038d4e339aab <br />
+本译文最后维护日期：2020-11-7</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法:</sup></strong><br />
@@ -7018,8 +7018,8 @@ fn main() {
 <h1><a class="header" href="#字段访问表达式" id="字段访问表达式">字段访问表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/field-expr.md">field-expr.md</a><br />
-commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
-本译文最后维护日期：2020-10-27</p>
+commit: 84a4bcb11ec14011e8e64bfd5d83a48c54bad1eb <br />
+本译文最后维护日期：2020-11-7</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -7034,9 +7034,9 @@ foo().x;
 mystruct.method();          // 方法表达式
 (mystruct.function_field)() // 调用表达式里包含一个字段表达式
 </code></pre>
-<p>字段访问是引用该字段位置的<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>。当子表达式是<a href="expressions/../expressions.html#mutability">可变的</a>时，此字段表达式也是可变的。</p>
+<p>字段访问是用一个<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>去引用该字段的内存位置。当字段表达式的子表达式是<a href="expressions/../expressions.html#mutability">可变的</a>时，此字段表达式也是可变的。</p>
 <p>另外，如果点号左侧的表达式类型是指针，则会根据需要自动应用多次解引用来使字段访问成为可能。在存在歧义的情况下，Rust 倾向于较少次数的自动解引用。</p>
-<p>最后，当用于借用时，对结构体的各个字段的借用或对整个结构体的引用都被视为彼此分离的实体。如果结构体没有实现 <a href="expressions/../special-types-and-traits.html#drop"><code>Drop</code></a>，同时该结构体存储在局部变量中，（这种各个字段被视为彼此分离的单独实体的逻辑）还让每个字段的移出（move out）互不影响。如果对该结构体实现了户定义的自动解引用，这（种各个字段被视为彼此分离的单独实体的逻辑）就也不适用了。</p>
+<p>最后，当处于借用状态时，结构体的各个字段以及对整个结构体的引用都被视为彼此分离的实体。如果结构体没有实现 <a href="expressions/../special-types-and-traits.html#drop"><code>Drop</code></a>，同时该结构体存储在局部变量中，（这种各个字段被视为彼此分离的单独实体的逻辑）还适用于每个字段的移出(move out)。如果对 <a href="expressions/../special-types-and-traits.html#boxt"><code>Box</code></a>类型之外的用户定义的类型执行自动解引用，这（种各个字段被视为彼此分离的单独实体的逻辑）就不适用了。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -7369,7 +7369,7 @@ commit: 1cc592ee270b4d9ad190a8cacce0a1ed356b54d0 <br />
    <code>..=</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
 <p><code>..</code> 和 <code>..=</code> 操作符会根据下表中的规则构造 <code>std::ops::Range</code>（或 <code>core::ops::Range</code>）的某一变体类型的对象：</p>
-<table><thead><tr><th>生产式/句法规则</th><th>句法</th><th>类型</th><th>区间语义</th></tr></thead><tbody>
+<table><thead><tr><th>产生式/句法规则</th><th>句法</th><th>类型</th><th>区间语义</th></tr></thead><tbody>
 <tr><td><em>RangeExpr</em></td><td>start<code>..</code>end</td><td><a href="https://doc.rust-lang.org/std/ops/struct.Range.html">std::ops::Range</a></td><td>start ≤ x &lt; end</td></tr>
 <tr><td><em>RangeFromExpr</em></td><td>start<code>..</code></td><td><a href="https://doc.rust-lang.org/std/ops/struct.RangeFrom.html">std::ops::RangeFrom</a></td><td>start ≤ x</td></tr>
 <tr><td><em>RangeToExpr</em></td><td><code>..</code>end</td><td><a href="https://doc.rust-lang.org/std/ops/struct.RangeTo.html">std::ops::RangeTo</a></td><td>x &lt; end</td></tr>
@@ -8180,7 +8180,7 @@ let b = match int_reference { &amp;0 =&gt; &quot;zero&quot;, _ =&gt; &quot;some&
 assert_eq!(a, b);
 <span class="boring">}
 </span></code></pre></pre>
-<p>引用模式的语法生产式(grammar production)要求必须使用标记码 <code>&amp;&amp;</code> 来匹配对引用的引用，因为 <code>&amp;&amp;</code> 本身是一个单独的标记码，而不是两个 <code>&amp;</code> 标记码。</p>
+<p>引用模式的语法产生式(grammar production)要求必须使用标记码 <code>&amp;&amp;</code> 来匹配对引用的引用，因为 <code>&amp;&amp;</code> 本身是一个单独的标记码，而不是两个 <code>&amp;</code> 标记码。</p>
 <p>引用模式中添加关键字 <code>mut</code> 可对可变引用做引用。引用模式中的可变性标记必须与引用对象的可变性匹配。</p>
 <p>引用模式总是不可反驳型的。</p>
 <h2><a class="header" href="#struct-patterns" id="struct-patterns">Struct patterns</a></h2>
@@ -11166,32 +11166,75 @@ fn panic(info: &amp;PanicInfo) -&gt; ! {
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macro-ambiguity.md">macro-ambiguity.md</a><br />
 commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 <br />
-本译文最后维护日期：2020-11-3</p>
+本译文最后维护日期：2020-11-7</p>
 </blockquote>
-<p>本页介绍了下述<a href="macros-by-example.html">声明宏</a>的规则的正式规范。它们最初是在 [RFC550] 中指定的，本文的大部分内容都是从其中复制过来的，并在后续的RFC中进行展开。</p>
+<p>本文介绍了下述<a href="macros-by-example.html">声明宏</a>规则的正式规范。它们最初是在 [RFC550] 中指定的（本文的大部分内容都是从其中复制过来的），并在后续的 RFC 中进行了进一步的展开。</p>
 <h2><a class="header" href="#definitions--conventions" id="definitions--conventions">Definitions &amp; Conventions</a></h2>
 <h2><a class="header" href="#定义和约定" id="定义和约定">定义和约定</a></h2>
 <ul>
-<li><code>macro</code>：宏，源代码中任何可调用的类似 <code>foo!(...)</code> 的东西。</li>
-<li><code>MBE</code>：macro-by-example，声明宏，由 <code>macro_rules</code> 定义的宏。</li>
-<li><code>matcher</code>：匹配器，<code>macro_rules</code>调用中一条规则的左侧部分，或其子部分。（译者注：匹配器可嵌套，可互相包含）</li>
-<li><code>macro parser</code>：宏解释器，Rust 解析器中的一段代码，它收集使用所有匹配器的句法规则来解析输入。 <!-- the bit of code in the Rust parser that will parse the input using a grammar derived from all of the matchers. tobemodify--></li>
-<li><code>fragment</code>：匹配段，给定匹配器将接受(或“匹配”)的 Rust 句法对象；<!-- The class of Rust syntax that a given matcher will accept (or "match"). tobemodify--></li>
-<li><code>repetition</code> ：重复元，遵循正则重复模式的匹配段。<!-- a fragment that follows a regular repeating pattern. tobemodify--></li>
-<li><code>NT</code>：non-terminal，非终结符，可以出现在匹配器中的各种“元变量”或重复元匹配器，在声明宏(MBE)句法中用前导的 <code>$</code> 字符指定。<!-- non-terminal, the various "meta-variables" or repetition matchers that can appear in a matcher, specified in MBE syntax with a leading `$` character. --></li>
-<li><code>simple NT</code>：简单NT，“元变量”类型的非终结符（下面会进一步讨论）。</li>
-<li><code>complex NT</code>：复杂NT，有重复元匹配规则可应用非终结符，通过重复操作符（<code>\*</code>, <code>+</code>, <code>?</code>）指定重复草书。<!-- a repetition matching non-terminal, specified via repetition operators (`\*`, `+`, `?`). --></li>
-<li><code>token</code>：标记码，匹配器中不可再细分的元素；例如，标识符、操作符、开/闭定界符、<em>和</em>简单NT(simple NT)。</li>
-<li><code>token tree</code>：标记树，标记树由标记码(叶)、复杂NT和子标记树（标记树的有限序列）的组成的树形数据结构。</li>
-<li><code>delimiter token</code>：定界符，一种标记，用于划分一个匹配段的结束和下一个匹配段的开始。</li>
-<li><code>separator token</code>：分隔符，复杂NT中的可选定界符，用于在匹配的重复中，以分隔每个元素对。</li>
-<li><code>separated complex NT</code>：带分隔符的复杂NT，有自己的分隔符的复杂NT。<!-- a complex NT that has its own separator token. --></li>
-<li><code>delimited sequence</code>：有界序列，在序列的开始和结束处使用适当的开闭定界符的标记树序列。</li>
-<li><code>empty fragment</code>：空匹配段，一种不可见的 Rust 句法对象，它分割各种标记码。例如空白符(whitespace)或者(在某些词法上下文中的)空标记序列。<!-- The class of invisible Rust syntax that separates tokens, i.e. whitespace, or (in some lexical contexts), the empty token sequence. --></li>
-<li><code>fragment specifier</code>：匹配段类型指示符，简单NT中的后段标识符部分，指定NT接受哪个匹配段。<!-- The identifier in a simple NT that specifies which fragment the NT accepts. tobemodify--></li>
-<li><code>language</code>：与上下文无关的语言。</li>
+<li>
+<p><code>macro</code>：宏，源代码中任何可调用的类似 <code>foo!(...)</code> 的东西。</p>
+</li>
+<li>
+<p><code>MBE</code>：macro-by-example，声明宏，由 <code>macro_rules</code> 定义的宏。</p>
+</li>
+<li>
+<p><code>matcher</code>：匹配器，<code>macro_rules</code>调用中一条规则的左侧部分，或其子部分(subportion)。（译者注：子部分的意思是匹配器可嵌套，可相互包含）</p>
+</li>
+<li>
+<p><code>macro parser</code>：宏解释器，Rust 解析器中的一段程序，这段程序使用从所有命中的匹配器中推导出的文法规则来解析宏输入。</p>
+</li>
+<li>
+<p><code>fragment</code>：匹配段，给定匹配器将接受（或“匹配”）的 Rust 句法对象。</p>
+</li>
+<li>
+<p><code>repetition</code> ：重复元，遵循正则重复模式的匹配段。</p>
+</li>
+<li>
+<p><code>NT</code>：non-terminal，非终结符，可以出现在匹配器中的各种“元变量”或重复元匹配器，在声明宏(MBE)句法中用前导字符 <code>$</code> 标明。</p>
+</li>
+<li>
+<p><code>simple NT</code>：简单NT，“元变量”类型的非终结符（下面会进一步讨论）。</p>
+</li>
+<li>
+<p><code>complex NT</code>：复杂NT，重复元类型的非终结符，通过重复元操作符（<code>\*</code>, <code>+</code>, <code>?</code>）指定重复次数。 <!-- a repetition matching non-terminal, specified via repetition operators (`\*`, `+`, `?`). --></p>
+</li>
+<li>
+<p><code>token</code>：标记码，匹配器中不可再细分的元素；例如，标识符、操作符、开/闭定界符<em>和</em>简单NT(simple NT)。</p>
+</li>
+<li>
+<p><code>token tree</code>：标记树，标记树由标记码(叶)、复杂NT和子标记树（标记树的有限序列）组成的树形数据结构。</p>
+</li>
+<li>
+<p><code>delimiter token</code>：定界符，一种用于划分一个匹配段的结束和下一个匹配段的开始的标记码。</p>
+</li>
+<li>
+<p><code>separator token</code>：分隔符，复杂NT 中的可选定界符，用在重复元里以分隔元素。</p>
+</li>
+<li>
+<p><code>separated complex NT</code>：带分隔符的复杂NT，分隔符是重复元的一部分的复杂NT。</p>
+</li>
+<li>
+<p><code>delimited sequence</code>：有界序列，在序列的开始和结束处使用了适当的开闭定界符的标记树。</p>
+</li>
+<li>
+<p><code>empty fragment</code>：空匹配段，一种不可见的 Rust 句法对象，它分割各种标记码，例如空白符(whitespace)或者（在某些词法上下文中的）空标记序列。</p>
+</li>
+<li>
+<p><code>fragment specifier</code>：匹配段类型指示符，简单NT中的后段标识符部分，指定NT接受哪个匹配段。<!-- The identifier in a simple NT that specifies which fragment the NT accepts. tobemodify--></p>
+</li>
+<li>
+<p><code>language</code>：与上下文无关的语言。</p>
+</li>
+<li>
+<p><code>fragment specifier</code>: The identifier in a simple NT that specifies which
+fragment the NT accepts.</p>
+</li>
+<li>
+<p><code>language</code>: a context-free language.
+示例：</p>
+</li>
 </ul>
-<p>示例：</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

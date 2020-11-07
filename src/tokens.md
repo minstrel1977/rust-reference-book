@@ -6,7 +6,7 @@
 >本译文最后维护日期：2020-11-5
 
 
-标记码是由正则语言(regular languages)（非递归方式）定义的基本语法生产式(primitive productions)。Rust 源码输入可以被分解成以下几类标记码：
+标记码是由正则语言(regular languages)（非递归方式）定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类标记码：
 
 * [关键字][Keywords]
 * [标识符][identifier]
@@ -15,7 +15,7 @@
 * [标点符号](#punctuation)
 * [分隔符](#delimiters)
 
-在本文档的语法中，“简单”标记码以[字符串型生产式][string table production]的形式给出，并以 `monospace` 字体显示。（译者注：如果译者觉得这种标记码需要翻译时，会使用如：等宽(`monospace`) 这种形式来翻译，但读者需要意识到“monospace”是语言里的一个标记码，是以其字面形式出现在源码里的。）
+在本文档的语法中，“简单”标记码以[字符串型产生式][string table production]的形式给出，并以 `monospace` 字体显示。（译者注：如果译者觉得这种标记码需要翻译时，会使用如：等宽(`monospace`) 这种形式来翻译，但读者需要意识到“monospace”是语言里的一个标记码，是以其字面形式出现在源码里的。）
 
 ## Literals
 ## 字面量

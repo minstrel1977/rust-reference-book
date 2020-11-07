@@ -172,7 +172,7 @@
 commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 本译文最后维护日期：2020-11-5</p>
 </blockquote>
-<p>标记码是由正则语言(regular languages)（非递归方式）定义的基本语法生产式(primitive productions)。Rust 源码输入可以被分解成以下几类标记码：</p>
+<p>标记码是由正则语言(regular languages)（非递归方式）定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类标记码：</p>
 <ul>
 <li><a href="keywords.html">关键字</a></li>
 <li><a href="identifiers.html">标识符</a></li>
@@ -181,7 +181,7 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <li><a href="#punctuation">标点符号</a></li>
 <li><a href="#delimiters">分隔符</a></li>
 </ul>
-<p>在本文档的语法中，“简单”标记码以[字符串型生产式][string table production]的形式给出，并以 <code>monospace</code> 字体显示。（译者注：如果译者觉得这种标记码需要翻译时，会使用如：等宽(<code>monospace</code>) 这种形式来翻译，但读者需要意识到“monospace”是语言里的一个标记码，是以其字面形式出现在源码里的。）</p>
+<p>在本文档的语法中，“简单”标记码以[字符串型产生式][string table production]的形式给出，并以 <code>monospace</code> 字体显示。（译者注：如果译者觉得这种标记码需要翻译时，会使用如：等宽(<code>monospace</code>) 这种形式来翻译，但读者需要意识到“monospace”是语言里的一个标记码，是以其字面形式出现在源码里的。）</p>
 <h2><a class="header" href="#literals" id="literals">Literals</a></h2>
 <h2><a class="header" href="#字面量" id="字面量">字面量</a></h2>
 <p>字面量是一个由单个标记码（而不是由一系列标记码）组成的表达式，它立即、直接表示它所代表的值，而不是通过名称或其他一些求值/计算规则来引用它。字面量是<a href="const_eval.html#constant-expressions">常量表达式</a>的一种形式，所以它（主要）用在编译时求值。</p>

@@ -177,7 +177,7 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <p>本书中给出的 <em>词法</em> 和 <em>句法</em> 的语法片段会用到下表中的各种表义符：</p>
 <table><thead><tr><th>表义符</th><th>示例</th><th>释义</th></tr></thead><tbody>
 <tr><td>CAPITAL</td><td>KW_IF, INTEGER_LITERAL</td><td>由词法分析生成的单个标记码(token)</td></tr>
-<tr><td><em>ItalicCamelCase</em></td><td><em>LetStatement</em>, <em>Item</em></td><td>句法生产式(syntactical production)</td></tr>
+<tr><td><em>ItalicCamelCase</em></td><td><em>LetStatement</em>, <em>Item</em></td><td>句法产生式(syntactical production)</td></tr>
 <tr><td><code>string</code></td><td><code>x</code>, <code>while</code>, <code>*</code></td><td>确切的字面字符(串)</td></tr>
 <tr><td>\x</td><td>\n, \r, \t, \0</td><td>转义字符</td></tr>
 <tr><td>x<sup>?</sup></td><td><code>pub</code><sup>?</sup></td><td>可选项</td></tr>
@@ -192,9 +192,9 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <tr><td>( )</td><td>(<code>,</code> <em>Parameter</em>)<sup>?</sup></td><td>数据项分组</td></tr>
 </tbody></table>
 <h2><a class="header" href="#string-table-productions" id="string-table-productions">String table productions</a></h2>
-<h2><a class="header" href="#字符串表示的句法生产式列表" id="字符串表示的句法生产式列表">字符串表示的句法生产式列表</a></h2>
-<p>语法中的一些规则 — 特别是<a href="expressions/operator-expr.html#borrow-operators">一元运算符</a>，<a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">二元运算符</a>和<a href="keywords.html">关键字</a> — 会以简化形式 - 作为可打印字符串的列表 - 给出。这些规则构成了<a href="tokens.html">标记码</a>相关规则的规则子集，并且它们被假定为词法分析阶段的结果。词法分析阶段由<abbr title="确定性有限自动机(Deterministic Finite Automaton)">DFA</abbr>驱动，并应用这些规则来对源码进行析取操作。（译者注：原文在这里并没有给出句法生产式的列表，但本书会假设存在这么一个列表。）</p>
-<p>本书还约定，当语法中出现如 <code>monospace</code> 这样的字符串时，它代表对这些生产式中的单个标记码成员的隐式引用。查阅<a href="tokens.html">标记码</a>以获取更多信息。（译者注：如果译者觉得这种引用需要翻译时，会使用如：等宽(<code>monospace</code>) 这种形式来翻译，但读者需要意识到“monospace”是语言里的一个标记码，是以其字面形式出现在源码里的。）</p>
+<h2><a class="header" href="#字符串表示的句法产生式列表" id="字符串表示的句法产生式列表">字符串表示的句法产生式列表</a></h2>
+<p>语法中的一些规则 — 特别是<a href="expressions/operator-expr.html#borrow-operators">一元运算符</a>，<a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">二元运算符</a>和<a href="keywords.html">关键字</a> — 会以简化形式 - 作为可打印字符串的列表 - 给出。这些规则构成了<a href="tokens.html">标记码</a>相关规则的规则子集，并且它们被假定为词法分析阶段的结果。词法分析阶段由<abbr title="确定性有限自动机(Deterministic Finite Automaton)">DFA</abbr>驱动，并应用这些规则来对源码进行析取操作。（译者注：原文在这里并没有给出句法产生式的列表，但本书会假设存在这么一个列表。）</p>
+<p>本书还约定，当语法中出现如 <code>monospace</code> 这样的字符串时，它代表对这些产生式中的单个标记码成员的隐式引用。查阅<a href="tokens.html">标记码</a>以获取更多信息。（译者注：如果译者觉得这种引用需要翻译时，会使用如：等宽(<code>monospace</code>) 这种形式来翻译，但读者需要意识到“monospace”是语言里的一个标记码，是以其字面形式出现在源码里的。）</p>
 <!-- 2020-11-3 -->
 <!-- checked -->
                     </main>

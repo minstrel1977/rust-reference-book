@@ -2,8 +2,8 @@
 # 字段访问表达式
 
 >[field-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/field-expr.md)\
->commit: f8e76ee9368f498f7f044c719de68c7d95da9972 \
->本译文最后维护日期：2020-10-27
+>commit: 84a4bcb11ec14011e8e64bfd5d83a48c54bad1eb \
+>本译文最后维护日期：2020-11-7
 
 > **<sup>句法</sup>**\
 > _FieldExpression_ :\
@@ -20,11 +20,11 @@ mystruct.method();          // 方法表达式
 (mystruct.function_field)() // 调用表达式里包含一个字段表达式
 ```
 
-字段访问是引用该字段位置的[位置表达式][place expression]。当子表达式是[可变的][mutable]时，此字段表达式也是可变的。
+字段访问是用一个[位置表达式][place expression]去引用该字段的内存位置。当字段表达式的子表达式是[可变的][mutable]时，此字段表达式也是可变的。
 
 另外，如果点号左侧的表达式类型是指针，则会根据需要自动应用多次解引用来使字段访问成为可能。在存在歧义的情况下，Rust 倾向于较少次数的自动解引用。
 
-最后，当用于借用时，对结构体的各个字段的借用或对整个结构体的引用都被视为彼此分离的实体。如果结构体没有实现 [`Drop`][`Drop`]，同时该结构体存储在局部变量中，（这种各个字段被视为彼此分离的单独实体的逻辑）还让每个字段的移出（move out）互不影响。如果对该结构体实现了户定义的自动解引用，这（种各个字段被视为彼此分离的单独实体的逻辑）就也不适用了。
+最后，当处于借用状态时，结构体的各个字段以及对整个结构体的引用都被视为彼此分离的实体。如果结构体没有实现 [`Drop`]，同时该结构体存储在局部变量中，（这种各个字段被视为彼此分离的单独实体的逻辑）还适用于每个字段的移出(move out)。如果对 [`Box`]类型之外的用户定义的类型执行自动解引用，这（种各个字段被视为彼此分离的单独实体的逻辑）就不适用了。
 
 ```rust
 struct A { f1: String, f2: String, f3: String }
@@ -41,6 +41,7 @@ let d: String = x.f3;           // 从 x.f3 中移出
 ```
 
 [`Drop`]: ../special-types-and-traits.md#drop
+[`Box`]: ../special-types-and-traits.md#boxt
 <!-- 上面这几个链接从原文来替换时小心 -->
 [_Expression_]: ../expressions.md
 [IDENTIFIER]: ../identifiers.md

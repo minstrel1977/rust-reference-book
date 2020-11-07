@@ -614,7 +614,7 @@ let b = match int_reference { &amp;0 =&gt; &quot;zero&quot;, _ =&gt; &quot;some&
 assert_eq!(a, b);
 <span class="boring">}
 </span></code></pre></pre>
-<p>引用模式的语法生产式(grammar production)要求必须使用标记码 <code>&amp;&amp;</code> 来匹配对引用的引用，因为 <code>&amp;&amp;</code> 本身是一个单独的标记码，而不是两个 <code>&amp;</code> 标记码。</p>
+<p>引用模式的语法产生式(grammar production)要求必须使用标记码 <code>&amp;&amp;</code> 来匹配对引用的引用，因为 <code>&amp;&amp;</code> 本身是一个单独的标记码，而不是两个 <code>&amp;</code> 标记码。</p>
 <p>引用模式中添加关键字 <code>mut</code> 可对可变引用做引用。引用模式中的可变性标记必须与引用对象的可变性匹配。</p>
 <p>引用模式总是不可反驳型的。</p>
 <h2><a class="header" href="#struct-patterns" id="struct-patterns">Struct patterns</a></h2>

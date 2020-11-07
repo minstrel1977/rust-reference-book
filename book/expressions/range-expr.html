@@ -195,7 +195,7 @@ commit: 1cc592ee270b4d9ad190a8cacce0a1ed356b54d0 <br />
    <code>..=</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
 <p><code>..</code> 和 <code>..=</code> 操作符会根据下表中的规则构造 <code>std::ops::Range</code>（或 <code>core::ops::Range</code>）的某一变体类型的对象：</p>
-<table><thead><tr><th>生产式/句法规则</th><th>句法</th><th>类型</th><th>区间语义</th></tr></thead><tbody>
+<table><thead><tr><th>产生式/句法规则</th><th>句法</th><th>类型</th><th>区间语义</th></tr></thead><tbody>
 <tr><td><em>RangeExpr</em></td><td>start<code>..</code>end</td><td><a href="https://doc.rust-lang.org/std/ops/struct.Range.html">std::ops::Range</a></td><td>start ≤ x &lt; end</td></tr>
 <tr><td><em>RangeFromExpr</em></td><td>start<code>..</code></td><td><a href="https://doc.rust-lang.org/std/ops/struct.RangeFrom.html">std::ops::RangeFrom</a></td><td>start ≤ x</td></tr>
 <tr><td><em>RangeToExpr</em></td><td><code>..</code>end</td><td><a href="https://doc.rust-lang.org/std/ops/struct.RangeTo.html">std::ops::RangeTo</a></td><td>x &lt; end</td></tr>

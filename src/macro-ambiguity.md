@@ -2,32 +2,35 @@
 
 >[macro-ambiguity.md](https://github.com/rust-lang/reference/blob/master/src/macro-ambiguity.md)\
 >commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 \
->本译文最后维护日期：2020-11-3
+>本译文最后维护日期：2020-11-7
 
-本页介绍了下述[声明宏][Macros By Example]的规则的正式规范。它们最初是在 [RFC550] 中指定的，本文的大部分内容都是从其中复制过来的，并在后续的RFC中进行展开。
+本文介绍了下述[声明宏][Macros By Example]规则的正式规范。它们最初是在 [RFC550] 中指定的（本文的大部分内容都是从其中复制过来的），并在后续的 RFC 中进行了进一步的展开。
 
 ## Definitions & Conventions
 ## 定义和约定
 
   - `macro`：宏，源代码中任何可调用的类似 `foo!(...)` 的东西。
   - `MBE`：macro-by-example，声明宏，由 `macro_rules` 定义的宏。
-  - `matcher`：匹配器，`macro_rules`调用中一条规则的左侧部分，或其子部分。（译者注：匹配器可嵌套，可互相包含）
-  - `macro parser`：宏解释器，Rust 解析器中的一段代码，它收集使用所有匹配器的句法规则来解析输入。 <!-- the bit of code in the Rust parser that will parse the input using a grammar derived from all of the matchers. tobemodify-->
-  - `fragment`：匹配段，给定匹配器将接受(或“匹配”)的 Rust 句法对象；<!-- The class of Rust syntax that a given matcher will accept (or "match"). tobemodify-->
-  - `repetition` ：重复元，遵循正则重复模式的匹配段。<!-- a fragment that follows a regular repeating pattern. tobemodify-->
-  - `NT`：non-terminal，非终结符，可以出现在匹配器中的各种“元变量”或重复元匹配器，在声明宏(MBE)句法中用前导的 `$` 字符指定。<!-- non-terminal, the various "meta-variables" or repetition matchers that can appear in a matcher, specified in MBE syntax with a leading `$` character. -->
+  - `matcher`：匹配器，`macro_rules`调用中一条规则的左侧部分，或其子部分(subportion)。（译者注：子部分的意思是匹配器可嵌套，可相互包含）
+  - `macro parser`：宏解释器，Rust 解析器中的一段程序，这段程序使用从所有命中的匹配器中推导出的文法规则来解析宏输入。
+  - `fragment`：匹配段，给定匹配器将接受（或“匹配”）的 Rust 句法对象。
+  - `repetition` ：重复元，遵循正则重复模式的匹配段。
+  - `NT`：non-terminal，非终结符，可以出现在匹配器中的各种“元变量”或重复元匹配器，在声明宏(MBE)句法中用前导字符 `$` 标明。
   - `simple NT`：简单NT，“元变量”类型的非终结符（下面会进一步讨论）。
-  - `complex NT`：复杂NT，有重复元匹配规则可应用非终结符，通过重复操作符（`\*`, `+`, `?`）指定重复草书。<!-- a repetition matching non-terminal, specified via repetition operators (`\*`, `+`, `?`). -->
-  - `token`：标记码，匹配器中不可再细分的元素；例如，标识符、操作符、开/闭定界符、*和*简单NT(simple NT)。
-  - `token tree`：标记树，标记树由标记码(叶)、复杂NT和子标记树（标记树的有限序列）的组成的树形数据结构。
-  - `delimiter token`：定界符，一种标记，用于划分一个匹配段的结束和下一个匹配段的开始。
-  - `separator token`：分隔符，复杂NT中的可选定界符，用于在匹配的重复中，以分隔每个元素对。
-  - `separated complex NT`：带分隔符的复杂NT，有自己的分隔符的复杂NT。<!-- a complex NT that has its own separator token. -->
-  - `delimited sequence`：有界序列，在序列的开始和结束处使用适当的开闭定界符的标记树序列。
-  - `empty fragment`：空匹配段，一种不可见的 Rust 句法对象，它分割各种标记码。例如空白符(whitespace)或者(在某些词法上下文中的)空标记序列。<!-- The class of invisible Rust syntax that separates tokens, i.e. whitespace, or (in some lexical contexts), the empty token sequence. -->
+  - `complex NT`：复杂NT，重复元类型的非终结符，通过重复元操作符（`\*`, `+`, `?`）指定重复次数。 <!-- a repetition matching non-terminal, specified via repetition operators (`\*`, `+`, `?`). -->
+  - `token`：标记码，匹配器中不可再细分的元素；例如，标识符、操作符、开/闭定界符*和*简单NT(simple NT)。
+  - `token tree`：标记树，标记树由标记码(叶)、复杂NT和子标记树（标记树的有限序列）组成的树形数据结构。
+  - `delimiter token`：定界符，一种用于划分一个匹配段的结束和下一个匹配段的开始的标记码。
+  - `separator token`：分隔符，复杂NT 中的可选定界符，用在重复元里以分隔元素。
+  - `separated complex NT`：带分隔符的复杂NT，分隔符是重复元的一部分的复杂NT。
+  - `delimited sequence`：有界序列，在序列的开始和结束处使用了适当的开闭定界符的标记树。
+  - `empty fragment`：空匹配段，一种不可见的 Rust 句法对象，它分割各种标记码，例如空白符(whitespace)或者（在某些词法上下文中的）空标记序列。
   - `fragment specifier`：匹配段类型指示符，简单NT中的后段标识符部分，指定NT接受哪个匹配段。<!-- The identifier in a simple NT that specifies which fragment the NT accepts. tobemodify-->
   - `language`：与上下文无关的语言。
 
+  - `fragment specifier`: The identifier in a simple NT that specifies which
+    fragment the NT accepts.
+  - `language`: a context-free language.
 示例：
 
 ```rust,compile_fail
