@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md">macros-by-example.md</a><br />
 commit: 30ccf092c7c1d92b2398e28d4abf8c5ba6c31cba <br />
-本译文最后维护日期：2020-11-5</p>
+本译文最后维护日期：2020-11-7</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -206,8 +206,8 @@ commit: 30ccf092c7c1d92b2398e28d4abf8c5ba6c31cba <br />
 <p><code>macro_rules</code> 允许用户以声明性的(declarative)方式定义句法扩展。我们称这种扩展形式为“声明宏（macros by example）”或简称“宏”。</p>
 <p>每个声明宏都有一个名称和一条或多条<em>规则</em>。每条规则都有两部分：一个<em>匹配器(matcher)</em>，描述它匹配的句法；一个<em>转码器(transcriber)</em>，描述成功匹配后将执行的替代调用句法。匹配器和转码器都必须由定界符(delimiter)包围。宏可以扩展为表达式、语句、数据项（包括 trait、impl 和外来数据项）、类型或模式。</p>
 <h2><a class="header" href="#transcribing" id="transcribing">Transcribing</a></h2>
-<h2><a class="header" href="#转换" id="转换">转换</a></h2>
-<p>当宏被调用时，宏扩展器(macro expander)按名称查找宏调用，并依次尝试此宏中的每条宏规则。宏会根据第一个成功的匹配进行转换；如果当前转换结果导致错误，也不会再尝试进行后续匹配。在匹配时，不会执行预判；如果编译器不能明确地确定如何逐个 token 地解析宏调用，则会报错。在下面的示例中，编译器不会越过标识符，去提前查看后跟的 token 是 <code>)</code>，尽管这能帮助它明确地解析调用：</p>
+<h2><a class="header" href="#转码" id="转码">转码</a></h2>
+<p>当宏被调用时，宏扩展器(macro expander)按名称查找宏调用，并依次尝试此宏中的每条宏规则。宏会根据第一个成功的匹配进行转码；如果当前转码结果导致错误，不会再尝试进行后续匹配。在匹配时，不会执行预判；如果编译器不能明确地确定如何一个 token 一个 token 地解析宏调用，则会报错。在下面的示例中，编译器不会越过标识符，去提前查看后跟的 token 是 <code>)</code>，尽管这能帮助它明确地解析调用：</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -218,8 +218,8 @@ commit: 30ccf092c7c1d92b2398e28d4abf8c5ba6c31cba <br />
 ambiguity!(error); // 错误: 局部歧义(local ambiguity)
 <span class="boring">}
 </span></code></pre></pre>
-<p>在匹配器和转码器中，token <code>$</code> 用于从宏引擎中调用特殊行为（下文<a href="#metavariables">元变量</a>和<a href="#repetitions">重复元</a>中有详述）。不属于此类调用的 token 将按字面意义进行匹配和转换，除了一个例外。这个例外是匹配器的外层定界符将匹配任何一对定界符。因此，比如匹配器 <code>(())</code> 将匹配 <code>{()}</code>，而 <code>{{}}</code> 不行。字符 <code>$</code> 不能按字面意义匹配或转换。</p>
-<p>当将当前匹配的匹配段转发给另一个声明宏时，第二个宏中的匹配器看到的将是此匹配段类型的不透明抽象句法树(opaque AST)。第二个宏不能使用字面量token 来匹配匹配器中的这个匹配段，唯一可看到/使用的就是此匹配段类型一样的匹配段选择器(fragment specifier)。但匹配段类型 <code>ident</code>、<code>lifetime</code>、和 <code>tt</code> 是几个例外，它们<em>可以</em>通过字面量token 进行匹配。下面示例展示了这一限制：（译者注：匹配段选择器和匹配段可以看做是同一回事儿，宏中各部件的定义可以凑合着看看译者未能翻译完成的<a href="macro-ambiguity.html">宏定义规范</a>）</p>
+<p>在匹配器和转码器中，token <code>$</code> 用于从宏引擎中调用特殊行为（下文<a href="#metavariables">元变量</a>和<a href="#repetitions">重复元</a>中有详述）。不属于此类调用的 token 将按字面意义进行匹配和转码，除了一个例外。这个例外是匹配器的外层定界符将匹配任何一对定界符。因此，比如匹配器 <code>(())</code> 将匹配 <code>{()}</code>，而 <code>{{}}</code> 不行。字符 <code>$</code> 不能按字面意义匹配或转码。</p>
+<p>当将当前匹配的匹配段转发给另一个声明宏时，第二个宏中的匹配器看到的将是此匹配段类型的不透明抽象句法树(opaque AST)。第二个宏不能使用字面量token 来匹配匹配器中的这个匹配段，唯一可看到/使用的就是此匹配段类型一样的匹配段选择器(fragment specifier)。但匹配段类型 <code>ident</code>、<code>lifetime</code>、和 <code>tt</code> 是几个例外，它们<em>可以</em>通过字面量token 进行匹配。下面示例展示了这一限制：（译者注：匹配段选择器和匹配段，以及宏中各部件的定义可以凑合着看看译者未能翻译完成的<a href="macro-ambiguity.html">宏定义规范</a>）</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -235,7 +235,7 @@ macro_rules! bar {
 foo!(3);
 <span class="boring">}
 </span></code></pre></pre>
-<p>以下示例展示了 <code>tt</code> 类型的匹配段在转换一次之后生成的 token 如何能够再次直接匹配：</p>
+<p>以下示例展示了 <code>tt</code> 类型的匹配段在成功匹配（转码）一次之后生成的 tokens 如何能够再次直接匹配：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -253,11 +253,11 @@ foo!(3);
 </span></code></pre></pre>
 <h2><a class="header" href="#metavariables" id="metavariables">Metavariables</a></h2>
 <h2><a class="header" href="#元变量" id="元变量">元变量</a></h2>
-<p>在匹配器中，<code>$</code><em>名称</em><code>:</code><em>匹配段选择器</em> 这种句法格式匹配符合指定句法类型的 Rust 句法段，并将其绑定到元变量 <code>$</code><em>名称</em>上。有效的匹配段选择器包括：</p>
+<p>在匹配器中，<code>$</code><em>名称</em><code>:</code><em>匹配段选择器</em> 这种句法格式匹配符合指定句法类型的 Rust 句法段，并将其绑定到元变量 <code>$</code><em>名称</em> 上。有效的匹配段选择器包括：</p>
 <ul>
 <li><code>item</code>: <a href="items.html"><em>数据项</em></a></li>
 <li><code>block</code>: <a href="expressions/block-expr.html"><em>块表达式</em></a></li>
-<li><code>stmt</code>: 去除了句尾分号的<a href="statements.html"><em>语句</em></a>（排除需要分号的数据项语句）</li>
+<li><code>stmt</code>: <a href="statements.html"><em>语句</em></a>，注意此选择器不匹配句尾的分号（如果匹配器中提供了分号，会被当做分隔符），但碰到分号是自身的一部分的数据项语句的情况又会匹配。</li>
 <li><code>pat</code>: <a href="patterns.html"><em>模式</em></a></li>
 <li><code>expr</code>: <a href="expressions.html"><em>表达式</em></a></li>
 <li><code>ty</code>: <a href="types.html#type-expressions"><em>类型</em></a></li>
@@ -269,7 +269,7 @@ foo!(3);
 <li><code>vis</code>: 可能为空的<a href="visibility-and-privacy.html"><em>可见性</em></a>限定符</li>
 <li><code>literal</code>: 匹配 <code>-</code><sup>?</sup><a href="expressions/literal-expr.html"><em>字面量表达式</em></a></li>
 </ul>
-<p>因为匹配段类型已在匹配器中指定了，则在转码器中，元变量只简单地用 <code>$</code><em>名称</em> 这种形式来指代就行了。元变量最终将被替换为跟它们匹配上的句法元素。元变量关键字 <code>$crate</code> 可以用来指代当前的 crate（请参阅后面的<a href="#hygiene">卫生性(hygiene)</a>章节）。元变量可以被多次转换，也可以完全不转换。</p>
+<p>因为匹配段类型已在匹配器中指定了，则在转码器中，元变量只简单地用 <code>$</code><em>名称</em> 这种形式来指代就行了。元变量最终将被替换为跟它们匹配上的句法元素。元变量关键字 <code>$crate</code> 可以用来指代当前的 crate（请参阅后面的<a href="#hygiene">卫生性(hygiene)</a>章节）。元变量可以被多次转码，也可以完全不转码。</p>
 <h2><a class="header" href="#repetitions" id="repetitions">Repetitions</a></h2>
 <h2><a class="header" href="#重复元" id="重复元">重复元</a></h2>
 <p>在匹配器和转码器中，重复元被表示为：将需要重复的 token 放在 <code>$(</code>…<code>)</code> 内，然后后跟一个重复运算符(repetition operator)，这两者之间可以放置一个可选的分隔符(separator token)。分隔符可以是除定界符或重复运算符之外的任何 token，其中分号(<code>;</code>)和逗号(<code>,</code>)最常见。例如： <code>$( $i:ident ),*</code> 表示用逗号分隔的任何数量的标识符。嵌套的重复元是合法的。</p>
@@ -280,8 +280,8 @@ foo!(3);
 <li><code>?</code> — 表示一个可选的匹配段，可以出现零次或一次。</li>
 </ul>
 <p>因为 <code>?</code> 表示最多出现一次，所以它不能与分隔符一起使用。</p>
-<p>通过分隔符的分隔，重复的匹配段都会被匹配和转换为指定的数量的匹配段。元变量就和这些每个段中的重复元相匹配。例如，之前示例中的 <code>$( $i:ident ),*</code> 将 <code>$i</code> 去匹配列表中的所有标识符。</p>
-<p>在转换过程中，重复元会受到额外的限制，以便于编译器知道该如何正确地扩展它们：</p>
+<p>通过分隔符的分隔，重复的匹配段都会被匹配和转码为指定的数量的匹配段。元变量就和这些每个段中的重复元相匹配。例如，之前示例中的 <code>$( $i:ident ),*</code> 将 <code>$i</code> 去匹配列表中的所有标识符。</p>
+<p>在转码过程中，重复元会受到额外的限制，以便于编译器知道该如何正确地扩展它们：</p>
 <ol>
 <li>在转码器中，元变量必须与它在匹配器中出现的次数、指示符类型以及其在重复元内的嵌套顺序都完全相同。因此，对于匹配器 <code>$( $i:ident ),*</code>，转码器 <code>=&gt; { $i }</code>, <code>=&gt; { $( $( $i)* )* }</code> 和 <code>=&gt; { $( $i )+ }</code> 都是非法的，但是 <code>=&gt; { $( $i );* }</code> 是正确的，它用分号分隔的标识符列表替换了逗号分隔的标识符列表。</li>
 <li>转码器中的每个重复元必须至少包含一个元变量，以便确定扩展多少次。如果在同一个重复元中出现多个元变量，则它们必须绑定到相同数量的匹配段上，不能有的多，有的少。例如，<code>( $( $i:ident ),* ; $( $j:ident ),* ) =&gt;( $( ($i,$j) ),*</code> 里，绑定到 <code>$j</code> 的匹配段的数量必须与绑定到 <code>$i</code> 上的相同。这意味着用 <code>(a, b, c; d, e, f</code>) 调用这个宏是合法的，并且可扩展到 <code>((a,d), (b,e), (c,f))</code>，但是 <code>(a, b, c; d, e)</code> 是非法的，因为前后绑定的数量不同。此要求适用于嵌套的重复元的每一层。</li>
@@ -474,7 +474,7 @@ fn foo() {}
 </span><span class="boring">fn main() {
 </span>#[macro_export(local_inner_macros)]
 macro_rules! helped {
-    () =&gt; { helper!() } // 自动转换为 $crate::helper!().
+    () =&gt; { helper!() } // 自动转码为 $crate::helper!().
 }
 
 #[macro_export]
@@ -485,7 +485,7 @@ macro_rules! helper {
 </span></code></pre></pre>
 <h2><a class="header" href="#follow-set-ambiguity-restrictions" id="follow-set-ambiguity-restrictions">Follow-set Ambiguity Restrictions</a></h2>
 <h2><a class="header" href="#随集歧义限制译者注该节还需要继续校对打磨主要难点还是因为附录的宏定义规范译者还没有能全部搞懂" id="随集歧义限制译者注该节还需要继续校对打磨主要难点还是因为附录的宏定义规范译者还没有能全部搞懂">随集歧义限制（译者注：该节还需要继续校对打磨，主要难点还是因为附录的宏定义规范译者还没有能全部搞懂）</a></h2>
-<p>宏系统使用的解析器相当强大，但是为了防止其在 Rust 的当前或未来版本中出现二义性解析，对它做出了限制。特别地，在二义性展开的规则之外，增加了一条：非终结符(nonterminal)必须后跟一个已经确定为可以用来安全分隔匹配段的分隔符。</p>
+<p>宏系统使用的解析器相当强大，但是为了防止其在 Rust 的当前或未来版本中出现二义性解析，因此对它做出了限制。特别地，在消除二义性展开的基本规则之外又增加了一条：元变量匹配的非终结符(nonterminal)必须后跟一个已经确定为可以用来安全分隔匹配段的分隔符。</p>
 <p>例如，像 <code>$i:expr [ , ]</code> 这样的宏匹配器在现今的 Rust 中理论上是可以接受的，因为现在 <code>[,]</code> 不可能是合法表达式的一部分，因此解析始终是明确的。但是，由于 <code>[</code> 可以开始一个尾随表达式(trailing expressions)，因此 <code>[</code> 不是一个可以安全排除在表达式后面出现的字符。如果在接下来的 Rust 版本中接受了 <code>[,]</code>，那么这个匹配器就会产生歧义或是错误解析，破坏正常代码。但是，像<code>$i:expr,</code> 或 <code>$i:expr;</code> 这样的匹配符始终是合法的，因为 <code>,</code> 和<code>;</code> 是合法的表达式分隔符。目前规范中的规则是：（译者注：下面的规则不是绝对的，因为宏的基础理论还在发展中。）</p>
 <ul>
 <li>

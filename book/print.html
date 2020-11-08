@@ -167,7 +167,10 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#前言" id="前言">前言</a></h1>
+                        <blockquote>
+<p>本译文跟随原文到：2020-11-7</p>
+</blockquote>
+<h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <p>本译作是译者自己在学习 Rust 时，有感于国内 Rust 中文学习资源贫乏的激情之作。</p>
 <p>译者在阅读和练习完了 Rust 的入门经典 <a href="https://doc.rust-lang.org/book/">The Rust Programming Language</a> 和 <a href="https://doc.rust-lang.org/stable/rust-by-example/">Rust by Example</a> 之后，发现自己对 Rust 非常感兴趣，就一发不可收拾地继续投入精力来深入学习。在这个继续学习的过程中译者发现自己在不断的翻阅官网的 <a href="https://doc.rust-lang.org/stable/reference/">参考手册(Reference)</a>。</p>
 <p>直接查看英语原文的确对理解 Rust 的基础概念很有帮助，但毕竟看英文效率太低；并且原文作为专业的工具书在读者设定上对阅读者做了较高的基础知识储备和 Rust 领域知识的假设；以及由于原文并未正式完工，还在不断增补中，所以其为追求效率导致其使用的英语语法比较简略随意，对基础知识和背景知识的省略严重，导致对译者这样的非英语母语者阅读起来体验并不好。所以译者就萌生了自己对阅读理解做翻译笔记的想法。</p>
@@ -179,6 +182,7 @@
 <h3><a class="header" href="#翻译风格" id="翻译风格">翻译风格</a></h3>
 <p>本书基本是忠于原文的直译，但针对比较晦涩的地方，本书采用了译者自己的理解的意译。但译者本身也是 Rust 的一个入门学习者，所以这里难免出错，所以这里恳请读者及时指正，以免译者贻害其他读者。</p>
 <p>也因为大部分是直译，所以行文并不是很符合中文的阅读习惯，比如同一句话里的定语过多，比如前后两句话没有明显的承接关系等。开始时译者也想把这些修改为符合中文阅读的行文方式，但一是发现工作量有些大，再则，也是主要的，就是在修改的过程中难免加入译者过多的演绎，这样很可能偏离原作的语义，所以暂时没改。其实根据后来译者的检查阅读体验发现，这样的行文反倒是有助于提高阅读时的专注力，比如，停下来对一句话里“...的...的”划分反倒是能让读者更深入理解语义。所以译者愿意相信这百分之十几的阅读磕顿有助于提升这作为一部工具书的价值。</p>
+<p>有时针对同一个英文原文，社区可能存在多种流行度差不多译法或译者认为自己的译法更贴切时，译者会采用格式“A译法/B译法”来同时给出这两种译法，比如，grammar 就翻译为“文法/语法”。</p>
 <p>一个问题是译者对原文章节段落标题的翻译。这样做是原文的文档链接仍然有效，这样能有效降低译者对文档链接的维护，也能降低译者对一些名词的专门维护，还能有效提醒读者本章节段落的主题。</p>
 <p>再一个问题是译文中的“译者注”，这里原本是译者加入的自我理解，以便降低新手的阅读门槛。但后来发现有些泛滥，并且译者的过分演绎发挥可能影响阅读体验，甚至曲解原意，所以译者删除了一部分，后续翻译也尽量克制了这一冲动。</p>
 <p>再有就是对一些名词的翻译，译者基本上是遵循了 <a href="https://learnku.com/">LearnKu</a> 上的 <a href="https://learnku.com/articles/43623">Rust 语言术语中英文对照表</a>上的约定，但也有一些译者按自己的理解做了新的翻译，这些<a href="%E7%BF%BB%E8%AF%91%E8%AF%B4%E6%98%8E.html#%E7%BA%A6%E5%AE%9A">下节</a>和本书最后的<a href="%E6%9C%AC%E4%B9%A6%E6%9C%AF%E8%AF%AD%E7%BF%BB%E8%AF%91%E5%AF%B9%E7%85%A7%E8%A1%A8.html">本书术语翻译对照表</a>中说明。</p>
@@ -188,10 +192,12 @@
 </blockquote>
 <h3><a class="header" href="#约定" id="约定">约定</a></h3>
 <p>如果一些词译者觉得只使用中文行文可能会导致读者迷惑，那译者就会使用半角的圆括号把原英文带出，比如：标称类型(nominal type)。<br />
-但有一类虽然比较浅显，译者还是采用了这种格式，比如：结构体(<code>struct</code>),这类是其实是原文直接使用 Rust 的文法中简单<a href="tokens.html">token</a> 来指代相关名词的方便做法。这类做法的另一个含义是这这类词可以直接出现源码中，并代表了某种特定和关键的意义。所以译者的这种翻译方法也是为了不遗失这部分含义。</p>
+但有一类虽然比较浅显，译者还是采用了这种格式，比如：结构体(<code>struct</code>)，这类是其实是原文直接使用了 Rust 文法中的简单<a href="tokens.html">token</a> 来指代相关名词的方便做法。这类做法的另一个含义是这这类词可以直接出现源码中，并代表了某种特定和关键的意义。所以译者的这种翻译方法也是为了不遗失这部分含义。<br />
+还有一类是针对比较生僻或非常专业的原文，译者可能较多的采用了意译，比如 “Macro Kleene Matcher”，可能译为“宏克林闭包匹配器”比较专业，但译者意译为“可匹配空的宏匹配器”，专业性是降低了，但也可能照顾了部分非专业读者。</p>
 <p>译文中还有许多全角圆括号，这些有可能是原文行文中就有的括号，也可能是译者为中文行文方便添加进来的，也有是译者为补充语义、方便阅读特意添加进来的。</p>
 <p>一些不确定该如何翻译的名词，译者也遵循一般原则没有强翻。但如果一个专有名词又有中文又有英文，译者就有意没在这两个次词/字中间留有空格，例如：“trait对象”。尤其是那些原文带有token含义的名词，译者也一般把它们“紧密结合”在一起，比如：<code>let</code>语句、<code>cfg</code>属性等。</p>
-<p>每章节译文开头，译者都把其对应的原文链接地址和本译文对应的 commit id 给放上了。同时也把译者最后维护的时间给放上。这些是希望将来有其他贡献者能共同遵守。</p>
+<p>每章节译文开头，译者都把其对应的原文链接地址和本译文对应的 commit id 给放上了。同时也把译者最后维护的时间给放上。这些是希望将来有其他贡献者能共同遵守。<br />
+本翻译说明的开头还附上了本书最后一次维护时同步原文的时间。</p>
 <blockquote>
 <p>待续</p>
 </blockquote>
@@ -308,7 +314,7 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/notation.md">notation.md</a><br />
 commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
-本译文最后维护日期：2020-11-5</p>
+本译文最后维护日期：2020-11-7</p>
 </blockquote>
 <h2><a class="header" href="#grammar" id="grammar">Grammar</a></h2>
 <h2><a class="header" href="#文法语法" id="文法语法">文法/语法</a></h2>
@@ -654,10 +660,10 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <li><a href="tokens.html#punctuation">标点符号</a></li>
 <li><a href="tokens.html#delimiters">分隔符</a></li>
 </ul>
-<p>在本文档的文法表中，“简单”token以[字符串型产生式(production)][string table production]的形式给出，并以 <code>monospace</code> 字体显示。（译者注：本译作的原文中，在文法表之外的行文中也会大量出现这种直接使用简单token 来替代相关名词的做法，一般此时如果译者觉得这种 token 需要翻译时，会使用如：结构体(<code>struct</code>) 这种形式来翻译，但读者需要意识到“struct”是文法里的一个 token，能以其字面形式出现在源码里的。）</p>
+<p>在本文档中，“简单”token 会直接在（相关章节头部的）[字串表产生式(production)][string table production]表单中给出，并以 <code>monospace</code> 字体显示。（译者注：本译作的原文中，在文法表之外的行文中也会大量出现这种直接使用简单token 来替代相关名词的做法，一般此时如果译者觉得这种 token 需要翻译时，会使用诸如：结构体(<code>struct</code>) 这种形式来翻译。读者需要意识到“struct”是文法里的一个 token，能以其字面形式直接出现在源码里。）</p>
 <h2><a class="header" href="#literals" id="literals">Literals</a></h2>
 <h2><a class="header" href="#字面量" id="字面量">字面量</a></h2>
-<p>字面量是一个由单一 token（而不是由一连串 token）组成的表达式，它立即、直接表示它所代表的值，而不是通过名称或其他一些求值/计算规则来引用它。字面量是<a href="const_eval.html#constant-expressions">常量表达式</a>的一种形式，所以它（主要）用在编译时求值。</p>
+<p>字面量是一个由单一 token（而不是由一连串 tokens）组成的表达式，它立即、直接表示它所代表的值，而不是通过名称或其他一些求值/计算规则来引用它。字面量是<a href="const_eval.html#constant-expressions">常量表达式</a>的一种形式，所以它（主要）用在编译时求值。</p>
 <h3><a class="header" href="#examples" id="examples">Examples</a></h3>
 <h3><a class="header" href="#示例-1" id="示例-1">示例</a></h3>
 <h4><a class="header" href="#characters-and-strings" id="characters-and-strings">Characters and strings</a></h4>
@@ -1496,7 +1502,7 @@ example!();
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md">macros-by-example.md</a><br />
 commit: 30ccf092c7c1d92b2398e28d4abf8c5ba6c31cba <br />
-本译文最后维护日期：2020-11-5</p>
+本译文最后维护日期：2020-11-7</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -1532,8 +1538,8 @@ commit: 30ccf092c7c1d92b2398e28d4abf8c5ba6c31cba <br />
 <p><code>macro_rules</code> 允许用户以声明性的(declarative)方式定义句法扩展。我们称这种扩展形式为“声明宏（macros by example）”或简称“宏”。</p>
 <p>每个声明宏都有一个名称和一条或多条<em>规则</em>。每条规则都有两部分：一个<em>匹配器(matcher)</em>，描述它匹配的句法；一个<em>转码器(transcriber)</em>，描述成功匹配后将执行的替代调用句法。匹配器和转码器都必须由定界符(delimiter)包围。宏可以扩展为表达式、语句、数据项（包括 trait、impl 和外来数据项）、类型或模式。</p>
 <h2><a class="header" href="#transcribing" id="transcribing">Transcribing</a></h2>
-<h2><a class="header" href="#转换" id="转换">转换</a></h2>
-<p>当宏被调用时，宏扩展器(macro expander)按名称查找宏调用，并依次尝试此宏中的每条宏规则。宏会根据第一个成功的匹配进行转换；如果当前转换结果导致错误，也不会再尝试进行后续匹配。在匹配时，不会执行预判；如果编译器不能明确地确定如何逐个 token 地解析宏调用，则会报错。在下面的示例中，编译器不会越过标识符，去提前查看后跟的 token 是 <code>)</code>，尽管这能帮助它明确地解析调用：</p>
+<h2><a class="header" href="#转码" id="转码">转码</a></h2>
+<p>当宏被调用时，宏扩展器(macro expander)按名称查找宏调用，并依次尝试此宏中的每条宏规则。宏会根据第一个成功的匹配进行转码；如果当前转码结果导致错误，不会再尝试进行后续匹配。在匹配时，不会执行预判；如果编译器不能明确地确定如何一个 token 一个 token 地解析宏调用，则会报错。在下面的示例中，编译器不会越过标识符，去提前查看后跟的 token 是 <code>)</code>，尽管这能帮助它明确地解析调用：</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -1544,8 +1550,8 @@ commit: 30ccf092c7c1d92b2398e28d4abf8c5ba6c31cba <br />
 ambiguity!(error); // 错误: 局部歧义(local ambiguity)
 <span class="boring">}
 </span></code></pre></pre>
-<p>在匹配器和转码器中，token <code>$</code> 用于从宏引擎中调用特殊行为（下文<a href="macros-by-example.html#metavariables">元变量</a>和<a href="macros-by-example.html#repetitions">重复元</a>中有详述）。不属于此类调用的 token 将按字面意义进行匹配和转换，除了一个例外。这个例外是匹配器的外层定界符将匹配任何一对定界符。因此，比如匹配器 <code>(())</code> 将匹配 <code>{()}</code>，而 <code>{{}}</code> 不行。字符 <code>$</code> 不能按字面意义匹配或转换。</p>
-<p>当将当前匹配的匹配段转发给另一个声明宏时，第二个宏中的匹配器看到的将是此匹配段类型的不透明抽象句法树(opaque AST)。第二个宏不能使用字面量token 来匹配匹配器中的这个匹配段，唯一可看到/使用的就是此匹配段类型一样的匹配段选择器(fragment specifier)。但匹配段类型 <code>ident</code>、<code>lifetime</code>、和 <code>tt</code> 是几个例外，它们<em>可以</em>通过字面量token 进行匹配。下面示例展示了这一限制：（译者注：匹配段选择器和匹配段可以看做是同一回事儿，宏中各部件的定义可以凑合着看看译者未能翻译完成的<a href="macro-ambiguity.html">宏定义规范</a>）</p>
+<p>在匹配器和转码器中，token <code>$</code> 用于从宏引擎中调用特殊行为（下文<a href="macros-by-example.html#metavariables">元变量</a>和<a href="macros-by-example.html#repetitions">重复元</a>中有详述）。不属于此类调用的 token 将按字面意义进行匹配和转码，除了一个例外。这个例外是匹配器的外层定界符将匹配任何一对定界符。因此，比如匹配器 <code>(())</code> 将匹配 <code>{()}</code>，而 <code>{{}}</code> 不行。字符 <code>$</code> 不能按字面意义匹配或转码。</p>
+<p>当将当前匹配的匹配段转发给另一个声明宏时，第二个宏中的匹配器看到的将是此匹配段类型的不透明抽象句法树(opaque AST)。第二个宏不能使用字面量token 来匹配匹配器中的这个匹配段，唯一可看到/使用的就是此匹配段类型一样的匹配段选择器(fragment specifier)。但匹配段类型 <code>ident</code>、<code>lifetime</code>、和 <code>tt</code> 是几个例外，它们<em>可以</em>通过字面量token 进行匹配。下面示例展示了这一限制：（译者注：匹配段选择器和匹配段，以及宏中各部件的定义可以凑合着看看译者未能翻译完成的<a href="macro-ambiguity.html">宏定义规范</a>）</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -1561,7 +1567,7 @@ macro_rules! bar {
 foo!(3);
 <span class="boring">}
 </span></code></pre></pre>
-<p>以下示例展示了 <code>tt</code> 类型的匹配段在转换一次之后生成的 token 如何能够再次直接匹配：</p>
+<p>以下示例展示了 <code>tt</code> 类型的匹配段在成功匹配（转码）一次之后生成的 tokens 如何能够再次直接匹配：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -1579,11 +1585,11 @@ foo!(3);
 </span></code></pre></pre>
 <h2><a class="header" href="#metavariables" id="metavariables">Metavariables</a></h2>
 <h2><a class="header" href="#元变量" id="元变量">元变量</a></h2>
-<p>在匹配器中，<code>$</code><em>名称</em><code>:</code><em>匹配段选择器</em> 这种句法格式匹配符合指定句法类型的 Rust 句法段，并将其绑定到元变量 <code>$</code><em>名称</em>上。有效的匹配段选择器包括：</p>
+<p>在匹配器中，<code>$</code><em>名称</em><code>:</code><em>匹配段选择器</em> 这种句法格式匹配符合指定句法类型的 Rust 句法段，并将其绑定到元变量 <code>$</code><em>名称</em> 上。有效的匹配段选择器包括：</p>
 <ul>
 <li><code>item</code>: <a href="items.html"><em>数据项</em></a></li>
 <li><code>block</code>: <a href="expressions/block-expr.html"><em>块表达式</em></a></li>
-<li><code>stmt</code>: 去除了句尾分号的<a href="statements.html"><em>语句</em></a>（排除需要分号的数据项语句）</li>
+<li><code>stmt</code>: <a href="statements.html"><em>语句</em></a>，注意此选择器不匹配句尾的分号（如果匹配器中提供了分号，会被当做分隔符），但碰到分号是自身的一部分的数据项语句的情况又会匹配。</li>
 <li><code>pat</code>: <a href="patterns.html"><em>模式</em></a></li>
 <li><code>expr</code>: <a href="expressions.html"><em>表达式</em></a></li>
 <li><code>ty</code>: <a href="types.html#type-expressions"><em>类型</em></a></li>
@@ -1595,7 +1601,7 @@ foo!(3);
 <li><code>vis</code>: 可能为空的<a href="visibility-and-privacy.html"><em>可见性</em></a>限定符</li>
 <li><code>literal</code>: 匹配 <code>-</code><sup>?</sup><a href="expressions/literal-expr.html"><em>字面量表达式</em></a></li>
 </ul>
-<p>因为匹配段类型已在匹配器中指定了，则在转码器中，元变量只简单地用 <code>$</code><em>名称</em> 这种形式来指代就行了。元变量最终将被替换为跟它们匹配上的句法元素。元变量关键字 <code>$crate</code> 可以用来指代当前的 crate（请参阅后面的<a href="macros-by-example.html#hygiene">卫生性(hygiene)</a>章节）。元变量可以被多次转换，也可以完全不转换。</p>
+<p>因为匹配段类型已在匹配器中指定了，则在转码器中，元变量只简单地用 <code>$</code><em>名称</em> 这种形式来指代就行了。元变量最终将被替换为跟它们匹配上的句法元素。元变量关键字 <code>$crate</code> 可以用来指代当前的 crate（请参阅后面的<a href="macros-by-example.html#hygiene">卫生性(hygiene)</a>章节）。元变量可以被多次转码，也可以完全不转码。</p>
 <h2><a class="header" href="#repetitions" id="repetitions">Repetitions</a></h2>
 <h2><a class="header" href="#重复元" id="重复元">重复元</a></h2>
 <p>在匹配器和转码器中，重复元被表示为：将需要重复的 token 放在 <code>$(</code>…<code>)</code> 内，然后后跟一个重复运算符(repetition operator)，这两者之间可以放置一个可选的分隔符(separator token)。分隔符可以是除定界符或重复运算符之外的任何 token，其中分号(<code>;</code>)和逗号(<code>,</code>)最常见。例如： <code>$( $i:ident ),*</code> 表示用逗号分隔的任何数量的标识符。嵌套的重复元是合法的。</p>
@@ -1606,8 +1612,8 @@ foo!(3);
 <li><code>?</code> — 表示一个可选的匹配段，可以出现零次或一次。</li>
 </ul>
 <p>因为 <code>?</code> 表示最多出现一次，所以它不能与分隔符一起使用。</p>
-<p>通过分隔符的分隔，重复的匹配段都会被匹配和转换为指定的数量的匹配段。元变量就和这些每个段中的重复元相匹配。例如，之前示例中的 <code>$( $i:ident ),*</code> 将 <code>$i</code> 去匹配列表中的所有标识符。</p>
-<p>在转换过程中，重复元会受到额外的限制，以便于编译器知道该如何正确地扩展它们：</p>
+<p>通过分隔符的分隔，重复的匹配段都会被匹配和转码为指定的数量的匹配段。元变量就和这些每个段中的重复元相匹配。例如，之前示例中的 <code>$( $i:ident ),*</code> 将 <code>$i</code> 去匹配列表中的所有标识符。</p>
+<p>在转码过程中，重复元会受到额外的限制，以便于编译器知道该如何正确地扩展它们：</p>
 <ol>
 <li>在转码器中，元变量必须与它在匹配器中出现的次数、指示符类型以及其在重复元内的嵌套顺序都完全相同。因此，对于匹配器 <code>$( $i:ident ),*</code>，转码器 <code>=&gt; { $i }</code>, <code>=&gt; { $( $( $i)* )* }</code> 和 <code>=&gt; { $( $i )+ }</code> 都是非法的，但是 <code>=&gt; { $( $i );* }</code> 是正确的，它用分号分隔的标识符列表替换了逗号分隔的标识符列表。</li>
 <li>转码器中的每个重复元必须至少包含一个元变量，以便确定扩展多少次。如果在同一个重复元中出现多个元变量，则它们必须绑定到相同数量的匹配段上，不能有的多，有的少。例如，<code>( $( $i:ident ),* ; $( $j:ident ),* ) =&gt;( $( ($i,$j) ),*</code> 里，绑定到 <code>$j</code> 的匹配段的数量必须与绑定到 <code>$i</code> 上的相同。这意味着用 <code>(a, b, c; d, e, f</code>) 调用这个宏是合法的，并且可扩展到 <code>((a,d), (b,e), (c,f))</code>，但是 <code>(a, b, c; d, e)</code> 是非法的，因为前后绑定的数量不同。此要求适用于嵌套的重复元的每一层。</li>
@@ -1800,7 +1806,7 @@ fn foo() {}
 </span><span class="boring">fn main() {
 </span>#[macro_export(local_inner_macros)]
 macro_rules! helped {
-    () =&gt; { helper!() } // 自动转换为 $crate::helper!().
+    () =&gt; { helper!() } // 自动转码为 $crate::helper!().
 }
 
 #[macro_export]
@@ -1811,7 +1817,7 @@ macro_rules! helper {
 </span></code></pre></pre>
 <h2><a class="header" href="#follow-set-ambiguity-restrictions" id="follow-set-ambiguity-restrictions">Follow-set Ambiguity Restrictions</a></h2>
 <h2><a class="header" href="#随集歧义限制译者注该节还需要继续校对打磨主要难点还是因为附录的宏定义规范译者还没有能全部搞懂" id="随集歧义限制译者注该节还需要继续校对打磨主要难点还是因为附录的宏定义规范译者还没有能全部搞懂">随集歧义限制（译者注：该节还需要继续校对打磨，主要难点还是因为附录的宏定义规范译者还没有能全部搞懂）</a></h2>
-<p>宏系统使用的解析器相当强大，但是为了防止其在 Rust 的当前或未来版本中出现二义性解析，对它做出了限制。特别地，在二义性展开的规则之外，增加了一条：非终结符(nonterminal)必须后跟一个已经确定为可以用来安全分隔匹配段的分隔符。</p>
+<p>宏系统使用的解析器相当强大，但是为了防止其在 Rust 的当前或未来版本中出现二义性解析，因此对它做出了限制。特别地，在消除二义性展开的基本规则之外又增加了一条：元变量匹配的非终结符(nonterminal)必须后跟一个已经确定为可以用来安全分隔匹配段的分隔符。</p>
 <p>例如，像 <code>$i:expr [ , ]</code> 这样的宏匹配器在现今的 Rust 中理论上是可以接受的，因为现在 <code>[,]</code> 不可能是合法表达式的一部分，因此解析始终是明确的。但是，由于 <code>[</code> 可以开始一个尾随表达式(trailing expressions)，因此 <code>[</code> 不是一个可以安全排除在表达式后面出现的字符。如果在接下来的 Rust 版本中接受了 <code>[,]</code>，那么这个匹配器就会产生歧义或是错误解析，破坏正常代码。但是，像<code>$i:expr,</code> 或 <code>$i:expr;</code> 这样的匹配符始终是合法的，因为 <code>,</code> 和<code>;</code> 是合法的表达式分隔符。目前规范中的规则是：（译者注：下面的规则不是绝对的，因为宏的基础理论还在发展中。）</p>
 <ul>
 <li>
@@ -1853,7 +1859,7 @@ commit: a1ef5a09c0281b0f2a65c18670e927ead61eb1b2 <br />
 <li><a href="procedural-macros.html#derive-macros">派生宏(derive macros)</a>- <code>#[derive(CustomDerive)]</code></li>
 <li><a href="procedural-macros.html#attribute-macros">属性宏(attribute macros)</a> - <code>#[CustomAttribute]</code></li>
 </ul>
-<p>过程宏允许在编译时运行对 Rust 句法进行操作的代码，它可以在消费掉一些 Rust 句法输入的同时产生新的 Rust 句法输出。可以将过程宏想象成是从一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 到另一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 的映射函数。</p>
+<p>过程宏允许在编译时运行对 Rust 句法进行操作的代码，它可以在消费掉一些 Rust 句法输入的同时产生新的 Rust 句法输出。可以将过程宏想象成是从一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 到另一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 的函数映射。</p>
 <p>过程宏必须在 <a href="linkage.html">crate 类型</a>为 <code>proc-macro</code> 的 crate 中定义。</p>
 <blockquote>
 <p><strong>注意</strong>: 使用 Cargo 时，定义过程宏的 crate 的配置文件里要使用 <code>proc-macro</code>键做如下设置：</p>
@@ -1870,7 +1876,7 @@ proc-macro = true
 <p>所有类型的 token 都有一个与之关联的 <code>Span</code>。<code>Span</code> 是一个不透明的值，不能被修改，但可以被制造。<code>Span</code> 表示程序内的源代码范围，主要用于错误报告。可以事先（通过函数 <code>set_span</code>）配置任何 token 的 <code>Span</code>。</p>
 <h3><a class="header" href="#procedural-macro-hygiene" id="procedural-macro-hygiene">Procedural macro hygiene</a></h3>
 <h3><a class="header" href="#过程宏的卫生性" id="过程宏的卫生性">过程宏的卫生性</a></h3>
-<p>过程宏是<em>非卫生的(unhygienic)</em>。这意味着它的行为就好像它输出的token流是被简单地内联写入它周围的代码中一样。这意味着它会受到外部数据项的影响，也会影响外部导入。</p>
+<p>过程宏是<em>非卫生的(unhygienic)</em>。这意味着它的行为就好像它输出的 token流是被简单地内联写入它周围的代码中一样。这意味着它会受到外部数据项的影响，也会影响外部导入。</p>
 <p>鉴于此限制，宏作者需要小心地确保他们的宏能在尽可能多的上下文中正常工作。这通常包括对库中数据项使用绝对路径(例如，使用 <code>::std::option::Option</code> 而不是 <code>Option</code>)，或者确保生成的函数具有不太可能与其他函数冲突的名称（如 <code>__internal_foo</code>，而不是 <code>foo</code>）。</p>
 <h3><a class="header" href="#function-like-procedural-macros" id="function-like-procedural-macros">Function-like procedural macros</a></h3>
 <h3><a class="header" href="#类函数过程宏" id="类函数过程宏">类函数过程宏</a></h3>
@@ -1901,9 +1907,9 @@ fn main() {
 <p>类函数过程宏可以在任何宏调用位置调用，这些位置包括<a href="statements.html">语句</a>、<a href="expressions.html">表达式</a>、<a href="patterns.html">模式</a>、<a href="types.html#type-expressions">类型表达式</a>、<a href="items.html">数据项</a>可以出现的位置（包括<a href="items/external-blocks.html"><code>extern</code>块</a>里、固有(inherent)<a href="items/implementations.html">实现</a>里和 trait实现里、以及 <a href="items/traits.html">trait声明</a>里）。</p>
 <h3><a class="header" href="#derive-macros" id="derive-macros">Derive macros</a></h3>
 <h3><a class="header" href="#派生宏" id="派生宏">派生宏</a></h3>
-<p><em>派生宏</em>为<a href="attributes/derive.html">派生(<code>derive</code>)属性</a>定义新输入。这类宏在给定输入<a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/enumerations.html">枚举(<code>enum</code>)</a>或<a href="items/unions.html">联合体(<code>union</code>)</a>token流的情况下创建新<a href="items.html">数据项</a>。它们也可以定义<a href="procedural-macros.html#derive-macro-helper-attributes">派生宏辅助属性</a>。</p>
+<p><em>派生宏</em>为<a href="attributes/derive.html">派生(<code>derive</code>)属性</a>定义新输入。这类宏在给定输入<a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/enumerations.html">枚举(<code>enum</code>)</a>或<a href="items/unions.html">联合体(<code>union</code>)</a> token流的情况下创建新<a href="items.html">数据项</a>。它们也可以定义<a href="procedural-macros.html#derive-macro-helper-attributes">派生宏辅助属性</a>。</p>
 <p>自定义派生宏由带有 <code>proc_macro_derive</code>属性和 <code>(TokenStream) -&gt; TokenStream</code>签名的<a href="visibility-and-privacy.html">公有</a>可见性<a href="items/functions.html">函数</a>定义。</p>
-<p>输入 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是带有 <code>derive</code> 属性的数据项的token流。输出 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 必须是一组数据项，然后将这组数据项追加到输入 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 中的那条数据项所在的<a href="items/modules.html">模块</a>或<a href="expressions/block-expr.html">块</a>中。</p>
+<p>输入 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是带有 <code>derive</code> 属性的数据项的 token流。输出 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 必须是一组数据项，然后将这组数据项追加到输入 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 中的那条数据项所在的<a href="items/modules.html">模块</a>或<a href="expressions/block-expr.html">块</a>中。</p>
 <p>下面是派生宏的一个示例。它没有对输入执行任何有用的操作，只是追加了一个函数 <code>answer</code>。</p>
 <!-- ignore: test doesn't support proc-macro -->
 <pre><code class="language-rust ignore"><span class="boring">#![crate_type = &quot;proc-macro&quot;]
@@ -2012,7 +2018,7 @@ fn invoke4() {}
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md">crates-and-source-files.md</a><br />
 commit: 277587a55aa24d8f6a66ddb43493e150c916ef43 <br />
-本译文最后维护日期：2020-10-19</p>
+本译文最后维护日期：2020-11-8</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -2032,10 +2038,10 @@ SHEBANG : <code>#!</code> ~<code>\n</code><sup>+</sup><a href="crates-and-source
 </blockquote>
 <p>Rust 的语义有编译时和运行时之间的<em>阶段差异(phase distinction)</em>。<sup class="footnote-reference"><a href="#phase-distinction">1</a></sup> 其中<em>静态解释</em>的语义规则控制编译的成败，而<em>动态解释</em>的语义规则控制程序在运行时的行为。</p>
 <p>编译模型以 <em>crate</em> 为中心。每次编译都以源码的形式处理单个的 crate，如果成功，将生成二进制形式的单个 crate：可执行文件或某种类型的库文件。<sup class="footnote-reference"><a href="#cratesourcefile">2</a></sup></p>
-<p>crate 是编译和链接的单元，也是版本控制、版本分发和运行时加载的基本单元。一个 crate 包含一个嵌套的带作用域的<a href="items/modules.html">模块</a><em>树</em>。这个树的顶层是一个匿名的模块(从模块内部路径的角度来看)，并且一个 crate 中的任何数据项都有一个规范的<a href="paths.html">模块路径</a>，表示它在 crate 的模块树中的位置。</p>
+<p>crate 是编译和链接的单元，也是版本控制、版本分发和运行时加载的基本单元。一个 crate 包含一个嵌套的带作用域的<a href="items/modules.html">模块</a><em>树</em>。这个树的顶层是一个匿名的模块（从模块内部路径的角度来看），并且一个 crate 中的任何数据项都有一个规范的<a href="paths.html">模块路径</a>来表示它在 crate 的模块树中的位置。</p>
 <p>Rust 编译器总是使用单个源文件作为输入来开启编译过程的，并且总是生成单个输出 crate。对输入源文件的处理可能导致其他源文件作为模块被加载进来。源文件的扩展名为 <code>.rs</code>。</p>
-<p>Rust 源文件描述了一个模块，其名称和位置（在当前 crate 的模块树中）是从源文件外部定义的：要么通过引用源文件中的显式<a href="items/modules.html">模块(<em>Module</em>)</a>项，要么由 crate 本身的名称定义。每个源文件都是一个模块，但并非每个模块都需要自己的源文件：多个<a href="items/modules.html">模块定义</a>可以嵌套在同一个文件中。</p>
-<p>每个源文件包含一个由零个或多个<a href="items.html">数据项</a>定义组成的序列，并且这些源文件都可选地从应用于其内部模块的任意数量的<a href="attributes.html">属性</a>开始，大部分这些属性都会会影响编译器行为。匿名的 crate 根模块可带有应用于整个 crate 的附加属性。</p>
+<p>Rust 源文件描述了一个模块，其名称和（在当前 crate 的模块树中的）位置是从源文件外部定义的：要么通过引用源文件中的显式<a href="items/modules.html">模块(<em>Module</em>)</a>项，要么由 crate 本身的名称定义。每个源文件都是一个模块，但并非每个模块都需要自己的源文件：多个<a href="items/modules.html">模块定义</a>可以嵌套在同一个文件中。</p>
+<p>每个源文件包含一个由零个或多个<a href="items.html">数据项</a>定义组成的代码序列，并且这些源文件都可选地从应用于其内部模块的任意数量的<a href="attributes.html">属性</a>开始，大部分这些属性都会会影响编译器行为。匿名的 crate 根模块可附带一些应用于整个 crate 的属性。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -2052,9 +2058,9 @@ SHEBANG : <code>#!</code> ~<code>\n</code><sup>+</sup><a href="crates-and-source
 </span></code></pre></pre>
 <h2><a class="header" href="#byte-order-mark" id="byte-order-mark">Byte order mark</a></h2>
 <h2><a class="header" href="#字节顺序标记bom" id="字节顺序标记bom">字节顺序标记(BOM)</a></h2>
-<p>可选的<a href="https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8"><em>UTF8字节序标记</em></a>（UTF8BOM 产生式）表示该文件是用 UTF8 编码的。它只能出现在文件的开头，并且编译器会忽略它。</p>
+<p>可选的<a href="https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8"><em>UTF8字节序标记</em></a>（UTF8BOM产生式）表示该文件是用 UTF8 编码的。它只能出现在文件的开头，并且编译器会忽略它。</p>
 <h2><a class="header" href="#shebang" id="shebang">Shebang</a></h2>
-<p>源文件可以有一个<a href="https://en.wikipedia.org/wiki/Shebang_(Unix)"><em>shebang</em></a>（SHEBANG 产生式），它指示操作系统使用什么程序来执行此文件。它本质上是将源文件作为可执行脚本处理。shebang 只能出现在文件的开头(但是在可选的 <em>UTF8BOM</em> 之后)。它会被编译器忽略。例如：</p>
+<p>源文件可以有一个<a href="https://en.wikipedia.org/wiki/Shebang_(Unix)"><em>shebang</em></a>（SHEBANG产生式），它指示操作系统使用什么程序来执行此文件。它本质上是将源文件作为可执行脚本处理。shebang 只能出现在文件的开头（但是要在可选的 <em>UTF8BOM</em> 生产式之后）。它会被编译器忽略。例如：</p>
 <!-- ignore: tests don't like shebang -->
 <pre><code class="language-rust ignore">#!/usr/bin/env rustx
 
@@ -2062,10 +2068,10 @@ fn main() {
     println!(&quot;Hello!&quot;);
 }
 </code></pre>
-<p>为了避免与<a href="attributes.html">属性</a>混淆， Rust 对 shebang 语法做了一个限制， 是 <code>#!</code> 字符不能后跟 token <code>[</code>，忽略中间的<a href="comments.html">注释</a>或<a href="whitespace.html">空白符</a>。如果违反此限制，则不会将其视为 shebang，而会将其视为属性的开始。</p>
+<p>为了避免与<a href="attributes.html">属性</a>混淆， Rust 对 shebang 句法做了一个限制：是 <code>#!</code> 字符不能后跟 token <code>[</code>，忽略中间的<a href="comments.html">注释</a>或<a href="whitespace.html">空白符</a>。如果违反此限制，则不会将其视为 shebang，而会将其视为属性的开始。</p>
 <h2><a class="header" href="#preludes-and-no_std" id="preludes-and-no_std">Preludes and <code>no_std</code></a></h2>
 <h2><a class="header" href="#预导入包和-no_std" id="预导入包和-no_std">预导入包和 <code>no_std</code></a></h2>
-<p>所有的 crate 都有一个 <em>预导入包</em>，它会自动将一个特定模块（<em>预导入包模块</em>）的名称插入到每个<a href="items/modules.html">模块</a>的作用域内，并将一个 <a href="items/extern-crates.html"><code>extern crate</code></a> 插入到当前 crate 的根模块中。默认情况下，这个预导入包为<em>标准预导入包(standard prelude)</em>。它链接的 crate 是 <a href="https://doc.rust-lang.org/std/index.html"><code>std</code></a>，预导入模块是 <a href="https://doc.rust-lang.org/std/prelude/index.html"><code>std::prelude::v1</code></a>。</p>
+<p>所有的 crate 都有一个 <em>预导入包(prelude)</em>，它会自动将一个特定模块（<em>预导入包模块</em>）里的名称插入到每个<a href="items/modules.html">模块</a>的作用域内，并将一个 <a href="items/extern-crates.html"><code>extern crate</code></a> 插入到当前 crate 的根模块中。默认情况下，这个预导入包为<em>标准预导入包(standard prelude)</em>。它链接的 crate 是 <a href="https://doc.rust-lang.org/std/index.html"><code>std</code></a>，预导入模块是 <a href="https://doc.rust-lang.org/std/prelude/index.html"><code>std::prelude::v1</code></a>。</p>
 <p>在根 crate 模块上使用 <code>no_std</code> <a href="attributes.html">属性</a>，可以将预导入包改成 <em>核心预导入包(core prelude)</em>。它链接的 crate 是 <a href="https://doc.rust-lang.org/core/index.html"><code>core</code></a>，预导入模块为 <a href="https://doc.rust-lang.org/core/prelude/index.html"><code>core::prelude::v1</code></a>。当 crate 的目标平台不支持标准库或有意不使用标准库的功能时，使用核心预导入包而不是标准预导入包是可行的。这么做放弃的主要功能是动态内存分配（例如：<code>Box</code> 和 <code>Vec</code>）、文件和网络功能（例如： <code>std::fs</code> 和 <code>std::io</code>）。</p>
 <div class="warning">
 <p>警告：使用 <code>no_std</code> 不会阻止主动把标准库链接进来的操作。仍然可以合法地将 <code>extern crate std;</code> 这条语句引入到当前 crate 中，这样，其完整的依赖关系也可以成功地加载到当前 crate 中。</p>
@@ -2437,7 +2443,7 @@ commit: fbf34356b709cfc0debb01acaaff038d4e339aab <br />
 <span class="boring">}
 </span></code></pre></pre>
 <p>模块和类型共享相同的命名空间。禁止在同一个作用域中声明与此作用域下模块同名的命名类型(named type)：也就是说，类型定义、trait、结构体、枚举、联合体、类型参数或 crate 不能在其作用域中屏蔽此作用域中也生效的模块名称，反之亦然。使用 <code>use</code> 引入到当前作用域的数据项也受这个限制。</p>
-<p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>mod</code>之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从token流中移除之前利用此句法来使用此关键字。</p>
+<p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>mod</code>之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从 token流中移除之前利用此句法来使用此关键字。</p>
 <h2><a class="header" href="#module-source-filenames" id="module-source-filenames">Module Source Filenames</a></h2>
 <h2><a class="header" href="#模块的源文件名" id="模块的源文件名">模块的源文件名</a></h2>
 <p>没有代码体的模块是从外部文件加载的。当模块没有 <code>path</code> 属性限制时，文件的路径和逻辑上的<a href="items/../paths.html">模块路径</a>互为镜像。祖先模块的路径组件(path component)是此模块文件的目录，而模块的内容存在一个以该模块名为文件名，再加上 <code>.rs</code> 为扩展文件名的文件中。例如，下面的示例可以反映这种模块结构和文件系统结构相互映射的关系：</p>
@@ -2964,7 +2970,7 @@ async fn safe_example() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>应用于数据项的过程宏属性所使用的惰性辅助属性也是允许的，但是要注意不要在最终（输出）的 <code>TokenStream</code> 中包含这些惰性属性。</p>
-<p>例如，下面的代码定义了一个未在任何地方正式定义的惰性属性 <code>some_inert_attribute</code>，而 <code>some_proc_macro_attribute</code> 过程宏负责检测它的存在，并从输出token流 <code>TokenStream</code> 中删除它。</p>
+<p>例如，下面的代码定义了一个未在任何地方正式定义的惰性属性 <code>some_inert_attribute</code>，而 <code>some_proc_macro_attribute</code> 过程宏负责检测它的存在，并从输出 token流 <code>TokenStream</code> 中删除它。</p>
 <!-- ignore: requires proc macro -->
 <pre><code class="language-rust ignore">#[some_proc_macro_attribute]
 fn foo_oof(#[some_inert_attribute] arg: u8) {
@@ -4050,7 +4056,7 @@ commit: fbf34356b709cfc0debb01acaaff038d4e339aab <br />
 </blockquote>
 <p>外部块提供未在当前 crate 中<em>定义</em>的数据项的<em>声明</em>，外部块是 Rust 外部函数接口的基础。这其实是某种类型的不受安全检查的导入。</p>
 <p>外部块中允许两种形式的数据项<em>声明</em>：<a href="items/functions.html">函数</a>和<a href="items/static-items.html">静态项</a>。只有在非安全(<code>unsafe</code>)上下文中才能调用在外部块中声明的函数或访问在外部块中声明的静态项。</p>
-<p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>extern</code>之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从token流中移除之前利用此句法来使用此关键字。</p>
+<p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>extern</code>之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从 token流中移除之前利用此句法来使用此关键字。</p>
 <h2><a class="header" href="#functions-1" id="functions-1">Functions</a></h2>
 <h2><a class="header" href="#函数-1" id="函数-1">函数</a></h2>
 <p>外部块中的函数与其他 Rust 函数的声明方式相同，但这里中的函数可以没有主体，直接以分号结尾。外部块中的函数的参数不允许使用模式，只能使用<a href="items/../identifiers.html">标识符/IDENTIFIER</a>或 <code>_</code> 。</p>
@@ -11173,69 +11179,26 @@ commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 <br />
 <h2><a class="header" href="#definitions--conventions" id="definitions--conventions">Definitions &amp; Conventions</a></h2>
 <h2><a class="header" href="#定义和约定" id="定义和约定">定义和约定</a></h2>
 <ul>
-<li>
-<p><code>macro</code>：宏，源代码中任何可调用的类似 <code>foo!(...)</code> 的东西。</p>
-</li>
-<li>
-<p><code>MBE</code>：macro-by-example，声明宏，由 <code>macro_rules</code> 定义的宏。</p>
-</li>
-<li>
-<p><code>matcher</code>：匹配器，<code>macro_rules</code>调用中一条规则的左侧部分，或其子部分(subportion)。（译者注：子部分的意思是匹配器可嵌套，可相互包含）</p>
-</li>
-<li>
-<p><code>macro parser</code>：宏解释器，Rust 解析器中的一段程序，这段程序使用从所有命中的匹配器中推导出的文法规则来解析宏输入。</p>
-</li>
-<li>
-<p><code>fragment</code>：匹配段，给定匹配器将接受（或“匹配”）的 Rust 句法对象。</p>
-</li>
-<li>
-<p><code>repetition</code> ：重复元，遵循正则重复模式的匹配段。</p>
-</li>
-<li>
-<p><code>NT</code>：non-terminal，非终结符，可以出现在匹配器中的各种“元变量”或重复元匹配器，在声明宏(MBE)句法中用前导字符 <code>$</code> 标明。</p>
-</li>
-<li>
-<p><code>simple NT</code>：简单NT，“元变量”类型的非终结符（下面会进一步讨论）。</p>
-</li>
-<li>
-<p><code>complex NT</code>：复杂NT，重复元类型的非终结符，通过重复元操作符（<code>\*</code>, <code>+</code>, <code>?</code>）指定重复次数。 <!-- a repetition matching non-terminal, specified via repetition operators (`\*`, `+`, `?`). --></p>
-</li>
-<li>
-<p><code>token</code>：匹配器中不可再细分的元素；例如，标识符、操作符、开/闭定界符<em>和</em>简单NT(simple NT)。</p>
-</li>
-<li>
-<p><code>token tree</code>：token树，token树由 token(叶)、复杂NT和子token树（token树的有限序列）组成的树形数据结构。</p>
-</li>
-<li>
-<p><code>delimiter token</code>：定界符，一种用于划分一个匹配段的结束和下一个匹配段的开始的 token。</p>
-</li>
-<li>
-<p><code>separator token</code>：分隔符，复杂NT 中的可选定界符，用在重复元里以分隔元素。</p>
-</li>
-<li>
-<p><code>separated complex NT</code>：带分隔符的复杂NT，分隔符是重复元的一部分的复杂NT。</p>
-</li>
-<li>
-<p><code>delimited sequence</code>：有界序列，在序列的开始和结束处使用了适当的开闭定界符的 token树。</p>
-</li>
-<li>
-<p><code>empty fragment</code>：空匹配段，一种不可见的 Rust 句法对象，它分割各种token，例如空白符(whitespace)或者（在某些词法上下文中的）空标记序列。</p>
-</li>
-<li>
-<p><code>fragment specifier</code>：匹配段选择器，简单NT中的后段标识符部分，指定NT接受哪个匹配段。<!-- The identifier in a simple NT that specifies which fragment the NT accepts. tobemodify--></p>
-</li>
-<li>
-<p><code>language</code>：与上下文无关的语言。</p>
-</li>
-<li>
-<p><code>fragment specifier</code>: The identifier in a simple NT that specifies which
-fragment the NT accepts.</p>
-</li>
-<li>
-<p><code>language</code>: a context-free language.
-示例：</p>
-</li>
+<li><code>macro</code>：宏，源代码中任何可调用的类似 <code>foo!(...)</code> 的东西。</li>
+<li><code>MBE</code>：macro-by-example，声明宏，由 <code>macro_rules</code> 定义的宏。</li>
+<li><code>matcher</code>：匹配器，<code>macro_rules</code>调用中一条规则的左侧部分，或其子部分(subportion)。（译者注：子部分的意思是匹配器可嵌套，可相互包含）</li>
+<li><code>macro parser</code>：宏解释器，Rust 解析器中的一段程序，这段程序使用从所有命中的匹配器中推导出的文法规则来解析宏输入。</li>
+<li><code>fragment</code>：匹配段，给定匹配器将接受（或“匹配”）的 Rust 句法对象。</li>
+<li><code>repetition</code> ：重复元，遵循正则重复模式的匹配段。</li>
+<li><code>NT</code>：non-terminal，非终结符，可以出现在匹配器中的各种“元变量”或重复元匹配器，在声明宏(MBE)句法中用前导字符 <code>$</code> 标明。</li>
+<li><code>simple NT</code>：简单NT，“元变量”类型的非终结符（下面会进一步讨论）。</li>
+<li><code>complex NT</code>：复杂NT，重复元类型的非终结符，通过重复元操作符（<code>\*</code>, <code>+</code>, <code>?</code>）指定重复次数。 <!-- a repetition matching non-terminal, specified via repetition operators (`\*`, `+`, `?`). --></li>
+<li><code>token</code>：匹配器中不可再细分的元素；例如，标识符、操作符、开/闭定界符<em>和</em>简单NT(simple NT)。</li>
+<li><code>token tree</code>：token树，token树由 token(叶)、复杂NT和子token树（token树的有限序列）组成的树形数据结构。</li>
+<li><code>delimiter token</code>：定界符，一种用于划分一个匹配段的结束和下一个匹配段的开始的 token。</li>
+<li><code>separator token</code>：分隔符，复杂NT 中的可选定界符，用在重复元里以分隔元素。</li>
+<li><code>separated complex NT</code>：带分隔符的复杂NT，分隔符是重复元的一部分的复杂NT。</li>
+<li><code>delimited sequence</code>：有界序列，在序列的开始和结束处使用了适当的开闭定界符的 token树。</li>
+<li><code>empty fragment</code>：空匹配段，一种不可见的 Rust 句法对象，它分割各种 token，例如空白符(whitespace)或者（在某些词法上下文中的）空标记序列。</li>
+<li><code>fragment specifier</code>：匹配段选择器，简单NT 中的后段标识符部分，指定 NT 接受哪种类型的匹配段。<!-- The identifier in a simple NT that specifies which fragment the NT accepts. tobemodify--></li>
+<li><code>language</code>：与上下文无关的语言。</li>
 </ul>
+<p>示例：</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

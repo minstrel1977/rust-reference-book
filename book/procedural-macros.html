@@ -178,7 +178,7 @@ commit: a1ef5a09c0281b0f2a65c18670e927ead61eb1b2 <br />
 <li><a href="#derive-macros">派生宏(derive macros)</a>- <code>#[derive(CustomDerive)]</code></li>
 <li><a href="#attribute-macros">属性宏(attribute macros)</a> - <code>#[CustomAttribute]</code></li>
 </ul>
-<p>过程宏允许在编译时运行对 Rust 句法进行操作的代码，它可以在消费掉一些 Rust 句法输入的同时产生新的 Rust 句法输出。可以将过程宏想象成是从一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 到另一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 的映射函数。</p>
+<p>过程宏允许在编译时运行对 Rust 句法进行操作的代码，它可以在消费掉一些 Rust 句法输入的同时产生新的 Rust 句法输出。可以将过程宏想象成是从一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 到另一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 的函数映射。</p>
 <p>过程宏必须在 <a href="linkage.html">crate 类型</a>为 <code>proc-macro</code> 的 crate 中定义。</p>
 <blockquote>
 <p><strong>注意</strong>: 使用 Cargo 时，定义过程宏的 crate 的配置文件里要使用 <code>proc-macro</code>键做如下设置：</p>
@@ -195,7 +195,7 @@ proc-macro = true
 <p>所有类型的 token 都有一个与之关联的 <code>Span</code>。<code>Span</code> 是一个不透明的值，不能被修改，但可以被制造。<code>Span</code> 表示程序内的源代码范围，主要用于错误报告。可以事先（通过函数 <code>set_span</code>）配置任何 token 的 <code>Span</code>。</p>
 <h3><a class="header" href="#procedural-macro-hygiene" id="procedural-macro-hygiene">Procedural macro hygiene</a></h3>
 <h3><a class="header" href="#过程宏的卫生性" id="过程宏的卫生性">过程宏的卫生性</a></h3>
-<p>过程宏是<em>非卫生的(unhygienic)</em>。这意味着它的行为就好像它输出的token流是被简单地内联写入它周围的代码中一样。这意味着它会受到外部数据项的影响，也会影响外部导入。</p>
+<p>过程宏是<em>非卫生的(unhygienic)</em>。这意味着它的行为就好像它输出的 token流是被简单地内联写入它周围的代码中一样。这意味着它会受到外部数据项的影响，也会影响外部导入。</p>
 <p>鉴于此限制，宏作者需要小心地确保他们的宏能在尽可能多的上下文中正常工作。这通常包括对库中数据项使用绝对路径(例如，使用 <code>::std::option::Option</code> 而不是 <code>Option</code>)，或者确保生成的函数具有不太可能与其他函数冲突的名称（如 <code>__internal_foo</code>，而不是 <code>foo</code>）。</p>
 <h3><a class="header" href="#function-like-procedural-macros" id="function-like-procedural-macros">Function-like procedural macros</a></h3>
 <h3><a class="header" href="#类函数过程宏" id="类函数过程宏">类函数过程宏</a></h3>
@@ -226,9 +226,9 @@ fn main() {
 <p>类函数过程宏可以在任何宏调用位置调用，这些位置包括<a href="statements.html">语句</a>、<a href="expressions.html">表达式</a>、<a href="patterns.html">模式</a>、<a href="types.html#type-expressions">类型表达式</a>、<a href="items.html">数据项</a>可以出现的位置（包括<a href="items/external-blocks.html"><code>extern</code>块</a>里、固有(inherent)<a href="items/implementations.html">实现</a>里和 trait实现里、以及 <a href="items/traits.html">trait声明</a>里）。</p>
 <h3><a class="header" href="#derive-macros" id="derive-macros">Derive macros</a></h3>
 <h3><a class="header" href="#派生宏" id="派生宏">派生宏</a></h3>
-<p><em>派生宏</em>为<a href="attributes/derive.html">派生(<code>derive</code>)属性</a>定义新输入。这类宏在给定输入<a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/enumerations.html">枚举(<code>enum</code>)</a>或<a href="items/unions.html">联合体(<code>union</code>)</a>token流的情况下创建新<a href="items.html">数据项</a>。它们也可以定义<a href="#derive-macro-helper-attributes">派生宏辅助属性</a>。</p>
+<p><em>派生宏</em>为<a href="attributes/derive.html">派生(<code>derive</code>)属性</a>定义新输入。这类宏在给定输入<a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/enumerations.html">枚举(<code>enum</code>)</a>或<a href="items/unions.html">联合体(<code>union</code>)</a> token流的情况下创建新<a href="items.html">数据项</a>。它们也可以定义<a href="#derive-macro-helper-attributes">派生宏辅助属性</a>。</p>
 <p>自定义派生宏由带有 <code>proc_macro_derive</code>属性和 <code>(TokenStream) -&gt; TokenStream</code>签名的<a href="visibility-and-privacy.html">公有</a>可见性<a href="items/functions.html">函数</a>定义。</p>
-<p>输入 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是带有 <code>derive</code> 属性的数据项的token流。输出 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 必须是一组数据项，然后将这组数据项追加到输入 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 中的那条数据项所在的<a href="items/modules.html">模块</a>或<a href="expressions/block-expr.html">块</a>中。</p>
+<p>输入 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 是带有 <code>derive</code> 属性的数据项的 token流。输出 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 必须是一组数据项，然后将这组数据项追加到输入 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 中的那条数据项所在的<a href="items/modules.html">模块</a>或<a href="expressions/block-expr.html">块</a>中。</p>
 <p>下面是派生宏的一个示例。它没有对输入执行任何有用的操作，只是追加了一个函数 <code>answer</code>。</p>
 <!-- ignore: test doesn't support proc-macro -->
 <pre><code class="language-rust ignore"><span class="boring">#![crate_type = &quot;proc-macro&quot;]

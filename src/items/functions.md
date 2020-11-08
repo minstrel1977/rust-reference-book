@@ -265,7 +265,7 @@ fn len(
 
 应用于数据项的过程宏属性所使用的惰性辅助属性也是允许的，但是要注意不要在最终（输出）的 `TokenStream` 中包含这些惰性属性。
 
-例如，下面的代码定义了一个未在任何地方正式定义的惰性属性 `some_inert_attribute`，而 `some_proc_macro_attribute` 过程宏负责检测它的存在，并从输出token流 `TokenStream` 中删除它。
+例如，下面的代码定义了一个未在任何地方正式定义的惰性属性 `some_inert_attribute`，而 `some_proc_macro_attribute` 过程宏负责检测它的存在，并从输出 token流 `TokenStream` 中删除它。
 
 <!-- ignore: requires proc macro -->
 ```rust,ignore

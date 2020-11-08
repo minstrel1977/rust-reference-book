@@ -14,12 +14,12 @@ token 是采用非递归方式的正则文法(regular languages)定义的基本�
 * [标点符号](#punctuation)
 * [分隔符](#delimiters)
 
-在本文档的文法表中，“简单”token以[字符串型产生式(production)][string table production]的形式给出，并以 `monospace` 字体显示。（译者注：本译作的原文中，在文法表之外的行文中也会大量出现这种直接使用简单token 来替代相关名词的做法，一般此时如果译者觉得这种 token 需要翻译时，会使用如：结构体(`struct`) 这种形式来翻译，但读者需要意识到“struct”是文法里的一个 token，能以其字面形式出现在源码里的。）
+在本文档中，“简单”token 会直接在（相关章节头部的）[字串表产生式(production)][string table production]表单中给出，并以 `monospace` 字体显示。（译者注：本译作的原文中，在文法表之外的行文中也会大量出现这种直接使用简单token 来替代相关名词的做法，一般此时如果译者觉得这种 token 需要翻译时，会使用诸如：结构体(`struct`) 这种形式来翻译。读者需要意识到“struct”是文法里的一个 token，能以其字面形式直接出现在源码里。）
 
 ## Literals
 ## 字面量
 
-字面量是一个由单一 token（而不是由一连串 token）组成的表达式，它立即、直接表示它所代表的值，而不是通过名称或其他一些求值/计算规则来引用它。字面量是[常量表达式](const_eval.md#constant-expressions)的一种形式，所以它（主要）用在编译时求值。
+字面量是一个由单一 token（而不是由一连串 tokens）组成的表达式，它立即、直接表示它所代表的值，而不是通过名称或其他一些求值/计算规则来引用它。字面量是[常量表达式](const_eval.md#constant-expressions)的一种形式，所以它（主要）用在编译时求值。
 
 ### Examples
 ### 示例

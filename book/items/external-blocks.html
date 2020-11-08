@@ -199,7 +199,7 @@ commit: fbf34356b709cfc0debb01acaaff038d4e339aab <br />
 </blockquote>
 <p>外部块提供未在当前 crate 中<em>定义</em>的数据项的<em>声明</em>，外部块是 Rust 外部函数接口的基础。这其实是某种类型的不受安全检查的导入。</p>
 <p>外部块中允许两种形式的数据项<em>声明</em>：<a href="functions.html">函数</a>和<a href="static-items.html">静态项</a>。只有在非安全(<code>unsafe</code>)上下文中才能调用在外部块中声明的函数或访问在外部块中声明的静态项。</p>
-<p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>extern</code>之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从token流中移除之前利用此句法来使用此关键字。</p>
+<p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>extern</code>之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从 token流中移除之前利用此句法来使用此关键字。</p>
 <h2><a class="header" href="#functions" id="functions">Functions</a></h2>
 <h2><a class="header" href="#函数" id="函数">函数</a></h2>
 <p>外部块中的函数与其他 Rust 函数的声明方式相同，但这里中的函数可以没有主体，直接以分号结尾。外部块中的函数的参数不允许使用模式，只能使用<a href="../identifiers.html">标识符/IDENTIFIER</a>或 <code>_</code> 。</p>

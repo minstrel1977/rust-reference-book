@@ -205,7 +205,7 @@ commit: fbf34356b709cfc0debb01acaaff038d4e339aab <br />
 <span class="boring">}
 </span></code></pre></pre>
 <p>模块和类型共享相同的命名空间。禁止在同一个作用域中声明与此作用域下模块同名的命名类型(named type)：也就是说，类型定义、trait、结构体、枚举、联合体、类型参数或 crate 不能在其作用域中屏蔽此作用域中也生效的模块名称，反之亦然。使用 <code>use</code> 引入到当前作用域的数据项也受这个限制。</p>
-<p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>mod</code>之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从token流中移除之前利用此句法来使用此关键字。</p>
+<p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>mod</code>之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从 token流中移除之前利用此句法来使用此关键字。</p>
 <h2><a class="header" href="#module-source-filenames" id="module-source-filenames">Module Source Filenames</a></h2>
 <h2><a class="header" href="#模块的源文件名" id="模块的源文件名">模块的源文件名</a></h2>
 <p>没有代码体的模块是从外部文件加载的。当模块没有 <code>path</code> 属性限制时，文件的路径和逻辑上的<a href="../paths.html">模块路径</a>互为镜像。祖先模块的路径组件(path component)是此模块文件的目录，而模块的内容存在一个以该模块名为文件名，再加上 <code>.rs</code> 为扩展文件名的文件中。例如，下面的示例可以反映这种模块结构和文件系统结构相互映射的关系：</p>

@@ -11,7 +11,7 @@
 * [派生宏(derive macros)][Derive macros]- `#[derive(CustomDerive)]`
 * [属性宏(attribute macros)][Attribute macros] - `#[CustomAttribute]`
 
-过程宏允许在编译时运行对 Rust 句法进行操作的代码，它可以在消费掉一些 Rust 句法输入的同时产生新的 Rust 句法输出。可以将过程宏想象成是从一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 到另一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 的映射函数。
+过程宏允许在编译时运行对 Rust 句法进行操作的代码，它可以在消费掉一些 Rust 句法输入的同时产生新的 Rust 句法输出。可以将过程宏想象成是从一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 到另一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 的函数映射。
 
 过程宏必须在 [crate 类型][crate type]为 `proc-macro` 的 crate 中定义。
 
@@ -39,7 +39,7 @@
 ### Procedural macro hygiene
 ### 过程宏的卫生性
 
-过程宏是*非卫生的(unhygienic)*。这意味着它的行为就好像它输出的token流是被简单地内联写入它周围的代码中一样。这意味着它会受到外部数据项的影响，也会影响外部导入。
+过程宏是*非卫生的(unhygienic)*。这意味着它的行为就好像它输出的 token流是被简单地内联写入它周围的代码中一样。这意味着它会受到外部数据项的影响，也会影响外部导入。
 
 鉴于此限制，宏作者需要小心地确保他们的宏能在尽可能多的上下文中正常工作。这通常包括对库中数据项使用绝对路径(例如，使用 `::std::option::Option` 而不是 `Option`)，或者确保生成的函数具有不太可能与其他函数冲突的名称（如 `__internal_foo`，而不是 `foo`）。
 
@@ -83,11 +83,11 @@ fn main() {
 ### Derive macros
 ### 派生宏
 
-*派生宏*为[派生(`derive`)属性][`derive` attribute]定义新输入。这类宏在给定输入[结构体(`struct`)][struct]、[枚举(`enum`)][enum]或[联合体(`union`)][union]token流的情况下创建新[数据项][items]。它们也可以定义[派生宏辅助属性][derive macro helper attributes]。
+*派生宏*为[派生(`derive`)属性][`derive` attribute]定义新输入。这类宏在给定输入[结构体(`struct`)][struct]、[枚举(`enum`)][enum]或[联合体(`union`)][union] token流的情况下创建新[数据项][items]。它们也可以定义[派生宏辅助属性][derive macro helper attributes]。
 
 自定义派生宏由带有 `proc_macro_derive`属性和 `(TokenStream) -> TokenStream`签名的[公有][public]可见性[函数][function]定义。
 
-输入 [`TokenStream`] 是带有 `derive` 属性的数据项的token流。输出 [`TokenStream`] 必须是一组数据项，然后将这组数据项追加到输入 [`TokenStream`] 中的那条数据项所在的[模块][module]或[块][block]中。
+输入 [`TokenStream`] 是带有 `derive` 属性的数据项的 token流。输出 [`TokenStream`] 必须是一组数据项，然后将这组数据项追加到输入 [`TokenStream`] 中的那条数据项所在的[模块][module]或[块][block]中。
 
 下面是派生宏的一个示例。它没有对输入执行任何有用的操作，只是追加了一个函数 `answer`。
 

@@ -2,7 +2,7 @@
 
 >[crates-and-source-files.md](https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md)\
 >commit: 277587a55aa24d8f6a66ddb43493e150c916ef43 \
->本译文最后维护日期：2020-10-19
+>本译文最后维护日期：2020-11-8
 
 > **<sup>句法</sup>**\
 > _Crate_ :\
@@ -22,13 +22,13 @@ Rust 的语义有编译时和运行时之间的*阶段差异(phase distinction)*
 
 编译模型以 _crate_ 为中心。每次编译都以源码的形式处理单个的 crate，如果成功，将生成二进制形式的单个 crate：可执行文件或某种类型的库文件。[^cratesourcefile]
 
-crate 是编译和链接的单元，也是版本控制、版本分发和运行时加载的基本单元。一个 crate 包含一个嵌套的带作用域的[模块][module]*树*。这个树的顶层是一个匿名的模块(从模块内部路径的角度来看)，并且一个 crate 中的任何数据项都有一个规范的[模块路径][module path]，表示它在 crate 的模块树中的位置。
+crate 是编译和链接的单元，也是版本控制、版本分发和运行时加载的基本单元。一个 crate 包含一个嵌套的带作用域的[模块][module]*树*。这个树的顶层是一个匿名的模块（从模块内部路径的角度来看），并且一个 crate 中的任何数据项都有一个规范的[模块路径][module path]来表示它在 crate 的模块树中的位置。
 
 Rust 编译器总是使用单个源文件作为输入来开启编译过程的，并且总是生成单个输出 crate。对输入源文件的处理可能导致其他源文件作为模块被加载进来。源文件的扩展名为 `.rs`。
 
-Rust 源文件描述了一个模块，其名称和位置（在当前 crate 的模块树中）是从源文件外部定义的：要么通过引用源文件中的显式[模块(_Module_)][module]项，要么由 crate 本身的名称定义。每个源文件都是一个模块，但并非每个模块都需要自己的源文件：多个[模块定义][module]可以嵌套在同一个文件中。
+Rust 源文件描述了一个模块，其名称和（在当前 crate 的模块树中的）位置是从源文件外部定义的：要么通过引用源文件中的显式[模块(_Module_)][module]项，要么由 crate 本身的名称定义。每个源文件都是一个模块，但并非每个模块都需要自己的源文件：多个[模块定义][module]可以嵌套在同一个文件中。
 
-每个源文件包含一个由零个或多个[数据项][_Item_]定义组成的序列，并且这些源文件都可选地从应用于其内部模块的任意数量的[属性][attributes]开始，大部分这些属性都会会影响编译器行为。匿名的 crate 根模块可带有应用于整个 crate 的附加属性。
+每个源文件包含一个由零个或多个[数据项][_Item_]定义组成的代码序列，并且这些源文件都可选地从应用于其内部模块的任意数量的[属性][attributes]开始，大部分这些属性都会会影响编译器行为。匿名的 crate 根模块可附带一些应用于整个 crate 的属性。
 
 ```rust
 // 指定 crate 名称.
@@ -44,11 +44,11 @@ Rust 源文件描述了一个模块，其名称和位置（在当前 crate 的�
 ## Byte order mark
 ## 字节顺序标记(BOM)
 
-可选的[_UTF8字节序标记_][_UTF8 byte order mark_]（UTF8BOM 产生式）表示该文件是用 UTF8 编码的。它只能出现在文件的开头，并且编译器会忽略它。
+可选的[_UTF8字节序标记_][_UTF8 byte order mark_]（UTF8BOM产生式）表示该文件是用 UTF8 编码的。它只能出现在文件的开头，并且编译器会忽略它。
 
 ## Shebang
 
-源文件可以有一个[_shebang_]（SHEBANG 产生式），它指示操作系统使用什么程序来执行此文件。它本质上是将源文件作为可执行脚本处理。shebang 只能出现在文件的开头(但是在可选的 _UTF8BOM_ 之后)。它会被编译器忽略。例如：
+源文件可以有一个[_shebang_]（SHEBANG产生式），它指示操作系统使用什么程序来执行此文件。它本质上是将源文件作为可执行脚本处理。shebang 只能出现在文件的开头（但是要在可选的 _UTF8BOM_ 生产式之后）。它会被编译器忽略。例如：
 
 <!-- ignore: tests don't like shebang -->
 ```rust,ignore
@@ -59,12 +59,12 @@ fn main() {
 }
 ```
 
-为了避免与[属性][attribute]混淆， Rust 对 shebang 语法做了一个限制， 是 `#!` 字符不能后跟 token `[`，忽略中间的[注释][comments]或[空白符][whitespace]。如果违反此限制，则不会将其视为 shebang，而会将其视为属性的开始。
+为了避免与[属性][attribute]混淆， Rust 对 shebang 句法做了一个限制：是 `#!` 字符不能后跟 token `[`，忽略中间的[注释][comments]或[空白符][whitespace]。如果违反此限制，则不会将其视为 shebang，而会将其视为属性的开始。
 
 ## Preludes and `no_std`
 ## 预导入包和 `no_std`
 
-所有的 crate 都有一个 *预导入包*，它会自动将一个特定模块（*预导入包模块*）的名称插入到每个[模块][module]的作用域内，并将一个 [`extern crate`] 插入到当前 crate 的根模块中。默认情况下，这个预导入包为*标准预导入包(standard prelude)*。它链接的 crate 是 [`std`]，预导入模块是 [`std::prelude::v1`]。
+所有的 crate 都有一个 *预导入包(prelude)*，它会自动将一个特定模块（*预导入包模块*）里的名称插入到每个[模块][module]的作用域内，并将一个 [`extern crate`] 插入到当前 crate 的根模块中。默认情况下，这个预导入包为*标准预导入包(standard prelude)*。它链接的 crate 是 [`std`]，预导入模块是 [`std::prelude::v1`]。
 
 在根 crate 模块上使用 `no_std` [属性][attribute]，可以将预导入包改成 *核心预导入包(core prelude)*。它链接的 crate 是 [`core`]，预导入模块为 [`core::prelude::v1`]。当 crate 的目标平台不支持标准库或有意不使用标准库的功能时，使用核心预导入包而不是标准预导入包是可行的。这么做放弃的主要功能是动态内存分配（例如：`Box` 和 `Vec`）、文件和网络功能（例如： `std::fs` 和 `std::io`）。
 
