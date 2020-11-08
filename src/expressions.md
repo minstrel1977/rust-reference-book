@@ -262,5 +262,5 @@ let b: &[i32];
 [_TypeCastExpression_]:           expressions/operator-expr.md#type-cast-expressions
 [_UnsafeBlockExpression_]:        expressions/block-expr.md#unsafe-blocks
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

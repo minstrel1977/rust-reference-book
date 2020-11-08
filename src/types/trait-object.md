@@ -80,5 +80,5 @@ fn main() {
 [object safe]: ../items/traits.md#object-safety
 [supertraits]: ../items/traits.md#supertraits
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

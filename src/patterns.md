@@ -704,5 +704,5 @@ match v[..] {
 [tuples]: types/tuple.md
 [scrutinee]: glossary.md#scrutinee
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

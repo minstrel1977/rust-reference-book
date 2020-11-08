@@ -63,5 +63,5 @@ x = bo(5,7);
 [unsafe function]: ../unsafe-functions.md
 [regular function parameters]: ../items/functions.md#attributes-on-function-parameters
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

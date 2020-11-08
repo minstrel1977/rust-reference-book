@@ -10,7 +10,7 @@
 ## The `recursion_limit` attribute
 ## `recursion_limit`属性
 
-*`recursion_limit`属性*可以应用于 [crate] 级别，为可能无限递归的编译期操作（如宏扩展或自动解引用）设置最大递归深度。它使用 [_MetaNameValueStr_]元项属性句法规则来指定递归深度。
+*`recursion_limit`属性*可以应用于 [crate] 级别，为可能无限递归的编译期操作（如宏扩展或自动解引用）设置最大递归深度。它使用 [_MetaNameValueStr_]元项属性句法来指定递归深度。
 
 > 注意：`rustc` 中的这个默认值是128。
 
@@ -39,7 +39,7 @@ a!{}
 ## The `type_length_limit` attribute
 ## `type_length_limit`属性
 
-*`type_length_limit`属性*限制在单态化过程中构造具体类型时所做的最大类型替换次数。它应用于 [crate] 级别，并使用 [_MetaNameValueStr_]元项属性句法规则来设置类型替换数量的上限。
+*`type_length_limit`属性*限制在单态化过程中构造具体类型时所做的最大类型替换次数。它应用于 [crate] 级别，并使用 [_MetaNameValueStr_]元项属性句法来设置类型替换数量的上限。
 
 > 注意：`rustc` 中的这个默认值是1048576。
 
@@ -58,5 +58,5 @@ f((1, 2, 3, 4, 5, 6, 7, 8, 9));
 [attributes]: ../attributes.md
 [crate]: ../crates-and-source-files.md
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

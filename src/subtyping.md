@@ -74,5 +74,5 @@ struct Variance<'a, 'b, T, U: 'a> {
 [Higher-ranked]: https://doc.rust-lang.org/nomicon/hrtb.html
 [trait objects]: types/trait-object.md
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

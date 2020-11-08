@@ -58,7 +58,7 @@ fn panic(info: &PanicInfo) -> ! {
 ## The `windows_subsystem` attribute
 ## `windows_subsystem`属性
 
-当为一个 Windows 编译目标配置链接属性时，*`windows_subsystem`属性*可以用来在 crate 级别上配置[子系统(subsystem)][subsystem]类别。它使用 [_MetaNameValueStr_]元项属性句法规则用 `console` 或 `windows` 两个可行值指定子系统。对于非windows 编译目标和非二进制的 [crate类型][crate types]，该属性将被忽略。
+当为一个 Windows 编译目标配置链接属性时，*`windows_subsystem`属性*可以用来在 crate 级别上配置[子系统(subsystem)][subsystem]类别。它使用 [_MetaNameValueStr_]元项属性句法用 `console` 或 `windows` 两个可行值指定子系统。对于非windows 编译目标和非二进制的 [crate类型][crate types]，该属性将被忽略。
 
 ```rust
 #![windows_subsystem = "windows"]
@@ -74,5 +74,5 @@ fn panic(info: &PanicInfo) -> ! {
 [static item]: items/static-items.md
 [subsystem]: https://msdn.microsoft.com/en-us/library/fcc1zstk.aspx
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

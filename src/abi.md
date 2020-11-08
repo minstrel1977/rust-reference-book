@@ -64,7 +64,7 @@ $ nm -C foo.o
 ## The `link_section` attribute
 ## `link_section`属性
 
-`link_section`属性指定了输出对象文件中[函数][function]或[静态项][static]的内容将被放置到的节点位置。它使用 [_MetaNameValueStr_]元项属性句法规则指定节点名称。
+`link_section`属性指定了输出对象文件中[函数][function]或[静态项][static]的内容将被放置到的节点位置。它使用 [_MetaNameValueStr_]元项属性句法指定节点名称。
 
 <!-- no_run: don't link. The format of the section name is platform-specific. -->
 ```rust,no_run
@@ -76,7 +76,7 @@ pub static VAR1: u32 = 1;
 ## The `export_name` attribute
 ## `export_name`属性
 
-*`export_name`属性*指定将在[函数][function]或[静态项][static]上导出的符号的名称。它使用 [_MetaNameValueStr_]元项属性句法规则指定符号名。
+*`export_name`属性*指定将在[函数][function]或[静态项][static]上导出的符号的名称。它使用 [_MetaNameValueStr_]元项属性句法指定符号名。
 
 ```rust
 #[export_name = "exported_symbol_name"]
@@ -92,5 +92,5 @@ pub fn name_in_rust() { }
 [item]: items.md
 [static]: items/static-items.md
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

@@ -451,7 +451,7 @@ let nonsense = circle.radius() * circle.area();
 </span></code></pre></pre>
 <h2><a class="header" href="#item-visibility" id="item-visibility">Item visibility</a></h2>
 <h2><a class="header" href="#数据项的可见性" id="数据项的可见性">数据项的可见性</a></h2>
-<p>trait 里数据项在语法上允许使用 <a href="../visibility-and-privacy.html"><em>Visibility</em></a>元项属性句法规则的注释，但是当 trait 被（句法法分析程序）验证(validate)时，这部分又将被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的数据项使用统一的句法规则进行解析。例如，宏规则内空的 <code>vis</code> 可用于 trait 里的数据项，非空的则可用于其他允许带非空可见性的数据项上。</p>
+<p>trait 里数据项在语法上允许使用 <a href="../visibility-and-privacy.html"><em>Visibility</em></a>元项属性句法的注释，但是当 trait 被（句法法分析程序）验证(validate)时，这部分又将被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的数据项使用统一的句法规则进行解析。例如，宏规则内空的 <code>vis</code> 可用于 trait 里的数据项，非空的则可用于其他允许带非空可见性的数据项上。</p>
 <pre><pre class="playground"><code class="language-rust">macro_rules! create_method {
     ($vis:vis $name:ident) =&gt; {
         $vis fn $name(&amp;self) {}
@@ -478,7 +478,7 @@ fn main() {
     s.method_of_s();
 }
 </code></pre></pre>
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->
 
                     </main>

@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items.md">items.md</a><br />
 commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本译文最后维护日期：2020-10-19</p>
+本译文最后维护日期：2020-11-8</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法:<sup></strong><br />
@@ -200,11 +200,11 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
    | <a href="macros-by-example.html"><em>MacroRulesDefinition</em></a></p>
 </blockquote>
 <p>*<a href="%E7%BF%BB%E8%AF%91%E8%AF%B4%E6%98%8E.html#%E5%B8%B8%E7%94%A8%E8%AF%8D%E7%BF%BB%E8%AF%91">数据项</a>*是 crate 的组成单元。数据项由一套嵌套的<a href="items/modules.html">模块</a>被组织在一个 crate 内。每个 crate 都有一个“最外层”的匿名模块；crate 中所有的数据项都在其 crate 的模块树中自己的<a href="paths.html">路径</a>。</p>
-<p>数据项在编译时就完全确定下来了，通常在执行期间保持结构稳定，并可能驻留在只读内存中。</p>
+<p>数据项在编译时就完全确定下来了，通常在执行期间保持结构稳定，并可以驻留在只读内存中。</p>
 <p>有以下几类数据项:</p>
 <ul>
 <li><a href="items/modules.html">模块</a></li>
-<li><a href="items/extern-crates.html">外部crate(<code>extern crate</code>)声明项</a></li>
+<li><a href="items/extern-crates.html">外部crate(<code>extern crate</code>)声明</a></li>
 <li><a href="items/use-declarations.html"><code>use</code>声明</a></li>
 <li><a href="items/functions.html">函数定义</a></li>
 <li><a href="items/type-aliases.html">类型定义</a></li>
@@ -218,7 +218,7 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <li><a href="items/external-blocks.html">外部块(<code>extern</code> blocks)</a></li>
 </ul>
 <p>有些数据项会形成子（数据）项声明的隐式作用域。换句话说，在一个函数或模块中，数据项的声明可以（在许多情况下）与语句、控制块、以及类似的能构成数据项主体的部件混合在一起。这些在作用域内的数据项的意义与在作用域外声明的数据项的意义相同（它仍然是静态项），只是该数据项在模块的命名空间中的<em>路径名</em>由封闭它的数据项的名称限定，或该数据项也可能是封闭它的数据项的私有数据项（比如函数的情况）。语法规范指定了子项声明可能出现的合法位置。</p>
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->
 
                     </main>

@@ -225,11 +225,11 @@ fn main() {
 <p>所有的 crate 都有一个 <em>预导入包(prelude)</em>，它会自动将一个特定模块（<em>预导入包模块</em>）里的名称插入到每个<a href="items/modules.html">模块</a>的作用域内，并将一个 <a href="items/extern-crates.html"><code>extern crate</code></a> 插入到当前 crate 的根模块中。默认情况下，这个预导入包为<em>标准预导入包(standard prelude)</em>。它链接的 crate 是 <a href="https://doc.rust-lang.org/std/index.html"><code>std</code></a>，预导入模块是 <a href="https://doc.rust-lang.org/std/prelude/index.html"><code>std::prelude::v1</code></a>。</p>
 <p>在根 crate 模块上使用 <code>no_std</code> <a href="attributes.html">属性</a>，可以将预导入包改成 <em>核心预导入包(core prelude)</em>。它链接的 crate 是 <a href="https://doc.rust-lang.org/core/index.html"><code>core</code></a>，预导入模块为 <a href="https://doc.rust-lang.org/core/prelude/index.html"><code>core::prelude::v1</code></a>。当 crate 的目标平台不支持标准库或有意不使用标准库的功能时，使用核心预导入包而不是标准预导入包是可行的。这么做放弃的主要功能是动态内存分配（例如：<code>Box</code> 和 <code>Vec</code>）、文件和网络功能（例如： <code>std::fs</code> 和 <code>std::io</code>）。</p>
 <div class="warning">
-<p>警告：使用 <code>no_std</code> 不会阻止主动把标准库链接进来的操作。仍然可以合法地将 <code>extern crate std;</code> 这条语句引入到当前 crate 中，这样，其完整的依赖关系也可以成功地加载到当前 crate 中。</p>
+<p>警告：使用 <code>no_std</code> 不会阻止主动把标准库链接进来的操作。仍然可以合法地将 <code>extern crate std;</code> 这条语句引入到当前 crate 中，同时其完整的依赖关系也可以成功地加载到当前 crate 中。</p>
 </div>
 <h2><a class="header" href="#main-functions" id="main-functions">Main Functions</a></h2>
 <h2><a class="header" href="#main函数" id="main函数">main函数</a></h2>
-<p>包含 <code>main</code><a href="items/functions.html">函数</a>的 crate 可以被编译成可执行文件。如果一个 <code>main</code>函数存在，它必须不能有参数，不能对其声明任何 <a href="trait-bounds.html">trait 或生存期约束</a>，不能有任何 <a href="items/generics.html#where-clauses">where子句</a>，并且它的返回类型必须是以下类型之一:</p>
+<p>包含 <code>main</code><a href="items/functions.html">函数</a>的 crate 可以被编译成可执行文件。如果一个 <code>main</code>函数存在，它必须不能有参数，不能对其声明任何 <a href="trait-bounds.html">trait约束或生存期约束</a>，不能有任何 <a href="items/generics.html#where-clauses">where子句</a>，并且它的返回类型必须是以下类型之一:</p>
 <ul>
 <li><code>()</code></li>
 <li><code>Result&lt;(), E&gt; where E: Error</code></li>
@@ -237,15 +237,15 @@ fn main() {
 <!-- * `!` -->
 <!-- * Result<!, E> where E: Error` -->
 <blockquote>
-<p>注意: 允许哪些返回类型的实现是由暂未稳定的 <a href="https://doc.rust-lang.org/std/process/trait.Termination.html"><code>Termination</code></a> trait 决定。</p>
+<p>注意: 允许哪些返回类型的实现是由暂未稳定的 <a href="https://doc.rust-lang.org/std/process/trait.Termination.html"><code>Termination</code></a> trait 决定的。</p>
 </blockquote>
 <!-- 如果前面这节需要更新 (从 "必须不能有参数" 开始, 同时需要修改 attributes/testing.md 文件 -->
 <h3><a class="header" href="#the-no_main-attribute" id="the-no_main-attribute">The <code>no_main</code> attribute</a></h3>
 <h3><a class="header" href="#no_main属性" id="no_main属性"><code>no_main</code>属性</a></h3>
-<p>可在 crate 层级使用 *<code>no_main</code><a href="attributes.html">属性</a>*来禁止对可执行二进制文件发布 <code>main</code> symbol，即禁止当前 crate 的 main 函数的执行。当链接的其他对象定义了 <code>main</code> 时，这很有用。</p>
+<p>可在 crate 层级使用 *<code>no_main</code><a href="attributes.html">属性</a>*来禁止对可执行二进制文件发布 <code>main</code> symbol，即禁止当前 crate 的 main 函数的执行。当链接的其他对象定义了 <code>main</code>函数时，这很有用。</p>
 <h2><a class="header" href="#the-crate_name-attribute" id="the-crate_name-attribute">The <code>crate_name</code> attribute</a></h2>
 <h2><a class="header" href="#crate_name属性" id="crate_name属性"><code>crate_name</code>属性</a></h2>
-<p>可在 crate 层级应用 <em><code>crate_name</code><a href="attributes.html">属性</a></em>，并通过使用 <a href="attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法规则来指定 crate 的名称。</p>
+<p>可在 crate 层级应用 <em><code>crate_name</code><a href="attributes.html">属性</a></em>，并通过使用 <a href="attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法来指定 crate 的名称。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span>#![crate_name = &quot;mycrate&quot;]
@@ -259,7 +259,7 @@ fn main() {
 <div class="footnote-definition" id="cratesourcefile"><sup class="footnote-definition-label">2</sup>
 <p>crate 有点类似于 ECMA-335 CLI 模型中的 <em>assembly</em>、SML/NJ 编译管理器中的 <em>library</em>、Owens 和 Flatt 模块系统中的 <em>unit</em>， 或 Mesa 中的 <em>configuration</em>。</p>
 </div>
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->
 
                     </main>

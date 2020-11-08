@@ -184,5 +184,5 @@ fn is_unix_platform() -> bool {
 [unsafe operations]: ../unsafety.md
 [value expressions]: ../expressions.md#place-expressions-and-value-expressions
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

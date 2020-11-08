@@ -310,5 +310,5 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [`no_mangle`]: ../abi.md#the-no_mangle-attribute
 [built-in attributes]: ../attributes.html#built-in-attributes-index
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

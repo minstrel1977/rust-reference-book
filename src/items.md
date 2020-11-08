@@ -3,7 +3,7 @@
 
 >[items.md](https://github.com/rust-lang/reference/blob/master/src/items.md)\
 >commit: b0e0ad6490d6517c19546b1023948986578fc378 \
->本译文最后维护日期：2020-10-19
+>本译文最后维护日期：2020-11-8
 
 > **<sup>句法:<sup>**\
 > _Item_:\
@@ -35,12 +35,12 @@
 
 *[数据项](翻译说明.md#常用词翻译)*是 crate 的组成单元。数据项由一套嵌套的[模块][modules]被组织在一个 crate 内。每个 crate 都有一个“最外层”的匿名模块；crate 中所有的数据项都在其 crate 的模块树中自己的[路径][paths]。
 
-数据项在编译时就完全确定下来了，通常在执行期间保持结构稳定，并可能驻留在只读内存中。
+数据项在编译时就完全确定下来了，通常在执行期间保持结构稳定，并可以驻留在只读内存中。
 
 有以下几类数据项:
 
 * [模块][modules]
-* [外部crate(`extern crate`)声明项][`extern crate` declarations]
+* [外部crate(`extern crate`)声明][`extern crate` declarations]
 * [`use`声明][`use` declarations]
 * [函数定义][function definitions]
 * [类型定义][type definitions]
@@ -87,5 +87,5 @@
 [type definitions]: items/type-aliases.md
 [union definitions]: items/unions.md
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

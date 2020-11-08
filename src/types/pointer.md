@@ -47,5 +47,5 @@ Rust 中所有的指针都是显式的头等(first-class)值。它们可以被�
 [dynamically sized types]: ../dynamically-sized-types.md
 [temporary value]: ../expressions.md#temporaries
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

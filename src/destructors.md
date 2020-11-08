@@ -345,5 +345,5 @@ let x = (&temp()).use_temp();  // ERROR
 [`std::ptr::drop_in_place`]: https://doc.rust-lang.org/std/ptr/fn.drop_in_place.html
 [`std::mem::ManuallyDrop`]: https://doc.rust-lang.org/std/mem/struct.ManuallyDrop.html
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

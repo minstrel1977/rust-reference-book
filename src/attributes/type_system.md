@@ -12,7 +12,7 @@
 
 *`non_exhaustive`属性*表示类型或变体将来可能会添加更多字段或变体。它可以应用在[结构体(`struct`)][struct]上、[枚举(`enum`)][enum]上 和 枚举变体上。
 
-`non_exhaustive`属性使用 [_MetaWord_]元项属性句法规则，因此不接受任何输入。
+`non_exhaustive`属性使用 [_MetaWord_]元项属性句法，因此不接受任何输入。
 
 在当前（`non_exhaustive`限制的类型的）定义所在的 crate 内，`non_exhaustive` 没有效果。
 
@@ -135,5 +135,5 @@ match message {
 [functional update syntax]: ../expressions/struct-expr.md#functional-update-syntax
 [struct]: ../items/structs.md
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

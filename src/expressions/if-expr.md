@@ -147,5 +147,5 @@ if let PAT = ( EXPR || EXPR ) { .. }
 [`match` expression]: match-expr.md
 [scrutinee]: ../glossary.md#scrutinee
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

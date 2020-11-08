@@ -250,7 +250,7 @@ extern &quot;stdcall&quot; { }
 <p>下面列出的<a href="../attributes.html">属性</a>可以控制外部块的行为。</p>
 <h3><a class="header" href="#the-link-attribute" id="the-link-attribute">The <code>link</code> attribute</a></h3>
 <h3><a class="header" href="#link属性" id="link属性"><code>link</code>属性</a></h3>
-<p><em><code>link</code>属性</em>为外部(<code>extern</code>)块中的数据项指定编译器应该链接的本机库的名称。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法规则指定其输入。<code>name</code>键指定要链接的本机库的名称。<code>kind</code>键是一个可选值，它指定具有以下可能值的库类型：</p>
+<p><em><code>link</code>属性</em>为外部(<code>extern</code>)块中的数据项指定编译器应该链接的本机库的名称。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法指定其输入。<code>name</code>键指定要链接的本机库的名称。<code>kind</code>键是一个可选值，它指定具有以下可能值的库类型：</p>
 <ul>
 <li><code>dylib</code> — 表示库类型是动态库。如果没有指定 <code>kind</code>，这是默认值。</li>
 <li><code>static</code> — 表示库类型是静态库。</li>
@@ -277,7 +277,7 @@ extern {
 <p>在空外部块上添加 <code>link</code>属性是有效的。可以用这种方式来满足代码中其他地方的外部块的链接需求(包括上游 crate)，而不必向每个外部块都添加此属性。</p>
 <h3><a class="header" href="#the-link_name-attribute" id="the-link_name-attribute">The <code>link_name</code> attribute</a></h3>
 <h3><a class="header" href="#link_name属性" id="link_name属性"><code>link_name</code>属性</a></h3>
-<p>可以在外部(<code>extern</code>)块内的数据项声明上指定 <code>link_name</code>属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法规则指定 symbol 的名称。</p>
+<p>可以在外部(<code>extern</code>)块内的数据项声明上指定 <code>link_name</code>属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法指定 symbol 的名称。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -290,7 +290,7 @@ extern {
 <h3><a class="header" href="#attributes-on-function-parameters" id="attributes-on-function-parameters">Attributes on function parameters</a></h3>
 <h3><a class="header" href="#函数参数上的属性" id="函数参数上的属性">函数参数上的属性</a></h3>
 <p>外部函数参数上的属性遵循与<a href="functions.html#attributes-on-function-parameters">常规函数参数</a>相同的规则和限制。</p>
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->
 
                     </main>

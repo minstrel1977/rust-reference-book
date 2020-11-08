@@ -38,5 +38,5 @@ let _ = TypeAlias(5); // 不能正常执行
 [_WhereClause_]: generics.md#where-clauses
 [_Type_]: ../types.md#type-expressions
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

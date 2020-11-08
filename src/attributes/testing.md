@@ -42,7 +42,7 @@ fn test_the_thing() -> io::Result<()> {
 
 被 `test`属性标注的(annotated with)函数也可以被 `ignore`属性标注。*`ignore`属性*告诉测试套件不要将该函数作为测试执行。但在测试模式下，这类函数仍然会被编译。
 
-`ignore`属性可以选择使用 [_MetaNameValueStr_]元项属性句法规则来指定测试被忽略的原因。
+`ignore`属性可以选择使用 [_MetaNameValueStr_]元项属性句法来指定测试被忽略的原因。
 
 ```rust
 #[test]
@@ -59,7 +59,7 @@ fn mytest() {
 
 被 `test`属性标注并返回 `()` 的函数也可以被 `should_panic`属性标注。*`should_panic`属性*使测试函数只有在实际发生 panic 时才算通过。
 
-`should_panic`属性可选输入一条出现在 panic消息中的字符串。如果在 panic消息中找不到该字符串，则测试将失败。可以使用 [_MetaNameValueStr_]元项属性句法规则或带有 `expected`字段的 [_MetaListNameValueStr_]元项属性句法规则来传递字符串。
+`should_panic`属性可选输入一条出现在 panic消息中的字符串。如果在 panic消息中找不到该字符串，则测试将失败。可以使用 [_MetaNameValueStr_]元项属性句法或带有 `expected`字段的 [_MetaListNameValueStr_]元项属性句法来传递字符串。
 
 ```rust
 #[test]
@@ -75,5 +75,5 @@ fn mytest() {
 [`test` conditional compilation option]: ../conditional-compilation.md#test
 [attributes]: ../attributes.md
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

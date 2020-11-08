@@ -42,7 +42,7 @@
 ## The `target_feature` attribute
 ## `target_feature`属性
 
-*`target_feature`[属性]*可应用于[非安全(unsafe)函数][unsafe function]，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 [_MetaListNameValueStr_]元项属性句法规则来启用（该平台支持的）特性，这次要求这个句法规则里只能有一个键 `enable` ，其对应值是一个逗号分隔的由平台特性名字组成的符串。
+*`target_feature`[属性]*可应用于[非安全(unsafe)函数][unsafe function]，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 [_MetaListNameValueStr_]元项属性句法来启用（该平台支持的）特性，这次要求这个句法规则里只能有一个键 `enable` ，其对应值是一个逗号分隔的由平台特性名字组成的符串。
 
 ```rust
 # #[cfg(target_feature = "avx2")]
@@ -232,5 +232,5 @@ fn calls_h() {
 [`core::panic::Location::caller`]: https://doc.rust-lang.org/core/panic/struct.Location.html#method.caller
 [`Location`]: https://doc.rust-lang.org/core/panic/struct.Location.html
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

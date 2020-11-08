@@ -70,33 +70,33 @@ fn main() {
 
 <div class="warning">
 
-警告：使用 `no_std` 不会阻止主动把标准库链接进来的操作。仍然可以合法地将 `extern crate std;` 这条语句引入到当前 crate 中，这样，其完整的依赖关系也可以成功地加载到当前 crate 中。
+警告：使用 `no_std` 不会阻止主动把标准库链接进来的操作。仍然可以合法地将 `extern crate std;` 这条语句引入到当前 crate 中，同时其完整的依赖关系也可以成功地加载到当前 crate 中。
 
 </div>
 
 ## Main Functions
 ## main函数
 
-包含 `main`[函数][function]的 crate 可以被编译成可执行文件。如果一个 `main`函数存在，它必须不能有参数，不能对其声明任何 [trait 或生存期约束][trait or lifetime bounds]，不能有任何 [where子句][where clauses]，并且它的返回类型必须是以下类型之一:
+包含 `main`[函数][function]的 crate 可以被编译成可执行文件。如果一个 `main`函数存在，它必须不能有参数，不能对其声明任何 [trait约束或生存期约束][trait or lifetime bounds]，不能有任何 [where子句][where clauses]，并且它的返回类型必须是以下类型之一:
 
 * `()`
 * `Result<(), E> where E: Error`
 <!-- * `!` -->
 <!-- * Result<!, E> where E: Error` -->
 
-> 注意: 允许哪些返回类型的实现是由暂未稳定的 [`Termination`] trait 决定。
+> 注意: 允许哪些返回类型的实现是由暂未稳定的 [`Termination`] trait 决定的。
 
 <!-- 如果前面这节需要更新 (从 "必须不能有参数" 开始, 同时需要修改 attributes/testing.md 文件 -->
 
 ### The `no_main` attribute
 ### `no_main`属性
 
-可在 crate 层级使用 *`no_main`[属性][attribute]*来禁止对可执行二进制文件发布 `main` symbol，即禁止当前 crate 的 main 函数的执行。当链接的其他对象定义了 `main` 时，这很有用。
+可在 crate 层级使用 *`no_main`[属性][attribute]*来禁止对可执行二进制文件发布 `main` symbol，即禁止当前 crate 的 main 函数的执行。当链接的其他对象定义了 `main`函数时，这很有用。
 
 ## The `crate_name` attribute
 ## `crate_name`属性
 
-可在 crate 层级应用 *`crate_name`[属性][attribute]*，并通过使用 [_MetaNameValueStr_]元项属性句法规则来指定 crate 的名称。
+可在 crate 层级应用 *`crate_name`[属性][attribute]*，并通过使用 [_MetaNameValueStr_]元项属性句法来指定 crate 的名称。
 
 ```rust
 #![crate_name = "mycrate"]
@@ -130,5 +130,5 @@ crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 `-`(U+
 [where clauses]: items/generics.md#where-clauses
 [whitespace]: whitespace.md
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

@@ -79,7 +79,7 @@ fn some_unused_variables() {
 ## Meta Item Attribute Syntax
 ## 元项/元数据项属性句法
 
-“元项(meta item)”是遵循 _Attr_ 句法规则(见本章头部的句法规则)的句法，Rust 的大多数[内置属性(built-in attributes)][built-in attributes]都使用了此句法。它有以下文法格式：
+“元项(meta item)”是遵循 _Attr_ 句法产生式（见本章头部）的句法，Rust 的大多数[内置属性(built-in attributes)][built-in attributes]都使用了此句法规则。它有以下文法格式：
 
 > **<sup>句法</sup>**\
 > _MetaItem_ :\
@@ -290,5 +290,5 @@ pub fn f() {}
 [function pointer]: types/function-pointer.md
 [variadic functions]: items/external-blocks.html#variadic-functions
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

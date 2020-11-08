@@ -146,5 +146,5 @@ let b = Gamma{};  // 和`a`的值完全一样。
 [scrutinee]: ../glossary.md#scrutinee
 
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

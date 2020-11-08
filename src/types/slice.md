@@ -32,5 +32,5 @@ let slice: &[i32] = &boxed_array[..];
 [_Type_]: ../types.md#type-expressions
 [dynamically sized type]: ../dynamically-sized-types.md
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

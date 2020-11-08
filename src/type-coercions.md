@@ -239,5 +239,5 @@ fn foo() -> i32 {
 [`Unsize`]: https://doc.rust-lang.org/std/marker/trait.Unsize.html
 [`CoerceUnsized`]: https://doc.rust-lang.org/std/ops/trait.CoerceUnsized.html
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

@@ -200,7 +200,7 @@ commit: 646ef8d240a798da5891deb5dbdbebe557f878b8 <br />
 <p>*<code>no_builtins</code><a href="../attributes.html">属性</a>*可以应用在 crate 级别，用以禁止在某些代码模式下对假定存在的库函数的调用的优化。</p>
 <h2><a class="header" href="#the-target_feature-attribute" id="the-target_feature-attribute">The <code>target_feature</code> attribute</a></h2>
 <h2><a class="header" href="#target_feature属性" id="target_feature属性"><code>target_feature</code>属性</a></h2>
-<p>*<code>target_feature</code>[属性]*可应用于<a href="../unsafe-functions.html">非安全(unsafe)函数</a>，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法规则来启用（该平台支持的）特性，这次要求这个句法规则里只能有一个键 <code>enable</code> ，其对应值是一个逗号分隔的由平台特性名字组成的符串。</p>
+<p>*<code>target_feature</code>[属性]*可应用于<a href="../unsafe-functions.html">非安全(unsafe)函数</a>，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法来启用（该平台支持的）特性，这次要求这个句法规则里只能有一个键 <code>enable</code> ，其对应值是一个逗号分隔的由平台特性名字组成的符串。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -337,7 +337,7 @@ fn calls_h() {
 <blockquote>
 <p>注意：前面提到的函数指针填充对象是必需的，因为 <code>rustc</code> 会通过向函数的ABI附加一个隐式参数来实现代码生成(codegen)上下文中的 <code>track_caller</code>，但这种添加是不健全的(unsound)，因为该隐式参数不是函数类型的一部分，那给定的函数指针类型可能引用也可能不引用具有此属性的函数。这里创建一个填充对象会对函数指针的调用方隐藏隐式参数，从而保持可靠性。</p>
 </blockquote>
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->
 
                     </main>

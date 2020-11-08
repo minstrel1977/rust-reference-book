@@ -287,7 +287,7 @@ trait T {
 ## Item visibility
 ## 数据项的可见性
 
-trait 里数据项在语法上允许使用 [_Visibility_]元项属性句法规则的注释，但是当 trait 被（句法法分析程序）验证(validate)时，这部分又将被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的数据项使用统一的句法规则进行解析。例如，宏规则内空的 `vis` 可用于 trait 里的数据项，非空的则可用于其他允许带非空可见性的数据项上。
+trait 里数据项在语法上允许使用 [_Visibility_]元项属性句法的注释，但是当 trait 被（句法法分析程序）验证(validate)时，这部分又将被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的数据项使用统一的句法规则进行解析。例如，宏规则内空的 `vis` 可用于 trait 里的数据项，非空的则可用于其他允许带非空可见性的数据项上。
 
 ```rust
 macro_rules! create_method {
@@ -351,5 +351,5 @@ fn main() {
 [`Pin<P>`]: ../special-types-and-traits.md#pinp
 [`Rc<Self>`]: ../special-types-and-traits.md#rct
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

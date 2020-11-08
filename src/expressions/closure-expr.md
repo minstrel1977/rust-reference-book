@@ -67,5 +67,5 @@ ten_times(move |j| println!("{}, {}", word, j));
 [`let` binding]: ../statements.md#let-statements
 [_OuterAttribute_]: ../attributes.md
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

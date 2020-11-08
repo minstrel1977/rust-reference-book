@@ -382,7 +382,7 @@ mod inner {
 m!();
 <span class="boring">}
 </span></code></pre></pre>
-<p>其次，它可以用于从另一个 crate 里来导入宏，方法是将它附加到当前 crate 根模块中的 <code>extern crate</code> 声明前。以这种方式导入的宏会被导入到当前 crate 的预导入包(prelude)里，而不是直接文本导入，这意味着它们可以被任何其他同名宏屏蔽。虽然可以在导入语句之前使用 <code>#[macro_use]</code> 导入宏，但如果发生冲突，则最后导入的宏将胜出。可以使用可选的 <a href="attributes.html#meta-item-attribute-syntax"><em>MetaListIdents</em></a>元项属性句法规则指定要导入的宏列表；当将 <code>#[macro_use]</code> 应用于模块上时，则不支持此指定操作。</p>
+<p>其次，它可以用于从另一个 crate 里来导入宏，方法是将它附加到当前 crate 根模块中的 <code>extern crate</code> 声明前。以这种方式导入的宏会被导入到当前 crate 的预导入包(prelude)里，而不是直接文本导入，这意味着它们可以被任何其他同名宏屏蔽。虽然可以在导入语句之前使用 <code>#[macro_use]</code> 导入宏，但如果发生冲突，则最后导入的宏将胜出。可以使用可选的 <a href="attributes.html#meta-item-attribute-syntax"><em>MetaListIdents</em></a>元项属性句法指定要导入的宏列表；当将 <code>#[macro_use]</code> 应用于模块上时，则不支持此指定操作。</p>
 <!-- ignore: requires external crates -->
 <pre><code class="language-rust ignore">#[macro_use(lazy_static)] // 或者使用 #[macro_use] 来导入所有宏.
 extern crate lazy_static;
@@ -513,7 +513,7 @@ macro_rules! helper {
 <li>如果重复元可以匹配零次（<code>*</code> 或 <code>?</code>），那么它后面的内容必须能够直接跟在它前面的内容后面。</li>
 </ul>
 <p>有关更多详细信息，请参阅[正式规范]。</p>
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->
                     </main>
 

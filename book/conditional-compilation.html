@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md">conditional-compilation.md</a><br />
 commit: 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7 <br />
-本译文最后维护日期：2020-10-19</p>
+本译文最后维护日期：2020-11-8</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -190,8 +190,8 @@ commit: 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7 <br />
 <p><em>ConfigurationPredicateList</em><br />
    <em>ConfigurationPredicate</em> (<code>,</code> <em>ConfigurationPredicate</em>)<sup>*</sup> <code>,</code><sup>?</sup></p>
 </blockquote>
-<p>根据某些条件，<!-- 这个定义有点空洞 --> <em>条件编译的源代码</em>可以被认为是 crate 源代码的一部分，也可以不被认为是 crate 源代码的一部分。源代码可以使用<a href="attributes.html">属性</a> <a href="#the-cfg-attribute"><code>cfg</code></a> 和 <a href="#the-cfg_attr-attribute"><code>cfg_attr</code></a> 以及内置的 <a href="#the-cfg-macro"><code>cfg</code> macro</a> 来有条件地编译。这些条件可以基于被编译的 crate 的目标架构、传递给编译器的值，以及下面将详细描述的一些其他事项。</p>
-<p>每种形式的条件编译都有一个计算结果为真或假的<em>配置谓词(configuration predicate)</em>。谓词是以下内容之一：</p>
+<p>根据某些条件，<!-- 这个定义有点空洞 --> *条件性编译的源代码(Conditionally compiled source code)*可以被认为是 crate 源代码的一部分，也可以不被认为是 crate 源代码的一部分。可以使用<a href="attributes.html">属性</a> <a href="#the-cfg-attribute"><code>cfg</code></a> 和 <a href="#the-cfg_attr-attribute"><code>cfg_attr</code></a> 以及内置的 <a href="#the-cfg-macro"><code>cfg</code> macro</a> 来有条件地对源代码进行编译。这些条件可以基于被编译的 crate 的目标架构、传递给编译器的值，以及下面将详细描述的一些其他事项。</p>
+<p>每种形式的编译条件都有一个计算结果为真或假的<em>配置谓词(configuration predicate)</em>。谓词是以下内容之一：</p>
 <ul>
 <li>一个配置选项。如果设置了该选项，则为真，如果未设置则为假。</li>
 <li><code>all()</code> 这样的配置谓词列表，列表内的配置谓词以逗号分隔。如果至少有一个谓词为假，则为假。如果没有谓词，则为真。</li>
@@ -205,18 +205,18 @@ commit: 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7 <br />
 <p>键在键值对配置选项列表中不是唯一的。例如，<code>feature = &quot;std&quot;</code> and <code>feature = &quot;serde&quot;</code> 可以同时设置。</p>
 <h2><a class="header" href="#set-configuration-options" id="set-configuration-options">Set Configuration Options</a></h2>
 <h2><a class="header" href="#设置配置选项" id="设置配置选项">设置配置选项</a></h2>
-<p>设置哪些配置选项是在 crate 编译期间静态确定的。一些选项属于<em>编译器设置集(compiler-set)</em>，这部分选项是编译器根据相关编译数据设置的。其他选项属于<em>任意设置集(arbitrarily-set)</em>，这部分设置必须从代码之外传参给编译器来自主设置。无法在正在编译的 crate 的源代码中设置编译配置选项。</p>
+<p>设置哪些配置选项是在 crate 编译期时就静态确定的。一些选项属于<em>编译器设置集(compiler-set)</em>，这部分选项是编译器根据相关编译数据设置的。其他选项属于<em>任意设置集(arbitrarily-set)</em>，这部分设置必须从代码之外传参给编译器来自主设置。无法在正在编译的 crate 的源代码中设置编译配置选项。</p>
 <blockquote>
 <p><strong>注意</strong>: 对于 <code>rustc</code>，任意配置集的配置选项要使用命令行参数 <a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#--cfg-configure-the-compilation-environment"><code>--cfg</code></a> 来设置。</p>
 </blockquote>
 <blockquote>
-<p><strong>注意</strong>: 键名为 <code>feature</code> 的配置选项一般被 <a href="https://doc.rust-lang.org/cargo/reference/features.html">Cargo</a> 约定用于指定编译时选项和可选依赖项。</p>
+<p><strong>注意</strong>: 键名为 <code>feature</code> 的配置选项一般被 <a href="https://doc.rust-lang.org/cargo/reference/features.html">Cargo</a> 约定用于指定编译期（用到的各种编译）选项和可选依赖项。</p>
 </blockquote>
 <div class="warning">
 <p>警告：任意配置集的配置选项可能与编译器设置集的配置选项设置相同的值。例如，在编译一个 Windows 目标时，可以执行命令行 <code>rustc --cfg &quot;unix&quot; program.rs</code>，这样就同时设置了 <code>unix</code> 和 <code>windows</code> 配置选项。但实际上这样做是不明智的。</p>
 </div>
 <h3><a class="header" href="#target_arch" id="target_arch"><code>target_arch</code></a></h3>
-<p>键值对选项，用于一次性设置编译目标的 CPU 架构。该值类似于平台的目标三元组(target triple)<sup class="footnote-reference"><a href="#target-triple">1</a></sup>的第一个元素，但不完全相同。</p>
+<p>键值对选项，用于一次性设置编译目标的 CPU 架构。该值类似于平台的目标三元组(target triple)<sup class="footnote-reference"><a href="#target-triple">1</a></sup>中的第一个元素，但也不完全相同。</p>
 <p>示例值：</p>
 <ul>
 <li><code>&quot;x86&quot;</code></li>
@@ -239,9 +239,9 @@ commit: 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7 <br />
 <li><code>&quot;sse2&quot;</code></li>
 <li><code>&quot;sse4.1&quot;</code></li>
 </ul>
-<p>有关可用特性的更多细节，请参见 <a href="attributes/codegen.html#the-target_feature-attribute"><code>target_feature</code>属性</a>。此外，编译器还为 <code>target_feature</code>选项提供了一个 <code>crt-static</code> 特性，它表示一个<a href="linkage.html#static-and-dynamic-c-runtimes">静态C运行时</a>可用。</p>
+<p>有关可用特性的更多细节，请参见 <a href="attributes/codegen.html#the-target_feature-attribute"><code>target_feature</code>属性</a>。此外，编译器还为 <code>target_feature</code>选项提供了一个额外的 <code>crt-static</code>特性，它表示需要链接一个可用的<a href="linkage.html#static-and-dynamic-c-runtimes">静态C运行时</a>。</p>
 <h3><a class="header" href="#target_os" id="target_os"><code>target_os</code></a></h3>
-<p>键值对选项，用于一次性设置编译目标的操作系统类型。该值类似于平台目标三元组的第二和第三个元素。</p>
+<p>键值对选项，用于一次性设置编译目标的操作系统类型。该值类似于平台目标三元组中的第二和第三个元素。</p>
 <p>示例值：</p>
 <ul>
 <li><code>&quot;windows&quot;</code></li>
@@ -275,7 +275,7 @@ commit: 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7 <br />
 <li><code>&quot;sgx&quot;</code></li>
 </ul>
 <h3><a class="header" href="#target_endian" id="target_endian"><code>target_endian</code></a></h3>
-<p>键值对选项，根据目标 CPU 的字节序(endianness)一次性设置值为 “little” 或 “big”。</p>
+<p>键值对选项，根据编译目标的 CPU 的字节序(endianness)属性一次性设置值为 “little” 或 “big”。</p>
 <h3><a class="header" href="#target_pointer_width" id="target_pointer_width"><code>target_pointer_width</code></a></h3>
 <p>键值对选项，用于一次性设置编译目标的指针位宽(pointer width in bits)。</p>
 <p>示例值：</p>
@@ -296,7 +296,7 @@ commit: 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7 <br />
 <h3><a class="header" href="#test" id="test"><code>test</code></a></h3>
 <p>在编译测试套件时启用。通过在 <code>rustc</code> 里使用 <a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#--test-build-a-test-harness"><code>--test</code></a> 命令行参数来完成此启用。请参阅<a href="attributes/testing.html">测试</a>章节来获取更多和测试支持相关的信息。</p>
 <h3><a class="header" href="#debug_assertions" id="debug_assertions"><code>debug_assertions</code></a></h3>
-<p>在进行非优化编译时默认启用。这可以用于在开发中启用额外的代码调试功能，但不能在生产中启用。例如，它控制着标准库的 <a href="https://doc.rust-lang.org/std/macro.debug_assert.html"><code>debug_assert!</code></a>宏(是否可用)。</p>
+<p>在进行非优化编译时默认启用。这可以用于在开发中启用额外的代码调试功能，但不能在生产中启用。例如，它控制着标准库的 <a href="https://doc.rust-lang.org/std/macro.debug_assert.html"><code>debug_assert!</code></a>宏（是否可用）。</p>
 <h3><a class="header" href="#proc_macro" id="proc_macro"><code>proc_macro</code></a></h3>
 <p>当须要指定当前 crate 的<a href="linkage.html">编译输出文件类型(crate-type)</a>为 <code>proc_macro</code> 时设置。</p>
 <h2><a class="header" href="#forms-of-conditional-compilation" id="forms-of-conditional-compilation">Forms of conditional compilation</a></h2>
@@ -308,7 +308,7 @@ commit: 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7 <br />
 <em>CfgAttrAttribute</em> :<br />
    <code>cfg</code> <code>(</code> <em>ConfigurationPredicate</em> <code>)</code></p>
 </blockquote>
-<!-- should we say they're active attributes here? -->
+<!-- 这里可以用“激活属性”来称呼吗？should we say they're active attributes here? -->
 <p><code>cfg</code><a href="attributes.html">属性</a>根据配置谓词有条件地包括它所附加的东西。</p>
 <p>它被写成 <code>cfg</code> 后跟一个 <code>(</code>，再跟一个配置谓词，最后是一个 <code>)</code>。</p>
 <p>如果谓词为真，则重写该部分代码，使其上没有 <code>cfg</code> 属性。如果谓词为假，则从源代码中删除该内容。</p>
@@ -394,14 +394,14 @@ println!(&quot;I'm running on a {} machine!&quot;, machine_kind);
 <span class="boring">}
 </span></code></pre></pre>
 <div class="footnote-definition" id="target-triple"><sup class="footnote-definition-label">1</sup>
-<p>首先给 <em>出目标三元组</em> 的参考资料地址：https://www.bookstack.cn/read/rCore_tutorial_doc/d997e9cbdfeef7d4.md。<br />
+<p>首先给出 <em>目标三元组</em> 的参考资料地址：https://www.bookstack.cn/read/rCore_tutorial_doc/d997e9cbdfeef7d4.md。<br />
 接下来为防止该地址失效，我用自己的理解简单重复一下我对这个名词的理解:<br />
 目标三元组可以理解为我们常说的平台信息，包含这些信息：第一项元素：CPU 架构；第二项元素：供应商；第三项元素：操作系统；第四项元素：ABI。<br />
-Rust 下查看目标三元组可以用 <code>rustc --version --verbose</code> 命令行。比如我在我工作机下下执行这行命令行的输出的 <code>host</code> 信息为：<code>host: x86_64-unknown-linux-gnu</code>，那我都工作机的目标三元组的信息就是：CPU 架构为 x86_64 ，供应商为 unknown ，操作系统为 linux ，ABI 为 gnu 。<br />
-我另一台windows机器为：<code>host: x86_64-pc-windows-msvc</code>，那这台的目标三元组的信息为：CPU 架构为 x86_64 ，供应商为 pwc ，操作系统为 windows ，ABI 为 msvc 。<br />
+Rust 下查看当前平台的三元组属性可以用 <code>rustc --version --verbose</code> 命令行。比如我在我工作机下下执行这行命令行的输出的 <code>host</code> 信息为：<code>host: x86_64-unknown-linux-gnu</code>，那我都工作机的目标三元组的信息就是：CPU 架构为 x86_64 ，供应商为 unknown ，操作系统为 linux ，ABI 为 gnu 。<br />
+我另一台 windows 机器为：<code>host: x86_64-pc-windows-msvc</code>，那这台的目标三元组的信息为：CPU 架构为 x86_64 ，供应商为 pc ，操作系统为 windows ，ABI 为 msvc 。<br />
 Rust 官方对一些平台提供了默认的目标三元组，我们可以通过 <code>rustc --print target-list</code> 命令来查看完整列表。</p>
 </div>
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->
 
                     </main>

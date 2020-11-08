@@ -12,7 +12,7 @@
 
 （译者注：lint在原文里有时当名词用，有时当动词用，本文统一翻译成名词，意思就是一种被命名的 lint检查模式）
 
-lint检查(lint check)系统命名了一些潜在的不良编码模式，这些被命名的 lint检查就是一个一个的lint，例如编写了执行不到的代码，就被命名为unreachable-code lint，编写未提供文档的代码就被命名为 missing_docs lint。`allow`、`warn`、`deny` 和 `forbid` 这些能调整代码检查级别的属性被称为 lint级别属性，它可以通过使用 [_MetaListPaths_]元项属性句法规则来添加指定 lint 的列表。代码实体应用了这些带上了具体 lint名的 lint级别属性，编译器或相关代码检查工具就可以对这段代码执行该 lint 定义的代码检查，当然该检查也和这些 lint级别息息相关。
+lint检查(lint check)系统命名了一些潜在的不良编码模式，这些被命名的 lint检查就是一个一个的lint，例如编写了执行不到的代码，就被命名为unreachable-code lint，编写未提供文档的代码就被命名为 missing_docs lint。`allow`、`warn`、`deny` 和 `forbid` 这些能调整代码检查级别的属性被称为 lint级别属性，它可以通过使用 [_MetaListPaths_]元项属性句法来添加指定 lint 的列表。代码实体应用了这些带上了具体 lint名的 lint级别属性，编译器或相关代码检查工具就可以对这段代码执行该 lint 定义的代码检查，当然该检查也和这些 lint级别息息相关。
 
 对带有任何 lint名为 `C` 的 lint级别来说：
 
@@ -134,7 +134,7 @@ pub fn bar() {}
 
 *`must_use`属性* 用于在值未被“使用”时发出诊断警告。它可以应用于用户定义的复合类型([结构体(`struct`)][struct]、[枚举(`enum`)][enum] 和 [联合体(`union`)][union])、[函数][functions]和 [trait][traits]。
 
-`must_use`属性可以使用[_MetaNameValueStr_]元项属性句法规则添加一些附加消息，如 `#[must_use = "example message"]`。该字符串将出现在告警消息里。
+`must_use`属性可以使用[_MetaNameValueStr_]元项属性句法添加一些附加消息，如 `#[must_use = "example message"]`。该字符串将出现在告警消息里。
 
 在用户定义的复合类型上使用时，如果[表达式语句][expression statement]里的[表达式][expression]具有该类型，那么就违反了 `unused_must_use` 这个lint检查。
 
@@ -250,5 +250,5 @@ impl Trait for i32 {
 [traits]: ../items/traits.md
 [union]: ../items/unions.md
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

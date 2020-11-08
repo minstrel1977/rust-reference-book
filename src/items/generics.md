@@ -111,5 +111,5 @@ struct Foo<#[my_flexible_clone(unbounded)] H> {
 [trait object]: ../types/trait-object.md
 [attributes]: ../attributes.md
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->

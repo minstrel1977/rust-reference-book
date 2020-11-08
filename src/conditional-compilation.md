@@ -3,7 +3,7 @@
 
 >[conditional-compilation.md](https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md)\
 >commit: 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7 \
->本译文最后维护日期：2020-10-19
+>本译文最后维护日期：2020-11-8
 
 > **<sup>句法</sup>**\
 > _ConfigurationPredicate_ :\
@@ -27,9 +27,9 @@
 > _ConfigurationPredicateList_\
 > &nbsp;&nbsp; _ConfigurationPredicate_ (`,` _ConfigurationPredicate_)<sup>\*</sup> `,`<sup>?</sup>
 
-根据某些条件，<!-- 这个定义有点空洞 --> *条件编译的源代码*可以被认为是 crate 源代码的一部分，也可以不被认为是 crate 源代码的一部分。源代码可以使用[属性][attributes] [`cfg`] 和 [`cfg_attr`] 以及内置的 [`cfg` macro] 来有条件地编译。这些条件可以基于被编译的 crate 的目标架构、传递给编译器的值，以及下面将详细描述的一些其他事项。
+根据某些条件，<!-- 这个定义有点空洞 --> *条件性编译的源代码(Conditionally compiled source code)*可以被认为是 crate 源代码的一部分，也可以不被认为是 crate 源代码的一部分。可以使用[属性][attributes] [`cfg`] 和 [`cfg_attr`] 以及内置的 [`cfg` macro] 来有条件地对源代码进行编译。这些条件可以基于被编译的 crate 的目标架构、传递给编译器的值，以及下面将详细描述的一些其他事项。
 
-每种形式的条件编译都有一个计算结果为真或假的*配置谓词(configuration predicate)*。谓词是以下内容之一：
+每种形式的编译条件都有一个计算结果为真或假的*配置谓词(configuration predicate)*。谓词是以下内容之一：
 
 * 一个配置选项。如果设置了该选项，则为真，如果未设置则为假。
 * `all()` 这样的配置谓词列表，列表内的配置谓词以逗号分隔。如果至少有一个谓词为假，则为假。如果没有谓词，则为真。
@@ -45,11 +45,11 @@
 ## Set Configuration Options
 ## 设置配置选项
 
-设置哪些配置选项是在 crate 编译期间静态确定的。一些选项属于*编译器设置集(compiler-set)*，这部分选项是编译器根据相关编译数据设置的。其他选项属于*任意设置集(arbitrarily-set)*，这部分设置必须从代码之外传参给编译器来自主设置。无法在正在编译的 crate 的源代码中设置编译配置选项。
+设置哪些配置选项是在 crate 编译期时就静态确定的。一些选项属于*编译器设置集(compiler-set)*，这部分选项是编译器根据相关编译数据设置的。其他选项属于*任意设置集(arbitrarily-set)*，这部分设置必须从代码之外传参给编译器来自主设置。无法在正在编译的 crate 的源代码中设置编译配置选项。
 
 > **注意**: 对于 `rustc`，任意配置集的配置选项要使用命令行参数 [`--cfg`] 来设置。
 
-> **注意**: 键名为 `feature` 的配置选项一般被 [Cargo][cargo-feature] 约定用于指定编译时选项和可选依赖项。
+> **注意**: 键名为 `feature` 的配置选项一般被 [Cargo][cargo-feature] 约定用于指定编译期（用到的各种编译）选项和可选依赖项。
 
 <div class="warning">
 
@@ -59,7 +59,7 @@
 
 ### `target_arch`
 
-键值对选项，用于一次性设置编译目标的 CPU 架构。该值类似于平台的目标三元组(target triple)[^target-triple]的第一个元素，但不完全相同。
+键值对选项，用于一次性设置编译目标的 CPU 架构。该值类似于平台的目标三元组(target triple)[^target-triple]中的第一个元素，但也不完全相同。
 
 示例值：
 
@@ -85,11 +85,11 @@
 * `"sse2"`
 * `"sse4.1"`
 
-有关可用特性的更多细节，请参见 [`target_feature`属性][`target_feature` attribute]。此外，编译器还为 `target_feature`选项提供了一个 `crt-static` 特性，它表示一个[静态C运行时][static C runtime]可用。
+有关可用特性的更多细节，请参见 [`target_feature`属性][`target_feature` attribute]。此外，编译器还为 `target_feature`选项提供了一个额外的 `crt-static`特性，它表示需要链接一个可用的[静态C运行时][static C runtime]。
 
 ### `target_os`
 
-键值对选项，用于一次性设置编译目标的操作系统类型。该值类似于平台目标三元组的第二和第三个元素。
+键值对选项，用于一次性设置编译目标的操作系统类型。该值类似于平台目标三元组中的第二和第三个元素。
 
 示例值：
 
@@ -131,7 +131,7 @@
 
 ### `target_endian`
 
-键值对选项，根据目标 CPU 的字节序(endianness)一次性设置值为 “little” 或 “big”。
+键值对选项，根据编译目标的 CPU 的字节序(endianness)属性一次性设置值为 “little” 或 “big”。
 
 ### `target_pointer_width`
 
@@ -160,7 +160,7 @@
 
 ### `debug_assertions`
 
-在进行非优化编译时默认启用。这可以用于在开发中启用额外的代码调试功能，但不能在生产中启用。例如，它控制着标准库的 [`debug_assert!`]宏(是否可用)。
+在进行非优化编译时默认启用。这可以用于在开发中启用额外的代码调试功能，但不能在生产中启用。例如，它控制着标准库的 [`debug_assert!`]宏（是否可用）。
 
 ### `proc_macro`
 
@@ -176,7 +176,7 @@
 > _CfgAttrAttribute_ :\
 > &nbsp;&nbsp; `cfg` `(` _ConfigurationPredicate_ `)`
 
-<!-- should we say they're active attributes here? -->
+<!-- 这里可以用“激活属性”来称呼吗？should we say they're active attributes here? -->
 
 `cfg`[属性][attribute]根据配置谓词有条件地包括它所附加的东西。
 
@@ -274,11 +274,11 @@ let machine_kind = if cfg!(unix) {
 println!("I'm running on a {} machine!", machine_kind);
 ```
 
-[^target-triple]: 首先给 *出目标三元组* 的参考资料地址：https://www.bookstack.cn/read/rCore_tutorial_doc/d997e9cbdfeef7d4.md。\
+[^target-triple]: 首先给出 *目标三元组* 的参考资料地址：https://www.bookstack.cn/read/rCore_tutorial_doc/d997e9cbdfeef7d4.md。\
 接下来为防止该地址失效，我用自己的理解简单重复一下我对这个名词的理解:\
 目标三元组可以理解为我们常说的平台信息，包含这些信息：第一项元素：CPU 架构；第二项元素：供应商；第三项元素：操作系统；第四项元素：ABI。\
-Rust 下查看目标三元组可以用 `rustc --version --verbose` 命令行。比如我在我工作机下下执行这行命令行的输出的 `host` 信息为：`host: x86_64-unknown-linux-gnu`，那我都工作机的目标三元组的信息就是：CPU 架构为 x86_64 ，供应商为 unknown ，操作系统为 linux ，ABI 为 gnu 。\
-我另一台windows机器为：`host: x86_64-pc-windows-msvc`，那这台的目标三元组的信息为：CPU 架构为 x86_64 ，供应商为 pwc ，操作系统为 windows ，ABI 为 msvc 。\
+Rust 下查看当前平台的三元组属性可以用 `rustc --version --verbose` 命令行。比如我在我工作机下下执行这行命令行的输出的 `host` 信息为：`host: x86_64-unknown-linux-gnu`，那我都工作机的目标三元组的信息就是：CPU 架构为 x86_64 ，供应商为 unknown ，操作系统为 linux ，ABI 为 gnu 。\
+我另一台 windows 机器为：`host: x86_64-pc-windows-msvc`，那这台的目标三元组的信息为：CPU 架构为 x86_64 ，供应商为 pc ，操作系统为 windows ，ABI 为 msvc 。\
 Rust 官方对一些平台提供了默认的目标三元组，我们可以通过 `rustc --print target-list` 命令来查看完整列表。
 
 [IDENTIFIER]: identifiers.md
@@ -299,5 +299,5 @@ Rust 官方对一些平台提供了默认的目标三元组，我们可以通过
 [crate type]: linkage.md
 [static C runtime]: linkage.md#static-and-dynamic-c-runtimes
 
-<!-- 2020-11-3 -->
+<!-- 2020-11-7-->
 <!-- checked -->
