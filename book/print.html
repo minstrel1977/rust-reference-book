@@ -2813,7 +2813,7 @@ foo(&amp;[1, 2]);
 <!-- ignore: fake ABI -->
 <pre><code class="language-rust ignore">extern &quot;ABI&quot; fn foo() { /* ... */ }
 </code></pre>
-<p>这些通常与提供了函数<em>声明</em>的<a href="items/external-blocks.html">外部块</a>数据项一起使用，这样就可以调用此函数而不必同时提供它们的<em>定义</em>：</p>
+<p>这些通常与提供了函数<em>声明</em>的<a href="items/external-blocks.html">外部块</a>数据项一起使用，这样就可以调用此函数而不必同时提供此函数的<em>定义</em>：</p>
 <!-- ignore: fake ABI -->
 <pre><code class="language-rust ignore">extern &quot;ABI&quot; {
   fn foo(); /* no body */
@@ -2834,7 +2834,7 @@ unsafe { foo() }
 </span>extern &quot;Rust&quot; fn foo() {}
 <span class="boring">}
 </span></code></pre></pre>
-<p>使用 <code>&quot;Rust&quot;</code> 之外的 ABI 可以让 Rust 中声明的函数被其他编程语言调用。比如下面声明了一个从C中调用的函数：</p>
+<p>使用 <code>&quot;Rust&quot;</code> 之外的 ABI 可以让 Rust 中声明的函数被其他编程语言调用。比如下面声明了一个可以从 C 中调用的函数：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -2862,16 +2862,16 @@ let fptr: extern fn() -&gt; i32 = new_i32;
 let fptr: extern &quot;C&quot; fn() -&gt; i32 = new_i32;
 <span class="boring">}
 </span></code></pre></pre>
-<p>非 <code>&quot;Rust&quot;</code> 的 ABI 函数不支持与 Rust 函数完全相同的展开(unwind)方式。因此展开过程触及这类 ABI 函数的结束时就会导致该进程被终止。</p>
+<p>非 <code>&quot;Rust&quot;</code> 的 ABI 函数不支持与 Rust 函数完全相同的展开(unwind)方式。因此展开进程过这类 ABI 函数的尾部时就会导致该进程被终止。（译者注：展开是逆向的。）</p>
 <blockquote>
 <p><strong>注意</strong>: <code>rustc</code> 背后的 LLVM 是通过执行一个非法指令来实现中止进程的功能的。</p>
 </blockquote>
 <h2><a class="header" href="#const-functions" id="const-functions">Const functions</a></h2>
 <h2><a class="header" href="#常量函数" id="常量函数">常量函数</a></h2>
-<p>使用关键字 <code>const</code> 限定的函数是<a href="items/../const_eval.html#const-functions">常量(const)函数</a>，<a href="items/structs.html">元组结构体</a>构造函数和<a href="items/enumerations.html">元组变体</a>构造函数也是如此。可以从<a href="items/../const_eval.html#const-context">常量上下文</a>中调用<em>常量函数</em>。</p>
+<p>使用关键字 <code>const</code> 限定的函数是<a href="items/../const_eval.html#const-functions">常量(const)函数</a>，<a href="items/structs.html">元组结构体</a>构造函数和<a href="items/enumerations.html">元组变体</a>构造函数也是如此。可以在<a href="items/../const_eval.html#const-context">常量上下文</a>中调用<em>常量函数</em>。</p>
 <h2><a class="header" href="#async-functions" id="async-functions">Async functions</a></h2>
 <h2><a class="header" href="#异步函数" id="异步函数">异步函数</a></h2>
-<p>函数可以限定为异步的，这还可以与 <code>unsafe</code> 限定符结合在一起使用：</p>
+<p>函数可以被限定为异步的，这还可以与 <code>unsafe</code> 限定符结合在一起使用：</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -2901,7 +2901,7 @@ fn example&lt;'a&gt;(x: &amp;'a str) -&gt; impl Future&lt;Output = usize&gt; + '
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>实际的脱糖过程相当复杂：</p>
+<p>实际的脱糖(desugaring)过程相当复杂：</p>
 <ul>
 <li>脱糖过程中的返回类型被假定捕获了 <em><code>async fn</code>声明</em>中的所有的生存期参数（包括省略的）。这可以在上面的脱糖示例中看到：（我们）显式地给它补上了一个生存期参数 <code>'a</code>，因此捕捉到 <code>'a</code>。</li>
 <li>代码体中的 [<code>async move</code>块][async blocks]捕获所有函数参数，包括未使用或绑定到 <code>_</code> 模式的参数。参数销毁方面，除了销毁动作需要在返回的 future 完全执行(fully awaited)完成后才会发生外，可以确保异步函数参数的销毁顺序与函数非异步时的顺序相同。</li>
@@ -2911,14 +2911,14 @@ fn example&lt;'a&gt;(x: &amp;'a str) -&gt; impl Future&lt;Output = usize&gt; + '
 <p><strong>版本差异</strong>: 异步函数只能从 Rust 2018 版才开始可用。</p>
 </blockquote>
 <h3><a class="header" href="#combining-async-and-unsafe" id="combining-async-and-unsafe">Combining <code>async</code> and <code>unsafe</code></a></h3>
-<h3><a class="header" href="#async-和-unsafe-的结合" id="async-和-unsafe-的结合"><code>async</code> 和 <code>unsafe</code> 的结合</a></h3>
-<p>声明一个既异步又非安全的函数是合法的。调用这样的函数是非安全的，并且（像任何异步函数一样）会返回一个 future。这个 future 只是一个普通的 future，因此“await”它不需要一个 <code>unsafe</code> 的上下文：</p>
+<h3><a class="header" href="#async-和-unsafe-的联合使用" id="async-和-unsafe-的联合使用"><code>async</code> 和 <code>unsafe</code> 的联合使用</a></h3>
+<p>声明一个既异步又非安全(<code>unsafe</code>)的函数是合法的。调用这样的函数是非安全的，并且（像任何异步函数一样）会返回一个 future。这个 future 只是一个普通的 future，因此“await”它不需要一个 <code>unsafe</code> 的上下文：</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 等待这个返回的 future 相当于解引用 `x`。
 //
-// 安全条件: 直到返回的 future 执行完成，`x` 必须能被安全解引用
+// 安全条件: 在返回的 future 执行完成前，`x` 必须能被安全解引用
 async unsafe fn unsafe_example(x: *const i32) -&gt; i32 {
   *x
 }
@@ -2934,7 +2934,7 @@ async fn safe_example() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>请注意，此行为是对返回 <code>impl Future</code> 的函数进行脱糖处理的结果——在本例中，我们脱糖处理生成的函数是一个非安全(<code>unsafe</code>)函数，这个非安全(<code>unsafe</code>)函数返回值与原始定义的函数的返回值仍保持一致。</p>
-<p>非安全在异步函数上的使用方式与它在其他函数上的使用方式完全相同：只是它表示该函数会要求它的调用者提供一些额外的义务/条件来确保该函数的健壮性(soundness)。与任何其他非安全函数一样，这些条件可能会超出初始调用本身——例如，在上面的代码片段中， 函数 <code>unsafe_example</code> 将指针 <code>x</code> 作为参数，然后（在执行 await 时）解引用了对该指针的引用。这意味着在 future 完成执行之前，<code>x</code> 必须是有效的，调用者有责任确保这一点。</p>
+<p>非安全限定在异步函数上的使用方式与它在其他函数上的使用方式完全相同：只是它表示该函数会要求它的调用者提供一些额外的义务/条件来确保该函数的健全性(soundness)。与任何其他非安全函数一样，这些条件可能会超出初始调用本身——例如，在上面的代码片段中， 函数 <code>unsafe_example</code> 将指针 <code>x</code> 作为参数，然后（在执行 await 时）解引用了对该指针的引用。这意味着在 future 完成执行之前，<code>x</code> 必须是有效的，调用者有责任确保这一点。</p>
 <h2><a class="header" href="#attributes-on-functions" id="attributes-on-functions">Attributes on functions</a></h2>
 <h2><a class="header" href="#函数上的属性" id="函数上的属性">函数上的属性</a></h2>
 <p>在函数上允许使用<a href="items/../attributes.html">外部属性</a>，也允许在<a href="items/../expressions/block-expr.html">函数体</a>中的 <code>{</code> 后面直接放置<a href="items/../attributes.html">内部属性</a>。</p>
@@ -2979,7 +2979,7 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/type-aliases.md">type-aliases.md</a><br />
 commit: d150e88973ffccc4439111d8e1b26da745670fa8 <br />
-本译文最后维护日期：2020-10-20</p>
+本译文最后维护日期：2020-11-8</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -2987,7 +2987,7 @@ commit: d150e88973ffccc4439111d8e1b26da745670fa8 <br />
    <code>type</code> <a href="items/../identifiers.html">IDENTIFIER</a> <a href="items/generics.html"><em>Generics</em></a><sup>?</sup>
 <a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup> <code>=</code> <a href="items/../types.html#type-expressions"><em>Type</em></a> <code>;</code></p>
 </blockquote>
-<p><em>类型别名</em>为现有的<a href="items/../types.html">类型</a>定义一个新名称。类型别名用关键字 <code>type</code> 声明。每个值都有一个唯一的特定的类型，但是可以实现几个不同的 trait，或者兼容几个不同的类型约束。</p>
+<p><em>类型别名</em>为现有的<a href="items/../types.html">类型</a>定义一个新名称。类型别名用关键字 <code>type</code> 声明。每个值都是一个唯一的特定的类型，但是可以实现几个不同的 trait，或者兼容几个不同的类型约束。</p>
 <p>例如，下面将类型 <code>Point</code> 定义为类型 <code>(u8, u8)</code> 的同义词/别名：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -3016,7 +3016,7 @@ let _ = TypeAlias(5); // 不能正常执行
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/structs.md">structs.md</a><br />
 commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本译文最后维护日期：2020-10-29</p>
+本译文最后维护日期：2020-11-8</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -3068,7 +3068,7 @@ let p = Point(10, 11);
 let px: i32 = match p { Point(x, _) =&gt; x };
 <span class="boring">}
 </span></code></pre></pre>
-<p>*单元结构体(unit-like struct)*是没有任何字段的结构体，它的定义完全不包含字段(fields)列表。这样的结构体隐式定义了其类型的同名常量。例如:</p>
+<p>*单元结构体(unit-like struct)*是没有任何字段的结构体，它的定义完全不包含字段(fields)列表。这样的结构体隐式定义了其类型的同名常量（值）。例如:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3093,7 +3093,7 @@ let c = [Cookie, Cookie {}, Cookie, Cookie {}];
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/enumerations.md">enumerations.md</a><br />
 commit: 2264855271fae0a915a0fa769e57f5a5d09ff5ef <br />
-本译文最后维护日期：2020-10-20</p>
+本译文最后维护日期：2020-11-8</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -3116,7 +3116,7 @@ commit: 2264855271fae0a915a0fa769e57f5a5d09ff5ef <br />
 <p><em>EnumItemDiscriminant</em> :<br />
    <code>=</code> <a href="items/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><em>枚举</em>，英文为 <em>enumeration</em>，也常用其简写形式 <em>enum</em>，它同时定义了一个标称型(nominal)<a href="items/../types/enum.html">枚举类型</a>和一组<em>构造器</em>，这可用于创建相应枚举类型的值或使用相应的枚举类型对这些值进行模式匹配。</p>
+<p><em>枚举</em>，英文为 <em>enumeration</em>，也常用其简写形式 <em>enum</em>，它同时定义了一个标称型(nominal)<a href="items/../types/enum.html">枚举类型</a>和一组<em>构造器</em>，这可用于创建或使用模式来匹配相应枚举类型的值。</p>
 <p>枚举使用关键字 <code>enum</code> 来声明。</p>
 <p><code>enum</code> 数据项的一个示例和它的使用方法：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -3144,7 +3144,7 @@ let mut a: Animal = Animal::Dog(&quot;Cocoa&quot;.to_string(), 37.2);
 a = Animal::Cat { name: &quot;Spotty&quot;.to_string(), weight: 2.7 };
 <span class="boring">}
 </span></code></pre></pre>
-<p>在这个例子中，<code>Cat</code> 是一个<em>类结构体枚举变体(struct-like enum variant)</em>，而 <code>Dog</code> 则被简单地称为枚举变体。每个枚举实例都有一个<em>判别值/判别式(iscriminant)</em>，它是一个与此枚举实例关联的整数，用来确定它持有哪个变体。可以通过 <a href="https://doc.rust-lang.org/std/mem/fn.discriminant.html"><code>mem::discriminant</code></a> 函数来获得对这个判别值的不透明引用。</p>
+<p>在这个例子中，<code>Cat</code> 是一个<em>类结构体枚举变体(struct-like enum variant)</em>，而 <code>Dog</code> 则被简单地称为枚举变体。每个枚举实例都有一个<em>判别值/判别式(discriminant)</em>，它是一个与此枚举实例关联的整数，用来确定它持有哪个变体。可以通过 <a href="https://doc.rust-lang.org/std/mem/fn.discriminant.html"><code>mem::discriminant</code></a> 函数来获得对这个判别值的不透明引用。</p>
 <h2><a class="header" href="#custom-discriminant-values-for-fieldless-enumerations" id="custom-discriminant-values-for-fieldless-enumerations">Custom Discriminant Values for Fieldless Enumerations</a></h2>
 <h2><a class="header" href="#为无字段枚举自定义判别值" id="为无字段枚举自定义判别值">为无字段枚举自定义判别值</a></h2>
 <p>如果枚举的<em>任何</em>变体都没有附加字段，则可以直接设置和访问判别值。</p>
@@ -3199,7 +3199,7 @@ enum OverflowingDiscriminantError2 {
 </span></code></pre></pre>
 <h2><a class="header" href="#zero-variant-enums" id="zero-variant-enums">Zero-variant Enums</a></h2>
 <h2><a class="header" href="#无变体枚举" id="无变体枚举">无变体枚举</a></h2>
-<p>具有零变体的枚举称为<em>零变体枚举/无变体枚举</em>。因为它们没有有效的值，所以不能被实例化。</p>
+<p>没有变体的枚举称为<em>零变体枚举/无变体枚举</em>。因为它们没有有效的值，所以不能被实例化。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3217,7 +3217,7 @@ let y: u32 = x; // 类型不匹配错误
 </span></code></pre></pre>
 <h2><a class="header" href="#variant-visibility" id="variant-visibility">Variant visibility</a></h2>
 <h2><a class="header" href="#变体的可见性" id="变体的可见性">变体的可见性</a></h2>
-<p>依照句法规则，枚举变体是允许有自己的[<em>可见性(visibility)</em>][Visibility]注解(annotation)的，但当枚举被（句法法分析程序）验证(validate)通过后，可见性注解又将被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的数据项使用统一的句法规则进行解析。</p>
+<p>依照句法规则，枚举变体是允许有自己的[<em>可见性(visibility)</em>][Visibility]限定/注解(annotation)的，但当枚举被（句法分析程序）验证(validate)通过后，可见性注解又被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的数据项使用统一的句法规则进行解析。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3252,7 +3252,7 @@ enum E {
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/unions.md">unions.md</a><br />
 commit: 0d6f579859c875371c8cfdd6314bb23b19c7a2e8 <br />
-本译文最后维护日期：2020-10-25</p>
+本译文最后维护日期：2020-11-8</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -3260,7 +3260,7 @@ commit: 0d6f579859c875371c8cfdd6314bb23b19c7a2e8 <br />
    <code>union</code> <a href="items/../identifiers.html">IDENTIFIER</a> <a href="items/generics.html"><em>Generics</em></a><sup>?</sup> <a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup>
 <code>{</code><a href="items/structs.html"><em>StructFields</em></a> <code>}</code></p>
 </blockquote>
-<p>联合体声明使用和结构体声明相同的句法规则，除了用 <code>union</code> 代替 <code>struct</code>。</p>
+<p>除了用 <code>union</code> 代替 <code>struct</code>外，联合体声明使用和结构体声明相同的句法。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3271,7 +3271,7 @@ union MyUnion {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>联合体的关键属性是联合体的所有字段共享同一段存储。因此，对联合体的一个字段的写操作会覆盖其他字段，而联合体的尺寸由其尺寸最大的字段的尺寸决定。</p>
+<p>联合体的关键特性是联合体的所有字段共享同一段存储。因此，对联合体的一个字段的写操作会覆盖其他字段，而联合体的尺寸由其尺寸最大的字段的尺寸所决定。</p>
 <h2><a class="header" href="#initialization-of-a-union" id="initialization-of-a-union">Initialization of a union</a></h2>
 <h2><a class="header" href="#联合体的初始化" id="联合体的初始化">联合体的初始化</a></h2>
 <p>可以使用与结构体类型相同的句法创建联合体类型的值，但必须只能指定一个字段：</p>
@@ -3295,7 +3295,7 @@ union MyUnion {
 </span></code></pre></pre>
 <h2><a class="header" href="#reading-and-writing-union-fields" id="reading-and-writing-union-fields">Reading and writing union fields</a></h2>
 <h2><a class="header" href="#读写联合体字段" id="读写联合体字段">读写联合体字段</a></h2>
-<p>联合体没有“活跃字段(active field)”的概念。相反，每次访问联合体只用访问所指定的字段的类型解释此联合体的数据存储。读取联合体字段将以当前读取字段的类型来解读此联合体的存储位。字段（间）可以有非零的偏移量存在（使用表型 <code>#[repr(C)]</code> 的除外）；在这种情况下，读取将从字段的相对偏移量的比特位开始。程序员有责任确保数据在当前字段类型下有效。否则会导致未定义行为(undefined behavior)。例如，在 <code>bool</code> 类型下读取到数值 <code>3</code> 是未定义行为。实际上，对一个 <code>#[repr(C)]</code> 表型的联合体进行写操作，然后再从中读取，就好比从用于写入的类型到用于读取的类型的 <a href="https://doc.rust-lang.org/std/mem/fn.transmute.html"><code>transmute</code></a> 操作。</p>
+<p>联合体没有“活跃字段(active field)”的概念。相反，每次访问联合体只是用访问所指定的字段的类型解释此联合体的存储。读取联合体的字段就是以当前读取字段的类型来解读此联合体的存储位。字段（间）可以有非零的偏移量存在（使用表型 <code>#[repr(C)]</code> 的除外）；在这种情况下，读取将从字段的相对偏移量的 bit 开始。程序员有责任确保此数据在当前字段类型下有效。否则会导致未定义行为(undefined behavior)。例如，在 <code>bool</code> 类型下读取到数值 <code>3</code> 是未定义行为。实际上，对一个 <code>#[repr(C)]</code> 表型的联合体进行写操作，然后再从中读取，就好比从用于写入的类型到用于读取的类型的 <a href="https://doc.rust-lang.org/std/mem/fn.transmute.html"><code>transmute</code></a> 操作。</p>
 <p>因此，所有的联合体字段的读取必须放在非安全(<code>unsafe</code>)块里：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -3308,7 +3308,7 @@ union MyUnion {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>因为对拥有 <code>Copy</code> 特性的联合体字段的写操作不需要事先的析构读操作<sup class="footnote-reference"><a href="#译者备注">1</a></sup>，所以这些写操作不必放在非安全(<code>unsafe</code>)块中。</p>
+<p>对实现 <code>Copy</code> trait 的联合体字段的写操作不需要事先的析构读操作，也因此这些写操作不必放在非安全(<code>unsafe</code>)块中。<sup class="footnote-reference"><a href="#译者备注">1</a></sup></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3318,14 +3318,14 @@ union MyUnion {
 </span>u.f1 = 2;
 <span class="boring">}
 </span></code></pre></pre>
-<p>通常，使用联合体的代码将为非安全的联合体字段访问提供一层安全包装。</p>
+<p>通常，那些用到联合体的程序代码会先在非安全的联合体字段访问操作上提供一层安全包装，然后再使用。</p>
 <h2><a class="header" href="#unions-and-drop" id="unions-and-drop">Unions and <code>Drop</code></a></h2>
 <h2><a class="header" href="#联合体和-drop" id="联合体和-drop">联合体和 <code>Drop</code></a></h2>
 <p>当一个联合体被销毁时，它无法知道需要销毁它的哪些字段。因此，所有联合体的字段都必须实现 <code>Copy</code> trait 或被包装进 <a href="https://doc.rust-lang.org/std/mem/struct.ManuallyDrop.html"><code>ManuallyDrop&lt;_&gt;</code></a>。这确保了联合体在超出作用域时不需要销毁任何内容。</p>
 <p>与结构体和枚举一样，联合体也可以通过 <code>impl Drop</code> 手动定义被销毁时的具体动作。</p>
 <h2><a class="header" href="#pattern-matching-on-unions" id="pattern-matching-on-unions">Pattern matching on unions</a></h2>
 <h2><a class="header" href="#联合体上的模式匹配" id="联合体上的模式匹配">联合体上的模式匹配</a></h2>
-<p>访问联合体字段的另一种方法是使用模式匹配。联合体字段上的模式匹配与结构体上的模式匹配使用相同的句法规则，只是这种模式只能一次指定一个字段。因为模式匹配就像使用特定字段来读取联合体，所以它也必须被放在非安全(<code>unsafe</code>)块中。</p>
+<p>访问联合体字段的另一种方法是使用模式匹配。联合体字段上的模式匹配与结构体上的模式匹配使用相同的句法，只是这种模式只能一次指定一个字段。因为模式匹配就像使用特定字段来读取联合体，所以它也必须被放在非安全(<code>unsafe</code>)块中。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3393,9 +3393,9 @@ fn test() {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>正如您所看到的，在许多方面(除了布局、安全性和所有权)，联合体的行为与结构体完全相同，这很大程度上是因为联合体继承了结构体的句法规则的结果。对于 Rust 语言未明确提及的许多方面(比如隐私性、名称解析、类型推断、泛型、trait 实现、固有实现、一致性、模式检查等等)也是如此。</p>
+<p>如您所见，在许多方面（除了布局、安全性和所有权），联合体的行为与结构体完全相同，这很大程度上是因为联合体继承使用了结构体的句法的结果。对于 Rust 语言未明确提及的许多方面（比如隐私性(privacy)、名称解析、类型推断、泛型、trait实现、固有实现、一致性、模式检查等等）也是如此。</p>
 <div class="footnote-definition" id="译者备注"><sup class="footnote-definition-label">1</sup>
-<p>这句译者简单理解就是对已经初始化的变量再去覆写的时候要先去读一下这个变量代表的地址上的值的状态，如果有值，并且允许覆写，那 Rust 为防止内存泄漏就先执行那变量的析构行为（drop()），清空那个地址上的数据的关联数据，再写入。我们这里的预设条件是那值有 Copy 特性，有Copy 特性了，对值的直接覆写不会造成内存泄漏，就不必调用析构行为，也不需要事先的非安全读操作了。对于这个问题<a href="https://learnku.com/docs/nomicon/2018">nomicon</a>的“未初始化内存”章有讲述，博主<a href="https://www.zhihu.com/people/crlf0710">CrLF0710</a>的两篇“学一点 Rust 内存模型会发生什么呢？”里也都有精彩讲解。</p>
+<p>这句译者简单理解就是对已经初始化的变量再去覆写的时候要先去读一下这个变量代表的地址上的值的状态，如果有值，并且允许覆写，那 Rust 为防止内存泄漏就先执行那变量的析构行为（drop()），清空那个地址上的关联堆数据，再写入。我们这里对联合体的预设条件是此联合体值有 Copy特性，有 Copy特性了，对值的直接覆写不会造成内存泄漏，就不必调用析构行为，也不需要事先的非安全读操作了。对于这个问题<a href="https://learnku.com/docs/nomicon/2018">nomicon</a>的“未初始化内存”章有讲述，博主<a href="https://www.zhihu.com/people/crlf0710">CrLF0710</a>的两篇“学一点 Rust 内存模型会发生什么呢？”里也都有精彩讲解。</p>
 </div>
 <!-- 2020-11-7-->
 <!-- checked -->
@@ -6157,7 +6157,7 @@ commit: 03dc50769738a643be1451a4ff1516fa5fab92bd <br />
 <ul>
 <li>当 <code>+</code>、<code>*</code> 或 <code>-</code> 创建的值大于当前类型可存储的最大值或小于最小值。这包括任何有符号整型的最小值上的一元运算符 <code>-</code>。</li>
 <li>使用 <code>/</code> 或 <code>%</code>，其中左边的参数是某类有符号整型的最小整数，右边的参数是 <code>-1</code>。</li>
-<li>使用 <code>&lt;&lt;</code> 或 <code>&gt;&gt;</code>，其中右边参数大于或等于左边参数类型的比特数，或右边参数为负数。</li>
+<li>使用 <code>&lt;&lt;</code> 或 <code>&gt;&gt;</code>，其中右边参数大于或等于左边参数类型的 bit 数，或右边参数为负数。</li>
 </ul>
 <h2><a class="header" href="#借用引用操作符" id="借用引用操作符">借用/引用操作符</a></h2>
 <h2><a class="header" href="#borrow-operators" id="borrow-operators">Borrow operators</a></h2>

@@ -3,14 +3,14 @@
 
 >[type-aliases.md](https://github.com/rust-lang/reference/blob/master/src/items/type-aliases.md)\
 >commit: d150e88973ffccc4439111d8e1b26da745670fa8 \
->本译文最后维护日期：2020-10-20
+>本译文最后维护日期：2020-11-8
 
 > **<sup>句法</sup>**\
 > _TypeAlias_ :\
 > &nbsp;&nbsp; `type` [IDENTIFIER]&nbsp;[_Generics_]<sup>?</sup>
 >              [_WhereClause_]<sup>?</sup> `=` [_Type_] `;`
 
-*类型别名*为现有的[类型][type]定义一个新名称。类型别名用关键字 `type` 声明。每个值都有一个唯一的特定的类型，但是可以实现几个不同的 trait，或者兼容几个不同的类型约束。
+*类型别名*为现有的[类型][type]定义一个新名称。类型别名用关键字 `type` 声明。每个值都是一个唯一的特定的类型，但是可以实现几个不同的 trait，或者兼容几个不同的类型约束。
 
 [type]: ../types.md
 

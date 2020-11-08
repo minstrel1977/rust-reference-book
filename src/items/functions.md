@@ -106,7 +106,7 @@ foo(&[1, 2]);
 extern "ABI" fn foo() { /* ... */ }
 ```
 
-这些通常与提供了函数*声明*的[外部块][external block]数据项一起使用，这样就可以调用此函数而不必同时提供它们的*定义*：
+这些通常与提供了函数*声明*的[外部块][external block]数据项一起使用，这样就可以调用此函数而不必同时提供此函数的*定义*：
 
 <!-- ignore: fake ABI -->
 ```rust,ignore
@@ -128,7 +128,7 @@ fn foo() {}
 extern "Rust" fn foo() {}
 ```
 
-使用 `"Rust"` 之外的 ABI 可以让 Rust 中声明的函数被其他编程语言调用。比如下面声明了一个从C中调用的函数：
+使用 `"Rust"` 之外的 ABI 可以让 Rust 中声明的函数被其他编程语言调用。比如下面声明了一个可以从 C 中调用的函数：
 
 ```rust
 // 使用 "C" ABI 声明一个函数
@@ -153,19 +153,19 @@ extern "C" fn new_i32() -> i32 { 0 }
 let fptr: extern "C" fn() -> i32 = new_i32;
 ```
 
-非 `"Rust"` 的 ABI 函数不支持与 Rust 函数完全相同的展开(unwind)方式。因此展开过程触及这类 ABI 函数的结束时就会导致该进程被终止。
+非 `"Rust"` 的 ABI 函数不支持与 Rust 函数完全相同的展开(unwind)方式。因此展开进程过这类 ABI 函数的尾部时就会导致该进程被终止。（译者注：展开是逆向的。）
 
 > **注意**: `rustc` 背后的 LLVM 是通过执行一个非法指令来实现中止进程的功能的。
 
 ## Const functions
 ## 常量函数
 
-使用关键字 `const` 限定的函数是[常量(const)函数][const functions]，[元组结构体][tuple struct]构造函数和[元组变体][tuple variant]构造函数也是如此。可以从[常量上下文][const context]中调用*常量函数*。
+使用关键字 `const` 限定的函数是[常量(const)函数][const functions]，[元组结构体][tuple struct]构造函数和[元组变体][tuple variant]构造函数也是如此。可以在[常量上下文][const context]中调用*常量函数*。
 
 ## Async functions
 ## 异步函数
 
-函数可以限定为异步的，这还可以与 `unsafe` 限定符结合在一起使用：
+函数可以被限定为异步的，这还可以与 `unsafe` 限定符结合在一起使用：
 
 ```rust,edition2018
 async fn regular_example() { }
@@ -193,7 +193,7 @@ fn example<'a>(x: &'a str) -> impl Future<Output = usize> + 'a {
 }
 ```
 
-实际的脱糖过程相当复杂：
+实际的脱糖(desugaring)过程相当复杂：
 
 - 脱糖过程中的返回类型被假定捕获了 *`async fn`声明*中的所有的生存期参数（包括省略的）。这可以在上面的脱糖示例中看到：（我们）显式地给它补上了一个生存期参数 `'a`，因此捕捉到 `'a`。
 - 代码体中的 [`async move`块][async blocks]捕获所有函数参数，包括未使用或绑定到 `_` 模式的参数。参数销毁方面，除了销毁动作需要在返回的 future 完全执行(fully awaited)完成后才会发生外，可以确保异步函数参数的销毁顺序与函数非异步时的顺序相同。
@@ -206,14 +206,14 @@ fn example<'a>(x: &'a str) -> impl Future<Output = usize> + 'a {
 > **版本差异**: 异步函数只能从 Rust 2018 版才开始可用。
 
 ### Combining `async` and `unsafe`
-### `async` 和 `unsafe` 的结合
+### `async` 和 `unsafe` 的联合使用
 
-声明一个既异步又非安全的函数是合法的。调用这样的函数是非安全的，并且（像任何异步函数一样）会返回一个 future。这个 future 只是一个普通的 future，因此“await”它不需要一个 `unsafe` 的上下文：
+声明一个既异步又非安全(`unsafe`)的函数是合法的。调用这样的函数是非安全的，并且（像任何异步函数一样）会返回一个 future。这个 future 只是一个普通的 future，因此“await”它不需要一个 `unsafe` 的上下文：
 
 ```rust,edition2018
 // 等待这个返回的 future 相当于解引用 `x`。
 //
-// 安全条件: 直到返回的 future 执行完成，`x` 必须能被安全解引用
+// 安全条件: 在返回的 future 执行完成前，`x` 必须能被安全解引用
 async unsafe fn unsafe_example(x: *const i32) -> i32 {
   *x
 }
@@ -230,7 +230,7 @@ async fn safe_example() {
 
 请注意，此行为是对返回 `impl Future` 的函数进行脱糖处理的结果——在本例中，我们脱糖处理生成的函数是一个非安全(`unsafe`)函数，这个非安全(`unsafe`)函数返回值与原始定义的函数的返回值仍保持一致。
 
-非安全在异步函数上的使用方式与它在其他函数上的使用方式完全相同：只是它表示该函数会要求它的调用者提供一些额外的义务/条件来确保该函数的健壮性(soundness)。与任何其他非安全函数一样，这些条件可能会超出初始调用本身——例如，在上面的代码片段中， 函数 `unsafe_example` 将指针 `x` 作为参数，然后（在执行 await 时）解引用了对该指针的引用。这意味着在 future 完成执行之前，`x` 必须是有效的，调用者有责任确保这一点。
+非安全限定在异步函数上的使用方式与它在其他函数上的使用方式完全相同：只是它表示该函数会要求它的调用者提供一些额外的义务/条件来确保该函数的健全性(soundness)。与任何其他非安全函数一样，这些条件可能会超出初始调用本身——例如，在上面的代码片段中， 函数 `unsafe_example` 将指针 `x` 作为参数，然后（在执行 await 时）解引用了对该指针的引用。这意味着在 future 完成执行之前，`x` 必须是有效的，调用者有责任确保这一点。
 
 ## Attributes on functions
 ## 函数上的属性

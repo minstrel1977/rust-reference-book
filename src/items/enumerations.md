@@ -3,7 +3,7 @@
 
 >[enumerations.md](https://github.com/rust-lang/reference/blob/master/src/items/enumerations.md)\
 >commit: 2264855271fae0a915a0fa769e57f5a5d09ff5ef \
->本译文最后维护日期：2020-10-20
+>本译文最后维护日期：2020-11-8
 
 > **<sup>句法</sup>**\
 > _Enumeration_ :\
@@ -30,7 +30,7 @@
 > _EnumItemDiscriminant_ :\
 > &nbsp;&nbsp; `=` [_Expression_]
 
-*枚举*，英文为 *enumeration*，也常用其简写形式 *enum*，它同时定义了一个标称型(nominal)[枚举类型][enumerated type]和一组*构造器*，这可用于创建相应枚举类型的值或使用相应的枚举类型对这些值进行模式匹配。
+*枚举*，英文为 *enumeration*，也常用其简写形式 *enum*，它同时定义了一个标称型(nominal)[枚举类型][enumerated type]和一组*构造器*，这可用于创建或使用模式来匹配相应枚举类型的值。
 
 枚举使用关键字 `enum` 来声明。
 
@@ -58,7 +58,7 @@ let mut a: Animal = Animal::Dog("Cocoa".to_string(), 37.2);
 a = Animal::Cat { name: "Spotty".to_string(), weight: 2.7 };
 ```
 
-在这个例子中，`Cat` 是一个*类结构体枚举变体(struct-like enum variant)*，而 `Dog` 则被简单地称为枚举变体。每个枚举实例都有一个*判别值/判别式(iscriminant)*，它是一个与此枚举实例关联的整数，用来确定它持有哪个变体。可以通过 [`mem::discriminant`] 函数来获得对这个判别值的不透明引用。
+在这个例子中，`Cat` 是一个*类结构体枚举变体(struct-like enum variant)*，而 `Dog` 则被简单地称为枚举变体。每个枚举实例都有一个*判别值/判别式(discriminant)*，它是一个与此枚举实例关联的整数，用来确定它持有哪个变体。可以通过 [`mem::discriminant`] 函数来获得对这个判别值的不透明引用。
 
 ## Custom Discriminant Values for Fieldless Enumerations
 ## 为无字段枚举自定义判别值
@@ -115,7 +115,7 @@ enum OverflowingDiscriminantError2 {
 ## Zero-variant Enums
 ## 无变体枚举
 
-具有零变体的枚举称为*零变体枚举/无变体枚举*。因为它们没有有效的值，所以不能被实例化。
+没有变体的枚举称为*零变体枚举/无变体枚举*。因为它们没有有效的值，所以不能被实例化。
 
 ```rust
 enum ZeroVariants {}
@@ -132,7 +132,7 @@ let y: u32 = x; // 类型不匹配错误
 ## Variant visibility
 ## 变体的可见性
 
-依照句法规则，枚举变体是允许有自己的[*可见性(visibility)*][Visibility]注解(annotation)的，但当枚举被（句法法分析程序）验证(validate)通过后，可见性注解又将被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的数据项使用统一的句法规则进行解析。
+依照句法规则，枚举变体是允许有自己的[*可见性(visibility)*][Visibility]限定/注解(annotation)的，但当枚举被（句法分析程序）验证(validate)通过后，可见性注解又被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的数据项使用统一的句法规则进行解析。
 
 ```rust
 macro_rules! mac_variant {

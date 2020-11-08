@@ -261,7 +261,7 @@ foo(&amp;[1, 2]);
 <!-- ignore: fake ABI -->
 <pre><code class="language-rust ignore">extern &quot;ABI&quot; fn foo() { /* ... */ }
 </code></pre>
-<p>这些通常与提供了函数<em>声明</em>的<a href="external-blocks.html">外部块</a>数据项一起使用，这样就可以调用此函数而不必同时提供它们的<em>定义</em>：</p>
+<p>这些通常与提供了函数<em>声明</em>的<a href="external-blocks.html">外部块</a>数据项一起使用，这样就可以调用此函数而不必同时提供此函数的<em>定义</em>：</p>
 <!-- ignore: fake ABI -->
 <pre><code class="language-rust ignore">extern &quot;ABI&quot; {
   fn foo(); /* no body */
@@ -282,7 +282,7 @@ unsafe { foo() }
 </span>extern &quot;Rust&quot; fn foo() {}
 <span class="boring">}
 </span></code></pre></pre>
-<p>使用 <code>&quot;Rust&quot;</code> 之外的 ABI 可以让 Rust 中声明的函数被其他编程语言调用。比如下面声明了一个从C中调用的函数：</p>
+<p>使用 <code>&quot;Rust&quot;</code> 之外的 ABI 可以让 Rust 中声明的函数被其他编程语言调用。比如下面声明了一个可以从 C 中调用的函数：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -310,16 +310,16 @@ let fptr: extern fn() -&gt; i32 = new_i32;
 let fptr: extern &quot;C&quot; fn() -&gt; i32 = new_i32;
 <span class="boring">}
 </span></code></pre></pre>
-<p>非 <code>&quot;Rust&quot;</code> 的 ABI 函数不支持与 Rust 函数完全相同的展开(unwind)方式。因此展开过程触及这类 ABI 函数的结束时就会导致该进程被终止。</p>
+<p>非 <code>&quot;Rust&quot;</code> 的 ABI 函数不支持与 Rust 函数完全相同的展开(unwind)方式。因此展开进程过这类 ABI 函数的尾部时就会导致该进程被终止。（译者注：展开是逆向的。）</p>
 <blockquote>
 <p><strong>注意</strong>: <code>rustc</code> 背后的 LLVM 是通过执行一个非法指令来实现中止进程的功能的。</p>
 </blockquote>
 <h2><a class="header" href="#const-functions" id="const-functions">Const functions</a></h2>
 <h2><a class="header" href="#常量函数" id="常量函数">常量函数</a></h2>
-<p>使用关键字 <code>const</code> 限定的函数是<a href="../const_eval.html#const-functions">常量(const)函数</a>，<a href="structs.html">元组结构体</a>构造函数和<a href="enumerations.html">元组变体</a>构造函数也是如此。可以从<a href="../const_eval.html#const-context">常量上下文</a>中调用<em>常量函数</em>。</p>
+<p>使用关键字 <code>const</code> 限定的函数是<a href="../const_eval.html#const-functions">常量(const)函数</a>，<a href="structs.html">元组结构体</a>构造函数和<a href="enumerations.html">元组变体</a>构造函数也是如此。可以在<a href="../const_eval.html#const-context">常量上下文</a>中调用<em>常量函数</em>。</p>
 <h2><a class="header" href="#async-functions" id="async-functions">Async functions</a></h2>
 <h2><a class="header" href="#异步函数" id="异步函数">异步函数</a></h2>
-<p>函数可以限定为异步的，这还可以与 <code>unsafe</code> 限定符结合在一起使用：</p>
+<p>函数可以被限定为异步的，这还可以与 <code>unsafe</code> 限定符结合在一起使用：</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -349,7 +349,7 @@ fn example&lt;'a&gt;(x: &amp;'a str) -&gt; impl Future&lt;Output = usize&gt; + '
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>实际的脱糖过程相当复杂：</p>
+<p>实际的脱糖(desugaring)过程相当复杂：</p>
 <ul>
 <li>脱糖过程中的返回类型被假定捕获了 <em><code>async fn</code>声明</em>中的所有的生存期参数（包括省略的）。这可以在上面的脱糖示例中看到：（我们）显式地给它补上了一个生存期参数 <code>'a</code>，因此捕捉到 <code>'a</code>。</li>
 <li>代码体中的 [<code>async move</code>块][async blocks]捕获所有函数参数，包括未使用或绑定到 <code>_</code> 模式的参数。参数销毁方面，除了销毁动作需要在返回的 future 完全执行(fully awaited)完成后才会发生外，可以确保异步函数参数的销毁顺序与函数非异步时的顺序相同。</li>
@@ -359,14 +359,14 @@ fn example&lt;'a&gt;(x: &amp;'a str) -&gt; impl Future&lt;Output = usize&gt; + '
 <p><strong>版本差异</strong>: 异步函数只能从 Rust 2018 版才开始可用。</p>
 </blockquote>
 <h3><a class="header" href="#combining-async-and-unsafe" id="combining-async-and-unsafe">Combining <code>async</code> and <code>unsafe</code></a></h3>
-<h3><a class="header" href="#async-和-unsafe-的结合" id="async-和-unsafe-的结合"><code>async</code> 和 <code>unsafe</code> 的结合</a></h3>
-<p>声明一个既异步又非安全的函数是合法的。调用这样的函数是非安全的，并且（像任何异步函数一样）会返回一个 future。这个 future 只是一个普通的 future，因此“await”它不需要一个 <code>unsafe</code> 的上下文：</p>
+<h3><a class="header" href="#async-和-unsafe-的联合使用" id="async-和-unsafe-的联合使用"><code>async</code> 和 <code>unsafe</code> 的联合使用</a></h3>
+<p>声明一个既异步又非安全(<code>unsafe</code>)的函数是合法的。调用这样的函数是非安全的，并且（像任何异步函数一样）会返回一个 future。这个 future 只是一个普通的 future，因此“await”它不需要一个 <code>unsafe</code> 的上下文：</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 等待这个返回的 future 相当于解引用 `x`。
 //
-// 安全条件: 直到返回的 future 执行完成，`x` 必须能被安全解引用
+// 安全条件: 在返回的 future 执行完成前，`x` 必须能被安全解引用
 async unsafe fn unsafe_example(x: *const i32) -&gt; i32 {
   *x
 }
@@ -382,7 +382,7 @@ async fn safe_example() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>请注意，此行为是对返回 <code>impl Future</code> 的函数进行脱糖处理的结果——在本例中，我们脱糖处理生成的函数是一个非安全(<code>unsafe</code>)函数，这个非安全(<code>unsafe</code>)函数返回值与原始定义的函数的返回值仍保持一致。</p>
-<p>非安全在异步函数上的使用方式与它在其他函数上的使用方式完全相同：只是它表示该函数会要求它的调用者提供一些额外的义务/条件来确保该函数的健壮性(soundness)。与任何其他非安全函数一样，这些条件可能会超出初始调用本身——例如，在上面的代码片段中， 函数 <code>unsafe_example</code> 将指针 <code>x</code> 作为参数，然后（在执行 await 时）解引用了对该指针的引用。这意味着在 future 完成执行之前，<code>x</code> 必须是有效的，调用者有责任确保这一点。</p>
+<p>非安全限定在异步函数上的使用方式与它在其他函数上的使用方式完全相同：只是它表示该函数会要求它的调用者提供一些额外的义务/条件来确保该函数的健全性(soundness)。与任何其他非安全函数一样，这些条件可能会超出初始调用本身——例如，在上面的代码片段中， 函数 <code>unsafe_example</code> 将指针 <code>x</code> 作为参数，然后（在执行 await 时）解引用了对该指针的引用。这意味着在 future 完成执行之前，<code>x</code> 必须是有效的，调用者有责任确保这一点。</p>
 <h2><a class="header" href="#attributes-on-functions" id="attributes-on-functions">Attributes on functions</a></h2>
 <h2><a class="header" href="#函数上的属性" id="函数上的属性">函数上的属性</a></h2>
 <p>在函数上允许使用<a href="../attributes.html">外部属性</a>，也允许在<a href="../expressions/block-expr.html">函数体</a>中的 <code>{</code> 后面直接放置<a href="../attributes.html">内部属性</a>。</p>

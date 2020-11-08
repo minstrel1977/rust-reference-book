@@ -3,7 +3,7 @@
 
 >[structs.md](https://github.com/rust-lang/reference/blob/master/src/items/structs.md)\
 >commit: b0e0ad6490d6517c19546b1023948986578fc378 \
->本译文最后维护日期：2020-10-29
+>本译文最后维护日期：2020-11-8
 
 > **<sup>句法</sup>**\
 > _Struct_ :\
@@ -62,7 +62,7 @@ let p = Point(10, 11);
 let px: i32 = match p { Point(x, _) => x };
 ```
 
-*单元结构体(unit-like struct)*是没有任何字段的结构体，它的定义完全不包含字段(fields)列表。这样的结构体隐式定义了其类型的同名常量。例如:
+*单元结构体(unit-like struct)*是没有任何字段的结构体，它的定义完全不包含字段(fields)列表。这样的结构体隐式定义了其类型的同名常量（值）。例如:
 
 ```rust
 struct Cookie;
