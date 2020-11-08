@@ -40,14 +40,14 @@ mod math {
 
 模块和类型共享相同的命名空间。禁止在同一个作用域中声明与此作用域下模块同名的命名类型(named type)：也就是说，类型定义、trait、结构体、枚举、联合体、类型参数或 crate 不能在其作用域中屏蔽此作用域中也生效的模块名称，反之亦然。使用 `use` 引入到当前作用域的数据项也受这个限制。
 
-在句法上，关键字 `unsafe` 允许出现在关键字 `mod`之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 `unsafe` 从 token流中移除之前利用此句法来使用此关键字。
+在句法上，关键字 `unsafe` 允许出现在关键字 `mod` 之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 `unsafe` 从 token流中移除之前利用此句法来使用此关键字。
 
 ## Module Source Filenames
 ## 模块的源文件名
 
-没有代码体的模块是从外部文件加载的。当模块没有 `path` 属性限制时，文件的路径和逻辑上的[模块路径][module path]互为镜像。祖先模块的路径组件(path component)是此模块文件的目录，而模块的内容存在一个以该模块名为文件名，再加上 `.rs` 为扩展文件名的文件中。例如，下面的示例可以反映这种模块结构和文件系统结构相互映射的关系：
+没有代码体的模块是从外部文件加载的。当模块没有 `path` 属性限制时，文件的路径和逻辑上的[模块路径][module path]互为镜像。祖先模块的路径组件(path component)是此模块文件的目录，而模块的内容存在一个以该模块名为文件名，以 `.rs` 为扩展文件名的文件中。例如，下面的示例可以反映这种模块结构和文件系统结构相互映射的关系：
 
-模块路径               | 文件系统路径  | 文件内容
+模块路径                   | 文件系统路径       | 文件内容
 ------------------------- | ---------------  | -------------
 `crate`                   | `lib.rs`         | `mod util;`
 `crate::util`             | `util.rs`        | `mod config;`
@@ -60,7 +60,7 @@ mod math {
 ### The `path` attribute
 ### `path`属性
 
-用于加载外部文件模块的目录和文件可以受 `path`属性的影响。
+用于加载外部文件模块的目录和文件可以受 `path`属性的影响。（或者说可以联合使用 `path`属性来重新指定那种没有代码体的模块声明的加载对象的文件路径。）
 
 对于不在内联模块(inline module)块内的模块上的 `path`属性，此属性引入的文件的路径为相对于当前源文件所在的目录。例如，下面的代码片段将使用基于其所在位置的路径:
 
@@ -75,7 +75,7 @@ Source File    | `c`'s File Location | `c`'s Module Path
 `src/a/b.rs`   | `src/a/foo.rs`      | `crate::a::b::c`
 `src/a/mod.rs` | `src/a/foo.rs`      | `crate::a::c`
 
-对于处在内联模块块内的 `path` 属性，此属性引入的文件的路径取决于 `path` 属性所在的源文件的类型。（先对源文件进行分类，）“mod-rs”源文件是根模块（比如是 `lib.rs` 或 `main.rs`）和文件名为 `mod.rs` 的模块，非“mod-rs”源文件是所有其他模块文件。（那）在 mod-rs 文件中，内联模块块内的 `path` 属性（引入的文件的）路径是相对于 mod-rs 文件的目录（该目录包括作为目录的内联模块组件名）。对于非 mod-rs 文件，除了路径以此模块名为目录前段外，其他是一样的。例如，下面的代码片段将使用基于其所在位置的路径：
+对于处在内联模块块内的 `path`属性，此属性引入的文件的路径取决于 `path`属性所在的源文件的类型。（先对源文件进行分类，）“mod-rs”源文件是根模块（比如是 `lib.rs` 或 `main.rs`）和文件名为 `mod.rs` 的模块，“非mod-rs”源文件是所有其他模块文件。（那）在 mod-rs 文件中，内联模块块内的 `path` 属性（引入的文件的）路径是相对于 mod-rs 文件的目录（该目录包括作为目录的内联模块组件名）。对于非mod-rs 文件，除了路径以此模块名为目录前段外，其他是一样的。例如，下面的代码片段将使用基于其所在位置的路径：
 
 <!-- ignore: requires external files -->
 ```rust,ignore
@@ -90,31 +90,29 @@ Source File    | `inner`'s File Location   | `inner`'s Module Path
 `src/a/b.rs`   | `src/a/b/inline/other.rs` | `crate::a::b::inline::inner`
 `src/a/mod.rs` | `src/a/inline/other.rs`   | `crate::a::inline::inner`
 
-在内联模块上和内嵌模块内混合应用上述 `path` 属性规则的一个例子（mod-rs 和非 mod-rs 文件都适用）：
-An example of combining the above rules of `path` attributes on inline modules
-and nested modules within (applies to both mod-rs and non-mod-rs files):
+在内联模块和其内嵌模块上混合应用上述 `path`属性规则的一个例子（mod-rs 和非mod-rs 文件都适用）：
 
 <!-- ignore: requires external files -->
 ```rust,ignore
 #[path = "thread_files"]
-mod thread {
+mod thread { // 译者注：有模块要内联进来的内联模块
     // 从相对于当前源文件的目录下的 `thread_files/tls.rs` 文件里载 `local_data` 模块。
     #[path = "tls.rs"]
-    mod local_data;
+    mod local_data; // 译者注：内嵌模块
 }
 ```
 
 ## Prelude Items
 ## 预导入项
 
-模块在作用域中隐式地就有一些模块名称。这些名称是内置的，除了宏（在外部crate 上是）用 [`#[macro_use]`][macro_use] 导入这些名称，其他都是通过当前 crate 的[预导入包][prelude]导入的。这些名称都由唯一的标识符组成。这些名称不是当前模块的一部分，因此，例如，任何名为 `name`、 `self::name` 的路径都不是有效路径。由[预导入包][prelude]添加进来的各种模块名称可以通过将 `no_implicit_prelude`[属性][attribute]放在当前模块或当前模块的任意祖先模块上来移除。
+模块在作用域中隐式地就有一些模块名称。这些名称是内置的，除了宏（是在外部crate声明上）用 [`#[macro_use]`][macro_use] 导入这些名称外，其他都是通过当前 crate 的[预导入包][prelude]导入的。这些名称都由唯一的标识符组成。这些名称不是当前模块的一部分，因此，例如，任何名为 `name`、 `self::name` 的路径都不是有效路径。由[预导入包][prelude]添加进来的各种模块名称可以通过将 `no_implicit_prelude`[属性][attribute]放在当前模块或当前模块的任意祖先模块上来移除。
 
 ## Attributes on Modules
 ## 模块上的属性
 
-模块和所有数据项一样能接受外部属性。它们也能接受内部属性：可以在带有代码体的模块的 `{` 之后，也可以在模块源文件的开头（须在可选的 BOM 和 shebang 之后）。
+模块和所有数据项一样能接受外部属性。它们也能接受内部属性：可以在带有代码体的模块的 `{` 之后，也可以在模块源文件的开头（但须在可选的 BOM 和 shebang 之后）。
 
-在模块中有意义的内置属性是 [`cfg`]、[`deprecated`]、[`doc`]、[lint检查类属性][the lint check attributes]、`path` 和 `no_implicit_prelude`。模块也接受宏属性。
+在模块中有意义的内置属性是 [`cfg`]、[`deprecated`]、[`doc`]、[lint检查类属性][the lint check attributes]、`path` 和 `no_implicit_prelude`。模块也能接受宏属性。
 
 [_InnerAttribute_]: ../attributes.md
 [_Item_]: ../items.md

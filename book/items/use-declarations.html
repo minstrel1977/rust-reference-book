@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/use-declarations.md">use-declarations.md</a><br />
 commit: da3098c49b2f62c878ca9a36099d7dffb4bd9474 <br />
-本译文最后维护日期：2020-10-20</p>
+本译文最后维护日期：2020-11-8</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法:</sup></strong><br />
@@ -271,7 +271,7 @@ use ::foo::baz::foobaz;
 <span class="boring">fn main() {}
 </span></code></pre></pre>
 <p>2015 版不允许用 use声明来引用<a href="extern-crates.html#extern-prelude">外部预导入包</a>里的 crate。因此，在2015 版中仍然需要使用 <a href="extern-crates.html"><code>extern crate</code></a>声明，以便在 use声明中去引用外部 crate。从 2018 版开始，use声明可以像 <code>extern crate</code> 一样指定外部 crate 依赖关系。</p>
-<p>在 2018 版中，如果本地数据项与外部的 crate 名称相同，那么使用该 crate 名称需要一个前导的 <code>::</code> 来明确地选择 crate 名称。这种做法是为了与未来可能发生的更改保持兼容。<!-- uniform_paths future-proofing --></p>
+<p>在 2018 版中，如果本地数据项与外部的 crate 名称相同，那么使用该 crate 名称需要一个前导的 <code>::</code> 来明确地选择该 crate 名称。这种做法是为了与未来可能发生的更改保持兼容。<!-- uniform_paths future-proofing --></p>
 <pre><pre class="playground"><code class="language-rust edition2018">// use std::fs; // 错误, 这样有歧义.
 use ::std::fs;  // 从`std` crate 里导入, 不是下面这个 mod.
 use self::std::fs as self_fs;  // 从下面这个 mod 导入.
@@ -285,7 +285,7 @@ mod std {
 <h2><a class="header" href="#underscore-imports" id="underscore-imports">Underscore Imports</a></h2>
 <h2><a class="header" href="#下划线导入" id="下划线导入">下划线导入</a></h2>
 <p>通过使用形如为 <code>use path as _</code> 的带下划线的 use声明，可以在不绑定名称的情况下导入数据项。这对于导入一个 trait 特别有用，这样就可以在不导入 trait 的 symbol 的情况下使用这个 trait 的方法，例如，如果 trait 的 symbol 可能与另一个 symbol 冲突。再一个例子是链接外部的 crate 而不导入其名称。</p>
-<p>使用星号全局导入(Asterisk glob imports,即 <code>::*</code>)句法将以 <code>_</code> 的形式导入能匹配的所有数据项，但这些数据项在当前作用域中将处于不可命名的状态。</p>
+<p>使用星号全局导入(Asterisk glob imports,即 <code>::*</code>)句法将以 <code>_</code> 的形式导入能匹配到的所有数据项，但这些数据项在当前作用域中将处于不可命名的状态。</p>
 <pre><pre class="playground"><code class="language-rust">mod foo {
     pub trait Zoo {
         fn zoo(&amp;self) {}

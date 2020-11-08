@@ -3,7 +3,7 @@
 
 >[use-declarations.md](https://github.com/rust-lang/reference/blob/master/src/items/use-declarations.md)\
 >commit: da3098c49b2f62c878ca9a36099d7dffb4bd9474 \
->本译文最后维护日期：2020-10-20
+>本译文最后维护日期：2020-11-8
 
 > **<sup>句法:</sup>**\
 > _UseDeclaration_ :\
@@ -123,7 +123,7 @@ fn main() {}
 >
 > 2015 版不允许用 use声明来引用[外部预导入包][extern prelude]里的 crate。因此，在2015 版中仍然需要使用 [`extern crate`]声明，以便在 use声明中去引用外部 crate。从 2018 版开始，use声明可以像 `extern crate` 一样指定外部 crate 依赖关系。
 >
-> 在 2018 版中，如果本地数据项与外部的 crate 名称相同，那么使用该 crate 名称需要一个前导的 `::` 来明确地选择 crate 名称。这种做法是为了与未来可能发生的更改保持兼容。<!-- uniform_paths future-proofing -->
+> 在 2018 版中，如果本地数据项与外部的 crate 名称相同，那么使用该 crate 名称需要一个前导的 `::` 来明确地选择该 crate 名称。这种做法是为了与未来可能发生的更改保持兼容。<!-- uniform_paths future-proofing -->
 >
 > ```rust,edition2018
 > // use std::fs; // 错误, 这样有歧义.
@@ -141,7 +141,7 @@ fn main() {}
 
 通过使用形如为 `use path as _` 的带下划线的 use声明，可以在不绑定名称的情况下导入数据项。这对于导入一个 trait 特别有用，这样就可以在不导入 trait 的 symbol 的情况下使用这个 trait 的方法，例如，如果 trait 的 symbol 可能与另一个 symbol 冲突。再一个例子是链接外部的 crate 而不导入其名称。
 
-使用星号全局导入(Asterisk glob imports,即 `::*`)句法将以 `_` 的形式导入能匹配的所有数据项，但这些数据项在当前作用域中将处于不可命名的状态。
+使用星号全局导入(Asterisk glob imports,即 `::*`)句法将以 `_` 的形式导入能匹配到的所有数据项，但这些数据项在当前作用域中将处于不可命名的状态。
 ```rust
 mod foo {
     pub trait Zoo {

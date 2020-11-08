@@ -192,9 +192,9 @@
 </blockquote>
 <h3><a class="header" href="#约定" id="约定">约定</a></h3>
 <p>如果一些词译者觉得只使用中文行文可能会导致读者迷惑，那译者就会使用半角的圆括号把原英文带出，比如：标称类型(nominal type)。<br />
-但有一类虽然比较浅显，译者还是采用了这种格式，比如：结构体(<code>struct</code>)，这类是其实是原文直接使用了 Rust 文法中的简单<a href="tokens.html">token</a> 来指代相关名词的方便做法。这类做法的另一个含义是这这类词可以直接出现源码中，并代表了某种特定和关键的意义。所以译者的这种翻译方法也是为了不遗失这部分含义。<br />
+但有一类虽然比较浅显，译者还是采用了这种格式，比如：结构体(<code>struct</code>)，这类是其实是原文直接使用了 Rust 文法中的简单<a href="tokens.html">token</a> 来指代相关名词的方便做法。这类做法的另一个含义是这这类词代表了某种特定和关键的意义，并有可能直接出现源码中。所以译者的这种翻译方法也是为了不遗失这部分含义。<br />
 还有一类是针对比较生僻或非常专业的原文，译者可能较多的采用了意译，比如 “Macro Kleene Matcher”，可能译为“宏克林闭包匹配器”比较专业，但译者意译为“可匹配空的宏匹配器”，专业性是降低了，但也可能照顾了部分非专业读者。</p>
-<p>译文中还有许多全角圆括号，这些有可能是原文行文中就有的括号，也可能是译者为中文行文方便添加进来的，也有是译者为补充语义、方便阅读特意添加进来的。</p>
+<p>译文中还有许多全角圆括号，这些有可能是原文行文中就有的括号，也可能是译者为中文行文方便添加进来的，也有是译者为补充语义、方便阅读特意添加进来的（这部分主要是译者注太多了，译者看着也烦）。</p>
 <p>一些不确定该如何翻译的名词，译者也遵循一般原则没有强翻。但如果一个专有名词又有中文又有英文，译者就有意没在这两个次词/字中间留有空格，例如：“trait对象”。尤其是那些原文带有token含义的名词，译者也一般把它们“紧密结合”在一起，比如：<code>let</code>语句、<code>cfg</code>属性等。</p>
 <p>每章节译文开头，译者都把其对应的原文链接地址和本译文对应的 commit id 给放上了。同时也把译者最后维护的时间给放上。这些是希望将来有其他贡献者能共同遵守。<br />
 本翻译说明的开头还附上了本书最后一次维护时同步原文的时间。</p>
@@ -2443,10 +2443,10 @@ commit: fbf34356b709cfc0debb01acaaff038d4e339aab <br />
 <span class="boring">}
 </span></code></pre></pre>
 <p>模块和类型共享相同的命名空间。禁止在同一个作用域中声明与此作用域下模块同名的命名类型(named type)：也就是说，类型定义、trait、结构体、枚举、联合体、类型参数或 crate 不能在其作用域中屏蔽此作用域中也生效的模块名称，反之亦然。使用 <code>use</code> 引入到当前作用域的数据项也受这个限制。</p>
-<p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>mod</code>之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从 token流中移除之前利用此句法来使用此关键字。</p>
+<p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>mod</code> 之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从 token流中移除之前利用此句法来使用此关键字。</p>
 <h2><a class="header" href="#module-source-filenames" id="module-source-filenames">Module Source Filenames</a></h2>
 <h2><a class="header" href="#模块的源文件名" id="模块的源文件名">模块的源文件名</a></h2>
-<p>没有代码体的模块是从外部文件加载的。当模块没有 <code>path</code> 属性限制时，文件的路径和逻辑上的<a href="items/../paths.html">模块路径</a>互为镜像。祖先模块的路径组件(path component)是此模块文件的目录，而模块的内容存在一个以该模块名为文件名，再加上 <code>.rs</code> 为扩展文件名的文件中。例如，下面的示例可以反映这种模块结构和文件系统结构相互映射的关系：</p>
+<p>没有代码体的模块是从外部文件加载的。当模块没有 <code>path</code> 属性限制时，文件的路径和逻辑上的<a href="items/../paths.html">模块路径</a>互为镜像。祖先模块的路径组件(path component)是此模块文件的目录，而模块的内容存在一个以该模块名为文件名，以 <code>.rs</code> 为扩展文件名的文件中。例如，下面的示例可以反映这种模块结构和文件系统结构相互映射的关系：</p>
 <table><thead><tr><th>模块路径</th><th>文件系统路径</th><th>文件内容</th></tr></thead><tbody>
 <tr><td><code>crate</code></td><td><code>lib.rs</code></td><td><code>mod util;</code></td></tr>
 <tr><td><code>crate::util</code></td><td><code>util.rs</code></td><td><code>mod config;</code></td></tr>
@@ -2458,7 +2458,7 @@ commit: fbf34356b709cfc0debb01acaaff038d4e339aab <br />
 </blockquote>
 <h3><a class="header" href="#the-path-attribute" id="the-path-attribute">The <code>path</code> attribute</a></h3>
 <h3><a class="header" href="#path属性" id="path属性"><code>path</code>属性</a></h3>
-<p>用于加载外部文件模块的目录和文件可以受 <code>path</code>属性的影响。</p>
+<p>用于加载外部文件模块的目录和文件可以受 <code>path</code>属性的影响。（或者说可以联合使用 <code>path</code>属性来重新指定那种没有代码体的模块声明的加载对象的文件路径。）</p>
 <p>对于不在内联模块(inline module)块内的模块上的 <code>path</code>属性，此属性引入的文件的路径为相对于当前源文件所在的目录。例如，下面的代码片段将使用基于其所在位置的路径:</p>
 <!-- ignore: requires external files -->
 <pre><code class="language-rust ignore">#[path = &quot;foo.rs&quot;]
@@ -2468,7 +2468,7 @@ mod c;
 <tr><td><code>src/a/b.rs</code></td><td><code>src/a/foo.rs</code></td><td><code>crate::a::b::c</code></td></tr>
 <tr><td><code>src/a/mod.rs</code></td><td><code>src/a/foo.rs</code></td><td><code>crate::a::c</code></td></tr>
 </tbody></table>
-<p>对于处在内联模块块内的 <code>path</code> 属性，此属性引入的文件的路径取决于 <code>path</code> 属性所在的源文件的类型。（先对源文件进行分类，）“mod-rs”源文件是根模块（比如是 <code>lib.rs</code> 或 <code>main.rs</code>）和文件名为 <code>mod.rs</code> 的模块，非“mod-rs”源文件是所有其他模块文件。（那）在 mod-rs 文件中，内联模块块内的 <code>path</code> 属性（引入的文件的）路径是相对于 mod-rs 文件的目录（该目录包括作为目录的内联模块组件名）。对于非 mod-rs 文件，除了路径以此模块名为目录前段外，其他是一样的。例如，下面的代码片段将使用基于其所在位置的路径：</p>
+<p>对于处在内联模块块内的 <code>path</code>属性，此属性引入的文件的路径取决于 <code>path</code>属性所在的源文件的类型。（先对源文件进行分类，）“mod-rs”源文件是根模块（比如是 <code>lib.rs</code> 或 <code>main.rs</code>）和文件名为 <code>mod.rs</code> 的模块，“非mod-rs”源文件是所有其他模块文件。（那）在 mod-rs 文件中，内联模块块内的 <code>path</code> 属性（引入的文件的）路径是相对于 mod-rs 文件的目录（该目录包括作为目录的内联模块组件名）。对于非mod-rs 文件，除了路径以此模块名为目录前段外，其他是一样的。例如，下面的代码片段将使用基于其所在位置的路径：</p>
 <!-- ignore: requires external files -->
 <pre><code class="language-rust ignore">mod inline {
     #[path = &quot;other.rs&quot;]
@@ -2479,32 +2479,30 @@ mod c;
 <tr><td><code>src/a/b.rs</code></td><td><code>src/a/b/inline/other.rs</code></td><td><code>crate::a::b::inline::inner</code></td></tr>
 <tr><td><code>src/a/mod.rs</code></td><td><code>src/a/inline/other.rs</code></td><td><code>crate::a::inline::inner</code></td></tr>
 </tbody></table>
-<p>在内联模块上和内嵌模块内混合应用上述 <code>path</code> 属性规则的一个例子（mod-rs 和非 mod-rs 文件都适用）：
-An example of combining the above rules of <code>path</code> attributes on inline modules
-and nested modules within (applies to both mod-rs and non-mod-rs files):</p>
+<p>在内联模块和其内嵌模块上混合应用上述 <code>path</code>属性规则的一个例子（mod-rs 和非mod-rs 文件都适用）：</p>
 <!-- ignore: requires external files -->
 <pre><code class="language-rust ignore">#[path = &quot;thread_files&quot;]
-mod thread {
+mod thread { // 译者注：有模块要内联进来的内联模块
     // 从相对于当前源文件的目录下的 `thread_files/tls.rs` 文件里载 `local_data` 模块。
     #[path = &quot;tls.rs&quot;]
-    mod local_data;
+    mod local_data; // 译者注：内嵌模块
 }
 </code></pre>
 <h2><a class="header" href="#prelude-items" id="prelude-items">Prelude Items</a></h2>
 <h2><a class="header" href="#预导入项" id="预导入项">预导入项</a></h2>
-<p>模块在作用域中隐式地就有一些模块名称。这些名称是内置的，除了宏（在外部crate 上是）用 <a href="items/../macros-by-example.html#the-macro_use-attribute"><code>#[macro_use]</code></a> 导入这些名称，其他都是通过当前 crate 的<a href="items/../crates-and-source-files.html#preludes-and-no_std">预导入包</a>导入的。这些名称都由唯一的标识符组成。这些名称不是当前模块的一部分，因此，例如，任何名为 <code>name</code>、 <code>self::name</code> 的路径都不是有效路径。由<a href="items/../crates-and-source-files.html#preludes-and-no_std">预导入包</a>添加进来的各种模块名称可以通过将 <code>no_implicit_prelude</code><a href="items/../attributes.html">属性</a>放在当前模块或当前模块的任意祖先模块上来移除。</p>
+<p>模块在作用域中隐式地就有一些模块名称。这些名称是内置的，除了宏（是在外部crate声明上）用 <a href="items/../macros-by-example.html#the-macro_use-attribute"><code>#[macro_use]</code></a> 导入这些名称外，其他都是通过当前 crate 的<a href="items/../crates-and-source-files.html#preludes-and-no_std">预导入包</a>导入的。这些名称都由唯一的标识符组成。这些名称不是当前模块的一部分，因此，例如，任何名为 <code>name</code>、 <code>self::name</code> 的路径都不是有效路径。由<a href="items/../crates-and-source-files.html#preludes-and-no_std">预导入包</a>添加进来的各种模块名称可以通过将 <code>no_implicit_prelude</code><a href="items/../attributes.html">属性</a>放在当前模块或当前模块的任意祖先模块上来移除。</p>
 <h2><a class="header" href="#attributes-on-modules" id="attributes-on-modules">Attributes on Modules</a></h2>
 <h2><a class="header" href="#模块上的属性" id="模块上的属性">模块上的属性</a></h2>
-<p>模块和所有数据项一样能接受外部属性。它们也能接受内部属性：可以在带有代码体的模块的 <code>{</code> 之后，也可以在模块源文件的开头（须在可选的 BOM 和 shebang 之后）。</p>
-<p>在模块中有意义的内置属性是 <a href="items/../conditional-compilation.html"><code>cfg</code></a>、<a href="items/../attributes/diagnostics.html#the-deprecated-attribute"><code>deprecated</code></a>、<a href="https://doc.rust-lang.org/rustdoc/the-doc-attribute.html"><code>doc</code></a>、<a href="items/../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>、<code>path</code> 和 <code>no_implicit_prelude</code>。模块也接受宏属性。</p>
+<p>模块和所有数据项一样能接受外部属性。它们也能接受内部属性：可以在带有代码体的模块的 <code>{</code> 之后，也可以在模块源文件的开头（但须在可选的 BOM 和 shebang 之后）。</p>
+<p>在模块中有意义的内置属性是 <a href="items/../conditional-compilation.html"><code>cfg</code></a>、<a href="items/../attributes/diagnostics.html#the-deprecated-attribute"><code>deprecated</code></a>、<a href="https://doc.rust-lang.org/rustdoc/the-doc-attribute.html"><code>doc</code></a>、<a href="items/../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>、<code>path</code> 和 <code>no_implicit_prelude</code>。模块也能接受宏属性。</p>
 <!-- 2020-11-7-->
 <!-- checked -->
 <h1><a class="header" href="#extern-crate-declarations" id="extern-crate-declarations">Extern crate declarations</a></h1>
-<h1><a class="header" href="#外部crate-声明" id="外部crate-声明">外部crate 声明</a></h1>
+<h1><a class="header" href="#外部crate声明" id="外部crate声明">外部crate声明</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/extern-crates.md">extern-crates.md</a><br />
 commit: afcf00bbf22f4dec71866a8bd5f385ba1d3b70af <br />
-本译文最后维护日期：2020-10-19</p>
+本译文最后维护日期：2020-11-8</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法:<sup></strong><br />
@@ -2515,10 +2513,10 @@ commit: afcf00bbf22f4dec71866a8bd5f385ba1d3b70af <br />
 <p><em>AsClause</em> :<br />
    <code>as</code> ( <a href="items/../identifiers.html">IDENTIFIER</a> | <code>_</code> )</p>
 </blockquote>
-<p><em>外部crate(<code>extern crate</code>)声明</em>指定了对外部 crate 的依赖关系。（这种声明让）外部的 crate 作为 <code>extern crate</code> 声明中提供的<a href="items/../identifiers.html">标识符</a>被绑定到当前声明的作用域中。<code>as</code>子句可用于将导入的 crate 绑定到不同的名称上。</p>
-<p>外部crate 在编译时被解析为一个特定的 <code>soname</code><sup class="footnote-reference"><a href="#soname">1</a></sup>， 并且一个到此 <code>soname</code> 的运行时链接会传递给链接器，以便在运行时加载此 <code>soname</code>。<code>soname</code> 在编译时解析，方法是扫描编译器的库文件路径，匹配外部crate 的 <code>crateid</code>。因为<code>crateid</code> 是在编译时通过可选的 <code>crateid</code>属性声明的，所以如果外部 crate 没有提供 <code>crateid</code> ， 则默认拿该外部crate 的 <code>name</code>属性值来和 <code>extern crate</code> 声明中的[标识符]绑定。</p>
-<p>导入<code>self</code> crate 会创建到当前 crate 的绑定。在这种情况下，必须使用 <code>as</code>子句指定要绑定到的名称。</p>
-<p>三种 <code>extern crate</code> 声明的示例:</p>
+<p><em>外部crate(<code>extern crate</code>)声明</em>指定了对外部 crate 的依赖关系。（这种声明让）外部的 crate 作为外部crate(<code>extern crate</code>)声明中提供的<a href="items/../identifiers.html">标识符</a>被绑定到当前声明的作用域中。<code>as</code>子句可用于将导入的 crate 绑定到不同的名称上。</p>
+<p>外部crate 在编译时被解析为一个特定的 <code>soname</code><sup class="footnote-reference"><a href="#soname">1</a></sup>， 并且一个到此 <code>soname</code> 的运行时链接会传递给链接器，以便在运行时加载此 <code>soname</code>。<code>soname</code> 在编译时解析，方法是扫描编译器的库文件路径，匹配外部crate 的 <code>crateid</code>。因为<code>crateid</code> 是在编译时通过可选的 <code>crateid</code>属性声明的，所以如果外部 crate 没有提供 <code>crateid</code>， 则默认拿该外部crate 的 <code>name</code>属性值来和外部crate(<code>extern crate</code>)声明中的[标识符]绑定。</p>
+<p>导入 <code>self</code> crate 会创建到当前 crate 的绑定。在这种情况下，必须使用 <code>as</code>子句指定要绑定到的名称。</p>
+<p>三种外部crate(<code>extern crate</code>)声明的示例:</p>
 <!-- ignore: requires external crates -->
 <pre><code class="language-rust ignore">extern crate pcre;
 
@@ -2526,23 +2524,23 @@ extern crate std; // 等同于: extern crate std as std;
 
 extern crate std as ruststd; // 使用其他名字去链接 'std'
 </code></pre>
-<p>当命名 Rust crate 时，不允许使用连字符。然而 Cargo 包却可以使用它们。在这种情况下，当 <code>Cargo.toml</code> 文件中没有指定 crate 名称时， Cargo 将透明地将 <code>-</code> 替换为 <code>_</code> 以供 Rust 源文件内的 <code>extern crate</code> 声明引用 (详见 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0940-hyphens-considered-harmful.md">RFC 940</a>)。
-这有一个示例：</p>
+<p>当命名 Rust crate 时，不允许使用连字符(<code>-</code>)。然而 Cargo 包却可以使用它们。在这种情况下，当 <code>Cargo.toml</code> 文件中没有指定 crate 名称时， Cargo 将透明地将 <code>-</code> 替换为 <code>_</code> 以供 Rust 源文件内的外部crate(<code>extern crate</code>)声明引用 (详见 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0940-hyphens-considered-harmful.md">RFC 940</a>)。</p>
+<p>这有一个示例：</p>
 <!-- ignore: requires external crates -->
 <pre><code class="language-rust ignore">// 导入 Cargo 包 hello-world
 extern crate hello_world; // 连字符被替换为下划线
 </code></pre>
 <h2><a class="header" href="#extern-prelude" id="extern-prelude">Extern Prelude</a></h2>
 <h2><a class="header" href="#外部预导入包" id="外部预导入包">外部预导入包</a></h2>
-<p>在根模块的源码中使用 <code>extern crate</code> 声明或者给编译命令增加编译参数（<code>rustc</code> 下使用 <code>--extern</code> 参数选项），这两种导入外部的 crate 的方式都是把外部的 crate 导入到“外部预导入包”里。外部预导入包里的 crate 的有效作用域是整个 crate，包括内部模块。如果使用 <code>extern crate orig_name as new_name</code> 导入，则相应地 symbol <code>new_name</code> 被添加到在预导入包里。</p>
+<p>在根模块的源码中使用外部crate(<code>extern crate</code>)声明或者给编译命令增加编译参数（<code>rustc</code> 下使用 <code>--extern</code> 参数选项），这两种导入外部的 crate 的方式都是把外部的 crate 导入到“外部预导入包”里。外部预导入包里的 crate 的有效作用域是整个 crate，包括内部模块。如果使用 <code>extern crate orig_name as new_name</code> 导入，则相应地 symbol <code>new_name</code> 被添加到在预导入包里。</p>
 <p><code>core</code> crate 总是会被添加到外部预导入包里。只要没有在 crate 根模块中指定应用 <a href="items/../crates-and-source-files.html#preludes-and-no_std"><code>no_std</code></a>属性，也会把 <code>std</code> crate 添加进来。</p>
-<p>可以在模块上使用 <a href="items/modules.html#prelude-items"><code>no_implicit_prelude</code></a> 属性来禁用模块内的预导入包查找。</p>
+<p>可以在模块上使用 <a href="items/modules.html#prelude-items"><code>no_implicit_prelude</code></a>属性来禁用模块内的预导入包查找功能。</p>
 <blockquote>
-<p><strong>版本差异</strong>：在 2015 版中，在外部预导入包中的 crate 不能通过 <a href="items/use-declarations.html">use声明</a>来直接引用，因此通常标准做法是用 <code>extern crate</code> 将那它们纳入到当前作用域。</p>
-<p>从 2018 版开始， <a href="items/use-declarations.html">use声明</a>可以直接引用外部预导入包里的 crate，所以再使用 <code>extern crate</code> 就被认为是不规范的。</p>
+<p><strong>版本差异</strong>：在 2015 版中，在外部预导入包中的 crate 不能通过 <a href="items/use-declarations.html">use声明</a>来直接引用，因此通常标准做法是用外部crate(<code>extern crate</code>)将那它们纳入到当前作用域。</p>
+<p>从 2018 版开始， <a href="items/use-declarations.html">use声明</a>可以直接引用外部预导入包里的 crate，所以再使用外部crate(<code>extern crate</code>)就被认为是不规范的。</p>
 </blockquote>
 <blockquote>
-<p><strong>注意</strong>: 随 <code>rustc</code> 一起引入的 crate，如 <a href="https://doc.rust-lang.org/alloc/"><code>alloc</code></a> 和 <a href="https://doc.rust-lang.org/test/"><code>test</code></a>，在使用 Cargo 时不会自动被包含在 <code>--extern</code> 命令行参数选项中。即使在 2018 版中，也必须通过 <code>extern crate</code> 声明来把它们引入到当前作用域内。</p>
+<p><strong>注意</strong>: 随 <code>rustc</code> 一起引入的 crate，如 <a href="https://doc.rust-lang.org/alloc/"><code>alloc</code></a> 和 <a href="https://doc.rust-lang.org/test/"><code>test</code></a>，在使用 Cargo 时不会自动被包含在 <code>--extern</code> 命令行参数选项中。即使在 2018 版中，也必须通过外部crate(<code>extern crate</code>)声明来把它们引入到当前作用域内。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -2552,19 +2550,17 @@ use alloc::rc::Rc;
 </span></code></pre></pre>
 </blockquote>
 <!--
-See https://github.com/rust-lang/rust/issues/57288 for more about the alloc/test limitation.
+查看 https://github.com/rust-lang/rust/issues/57288 以了解更多关于 alloc/test 的限制。
 -->
 <h2><a class="header" href="#underscore-imports" id="underscore-imports">Underscore Imports</a></h2>
 <h2><a class="header" href="#下划线导入" id="下划线导入">下划线导入</a></h2>
-<p>The <a href="items/../macros-by-example.html#the-macro_use-attribute"><code>macro_use</code> attribute</a> works as usual and import the macro names
-into the macro-use prelude.</p>
-<p>外部的 crate依赖可以通过使用带有下划线形如 <code>extern crate foo as _</code> 的形式来声明，而无需将其名称绑定到当前作用域内。这种声明方式对于只需要 crate 被链接进，但 crate 从不会被当前代码引用的情况可能很有用，并且还可以避免未使用的提醒。</p>
-<p>下划线导入不会影响 <a href="items/../macros-by-example.html#the-macro_use-attribute"><code>macro_use</code>属性</a>的正常使用，这情况下使用 <code>macro_use</code>属性，宏名称仍会正常导入到 macro-use 预导入包中。</p>
+<p>外部的 crate依赖可以通过使用带有下划线形如 <code>extern crate foo as _</code> 的形式来声明，而无需将其名称绑定到当前作用域内。这种声明方式对于只需要 crate 被链接进来，但 crate 从不会被当前代码引用的情况可能很有用，并且还可以避免未使用的 lint 提醒。</p>
+<p>下划线导入不会影响 <a href="items/../macros-by-example.html#the-macro_use-attribute"><code>macro_use</code>属性</a>的正常使用，这情况下使用 <code>macro_use</code>属性，宏名称仍会正常导入到 macro-use预导入包中。</p>
 <h2><a class="header" href="#the-no_link-attribute" id="the-no_link-attribute">The <code>no_link</code> attribute</a></h2>
 <h2><a class="header" href="#no_link属性" id="no_link属性"><code>no_link</code>属性</a></h2>
 <p>可以在外部项(<code>extern crate</code> item)上指定使用 <em><code>no_link</code>属性</em>，以防止此 crate 被链接到编译输出中。这通常用于加载一个 crate 而只访问它的宏。</p>
 <div class="footnote-definition" id="soname"><sup class="footnote-definition-label">1</sup>
-<p>译者注：这里故意使用soname是为了让读者主动去联想类比linux系统里的动态库文件的soname。</p>
+<p>译者注：这里的 <code>soname</code> 是 linux系统里的动态库文件的 soname。</p>
 </div>
 <!-- 2020-11-7-->
 <!-- checked -->
@@ -2573,7 +2569,7 @@ into the macro-use prelude.</p>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/use-declarations.md">use-declarations.md</a><br />
 commit: da3098c49b2f62c878ca9a36099d7dffb4bd9474 <br />
-本译文最后维护日期：2020-10-20</p>
+本译文最后维护日期：2020-11-8</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法:</sup></strong><br />
@@ -2674,7 +2670,7 @@ use ::foo::baz::foobaz;
 <span class="boring">fn main() {}
 </span></code></pre></pre>
 <p>2015 版不允许用 use声明来引用<a href="items/extern-crates.html#extern-prelude">外部预导入包</a>里的 crate。因此，在2015 版中仍然需要使用 <a href="items/extern-crates.html"><code>extern crate</code></a>声明，以便在 use声明中去引用外部 crate。从 2018 版开始，use声明可以像 <code>extern crate</code> 一样指定外部 crate 依赖关系。</p>
-<p>在 2018 版中，如果本地数据项与外部的 crate 名称相同，那么使用该 crate 名称需要一个前导的 <code>::</code> 来明确地选择 crate 名称。这种做法是为了与未来可能发生的更改保持兼容。<!-- uniform_paths future-proofing --></p>
+<p>在 2018 版中，如果本地数据项与外部的 crate 名称相同，那么使用该 crate 名称需要一个前导的 <code>::</code> 来明确地选择该 crate 名称。这种做法是为了与未来可能发生的更改保持兼容。<!-- uniform_paths future-proofing --></p>
 <pre><pre class="playground"><code class="language-rust edition2018">// use std::fs; // 错误, 这样有歧义.
 use ::std::fs;  // 从`std` crate 里导入, 不是下面这个 mod.
 use self::std::fs as self_fs;  // 从下面这个 mod 导入.
@@ -2688,7 +2684,7 @@ mod std {
 <h2><a class="header" href="#underscore-imports-1" id="underscore-imports-1">Underscore Imports</a></h2>
 <h2><a class="header" href="#下划线导入-1" id="下划线导入-1">下划线导入</a></h2>
 <p>通过使用形如为 <code>use path as _</code> 的带下划线的 use声明，可以在不绑定名称的情况下导入数据项。这对于导入一个 trait 特别有用，这样就可以在不导入 trait 的 symbol 的情况下使用这个 trait 的方法，例如，如果 trait 的 symbol 可能与另一个 symbol 冲突。再一个例子是链接外部的 crate 而不导入其名称。</p>
-<p>使用星号全局导入(Asterisk glob imports,即 <code>::*</code>)句法将以 <code>_</code> 的形式导入能匹配的所有数据项，但这些数据项在当前作用域中将处于不可命名的状态。</p>
+<p>使用星号全局导入(Asterisk glob imports,即 <code>::*</code>)句法将以 <code>_</code> 的形式导入能匹配到的所有数据项，但这些数据项在当前作用域中将处于不可命名的状态。</p>
 <pre><pre class="playground"><code class="language-rust">mod foo {
     pub trait Zoo {
         fn zoo(&amp;self) {}
@@ -2726,7 +2722,7 @@ m!(use std as _;);
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/functions.md">functions.md</a><br />
 commit: f35a6003ad9aff52e3cd459917b737bb5b1e56f8 <br />
-本译文最后维护日期：2020-10-20</p>
+本译文最后维护日期：2020-11-8</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -2748,7 +2744,7 @@ commit: f35a6003ad9aff52e3cd459917b737bb5b1e56f8 <br />
 <p><em>FunctionReturnType</em> :<br />
    <code>-&gt;</code> <a href="items/../types.html#type-expressions"><em>Type</em></a></p>
 </blockquote>
-<p><em>函数</em>由一个<a href="items/../expressions/block-expr.html">块</a>以及一个名称和一组参数组成。除了名字，其他的都是可选的。函数使用关键字 <code>fn</code> 声明。函数可以声明一组<em>输入</em><a href="items/../variables.html"><em>变量</em></a>作为参数，调用者通过它向函数传递参数，函数完成后，它再将带有<em>输出</em><a href="items/../types.html#type-expressions"><em>类型</em></a>的结果值返回给调用者。</p>
+<p><em>函数</em>由一个<a href="items/../expressions/block-expr.html">块</a>以及一个名称和一组参数组成。除了名称，其他的都是可选的。函数使用关键字 <code>fn</code> 声明。函数可以声明一组<em>输入</em><a href="items/../variables.html"><em>变量</em></a>作为参数，调用者通过它向函数传递参数，函数完成后，它再将带有<em>输出</em><a href="items/../types.html#type-expressions"><em>类型</em></a>的结果值返回给调用者。</p>
 <p>当一个<em>函数</em>被引用时，该函数会产生一个相应的零尺寸<a href="items/../types/function-item.html"><em>函数项类型(function item type)</em></a>的一等(first-class)<em>值</em>，调用该值就相当于直接调用该函数。</p>
 <p>举个简单的定义函数的例子:</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -2766,7 +2762,7 @@ commit: f35a6003ad9aff52e3cd459917b737bb5b1e56f8 <br />
 </span>fn first((value, _): (i32, i32)) -&gt; i32 { value }
 <span class="boring">}
 </span></code></pre></pre>
-<p>函数里的块在概念上被包装在一个块中，该块绑定该函数的参数模式，然后返回(<code>return</code>)该函数块的值。这意味着块的*尾部表达式(tail expression)*如果轮到它被求值计算了，该块将结束，求得的值将被返回给调用者。通常，如果执行流碰到函数体中的显式返回表达式(return expression)，就会截断那个隐式的尾部表达式的执行。</p>
+<p>函数的块在概念上被包装进在一个块中，该块绑定该函数的参数模式，然后返回(<code>return</code>)该函数的块的值。这意味着如果轮到块的*尾部表达式(tail expression)*被求值计算了，该块将结束，求得的值将被返回给调用者。通常，程序执行时如果流碰到函数体中的显式返回表达式(return expression)，就会截断那个隐式的尾部表达式的执行。</p>
 <p>例如，上面例子里函数的行为就像下面被改写的这样:</p>
 <!-- ignore: example expansion -->
 <pre><code class="language-rust ignore">// argument_0 是调用者真正传过来的第一个参数
@@ -2781,13 +2777,13 @@ return {
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// foo 建立在 A 和 B 基础上的泛型函数
+</span>// foo 是建立在 A 和 B 基础上的泛型函数
 
 fn foo&lt;A, B&gt;(x: A, y: B) {
 <span class="boring">}
 </span><span class="boring">}
 </span></code></pre></pre>
-<p>在函数签名上和函数体内部，类型参数的名称可以用作类型名。可以为类型参数指定 <a href="items/traits.html">trait</a>约束，以允许对该类型的值调用这些 trait 的方法。这种约束是使用 <code>where</code> 句法指定的：</p>
+<p>在函数签名上和函数体内部，类型参数的名称可以被用作类型名。可以为类型参数指定 <a href="items/traits.html">trait</a>约束，以允许对该类型的值调用这些 trait 的方法。这种约束是使用 <code>where</code>句法指定的：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -2796,7 +2792,7 @@ fn foo&lt;A, B&gt;(x: A, y: B) {
 <span class="boring">}
 </span><span class="boring">}
 </span></code></pre></pre>
-<p>当使用泛型函数时，它的类型将基于调用的上下文被实例化。例如，这里调用 <code>foo</code> 函数:</p>
+<p>当使用泛型函数时，它的（类型参数的）类型会基于调用的上下文被实例化。例如，这里调用 <code>foo</code> 函数:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -2810,14 +2806,14 @@ foo(&amp;[1, 2]);
 <span class="boring">}
 </span></code></pre></pre>
 <p>将用 <code>i32</code> 实例化类型参数 <code>T</code>。</p>
-<p>类型参数也可以在函数名之后的尾部<a href="items/../paths.html">路径</a>组件(trailing path component,即 <code>::&lt;type&gt;</code>)中显式地提供。如果没有足够的上下文来确定类型参数，那么这可能是必要的。例如：<code>mem::size_of::&lt;u32&gt;() == 4</code>。</p>
+<p>类型参数也可以在函数名之后的尾部<a href="items/../paths.html">路径</a>段(trailing path component,即 <code>::&lt;type&gt;</code>)中显式地提供。如果没有足够的上下文来确定类型参数，那么这可能是必要的。例如：<code>mem::size_of::&lt;u32&gt;() == 4</code>。</p>
 <h2><a class="header" href="#extern-function-qualifier" id="extern-function-qualifier">Extern function qualifier</a></h2>
 <h2><a class="header" href="#外部函数限定符" id="外部函数限定符">外部函数限定符</a></h2>
-<p>使用外部(<code>extern</code>)函数限定符可以限定能通过特定 ABI 调用的函数<em>定义</em>：</p>
+<p>外部函数限定符(<code>extern</code>)可以提供那些能通过特定 ABI 才能调用的函数的<em>定义</em>：</p>
 <!-- ignore: fake ABI -->
 <pre><code class="language-rust ignore">extern &quot;ABI&quot; fn foo() { /* ... */ }
 </code></pre>
-<p>这些通常与<a href="items/external-blocks.html">外部块</a>数据项一起使用，该类数据项提供函数<em>声明</em>，这样就可以调用此函数而不用给它们提供<em>定义</em>：</p>
+<p>这些通常与提供了函数<em>声明</em>的<a href="items/external-blocks.html">外部块</a>数据项一起使用，这样就可以调用此函数而不必同时提供它们的<em>定义</em>：</p>
 <!-- ignore: fake ABI -->
 <pre><code class="language-rust ignore">extern &quot;ABI&quot; {
   fn foo(); /* no body */

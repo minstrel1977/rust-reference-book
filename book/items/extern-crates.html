@@ -166,11 +166,11 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#extern-crate-declarations" id="extern-crate-declarations">Extern crate declarations</a></h1>
-<h1><a class="header" href="#外部crate-声明" id="外部crate-声明">外部crate 声明</a></h1>
+<h1><a class="header" href="#外部crate声明" id="外部crate声明">外部crate声明</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/extern-crates.md">extern-crates.md</a><br />
 commit: afcf00bbf22f4dec71866a8bd5f385ba1d3b70af <br />
-本译文最后维护日期：2020-10-19</p>
+本译文最后维护日期：2020-11-8</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法:<sup></strong><br />
@@ -181,10 +181,10 @@ commit: afcf00bbf22f4dec71866a8bd5f385ba1d3b70af <br />
 <p><em>AsClause</em> :<br />
    <code>as</code> ( <a href="../identifiers.html">IDENTIFIER</a> | <code>_</code> )</p>
 </blockquote>
-<p><em>外部crate(<code>extern crate</code>)声明</em>指定了对外部 crate 的依赖关系。（这种声明让）外部的 crate 作为 <code>extern crate</code> 声明中提供的<a href="../identifiers.html">标识符</a>被绑定到当前声明的作用域中。<code>as</code>子句可用于将导入的 crate 绑定到不同的名称上。</p>
-<p>外部crate 在编译时被解析为一个特定的 <code>soname</code><sup class="footnote-reference"><a href="#soname">1</a></sup>， 并且一个到此 <code>soname</code> 的运行时链接会传递给链接器，以便在运行时加载此 <code>soname</code>。<code>soname</code> 在编译时解析，方法是扫描编译器的库文件路径，匹配外部crate 的 <code>crateid</code>。因为<code>crateid</code> 是在编译时通过可选的 <code>crateid</code>属性声明的，所以如果外部 crate 没有提供 <code>crateid</code> ， 则默认拿该外部crate 的 <code>name</code>属性值来和 <code>extern crate</code> 声明中的[标识符]绑定。</p>
-<p>导入<code>self</code> crate 会创建到当前 crate 的绑定。在这种情况下，必须使用 <code>as</code>子句指定要绑定到的名称。</p>
-<p>三种 <code>extern crate</code> 声明的示例:</p>
+<p><em>外部crate(<code>extern crate</code>)声明</em>指定了对外部 crate 的依赖关系。（这种声明让）外部的 crate 作为外部crate(<code>extern crate</code>)声明中提供的<a href="../identifiers.html">标识符</a>被绑定到当前声明的作用域中。<code>as</code>子句可用于将导入的 crate 绑定到不同的名称上。</p>
+<p>外部crate 在编译时被解析为一个特定的 <code>soname</code><sup class="footnote-reference"><a href="#soname">1</a></sup>， 并且一个到此 <code>soname</code> 的运行时链接会传递给链接器，以便在运行时加载此 <code>soname</code>。<code>soname</code> 在编译时解析，方法是扫描编译器的库文件路径，匹配外部crate 的 <code>crateid</code>。因为<code>crateid</code> 是在编译时通过可选的 <code>crateid</code>属性声明的，所以如果外部 crate 没有提供 <code>crateid</code>， 则默认拿该外部crate 的 <code>name</code>属性值来和外部crate(<code>extern crate</code>)声明中的[标识符]绑定。</p>
+<p>导入 <code>self</code> crate 会创建到当前 crate 的绑定。在这种情况下，必须使用 <code>as</code>子句指定要绑定到的名称。</p>
+<p>三种外部crate(<code>extern crate</code>)声明的示例:</p>
 <!-- ignore: requires external crates -->
 <pre><code class="language-rust ignore">extern crate pcre;
 
@@ -192,23 +192,23 @@ extern crate std; // 等同于: extern crate std as std;
 
 extern crate std as ruststd; // 使用其他名字去链接 'std'
 </code></pre>
-<p>当命名 Rust crate 时，不允许使用连字符。然而 Cargo 包却可以使用它们。在这种情况下，当 <code>Cargo.toml</code> 文件中没有指定 crate 名称时， Cargo 将透明地将 <code>-</code> 替换为 <code>_</code> 以供 Rust 源文件内的 <code>extern crate</code> 声明引用 (详见 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0940-hyphens-considered-harmful.md">RFC 940</a>)。
-这有一个示例：</p>
+<p>当命名 Rust crate 时，不允许使用连字符(<code>-</code>)。然而 Cargo 包却可以使用它们。在这种情况下，当 <code>Cargo.toml</code> 文件中没有指定 crate 名称时， Cargo 将透明地将 <code>-</code> 替换为 <code>_</code> 以供 Rust 源文件内的外部crate(<code>extern crate</code>)声明引用 (详见 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0940-hyphens-considered-harmful.md">RFC 940</a>)。</p>
+<p>这有一个示例：</p>
 <!-- ignore: requires external crates -->
 <pre><code class="language-rust ignore">// 导入 Cargo 包 hello-world
 extern crate hello_world; // 连字符被替换为下划线
 </code></pre>
 <h2><a class="header" href="#extern-prelude" id="extern-prelude">Extern Prelude</a></h2>
 <h2><a class="header" href="#外部预导入包" id="外部预导入包">外部预导入包</a></h2>
-<p>在根模块的源码中使用 <code>extern crate</code> 声明或者给编译命令增加编译参数（<code>rustc</code> 下使用 <code>--extern</code> 参数选项），这两种导入外部的 crate 的方式都是把外部的 crate 导入到“外部预导入包”里。外部预导入包里的 crate 的有效作用域是整个 crate，包括内部模块。如果使用 <code>extern crate orig_name as new_name</code> 导入，则相应地 symbol <code>new_name</code> 被添加到在预导入包里。</p>
+<p>在根模块的源码中使用外部crate(<code>extern crate</code>)声明或者给编译命令增加编译参数（<code>rustc</code> 下使用 <code>--extern</code> 参数选项），这两种导入外部的 crate 的方式都是把外部的 crate 导入到“外部预导入包”里。外部预导入包里的 crate 的有效作用域是整个 crate，包括内部模块。如果使用 <code>extern crate orig_name as new_name</code> 导入，则相应地 symbol <code>new_name</code> 被添加到在预导入包里。</p>
 <p><code>core</code> crate 总是会被添加到外部预导入包里。只要没有在 crate 根模块中指定应用 <a href="../crates-and-source-files.html#preludes-and-no_std"><code>no_std</code></a>属性，也会把 <code>std</code> crate 添加进来。</p>
-<p>可以在模块上使用 <a href="modules.html#prelude-items"><code>no_implicit_prelude</code></a> 属性来禁用模块内的预导入包查找。</p>
+<p>可以在模块上使用 <a href="modules.html#prelude-items"><code>no_implicit_prelude</code></a>属性来禁用模块内的预导入包查找功能。</p>
 <blockquote>
-<p><strong>版本差异</strong>：在 2015 版中，在外部预导入包中的 crate 不能通过 <a href="use-declarations.html">use声明</a>来直接引用，因此通常标准做法是用 <code>extern crate</code> 将那它们纳入到当前作用域。</p>
-<p>从 2018 版开始， <a href="use-declarations.html">use声明</a>可以直接引用外部预导入包里的 crate，所以再使用 <code>extern crate</code> 就被认为是不规范的。</p>
+<p><strong>版本差异</strong>：在 2015 版中，在外部预导入包中的 crate 不能通过 <a href="use-declarations.html">use声明</a>来直接引用，因此通常标准做法是用外部crate(<code>extern crate</code>)将那它们纳入到当前作用域。</p>
+<p>从 2018 版开始， <a href="use-declarations.html">use声明</a>可以直接引用外部预导入包里的 crate，所以再使用外部crate(<code>extern crate</code>)就被认为是不规范的。</p>
 </blockquote>
 <blockquote>
-<p><strong>注意</strong>: 随 <code>rustc</code> 一起引入的 crate，如 <a href="https://doc.rust-lang.org/alloc/"><code>alloc</code></a> 和 <a href="https://doc.rust-lang.org/test/"><code>test</code></a>，在使用 Cargo 时不会自动被包含在 <code>--extern</code> 命令行参数选项中。即使在 2018 版中，也必须通过 <code>extern crate</code> 声明来把它们引入到当前作用域内。</p>
+<p><strong>注意</strong>: 随 <code>rustc</code> 一起引入的 crate，如 <a href="https://doc.rust-lang.org/alloc/"><code>alloc</code></a> 和 <a href="https://doc.rust-lang.org/test/"><code>test</code></a>，在使用 Cargo 时不会自动被包含在 <code>--extern</code> 命令行参数选项中。即使在 2018 版中，也必须通过外部crate(<code>extern crate</code>)声明来把它们引入到当前作用域内。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -218,19 +218,17 @@ use alloc::rc::Rc;
 </span></code></pre></pre>
 </blockquote>
 <!--
-See https://github.com/rust-lang/rust/issues/57288 for more about the alloc/test limitation.
+查看 https://github.com/rust-lang/rust/issues/57288 以了解更多关于 alloc/test 的限制。
 -->
 <h2><a class="header" href="#underscore-imports" id="underscore-imports">Underscore Imports</a></h2>
 <h2><a class="header" href="#下划线导入" id="下划线导入">下划线导入</a></h2>
-<p>The <a href="../macros-by-example.html#the-macro_use-attribute"><code>macro_use</code> attribute</a> works as usual and import the macro names
-into the macro-use prelude.</p>
-<p>外部的 crate依赖可以通过使用带有下划线形如 <code>extern crate foo as _</code> 的形式来声明，而无需将其名称绑定到当前作用域内。这种声明方式对于只需要 crate 被链接进，但 crate 从不会被当前代码引用的情况可能很有用，并且还可以避免未使用的提醒。</p>
-<p>下划线导入不会影响 <a href="../macros-by-example.html#the-macro_use-attribute"><code>macro_use</code>属性</a>的正常使用，这情况下使用 <code>macro_use</code>属性，宏名称仍会正常导入到 macro-use 预导入包中。</p>
+<p>外部的 crate依赖可以通过使用带有下划线形如 <code>extern crate foo as _</code> 的形式来声明，而无需将其名称绑定到当前作用域内。这种声明方式对于只需要 crate 被链接进来，但 crate 从不会被当前代码引用的情况可能很有用，并且还可以避免未使用的 lint 提醒。</p>
+<p>下划线导入不会影响 <a href="../macros-by-example.html#the-macro_use-attribute"><code>macro_use</code>属性</a>的正常使用，这情况下使用 <code>macro_use</code>属性，宏名称仍会正常导入到 macro-use预导入包中。</p>
 <h2><a class="header" href="#the-no_link-attribute" id="the-no_link-attribute">The <code>no_link</code> attribute</a></h2>
 <h2><a class="header" href="#no_link属性" id="no_link属性"><code>no_link</code>属性</a></h2>
 <p>可以在外部项(<code>extern crate</code> item)上指定使用 <em><code>no_link</code>属性</em>，以防止此 crate 被链接到编译输出中。这通常用于加载一个 crate 而只访问它的宏。</p>
 <div class="footnote-definition" id="soname"><sup class="footnote-definition-label">1</sup>
-<p>译者注：这里故意使用soname是为了让读者主动去联想类比linux系统里的动态库文件的soname。</p>
+<p>译者注：这里的 <code>soname</code> 是 linux系统里的动态库文件的 soname。</p>
 </div>
 <!-- 2020-11-7-->
 <!-- checked -->
