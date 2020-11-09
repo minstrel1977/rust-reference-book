@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/generics.md">generics.md</a><br />
 commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
-本译文最后维护日期：2020-10-22</p>
+本译文最后维护日期：2020-11-9</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -188,7 +188,7 @@ commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
 <p><em>TypeParam</em> :<br />
    <a href="../attributes.html"><em>OuterAttribute</em></a><sup>?</sup> <a href="../identifiers.html">IDENTIFIER</a> ( <code>:</code> <a href="../trait-bounds.html"><em>TypeParamBounds</em></a><sup>?</sup> )<sup>?</sup> ( <code>=</code> <a href="../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
 </blockquote>
-<p>函数、类型别名、结构体、枚举、联合体、trait 和实现可以通过类型参数和生存期参数达到<em>参数化</em>配置的的效果。这些参数在尖括号<span class="parenthetical">（<code>&lt;…&gt;</code>）</span>中列出，通常是紧跟在数据项名称之后和数据项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 <code>impl</code> 之后。生存期参数必须在类型参数之前声明。下面给出一些带类型参数和生存期参数的数据项的示例：</p>
+<p>函数、类型别名、结构体、枚举、联合体、trait 和实现可以通过类型参数和生存期参数达到<em>参数化</em>配置的的效果。这些参数在尖括号<span class="parenthetical">（<code>&lt;…&gt;</code>）</span>中列出，通常都是紧跟在数据项名称之后和数据项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 <code>impl</code> 之后。生存期参数必须在类型参数之前声明。下面给出一些带类型参数和生存期参数的数据项的示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -214,9 +214,9 @@ struct Ref&lt;'a, T&gt; where T: 'a { r: &amp;'a T }
 <p><em>ForLifetimes</em> :<br />
    <code>for</code> <code>&lt;</code> <a href="#type-and-lifetime-parameters"><em>LifetimeParams</em></a> <code>&gt;</code></p>
 </blockquote>
-<p><em>where子句</em>提供了另一种方法来指定类型参数和生存期参数上的约束(bound)，甚至还可以指定非类型参数的类型的约束。</p>
-<p>当定义数据项时，该数据项上的约束与该数据项的各种参数（包括生存期和高阶生存期）无关也是可以通过安全检查的。但这样做会带来潜在的错误。</p>
-<p>在定义数据项时，对某些泛型类型来说，<a href="../special-types-and-traits.html#copy"><code>Copy</code></a>、<a href="../special-types-and-traits.html#clone"><code>Clone</code></a> 和 <a href="../special-types-and-traits.html#sized"><code>Sized</code></a> 这些约束也可以通过安全检查。将 <code>Copy</code> 或 <code>Clone</code> 作为可变引用、<a href="../types/trait-object.html">trait对象</a>或<a href="../types/array.html">切片</a>的约束上错误的，将 <code>Sized</code> 作为 trait对象或切片的约束也是错误的。</p>
+<p><em>where子句</em>提供了另一种方法来为类型参数和生存期参数指定约束(bound)，甚至可以为非类型参数的类型指定约束。</p>
+<p>当定义数据项时，where子句提供的约束与该数据项的各种参数（包括生存期和高阶生存期）无关也是可以通过安全检查的。但这样做会带来潜在的错误。</p>
+<p>对某些泛型类型来说，在定义它的 where子句时，<a href="../special-types-and-traits.html#copy"><code>Copy</code></a>、<a href="../special-types-and-traits.html#clone"><code>Clone</code></a> 和 <a href="../special-types-and-traits.html#sized"><code>Sized</code></a> 这些约束也可以通过安全检查。但将 <code>Copy</code> 或 <code>Clone</code> 作为可变引用、<a href="../types/trait-object.html">trait对象</a>或<a href="../types/array.html">切片</a>的约束上错误的，将 <code>Sized</code> 作为 trait对象或切片的约束也是错误的。</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

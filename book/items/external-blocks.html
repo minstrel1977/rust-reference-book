@@ -197,32 +197,32 @@ commit: fbf34356b709cfc0debb01acaaff038d4e339aab <br />
 <p><em>NamedFunctionParametersWithVariadics</em> :<br />
    ( <em>NamedFunctionParam</em> <code>,</code> )<sup>*</sup> <em>NamedFunctionParam</em> <code>,</code> <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <code>...</code></p>
 </blockquote>
-<p>外部块提供未在当前 crate 中<em>定义</em>的数据项的<em>声明</em>，外部块是 Rust 外部函数接口的基础。这其实是某种类型的不受安全检查的导入。</p>
-<p>外部块中允许两种形式的数据项<em>声明</em>：<a href="functions.html">函数</a>和<a href="static-items.html">静态项</a>。只有在非安全(<code>unsafe</code>)上下文中才能调用在外部块中声明的函数或访问在外部块中声明的静态项。</p>
-<p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>extern</code>之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从 token流中移除之前利用此句法来使用此关键字。</p>
+<p>外部块提供未在当前 crate 中<em>定义</em>的数据项的<em>声明</em>，外部块是 Rust 外部函数接口的基础。这其实是某种意义上的不受安全检查的导入入口。</p>
+<p>外部块里允许存在两种形式的数据项<em>声明</em>：<a href="functions.html">函数</a>和<a href="static-items.html">静态项</a>。只有在非安全(<code>unsafe</code>)上下文中才能调用在外部块中声明的函数或访问在外部块中声明的静态项。</p>
+<p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>extern</code> 之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从 token流中移除之前利用此句法来使用此关键字。</p>
 <h2><a class="header" href="#functions" id="functions">Functions</a></h2>
 <h2><a class="header" href="#函数" id="函数">函数</a></h2>
-<p>外部块中的函数与其他 Rust 函数的声明方式相同，但这里中的函数可以没有主体，直接以分号结尾。外部块中的函数的参数不允许使用模式，只能使用<a href="../identifiers.html">标识符/IDENTIFIER</a>或 <code>_</code> 。</p>
-<p>外部块中的函数可以被 Rust 代码调用，就像在 Rust 中定义的函数一样。Rust 编译器会自动在 Rust ABI 和外部 ABI 之间进行转换。</p>
+<p>外部块中的函数与其他 Rust 函数的声明方式相同，但这里的函数允许没有函数体，取而代之的是直接以分号结尾。外部块中的函数的参数不允许使用模式，只能使用<a href="../identifiers.html">标识符(IDENTIFIER)</a> 和 <code>_</code> 。</p>
+<p>外部块中的函数可以被 Rust 代码调用，就跟调用在 Rust 中定义的函数一样。Rust 编译器会自动在 Rust ABI 和外部 ABI 之间进行转换。</p>
 <p>在外部块中声明的函数隐式为非安全(<code>unsafe</code>)的。当强转为函数指针时，外部块中声明的函数的类型就为 <code>unsafe extern &quot;abi&quot; for&lt;'l1, ..., 'lm&gt; fn(A1, ..., An) -&gt; R</code>，其中 <code>'l1</code>，…<code>'lm</code> 是其生存期参数，<code>A1</code>，…，<code>An</code> 是该声明的参数的类型，<code>R</code> 是该声明的返回类型。</p>
 <h2><a class="header" href="#statics" id="statics">Statics</a></h2>
 <h2><a class="header" href="#静态项" id="静态项">静态项</a></h2>
-<p><a href="static-items.html">静态项</a>在外部块内部与在外部块外部的声明方式相同，只是在外部块内部没有初始化其值的表达式。访问外部块中声明的静态项是 <code>unsafe</code> 的，不管它是否可变，因为无法保证静态项的内存位模式(bit pattern)对声明它的类型是有效的，因为初始化这些静态项的可能是任何外部代码（例如C）。</p>
-<p>就像外部块之外的<a href="static-items.html">静态项</a>，外部静态项可以是不可变的，也可以是可变的。不可变外部静态项在执行任何 Rust 代码之前，<em>必须</em>被初始化。也就是说仅在 Rust 代码读取外部静态项之前对其进行初始化是不够的。</p>
+<p><a href="static-items.html">静态项</a>在外部块内部与在外部块之外的声明方式相同，只是在外部块内部声明的静态项没有对应的初始化表达式。访问外部块中声明的静态项是 <code>unsafe</code> 的，不管它是否可变，因为没有任何保证来确保静态项的内存位模式(bit pattern)对声明它的类型是有效的，因为初始化这些静态项的可能是其他的任意外部代码（例如 C）。</p>
+<p>就像外部块之外的<a href="static-items.html">静态项</a>，外部静态项可以是不可变的，也可以是可变的。在执行任何 Rust 代码之前，不可变外部静态项<em>必须</em>被初始化。也就是说，对于外部静态项，仅在 Rust 代码读取它之前对它进行初始化是不够的。</p>
 <h2><a class="header" href="#abi" id="abi">ABI</a></h2>
-<p>不指定 ABI 字符串的默认情况下，外部块假设它们当前调用库时所使用的 ABI 约定是使用指定平台上的标准 C ABI。其他的 ABI 约定可以使用字符串 <code>abi</code> 指定，具体如下所示：</p>
+<p>不指定 ABI 字符串的默认情况下，外部块会假定使用指定平台上的标准 C ABI 约定来调用当前的库。其他的 ABI 约定可以使用字符串 <code>abi</code> 来指定，具体如下所示：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// 指定使用 stdcall 调用约定去调用 Windows API
+</span>// 到 Windows API 的接口。（译者注：指定使用 stdcall调用约定去调用 Windows API）
 extern &quot;stdcall&quot; { }
 <span class="boring">}
 </span></code></pre></pre>
 <p>有三个 ABI 字符串是跨平台的，并且保证所有编译器都支持它们：</p>
 <ul>
-<li><code>extern &quot;Rust&quot;</code> -- 在任何 Rust 语言中编写一个普通函数 <code>fn foo()</code> 时默认使用的 ABI。</li>
+<li><code>extern &quot;Rust&quot;</code> -- 在任何 Rust 语言中编写的普通函数 <code>fn foo()</code> 默认使用的 ABI。</li>
 <li><code>extern &quot;C&quot;</code> -- 这等价于 <code>extern fn foo()</code>；无论您的 C编译器支持什么默认 ABI。</li>
-<li><code>extern &quot;system&quot;</code> -- 通常等价于 <code>extern &quot;C&quot;</code>，除了在 Win32 平台上。在 Win32 平台上，应该使用<code>&quot;stdcall&quot;</code>，或者其他应该使用的 ABI 字符串来链接到 Windows API 自身。</li>
+<li><code>extern &quot;system&quot;</code> -- 在 Win32 平台之外，中通常等价于 <code>extern &quot;C&quot;</code>。在 Win32 平台上，应该使用<code>&quot;stdcall&quot;</code>，或者其他应该使用的 ABI 字符串来链接它们自身的 Windows API。</li>
 </ul>
 <p>还有一些特定于平台的 ABI 字符串：</p>
 <ul>
@@ -250,13 +250,13 @@ extern &quot;stdcall&quot; { }
 <p>下面列出的<a href="../attributes.html">属性</a>可以控制外部块的行为。</p>
 <h3><a class="header" href="#the-link-attribute" id="the-link-attribute">The <code>link</code> attribute</a></h3>
 <h3><a class="header" href="#link属性" id="link属性"><code>link</code>属性</a></h3>
-<p><em><code>link</code>属性</em>为外部(<code>extern</code>)块中的数据项指定编译器应该链接的本机库的名称。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法指定其输入。<code>name</code>键指定要链接的本机库的名称。<code>kind</code>键是一个可选值，它指定具有以下可能值的库类型：</p>
+<p><em><code>link</code>属性</em>为外部(<code>extern</code>)块中的数据项指定编译器应该链接的本地库的名称。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法指定其输入参数。<code>name</code>键指定要链接的本地库的名称。<code>kind</code>键是一个可选值，它指定具有以下可选值的库类型：</p>
 <ul>
 <li><code>dylib</code> — 表示库类型是动态库。如果没有指定 <code>kind</code>，这是默认值。</li>
 <li><code>static</code> — 表示库类型是静态库。</li>
 <li><code>framework</code> — 表示库类型是 macOS 框架。这只对 macOS 目标平台有效。</li>
 </ul>
-<p>如果指定了 <code>kind</code>，则必须指定 <code>name</code>键。</p>
+<p>如果指定了 <code>kind</code>键，则必须指定 <code>name</code>键。</p>
 <p>当从主机环境导入 symbols 时，<code>wasm_import_module</code>键可用于为外部(<code>extern</code>)块中的数据项指定 <a href="https://webassembly.github.io/spec/core/syntax/modules.html">WebAssembly模块</a>名称。如果未指定 <code>wasm_import_module</code>，则默认模块名为 <code>env</code>。</p>
 <!-- ignore: requires extern linking -->
 <pre><code class="language-rust ignore">#[link(name = &quot;crypto&quot;)]
@@ -274,7 +274,7 @@ extern {
     // …
 }
 </code></pre>
-<p>在空外部块上添加 <code>link</code>属性是有效的。可以用这种方式来满足代码中其他地方的外部块的链接需求(包括上游 crate)，而不必向每个外部块都添加此属性。</p>
+<p>在空外部块上添加 <code>link</code>属性是有效的。可以用这种方式来满足代码中其他地方的外部块的链接需求（包括上游 crate），而不必向每个外部块都添加此属性。</p>
 <h3><a class="header" href="#the-link_name-attribute" id="the-link_name-attribute">The <code>link_name</code> attribute</a></h3>
 <h3><a class="header" href="#link_name属性" id="link_name属性"><code>link_name</code>属性</a></h3>
 <p>可以在外部(<code>extern</code>)块内的数据项声明上指定 <code>link_name</code>属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法指定 symbol 的名称。</p>

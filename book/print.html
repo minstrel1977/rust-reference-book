@@ -4059,32 +4059,32 @@ commit: fbf34356b709cfc0debb01acaaff038d4e339aab <br />
 <p><em>NamedFunctionParametersWithVariadics</em> :<br />
    ( <em>NamedFunctionParam</em> <code>,</code> )<sup>*</sup> <em>NamedFunctionParam</em> <code>,</code> <a href="items/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <code>...</code></p>
 </blockquote>
-<p>外部块提供未在当前 crate 中<em>定义</em>的数据项的<em>声明</em>，外部块是 Rust 外部函数接口的基础。这其实是某种类型的不受安全检查的导入。</p>
-<p>外部块中允许两种形式的数据项<em>声明</em>：<a href="items/functions.html">函数</a>和<a href="items/static-items.html">静态项</a>。只有在非安全(<code>unsafe</code>)上下文中才能调用在外部块中声明的函数或访问在外部块中声明的静态项。</p>
-<p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>extern</code>之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从 token流中移除之前利用此句法来使用此关键字。</p>
+<p>外部块提供未在当前 crate 中<em>定义</em>的数据项的<em>声明</em>，外部块是 Rust 外部函数接口的基础。这其实是某种意义上的不受安全检查的导入入口。</p>
+<p>外部块里允许存在两种形式的数据项<em>声明</em>：<a href="items/functions.html">函数</a>和<a href="items/static-items.html">静态项</a>。只有在非安全(<code>unsafe</code>)上下文中才能调用在外部块中声明的函数或访问在外部块中声明的静态项。</p>
+<p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>extern</code> 之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从 token流中移除之前利用此句法来使用此关键字。</p>
 <h2><a class="header" href="#functions-1" id="functions-1">Functions</a></h2>
 <h2><a class="header" href="#函数-1" id="函数-1">函数</a></h2>
-<p>外部块中的函数与其他 Rust 函数的声明方式相同，但这里中的函数可以没有主体，直接以分号结尾。外部块中的函数的参数不允许使用模式，只能使用<a href="items/../identifiers.html">标识符/IDENTIFIER</a>或 <code>_</code> 。</p>
-<p>外部块中的函数可以被 Rust 代码调用，就像在 Rust 中定义的函数一样。Rust 编译器会自动在 Rust ABI 和外部 ABI 之间进行转换。</p>
+<p>外部块中的函数与其他 Rust 函数的声明方式相同，但这里的函数允许没有函数体，取而代之的是直接以分号结尾。外部块中的函数的参数不允许使用模式，只能使用<a href="items/../identifiers.html">标识符(IDENTIFIER)</a> 和 <code>_</code> 。</p>
+<p>外部块中的函数可以被 Rust 代码调用，就跟调用在 Rust 中定义的函数一样。Rust 编译器会自动在 Rust ABI 和外部 ABI 之间进行转换。</p>
 <p>在外部块中声明的函数隐式为非安全(<code>unsafe</code>)的。当强转为函数指针时，外部块中声明的函数的类型就为 <code>unsafe extern &quot;abi&quot; for&lt;'l1, ..., 'lm&gt; fn(A1, ..., An) -&gt; R</code>，其中 <code>'l1</code>，…<code>'lm</code> 是其生存期参数，<code>A1</code>，…，<code>An</code> 是该声明的参数的类型，<code>R</code> 是该声明的返回类型。</p>
 <h2><a class="header" href="#statics" id="statics">Statics</a></h2>
 <h2><a class="header" href="#静态项-1" id="静态项-1">静态项</a></h2>
-<p><a href="items/static-items.html">静态项</a>在外部块内部与在外部块外部的声明方式相同，只是在外部块内部没有初始化其值的表达式。访问外部块中声明的静态项是 <code>unsafe</code> 的，不管它是否可变，因为无法保证静态项的内存位模式(bit pattern)对声明它的类型是有效的，因为初始化这些静态项的可能是任何外部代码（例如C）。</p>
-<p>就像外部块之外的<a href="items/static-items.html">静态项</a>，外部静态项可以是不可变的，也可以是可变的。不可变外部静态项在执行任何 Rust 代码之前，<em>必须</em>被初始化。也就是说仅在 Rust 代码读取外部静态项之前对其进行初始化是不够的。</p>
+<p><a href="items/static-items.html">静态项</a>在外部块内部与在外部块之外的声明方式相同，只是在外部块内部声明的静态项没有对应的初始化表达式。访问外部块中声明的静态项是 <code>unsafe</code> 的，不管它是否可变，因为没有任何保证来确保静态项的内存位模式(bit pattern)对声明它的类型是有效的，因为初始化这些静态项的可能是其他的任意外部代码（例如 C）。</p>
+<p>就像外部块之外的<a href="items/static-items.html">静态项</a>，外部静态项可以是不可变的，也可以是可变的。在执行任何 Rust 代码之前，不可变外部静态项<em>必须</em>被初始化。也就是说，对于外部静态项，仅在 Rust 代码读取它之前对它进行初始化是不够的。</p>
 <h2><a class="header" href="#abi" id="abi">ABI</a></h2>
-<p>不指定 ABI 字符串的默认情况下，外部块假设它们当前调用库时所使用的 ABI 约定是使用指定平台上的标准 C ABI。其他的 ABI 约定可以使用字符串 <code>abi</code> 指定，具体如下所示：</p>
+<p>不指定 ABI 字符串的默认情况下，外部块会假定使用指定平台上的标准 C ABI 约定来调用当前的库。其他的 ABI 约定可以使用字符串 <code>abi</code> 来指定，具体如下所示：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// 指定使用 stdcall 调用约定去调用 Windows API
+</span>// 到 Windows API 的接口。（译者注：指定使用 stdcall调用约定去调用 Windows API）
 extern &quot;stdcall&quot; { }
 <span class="boring">}
 </span></code></pre></pre>
 <p>有三个 ABI 字符串是跨平台的，并且保证所有编译器都支持它们：</p>
 <ul>
-<li><code>extern &quot;Rust&quot;</code> -- 在任何 Rust 语言中编写一个普通函数 <code>fn foo()</code> 时默认使用的 ABI。</li>
+<li><code>extern &quot;Rust&quot;</code> -- 在任何 Rust 语言中编写的普通函数 <code>fn foo()</code> 默认使用的 ABI。</li>
 <li><code>extern &quot;C&quot;</code> -- 这等价于 <code>extern fn foo()</code>；无论您的 C编译器支持什么默认 ABI。</li>
-<li><code>extern &quot;system&quot;</code> -- 通常等价于 <code>extern &quot;C&quot;</code>，除了在 Win32 平台上。在 Win32 平台上，应该使用<code>&quot;stdcall&quot;</code>，或者其他应该使用的 ABI 字符串来链接到 Windows API 自身。</li>
+<li><code>extern &quot;system&quot;</code> -- 在 Win32 平台之外，中通常等价于 <code>extern &quot;C&quot;</code>。在 Win32 平台上，应该使用<code>&quot;stdcall&quot;</code>，或者其他应该使用的 ABI 字符串来链接它们自身的 Windows API。</li>
 </ul>
 <p>还有一些特定于平台的 ABI 字符串：</p>
 <ul>
@@ -4112,13 +4112,13 @@ extern &quot;stdcall&quot; { }
 <p>下面列出的<a href="items/../attributes.html">属性</a>可以控制外部块的行为。</p>
 <h3><a class="header" href="#the-link-attribute" id="the-link-attribute">The <code>link</code> attribute</a></h3>
 <h3><a class="header" href="#link属性" id="link属性"><code>link</code>属性</a></h3>
-<p><em><code>link</code>属性</em>为外部(<code>extern</code>)块中的数据项指定编译器应该链接的本机库的名称。它使用 <a href="items/../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法指定其输入。<code>name</code>键指定要链接的本机库的名称。<code>kind</code>键是一个可选值，它指定具有以下可能值的库类型：</p>
+<p><em><code>link</code>属性</em>为外部(<code>extern</code>)块中的数据项指定编译器应该链接的本地库的名称。它使用 <a href="items/../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法指定其输入参数。<code>name</code>键指定要链接的本地库的名称。<code>kind</code>键是一个可选值，它指定具有以下可选值的库类型：</p>
 <ul>
 <li><code>dylib</code> — 表示库类型是动态库。如果没有指定 <code>kind</code>，这是默认值。</li>
 <li><code>static</code> — 表示库类型是静态库。</li>
 <li><code>framework</code> — 表示库类型是 macOS 框架。这只对 macOS 目标平台有效。</li>
 </ul>
-<p>如果指定了 <code>kind</code>，则必须指定 <code>name</code>键。</p>
+<p>如果指定了 <code>kind</code>键，则必须指定 <code>name</code>键。</p>
 <p>当从主机环境导入 symbols 时，<code>wasm_import_module</code>键可用于为外部(<code>extern</code>)块中的数据项指定 <a href="https://webassembly.github.io/spec/core/syntax/modules.html">WebAssembly模块</a>名称。如果未指定 <code>wasm_import_module</code>，则默认模块名为 <code>env</code>。</p>
 <!-- ignore: requires extern linking -->
 <pre><code class="language-rust ignore">#[link(name = &quot;crypto&quot;)]
@@ -4136,7 +4136,7 @@ extern {
     // …
 }
 </code></pre>
-<p>在空外部块上添加 <code>link</code>属性是有效的。可以用这种方式来满足代码中其他地方的外部块的链接需求(包括上游 crate)，而不必向每个外部块都添加此属性。</p>
+<p>在空外部块上添加 <code>link</code>属性是有效的。可以用这种方式来满足代码中其他地方的外部块的链接需求（包括上游 crate），而不必向每个外部块都添加此属性。</p>
 <h3><a class="header" href="#the-link_name-attribute" id="the-link_name-attribute">The <code>link_name</code> attribute</a></h3>
 <h3><a class="header" href="#link_name属性" id="link_name属性"><code>link_name</code>属性</a></h3>
 <p>可以在外部(<code>extern</code>)块内的数据项声明上指定 <code>link_name</code>属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 <a href="items/../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法指定 symbol 的名称。</p>
@@ -4159,7 +4159,7 @@ extern {
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/generics.md">generics.md</a><br />
 commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
-本译文最后维护日期：2020-10-22</p>
+本译文最后维护日期：2020-11-9</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -4177,7 +4177,7 @@ commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
 <p><em>TypeParam</em> :<br />
    <a href="items/../attributes.html"><em>OuterAttribute</em></a><sup>?</sup> <a href="items/../identifiers.html">IDENTIFIER</a> ( <code>:</code> <a href="items/../trait-bounds.html"><em>TypeParamBounds</em></a><sup>?</sup> )<sup>?</sup> ( <code>=</code> <a href="items/../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
 </blockquote>
-<p>函数、类型别名、结构体、枚举、联合体、trait 和实现可以通过类型参数和生存期参数达到<em>参数化</em>配置的的效果。这些参数在尖括号<span class="parenthetical">（<code>&lt;…&gt;</code>）</span>中列出，通常是紧跟在数据项名称之后和数据项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 <code>impl</code> 之后。生存期参数必须在类型参数之前声明。下面给出一些带类型参数和生存期参数的数据项的示例：</p>
+<p>函数、类型别名、结构体、枚举、联合体、trait 和实现可以通过类型参数和生存期参数达到<em>参数化</em>配置的的效果。这些参数在尖括号<span class="parenthetical">（<code>&lt;…&gt;</code>）</span>中列出，通常都是紧跟在数据项名称之后和数据项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 <code>impl</code> 之后。生存期参数必须在类型参数之前声明。下面给出一些带类型参数和生存期参数的数据项的示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -4203,9 +4203,9 @@ struct Ref&lt;'a, T&gt; where T: 'a { r: &amp;'a T }
 <p><em>ForLifetimes</em> :<br />
    <code>for</code> <code>&lt;</code> <a href="items/generics.html#type-and-lifetime-parameters"><em>LifetimeParams</em></a> <code>&gt;</code></p>
 </blockquote>
-<p><em>where子句</em>提供了另一种方法来指定类型参数和生存期参数上的约束(bound)，甚至还可以指定非类型参数的类型的约束。</p>
-<p>当定义数据项时，该数据项上的约束与该数据项的各种参数（包括生存期和高阶生存期）无关也是可以通过安全检查的。但这样做会带来潜在的错误。</p>
-<p>在定义数据项时，对某些泛型类型来说，<a href="items/../special-types-and-traits.html#copy"><code>Copy</code></a>、<a href="items/../special-types-and-traits.html#clone"><code>Clone</code></a> 和 <a href="items/../special-types-and-traits.html#sized"><code>Sized</code></a> 这些约束也可以通过安全检查。将 <code>Copy</code> 或 <code>Clone</code> 作为可变引用、<a href="items/../types/trait-object.html">trait对象</a>或<a href="items/../types/array.html">切片</a>的约束上错误的，将 <code>Sized</code> 作为 trait对象或切片的约束也是错误的。</p>
+<p><em>where子句</em>提供了另一种方法来为类型参数和生存期参数指定约束(bound)，甚至可以为非类型参数的类型指定约束。</p>
+<p>当定义数据项时，where子句提供的约束与该数据项的各种参数（包括生存期和高阶生存期）无关也是可以通过安全检查的。但这样做会带来潜在的错误。</p>
+<p>对某些泛型类型来说，在定义它的 where子句时，<a href="items/../special-types-and-traits.html#copy"><code>Copy</code></a>、<a href="items/../special-types-and-traits.html#clone"><code>Clone</code></a> 和 <a href="items/../special-types-and-traits.html#sized"><code>Sized</code></a> 这些约束也可以通过安全检查。但将 <code>Copy</code> 或 <code>Clone</code> 作为可变引用、<a href="items/../types/trait-object.html">trait对象</a>或<a href="items/../types/array.html">切片</a>的约束上错误的，将 <code>Sized</code> 作为 trait对象或切片的约束也是错误的。</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -4240,19 +4240,19 @@ struct Foo&lt;#[my_flexible_clone(unbounded)] H&gt; {
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/associated-items.md">associated-items.md</a><br />
 commit: 136bd7da8b9c509c17c9619813b57dd1a47a8e25 <br />
-本译文最后维护日期：2020-10-22</p>
+本译文最后维护日期：2020-10-9</p>
 </blockquote>
-<p><em>关联数据项</em>是在 <a href="items/traits.html">traits</a> 中声明或在<a href="items/implementations.html">实现</a>中定义的数据项。之所以这样称呼它们，是因为它们的定义是在类型的关联项里定义的，即类型的实现里定义的。它们是可在模块中声明的数据项的子集。具体来说，有[关联函数][associated functions]（包括方法）、[关联类型][associated types]和[关联常量][associated constants]。</p>
-<p>当关联数据项与被关联数据项在逻辑上相关时，关联数据项非常有用。例如，<code>Option</code> 上的 <code>is_some</code> 方法与 Options 是内在相关的，所以它们应该关联在一起。</p>
-<p>每一种关联数据项都有两种形式：（包含实际实现的）定义和（为定义声明签名的）声明。</p>
-<p>正是这些声明构成了 trait 的约定(contract)以及其泛型参数中可用的资源。</p>
+<p><em>关联数据项</em>是在 <a href="items/traits.html">traits</a> 中声明或在<a href="items/implementations.html">实现</a>中定义的数据项。之所以这样称呼它们，是因为它们是被定义在一个相关联的类型（即实现里指定的类型）上的。关联数据项是那些可在模块中声明的数据项的子集。具体来说，有[关联函数][associated functions]（包括方法）、[关联类型][associated types]和[关联常量][associated constants]。</p>
+<p>当关联数据项与被关联数据项在逻辑上相关时，关联数据项就非常有用。例如，<code>Option</code> 上的 <code>is_some</code> 方法内在逻辑定义上就与 Option枚举类型相关，所以它应该和 Option 关联在一起。</p>
+<p>每个关联数据项都有两种形式：（包含实际实现的）定义和（为定义声明签名的）声明。<sup class="footnote-reference"><a href="#译者备注">1</a></sup></p>
+<p>正是这些声明构成了 trait 的契约(contract)以及其泛型参数中的可用内容。</p>
 <h2><a class="header" href="#associated-functions-and-methods" id="associated-functions-and-methods">Associated functions and methods</a></h2>
 <h2><a class="header" href="#关联函数和方法" id="关联函数和方法">关联函数和方法</a></h2>
-<p><em>关联函数</em>是与具体类型相关联的<a href="items/functions.html">函数</a>。</p>
+<p><em>关联函数</em>是与一个类型相关联的<a href="items/functions.html">函数</a>。</p>
 <p><em>关联函数声明</em>为<em>关联函数定义</em>声明签名。它的书写格式和函数项一样，除了函数体被替换为 <code>;</code>。</p>
-<p>标识符是函数的名称。关联函数的泛型参数、参数列表、返回类型 和 where子句必须与它们在<em>关联函数声明</em>中声明的格式一致。</p>
-<p><em>关联函数定义</em>定义与类型相关联的函数。它的编写方式与<a href="items/../types/function-item.html">函数项</a>相同。</p>
-<p>常见的关联函数的一个例子是 <code>new</code> 函数，它返回此关联函数所关联的类型的值。</p>
+<p>标识符是关联函数的名称。关联函数的泛型参数、参数列表、返回类型 和 where子句必须与它们在<em>关联函数声明</em>中声明的格式一致。</p>
+<p><em>关联函数定义</em>定义与另一个类型相关联的函数。它的编写方式与<a href="items/../types/function-item.html">函数项</a>相同。</p>
+<p>常见的关联函数的一个例子是 <code>new</code>函数，它返回此关联函数所关联的类型的值。</p>
 <pre><pre class="playground"><code class="language-rust">struct Struct {
     field: i32
 }
@@ -4269,7 +4269,7 @@ fn main () {
     let _struct = Struct::new();
 }
 </code></pre></pre>
-<p>当关联函数在 trait 上声明时，此函数也可以通过指向 trait，再后跟函数名的<a href="items/../paths.html">路径</a>来调用。当发生这种情况时，可以用实际的路径和标识符按 <code>&lt;_ as Trait&gt;::function_name</code> 这样的形式来组织实际的调用路径。</p>
+<p>当关联函数在 trait 上声明时，此函数也可以通过一个指向 trait，再后跟函数名的<a href="items/../paths.html">路径</a>来调用。当发生这种情况时，可以用 trait 的实际路径和关联函数的标识符按 <code>&lt;_ as Trait&gt;::function_name</code> 这样的形式来组织实际的调用路径。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -4303,13 +4303,19 @@ let _: f64 = f64::from_i32(42);
 <p><em>TypedSelf</em> :<br />
    <code>mut</code><sup>?</sup> <code>self</code> <code>:</code> <a href="items/../types.html#type-expressions"><em>Type</em></a></p>
 </blockquote>
-<p>参数列表中的第一个参数名为 <code>self</code> 的关联函数被称为<em>方法</em>，方法可以使用<a href="items/../expressions/method-call-expr.html">方法调用操作符</a>来调用，例如 <code>x.foo()</code>，也可以使用常用的函数调用形式进行调用。</p>
-<p>如果 <code>self</code> 参数的类型被指定，它就通过以下文法规则（其中 <code>'lt</code> 表示生存期参数）被限制解析成其中几个相关类型中的一个：</p>
+<p>参数列表中的第一个参数为 self类型(<code>self</code>)的参数的关联函数被称为<em>方法</em>，方法可以使用<a href="items/../expressions/method-call-expr.html">方法调用操作符</a>(<code>.</code>)来调用，例如 <code>x.foo()</code>，也可以使用常用的函数调用形式进行调用。
+If the type of the <code>self</code> parameter is specified, it is limited to types resolving
+to one generated by the following grammar (where <code>'lt</code> denotes some arbitrary
+lifetime):
+如果 self类型(<code>self</code>)的参数被指定了，它就通过以下文法（其中 <code>'lt</code> 表示生存期参数）来把此指定的参数限制解析成此文法中的一个类型：</p>
 <pre><code class="language-text">P = &amp;'lt S | &amp;'lt mut S | Box&lt;S&gt; | Rc&lt;S&gt; | Arc&lt;S&gt; | Pin&lt;P&gt;
 S = Self | P
 </code></pre>
-<p>此文法规则中的 <code>Self</code>终结符表示解析为实现类型的类型。此解析还可以包括对上下文中的类型别名 <code>Self</code>、其他类型别名、或对实现类型采用关联类型预测解析方法解析。（原文：
-The <code>Self</code> terminal in this grammar denotes a type resolving to the implementing type. This can also include the contextual type alias <code>Self</code>, other type aliases, or associated type projections resolving to the implementing type. 译者注：这句对译者来说太难了，只能先这么将就着翻译，同时放出原文，请读者中的高手帮忙翻译清楚。感谢感谢）</p>
+<p>此文法中的 <code>Self</code>终结符(terminal)代表对实现类型的某种处理形式。此处理形式还可以包括上下文中的类型别名 <code>Self</code> 的处理、对其他类型别名的处理、或使用投射解析把关联类型解析为实现类型。
+&gt;译者注：原谅译者对上面这句背后知识的无知，那首先给出原文：<br />
+&gt;The <code>Self</code> terminal in this grammar denotes a type resolving to the implementing type. This can also include the contextual type alias <code>Self</code>, other type aliases, or associated type projections resolving to the implementing type. <br />
+&gt;译者在此先邀请读者中的高手帮忙翻译清楚。感谢感谢。另外译者还是要啰嗦以下译者对这句话背后知识的理解，希望有人能指出其中的错误，以让译者有机会进步：<br />
+&gt;首先终结符(terminal)就是不能在更细分的词法单元，可以理解它是一个 token，这里它代表方法接受者的类型的基础类型。上面句法中的 P 代表一个产生式，它内部定义的规则是并联的，就是自动机在应用这个产生式时碰到任意符合条件的输入就直接进入终态。S代表有限自动机从 S 这里开始读取 self类型(<code>self</code>)的参数。这里 S 是 Self 和 P 的并联，应该表示是：如果方法接受者的类型直接是 Self（其中Self的几种猜测方式上面已经给出），那就直接进入终态，即返回 Self；如果方法接受者的类型是 P 上的任一种，就返回那一种，比如接受者是一个 box指针，那么就返回 <code>Box&lt;S&gt;</code>。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -4505,6 +4511,9 @@ fn main() {
     assert_eq!(5, OtherStruct::ID);
 }
 </code></pre></pre>
+<div class="footnote-definition" id="译者备注"><sup class="footnote-definition-label">1</sup>
+<p>固有实现中声明和定义是在一起的。</p>
+</div>
 <!-- 2020-11-7-->
 <!-- checked -->
 <h1><a class="header" href="#visibility-and-privacy" id="visibility-and-privacy">Visibility and Privacy</a></h1>
