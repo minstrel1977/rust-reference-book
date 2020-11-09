@@ -3404,16 +3404,16 @@ fn test() {
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/constant-items.md">constant-items.md</a><br />
 commit: da910b725a59ba9bb32c6954074f377589a2a689 <br />
-本译文最后维护日期：2020-10-21</p>
+本译文最后维护日期：2020-11-9</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ConstantItem</em> :<br />
    <code>const</code> ( <a href="items/../identifiers.html">IDENTIFIER</a> | <code>_</code> ) <code>:</code> <a href="items/../types.html#type-expressions"><em>Type</em></a> <code>=</code> <a href="items/../expressions.html"><em>Expression</em></a> <code>;</code></p>
 </blockquote>
-<p><em>常量项</em>是一个可选的命名 <em><a href="items/../const_eval.html#constant-expressions">常量值</a></em>，它与程序中的具体内存位置没有关联。常量本质上是内联的，无论它们在哪里使用，这意味着它们在使用时是直接复制到相关的上下文中的。这包括使用来自外部的 crate 的常量和非复制(on-<a href="items/../special-types-and-traits.html#copy"><code>Copy</code></a>)类型的值。对相同常量的引用不保证引用相同的内存地址。</p>
-<p>常量必须显式指定数据类型。类型必须具有 <code>'static</code> 生存期：程序初始化器(initializer)中的任何引用都必须具有 <code>'static</code> 生存期。</p>
-<p>常量可以引用其他常量的地址，在这种情况下，该地址将具有省略（如果适用）的生存期，否则（在大多数情况下）默认为 <code>'static</code> 生存期。（请参阅<a href="items/../lifetime-elision.html#static-lifetime-elision">静态生存期省略</a>）。但是，编译器仍然可以自由地任意次数地转换该常量，因此引用的地址可能并不固定。</p>
+<p><em>常量项</em>是一个可选的命名 <em><a href="items/../const_eval.html#constant-expressions">常量值</a></em>，它与程序中的具体内存位置没有关联。无论常量在哪里使用，它们本质上都是内联的，这意味着当它们被使用时，都是直接被拷贝到相关的上下文中来使用的。这包括使用非拷贝(non-<a href="items/../special-types-and-traits.html#copy"><code>Copy</code></a>)类型的值和来自外部的 crate 的常量。对相同常量的引用不保证它们引用的是相同的内存地址。</p>
+<p>常量必须显式指定数据类型。类型必须具有 <code>'static</code>生存期：程序初始化器(initializer)中的任何引用都必须具有 <code>'static</code>生存期。</p>
+<p>常量可以引用其他常量的地址，在这种情况下，如果适用，该地址将具有省略的生存期，否则（在大多数情况下）默认为 <code>'static</code>生存期。（请参阅<a href="items/../lifetime-elision.html#static-lifetime-elision">静态生存期省略</a>。）但是，编译器仍有权多次调整转移该常量，因此引用的地址可能并不固定。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3436,7 +3436,7 @@ const BITS_N_STRINGS: BitsNStrings&lt;'static&gt; = BitsNStrings {
 </span></code></pre></pre>
 <h2><a class="header" href="#constants-with-destructors" id="constants-with-destructors">Constants with Destructors</a></h2>
 <h2><a class="header" href="#常量与析构函数" id="常量与析构函数">常量与析构函数</a></h2>
-<p>常量可以包含析构函数。析构函数在值超出作用域时运行。</p>
+<p>常量可以包含析构函数。析构函数在值超出作用域时运行。<sup class="footnote-reference"><a href="#译者备注">1</a></sup></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3483,6 +3483,9 @@ m!(const _: () = (););
 // const _: () = ();
 <span class="boring">}
 </span></code></pre></pre>
+<div class="footnote-definition" id="译者备注"><sup class="footnote-definition-label">1</sup>
+<p>在程序退出前，析构销毁的只是其中的一份拷贝；这句还有另一层含义是常量在整个程序结束时会调用析构函数。</p>
+</div>
 <!-- 2020-11-7-->
 <!-- checked -->
 <h1><a class="header" href="#static-items" id="static-items">Static items</a></h1>
@@ -3490,7 +3493,7 @@ m!(const _: () = (););
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/static-items.md">static-items.md</a><br />
 commit: 2f459e22ec30a94bafafe417da4e95044578df73 <br />
-本译文最后维护日期：2020-10-21</p>
+本译文最后维护日期：2020-11-9</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -3498,18 +3501,18 @@ commit: 2f459e22ec30a94bafafe417da4e95044578df73 <br />
    <code>static</code> <code>mut</code><sup>?</sup> <a href="items/../identifiers.html">IDENTIFIER</a> <code>:</code> <a href="items/../types.html#type-expressions"><em>Type</em></a>
 <code>=</code> <a href="items/../expressions.html"><em>Expression</em></a> <code>;</code></p>
 </blockquote>
-<p><em>静态项</em>类似于<a href="items/constant-items.html">常量项</a>，除了它在程序中表示一个精确的内存位置。所有对静态项的引用都指向相同的内存位置。静态项拥有 <code>static</code> 生存期，它比 Rust 程序中的所有其他生存期都要长。静态项不会在程序结束时调用析构动作 <a href="items/../destructors.html"><code>drop</code></a>。</p>
+<p><em>静态项</em>类似于<a href="items/constant-items.html">常量项</a>，除了它在程序中表示一个精确的内存位置。所有对静态项的引用都指向相同的内存位置。静态项拥有 <code>'static</code> 生存期，它比 Rust 程序中的所有其他生存期都要长。静态项不会在程序结束时调用析构动作 <a href="items/../destructors.html"><code>drop</code></a>。</p>
 <p>静态初始化器是在编译时求值的<a href="items/../const_eval.html#constant-expressions">常量表达式</a>。静态初始化器可以引用其他静态项。</p>
 <p>包含非<a href="items/../interior-mutability.html">内部可变</a>类型的非 <code>mut</code> 静态项可以放在只读内存中。</p>
 <p>所有访问静态项的操作都是安全的，但对静态项有一些限制：</p>
 <ul>
-<li>静态项的数据类型必须实现 <code>Sync</code> trait，这样才可以让线程安全访问。</li>
+<li>静态项的数据类型必须有 <code>Sync</code> trait约束，这样才可以让线程安全地访问。</li>
 <li>常量项不能引用静态项。</li>
 </ul>
 <h2><a class="header" href="#mutable-statics" id="mutable-statics">Mutable statics</a></h2>
 <h2><a class="header" href="#可变静态项" id="可变静态项">可变静态项</a></h2>
-<p>如果静态项是用关键字 <code>mut</code> 声明的，则它允许被程序修改。Rust 的目标之一是使尽可能的避免出现并发bug，这显然是竞争条件(race conditions)或其他 bug 的一个非常大的来源。因此，读取或写入可变静态项变量时需要引入非安全块(<code>unsafe</code>)块。应注意确保对可变静态项的修改相对于运行在同一进程中的其他线程来说是安全的。</p>
-<p>然而，可变静态项仍然非常有用。它们可以与 C库一起使用，也可以在外部(<code>extern</code>)块中从 C库中来绑定它。</p>
+<p>如果静态项是用关键字 <code>mut</code> 声明的，则它允许被程序修改。Rust 的目标之一是使尽可能的避免出现并发 bug，那允许修改可变静态项显然是竞争条件(race conditions)或其他 bug 的一个非常大的来源。因此，读取或写入可变静态项变量时需要引入非安全(<code>unsafe</code>)块。应注意确保对可变静态项的修改相对于运行在同一进程中的其他线程来说是安全的。</p>
+<p>尽管有这些缺点，可变静态项仍然非常有用。它们可以与 C库一起使用，也可以在外部(<code>extern</code>)块中从 C库中来绑定它。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3531,10 +3534,10 @@ unsafe fn bump_levels_unsafe2() -&gt; u32 {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>可变静态项与普通静态项具有相同的限制，除了可变静态项的类型不需要实现 <code>Sync</code> trait。</p>
+<p>除了可变静态项的类型不需要实现 <code>Sync</code> trait 之外，可变静态项与普通静态项具有相同的限制。</p>
 <h2><a class="header" href="#using-statics-or-consts" id="using-statics-or-consts">Using Statics or Consts</a></h2>
 <h2><a class="header" href="#使用常量项或静态项" id="使用常量项或静态项">使用常量项或静态项</a></h2>
-<p>是否应该使用常量项还是静态项可能会令人困惑。一般来说，常量项应优先于静态项，除非以下情况之一成立：</p>
+<p>应该使用常量项还是应该使用静态项可能会令人困惑。一般来说，常量项应优先于静态项，除非以下情况之一成立：</p>
 <ul>
 <li>存储大量数据</li>
 <li>需要静态项的存储地址不变的特性。</li>
@@ -3594,14 +3597,14 @@ commit: d5cc65a70f66a243d84cd251188d80fbe9926747 <br />
 <li><a href="items/associated-items.html#associated-constants">常量</a></li>
 </ul>
 <p>所有 trait 都定义了一个隐式类型参数 <code>Self</code> ，它指向“实现此接口的类型”。trait 还可能包含额外的类型参数。这些类型参数，包括 <code>Self</code> 在内，都可能会<a href="items/generics.html">跟正常类型参数一样</a>受到其他 trait 的约束。</p>
-<p>trait 需要具体的类型去实现，具体的实现方法是通过该类型的一个单独实现(implementation)来完成的。</p>
-<p>trait 关联数据项/自带的数据项不需要在该 trait 中提供具体定义，但也可以提供。如果 trait 提供了定义，那么该定义将作为任何不覆盖它的实现的默认值。如果没有提供，那么任何实现都必须提供具体定义。</p>
+<p>trait 需要具体的类型去实现，具体的实现方法是通过该类型的各种独立实现(implementations)来完成的。</p>
+<p>trait 关联数据项/自带的数据项不需要在该 trait 中提供具体定义，但也可以提供。如果 trait 提供了定义，那么该定义将作为任何不覆盖它的实现的默认定义。如果没有提供，那么任何实现都必须提供具体定义。</p>
 <h2><a class="header" href="#trait-bounds" id="trait-bounds">Trait bounds</a></h2>
 <h2><a class="header" href="#trait约束" id="trait约束">trait约束</a></h2>
 <p>泛型数据项可以使用 trait 作为其类型参数的<a href="items/../trait-bounds.html">约束</a>。</p>
 <h2><a class="header" href="#generic-traits" id="generic-traits">Generic Traits</a></h2>
-<h2><a class="header" href="#泛型-trait" id="泛型-trait">泛型 trait</a></h2>
-<p>可以为 trait 指定类型参数来使该 trait 成为泛型。这些类型参数出现在 trait 名称之后，使用与<a href="items/functions.html#generic-functions">泛型函数</a>相同的语法规则。</p>
+<h2><a class="header" href="#泛型trait" id="泛型trait">泛型trait</a></h2>
+<p>可以为 trait 指定类型参数来使该 trait 成为泛型trait/泛型类型。这些类型参数出现在 trait 名称之后，使用与<a href="items/functions.html#generic-functions">泛型函数</a>相同的句法。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3616,17 +3619,17 @@ commit: d5cc65a70f66a243d84cd251188d80fbe9926747 <br />
 <h2><a class="header" href="#对象安全条款" id="对象安全条款">对象安全条款</a></h2>
 <p>对象安全的 trait 可以是 <a href="items/../types/trait-object.html">trait对象</a>的底层 trait。如果 trait 符合以下限定条件（在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md">RFC 255</a> 中定义），则认为它是<em>对象安全的(object safe)</em>：</p>
 <ul>
-<li>它必须不能是 <code>Self: Sized</code></li>
+<li>它不能有强制的 <code>Self: Sized</code>约束 <sup class="footnote-reference"><a href="#译者备注">1</a></sup></li>
 <li>所有的关联函数要么有 <code>where Self: Sized</code> 约束，要么
 <ul>
 <li>不能有类型参数（生存期参数可以有），并且</li>
-<li><code>Self</code> 只能出现在<a href="items/associated-items.html#methods">方法</a>的接受者(receiver)的类型里。</li>
+<li>除了 <code>Self</code> 只能出现在<a href="items/associated-items.html#methods">方法</a>的接受者(receiver)的类型里的情况外，关联函数作为<a href="items/associated-items.html#methods">方法</a>时不能使用 <code>Self</code>。</li>
 </ul>
 </li>
 <li>它必须没有任何关联常量。</li>
-<li>其所有的超类trait 也必须也是安全的。</li>
+<li>其所有的超类trait 也必须也是对象安全的。</li>
 </ul>
-<p>上述限定条件的第二条的后半部分，也就是当方法上没有 <code>Self: Sized</code> 绑定时，方法接受者的类型必须是以下类型之一：</p>
+<p>当方法上没有 <code>Self: Sized</code> 绑定时，方法接受者的类型必须是以下类型之一：</p>
 <ul>
 <li><code>&amp;Self</code></li>
 <li><code>&amp;mut Self</code></li>
@@ -3855,6 +3858,9 @@ fn main() {
     s.method_of_s();
 }
 </code></pre></pre>
+<div class="footnote-definition" id="译者备注"><sup class="footnote-definition-label">1</sup>
+<p>所有 trait 都定义了一个隐式类型参数 <code>Self</code> ，它指向“实现此接口的类型”。</p>
+</div>
 <!-- 2020-11-7-->
 <!-- checked -->
 <h1><a class="header" href="#implementations" id="implementations">Implementations</a></h1>

@@ -59,9 +59,9 @@ _trait_ 描述类型可以实现的抽象接口。这类接口由三种[关联�
 
 所有 trait 都定义了一个隐式类型参数 `Self` ，它指向“实现此接口的类型”。trait 还可能包含额外的类型参数。这些类型参数，包括 `Self` 在内，都可能会[跟正常类型参数一样][generics]受到其他 trait 的约束。
 
-trait 需要具体的类型去实现，具体的实现方法是通过该类型的一个单独实现(implementation)来完成的。
+trait 需要具体的类型去实现，具体的实现方法是通过该类型的各种独立实现(implementations)来完成的。
 
-trait 关联数据项/自带的数据项不需要在该 trait 中提供具体定义，但也可以提供。如果 trait 提供了定义，那么该定义将作为任何不覆盖它的实现的默认值。如果没有提供，那么任何实现都必须提供具体定义。
+trait 关联数据项/自带的数据项不需要在该 trait 中提供具体定义，但也可以提供。如果 trait 提供了定义，那么该定义将作为任何不覆盖它的实现的默认定义。如果没有提供，那么任何实现都必须提供具体定义。
 
 ## Trait bounds
 ## trait约束
@@ -69,9 +69,9 @@ trait 关联数据项/自带的数据项不需要在该 trait 中提供具体定
 泛型数据项可以使用 trait 作为其类型参数的[约束][bounds]。
 
 ## Generic Traits
-## 泛型 trait
+## 泛型trait
 
-可以为 trait 指定类型参数来使该 trait 成为泛型。这些类型参数出现在 trait 名称之后，使用与[泛型函数][generic functions]相同的语法规则。
+可以为 trait 指定类型参数来使该 trait 成为泛型trait/泛型类型。这些类型参数出现在 trait 名称之后，使用与[泛型函数][generic functions]相同的句法。
 
 ```rust
 trait Seq<T> {
@@ -86,14 +86,14 @@ trait Seq<T> {
 
 对象安全的 trait 可以是 [trait对象][trait object]的底层 trait。如果 trait 符合以下限定条件（在 [RFC 255] 中定义），则认为它是*对象安全的(object safe)*：
 
-* 它必须不能是 `Self: Sized`
+* 它不能有强制的 `Self: Sized`约束 [^译者备注]
 * 所有的关联函数要么有 `where Self: Sized` 约束，要么
   * 不能有类型参数（生存期参数可以有），并且
-  * `Self` 只能出现在[方法][method]的接受者(receiver)的类型里。
+  * 除了 `Self` 只能出现在[方法][method]的接受者(receiver)的类型里的情况外，关联函数作为[方法][method]时不能使用 `Self`。
 * 它必须没有任何关联常量。
-* 其所有的超类trait 也必须也是安全的。
+* 其所有的超类trait 也必须也是对象安全的。
 
-上述限定条件的第二条的后半部分，也就是当方法上没有 `Self: Sized` 绑定时，方法接受者的类型必须是以下类型之一：
+当方法上没有 `Self: Sized` 绑定时，方法接受者的类型必须是以下类型之一：
 
 * `&Self`
 * `&mut Self`
@@ -316,6 +316,8 @@ fn main() {
     s.method_of_s();
 }
 ```
+
+[^译者备注]: 所有 trait 都定义了一个隐式类型参数 `Self` ，它指向“实现此接口的类型”。
 
 [IDENTIFIER]: ../identifiers.md
 [WildcardPattern]: ../patterns.md#wildcard-pattern

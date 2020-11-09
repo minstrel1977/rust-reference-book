@@ -3,17 +3,17 @@
 
 >[constant-items.md](https://github.com/rust-lang/reference/blob/master/src/items/constant-items.md)\
 >commit: da910b725a59ba9bb32c6954074f377589a2a689 \
->本译文最后维护日期：2020-10-21
+>本译文最后维护日期：2020-11-9
 
 > **<sup>句法</sup>**\
 > _ConstantItem_ :\
 > &nbsp;&nbsp; `const` ( [IDENTIFIER] | `_` ) `:` [_Type_] `=` [_Expression_] `;`
 
-*常量项*是一个可选的命名 *[常量值][constant value]*，它与程序中的具体内存位置没有关联。常量本质上是内联的，无论它们在哪里使用，这意味着它们在使用时是直接复制到相关的上下文中的。这包括使用来自外部的 crate 的常量和非复制(on-[`Copy`])类型的值。对相同常量的引用不保证引用相同的内存地址。
+*常量项*是一个可选的命名 *[常量值][constant value]*，它与程序中的具体内存位置没有关联。无论常量在哪里使用，它们本质上都是内联的，这意味着当它们被使用时，都是直接被拷贝到相关的上下文中来使用的。这包括使用非拷贝(non-[`Copy`])类型的值和来自外部的 crate 的常量。对相同常量的引用不保证它们引用的是相同的内存地址。
 
-常量必须显式指定数据类型。类型必须具有 `'static` 生存期：程序初始化器(initializer)中的任何引用都必须具有 `'static` 生存期。
+常量必须显式指定数据类型。类型必须具有 `'static`生存期：程序初始化器(initializer)中的任何引用都必须具有 `'static`生存期。
 
-常量可以引用其他常量的地址，在这种情况下，该地址将具有省略（如果适用）的生存期，否则（在大多数情况下）默认为 `'static` 生存期。（请参阅[静态生存期省略][static lifetime elision]）。但是，编译器仍然可以自由地任意次数地转换该常量，因此引用的地址可能并不固定。
+常量可以引用其他常量的地址，在这种情况下，如果适用，该地址将具有省略的生存期，否则（在大多数情况下）默认为 `'static`生存期。（请参阅[静态生存期省略][static lifetime elision]。）但是，编译器仍有权多次调整转移该常量，因此引用的地址可能并不固定。
 
 ```rust
 const BIT1: u32 = 1 << 0;
@@ -36,7 +36,7 @@ const BITS_N_STRINGS: BitsNStrings<'static> = BitsNStrings {
 ## Constants with Destructors
 ## 常量与析构函数
 
-常量可以包含析构函数。析构函数在值超出作用域时运行。
+常量可以包含析构函数。析构函数在值超出作用域时运行。[^译者备注]
 
 ```rust
 struct TypeWithDestructor(i32);
@@ -80,6 +80,8 @@ m!(const _: () = (););
 // const _: () = ();
 // const _: () = ();
 ```
+
+[^译者备注]: 在程序退出前，析构销毁的只是其中的一份拷贝；这句还有另一层含义是常量在整个程序结束时会调用析构函数。
 
 [associated]: ../glossary.md#associated-item
 [constant value]: ../const_eval.md#constant-expressions
