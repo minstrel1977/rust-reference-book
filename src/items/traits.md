@@ -89,11 +89,11 @@ trait Seq<T> {
 * trait 本身不能有 `Self: Sized`约束 [^译者备注]
 * 所有的关联函数要么有 `where Self: Sized` 约束，要么
   * 不能有类型参数（生存期参数可以有），并且
-  * 作为方法时，`Self` 除了只能出现在[方法][method]的接受者(receiver)的类型里之外，其它地方不能使用 `Self`。
+  * 作为方法时，`Self` 只能出现在[方法][method]的接受者(receiver)的类型里，其它地方不能使用 `Self`。
 * 它必须没有任何关联常量。
 * 其所有的超类trait 也必须也是对象安全的。
 
-当方法上没有 `Self: Sized` 绑定时，方法的接受者的类型必须是以下类型之一：
+（作为上面第二条的补充，）当方法上没有 `Self: Sized` 绑定时，方法的接受者的类型必须是以下类型之一：
 
 * `&Self`
 * `&mut Self`
@@ -142,7 +142,7 @@ impl NonDispatchable for S {
 let obj: Box<dyn NonDispatchable> = Box::new(S);
 obj.returns(); // 错误: 不能调用带有 Self 返回类型的方法
 obj.param(S);  // 错误: 不能调用带有 Self 类型的参数的方法
-obj.typed(1);  // 错误: 不能调用带有泛型类型的参数的方法
+obj.typed(1);  // 错误: 不能调用带有泛型类型参数的方法
 ```
 
 ```rust,compile_fail
@@ -153,8 +153,8 @@ trait NotObjectSafe {
 
     fn foo() {}  // 错误: 关联函数没有 `Sized` 约束
     fn returns(&self) -> Self; // 错误: `Self` 在返回类型中 
-    fn typed<T>(&self, x: T) {} // 错误: 泛型类型的参数
-    fn nested(self: Rc<Box<Self>>) {} // 错误: 嵌套接受者还未被支持
+    fn typed<T>(&self, x: T) {} // 错误: 泛型类型参数
+    fn nested(self: Rc<Box<Self>>) {} // 错误: 嵌套接受者还未被完全支持。（译者注：有限支持见上面的补充规则。）
 }
 
 struct S;
@@ -187,7 +187,7 @@ let obj: Box<dyn WithSelf> = Box::new(S); // 错误: 不能使用 `Self` 作为�
 ## Supertraits
 ## 超类trait
 
-超类trait 是类型为了实现特定 trait 而需要（提前）实现的 trait。此外，在任何地方，如果[泛型][generics]或 [trait对象][trait object]被某个 trait约束，那这个泛型或 trait对象就可以访问这个*超类trait* 的关联数据项。
+**超类trait** 是类型为了实现某特定 trait 而需要一并实现的 trait。此外，在任何地方，如果[泛型][generics]或 [trait对象][trait object]被某个 trait约束，那这个泛型或 trait对象就可以访问这个*超类trait* 的关联数据项。
 
 超类trait 是通过 trait 的 `Self`类型上的 trait约束来声明的，并且通过这种声明 trait约束的方式来传递这种超类trait 关系。一个 trait 不能是它自己的超类trait。
 
@@ -213,16 +213,14 @@ trait Circle where Self: Shape { fn radius(&self) -> f64; }
 # trait Shape { fn area(&self) -> f64; }
 trait Circle where Self: Shape {
     fn radius(&self) -> f64 {
-        // 因为 A = pi * r^2
-        // 所以通过代数推导
-        // r = sqrt(A / pi)
+        // 因为 A = pi * r^2，所以通过代数推导得：r = sqrt(A / pi)
         (self.area() /std::f64::consts::PI).sqrt()
     }
 }
 ```
 
-下一个示例调用了一个泛型参数的超类trait 的方法。
-This next example calls a supertrait method on a generic parameter.
+下一个示例调用了一个泛型参数的超类trait 上的方法。
+
 ```rust
 # trait Shape { fn area(&self) -> f64; }
 # trait Circle : Shape { fn radius(&self) -> f64; }
@@ -256,10 +254,10 @@ let nonsense = circle.radius() * circle.area();
 ## Parameter patterns
 ## 参数模式
 
-没有代码体的函数或方法声明只允许使用[标识符/IDENTIFIER][IDENTIFIER] 或 `_` [通配符][WildcardPattern]模式。当前 `mut` [IDENTIFIER]是允许的，但它已被弃用，未来将成为一个硬错误(hard error)。
+（trait 中）没有代码体的函数声明或方法声明（的参数模式）只允许使用[标识符/IDENTIFIER][IDENTIFIER]模式 或 `_` [通配符][WildcardPattern]模式。当前 `mut` [IDENTIFIER] 还是允许的，但已被弃用，未来将成为一个硬编码错误(hard error)。
 <!-- https://github.com/rust-lang/rust/issues/35203 -->
 
-在2015版中，trait 的函数或方法的参数模式是可选的：
+在 2015 版中，trait 的函数或方法的参数模式是可选的：
 
 ```rust
 trait T {
@@ -275,7 +273,7 @@ trait T {
 * `&` [IDENTIFIER]
 * `&&` [IDENTIFIER]
 
-从2018版开始，函数或方法的参数模式不再是可选的。同时，只要有代码体，所有不可反驳型模式都是被允许的。如果没有代码体，上面列出的限制仍然有效。
+（跟普通函数一样，）从 2018 版开始，（trait 中）函数或方法的参数模式不再是可选的。同时，也跟普通函数一样，（trait 中）函数或方法只要有代码体，其参数模式可以是任何不可反驳型模式。但如果没有代码体，上面列出的限制仍然有效。
 
 ```rust,edition2018
 trait T {
@@ -287,7 +285,7 @@ trait T {
 ## Item visibility
 ## 数据项的可见性
 
-trait 里数据项在语法上允许使用 [_Visibility_]元项属性句法的注释，但是当 trait 被（句法法分析程序）验证(validate)时，这部分又将被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的数据项使用统一的句法规则进行解析。例如，宏规则内空的 `vis` 可用于 trait 里的数据项，非空的则可用于其他允许带非空可见性的数据项上。
+依照句法规定，trait数据项在语法上允许使用 [_Visibility_]句法的注释，但是当 trait 被（句法法分析程序）验证(validate)后，该可见性注释又被弃用。因此，在源码解析层面，可以在使用数据项的不同上下文中使用统一的语法对这些数据项进行解析。例如，空的 `vis` 宏匹配段选择器可以用于 trait数据项，而在其他允许使用非空可见性的情况下，也可使用这同一套宏规则。
 
 ```rust
 macro_rules! create_method {

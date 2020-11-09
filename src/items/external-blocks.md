@@ -3,7 +3,7 @@
 
 >[external-blocks.md](https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md)\
 >commit: fbf34356b709cfc0debb01acaaff038d4e339aab \
->本译文最后维护日期：2020-11-3
+>本译文最后维护日期：2020-11-9
 
 > **<sup>句法</sup>**\
 > _ExternBlock_ :\

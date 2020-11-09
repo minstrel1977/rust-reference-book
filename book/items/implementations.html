@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/implementations.md">implementations.md</a><br />
 commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
-本译文最后维护日期：2020-10-21</p>
+本译文最后维护日期：2020-11-8</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -200,7 +200,7 @@ commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
       | ( <a href="../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup> ( <a href="type-aliases.html"><em>TypeAlias</em></a> | <a href="constant-items.html"><em>ConstantItem</em></a> | <a href="functions.html"><em>Function</em></a> | <a href="associated-items.html#methods"><em>Method</em></a> ) )<br />
    )</p>
 </blockquote>
-<p><em>实现</em>是将数据项与*实现类型(implementing type)*关联起来的数据项。实现使用关键字 <code>impl</code> 定义，它包含了属于当前实现的类型的实例的函数，或者包含了当前实现的类型本身的静态函数。（译者注：后一句如果简单意译应该是：实现使用关键字 <code>impl</code> 定义，它包含了当前类型的方法和函数）</p>
+<p><em>实现</em>是将数据项与*实现类型(implementing type)*关联起来的数据项。实现使用关键字 <code>impl</code> 定义，它包含了属于当前实现的类型的实例的函数，或者包含了当前实现的类型本身的静态函数。</p>
 <p>有两种类型的实现:</p>
 <ul>
 <li>固有实现(inherent implementations)</li>
@@ -209,22 +209,25 @@ commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
 <h2><a class="header" href="#inherent-implementations" id="inherent-implementations">Inherent Implementations</a></h2>
 <h2><a class="header" href="#固有实现" id="固有实现">固有实现</a></h2>
 <p>固有实现被定义为一段由关键字 <code>impl</code>，泛型类型声明，指向标称类型(nominal type)的路径，一个 where子句和一对花括号括起来的一组*类型关联项(associable items)*组成的序列。</p>
-<p>（这里）<em>标称类型</em>也被称作<em>实现类型(implementing type)</em>；<em>类型关联项(associable items)<em>可理解为实现类型的各种</em>关联数据项</em>。</p>
-<p>固有实现将包含的数据项与实现类型关联起来。固有实现可以包含<a href="associated-items.html#associated-functions-and-methods">关联函数</a>（包括方法）和<a href="associated-items.html#associated-constants">关联常量</a>。固有实现不能包含关联类型别名。</p>
+<p>（这里）<em>标称类型</em>也被称作<em>实现类型(implementing type)</em>；<em>类型关联项(associable items)<em>可理解为实现类型的各种</em>关联数据项(associated items)</em>。</p>
+<p>固有实现将其包含的数据项与其的实现类型关联起来。固有实现可以包含<a href="associated-items.html#associated-functions-and-methods">关联函数</a>（包括方法）和<a href="associated-items.html#associated-constants">关联常量</a>。固有实现不能包含关联类型别名。</p>
 <p>关联数据项的<a href="../paths.html">路径</a>是其实现类型的所有（形式的）路径中的任一种，然后再拼接上这个关联数据项的标识符来作为整个路径的末段路径组件(final path component)。</p>
-<p>类型可以有多个固有实现。但作为原始类型定义的实现类型与这些固有实现必须在同一个 crate 里。</p>
+<p>类型可以有多个固有实现。但作为原始类型定义的实现类型必须与这些固有实现处在同一个 crate 里。</p>
 <pre><pre class="playground"><code class="language-rust">pub mod color {
-    // 译者添加的注释：这段为 Color的原始类型，也是后面实现的实现类型
+    // 译者添加的注释：这个结构体是 Color 的原始类型，是一个标称类型，也是后面两个实现的实现类型
     pub struct Color(pub u8, pub u8, pub u8);
-    // 译者添加的注释：下行的 `Color` 为标称类型 或 实现类型
+    // 译者添加的注释：这个实现是 Color 的固有实现
     impl Color {
-        pub const WHITE: Color = Color(255, 255, 255);
+        // 译者添加的注释：类型关联项(associable items)
+        pub const WHITE: Color = Color(255, 255, 255); 
     }
 }
 
 mod values {
     use super::color::Color;
+    // 译者添加的注释：这个实现也是 Color 的固有实现
     impl Color {
+        // 译者添加的注释：类型关联项(associable items)
         pub fn red() -&gt; Color {
             Color(255, 0, 0)
         }
@@ -236,7 +239,7 @@ fn main() {
     // 实现类型 和 固有实现 在同一个模块下。
     color::Color::WHITE;
 
-    // 固有实现和类型声明不在同一个模块下，此时对固有实现内的关联数据项的存取仍通过指向实现类型的路径
+    // 固有实现和类型声明不在同一个模块下，此时对通过固有实现关联进的数据项的存取仍通过指向实现类型的路径
     color::Color::red();
 
     // 实现类型重导出后，使用这类快捷路径效果也一样。
@@ -248,12 +251,12 @@ fn main() {
 </code></pre></pre>
 <h2><a class="header" href="#trait-implementations" id="trait-implementations">Trait Implementations</a></h2>
 <h2><a class="header" href="#trait实现" id="trait实现">trait实现</a></h2>
-<p><em>trait实现</em>的定义与固有实现类似，只是可选的泛型类型声明后须跟一个 <a href="traits.html">trait</a>，再后跟关键字 <code>for</code>，之后再跟那个指向标称类型的路径。</p>
+<p><em>trait实现</em>的定义与固有实现类似，只是可选的泛型类型声明后须跟一个 <a href="traits.html">trait</a>，再后跟关键字 <code>for</code>，之后再跟一个指向标称类型的路径。</p>
 <!-- 为理解这个，你必须回去查看一下上一节的内容 :( -->
-<p>这里讨论的 trait 也被称为<em>应实现trait(implemented trait)</em>。实现类型会实现 该应实现trait。</p>
-<p>trait实现必须定义应实现trait 声明的所有非默认关联数据项，可以重新定义应实现trait 定义的默认关联数据项，但不能定义任何其他数据项。</p>
-<p>关联数据项的完整路径为 <code>&lt;</code> 后跟实现类型的路径，再后跟 <code>as</code>，然后是指向 trait 的路径，再后跟 <code>&gt;</code>，这整体作为一个路径组件，然后再接关联数据项自己的路径组件。</p>
-<p>非安全trait 需要 trait实现以关键字 <code>unsafe</code> 开头。</p>
+<p>这里讨论的 trait 也被称为<em>被实现trait(implemented trait)</em>。实现类型去实现该被实现trait。</p>
+<p>trait实现必须去定义被实现trait 声明里的所有非默认关联数据项，可以重新定义被实现trait 定义的默认关联数据项，但不能定义任何其他数据项。</p>
+<p>关联数据项的完整路径为 <code>&lt;</code> 后跟实现类型的路径，再后跟 <code>as</code>，然后是指向 trait 的路径，再后跟 <code>&gt;</code>，这整体作为一个路径组件，然后再后接关联数据项自己的路径组件。</p>
+<p><a href="traits.html#unsafe-traits">非安全(unsafe) trait</a> 需要 trait实现以关键字 <code>unsafe</code> 开头。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -290,25 +293,28 @@ impl Shape for Circle {
 </span></code></pre></pre>
 <h3><a class="header" href="#trait-implementation-coherence" id="trait-implementation-coherence">Trait Implementation Coherence</a></h3>
 <h3><a class="header" href="#trait实现的一致性" id="trait实现的一致性">trait实现的一致性</a></h3>
-<p>一个trait实现如果通不过孤儿规则检查或有其它 trait实现和本 trait实现有重叠，则认为 trait实现不一致(incoherent)。</p>
+<p>一个 trait实现如果未通过孤儿规则(orphan rules)检查或有 trait实现重叠(implementations overlap)发生，则认为 trait实现不一致(incoherent)。</p>
 <p>当两个实现各自的 <em>trait接口</em>集之间存在非空交集时即为这两个 trait实现 重叠了，（这种常情况下）这两个 trait实现可以用相同的类型来实例化。<!-- 这可能是错的？来源：对于输入类型参数，没有两个实现可以用相同的类型集实例化。 --></p>
 <h4><a class="header" href="#orphan-rules" id="orphan-rules">Orphan rules</a></h4>
 <h4><a class="header" href="#孤儿规则" id="孤儿规则">孤儿规则</a></h4>
 <p>给定 <code>impl&lt;P1..=Pn&gt; Trait&lt;T1..=Tn&gt; for T0</code>，只有以下至少一种情况为真时，此 <code>impl</code> 才能成立：</p>
 <ul>
-<li><code>Trait</code> 是一个<a href="../glossary.html#local-trait">本地trait</a></li>
-<li>以下所有
+<li>
+<p><code>Trait</code> 是一个<a href="../glossary.html#local-trait">本地 trait</a></p>
+</li>
+<li>
+<p>以下所有</p>
 <ul>
 <li><code>T0..=Tn</code> 中的类型至少有一种是<a href="../glossary.html#local-type">本地类型</a>。假设 <code>Ti</code> 是第一个这样的类型。</li>
-<li>没有<a href="../glossary.html#uncovered-type">无覆盖类型</a>参数 <code>P1..=Pn</code> 会出现在 <code>T0..Ti</code> 里（注意 <code>Ti</code> 被排除在外）。
-（译者注：为理解上面两条规则，举几个例子、 <code>impl&lt;T&gt; ForeignTrait&lt;LocalType&gt; for ForeignType&lt;T&gt;</code> 这样的实现也是被允许的，而 <code>impl&lt;Vec&lt;T&gt;&gt; ForeignTrait&lt;LocalType&gt; for ForeignType&lt;T&gt;</code> 和 <code>impl&lt;T&gt; ForeignTrait&lt;Vec&lt;T&gt;&gt; for ForeignType&lt;T&gt;</code> 不被允许。）</li>
+<li>没有<a href="../glossary.html#uncovered-type">无覆盖类型</a>参数 <code>P1..=Pn</code> 会出现在 <code>T0..Ti</code> 里（注意 <code>Ti</code> 被排除在外）。</li>
 </ul>
+<p>（译者注：为理解上面两条规则，举几个例子、 <code>impl&lt;T&gt; ForeignTrait&lt;LocalType&gt; for ForeignType&lt;T&gt;</code> 这样的实现也是被允许的，而 <code>impl&lt;Vec&lt;T&gt;&gt; ForeignTrait&lt;LocalType&gt; for ForeignType&lt;T&gt;</code> 和 <code>impl&lt;T&gt; ForeignTrait&lt;Vec&lt;T&gt;&gt; for ForeignType&lt;T&gt;</code> 不被允许。）</p>
 </li>
 </ul>
 <p>这里只有<em>无覆盖</em>类型参数的外观被限制（译者注：为方便理解“无覆盖类型参数”，译者提醒读者把它想象成上面译者举例中的 <code>T</code>）。注意，理解“无覆盖类型参数”时需要注意：为了保持一致性，<a href="../glossary.html#fundamental-type-constructors">基本类型</a>虽然外观形式特殊，但仍不认为是有覆盖的，比如 <code>Box&lt;T&gt;</code> 中的 <code>T</code> 就不认为是有覆盖的，<code>Box&lt;LocalType&gt;</code> 这样的就被认为是本地的。</p>
 <h2><a class="header" href="#generic-implementations" id="generic-implementations">Generic Implementations</a></h2>
 <h2><a class="header" href="#泛型实现" id="泛型实现">泛型实现</a></h2>
-<p>实现可以采用类型和生存期作为参数，这些参数可用在实现中（，也可以不用）。为实现所声明的类型参数必须在 trait 中或实现类型中至少使用一次。实现的参数直接写在关键字 <code>impl</code> 之后。</p>
+<p>实现可以带有类型参数和生存期参数，这些参数可用在实现中的其他地方。为实现所声明的类型参数必须在此声明的被实现trait(implemented trait)中或其实现类型(implementing type)中至少使用一次。实现的参数直接写在关键字 <code>impl</code> 之后。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

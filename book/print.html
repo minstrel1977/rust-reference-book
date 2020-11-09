@@ -2806,7 +2806,7 @@ foo(&amp;[1, 2]);
 <span class="boring">}
 </span></code></pre></pre>
 <p>将用 <code>i32</code> 实例化类型参数 <code>T</code>。</p>
-<p>类型参数也可以在函数名之后的尾部<a href="items/../paths.html">路径</a>段(trailing path component,即 <code>::&lt;type&gt;</code>)中显式地提供。如果没有足够的上下文来确定类型参数，那么这可能是必要的。例如：<code>mem::size_of::&lt;u32&gt;() == 4</code>。</p>
+<p>类型参数也可以在函数名之后的末段<a href="items/../paths.html">路径</a>组件(trailing path component，即 <code>::&lt;type&gt;</code>)中显式地提供。如果没有足够的上下文来确定类型参数，那么这可能是必要的。例如：<code>mem::size_of::&lt;u32&gt;() == 4</code>。</p>
 <h2><a class="header" href="#extern-function-qualifier" id="extern-function-qualifier">Extern function qualifier</a></h2>
 <h2><a class="header" href="#外部函数限定符" id="外部函数限定符">外部函数限定符</a></h2>
 <p>外部函数限定符(<code>extern</code>)可以提供那些能通过特定 ABI 才能调用的函数的<em>定义</em>：</p>
@@ -3623,13 +3623,13 @@ commit: d5cc65a70f66a243d84cd251188d80fbe9926747 <br />
 <li>所有的关联函数要么有 <code>where Self: Sized</code> 约束，要么
 <ul>
 <li>不能有类型参数（生存期参数可以有），并且</li>
-<li>作为方法时，<code>Self</code> 除了只能出现在<a href="items/associated-items.html#methods">方法</a>的接受者(receiver)的类型里之外，其它地方不能使用 <code>Self</code>。</li>
+<li>作为方法时，<code>Self</code> 只能出现在<a href="items/associated-items.html#methods">方法</a>的接受者(receiver)的类型里，其它地方不能使用 <code>Self</code>。</li>
 </ul>
 </li>
 <li>它必须没有任何关联常量。</li>
 <li>其所有的超类trait 也必须也是对象安全的。</li>
 </ul>
-<p>当方法上没有 <code>Self: Sized</code> 绑定时，方法的接受者的类型必须是以下类型之一：</p>
+<p>（作为上面第二条的补充，）当方法上没有 <code>Self: Sized</code> 绑定时，方法的接受者的类型必须是以下类型之一：</p>
 <ul>
 <li><code>&amp;Self</code></li>
 <li><code>&amp;mut Self</code></li>
@@ -3682,7 +3682,7 @@ impl NonDispatchable for S {
 let obj: Box&lt;dyn NonDispatchable&gt; = Box::new(S);
 obj.returns(); // 错误: 不能调用带有 Self 返回类型的方法
 obj.param(S);  // 错误: 不能调用带有 Self 类型的参数的方法
-obj.typed(1);  // 错误: 不能调用带有泛型类型的参数的方法
+obj.typed(1);  // 错误: 不能调用带有泛型类型参数的方法
 <span class="boring">}
 </span></code></pre></pre>
 <pre><pre class="playground"><code class="language-rust compile_fail">
@@ -3695,8 +3695,8 @@ trait NotObjectSafe {
 
     fn foo() {}  // 错误: 关联函数没有 `Sized` 约束
     fn returns(&amp;self) -&gt; Self; // 错误: `Self` 在返回类型中 
-    fn typed&lt;T&gt;(&amp;self, x: T) {} // 错误: 泛型类型的参数
-    fn nested(self: Rc&lt;Box&lt;Self&gt;&gt;) {} // 错误: 嵌套接受者还未被支持
+    fn typed&lt;T&gt;(&amp;self, x: T) {} // 错误: 泛型类型参数
+    fn nested(self: Rc&lt;Box&lt;Self&gt;&gt;) {} // 错误: 嵌套接受者还未被完全支持。（译者注：有限支持见上面的补充规则。）
 }
 
 struct S;
@@ -3732,7 +3732,7 @@ let obj: Box&lt;dyn WithSelf&gt; = Box::new(S); // 错误: 不能使用 `Self` �
 </span></code></pre></pre>
 <h2><a class="header" href="#supertraits" id="supertraits">Supertraits</a></h2>
 <h2><a class="header" href="#超类trait" id="超类trait">超类trait</a></h2>
-<p>超类trait 是类型为了实现特定 trait 而需要（提前）实现的 trait。此外，在任何地方，如果<a href="items/generics.html">泛型</a>或 <a href="items/../types/trait-object.html">trait对象</a>被某个 trait约束，那这个泛型或 trait对象就可以访问这个<em>超类trait</em> 的关联数据项。</p>
+<p><strong>超类trait</strong> 是类型为了实现某特定 trait 而需要一并实现的 trait。此外，在任何地方，如果<a href="items/generics.html">泛型</a>或 <a href="items/../types/trait-object.html">trait对象</a>被某个 trait约束，那这个泛型或 trait对象就可以访问这个<em>超类trait</em> 的关联数据项。</p>
 <p>超类trait 是通过 trait 的 <code>Self</code>类型上的 trait约束来声明的，并且通过这种声明 trait约束的方式来传递这种超类trait 关系。一个 trait 不能是它自己的超类trait。</p>
 <p>有超类trait 的 trait 称其为其超类trait 的<strong>子trait(subtrait)</strong>。</p>
 <p>下面是一个声明 <code>Shape</code> 是 <code>Circle</code> 的超类trait 的例子。</p>
@@ -3758,16 +3758,13 @@ trait Circle where Self: Shape { fn radius(&amp;self) -&gt; f64; }
 </span><span class="boring">trait Shape { fn area(&amp;self) -&gt; f64; }
 </span>trait Circle where Self: Shape {
     fn radius(&amp;self) -&gt; f64 {
-        // 因为 A = pi * r^2
-        // 所以通过代数推导
-        // r = sqrt(A / pi)
+        // 因为 A = pi * r^2，所以通过代数推导得：r = sqrt(A / pi)
         (self.area() /std::f64::consts::PI).sqrt()
     }
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>下一个示例调用了一个泛型参数的超类trait 的方法。
-This next example calls a supertrait method on a generic parameter.</p>
+<p>下一个示例调用了一个泛型参数的超类trait 上的方法。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3800,9 +3797,9 @@ let nonsense = circle.radius() * circle.area();
 <p><a href="items/../special-types-and-traits.html#sync"><code>Sync</code></a> 和 <a href="items/../special-types-and-traits.html#send"><code>Send</code></a> 是典型的非安全trait。</p>
 <h2><a class="header" href="#parameter-patterns" id="parameter-patterns">Parameter patterns</a></h2>
 <h2><a class="header" href="#参数模式" id="参数模式">参数模式</a></h2>
-<p>没有代码体的函数或方法声明只允许使用<a href="items/../identifiers.html">标识符/IDENTIFIER</a> 或 <code>_</code> <a href="items/../patterns.html#wildcard-pattern">通配符</a>模式。当前 <code>mut</code> <a href="items/../identifiers.html">IDENTIFIER</a>是允许的，但它已被弃用，未来将成为一个硬错误(hard error)。</p>
+<p>（trait 中）没有代码体的函数声明或方法声明（的参数模式）只允许使用<a href="items/../identifiers.html">标识符/IDENTIFIER</a>模式 或 <code>_</code> <a href="items/../patterns.html#wildcard-pattern">通配符</a>模式。当前 <code>mut</code> <a href="items/../identifiers.html">IDENTIFIER</a> 还是允许的，但已被弃用，未来将成为一个硬编码错误(hard error)。</p>
 <!-- https://github.com/rust-lang/rust/issues/35203 -->
-<p>在2015版中，trait 的函数或方法的参数模式是可选的：</p>
+<p>在 2015 版中，trait 的函数或方法的参数模式是可选的：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3819,7 +3816,7 @@ let nonsense = circle.radius() * circle.area();
 <li><code>&amp;</code> <a href="items/../identifiers.html">IDENTIFIER</a></li>
 <li><code>&amp;&amp;</code> <a href="items/../identifiers.html">IDENTIFIER</a></li>
 </ul>
-<p>从2018版开始，函数或方法的参数模式不再是可选的。同时，只要有代码体，所有不可反驳型模式都是被允许的。如果没有代码体，上面列出的限制仍然有效。</p>
+<p>（跟普通函数一样，）从 2018 版开始，（trait 中）函数或方法的参数模式不再是可选的。同时，也跟普通函数一样，（trait 中）函数或方法只要有代码体，其参数模式可以是任何不可反驳型模式。但如果没有代码体，上面列出的限制仍然有效。</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3831,7 +3828,7 @@ let nonsense = circle.radius() * circle.area();
 </span></code></pre></pre>
 <h2><a class="header" href="#item-visibility" id="item-visibility">Item visibility</a></h2>
 <h2><a class="header" href="#数据项的可见性" id="数据项的可见性">数据项的可见性</a></h2>
-<p>trait 里数据项在语法上允许使用 <a href="items/../visibility-and-privacy.html"><em>Visibility</em></a>元项属性句法的注释，但是当 trait 被（句法法分析程序）验证(validate)时，这部分又将被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的数据项使用统一的句法规则进行解析。例如，宏规则内空的 <code>vis</code> 可用于 trait 里的数据项，非空的则可用于其他允许带非空可见性的数据项上。</p>
+<p>依照句法规定，trait数据项在语法上允许使用 <a href="items/../visibility-and-privacy.html"><em>Visibility</em></a>句法的注释，但是当 trait 被（句法法分析程序）验证(validate)后，该可见性注释又被弃用。因此，在源码解析层面，可以在使用数据项的不同上下文中使用统一的语法对这些数据项进行解析。例如，空的 <code>vis</code> 宏匹配段选择器可以用于 trait数据项，而在其他允许使用非空可见性的情况下，也可使用这同一套宏规则。</p>
 <pre><pre class="playground"><code class="language-rust">macro_rules! create_method {
     ($vis:vis $name:ident) =&gt; {
         $vis fn $name(&amp;self) {}
@@ -3868,7 +3865,7 @@ fn main() {
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/implementations.md">implementations.md</a><br />
 commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
-本译文最后维护日期：2020-10-21</p>
+本译文最后维护日期：2020-11-8</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -3898,7 +3895,7 @@ commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
       | ( <a href="items/../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup> ( <a href="items/type-aliases.html"><em>TypeAlias</em></a> | <a href="items/constant-items.html"><em>ConstantItem</em></a> | <a href="items/functions.html"><em>Function</em></a> | <a href="items/associated-items.html#methods"><em>Method</em></a> ) )<br />
    )</p>
 </blockquote>
-<p><em>实现</em>是将数据项与*实现类型(implementing type)*关联起来的数据项。实现使用关键字 <code>impl</code> 定义，它包含了属于当前实现的类型的实例的函数，或者包含了当前实现的类型本身的静态函数。（译者注：后一句如果简单意译应该是：实现使用关键字 <code>impl</code> 定义，它包含了当前类型的方法和函数）</p>
+<p><em>实现</em>是将数据项与*实现类型(implementing type)*关联起来的数据项。实现使用关键字 <code>impl</code> 定义，它包含了属于当前实现的类型的实例的函数，或者包含了当前实现的类型本身的静态函数。</p>
 <p>有两种类型的实现:</p>
 <ul>
 <li>固有实现(inherent implementations)</li>
@@ -3907,22 +3904,25 @@ commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
 <h2><a class="header" href="#inherent-implementations" id="inherent-implementations">Inherent Implementations</a></h2>
 <h2><a class="header" href="#固有实现" id="固有实现">固有实现</a></h2>
 <p>固有实现被定义为一段由关键字 <code>impl</code>，泛型类型声明，指向标称类型(nominal type)的路径，一个 where子句和一对花括号括起来的一组*类型关联项(associable items)*组成的序列。</p>
-<p>（这里）<em>标称类型</em>也被称作<em>实现类型(implementing type)</em>；<em>类型关联项(associable items)<em>可理解为实现类型的各种</em>关联数据项</em>。</p>
-<p>固有实现将包含的数据项与实现类型关联起来。固有实现可以包含<a href="items/associated-items.html#associated-functions-and-methods">关联函数</a>（包括方法）和<a href="items/associated-items.html#associated-constants">关联常量</a>。固有实现不能包含关联类型别名。</p>
+<p>（这里）<em>标称类型</em>也被称作<em>实现类型(implementing type)</em>；<em>类型关联项(associable items)<em>可理解为实现类型的各种</em>关联数据项(associated items)</em>。</p>
+<p>固有实现将其包含的数据项与其的实现类型关联起来。固有实现可以包含<a href="items/associated-items.html#associated-functions-and-methods">关联函数</a>（包括方法）和<a href="items/associated-items.html#associated-constants">关联常量</a>。固有实现不能包含关联类型别名。</p>
 <p>关联数据项的<a href="items/../paths.html">路径</a>是其实现类型的所有（形式的）路径中的任一种，然后再拼接上这个关联数据项的标识符来作为整个路径的末段路径组件(final path component)。</p>
-<p>类型可以有多个固有实现。但作为原始类型定义的实现类型与这些固有实现必须在同一个 crate 里。</p>
+<p>类型可以有多个固有实现。但作为原始类型定义的实现类型必须与这些固有实现处在同一个 crate 里。</p>
 <pre><pre class="playground"><code class="language-rust">pub mod color {
-    // 译者添加的注释：这段为 Color的原始类型，也是后面实现的实现类型
+    // 译者添加的注释：这个结构体是 Color 的原始类型，是一个标称类型，也是后面两个实现的实现类型
     pub struct Color(pub u8, pub u8, pub u8);
-    // 译者添加的注释：下行的 `Color` 为标称类型 或 实现类型
+    // 译者添加的注释：这个实现是 Color 的固有实现
     impl Color {
-        pub const WHITE: Color = Color(255, 255, 255);
+        // 译者添加的注释：类型关联项(associable items)
+        pub const WHITE: Color = Color(255, 255, 255); 
     }
 }
 
 mod values {
     use super::color::Color;
+    // 译者添加的注释：这个实现也是 Color 的固有实现
     impl Color {
+        // 译者添加的注释：类型关联项(associable items)
         pub fn red() -&gt; Color {
             Color(255, 0, 0)
         }
@@ -3934,7 +3934,7 @@ fn main() {
     // 实现类型 和 固有实现 在同一个模块下。
     color::Color::WHITE;
 
-    // 固有实现和类型声明不在同一个模块下，此时对固有实现内的关联数据项的存取仍通过指向实现类型的路径
+    // 固有实现和类型声明不在同一个模块下，此时对通过固有实现关联进的数据项的存取仍通过指向实现类型的路径
     color::Color::red();
 
     // 实现类型重导出后，使用这类快捷路径效果也一样。
@@ -3946,12 +3946,12 @@ fn main() {
 </code></pre></pre>
 <h2><a class="header" href="#trait-implementations" id="trait-implementations">Trait Implementations</a></h2>
 <h2><a class="header" href="#trait实现" id="trait实现">trait实现</a></h2>
-<p><em>trait实现</em>的定义与固有实现类似，只是可选的泛型类型声明后须跟一个 <a href="items/traits.html">trait</a>，再后跟关键字 <code>for</code>，之后再跟那个指向标称类型的路径。</p>
+<p><em>trait实现</em>的定义与固有实现类似，只是可选的泛型类型声明后须跟一个 <a href="items/traits.html">trait</a>，再后跟关键字 <code>for</code>，之后再跟一个指向标称类型的路径。</p>
 <!-- 为理解这个，你必须回去查看一下上一节的内容 :( -->
-<p>这里讨论的 trait 也被称为<em>应实现trait(implemented trait)</em>。实现类型会实现 该应实现trait。</p>
-<p>trait实现必须定义应实现trait 声明的所有非默认关联数据项，可以重新定义应实现trait 定义的默认关联数据项，但不能定义任何其他数据项。</p>
-<p>关联数据项的完整路径为 <code>&lt;</code> 后跟实现类型的路径，再后跟 <code>as</code>，然后是指向 trait 的路径，再后跟 <code>&gt;</code>，这整体作为一个路径组件，然后再接关联数据项自己的路径组件。</p>
-<p>非安全trait 需要 trait实现以关键字 <code>unsafe</code> 开头。</p>
+<p>这里讨论的 trait 也被称为<em>被实现trait(implemented trait)</em>。实现类型去实现该被实现trait。</p>
+<p>trait实现必须去定义被实现trait 声明里的所有非默认关联数据项，可以重新定义被实现trait 定义的默认关联数据项，但不能定义任何其他数据项。</p>
+<p>关联数据项的完整路径为 <code>&lt;</code> 后跟实现类型的路径，再后跟 <code>as</code>，然后是指向 trait 的路径，再后跟 <code>&gt;</code>，这整体作为一个路径组件，然后再后接关联数据项自己的路径组件。</p>
+<p><a href="items/traits.html#unsafe-traits">非安全(unsafe) trait</a> 需要 trait实现以关键字 <code>unsafe</code> 开头。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3988,25 +3988,28 @@ impl Shape for Circle {
 </span></code></pre></pre>
 <h3><a class="header" href="#trait-implementation-coherence" id="trait-implementation-coherence">Trait Implementation Coherence</a></h3>
 <h3><a class="header" href="#trait实现的一致性" id="trait实现的一致性">trait实现的一致性</a></h3>
-<p>一个trait实现如果通不过孤儿规则检查或有其它 trait实现和本 trait实现有重叠，则认为 trait实现不一致(incoherent)。</p>
+<p>一个 trait实现如果未通过孤儿规则(orphan rules)检查或有 trait实现重叠(implementations overlap)发生，则认为 trait实现不一致(incoherent)。</p>
 <p>当两个实现各自的 <em>trait接口</em>集之间存在非空交集时即为这两个 trait实现 重叠了，（这种常情况下）这两个 trait实现可以用相同的类型来实例化。<!-- 这可能是错的？来源：对于输入类型参数，没有两个实现可以用相同的类型集实例化。 --></p>
 <h4><a class="header" href="#orphan-rules" id="orphan-rules">Orphan rules</a></h4>
 <h4><a class="header" href="#孤儿规则" id="孤儿规则">孤儿规则</a></h4>
 <p>给定 <code>impl&lt;P1..=Pn&gt; Trait&lt;T1..=Tn&gt; for T0</code>，只有以下至少一种情况为真时，此 <code>impl</code> 才能成立：</p>
 <ul>
-<li><code>Trait</code> 是一个<a href="items/../glossary.html#local-trait">本地trait</a></li>
-<li>以下所有
+<li>
+<p><code>Trait</code> 是一个<a href="items/../glossary.html#local-trait">本地 trait</a></p>
+</li>
+<li>
+<p>以下所有</p>
 <ul>
 <li><code>T0..=Tn</code> 中的类型至少有一种是<a href="items/../glossary.html#local-type">本地类型</a>。假设 <code>Ti</code> 是第一个这样的类型。</li>
-<li>没有<a href="items/../glossary.html#uncovered-type">无覆盖类型</a>参数 <code>P1..=Pn</code> 会出现在 <code>T0..Ti</code> 里（注意 <code>Ti</code> 被排除在外）。
-（译者注：为理解上面两条规则，举几个例子、 <code>impl&lt;T&gt; ForeignTrait&lt;LocalType&gt; for ForeignType&lt;T&gt;</code> 这样的实现也是被允许的，而 <code>impl&lt;Vec&lt;T&gt;&gt; ForeignTrait&lt;LocalType&gt; for ForeignType&lt;T&gt;</code> 和 <code>impl&lt;T&gt; ForeignTrait&lt;Vec&lt;T&gt;&gt; for ForeignType&lt;T&gt;</code> 不被允许。）</li>
+<li>没有<a href="items/../glossary.html#uncovered-type">无覆盖类型</a>参数 <code>P1..=Pn</code> 会出现在 <code>T0..Ti</code> 里（注意 <code>Ti</code> 被排除在外）。</li>
 </ul>
+<p>（译者注：为理解上面两条规则，举几个例子、 <code>impl&lt;T&gt; ForeignTrait&lt;LocalType&gt; for ForeignType&lt;T&gt;</code> 这样的实现也是被允许的，而 <code>impl&lt;Vec&lt;T&gt;&gt; ForeignTrait&lt;LocalType&gt; for ForeignType&lt;T&gt;</code> 和 <code>impl&lt;T&gt; ForeignTrait&lt;Vec&lt;T&gt;&gt; for ForeignType&lt;T&gt;</code> 不被允许。）</p>
 </li>
 </ul>
 <p>这里只有<em>无覆盖</em>类型参数的外观被限制（译者注：为方便理解“无覆盖类型参数”，译者提醒读者把它想象成上面译者举例中的 <code>T</code>）。注意，理解“无覆盖类型参数”时需要注意：为了保持一致性，<a href="items/../glossary.html#fundamental-type-constructors">基本类型</a>虽然外观形式特殊，但仍不认为是有覆盖的，比如 <code>Box&lt;T&gt;</code> 中的 <code>T</code> 就不认为是有覆盖的，<code>Box&lt;LocalType&gt;</code> 这样的就被认为是本地的。</p>
 <h2><a class="header" href="#generic-implementations" id="generic-implementations">Generic Implementations</a></h2>
 <h2><a class="header" href="#泛型实现" id="泛型实现">泛型实现</a></h2>
-<p>实现可以采用类型和生存期作为参数，这些参数可用在实现中（，也可以不用）。为实现所声明的类型参数必须在 trait 中或实现类型中至少使用一次。实现的参数直接写在关键字 <code>impl</code> 之后。</p>
+<p>实现可以带有类型参数和生存期参数，这些参数可用在实现中的其他地方。为实现所声明的类型参数必须在此声明的被实现trait(implemented trait)中或其实现类型(implementing type)中至少使用一次。实现的参数直接写在关键字 <code>impl</code> 之后。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -4029,7 +4032,7 @@ impl Seq&lt;bool&gt; for u32 {
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md">external-blocks.md</a><br />
 commit: fbf34356b709cfc0debb01acaaff038d4e339aab <br />
-本译文最后维护日期：2020-11-3</p>
+本译文最后维护日期：2020-11-9</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />

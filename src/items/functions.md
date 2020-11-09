@@ -94,7 +94,7 @@ foo(&[1, 2]);
 
 将用 `i32` 实例化类型参数 `T`。
 
-类型参数也可以在函数名之后的尾部[路径][path]段(trailing path component,即 `::<type>`)中显式地提供。如果没有足够的上下文来确定类型参数，那么这可能是必要的。例如：`mem::size_of::<u32>() == 4`。
+类型参数也可以在函数名之后的末段[路径][path]组件(trailing path component，即 `::<type>`)中显式地提供。如果没有足够的上下文来确定类型参数，那么这可能是必要的。例如：`mem::size_of::<u32>() == 4`。
 
 ## Extern function qualifier
 ## 外部函数限定符

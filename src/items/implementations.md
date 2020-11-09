@@ -3,7 +3,7 @@
 
 >[implementations.md](https://github.com/rust-lang/reference/blob/master/src/items/implementations.md)\
 >commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e \
->本译文最后维护日期：2020-10-21
+>本译文最后维护日期：2020-11-8
 
 > **<sup>句法</sup>**\
 > _Implementation_ :\
@@ -36,7 +36,7 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; | ( [_Visibility_]<sup>?</sup> ( [_TypeAlias_] | [_ConstantItem_] | [_Function_] | [_Method_] ) )\
 > &nbsp;&nbsp; )
 
-*实现*是将数据项与*实现类型(implementing type)*关联起来的数据项。实现使用关键字 `impl` 定义，它包含了属于当前实现的类型的实例的函数，或者包含了当前实现的类型本身的静态函数。（译者注：后一句如果简单意译应该是：实现使用关键字 `impl` 定义，它包含了当前类型的方法和函数）
+*实现*是将数据项与*实现类型(implementing type)*关联起来的数据项。实现使用关键字 `impl` 定义，它包含了属于当前实现的类型的实例的函数，或者包含了当前实现的类型本身的静态函数。
 
 有两种类型的实现:
 
@@ -48,27 +48,30 @@
 
 固有实现被定义为一段由关键字 `impl`，泛型类型声明，指向标称类型(nominal type)的路径，一个 where子句和一对花括号括起来的一组*类型关联项(associable items)*组成的序列。
 
-（这里）*标称类型*也被称作*实现类型(implementing type)*；*类型关联项(associable items)*可理解为实现类型的各种*关联数据项*。
+（这里）*标称类型*也被称作*实现类型(implementing type)*；*类型关联项(associable items)*可理解为实现类型的各种*关联数据项(associated items)*。
 
-固有实现将包含的数据项与实现类型关联起来。固有实现可以包含[关联函数][associated functions]（包括方法）和[关联常量][associated constants]。固有实现不能包含关联类型别名。
+固有实现将其包含的数据项与其的实现类型关联起来。固有实现可以包含[关联函数][associated functions]（包括方法）和[关联常量][associated constants]。固有实现不能包含关联类型别名。
 
 关联数据项的[路径][path]是其实现类型的所有（形式的）路径中的任一种，然后再拼接上这个关联数据项的标识符来作为整个路径的末段路径组件(final path component)。
 
-类型可以有多个固有实现。但作为原始类型定义的实现类型与这些固有实现必须在同一个 crate 里。
+类型可以有多个固有实现。但作为原始类型定义的实现类型必须与这些固有实现处在同一个 crate 里。
 
 ``` rust
 pub mod color {
-    // 译者添加的注释：这段为 Color的原始类型，也是后面实现的实现类型
+    // 译者添加的注释：这个结构体是 Color 的原始类型，是一个标称类型，也是后面两个实现的实现类型
     pub struct Color(pub u8, pub u8, pub u8);
-    // 译者添加的注释：下行的 `Color` 为标称类型 或 实现类型
+    // 译者添加的注释：这个实现是 Color 的固有实现
     impl Color {
-        pub const WHITE: Color = Color(255, 255, 255);
+        // 译者添加的注释：类型关联项(associable items)
+        pub const WHITE: Color = Color(255, 255, 255); 
     }
 }
 
 mod values {
     use super::color::Color;
+    // 译者添加的注释：这个实现也是 Color 的固有实现
     impl Color {
+        // 译者添加的注释：类型关联项(associable items)
         pub fn red() -> Color {
             Color(255, 0, 0)
         }
@@ -80,7 +83,7 @@ fn main() {
     // 实现类型 和 固有实现 在同一个模块下。
     color::Color::WHITE;
 
-    // 固有实现和类型声明不在同一个模块下，此时对固有实现内的关联数据项的存取仍通过指向实现类型的路径
+    // 固有实现和类型声明不在同一个模块下，此时对通过固有实现关联进的数据项的存取仍通过指向实现类型的路径
     color::Color::red();
 
     // 实现类型重导出后，使用这类快捷路径效果也一样。
@@ -94,17 +97,17 @@ fn main() {
 ## Trait Implementations
 ## trait实现
 
-*trait实现*的定义与固有实现类似，只是可选的泛型类型声明后须跟一个 [trait]，再后跟关键字 `for`，之后再跟那个指向标称类型的路径。
+*trait实现*的定义与固有实现类似，只是可选的泛型类型声明后须跟一个 [trait]，再后跟关键字 `for`，之后再跟一个指向标称类型的路径。
 
 <!-- 为理解这个，你必须回去查看一下上一节的内容 :( -->
 
-这里讨论的 trait 也被称为*应实现trait(implemented trait)*。实现类型会实现 该应实现trait。
+这里讨论的 trait 也被称为*被实现trait(implemented trait)*。实现类型去实现该被实现trait。
 
-trait实现必须定义应实现trait 声明的所有非默认关联数据项，可以重新定义应实现trait 定义的默认关联数据项，但不能定义任何其他数据项。
+trait实现必须去定义被实现trait 声明里的所有非默认关联数据项，可以重新定义被实现trait 定义的默认关联数据项，但不能定义任何其他数据项。
 
-关联数据项的完整路径为 `<` 后跟实现类型的路径，再后跟 `as`，然后是指向 trait 的路径，再后跟 `>`，这整体作为一个路径组件，然后再接关联数据项自己的路径组件。
+关联数据项的完整路径为 `<` 后跟实现类型的路径，再后跟 `as`，然后是指向 trait 的路径，再后跟 `>`，这整体作为一个路径组件，然后再后接关联数据项自己的路径组件。
 
-非安全trait 需要 trait实现以关键字 `unsafe` 开头。
+[非安全(unsafe) trait][Unsafe traits] 需要 trait实现以关键字 `unsafe` 开头。
 
 ```rust
 # #[derive(Copy, Clone)]
@@ -141,7 +144,7 @@ impl Shape for Circle {
 ### Trait Implementation Coherence
 ### trait实现的一致性
 
-一个trait实现如果通不过孤儿规则检查或有其它 trait实现和本 trait实现有重叠，则认为 trait实现不一致(incoherent)。
+一个 trait实现如果未通过孤儿规则(orphan rules)检查或有 trait实现重叠(implementations overlap)发生，则认为 trait实现不一致(incoherent)。
 
 当两个实现各自的 *trait接口*集之间存在非空交集时即为这两个 trait实现 重叠了，（这种常情况下）这两个 trait实现可以用相同的类型来实例化。<!-- 这可能是错的？来源：对于输入类型参数，没有两个实现可以用相同的类型集实例化。 -->
 
@@ -150,10 +153,11 @@ impl Shape for Circle {
 
 给定 `impl<P1..=Pn> Trait<T1..=Tn> for T0`，只有以下至少一种情况为真时，此 `impl` 才能成立：
 
-- `Trait` 是一个[本地trait][local trait]
+- `Trait` 是一个[本地 trait][local trait]
 - 以下所有
   - `T0..=Tn` 中的类型至少有一种是[本地类型][local type]。假设 `Ti` 是第一个这样的类型。
   - 没有[无覆盖类型][uncovered type]参数 `P1..=Pn` 会出现在 `T0..Ti` 里（注意 `Ti` 被排除在外）。
+
   （译者注：为理解上面两条规则，举几个例子、 `impl<T> ForeignTrait<LocalType> for ForeignType<T>` 这样的实现也是被允许的，而 `impl<Vec<T>> ForeignTrait<LocalType> for ForeignType<T>` 和 `impl<T> ForeignTrait<Vec<T>> for ForeignType<T>` 不被允许。）
 
 这里只有*无覆盖*类型参数的外观被限制（译者注：为方便理解“无覆盖类型参数”，译者提醒读者把它想象成上面译者举例中的 `T`）。注意，理解“无覆盖类型参数”时需要注意：为了保持一致性，[基本类型][fundamental types]虽然外观形式特殊，但仍不认为是有覆盖的，比如 `Box<T>` 中的 `T` 就不认为是有覆盖的，`Box<LocalType>` 这样的就被认为是本地的。
@@ -161,7 +165,7 @@ impl Shape for Circle {
 ## Generic Implementations
 ## 泛型实现
 
-实现可以采用类型和生存期作为参数，这些参数可用在实现中（，也可以不用）。为实现所声明的类型参数必须在 trait 中或实现类型中至少使用一次。实现的参数直接写在关键字 `impl` 之后。
+实现可以带有类型参数和生存期参数，这些参数可用在实现中的其他地方。为实现所声明的类型参数必须在此声明的被实现trait(implemented trait)中或其实现类型(implementing type)中至少使用一次。实现的参数直接写在关键字 `impl` 之后。
 
 ```rust
 # trait Seq<T> { fn dummy(&self, _: T) { } }

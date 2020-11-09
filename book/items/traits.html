@@ -243,13 +243,13 @@ commit: d5cc65a70f66a243d84cd251188d80fbe9926747 <br />
 <li>所有的关联函数要么有 <code>where Self: Sized</code> 约束，要么
 <ul>
 <li>不能有类型参数（生存期参数可以有），并且</li>
-<li>作为方法时，<code>Self</code> 除了只能出现在<a href="associated-items.html#methods">方法</a>的接受者(receiver)的类型里之外，其它地方不能使用 <code>Self</code>。</li>
+<li>作为方法时，<code>Self</code> 只能出现在<a href="associated-items.html#methods">方法</a>的接受者(receiver)的类型里，其它地方不能使用 <code>Self</code>。</li>
 </ul>
 </li>
 <li>它必须没有任何关联常量。</li>
 <li>其所有的超类trait 也必须也是对象安全的。</li>
 </ul>
-<p>当方法上没有 <code>Self: Sized</code> 绑定时，方法的接受者的类型必须是以下类型之一：</p>
+<p>（作为上面第二条的补充，）当方法上没有 <code>Self: Sized</code> 绑定时，方法的接受者的类型必须是以下类型之一：</p>
 <ul>
 <li><code>&amp;Self</code></li>
 <li><code>&amp;mut Self</code></li>
@@ -302,7 +302,7 @@ impl NonDispatchable for S {
 let obj: Box&lt;dyn NonDispatchable&gt; = Box::new(S);
 obj.returns(); // 错误: 不能调用带有 Self 返回类型的方法
 obj.param(S);  // 错误: 不能调用带有 Self 类型的参数的方法
-obj.typed(1);  // 错误: 不能调用带有泛型类型的参数的方法
+obj.typed(1);  // 错误: 不能调用带有泛型类型参数的方法
 <span class="boring">}
 </span></code></pre></pre>
 <pre><pre class="playground"><code class="language-rust compile_fail">
@@ -315,8 +315,8 @@ trait NotObjectSafe {
 
     fn foo() {}  // 错误: 关联函数没有 `Sized` 约束
     fn returns(&amp;self) -&gt; Self; // 错误: `Self` 在返回类型中 
-    fn typed&lt;T&gt;(&amp;self, x: T) {} // 错误: 泛型类型的参数
-    fn nested(self: Rc&lt;Box&lt;Self&gt;&gt;) {} // 错误: 嵌套接受者还未被支持
+    fn typed&lt;T&gt;(&amp;self, x: T) {} // 错误: 泛型类型参数
+    fn nested(self: Rc&lt;Box&lt;Self&gt;&gt;) {} // 错误: 嵌套接受者还未被完全支持。（译者注：有限支持见上面的补充规则。）
 }
 
 struct S;
@@ -352,7 +352,7 @@ let obj: Box&lt;dyn WithSelf&gt; = Box::new(S); // 错误: 不能使用 `Self` �
 </span></code></pre></pre>
 <h2><a class="header" href="#supertraits" id="supertraits">Supertraits</a></h2>
 <h2><a class="header" href="#超类trait" id="超类trait">超类trait</a></h2>
-<p>超类trait 是类型为了实现特定 trait 而需要（提前）实现的 trait。此外，在任何地方，如果<a href="generics.html">泛型</a>或 <a href="../types/trait-object.html">trait对象</a>被某个 trait约束，那这个泛型或 trait对象就可以访问这个<em>超类trait</em> 的关联数据项。</p>
+<p><strong>超类trait</strong> 是类型为了实现某特定 trait 而需要一并实现的 trait。此外，在任何地方，如果<a href="generics.html">泛型</a>或 <a href="../types/trait-object.html">trait对象</a>被某个 trait约束，那这个泛型或 trait对象就可以访问这个<em>超类trait</em> 的关联数据项。</p>
 <p>超类trait 是通过 trait 的 <code>Self</code>类型上的 trait约束来声明的，并且通过这种声明 trait约束的方式来传递这种超类trait 关系。一个 trait 不能是它自己的超类trait。</p>
 <p>有超类trait 的 trait 称其为其超类trait 的<strong>子trait(subtrait)</strong>。</p>
 <p>下面是一个声明 <code>Shape</code> 是 <code>Circle</code> 的超类trait 的例子。</p>
@@ -378,16 +378,13 @@ trait Circle where Self: Shape { fn radius(&amp;self) -&gt; f64; }
 </span><span class="boring">trait Shape { fn area(&amp;self) -&gt; f64; }
 </span>trait Circle where Self: Shape {
     fn radius(&amp;self) -&gt; f64 {
-        // 因为 A = pi * r^2
-        // 所以通过代数推导
-        // r = sqrt(A / pi)
+        // 因为 A = pi * r^2，所以通过代数推导得：r = sqrt(A / pi)
         (self.area() /std::f64::consts::PI).sqrt()
     }
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>下一个示例调用了一个泛型参数的超类trait 的方法。
-This next example calls a supertrait method on a generic parameter.</p>
+<p>下一个示例调用了一个泛型参数的超类trait 上的方法。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -420,9 +417,9 @@ let nonsense = circle.radius() * circle.area();
 <p><a href="../special-types-and-traits.html#sync"><code>Sync</code></a> 和 <a href="../special-types-and-traits.html#send"><code>Send</code></a> 是典型的非安全trait。</p>
 <h2><a class="header" href="#parameter-patterns" id="parameter-patterns">Parameter patterns</a></h2>
 <h2><a class="header" href="#参数模式" id="参数模式">参数模式</a></h2>
-<p>没有代码体的函数或方法声明只允许使用<a href="../identifiers.html">标识符/IDENTIFIER</a> 或 <code>_</code> <a href="../patterns.html#wildcard-pattern">通配符</a>模式。当前 <code>mut</code> <a href="../identifiers.html">IDENTIFIER</a>是允许的，但它已被弃用，未来将成为一个硬错误(hard error)。</p>
+<p>（trait 中）没有代码体的函数声明或方法声明（的参数模式）只允许使用<a href="../identifiers.html">标识符/IDENTIFIER</a>模式 或 <code>_</code> <a href="../patterns.html#wildcard-pattern">通配符</a>模式。当前 <code>mut</code> <a href="../identifiers.html">IDENTIFIER</a> 还是允许的，但已被弃用，未来将成为一个硬编码错误(hard error)。</p>
 <!-- https://github.com/rust-lang/rust/issues/35203 -->
-<p>在2015版中，trait 的函数或方法的参数模式是可选的：</p>
+<p>在 2015 版中，trait 的函数或方法的参数模式是可选的：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -439,7 +436,7 @@ let nonsense = circle.radius() * circle.area();
 <li><code>&amp;</code> <a href="../identifiers.html">IDENTIFIER</a></li>
 <li><code>&amp;&amp;</code> <a href="../identifiers.html">IDENTIFIER</a></li>
 </ul>
-<p>从2018版开始，函数或方法的参数模式不再是可选的。同时，只要有代码体，所有不可反驳型模式都是被允许的。如果没有代码体，上面列出的限制仍然有效。</p>
+<p>（跟普通函数一样，）从 2018 版开始，（trait 中）函数或方法的参数模式不再是可选的。同时，也跟普通函数一样，（trait 中）函数或方法只要有代码体，其参数模式可以是任何不可反驳型模式。但如果没有代码体，上面列出的限制仍然有效。</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -451,7 +448,7 @@ let nonsense = circle.radius() * circle.area();
 </span></code></pre></pre>
 <h2><a class="header" href="#item-visibility" id="item-visibility">Item visibility</a></h2>
 <h2><a class="header" href="#数据项的可见性" id="数据项的可见性">数据项的可见性</a></h2>
-<p>trait 里数据项在语法上允许使用 <a href="../visibility-and-privacy.html"><em>Visibility</em></a>元项属性句法的注释，但是当 trait 被（句法法分析程序）验证(validate)时，这部分又将被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的数据项使用统一的句法规则进行解析。例如，宏规则内空的 <code>vis</code> 可用于 trait 里的数据项，非空的则可用于其他允许带非空可见性的数据项上。</p>
+<p>依照句法规定，trait数据项在语法上允许使用 <a href="../visibility-and-privacy.html"><em>Visibility</em></a>句法的注释，但是当 trait 被（句法法分析程序）验证(validate)后，该可见性注释又被弃用。因此，在源码解析层面，可以在使用数据项的不同上下文中使用统一的语法对这些数据项进行解析。例如，空的 <code>vis</code> 宏匹配段选择器可以用于 trait数据项，而在其他允许使用非空可见性的情况下，也可使用这同一套宏规则。</p>
 <pre><pre class="playground"><code class="language-rust">macro_rules! create_method {
     ($vis:vis $name:ident) =&gt; {
         $vis fn $name(&amp;self) {}
