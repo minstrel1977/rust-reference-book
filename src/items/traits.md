@@ -86,14 +86,14 @@ trait Seq<T> {
 
 对象安全的 trait 可以是 [trait对象][trait object]的底层 trait。如果 trait 符合以下限定条件（在 [RFC 255] 中定义），则认为它是*对象安全的(object safe)*：
 
-* 它不能有强制的 `Self: Sized`约束 [^译者备注]
+* trait 本身不能有 `Self: Sized`约束 [^译者备注]
 * 所有的关联函数要么有 `where Self: Sized` 约束，要么
   * 不能有类型参数（生存期参数可以有），并且
-  * 除了 `Self` 只能出现在[方法][method]的接受者(receiver)的类型里的情况外，关联函数作为[方法][method]时不能使用 `Self`。
+  * 作为方法时，`Self` 除了只能出现在[方法][method]的接受者(receiver)的类型里之外，其它地方不能使用 `Self`。
 * 它必须没有任何关联常量。
 * 其所有的超类trait 也必须也是对象安全的。
 
-当方法上没有 `Self: Sized` 绑定时，方法接受者的类型必须是以下类型之一：
+当方法上没有 `Self: Sized` 绑定时，方法的接受者的类型必须是以下类型之一：
 
 * `&Self`
 * `&mut Self`
@@ -123,7 +123,7 @@ trait TraitMethods {
 ```
 
 ```rust,compile_fail
-// 此 trait 是对象安全的，但不能在 trait对象上分发使用这些方法。
+// 此 trait 是对象安全的，但不能在 trait对象上分发(dispatch)使用这些方法。
 trait NonDispatchable {
     // 非方法不能被分发。
     fn foo() where Self: Sized {}
@@ -317,7 +317,7 @@ fn main() {
 }
 ```
 
-[^译者备注]: 所有 trait 都定义了一个隐式类型参数 `Self` ，它指向“实现此接口的类型”。
+[^译者备注]: 两点提醒：所有 trait 都定义了一个隐式类型参数 `Self` ，它指向“实现此接口的类型”；trait 的 Self 默认满足：`Self: ?Sized`
 
 [IDENTIFIER]: ../identifiers.md
 [WildcardPattern]: ../patterns.md#wildcard-pattern
