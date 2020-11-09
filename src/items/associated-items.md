@@ -100,7 +100,7 @@ S = Self | P
 > 译者注：原谅译者对上面这句背后知识的无知，那首先给出原文：\
 > The `Self` terminal in this grammar denotes a type resolving to the implementing type. This can also include the contextual type alias `Self`, other type aliases, or associated type projections resolving to the implementing type. \
 > 译者在此先邀请读者中的高手帮忙翻译清楚。感谢感谢。另外译者还是要啰嗦以下译者对这句话背后知识的理解，希望有人能指出其中的错误，以让译者有机会进步：\
-> 首先终结符(terminal)就是不能在更细分的词法单元，可以理解它是一个 token，这里它代表方法接受者的类型的基础类型。上面句法中的 P 代表一个产生式，它内部定义的规则是并联的，就是自动机在应用这个产生式时碰到任意符合条件的输入就直接进入终态。S代表有限自动机从 S 这里开始读取 self类型(`self`)的参数。这里 S 是 Self 和 P 的并联，应该表示是：如果方法接受者的类型直接是 Self（其中Self的几种猜测方式上面已经给出），那就直接进入终态，即返回 Self；如果方法接受者的类型是 P 上的任一种，就返回那一种，比如接受者是一个 box指针，那么就返回 `Box<S>`。
+> 首先终结符(terminal)就是不能再更细分的词法单元，可以理解它是一个 token，这里它代表方法接受者的类型的基础类型。上面句法中的 P 代表一个产生式，它内部定义的规则是并联的，就是自动机在应用这个产生式时碰到任意符合条件的输入就直接进入终态。S代表有限自动机从 S 这里开始读取 self类型(`self`)的参数。这里 S 是 Self 和 P 的并联，应该表示是：如果方法接受者的类型直接是 Self（其中Self的几种猜测方式上面已经给出），那就直接进入终态，即返回 Self；如果方法接受者的类型是 P 上的任一种，就返回那一种，比如接受者是一个 box指针，那么就返回 `Box<S>`。
 
 
 ```rust
