@@ -3619,17 +3619,17 @@ commit: d5cc65a70f66a243d84cd251188d80fbe9926747 <br />
 <h2><a class="header" href="#对象安全条款" id="对象安全条款">对象安全条款</a></h2>
 <p>对象安全的 trait 可以是 <a href="items/../types/trait-object.html">trait对象</a>的底层 trait。如果 trait 符合以下限定条件（在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md">RFC 255</a> 中定义），则认为它是<em>对象安全的(object safe)</em>：</p>
 <ul>
-<li>它不能有强制的 <code>Self: Sized</code>约束 <sup class="footnote-reference"><a href="#译者备注">1</a></sup></li>
+<li>trait 本身不能有 <code>Self: Sized</code>约束 <sup class="footnote-reference"><a href="#译者备注">1</a></sup></li>
 <li>所有的关联函数要么有 <code>where Self: Sized</code> 约束，要么
 <ul>
 <li>不能有类型参数（生存期参数可以有），并且</li>
-<li>除了 <code>Self</code> 只能出现在<a href="items/associated-items.html#methods">方法</a>的接受者(receiver)的类型里的情况外，关联函数作为<a href="items/associated-items.html#methods">方法</a>时不能使用 <code>Self</code>。</li>
+<li>作为方法时，<code>Self</code> 除了只能出现在<a href="items/associated-items.html#methods">方法</a>的接受者(receiver)的类型里之外，其它地方不能使用 <code>Self</code>。</li>
 </ul>
 </li>
 <li>它必须没有任何关联常量。</li>
 <li>其所有的超类trait 也必须也是对象安全的。</li>
 </ul>
-<p>当方法上没有 <code>Self: Sized</code> 绑定时，方法接受者的类型必须是以下类型之一：</p>
+<p>当方法上没有 <code>Self: Sized</code> 绑定时，方法的接受者的类型必须是以下类型之一：</p>
 <ul>
 <li><code>&amp;Self</code></li>
 <li><code>&amp;mut Self</code></li>
@@ -3663,7 +3663,7 @@ trait TraitMethods {
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// 此 trait 是对象安全的，但不能在 trait对象上分发使用这些方法。
+</span>// 此 trait 是对象安全的，但不能在 trait对象上分发(dispatch)使用这些方法。
 trait NonDispatchable {
     // 非方法不能被分发。
     fn foo() where Self: Sized {}
@@ -3859,7 +3859,7 @@ fn main() {
 }
 </code></pre></pre>
 <div class="footnote-definition" id="译者备注"><sup class="footnote-definition-label">1</sup>
-<p>所有 trait 都定义了一个隐式类型参数 <code>Self</code> ，它指向“实现此接口的类型”。</p>
+<p>两点提醒：所有 trait 都定义了一个隐式类型参数 <code>Self</code> ，它指向“实现此接口的类型”；trait 的 Self 默认满足：<code>Self: ?Sized</code></p>
 </div>
 <!-- 2020-11-7-->
 <!-- checked -->
