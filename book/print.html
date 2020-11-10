@@ -4240,7 +4240,7 @@ struct Foo&lt;#[my_flexible_clone(unbounded)] H&gt; {
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/associated-items.md">associated-items.md</a><br />
 commit: 136bd7da8b9c509c17c9619813b57dd1a47a8e25 <br />
-本译文最后维护日期：2020-10-9</p>
+本译文最后维护日期：2020-10-10</p>
 </blockquote>
 <p><em>关联数据项</em>是在 <a href="items/traits.html">traits</a> 中声明或在<a href="items/implementations.html">实现</a>中定义的数据项。之所以这样称呼它们，是因为它们是被定义在一个相关联的类型（即实现里指定的类型）上的。关联数据项是那些可在模块中声明的数据项的子集。具体来说，有[关联函数][associated functions]（包括方法）、[关联类型][associated types]和[关联常量][associated constants]。</p>
 <p>当关联数据项与被关联数据项在逻辑上相关时，关联数据项就非常有用。例如，<code>Option</code> 上的 <code>is_some</code> 方法内在逻辑定义上就与 Option枚举类型相关，所以它应该和 Option 关联在一起。</p>
@@ -4313,7 +4313,7 @@ S = Self | P
 <p>译者注：原谅译者对上面这句背后知识的模糊理解，那首先给出原文：<br />
 The <code>Self</code> terminal in this grammar denotes a type resolving to the implementing type. This can also include the contextual type alias <code>Self</code>, other type aliases, or associated type projections resolving to the implementing type. <br />
 译者在此先邀请读者中的高手帮忙翻译清楚。感谢感谢。另外译者还是要啰嗦以下译者对这句话背后知识的理解，希望有人能指出其中的错误，以让译者有机会进步：<br />
-首先终结符(terminal)就是不能再更细分的词法单元，可以理解它是一个 token，这里它代表 self（即方法接受者）的类型的基础类型。上面句法中的 P 代表一个产生式，它内部定义的规则是并联的，就是自动机在应用这个产生式时碰到任意符合条件的输入就直接进入终态。S 代表有限自动机从 S 这里开始读取 self 的类型。这里 S 是 Self 和 P 的并联，应该表示是：如果 self 的类型直接是 Self，那就直接进入终态，即返回 Self，即方法接收者的直接类型就是结果类型；如果方法接受者的类型是 P 中的任一种，就返回那一种，比如接受者类型是一个 box指针，那么就返回 <code>Box&lt;S&gt;</code>。</p>
+首先终结符(terminal)就是不能再更细分的词法单元，可以理解它是一个 token，这里它代表 self（即方法接受者）的类型的基础类型。上面句法中的 P 代表一个产生式，它内部定义的规则是并联的，就是自动机在应用这个产生式时碰到任意符合条件的输入就直接进入终态。S 代表有限自动机从 S 这里开始读取 self 的类型。这里 S 是 Self 和 P 的并联，应该表示是：如果 self 的类型直接是 Self，那就直接进入终态，即返回 Self，即方法接收者的直接类型就是结果类型；如果 self 的类型是 P 中的任一种，就返回那一种，比如 self 的类型是一个 box指针，那么就返回 <code>Box&lt;S&gt;</code>。</p>
 </blockquote>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -4372,7 +4372,7 @@ impl Example {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>这里定义了一个带有两个方法的 trait。当此 trait 被引入当前作用域内后，所有拥有此 trait的<a href="items/implementations.html">实现</a>的值都可以调用此 trait 的 <code>draw</code> 和 <code>bounding_box</code> 方法。</p>
+<p>这里定义了一个带有两个方法的 trait。当此 trait 被引入当前作用域内后，所有此 trait 的<a href="items/implementations.html">实现</a>的值都可以调用此 trait 的 <code>draw</code> 和 <code>bounding_box</code> 方法。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -4409,11 +4409,11 @@ let bounding_box = circle_shape.bounding_box();
 <p>方法参数上的属性遵循与<a href="items/functions.html#attributes-on-function-parameters">常规函数参数</a>上相同的规则和限制。</p>
 <h2><a class="header" href="#associated-types" id="associated-types">Associated Types</a></h2>
 <h2><a class="header" href="#关联类型" id="关联类型">关联类型</a></h2>
-<p><em>关联类型</em>是与另一个类型关联的<a href="items/type-aliases.html">类型别名</a> 。关联类型不能在<a href="items/implementations.html#inherent-implementations">固有实现</a>中定义，也不能在 trait 中给它们一个默认实现。</p>
+<p><em>关联类型</em>是与另一个类型关联的<a href="items/type-aliases.html">类型别名(type aliases)</a> 。关联类型不能在<a href="items/implementations.html#inherent-implementations">固有实现</a>中定义，也不能在 trait 中给它们一个默认实现。</p>
 <p><em>关联类型声明</em>为<em>关联类型定义</em>声明签名。书写形式为：先是 <code>type</code>，然后是一个<a href="items/../identifiers.html">标识符</a>，最后是一个可选的 trait约束列表。</p>
-<p>这里的标识符是声明的类型的别名名称；可选的 trait约束必须由此类型别名的实现来履行。</p>
+<p>这里的标识符是声明的类型的别名名称；可选的 trait约束必须由此类型别名的实现来履行实现。</p>
 <p><em>关联类型定义</em>在另一个类型上定义了一个类型别名。书写形式为：先是 <code>type</code>，然后是一个[标识符]，然后再是一个 <code>=</code>，最后是一个<a href="items/../types.html#type-expressions">类型</a>。</p>
-<p>如果类型 <code>Item</code> 有一个来自 trait <code>Trait</code>的关联类型 <code>Assoc</code>，则表达式 <code>&lt;Item as Trait&gt;::Assoc</code> 也是一个类型，具体就是<em>关联类型定义</em>中指定的类型的一个别名。此外，如果 <code>Item</code> 是类型参数，则 <code>Item::Assoc</code> 也可以在类型参数中使用。</p>
+<p>如果类型 <code>Item</code> 上有一个来自 trait <code>Trait</code>的关联类型 <code>Assoc</code>，则表达式 <code>&lt;Item as Trait&gt;::Assoc</code> 也是一个类型，具体就是<em>关联类型定义</em>中指定的类型的一个别名。此外，如果 <code>Item</code> 是类型参数，则 <code>Item::Assoc</code> 也可以在类型参数中使用。</p>
 <pre><pre class="playground"><code class="language-rust">trait AssociatedType {
     // 关联类型声明
     type Assoc;
@@ -4452,7 +4452,7 @@ fn main() {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>为了使类型实现此 trait，它不仅必须为每个方法提供实现，而且必须指定类型 <code>E</code>。下面是一个为标准库类型 <code>Vec</code> 实现了 <code>Container</code> 的实现：</p>
+<p>为了能让实现类型来实现此 trait，实现类型不仅必须为每个方法提供实现，而且必须指定类型 <code>E</code>。下面是一个为标准库类型 <code>Vec</code> 实现了此 <code>Container</code> 的实现：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -4472,8 +4472,8 @@ fn main() {
 <h2><a class="header" href="#关联常量" id="关联常量">关联常量</a></h2>
 <p><em>关联常量</em>是与具体类型关联的<a href="items/constant-items.html">常量</a>。</p>
 <p><em>关联常量声明</em>为<em>关联常量定义</em>声明签名。书写形式为：先是 <code>const</code> 开头，然后是标识符，然后是 <code>:</code>，然后是一个类型，最后是一个 <code>;</code>。</p>
-<p>这里标识符是（外部引用）路径中使用的常量的名称；类型是（关联常量）定义必须实现的类型。</p>
-<p><em>关联常量定义</em>定义了与类型关联的常量。它的编写方式与<a href="items/constant-items.html">常量项</a>相同。</p>
+<p>这里标识符是（外部引用）路径中使用的常量的名称；类型是（此关联常量的）定义必须实现的类型。</p>
+<p><em>关联常量定义</em>定义了与类型关联的常量。它的书写方式与<a href="items/constant-items.html">常量项</a>相同。</p>
 <h3><a class="header" href="#associated-constants-examples" id="associated-constants-examples">Associated Constants Examples</a></h3>
 <h3><a class="header" href="#示例展示关联常量" id="示例展示关联常量">示例展示关联常量</a></h3>
 <p>基本示例：</p>
@@ -4522,7 +4522,7 @@ fn main() {
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/visibility-and-privacy.md">visibility-and-privacy.md</a><br />
 commit: f41afd4f69a7996ac66b01f75e333bccf43337f7 <br />
-本译文最后维护日期：2020-10-22</p>
+本译文最后维护日期：2020-11-10</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法<sup></strong><br />
@@ -4534,8 +4534,8 @@ commit: f41afd4f69a7996ac66b01f75e333bccf43337f7 <br />
    | <code>pub</code> <code>(</code> <code>in</code> <a href="paths.html#simple-paths"><em>SimplePath</em></a> <code>)</code></p>
 </blockquote>
 <p>这两个术语经常互换使用，它们试图表达的是对“这个地方能使用这个数据项吗？”这个问题的回答。</p>
-<p>Rust 的名称解析是在命名空间的层级结构的最顶层（即全局层）上运行的。此层级结构中的每个级别都可以看作是某个数据项。这些数据项就是我们前面提到的那些数据项之一（注意这也包括外部 crate）。声明或定义一个新模块可以被认为是在定义的位置向此层次结构中插入一个新的（层级）树。</p>
-<p>为了控制接口是否可以被跨模块使用，Rust 会检查每个数据项的使用，来看看它是否被允许使用。此处就是生成隐私告警的地方，或者直接提示：“您使用了另一个模块的私有数据项，但不允许这样做。”</p>
+<p>Rust 的名称解析是在命名空间的层级结构的全局层（即最顶层）上运行的。此层级结构中的每个级别都可以看作是某个数据项。这些数据项就是我们前面提到的那些数据项之一（注意这也包括外部crate）。声明或定义一个新模块可以被认为是在定义的位置向此层次结构中插入一个新的（层级）树。</p>
+<p>为了控制接口是否可以被跨模块使用，Rust 会检查每个数据项的使用，来看看它是否被允许使用。此处就是生成隐私告警的地方，或者说是提示：“you used a private item of another module and weren't allowed to.”的地方。（译者注：这句提示可以翻译为：您使用了另一个模块的私有数据项，但不允许这样做。）</p>
 <p>默认情况下，Rust 中的所有内容都是<em>私有的</em>，但有两个例外：<code>pub</code> trait 中的关联数据项默认为公有的；<code>pub</code> 枚举中的枚举变体也默认为公有的。当一个数据项被声明为 <code>pub</code> 时，它可以被认为是外部世界能以访问的。例如：</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {}
 </span>// 声明一个私有结构体
@@ -4564,16 +4564,16 @@ pub enum State {
 <p>这两种情况在创建能对外暴露公共API 同时又隐藏内部实现细节的模块层次结构时非常好用。为了帮助理解，以下是一些常见案例和它们需要做的事情：</p>
 <ul>
 <li>
-<p>库开发人员需要将一些功能暴露给链接了其库的 crate。作为第一种情况的结果，这意味着任何那些在外部可用的数据项自身以及其路径层级结构中的每一层都必须是共有的(<code>pub</code>)的。并且此层级链中的任何私有数据项都不允许被外部访问。</p>
+<p>库开发人员需要将一些功能暴露给链接了其库的 crate。作为第一种情况的结果，这意味着任何那些在外部可用的数据项自身以及其路径层级结构中的每一层都必须是公有的(<code>pub</code>)的。并且此层级链中的任何私有数据项都不允许被外部访问。</p>
 </li>
 <li>
-<p>crate 需要一个全局可用的“辅助模块(helper module)”，但又不想将辅助模块公开为公共API。为了实现这一点，可以在整个 crate 的根模块（路径层级结构中的最顶层）下建一个私有模块，该模块在内部是“公共API”。因为整个 crate 是根模块的后代，所以整个本地 crate 里都可以通过第二种情况访问这个私有模块。</p>
+<p>crate 需要一个全局可用的“辅助模块(helper module)”，但又不想将辅助模块公开为公共API。为了实现这一点，可以在整个 crate 的根模块（路径层级结构中的最顶层）下建一个私有模块，该模块在内部是“公共API”。因为整个 crate 都是根模块的后代，所以整个本地 crate 里都可以通过第二种情况访问这个私有模块。</p>
 </li>
 <li>
 <p>在为模块编写单元测试时，通常的习惯做法是给要测试的模块加一个命名为 <code>mod test</code> 的直接子模块。这个模块可以通过第二种情况访问父模块的任何数据项，这意味着内部实现细节也可以从这个子模块里进行无缝地测试。</p>
 </li>
 </ul>
-<p>在第二种情况下，我们提到了当前模块及其后代“可以访问”私有项，但是访问数据项的确切含义取决于该项是什么。例如，访问一个模块意味着要查看它的内部（以导入更多的数据项）。另一方面，访问一个函数意味着它被调用了。此外，路径表达式和导入(import)语句也被视为访问数据项（提及这两项是因为这两项也涉及到可见性，但它们只有当访问目标位于当前可见的作用域内时，才算是有效的数据访问）。</p>
+<p>在第二种情况下，我们提到了当前模块及其后代“可以访问”私有项，但是访问一个数据项的确切含义取决于该项是什么。例如，访问一个模块意味着要查看它的内部（以导入更多的数据项）；访问一个函数意味着它被调用了。此外，路径表达式和导入语句也被视为访问一个数据项，但只有当访问目标位于当前可见的作用域内时，它们才算是有效的数据访问。</p>
 <p>下面是一段示例程序，它例证了上述三种情况：</p>
 <pre><pre class="playground"><code class="language-rust">// 这个模块是私有的，这意味着没有外部crate 可以访问这个模块。
 // 但是，由于它在当前 crate 的根模块下，
@@ -4626,7 +4626,7 @@ pub mod submodule {
 <li><code>pub(self)</code> 使一个数据项对当前模块可见。这相当于 <code>pub(in self)</code> 或者根本不使用 <code>pub</code>。</li>
 </ul>
 <blockquote>
-<p><strong>版本差异</strong>: 从2018版开始，<code>pub(in path)</code> 的路径必须以 <code>crate</code>、<code>self</code>或<code>super</code>开头。2015版还可以使用以 <code>::</code> 开头的路径，或以根模块下的模块名的开头的路径。</p>
+<p><strong>版本差异</strong>: 从 2018版开始，<code>pub(in path)</code> 的路径必须以 <code>crate</code>、<code>self</code>或<code>super</code>开头。2015版还可以使用以 <code>::</code> 开头的路径，或以根模块下的模块名的开头的路径。</p>
 </blockquote>
 <p>这里是一些示例：</p>
 <pre><pre class="playground"><code class="language-rust">pub mod outer_mod {
@@ -4730,7 +4730,7 @@ mod implementation {
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes.md">attributes.md</a><br />
 commit: 814a530db0a3f91821095a830fa321fdd5a41d17 <br />
-本译文最后维护日期：2020-10-22</p>
+本译文最后维护日期：2020-11-10</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -4744,9 +4744,9 @@ commit: 814a530db0a3f91821095a830fa321fdd5a41d17 <br />
       <a href="macros.html"><em>DelimTokenTree</em></a><br />
    | <code>=</code> <a href="expressions/literal-expr.html"><em>LiteralExpression</em></a><sub><em>不带后缀</em></sub></p>
 </blockquote>
-<p><em>属性</em>是一种通用的、形式自由的元数据，这种元数据会被（编译器/解释器）依据名称、约定、语言和编译器版本进行解释。（Rust 的）属性是根据 <a href="https://www.ecma-international.org/publications/standards/Ecma-335.htm">ECMA-335</a>标准中的属性规范进行建模的，其语法来自 <a href="https://www.ecma-international.org/publications/standards/Ecma-334.htm">ECMA-334</a> (C#）。</p>
-<p><em>内部属性</em>以 <code>#!</code> 开头的方式编写，应用于它在其中声明的数据项。<em>外部属性</em>以不后跟感叹号的(<code>!</code>)的 <code>#</code> 开头的方式编写，应用于属性后面的内容。</p>
-<p>属性由指向属性的路径和路径后跟的可选的带定界符的 token树(delimited token tree)（其解释由属性定义）组成。除了宏属性之外，其他属性的输入也允许使用等号(<code>=</code>)后跟文字表达式的格式。更多细节请参见下面的<a href="attributes.html#meta-item-attribute-syntax">元数据项句法</a>。</p>
+<p><em>属性</em>是一种通用的、格式自由的元数据(free-form metadatum)，这种元数据会（被编译器/解释器）依据名称、约定、语言和编译器版本进行解释。（Rust 语言中的）属性是根据 <a href="https://www.ecma-international.org/publications/standards/Ecma-335.htm">ECMA-335</a> 标准中的属性规范进行建模的，其语法来自 <a href="https://www.ecma-international.org/publications/standards/Ecma-334.htm">ECMA-334</a> (C#）。</p>
+<p>*内部属性(Inner attributes)*以 <code>#!</code> 开头的方式编写，应用于它在其中声明的数据项。*外部属性(Outer attributes)*以不后跟感叹号的(<code>!</code>)的 <code>#</code> 开头的方式编写，应用于属性后面的内容。</p>
+<p>属性由指向属性的路径和路径后跟的可选的带定界符的 token树(delimited token tree)（其解释由属性定义）组成。除了宏属性之外，其他属性的输入也允许使用等号(<code>=</code>)后跟文字表达式的格式。更多细节请参见下面的<a href="attributes.html#meta-item-attribute-syntax">元项属性句法(meta item syntax)</a>。</p>
 <p>属性可以分为以下几类：</p>
 <ul>
 <li><a href="attributes.html#built-in-attributes-index">内置属性</a></li>
@@ -4757,11 +4757,11 @@ commit: 814a530db0a3f91821095a830fa321fdd5a41d17 <br />
 <p>属性可以应用于语言中的许多场景：</p>
 <ul>
 <li>所有的<a href="items.html">数据项声明</a>都可接受外部属性，同时<a href="items/external-blocks.html">外部块</a>、<a href="items/functions.html">函数</a>、<a href="items/implementations.html">实现</a>和<a href="items/modules.html">模块</a>都可接受内部属性。</li>
-<li>大多数<a href="statements.html">语句</a>都可接受外部属性(参见<a href="expressions.html#expression-attributes">表达式属性</a>，了解表达式语句的限制)。</li>
-<li><a href="expressions/block-expr.html">块表达式</a>也可接受外部和内部属性，但只有当它们是另一个<a href="statements.html#expression-statements">表达式语句</a>的外层表达式时或是另一个块表达式的尾部表达式(final expression)时才有效。</li>
+<li>大多数<a href="statements.html">语句</a>都可接受外部属性（参见<a href="expressions.html#expression-attributes">表达式属性</a>，了解表达式语句的限制）。</li>
+<li><a href="expressions/block-expr.html">块表达式</a>也可接受外部属性和内部属性，但只有当它们是另一个<a href="statements.html#expression-statements">表达式语句</a>的外层表达式时，或是另一个块表达式的尾部表达式(final expression)时才有效。</li>
 <li><a href="items/enumerations.html">枚举(<code>enum</code>)</a>变体和<a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/unions.html">联合体(<code>union</code>)</a>的字段可接受外部属性。</li>
-<li><a href="expressions/match-expr.html">匹配表达式的匹配臂</a>可接受外部属性。</li>
-<li><a href="items/generics.html">泛型生存期或类型参数</a>可接受外部属性。</li>
+<li><a href="expressions/match-expr.html">匹配表达式的匹配臂(arms)</a>可接受外部属性。</li>
+<li><a href="items/generics.html">泛型生存期(Generic lifetime)或类型参数</a>可接受外部属性。</li>
 <li>表达式在有限的情况下可接受外部属性，详见<a href="expressions.html#expression-attributes">表达式属性</a>。</li>
 <li><a href="items/functions.html">函数</a>、<a href="expressions/closure-expr.html">闭包</a>和<a href="types/function-pointer.html">函数指针</a>的参数可接受外部属性。这包括函数指针和<a href="items/external-blocks.html#variadic-functions">外部块</a>中用 <code>...</code> 表示的可变参数上的属性。</li>
 </ul>

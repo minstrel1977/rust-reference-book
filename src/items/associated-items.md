@@ -3,7 +3,7 @@
 
 >[associated-items.md](https://github.com/rust-lang/reference/blob/master/src/items/associated-items.md)\
 >commit: 136bd7da8b9c509c17c9619813b57dd1a47a8e25 \
->本译文最后维护日期：2020-10-9
+>本译文最后维护日期：2020-10-10
 
 *关联数据项*是在 [traits] 中声明或在[实现][implementations]中定义的数据项。之所以这样称呼它们，是因为它们是被定义在一个相关联的类型（即实现里指定的类型）上的。关联数据项是那些可在模块中声明的数据项的子集。具体来说，有[关联函数][associated functions]（包括方法）、[关联类型][associated types]和[关联常量][associated constants]。
 
@@ -98,7 +98,7 @@ S = Self | P
 > 译者注：原谅译者对上面这句背后知识的模糊理解，那首先给出原文：\
 > The `Self` terminal in this grammar denotes a type resolving to the implementing type. This can also include the contextual type alias `Self`, other type aliases, or associated type projections resolving to the implementing type. \
 > 译者在此先邀请读者中的高手帮忙翻译清楚。感谢感谢。另外译者还是要啰嗦以下译者对这句话背后知识的理解，希望有人能指出其中的错误，以让译者有机会进步：\
-> 首先终结符(terminal)就是不能再更细分的词法单元，可以理解它是一个 token，这里它代表 self（即方法接受者）的类型的基础类型。上面句法中的 P 代表一个产生式，它内部定义的规则是并联的，就是自动机在应用这个产生式时碰到任意符合条件的输入就直接进入终态。S 代表有限自动机从 S 这里开始读取 self 的类型。这里 S 是 Self 和 P 的并联，应该表示是：如果 self 的类型直接是 Self，那就直接进入终态，即返回 Self，即方法接收者的直接类型就是结果类型；如果方法接受者的类型是 P 中的任一种，就返回那一种，比如接受者类型是一个 box指针，那么就返回 `Box<S>`。
+> 首先终结符(terminal)就是不能再更细分的词法单元，可以理解它是一个 token，这里它代表 self（即方法接受者）的类型的基础类型。上面句法中的 P 代表一个产生式，它内部定义的规则是并联的，就是自动机在应用这个产生式时碰到任意符合条件的输入就直接进入终态。S 代表有限自动机从 S 这里开始读取 self 的类型。这里 S 是 Self 和 P 的并联，应该表示是：如果 self 的类型直接是 Self，那就直接进入终态，即返回 Self，即方法接收者的直接类型就是结果类型；如果 self 的类型是 P 中的任一种，就返回那一种，比如 self 的类型是一个 box指针，那么就返回 `Box<S>`。
 
 
 ```rust
@@ -155,7 +155,7 @@ trait Shape {
 }
 ```
 
-这里定义了一个带有两个方法的 trait。当此 trait 被引入当前作用域内后，所有拥有此 trait的[实现][implementations]的值都可以调用此 trait 的 `draw` 和 `bounding_box` 方法。
+这里定义了一个带有两个方法的 trait。当此 trait 被引入当前作用域内后，所有此 trait 的[实现][implementations]的值都可以调用此 trait 的 `draw` 和 `bounding_box` 方法。
 
 ```rust
 # type Surface = i32;
@@ -193,15 +193,15 @@ let bounding_box = circle_shape.bounding_box();
 ## Associated Types
 ## 关联类型
 
-*关联类型*是与另一个类型关联的[类型别名][type aliases] 。关联类型不能在[固有实现][inherent implementations]中定义，也不能在 trait 中给它们一个默认实现。
+*关联类型*是与另一个类型关联的[类型别名(type aliases)][type aliases] 。关联类型不能在[固有实现][inherent implementations]中定义，也不能在 trait 中给它们一个默认实现。
 
 *关联类型声明*为*关联类型定义*声明签名。书写形式为：先是 `type`，然后是一个[标识符][identifier]，最后是一个可选的 trait约束列表。
 
-这里的标识符是声明的类型的别名名称；可选的 trait约束必须由此类型别名的实现来履行。
+这里的标识符是声明的类型的别名名称；可选的 trait约束必须由此类型别名的实现来履行实现。
 
 *关联类型定义*在另一个类型上定义了一个类型别名。书写形式为：先是 `type`，然后是一个[标识符]，然后再是一个 `=`，最后是一个[类型][type]。
 
-如果类型 `Item` 有一个来自 trait `Trait`的关联类型 `Assoc`，则表达式 `<Item as Trait>::Assoc` 也是一个类型，具体就是*关联类型定义*中指定的类型的一个别名。此外，如果 `Item` 是类型参数，则 `Item::Assoc` 也可以在类型参数中使用。
+如果类型 `Item` 上有一个来自 trait `Trait`的关联类型 `Assoc`，则表达式 `<Item as Trait>::Assoc` 也是一个类型，具体就是*关联类型定义*中指定的类型的一个别名。此外，如果 `Item` 是类型参数，则 `Item::Assoc` 也可以在类型参数中使用。
 
 ```rust
 trait AssociatedType {
@@ -243,7 +243,7 @@ trait Container {
 }
 ```
 
-为了使类型实现此 trait，它不仅必须为每个方法提供实现，而且必须指定类型 `E`。下面是一个为标准库类型 `Vec` 实现了 `Container` 的实现：
+为了能让实现类型来实现此 trait，实现类型不仅必须为每个方法提供实现，而且必须指定类型 `E`。下面是一个为标准库类型 `Vec` 实现了此 `Container` 的实现：
 
 ```rust
 # trait Container {
@@ -265,9 +265,9 @@ impl<T> Container for Vec<T> {
 
 *关联常量声明*为*关联常量定义*声明签名。书写形式为：先是 `const` 开头，然后是标识符，然后是 `:`，然后是一个类型，最后是一个 `;`。
 
-这里标识符是（外部引用）路径中使用的常量的名称；类型是（关联常量）定义必须实现的类型。
+这里标识符是（外部引用）路径中使用的常量的名称；类型是（此关联常量的）定义必须实现的类型。
 
-*关联常量定义*定义了与类型关联的常量。它的编写方式与[常量项][constant item]相同。
+*关联常量定义*定义了与类型关联的常量。它的书写方式与[常量项][constant item]相同。
 
 ### Associated Constants Examples
 ### 示例展示关联常量

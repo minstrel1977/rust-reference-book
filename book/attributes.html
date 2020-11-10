@@ -199,7 +199,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes.md">attributes.md</a><br />
 commit: 814a530db0a3f91821095a830fa321fdd5a41d17 <br />
-本译文最后维护日期：2020-10-22</p>
+本译文最后维护日期：2020-11-10</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -213,9 +213,9 @@ commit: 814a530db0a3f91821095a830fa321fdd5a41d17 <br />
       <a href="macros.html"><em>DelimTokenTree</em></a><br />
    | <code>=</code> <a href="expressions/literal-expr.html"><em>LiteralExpression</em></a><sub><em>不带后缀</em></sub></p>
 </blockquote>
-<p><em>属性</em>是一种通用的、形式自由的元数据，这种元数据会被（编译器/解释器）依据名称、约定、语言和编译器版本进行解释。（Rust 的）属性是根据 <a href="https://www.ecma-international.org/publications/standards/Ecma-335.htm">ECMA-335</a>标准中的属性规范进行建模的，其语法来自 <a href="https://www.ecma-international.org/publications/standards/Ecma-334.htm">ECMA-334</a> (C#）。</p>
-<p><em>内部属性</em>以 <code>#!</code> 开头的方式编写，应用于它在其中声明的数据项。<em>外部属性</em>以不后跟感叹号的(<code>!</code>)的 <code>#</code> 开头的方式编写，应用于属性后面的内容。</p>
-<p>属性由指向属性的路径和路径后跟的可选的带定界符的 token树(delimited token tree)（其解释由属性定义）组成。除了宏属性之外，其他属性的输入也允许使用等号(<code>=</code>)后跟文字表达式的格式。更多细节请参见下面的<a href="#meta-item-attribute-syntax">元数据项句法</a>。</p>
+<p><em>属性</em>是一种通用的、格式自由的元数据(free-form metadatum)，这种元数据会（被编译器/解释器）依据名称、约定、语言和编译器版本进行解释。（Rust 语言中的）属性是根据 <a href="https://www.ecma-international.org/publications/standards/Ecma-335.htm">ECMA-335</a> 标准中的属性规范进行建模的，其语法来自 <a href="https://www.ecma-international.org/publications/standards/Ecma-334.htm">ECMA-334</a> (C#）。</p>
+<p>*内部属性(Inner attributes)*以 <code>#!</code> 开头的方式编写，应用于它在其中声明的数据项。*外部属性(Outer attributes)*以不后跟感叹号的(<code>!</code>)的 <code>#</code> 开头的方式编写，应用于属性后面的内容。</p>
+<p>属性由指向属性的路径和路径后跟的可选的带定界符的 token树(delimited token tree)（其解释由属性定义）组成。除了宏属性之外，其他属性的输入也允许使用等号(<code>=</code>)后跟文字表达式的格式。更多细节请参见下面的<a href="#meta-item-attribute-syntax">元项属性句法(meta item syntax)</a>。</p>
 <p>属性可以分为以下几类：</p>
 <ul>
 <li><a href="#built-in-attributes-index">内置属性</a></li>
@@ -226,11 +226,11 @@ commit: 814a530db0a3f91821095a830fa321fdd5a41d17 <br />
 <p>属性可以应用于语言中的许多场景：</p>
 <ul>
 <li>所有的<a href="items.html">数据项声明</a>都可接受外部属性，同时<a href="items/external-blocks.html">外部块</a>、<a href="items/functions.html">函数</a>、<a href="items/implementations.html">实现</a>和<a href="items/modules.html">模块</a>都可接受内部属性。</li>
-<li>大多数<a href="statements.html">语句</a>都可接受外部属性(参见<a href="expressions.html#expression-attributes">表达式属性</a>，了解表达式语句的限制)。</li>
-<li><a href="expressions/block-expr.html">块表达式</a>也可接受外部和内部属性，但只有当它们是另一个<a href="statements.html#expression-statements">表达式语句</a>的外层表达式时或是另一个块表达式的尾部表达式(final expression)时才有效。</li>
+<li>大多数<a href="statements.html">语句</a>都可接受外部属性（参见<a href="expressions.html#expression-attributes">表达式属性</a>，了解表达式语句的限制）。</li>
+<li><a href="expressions/block-expr.html">块表达式</a>也可接受外部属性和内部属性，但只有当它们是另一个<a href="statements.html#expression-statements">表达式语句</a>的外层表达式时，或是另一个块表达式的尾部表达式(final expression)时才有效。</li>
 <li><a href="items/enumerations.html">枚举(<code>enum</code>)</a>变体和<a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/unions.html">联合体(<code>union</code>)</a>的字段可接受外部属性。</li>
-<li><a href="expressions/match-expr.html">匹配表达式的匹配臂</a>可接受外部属性。</li>
-<li><a href="items/generics.html">泛型生存期或类型参数</a>可接受外部属性。</li>
+<li><a href="expressions/match-expr.html">匹配表达式的匹配臂(arms)</a>可接受外部属性。</li>
+<li><a href="items/generics.html">泛型生存期(Generic lifetime)或类型参数</a>可接受外部属性。</li>
 <li>表达式在有限的情况下可接受外部属性，详见<a href="expressions.html#expression-attributes">表达式属性</a>。</li>
 <li><a href="items/functions.html">函数</a>、<a href="expressions/closure-expr.html">闭包</a>和<a href="types/function-pointer.html">函数指针</a>的参数可接受外部属性。这包括函数指针和<a href="items/external-blocks.html#variadic-functions">外部块</a>中用 <code>...</code> 表示的可变参数上的属性。</li>
 </ul>

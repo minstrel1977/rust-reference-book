@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/visibility-and-privacy.md">visibility-and-privacy.md</a><br />
 commit: f41afd4f69a7996ac66b01f75e333bccf43337f7 <br />
-本译文最后维护日期：2020-10-22</p>
+本译文最后维护日期：2020-11-10</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法<sup></strong><br />
@@ -182,8 +182,8 @@ commit: f41afd4f69a7996ac66b01f75e333bccf43337f7 <br />
    | <code>pub</code> <code>(</code> <code>in</code> <a href="paths.html#simple-paths"><em>SimplePath</em></a> <code>)</code></p>
 </blockquote>
 <p>这两个术语经常互换使用，它们试图表达的是对“这个地方能使用这个数据项吗？”这个问题的回答。</p>
-<p>Rust 的名称解析是在命名空间的层级结构的最顶层（即全局层）上运行的。此层级结构中的每个级别都可以看作是某个数据项。这些数据项就是我们前面提到的那些数据项之一（注意这也包括外部 crate）。声明或定义一个新模块可以被认为是在定义的位置向此层次结构中插入一个新的（层级）树。</p>
-<p>为了控制接口是否可以被跨模块使用，Rust 会检查每个数据项的使用，来看看它是否被允许使用。此处就是生成隐私告警的地方，或者直接提示：“您使用了另一个模块的私有数据项，但不允许这样做。”</p>
+<p>Rust 的名称解析是在命名空间的层级结构的全局层（即最顶层）上运行的。此层级结构中的每个级别都可以看作是某个数据项。这些数据项就是我们前面提到的那些数据项之一（注意这也包括外部crate）。声明或定义一个新模块可以被认为是在定义的位置向此层次结构中插入一个新的（层级）树。</p>
+<p>为了控制接口是否可以被跨模块使用，Rust 会检查每个数据项的使用，来看看它是否被允许使用。此处就是生成隐私告警的地方，或者说是提示：“you used a private item of another module and weren't allowed to.”的地方。（译者注：这句提示可以翻译为：您使用了另一个模块的私有数据项，但不允许这样做。）</p>
 <p>默认情况下，Rust 中的所有内容都是<em>私有的</em>，但有两个例外：<code>pub</code> trait 中的关联数据项默认为公有的；<code>pub</code> 枚举中的枚举变体也默认为公有的。当一个数据项被声明为 <code>pub</code> 时，它可以被认为是外部世界能以访问的。例如：</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {}
 </span>// 声明一个私有结构体
@@ -212,16 +212,16 @@ pub enum State {
 <p>这两种情况在创建能对外暴露公共API 同时又隐藏内部实现细节的模块层次结构时非常好用。为了帮助理解，以下是一些常见案例和它们需要做的事情：</p>
 <ul>
 <li>
-<p>库开发人员需要将一些功能暴露给链接了其库的 crate。作为第一种情况的结果，这意味着任何那些在外部可用的数据项自身以及其路径层级结构中的每一层都必须是共有的(<code>pub</code>)的。并且此层级链中的任何私有数据项都不允许被外部访问。</p>
+<p>库开发人员需要将一些功能暴露给链接了其库的 crate。作为第一种情况的结果，这意味着任何那些在外部可用的数据项自身以及其路径层级结构中的每一层都必须是公有的(<code>pub</code>)的。并且此层级链中的任何私有数据项都不允许被外部访问。</p>
 </li>
 <li>
-<p>crate 需要一个全局可用的“辅助模块(helper module)”，但又不想将辅助模块公开为公共API。为了实现这一点，可以在整个 crate 的根模块（路径层级结构中的最顶层）下建一个私有模块，该模块在内部是“公共API”。因为整个 crate 是根模块的后代，所以整个本地 crate 里都可以通过第二种情况访问这个私有模块。</p>
+<p>crate 需要一个全局可用的“辅助模块(helper module)”，但又不想将辅助模块公开为公共API。为了实现这一点，可以在整个 crate 的根模块（路径层级结构中的最顶层）下建一个私有模块，该模块在内部是“公共API”。因为整个 crate 都是根模块的后代，所以整个本地 crate 里都可以通过第二种情况访问这个私有模块。</p>
 </li>
 <li>
 <p>在为模块编写单元测试时，通常的习惯做法是给要测试的模块加一个命名为 <code>mod test</code> 的直接子模块。这个模块可以通过第二种情况访问父模块的任何数据项，这意味着内部实现细节也可以从这个子模块里进行无缝地测试。</p>
 </li>
 </ul>
-<p>在第二种情况下，我们提到了当前模块及其后代“可以访问”私有项，但是访问数据项的确切含义取决于该项是什么。例如，访问一个模块意味着要查看它的内部（以导入更多的数据项）。另一方面，访问一个函数意味着它被调用了。此外，路径表达式和导入(import)语句也被视为访问数据项（提及这两项是因为这两项也涉及到可见性，但它们只有当访问目标位于当前可见的作用域内时，才算是有效的数据访问）。</p>
+<p>在第二种情况下，我们提到了当前模块及其后代“可以访问”私有项，但是访问一个数据项的确切含义取决于该项是什么。例如，访问一个模块意味着要查看它的内部（以导入更多的数据项）；访问一个函数意味着它被调用了。此外，路径表达式和导入语句也被视为访问一个数据项，但只有当访问目标位于当前可见的作用域内时，它们才算是有效的数据访问。</p>
 <p>下面是一段示例程序，它例证了上述三种情况：</p>
 <pre><pre class="playground"><code class="language-rust">// 这个模块是私有的，这意味着没有外部crate 可以访问这个模块。
 // 但是，由于它在当前 crate 的根模块下，
@@ -274,7 +274,7 @@ pub mod submodule {
 <li><code>pub(self)</code> 使一个数据项对当前模块可见。这相当于 <code>pub(in self)</code> 或者根本不使用 <code>pub</code>。</li>
 </ul>
 <blockquote>
-<p><strong>版本差异</strong>: 从2018版开始，<code>pub(in path)</code> 的路径必须以 <code>crate</code>、<code>self</code>或<code>super</code>开头。2015版还可以使用以 <code>::</code> 开头的路径，或以根模块下的模块名的开头的路径。</p>
+<p><strong>版本差异</strong>: 从 2018版开始，<code>pub(in path)</code> 的路径必须以 <code>crate</code>、<code>self</code>或<code>super</code>开头。2015版还可以使用以 <code>::</code> 开头的路径，或以根模块下的模块名的开头的路径。</p>
 </blockquote>
 <p>这里是一些示例：</p>
 <pre><pre class="playground"><code class="language-rust">pub mod outer_mod {
