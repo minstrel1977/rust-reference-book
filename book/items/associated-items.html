@@ -174,7 +174,7 @@ commit: 136bd7da8b9c509c17c9619813b57dd1a47a8e25 <br />
 </blockquote>
 <p><em>关联数据项</em>是在 <a href="traits.html">traits</a> 中声明或在<a href="implementations.html">实现</a>中定义的数据项。之所以这样称呼它们，是因为它们是被定义在一个相关联的类型（即实现里指定的类型）上的。关联数据项是那些可在模块中声明的数据项的子集。具体来说，有[关联函数][associated functions]（包括方法）、[关联类型][associated types]和[关联常量][associated constants]。</p>
 <p>当关联数据项与被关联数据项在逻辑上相关时，关联数据项就非常有用。例如，<code>Option</code> 上的 <code>is_some</code> 方法内在逻辑定义上就与 Option枚举类型相关，所以它应该和 Option 关联在一起。</p>
-<p>每个关联数据项都有两种形式：（包含实际实现的）定义和（为定义声明签名的）声明。<sup class="footnote-reference"><a href="#译者备注">1</a></sup></p>
+<p>每个关联数据项都有两种形式：（包含实际实现的）定义和（为定义声明签名的）声明。<sup class="footnote-reference"><a href="#译者备注1">1</a></sup></p>
 <p>正是这些声明构成了 trait 的契约(contract)以及其泛型参数中的可用内容。</p>
 <h2><a class="header" href="#associated-functions-and-methods" id="associated-functions-and-methods">Associated functions and methods</a></h2>
 <h2><a class="header" href="#关联函数和方法" id="关联函数和方法">关联函数和方法</a></h2>
@@ -233,17 +233,17 @@ let _: f64 = f64::from_i32(42);
 <p><em>TypedSelf</em> :<br />
    <code>mut</code><sup>?</sup> <code>self</code> <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a></p>
 </blockquote>
-<p>参数列表中的第一个参数为 self类型(<code>self</code>)的参数的关联函数被称为<em>方法</em>，方法可以使用<a href="../expressions/method-call-expr.html">方法调用操作符</a>(<code>.</code>)来调用，例如 <code>x.foo()</code>，也可以使用常用的函数调用形式进行调用。</p>
-<p>如果 self类型(<code>self</code>)的参数被指定了，它就通过以下文法（其中 <code>'lt</code> 表示生存期参数）来把此指定的参数限制解析成此文法中的一个类型：</p>
+<p>如果关联函数的参数列表中的第一个参数名为 <code>self</code><sup class="footnote-reference"><a href="#译者备注2">2</a></sup>，则此关联函数被称为<em>方法</em>，方法可以使用<a href="../expressions/method-call-expr.html">方法调用操作符</a>(<code>.</code>)来调用，例如 <code>x.foo()</code>，也可以使用常用的函数调用形式进行调用。</p>
+<p>如果名为 <code>self</code> 的参数的类型被指定了，它就通过以下文法（其中 <code>'lt</code> 表示生存期参数）来把此指定的参数限制解析成此文法中的一个类型：</p>
 <pre><code class="language-text">P = &amp;'lt S | &amp;'lt mut S | Box&lt;S&gt; | Rc&lt;S&gt; | Arc&lt;S&gt; | Pin&lt;P&gt;
 S = Self | P
 </code></pre>
-<p>此文法中的 <code>Self</code>终结符(terminal)表示解析为实现类型的类型。这种解析包括解析上下文中的类型别名 <code>Self</code>、其他类型别名、或使用投射解析把（调用者的类型中的）关联类型解析为实现类型。</p>
+<p>此文法中的 <code>Self</code>终结符(terminal)表示解析为实现类型(implementing type)的类型。这种解析包括解析上下文中的类型别名 <code>Self</code>、其他类型别名、或使用投射解析把（self 的类型中的）关联类型解析为实现类型。<sup class="footnote-reference"><a href="#译者备注3">3</a></sup></p>
 <blockquote>
-<p>译者注：原谅译者对上面这句背后知识的无知，那首先给出原文：<br />
+<p>译者注：原谅译者对上面这句背后知识的模糊理解，那首先给出原文：<br />
 The <code>Self</code> terminal in this grammar denotes a type resolving to the implementing type. This can also include the contextual type alias <code>Self</code>, other type aliases, or associated type projections resolving to the implementing type. <br />
 译者在此先邀请读者中的高手帮忙翻译清楚。感谢感谢。另外译者还是要啰嗦以下译者对这句话背后知识的理解，希望有人能指出其中的错误，以让译者有机会进步：<br />
-首先终结符(terminal)就是不能再更细分的词法单元，可以理解它是一个 token，这里它代表方法接受者的类型的基础类型。上面句法中的 P 代表一个产生式，它内部定义的规则是并联的，就是自动机在应用这个产生式时碰到任意符合条件的输入就直接进入终态。S代表有限自动机从 S 这里开始读取 self类型(<code>self</code>)的参数。这里 S 是 Self 和 P 的并联，应该表示是：如果方法接受者的类型直接是 Self（其中Self的几种猜测方式上面已经给出），那就直接进入终态，即返回 Self；如果方法接受者的类型是 P 上的任一种，就返回那一种，比如接受者是一个 box指针，那么就返回 <code>Box&lt;S&gt;</code>。</p>
+首先终结符(terminal)就是不能再更细分的词法单元，可以理解它是一个 token，这里它代表 self（即方法接受者）的类型的基础类型。上面句法中的 P 代表一个产生式，它内部定义的规则是并联的，就是自动机在应用这个产生式时碰到任意符合条件的输入就直接进入终态。S 代表有限自动机从 S 这里开始读取 self 的类型。这里 S 是 Self 和 P 的并联，应该表示是：如果 self 的类型直接是 Self，那就直接进入终态，即返回 Self，即方法接收者的直接类型就是结果类型；如果方法接受者的类型是 P 中的任一种，就返回那一种，比如接受者类型是一个 box指针，那么就返回 <code>Box&lt;S&gt;</code>。</p>
 </blockquote>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -440,8 +440,10 @@ fn main() {
     assert_eq!(5, OtherStruct::ID);
 }
 </code></pre></pre>
-<div class="footnote-definition" id="译者备注"><sup class="footnote-definition-label">1</sup>
-<p>固有实现中声明和定义是在一起的。</p>
+<div class="footnote-definition" id="译者备注1"><sup class="footnote-definition-label">1</sup>
+<p>固有实现中声明和定义是在一起的。
+<sup class="footnote-reference"><a href="#译者备注2">2</a></sup>: 把简写形式转换成等价的标准形式。
+<sup class="footnote-reference"><a href="#译者备注3">3</a></sup>: 结合下面的示例理解。</p>
 </div>
 <!-- 2020-11-7-->
 <!-- checked -->
