@@ -3,23 +3,23 @@
 
 >[codegen.md](https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md)\
 >commit: 646ef8d240a798da5891deb5dbdbebe557f878b8 \
->本章译文最后维护日期：2020-10-23
+>本章译文最后维护日期：2020-11-10
 
 下述[属性][attributes]用于控制代码生成。
 
 ## Optimization hints
 ## 优化提示
 
-`cold` 和 `inline`[属性][attributes]给出了某种生成代码方式的提示建议，这种方式可能比没有此提示时更快。这些属性只是提示，可能会被忽略。
+`cold`[属性][attributes] 和 `inline`属性给出了某种代码生成方式的提示建议，这种方式可能比没有此提示时更快。这些属性只是提示，可能会被忽略。
 
-这两个属性都可以在[函数][functions]上使用。当这类属性应用于 [trait] 里的函数上时，它们只在没有被 trait实现所覆盖的默认函数上生效，而不是所有 trait实现里的函数上。如果在 trait 里，相关函数只有声明，没有默认实现，那这些属性对这些 trait函数没任何影响。
+这两个属性都可以在[函数][functions]上使用。当这类属性应用于 [trait] 中的函数上时，它们只在那些没有被 trait实现所覆盖的默认函数上生效，而不是所有 trait实现中用到的函数上都生效。这两属性对 trait 中那些没有函数体的函数没有影响。
 
 ### The `inline` attribute
 ### `inline`属性/内联(`inline`)属性
 
-*`inline`[属性][attribute]*的意义是暗示在调用者(caller)中放置此（属性限定的）函数的副本，而不是在定义此（属性限定的）函数的地方生此函数的代码，然后去让别处代码来此调用。
+*`inline`[属性][attribute]*的意义是暗示在调用者(caller)中放置此（属性限定的）函数的副本，而不是在定义此（属性限定的）函数的地方生此函数的代码，然后去让别处代码来调用此函数。
 
-> ***注意***：`rustc` 编译器会根据启发式算法（internal heuristics，译者注：可字面理解为内部试探）自动内联函数。不正确的内联函数会使程序变慢，所以应该小心使用此属性。
+> ***注意***：`rustc` 编译器会根据启发式算法(internal heuristics)[^译者注]自动内联函数。不正确的内联函数会使程序变慢，所以应该小心使用此属性。
 
 使用内联(`inline`)属性有三种方法：
 
@@ -214,6 +214,8 @@ fn calls_h() {
 特别是，将带有 `#[track_caller]` 的函数自动强转为函数指针会创建一个填充对象，该填充对象在观察者看来似乎是在此(属性限定的)函数的定义处调用的，从而在这层虚拟调用中丢失了实际的调用者信息。这种自动强转情况的一个常见示例是创建方法被此属性限定的 trait对象，因为 trait对象的值不能直接使用，只能自动强转为指针引用，那这里的调用就无法观察到真实的调用位置。
 
 > 注意：前面提到的函数指针填充对象是必需的，因为 `rustc` 会通过向函数的ABI附加一个隐式参数来实现代码生成(codegen)上下文中的 `track_caller`，但这种添加是不健全的(unsound)，因为该隐式参数不是函数类型的一部分，那给定的函数指针类型可能引用也可能不引用具有此属性的函数。这里创建一个填充对象会对函数指针的调用方隐藏隐式参数，从而保持可靠性。
+
+[^译者注]: 可字面理解为内部反复试探。
 
 [_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
 [`-C target-cpu`]: https://doc.rust-lang.org/rustc/codegen-options/index.html#target-cpu

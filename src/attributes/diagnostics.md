@@ -12,9 +12,9 @@
 
 （译者注：lint在原文里有时当名词用，有时当动词用，本文统一翻译成名词，意思就是一种被命名的 lint检查模式）
 
-lint检查(lint check)系统命名了一些潜在的不良编码模式，这些被命名的 lint检查就是一个一个的lint，例如编写了执行不到的代码，就被命名为unreachable-code lint，编写未提供文档的代码就被命名为 missing_docs lint。`allow`、`warn`、`deny` 和 `forbid` 这些能调整代码检查级别的属性被称为 lint级别属性，它可以通过使用 [_MetaListPaths_]元项属性句法来添加指定 lint 的列表。代码实体应用了这些带上了具体 lint名的 lint级别属性，编译器或相关代码检查工具就可以对这段代码执行该 lint 定义的代码检查，当然该检查也和这些 lint级别息息相关。
+lint检查(lint check)系统命名了一些潜在的不良编码模式，（这些被命名的 lint检查就是一个一个的lint，）例如编写了不可能执行到的代码，就被命名为 unreachable-code lint，编写未提供文档的代码就被命名为 missing_docs lint。`allow`、`warn`、`deny` 和 `forbid` 这些能调整代码检查级别的属性被称为 lint级别属性，它们使用 [_MetaListPaths_]元项属性句法来指定接受此级别的各种 lint。代码实体应用了这些带了具体 lint 列表的 lint级别属性，编译器或相关代码检查工具就可以结合这两层属性对这段代码执行相应的代码检查和检查报告。
 
-对带有任何 lint名为 `C` 的 lint级别来说：
+对任何名为 `C` 的 lint 来说：
 
 * `allow(C)` 会压制对 `C` 的检查，那这样的违规行为就不会被报告，
 * `warn(C)` 警告违反 `C` 的，但继续编译。
@@ -132,11 +132,11 @@ pub fn bar() {}
 ## The `must_use` attribute
 ## `must_use`属性
 
-*`must_use`属性* 用于在值未被“使用”时发出诊断警告。它可以应用于用户定义的复合类型([结构体(`struct`)][struct]、[枚举(`enum`)][enum] 和 [联合体(`union`)][union])、[函数][functions]和 [trait][traits]。
+*`must_use`属性* 用于在值未被“使用”时发出诊断告警。它可以应用于用户定义的复合类型（[结构体(`struct`)][struct]、[枚举(`enum`)][enum] 和 [联合体(`union`)][union]）、[函数][functions]和 [trait][traits]。
 
 `must_use`属性可以使用[_MetaNameValueStr_]元项属性句法添加一些附加消息，如 `#[must_use = "example message"]`。该字符串将出现在告警消息里。
 
-在用户定义的复合类型上使用时，如果[表达式语句][expression statement]里的[表达式][expression]具有该类型，那么就违反了 `unused_must_use` 这个lint检查。
+当用户定义的复合类型上使用了此属性，如果有该类型的[表达式][expression]正好是[表达式语句][expression statement]的表达式，那就违反了 `unused_must_use` 这个 lint。
 
 ```rust
 #[must_use]
@@ -152,7 +152,7 @@ struct MustUse {
 MustUse::new();
 ```
 
-当在函数上使用时，如果[表达式语句][expression statement]的[表达式][expression]是该函数的[调用表达式][call expression]，那就违反了 `unused_must_use` lint。
+当函数上使用了此属性，如果此函数被当作[表达式语句][expression statement]的[表达式][expression]的[调用表达式][call expression]，那就违反了 `unused_must_use` lint。
 
 ```rust
 #[must_use]
@@ -162,7 +162,7 @@ fn five() -> i32 { 5i32 }
 five();
 ```
 
-在 [trait声明]中使用时，如果[表达式语句][expression statement]的[调用表达式][call expression]返回了 trait 的 [trait实现(impl trait)][impl trait] ，则违反了 `unused_must_use` lint。
+当 [trait声明]中使用了此属性，如果[表达式语句][expression statement]的[调用表达式][call expression]返回了此 trait 的 [trait实现(impl trait)][impl trait] ，则违反了 `unused_must_use` lint。
 
 ```rust
 #[must_use]
@@ -177,7 +177,7 @@ fn get_critical() -> impl Critical {
 get_critical();
 ```
 
-当在 trait声明中的函数上使用时，如果调用表达式直接是此 trait实现中的此函数时，该行为同样违反 `unused_must_use` lint。
+当 trait声明中的一函数上使用了此属性时，如果调用表达式是此 trait 的某个实现中的该函数时，该行为同样违反 `unused_must_use` lint。
 
 ```rust
 trait Trait {
@@ -193,9 +193,9 @@ impl Trait for i32 {
 5i32.use_me();
 ```
 
-当在 trait实现中的函数上使用 `must_use`属性时，此属性将被忽略。
+当在 trait实现里的函数上使用 `must_use`属性时，此属性将被忽略。
 
-> 注意：包含值的普通空操作表达式不会违反该 lint。例如，将值包装在没有实现 [`Drop`] 的类型中，然后不使用该类型，并成为未使用的[块表达式][block expression]的尾部表达式(final expression)。
+> 注意：包含了此（属性应用的数据项产生的值）的普通空操作(no-op)表达式不会违反该 lint。例如，将此类值包装在没有实现 [`Drop`] 的类型中，然后不使用该类型，并成为未使用的[块表达式][block expression]的尾部表达式(final expression)。
 >
 > ```rust
 > #[must_use]
