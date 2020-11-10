@@ -19,7 +19,7 @@
 
 *`inline`[属性][attribute]*的意义是暗示在调用者(caller)中放置此（属性限定的）函数的副本，而不是在定义此（属性限定的）函数的地方生此函数的代码，然后去让别处代码来调用此函数。
 
-> ***注意***：`rustc` 编译器会根据启发式算法(internal heuristics)[^译者注]自动内联函数。不正确的内联函数会使程序变慢，所以应该小心使用此属性。
+> ***注意***：`rustc` 编译器会根据启发式算法(internal heuristics)[^译者注1]自动内联函数。不正确的内联函数会使程序变慢，所以应该小心使用此属性。
 
 使用内联(`inline`)属性有三种方法：
 
@@ -27,22 +27,22 @@
 * `#[inline(always)]` *暗示*应该一直执行内联扩展。
 * `#[inline(never)]` *暗示*应该从不执行内联扩展。
 
-> ***注意***: `#[inline]` 在每种形式中都是一个暗示，不是*必须*要在调用者中放置此属性限定的函数的副本。
+> ***注意***: `#[inline]` 在每种形式中都是一个提示，不是*必须*要在调用者放置此属性限定的函数的副本。
 
 ### The `cold` attribute
 ### `cold`属性
 
-*`cold`[属性][attribute]*暗示此(属性限定的)函数不太可能被调用。
+*`cold`[属性][attribute]*暗示此（属性限定的）函数不太可能被调用。
 
 ## The `no_builtins` attribute
 ## `no_builtins`属性
 
-*`no_builtins`[属性][attribute]*可以应用在 crate 级别，用以禁止在某些代码模式下对假定存在的库函数的调用的优化。
+*`no_builtins`[属性][attribute]*可以应用在 crate 级别，用以禁用对假定存在的库函数调用的某些代码模式优化。[^译者注2]
 
 ## The `target_feature` attribute
 ## `target_feature`属性
 
-*`target_feature`[属性]*可应用于[非安全(unsafe)函数][unsafe function]，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 [_MetaListNameValueStr_]元项属性句法来启用（该平台支持的）特性，这次要求这个句法规则里只能有一个键 `enable` ，其对应值是一个逗号分隔的由平台特性名字组成的符串。
+*`target_feature`[属性]*可应用于[非安全(unsafe)函数][unsafe function]上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 [_MetaListNameValueStr_]元项属性句法来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 `enable`键，其对应值是一个逗号分隔的由平台特性名字组成的符串。
 
 ```rust
 # #[cfg(target_feature = "avx2")]
@@ -52,7 +52,7 @@ unsafe fn foo_avx2() {}
 
 每个[目标架构][target architecture]都有一组可以被启用的特性。为不是当前 crate 的编译目标下的CPU架构指定需启用的特性是错误的。
 
-调用一个编译时启用了某特性的函数，但当前程序运行的平台并不支持该特性，那这将导致[未定义行为][undefined behavior]。
+调用一个编译时启用了某特性的函数，但当前程序运行的平台并不支持该特性，那这将导致出现[未定义行为][undefined behavior]。
 
 应用了 `target_feature` 的函数不会内联到不支持给定特性的上下文中。`#[inline(always)]` 属性不能与 `target_feature`属性一起使用。
 
@@ -119,18 +119,23 @@ unsafe fn foo_avx2() {}
 ### Additional information
 ### 附加信息
 
-请参阅 [`target_feature`-条件编译选项][`target_feature` conditional compilation option]，了解如何基于编译时的设置来有选择地启用或禁用编译选项。注意，编译选项不受 `target_feature`属性的影响，只为整个 crate 启用的特性所驱动。
+请参阅 [`target_feature`-条件编译选项][`target_feature` conditional compilation option]，了解如何基于编译时的设置来有选择地启用或禁用对某些代码的编译。注意，条件编译选项不受 `target_feature`属性的影响，只是被整个 crate 启用的特性所驱动。
 
-有关 x86平台上的运行时特性检测，请参阅标准库中的 [`is_x86_feature_detected`]宏。
+> Note: `rustc` has a default set of features enabled for each target and CPU.
+> The CPU may be chosen with the [`-C target-cpu`] flag. Individual features
+> may be enabled or disabled for an entire crate with the
+> [`-C target-feature`] flag.
 
-> 注意：`rustc` 为每个编译目标和CPU启用了一组默认特性。可以使用 [`-C target-cpu`] 命令行参数选择CPU。单个特性可以通过 [`-C target-feature`] 标志来为整个 crate 启用或禁用。
+有关 x86 平台上的运行时特性检测，请参阅标准库中的 [`is_x86_feature_detected`]宏。
+
+> 注意：`rustc` 为每个编译目标和 CPU 启用了一组默认特性。编译时，可以使用命令行参数 [`-C target-cpu`] 选择目标 CPU。可以通过命令行参数 [`-C target-feature`] 来为整个 crate 启用或禁用某些单独的特性。
 
 ## The `track_caller` attribute
 ## `track_caller`属性
 
-`track_caller`属性可以应用于除程序入口函数 `fn main` 之外的任何带有 [`"Rust"` ABI][rust-abi] 的函数。当此属性应用于 crate声明中的函数或方法时，该属性将应用在其所有的实现上。如果 trait 提供了带有该属性的默认实现，那么该属性也应用于其覆盖实现。
+`track_caller`属性可以应用于除程序入口函数 `fn main` 之外的任何带有 [`"Rust"` ABI][rust-abi] 的函数。当此属性应用于 trait声明中的函数或方法时，该属性将应用在其所有的实现上。如果 trait 本身提供了带有该属性的默认函数实现，那么该属性也应用于其覆盖实现(override implementations)。
 
-当应用于外部(`extern`)块中的函数上时，该属性还必须应用于此函数的所有实现上，否则将导致未定义行为。当此属性应用于可被一个外部(`extern`)块使用的函数上时，该外部(`extern`)块中的对该函数的声明也必须带上此属性，否则将导致未定义行为。
+当应用于外部(`extern`)块中的函数上时，该属性也必须应用于此函数的任何链接实现(linked implementations)上，否则将导致未定义行为。当此属性应用在一个外部(`extern`)块内可用的函数上时，该外部(`extern`)块中的对该函数的声明也必须带上此属性，否则将导致未定义行为。
 
 ### Behavior
 ### 表现
@@ -144,7 +149,7 @@ fn f() {
 }
 ```
 
-> 注意：`core` 提供 [`core::panic::Location::caller`] 来观察调用者的位置。它封装了由 `rustc` 实现的内部函数 [`core::intrinsics::caller_location`]。
+> 注意：`core` 提供了 [`core::panic::Location::caller`] 来观察调用者的位置。它封装了由 `rustc` 实现的内部函数 [`core::intrinsics::caller_location`]。
 
 > 注意：由于结果 `Location` 是一个提示，所以具体实现可能会提前终止对堆栈的遍历。请参阅[限制](#limitations)以了解重要的注意事项。
 
@@ -209,13 +214,17 @@ fn calls_h() {
 ### Limitations
 ### 限制
 
-`track_caller`属性获得的信息是一个提示信息，不需要具体的代码实现来保存它。
+`track_caller`属性获得的信息是一个提示信息，实现不需要维护它。
 
-特别是，将带有 `#[track_caller]` 的函数自动强转为函数指针会创建一个填充对象，该填充对象在观察者看来似乎是在此(属性限定的)函数的定义处调用的，从而在这层虚拟调用中丢失了实际的调用者信息。这种自动强转情况的一个常见示例是创建方法被此属性限定的 trait对象，因为 trait对象的值不能直接使用，只能自动强转为指针引用，那这里的调用就无法观察到真实的调用位置。
+特别是，将带有 `#[track_caller]` 的函数自动强转为函数指针会创建一个填充对象，该填充对象在观察者看来似乎是在此(属性限定的)函数的定义处调用的，从而在这层虚拟调用中丢失了实际的调用者信息。这种自动强转情况的一个常见示例是创建方法被此属性限定的 trait对象[^译者注3] 。
 
-> 注意：前面提到的函数指针填充对象是必需的，因为 `rustc` 会通过向函数的ABI附加一个隐式参数来实现代码生成(codegen)上下文中的 `track_caller`，但这种添加是不健全的(unsound)，因为该隐式参数不是函数类型的一部分，那给定的函数指针类型可能引用也可能不引用具有此属性的函数。这里创建一个填充对象会对函数指针的调用方隐藏隐式参数，从而保持可靠性。
+> 注意：前面提到的函数指针填充对象是必需的，因为 `rustc` 会通过向函数的 ABI 附加一个隐式参数来实现代码生成(codegen)上下文中的 `track_caller`，但这种添加是不健全的(unsound)，因为该隐式参数不是函数类型的一部分，那给定的函数指针类型可能引用也可能不引用具有此属性的函数。这里创建一个填充对象会对函数指针的调用方隐藏隐式参数，从而保持可靠性。
 
 [^译者注]: 可字面理解为内部反复试探。
+
+[^译者注2]: 默认情况下，Rust 编译器会默认某些标准库函数在编译时可用，编译器也会把当前编译的代码往这些库函数可用的方向去优化。
+
+[^译者注3]: 因为 trait对象的值不能直接使用，只能自动强转为指针引用，那这里的调用就无法观察到真实的调用位置。
 
 [_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
 [`-C target-cpu`]: https://doc.rust-lang.org/rustc/codegen-options/index.html#target-cpu
