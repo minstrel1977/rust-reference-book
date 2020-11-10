@@ -3,7 +3,7 @@
 
 >[mumeric.md](https://github.com/rust-lang/reference/blob/master/src/types/mumeric.md)\
 >commit: 73ca198fb3ab52283d67d5fe28c541ee1d169f48 \
->本译文最后维护日期：2020-10-29
+>本章译文最后维护日期：2020-10-29
 
 ## Integer types
 ## 整型/整数类型

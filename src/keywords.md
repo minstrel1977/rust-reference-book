@@ -3,7 +3,7 @@
 
 >[keywords.md](https://github.com/rust-lang/reference/blob/master/src/keywords.md)\
 >commit: 64923185890763048d190ce92cb668b58acbc49a
->本译文最后维护日期：2020-11-5
+>本章译文最后维护日期：2020-11-5
 
 Rust 将关键字分为三类：
 

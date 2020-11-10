@@ -3,7 +3,7 @@
 
 >[loop-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/loop-expr.md)\
 >commit: 37f61d3347d0813bce53a25c8ee068650d9a025f \
->本译文最后维护日期：2020-10-27
+>本章译文最后维护日期：2020-10-27
 
 > **<sup>句法</sup>**\
 > _LoopExpression_ :\

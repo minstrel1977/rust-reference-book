@@ -3,7 +3,7 @@
 
 >[behavior-not-considered-unsafe.md](https://github.com/rust-lang/reference/blob/master/src/behavior-not-considered-unsafe.md)\
 >commit: 75fd23737cd08ec1ae14deae5e2680d9007575ae \
->本译文最后维护日期：2020-11-2
+>本章译文最后维护日期：2020-11-2
 
 虽然程序员可能（应该）发现下列行为是不良的、意外的或错误的，但 Rust 编译器并不认为这些行为是*非安全的(unsafe)*。
 

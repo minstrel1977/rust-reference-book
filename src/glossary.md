@@ -3,7 +3,7 @@
 
 >[glossary.md](https://github.com/rust-lang/reference/blob/master/src/glossary.md)\
 >commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e \
->本译文最后维护日期：2020-11-3
+>本章译文最后维护日期：2020-11-3
 
 ### Abstract syntax tree
 ### 抽象语法树

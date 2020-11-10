@@ -3,7 +3,7 @@
 
 >[items.md](https://github.com/rust-lang/reference/blob/master/src/items.md)\
 >commit: b0e0ad6490d6517c19546b1023948986578fc378 \
->本译文最后维护日期：2020-11-8
+>本章译文最后维护日期：2020-11-8
 
 > **<sup>句法:<sup>**\
 > _Item_:\

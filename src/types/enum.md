@@ -3,7 +3,7 @@
 
 >[enum.md](https://github.com/rust-lang/reference/blob/master/src/types/enum.md)\
 >commit: b0e0ad6490d6517c19546b1023948986578fc378 \
->本译文最后维护日期：2020-10-29
+>本章译文最后维护日期：2020-10-29
 
 *枚举类型*是一种标称型(nominal)的、异构的(heterogeneous)、不相交的联合类型(disjoint union type)，具体的枚举类型由[枚举(`enum`)数据项][`enum` item]的名称来表示。[^enumtype]
 

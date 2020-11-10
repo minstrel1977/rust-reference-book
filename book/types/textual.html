@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/textual.md">textual.md</a><br />
 commit: 9af5071f876111a09ba54a86655679de83eb464c <br />
-本译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-10-29</p>
 </blockquote>
 <p>类型 <code>char</code> 和 <code>str</code> 用于保存文本数据。</p>
 <p>字符型(<code>char</code>)的值是 <a href="http://www.unicode.org/glossary/#unicode_scalar_value">Unicode 标量(scalar)值</a>（即不是代理项(surrogate)的代码点），可以表示为 0x0000 到 0xD7FF 或 0xE000 到 0x10FFFF 范围内的 32-bit 无符号字符。创建超出此范围的字符直接触发<a href="../behavior-considered-undefined.html">未定义行为(Undefined Behavior)</a>。一个 <code>[char]</code> 实际上是长度为1的 UCS-4 / UTF-32 字符串。</p>

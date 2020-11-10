@@ -3,7 +3,7 @@
 
 >[limits.md](https://github.com/rust-lang/reference/blob/master/src/attributes/limits.md)\
 >commit: a258c97b95c9c1bf27f4b6684e5b5d080eb8aa69 \
->本译文最后维护日期：2020-10-24
+>本章译文最后维护日期：2020-10-24
 
 以下[属性][attributes]影响编译期的编译参数的极限值设置。
 

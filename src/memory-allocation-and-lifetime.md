@@ -3,7 +3,7 @@
 
 >[memory-allocation-and-lifetime.md](https://github.com/rust-lang/reference/blob/master/src/memory-allocation-and-lifetime.md)\
 >commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 \
->本译文最后维护日期：2020-11-2
+>本章译文最后维护日期：2020-11-2
 
 程序的*数据项*是那些函数、模块和类型，它们的值在编译时被计算出来，并且唯一地存储在 Rust 进程的内存映像中。数据项既不是动态分配的，也不是动态释放的。
 

@@ -3,7 +3,7 @@
 
 >[macros-by-example.md](https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md)\
 >commit: 30ccf092c7c1d92b2398e28d4abf8c5ba6c31cba \
->本译文最后维护日期：2020-11-7
+>本章译文最后维护日期：2020-11-7
 
 > **<sup>句法</sup>**\
 > _MacroRulesDefinition_ :\

@@ -3,7 +3,7 @@
 
 >[destructors.md](https://github.com/rust-lang/reference/blob/master/src/destructors.md)\
 >commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e \
->本译文最后维护日期：2020-11-1
+>本章译文最后维护日期：2020-11-1
 
 
 当一个[初始化][initialized]了的[变量][variable]或[临时变量][temporary]超出作用域时，它的*析构函数(destructor)*将运行，或者说它将被*销毁(dropped)*。此外[赋值][Assignment]操作也会运行其左操作数的析构函数（如果它已经初始化了）。如果变量已部分初始化了，则只销毁其已初始化的字段。

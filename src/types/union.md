@@ -3,7 +3,7 @@
 
 >[union.md](https://github.com/rust-lang/reference/blob/master/src/types/union.md)\
 >commit: 0c8df59ff60f341ff0cf4d766a7c442b4a5837a4 \
->本译文最后维护日期：2020-10-29
+>本章译文最后维护日期：2020-10-29
 
 *联合体类型*是一种标称型(nominal)的异构的类似C语言里的联合体(union)的类型，具体的类型名称由[联合体(`union`)数据项][item]的名称表示。
 

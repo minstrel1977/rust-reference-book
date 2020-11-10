@@ -3,7 +3,7 @@
 
 >[function-pointer.md](https://github.com/rust-lang/reference/blob/master/src/types/function-pointer.md)\
 >commit: 3d1b9ae5e7a61da43ac83cc42815e29b34b350ba \
->本译文最后维护日期：2020-10-29
+>本章译文最后维护日期：2020-10-29
 
 > **<sup>句法</sup>**\
 > _BareFunctionType_ :\

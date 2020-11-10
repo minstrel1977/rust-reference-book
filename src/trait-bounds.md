@@ -3,7 +3,7 @@
 
 >[trait-bounds.md](https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md)\
 >commit: f8e76ee9368f498f7f044c719de68c7d95da9972 \
->本译文最后维护日期：2020-10-31
+>本章译文最后维护日期：2020-10-31
 
 > **<sup>句法</sup>**\
 > _TypeParamBounds_ :\

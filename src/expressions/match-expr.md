@@ -3,7 +3,7 @@
 
 >[match-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/match-expr.md)\
 >commit: 41cf00929903710a9ce9b1f4c5d8b96e6a511614 \
->本译文最后维护日期：2020-10-28
+>本章译文最后维护日期：2020-10-28
 
 > **<sup>句法</sup>**\
 > _MatchExpression_ :\

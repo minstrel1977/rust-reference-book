@@ -3,7 +3,7 @@
 
 >[enumerations.md](https://github.com/rust-lang/reference/blob/master/src/items/enumerations.md)\
 >commit: 2264855271fae0a915a0fa769e57f5a5d09ff5ef \
->本译文最后维护日期：2020-11-8
+>本章译文最后维护日期：2020-11-8
 
 > **<sup>句法</sup>**\
 > _Enumeration_ :\

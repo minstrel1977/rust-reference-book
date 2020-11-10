@@ -3,7 +3,7 @@
 
 >[expressions.md](https://github.com/rust-lang/reference/blob/master/src/expressions.md)\
 >commit: 8c4522851452563b715b11d4cd755b36d8e4bca5 \
->本译文最后维护日期：2020-10-24
+>本章译文最后维护日期：2020-10-24
 
 > **<sup>句法</sup>**\
 > _Expression_ :\

@@ -3,7 +3,7 @@
 
 >[associated-items.md](https://github.com/rust-lang/reference/blob/master/src/items/associated-items.md)\
 >commit: 136bd7da8b9c509c17c9619813b57dd1a47a8e25 \
->本译文最后维护日期：2020-10-10
+>本章译文最后维护日期：2020-10-10
 
 *关联数据项*是在 [traits] 中声明或在[实现][implementations]中定义的数据项。之所以这样称呼它们，是因为它们是被定义在一个相关联的类型（即实现里指定的类型）上的。关联数据项是那些可在模块中声明的数据项的子集。具体来说，有[关联函数][associated functions]（包括方法）、[关联类型][associated types]和[关联常量][associated constants]。
 
@@ -313,7 +313,9 @@ fn main() {
 ```
 
 [^译者备注1]: 固有实现中声明和定义是在一起的。
+
 [^译者备注2]: 把简写形式转换成等价的标准形式。
+
 [^译者备注3]: 结合下面的示例理解。
 
 [_BlockExpression_]: ../expressions/block-expr.md

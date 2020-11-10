@@ -3,7 +3,7 @@
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
 >commit: 03dc50769738a643be1451a4ff1516fa5fab92bd \
->本译文最后维护日期：2020-10-26
+>本章译文最后维护日期：2020-10-26
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\

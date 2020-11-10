@@ -3,7 +3,7 @@
 
 >[const_eval.md](https://github.com/rust-lang/reference/blob/master/src/const_eval.md)\
 >commit:  7ad799da00dd162638999e38dad10905bf6c7ec6 \
->本译文最后维护日期：2020-11-2
+>本章译文最后维护日期：2020-11-2
 
 常量求值是在编译过程中计算[表达式][[expressions]]结果的过程。（不是所有表达式都可以在编译时求值，也就是说）只有全部表达式的某个子集可以在编译时求值。
 

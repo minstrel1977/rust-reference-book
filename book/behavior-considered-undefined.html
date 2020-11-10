@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md">behavior-considered-undefined.md</a><br />
 commit: 8aa6f0f5471a23621f52d16e823c6316fda2b904 <br />
-本译文最后维护日期：2020-11-2</p>
+本章译文最后维护日期：2020-11-2</p>
 </blockquote>
 <p>如果 Rust 代码出现了下列列表中的任何行为，则此代码被认为不正确。这包括非安全(<code>unsafe</code>)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。</p>
 <p>在编写非安全代码时，确保任何与非安全代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何使用非安全代码的安全代码(safe client)，如果当前条件满足了此非安全代码对于安全条件的要求，那此此非安全代码对于此安全代码就是<em>健全的(sound)</em>；如果非安全(<code>unsafe</code>)代码可以被安全代码滥用以致出现未定义行为，那么此非安全(<code>unsafe</code>)代码对这些安全代码来说就是<em>不健全的(unsound)</em>。</p>

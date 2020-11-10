@@ -3,7 +3,7 @@
 
 >[implementations.md](https://github.com/rust-lang/reference/blob/master/src/items/implementations.md)\
 >commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e \
->本译文最后维护日期：2020-11-8
+>本章译文最后维护日期：2020-11-8
 
 > **<sup>句法</sup>**\
 > _Implementation_ :\

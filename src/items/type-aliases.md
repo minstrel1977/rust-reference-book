@@ -3,7 +3,7 @@
 
 >[type-aliases.md](https://github.com/rust-lang/reference/blob/master/src/items/type-aliases.md)\
 >commit: d150e88973ffccc4439111d8e1b26da745670fa8 \
->本译文最后维护日期：2020-11-8
+>本章译文最后维护日期：2020-11-8
 
 > **<sup>句法</sup>**\
 > _TypeAlias_ :\

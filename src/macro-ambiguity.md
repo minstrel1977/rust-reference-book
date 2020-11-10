@@ -2,7 +2,7 @@
 
 >[macro-ambiguity.md](https://github.com/rust-lang/reference/blob/master/src/macro-ambiguity.md)\
 >commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 \
->本译文最后维护日期：2020-11-7
+>本章译文最后维护日期：2020-11-7
 
 本文介绍了下述[声明宏][Macros By Example]规则的正式规范。它们最初是在 [RFC550] 中指定的（本文的大部分内容都是从其中复制过来的），并在后续的 RFC 中进行了进一步的展开。
 

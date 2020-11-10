@@ -3,7 +3,7 @@
 
 >[extern-crates.md](https://github.com/rust-lang/reference/blob/master/src/items/extern-crates.md)\
 >commit: afcf00bbf22f4dec71866a8bd5f385ba1d3b70af \
->本译文最后维护日期：2020-11-8
+>本章译文最后维护日期：2020-11-8
 
 > **<sup>句法:<sup>**\
 > _ExternCrate_ :\

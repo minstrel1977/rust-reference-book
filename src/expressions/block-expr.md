@@ -3,7 +3,7 @@
 
 >[block-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/block-expr.md)\
 >commit: 6b90080371ff44d0074a465945dfdb0de4b50774 \
->本译文最后维护日期：2020-10-25
+>本章译文最后维护日期：2020-10-25
 
 > **<sup>句法</sup>**\
 > _BlockExpression_ :\

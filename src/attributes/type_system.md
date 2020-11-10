@@ -3,7 +3,7 @@
 
 >[type_system.md](https://github.com/rust-lang/reference/blob/master/src/attributes/type_system.md)\
 >commit: 363a64a939bf246d7373776826e14065e912131f \
->本译文最后维护日期：2020-10-24
+>本章译文最后维护日期：2020-10-24
 
 以下[属性][attributes]用于改变类型的使用方式。
 

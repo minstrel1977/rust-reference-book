@@ -3,7 +3,7 @@
 
 >[subtyping.md](https://github.com/rust-lang/reference/blob/master/src/subtyping.md)\
 >commit: ecb53d2015ce93b3519ee0b358fc13fa9b3f723d \
->本译文最后维护日期：2020-10-31
+>本章译文最后维护日期：2020-10-31
 
 子类型化是隐式的，可以出现在类型检查或推断的任何阶段。Rust 中的子类型化的使用非常受限制，并且锈病中的亚型非常有限，仅出现在和生存期的型变(variance)相关的地方，以及适配那些带有高阶生存期的类型之间的型变。如果我们擦除了类型的生存期，那么唯一的子类型化将是由于类型相等。
 

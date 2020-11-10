@@ -3,7 +3,7 @@
 
 >[whitespace.md](https://github.com/rust-lang/reference/blob/master/src/whitespace.md)\
 >commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 \
->本译文最后维护日期：2020-11-5
+>本章译文最后维护日期：2020-11-5
 
 空白符是非空字符串，它里面只包含具有 [`Pattern_White_Space`] 属性的 Unicode 字符，即:
 

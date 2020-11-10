@@ -3,7 +3,7 @@
 
 >[comments.md](https://github.com/rust-lang/reference/blob/master/src/comments.md)\
 >commit: 993393d362cae51584d580f86c4f38d43ae76efc \
->本译文最后维护日期：2020-10-17
+>本章译文最后维护日期：2020-10-17
 
 > **<sup>词法分析</sup>**\
 > LINE_COMMENT :(译者注：行注释)\

@@ -3,7 +3,7 @@
 
 >[paths.md](https://github.com/rust-lang/reference/blob/master/src/paths.md)\
 >commit: ecfd8761829d6b1025f2a0a8df6905043b2c5e8a \
->本译文最后维护日期：2020-11-5
+>本章译文最后维护日期：2020-11-5
 
 *路径*是一个或多个由命名空间<span class="parenthetical">限定符(`::`)</span>*逻辑*分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，`::` 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的[数据项][item]或[变量][variable]。如果路径包含多个路径段，则总是引用数据项。
 

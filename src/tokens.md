@@ -2,7 +2,7 @@
 
 >[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
 >commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 \
->本译文最后维护日期：2020-11-5
+>本章译文最后维护日期：2020-11-5
 
 
 token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：

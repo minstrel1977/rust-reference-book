@@ -3,7 +3,7 @@
 
 >[notation.md](https://github.com/rust-lang/reference/blob/master/src/notation.md)\
 >commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 \
->本译文最后维护日期：2020-11-7
+>本章译文最后维护日期：2020-11-7
 
 ## Grammar
 ## 文法/语法

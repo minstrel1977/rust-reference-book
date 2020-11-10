@@ -3,7 +3,7 @@
 
 >[slice.md](https://github.com/rust-lang/reference/blob/master/src/types/slice.md)\
 >commit: b0e0ad6490d6517c19546b1023948986578fc378 \
->本译文最后维护日期：2020-10-29
+>本章译文最后维护日期：2020-10-29
 
 > **<sup>句法</sup>**\
 > _SliceType_ :\

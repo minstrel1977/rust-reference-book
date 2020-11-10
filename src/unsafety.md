@@ -3,7 +3,7 @@
 
 >[unsafety.md](https://github.com/rust-lang/reference/blob/master/src/unsafety.md)\
 >commit:  b0e0ad6490d6517c19546b1023948986578fc378 \
->本译文最后维护日期：2020-11-2
+>本章译文最后维护日期：2020-11-2
 
 非安全操作(Unsafe operations)是那些潜在地可能违反 Rust 静态语义里的和内存安全保障相关的操作。
 

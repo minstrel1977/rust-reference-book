@@ -3,7 +3,7 @@
 
 >[special-types-and-traits.md](https://github.com/rust-lang/reference/blob/master/src/special-types-and-traits.md)\
 >commit: fcdc0cab546c10921d66054be25c6afc9dd6b3bc \
->本译文最后维护日期：2020-11-2
+>本章译文最后维护日期：2020-11-2
 
 [标准库][the standard library]中的某些类型和 trait 在 Rust 编译器中也直接能用。本章就阐述了这些类型和 trait 的特殊特性。
 

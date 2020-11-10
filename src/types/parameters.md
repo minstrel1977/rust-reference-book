@@ -3,7 +3,7 @@
 
 >[parameters.md](https://github.com/rust-lang/reference/blob/master/src/types/parameters.md)\
 >commit: eb02dd5194a747277bfa46b0185d1f5c248f177b \
->本译文最后维护日期：2020-10-29
+>本章译文最后维护日期：2020-10-29
 
 在带有类型参数声明的数据项的代码体内，其类型参数的名称是类型：
 

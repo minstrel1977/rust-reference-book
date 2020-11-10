@@ -3,7 +3,7 @@
 
 >[influences.md](https://github.com/rust-lang/reference/blob/master/src/influences.md)\
 >commit:  dc3808468e37ff4c1f663d26c491a3549a42c201 \
->本译文最后维护日期：2020-11-3
+>本章译文最后维护日期：2020-11-3
 
 Rust 并不是一种极端原创的语言，它的设计元素来源广泛。下面列出了其中一些（包括已经删除的）：
 

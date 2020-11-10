@@ -3,7 +3,7 @@
 
 >[call-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/call-expr.md)\
 >commit: e06136b1cd06d3d72dcc0ed7ccf5fbab5574f901 \
->本译文最后维护日期：2020-10-26
+>本章译文最后维护日期：2020-10-26
 
 > **<sup>句法</sup>**\
 > _CallExpression_ :\

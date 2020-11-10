@@ -3,7 +3,7 @@
 
 >[conditional-compilation.md](https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md)\
 >commit: 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7 \
->本译文最后维护日期：2020-11-8
+>本章译文最后维护日期：2020-11-8
 
 > **<sup>句法</sup>**\
 > _ConfigurationPredicate_ :\

@@ -3,7 +3,7 @@
 
 >[diagnostics.md](https://github.com/rust-lang/reference/blob/master/src/attributes/diagnostics.md)\
 >commit: 2196589ccf8fefc4edeaa0ab430fe2ce6a57dec3 \
->本译文最后维护日期：2020-10-23
+>本章译文最后维护日期：2020-11-10
 
 以下[属性][attributes]用于在编译期间控制或生成诊断消息。
 

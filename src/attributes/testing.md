@@ -3,9 +3,9 @@
 
 >[testing.md](https://github.com/rust-lang/reference/blob/master/src/attributes/testing.md)\
 >commit: b0e0ad6490d6517c19546b1023948986578fc378 \
->本译文最后维护日期：2020-10-23
+>本章译文最后维护日期：2020-11-10
 
-以下[属性][attributes]用于指定函数来执行测试。在“测试(test)”模式下编译 crate 可以构建测试函数以及构建用于执行测试的测试套件(test harness)。启用测试模式还会启用 [`test`条件编译选项][`test` conditional compilation option]。
+以下[属性][attributes]用于指定函数来执行测试。在“测试(test)”模式下编译 crate 可以构建测试函数以及构建用于执行测试（函数）的测试套件(test harness)。启用测试模式还会启用 [`test`条件编译选项][`test` conditional compilation option]。
 
 ## The `test` attribute
 ## `test`属性
@@ -23,7 +23,7 @@
 
 > 注意：测试模式是通过将 `--test` 参数选项传递给 `rustc` 或使用 `cargo test` 来启用的。
 
-返回 `()` 的测试只要结束(terminate)且没有发生 panic 就会通过。返回 `Result<(), E>` 的测试只要它们返回 `Ok(())` 就算通过。不结束的测试既不（计为）通过也不（计为）失败。
+返回 `()` 的测试只要结束(terminate)且没有触发 panic 就会通过。返回 `Result<(), E>` 的测试只要它们返回 `Ok(())` 就算通过。不结束的测试既不（计为）通过也不（计为）失败。
 
 ```rust
 # use std::io;
@@ -42,7 +42,7 @@ fn test_the_thing() -> io::Result<()> {
 
 被 `test`属性标注的(annotated with)函数也可以被 `ignore`属性标注。*`ignore`属性*告诉测试套件不要将该函数作为测试执行。但在测试模式下，这类函数仍然会被编译。
 
-`ignore`属性可以选择使用 [_MetaNameValueStr_]元项属性句法来指定测试被忽略的原因。
+`ignore`属性可以选择使用 [_MetaNameValueStr_]元项属性句法来说明测试被忽略的原因。
 
 ```rust
 #[test]

@@ -3,7 +3,7 @@
 
 >[macros.md](https://github.com/rust-lang/reference/blob/master/src/macros.md)\
 >commit: 771c5d10cf944bf7d221f5d6cb7abd2a06c400e4 \
->本译文最后维护日期：2020-11-5
+>本章译文最后维护日期：2020-11-5
 
 可以使用称被为宏的自定义句法形式来扩展 Rust 的功能和句法。宏需要被命名，并通过一致的句法去调用：`some_extension!(...)`。
 

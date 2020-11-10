@@ -4,7 +4,7 @@
 
 >[attributes.md](https://github.com/rust-lang/reference/blob/master/src/attributes.md)\
 >commit: 814a530db0a3f91821095a830fa321fdd5a41d17 \
->本译文最后维护日期：2020-11-10
+>本章译文最后维护日期：2020-11-10
 
 > **<sup>句法</sup>**\
 > _InnerAttribute_ :\
@@ -47,7 +47,7 @@
 属性的一些例子：
 
 ```rust
-// 应用于当前模块或 crate 的一般性元数据(metadata)。
+// 应用于当前模块或 crate 的一般性元数据。
 #![crate_type = "lib"]
 
 // 标记为单元测试的函数
@@ -62,7 +62,7 @@ mod bar {
     /* ... */
 }
 
-// 用于取消执行了 lint检查后报告的告警/错误提醒 
+// 用于静音 lint检查后报告的告警和错误提醒
 #[allow(non_camel_case_types)]
 type int8_t = i8;
 
@@ -79,7 +79,7 @@ fn some_unused_variables() {
 ## Meta Item Attribute Syntax
 ## 元项/元数据项属性句法
 
-“元项(meta item)”是遵循 _Attr_ 句法产生式（见本章头部）的句法，Rust 的大多数[内置属性(built-in attributes)][built-in attributes]都使用了此句法规则。它有以下文法格式：
+“元项(meta item)”是遵循 _Attr_ 产生式（见本章头部）的句法，Rust 的大多数[内置属性(built-in attributes)][built-in attributes]都使用了此句法。它有以下文法格式：
 
 > **<sup>句法</sup>**\
 > _MetaItem_ :\
@@ -114,7 +114,7 @@ fn some_unused_variables() {
 > _MetaListNameValueStr_:\
 > &nbsp;&nbsp; [IDENTIFIER] `(` ( _MetaNameValueStr_ (`,` _MetaNameValueStr_)* `,`<sup>?</sup> )<sup>?</sup> `)`
 
-元项的一些例子是：
+元项句法的一些例子是：
 
 形式 | 示例
 ------|--------
@@ -125,18 +125,18 @@ _MetaListIdents_ | `macro_use(foo, bar)`
 _MetaListNameValueStr_ | `link(name = "CoreFoundation", kind = "framework")`
 
 ## Active and inert attributes
-## 活动属性和惰性属性
+## 活跃属性和惰性属性
 
-属性要么是活动的，要么是惰性的。在属性处理过程中，*活动属性*将自己从它们所在的对象上移除，而*惰性属性*依然保持原位置不变。
+属性要么是活跃的，要么是惰性的。在属性处理过程中，*活跃属性*将自己从它们所在的对象上移除，而*惰性属性*依然保持原位置不变。
 
-[`cfg`] 和 [`cfg_attr`] 属性是活动的。[`test`]属性在为测试所做的编译形式中是惰性的，在其他编译形式中是活动的。[宏属性][Attribute macros]是活动的。所有其他属性都是惰性的。
+[`cfg`] 和 [`cfg_attr`] 属性是活跃的。[`test`]属性在为测试所做的编译形式中是惰性的，在其他编译形式中是活跃的。[宏属性][Attribute macros]是活跃的。所有其他属性都是惰性的。
 
 ## Tool attributes
 ## 外部工具属性
 
 编译器可以允许和具体外部工具相关的属性，但这些工具在编译和检查过程中必须存在并驻留在编译器为它们提供的命名空间中。这种属性的（命名空间）路径的第一段是工具的名称，后跟一个或多个工具自己解释的附加段。
 
-当工具在编译时不可用时，该工具的属性将被静默接受而不提示警告。当工具可用时，该工具负责处理和解释这些属性。
+当工具在编译期不可用时，该工具的属性将被静默接受而不提示警告。当工具可用时，该工具负责处理和解释这些属性。
 
 如果使用了 [`no_implicit_prelude`]属性，则外部工具属性不可用。
 

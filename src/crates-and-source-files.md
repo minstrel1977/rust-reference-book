@@ -2,7 +2,7 @@
 
 >[crates-and-source-files.md](https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md)\
 >commit: 277587a55aa24d8f6a66ddb43493e150c916ef43 \
->本译文最后维护日期：2020-11-8
+>本章译文最后维护日期：2020-11-8
 
 > **<sup>句法</sup>**\
 > _Crate_ :\

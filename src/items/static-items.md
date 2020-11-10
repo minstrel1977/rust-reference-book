@@ -3,7 +3,7 @@
 
 >[static-items.md](https://github.com/rust-lang/reference/blob/master/src/items/static-items.md)\
 >commit: 2f459e22ec30a94bafafe417da4e95044578df73 \
->本译文最后维护日期：2020-11-9
+>本章译文最后维护日期：2020-11-9
 
 > **<sup>句法</sup>**\
 > _StaticItem_ :\

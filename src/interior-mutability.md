@@ -3,7 +3,7 @@
 
 >[interior-mutability.md](https://github.com/rust-lang/reference/blob/master/src/interior-mutability.md)\
 >commit: e7dd3618d78928322f53a20e2947e428b12eda2b \
->本译文最后维护日期：2020-10-31
+>本章译文最后维护日期：2020-10-31
 
 有时一个类型需要在存在多个别名时进行更改。在 Rust 中，这是通过一种叫做*内部可变性*的模式实现的。如果一个类型的内部状态可以通过对它的[共享引用][shared reference]来进行更改，那么就说这个类型就具有内部可变性。这违背了共享引用所引向的值不能被更改的通常[要求][ub]。
 

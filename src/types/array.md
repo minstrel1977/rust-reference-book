@@ -3,7 +3,7 @@
 
 >[array.md](https://github.com/rust-lang/reference/blob/master/src/types/array.md)\
 >commit: 2f459e22ec30a94bafafe417da4e95044578df73 \
->本译文最后维护日期：2020-10-29
+>本章译文最后维护日期：2020-10-29
 
 > **<sup>句法</sup>**\
 > _ArrayType_ :\

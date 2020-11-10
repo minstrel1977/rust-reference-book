@@ -3,7 +3,7 @@
 
 >[parameters.md](https://github.com/rust-lang/reference/blob/master/src/types/parameters.md)\
 >commit: 43dc1a42f19026f580e34a095e91804c3d6da186 \
->本译文最后维护日期：2020-10-29
+>本章译文最后维护日期：2020-10-29
 
 > **<sup>句法</sup>**\
 > _InferredType_ : `_`

@@ -3,7 +3,7 @@
 
 >[enum-variant-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/enum-variant-expr.md)\
 >commit: 1a3615102993e9f017a44b903ff2277a38a171a8 \
->本译文最后维护日期：2020-10-26
+>本章译文最后维护日期：2020-10-26
 
 > **<sup>句法</sup>**\
 > _EnumerationVariantExpression_ :\

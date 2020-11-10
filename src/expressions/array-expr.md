@@ -3,7 +3,7 @@
 
 >[array-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/array-expr.md)\
 >commit: 65c523479abb8024672918444ff839426ff5c3a7 \
->本译文最后维护日期：2020-10-26
+>本章译文最后维护日期：2020-10-26
 
 ## Array expressions
 ## 数组表达式

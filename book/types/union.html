@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/union.md">union.md</a><br />
 commit: 0c8df59ff60f341ff0cf4d766a7c442b4a5837a4 <br />
-本译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-10-29</p>
 </blockquote>
 <p><em>联合体类型</em>是一种标称型(nominal)的异构的类似C语言里的联合体(union)的类型，具体的类型名称由<a href="../items/unions.html">联合体(<code>union</code>)数据项</a>的名称表示。</p>
 <p>联合体没有“活跃字段(active field)”的概念。相反，每次对联合体的访问都将联合体的部分存储内容转换为被访问字段的类型。由于转换可能会导致意外或未定义行为，所以读取联合体字段，或写入未实现 <a href="../special-types-and-traits.html#copy"><code>Copy</code></a> 的联合体字段时都需要使用 <code>unsafe</code> 标志。有关详细信息，请参阅<a href="../items/unions.html">数据项</a>文档。</p>

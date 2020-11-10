@@ -3,7 +3,7 @@
 
 >[visibility-and-privacy.md](https://github.com/rust-lang/reference/blob/master/src/visibility-and-privacy.md)\
 >commit: f41afd4f69a7996ac66b01f75e333bccf43337f7 \
->本译文最后维护日期：2020-11-10
+>本章译文最后维护日期：2020-11-10
 
 > **<sup>句法<sup>**\
 > _Visibility_ :\

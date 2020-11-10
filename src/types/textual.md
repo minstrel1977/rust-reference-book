@@ -3,7 +3,7 @@
 
 >[textual.md](https://github.com/rust-lang/reference/blob/master/src/types/textual.md)\
 >commit: 9af5071f876111a09ba54a86655679de83eb464c \
->本译文最后维护日期：2020-10-29
+>本章译文最后维护日期：2020-10-29
 
 类型 `char` 和 `str` 用于保存文本数据。
 

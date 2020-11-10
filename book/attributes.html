@@ -199,7 +199,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes.md">attributes.md</a><br />
 commit: 814a530db0a3f91821095a830fa321fdd5a41d17 <br />
-本译文最后维护日期：2020-11-10</p>
+本章译文最后维护日期：2020-11-10</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -238,7 +238,7 @@ commit: 814a530db0a3f91821095a830fa321fdd5a41d17 <br />
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// 应用于当前模块或 crate 的一般性元数据(metadata)。
+</span>// 应用于当前模块或 crate 的一般性元数据。
 #![crate_type = &quot;lib&quot;]
 
 // 标记为单元测试的函数
@@ -253,7 +253,7 @@ mod bar {
     /* ... */
 }
 
-// 用于取消执行了 lint检查后报告的告警/错误提醒 
+// 用于静音 lint检查后报告的告警和错误提醒
 #[allow(non_camel_case_types)]
 type int8_t = i8;
 
@@ -269,7 +269,7 @@ fn some_unused_variables() {
 </span></code></pre></pre>
 <h2><a class="header" href="#meta-item-attribute-syntax" id="meta-item-attribute-syntax">Meta Item Attribute Syntax</a></h2>
 <h2><a class="header" href="#元项元数据项属性句法" id="元项元数据项属性句法">元项/元数据项属性句法</a></h2>
-<p>“元项(meta item)”是遵循 <em>Attr</em> 句法产生式（见本章头部）的句法，Rust 的大多数<a href="#built-in-attributes-index">内置属性(built-in attributes)</a>都使用了此句法规则。它有以下文法格式：</p>
+<p>“元项(meta item)”是遵循 <em>Attr</em> 产生式（见本章头部）的句法，Rust 的大多数<a href="#built-in-attributes-index">内置属性(built-in attributes)</a>都使用了此句法。它有以下文法格式：</p>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>MetaItem</em> :<br />
@@ -297,7 +297,7 @@ fn some_unused_variables() {
 <p><em>MetaListNameValueStr</em>:<br />
    <a href="identifiers.html">IDENTIFIER</a> <code>(</code> ( <em>MetaNameValueStr</em> (<code>,</code> <em>MetaNameValueStr</em>)* <code>,</code><sup>?</sup> )<sup>?</sup> <code>)</code></p>
 </blockquote>
-<p>元项的一些例子是：</p>
+<p>元项句法的一些例子是：</p>
 <table><thead><tr><th>形式</th><th>示例</th></tr></thead><tbody>
 <tr><td><em>MetaWord</em></td><td><code>no_std</code></td></tr>
 <tr><td><em>MetaNameValueStr</em></td><td><code>doc = &quot;example&quot;</code></td></tr>
@@ -306,13 +306,13 @@ fn some_unused_variables() {
 <tr><td><em>MetaListNameValueStr</em></td><td><code>link(name = &quot;CoreFoundation&quot;, kind = &quot;framework&quot;)</code></td></tr>
 </tbody></table>
 <h2><a class="header" href="#active-and-inert-attributes" id="active-and-inert-attributes">Active and inert attributes</a></h2>
-<h2><a class="header" href="#活动属性和惰性属性" id="活动属性和惰性属性">活动属性和惰性属性</a></h2>
-<p>属性要么是活动的，要么是惰性的。在属性处理过程中，<em>活动属性</em>将自己从它们所在的对象上移除，而<em>惰性属性</em>依然保持原位置不变。</p>
-<p><a href="conditional-compilation.html#the-cfg-attribute"><code>cfg</code></a> 和 <a href="conditional-compilation.html#the-cfg_attr-attribute"><code>cfg_attr</code></a> 属性是活动的。<a href="attributes/testing.html#the-test-attribute"><code>test</code></a>属性在为测试所做的编译形式中是惰性的，在其他编译形式中是活动的。<a href="procedural-macros.html#attribute-macros">宏属性</a>是活动的。所有其他属性都是惰性的。</p>
+<h2><a class="header" href="#活跃属性和惰性属性" id="活跃属性和惰性属性">活跃属性和惰性属性</a></h2>
+<p>属性要么是活跃的，要么是惰性的。在属性处理过程中，<em>活跃属性</em>将自己从它们所在的对象上移除，而<em>惰性属性</em>依然保持原位置不变。</p>
+<p><a href="conditional-compilation.html#the-cfg-attribute"><code>cfg</code></a> 和 <a href="conditional-compilation.html#the-cfg_attr-attribute"><code>cfg_attr</code></a> 属性是活跃的。<a href="attributes/testing.html#the-test-attribute"><code>test</code></a>属性在为测试所做的编译形式中是惰性的，在其他编译形式中是活跃的。<a href="procedural-macros.html#attribute-macros">宏属性</a>是活跃的。所有其他属性都是惰性的。</p>
 <h2><a class="header" href="#tool-attributes" id="tool-attributes">Tool attributes</a></h2>
 <h2><a class="header" href="#外部工具属性" id="外部工具属性">外部工具属性</a></h2>
 <p>编译器可以允许和具体外部工具相关的属性，但这些工具在编译和检查过程中必须存在并驻留在编译器为它们提供的命名空间中。这种属性的（命名空间）路径的第一段是工具的名称，后跟一个或多个工具自己解释的附加段。</p>
-<p>当工具在编译时不可用时，该工具的属性将被静默接受而不提示警告。当工具可用时，该工具负责处理和解释这些属性。</p>
+<p>当工具在编译期不可用时，该工具的属性将被静默接受而不提示警告。当工具可用时，该工具负责处理和解释这些属性。</p>
 <p>如果使用了 <a href="items/modules.html#prelude-items"><code>no_implicit_prelude</code></a>属性，则外部工具属性不可用。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]

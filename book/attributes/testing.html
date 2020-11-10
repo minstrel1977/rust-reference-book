@@ -170,9 +170,9 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/testing.md">testing.md</a><br />
 commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本译文最后维护日期：2020-10-23</p>
+本章译文最后维护日期：2020-11-10</p>
 </blockquote>
-<p>以下<a href="../attributes.html">属性</a>用于指定函数来执行测试。在“测试(test)”模式下编译 crate 可以构建测试函数以及构建用于执行测试的测试套件(test harness)。启用测试模式还会启用 <a href="../conditional-compilation.html#test"><code>test</code>条件编译选项</a>。</p>
+<p>以下<a href="../attributes.html">属性</a>用于指定函数来执行测试。在“测试(test)”模式下编译 crate 可以构建测试函数以及构建用于执行测试（函数）的测试套件(test harness)。启用测试模式还会启用 <a href="../conditional-compilation.html#test"><code>test</code>条件编译选项</a>。</p>
 <h2><a class="header" href="#the-test-attribute" id="the-test-attribute">The <code>test</code> attribute</a></h2>
 <h2><a class="header" href="#test属性" id="test属性"><code>test</code>属性</a></h2>
 <p><em><code>test</code>属性</em>标记一个用来执行测试的函数。这些函数只在测试模式下编译。测试函数必须是自由函数和单态函数，不能有参数，返回类型必须是以下类型之一：</p>
@@ -189,7 +189,7 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <blockquote>
 <p>注意：测试模式是通过将 <code>--test</code> 参数选项传递给 <code>rustc</code> 或使用 <code>cargo test</code> 来启用的。</p>
 </blockquote>
-<p>返回 <code>()</code> 的测试只要结束(terminate)且没有发生 panic 就会通过。返回 <code>Result&lt;(), E&gt;</code> 的测试只要它们返回 <code>Ok(())</code> 就算通过。不结束的测试既不（计为）通过也不（计为）失败。</p>
+<p>返回 <code>()</code> 的测试只要结束(terminate)且没有触发 panic 就会通过。返回 <code>Result&lt;(), E&gt;</code> 的测试只要它们返回 <code>Ok(())</code> 就算通过。不结束的测试既不（计为）通过也不（计为）失败。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -207,7 +207,7 @@ fn test_the_thing() -&gt; io::Result&lt;()&gt; {
 <h2><a class="header" href="#the-ignore-attribute" id="the-ignore-attribute">The <code>ignore</code> attribute</a></h2>
 <h2><a class="header" href="#ignore属性" id="ignore属性"><code>ignore</code>属性</a></h2>
 <p>被 <code>test</code>属性标注的(annotated with)函数也可以被 <code>ignore</code>属性标注。<em><code>ignore</code>属性</em>告诉测试套件不要将该函数作为测试执行。但在测试模式下，这类函数仍然会被编译。</p>
-<p><code>ignore</code>属性可以选择使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法来指定测试被忽略的原因。</p>
+<p><code>ignore</code>属性可以选择使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法来说明测试被忽略的原因。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

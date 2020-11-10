@@ -3,7 +3,7 @@
 
 >[closure-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/closure-expr.md)\
 >commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e \
->本译文最后维护日期：2020-10-27
+>本章译文最后维护日期：2020-10-27
 
 > **<sup>句法</sup>**\
 > _ClosureExpression_ :\

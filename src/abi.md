@@ -3,7 +3,7 @@
 
 >[abi.md.md](https://github.com/rust-lang/reference/blob/master/src/abi.md)\
 >commit:  24137b49a3c02f53e5a7699a78a47501aef3e769 \
->本译文最后维护日期：2020-11-3
+>本章译文最后维护日期：2020-11-3
 
 本节介绍影响 crate 编译输出的 ABI 的各种特性。
 

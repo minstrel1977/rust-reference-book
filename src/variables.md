@@ -3,7 +3,7 @@
 
 >[variables.md](https://github.com/rust-lang/reference/blob/master/src/variables.md)\
 >commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d \
->本译文最后维护日期：2020-11-2
+>本章译文最后维护日期：2020-11-2
 
 *变量*是栈帧里的一个组件，可以是命名的函数参数、匿名的[临时变量](expressions.md#temporaries)或命名的局部变量。
 

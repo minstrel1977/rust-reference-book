@@ -3,7 +3,7 @@
 
 >[linkage.md](https://github.com/rust-lang/reference/blob/master/src/linkage.md)\
 >commit: 79364a6583803c270ff5be1085434631aba30858 \
->本译文最后维护日期：2020-11-2
+>本章译文最后维护日期：2020-11-2
 
 > 注意：本节更多的是从编译器的角度来描述的，而不是语言。
 

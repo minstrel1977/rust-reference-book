@@ -3,7 +3,7 @@
 
 >[codegen.md](https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md)\
 >commit: 646ef8d240a798da5891deb5dbdbebe557f878b8 \
->本译文最后维护日期：2020-10-23
+>本章译文最后维护日期：2020-10-23
 
 下述[属性][attributes]用于控制代码生成。
 

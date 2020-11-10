@@ -3,7 +3,7 @@
 
 >[unions.md](https://github.com/rust-lang/reference/blob/master/src/items/unions.md)\
 >commit: 0d6f579859c875371c8cfdd6314bb23b19c7a2e8 \
->本译文最后维护日期：2020-11-8
+>本章译文最后维护日期：2020-11-8
 
 > **<sup>句法</sup>**\
 > _Union_ :\

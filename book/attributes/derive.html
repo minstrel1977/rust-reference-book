@@ -170,10 +170,10 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/derive.md">derive.md</a><br />
 commit: a52543267554541a95088b79f46a8bd36f487603 <br />
-本译文最后维护日期：2020-10-23</p>
+本章译文最后维护日期：2020-11-10</p>
 </blockquote>
-<p><em><code>derive</code>属性</em>允许为数据结构自动生成新的<a href="../items.html">数据项</a>。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListPaths</em></a>元项属性句法指定要实现的 trait 列表或<a href="../procedural-macros.html#derive-macros">派生宏</a>要处理的路径。</p>
-<p>例如，下面的派生宏将为 <code>Foo</code> 创建一个实现 <a href="https://doc.rust-lang.org/std/cmp/trait.PartialEq.html"><code>PartialEq</code></a> 和 <a href="https://doc.rust-lang.org/std/clone/trait.Clone.html"><code>Clone</code></a> 这两个 trait 的 <a href="../items/implementations.html">实现(<code>impl</code> item)</a>，类型参数 <code>T</code> 将被派生出的实现(<code>impl</code>)加上 <code>PartialEq</code> 或<sup class="footnote-reference"><a href="#or-and">1</a></sup>:  <code>Clone</code> 约束：</p>
+<p><em><code>derive</code>属性</em>允许为数据结构自动生成新的<a href="../items.html">数据项</a>。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListPaths</em></a>元项属性句法（为数据项）指定一系列要实现的 trait 或指定要执行的<a href="../procedural-macros.html#derive-macros">派生宏</a>的路径。</p>
+<p>例如，下面的派生属性将为结构体 <code>Foo</code> 创建一个实现 <a href="https://doc.rust-lang.org/std/cmp/trait.PartialEq.html"><code>PartialEq</code></a> trait 和 <a href="https://doc.rust-lang.org/std/clone/trait.Clone.html"><code>Clone</code></a> trait 的<a href="../items/implementations.html">实现(<code>impl</code> item)</a>，类型参数 <code>T</code> 将被派生出的实现(<code>impl</code>)加上 <code>PartialEq</code> 或<sup class="footnote-reference"><a href="#or-and">1</a></sup> <code>Clone</code> 约束：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -200,12 +200,12 @@ struct Foo&lt;T&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>可以通过<a href="../procedural-macros.html#derive-macros">过程宏</a>为自定义的 trait 去实现 <code>derive</code>。</p>
+<p>可以通过<a href="../procedural-macros.html#derive-macros">过程宏</a>为自定义的 trait 实现自动派生(<code>derive</code>)功能。</p>
 <h2><a class="header" href="#the-automatically_derived-attribute" id="the-automatically_derived-attribute">The <code>automatically_derived</code> attribute</a></h2>
 <h2><a class="header" href="#automatically_derived属性" id="automatically_derived属性"><code>automatically_derived</code>属性</a></h2>
 <p><em><code>automatically_derived</code>属性</em>会被自动添加到由 <code>derive</code>属性为一些内置trait 自动派生的<a href="../items/implementations.html">实现</a>中。它对派生出的实现没有直接影响，但是工具和诊断lint 可以使用它来检测这些自动派生的实现。</p>
 <div class="footnote-definition" id="or-and"><sup class="footnote-definition-label">1</sup>
-<p>原文后半句是：&quot;and the type parameter <code>T</code> will be given the <code>PartialEq</code> or <code>Clone</code> constraints for the appropriate <code>impl</code>:&quot;，这里译者搞不清楚为什么 <code>PartialEq</code> 和 <code>Clone</code> 之间用了&quot;or&quot;，而不是&quot;and&quot;？这里译者就先采用直译。</p>
+<p>原文后半句是：&quot;and the type parameter <code>T</code> will be given the <code>PartialEq</code> or <code>Clone</code> constraints for the appropriate <code>impl</code>:&quot;，这里译者也搞不清楚为什么 <code>PartialEq</code> 和 <code>Clone</code> 之间用了&quot;or&quot;，而不是&quot;and&quot;？这里译者就先采用直译。</p>
 </div>
 <!-- 2020-11-7-->
 <!-- checked -->

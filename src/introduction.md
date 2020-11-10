@@ -3,7 +3,7 @@
 
 >[introduction.md](https://github.com/rust-lang/reference/blob/master/src/introduction.md)\
 >commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d \
->本译文最后维护日期：2020-11-5
+>本章译文最后维护日期：2020-11-5
 
 本书是 Rust 编程语言的主要参考手册，本书提供了3类资料：
   - 一些章节非正式地介绍了该语言的各种语言结构及其用法。

@@ -3,7 +3,7 @@
 
 >[field-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/field-expr.md)\
 >commit: 84a4bcb11ec14011e8e64bfd5d83a48c54bad1eb \
->本译文最后维护日期：2020-11-7
+>本章译文最后维护日期：2020-11-7
 
 > **<sup>句法</sup>**\
 > _FieldExpression_ :\
