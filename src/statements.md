@@ -13,23 +13,23 @@
 > &nbsp;&nbsp; | [_ExpressionStatement_]\
 > &nbsp;&nbsp; | [_MacroInvocationSemi_]
 
-*语句*是[块(block)][block][^译者注]的一个组件，相应地，块又是外层[表达式][expression]或[函数][function]的组件。
+*语句*是[块(block)][block][^译者注]的一个组件，反过来，块又是其外层[表达式][expression]或[函数][function]的组件。
 
-Rust 有两种语句：[声明式语句(declaration statements)](#declaration-statements)和[表达式语句(expression statements)](#expression-statements)。
+Rust 有两种语句：[声明语句(declaration statements)](#declaration-statements)和[表达式语句(expression statements)](#expression-statements)。
 
 ## Declaration statements
-## 声明式语句
+## 声明语句
 
-*声明式语句*是在它自己封闭形成的语句块的内部引入一个或多个*名称*的语句。声明的名称可以表示新变量或新的[数据项][item]。
+*声明语句*是在它自己封闭的语句块的内部引入一个或多个*名称*的语句。声明的名称可以表示新变量或新的[数据项][item]。
 
-这两种声明式语句就是数据项声明和 let声明。
+这两种声明语句就是数据项声明语句和 let声明语句。
 
 ### Item declarations
-### 数据项声明
+### 数据项声明语句
 
-*数据项声明语句*的句法形式与[模块][module]中的[数据项声明][item]的句法形式相同。在语句块中声明的数据项会将其作用域限制为包含该语句的块。这类数据项以及其子项都没有给定的[规范路径][canonical path]。例外的是，只要数据项和 trait(如果有的话)的可见性允许，由[实现][implementations]定义的关联项在外层作用域内仍然是可访问的。除了这些区别外，它与在模块中声明数据项的意义也相同的。
+*数据项声明语句*的句法形式与[模块][module]中的[数据项声明][item]的句法形式相同。在语句块中声明的数据项会将其作用域限制为包含该语句的块。这类数据项以及在其内声明子项(sub-items)都没有给定的[规范路径][canonical path]。例外的是，只要数据项和 trait（如果有的话）的可见性允许，在（数据项声明语句内定义的和此数据项或 trait 关联的）[实现][implementations]中定义的关联项在外层作用域内仍然是可访问的。除了这些区别外，它与在模块中声明的数据项的意义也是相同的。
 
-数据项声明不会隐式捕获包含它的函数的泛型参数、参数和局部变量。如下，`inner` 不能访问 `outer_var`。
+数据项声明语句不会隐式捕获包含它的函数的泛型参数、参数和局部变量。如下，`inner` 不能访问 `outer_var`。
 
 `outer_var`.
 ```rust
@@ -50,7 +50,7 @@ fn outer() {
 > &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> `let` [_Pattern_]
 >     ( `:` [_Type_] )<sup>?</sup> (`=` [_Expression_] )<sup>?</sup> `;`
 
-*`let`语句*通过一个不可反驳型[模式][pattern]引入了一组新的[变量][variables]，变量由该模式给定。模式后面有一个可选的类型标注(annotation)，再后面是一个初始化表达式。当没有给出类型标注时，编译器将自行推断类型，如果没有足够的信息来执行类型推断，则将触发编译器报错。由变量声明引入的任何变量从声明开始直到封闭块作用域结束都是可见的。
+*`let`语句*通过一个不可反驳型[模式][pattern]引入了一组新的[变量][variables]，变量由该模式给定。模式后面有一个可选的类型标注(annotation)，再后面是一个可选的初始化表达式。当没有给出类型标注时，编译器将自行推断类型，如果没有足够的信息来执行有限次的类型推断，则将触发编译器报错。由变量声明引入的任何变量从声明开始直到封闭块作用域结束都是可见的。
 
 ## Expression statements
 ## 表达式语句
@@ -60,9 +60,9 @@ fn outer() {
 > &nbsp;&nbsp; &nbsp;&nbsp; [_ExpressionWithoutBlock_][expression] `;`\
 > &nbsp;&nbsp; | [_ExpressionWithBlock_][expression] `;`<sup>?</sup>
 
-*表达式语句*是对[表达式][expression]求值并忽略其结果的语句。通常，表达式语句的目的是触发（其包含的表达式的）求值效果的表达。
+*表达式语句*是对[表达式][expression]求值并忽略其结果的语句。通常，表达式语句存在的目的是触发对其内部的表达式的求值时的效果。
 
-仅由[块表达式][block]或控制流表达式组成的表达式，如果在允许语句的上下文中使用，则可以省略后面的分号。这有可能会导致解析歧义，因为它可以被解析为独立语句，也可以被解析为另一个表达式的一部分；在下例中，它被解析为一个语句。[_ExpressionWithBlock_][expression] 形式的表达式用作语句时，其类型必须是 单元类型（`()`）。
+仅由[块表达式][block]或控制流表达式组成的表达式，如果它们在允许使用语句的上下文中使用时，是可以省略其后面的分号的。这有可能会导致解析歧义，因为它可以被解析为独立语句，也可以被解析为另一个表达式的一部分；下例中的控制流表达式被解析为一个语句。注意 [_ExpressionWithBlock_][expression] 形式的表达式用作语句时，其类型必须是单元类型(`()`)。
 
 ```rust
 # let mut v = vec![1, 2, 3];

@@ -10,14 +10,14 @@
 ## Optimization hints
 ## 优化提示
 
-`cold`[属性][attributes] 和 `inline`属性给出了某种代码生成方式的提示建议，这种方式可能比没有此提示时更快。这些属性只是提示，可能会被忽略。
+`cold`[属性][attributes]和 `inline`属性给出了某种代码生成方式的提示建议，这种方式可能比没有此提示时更快。这些属性只是提示，可能会被忽略。
 
 这两个属性都可以在[函数][functions]上使用。当这类属性应用于 [trait] 中的函数上时，它们只在那些没有被 trait实现所覆盖的默认函数上生效，而不是所有 trait实现中用到的函数上都生效。这两属性对 trait 中那些没有函数体的函数没有影响。
 
 ### The `inline` attribute
 ### 内联(`inline`)属性
 
-*`inline`[属性][attribute]*的意义是暗示在调用者(caller)中放置此（属性限定的）函数的副本，而不是在定义此（属性限定的）函数的地方生此函数的代码，然后去让别处代码来调用此函数。
+`inline`*[属性][attribute]*的意义是暗示在调用者(caller)中放置此（属性限定的）函数的副本，而不是在定义此（属性限定的）函数的地方生此函数的代码，然后去让别处代码来调用此函数。
 
 > ***注意***：`rustc` 编译器会根据启发式算法(internal heuristics)[^译者注1]自动内联函数。不正确的内联函数会使程序变慢，所以应该小心使用此属性。
 
@@ -32,17 +32,17 @@
 ### The `cold` attribute
 ### `cold`属性
 
-*`cold`[属性][attribute]*暗示此（属性限定的）函数不太可能被调用。
+`cold`*[属性][attribute]*暗示此（属性限定的）函数不太可能被调用。
 
 ## The `no_builtins` attribute
 ## `no_builtins`属性
 
-*`no_builtins`[属性][attribute]*可以应用在 crate 级别，用以禁用对假定存在的库函数调用的某些代码模式优化。[^译者注2]
+`no_builtins`*[属性][attribute]*可以应用在 crate 级别，用以禁用对假定存在的库函数调用的某些代码模式优化。[^译者注2]
 
 ## The `target_feature` attribute
 ## `target_feature`属性
 
-*`target_feature`[属性]*可应用于[非安全(unsafe)函数][unsafe function]上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 [_MetaListNameValueStr_]元项属性句法来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 `enable`键，其对应值是一个逗号分隔的由平台特性名字组成的符串。
+`target_feature`*[属性]*可应用于[非安全(unsafe)函数][unsafe function]上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 [_MetaListNameValueStr_]元项属性句法来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 `enable`键，其对应值是一个逗号分隔的由平台特性名字组成的符串。
 
 ```rust
 # #[cfg(target_feature = "avx2")]
@@ -209,7 +209,7 @@ fn calls_h() {
 ### Limitations
 ### 限制
 
-`track_caller`属性获得的信息是一个提示信息，实现不需要维护它。
+`track_caller`属性获取的信息是只是一个提示信息，实现不需要维护它。
 
 特别是，将带有 `#[track_caller]` 的函数自动强转为函数指针会创建一个填充对象，该填充对象在观察者看来似乎是在此(属性限定的)函数的定义处调用的，从而在这层虚拟调用中丢失了实际的调用者信息。这种自动强转情况的一个常见示例是创建方法被此属性限定的 trait对象[^译者注3] 。
 
