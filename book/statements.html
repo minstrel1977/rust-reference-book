@@ -181,16 +181,16 @@ commit: 6b90080371ff44d0074a465945dfdb0de4b50774 <br />
    | <a href="#expression-statements"><em>ExpressionStatement</em></a><br />
    | <a href="macros.html#macro-invocation"><em>MacroInvocationSemi</em></a></p>
 </blockquote>
-<p><em>语句</em>是<a href="expressions/block-expr.html">块(block)</a><sup class="footnote-reference"><a href="#译者注">1</a></sup>的一个组件，相应地，块又是外层<a href="expressions.html">表达式</a>或<a href="items/functions.html">函数</a>的组件。</p>
-<p>Rust 有两种语句：<a href="#declaration-statements">声明式语句(declaration statements)</a>和<a href="#expression-statements">表达式语句(expression statements)</a>。</p>
+<p><em>语句</em>是<a href="expressions/block-expr.html">块(block)</a><sup class="footnote-reference"><a href="#译者注">1</a></sup>的一个组件，反过来，块又是其外层<a href="expressions.html">表达式</a>或<a href="items/functions.html">函数</a>的组件。</p>
+<p>Rust 有两种语句：<a href="#declaration-statements">声明语句(declaration statements)</a>和<a href="#expression-statements">表达式语句(expression statements)</a>。</p>
 <h2><a class="header" href="#declaration-statements" id="declaration-statements">Declaration statements</a></h2>
-<h2><a class="header" href="#声明式语句" id="声明式语句">声明式语句</a></h2>
-<p><em>声明式语句</em>是在它自己封闭形成的语句块的内部引入一个或多个<em>名称</em>的语句。声明的名称可以表示新变量或新的<a href="items.html">数据项</a>。</p>
-<p>这两种声明式语句就是数据项声明和 let声明。</p>
+<h2><a class="header" href="#声明语句" id="声明语句">声明语句</a></h2>
+<p><em>声明语句</em>是在它自己封闭的语句块的内部引入一个或多个<em>名称</em>的语句。声明的名称可以表示新变量或新的<a href="items.html">数据项</a>。</p>
+<p>这两种声明语句就是数据项声明语句和 let声明语句。</p>
 <h3><a class="header" href="#item-declarations" id="item-declarations">Item declarations</a></h3>
-<h3><a class="header" href="#数据项声明" id="数据项声明">数据项声明</a></h3>
-<p><em>数据项声明语句</em>的句法形式与<a href="items/modules.html">模块</a>中的<a href="items.html">数据项声明</a>的句法形式相同。在语句块中声明的数据项会将其作用域限制为包含该语句的块。这类数据项以及其子项都没有给定的<a href="paths.html#canonical-paths">规范路径</a>。例外的是，只要数据项和 trait(如果有的话)的可见性允许，由<a href="items/implementations.html">实现</a>定义的关联项在外层作用域内仍然是可访问的。除了这些区别外，它与在模块中声明数据项的意义也相同的。</p>
-<p>数据项声明不会隐式捕获包含它的函数的泛型参数、参数和局部变量。如下，<code>inner</code> 不能访问 <code>outer_var</code>。</p>
+<h3><a class="header" href="#数据项声明语句" id="数据项声明语句">数据项声明语句</a></h3>
+<p><em>数据项声明语句</em>的句法形式与<a href="items/modules.html">模块</a>中的<a href="items.html">数据项声明</a>的句法形式相同。在语句块中声明的数据项会将其作用域限制为包含该语句的块。这类数据项以及在其内声明子项(sub-items)都没有给定的<a href="paths.html#canonical-paths">规范路径</a>。例外的是，只要数据项和 trait（如果有的话）的可见性允许，在（数据项声明语句内定义的和此数据项或 trait 关联的）<a href="items/implementations.html">实现</a>中定义的关联项在外层作用域内仍然是可访问的。除了这些区别外，它与在模块中声明的数据项的意义也是相同的。</p>
+<p>数据项声明语句不会隐式捕获包含它的函数的泛型参数、参数和局部变量。如下，<code>inner</code> 不能访问 <code>outer_var</code>。</p>
 <p><code>outer_var</code>.</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -212,7 +212,7 @@ commit: 6b90080371ff44d0074a465945dfdb0de4b50774 <br />
    <a href="attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <code>let</code> <a href="patterns.html"><em>Pattern</em></a>
 ( <code>:</code> <a href="types.html"><em>Type</em></a> )<sup>?</sup> (<code>=</code> <a href="expressions.html"><em>Expression</em></a> )<sup>?</sup> <code>;</code></p>
 </blockquote>
-<p><em><code>let</code>语句</em>通过一个不可反驳型<a href="patterns.html">模式</a>引入了一组新的<a href="variables.html">变量</a>，变量由该模式给定。模式后面有一个可选的类型标注(annotation)，再后面是一个初始化表达式。当没有给出类型标注时，编译器将自行推断类型，如果没有足够的信息来执行类型推断，则将触发编译器报错。由变量声明引入的任何变量从声明开始直到封闭块作用域结束都是可见的。</p>
+<p><em><code>let</code>语句</em>通过一个不可反驳型<a href="patterns.html">模式</a>引入了一组新的<a href="variables.html">变量</a>，变量由该模式给定。模式后面有一个可选的类型标注(annotation)，再后面是一个可选的初始化表达式。当没有给出类型标注时，编译器将自行推断类型，如果没有足够的信息来执行有限次的类型推断，则将触发编译器报错。由变量声明引入的任何变量从声明开始直到封闭块作用域结束都是可见的。</p>
 <h2><a class="header" href="#expression-statements" id="expression-statements">Expression statements</a></h2>
 <h2><a class="header" href="#表达式语句" id="表达式语句">表达式语句</a></h2>
 <blockquote>
@@ -221,8 +221,8 @@ commit: 6b90080371ff44d0074a465945dfdb0de4b50774 <br />
       <a href="expressions.html"><em>ExpressionWithoutBlock</em></a> <code>;</code><br />
    | <a href="expressions.html"><em>ExpressionWithBlock</em></a> <code>;</code><sup>?</sup></p>
 </blockquote>
-<p><em>表达式语句</em>是对<a href="expressions.html">表达式</a>求值并忽略其结果的语句。通常，表达式语句的目的是触发（其包含的表达式的）求值效果的表达。</p>
-<p>仅由<a href="expressions/block-expr.html">块表达式</a>或控制流表达式组成的表达式，如果在允许语句的上下文中使用，则可以省略后面的分号。这有可能会导致解析歧义，因为它可以被解析为独立语句，也可以被解析为另一个表达式的一部分；在下例中，它被解析为一个语句。<a href="expressions.html"><em>ExpressionWithBlock</em></a> 形式的表达式用作语句时，其类型必须是 单元类型（<code>()</code>）。</p>
+<p><em>表达式语句</em>是对<a href="expressions.html">表达式</a>求值并忽略其结果的语句。通常，表达式语句存在的目的是触发对其内部的表达式的求值时的效果。</p>
+<p>仅由<a href="expressions/block-expr.html">块表达式</a>或控制流表达式组成的表达式，如果它们在允许使用语句的上下文中使用时，是可以省略其后面的分号的。这有可能会导致解析歧义，因为它可以被解析为独立语句，也可以被解析为另一个表达式的一部分；下例中的控制流表达式被解析为一个语句。注意 <a href="expressions.html"><em>ExpressionWithBlock</em></a> 形式的表达式用作语句时，其类型必须是单元类型(<code>()</code>)。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
