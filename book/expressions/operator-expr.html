@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
 commit: 03dc50769738a643be1451a4ff1516fa5fab92bd <br />
-本章译文最后维护日期：2020-10-26</p>
+本章译文最后维护日期：2020-11-11</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -186,16 +186,16 @@ commit: 03dc50769738a643be1451a4ff1516fa5fab92bd <br />
    | <a href="#assignment-expressions"><em>AssignmentExpression</em></a><br />
    | <a href="#compound-assignment-expressions"><em>CompoundAssignmentExpression</em></a></p>
 </blockquote>
-<p>操作符是Rust 语言为其内建类型定义的。本文后面的许多操作符都可以使用 <code>std::ops</code> 或 <code>std::cmp</code> 中的 trait 进行重载。</p>
+<p>操作符是 Rust 语言为其内建类型定义的。本文后面的许多操作符都可以使用 <code>std::ops</code> 或 <code>std::cmp</code> 中的 trait 进行重载。</p>
 <h2><a class="header" href="#溢出" id="溢出">溢出</a></h2>
 <h2><a class="header" href="#overflow" id="overflow">Overflow</a></h2>
-<p>在调试模式下编译整数运算时，如果发生溢出，会触发 panic。可以使用命令行参数 <code>-C debug-assertions</code> 和 <code>-C overflow-checks</code> 来设置编译器标志位，来更直接地控制这个溢出过程。以下情况被认为是溢出：</p>
+<p>在 debug模式下编译整数运算时，如果发生溢出，会触发 panic。可以使用命令行参数 <code>-C debug-assertions</code> 和 <code>-C overflow-checks</code> 设置编译器标志位来更直接地控制这个溢出过程。以下情况被认为是溢出：</p>
 <ul>
 <li>当 <code>+</code>、<code>*</code> 或 <code>-</code> 创建的值大于当前类型可存储的最大值或小于最小值。这包括任何有符号整型的最小值上的一元运算符 <code>-</code>。</li>
-<li>使用 <code>/</code> 或 <code>%</code>，其中左边的参数是某类有符号整型的最小整数，右边的参数是 <code>-1</code>。</li>
-<li>使用 <code>&lt;&lt;</code> 或 <code>&gt;&gt;</code>，其中右边参数大于或等于左边参数类型的 bit 数，或右边参数为负数。</li>
+<li>使用 <code>/</code> 或 <code>%</code>，其中左手参数是某类有符号整型的最小整数，右手参数是 <code>-1</code>。</li>
+<li>使用 <code>&lt;&lt;</code> 或 <code>&gt;&gt;</code>，其中右手参数大于或等于左手参数类型的 bit 数，或右手参数为负数。</li>
 </ul>
-<h2><a class="header" href="#借用引用操作符" id="借用引用操作符">借用/引用操作符</a></h2>
+<h2><a class="header" href="#借用引用操作符运算符" id="借用引用操作符运算符">借用/引用操作符/运算符</a></h2>
 <h2><a class="header" href="#borrow-operators" id="borrow-operators">Borrow operators</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -203,7 +203,7 @@ commit: 03dc50769738a643be1451a4ff1516fa5fab92bd <br />
       (<code>&amp;</code>|<code>&amp;&amp;</code>) <a href="../expressions.html"><em>Expression</em></a><br />
    | (<code>&amp;</code>|<code>&amp;&amp;</code>) <code>mut</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><code>&amp;</code>（共享借用）和 <code>&amp;mut</code>（可变借用）运算符是一元前缀运算符。当应用于<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>上时，此表达式生成指向值所在的内存位置的引用（指针）。在引用期间，该内存位置也被置于借出状态。对于共享借用（<code>&amp;</code>），这意味着该位置可能不会发生变化，但可能会被再次读取或共享。对于可变借用（<code>&amp;mut</code>），在借用到期之前，不能以任何方式访问该位置。<code>&amp;mut</code> 在可变位置表达式上下文中计算其操作数。如果 <code>&amp;</code> 或 <code>&amp;mut</code> 运算符应用于<a href="../expressions.html#place-expressions-and-value-expressions">值表达式</a>，则会创建一个<a href="../expressions.html#temporaries">临时值</a>。</p>
+<p><code>&amp;</code>（共享借用）和 <code>&amp;mut</code>（可变借用）运算符是一元前缀运算符。当应用于<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>上时，此表达式生成指向值所在的内存位置的引用（指针）。在引用存续期间，该内存位置也被置于借出状态。对于共享借用（<code>&amp;</code>），这意味着该位置可能不会发生变化，但可能会被再次读取或共享。对于可变借用（<code>&amp;mut</code>），在借用到期之前，不能以任何方式访问该位置。<code>&amp;mut</code> 在可变位置表达式上下文中会对其操作数求值。如果 <code>&amp;</code> 或 <code>&amp;mut</code> 运算符应用于<a href="../expressions.html#place-expressions-and-value-expressions">值表达式</a>上，则会创建一个<a href="../expressions.html#temporaries">临时值</a>。</p>
 <p>这类操作符不能重载。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -240,6 +240,7 @@ let a = &amp; &amp; &amp; &amp; mut 10;
 <em>DereferenceExpression</em> :<br />
    <code>*</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
+<!-- check from here -->
 <p><code>*</code>（解引用）操作符也是一元前缀操作符。当应用于<a href="../types/pointer.html">指针</a>时，它表示该指针指向的内存位置。如果表达式的类型为 <code>&amp;mut T</code> 或 <code>*mut T</code>，并且该表达式是局部变量（局部变量的（嵌套）字段也可以）或是可变的<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>，则它代表的内存位置可以被赋值。解引用原始指针需要在非安全(<code>unsafe</code>)块才能进行。</p>
 <p>在<a href="../expressions.html#mutability">不可变位置表达式上下文</a>中对非指针类型作 <code>*x</code> 相当于执行 <code>*std::ops::Deref::deref(&amp;x)</code>；同样的，在可变位置表达式上下文中这个动作就相当于执行 <code>*std::ops::DerefMut::deref_mut(&amp;mut x)</code>。</p>
 <pre><pre class="playground"><code class="language-rust">

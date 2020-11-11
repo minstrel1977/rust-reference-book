@@ -3,7 +3,7 @@
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
 >commit: 03dc50769738a643be1451a4ff1516fa5fab92bd \
->本章译文最后维护日期：2020-10-26
+>本章译文最后维护日期：2020-11-11
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -18,18 +18,18 @@
 > &nbsp;&nbsp; | [_AssignmentExpression_]\
 > &nbsp;&nbsp; | [_CompoundAssignmentExpression_]
 
-操作符是Rust 语言为其内建类型定义的。本文后面的许多操作符都可以使用 `std::ops` 或 `std::cmp` 中的 trait 进行重载。
+操作符是 Rust 语言为其内建类型定义的。本文后面的许多操作符都可以使用 `std::ops` 或 `std::cmp` 中的 trait 进行重载。
 
 ## 溢出
 ## Overflow
 
-在调试模式下编译整数运算时，如果发生溢出，会触发 panic。可以使用命令行参数 `-C debug-assertions` 和 `-C overflow-checks` 来设置编译器标志位，来更直接地控制这个溢出过程。以下情况被认为是溢出：
+在 debug模式下编译整数运算时，如果发生溢出，会触发 panic。可以使用命令行参数 `-C debug-assertions` 和 `-C overflow-checks` 设置编译器标志位来更直接地控制这个溢出过程。以下情况被认为是溢出：
 
 * 当 `+`、`*` 或 `-` 创建的值大于当前类型可存储的最大值或小于最小值。这包括任何有符号整型的最小值上的一元运算符 `-`。
-* 使用 `/` 或 `%`，其中左边的参数是某类有符号整型的最小整数，右边的参数是 `-1`。
-* 使用 `<<` 或 `>>`，其中右边参数大于或等于左边参数类型的 bit 数，或右边参数为负数。
+* 使用 `/` 或 `%`，其中左手参数是某类有符号整型的最小整数，右手参数是 `-1`。
+* 使用 `<<` 或 `>>`，其中右手参数大于或等于左手参数类型的 bit 数，或右手参数为负数。
 
-## 借用/引用操作符
+## 借用/引用操作符/运算符
 ## Borrow operators
 
 > **<sup>句法</sup>**\
@@ -37,7 +37,7 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; (`&`|`&&`) [_Expression_]\
 > &nbsp;&nbsp; | (`&`|`&&`) `mut` [_Expression_]
 
-`&`（共享借用）和 `&mut`（可变借用）运算符是一元前缀运算符。当应用于[位置表达式][place expression]上时，此表达式生成指向值所在的内存位置的引用（指针）。在引用期间，该内存位置也被置于借出状态。对于共享借用（`&`），这意味着该位置可能不会发生变化，但可能会被再次读取或共享。对于可变借用（`&mut`），在借用到期之前，不能以任何方式访问该位置。`&mut` 在可变位置表达式上下文中计算其操作数。如果 `&` 或 `&mut` 运算符应用于[值表达式][value expression]，则会创建一个[临时值][temporary value]。
+`&`（共享借用）和 `&mut`（可变借用）运算符是一元前缀运算符。当应用于[位置表达式][place expression]上时，此表达式生成指向值所在的内存位置的引用（指针）。在引用存续期间，该内存位置也被置于借出状态。对于共享借用（`&`），这意味着该位置可能不会发生变化，但可能会被再次读取或共享。对于可变借用（`&mut`），在借用到期之前，不能以任何方式访问该位置。`&mut` 在可变位置表达式上下文中会对其操作数求值。如果 `&` 或 `&mut` 运算符应用于[值表达式][value expression]上，则会创建一个[临时值][temporary value]。
 
 这类操作符不能重载。
 
@@ -72,7 +72,7 @@ let a = & & & & mut 10;
 > **<sup>句法</sup>**\
 > _DereferenceExpression_ :\
 > &nbsp;&nbsp; `*` [_Expression_]
-
+<!-- check from here -->
 `*`（解引用）操作符也是一元前缀操作符。当应用于[指针][pointer]时，它表示该指针指向的内存位置。如果表达式的类型为 `&mut T` 或 `*mut T`，并且该表达式是局部变量（局部变量的（嵌套）字段也可以）或是可变的[位置表达式][place expression]，则它代表的内存位置可以被赋值。解引用原始指针需要在非安全(`unsafe`)块才能进行。
 
 在[不可变位置表达式上下文][immutable place expression context]中对非指针类型作 `*x` 相当于执行 `*std::ops::Deref::deref(&x)`；同样的，在可变位置表达式上下文中这个动作就相当于执行 `*std::ops::DerefMut::deref_mut(&mut x)`。

@@ -21,7 +21,7 @@
 
 块的书写形式为：先是一个 `{`，然后是[内部属性][inner attributes]，再后是各条[语句][statements]，再后是一个可选表达式，最后是一个 `}`。语句之间通常需要后跟分号，但有两个例外。数据项声明语句不需要后跟分号；表达式语句通常需要后面的分号，但它的外层表达式是控制流表达式时不需要。此外，允许在语句之间使用额外的分号，但是这些分号并不影响语义。
 
-在对块表达式求值时，除了数据项声明语句外，每个语句都是按顺序执行的。如果给出了块尾的可选的最终表达式(final expression)，则最后会执行它。 
+在对块表达式求值时，除了数据项声明语句外，每个语句都是按顺序执行的。如果给出了块尾的可选的最终表达式(final expression)，则最后会执行它。
 
 块的类型是最此块的最终表达式(final expression)的类型，但如果省略了最终表达式，则块的类型为 `()`。
 
@@ -39,7 +39,7 @@ let five: i32 = {
 assert_eq!(5, five);
 ```
 
-> 注意：作为控制流表达式，如果块表达式是一个表达式语句的外层表达式，则该块表达式的预期类型为 `()` ，除非该块后面紧跟着一个分号。（译者注：译者怀疑源文档这里写错了，所以这里先直译，同时提供原文：Note: As a control flow expression, if a block expression is the outer expression of an expression statement, the expected type is `()` unless it is followed immediately by a semicolon.）
+> 注意：作为控制流表达式，如果块表达式是一个表达式语句的外层表达式，则该块表达式的预期类型为 `()`，除非该块后面紧跟着一个分号。
 
 块总是[值表达式][value expressions]，并会在值表达式上下文中对最终表达式求值。如果确实有需要，块可以用于强制移动值。例如，下面的示例在调用 `consume_self` 时失败，因为结构体已经在之前的块表达式里被从 `s` 里移出了。
 
@@ -69,22 +69,22 @@ fn move_by_block_expression() {
 > _AsyncBlockExpression_ :\
 > &nbsp;&nbsp; `async` `move`<sup>?</sup> _BlockExpression_
 
-*异步块(async block)*是求值为 *future* 的块表达式。块的最终表达式（如果存在）决定了 future 的结果值。（译者注：单词future对应中文为“未来”。原文里，作为类型的 future 和字面意义上的 future 经常混用，所以译者基本保留此单词不翻译，特别强调“未来”的意义时也会加上其英文单词。）
+*异步块(async block)*是求值为 *future* 的块表达式的一个变体。块的最终表达式（如果存在）决定了 future 的结果值。（译者注：单词 future 对应中文为“未来”。原文可能为了双关的行文效果，经常把作为类型的 future 和字面意义上的 future 经常混用，所以译者基本保留此单词不翻译，特别强调“未来”的意义时也会加上其英文单词。）
 
-执行一个异步块类似于执行一个闭包表达式：它的即时效应是生成并返回一个匿名类型。类似闭包返回的类型实现了一个或多个 [`std::ops::Fn`] trait，异步块返回的类型实现了 [`std::future::Future`] trait。此类型的实际数据格式规范还未确定下来。
+执行一个异步块类似于执行一个闭包表达式：它的即时效果是生成并返回一个匿名类型。类似闭包返回的类型实现了一个或多个 [`std::ops::Fn`] trait，异步块返回的类型实现了 [`std::future::Future`] trait。此类型的实际数据格式规范还未确定下来。
 
-> **注意：** rustc 生成的 future类型大致相当于一个枚举，rustc 为这个 future 的每个 `await` 点生成一个此枚举的变体，其中每个变体都存储了对应点再次恢复执行时需要的数据。
+> **注意：** rustc 生成的 future类型大致相当于一个枚举，rustc 为这个 future 的每个 `await`点生成一个此枚举的变体，其中每个变体都存储了对应点再次恢复执行时需要的数据。
 
-> **版本差异**: 异步块从 Rust 2018版才开始可用。
+> **版本差异**: 异步块从 Rust 2018 版才开始可用。
 
 [`std::ops::Fn`]: https://doc.rust-lang.org/std/ops/trait.Fn.html
 [`std::future::Future`]: https://doc.rust-lang.org/std/future/trait.Future.html
 
 ### Capture modes
-### 捕获模式
+### 捕获方式
 
-异步块使用与闭包相同的[捕获模式][capture modes]从其环境中捕获变量。跟闭包一样，当编写 `async { .. }` 时，每个变量的捕获模式将从该块里的内容中推断出来。
-而 `async move { .. }` 类型的异步块将把所有需要捕获的变量应用移动语义移入(move)到相应的结果 future 中。
+异步块使用与闭包相同的[捕获方式][capture modes]从其环境中捕获变量。跟闭包一样，当编写 `async { .. }` 时，每个变量的捕获方式将从该块里的内容中推断出来。
+而 `async move { .. }` 类型的异步块将把所有需要捕获的变量使用移动语义移入(move)到相应的结果 future 中。
 
 [capture modes]: ../types/closure.md#capture-modes
 [shared references]: ../types/pointer.md#shared-references-
@@ -93,16 +93,14 @@ fn move_by_block_expression() {
 ### Async context
 ### 异步上下文
 
-因为异步块构造了一个 future，所以它们定义了一个**async上下文**，这个上下文可以相应地包含 [`await`表达式][`await` expressions]。异步上下文是由异步块和异步函数的函数体建立的，它们的语义是根据异步块定义的。
+因为异步块构造了一个 future，所以它们定义了一个**async上下文**，这个上下文可以相应地包含 [`await`表达式][`await` expressions]。异步上下文是由异步块和异步函数的函数体建立的，它们的语义是依照异步块定义的。
 
 [`await` expressions]: await-expr.md
 
 ### Control-flow operators
 ### 控制流操作符
 
-Finally, the `break` and `continue` keywords cannot be used to branch
-out from an async block. Therefore the following is illegal:
-异步块和函数边界类似，或者更类似于闭包。因此 `?`操作符和 返回(`return`)表达式也都能影响 future 的输出，且不会影响封闭它的函数或其他上下文。也就是说，future 的输出跟闭包将其中的 `return <expr>` 的表达式 `<expr>` 的计算结果作为输出的做法是一样的。类似地,如果 `<expr>?` 传播一个错误，这个错误会被 future 在未来的某个时候作为返回结果传播出去。
+异步块的作用类似于函数边界，或者更类似于闭包。因此 `?`操作符和 返回(`return`)表达式也都能影响 future 的输出，且不会影响封闭它的函数或其他上下文。也就是说，future 的输出跟闭包将其中的 `return <expr>` 的表达式 `<expr>` 的计算结果作为未来的输出的做法是一样的。类似地,如果 `<expr>?` 传播(propagate)一个错误，这个错误也会被 future 在未来的某个时候作为返回结果被传播出去。
 
 最后，关键字 `break` 和 `continue` 不能用于从异步块中跳出分支。因此，以下内容是非法的：
 
@@ -123,7 +121,7 @@ loop {
 
 _查看 [`unsafe`块][`unsafe` block]以了解更多该何时使用` unsafe` 的信息_
 
-可以在代码块前面加上关键字 `unsafe` 以允许[非安全操作][unsafe operations][unsafe operations]。例如：
+可以在代码块前面加上关键字 `unsafe` 以允许[非安全操作][unsafe operations]。例如：
 
 ```rust
 unsafe {
@@ -146,7 +144,7 @@ let a = unsafe { an_unsafe_fn() };
 * 循环体（[`loop`], [`while`], [`while let`], 和 [`for`]）。
 * 被用作[语句][statement]的块表达式。
 * 块表达式作为[数组表达式][array expressions]、[元组表达式][tuple expressions]、[调用表达式][call expressions]、[元组结构体][struct]表达式和[枚举变体][enum variant]表达式的元素。
-* 作为另一个块表达式的尾部表达式的块表达式。
+* 作为另一个块表达式的尾部表达式(tail expression)的块表达式。
 <!-- 本列表需要和 expressions.md 保持同步 -->
 
 在块表达式上有意义的属性有 [`cfg`] 和 [lint检查类属性][the lint check attributes]。

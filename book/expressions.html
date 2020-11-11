@@ -213,7 +213,7 @@ commit: 8c4522851452563b715b11d4cd755b36d8e4bca5 <br />
       | <a href="expressions/match-expr.html"><em>MatchExpression</em></a><br />
    )</p>
 </blockquote>
-<p>一个表达式可能有两个角色：它总是能产生一个<em>值</em>；它还有可能表达出<em>效果(effects)</em>（也被称为“副作用(side effects)”）。表达式 <em>求值/计算为(evaluates to)</em> 值，并在 <em>求值(evaluation)</em> 期间表达出效果。<sup class="footnote-reference"><a href="#译者注1">1</a></sup> <br />
+<p>一个表达式可能有两个角色：它总是能产生<sup class="footnote-reference"><a href="#译者注1">1</a></sup>一个<em>值</em>；它还有可能表达出<em>效果(effects)</em>（也被称为“副作用(side effects)”）。表达式 <em>求值/计算为(evaluates to)</em> 值，并在 <em>求值(evaluation)</em> 期间表达出效果。 <br />
 许多表达式包含子表达式（操作数）。每种表达式都表达了以下几点含义：</p>
 <ul>
 <li>在对表达式求值时是否对子表达式求值</li>
@@ -248,7 +248,7 @@ commit: 8c4522851452563b715b11d4cd755b36d8e4bca5 <br />
 </tbody></table>
 <h2><a class="header" href="#place-expressions-and-value-expressions" id="place-expressions-and-value-expressions">Place Expressions and Value Expressions</a></h2>
 <h2><a class="header" href="#位置表达式和值表达式" id="位置表达式和值表达式">位置表达式和值表达式</a></h2>
-<p>表达式分为两大类：位置表达式和值表达式。就跟在每个表达式中一样，子表达式可以出现在位置上下文或值上下文中。表达式的求值既取决于它自己的类别，也取决于它所处的上下文。</p>
+<p>表达式分为两大类：位置表达式和值表达式（，它们各自形成了自己的上下文）。因此，在每个表达式中，子表达式可以出现在位置上下文，也可出现在值上下文中。表达式的求值既依赖于它自己的类别，也依赖于它所在的上下文。</p>
 <p><em>位置表达式</em>是表示内存位置的表达式。语言中表现为指向<strong>局部变量、<a href="items/static-items.html">静态变量</a>、<a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>(<code>*expr</code>)、<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">数组索引</a>表达式(<code>expr[expr]</code>)、<a href="expressions/field-expr.html">字段</a>引用(<code>expr.f</code>)、圆括号括起来的位置表达式</strong>的<a href="expressions/path-expr.html">路径</a>。所有其他形式的表达式都是值表达式。</p>
 <p><em>值表达式</em>是代表实际值的表达式。</p>
 <p>下面的上下文是<em>位置表达式</em>上下文：</p>

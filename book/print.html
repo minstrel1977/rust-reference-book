@@ -5823,7 +5823,7 @@ commit: 8c4522851452563b715b11d4cd755b36d8e4bca5 <br />
       | <a href="expressions/match-expr.html"><em>MatchExpression</em></a><br />
    )</p>
 </blockquote>
-<p>一个表达式可能有两个角色：它总是能产生一个<em>值</em>；它还有可能表达出<em>效果(effects)</em>（也被称为“副作用(side effects)”）。表达式 <em>求值/计算为(evaluates to)</em> 值，并在 <em>求值(evaluation)</em> 期间表达出效果。<sup class="footnote-reference"><a href="#译者注1">1</a></sup> <br />
+<p>一个表达式可能有两个角色：它总是能产生<sup class="footnote-reference"><a href="#译者注1">1</a></sup>一个<em>值</em>；它还有可能表达出<em>效果(effects)</em>（也被称为“副作用(side effects)”）。表达式 <em>求值/计算为(evaluates to)</em> 值，并在 <em>求值(evaluation)</em> 期间表达出效果。 <br />
 许多表达式包含子表达式（操作数）。每种表达式都表达了以下几点含义：</p>
 <ul>
 <li>在对表达式求值时是否对子表达式求值</li>
@@ -5858,7 +5858,7 @@ commit: 8c4522851452563b715b11d4cd755b36d8e4bca5 <br />
 </tbody></table>
 <h2><a class="header" href="#place-expressions-and-value-expressions" id="place-expressions-and-value-expressions">Place Expressions and Value Expressions</a></h2>
 <h2><a class="header" href="#位置表达式和值表达式" id="位置表达式和值表达式">位置表达式和值表达式</a></h2>
-<p>表达式分为两大类：位置表达式和值表达式。就跟在每个表达式中一样，子表达式可以出现在位置上下文或值上下文中。表达式的求值既取决于它自己的类别，也取决于它所处的上下文。</p>
+<p>表达式分为两大类：位置表达式和值表达式（，它们各自形成了自己的上下文）。因此，在每个表达式中，子表达式可以出现在位置上下文，也可出现在值上下文中。表达式的求值既依赖于它自己的类别，也依赖于它所在的上下文。</p>
 <p><em>位置表达式</em>是表示内存位置的表达式。语言中表现为指向<strong>局部变量、<a href="items/static-items.html">静态变量</a>、<a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>(<code>*expr</code>)、<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">数组索引</a>表达式(<code>expr[expr]</code>)、<a href="expressions/field-expr.html">字段</a>引用(<code>expr.f</code>)、圆括号括起来的位置表达式</strong>的<a href="expressions/path-expr.html">路径</a>。所有其他形式的表达式都是值表达式。</p>
 <p><em>值表达式</em>是代表实际值的表达式。</p>
 <p>下面的上下文是<em>位置表达式</em>上下文：</p>
@@ -6061,7 +6061,7 @@ assert_eq!(5, five);
 <span class="boring">}
 </span></code></pre></pre>
 <blockquote>
-<p>注意：作为控制流表达式，如果块表达式是一个表达式语句的外层表达式，则该块表达式的预期类型为 <code>()</code> ，除非该块后面紧跟着一个分号。（译者注：译者怀疑源文档这里写错了，所以这里先直译，同时提供原文：Note: As a control flow expression, if a block expression is the outer expression of an expression statement, the expected type is <code>()</code> unless it is followed immediately by a semicolon.）</p>
+<p>注意：作为控制流表达式，如果块表达式是一个表达式语句的外层表达式，则该块表达式的预期类型为 <code>()</code>，除非该块后面紧跟着一个分号。</p>
 </blockquote>
 <p>块总是<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>，并会在值表达式上下文中对最终表达式求值。如果确实有需要，块可以用于强制移动值。例如，下面的示例在调用 <code>consume_self</code> 时失败，因为结构体已经在之前的块表达式里被从 <code>s</code> 里移出了。</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
@@ -6092,26 +6092,24 @@ fn move_by_block_expression() {
 <em>AsyncBlockExpression</em> :<br />
    <code>async</code> <code>move</code><sup>?</sup> <em>BlockExpression</em></p>
 </blockquote>
-<p>*异步块(async block)*是求值为 <em>future</em> 的块表达式。块的最终表达式（如果存在）决定了 future 的结果值。（译者注：单词future对应中文为“未来”。原文里，作为类型的 future 和字面意义上的 future 经常混用，所以译者基本保留此单词不翻译，特别强调“未来”的意义时也会加上其英文单词。）</p>
-<p>执行一个异步块类似于执行一个闭包表达式：它的即时效应是生成并返回一个匿名类型。类似闭包返回的类型实现了一个或多个 <a href="https://doc.rust-lang.org/std/ops/trait.Fn.html"><code>std::ops::Fn</code></a> trait，异步块返回的类型实现了 <a href="https://doc.rust-lang.org/std/future/trait.Future.html"><code>std::future::Future</code></a> trait。此类型的实际数据格式规范还未确定下来。</p>
+<p>*异步块(async block)*是求值为 <em>future</em> 的块表达式的一个变体。块的最终表达式（如果存在）决定了 future 的结果值。（译者注：单词 future 对应中文为“未来”。原文可能为了双关的行文效果，经常把作为类型的 future 和字面意义上的 future 经常混用，所以译者基本保留此单词不翻译，特别强调“未来”的意义时也会加上其英文单词。）</p>
+<p>执行一个异步块类似于执行一个闭包表达式：它的即时效果是生成并返回一个匿名类型。类似闭包返回的类型实现了一个或多个 <a href="https://doc.rust-lang.org/std/ops/trait.Fn.html"><code>std::ops::Fn</code></a> trait，异步块返回的类型实现了 <a href="https://doc.rust-lang.org/std/future/trait.Future.html"><code>std::future::Future</code></a> trait。此类型的实际数据格式规范还未确定下来。</p>
 <blockquote>
-<p><strong>注意：</strong> rustc 生成的 future类型大致相当于一个枚举，rustc 为这个 future 的每个 <code>await</code> 点生成一个此枚举的变体，其中每个变体都存储了对应点再次恢复执行时需要的数据。</p>
+<p><strong>注意：</strong> rustc 生成的 future类型大致相当于一个枚举，rustc 为这个 future 的每个 <code>await</code>点生成一个此枚举的变体，其中每个变体都存储了对应点再次恢复执行时需要的数据。</p>
 </blockquote>
 <blockquote>
-<p><strong>版本差异</strong>: 异步块从 Rust 2018版才开始可用。</p>
+<p><strong>版本差异</strong>: 异步块从 Rust 2018 版才开始可用。</p>
 </blockquote>
 <h3><a class="header" href="#capture-modes" id="capture-modes">Capture modes</a></h3>
-<h3><a class="header" href="#捕获模式" id="捕获模式">捕获模式</a></h3>
-<p>异步块使用与闭包相同的<a href="expressions/../types/closure.html#capture-modes">捕获模式</a>从其环境中捕获变量。跟闭包一样，当编写 <code>async { .. }</code> 时，每个变量的捕获模式将从该块里的内容中推断出来。
-而 <code>async move { .. }</code> 类型的异步块将把所有需要捕获的变量应用移动语义移入(move)到相应的结果 future 中。</p>
+<h3><a class="header" href="#捕获方式" id="捕获方式">捕获方式</a></h3>
+<p>异步块使用与闭包相同的<a href="expressions/../types/closure.html#capture-modes">捕获方式</a>从其环境中捕获变量。跟闭包一样，当编写 <code>async { .. }</code> 时，每个变量的捕获方式将从该块里的内容中推断出来。
+而 <code>async move { .. }</code> 类型的异步块将把所有需要捕获的变量使用移动语义移入(move)到相应的结果 future 中。</p>
 <h3><a class="header" href="#async-context" id="async-context">Async context</a></h3>
 <h3><a class="header" href="#异步上下文" id="异步上下文">异步上下文</a></h3>
-<p>因为异步块构造了一个 future，所以它们定义了一个<strong>async上下文</strong>，这个上下文可以相应地包含 <a href="expressions/await-expr.html"><code>await</code>表达式</a>。异步上下文是由异步块和异步函数的函数体建立的，它们的语义是根据异步块定义的。</p>
+<p>因为异步块构造了一个 future，所以它们定义了一个<strong>async上下文</strong>，这个上下文可以相应地包含 <a href="expressions/await-expr.html"><code>await</code>表达式</a>。异步上下文是由异步块和异步函数的函数体建立的，它们的语义是依照异步块定义的。</p>
 <h3><a class="header" href="#control-flow-operators" id="control-flow-operators">Control-flow operators</a></h3>
 <h3><a class="header" href="#控制流操作符" id="控制流操作符">控制流操作符</a></h3>
-<p>Finally, the <code>break</code> and <code>continue</code> keywords cannot be used to branch
-out from an async block. Therefore the following is illegal:
-异步块和函数边界类似，或者更类似于闭包。因此 <code>?</code>操作符和 返回(<code>return</code>)表达式也都能影响 future 的输出，且不会影响封闭它的函数或其他上下文。也就是说，future 的输出跟闭包将其中的 <code>return &lt;expr&gt;</code> 的表达式 <code>&lt;expr&gt;</code> 的计算结果作为输出的做法是一样的。类似地,如果 <code>&lt;expr&gt;?</code> 传播一个错误，这个错误会被 future 在未来的某个时候作为返回结果传播出去。</p>
+<p>异步块的作用类似于函数边界，或者更类似于闭包。因此 <code>?</code>操作符和 返回(<code>return</code>)表达式也都能影响 future 的输出，且不会影响封闭它的函数或其他上下文。也就是说，future 的输出跟闭包将其中的 <code>return &lt;expr&gt;</code> 的表达式 <code>&lt;expr&gt;</code> 的计算结果作为未来的输出的做法是一样的。类似地,如果 <code>&lt;expr&gt;?</code> 传播(propagate)一个错误，这个错误也会被 future 在未来的某个时候作为返回结果被传播出去。</p>
 <p>最后，关键字 <code>break</code> 和 <code>continue</code> 不能用于从异步块中跳出分支。因此，以下内容是非法的：</p>
 <pre><pre class="playground"><code class="language-rust edition2018 compile_fail">
 <span class="boring">#![allow(unused)]
@@ -6131,7 +6129,7 @@ out from an async block. Therefore the following is illegal:
    <code>unsafe</code> <em>BlockExpression</em></p>
 </blockquote>
 <p><em>查看 <a href="expressions/../unsafe-blocks.html"><code>unsafe</code>块</a>以了解更多该何时使用<code> unsafe</code> 的信息</em></p>
-<p>可以在代码块前面加上关键字 <code>unsafe</code> 以允许<a href="expressions/../unsafety.html">非安全操作</a><a href="expressions/../unsafety.html">unsafe operations</a>。例如：</p>
+<p>可以在代码块前面加上关键字 <code>unsafe</code> 以允许<a href="expressions/../unsafety.html">非安全操作</a>。例如：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6154,7 +6152,7 @@ out from an async block. Therefore the following is illegal:
 <li>循环体（<a href="expressions/loop-expr.html#infinite-loops"><code>loop</code></a>, <a href="expressions/loop-expr.html#predicate-loops"><code>while</code></a>, <a href="expressions/loop-expr.html#predicate-pattern-loops"><code>while let</code></a>, 和 <a href="expressions/loop-expr.html#iterator-loops"><code>for</code></a>）。</li>
 <li>被用作<a href="expressions/../statements.html">语句</a>的块表达式。</li>
 <li>块表达式作为<a href="expressions/array-expr.html">数组表达式</a>、<a href="expressions/tuple-expr.html">元组表达式</a>、<a href="expressions/call-expr.html">调用表达式</a>、<a href="expressions/struct-expr.html">元组结构体</a>表达式和<a href="expressions/enum-variant-expr.html">枚举变体</a>表达式的元素。</li>
-<li>作为另一个块表达式的尾部表达式的块表达式。</li>
+<li>作为另一个块表达式的尾部表达式(tail expression)的块表达式。</li>
 </ul>
 <!-- 本列表需要和 expressions.md 保持同步 -->
 <p>在块表达式上有意义的属性有 <a href="expressions/../conditional-compilation.html"><code>cfg</code></a> 和 <a href="expressions/../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>。</p>
@@ -6176,7 +6174,7 @@ out from an async block. Therefore the following is illegal:
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
 commit: 03dc50769738a643be1451a4ff1516fa5fab92bd <br />
-本章译文最后维护日期：2020-10-26</p>
+本章译文最后维护日期：2020-11-11</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6192,16 +6190,16 @@ commit: 03dc50769738a643be1451a4ff1516fa5fab92bd <br />
    | <a href="expressions/operator-expr.html#assignment-expressions"><em>AssignmentExpression</em></a><br />
    | <a href="expressions/operator-expr.html#compound-assignment-expressions"><em>CompoundAssignmentExpression</em></a></p>
 </blockquote>
-<p>操作符是Rust 语言为其内建类型定义的。本文后面的许多操作符都可以使用 <code>std::ops</code> 或 <code>std::cmp</code> 中的 trait 进行重载。</p>
+<p>操作符是 Rust 语言为其内建类型定义的。本文后面的许多操作符都可以使用 <code>std::ops</code> 或 <code>std::cmp</code> 中的 trait 进行重载。</p>
 <h2><a class="header" href="#溢出" id="溢出">溢出</a></h2>
 <h2><a class="header" href="#overflow" id="overflow">Overflow</a></h2>
-<p>在调试模式下编译整数运算时，如果发生溢出，会触发 panic。可以使用命令行参数 <code>-C debug-assertions</code> 和 <code>-C overflow-checks</code> 来设置编译器标志位，来更直接地控制这个溢出过程。以下情况被认为是溢出：</p>
+<p>在 debug模式下编译整数运算时，如果发生溢出，会触发 panic。可以使用命令行参数 <code>-C debug-assertions</code> 和 <code>-C overflow-checks</code> 设置编译器标志位来更直接地控制这个溢出过程。以下情况被认为是溢出：</p>
 <ul>
 <li>当 <code>+</code>、<code>*</code> 或 <code>-</code> 创建的值大于当前类型可存储的最大值或小于最小值。这包括任何有符号整型的最小值上的一元运算符 <code>-</code>。</li>
-<li>使用 <code>/</code> 或 <code>%</code>，其中左边的参数是某类有符号整型的最小整数，右边的参数是 <code>-1</code>。</li>
-<li>使用 <code>&lt;&lt;</code> 或 <code>&gt;&gt;</code>，其中右边参数大于或等于左边参数类型的 bit 数，或右边参数为负数。</li>
+<li>使用 <code>/</code> 或 <code>%</code>，其中左手参数是某类有符号整型的最小整数，右手参数是 <code>-1</code>。</li>
+<li>使用 <code>&lt;&lt;</code> 或 <code>&gt;&gt;</code>，其中右手参数大于或等于左手参数类型的 bit 数，或右手参数为负数。</li>
 </ul>
-<h2><a class="header" href="#借用引用操作符" id="借用引用操作符">借用/引用操作符</a></h2>
+<h2><a class="header" href="#借用引用操作符运算符" id="借用引用操作符运算符">借用/引用操作符/运算符</a></h2>
 <h2><a class="header" href="#borrow-operators" id="borrow-operators">Borrow operators</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6209,7 +6207,7 @@ commit: 03dc50769738a643be1451a4ff1516fa5fab92bd <br />
       (<code>&amp;</code>|<code>&amp;&amp;</code>) <a href="expressions/../expressions.html"><em>Expression</em></a><br />
    | (<code>&amp;</code>|<code>&amp;&amp;</code>) <code>mut</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><code>&amp;</code>（共享借用）和 <code>&amp;mut</code>（可变借用）运算符是一元前缀运算符。当应用于<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>上时，此表达式生成指向值所在的内存位置的引用（指针）。在引用期间，该内存位置也被置于借出状态。对于共享借用（<code>&amp;</code>），这意味着该位置可能不会发生变化，但可能会被再次读取或共享。对于可变借用（<code>&amp;mut</code>），在借用到期之前，不能以任何方式访问该位置。<code>&amp;mut</code> 在可变位置表达式上下文中计算其操作数。如果 <code>&amp;</code> 或 <code>&amp;mut</code> 运算符应用于<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>，则会创建一个<a href="expressions/../expressions.html#temporaries">临时值</a>。</p>
+<p><code>&amp;</code>（共享借用）和 <code>&amp;mut</code>（可变借用）运算符是一元前缀运算符。当应用于<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>上时，此表达式生成指向值所在的内存位置的引用（指针）。在引用存续期间，该内存位置也被置于借出状态。对于共享借用（<code>&amp;</code>），这意味着该位置可能不会发生变化，但可能会被再次读取或共享。对于可变借用（<code>&amp;mut</code>），在借用到期之前，不能以任何方式访问该位置。<code>&amp;mut</code> 在可变位置表达式上下文中会对其操作数求值。如果 <code>&amp;</code> 或 <code>&amp;mut</code> 运算符应用于<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>上，则会创建一个<a href="expressions/../expressions.html#temporaries">临时值</a>。</p>
 <p>这类操作符不能重载。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -6246,6 +6244,7 @@ let a = &amp; &amp; &amp; &amp; mut 10;
 <em>DereferenceExpression</em> :<br />
    <code>*</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
+<!-- check from here -->
 <p><code>*</code>（解引用）操作符也是一元前缀操作符。当应用于<a href="expressions/../types/pointer.html">指针</a>时，它表示该指针指向的内存位置。如果表达式的类型为 <code>&amp;mut T</code> 或 <code>*mut T</code>，并且该表达式是局部变量（局部变量的（嵌套）字段也可以）或是可变的<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>，则它代表的内存位置可以被赋值。解引用原始指针需要在非安全(<code>unsafe</code>)块才能进行。</p>
 <p>在<a href="expressions/../expressions.html#mutability">不可变位置表达式上下文</a>中对非指针类型作 <code>*x</code> 相当于执行 <code>*std::ops::Deref::deref(&amp;x)</code>；同样的，在可变位置表达式上下文中这个动作就相当于执行 <code>*std::ops::DerefMut::deref_mut(&amp;mut x)</code>。</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -8920,7 +8919,7 @@ impl&lt;'a&gt; FnOnce&lt;()&gt; for Closure&lt;'a&gt; {
 <pre><code class="language-rust ignore">f(Closure{s: s, t: &amp;t});
 </code></pre>
 <h2><a class="header" href="#capture-modes-1" id="capture-modes-1">Capture modes</a></h2>
-<h2><a class="header" href="#捕获方式" id="捕获方式">捕获方式</a></h2>
+<h2><a class="header" href="#捕获方式-1" id="捕获方式-1">捕获方式</a></h2>
 <p>编译器倾向于优先通过不可变借用(immutable borrow)，其次唯一不可变借用(unique immutable borrow)（见下文），再其次可变借用(mutable borrow)，最后使用移动语义(move)来捕获一个闭合变量(closed-over variable)。编译器将选择第一个通过的选项来编译闭包。这个选择只与闭包表达式的内容有关；编译器不考虑闭包表达式之外的代码，比如所涉及的变量的生存期。</p>
 <p>如果使用了关键字 <code>move</code> ，那么所有捕获都是通过移动(move)语义进行的（当然对于 <code>Copy</code>类型，则是通过拷贝语义进行的），而不管借用是否可用。<code>move</code>关键字通常用于允许闭包比其捕获的值活得更久，例如返回闭包（以备后用）或用于生成新线程。</p>
 <p>复合类型（如结构体、元组和枚举）始终是全部捕获的，而不是各个字段分开捕获的。如果真要捕获单个字段，那可能需要先借用该字段到本地局部变量中：</p>
