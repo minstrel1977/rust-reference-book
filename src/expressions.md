@@ -47,7 +47,8 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_MatchExpression_]\
 > &nbsp;&nbsp; )
 
-一个表达式可能有两个角色：它总是能产生一个*值*；它还有可能表达出*效果(effects)*（也被称为“副作用(side effects)”）。表达式*求值/计算为(evaluates to)*值，并在*求值(evaluation)*期间表达出效果。许多表达式包含子表达式（操作数）。每种表达式都表达了以下几点含义：
+一个表达式可能有两个角色：它总是能产生一个*值*；它还有可能表达出*效果(effects)*（也被称为“副作用(side effects)”）。表达式 _求值/计算为(evaluates to)_ 值，并在 _求值(evaluation)_ 期间表达出效果。[^译者注1] \
+许多表达式包含子表达式（操作数）。每种表达式都表达了以下几点含义：
 
 * 在对表达式求值时是否对子表达式求值
 * 对子表达式求值的顺序
@@ -86,9 +87,9 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 ## Place Expressions and Value Expressions
 ## 位置表达式和值表达式
 
-表达式分为两大类：位置表达式(place expressions)和值表达式(value expressions)。在每个表达式中，子表达式可以出现在位置上下文或值上下文中。表达式的求值既取决于它自己的类别，也取决于它所处的上下文。
+表达式分为两大类：位置表达式和值表达式。就跟在每个表达式中一样，子表达式可以出现在位置上下文或值上下文中。表达式的求值既取决于它自己的类别，也取决于它所处的上下文。
 
-*位置表达式*是表示内存位置的表达式。这类表达式本质就是指向**局部变量、[静态变量][static variables]、[解引用][deref](`*expr`)、[索引数组][array indexing]表达式(`expr[expr]`)、[字段][field]引用(`expr.f`)、圆括号括起来的位置表达式**的[路径][paths]。那除了这些形式外所有其他形式的表达式都是值表达式。
+*位置表达式*是表示内存位置的表达式。语言中表现为指向**局部变量、[静态变量][static variables]、[解引用][deref](`*expr`)、[数组索引][array indexing]表达式(`expr[expr]`)、[字段][field]引用(`expr.f`)、圆括号括起来的位置表达式**的[路径][paths]。所有其他形式的表达式都是值表达式。
 
 *值表达式*是代表实际值的表达式。
 
@@ -97,10 +98,10 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 * [赋值][assign]或[复合赋值][compound assignment]表达式的左操作数。
 * 一元运算符[借用][borrow]或[解引用][deref]的操作数。
 * 字段表达式的操作数。
-* 数组索引表达式的索引操作数。
+* 数组索引表达式的被索引操作数。
 * 任何[隐式借用][implicit borrow]的操作数。
-* [let语句][let statement]的初始化表达式。
-* [`if let`]、[`match`][match] 或 [`while let`] 表达式的[检验对象(scrutinee)][scrutinee]。
+* [let语句][let statement]的初始化器(initializer)。
+* [`if let`]表达式、[`while let`]表达式或[匹配(`match`)][match]表达式的[检验对象(scrutinee)][scrutinee]。
 * 结构体表达式里的[函数式更新(functional update)][functional update]的基(base)。
 
 > 注意：历史上，位置表达式被称为 *左值/lvalues*，值表达式被称为 *右值/rvalues*。
@@ -108,30 +109,31 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 ### Moved and copied types
 ### 移动语义类型和复制语义类型
 
-当位置表达式在值表达式上下文中求值或在模式中被值绑定时，这表示求出的值会*保存进(held in)*当前表达式代表的内存地址。如果该值的类型实现了 [`Copy`]，那么该值将被从原来的位置表达式（代表的内存位置）中复制一份过来。如果该值的类型没有实现 [`Copy`]，但实现了 [`Sized`]，那么就有可能把该值从原来的位置表达式里移出(move out)（到新位置表达式中）。移出对位置表达式也有要求，具体如下的位置表达式里的值才可能被移出：
+当位置表达式在值表达式上下文中被求值时，或在模式中被值绑定时，这表示此值会*保存进(held in)*当前表达式代表的内存地址。如果该值的类型实现了 [`Copy`]，那么该值将被从原来的位置复制一份过来。如果该值的类型没有实现 [`Copy`]，但实现了 [`Sized`]，那么就有可能把该值从原来的位置移动(move)过来。从位置表达式里移出值对位置表达式也有要求，只有如下的位置表达式才可能把值从其中移出(move out)：
 
 * [变量][Variables]当前未被借用。
 * [临时值(Temporary values)](#temporaries)。
 * 可以移出且没实现 [`Drop`] 的位置表达式的字段。
 * 对可移出且类型为 [`Box<T>`] 的表达式作[解引用][deref]的结果。
 
-移出作为局部变量的位置表达式里的值后，原来表达式代表的地址将被去初始化(deinitialized)，并且该地址在重新初始化之前无法再次读取。除以上列出的情况外，任何在值表达式上下文中使用位置表达式都是错误的。
+把值从一个位置表达式里移出到一个局部变量，那此（表达式代表的）地址将被去初始化(deinitialized)，并且该地址在重新初始化之前无法被再次读取。\
+除以上列出的情况外，任何在值表达式上下文中使用位置表达式都是错误的。
 
 ### Mutability
 ### 可变性
 
-如果一个位置表达式可能会被[赋值][assign]、可变[借出][borrow]、[隐式可变借出][implicitly mutably borrowed]或被绑定到包含 `ref mut` 模式上，则该位置表达式必须是*可变的(mutable)*。我们称这类为*可变位置表达式*。与之相对，其他位置表达式称为*不可变位置表达式*。
+如果一个位置表达式将会被[赋值][assign]、可变[借出][borrow]、[隐式可变借出][implicitly mutably borrowed]或被绑定到包含 `ref mut` 模式上，则该位置表达式必须是*可变的(mutable)*。我们称这类位置表达式为*可变位置表达式*。与之相对，其他位置表达式称为*不可变位置表达式*。
 
 下面的表达式可以是可变位置表达式上下文：
 
 * 当前未被借出的可变[变量][variables]。
 * [可变静态(`static`)项][Mutable `static` items]。
 * [临时值][Temporary values]。
-* 可变位置表达式上下文中对子表达式求值求出的[字段][field]。
+* [字段][field]，在可变位置表达式上下文中，可以对此子表达式求值。
 * 对 `*mut T` 指针的[解引用][deref]。
-* 对类型为 `&mut T` 的变量或变量的字段的解引用。注意：这条是下一条规则的必要条件的例外情况。（译者注：这里提醒的注意内容，译者没搞懂，所以有请读者能指点一二。）
-* 对实现 `DerefMut` 的类型的解引用，再对此解出的表达式求值就需要一个可变位置表达式上下文。
-* 对于实现 `IndexMut` 的类型的[数组索引][array indexing]，再对此检索出的表达式求值就需要一个可变位置表达式上下文，注意对索引本身的求值不用。
+* 对类型为 `&mut T` 的变量或变量的字段的解引用。注意：这条是下一条规则的必要条件的例外情况。[^译者注2]
+* 对实现 `DerefMut` 的类型的解引用，那对这里解出的表达式求值就需要在一个可变位置表达式上下文中进行。
+* 对实现 `IndexMut` 的类型做[索引][array indexing]，那对此检索出的表达式求值就需要在一个可变位置表达式上下文进行。注意对索引(index)本身的求值不用。
 
 ### Temporaries
 ### 临时位置/临时变量
@@ -141,7 +143,7 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 ### Implicit Borrows
 ### 隐式借用
 
-某些表达式可以通过隐式借用一个表达式来将其视为位置表达式。例如，可以直接比较两个非固定尺寸的[切片][slice]是否相等，因为 `==` 操作符隐式借用了它自身的操作数：
+某些特定的表达式可以通过隐式借用一个表达式来将其视为位置表达式。例如，可以直接比较两个非固定尺寸的[切片][slice]是否相等，因为 `==` 操作符隐式借用了它自身的操作数：
 
 ```rust
 # let c = [1, 2, 3];
@@ -156,7 +158,7 @@ let b: &[i32];
 ::std::cmp::PartialEq::eq(&*a, &*b);
 ```
 
-以下表达式可以采用隐式借用：
+隐式借用可能会被以下表达式采用：
 
 * [方法调用][method-call]表达式中的左操作数。
 * [字段][field]表达式中的左操作数。
@@ -177,14 +179,18 @@ let b: &[i32];
 只有在少数特定情况下，才允许在表达式之前使用[外部属性][_OuterAttribute_]：
 
 * 在被当作[语句][statement]用的表达式之前。
-* [数组表达式][array expressions]、[元组表达式][tuple expressions]、[调用表达式][call expressions]、[元组结构体][struct]表达式、[枚举变体][enum variant] 表达式这些中的元素。
-  <!-- These were likely stabilized inadvertently. See https://github.com/rust-lang/rust/issues/32796 and https://github.com/rust-lang/rust/issues/15701 -->
+* [数组表达式][array expressions]、[元组表达式][tuple expressions]、[调用表达式][call expressions]、[元组结构体(tuple-style struct)][struct]表达式、[枚举变体][enum variant] 表达式这些中的元素。
+  <!-- 这些可能在无意中稳定下来了。参见 https://github.com/rust-lang/rust/issues/32796 和 https://github.com/rust-lang/rust/issues/15701 -->
 * [块表达式][block expressions]的尾部表达式(tail expression)。
 <!-- 本列表需要和 block-expr.md 保持同步-->
 
 在下面情形之前是不允许的：
 * [区间(Range)][_RangeExpression_]表达式。
-* 二元运算符表达式([_ArithmeticOrLogicalExpression_]、[_ComparisonExpression_]、[_LazyBooleanExpression_]、[_TypeCastExpression_]、[_AssignmentExpression_]、[_CompoundAssignmentExpression_])。
+* 二元运算符表达式（[_ArithmeticOrLogicalExpression_]、[_ComparisonExpression_]、[_LazyBooleanExpression_]、[_TypeCastExpression_]、[_AssignmentExpression_]、[_CompoundAssignmentExpression_]）。
+
+[^译者注1]: 通俗理解“求值”，可以理解为：一方面可以从表达式求出值，另一方面可以为表达式赋值。
+
+[^译者注2]: 译者暂时还未用代码测试这种例外情况。
 
 [block expressions]:    expressions/block-expr.md
 [call expressions]:     expressions/call-expr.md

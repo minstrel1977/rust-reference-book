@@ -81,7 +81,7 @@ fn main() {
 更多细节和动机说明请参考[RFC 132]。
 
 [non-function types]: ../types/function-item.md
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 [RFC 132]: https://github.com/rust-lang/rfcs/blob/master/text/0132-ufcs.md
 [_Expression_]: ../expressions.md
 [`default()`]: https://doc.rust-lang.org/std/default/trait.Default.html#tymethod.default

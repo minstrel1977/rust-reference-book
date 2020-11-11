@@ -68,7 +68,7 @@ let log_pi = pi.unwrap_or(1.0).log(2.72);
 </div>
 
 [trait object]: ../types/trait-object.md
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 [_CallParams_]: call-expr.md
 [_Expression_]: ../expressions.md
 [_PathExprSegment_]: ../paths.md#paths-in-expressions

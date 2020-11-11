@@ -392,7 +392,7 @@ assert_eq!(x, 14);
 [coercions]: ../type-coercions.md
 [drops]: ../destructors.md
 [either copies or moves]: ../expressions.md#moved-and-copied-types
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 [place expression]: ../expressions.md#place-expressions-and-value-expressions
 [value expression]: ../expressions.md#place-expressions-and-value-expressions
 [temporary value]: ../expressions.md#temporaries

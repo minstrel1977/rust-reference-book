@@ -2763,7 +2763,7 @@ commit: f35a6003ad9aff52e3cd459917b737bb5b1e56f8 <br />
 </span>fn first((value, _): (i32, i32)) -&gt; i32 { value }
 <span class="boring">}
 </span></code></pre></pre>
-<p>函数的块在概念上被包装进在一个块中，该块绑定该函数的参数模式，然后返回(<code>return</code>)该函数的块的值。这意味着如果轮到块的*尾部表达式(tail expression)*被求值计算了，该块将结束，求得的值将被返回给调用者。通常，程序执行时如果流碰到函数体中的显式返回表达式(return expression)，就会截断那个隐式的尾部表达式的执行。</p>
+<p>函数的块在概念上被包装进在一个块中，该块绑定该函数的参数模式，然后返回(<code>return</code>)该函数的块的值。这意味着如果轮到块的*尾部表达式(tail expression)*被求值计算了，该块将结束，求得的值将被返回给调用者。通常，程序执行时如果流碰到函数体中的显式返回表达式(return expression)，就会截断那个隐式的最终表达式的执行。</p>
 <p>例如，上面例子里函数的行为就像下面被改写的这样:</p>
 <!-- ignore: example expansion -->
 <pre><code class="language-rust ignore">// argument_0 是调用者真正传过来的第一个参数
@@ -4763,7 +4763,7 @@ commit: 814a530db0a3f91821095a830fa321fdd5a41d17 <br />
 <ul>
 <li>所有的<a href="items.html">数据项声明</a>都可接受外部属性，同时<a href="items/external-blocks.html">外部块</a>、<a href="items/functions.html">函数</a>、<a href="items/implementations.html">实现</a>和<a href="items/modules.html">模块</a>都可接受内部属性。</li>
 <li>大多数<a href="statements.html">语句</a>都可接受外部属性（参见<a href="expressions.html#expression-attributes">表达式属性</a>，了解表达式语句的限制）。</li>
-<li><a href="expressions/block-expr.html">块表达式</a>也可接受外部属性和内部属性，但只有当它们是另一个<a href="statements.html#expression-statements">表达式语句</a>的外层表达式时，或是另一个块表达式的尾部表达式(final expression)时才有效。</li>
+<li><a href="expressions/block-expr.html">块表达式</a>也可接受外部属性和内部属性，但只有当它们是另一个<a href="statements.html#expression-statements">表达式语句</a>的外层表达式时，或是另一个块表达式的最终表达式(final expression)时才有效。</li>
 <li><a href="items/enumerations.html">枚举(<code>enum</code>)</a>变体和<a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/unions.html">联合体(<code>union</code>)</a>的字段可接受外部属性。</li>
 <li><a href="expressions/match-expr.html">匹配表达式的匹配臂(arms)</a>可接受外部属性。</li>
 <li><a href="items/generics.html">泛型生存期(Generic lifetime)或类型参数</a>可接受外部属性。</li>
@@ -5277,7 +5277,7 @@ impl Trait for i32 {
 </span></code></pre></pre>
 <p>当在 trait实现里的函数上使用 <code>must_use</code>属性时，此属性将被忽略。</p>
 <blockquote>
-<p>注意：包含了此（属性应用的数据项产生的值）的普通空操作(no-op)表达式不会违反该 lint。例如，将此类值包装在没有实现 <a href="attributes/../special-types-and-traits.html#drop"><code>Drop</code></a> 的类型中，然后不使用该类型，并成为未使用的<a href="attributes/../expressions/block-expr.html">块表达式</a>的尾部表达式(final expression)。</p>
+<p>注意：包含了此（属性应用的数据项产生的值）的普通空操作(no-op)表达式不会违反该 lint。例如，将此类值包装在没有实现 <a href="attributes/../special-types-and-traits.html#drop"><code>Drop</code></a> 的类型中，然后不使用该类型，并成为未使用的<a href="attributes/../expressions/block-expr.html">块表达式</a>的最终表达式(final expression)。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -5324,7 +5324,7 @@ commit: 646ef8d240a798da5891deb5dbdbebe557f878b8 <br />
 <p>这两个属性都可以在<a href="attributes/../items/functions.html">函数</a>上使用。当这类属性应用于 <a href="attributes/../items/traits.html">trait</a> 中的函数上时，它们只在那些没有被 trait实现所覆盖的默认函数上生效，而不是所有 trait实现中用到的函数上都生效。这两属性对 trait 中那些没有函数体的函数没有影响。</p>
 <h3><a class="header" href="#the-inline-attribute" id="the-inline-attribute">The <code>inline</code> attribute</a></h3>
 <h3><a class="header" href="#内联inline属性" id="内联inline属性">内联(<code>inline</code>)属性</a></h3>
-<p><code>inline</code>*<a href="attributes/../attributes.html">属性</a>*的意义是暗示在调用者(caller)中放置此（属性限定的）函数的副本，而不是在定义此（属性限定的）函数的地方生此函数的代码，然后去让别处代码来调用此函数。</p>
+<p><em><code>inline</code><a href="attributes/../attributes.html">属性</a></em> 的意义是暗示在调用者(caller)中放置此（属性限定的）函数的副本，而不是在定义此（属性限定的）函数的地方生此函数的代码，然后去让别处代码来调用此函数。</p>
 <blockquote>
 <p><em><strong>注意</strong></em>：<code>rustc</code> 编译器会根据启发式算法(internal heuristics)<sup class="footnote-reference"><a href="#译者注1">1</a></sup>自动内联函数。不正确的内联函数会使程序变慢，所以应该小心使用此属性。</p>
 </blockquote>
@@ -5339,13 +5339,13 @@ commit: 646ef8d240a798da5891deb5dbdbebe557f878b8 <br />
 </blockquote>
 <h3><a class="header" href="#the-cold-attribute" id="the-cold-attribute">The <code>cold</code> attribute</a></h3>
 <h3><a class="header" href="#cold属性" id="cold属性"><code>cold</code>属性</a></h3>
-<p><code>cold</code>*<a href="attributes/../attributes.html">属性</a>*暗示此（属性限定的）函数不太可能被调用。</p>
+<p><em><code>cold</code><a href="attributes/../attributes.html">属性</a></em> 暗示此（属性限定的）函数不太可能被调用。</p>
 <h2><a class="header" href="#the-no_builtins-attribute" id="the-no_builtins-attribute">The <code>no_builtins</code> attribute</a></h2>
 <h2><a class="header" href="#no_builtins属性" id="no_builtins属性"><code>no_builtins</code>属性</a></h2>
-<p><code>no_builtins</code>*<a href="attributes/../attributes.html">属性</a>*可以应用在 crate 级别，用以禁用对假定存在的库函数调用的某些代码模式优化。<sup class="footnote-reference"><a href="#译者注2">2</a></sup></p>
+<p><em><code>no_builtins</code><a href="attributes/../attributes.html">属性</a></em> 可以应用在 crate 级别，用以禁用对假定存在的库函数调用的某些代码模式优化。<sup class="footnote-reference"><a href="#译者注2">2</a></sup></p>
 <h2><a class="header" href="#the-target_feature-attribute" id="the-target_feature-attribute">The <code>target_feature</code> attribute</a></h2>
 <h2><a class="header" href="#target_feature属性" id="target_feature属性"><code>target_feature</code>属性</a></h2>
-<p><code>target_feature</code>*[属性]*可应用于<a href="attributes/../unsafe-functions.html">非安全(unsafe)函数</a>上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 <a href="attributes/../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 <code>enable</code>键，其对应值是一个逗号分隔的由平台特性名字组成的符串。</p>
+<p><em><code>target_feature</code>[属性]</em> 可应用于<a href="attributes/../unsafe-functions.html">非安全(unsafe)函数</a>上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 <a href="attributes/../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 <code>enable</code>键，其对应值是一个逗号分隔的由平台特性名字组成的符串。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -5823,7 +5823,8 @@ commit: 8c4522851452563b715b11d4cd755b36d8e4bca5 <br />
       | <a href="expressions/match-expr.html"><em>MatchExpression</em></a><br />
    )</p>
 </blockquote>
-<p>一个表达式可能有两个角色：它总是能产生一个<em>值</em>；它还有可能表达出<em>效果(effects)</em>（也被称为“副作用(side effects)”）。表达式*求值/计算为(evaluates to)<em>值，并在</em>求值(evaluation)*期间表达出效果。许多表达式包含子表达式（操作数）。每种表达式都表达了以下几点含义：</p>
+<p>一个表达式可能有两个角色：它总是能产生一个<em>值</em>；它还有可能表达出<em>效果(effects)</em>（也被称为“副作用(side effects)”）。表达式 <em>求值/计算为(evaluates to)</em> 值，并在 <em>求值(evaluation)</em> 期间表达出效果。<sup class="footnote-reference"><a href="#译者注1">1</a></sup> <br />
+许多表达式包含子表达式（操作数）。每种表达式都表达了以下几点含义：</p>
 <ul>
 <li>在对表达式求值时是否对子表达式求值</li>
 <li>对子表达式求值的顺序</li>
@@ -5857,18 +5858,18 @@ commit: 8c4522851452563b715b11d4cd755b36d8e4bca5 <br />
 </tbody></table>
 <h2><a class="header" href="#place-expressions-and-value-expressions" id="place-expressions-and-value-expressions">Place Expressions and Value Expressions</a></h2>
 <h2><a class="header" href="#位置表达式和值表达式" id="位置表达式和值表达式">位置表达式和值表达式</a></h2>
-<p>表达式分为两大类：位置表达式(place expressions)和值表达式(value expressions)。在每个表达式中，子表达式可以出现在位置上下文或值上下文中。表达式的求值既取决于它自己的类别，也取决于它所处的上下文。</p>
-<p><em>位置表达式</em>是表示内存位置的表达式。这类表达式本质就是指向<strong>局部变量、<a href="items/static-items.html">静态变量</a>、<a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>(<code>*expr</code>)、<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">索引数组</a>表达式(<code>expr[expr]</code>)、<a href="expressions/field-expr.html">字段</a>引用(<code>expr.f</code>)、圆括号括起来的位置表达式</strong>的<a href="expressions/path-expr.html">路径</a>。那除了这些形式外所有其他形式的表达式都是值表达式。</p>
+<p>表达式分为两大类：位置表达式和值表达式。就跟在每个表达式中一样，子表达式可以出现在位置上下文或值上下文中。表达式的求值既取决于它自己的类别，也取决于它所处的上下文。</p>
+<p><em>位置表达式</em>是表示内存位置的表达式。语言中表现为指向<strong>局部变量、<a href="items/static-items.html">静态变量</a>、<a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>(<code>*expr</code>)、<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">数组索引</a>表达式(<code>expr[expr]</code>)、<a href="expressions/field-expr.html">字段</a>引用(<code>expr.f</code>)、圆括号括起来的位置表达式</strong>的<a href="expressions/path-expr.html">路径</a>。所有其他形式的表达式都是值表达式。</p>
 <p><em>值表达式</em>是代表实际值的表达式。</p>
 <p>下面的上下文是<em>位置表达式</em>上下文：</p>
 <ul>
 <li><a href="expressions/operator-expr.html#assignment-expressions">赋值</a>或<a href="expressions/operator-expr.html#compound-assignment-expressions">复合赋值</a>表达式的左操作数。</li>
 <li>一元运算符<a href="expressions/operator-expr.html#borrow-operators">借用</a>或<a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>的操作数。</li>
 <li>字段表达式的操作数。</li>
-<li>数组索引表达式的索引操作数。</li>
+<li>数组索引表达式的被索引操作数。</li>
 <li>任何<a href="expressions.html#implicit-borrows">隐式借用</a>的操作数。</li>
-<li><a href="statements.html#let-statements">let语句</a>的初始化表达式。</li>
-<li><a href="expressions/if-expr.html#if-let-expressions"><code>if let</code></a>、<a href="expressions/match-expr.html"><code>match</code></a> 或 <a href="expressions/loop-expr.html#predicate-pattern-loops"><code>while let</code></a> 表达式的<a href="glossary.html#scrutinee">检验对象(scrutinee)</a>。</li>
+<li><a href="statements.html#let-statements">let语句</a>的初始化器(initializer)。</li>
+<li><a href="expressions/if-expr.html#if-let-expressions"><code>if let</code></a>表达式、<a href="expressions/loop-expr.html#predicate-pattern-loops"><code>while let</code></a>表达式或<a href="expressions/match-expr.html">匹配(<code>match</code>)</a>表达式的<a href="glossary.html#scrutinee">检验对象(scrutinee)</a>。</li>
 <li>结构体表达式里的<a href="expressions/struct-expr.html#functional-update-syntax">函数式更新(functional update)</a>的基(base)。</li>
 </ul>
 <blockquote>
@@ -5876,34 +5877,35 @@ commit: 8c4522851452563b715b11d4cd755b36d8e4bca5 <br />
 </blockquote>
 <h3><a class="header" href="#moved-and-copied-types" id="moved-and-copied-types">Moved and copied types</a></h3>
 <h3><a class="header" href="#移动语义类型和复制语义类型" id="移动语义类型和复制语义类型">移动语义类型和复制语义类型</a></h3>
-<p>当位置表达式在值表达式上下文中求值或在模式中被值绑定时，这表示求出的值会*保存进(held in)*当前表达式代表的内存地址。如果该值的类型实现了 <a href="special-types-and-traits.html#copy"><code>Copy</code></a>，那么该值将被从原来的位置表达式（代表的内存位置）中复制一份过来。如果该值的类型没有实现 <a href="special-types-and-traits.html#copy"><code>Copy</code></a>，但实现了 <a href="special-types-and-traits.html#sized"><code>Sized</code></a>，那么就有可能把该值从原来的位置表达式里移出(move out)（到新位置表达式中）。移出对位置表达式也有要求，具体如下的位置表达式里的值才可能被移出：</p>
+<p>当位置表达式在值表达式上下文中被求值时，或在模式中被值绑定时，这表示此值会*保存进(held in)*当前表达式代表的内存地址。如果该值的类型实现了 <a href="special-types-and-traits.html#copy"><code>Copy</code></a>，那么该值将被从原来的位置复制一份过来。如果该值的类型没有实现 <a href="special-types-and-traits.html#copy"><code>Copy</code></a>，但实现了 <a href="special-types-and-traits.html#sized"><code>Sized</code></a>，那么就有可能把该值从原来的位置移动(move)过来。从位置表达式里移出值对位置表达式也有要求，只有如下的位置表达式才可能把值从其中移出(move out)：</p>
 <ul>
 <li><a href="variables.html">变量</a>当前未被借用。</li>
 <li><a href="expressions.html#temporaries">临时值(Temporary values)</a>。</li>
 <li>可以移出且没实现 <a href="special-types-and-traits.html#drop"><code>Drop</code></a> 的位置表达式的字段。</li>
 <li>对可移出且类型为 <a href="../std/boxed/struct.Box.html"><code>Box&lt;T&gt;</code></a> 的表达式作<a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>的结果。</li>
 </ul>
-<p>移出作为局部变量的位置表达式里的值后，原来表达式代表的地址将被去初始化(deinitialized)，并且该地址在重新初始化之前无法再次读取。除以上列出的情况外，任何在值表达式上下文中使用位置表达式都是错误的。</p>
+<p>把值从一个位置表达式里移出到一个局部变量，那此（表达式代表的）地址将被去初始化(deinitialized)，并且该地址在重新初始化之前无法被再次读取。<br />
+除以上列出的情况外，任何在值表达式上下文中使用位置表达式都是错误的。</p>
 <h3><a class="header" href="#mutability" id="mutability">Mutability</a></h3>
 <h3><a class="header" href="#可变性" id="可变性">可变性</a></h3>
-<p>如果一个位置表达式可能会被<a href="expressions/operator-expr.html#assignment-expressions">赋值</a>、可变<a href="expressions/operator-expr.html#borrow-operators">借出</a>、<a href="expressions.html#implicit-borrows">隐式可变借出</a>或被绑定到包含 <code>ref mut</code> 模式上，则该位置表达式必须是<em>可变的(mutable)</em>。我们称这类为<em>可变位置表达式</em>。与之相对，其他位置表达式称为<em>不可变位置表达式</em>。</p>
+<p>如果一个位置表达式将会被<a href="expressions/operator-expr.html#assignment-expressions">赋值</a>、可变<a href="expressions/operator-expr.html#borrow-operators">借出</a>、<a href="expressions.html#implicit-borrows">隐式可变借出</a>或被绑定到包含 <code>ref mut</code> 模式上，则该位置表达式必须是<em>可变的(mutable)</em>。我们称这类位置表达式为<em>可变位置表达式</em>。与之相对，其他位置表达式称为<em>不可变位置表达式</em>。</p>
 <p>下面的表达式可以是可变位置表达式上下文：</p>
 <ul>
 <li>当前未被借出的可变<a href="variables.html">变量</a>。</li>
 <li><a href="items/static-items.html#mutable-statics">可变静态(<code>static</code>)项</a>。</li>
 <li><a href="expressions.html#temporaries">临时值</a>。</li>
-<li>可变位置表达式上下文中对子表达式求值求出的<a href="expressions/field-expr.html">字段</a>。</li>
+<li><a href="expressions/field-expr.html">字段</a>，在可变位置表达式上下文中，可以对此子表达式求值。</li>
 <li>对 <code>*mut T</code> 指针的<a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>。</li>
-<li>对类型为 <code>&amp;mut T</code> 的变量或变量的字段的解引用。注意：这条是下一条规则的必要条件的例外情况。（译者注：这里提醒的注意内容，译者没搞懂，所以有请读者能指点一二。）</li>
-<li>对实现 <code>DerefMut</code> 的类型的解引用，再对此解出的表达式求值就需要一个可变位置表达式上下文。</li>
-<li>对于实现 <code>IndexMut</code> 的类型的<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">数组索引</a>，再对此检索出的表达式求值就需要一个可变位置表达式上下文，注意对索引本身的求值不用。</li>
+<li>对类型为 <code>&amp;mut T</code> 的变量或变量的字段的解引用。注意：这条是下一条规则的必要条件的例外情况。<sup class="footnote-reference"><a href="#译者注2">2</a></sup></li>
+<li>对实现 <code>DerefMut</code> 的类型的解引用，那对这里解出的表达式求值就需要在一个可变位置表达式上下文中进行。</li>
+<li>对实现 <code>IndexMut</code> 的类型做<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">索引</a>，那对此检索出的表达式求值就需要在一个可变位置表达式上下文进行。注意对索引(index)本身的求值不用。</li>
 </ul>
 <h3><a class="header" href="#temporaries" id="temporaries">Temporaries</a></h3>
 <h3><a class="header" href="#临时位置临时变量" id="临时位置临时变量">临时位置/临时变量</a></h3>
 <p>在大多数位置表达式上下文中使用值表达式时，会创建一个临时的未命名内存位置，并将该位置初始为该值，然后这个表达式的求值结果就为该内存位置。此过程也有例外，就是把此临时表达式<a href="destructors.html#constant-promotion">提升</a>为一个静态项(<code>static</code>)。（译者注：这种情况下表达式将直接在编译时就求值了，求值的结果会根据编译器要求重新选择地址存储）。临时位置/临时变量的<a href="destructors.html#drop-scopes">销毁作用域(drop scope)</a>通常在包含它的最内层语句的结尾处。</p>
 <h3><a class="header" href="#implicit-borrows" id="implicit-borrows">Implicit Borrows</a></h3>
 <h3><a class="header" href="#隐式借用" id="隐式借用">隐式借用</a></h3>
-<p>某些表达式可以通过隐式借用一个表达式来将其视为位置表达式。例如，可以直接比较两个非固定尺寸的<a href="types/slice.html">切片</a>是否相等，因为 <code>==</code> 操作符隐式借用了它自身的操作数：</p>
+<p>某些特定的表达式可以通过隐式借用一个表达式来将其视为位置表达式。例如，可以直接比较两个非固定尺寸的<a href="types/slice.html">切片</a>是否相等，因为 <code>==</code> 操作符隐式借用了它自身的操作数：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -5919,7 +5921,7 @@ let b: &amp;[i32];
 ::std::cmp::PartialEq::eq(&amp;*a, &amp;*b);
 <span class="boring">}
 </span></code></pre></pre>
-<p>以下表达式可以采用隐式借用：</p>
+<p>隐式借用可能会被以下表达式采用：</p>
 <ul>
 <li><a href="expressions/method-call-expr.html">方法调用</a>表达式中的左操作数。</li>
 <li><a href="expressions/field-expr.html">字段</a>表达式中的左操作数。</li>
@@ -5937,7 +5939,7 @@ let b: &amp;[i32];
 <p>只有在少数特定情况下，才允许在表达式之前使用<a href="attributes.html">外部属性</a>：</p>
 <ul>
 <li>在被当作<a href="statements.html">语句</a>用的表达式之前。</li>
-<li><a href="expressions/array-expr.html">数组表达式</a>、<a href="expressions/tuple-expr.html">元组表达式</a>、<a href="expressions/call-expr.html">调用表达式</a>、<a href="expressions/struct-expr.html">元组结构体</a>表达式、<a href="expressions/enum-variant-expr.html">枚举变体</a> 表达式这些中的元素。<!-- These were likely stabilized inadvertently. See https://github.com/rust-lang/rust/issues/32796 and https://github.com/rust-lang/rust/issues/15701 -->
+<li><a href="expressions/array-expr.html">数组表达式</a>、<a href="expressions/tuple-expr.html">元组表达式</a>、<a href="expressions/call-expr.html">调用表达式</a>、<a href="expressions/struct-expr.html">元组结构体(tuple-style struct)</a>表达式、<a href="expressions/enum-variant-expr.html">枚举变体</a> 表达式这些中的元素。<!-- 这些可能在无意中稳定下来了。参见 https://github.com/rust-lang/rust/issues/32796 和 https://github.com/rust-lang/rust/issues/15701 -->
 </li>
 <li><a href="expressions/block-expr.html">块表达式</a>的尾部表达式(tail expression)。</li>
 </ul>
@@ -5945,8 +5947,14 @@ let b: &amp;[i32];
 <p>在下面情形之前是不允许的：</p>
 <ul>
 <li><a href="expressions/range-expr.html">区间(Range)</a>表达式。</li>
-<li>二元运算符表达式(<a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators"><em>ArithmeticOrLogicalExpression</em></a>、<a href="expressions/operator-expr.html#comparison-operators"><em>ComparisonExpression</em></a>、<a href="expressions/operator-expr.html#lazy-boolean-operators"><em>LazyBooleanExpression</em></a>、<a href="expressions/operator-expr.html#type-cast-expressions"><em>TypeCastExpression</em></a>、<a href="expressions/operator-expr.html#assignment-expressions"><em>AssignmentExpression</em></a>、<a href="expressions/operator-expr.html#compound-assignment-expressions"><em>CompoundAssignmentExpression</em></a>)。</li>
+<li>二元运算符表达式（<a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators"><em>ArithmeticOrLogicalExpression</em></a>、<a href="expressions/operator-expr.html#comparison-operators"><em>ComparisonExpression</em></a>、<a href="expressions/operator-expr.html#lazy-boolean-operators"><em>LazyBooleanExpression</em></a>、<a href="expressions/operator-expr.html#type-cast-expressions"><em>TypeCastExpression</em></a>、<a href="expressions/operator-expr.html#assignment-expressions"><em>AssignmentExpression</em></a>、<a href="expressions/operator-expr.html#compound-assignment-expressions"><em>CompoundAssignmentExpression</em></a>）。</li>
 </ul>
+<div class="footnote-definition" id="译者注1"><sup class="footnote-definition-label">1</sup>
+<p>通俗理解“求值”，可以理解为：一方面可以从表达式求出值，另一方面可以为表达式赋值。</p>
+</div>
+<div class="footnote-definition" id="译者注2"><sup class="footnote-definition-label">2</sup>
+<p>译者暂时还未用代码测试这种例外情况。</p>
+</div>
 <!-- 2020-11-7-->
 <!-- checked -->
 <h1><a class="header" href="#literal-expressions" id="literal-expressions">Literal expressions</a></h1>
@@ -5954,7 +5962,7 @@ let b: &amp;[i32];
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/literal-expr.md">literal-expr.md</a><br />
 commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本章译文最后维护日期：2020-10-24</p>
+本章译文最后维护日期：2020-11-11</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -5969,7 +5977,7 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
    | <a href="expressions/../tokens.html#floating-point-literals">FLOAT_LITERAL</a><br />
    | <a href="expressions/../tokens.html#boolean-literals">BOOLEAN_LITERAL</a></p>
 </blockquote>
-<p><em>字面量表达式</em>由上面的句法规则里给定的任一<a href="expressions/../tokens.html#literals">字面量</a>形式组成。它直接描述一个数字、字符、字符串或布尔值。</p>
+<p><em>字面量表达式</em>由<a href="expressions/../tokens.html#literals">字面量</a>里讲过的任一形式组成。它直接描述一个数字、字符、字符串或布尔值。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -5978,7 +5986,7 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 5;         // 整型
 <span class="boring">}
 </span></code></pre></pre>
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 <!-- 2020-11-7-->
 <!-- checked -->
 <h1><a class="header" href="#path-expressions" id="path-expressions">Path expressions</a></h1>
@@ -5986,7 +5994,7 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/path-expr.md">path-expr.md</a><br />
 commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本章译文最后维护日期：2020-10-24</p>
+本章译文最后维护日期：2020-11-11</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -5994,7 +6002,7 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
       <a href="expressions/../paths.html#paths-in-expressions"><em>PathInExpression</em></a><br />
    | <a href="expressions/../paths.html#qualified-paths"><em>QualifiedPathInExpression</em></a></p>
 </blockquote>
-<p>被用做表达式上下文的<a href="expressions/../paths.html">路径</a>表示局部变量或数据项。解析为局部变量或静态变量的路径表达式是<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>，其他路径是<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>。使用 <a href="expressions/../items/static-items.html#mutable-statics"><code>static mut</code></a> 变量需要引入 <a href="expressions/block-expr.html#unsafe-blocks"><code>unsafe</code>块</a>。</p>
+<p><a href="expressions/../paths.html">路径</a>被用做表达式上下文时表示局部变量或数据项。解析为局部变量或静态变量的路径表达式是<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>，其他路径是<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>。使用 <a href="expressions/../items/static-items.html#mutable-statics"><code>static mut</code></a>变量需在 <a href="expressions/block-expr.html#unsafe-blocks"><code>unsafe</code>块</a>中。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6018,7 +6026,7 @@ let slice_reverse = &lt;[i32]&gt;::reverse;
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/block-expr.md">block-expr.md</a><br />
 commit: 6b90080371ff44d0074a465945dfdb0de4b50774 <br />
-本章译文最后维护日期：2020-10-25</p>
+本章译文最后维护日期：2020-11-11</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6032,10 +6040,10 @@ commit: 6b90080371ff44d0074a465945dfdb0de4b50774 <br />
    | <a href="expressions/../statements.html"><em>Statement</em></a><sup>+</sup> <a href="expressions/../expressions.html"><em>ExpressionWithoutBlock</em></a><br />
    | <a href="expressions/../expressions.html"><em>ExpressionWithoutBlock</em></a></p>
 </blockquote>
-<p><em>块表达式</em>或<em>块</em>是数据项和变量声明的控制流表达式和匿名命名空间作用域。作为控制流表达式，块按顺序执行其非数据项声明的语句组件，最后执行可选的尾部表达式(final expression)。作为一个匿名命名空间作用域，在本块内声明的数据项只在块本身围成的作用域内有效，而块内由 <code>let</code>语句声明的变量的作用域为下一条语句到块尾。</p>
+<p><em>块表达式</em>或<em>块</em>是一个控制流表达式(control flow expression)，同时也是数据项声明和变量声明的匿名命名空间作用域。作为控制流表达式，块按顺序执行其非数据项声明的语句组件，最后执行可选的最终表达式(final expression)。作为一个匿名命名空间作用域，在本块内声明的数据项只在块本身围成的作用域内有效，而块内由 <code>let</code>语句声明的变量的作用域为下一条语句到块尾。</p>
 <p>块的书写形式为：先是一个 <code>{</code>，然后是<a href="expressions/../attributes.html">内部属性</a>，再后是各条<a href="expressions/../statements.html">语句</a>，再后是一个可选表达式，最后是一个 <code>}</code>。语句之间通常需要后跟分号，但有两个例外。数据项声明语句不需要后跟分号；表达式语句通常需要后面的分号，但它的外层表达式是控制流表达式时不需要。此外，允许在语句之间使用额外的分号，但是这些分号并不影响语义。</p>
-<p>在对块表达式求值时，除了数据项声明语句外，每个语句都是按顺序执行的。如果给出了块尾的可选的尾部表达式(final expression)，则最后会执行它。</p>
-<p>块的类型是最此块的尾部表达式(final expression)的类型，但如果省略了尾部表达式，则块的类型为 <code>()</code>。</p>
+<p>在对块表达式求值时，除了数据项声明语句外，每个语句都是按顺序执行的。如果给出了块尾的可选的最终表达式(final expression)，则最后会执行它。</p>
+<p>块的类型是最此块的最终表达式(final expression)的类型，但如果省略了最终表达式，则块的类型为 <code>()</code>。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6055,7 +6063,7 @@ assert_eq!(5, five);
 <blockquote>
 <p>注意：作为控制流表达式，如果块表达式是一个表达式语句的外层表达式，则该块表达式的预期类型为 <code>()</code> ，除非该块后面紧跟着一个分号。（译者注：译者怀疑源文档这里写错了，所以这里先直译，同时提供原文：Note: As a control flow expression, if a block expression is the outer expression of an expression statement, the expected type is <code>()</code> unless it is followed immediately by a semicolon.）</p>
 </blockquote>
-<p>块总是<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>，并会在值表达式上下文中对尾部表达式求值。如果确实有需要，块可以用于强制移动值。例如，下面的示例在调用 <code>consume_self</code> 时失败，因为结构体已经在之前的块表达式里被从 <code>s</code> 里移出了。</p>
+<p>块总是<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>，并会在值表达式上下文中对最终表达式求值。如果确实有需要，块可以用于强制移动值。例如，下面的示例在调用 <code>consume_self</code> 时失败，因为结构体已经在之前的块表达式里被从 <code>s</code> 里移出了。</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6084,7 +6092,7 @@ fn move_by_block_expression() {
 <em>AsyncBlockExpression</em> :<br />
    <code>async</code> <code>move</code><sup>?</sup> <em>BlockExpression</em></p>
 </blockquote>
-<p>*异步块(async block)*是求值为 <em>future</em> 的块表达式。块的尾部表达式（如果存在）决定了 future 的结果值。（译者注：单词future对应中文为“未来”。原文里，作为类型的 future 和字面意义上的 future 经常混用，所以译者基本保留此单词不翻译，特别强调“未来”的意义时也会加上其英文单词。）</p>
+<p>*异步块(async block)*是求值为 <em>future</em> 的块表达式。块的最终表达式（如果存在）决定了 future 的结果值。（译者注：单词future对应中文为“未来”。原文里，作为类型的 future 和字面意义上的 future 经常混用，所以译者基本保留此单词不翻译，特别强调“未来”的意义时也会加上其英文单词。）</p>
 <p>执行一个异步块类似于执行一个闭包表达式：它的即时效应是生成并返回一个匿名类型。类似闭包返回的类型实现了一个或多个 <a href="https://doc.rust-lang.org/std/ops/trait.Fn.html"><code>std::ops::Fn</code></a> trait，异步块返回的类型实现了 <a href="https://doc.rust-lang.org/std/future/trait.Future.html"><code>std::future::Future</code></a> trait。此类型的实际数据格式规范还未确定下来。</p>
 <blockquote>
 <p><strong>注意：</strong> rustc 生成的 future类型大致相当于一个枚举，rustc 为这个 future 的每个 <code>await</code> 点生成一个此枚举的变体，其中每个变体都存储了对应点再次恢复执行时需要的数据。</p>
@@ -6160,7 +6168,7 @@ out from an async block. Therefore the following is illegal:
 }
 <span class="boring">}
 </span></code></pre></pre>
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 <!-- 2020-11-7-->
 <!-- checked -->
 <h1><a class="header" href="#操作符运算符表达式" id="操作符运算符表达式">操作符/运算符表达式</a></h1>
@@ -6566,7 +6574,7 @@ assert_eq!(x, 14);
 <div class="footnote-definition" id="译者注"><sup class="footnote-definition-label">1</sup>
 <p>截断，即一个值范围较大的变量A转换为值范围较小的变量B，如果超出范围，则将A减去B的区间长度。例如，128超出了i8类型的范围（-128,127），截断之后的值等于128-256=-128。</p>
 </div>
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 <!-- 2020-11-7-->
 <!-- checked -->
 <h1><a class="header" href="#grouped-expressions" id="grouped-expressions">Grouped expressions</a></h1>
@@ -6685,7 +6693,7 @@ arr[10];                  // 告警：索引越界
 <span class="boring">}
 </span></code></pre></pre>
 <p>数组索引表达式可以被数组和切片片以外的类型通过实现 <a href="https://doc.rust-lang.org/std/ops/trait.Index.html">Index</a> trait 和 <a href="https://doc.rust-lang.org/std/ops/trait.IndexMut.html">IndexMut</a> trait 来实现。</p>
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 <!-- 2020-11-7-->
 <!-- checked -->
 <h1><a class="header" href="#tuple-and-tuple-indexing-expressions" id="tuple-and-tuple-indexing-expressions">Tuple and tuple indexing expressions</a></h1>
@@ -6742,7 +6750,7 @@ let unit_x = Point(1.0, 0.0);
 assert_eq!(unit_x.0, 1.0);
 <span class="boring">}
 </span></code></pre></pre>
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 <!-- 2020-11-7-->
 <!-- checked -->
 <h1><a class="header" href="#struct-expressions" id="struct-expressions">Struct expressions</a></h1>
@@ -6984,7 +6992,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>更多细节和动机说明请参考<a href="https://github.com/rust-lang/rfcs/blob/master/text/0132-ufcs.md">RFC 132</a>。</p>
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 <!-- 2020-11-7-->
 <!-- checked -->
 <h1><a class="header" href="#method-call-expressions" id="method-call-expressions">Method-call expressions</a></h1>
@@ -7048,7 +7056,7 @@ fn main() {
 <div class="warning">
 <p><em><strong>警告：</strong></em> 对于 <a href="expressions/../types/trait-object.html">trait对象</a>，如果有一个与 trait方法同名的固有方法，那么当尝试在方法调用表达式中调用该方法时，将编译报错。此时，可以使用<a href="expressions/call-expr.html#disambiguating-function-calls">消除函数调用歧义的句法</a>来明确调用语义。在 trait对象上使用消除函数调用歧义的句法，将只能调用 trait方法，无法调用固有方法。所以只要不在 trait对象上定义和 trait方法同名的固有方法就不会碰到这种麻烦。</p>
 </div>
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 <!-- 2020-11-7-->
 <!-- checked -->
 <h1><a class="header" href="#field-access-expressions" id="field-access-expressions">Field access expressions</a></h1>
@@ -7090,7 +7098,7 @@ let c: &amp;String = &amp;x.f2;         // 可以被再次借用
 let d: String = x.f3;           // 从 x.f3 中移出
 <span class="boring">}
 </span></code></pre></pre>
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 <!-- 2020-11-7-->
 <!-- checked -->
 <h1><a class="header" href="#closure-expressions" id="closure-expressions">Closure expressions</a></h1>
@@ -7137,7 +7145,7 @@ ten_times(move |j| println!(&quot;{}, {}&quot;, word, j));
 <h2><a class="header" href="#attributes-on-closure-parameters" id="attributes-on-closure-parameters">Attributes on closure parameters</a></h2>
 <h2><a class="header" href="#闭包参数上的属性" id="闭包参数上的属性">闭包参数上的属性</a></h2>
 <p>闭包参数上的属性遵循与<a href="expressions/../items/functions.html#attributes-on-function-parameters">常规函数参数</a>上相同的规则和限制。</p>
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 <!-- 2020-11-7-->
 <!-- checked -->
 <h1><a class="header" href="#loops" id="loops">Loops</a></h1>
@@ -7373,7 +7381,7 @@ assert_eq!(result, 13);
 <span class="boring">}
 </span></code></pre></pre>
 <p>如果 <code>loop</code> 有关联的 <code>break</code>，则不认为该循环是发散的，并且 <code>loop</code>表达式的类型必须与每个 <code>break</code>表达式的类型兼容。不后跟表达式的 <code>break</code> 被认为与后跟 <code>()</code> 的<code>break</code>表达式的效果相同。</p>
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 <!-- 2020-11-7-->
 <!-- checked -->
 <h1><a class="header" href="#range-expressions" id="range-expressions">Range expressions</a></h1>
@@ -10264,7 +10272,7 @@ let declared_last = PrintOnDrop(&quot;在外层作用域内最先销毁&quot;);
 </ul>
 <blockquote>
 <p><strong>注意</strong>：</p>
-<p>在函数体的尾部表达式(final expression)中创建的临时变量会在任何命名变量销毁<em>之后</em>销毁，因为这里没有更小的封闭它的临时作用域。</p>
+<p>在函数体的最终表达式(final expression)中创建的临时变量会在任何命名变量销毁<em>之后</em>销毁，因为这里没有更小的封闭它的临时作用域。</p>
 <p>匹配表达式的<a href="glossary.html#scrutinee">检验对象</a>表达式不是一个临时作用域，因此可以在匹配(<code>match</code>)表达式之后销毁检验对象表达式中的临时作用域。例如，<code>match 1 { ref mut z =&gt; z };</code> 中的 <code>1</code> 所在的临时变量一直存活到此语句结束。</p>
 </blockquote>
 <p>一些示例：</p>
@@ -10365,7 +10373,7 @@ println!(&quot;{}&quot;, x);
 <li>初始化表达式(initializer expression)。</li>
 <li>扩展临时作用域的<a href="expressions/operator-expr.html#borrow-operators">借用表达式</a>的操作数。</li>
 <li>扩展临时作用域的<a href="expressions/array-expr.html#array-expressions">数组</a>、<a href="expressions/operator-expr.html#type-cast-expressions">强制转换(cast)</a>、<a href="expressions/struct-expr.html">花括号括起来的结构体</a>或<a href="expressions/tuple-expr.html#tuple-expressions">元组</a>表达式的操作数。</li>
-<li>任何扩展临时作用域的<a href="expressions/block-expr.html">块表达式</a>的尾部表达式(final expression);</li>
+<li>任何扩展临时作用域的<a href="expressions/block-expr.html">块表达式</a>的最终表达式(final expression);</li>
 </ul>
 <p>因此，在 <code>&amp;mut 0</code>、<code>(&amp;1, &amp;mut 2)</code> 和 <code>Some { 0: &amp;mut 3 }</code> 中的借用表达式都是扩展临时作用域的表达式。在 <code>&amp;0 + &amp;1</code> 和一些 <code>Some(&amp;mut 0)</code> 中的借用不是：它们在句法上是函数调用表达式。</p>
 <p>任何扩展了临时作用域的借用表达式的操作数的临时作用域都随此表达式的临时作用域的扩展而扩展。</p>
@@ -11716,7 +11724,7 @@ A type is uninhabited if it has no constructors and therefore can never be insta
 <li>evaluation：求值、计算</li>
 <li>feature：特性</li>
 <li>field： 字段</li>
-<li>final expression： 尾部表达式</li>
+<li>final expression： 最终表达式</li>
 <li>follow-set： 随集</li>
 <li>fragment specifier：片段分类符</li>
 <li>grammar：语法、文法</li>

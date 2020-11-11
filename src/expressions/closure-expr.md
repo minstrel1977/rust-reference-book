@@ -53,7 +53,7 @@ ten_times(move |j| println!("{}, {}", word, j));
 [closure traits]: ../types/closure.md#call-traits-and-coercions
 [`Send`]: ../special-types-and-traits.md#send
 [`Sync`]: ../special-types-and-traits.md#sync
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 [block]: block-expr.md
 [function definitions]: ../items/functions.md
 [patterns]: ../patterns.md

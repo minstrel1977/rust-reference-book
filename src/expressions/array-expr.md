@@ -78,7 +78,7 @@ arr[10];                  // 告警：索引越界
 [slice]: https://doc.rust-lang.org/types/slice.md
 [constant item]: ../items/constant-items.md
 [`Copy`]: ../special-types-and-traits.md#copy
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 [IndexMut]: https://doc.rust-lang.org/std/ops/trait.IndexMut.html
 [Index]: https://doc.rust-lang.org/std/ops/trait.Index.html
 [Inner attributes]: ../attributes.md

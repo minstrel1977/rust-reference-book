@@ -3,7 +3,7 @@
 
 >[literal-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/literal-expr.md)\
 >commit: b0e0ad6490d6517c19546b1023948986578fc378 \
->本章译文最后维护日期：2020-10-24
+>本章译文最后维护日期：2020-11-11
 
 > **<sup>句法</sup>**\
 > _LiteralExpression_ :\
@@ -17,7 +17,7 @@
 > &nbsp;&nbsp; | [FLOAT_LITERAL]\
 > &nbsp;&nbsp; | [BOOLEAN_LITERAL]
 
-*字面量表达式*由上面的句法规则里给定的任一[字面量][literal]形式组成。它直接描述一个数字、字符、字符串或布尔值。
+*字面量表达式*由[字面量][literal]里讲过的任一形式组成。它直接描述一个数字、字符、字符串或布尔值。
 
 ```rust
 "hello";   // 字符串类型
@@ -26,7 +26,7 @@
 ```
 
 [literal]: ../tokens.md#literals
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 [CHAR_LITERAL]: ../tokens.md#character-literals
 [STRING_LITERAL]: ../tokens.md#string-literals
 [RAW_STRING_LITERAL]: ../tokens.md#raw-string-literals

@@ -252,7 +252,7 @@ assert_eq!(result, 13);
 如果 `loop` 有关联的 `break`，则不认为该循环是发散的，并且 `loop`表达式的类型必须与每个 `break`表达式的类型兼容。不后跟表达式的 `break` 被认为与后跟 `()` 的`break`表达式的效果相同。
 
 [`!`]: ../types/never.md
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 [LIFETIME_OR_LABEL]: ../tokens.md#lifetimes-and-loop-labels
 [_BlockExpression_]: block-expr.md
 [_Expression_]: ../expressions.md

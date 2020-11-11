@@ -179,7 +179,7 @@ commit: 646ef8d240a798da5891deb5dbdbebe557f878b8 <br />
 <p>这两个属性都可以在<a href="../items/functions.html">函数</a>上使用。当这类属性应用于 <a href="../items/traits.html">trait</a> 中的函数上时，它们只在那些没有被 trait实现所覆盖的默认函数上生效，而不是所有 trait实现中用到的函数上都生效。这两属性对 trait 中那些没有函数体的函数没有影响。</p>
 <h3><a class="header" href="#the-inline-attribute" id="the-inline-attribute">The <code>inline</code> attribute</a></h3>
 <h3><a class="header" href="#内联inline属性" id="内联inline属性">内联(<code>inline</code>)属性</a></h3>
-<p><code>inline</code>*<a href="../attributes.html">属性</a>*的意义是暗示在调用者(caller)中放置此（属性限定的）函数的副本，而不是在定义此（属性限定的）函数的地方生此函数的代码，然后去让别处代码来调用此函数。</p>
+<p><em><code>inline</code><a href="../attributes.html">属性</a></em> 的意义是暗示在调用者(caller)中放置此（属性限定的）函数的副本，而不是在定义此（属性限定的）函数的地方生此函数的代码，然后去让别处代码来调用此函数。</p>
 <blockquote>
 <p><em><strong>注意</strong></em>：<code>rustc</code> 编译器会根据启发式算法(internal heuristics)<sup class="footnote-reference"><a href="#译者注1">1</a></sup>自动内联函数。不正确的内联函数会使程序变慢，所以应该小心使用此属性。</p>
 </blockquote>
@@ -194,13 +194,13 @@ commit: 646ef8d240a798da5891deb5dbdbebe557f878b8 <br />
 </blockquote>
 <h3><a class="header" href="#the-cold-attribute" id="the-cold-attribute">The <code>cold</code> attribute</a></h3>
 <h3><a class="header" href="#cold属性" id="cold属性"><code>cold</code>属性</a></h3>
-<p><code>cold</code>*<a href="../attributes.html">属性</a>*暗示此（属性限定的）函数不太可能被调用。</p>
+<p><em><code>cold</code><a href="../attributes.html">属性</a></em> 暗示此（属性限定的）函数不太可能被调用。</p>
 <h2><a class="header" href="#the-no_builtins-attribute" id="the-no_builtins-attribute">The <code>no_builtins</code> attribute</a></h2>
 <h2><a class="header" href="#no_builtins属性" id="no_builtins属性"><code>no_builtins</code>属性</a></h2>
-<p><code>no_builtins</code>*<a href="../attributes.html">属性</a>*可以应用在 crate 级别，用以禁用对假定存在的库函数调用的某些代码模式优化。<sup class="footnote-reference"><a href="#译者注2">2</a></sup></p>
+<p><em><code>no_builtins</code><a href="../attributes.html">属性</a></em> 可以应用在 crate 级别，用以禁用对假定存在的库函数调用的某些代码模式优化。<sup class="footnote-reference"><a href="#译者注2">2</a></sup></p>
 <h2><a class="header" href="#the-target_feature-attribute" id="the-target_feature-attribute">The <code>target_feature</code> attribute</a></h2>
 <h2><a class="header" href="#target_feature属性" id="target_feature属性"><code>target_feature</code>属性</a></h2>
-<p><code>target_feature</code>*[属性]*可应用于<a href="../unsafe-functions.html">非安全(unsafe)函数</a>上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 <code>enable</code>键，其对应值是一个逗号分隔的由平台特性名字组成的符串。</p>
+<p><em><code>target_feature</code>[属性]</em> 可应用于<a href="../unsafe-functions.html">非安全(unsafe)函数</a>上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 <code>enable</code>键，其对应值是一个逗号分隔的由平台特性名字组成的符串。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

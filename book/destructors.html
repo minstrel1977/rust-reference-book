@@ -312,7 +312,7 @@ let declared_last = PrintOnDrop(&quot;在外层作用域内最先销毁&quot;);
 </ul>
 <blockquote>
 <p><strong>注意</strong>：</p>
-<p>在函数体的尾部表达式(final expression)中创建的临时变量会在任何命名变量销毁<em>之后</em>销毁，因为这里没有更小的封闭它的临时作用域。</p>
+<p>在函数体的最终表达式(final expression)中创建的临时变量会在任何命名变量销毁<em>之后</em>销毁，因为这里没有更小的封闭它的临时作用域。</p>
 <p>匹配表达式的<a href="glossary.html#scrutinee">检验对象</a>表达式不是一个临时作用域，因此可以在匹配(<code>match</code>)表达式之后销毁检验对象表达式中的临时作用域。例如，<code>match 1 { ref mut z =&gt; z };</code> 中的 <code>1</code> 所在的临时变量一直存活到此语句结束。</p>
 </blockquote>
 <p>一些示例：</p>
@@ -413,7 +413,7 @@ println!(&quot;{}&quot;, x);
 <li>初始化表达式(initializer expression)。</li>
 <li>扩展临时作用域的<a href="expressions/operator-expr.html#borrow-operators">借用表达式</a>的操作数。</li>
 <li>扩展临时作用域的<a href="expressions/array-expr.html#array-expressions">数组</a>、<a href="expressions/operator-expr.html#type-cast-expressions">强制转换(cast)</a>、<a href="expressions/struct-expr.html">花括号括起来的结构体</a>或<a href="expressions/tuple-expr.html#tuple-expressions">元组</a>表达式的操作数。</li>
-<li>任何扩展临时作用域的<a href="expressions/block-expr.html">块表达式</a>的尾部表达式(final expression);</li>
+<li>任何扩展临时作用域的<a href="expressions/block-expr.html">块表达式</a>的最终表达式(final expression);</li>
 </ul>
 <p>因此，在 <code>&amp;mut 0</code>、<code>(&amp;1, &amp;mut 2)</code> 和 <code>Some { 0: &amp;mut 3 }</code> 中的借用表达式都是扩展临时作用域的表达式。在 <code>&amp;0 + &amp;1</code> 和一些 <code>Some(&amp;mut 0)</code> 中的借用不是：它们在句法上是函数调用表达式。</p>
 <p>任何扩展了临时作用域的借用表达式的操作数的临时作用域都随此表达式的临时作用域的扩展而扩展。</p>

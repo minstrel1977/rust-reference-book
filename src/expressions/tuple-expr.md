@@ -56,7 +56,7 @@ assert_eq!(unit_x.0, 1.0);
 [Tuples]: ../types/tuple.md
 [struct tuples]: ../items/structs.md
 [decimal literal]: ../tokens.md#integer-literals
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 [Inner attributes]: ../attributes.md
 [TUPLE_INDEX]: ../tokens.md#tuple-index
 [_Expression_]: ../expressions.md

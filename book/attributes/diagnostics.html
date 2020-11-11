@@ -355,7 +355,7 @@ impl Trait for i32 {
 </span></code></pre></pre>
 <p>当在 trait实现里的函数上使用 <code>must_use</code>属性时，此属性将被忽略。</p>
 <blockquote>
-<p>注意：包含了此（属性应用的数据项产生的值）的普通空操作(no-op)表达式不会违反该 lint。例如，将此类值包装在没有实现 <a href="../special-types-and-traits.html#drop"><code>Drop</code></a> 的类型中，然后不使用该类型，并成为未使用的<a href="../expressions/block-expr.html">块表达式</a>的尾部表达式(final expression)。</p>
+<p>注意：包含了此（属性应用的数据项产生的值）的普通空操作(no-op)表达式不会违反该 lint。例如，将此类值包装在没有实现 <a href="../special-types-and-traits.html#drop"><code>Drop</code></a> 的类型中，然后不使用该类型，并成为未使用的<a href="../expressions/block-expr.html">块表达式</a>的最终表达式(final expression)。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

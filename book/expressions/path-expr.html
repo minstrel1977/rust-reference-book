@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/path-expr.md">path-expr.md</a><br />
 commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本章译文最后维护日期：2020-10-24</p>
+本章译文最后维护日期：2020-11-11</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -178,7 +178,7 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
       <a href="../paths.html#paths-in-expressions"><em>PathInExpression</em></a><br />
    | <a href="../paths.html#qualified-paths"><em>QualifiedPathInExpression</em></a></p>
 </blockquote>
-<p>被用做表达式上下文的<a href="../paths.html">路径</a>表示局部变量或数据项。解析为局部变量或静态变量的路径表达式是<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>，其他路径是<a href="../expressions.html#place-expressions-and-value-expressions">值表达式</a>。使用 <a href="../items/static-items.html#mutable-statics"><code>static mut</code></a> 变量需要引入 <a href="block-expr.html#unsafe-blocks"><code>unsafe</code>块</a>。</p>
+<p><a href="../paths.html">路径</a>被用做表达式上下文时表示局部变量或数据项。解析为局部变量或静态变量的路径表达式是<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>，其他路径是<a href="../expressions.html#place-expressions-and-value-expressions">值表达式</a>。使用 <a href="../items/static-items.html#mutable-statics"><code>static mut</code></a>变量需在 <a href="block-expr.html#unsafe-blocks"><code>unsafe</code>块</a>中。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

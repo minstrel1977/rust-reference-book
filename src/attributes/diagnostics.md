@@ -195,7 +195,7 @@ impl Trait for i32 {
 
 当在 trait实现里的函数上使用 `must_use`属性时，此属性将被忽略。
 
-> 注意：包含了此（属性应用的数据项产生的值）的普通空操作(no-op)表达式不会违反该 lint。例如，将此类值包装在没有实现 [`Drop`] 的类型中，然后不使用该类型，并成为未使用的[块表达式][block expression]的尾部表达式(final expression)。
+> 注意：包含了此（属性应用的数据项产生的值）的普通空操作(no-op)表达式不会违反该 lint。例如，将此类值包装在没有实现 [`Drop`] 的类型中，然后不使用该类型，并成为未使用的[块表达式][block expression]的最终表达式(final expression)。
 >
 > ```rust
 > #[must_use]

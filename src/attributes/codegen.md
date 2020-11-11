@@ -17,7 +17,7 @@
 ### The `inline` attribute
 ### 内联(`inline`)属性
 
-`inline`*[属性][attribute]*的意义是暗示在调用者(caller)中放置此（属性限定的）函数的副本，而不是在定义此（属性限定的）函数的地方生此函数的代码，然后去让别处代码来调用此函数。
+*`inline`[属性][attribute]* 的意义是暗示在调用者(caller)中放置此（属性限定的）函数的副本，而不是在定义此（属性限定的）函数的地方生此函数的代码，然后去让别处代码来调用此函数。
 
 > ***注意***：`rustc` 编译器会根据启发式算法(internal heuristics)[^译者注1]自动内联函数。不正确的内联函数会使程序变慢，所以应该小心使用此属性。
 
@@ -32,17 +32,17 @@
 ### The `cold` attribute
 ### `cold`属性
 
-`cold`*[属性][attribute]*暗示此（属性限定的）函数不太可能被调用。
+*`cold`[属性][attribute]* 暗示此（属性限定的）函数不太可能被调用。
 
 ## The `no_builtins` attribute
 ## `no_builtins`属性
 
-`no_builtins`*[属性][attribute]*可以应用在 crate 级别，用以禁用对假定存在的库函数调用的某些代码模式优化。[^译者注2]
+*`no_builtins`[属性][attribute]* 可以应用在 crate 级别，用以禁用对假定存在的库函数调用的某些代码模式优化。[^译者注2]
 
 ## The `target_feature` attribute
 ## `target_feature`属性
 
-`target_feature`*[属性]*可应用于[非安全(unsafe)函数][unsafe function]上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 [_MetaListNameValueStr_]元项属性句法来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 `enable`键，其对应值是一个逗号分隔的由平台特性名字组成的符串。
+*`target_feature`[属性]* 可应用于[非安全(unsafe)函数][unsafe function]上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 [_MetaListNameValueStr_]元项属性句法来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 `enable`键，其对应值是一个逗号分隔的由平台特性名字组成的符串。
 
 ```rust
 # #[cfg(target_feature = "avx2")]

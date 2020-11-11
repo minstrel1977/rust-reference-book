@@ -42,7 +42,7 @@ let d: String = x.f3;           // 从 x.f3 中移出
 
 [`Drop`]: ../special-types-and-traits.md#drop
 [`Box`]: ../special-types-and-traits.md#boxt
-<!-- 上面这几个链接从原文来替换时小心 -->
+<!-- 上面这几个链接从原文来替换时需小心 -->
 [_Expression_]: ../expressions.md
 [IDENTIFIER]: ../identifiers.md
 [method call expression]: method-call-expr.md
