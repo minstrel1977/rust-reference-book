@@ -121,11 +121,6 @@ unsafe fn foo_avx2() {}
 
 请参阅 [`target_feature`-条件编译选项][`target_feature` conditional compilation option]，了解如何基于编译时的设置来有选择地启用或禁用对某些代码的编译。注意，条件编译选项不受 `target_feature`属性的影响，只是被整个 crate 启用的特性所驱动。
 
-> Note: `rustc` has a default set of features enabled for each target and CPU.
-> The CPU may be chosen with the [`-C target-cpu`] flag. Individual features
-> may be enabled or disabled for an entire crate with the
-> [`-C target-feature`] flag.
-
 有关 x86 平台上的运行时特性检测，请参阅标准库中的 [`is_x86_feature_detected`]宏。
 
 > 注意：`rustc` 为每个编译目标和 CPU 启用了一组默认特性。编译时，可以使用命令行参数 [`-C target-cpu`] 选择目标 CPU。可以通过命令行参数 [`-C target-feature`] 来为整个 crate 启用或禁用某些单独的特性。

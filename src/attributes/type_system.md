@@ -3,7 +3,7 @@
 
 >[type_system.md](https://github.com/rust-lang/reference/blob/master/src/attributes/type_system.md)\
 >commit: 363a64a939bf246d7373776826e14065e912131f \
->本章译文最后维护日期：2020-10-24
+>本章译文最后维护日期：2020-11-11
 
 以下[属性][attributes]用于改变类型的使用方式。
 
@@ -62,10 +62,10 @@ match message {
 
 在定义所在的 crate之外，标注为 `non_exhaustive` 的类型须在添加新字段或变体时保持向后兼容性。
 
-非穷尽类型不能在定义它的 crate 之外构建：
+非穷尽类型(non-exhaustive types)不能在定义它的 crate 之外构建：
 
-- 非穷尽变体（[结构体(`struct`)][struct]或[枚举变体(`enum` variant)][enum]）不能用 [_StructExpression_]句法规则（包括[函数更新句法][functional update syntax]）构建。
-- 但[枚举(`enum`)]实例能用 [_EnumerationVariantExpression_]句法规则构建。
+- 非穷尽变体（[结构体(`struct`)][struct]或[枚举变体(`enum` variant)][enum]）不能用 [_StructExpression_]句法（包括[函数式更新(functional update)句法][functional update syntax]）构建。
+- 但[枚举(`enum`)]实例能用 [_EnumerationVariantExpression_]句法构建。
 
 示例：（译者注：本例把上例看成本例的 `upstream` ）
 <!-- ignore: requires external crates -->
@@ -85,13 +85,13 @@ let message = Message::Send { from: 0, to: 1, contents: "foo".to_string(), };
 let message = Message::Reaction(0);
 
 // 无法构造 `Message::Quit` 的实例，
-// 如果 `upstream` 内的 `Message::Quit` 的因为添加字段变成元组变体（tuple-variant/tuple variant）后，则本地编译失败。
+// 如果 `upstream` 内的 `Message::Quit` 的因为添加字段变成元组变体(tuple-variant/tuple variant)后，则本地编译失败。
 let message = Message::Quit;
 ```
 
 在定义所在的 crate 之外对非穷尽类型进行匹配，有如下限制：
 
-- 当模式匹配一个非穷尽变体([结构体(`struct`)][struct]或[枚举变体(`enum` variant)][enum])时，必须使用 [_StructPattern_]句法规则进行匹配，其匹配臂必须有一个为 `..`。元组变体的构造函数的可见性降低为 `min($vis, pub(crate))`。
+- 当模式匹配一个非穷尽变体（[结构体(`struct`)][struct]或[枚举变体(`enum` variant)][enum]）时，必须使用 [_StructPattern_]句法进行匹配，其匹配臂必须有一个为 `..`。元组变体的构造函数的可见性降低为 `min($vis, pub(crate))`。
 - 当模式匹配在一个非穷尽的[枚举(`enum`)][enum]上时，增加对单个变体的匹配无助于匹配臂需满足枚举变体的穷尽性(exhaustiveness)的这一要求。
 
 示例：（译者注：可以把上上例看成本例的 `upstream` ）
