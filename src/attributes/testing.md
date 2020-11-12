@@ -75,5 +75,5 @@ fn mytest() {
 [`test` conditional compilation option]: ../conditional-compilation.md#test
 [attributes]: ../attributes.md
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

@@ -299,5 +299,5 @@ Rust 官方对一些平台提供了默认的目标三元组，我们可以通过
 [crate type]: linkage.md
 [static C runtime]: linkage.md#static-and-dynamic-c-runtimes
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

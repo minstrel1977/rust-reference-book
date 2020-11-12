@@ -290,5 +290,5 @@ pub fn f() {}
 [function pointer]: types/function-pointer.md
 [variadic functions]: items/external-blocks.html#variadic-functions
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

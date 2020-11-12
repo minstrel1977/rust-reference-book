@@ -188,5 +188,5 @@ mod implementation {
 
 [_SimplePath_]: paths.md#simple-paths
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

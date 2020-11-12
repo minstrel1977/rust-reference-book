@@ -315,7 +315,7 @@ fn test() {
 <div class="footnote-definition" id="译者备注"><sup class="footnote-definition-label">1</sup>
 <p>这句译者简单理解就是对已经初始化的变量再去覆写的时候要先去读一下这个变量代表的地址上的值的状态，如果有值，并且允许覆写，那 Rust 为防止内存泄漏就先执行那变量的析构行为（drop()），清空那个地址上的关联堆数据，再写入。我们这里对联合体的预设条件是此联合体值有 Copy特性，有 Copy特性了，对值的直接覆写不会造成内存泄漏，就不必调用析构行为，也不需要事先的非安全读操作了。对于这个问题<a href="https://learnku.com/docs/nomicon/2018">nomicon</a>的“未初始化内存”章有讲述，博主<a href="https://www.zhihu.com/people/crlf0710">CrLF0710</a>的两篇“学一点 Rust 内存模型会发生什么呢？”里也都有精彩讲解。</p>
 </div>
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->
 
                     </main>

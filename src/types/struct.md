@@ -24,5 +24,5 @@
 [struct expression]: ../expressions/struct-expr.md
 [visibility modifiers]: ../visibility-and-privacy.md
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

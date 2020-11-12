@@ -20,5 +20,5 @@ Rust 并不是一种极端原创的语言，它的设计元素来源广泛。下
 * NIL, Hermes：<strike>typestate</strike>
 * [Unicode Annex #31](http://www.unicode.org/reports/tr31/)：标识符和模式句法
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

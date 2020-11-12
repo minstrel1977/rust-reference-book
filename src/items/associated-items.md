@@ -346,5 +346,5 @@ fn main() {
 [path]: ../paths.md
 [regular function parameters]: functions.md#attributes-on-function-parameters
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

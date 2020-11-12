@@ -88,5 +88,5 @@ arr[10];                  // 告警：索引越界
 [constant expression]: ../const_eval.md#constant-expressions
 [memory location]: ../expressions.md#place-expressions-and-value-expressions
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

@@ -91,5 +91,5 @@ fn main() {
 [`std::ops::Fn`]: https://doc.rust-lang.org/std/ops/trait.Fn.html
 [fully-qualified syntax]: ../paths.md#qualified-paths
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

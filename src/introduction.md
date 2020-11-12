@@ -110,5 +110,5 @@
 [Notation]: notation.md
 [Discord]: https://discord.gg/rust-lang
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

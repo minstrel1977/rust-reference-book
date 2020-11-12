@@ -209,5 +209,5 @@ impl Seq<bool> for u32 {
 [fundamental types]: ../glossary.md#fundamental-type-constructors
 [uncovered type]: ../glossary.md#uncovered-type
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

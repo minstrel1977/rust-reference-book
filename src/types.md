@@ -77,12 +77,12 @@ Rust 程序中的每个变量、数据项和值都有一个类型。*值*的*类
 * 展开成类型表达式的[宏][Macros]。
 
 ### Parenthesized types
-### 组合类型
+### 圆括号组合类型
 
 > _ParenthesizedType_ :\
 > &nbsp;&nbsp; `(` [_Type_] `)`
 
-在某些情况下，类型的组合可能会产生歧义。在类型周围使用括号来避免歧义。例如，[引用类型][reference type]中的[类型边界(type boundaries)][type boundaries]列表中的 `+`运算符搞不清楚其左值的边界位置在哪里，因此需要使用括号来明确其边界。这里需要的消除歧义的文法规则就是使用 [_TypeNoBounds_] 规则替代 [_Type_] 规则。
+在某些情况下，类型的组合可能会产生歧义。可以在类型周围使用元括号来避免歧义。例如，[引用类型][reference type]中的[类型边界(type boundaries)][type boundaries]列表中的 `+`运算符搞不清楚其左值的边界位置在哪里，因此需要使用圆括号来明确其边界。这里需要的消除歧义的文法就是使用 [_TypeNoBounds_] 规则替代 [_Type_] 规则。
 
 ```rust
 # use std::any::Any;
@@ -167,5 +167,5 @@ let a: List<i32> = List::Cons(7, Box::new(List::Cons(13, Box::new(List::Nil))));
 [type parameters]: types/parameters.md
 [unions]: types/union.md
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

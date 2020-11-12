@@ -175,5 +175,5 @@ enum E {
 [primitive representation]: ../type-layout.md#primitive-representations
 [`C` representation]: ../type-layout.md#the-c-representation
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

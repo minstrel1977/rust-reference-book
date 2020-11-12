@@ -20,5 +20,5 @@
 [`enum` item]: ../items/enumerations.md
 [enumeration variant expression]: ../expressions/enum-variant-expr.md
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

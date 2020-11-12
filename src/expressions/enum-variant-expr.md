@@ -49,5 +49,5 @@ let m = Message::Move { x: 50, y: 200 };
 [_PathInExpression_]: ../paths.md#paths-in-expressions
 [structs]: struct-expr.md
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

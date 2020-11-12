@@ -17,5 +17,5 @@
 [`std::cell::RefCell<T>`]: https://doc.rust-lang.org/std/cell/struct.RefCell.html
 [`std::sync::atomic`]: https://doc.rust-lang.org/std/sync/atomic/index.html
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

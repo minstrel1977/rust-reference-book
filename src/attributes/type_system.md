@@ -135,5 +135,5 @@ match message {
 [functional update syntax]: ../expressions/struct-expr.md#functional-update-syntax
 [struct]: ../items/structs.md
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

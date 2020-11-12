@@ -295,5 +295,5 @@ why particular matchers are legal and others are not.
 [RFC 550]: https://github.com/rust-lang/rfcs/blob/master/text/0550-macro-future-proofing.md
 [tracking issue]: https://github.com/rust-lang/rust/issues/56575
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

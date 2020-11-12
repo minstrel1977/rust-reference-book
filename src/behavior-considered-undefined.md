@@ -54,5 +54,5 @@
 [`NonNull<T>`]: https://doc.rust-lang.org/core/ptr/struct.NonNull.html
 [`NonZero*`]: https://doc.rust-lang.org/core/num/index.html
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

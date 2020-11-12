@@ -133,5 +133,5 @@ let message = match maybe_digit {
 [binding mode]: ../patterns.md#binding-modes
 [scrutinee]: ../glossary.md#scrutinee
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

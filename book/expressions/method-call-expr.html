@@ -170,14 +170,15 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/method-call-expr.md">method-call-expr.md</a><br />
 commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本章译文最后维护日期：2020-10-27</p>
+本章译文最后维护日期：2020-11-12</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>MethodCallExpression</em> :<br />
    <a href="../expressions.html"><em>Expression</em></a> <code>.</code> <a href="../paths.html#paths-in-expressions"><em>PathExprSegment</em></a> <code>(</code><a href="call-expr.html"><em>CallParams</em></a><sup>?</sup> <code>)</code></p>
 </blockquote>
-<p><em>方法调用</em>由一个表达式（<em>接受者(receiver)</em>）后跟一个单点号(<code>.</code>)、一个表达式路径段(path segment)和一个圆括号封闭的的表达式列表组成。方法调用被解析为特定 trait 上的关联<a href="../items/associated-items.html#methods">方法</a>时，如果点号左边表达式有确切的已知的 <code>self</code> 类型，则会静态地分发(dispatch)给某个查找到的同名方法来执行；如果点号左边表达式是间接的 <a href="https://doc.rust-lang.org/types/trait-object.md">trait对象</a>，则会采用动态分发。</p>
+<p><em>方法调用</em>由一个表达式（<em>接受者(receiver)</em>）后跟一个单点号(<code>.</code>)、一个表达式路径段(path segment)和一个圆括号封闭的的表达式列表组成。方法调用被解析为特定 trait 上的关联<a href="../items/associated-items.html#methods">方法</a>时，如果点号左边的表达式有确切的已知的 <code>self</code>类型，则会静态地分发(statically dispatch)给在此类型下查找到的某个同名方法来执行；如果点号左边的表达式是间接的 <a href="../types/trait-object.html">trait对象</a>，则会采用动态分发(dynamically dispatch)的方式。</p>
+<p><a href="../types/trait-object.html">trait object</a>.</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -186,16 +187,16 @@ let log_pi = pi.unwrap_or(1.0).log(2.72);
 <span class="boring">assert!(1.14 &lt; log_pi &amp;&amp; log_pi &lt; 1.15)
 </span><span class="boring">}
 </span></code></pre></pre>
-<p>在查找方法调用时，为了调用某个方法，可能会自动对接受者做解引用或借用。这需要比普通函数更复杂的查找流程，因为可能需要调用许多可能的方法。具体会用到下述步骤：</p>
-<p>第一步是构建候选接受者类型的列表。通过重复对接收方表达式的类型作<a href="operator-expr.html#the-dereference-operator">解引用</a>，将遇到的每个类型添加到列表中，然后在最后再尝试进行一次<a href="../type-coercions.html#unsized-coercions">非固定尺寸类型自动强转(unsized coercion)</a>，如果成功，则将结果类型也添加到类型列表。然后，再在这个列表中的每个候选类型 <code>T</code> 后紧跟着添加 <code>&amp;T</code> 和 <code>&amp;mut T</code> 候选项。</p>
+<p>在查找方法调用时，为了调用某个方法，可能会自动对接受者做解引用或借用。这需要比其他函数更复杂的查找流程，因为这可能需要调用许多可能的方法。具体会用到下述步骤：</p>
+<p>第一步是构建候选接受者类型的列表。通过重复对接受者表达式的类型作<a href="operator-expr.html#the-dereference-operator">解引用</a>，将遇到的每个类型添加到列表中，然后在最后再尝试进行一次<a href="../type-coercions.html#unsized-coercions">非固定尺寸类型自动强转(unsized coercion)</a>，如果成功，则将结果类型也添加到此类型列表里。然后，再在这个列表中的每个候选类型 <code>T</code> 后紧跟着添加 <code>&amp;T</code> 和 <code>&amp;mut T</code> 候选项。</p>
 <p>例如，接受者的类型为 <code>Box&lt;[i32;2]&gt;</code>，则候选类型为 <code>Box&lt;[i32;2]&gt;</code>，<code>&amp;Box&lt;[i32;2]&gt;</code>，<code>&amp;mut Box&lt;[i32;2]&gt;</code>，<code>[i32; 2]</code>（通过解引用得到），<code>&amp;[i32; 2]</code>，<code>&amp;mut [i32; 2]</code>，<code>[i32]</code>（通过非固定尺寸类型自动强转得到），<code>&amp;[i32]</code>，最后是 <code>&amp;mut [i32]</code>。</p>
-<p>然后，对每个候选类型 <code>T</code>，编译器会在以下位置搜索接受者为该候选类型的一个<a href="../visibility-and-privacy.html">可见的</a>方法：</p>
+<p>然后，对每个候选类型 <code>T</code>，编译器会它的以下位置上搜索一个<a href="../visibility-and-privacy.html">可见的</a>同名方法，找到后还会把此方法所属的类型当做接受者：</p>
 <ol>
 <li><code>T</code> 的固有方法（直接在 <code>T</code> 上实现的方法）。</li>
-<li>由 <code>T</code> 实现的<a href="../visibility-and-privacy.html">可见的</a> trait 所提供的任何方法。如果 <code>T</code> 是一个类型参数，则首先查找由 <code>T</code> 上的 trait约束所提供的方法。然后查找作用域内所有其他的方法。</li>
+<li>由 <code>T</code> 已实现的<a href="../visibility-and-privacy.html">可见的</a> trait 所提供的任何方法。如果 <code>T</code> 是一个类型参数，则首先查找由 <code>T</code> 上的 trait约束所提供的方法。然后查找作用域内所有其他的方法。</li>
 </ol>
 <blockquote>
-<p>注意：查找是按顺序进行的，这有时会导致不太符合直觉的结果。下面的代码将打印 “In trait impl!”，因为首先会查找 <code>&amp;self</code> 上的方法，在找到结构体 <code>Foo</code> 的（接受者为） <code>&amp;mut self</code> 方法之前先找到（接受者为 <code>&amp;self</code> 的 <code>Bar::bar</code>）trait方法。</p>
+<p>注意：查找是按顺序进行的，这有时会导致出现不太符合直觉的结果。下面的代码将打印 “In trait impl!”，因为首先会查找 <code>&amp;self</code> 上的方法，在找到结构体 <code>Foo</code> 的（接受者类型为）<code>&amp;mut self</code> 的（固有）方法（<code>Foo::bar</code>）之前先找到（接受者类型为 <code>&amp;self</code> 的）trait方法（<code>Bar::bar</code>）。</p>
 <pre><pre class="playground"><code class="language-rust">struct Foo {}
 
 trait Bar {
@@ -220,14 +221,15 @@ fn main() {
 }
 </code></pre></pre>
 </blockquote>
-<p>如果查找导致了多个可能的候选项（译者注：比如接受者实现的两个 trait中都定义了该方法），就会导致报错，此时必须将接受者<a href="call-expr.html#disambiguating-function-calls">转换</a>为适当的接受者类型来进行方法调用。</p>
-<p>此过程不考虑接受者的可变性或生存期，也不考虑方法是否为非安全(<code>unsafe</code>)方法。一旦查找到了一个方法，如果由于其中一个（或多个）原因而不能调用它，则会报编译错误。</p>
-<p>如果碰到了某步存在多个可能性的方法，比如泛型方法之间或 trait方法之间被认为是相同的，那么它就会导致编译错误。这些情况就需要使用<a href="call-expr.html#disambiguating-function-calls">消除函数调用歧义的句法</a>为方法或函数的调用来消除歧义。</p>
+<p>如果上面这第二步查找导致了多个可能的候选类型<sup class="footnote-reference"><a href="#译者注">1</a></sup>，就会导致报错，此时必须将接受者<a href="call-expr.html#disambiguating-function-calls">转换</a>为适当的接受者类型再来进行方法调用。</p>
+<p>此方法过程不考虑接受者的可变性或生存期，也不考虑方法是否为非安全(<code>unsafe</code>)方法。一旦查找到了一个方法，如果由于这些（可变性、生存期或健全性）原因中的一个（或多个）而不能调用，则会报编译错误。</p>
+<p>如果某步碰到了存在多个可能性方法的情况，比如泛型方法之间或 trait方法之间被认为是相同的，那么它就会导致编译错误。这些情况就需要使用<a href="call-expr.html#disambiguating-function-calls">函数调用的消歧句法</a>来为方法调用或函数调用消除歧义。</p>
 <div class="warning">
-<p><em><strong>警告：</strong></em> 对于 <a href="../types/trait-object.html">trait对象</a>，如果有一个与 trait方法同名的固有方法，那么当尝试在方法调用表达式中调用该方法时，将编译报错。此时，可以使用<a href="call-expr.html#disambiguating-function-calls">消除函数调用歧义的句法</a>来明确调用语义。在 trait对象上使用消除函数调用歧义的句法，将只能调用 trait方法，无法调用固有方法。所以只要不在 trait对象上定义和 trait方法同名的固有方法就不会碰到这种麻烦。</p>
+<p><em><strong>警告：</strong></em> 对于 <a href="../types/trait-object.html">trait对象</a>，如果有一个与 trait方法同名的固有方法，那么当尝试在方法调用表达式(method call expression)中调用该方法时，将编译报错。此时，可以使用<a href="call-expr.html#disambiguating-function-calls">消除函数调用歧义的句法</a>来明确调用语义。在 trait对象上使用消除函数调用歧义的句法，将只能调用 trait方法，无法调用固有方法。所以只要不在 trait对象上定义和 trait方法同名的固有方法就不会碰到这种麻烦。</p>
 </div>
+<p><sup class="footnote-reference"><a href="#译者注">1</a></sup>：这个应该跟后面说的方法名歧义了一样，如果类型 <code>T</code> 的两个 trait 都有调用的那个方法，那此方法的调用者类型就不能确定了，就需要消歧。</p>
 <!-- 上面这几个链接从原文来替换时需小心 -->
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->
 
                     </main>

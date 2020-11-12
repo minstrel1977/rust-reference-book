@@ -31,5 +31,5 @@ let boxed_array: Box<[i32]> = Box::new([1, 2, 3]);
 [`usize`]: numeric.md#machine-dependent-integer-types
 [constant expression]: ../const_eval.md#constant-expressions
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

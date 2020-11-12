@@ -351,5 +351,5 @@ fn main() {
 [`Pin<P>`]: ../special-types-and-traits.md#pinp
 [`Rc<Self>`]: ../special-types-and-traits.md#rct
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

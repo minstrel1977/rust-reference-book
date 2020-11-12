@@ -92,5 +92,5 @@ pub fn name_in_rust() { }
 [item]: items.md
 [static]: items/static-items.md
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

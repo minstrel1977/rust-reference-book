@@ -169,8 +169,8 @@
 <h1><a class="header" href="#模式" id="模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
-commit: 840993a70813e71362dc1f640a1e7e0a9c1d3577 <br />
-本章译文最后维护日期：2020-10-28</p>
+commit: ff68c99b2b2003998b0f951fcb8dc290370a0275 <br />
+本章译文最后维护日期：2020-11-12</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -398,21 +398,6 @@ if let Some(y) = x {
 </span></code></pre></pre>
 <p>*非引用模式(Non-reference patterns)*包括<strong>除</strong>上面的绑定方式、后面的<a href="#wildcard-pattern">通配符模式</a>（<code>_</code>）、引用类型的<a href="#path-patterns">常量(<code>const</code>)模式</a>和<a href="#reference-patterns">引用模式</a>以外的所有模式。</p>
 <p>如果绑定模式(binding pattern)中没有显式地包含 <code>ref</code>、<code>ref mut</code>、<code>mut</code>，那么它将使用<em>默认绑定方式</em>来确定如何绑定变量。默认绑定方式以使用移动语义的“移动(move)”方式开始。当匹配一个模式时，编译器对模式从外到内逐层匹配。每次使用非引用模式去匹配引用值时，它都会自动解引用该引用值，并更新默认绑定方式。引用会将默认绑定方式设置为 <code>ref</code> 方式。可变引用会将模式设置为 <code>ref mut</code> 方式，除非绑定方式已经是 <code>ref</code> 了（在这种情况下它仍然是 <code>ref</code> 方式）。如果自动解引用的值仍然是引用，则会重复解引用此值。</p>
-<p>移动语义的绑定方式和引用语义的绑定方式可以在同一个模式中混合使用，这样做会导致绑定对象的部分被移走，并且之后无法再使用该对象。这只适用于类型无法拷贝的情况下。</p>
-<p>下面的示例中，<code>name</code> 被移出了 <code>person</code>，因此如果再试图把 <code>person</code> 作为一个整体使用，或再次使用 <code>person.name</code>，将会因为*部分移出(partial move)*的问题而报错。</p>
-<p>示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">struct Person {
-</span><span class="boring">   name: String,
-</span><span class="boring">   age: u8,
-</span><span class="boring">}
-</span><span class="boring">let person = Person{ name: String::from(&quot;John&quot;), age: 23 };
-</span>// 在 `age` 被引用绑定的情况下，`name` 被从 person 中移出
-let Person { name, ref age } = person;
-<span class="boring">}
-</span></code></pre></pre>
 <h2><a class="header" href="#wildcard-pattern" id="wildcard-pattern">Wildcard pattern</a></h2>
 <h2><a class="header" href="#通配符模式" id="通配符模式">通配符模式</a></h2>
 <blockquote>
@@ -733,6 +718,17 @@ assert_eq!(a, b);
 <p>元组模式匹配与子模式定义的所有条件匹配的元组值。它们还被用来<a href="#destructuring">解构</a>元组值。</p>
 <p>带有单个<a href="#rest-patterns">剩余模式</a>(<em>RestPattern</em>)的句法结构 <code>(..)</code> 是一种内部不需要逗号分割的特殊匹配结构，它可以匹配任意长度的元组。</p>
 <p>当元组模式的一个子模式是可反驳型的，那该元组模式就是可反驳型的。</p>
+<p>使用元组模式的示例：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let pair = (10, &quot;ten&quot;);
+let (a, b) = pair;
+
+assert_eq!(a, 10);
+assert_eq!(b, &quot;ten&quot;);
+<span class="boring">}
+</span></code></pre></pre>
 <h2><a class="header" href="#grouped-patterns" id="grouped-patterns">Grouped patterns</a></h2>
 <h2><a class="header" href="#分组模式" id="分组模式">分组模式</a></h2>
 <blockquote>
@@ -804,7 +800,7 @@ match v[..] {
 <p>限定路径模式只能指向关联常量。</p>
 <p>常量不能是联合体类型。结构体常量和枚举常量必须带有 <code>#[derive(PartialEq, Eq)]</code> 属性（不只是实现）。</p>
 <p>当路径模式指向结构体或枚举变体(枚举只有一个变体)或类型为不可反驳型的常量时，该路径模式是不可反驳型的。当路径模式指向的是可反驳型常量或带有多个变体的枚举时，该路径模式是可反驳型的。</p>
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->
 
                     </main>

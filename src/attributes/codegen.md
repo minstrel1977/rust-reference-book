@@ -238,5 +238,5 @@ fn calls_h() {
 [`core::panic::Location::caller`]: https://doc.rust-lang.org/core/panic/struct.Location.html#method.caller
 [`Location`]: https://doc.rust-lang.org/core/panic/struct.Location.html
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

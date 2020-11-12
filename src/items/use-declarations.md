@@ -179,5 +179,5 @@ m!(use std as _;);
 [extern prelude]: extern-crates.md#extern-prelude
 [path qualifiers]: ../paths.md#path-qualifiers
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

@@ -128,5 +128,5 @@ Rust 将关键字分为三类：
 [variants]: items/enumerations.md
 [`dyn`]: types/trait-object.md
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

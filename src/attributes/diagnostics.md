@@ -250,5 +250,5 @@ impl Trait for i32 {
 [traits]: ../items/traits.md
 [union]: ../items/unions.md
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

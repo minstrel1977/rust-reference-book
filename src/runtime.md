@@ -74,5 +74,5 @@ fn panic(info: &PanicInfo) -> ! {
 [static item]: items/static-items.md
 [subsystem]: https://msdn.microsoft.com/en-us/library/fcc1zstk.aspx
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

@@ -190,5 +190,5 @@ const RESOLVED_STATIC: &dyn Fn(&Foo, &Bar) -> &Baz = &somefunc;
 [static]: items/static-items.md
 [trait object]: types/trait-object.md
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

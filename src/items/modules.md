@@ -127,5 +127,5 @@ mod thread { // 译者注：有模块要内联进来的内联模块
 [prelude]: ../crates-and-source-files.md#preludes-and-no_std
 [the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

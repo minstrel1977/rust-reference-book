@@ -304,12 +304,12 @@ commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
 <li>展开成类型表达式的<a href="macros.html">宏</a>。</li>
 </ul>
 <h3><a class="header" href="#parenthesized-types" id="parenthesized-types">Parenthesized types</a></h3>
-<h3><a class="header" href="#组合类型" id="组合类型">组合类型</a></h3>
+<h3><a class="header" href="#圆括号组合类型" id="圆括号组合类型">圆括号组合类型</a></h3>
 <blockquote>
 <p><em>ParenthesizedType</em> :<br />
    <code>(</code> <a href="types.html#type-expressions"><em>Type</em></a> <code>)</code></p>
 </blockquote>
-<p>在某些情况下，类型的组合可能会产生歧义。在类型周围使用括号来避免歧义。例如，<a href="types/pointer.html#shared-references-">引用类型</a>中的<a href="trait-bounds.html">类型边界(type boundaries)</a>列表中的 <code>+</code>运算符搞不清楚其左值的边界位置在哪里，因此需要使用括号来明确其边界。这里需要的消除歧义的文法规则就是使用 <a href="types.html#type-expressions"><em>TypeNoBounds</em></a> 规则替代 <a href="types.html#type-expressions"><em>Type</em></a> 规则。</p>
+<p>在某些情况下，类型的组合可能会产生歧义。可以在类型周围使用元括号来避免歧义。例如，<a href="types/pointer.html#shared-references-">引用类型</a>中的<a href="trait-bounds.html">类型边界(type boundaries)</a>列表中的 <code>+</code>运算符搞不清楚其左值的边界位置在哪里，因此需要使用圆括号来明确其边界。这里需要的消除歧义的文法就是使用 <a href="types.html#type-expressions"><em>TypeNoBounds</em></a> 规则替代 <a href="types.html#type-expressions"><em>Type</em></a> 规则。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -337,7 +337,7 @@ commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
 let a: List&lt;i32&gt; = List::Cons(7, Box::new(List::Cons(13, Box::new(List::Nil))));
 <span class="boring">}
 </span></code></pre></pre>
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->
 
                     </main>

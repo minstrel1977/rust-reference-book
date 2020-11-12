@@ -80,5 +80,5 @@ for i in 1..11 {
 [std::ops::RangeInclusive]: https://doc.rust-lang.org/std/ops/struct.RangeInclusive.html
 [std::ops::RangeToInclusive]: https://doc.rust-lang.org/std/ops/struct.RangeToInclusive.html
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

@@ -264,5 +264,5 @@ assert_eq!(result, 13);
 [_LazyBooleanOperatorExpression_]: operator-expr.md#lazy-boolean-operators
 [`if let` expressions]: if-expr.md#if-let-expressions
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

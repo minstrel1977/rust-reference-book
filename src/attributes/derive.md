@@ -51,5 +51,5 @@ impl<T: PartialEq> PartialEq for Foo<T> {
 [items]: ../items.md
 [procedural macros]: ../procedural-macros.md#derive-macros
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

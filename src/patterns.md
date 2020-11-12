@@ -2,8 +2,8 @@
 # 模式
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
->commit: 840993a70813e71362dc1f640a1e7e0a9c1d3577 \
->本章译文最后维护日期：2020-10-28
+>commit: ff68c99b2b2003998b0f951fcb8dc290370a0275 \
+>本章译文最后维护日期：2020-11-12
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\
@@ -244,22 +244,6 @@ if let Some(y) = x {
 *非引用模式(Non-reference patterns)*包括**除**上面的绑定方式、后面的[通配符模式](#wildcard-pattern)（`_`）、引用类型的[常量(`const`)模式](#path-patterns)和[引用模式](#reference-patterns)以外的所有模式。
 
 如果绑定模式(binding pattern)中没有显式地包含 `ref`、`ref mut`、`mut`，那么它将使用*默认绑定方式*来确定如何绑定变量。默认绑定方式以使用移动语义的“移动(move)”方式开始。当匹配一个模式时，编译器对模式从外到内逐层匹配。每次使用非引用模式去匹配引用值时，它都会自动解引用该引用值，并更新默认绑定方式。引用会将默认绑定方式设置为 `ref` 方式。可变引用会将模式设置为 `ref mut` 方式，除非绑定方式已经是 `ref` 了（在这种情况下它仍然是 `ref` 方式）。如果自动解引用的值仍然是引用，则会重复解引用此值。
-
-移动语义的绑定方式和引用语义的绑定方式可以在同一个模式中混合使用，这样做会导致绑定对象的部分被移走，并且之后无法再使用该对象。这只适用于类型无法拷贝的情况下。
-
-下面的示例中，`name` 被移出了 `person`，因此如果再试图把 `person` 作为一个整体使用，或再次使用 `person.name`，将会因为*部分移出(partial move)*的问题而报错。
-
-示例：
-
-```rust
-# struct Person {
-#    name: String,
-#    age: u8,
-# }
-# let person = Person{ name: String::from("John"), age: 23 };
-// 在 `age` 被引用绑定的情况下，`name` 被从 person 中移出
-let Person { name, ref age } = person;
-```
 
 ## Wildcard pattern
 ## 通配符模式
@@ -605,6 +589,16 @@ let Struct{a: x, b: y, c: z} = struct_value;          // 解构所有的字段
 
 当元组模式的一个子模式是可反驳型的，那该元组模式就是可反驳型的。
 
+使用元组模式的示例：
+
+```rust
+let pair = (10, "ten");
+let (a, b) = pair;
+
+assert_eq!(a, 10);
+assert_eq!(b, "ten");
+```
+
 ## Grouped patterns
 ## 分组模式
 
@@ -704,5 +698,5 @@ match v[..] {
 [tuples]: types/tuple.md
 [scrutinee]: glossary.md#scrutinee
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

@@ -48,5 +48,5 @@ assert_eq!((a.f)(), "The field f");
 [_InnerAttribute_]: ../attributes.md
 [attributes on block expressions]: block-expr.md#attributes-on-block-expressions
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->

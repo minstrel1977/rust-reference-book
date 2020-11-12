@@ -147,5 +147,5 @@ x = bo(5,7);
 [closure expression]: ../expressions/closure-expr.md
 [derived]: ../attributes/derive.md
 
-<!-- 2020-11-7-->
+<!-- 2020-11-12-->
 <!-- checked -->
