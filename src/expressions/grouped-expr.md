@@ -3,14 +3,14 @@
 
 >[grouped-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/grouped-expr.md)\
 >commit: b0e0ad6490d6517c19546b1023948986578fc378 \
->本章译文最后维护日期：2020-10-26
+>本章译文最后维护日期：2020-11-12
 
 
 > **<sup>句法</sup>**\
 > _GroupedExpression_ :\
 > &nbsp;&nbsp; `(` [_InnerAttribute_]<sup>\*</sup> [_Expression_] `)`
 
-由圆括号封闭的表达式的求值结果就是在期内的表达式的求值结果。在表达式内部，圆括号可用于显式地指定表达式内部的求值顺序。
+由圆括号封闭的表达式的求值结果就是在其内的表达式的求值结果。在表达式内部，圆括号可用于显式地指定表达式内部的求值顺序。
 
 圆括号表达式的一个例子：
 

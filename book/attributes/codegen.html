@@ -266,7 +266,7 @@ fn f() {
 <span class="boring">}
 </span></code></pre></pre>
 <blockquote>
-<p>注意：<code>core</code> 提供了 <a href="https://doc.rust-lang.org/core/panic/struct.Location.html#method.caller"><code>core::panic::Location::caller</code></a> 来观察调用者的位置。它封装了由 <code>rustc</code> 实现的内部函数 <a href="https://doc.rust-lang.org/core/intrinsics/fn.caller_location.html"><code>core::intrinsics::caller_location</code></a>。</p>
+<p>注意：<code>core</code> 提供了 <a href="https://doc.rust-lang.org/core/panic/struct.Location.html#method.caller"><code>core::panic::Location::caller</code></a> 来观察调用者的位置。它封装(wrap)了由 <code>rustc</code> 实现的内部函数 <a href="https://doc.rust-lang.org/core/intrinsics/fn.caller_location.html"><code>core::intrinsics::caller_location</code></a>。</p>
 </blockquote>
 <blockquote>
 <p>注意：由于结果 <code>Location</code> 是一个提示，所以具体实现可能会提前终止对堆栈的遍历。请参阅<a href="#limitations">限制</a>以了解重要的注意事项。</p>

@@ -144,7 +144,7 @@ fn f() {
 }
 ```
 
-> 注意：`core` 提供了 [`core::panic::Location::caller`] 来观察调用者的位置。它封装了由 `rustc` 实现的内部函数 [`core::intrinsics::caller_location`]。
+> 注意：`core` 提供了 [`core::panic::Location::caller`] 来观察调用者的位置。它封装(wrap)了由 `rustc` 实现的内部函数 [`core::intrinsics::caller_location`]。
 
 > 注意：由于结果 `Location` 是一个提示，所以具体实现可能会提前终止对堆栈的遍历。请参阅[限制](#limitations)以了解重要的注意事项。
 

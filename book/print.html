@@ -5411,7 +5411,7 @@ fn f() {
 <span class="boring">}
 </span></code></pre></pre>
 <blockquote>
-<p>注意：<code>core</code> 提供了 <a href="https://doc.rust-lang.org/core/panic/struct.Location.html#method.caller"><code>core::panic::Location::caller</code></a> 来观察调用者的位置。它封装了由 <code>rustc</code> 实现的内部函数 <a href="https://doc.rust-lang.org/core/intrinsics/fn.caller_location.html"><code>core::intrinsics::caller_location</code></a>。</p>
+<p>注意：<code>core</code> 提供了 <a href="https://doc.rust-lang.org/core/panic/struct.Location.html#method.caller"><code>core::panic::Location::caller</code></a> 来观察调用者的位置。它封装(wrap)了由 <code>rustc</code> 实现的内部函数 <a href="https://doc.rust-lang.org/core/intrinsics/fn.caller_location.html"><code>core::intrinsics::caller_location</code></a>。</p>
 </blockquote>
 <blockquote>
 <p>注意：由于结果 <code>Location</code> 是一个提示，所以具体实现可能会提前终止对堆栈的遍历。请参阅<a href="attributes/codegen.html#limitations">限制</a>以了解重要的注意事项。</p>
@@ -6174,7 +6174,7 @@ fn move_by_block_expression() {
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
 commit: 03dc50769738a643be1451a4ff1516fa5fab92bd <br />
-本章译文最后维护日期：2020-11-11</p>
+本章译文最后维护日期：2020-11-12</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6196,8 +6196,8 @@ commit: 03dc50769738a643be1451a4ff1516fa5fab92bd <br />
 <p>在 debug模式下编译整数运算时，如果发生溢出，会触发 panic。可以使用命令行参数 <code>-C debug-assertions</code> 和 <code>-C overflow-checks</code> 设置编译器标志位来更直接地控制这个溢出过程。以下情况被认为是溢出：</p>
 <ul>
 <li>当 <code>+</code>、<code>*</code> 或 <code>-</code> 创建的值大于当前类型可存储的最大值或小于最小值。这包括任何有符号整型的最小值上的一元运算符 <code>-</code>。</li>
-<li>使用 <code>/</code> 或 <code>%</code>，其中左手参数是某类有符号整型的最小整数，右手参数是 <code>-1</code>。</li>
-<li>使用 <code>&lt;&lt;</code> 或 <code>&gt;&gt;</code>，其中右手参数大于或等于左手参数类型的 bit 数，或右手参数为负数。</li>
+<li>使用 <code>/</code> 或 <code>%</code>，其中左操作数是某类有符号整型的最小整数，右操作数是 <code>-1</code>。</li>
+<li>使用 <code>&lt;&lt;</code> 或 <code>&gt;&gt;</code>，其中右操作数大于或等于左操作数类型的 bit 数，或右操作数为负数。</li>
 </ul>
 <h2><a class="header" href="#借用引用操作符运算符" id="借用引用操作符运算符">借用/引用操作符/运算符</a></h2>
 <h2><a class="header" href="#borrow-operators" id="borrow-operators">Borrow operators</a></h2>
@@ -6244,8 +6244,7 @@ let a = &amp; &amp; &amp; &amp; mut 10;
 <em>DereferenceExpression</em> :<br />
    <code>*</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<!-- check from here -->
-<p><code>*</code>（解引用）操作符也是一元前缀操作符。当应用于<a href="expressions/../types/pointer.html">指针</a>时，它表示该指针指向的内存位置。如果表达式的类型为 <code>&amp;mut T</code> 或 <code>*mut T</code>，并且该表达式是局部变量（局部变量的（嵌套）字段也可以）或是可变的<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>，则它代表的内存位置可以被赋值。解引用原始指针需要在非安全(<code>unsafe</code>)块才能进行。</p>
+<p><code>*</code>（解引用）操作符也是一元前缀操作符。当应用于<a href="expressions/../types/pointer.html">指针</a>上时，它表示该指针指向的内存位置。如果表达式的类型为 <code>&amp;mut T</code> 或 <code>*mut T</code>，并且该表达式是局部变量、局部变量的（内嵌）字段、或是可变的<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>，则它代表的内存位置可以被赋值。解引用原始指针需要在非安全(<code>unsafe</code>)块才能进行。</p>
 <p>在<a href="expressions/../expressions.html#mutability">不可变位置表达式上下文</a>中对非指针类型作 <code>*x</code> 相当于执行 <code>*std::ops::Deref::deref(&amp;x)</code>；同样的，在可变位置表达式上下文中这个动作就相当于执行 <code>*std::ops::DerefMut::deref_mut(&amp;mut x)</code>。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -6264,8 +6263,8 @@ assert_eq!(*y, 11);
 <em>ErrorPropagationExpression</em> :<br />
    <a href="expressions/../expressions.html"><em>Expression</em></a> <code>?</code></p>
 </blockquote>
-<p>问号操作符（<code>?</code>）解开(unwrap)有效值或返回错误值，并将它们传播(propagate)给调用函数。问号操作符（<code>?</code>）是一个一元后缀操作符，只能应用于类型 <code>Result&lt;T, E&gt;</code> 和 <code>Option&lt;T&gt;</code>。</p>
-<p>当应用在 <code>Result&lt;T, E&gt;</code> 类型的值上时，它可以传播错误。如果值是 <code>Err(e)</code>，那么它将实际从函数体或闭包中返回 <code>Err(From::from(e))</code>。如果应用到 <code>Ok(x)</code>，那么它将展开值以求得 <code>x</code>。</p>
+<p>问号操作符（<code>?</code>）解包(unwrap)有效值或返回错误值，并将它们传播(propagate)给调用函数。问号操作符（<code>?</code>）是一个一元后缀操作符，只能应用于类型 <code>Result&lt;T, E&gt;</code> 和 <code>Option&lt;T&gt;</code>。</p>
+<p>当应用在 <code>Result&lt;T, E&gt;</code> 类型的值上时，它可以传播错误。如果值是 <code>Err(e)</code>，那么它实际上将从此操作符所在的函数体或闭包中返回 <code>Err(From::from(e))</code>。如果应用到 <code>Ok(x)</code>，那么它将解包此值以求得 <code>x</code>。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6281,7 +6280,7 @@ println!(&quot;{:?}&quot;, res);
 <span class="boring">assert!(res.is_err())
 </span><span class="boring">}
 </span></code></pre></pre>
-<p>当应用到 <code>Option&lt;T&gt;</code> 类型的值时，它向调用者传播错误 <code>None</code>。如果它应用的值本身是 <code>None</code>，那么它将返回 <code>None</code>。如果应用于 <code>Some(x)</code>，那么它将解开值以求得 <code>x</code>。</p>
+<p>当应用到 <code>Option&lt;T&gt;</code> 类型的值时，它向调用者传播错误 <code>None</code>。如果它应用的值是 <code>None</code>，那么它将返回 <code>None</code>。如果应用的值是 <code>Some(x)</code>，那么它将解包此值以求得 <code>x</code>。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6307,7 +6306,7 @@ assert_eq!(try_option_none(), None);
       <code>-</code> <a href="expressions/../expressions.html"><em>Expression</em></a><br />
    | <code>!</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p>这是最后两个一元运算符。下表总结了它们用在基本类型上的表现，以及指出其他类型要重载这些操作符需要实现哪些 trait。记住，有符号整数总是用2的补码形式表示。所有这些运算符的操作数都在<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中被求值，所以这些操作数的值会被移走或复制。</p>
+<p>这是最后两个一元运算符。下表总结了它们用在基本类型上的表现，同时指出其他类型要重载这些操作符需要实现的 trait。记住，有符号整数总是用 2 的补码形式表示。所有这些运算符的操作数都在<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中被求值，所以这些操作数的值会被移走或复制。</p>
 <table><thead><tr><th>符号</th><th>整数</th><th><code>bool</code></th><th>浮点数</th><th>用于重载的 trait</th></tr></thead><tbody>
 <tr><td><code>-</code></td><td>符号取反*</td><td></td><td>符号取反</td><td><code>std::ops::Neg</code></td></tr>
 <tr><td><code>!</code></td><td>按位取反</td><td>逻辑非</td><td></td><td><code>std::ops::Not</code></td></tr>
@@ -6339,7 +6338,7 @@ assert_eq!(true, !false);
    | <a href="expressions/../expressions.html"><em>Expression</em></a> <code>&lt;&lt;</code> <a href="expressions/../expressions.html"><em>Expression</em></a><br />
    | <a href="expressions/../expressions.html"><em>Expression</em></a> <code>&gt;&gt;</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p>二元运算符表达式都用中缀表示法(infix notation)书写。下表总结了算术和逻辑二元运算符在原生类型(primitive type)上的行为，以及指出其他类型要重载这些操作符需要实现哪些 trait。记住，有符号整数总是用2的补码形式表示。所有这些运算符的操作数都在<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中求值，因此这些操作数的值会被移走或复制。</p>
+<p>二元运算符表达式都用中缀表示法(infix notation)书写。下表总结了算术和逻辑二元运算符在原生类型(primitive type)上的行为，同时指出其他类型要重载这些操作符需要实现的 trait。记住，有符号整数总是用 2 的补码形式表示。所有这些运算符的操作数都在<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中求值，因此这些操作数的值会被移走或复制。</p>
 <table><thead><tr><th>符号</th><th>整数</th><th><code>bool</code></th><th>浮点数</th><th>用于重载的 trait</th></tr></thead><tbody>
 <tr><td><code>+</code></td><td>加法</td><td></td><td>加法</td><td><code>std::ops::Add</code></td></tr>
 <tr><td><code>-</code></td><td>减法</td><td></td><td>减法</td><td><code>std::ops::Sub</code></td></tr>
@@ -6382,8 +6381,8 @@ assert_eq!(-10 &gt;&gt; 2, -3);
    | <a href="expressions/../expressions.html"><em>Expression</em></a> <code>&gt;=</code> <a href="expressions/../expressions.html"><em>Expression</em></a><br />
    | <a href="expressions/../expressions.html"><em>Expression</em></a> <code>&lt;=</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p>Rust 还为原生类型以及标准库中的许多类型定义了比较运算符。链式比较运算时需要括号，例如，表达式 <code>a == b == c</code> 是无效的，（但如果逻辑允许）可以写成 <code>(a == b) == c</code>。</p>
-<p>与算术运算符和逻辑运算符不同，比较运算符所使用的 trait（这些 trait 也可以被其他类型所实现以重载这些比较运算符）更抽象地用于显示/约定如何比较一个类型，并且很可能会假定使用这些 trait 作为约束条件的函数定义了实际的比较逻辑。（对库API使用者来说，）标准库中的许多函数和宏都可以被认为遵守了这个假定(尽管不能确保它们的实现的安全性)。与上面的算术和逻辑运算符不同，这些运算符会隐式地对它们的操作数执行共享借用，并当在<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式上下文</a>中对它们进行求值：</p>
+<p>Rust 还为原生类型以及标准库中的多种类型都定义了比较运算符。链式比较运算时需要借助圆括号，例如，表达式 <code>a == b == c</code> 是无效的，（但如果逻辑允许）可以写成 <code>(a == b) == c</code>。</p>
+<p>与算术运算符和逻辑运算符不同，比较运算符所使用的 trait（这些 trait 也可以被其他类型所实现以重载这些比较运算符）通常用于显示/约定如何比较一个类型，并且还很可能会假定使用这些 trait 作为约束条件的函数定义了实际的比较逻辑。其实标准库中的许多函数和宏都使用了这个假定（尽管不能确保这些假定的安全性）。与上面的算术和逻辑运算符不同，这些运算符会隐式地对它们的操作数执行共享借用，并在<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式上下文</a>中对它们进行求值：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6439,8 +6438,8 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
    <a href="expressions/../expressions.html"><em>Expression</em></a> <code>as</code> <a href="expressions/../types.html#type-expressions"><em>TypeNoBounds</em></a></p>
 </blockquote>
 <p>类型转换表达式用二元运算符 <code>as</code> 表示。</p>
-<p>执行 <code>as</code>表达式将左侧的值显式转换为右侧的类型。</p>
-<p><code>as</code>表达式的一个例子：</p>
+<p>执行类型转换(<code>as</code>)表达式将左侧的值显式转换为右侧的类型。</p>
+<p>类型转换(<code>as</code>)表达式的一个例子：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6536,7 +6535,7 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
    <a href="expressions/../expressions.html"><em>Expression</em></a> <code>=</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
 <p><em>赋值表达式</em>由<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>后跟等号（<code>=</code>）和<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>组成。这样的表达式的类型总是<a href="expressions/../types/tuple.html">单元(<code>unit</code>)类型</a>。</p>
-<p>执行赋值表达式时会先<a href="expressions/../destructors.html">销毁(drop)</a>左操作数（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将其右操作数<a href="expressions/../expressions.html#moved-and-copied-types">复制(copy)或移动(move)</a>到左操作数。左边的操作数必须是位置表达式：使用值表达式不会将其提升为临时位置，而是会导致编译器错误。</p>
+<p>对赋值表达式求值时会先<a href="expressions/../destructors.html">销毁(drop)</a>左操作数（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将其右操作数<a href="expressions/../expressions.html#moved-and-copied-types">复制(copy)或移动(move)</a>到左操作数中。左边的操作数必须是位置表达式：此时使用值表达式不会将其提升为临时位置，而是会导致编译器报错。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6561,7 +6560,7 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
    | <a href="expressions/../expressions.html"><em>Expression</em></a> <code>&lt;&lt;=</code> <a href="expressions/../expressions.html"><em>Expression</em></a><br />
    | <a href="expressions/../expressions.html"><em>Expression</em></a> <code>&gt;&gt;=</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, <code>&amp;</code>, <code>|</code>, <code>^</code>, <code>&lt;&lt;</code>, 和 <code>&gt;&gt;</code>运算符可以和 <code>=</code> 运算符复合组成新的运算符。表达式 <code>place_exp OP= value</code> 等效于 <code>place_expr = place_expr OP val</code>。例如，<code>x = x + 1</code> 可以写成 <code>x += 1</code>。任何这样的表达式的类型总是<a href="expressions/../types/tuple.html">单元(<code>unit</code>)类型</a>。这些运算符都可以使用与普通操作的相同的 trait 来重载，只是相应的 trait名称后要加上 “Assign”，例如，<code>std::ops::AddAssign</code> 用于重载 <code>+=</code>。因为带有 <code>=</code>，所以 <code>place_expr</code> 必须是<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>。</p>
+<p><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, <code>&amp;</code>, <code>|</code>, <code>^</code>, <code>&lt;&lt;</code>, 和 <code>&gt;&gt;</code>运算符可以和 <code>=</code>运算符复合组成新的运算符。表达式 <code>place_exp OP= value</code> 等效于 <code>place_expr = place_expr OP val</code>。例如，<code>x = x + 1</code> 可以写成 <code>x += 1</code>。任何这样的表达式的类型总是<a href="expressions/../types/tuple.html">单元(<code>unit</code>)类型</a>。这些运算符都可以使用与普通操作的相同的 trait 来重载，只是相应的 trait名称后要加上 “Assign”，例如，<code>std::ops::AddAssign</code> 用于重载 <code>+=</code>。因为带有 <code>=</code>，所以 <code>place_expr</code> 必须是<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6581,14 +6580,14 @@ assert_eq!(x, 14);
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/grouped-expr.md">grouped-expr.md</a><br />
 commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本章译文最后维护日期：2020-10-26</p>
+本章译文最后维护日期：2020-11-12</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>GroupedExpression</em> :<br />
    <code>(</code> <a href="expressions/../attributes.html"><em>InnerAttribute</em></a><sup>*</sup> <a href="expressions/../expressions.html"><em>Expression</em></a> <code>)</code></p>
 </blockquote>
-<p>由圆括号封闭的表达式的求值结果就是在期内的表达式的求值结果。在表达式内部，圆括号可用于显式地指定表达式内部的求值顺序。</p>
+<p>由圆括号封闭的表达式的求值结果就是在其内的表达式的求值结果。在表达式内部，圆括号可用于显式地指定表达式内部的求值顺序。</p>
 <p>圆括号表达式的一个例子：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -11820,6 +11819,11 @@ A type is uninhabited if it has no constructors and therefore can never be insta
 <li>unwind： 展开</li>
 <li>variant： 变体。指枚举或元组的变体</li>
 <li>whitespace： 空白符</li>
+<li>wrap: 包装
+<ul>
+<li>unwrap：解包</li>
+</ul>
+</li>
 <li>zero-extend：零扩展</li>
 <li>zero-sized： 零尺寸</li>
 <li>zero-variant enums： 零变体枚举</li>
