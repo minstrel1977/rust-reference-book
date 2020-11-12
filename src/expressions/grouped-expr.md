@@ -41,7 +41,7 @@ assert_eq!((a.f)(), "The field f");
 ## Group expression attributes
 ## 分组表达式上的属性
 
-在与[块表达式上的属性][Inner attributes]相同的表达式上下文中，允许在分组表达式的左括号后直接使用[内部属性][attributes on block expressions]。
+在允许[块表达式上的属性][Inner attributes]存在的那几种表达式上下文中，可以在分组表达式的左括号后直接使用[内部属性][attributes on block expressions]。
 
 [Inner attributes]: ../attributes.md
 [_Expression_]: ../expressions.md

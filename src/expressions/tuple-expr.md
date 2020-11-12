@@ -3,7 +3,7 @@
 
 >[tuple-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/tuple-expr.md)\
 >commit: 1a3615102993e9f017a44b903ff2277a38a171a8 \
->本章译文最后维护日期：2020-10-26
+>本章译文最后维护日期：2020-11-12
 
 ## Tuple expressions
 ## 元组表达式
@@ -33,7 +33,7 @@
 ### Tuple expression attributes
 ### 元组表达式上的属性
 
-允许[块表达式上的属性][attributes on block expressions]的表达式上下文同样允许元组表达式上的属性，即在这种上下文下[内部属性][Inner attributes]可以直接位于表达式的左括号之后。
+在允许[块表达式上的属性][Inner attributes]存在的那几种表达式上下文中，可以在元组表达式的左括号后直接使用[内部属性][attributes on block expressions]。
 
 ## Tuple indexing expressions
 ## 元组索引表达式
@@ -42,7 +42,7 @@
 > _TupleIndexingExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `.` [TUPLE_INDEX]
 
-[元组][Tuples]和[元组结构体][struct tuples]可以使用与字段位置相对应的数字来编制索引。索引必须写成不带下划线或后缀的[十进制字面量][decimal literal]。元组索引表达式也不同于字段表达式，因为元组索引表达式可以明确地作为函数来调用。在所有其他方面，它们有相同的行为。
+[元组][Tuples]和[元组结构体][struct tuples]可以使用与字段位置相对应的数字来索引检索相应字段。索引必须写成不带下划线或后缀的[十进制字面量][decimal literal]。元组索引表达式也不同于字段表达式，因为元组索引表达式可以明确地作为函数来调用。在所有其他方面，它们的表现相同。
 
 ```rust
 # struct Point(f32, f32);

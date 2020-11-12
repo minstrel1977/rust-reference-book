@@ -69,7 +69,7 @@
         - [if 和 if let 表达式](expressions/if-expr.md)
         - [匹配表达式](expressions/match-expr.md)
         - [返回表达式](expressions/return-expr.md)
-        - [等待表达式](expressions/await-expr.md)
+        - [等待(await)表达式](expressions/await-expr.md)
 
 - [模式](patterns.md)
 

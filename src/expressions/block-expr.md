@@ -138,7 +138,7 @@ let a = unsafe { an_unsafe_fn() };
 ## Attributes on block expressions
 ## 块表达式上的属性
 
-在以下情况下，允许在块表达式的左括号之后直接使用[内部属性][inner attributes]：
+在以下上下文中，允许在块表达式的左括号之后直接使用[内部属性][inner attributes]：
 
 * [函数][function]和[方法][method]的代码体。
 * 循环体（[`loop`], [`while`], [`while let`], 和 [`for`]）。

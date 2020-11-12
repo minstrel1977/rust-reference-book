@@ -3,7 +3,7 @@
 
 >[enum-variant-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/enum-variant-expr.md)\
 >commit: 1a3615102993e9f017a44b903ff2277a38a171a8 \
->本章译文最后维护日期：2020-10-26
+>本章译文最后维护日期：2020-11-12
 
 > **<sup>句法</sup>**\
 > _EnumerationVariantExpression_ :\
@@ -28,7 +28,7 @@
 >
 > _EnumExprFieldless_ : [_PathInExpression_]
 
-枚举变体的构造与[结构体(`struct`)][structs]的构造类似，只是使用枚举变体的路径来替代结构体的路径：
+枚举变体的构造与[结构体(`struct`)][structs]的构造方法类似，只是使用枚举变体的路径来替代结构体的路径：
 
 ```rust
 # enum Message {
@@ -41,7 +41,7 @@ let w = Message::WriteString("Some string".to_string());
 let m = Message::Move { x: 50, y: 200 };
 ```
 
-枚举变体表达式具有与[结构体表达式][structs]相同的语法、行为和限制，除了它不支持使用 `..` 句法。
+枚举变体表达式具有与[结构体表达式][structs]相同的句法、行为和限制，除了它不支持使用 `..`句法。
 
 [IDENTIFIER]: ../identifiers.md
 [TUPLE_INDEX]: ../tokens.md#tuple-index
