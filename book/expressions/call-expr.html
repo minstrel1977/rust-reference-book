@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/call-expr.md">call-expr.md</a><br />
 commit: e06136b1cd06d3d72dcc0ed7ccf5fbab5574f901 <br />
-本章译文最后维护日期：2020-10-26</p>
+本章译文最后维护日期：2020-11-12</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -189,18 +189,18 @@ let name: &amp;'static str = (|| &quot;Rust&quot;)();
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#disambiguating-function-calls" id="disambiguating-function-calls">Disambiguating Function Calls</a></h2>
-<h2><a class="header" href="#消除函数调用歧义" id="消除函数调用歧义">消除函数调用歧义</a></h2>
-<p>为获得更直观的、<a href="../paths.html#qualified-paths">完全限定的句法</a>，Rust 对所有函数调都作了糖化表达处理，以方便代码编写。而在编译时，Rust 又会把所有函数调用进行脱糖(desugar)处理，转换为显式形式。Rust 有时可能要求程序员使用 trait 来限定具体函数调用，这取决于调用作用域内的数据项时是否出现了模糊性。</p>
+<h2><a class="header" href="#函数调用的消歧" id="函数调用的消歧">函数调用的消歧</a></h2>
+<p>为获得更直观的、<a href="../paths.html#qualified-paths">完全限定的句法</a>，Rust 对所有函数调都作了糖化(sugar)处理，以方便代码编写。而在编译时，Rust 又会把所有函数调用进行脱糖(desugar)处理，转换为显式形式。Rust 有时可能要求程序员带上 trait 来限定具体的函数调用，这取决于调用作用域内的数据项时是否出现了二义性(ambiguity)。</p>
 <blockquote>
-<p><strong>注意</strong>：过去，Rust 社区在文档、议题、RFC 和其他社区文章中使用了术语“确定性函数调用句法(Unambiguous Function Call Syntax)”、“通用函数调用句法(Universal Function Call Syntax)” 或 “UFCS”。但是，这个术语缺乏描述力，可能会混淆当前的议题。我们在这里提起它是为了便于搜索。</p>
+<p><strong>注意</strong>：过去，Rust 社区在文档、议题、RFC 和其他社区文章中使用了术语“确定性函数调用句法(Unambiguous Function Call Syntax)”、“通用函数调用句法(Universal Function Call Syntax)” 或 “UFCS”。但是，这个术语缺乏描述力，可能会混淆当前的议题。我们在这里提起这个词是为了便于搜索。</p>
 </blockquote>
-<p>少数几种情况下经常会出现一些导致方法或关联函数调用的接受者或引用对象不明确的情况。这些情况可包括：</p>
+<p>少数几种情况下经常会出现一些导致方法调用或关联函数调用的接受者或引用对象不明确的情况。这些情况可包括：</p>
 <ul>
-<li>作用域内多个 trait 为同一类型定义了相同名称的方法</li>
-<li>自动解引(Auto-<code>deref</code>)用搞不定的；例如，区分智能指针本身的方法和指针所指对象上的方法</li>
-<li>不带接受者的方法，如 <a href="https://doc.rust-lang.org/std/default/trait.Default.html#tymethod.default"><code>default()</code></a>；返回类型的属性(properties)，如 <a href="https://doc.rust-lang.org/std/mem/fn.size_of.html"><code>size_of()</code></a></li>
+<li>作用域内的多个 trait 为同一类型定义了相同名称的方法</li>
+<li>自动解引(Auto-<code>deref</code>)用搞不定的情况；例如，区分智能指针本身的方法和指针所指对象上的方法</li>
+<li>不带参数的方法，就像 <a href="https://doc.rust-lang.org/std/default/trait.Default.html#tymethod.default"><code>default()</code></a> 这样的和返回类型的属性(properties)的，如 <a href="https://doc.rust-lang.org/std/mem/fn.size_of.html"><code>size_of()</code></a></li>
 </ul>
-<p>为了解决这种模糊性，程序员可以使用更具体的路径、类型或 trait 来明确指代他们想要的方法或函数。</p>
+<p>为了解决这种二义性，程序员可以使用更具体的路径、类型或 trait 来明确指代他们想要的方法或函数。</p>
 <p>例如：</p>
 <pre><pre class="playground"><code class="language-rust">trait Pretty {
     fn print(&amp;self);
