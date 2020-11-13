@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
 commit: ff68c99b2b2003998b0f951fcb8dc290370a0275 <br />
-本章译文最后维护日期：2020-11-12</p>
+本章译文最后维护日期：2020-11-13</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -192,13 +192,13 @@ commit: ff68c99b2b2003998b0f951fcb8dc290370a0275 <br />
    | <a href="#path-patterns"><em>PathPattern</em></a><br />
    | <a href="macros.html#macro-invocation"><em>MacroInvocation</em></a></p>
 </blockquote>
-<p>模式基于给定结构去匹配值，并可选地将变量和这些结构中匹配到的值绑定起来。模式也用在变量声明上和函数（包括闭包）的参数上。</p>
+<p>模式基于给定数据结构去匹配值，并可选地将变量和这些结构中匹配到的值绑定起来。模式也用在变量声明上和函数（包括闭包）的参数上。</p>
 <p>下面示例中的模式完成四件事：</p>
 <ul>
-<li>测试 <code>person</code> 是否在 <code>car</code>字段中填充了内容。</li>
-<li>测试变量 <code>person</code> 的 <code>age</code>字段（的值）是否在 13 到 19 之间，并将其值绑定到变量 <code>person_age</code> 上。</li>
-<li>将对 <code>name</code> 字段的引用绑定到变量 <code>person_name</code> 上。</li>
-<li>忽略 <code>person</code> 的其余字段。其余字段可以有任何值，并且不绑定到任何变量。</li>
+<li>测试 <code>person</code> 是否在其 <code>car</code>字段中填充了内容。</li>
+<li>测试 <code>person</code> 的 <code>age</code>字段（的值）是否在 13 到 19 之间，并将其值绑定到给定的变量 <code>person_age</code> 上。</li>
+<li>将对 <code>name</code>字段的引用绑定到给定变量 <code>person_name</code> 上。</li>
+<li>忽略 <code>person</code> 的其余字段。其余字段可以有任何值，并且不会绑定到任何变量上。</li>
 </ul>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -240,7 +240,7 @@ commit: ff68c99b2b2003998b0f951fcb8dc290370a0275 <br />
 </ul>
 <h2><a class="header" href="#destructuring" id="destructuring">Destructuring</a></h2>
 <h2><a class="header" href="#解构" id="解构">解构</a></h2>
-<p>模式可用于<em>解构</em><a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/enumerations.html">枚举(<code>enum</code>)</a>和<a href="types/tuple.html">元组</a>。解构将一个值分解成它的组成部分，使用的句法与创建此类值时的几乎相同。在<a href="glossary.html#scrutinee">检验对象</a>表达式具有结构体(<code>struct</code>)、枚举(<code>enum</code>)或元组(<code>tuple</code>)类型的模式中，占位符(<code>_</code>) 代表<em>一个</em>数据字段，而通配符 <code>..</code> 代表特定变量(variant)的<em>所有</em>剩余字段。当使用字段的名称（而不是编号）来解构数据结构时，允许将 <code>fieldname</code> 当作 <code>fieldname: fieldname</code> 的简写形式书写。</p>
+<p>模式可用于<em>解构</em><a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/enumerations.html">枚举(<code>enum</code>)</a>和<a href="types/tuple.html">元组</a>。解构将一个值分解成它的内部组件组成，使用的句法与创建此类值时的几乎相同。在<a href="glossary.html#scrutinee">检验对象</a>表达式的类型为结构体(<code>struct</code>)、枚举(<code>enum</code>)或元组(<code>tuple</code>)的模式中，占位符(<code>_</code>) 代表<em>一个</em>数据字段，而通配符 <code>..</code> 代表特定变量/变体(variant)的<em>所有</em>剩余字段。当使用字段的名称（而不是字段序号）来解构数据结构时，允许将 <code>fieldname</code> 当作 <code>fieldname: fieldname</code> 的简写形式书写。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -264,7 +264,7 @@ commit: ff68c99b2b2003998b0f951fcb8dc290370a0275 <br />
 </span></code></pre></pre>
 <h2><a class="header" href="#refutability" id="refutability">Refutability</a></h2>
 <h2><a class="header" href="#可反驳性" id="可反驳性">可反驳性</a></h2>
-<p>当一个模式有可能与它所匹配的值不匹配时，我们就说它是<em>可反驳型的(refutable)</em>。另一方面，*不可反驳型(irrefutable)*模式总是能与它们所匹配的值匹配成功。例如：</p>
+<p>当一个模式有可能与它所匹配的值不匹配时，我们就说它是<em>可反驳型的(refutable)</em>。也就是说，*不可反驳型(irrefutable)*模式总是能与它们所匹配的值匹配成功。例如：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -292,7 +292,7 @@ if let (a, 3) = (1, 2) {           // &quot;(a, 3)&quot; 是可反驳型的, 将
    | <code>-</code><sup>?</sup> <a href="tokens.html#integer-literals">INTEGER_LITERAL</a><br />
    | <code>-</code><sup>?</sup> <a href="tokens.html#floating-point-literals">FLOAT_LITERAL</a></p>
 </blockquote>
-<p><em>字面量模式</em>匹配的值与字面量所创建的值完全相同。由于负数不是<a href="expressions/literal-expr.html">字面量</a>，字面量模式也接受字面量前的可选负号，它的作用类似于否定运算符。</p>
+<p><em>字面量模式</em>匹配的值与字面量所创建的值完全相同。由于负数不是<a href="expressions/literal-expr.html">字面量</a>，（特设定）字面量模式也接受字面量前的可选负号，它的作用类似于否定运算符。</p>
 <div class="warning">
 <p>浮点字面量目前还可以使用，但是由于它们在数值比较时带来的复杂性，在将来的 Rust 版本中，它们将被禁止用于字面量模式(参见 <a href="https://github.com/rust-lang/rust/issues/41620">issue #41620</a>)。</p>
 </div>
@@ -318,8 +318,8 @@ if let (a, 3) = (1, 2) {           // &quot;(a, 3)&quot; 是可反驳型的, 将
 <em>IdentifierPattern</em> :<br />
       <code>ref</code><sup>?</sup> <code>mut</code><sup>?</sup> <a href="identifiers.html">IDENTIFIER</a> (<code>@</code> <a href="#patterns"><em>Pattern</em></a> ) <sup>?</sup></p>
 </blockquote>
-<p>标识符模式将它们匹配的值绑定到一个变量上。此标识符在该模式中必须是唯一的。该变量会在作用域中遮蔽任何同名的变量。这种绑定的作用域取决于使用模式的上下文（例如 <code>let</code>绑定或匹配臂(<code>match</code> arm)）。</p>
-<p>这种模式只包含一个标识符（也可能前带一个 <code>mut</code>），能匹配任何值，并将其绑定到该标识符。最常见的标识符模式就是用在变量声明上和函数（包括闭包）的参数上。</p>
+<p>标识符模式将它们匹配的值绑定到一个变量上。此标识符在该模式中必须是唯一的。该变量会在作用域中遮蔽任何同名的变量。这种绑定的作用域取决于使用模式的上下文（例如 <code>let</code>绑定或匹配臂(<code>match</code> arm)<sup class="footnote-reference"><a href="#译注1">1</a></sup>）。</p>
+<p>标识符模式只能包含一个标识符（也可能前带一个 <code>mut</code>），能匹配任何值，并将其绑定到该标识符上。最常见的标识符模式应用场景就是用在变量声明上和用在函数（包括闭包）的参数上。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -329,7 +329,7 @@ fn sum(x: i32, y: i32) -&gt; i32 {
 </span><span class="boring">}
 </span><span class="boring">}
 </span></code></pre></pre>
-<p>要将模式的匹配值绑定到变量，也可使用句法 <code>variable @ subpattern</code>。例如，下面示例中将值 2 绑定到 <code>e</code> 上（不是整个区间(range)：这里的区间是一个区间子模式(range subpattern)）。</p>
+<p>要将模式匹配到值绑定到变量，也可使用句法 <code>variable @ subpattern</code>。例如，下面示例中将值 2 绑定到 <code>e</code> 上（不是整个区间(range)：这里的区间是一个区间子模式(range subpattern)）。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -341,7 +341,7 @@ match x {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>默认情况下，标识符模式里变量会和匹配值的一个拷贝副本绑定，或匹配值自身移动过来和变量完成绑定，具体是使用拷贝语义还是移动语义取决于匹配值是否实现了 <a href="special-types-and-traits.html#copy"><code>Copy</code></a>。也可以通过使用关键字 <code>ref</code> 将变量和值的引用绑定，或者使用 <code>ref mut</code> 将变量和值的可变引用绑定。示例：</p>
+<p>默认情况下，标识符模式里变量会和匹配到的值的一个拷贝副本绑定，或匹配值自身移动过来和变量完成绑定，具体是使用拷贝语义还是移动语义取决于匹配到的值是否实现了 <a href="special-types-and-traits.html#copy"><code>Copy</code></a>。也可以通过使用关键字 <code>ref</code> 将变量和值的引用绑定，或者使用 <code>ref mut</code> 将变量和值的可变引用绑定。示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -357,7 +357,7 @@ match a {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>在第一个匹配表达式中，值被拷贝（或移动）。在第二个匹配中，对相同内存位置的引用被绑定到变量上。之所以需要这种句法，是因为在解构子模式(destructuring subpatterns)中，操作符 <code>&amp;</code> 不能应用于值的字段。例如，以下内容无效：</p>
+<p>在第一个匹配表达式中，值被拷贝（或移动）（到变量 <code>value</code> 上）。在第二个匹配中，对相同内存位置的引用被绑定到变量上。之所以需要这种句法，是因为在解构子模式(destructuring subpatterns)里，操作符 <code>&amp;</code> 不能应用在值的字段上。例如，以下内容无效：</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -381,12 +381,13 @@ match a {
 </span>if let Person{ name: ref person_name, age: 18..=150 } = value { }
 <span class="boring">}
 </span></code></pre></pre>
-<p>这里，<code>ref</code> 不是被匹配的一部分。这里它唯一的目的就是使变量和匹配值的引用绑定起来，而不是潜在地拷贝或移动匹配的内容。</p>
-<p><a href="#path-patterns">路径模式(Path pattern)</a>优先于标识符模式。如果给某个标识符前置用上了 <code>ref</code> 或 <code>ref mut</code>，同时该标识符又遮蔽了某个常量，这会导致错误。</p>
+<p>这里，<code>ref</code> 不是被匹配的一部分。这里它唯一的目的就是使变量和匹配值的引用绑定起来，而不是潜在地拷贝或移动匹配到的内容。</p>
+<p><a href="#path-patterns">路径模式(Path pattern)</a>优先于标识符模式。如果给某个标识符指定了 <code>ref</code> 或 <code>ref mut</code>，同时该标识符又遮蔽了某个常量，这会导致错误。</p>
 <p>如果 <code>@</code>子模式是不可反驳型的或未指定子模式，则标识符模式是不可反驳型的。</p>
 <h3><a class="header" href="#binding-modes" id="binding-modes">Binding modes</a></h3>
 <h3><a class="header" href="#绑定方式" id="绑定方式">绑定方式</a></h3>
-<p>（毕竟显式使用 <code>ref</code> 或 <code>ref mut</code> 绑定有些麻烦，）为了更好地服务于人类工程学，为了让引用和匹配值的绑定更容易一些，模式会自动选择不同的<em>绑定方式</em>。当引用值与非引用模式匹配时，这将自动地被视为 <code>ref</code> 或 <code>ref mut</code> 绑定方式。示例：</p>
+<p>基于人类工程学的考量，为了让引用和匹配值的绑定更容易一些，模式会自动选择不同的<em>绑定方式</em>。当引用值与非引用模式匹配时，这将自动地被视为 <code>ref</code> 或 <code>ref mut</code> 绑定方式。示例：</p>
+<!-- check from here -->
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -800,6 +801,9 @@ match v[..] {
 <p>限定路径模式只能指向关联常量。</p>
 <p>常量不能是联合体类型。结构体常量和枚举常量必须带有 <code>#[derive(PartialEq, Eq)]</code> 属性（不只是实现）。</p>
 <p>当路径模式指向结构体或枚举变体(枚举只有一个变体)或类型为不可反驳型的常量时，该路径模式是不可反驳型的。当路径模式指向的是可反驳型常量或带有多个变体的枚举时，该路径模式是可反驳型的。</p>
+<div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
+<p>请仔细参研<a href="expressions/match-expr.html">匹配表达式</a>中的 MatchExpression产生式，搞清楚匹配臂(MatchArm)的位置。 </p>
+</div>
 <!-- 2020-11-12-->
 <!-- checked -->
 
