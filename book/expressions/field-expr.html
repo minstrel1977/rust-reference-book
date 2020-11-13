@@ -170,14 +170,14 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/field-expr.md">field-expr.md</a><br />
 commit: 84a4bcb11ec14011e8e64bfd5d83a48c54bad1eb <br />
-本章译文最后维护日期：2020-11-12</p>
+本章译文最后维护日期：2020-11-13</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>FieldExpression</em> :<br />
    <a href="../expressions.html"><em>Expression</em></a> <code>.</code> <a href="../identifiers.html">IDENTIFIER</a></p>
 </blockquote>
-<p>*字段表达式(field expression)*由一个表达式、一个单点号(<code>.</code>)和一个<a href="../identifiers.html">标识符</a>组成，且后面不能再紧跟着一个被圆括号封闭起来的表达式列表（后者总是一个<a href="method-call-expr.html">方法调用表达式</a>）。字段表达式代表<a href="../items/structs.html">结构体(<code>struct</code>)</a>或<a href="../items/unions.html">联合体(<code>union</code>)</a>的字段。要调用存储在结构体的字段中的函数，需要在字段表达式外加一对圆括号。</p>
+<p>*字段表达式(field expression)*由一个表达式，后跟一个单点号(<code>.</code>)和一个<a href="../identifiers.html">标识符</a>组成，此时后面不能再紧跟着一个被圆括号封闭起来的表达式列表（后者是一个<a href="method-call-expr.html">方法调用表达式</a>）。字段表达式代表<a href="../items/structs.html">结构体(<code>struct</code>)</a>或<a href="../items/unions.html">联合体(<code>union</code>)</a>的字段。要调用存储在结构体的字段中的函数，需要在此字段表达式外加上圆括号。</p>
 <!-- ignore: needs lots of support code -->
 <pre><code class="language-rust ignore">mystruct.myfield;
 foo().x;
@@ -186,8 +186,8 @@ mystruct.method();          // 方法表达式
 (mystruct.function_field)() // 调用表达式里包含一个字段表达式
 </code></pre>
 <p>字段访问是用一个<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>去引用该字段的内存位置。当字段表达式的子表达式是<a href="../expressions.html#mutability">可变的</a>时，此字段表达式也是可变的。</p>
-<p>另外，如果点号左侧的表达式类型是指针，则会根据需要自动应用多次解引用来使字段访问成为可能。在存在歧义的情况下，Rust 倾向于较少次数的自动解引用。</p>
-<p>最后，当处于借用状态时，结构体的各个字段以及对整个结构体的引用都被视为彼此分离的实体。如果结构体没有实现 <a href="../special-types-and-traits.html#drop"><code>Drop</code></a>，同时该结构体存储在局部变量中，（这种各个字段被视为彼此分离的单独实体的逻辑）还适用于每个字段的移出(move out)。如果对 <a href="../special-types-and-traits.html#boxt"><code>Box</code></a>类型之外的用户定义的类型执行自动解引用，这（种各个字段被视为彼此分离的单独实体的逻辑）就不适用了。</p>
+<p>另外，如果点号左侧的表达式类型是指针型的，则会根据需要自动对其多次应用解引用来使字段访问成为可能。在存在二义性的情况下，Rust 倾向于较少次数的自动解引用。</p>
+<p>最后，当借用时，结构体的各个字段以及对结构体的整体引用都被视为彼此分离的实体。如果结构体没有实现 <a href="../special-types-and-traits.html#drop"><code>Drop</code></a>，同时该结构体又存储在局部变量中，（这种各个字段被视为彼此分离的单独实体的逻辑）还适用于每个字段的移出(move out)。如果对 <a href="../special-types-and-traits.html#boxt"><code>Box</code></a>类型之外的用户定义的类型执行自动解引用，这（种各个字段被视为彼此分离的单独实体的逻辑）就不适用了。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

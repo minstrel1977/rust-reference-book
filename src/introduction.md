@@ -2,8 +2,8 @@
 # 介绍
 
 >[introduction.md](https://github.com/rust-lang/reference/blob/master/src/introduction.md)\
->commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d \
->本章译文最后维护日期：2020-11-5
+>commit: 95de3e8bd57ce4fb239aa1cfc0171c3305e5eb56 \
+>本章译文最后维护日期：2020-11-13
 
 本书是 Rust 编程语言的主要参考手册，本书提供了3类资料：
   - 一些章节非正式地介绍了该语言的各种语言结构及其用法。
@@ -93,7 +93,7 @@
 
 我们欢迎各种形式的贡献。
 
-您可以通过打开一个问题或向 [Rust 参考手册仓库][the Rust Reference repository]发送一个 PR 来为本书做出贡献。如果这本书没有回答您的问题，并且您认为它的答案应该在本书的范围内，请不要犹豫，提交问题或在 [Discord] 的 `#docs` 频道上询问。知道人们最喜欢用这本书来做什么将有助于引导我们的注意力来让这些部分变得更好。
+您可以通过开启议题或向 [Rust 参考手册仓库][the Rust Reference repository]发送 PR 来为本书做出贡献。如果这本书没有回答您的问题，并且您认为它的答案应该在本书的范围内，请不要犹豫，[提交议题][file an issue]或在 [Zulip] 的 `t-lang/doc` 流频道上询问。知道人们最喜欢用这本书来做什么将有助于引导我们的注意力来让这些部分变得更好。我们也希望此手册尽可能地规范，所以如果你看到任何错误或非规范的地方，但没有明确指出，也请[提交议题]。
 
 [book]: https://doc.rust-lang.org/book/index.html
 [github issues]: https://github.com/rust-lang/reference/issues
@@ -104,11 +104,12 @@
 [cargo book]: https://doc.rust-lang.org/cargo/index.html
 [cargo reference]: https://doc.rust-lang.org/cargo/reference/index.html
 [expressions chapter]: expressions.html
+[file an issue]: https://github.com/rust-lang/reference/issues
 [lifetime of temporaries]: expressions.html#temporaries
 [linkage]: linkage.html
 [rustc book]: https://doc.rust-lang.org/rustc/index.html
 [Notation]: notation.md
-[Discord]: https://discord.gg/rust-lang
+[Zulip]: https://rust-lang.zulipchat.com/#narrow/stream/237824-t-lang.2Fdoc
 
 <!-- 2020-11-12-->
 <!-- checked -->
