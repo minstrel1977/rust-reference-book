@@ -7108,7 +7108,7 @@ let d: String = x.f3;           // 从 x.f3 中移出
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/closure-expr.md">closure-expr.md</a><br />
 commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
-本章译文最后维护日期：2020-10-27</p>
+本章译文最后维护日期：2020-11-13</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -7121,12 +7121,12 @@ commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
 <p><em>ClosureParam</em> :<br />
    <a href="expressions/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <a href="expressions/../patterns.html"><em>Pattern</em></a> ( <code>:</code> <a href="expressions/../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
 </blockquote>
-<p><em>闭包表达式</em>，也称为 lambda表达式或 lambda。每个闭包表达式都定义了一个单独类型的闭包，其值就是闭包本身。闭包表达式是由管道符号(<code>|</code>)封闭的不可反驳型<a href="expressions/../patterns.html">模式</a>的参数列表再后跟一个表达式组成，可以选择为参数类型或返回类型添加类型标注(type annotations)。如果存在返回类型，则用于闭包主体的表达式必须是一个普通的<a href="expressions/block-expr.html">块</a>。闭包表达式也可以在初始 <code>|</code> 之前以关键字 <code>move</code> 开头。</p>
-<p>闭包表达式表示将一组参数映射到参数后面的表达式的函数。与 <a href="expressions/../statements.html#let-statements"><code>let</code>绑定</a>一样，这里的参数也是不可反驳型<a href="expressions/../patterns.html">模式</a>，其类型标注是可选的，如果没有给出，则从上下文推断。每个闭包表达式都有一个唯一的匿名类型。</p>
-<p>闭包表达式在将函数作为参数传递给其他函数时非常有用，因此它常被用来作为定义和捕获独立函数(separate function)的便捷手段。</p>
-<p>特别值得注意的是闭包表达式能<em>捕获它们被定义时的环境中的变量(capture their environment)</em>，而正常函数定义则不能。如果没有关键字 <code>move</code>，闭包表达式将<a href="expressions/../types/closure.html#capture-modes">推断出它该如何从其环境中捕获每个变量</a>，它会而倾向于通过共享引用来捕获，从而有效地借用闭包体中用到的所有外部变量。如果有必要，编译器将推断出应该采用可变引用，或者应该从环境中移动或复制值（取决于它们的类型）变量。闭包可以通过前缀关键字 <code>move</code> 来强制通过复制值或移动值的方式捕获其环境变量。这通常用来确保当前闭包的生存期类型为 <code>'static</code>。</p>
-<p>编译器将通过闭包对其捕获的变量的处置方式来确定闭包类型将实现哪些<a href="expressions/../types/closure.html#call-traits-and-coercions">闭包trait</a>。如果所有捕获的类型都实现了 <a href="expressions/../special-types-and-traits.html#send"><code>Send</code></a> 和/或 <a href="expressions/../special-types-and-traits.html#sync"><code>Sync</code></a>，那么闭包也实现了 <code>Send</code> 和/或 <code>Sync</code>。因为存在这些 trait，函数可以方便的使用泛型来接受闭包类型的参数，即使闭包的类型名称无法被显式指定。</p>
-<p>在本例中，我们定义了一个名为 <code>ten_times</code> 的函数，它接受高阶函数参数，然后我们用一个闭包表达式作为实参来调用它，后面还定义了一个使用移动语义从环境中捕获变量的闭包表达式来供该函数调用。</p>
+<p><em>闭包表达式</em>，也被称为 lambda表达式或 lambda。每个闭包表达式都定义了一个单独类型的闭包，其值就是闭包本身。闭包表达式是由管道定界符(<code>|</code>)封闭的不可反驳型<a href="expressions/../patterns.html">模式</a>参数列表，再后跟一个表达式组成。可以选择为参数类型或返回类型添加类型标注(type annotations)。如果存在返回类型，则用于闭包主体的表达式必须是一个普通的<a href="expressions/block-expr.html">块</a>。闭包表达式也可以以位于起始的 <code>|</code> 之前的关键字 <code>move</code> 为开头。</p>
+<p>闭包表达式表示了将一组参数映射到参数后面的表达式的函数。与 <a href="expressions/../statements.html#let-statements"><code>let</code>绑定</a>一样，这里的参数也是不可反驳型<a href="expressions/../patterns.html">模式</a>的，其类型标注是可选的，如果没有给出，则从上下文推断。每个闭包表达式都有一个唯一的匿名类型。</p>
+<p>闭包表达式在将函数作为参数传递给其他函数时非常有用，它常被用作为定义和捕获独立函数(separate function)的便捷手段。</p>
+<p>特别值得注意的是闭包表达式能<em>捕获它们被定义时的环境中的变量(capture their environment)</em>，而正常<a href="expressions/../items/functions.html">函数定义</a>则不能。如果没有关键字 <code>move</code>，闭包表达式将<a href="expressions/../types/closure.html#capture-modes">推断它该如何从其环境中捕获每个变量</a>，它倾向于通过共享引用来捕获，从而有效地借用闭包体中用到的所有外部变量。如果有必要，编译器将推断出应该采用可变引用，或者应该从环境中移动或复制值（取决于这些变量的类型）。闭包可以通过前缀关键字 <code>move</code> 来强制通过复制值或移动值的方式捕获其环境变量。这通常是为了确保当前闭包的生存期类型为 <code>'static</code>。</p>
+<p>编译器将通过闭包对其捕获的变量的处置方式来确定此闭包类型将实现的<a href="expressions/../types/closure.html#call-traits-and-coercions">闭包trait</a>。如果所有捕获的类型都实现了 <a href="expressions/../special-types-and-traits.html#send"><code>Send</code></a> 和/或 <a href="expressions/../special-types-and-traits.html#sync"><code>Sync</code></a>，那么此闭包类型也实现了 <code>Send</code> 和/或 <code>Sync</code>。这些存在这些 trait，函数可以通过泛型的方式接受各种闭包，即便闭包的类型名无法被确切指定。</p>
+<p>在本例中，我们定义了一个名为 <code>ten_times</code> 的函数，它接受高阶函数参数，然后我们传给它一个闭包表达式作为实参并调用它。之后又定义了一个使用移动语义从环境中捕获变量的闭包表达式来供该函数调用。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -7155,7 +7155,7 @@ ten_times(move |j| println!(&quot;{}, {}&quot;, word, j));
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/loop-expr.md">loop-expr.md</a><br />
 commit: 37f61d3347d0813bce53a25c8ee068650d9a025f <br />
-本章译文最后维护日期：2020-10-27</p>
+本章译文最后维护日期：2020-11-13</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -7174,7 +7174,7 @@ commit: 37f61d3347d0813bce53a25c8ee068650d9a025f <br />
 <li><a href="expressions/loop-expr.html#predicate-pattern-loops"><code>while let</code>表达式</a>循环测试给定模式。</li>
 <li><a href="expressions/loop-expr.html#iterator-loops"><code>for</code>表达式</a>从迭代器中循环取值，直到迭代器为空。</li>
 </ul>
-<p>所有四种类型的循环都支持 <a href="expressions/loop-expr.html#break-expressions"><code>break</code>表达式</a>、<a href="expressions/loop-expr.html#continue-expressions"><code>continue</code>表达式</a>和<a href="expressions/loop-expr.html#loop-labels">循环标签</a>。只有 <code>loop</code>循环支持对循环体[非平凡求值(<a href="expressions/loop-expr.html#break-and-loop-values">evaluation to non-trivial values)</a>。</p>
+<p>所有四种类型的循环都支持 <a href="expressions/loop-expr.html#break-expressions"><code>break</code>表达式</a>、<a href="expressions/loop-expr.html#continue-expressions"><code>continue</code>表达式</a>和<a href="expressions/loop-expr.html#loop-labels">循环标签(label)</a>。只有 <code>loop</code>循环支持对循环体<a href="expressions/loop-expr.html#break-and-loop-values">非平凡求值(evaluation to non-trivial values)</a><sup class="footnote-reference"><a href="#译注1">1</a></sup>。</p>
 <h2><a class="header" href="#infinite-loops" id="infinite-loops">Infinite loops</a></h2>
 <h2><a class="header" href="#无限循环" id="无限循环">无限循环</a></h2>
 <blockquote>
@@ -7183,7 +7183,7 @@ commit: 37f61d3347d0813bce53a25c8ee068650d9a025f <br />
    <code>loop</code> <a href="expressions/block-expr.html"><em>BlockExpression</em></a></p>
 </blockquote>
 <p><code>loop</code>表达式会不断地重复地执行它代码体内的代码：<code>loop { println!(&quot;I live.&quot;); }</code>。</p>
-<p>没有包含关联的 <code>break</code>表达式的 <code>loop</code>表达式是发散的，并且具有类型 <a href="expressions/../types/never.html"><code>!</code></a>。包含相应 <code>break</code>表达式的 <code>loop</code>表达式可以结束循环，并且此表达式的类型必须与 <code>break</code>表达式的值兼容。</p>
+<p>没有包含关联的 <code>break</code>表达式的 <code>loop</code>表达式是发散的，并且具有类型 <a href="expressions/../types/never.html"><code>!</code></a>。包含相应 <code>break</code>表达式的 <code>loop</code>表达式可以结束循环，并且此表达式的类型必须与 <code>break</code>表达式的类型兼容。</p>
 <h2><a class="header" href="#predicate-loops" id="predicate-loops">Predicate loops</a></h2>
 <h2><a class="header" href="#谓词循环" id="谓词循环">谓词循环</a></h2>
 <blockquote>
@@ -7212,7 +7212,7 @@ while i &lt; 10 {
    <code>while</code> <code>let</code> <a href="expressions/match-expr.html"><em>MatchArmPatterns</em></a> <code>=</code> <a href="expressions/../expressions.html"><em>Expression</em></a><sub><em>排除结构体表达式和惰性布尔运算符表达式</em></sub>
 <a href="expressions/block-expr.html"><em>BlockExpression</em></a></p>
 </blockquote>
-<p><code>while let</code>循环在语义上类似于 <code>while</code>循环，但它用 <code>let</code>关键字后紧跟着一个模式、一个 <code>=</code>、一个<a href="expressions/../glossary.html#scrutinee">检验对象(scrutinee)</a>表达式和一个块表达式，来替代原来的条件表达式。如果检验对象表达式的值与模式匹配，则执行循环体块，然后控制流返回到模式匹配语句。如果不匹配，则 <code>while</code>表达式完成。</p>
+<p><code>while let</code>循环在语义上类似于 <code>while</code>循环，但它用 <code>let</code>关键字后紧跟着一个模式、一个 <code>=</code>、一个<a href="expressions/../glossary.html#scrutinee">检验对象(scrutinee)</a>表达式和一个块表达式，来替代原来的条件表达式。如果检验对象表达式的值与模式匹配，则执行循环体块，然后控制流再返回到模式匹配语句。如果不匹配，则 <code>while</code>表达式执行完成。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -7263,7 +7263,7 @@ while let Some(v @ 1) | Some(v @ 2) = vals.pop() {
    <code>for</code> <a href="expressions/../patterns.html"><em>Pattern</em></a> <code>in</code> <a href="expressions/../expressions.html"><em>Expression</em></a><sub><em>排除结构体表达式</em></sub>
 <a href="expressions/block-expr.html"><em>BlockExpression</em></a></p>
 </blockquote>
-<p><code>for</code>表达式是一个语法结构，用于在 <code>std::iter::IntoIterator</code> 的某个迭代器实现提供的元素上循环。如果迭代器生成一个值，该值将与此 <code>for</code>表达式提供的不可反驳型模式进行匹配，执行循环体，然后控制流返回到 <code>for</code>循环的头部。如果迭代器为空了，则 <code>for</code>表达式执行完成。</p>
+<p><code>for</code>表达式是一个用于在 <code>std::iter::IntoIterator</code> 的某个迭代器实现提供的元素上进行循环的语法结构。如果迭代器生成一个值，该值将与此 <code>for</code>表达式提供的不可反驳型模式进行匹配，执行循环体，然后控制流返回到 <code>for</code>循环的头部。如果迭代器为空了，则 <code>for</code>表达式执行完成。</p>
 <p><code>for</code>循环遍历数组内容的示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -7311,7 +7311,7 @@ assert_eq!(sum, 55);
 </code></pre>
 <p>这里的 <code>IntoIterator</code>、<code>Iterator</code> 和 <code>Option</code> 是标准库的数据项(standard library item)，不是当前作用域中解析的的任何名称。变量名 <code>next</code>、<code>iter</code> 和 <code>val</code> 也仅用于表述需要，实际上它们不是用户可以输入的名称。</p>
 <blockquote>
-<p><strong>注意</strong>：上面代码里使用外层 <code>matche</code> 来确保 <code>iter_expr</code> 中的任何<a href="expressions/../expressions.html#temporaries">临时值</a>在循环结束前不会被销毁。<code>next</code> 先声明后赋值是因为这样能让给编译器更准确地推断出类型。</p>
+<p><strong>注意</strong>：上面代码里使用外层 <code>matche</code> 来确保 <code>iter_expr</code> 中的任何<a href="expressions/../expressions.html#temporaries">临时值</a>在循环结束前不会被销毁。<code>next</code> 先声明后赋值是因为这样能让编译器更准确地推断出类型。</p>
 </blockquote>
 <h2><a class="header" href="#loop-labels" id="loop-labels">Loop labels</a></h2>
 <h2><a class="header" href="#循环标签" id="循环标签">循环标签</a></h2>
@@ -7320,7 +7320,7 @@ assert_eq!(sum, 55);
 <em>LoopLabel</em> :<br />
    <a href="expressions/../tokens.html#lifetimes-and-loop-labels">LIFETIME_OR_LABEL</a> <code>:</code></p>
 </blockquote>
-<p>一个循环表达式可以选择设置一个<em>标签</em>。这类标签被标记为循环表达式之前的生存期，如 <code>'foo: loop { break 'foo; }</code>、<code>'bar: while false {}</code>、<code>'humbug: for _ in 0..0 {}</code>。如果循环存在标签，则嵌套在该循环中的带标签的 <code>break</code>表达式和 <code>continue</code>表达式可以退出此层循环或将控制流返回至其头部。具体请参见后面的 <a href="expressions/loop-expr.html#break-expressions">break表达式</a>和 <a href="expressions/loop-expr.html#continue-expressions">continue表达式</a>。</p>
+<p>一个循环表达式可以选择设置一个<em>标签</em>。这类标签被标记为循环表达式之前的生存期（标签），如 <code>'foo: loop { break 'foo; }</code>、<code>'bar: while false {}</code>、<code>'humbug: for _ in 0..0 {}</code>。如果循环存在标签，则嵌套在该循环中的带此标签的 <code>break</code>表达式和 <code>continue</code>表达式可以退出此标签标记的循环层或将控制流返回至此标签标记的循环层的头部。具体请参见后面的 <a href="expressions/loop-expr.html#break-expressions">break表达式</a>和 <a href="expressions/loop-expr.html#continue-expressions">continue表达式</a>。</p>
 <h2><a class="header" href="#break-expressions" id="break-expressions"><code>break</code> expressions</a></h2>
 <h2><a class="header" href="#break表达式" id="break表达式"><code>break</code>表达式</a></h2>
 <blockquote>
@@ -7342,7 +7342,7 @@ for x in 1..100 {
 assert_eq!(last, 12);
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>break</code>表达式通常与包含 <code>break</code>表达式的最内层 <code>loop</code>、<code>for</code>或 <code>while</code>循环相关联，但是可以使用<a href="expressions/loop-expr.html#loop-labels">循环标签</a>来指定受影响的循环（此循环必须是封闭该 break表达式的循环之一）。例如：</p>
+<p><code>break</code>表达式通常与包含 <code>break</code>表达式的最内层 <code>loop</code>、<code>for</code>或 <code>while</code>循环相关联，但是可以使用<a href="expressions/loop-expr.html#loop-labels">循环标签</a>来指定受影响的循环层（此循环层必须是封闭该 break表达式的循环之一）。例如：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -7362,7 +7362,7 @@ assert_eq!(last, 12);
    <code>continue</code> <a href="expressions/../tokens.html#lifetimes-and-loop-labels">LIFETIME_OR_LABEL</a><sup>?</sup></p>
 </blockquote>
 <p>当遇到 <code>continue</code> 时，相关的循环体的当前迭代将立即结束，并将控制流返回到循环头。在 <code>while</code>循环的情况下，循环头是控制循环的条件表达式。在 <code>for</code>循环的情况下，循环头是控制循环的调用表达式。</p>
-<p>与 <code>break</code> 一样，<code>continue</code> 通常与最内部的循环相关联，但可以使用 <code>continue 'label</code> 来指定受影响的循环。<code>continue</code>表达式只允许在循环体内部使用。</p>
+<p>与 <code>break</code> 一样，<code>continue</code> 通常与最内层的循环相关联，但可以使用 <code>continue 'label</code> 来指定受影响的循环层。<code>continue</code>表达式只允许在循环体内部使用。</p>
 <h2><a class="header" href="#break-and-loop-values" id="break-and-loop-values"><code>break</code> and loop values</a></h2>
 <h2><a class="header" href="#break和loop返回值" id="break和loop返回值"><code>break</code>和<code>loop</code>返回值</a></h2>
 <p>当使用 <code>loop</code>循环时，可以使用 <code>break</code>表达式从循环中返回一个值，通过形如 <code>break EXPR</code> 或 <code>break 'label EXPR</code> 来返回，其中 <code>EXPR</code> 是一个表达式，它的结果被从 <code>loop</code>循环中返回。例如：</p>
@@ -7382,7 +7382,10 @@ let result = loop {
 assert_eq!(result, 13);
 <span class="boring">}
 </span></code></pre></pre>
-<p>如果 <code>loop</code> 有关联的 <code>break</code>，则不认为该循环是发散的，并且 <code>loop</code>表达式的类型必须与每个 <code>break</code>表达式的类型兼容。不后跟表达式的 <code>break</code> 被认为与后跟 <code>()</code> 的<code>break</code>表达式的效果相同。</p>
+<p>如果 <code>loop</code> 有关联的 <code>break</code>，则不认为该循环是发散的，并且 <code>loop</code>表达式的类型必须与每个 <code>break</code>表达式的类型兼容。其后不跟表达式的 <code>break</code> 被认为与后跟 <code>()</code> 的<code>break</code>表达式的效果相同。</p>
+<div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
+<p>求得 <code>()</code> 类型以外的值。</p>
+</div>
 <!-- 上面这几个链接从原文来替换时需小心 -->
 <!-- 2020-11-12-->
 <!-- checked -->
@@ -7391,7 +7394,7 @@ assert_eq!(result, 13);
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/range-expr.md">range-expr.md</a><br />
 commit: 1cc592ee270b4d9ad190a8cacce0a1ed356b54d0 <br />
-本章译文最后维护日期：2020-10-28</p>
+本章译文最后维护日期：2020-11-13</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -7462,7 +7465,7 @@ assert_eq!(x, y);
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/if-expr.md">if-expr.md</a><br />
 commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
-本章译文最后维护日期：2020-10-28</p>
+本章译文最后维护日期：2020-11-13</p>
 </blockquote>
 <h2><a class="header" href="#if-expressions" id="if-expressions"><code>if</code> expressions</a></h2>
 <h2><a class="header" href="#if表达式" id="if表达式"><code>if</code>表达式</a></h2>
@@ -7600,7 +7603,7 @@ if let PAT = ( EXPR || EXPR ) { .. }
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/match-expr.md">match-expr.md</a><br />
 commit: 41cf00929903710a9ce9b1f4c5d8b96e6a511614 <br />
-本章译文最后维护日期：2020-10-28</p>
+本章译文最后维护日期：2020-11-13</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -7622,9 +7625,9 @@ commit: 41cf00929903710a9ce9b1f4c5d8b96e6a511614 <br />
 <p><em>MatchArmGuard</em> :<br />
    <code>if</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><em>匹配(<code>match</code>)表达式</em>在模式(pattern)上建立控制流分支(branch)。匹配的具体形式取决于其应用的<a href="expressions/../patterns.html">模式</a>。一个匹配(<code>match</code>)表达式带有一个要与模式进行比较的 <em><a href="expressions/../glossary.html#scrutinee">检验对象</a>(scrutinee)表达式</em>。检验对象表达式和模式必须具有相同的类型。</p>
-<p>根据检验对象表达式是<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式或值表达式</a>，匹配(<code>match</code>)的行为会有所不同。如果检验对象表达式是一个<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>，则这个表达式首先会在被求值到一个临时位置，然后将这个结果值按顺序与匹配臂(arms)中的模式进行比较，直到找到一个成功的匹配。第一个匹配成功的模式所在的匹配臂会被选中为当前匹配(<code>match</code>)的分支目标，然后由该模式（从检验对象那里）绑定到的任何变量又都会被赋值给该匹配臂的块中的局部变量，然后控制流进入该块。</p>
-<p>当检验对象表达式是一个<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>时，此匹配(<code>match</code>)表达式不用先去内存上分配一个临时位置，但是，按值匹配绑定(by-value binding)会复制或移动这个（位置表达式代表的）内存位置里面的值。如果可能，最好是在位置表达式上进行匹配，因为这种匹配的生存期继承了该位置表达式的生存期，而不会（让其生存期仅）局限于此匹配的内部。</p>
+<p><em>匹配(<code>match</code>)表达式</em>在模式(pattern)上建立代码逻辑分支(branch)。匹配的确切形式取决于其应用的<a href="expressions/../patterns.html">模式</a>。一个匹配(<code>match</code>)表达式带有一个要与模式进行比较的 <em><a href="expressions/../glossary.html#scrutinee">检验对象</a>(scrutinee)表达式</em>。检验对象表达式和模式必须具有相同的类型。</p>
+<p>根据检验对象表达式是<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式或值表达式</a>，匹配(<code>match</code>)的行为表现会有所不同。如果检验对象表达式是一个<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>，则这个表达式首先会在被求值到一个临时内存位置，然后将这个结果值按顺序与匹配臂(arms)中的模式进行比较，直到找到一个成功的匹配。第一个匹配成功的模式所在的匹配臂会被选中为当前匹配(<code>match</code>)的分支目标，然后以该模式绑定的变量为中介，（把它从检验对象那里匹配到的变量值）转赋值给该匹配臂的块中的局部变量，然后控制流进入该块。</p>
+<p>当检验对象表达式是一个<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>时，此匹配(<code>match</code>)表达式不用先去内存上分配一个临时位置；但是，按值匹配的绑定方式(by-value binding)会复制或移动这个（位置表达式代表的）内存位置里面的值。如果可能，最好还是在位置表达式上进行匹配，因为这种匹配的生存期继承了该位置表达式的生存期，而不会（让其生存期仅）局限于此匹配的内部。</p>
 <p>匹配(<code>match</code>)表达式的一个示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]

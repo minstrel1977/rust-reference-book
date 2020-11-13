@@ -3,7 +3,7 @@
 
 >[if-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/if-expr.md)\
 >commit: f8e76ee9368f498f7f044c719de68c7d95da9972 \
->本章译文最后维护日期：2020-10-28
+>本章译文最后维护日期：2020-11-13
 
 ## `if` expressions
 ## `if`表达式

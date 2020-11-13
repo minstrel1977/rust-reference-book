@@ -3,7 +3,7 @@
 
 >[loop-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/loop-expr.md)\
 >commit: 37f61d3347d0813bce53a25c8ee068650d9a025f \
->本章译文最后维护日期：2020-10-27
+>本章译文最后维护日期：2020-11-13
 
 > **<sup>句法</sup>**\
 > _LoopExpression_ :\
@@ -21,12 +21,13 @@
 [_IteratorLoopExpression_]: #iterator-loops
 
 Rust支持四种循环表达式：
+
 *   [`loop`表达式](#infinite-loops)表示一个无限循环。
 *   [`while`表达式](#predicate-loops)不断循环，直到谓词为假。
 *   [`while let`表达式](#predicate-pattern-loops)循环测试给定模式。
 *   [`for`表达式](#iterator-loops)从迭代器中循环取值，直到迭代器为空。
 
-所有四种类型的循环都支持 [`break`表达式](#break-expressions)、[`continue`表达式](#continue-expressions)和[循环标签](#loop-labels)。只有 `loop`循环支持对循环体[非平凡求值([evaluation to non-trivial values)](#break-and-loop-values)。
+所有四种类型的循环都支持 [`break`表达式](#break-expressions)、[`continue`表达式](#continue-expressions)和[循环标签(label)](#loop-labels)。只有 `loop`循环支持对循环体[非平凡求值(evaluation to non-trivial values)](#break-and-loop-values)[^译注1]。
 
 ## Infinite loops
 ## 无限循环
@@ -37,7 +38,7 @@ Rust支持四种循环表达式：
 
 `loop`表达式会不断地重复地执行它代码体内的代码：`loop { println!("I live."); }`。
 
-没有包含关联的 `break`表达式的 `loop`表达式是发散的，并且具有类型 [`!`][`!`]。包含相应 `break`表达式的 `loop`表达式可以结束循环，并且此表达式的类型必须与 `break`表达式的值兼容。
+没有包含关联的 `break`表达式的 `loop`表达式是发散的，并且具有类型 [`!`][`!`]。包含相应 `break`表达式的 `loop`表达式可以结束循环，并且此表达式的类型必须与 `break`表达式的类型兼容。
 
 ## Predicate loops
 ## 谓词循环
@@ -67,7 +68,7 @@ while i < 10 {
 > &nbsp;&nbsp; `while` `let` [_MatchArmPatterns_] `=` [_Expression_]<sub>_排除结构体表达式和惰性布尔运算符表达式_</sub>
 >              [_BlockExpression_]
 
-`while let`循环在语义上类似于 `while`循环，但它用 `let`关键字后紧跟着一个模式、一个 `=`、一个[检验对象(scrutinee)][scrutinee]表达式和一个块表达式，来替代原来的条件表达式。如果检验对象表达式的值与模式匹配，则执行循环体块，然后控制流返回到模式匹配语句。如果不匹配，则 `while`表达式完成。
+`while let`循环在语义上类似于 `while`循环，但它用 `let`关键字后紧跟着一个模式、一个 `=`、一个[检验对象(scrutinee)][scrutinee]表达式和一个块表达式，来替代原来的条件表达式。如果检验对象表达式的值与模式匹配，则执行循环体块，然后控制流再返回到模式匹配语句。如果不匹配，则 `while`表达式执行完成。
 
 ```rust
 let mut x = vec![1, 2, 3];
@@ -123,7 +124,7 @@ while let Some(v @ 1) | Some(v @ 2) = vals.pop() {
 > &nbsp;&nbsp; `for` [_Pattern_] `in` [_Expression_]<sub>_排除结构体表达式_</sub>
 >              [_BlockExpression_]
 
-`for`表达式是一个语法结构，用于在 `std::iter::IntoIterator` 的某个迭代器实现提供的元素上循环。如果迭代器生成一个值，该值将与此 `for`表达式提供的不可反驳型模式进行匹配，执行循环体，然后控制流返回到 `for`循环的头部。如果迭代器为空了，则 `for`表达式执行完成。
+`for`表达式是一个用于在 `std::iter::IntoIterator` 的某个迭代器实现提供的元素上进行循环的语法结构。如果迭代器生成一个值，该值将与此 `for`表达式提供的不可反驳型模式进行匹配，执行循环体，然后控制流返回到 `for`循环的头部。如果迭代器为空了，则 `for`表达式执行完成。
 
 `for`循环遍历数组内容的示例：
 
@@ -176,7 +177,7 @@ assert_eq!(sum, 55);
 
 这里的 `IntoIterator`、`Iterator` 和 `Option` 是标准库的数据项(standard library item)，不是当前作用域中解析的的任何名称。变量名 `next`、`iter` 和 `val` 也仅用于表述需要，实际上它们不是用户可以输入的名称。
 
-> **注意**：上面代码里使用外层 `matche` 来确保 `iter_expr` 中的任何[临时值][temporary values]在循环结束前不会被销毁。`next` 先声明后赋值是因为这样能让给编译器更准确地推断出类型。
+> **注意**：上面代码里使用外层 `matche` 来确保 `iter_expr` 中的任何[临时值][temporary values]在循环结束前不会被销毁。`next` 先声明后赋值是因为这样能让编译器更准确地推断出类型。
 
 ## Loop labels
 ## 循环标签
@@ -185,7 +186,7 @@ assert_eq!(sum, 55);
 > _LoopLabel_ :\
 > &nbsp;&nbsp; [LIFETIME_OR_LABEL] `:`
 
-一个循环表达式可以选择设置一个*标签*。这类标签被标记为循环表达式之前的生存期，如 `'foo: loop { break 'foo; }`、`'bar: while false {}`、`'humbug: for _ in 0..0 {}`。如果循环存在标签，则嵌套在该循环中的带标签的 `break`表达式和 `continue`表达式可以退出此层循环或将控制流返回至其头部。具体请参见后面的 [break表达式](#break-expressions)和 [continue表达式](#continue-expressions)。
+一个循环表达式可以选择设置一个*标签*。这类标签被标记为循环表达式之前的生存期（标签），如 `'foo: loop { break 'foo; }`、`'bar: while false {}`、`'humbug: for _ in 0..0 {}`。如果循环存在标签，则嵌套在该循环中的带此标签的 `break`表达式和 `continue`表达式可以退出此标签标记的循环层或将控制流返回至此标签标记的循环层的头部。具体请参见后面的 [break表达式](#break-expressions)和 [continue表达式](#continue-expressions)。
 
 ## `break` expressions
 ## `break`表达式
@@ -207,7 +208,7 @@ for x in 1..100 {
 assert_eq!(last, 12);
 ```
 
-`break`表达式通常与包含 `break`表达式的最内层 `loop`、`for`或 `while`循环相关联，但是可以使用[循环标签](#loop-labels)来指定受影响的循环（此循环必须是封闭该 break表达式的循环之一）。例如：
+`break`表达式通常与包含 `break`表达式的最内层 `loop`、`for`或 `while`循环相关联，但是可以使用[循环标签](#loop-labels)来指定受影响的循环层（此循环层必须是封闭该 break表达式的循环之一）。例如：
 
 ```rust
 'outer: loop {
@@ -228,7 +229,7 @@ assert_eq!(last, 12);
 
 当遇到 `continue` 时，相关的循环体的当前迭代将立即结束，并将控制流返回到循环头。在 `while`循环的情况下，循环头是控制循环的条件表达式。在 `for`循环的情况下，循环头是控制循环的调用表达式。
 
-与 `break` 一样，`continue` 通常与最内部的循环相关联，但可以使用 `continue 'label` 来指定受影响的循环。`continue`表达式只允许在循环体内部使用。
+与 `break` 一样，`continue` 通常与最内层的循环相关联，但可以使用 `continue 'label` 来指定受影响的循环层。`continue`表达式只允许在循环体内部使用。
 
 ## `break` and loop values
 ## `break`和`loop`返回值
@@ -249,7 +250,9 @@ let result = loop {
 assert_eq!(result, 13);
 ```
 
-如果 `loop` 有关联的 `break`，则不认为该循环是发散的，并且 `loop`表达式的类型必须与每个 `break`表达式的类型兼容。不后跟表达式的 `break` 被认为与后跟 `()` 的`break`表达式的效果相同。
+如果 `loop` 有关联的 `break`，则不认为该循环是发散的，并且 `loop`表达式的类型必须与每个 `break`表达式的类型兼容。其后不跟表达式的 `break` 被认为与后跟 `()` 的`break`表达式的效果相同。
+
+[^译注1]: 求得 `()` 类型以外的值。  
 
 [`!`]: ../types/never.md
 <!-- 上面这几个链接从原文来替换时需小心 -->
