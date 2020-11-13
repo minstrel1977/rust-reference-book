@@ -166,28 +166,28 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#await-expressions" id="await-expressions">Await expressions</a></h1>
-<h1><a class="header" href="#等待表达式" id="等待表达式">等待表达式</a></h1>
+<h1><a class="header" href="#等待await表达式" id="等待await表达式">等待(await)表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/await-expr.md">await-expr.md</a><br />
 commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
-本章译文最后维护日期：2020-10-28</p>
+本章译文最后维护日期：2020-11-13</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>AwaitExpression</em> :<br />
    <a href="../expressions.html"><em>Expression</em></a> <code>.</code> <code>await</code></p>
 </blockquote>
-<p>等待表达式仅在<a href="../expressions/block-expr.html#async-context">异步上下文</a>中才能使用，例如 <a href="../items/functions.html#async-functions">异步函数(<code>async fn</code>)</a> 或 <a href="block-expr.html#async-blocks">异步(<code>async</code>)块</a>。等待表达式内部操作一个 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">future</a> 。它的作用是暂停当前计算，直到给定的 future 准备好生成返回值。</p>
+<p>等待(await)表达式仅在<a href="../expressions/block-expr.html#async-context">异步上下文</a>中才能使用，例如 <a href="../items/functions.html#async-functions">异步函数(<code>async fn</code>)</a> 或 <a href="block-expr.html#async-blocks">异步(<code>async</code>)块</a>。等待(await)表达式内部操作一个 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">future</a> 。它的作用是挂起当前计算，直到给定的 future 准备好生成返回值。</p>
 <p>更具体地说 <code>&lt;expr&gt;.await</code>表达式有以下效果。</p>
 <ol>
-<li>计算 <code>&lt;expr&gt;</code> 到一个 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">future</a> <code>tmp</code>；</li>
-<li>使用 <a href="https://doc.rust-lang.org/std/pin/struct.Pin.html#method.new_unchecked"><code>Pin::new_unchecked</code></a> 固定住(Pin) <code>tmp</code>；</li>
-<li>然后通过调用 <a href="https://doc.rust-lang.org/std/future/trait.Future.html#tymethod.poll"><code>Future::poll</code></a> 方法对这个固定住的 future 进行轮询，并将当前<a href="#task-context">任务上下文</a>传递给它；</li>
+<li>计算 <code>&lt;expr&gt;</code> 到一个 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">future</a> <code>tmp</code> 中；</li>
+<li>使用 <a href="https://doc.rust-lang.org/std/pin/struct.Pin.html#method.new_unchecked"><code>Pin::new_unchecked</code></a> 固定住(Pin)这个 <code>tmp</code>；</li>
+<li>然后通过调用 <a href="https://doc.rust-lang.org/std/future/trait.Future.html#tymethod.poll"><code>Future::poll</code></a> 方法对这个固定住的 future 进行轮询，同事将当前<a href="#task-context">任务上下文</a>传递给它；</li>
 <li>如果轮询(<code>poll</code>)调用返回 <a href="https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Pending"><code>Poll::Pending</code></a>，那么这个 future 就也返回 <code>Poll::Pending</code>，并相应地挂起它的状态，这样，当包围它的异步上下文被再次轮询时，执行流返回到步骤2；</li>
-<li>否则，轮询(<code>poll</code>)调用必定返回了 <a href="https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Ready"><code>Poll::Ready</code></a>，在这种情况下，<a href="https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Ready"><code>Poll::Ready</code></a> 变体中包含的值将被当作这个 <code>await</code>表达式本身的求值结果。</li>
+<li>否则，轮询(<code>poll</code>)调用必定返回了 <a href="https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Ready"><code>Poll::Ready</code></a>，在这种情况下，<a href="https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Ready"><code>Poll::Ready</code></a>变体中包含的值将被当作这个 <code>await</code>表达式本身的求值结果。</li>
 </ol>
 <blockquote>
-<p><strong>版本差异</strong>： 等待表达式只能从 Rust 2018 版开始才可用</p>
+<p><strong>版本差异</strong>： 等待(await)表达式只能从 Rust 2018 版开始才可用</p>
 </blockquote>
 <h2><a class="header" href="#task-context" id="task-context">Task context</a></h2>
 <h2><a class="header" href="#任务上下文" id="任务上下文">任务上下文</a></h2>

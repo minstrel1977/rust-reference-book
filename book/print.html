@@ -7673,8 +7673,8 @@ match S(1, 2) {
 <p>每个 <code>|</code> 分隔的模式里出现的变量绑定必须出现在匹配臂的所有模式里。相同名称的绑定变量必须具有相同的类型和相同的变量绑定模式。</p>
 <h2><a class="header" href="#match-guards" id="match-guards">Match guards</a></h2>
 <h2><a class="header" href="#匹配守卫" id="匹配守卫">匹配守卫</a></h2>
-<p>匹配臂可以接受*匹配守卫(Pattern guard)*来进一步改进匹配标准。模式守卫出现在模式后面，由关键字 <code>if</code> 后面的布尔类型表达式组成。</p>
-<p>当模式匹配成功时，将执行匹配守卫表达式。如果此表达式的计算结果为真，则此模式将进一步被确认匹配成功。否则，将匹配将测试下一个模式，包括同一匹配臂中运算符 <code>|</code> 分割的后续匹配模式。</p>
+<p>匹配臂可以接受*匹配守卫(Pattern guard)*来进一步改进匹配标准。模式守卫出现在模式的后面，由关键字 <code>if</code> 后面的布尔类型表达式组成。</p>
+<p>当模式匹配成功时，将执行匹配守卫表达式。如果此表达式的计算结果为真，则此模式将进一步被确认为匹配成功。否则，匹配将测试下一个模式，包括测试同一匹配臂中运算符 <code>|</code> 分割的后续匹配模式。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -7703,11 +7703,11 @@ assert_eq!(i.get(), 2);
 <span class="boring">}
 </span></code></pre></pre>
 </blockquote>
-<p>匹配守卫可以引用绑定在它们前面的模式里的变量。在计算匹配守卫之前，将对检验对象内部被模式的变量匹配上的那部分进行共享引用。在计算匹配守卫时，其中的访问该变量动作就会使用这个共享引用。只有当匹配守卫最终计算为真时，此共享引用的值才会从检验对象内部移动或复制到相应的匹配臂的变量中。这使得共享借用可以在守卫内部使用，而不会在守卫不匹配的情况下移出检验对象。此外，通过在评估匹配守卫的同时保留共享引用，也可以防止匹配守卫内部去修改检验对象。</p>
+<p>匹配守卫可以引用绑定在它们前面的模式里的变量。在对匹配守卫进行计算之前，将对检验对象内部被模式的变量匹配上的那部分进行共享引用。在对匹配守卫进行计算时，访问守卫里的这些变量就会使用这个共享引用。只有当匹配守卫最终计算为真时，此共享引用的值才会从检验对象内部移动或复制到相应的匹配臂的变量中。这使得共享借用可以在守卫内部使用，还不会在守卫不匹配的情况下将值移出检验对象。此外，通过在计算匹配守卫的同时持有共享引用，也可以防止匹配守卫内部意外修改检验对象。</p>
 <h2><a class="header" href="#attributes-on-match-arms" id="attributes-on-match-arms">Attributes on match arms</a></h2>
 <h2><a class="header" href="#匹配臂上的属性" id="匹配臂上的属性">匹配臂上的属性</a></h2>
 <p>在匹配臂上允许使用外部属性，但在匹配臂上只有 <a href="expressions/../conditional-compilation.html"><code>cfg</code></a>、<a href="expressions/../attributes/codegen.html#the-cold-attribute"><code>cold</code></a> 和 <a href="expressions/../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>这些属性才有意义。</p>
-<p>允许<a href="expressions/block-expr.html#attributes-on-block-expressions">块表达式上的属性</a>的表达式上下文同样允许匹配表达式上的属性，即在这种上下文下<a href="expressions/../attributes.html">内部属性</a>可以直接位于表达式的左括号之后。</p>
+<p>在允许<a href="expressions/../attributes.html">块表达式上的属性</a>存在的那几种表达式上下文中，可以在匹配表达式的左括号后直接使用<a href="expressions/block-expr.html#attributes-on-block-expressions">内部属性</a>。</p>
 <!-- 2020-11-12-->
 <!-- checked -->
 <h1><a class="header" href="#return-expressions" id="return-expressions"><code>return</code> expressions</a></h1>
@@ -7715,14 +7715,14 @@ assert_eq!(i.get(), 2);
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/return-expr.md">return-expr.md</a><br />
 commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本章译文最后维护日期：2020-10-28</p>
+本章译文最后维护日期：2020-11-13</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ReturnExpression</em> :<br />
    <code>return</code> <a href="expressions/../expressions.html"><em>Expression</em></a><sup>?</sup></p>
 </blockquote>
-<p>返回(return)表达式用关键字 <code>return</code> 表示。对返回(<code>return</code>)表达式求值会将其参数移动到当前函数调用的指定输出位置，然后销毁当前的函数激活帧(activation frame)，并将控制权转移到此函数的调用帧(caller frame)。</p>
+<p>返回(return)表达式使用关键字 <code>return</code> 来标识。对返回(<code>return</code>)表达式求值会将其参数移动到当前函数调用的指定输出位置，然后销毁当前函数的激活帧(activation frame)，并将控制权转移到此函数的调用帧(caller frame)。</p>
 <p>一个返回(<code>return</code>)表达式的例子：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -7738,28 +7738,28 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <!-- 2020-11-12-->
 <!-- checked -->
 <h1><a class="header" href="#await-expressions" id="await-expressions">Await expressions</a></h1>
-<h1><a class="header" href="#等待表达式" id="等待表达式">等待表达式</a></h1>
+<h1><a class="header" href="#等待await表达式" id="等待await表达式">等待(await)表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/await-expr.md">await-expr.md</a><br />
 commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
-本章译文最后维护日期：2020-10-28</p>
+本章译文最后维护日期：2020-11-13</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>AwaitExpression</em> :<br />
    <a href="expressions/../expressions.html"><em>Expression</em></a> <code>.</code> <code>await</code></p>
 </blockquote>
-<p>等待表达式仅在<a href="expressions/../expressions/block-expr.html#async-context">异步上下文</a>中才能使用，例如 <a href="expressions/../items/functions.html#async-functions">异步函数(<code>async fn</code>)</a> 或 <a href="expressions/block-expr.html#async-blocks">异步(<code>async</code>)块</a>。等待表达式内部操作一个 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">future</a> 。它的作用是暂停当前计算，直到给定的 future 准备好生成返回值。</p>
+<p>等待(await)表达式仅在<a href="expressions/../expressions/block-expr.html#async-context">异步上下文</a>中才能使用，例如 <a href="expressions/../items/functions.html#async-functions">异步函数(<code>async fn</code>)</a> 或 <a href="expressions/block-expr.html#async-blocks">异步(<code>async</code>)块</a>。等待(await)表达式内部操作一个 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">future</a> 。它的作用是挂起当前计算，直到给定的 future 准备好生成返回值。</p>
 <p>更具体地说 <code>&lt;expr&gt;.await</code>表达式有以下效果。</p>
 <ol>
-<li>计算 <code>&lt;expr&gt;</code> 到一个 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">future</a> <code>tmp</code>；</li>
-<li>使用 <a href="https://doc.rust-lang.org/std/pin/struct.Pin.html#method.new_unchecked"><code>Pin::new_unchecked</code></a> 固定住(Pin) <code>tmp</code>；</li>
-<li>然后通过调用 <a href="https://doc.rust-lang.org/std/future/trait.Future.html#tymethod.poll"><code>Future::poll</code></a> 方法对这个固定住的 future 进行轮询，并将当前<a href="expressions/await-expr.html#task-context">任务上下文</a>传递给它；</li>
+<li>计算 <code>&lt;expr&gt;</code> 到一个 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">future</a> <code>tmp</code> 中；</li>
+<li>使用 <a href="https://doc.rust-lang.org/std/pin/struct.Pin.html#method.new_unchecked"><code>Pin::new_unchecked</code></a> 固定住(Pin)这个 <code>tmp</code>；</li>
+<li>然后通过调用 <a href="https://doc.rust-lang.org/std/future/trait.Future.html#tymethod.poll"><code>Future::poll</code></a> 方法对这个固定住的 future 进行轮询，同事将当前<a href="expressions/await-expr.html#task-context">任务上下文</a>传递给它；</li>
 <li>如果轮询(<code>poll</code>)调用返回 <a href="https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Pending"><code>Poll::Pending</code></a>，那么这个 future 就也返回 <code>Poll::Pending</code>，并相应地挂起它的状态，这样，当包围它的异步上下文被再次轮询时，执行流返回到步骤2；</li>
-<li>否则，轮询(<code>poll</code>)调用必定返回了 <a href="https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Ready"><code>Poll::Ready</code></a>，在这种情况下，<a href="https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Ready"><code>Poll::Ready</code></a> 变体中包含的值将被当作这个 <code>await</code>表达式本身的求值结果。</li>
+<li>否则，轮询(<code>poll</code>)调用必定返回了 <a href="https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Ready"><code>Poll::Ready</code></a>，在这种情况下，<a href="https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Ready"><code>Poll::Ready</code></a>变体中包含的值将被当作这个 <code>await</code>表达式本身的求值结果。</li>
 </ol>
 <blockquote>
-<p><strong>版本差异</strong>： 等待表达式只能从 Rust 2018 版开始才可用</p>
+<p><strong>版本差异</strong>： 等待(await)表达式只能从 Rust 2018 版开始才可用</p>
 </blockquote>
 <h2><a class="header" href="#task-context" id="task-context">Task context</a></h2>
 <h2><a class="header" href="#任务上下文" id="任务上下文">任务上下文</a></h2>

@@ -170,14 +170,14 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/return-expr.md">return-expr.md</a><br />
 commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本章译文最后维护日期：2020-10-28</p>
+本章译文最后维护日期：2020-11-13</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ReturnExpression</em> :<br />
    <code>return</code> <a href="../expressions.html"><em>Expression</em></a><sup>?</sup></p>
 </blockquote>
-<p>返回(return)表达式用关键字 <code>return</code> 表示。对返回(<code>return</code>)表达式求值会将其参数移动到当前函数调用的指定输出位置，然后销毁当前的函数激活帧(activation frame)，并将控制权转移到此函数的调用帧(caller frame)。</p>
+<p>返回(return)表达式使用关键字 <code>return</code> 来标识。对返回(<code>return</code>)表达式求值会将其参数移动到当前函数调用的指定输出位置，然后销毁当前函数的激活帧(activation frame)，并将控制权转移到此函数的调用帧(caller frame)。</p>
 <p>一个返回(<code>return</code>)表达式的例子：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
