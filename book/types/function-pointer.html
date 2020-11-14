@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/function-pointer.md">function-pointer.md</a><br />
 commit: 3d1b9ae5e7a61da43ac83cc42815e29b34b350ba <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -188,9 +188,9 @@ commit: 3d1b9ae5e7a61da43ac83cc42815e29b34b350ba <br />
 <p><em>MaybeNamedFunctionParametersVariadic</em> :<br />
    ( <em>MaybeNamedParam</em> <code>,</code> )<sup>*</sup> <em>MaybeNamedParam</em> <code>,</code> <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <code>...</code></p>
 </blockquote>
-<p>函数指针类型（使用关键字 <code>fn</code> 写出）指的是在编译时不必知道其标识符的函数。它们也可以由<a href="function-item.html">函数项</a>类型或非捕获(non-capturing)<a href="closure.html">闭包</a>经过一次自动强转来创建。</p>
+<p>函数指针类型（使用关键字 <code>fn</code> 写出）指向那些在编译时不必知道函数标识符的函数。它们也可以由<a href="function-item.html">函数项</a>类型或非捕获(non-capturing)<a href="closure.html">闭包</a>经过一次自动强转(coercion)来创建。</p>
 <p>非安全(<code>unsafe</code>)限定符表示类型的值是一个<a href="../unsafe-functions.html">非安全函数</a>，而外部(<code>extern</code>)限定符表示它是一个<a href="../items/functions.html#extern-function-qualifier">外部函数</a>。</p>
-<p>可变参数只能通过 <a href="../items/external-blocks.html"><code>extern</code></a> 函数类型使用 <code>&quot;C&quot;</code> 或 <code>&quot;cdecl&quot;</code> 的调用约定来指定。</p>
+<p>可变参数只能通过使用 <code>&quot;C&quot;</code> 或 <code>&quot;cdecl&quot;</code> 的 ABI调用约定的 <a href="../items/external-blocks.html"><code>extern</code></a>函数类型来指定。</p>
 <p>下面示例中 <code>Binop</code> 被定义为函数指针类型：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]

@@ -170,9 +170,9 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/parameters.md">parameters.md</a><br />
 commit: eb02dd5194a747277bfa46b0185d1f5c248f177b <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
-<p>在带有类型参数声明的数据项的代码体内，其类型参数的名称是类型：</p>
+<p>在带有类型参数声明的数据项的代码体内，这些类型参数的名称可以直接当做类型使用：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -187,7 +187,7 @@ commit: eb02dd5194a747277bfa46b0185d1f5c248f177b <br />
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>这里，<code>first</code> 的类型为 <code>A</code>，引用的是 <code>to_vec</code> 的类型参数 <code>A</code>；<code>rest</code> 的类型为 <code>Vec&lt;A&gt;</code>，它是一个内部元素类型为 <code>A</code> 向量(vector)。</p>
+<p>这里，<code>first</code> 的类型为 <code>A</code>，援引的是 <code>to_vec</code> 的类型参数 <code>A</code>；<code>rest</code> 的类型为 <code>Vec&lt;A&gt;</code>，它是一个元素类型为 <code>A</code> 向量(vector)。</p>
 <!-- 2020-11-12-->
 <!-- checked -->
 

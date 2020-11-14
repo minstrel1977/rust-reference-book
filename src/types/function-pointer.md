@@ -3,7 +3,7 @@
 
 >[function-pointer.md](https://github.com/rust-lang/reference/blob/master/src/types/function-pointer.md)\
 >commit: 3d1b9ae5e7a61da43ac83cc42815e29b34b350ba \
->本章译文最后维护日期：2020-10-29
+>本章译文最后维护日期：2020-11-14
 
 > **<sup>句法</sup>**\
 > _BareFunctionType_ :\
@@ -25,11 +25,11 @@
 > _MaybeNamedFunctionParametersVariadic_ :\
 > &nbsp;&nbsp; ( _MaybeNamedParam_ `,` )<sup>\*</sup> _MaybeNamedParam_ `,` [_OuterAttribute_]<sup>\*</sup> `...`
 
-函数指针类型（使用关键字 `fn` 写出）指的是在编译时不必知道其标识符的函数。它们也可以由[函数项][function items]类型或非捕获(non-capturing)[闭包][closures]经过一次自动强转来创建。
+函数指针类型（使用关键字 `fn` 写出）指向那些在编译时不必知道函数标识符的函数。它们也可以由[函数项][function items]类型或非捕获(non-capturing)[闭包][closures]经过一次自动强转(coercion)来创建。
 
 非安全(`unsafe`)限定符表示类型的值是一个[非安全函数][unsafe function]，而外部(`extern`)限定符表示它是一个[外部函数][extern function]。
 
-可变参数只能通过 [`extern`] 函数类型使用 `"C"` 或 `"cdecl"` 的调用约定来指定。
+可变参数只能通过使用 `"C"` 或 `"cdecl"` 的 ABI调用约定的 [`extern`]函数类型来指定。
 
 下面示例中 `Binop` 被定义为函数指针类型：
 

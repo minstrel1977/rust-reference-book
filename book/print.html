@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本译文跟随原文到：2020-11-13</p>
+<p>本译文跟随原文到：2020-11-14</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <p>本译作是译者自己在学习 Rust 时，有感于国内 Rust 中文学习资源贫乏的激情之作。</p>
@@ -210,7 +210,8 @@
 <li>item，这个一般翻译为“项”或“条目”，译者期初为了读起来更符合习惯，选择了“项”的翻译方法，但后来发现这个方法太容易引起歧义，无法体现出其作为语法单元的特殊含义，所以又给它添了两个字，变成了“数据项”。而其他名词复合时，又一般会简化翻译为“XX项”，如：“static item”，译者就翻译为“静态项”。</li>
 <li>size，社区内常把这个词在表示 Rust 数据类型的位宽时也译做“大小”，但在中文语境中，有时无法把其和数值大小，以及比较意义的大小，或长度等含义快速区分开来，所以本文在表示 Rust 数据类型的位宽时统一译做“尺寸”。</li>
 <li>bit，这个通常译为“位”，但有时它会和中文中的“两位数”的“位”混淆，所以在代表二进制位宽时译者干脆保持不译。</li>
-<li>待续</li>
+<li>alignment，这个词通常译作“对齐”，但本书由于体量较大，行文中行内和动词的“对齐”，以及普通意义上的“对齐”区分开来，所以在特指布局属性中的 alignment 时，统一翻译为“对齐量”。出于同样的考虑，representation 在表示类型的布局属性时统一翻译为“表形”。</li>
+<li>更多常用词汇的翻译对照见<a href="%E6%9C%AC%E4%B9%A6%E6%9C%AF%E8%AF%AD%E7%BF%BB%E8%AF%91%E5%AF%B9%E7%85%A7%E8%A1%A8.html">本书术语翻译对照表</a>。</li>
 </ol>
 <h2><a class="header" href="#阅读建议" id="阅读建议">阅读建议</a></h2>
 <p>本译作的英文原文主语省略很严重，但基本规律是省略的主语大部分是本节的标题，所以译者也很多时候继承了这个风格，所以阅读某一具体章节的时候，请读者主动把语义范围缩小为当前讲述的话题点上。</p>
@@ -9054,9 +9055,9 @@ f2(move || { t });
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/pointer.md">pointer.md</a><br />
 commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
-<p>Rust 中所有的指针都是显式的头等(first-class)值。它们可以被移动或复制，存储到数据结构中，或从函数中返回。</p>
+<p>Rust 中所有的指针都是显式的头等(first-class)值。它们可以被移动或复制，存储到其他数据结构中，或从函数中返回。</p>
 <h2><a class="header" href="#references--and-mut" id="references--and-mut">References (<code>&amp;</code> and <code>&amp;mut</code>)</a></h2>
 <h2><a class="header" href="#引用-和-mut" id="引用-和-mut">引用(<code>&amp;</code> 和 <code>&amp;mut</code>)</a></h2>
 <blockquote>
@@ -9066,10 +9067,10 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 </blockquote>
 <h3><a class="header" href="#shared-references-" id="shared-references-">Shared references (<code>&amp;</code>)</a></h3>
 <h3><a class="header" href="#共享引用" id="共享引用">共享引用(<code>&amp;</code>)</a></h3>
-<p>共享引用(<code>&amp;</code>)指向<em>由其他值拥有的</em>内存。创建了对值的共享引用可以防止对该值的直接更改。<a href="types/../interior-mutability.html">内部可变性</a>提供了在某些特定情况下的一种例外。顾名思义，对一个值的共享引用的次数没有限制。当需要指定显式的生存期时，共享引用类型被写为 <code>&amp;type</code>，或者 <code>&amp;'a type</code>。复制引用是一个“浅(shallow)”操作：它只涉及复制指针本身，也就是说，指针实现了 <code>Copy</code> trait。释放引用对共享引用所指向的值没有影响，但是引用<a href="types/../expressions.html#temporaries">临时值</a>将使此临时值在引用本身的作用域内保持存活状态。</p>
+<p>共享引用(<code>&amp;</code>)指向<em>由其他值拥有的</em>内存。创建了对值的共享引用可以防止对该值的直接更改。但在某些特定情况下，<a href="types/../interior-mutability.html">内部可变性</a>又提供了这种情况的一种例外。顾名思义，对一个值的共享引用的次数没有限制。共享引用类型被写为 <code>&amp;type</code>；当需要指定显式的生存期时可写为 <code>&amp;'a type</code>。拷贝引用是一个“浅拷贝(shallow)”操作：它只涉及复制指针本身，也就是指针实现了 <code>Copy</code> trait 的意义所在。释放引用对共享引用所指向的值没有影响，但是对<a href="types/../expressions.html#temporaries">临时值</a>的引用的存在将使此临时值在此引用的作用域内保持存活状态。</p>
 <h3><a class="header" href="#mutable-references-mut" id="mutable-references-mut">Mutable references (<code>&amp;mut</code>)</a></h3>
 <h3><a class="header" href="#可变引用mut" id="可变引用mut">可变引用(<code>&amp;mut</code>)</a></h3>
-<p>可变引用(<code>&amp;mut</code>)也指向其他值所拥有的内存。可变引用类型被写为 <code>&amp;mut type</code> 或 <code>&amp;'a mut type</code>。可变引用（其还未被借出）是访问它所指向的值的唯一方法，当然此值没有实现 <code>Copy</code> trait。</p>
+<p>可变引用(<code>&amp;mut</code>)也指向其他值所拥有的内存。可变引用类型被写为 <code>&amp;mut type</code> 或 <code>&amp;'a mut type</code>。可变引用（其还未被借出<sup class="footnote-reference"><a href="#译注1">1</a></sup>）是访问它所指向的值的唯一方法，所以可变引用没有实现 <code>Copy</code> trait。</p>
 <h2><a class="header" href="#raw-pointers-const-and-mut" id="raw-pointers-const-and-mut">Raw pointers (<code>*const</code> and <code>*mut</code>)</a></h2>
 <h2><a class="header" href="#裸指针const-和-mut" id="裸指针const-和-mut">裸指针(<code>*const</code> 和 <code>*mut</code>)</a></h2>
 <blockquote>
@@ -9077,11 +9078,14 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 <em>RawPointerType</em> :<br />
    <code>*</code> ( <code>mut</code> | <code>const</code> ) <a href="types/../types.html#type-expressions"><em>TypeNoBounds</em></a></p>
 </blockquote>
-<p>裸指针是没有安全性或可用性(liveness)保证的指针。裸指针写为 <code>*const T</code> 或 <code>*mut T</code>，例如，<code>*const i32</code> 表示指向 32-bit 有符号整数的裸指针。复制或销毁裸指针对任何其他值的生命周期都没有影响。对裸指针的解引用是<a href="types/../unsafety.html">非安全(<code>unsafe</code>)操作</a>，可以通过重新借用裸指针（<code>&amp;*</code> 或 <code>&amp;mut *</code>）将其转换为引用。在 Rust 代码中通常不鼓励使用裸指针；它们的存在是为了支持与外部代码的互操作性，以及编写对性能要求很高的函数或低级的函数。</p>
+<p>裸指针是没有安全性或可用性(liveness)保证的指针。裸指针写为 <code>*const T</code> 或 <code>*mut T</code>，例如，<code>*const i32</code> 表示指向 32-bit 有符号整数的裸指针。拷贝或销毁(dropping )裸指针对任何其他值的生命周期(lifecycle)都没有影响。对裸指针的解引用是<a href="types/../unsafety.html">非安全(<code>unsafe</code>)操作</a>，可以通过重新借用裸指针（<code>&amp;*</code> 或 <code>&amp;mut *</code>）将其转换为引用。在 Rust 代码中通常不鼓励使用裸指针；它们的存在是为了提升与外部代码的互操作性，以及编写对性能要求很高的函数或很底层的函数。</p>
 <p>在比较裸指针时，比较的是它们的地址，而不是它们指向的数据。当比较裸指针和<a href="types/../dynamically-sized-types.html">动态尺寸类型</a>时，还会比较它们指针上的附加/元数据。</p>
 <h2><a class="header" href="#smart-pointers" id="smart-pointers">Smart Pointers</a></h2>
 <h2><a class="header" href="#智能指针" id="智能指针">智能指针</a></h2>
-<p>标准库包含了额外的“智能指针”类型，它们提供了在引用和裸指针这类低级指针之外的更多的功能。</p>
+<p>标准库包含了一些额外的“智能指针”类型，它们提供了在引用和裸指针这类低级指针之外的更多的功能。</p>
+<div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
+<p>译者理解这里是指 <code>&amp;mut type</code> 如果被借出，就成了 <code>&amp;&amp;mut type</code>，这样就又成了不可变借用了。</p>
+</div>
 <!-- 2020-11-12-->
 <!-- checked -->
 <h1><a class="header" href="#function-pointer-types" id="function-pointer-types">Function pointer types</a></h1>
@@ -9089,7 +9093,7 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/function-pointer.md">function-pointer.md</a><br />
 commit: 3d1b9ae5e7a61da43ac83cc42815e29b34b350ba <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -9107,9 +9111,9 @@ commit: 3d1b9ae5e7a61da43ac83cc42815e29b34b350ba <br />
 <p><em>MaybeNamedFunctionParametersVariadic</em> :<br />
    ( <em>MaybeNamedParam</em> <code>,</code> )<sup>*</sup> <em>MaybeNamedParam</em> <code>,</code> <a href="types/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <code>...</code></p>
 </blockquote>
-<p>函数指针类型（使用关键字 <code>fn</code> 写出）指的是在编译时不必知道其标识符的函数。它们也可以由<a href="types/function-item.html">函数项</a>类型或非捕获(non-capturing)<a href="types/closure.html">闭包</a>经过一次自动强转来创建。</p>
+<p>函数指针类型（使用关键字 <code>fn</code> 写出）指向那些在编译时不必知道函数标识符的函数。它们也可以由<a href="types/function-item.html">函数项</a>类型或非捕获(non-capturing)<a href="types/closure.html">闭包</a>经过一次自动强转(coercion)来创建。</p>
 <p>非安全(<code>unsafe</code>)限定符表示类型的值是一个<a href="types/../unsafe-functions.html">非安全函数</a>，而外部(<code>extern</code>)限定符表示它是一个<a href="types/../items/functions.html#extern-function-qualifier">外部函数</a>。</p>
-<p>可变参数只能通过 <a href="types/../items/external-blocks.html"><code>extern</code></a> 函数类型使用 <code>&quot;C&quot;</code> 或 <code>&quot;cdecl&quot;</code> 的调用约定来指定。</p>
+<p>可变参数只能通过使用 <code>&quot;C&quot;</code> 或 <code>&quot;cdecl&quot;</code> 的 ABI调用约定的 <a href="types/../items/external-blocks.html"><code>extern</code></a>函数类型来指定。</p>
 <p>下面示例中 <code>Binop</code> 被定义为函数指针类型：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -9135,7 +9139,7 @@ x = bo(5,7);
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/trait-object.md">trait-object.md</a><br />
 commit: fd10e7043934711ef96b4dd2009db3e4d0182a33 <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -9144,8 +9148,8 @@ commit: fd10e7043934711ef96b4dd2009db3e4d0182a33 <br />
 <p><em>TraitObjectTypeOneBound</em> :<br />
    <code>dyn</code><sup>?</sup> <a href="types/../trait-bounds.html"><em>TraitBound</em></a></p>
 </blockquote>
-<p><em>trait对象</em>是某种实现了一组 trait 的类型的不透明的值(opaque value)。这组 trait 是由一个<a href="types/../items/traits.html#object-safety">对象安全的</a><em>基础trait(base trait)</em> 加上任意数量的<a href="types/../special-types-and-traits.html#auto-traits">自动trait(auto traits)</a>组成。</p>
-<p>trait对象实现了基础trait 和它的自动trait 以及基础trait 的任何<a href="types/../items/traits.html#supertraits">超类trait(supertraits)</a>。</p>
+<p>*trait对象<sup class="footnote-reference"><a href="#译注1">1</a></sup>*是另一种类型的不透明值(opaque value)，它实现了一组 trait。<sup class="footnote-reference"><a href="#译注1">1</a></sup> 这组 trait 是由一个<a href="types/../items/traits.html#object-safety">对象安全的</a><em>基础trait(base trait)</em> 加上任意数量的<a href="types/../special-types-and-traits.html#auto-traits">自动trait(auto traits)</a>组成。</p>
+<p>trait对象实现了基础trait、它的自动trait 以及其基础trait 的任何<a href="types/../items/traits.html#supertraits">超类trait(supertraits)</a>。</p>
 <p>trait对象被写为为可选的关键字 <code>dyn</code> 后跟一组 trait约束，这些 trait约束有如此限制：除了第一个 trait 外，其他所有 trait 都必须是自动trait；生存期不能超过一个；不允许选择退出约束(opt-out bounds)（例如 <code>?Sized</code>）。此外，trait 的路径可以用圆括号括起来。</p>
 <p>例如，给定一个trait <code>Trait</code>，下面所有的形式都是 trait对象：</p>
 <ul>
@@ -9161,16 +9165,16 @@ commit: fd10e7043934711ef96b4dd2009db3e4d0182a33 <br />
 </ul>
 <blockquote>
 <p><strong>版本差异</strong>：在 2015 版里，如果 trait对象的第一个约束是以 <code>::</code> 开头的路径，那么 <code>dyn</code> 会被视为路径的一部分。可以把第一条路径放在圆括号中来绕过这个问题。因此，如果希望 trait对象具有 <code>::your_module::Trait</code> 路径，那么应该将其写为  <code>dyn (::your_module::Trait)</code>。</p>
-<p>从2018版本开始，<code>dyn</code> 是一个真正的关键字了，不允许在路径中使用，因此括号就没必要了。</p>
+<p>从2018版本开始，<code>dyn</code> 是一个真正的关键字了，不允许在路径中使用，（不存在二义性了，）因此括号就没必要了。</p>
 <p>注意：为了清晰起见，建议总是在 trait对象上使用关键字 <code>dyn</code>，除非你的代码库支持用Rust 1.26 或更低的版本来编译。</p>
 </blockquote>
-<p>如果基础trait 互为别名，并且自动trait 相同，生存期约束也相同，则这两种 trait对象类型互为别名。例如，<code>dyn Trait + Send + UnwindSafe</code> 和 <code>dyn Trait + UnwindSafe + Send</code> 是一样的。</p>
-<p>由于值的具体类型是不透明的，trait对象是<a href="types/../dynamically-sized-types.html">动态尺寸类型</a>。像所有的 <abbr title="dynamically sized types">DST</abbr> 一样，trait对象常被用在某种类型的指针后面；例如 <code>&amp;dyn SomeTrait</code> 或 <code>Box&lt;dyn SomeTrait&gt;</code>。每个指向 trait对象的指针的实例包括：</p>
+<p>如果基础trait 互为别名，并且自动trait 相同，生存期约束也相同，则这两种 trait对象类型互为别名。例如，<code>dyn Trait + Send + UnwindSafe</code> 和 <code>dyn Trait + UnwindSafe + Send</code> 是等价的。</p>
+<p>由于值的具体类型是不透明的，trait对象是<a href="types/../dynamically-sized-types.html">动态尺寸类型</a>。像所有的 <abbr title="dynamically sized types">DST</abbr> 一样，trait对象常被用在某种类型的指针后面；例如 <code>&amp;dyn SomeTrait</code> 或 <code>Box&lt;dyn SomeTrait&gt;</code>。每个指向 trait对象的指针实例包括：</p>
 <ul>
 <li>一个指向实现 <code>SomeTrait</code> 的（那个真实的不透明的）类型 <code>T</code> 的实例的指针</li>
-<li>一个<em>虚拟方法表(virtual method table_)</em>，它也通常被称为 <em>虚函数表(vtable)</em>，它包含了 <code>T</code> 实现的 <code>SomeTrait</code> 的所有方法，<code>T</code> 实现的 <code>SomeTrait</code> 的<a href="types/../items/traits.html#supertraits">超类trait</a> 的每个方法，还有一个指向 <code>T</code> 的实现的指针（即函数指针）。</li>
+<li>一个指向*虚拟方法表(virtual method table_)*的指针。虚拟方法表也通常被称为 <em>虚函数表(vtable)</em>，它包含了 <code>T</code> 实现的 <code>SomeTrait</code> 的所有方法，<code>T</code> 实现的 <code>SomeTrait</code> 的<a href="types/../items/traits.html#supertraits">超类trait</a> 的每个方法，还有指向 <code>T</code> 的实现的指针（即函数指针）。</li>
 </ul>
-<p>trait对象的目的是允许方法的“延迟绑定(late binding)”。在 trait对象上调用一个方法会导致运行时的虚拟分发：也就是说，一个函数指针从 trait对象的虚函数表(vtable)中被加载进来，并被间接调用。每个虚函数表实体的实际实现可能因对象的不同而不同。</p>
+<p>trait对象的目的是允许方法的“延迟绑定(late binding)”。在 trait对象上调用一个方法会导致运行时的虚拟分发(virtual dispatch)：也就是说，一个函数指针从 trait对象的虚函数表(vtable)中被加载进来，并被间接调用。每个虚函数表实体的实际实现可能因对象的不同而不同。</p>
 <p>一个 trait对象的例子：</p>
 <pre><pre class="playground"><code class="language-rust">trait Printable {
     fn stringify(&amp;self) -&gt; String;
@@ -9192,6 +9196,10 @@ fn main() {
 <h2><a class="header" href="#trait-object-lifetime-bounds" id="trait-object-lifetime-bounds">Trait Object Lifetime Bounds</a></h2>
 <h2><a class="header" href="#trait对象的生存期约束" id="trait对象的生存期约束">trait对象的生存期约束</a></h2>
 <p>因为 trait对象可以包含引用，所以这些引用的生存期需要表示为 trait对象的一部分。这种生存期被写为 <code>Trait + 'a</code>。<a href="types/../lifetime-elision.html#default-trait-object-lifetimes">默认情况</a>下，可以通过合理的选择来推断此生存期。</p>
+<div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
+<p>本书行文中，使用“trait对象”这个词时，没区分 trait对象的值和类型本身，但一般都指类型。
+<sup class="footnote-reference"><a href="#译注1">1</a></sup>: 译者认为这样翻译可能更容易理解：<em>trait对象</em>是丢失了/隐藏了具体真实类型的 trait实现的类型，此类型本身一般会实现了一组 trait。</p>
+</div>
 <!-- 2020-11-12-->
 <!-- checked -->
 <h1><a class="header" href="#impl-trait" id="impl-trait">Impl trait</a></h1>
@@ -9199,7 +9207,7 @@ fn main() {
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/impl-object.md">impl-object.md</a><br />
 commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -9214,7 +9222,7 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <blockquote>
 <p>注意：匿名类型参数通常被称为“参数位置上的实现trait(impl Trait in argument position)”。</p>
 </blockquote>
-<p>函数可以将其参数声明为匿名类型的参数，这种情况下函数内部只能使用匿名类型参数的 trait约束所提供的方法。之后调用者(callee)在调用此函数时必须提供具体的类型，并且要求提供的具体类型必须拥有此匿名类型参数声明的约束。</p>
+<p>函数可以将其参数声明为匿名类型的参数，这种情况下函数内部只能使用匿名类型参数的 trait约束所提供的方法。之后的调用者(callee)在调用此函数时必须提供具体的类型，并且要求提供的具体类型必须拥有此匿名类型参数声明的约束。</p>
 <p>它们被写成 <code>impl</code> 后跟一组 trait约束。</p>
 <h2><a class="header" href="#abstract-return-types" id="abstract-return-types">Abstract return types</a></h2>
 <h2><a class="header" href="#抽象返回类型" id="抽象返回类型">抽象返回类型</a></h2>
@@ -9224,7 +9232,7 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <blockquote>
 <p>注意：抽象返回类型(abstract return types)通常被称为“函数返回位置上的实现trait(impl Trait in return position)”。</p>
 </blockquote>
-<p>除了关联trait 函数外，其他函数都可以返回抽象返回类型。这些类型代表了某一种具体类型，其中使用点(use-site)只能使用由该类型的 trait约束声明的 trait方法。</p>
+<p>除了关联trait函数(associated trait function)外，其他函数都可以返回抽象返回类型。这些类型代表了某种具体类型，它要求在此返回类型的使用点(use-site)上只能使用由该类型的 trait约束声明的 trait方法。</p>
 <p>它们被写成 <code>impl</code> 后跟一组 trait约束。</p>
 <!-- 2020-11-12-->
 <!-- checked -->
@@ -9233,9 +9241,9 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/parameters.md">parameters.md</a><br />
 commit: eb02dd5194a747277bfa46b0185d1f5c248f177b <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
-<p>在带有类型参数声明的数据项的代码体内，其类型参数的名称是类型：</p>
+<p>在带有类型参数声明的数据项的代码体内，这些类型参数的名称可以直接当做类型使用：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -9250,7 +9258,7 @@ commit: eb02dd5194a747277bfa46b0185d1f5c248f177b <br />
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>这里，<code>first</code> 的类型为 <code>A</code>，引用的是 <code>to_vec</code> 的类型参数 <code>A</code>；<code>rest</code> 的类型为 <code>Vec&lt;A&gt;</code>，它是一个内部元素类型为 <code>A</code> 向量(vector)。</p>
+<p>这里，<code>first</code> 的类型为 <code>A</code>，援引的是 <code>to_vec</code> 的类型参数 <code>A</code>；<code>rest</code> 的类型为 <code>Vec&lt;A&gt;</code>，它是一个元素类型为 <code>A</code> 向量(vector)。</p>
 <!-- 2020-11-12-->
 <!-- checked -->
 <h1><a class="header" href="#inferred-type" id="inferred-type">Inferred type</a></h1>
@@ -9258,7 +9266,7 @@ commit: eb02dd5194a747277bfa46b0185d1f5c248f177b <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/parameters.md">parameters.md</a><br />
 commit: 43dc1a42f19026f580e34a095e91804c3d6da186 <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -9283,22 +9291,24 @@ commit: 43dc1a42f19026f580e34a095e91804c3d6da186 <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/dynamically-sized-types.md">dynamically-sized-types.md</a><br />
 commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
 <p>大多数的类型都有一个在编译时就已知的固定尺寸，并实现了 trait <a href="special-types-and-traits.html#sized"><code>Sized</code></a>。只有在运行时才知道尺寸的类型称为<em>动态尺寸类型(dynamically sized type)</em>（<em>DST</em>），或者非正式地称为非固定尺寸类型(unsized type)。<a href="types/slice.html">切片</a>和 <a href="types/trait-object.html">trait对象</a>是 <abbr title="dynamically sized types">DSTs</abbr> 的两个例子。此类类型只能在某些情况下使用:</p>
 <ul>
-<li>指向 <abbr title="dynamically sized types">DST</abbr> 的<a href="types/pointer.html">指针类型</a>的尺寸是指向固定尺寸类型的指针的尺寸的两倍
+<li>指向 <abbr title="dynamically sized types">DST</abbr> 的<a href="types/pointer.html">指针类型</a>的尺寸是固定的(sized)，但是是指向固定尺寸类型的指针的尺寸的两倍
 <ul>
 <li>指向切片的指针也存储了切片的元素的数量。</li>
-<li>指向 trait对象的指针也存储了一个指向虚函数表的指针地址</li>
+<li>指向 trait对象的指针也存储了一个指向虚函数表(vtable)的指针地址</li>
 </ul>
 </li>
-<li>当接收了 <code>?Sized</code> 约束时，<abbr title="dynamically sized types">DST</abbr> 可以作为类型参数使用。默认情况下，任何类型参数都拥有 <code>Sized</code>约束。</li>
+<li>当接受了 <code>?Sized</code>约束时，<abbr title="dynamically sized types">DST</abbr> 可以作为类型实参( type arguments)使用。默认情况下，任何类型形参(type parameter)都拥有 <code>Sized</code>约束。</li>
 <li>可以为 <abbr title="dynamically sized types">DST</abbr> 实现 trait。与类型参数中的默认设置不同，在 trait定义中默认存在 <code>Self: ?Sized</code>约束。</li>
 <li>结构体可以包含一个 <abbr title="dynamically sized type">DST</abbr> 作为最后一个字段，这使得该结构体也成为是一个 <abbr title="dynamically sized type">DST</abbr>。</li>
 </ul>
 <blockquote>
-<p><strong>注意</strong>：<a href="variables.html">变量</a>、函数参数、<a href="items/constant-items.html">常量</a>项和<a href="items/static-items.html">静态</a>项必须是 <code>Sized</code>。</p>
+<p><strong>Note</strong>: <a href="variables.html">variables</a>, function parameters, <a href="items/constant-items.html">const</a> items, and <a href="items/static-items.html">static</a> items must be
+<code>Sized</code>.
+<strong>注意</strong>：<a href="variables.html">变量</a>、函数参数、<a href="items/constant-items.html">常量</a>项和<a href="items/static-items.html">静态</a>项必须是 <code>Sized</code>。</p>
 </blockquote>
 <!-- 2020-11-12-->
 <!-- checked -->
@@ -9307,14 +9317,14 @@ commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-layout.md">type-layout.md</a><br />
 commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
-本章译文最后维护日期：2020-10-30</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
-<p>类型的布局描述类型的尺寸(size)、对齐量(alignment)和字段(fields)的<em>相对偏移量(relative offsets)</em>。对于枚举，如何布局和解释判别值(discriminant)也是类型布局的一部分。</p>
+<p>类型的布局描述类型的尺寸(size)、对齐量(alignment)和字段(fields)的<em>相对偏移量(relative offsets)</em>。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。</p>
 <p>每次编译都有可能更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。</p>
 <h2><a class="header" href="#size-and-alignment" id="size-and-alignment">Size and Alignment</a></h2>
 <h2><a class="header" href="#尺寸和对齐量" id="尺寸和对齐量">尺寸和对齐量</a></h2>
-<p>所有值都有对齐量和尺寸。</p>
-<p>值的<em>对齐量</em>指定了哪些地址可以有效地存储该值。对齐量为 <code>n</code> 的值只能存储地址为 n 的倍数的内存地址上。例如，对齐量为 2 的值必须存储在偶数地址上，而对齐量为 1 的值可以存储在任何地址上。对齐量是用字节来度量的，必须至少是 1，并且总是 2 的幂次。值的对齐量可以通过函数 <a href="https://doc.rust-lang.org/std/mem/fn.align_of_val.html"><code>align_of_val</code></a> 来检测。</p>
+<p>所有值都有对一个齐量和尺寸。</p>
+<p>值的<em>对齐量</em>指定了哪些地址可以有效地存储该值。对齐量为 <code>n</code> 的值只能存储地址为 n 的倍数的内存地址上。例如，对齐量为 2 的值必须存储在偶数地址上，而对齐量为 1 的值可以存储在任何地址上。对齐量是用字节数来度量的，必须至少是 1，并且总是 2 的幂次。值的对齐量可以通过函数 <a href="https://doc.rust-lang.org/std/mem/fn.align_of_val.html"><code>align_of_val</code></a> 来检测。</p>
 <p>值的<em>尺寸</em>是同类型的值组成的数组中连续两个元素之间的字节偏移量，此偏移量包括了为保持数据项类型内部对齐而对此类型做的对齐填充。值的尺寸总是其对齐量的非负整数倍数。值的尺寸可以通过函数 <a href="https://doc.rust-lang.org/std/mem/fn.size_of_val.html"><code>size_of_val</code></a> 来检测。</p>
 <p>类型如果实现了 <a href="https://doc.rust-lang.org/std/marker/trait.Sized.html"><code>Sized</code></a> trait，那它的所有值在编译时都具有相同尺寸和对齐量，并且可以使用函数 <a href="https://doc.rust-lang.org/std/mem/fn.size_of.html"><code>size_of</code></a> 和 <a href="https://doc.rust-lang.org/std/mem/fn.align_of.html"><code>align_of</code></a> 对此类型进行检测。没有实现 <code>Sized</code> trait 的类型被称为<a href="dynamically-sized-types.html">动态尺寸类型</a>。由于实现了 <code>Sized</code> trait 的某一类型的所有值共享相同的尺寸和对齐量，所以我们分别将这俩共享值称为类型的尺寸和类型的对齐量。</p>
 <h2><a class="header" href="#primitive-data-layout" id="primitive-data-layout">Primitive Data Layout</a></h2>
@@ -9332,23 +9342,24 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <tr><td><code>char</code></td><td>4</td></tr>
 </tbody></table>
 <p><code>usize</code> 和 <code>isize</code> 的尺寸足以包含目标平台上的每个内存地址。例如，在 32-bit 目标上，它们是 4 个字节，而在 64-bit 目标上，它们是 8 个字节。</p>
-<p>大多数原生类型的对齐量通常与它们的尺寸保持一致，尽管这是特定于平台的行为。典型的特定于平台的就是在 x86 平台上，u64 和 f64 都上 32-bit 对齐量。</p>
+<p>大多数原生类型的对齐量通常与它们的尺寸保持一致，尽管这是特定于平台的行为。比较典型的就是在 x86 平台上，u64 和 f64 都上 32-bit 的对齐量。</p>
 <h2><a class="header" href="#pointers-and-references-layout" id="pointers-and-references-layout">Pointers and References Layout</a></h2>
 <h2><a class="header" href="#指针和引用的布局" id="指针和引用的布局">指针和引用的布局</a></h2>
-<p>指针和引用具有相同的布局。指针或引用的可变性不会改变布局。</p>
-<p>指向固定尺寸类型(sized type)的值的指针具有与 <code>usize</code> 相同的尺寸和对齐量。</p>
+<p>指针和引用具有相同的布局。指针或引用的可变性不会影响其布局。</p>
+<p>指向固定尺寸类型(sized type)的值的指针具有和 <code>usize</code> 相同的尺寸和对齐量。</p>
 <p>指向非固定尺寸类型(unsized types)的值的指针是固定尺寸的。其尺寸和对齐量至少等于一个指针的尺寸和对齐量</p>
 <blockquote>
-<p>注意：虽然不应该依赖于此，但是目前所有指向 <abbr title="Dynamically Sized Types">DST</abbr> 的指针都是 <code>usize</code> 的两倍尺寸，并且具有相同的对齐量方式。</p>
+<p>注意：虽然不应该依赖于此，但是目前所有指向 <abbr title="Dynamically Sized Types">DST</abbr> 的指针都是 <code>usize</code> 的两倍尺寸，并且具有相同的对齐量。</p>
 </blockquote>
 <h2><a class="header" href="#array-layout" id="array-layout">Array Layout</a></h2>
 <h2><a class="header" href="#数组的布局" id="数组的布局">数组的布局</a></h2>
-<p>数组的布局使得数组的第n个(<code>nth</code>)元素为从数组开始的位置向后偏移 <em>n * 元素类型的尺寸(<code>n * the size of the element's type</code>)</em> 个字节数。数组 <code>[T; n]</code> 的尺寸为 <code>size_of::&lt;T&gt;() * n</code>，对齐量和 <code>T</code> 的对齐量相同。</p>
+<p>数组的布局使得数组的第 n 个(<code>nth</code>)元素为从数组开始的位置向后偏移 <em>n * 元素类型的尺寸(<code>n * the size of the element's type</code>)</em> 个字节数。数组 <code>[T; n]</code> 的尺寸为 <code>size_of::&lt;T&gt;() * n</code>，对齐量和 <code>T</code> 的对齐量相同。</p>
 <h2><a class="header" href="#slice-layout" id="slice-layout">Slice Layout</a></h2>
 <h2><a class="header" href="#切片的布局" id="切片的布局">切片的布局</a></h2>
 <p>切片的布局与它们所切的那部分数组片段相同。</p>
+<!-- check from here -->
 <blockquote>
-<p>注意：这是关于原生的 <code>[T]</code>类型，而不是指向切片的指针 <code>&amp;[T]</code>、<code>Box&lt;[T]&gt;</code> 等)。</p>
+<p>注意：这是关于原生的 <code>[T]</code>类型，而不是指向切片的指针（<code>&amp;[T]</code>、<code>Box&lt;[T]&gt;</code> 等）。</p>
 </blockquote>
 <h2><a class="header" href="#str-layout" id="str-layout"><code>str</code> Layout</a></h2>
 <h2><a class="header" href="#字符串切片str的布局" id="字符串切片str的布局">字符串切片(<code>str</code>)的布局</a></h2>
