@@ -8857,10 +8857,10 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/union.md">union.md</a><br />
 commit: 0c8df59ff60f341ff0cf4d766a7c442b4a5837a4 <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
-<p><em>联合体类型</em>是一种标称型(nominal)的异构的类似C语言里的联合体(union)的类型，具体的类型名称由<a href="types/../items/unions.html">联合体(<code>union</code>)数据项</a>的名称表示。</p>
-<p>联合体没有“活跃字段(active field)”的概念。相反，每次对联合体的访问都将联合体的部分存储内容转换为被访问字段的类型。由于转换可能会导致意外或未定义行为，所以读取联合体字段，或写入未实现 <a href="types/../special-types-and-traits.html#copy"><code>Copy</code></a> 的联合体字段时都需要使用 <code>unsafe</code> 标志。有关详细信息，请参阅<a href="types/../items/unions.html">数据项</a>文档。</p>
+<p><em>联合体类型</em>是一种标称型(nominal)的、异构的、类似C语言里的 union 的类型，具体的类型名称由<a href="types/../items/unions.html">联合体(<code>union</code>)数据项</a>的名称表示。</p>
+<p>联合体没有“活跃字段(active field)”的概念。相反，每次对联合体的访问都将联合体的部分存储内容转换为被访问字段的类型。由于转换可能会导致意外或未定义行为，所以读取联合体字段，或写入未实现 <a href="types/../special-types-and-traits.html#copy"><code>Copy</code></a> 的联合体字段的操作都需要放在 <code>unsafe</code>块内进行。有关详细信息，请参阅<a href="types/../items/unions.html">数据项</a>文档。</p>
 <p>默认情况下，联合体(<code>union</code>)的内存布局是未定义的，但是可以使用 <code>#[repr(...)]</code>属性来固定为某一类型布局。</p>
 <!-- 2020-11-12-->
 <!-- checked -->
@@ -8869,10 +8869,10 @@ commit: 0c8df59ff60f341ff0cf4d766a7c442b4a5837a4 <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/function-item.md">function-item.md</a><br />
 commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
-<p>当引用函数项、元组结构体的构造函数或枚举变体的构造函数时，会产生它们的*函数项类型(function item type)*的零尺寸的值。这种类型（也就是此值）显式地标识了该函数——标识出的内容包括数据项定义时的名字、类型参数，及其定义时的生存期参数（不是后期绑定的生存期参数，后期绑定的生存期参数只在函数被调用时才被赋值）——所以该值不需要包含一个实际的函数指针，当此函数被调用时也不需要一个间接的寻址操作去查找此函数。</p>
-<p>没有直接引用函数项类型的句法，但是编译器会在错误消息中显示类似于 <code>fn(u32) -&gt; i32 {fn_name}</code> 这样的“类型”。</p>
+<p>当被引用函数项、元组结构体的构造函数或枚举变体的构造函数时，会产生它们的*函数项类型(function item type)*的零尺寸的值。这种类型（也就是此值）显式地标识了该函数——标识出的内容包括数据项定义时的名字、类型参数，及其定义时的生存期参数（不是后期绑定的生存期参数，后期绑定的生存期参数只在函数被调用时才被赋与）——所以该值不需要包含一个实际的函数指针，当此函数被调用时也不需要一个间接的寻址操作去查找此函数。</p>
+<p>没有直接引用函数项类型的句法，但是编译器会在错误消息中会显示类似于 <code>fn(u32) -&gt; i32 {fn_name}</code> 这样的“类型”。</p>
 <p>因为函数项类型显式地标识了其函数，所以如果它们所指的数据项不同（包括不同的数据项，或相同的数据项但泛型参数的实际类型不同），则此函数项类型也不同，混合使用它们将导致类型错误：</p>
 <pre><pre class="playground"><code class="language-rust compile_fail E0308">
 <span class="boring">#![allow(unused)]
@@ -8883,7 +8883,6 @@ let x = &amp;mut foo::&lt;i32&gt;;
 <span class="boring">}
 </span></code></pre></pre>
 <p>但确实存在从函数项类型到具有相同签名的函数指针的<a href="types/../type-coercions.html">自动强转(coercion)</a>，这种自动强转一般发生在使用函数项类型却直接预期函数指针时；另一种发生情况是 <code>if</code>表达式或匹配(<code>match</code>)表达式的不同分支返回使用了具有相同签名却使用了不同函数项类型的情况：</p>
-<p><code>match</code>:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
