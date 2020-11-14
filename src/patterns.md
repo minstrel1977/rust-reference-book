@@ -355,7 +355,7 @@ match tuple {
 > _RangePattern_ :\
 > &nbsp;&nbsp; _RangePatternBound_ `..=` _RangePatternBound_
 >
-> _ObsoleteRangePattern_ :(译者注：废弃的区间模式句法) \ 
+> _ObsoleteRangePattern_ :(译者注：废弃的区间模式句法/产生式) \ 
 > &nbsp;&nbsp; _RangePatternBound_ `...` _RangePatternBound_
 >
 > _RangePatternBound_ :\
@@ -517,7 +517,7 @@ assert_eq!(a, b);
 
 结构体模式匹配与子模式定义的所有条件匹配的结构体值。它也被用来[解构](#destructuring)结构体。
 
-在结构体模式中，结构体字段需通过名称、索引（对于元组结构体来说）来指向，或者通过使用 `..` 来忽略：
+在结构体模式中，结构体字段需通过名称、索引（对于元组结构体来说）来指代，或者通过使用 `..` 来忽略：
 
 ```rust
 # struct Point {
@@ -609,7 +609,7 @@ let Struct{a: x, b: y, c: z} = struct_value;          // 解构所有的字段
 
 元组模式匹配与子模式定义的所有条件匹配的元组值。它们还被用来[解构](#destructuring)元组值。
 
-带有单个[剩余模式][_RestPattern_](_RestPattern_)的句法结构 `(..)` 是一种内部不需要逗号分割的特殊匹配结构，它可以匹配任意长度的元组。
+内部只带有一个[剩余模式][_RestPattern_](_RestPattern_)的元组句法形式 `(..)` 是一种内部不需要逗号分割的特殊匹配形式，它可以匹配任意长度的元组。
 
 当元组模式的一个子模式是可反驳型的，那该元组模式就是可反驳型的。
 
@@ -630,7 +630,7 @@ assert_eq!(b, "ten");
 > _GroupedPattern_ :\
 > &nbsp;&nbsp; `(` [_Pattern_] `)`
 
-将模式括在圆括号内可用于显式控制复合模式的优先级。例如，在区间模式（如 `&0..=5`）和附近的引用模式会引起歧义，这时可以用圆括号来消除歧义。
+将模式括在圆括号内可用来显式控制复合模式的优先级。例如，像 `&0..=5` 这样的引用模式和区间模式相邻就会引起歧义，这时可以用圆括号来消除歧义。
 
 ```rust
 let int_reference = &3;

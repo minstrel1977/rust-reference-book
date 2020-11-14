@@ -8120,7 +8120,7 @@ match tuple {
 <p><strong><sup>句法</sup></strong><br />
 <em>RangePattern</em> :<br />
    <em>RangePatternBound</em> <code>..=</code> <em>RangePatternBound</em></p>
-<p><em>ObsoleteRangePattern</em> :(译者注：废弃的区间模式句法) \ 
+<p><em>ObsoleteRangePattern</em> :(译者注：废弃的区间模式句法/产生式) \ 
    <em>RangePatternBound</em> <code>...</code> <em>RangePatternBound</em></p>
 <p><em>RangePatternBound</em> :<br />
       <a href="tokens.html#character-literals">CHAR_LITERAL</a><br />
@@ -8267,7 +8267,7 @@ match a {
    <code>..</code></p>
 </blockquote>
 <p>结构体模式匹配与子模式定义的所有条件匹配的结构体值。它也被用来<a href="patterns.html#destructuring">解构</a>结构体。</p>
-<p>在结构体模式中，结构体字段需通过名称、索引（对于元组结构体来说）来指向，或者通过使用 <code>..</code> 来忽略：</p>
+<p>在结构体模式中，结构体字段需通过名称、索引（对于元组结构体来说）来指代，或者通过使用 <code>..</code> 来忽略：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -8356,7 +8356,7 @@ match a {
    | <a href="patterns.html#patterns"><em>Pattern</em></a> (<code>,</code> <a href="patterns.html#patterns"><em>Pattern</em></a>)<sup>+</sup> <code>,</code><sup>?</sup></p>
 </blockquote>
 <p>元组模式匹配与子模式定义的所有条件匹配的元组值。它们还被用来<a href="patterns.html#destructuring">解构</a>元组值。</p>
-<p>带有单个<a href="patterns.html#rest-patterns">剩余模式</a>(<em>RestPattern</em>)的句法结构 <code>(..)</code> 是一种内部不需要逗号分割的特殊匹配结构，它可以匹配任意长度的元组。</p>
+<p>内部只带有一个<a href="patterns.html#rest-patterns">剩余模式</a>(<em>RestPattern</em>)的元组句法形式 <code>(..)</code> 是一种内部不需要逗号分割的特殊匹配形式，它可以匹配任意长度的元组。</p>
 <p>当元组模式的一个子模式是可反驳型的，那该元组模式就是可反驳型的。</p>
 <p>使用元组模式的示例：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -8376,7 +8376,7 @@ assert_eq!(b, &quot;ten&quot;);
 <em>GroupedPattern</em> :<br />
    <code>(</code> <a href="patterns.html#patterns"><em>Pattern</em></a> <code>)</code></p>
 </blockquote>
-<p>将模式括在圆括号内可用于显式控制复合模式的优先级。例如，在区间模式（如 <code>&amp;0..=5</code>）和附近的引用模式会引起歧义，这时可以用圆括号来消除歧义。</p>
+<p>将模式括在圆括号内可用来显式控制复合模式的优先级。例如，像 <code>&amp;0..=5</code> 这样的引用模式和区间模式相邻就会引起歧义，这时可以用圆括号来消除歧义。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -8502,9 +8502,9 @@ commit: 4a2bdf896cd2df370a91d14cb8ba04e326cd21db <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types.md">types.md</a><br />
 commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
-<p>Rust 程序中的每个变量、数据项和值都有一个类型。<em>值</em>的<em>类型</em>定义了对于保存它的内存的解释，以及定义了可以对该值执行的操作。</p>
+<p>Rust 程序中的每个变量、数据项和值都有一个类型。<em>值</em>的<em>类型</em>定义了该如何解释用于保存它的内存数据，以及定义了可以对该值执行的操作。</p>
 <p>内置的类型以非平凡的方式(in nontrivial ways)紧密地集成到语言中，这种方式是不可能在用户定义的类型中模拟的。用户定义的类型功能有限。</p>
 <p>内置类型列表：</p>
 <ul>
@@ -8574,12 +8574,12 @@ commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
    | <a href="types/function-pointer.html"><em>BareFunctionType</em></a><br />
    | <a href="macros.html#macro-invocation"><em>MacroInvocation</em></a></p>
 </blockquote>
-<p>上表中的 <em>Type</em> 文法规则中定义的各种<em>类型表达式</em>是指向某个具体类型的句法。它们可以指向：</p>
+<p>上表中的 <em>Type</em> 文法规则中定义的各种<em>类型表达式</em>都是某个具体类型的句法产生式。它们可以覆盖指代：</p>
 <ul>
 <li>序列类型（<a href="types/tuple.html">tuple</a>, <a href="types/array.html">array</a>, <a href="types/slice.html">slice</a>）。</li>
 <li><a href="paths.html#paths-in-types">类型路径(type paths)</a>，这些包括：
 <ul>
-<li>原生类型（<a href="types/boolean.html">布尔型</a>, <a href="types/numeric.html">数字类</a>, <a href="types/textual.html">文本类</a>）。</li>
+<li>原生类型（<a href="types/boolean.html">布尔型</a>, <a href="types/numeric.html">数字类类型</a>, <a href="types/textual.html">文本类类型</a>）。</li>
 <li>指向<a href="items.html">数据项</a>（<a href="types/struct.html">结构体(<code>struct</code>)</a>, <a href="types/enum.html">枚举(<code>enum</code>)</a>, <a href="types/union.html">联合体(<code>union</code>)</a>, <a href="items/type-aliases.html">类型别名</a>, <a href="types/trait-object.html">trait</a>）的路径。</li>
 <li><a href="paths.html#self-1"><code>Self</code>路径</a>，其中 <code>Self</code> 是实现类型。</li>
 <li>泛型<a href="types/parameters.html">类型参数</a>。</li>
@@ -8589,7 +8589,7 @@ commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
 <li><a href="types/inferred.html">自动推断型类型(inferred type)</a>，就是请求编译器确定类型的类型。</li>
 <li>用来消除歧义的<a href="types.html#parenthesized-types">圆括号</a>。</li>
 <li>Trait类型：<a href="types/trait-object.html">trait对象(trait object)</a> 和 <a href="types/impl-trait.html">实现trait(impl trait)</a>.</li>
-<li><a href="types/never.html">never</a>型。</li>
+<li><a href="types/never.html">never</a>型(<code>!</code>)。</li>
 <li>展开成类型表达式的<a href="macros.html">宏</a>。</li>
 </ul>
 <h3><a class="header" href="#parenthesized-types" id="parenthesized-types">Parenthesized types</a></h3>
@@ -8598,7 +8598,7 @@ commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
 <p><em>ParenthesizedType</em> :<br />
    <code>(</code> <a href="types.html#type-expressions"><em>Type</em></a> <code>)</code></p>
 </blockquote>
-<p>在某些情况下，类型的组合可能会产生歧义。可以在类型周围使用元括号来避免歧义。例如，<a href="types/pointer.html#shared-references-">引用类型</a>中的<a href="trait-bounds.html">类型边界(type boundaries)</a>列表中的 <code>+</code>运算符搞不清楚其左值的边界位置在哪里，因此需要使用圆括号来明确其边界。这里需要的消除歧义的文法就是使用 <a href="types.html#type-expressions"><em>TypeNoBounds</em></a> 规则替代 <a href="types.html#type-expressions"><em>Type</em></a> 规则。</p>
+<p>在某些情况下，类型组合在一起时可能会产生二义性。此时可以在类型周围使用元括号来避免歧义。例如，<a href="types/pointer.html#shared-references-">引用类型</a>的<a href="trait-bounds.html">类型约束</a>列表中的 <code>+</code>运算符搞不清楚其左值的边界位置在哪里，因此需要使用圆括号来明确其边界。这里需要的消歧文法就是使用 <a href="types.html#type-expressions"><em>TypeNoBounds</em></a> 句法规则替代 <a href="types.html#type-expressions"><em>Type</em></a> 句法规则。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -8608,13 +8608,13 @@ commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
 </span></code></pre></pre>
 <h2><a class="header" href="#recursive-types" id="recursive-types">Recursive types</a></h2>
 <h2><a class="header" href="#递归类型" id="递归类型">递归类型</a></h2>
-<p>标称类型 — <a href="types/struct.html">结构体(<code>struct</code>)</a>、<a href="types/enum.html">枚举(<code>enum</code>)</a>和<a href="types/union.html">联合体(<code>union</code>)</a> — 可以是递归的。也就是说，每个枚举(<code>enum</code>)变体或结构体(<code>struct</code>)或联合体(<code>union</code>)字段可以直接或间接地指向此枚举(<code>enum</code>)或结构体(<code>struct</code>)类型本身。这种递归有一些限制：</p>
+<p>标称类型(nominal types) — <a href="types/struct.html">结构体(<code>struct</code>)</a>、<a href="types/enum.html">枚举(<code>enum</code>)</a>和<a href="types/union.html">联合体(<code>union</code>)</a> — 可以是递归的。也就是说，每个枚举(<code>enum</code>)变体或结构体(<code>struct</code>)或联合体(<code>union</code>)的字段可以直接或间接地指向此枚举(<code>enum</code>)或结构体(<code>struct</code>)类型本身。这种递归有一些限制：</p>
 <ul>
 <li>递归类型必须在递归中包含一个标称类型（不能仅是<a href="items/type-aliases.html">类型别名</a>或其他结构化的类型，如<a href="types/array.html">数组</a>或<a href="types/tuple.html">元组</a>）。因此不允许使用 <code>type Rec = &amp;'static [Rec]</code>。</li>
-<li>递归类型的次数必须是有限的；也就是说，类型的递归字段必须是<a href="types/pointer.html">指针类型</a>。</li>
-<li>递归类型定义可以跨越模块边界，但不能跨越模块<em>可见性</em>边界或 crate 边界（为了简化模块系统和类型检查）。</li>
+<li>递归类型的尺寸必须是有限的；也就是说，类型的递归字段必须是<a href="types/pointer.html">指针类型</a>。</li>
+<li>递归类型的定义可以跨越模块边界，但不能跨越模块<em>可见性</em>边界或 crate 边界（为了简化模块系统和类型检查）。</li>
 </ul>
-<p><em>递归</em>类型及其使用示例：</p>
+<p><em>递归</em>类型及使用示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -8633,9 +8633,9 @@ let a: List&lt;i32&gt; = List::Cons(7, Box::new(List::Cons(13, Box::new(List::Ni
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/boolean.md">boolean.md</a><br />
 commit: 0a15f29adb9988fcf4a57754c820332f5b3b214a <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
-<p>布尔(<code>bool</code>)型是一种可以为真(<code>true</code>)或假(<code>false</code>)的数据类型。布尔型使用一个字节的内存。它用于比较和按位操作，如 <code>&amp;</code>、<code>|</code> 和 <code>!</code>。</p>
+<p>布尔(<code>bool</code>)型是一种可以为真(<code>true</code>)或假(<code>false</code>)的数据类型。布尔型使用一个字节的内存。它用于比较和按位运算，如 <code>&amp;</code>、<code>|</code> 和 <code>!</code>。</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let x = true;
     let y: bool = false; // 使用布尔类型标注
@@ -8653,7 +8653,7 @@ commit: 0a15f29adb9988fcf4a57754c820332f5b3b214a <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/mumeric.md">mumeric.md</a><br />
 commit: 73ca198fb3ab52283d67d5fe28c541ee1d169f48 <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
 <h2><a class="header" href="#integer-types" id="integer-types">Integer types</a></h2>
 <h2><a class="header" href="#整型整数类型" id="整型整数类型">整型/整数类型</a></h2>
@@ -8678,9 +8678,9 @@ commit: 73ca198fb3ab52283d67d5fe28c541ee1d169f48 <br />
 <p>Rust 对应 IEEE 754-2008 的“binary32”和“binary64”浮点类型分别是 <code>f32</code> 和 <code>f64</code>。</p>
 <h2><a class="header" href="#machine-dependent-integer-types" id="machine-dependent-integer-types">Machine-dependent integer types</a></h2>
 <h2><a class="header" href="#和计算平台相关的整型" id="和计算平台相关的整型">和计算平台相关的整型</a></h2>
-<p><code>usize</code>类型是一种无符号整型，其位数与平台的指针类型的位数相同。它可以表示进程中的每个内存地址。</p>
-<p><code>isize</code>类型是一种有符号整型，其位数与平台的指针类型的位数相同。（Rust 规定）对象的尺寸和数组的长度的理论上限是 <code>isize</code>的最大值。这确保了 <code>isize</code> 可以用来计算指向对象或数组内部的指针之间的差异，并且可以寻址对象中的每个字节以及末尾的那个字节。</p>
-<p><code>usize</code> 和 <code>isize</code> 至少是 16-bits 宽。</p>
+<p><code>usize</code>类型是一种无符号整型，其宽度与平台的指针类型的宽度相同。它可以表示进程中的每个内存地址。</p>
+<p><code>isize</code>类型是一种有符号整型，其宽度与平台的指针类型的宽度相同。（Rust 规定）对象的尺寸和数组的长度的理论上限是 <code>isize</code> 的最大值。这确保了 <code>isize</code> 可以用来计算指向对象或数组内部的指针之间的差异，并且可以寻址对象中的每个字节以及末尾之后的那个字节。</p>
+<p><code>usize</code> 和 <code>isize</code> 的宽度至少是 16-bits。</p>
 <blockquote>
 <p><strong>注意</strong>：许多 Rust 代码可能会假设指针、<code>usize</code> 和 <code>isize</code> 是 32-bit 或 64-bit 的。因此，16-bit 指针的支持是有限的，这部分支持可能需要来自库的明确关注和确认。</p>
 </blockquote>
@@ -8691,10 +8691,10 @@ commit: 73ca198fb3ab52283d67d5fe28c541ee1d169f48 <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/textual.md">textual.md</a><br />
 commit: 9af5071f876111a09ba54a86655679de83eb464c <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
 <p>类型 <code>char</code> 和 <code>str</code> 用于保存文本数据。</p>
-<p>字符型(<code>char</code>)的值是 <a href="http://www.unicode.org/glossary/#unicode_scalar_value">Unicode 标量(scalar)值</a>（即不是代理项(surrogate)的代码点），可以表示为 0x0000 到 0xD7FF 或 0xE000 到 0x10FFFF 范围内的 32-bit 无符号字符。创建超出此范围的字符直接触发<a href="types/../behavior-considered-undefined.html">未定义行为(Undefined Behavior)</a>。一个 <code>[char]</code> 实际上是长度为1的 UCS-4 / UTF-32 字符串。</p>
+<p>字符型(<code>char</code>)的值是 <a href="http://www.unicode.org/glossary/#unicode_scalar_value">Unicode 标量(scalar)值</a>（即不是代理项(surrogate)的代码点），可以表示为 0x0000~0xD7FF 或 0xE000~0x10FFFF 范围内的 32-bit 无符号字符。创建超出此范围的字符直接触发<a href="types/../behavior-considered-undefined.html">未定义行为(Undefined Behavior)</a>。一个 <code>[char]</code> 实际上是长度为1的 UCS-4 / UTF-32 字符串。</p>
 <p><code>str</code>类型的值的表示方法与 <code>[u8]</code> 相同，它是一个 8-bit 无符号字节类型的切片。但是，Rust 标准库对 <code>str</code> 做了额外的假定：<code>str</code> 上的方法会假定并确保其中的数据是有效的 UTF-8。调用 <code>str</code> 的方法来处理非UTF-8 缓冲区上的数据可能或早或晚地出现<a href="types/../behavior-considered-undefined.html">未定义行为</a>。</p>
 <p>由于 <code>str</code> 是一个<a href="types/../dynamically-sized-types.html">动态尺寸类型</a>，所以它只能通过指针类型实例化，比如 <code>&amp;str</code>。</p>
 <!-- 2020-11-12-->
@@ -8704,7 +8704,7 @@ commit: 9af5071f876111a09ba54a86655679de83eb464c <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/never.md">never.md</a><br />
 commit: 91486df597a9e8060f9c67587359e9f168dea7ef <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -8716,7 +8716,7 @@ commit: 91486df597a9e8060f9c67587359e9f168dea7ef <br />
 // 可以强转为任何类型
 let y: u32 = x;
 </code></pre>
-<p><strong>注意：</strong> never类型本预计在1.41中稳定下来，但由于最后一分钟检测到一些意想不到的回归，该类型的稳定进程临时暂停。目前 <code>!</code>类型只能出现在函数返回类型中。有关详细信息，请参阅<a href="https://github.com/rust-lang/rust/issues/35121">议题跟踪</a>。</p>
+<p><strong>注意：</strong> never类型原本预计在1.41中稳定下来，但由于最后一分钟检测到一些意想不到的回归，该类型的稳定进程临时暂停。目前 <code>!</code>类型只能出现在函数返回类型中。有关详细信息，请参阅<a href="https://github.com/rust-lang/rust/issues/35121">议题跟踪</a>。</p>
 <!-- 2020-11-12-->
 <!-- checked -->
 <h1><a class="header" href="#tuple-types" id="tuple-types">Tuple types</a></h1>
@@ -8724,7 +8724,7 @@ let y: u32 = x;
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/tuple.md">tuple.md</a><br />
 commit: ff68c99b2b2003998b0f951fcb8dc290370a0275 <br />
-本章译文最后维护日期：2020-11-12</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -8732,8 +8732,8 @@ commit: ff68c99b2b2003998b0f951fcb8dc290370a0275 <br />
       <code>(</code> <code>)</code><br />
    | <code>(</code> ( <a href="types/../types.html#type-expressions"><em>Type</em></a> <code>,</code> )<sup>+</sup> <a href="types/../types.html#type-expressions"><em>Type</em></a><sup>?</sup> <code>)</code></p>
 </blockquote>
-<p><em>元组类型</em>是由其他类型异构合成的列表型结构化类型<sup class="footnote-reference"><a href="#1">1</a></sup>。其列表中的每个条目(entry)都是此元组的一个<em>元素</em><sup class="footnote-reference"><a href="#2">2</a></sup>。元素可以用它在元组中的位置数字来索引，读作<em>第 n 个元素</em>，索引从 0(<code>0</code>)开始。</p>
-<p>元素的数量决定元组的元数(arity)。有 <code>n</code> 个元素的元组叫做 n元组(<code>n-ary tuple</code>)。例如，有两个元素的元组就是二元元组。</p>
+<p><em>元组类型</em>是把不同类型放在同一个列表中异构组成结构类型<sup class="footnote-reference"><a href="#1">1</a></sup>。这个列表中的每个条目(entry)都是对应元组的一个<em>元素</em><sup class="footnote-reference"><a href="#2">2</a></sup>。元素可以用它在列表中的位置数字来索引，读作<em>第 n 个元素</em>，索引从 0(<code>0</code>)开始。</p>
+<p>元素的数量决定元组的元数(arity)。有 <code>n</code> 个元素的元组叫做 n元元组(<code>n-ary tuple</code>)。例如，有两个元素的元组就是二元元组。</p>
 <p>出于方便和历史原因，不带元素(<code>()</code>)的元组类型通常被称为<em>单元(unit)<em>或</em>单元类型(unit type)</em>。它的值也被称为<em>单元</em>或<em>单元值</em>。</p>
 <p>元组类型是通过在圆括号封闭的逗号分隔的列表中列出其元素的类型来编写的。一元元组的元素类型后面需要一个逗号，以便和<a href="types/../types.html#parenthesized-types">圆括号组合类型(parenthesized type)</a>区分开来。</p>
 <p>元组类型的示例：</p>
@@ -8744,7 +8744,7 @@ commit: ff68c99b2b2003998b0f951fcb8dc290370a0275 <br />
 <li><code>(i32, String)</code> (跟前一个示例类型不一样)</li>
 <li><code>(i32, f64, Vec&lt;String&gt;, Option&lt;bool&gt;)</code></li>
 </ul>
-<p>这种类型的值是使用<a href="types/../expressions/tuple-expr.html#tuple-expressions">元组表达式</a>来构造的。此外，如果没有其他有意义的值可供求得，很多种表达式都将生成单元值。元组元素可以通过<a href="types/../expressions/tuple-expr.html#tuple-indexing-expressions">元组索引表达式</a>或<a href="types/../patterns.html#tuple-patterns">模式匹配</a>来访问。</p>
+<p>这种类型的值是使用<a href="types/../expressions/tuple-expr.html#tuple-expressions">元组表达式</a>来构造的。此外，如果没有其他有意义的值可供求得/返回，很多种表达式都将生成单元值。元组元素可以通过<a href="types/../expressions/tuple-expr.html#tuple-indexing-expressions">元组索引表达式</a>或<a href="types/../patterns.html#tuple-patterns">模式匹配</a>来访问。</p>
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
 <p>如果一些类型相互比较，发现它们对等位置的内部类型是相等的，那么这些结构化类型就总是相等的。有关元组的标称类型版本，请参见<a href="types/./struct.html">元组结构体</a>。
 <sup class="footnote-reference"><a href="#2">2</a></sup>: 元素与字段等效，只是元素用数字索引代替标识符来标识和检索。</p>
@@ -8756,7 +8756,7 @@ commit: ff68c99b2b2003998b0f951fcb8dc290370a0275 <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/array.md">array.md</a><br />
 commit: 2f459e22ec30a94bafafe417da4e95044578df73 <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -8775,7 +8775,7 @@ let array: [i32; 3] = [1, 2, 3];
 let boxed_array: Box&lt;[i32]&gt; = Box::new([1, 2, 3]);
 <span class="boring">}
 </span></code></pre></pre>
-<p>数组的所有元素总是初始化过的，使用 Rust 的安全(safe)方法或操作符来访问数组时总是会做越界检查。</p>
+<p>数组的所有元素总是初始化过的，使用 Rust 中的安全(safe)方法或操作符来访问数组时总是会先做越界检查。</p>
 <blockquote>
 <p>注意：标准库类型 <a href="https://doc.rust-lang.org/std/vec/struct.Vec.html"><code>Vec&lt;T&gt;</code></a> 提供了堆分配方案的可调整大小的数组类型。</p>
 </blockquote>
@@ -8786,14 +8786,14 @@ let boxed_array: Box&lt;[i32]&gt; = Box::new([1, 2, 3]);
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/slice.md">slice.md</a><br />
 commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>SliceType</em> :<br />
    <code>[</code> <a href="types/../types.html#type-expressions"><em>Type</em></a> <code>]</code></p>
 </blockquote>
-<p>切片是一种<a href="types/../dynamically-sized-types.html">动态尺寸类型(dynamically sized type)</a>，它代表类型为 <code>T</code> 的元素组成的序列的一个“视图(view)”。切片类型写为 <code>[T]</code>。</p>
+<p>切片是一种<a href="types/../dynamically-sized-types.html">动态尺寸类型(dynamically sized type)</a>，它代表类型为 <code>T</code> 的元素组成的数据序列的一个“视图(view)”。切片类型写为 <code>[T]</code>。</p>
 <p>要使用切片类型，通常必须放在指针后面使用，例如：</p>
 <ul>
 <li><code>&amp;[T]</code>，共享切片('shared slice')，常被直接称为切片(<code>slice</code>)，它不拥有它指向的数据，只是借用。</li>
@@ -8811,7 +8811,7 @@ let boxed_array: Box&lt;[i32]&gt; = Box::new([1, 2, 3]);
 let slice: &amp;[i32] = &amp;boxed_array[..];
 <span class="boring">}
 </span></code></pre></pre>
-<p>切片的所有元素总是被初始化过的，使用 Rust 的安全(safe)方法或操作符来访问切片时总是会做越界检查。</p>
+<p>切片的所有元素总是初始化过的，使用 Rust 中的安全(safe)方法或操作符来访问切片时总是会做越界检查。</p>
 <!-- 2020-11-12-->
 <!-- checked -->
 <h1><a class="header" href="#struct-types" id="struct-types">Struct types</a></h1>
@@ -8819,17 +8819,16 @@ let slice: &amp;[i32] = &amp;boxed_array[..];
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/struct.md">struct.md</a><br />
 commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
-<p>结构体(<code>struct</code>)<em>类型</em>是其由他类型异构组合的数据结构，这些其他类型被称为结构体类型的字段。<sup class="footnote-reference"><a href="#structtype">1</a></sup></p>
+<p>结构体(<code>struct</code>)<em>类型</em>是其由他类型异构产生的类型，这些其他类型被称为结构体类型的字段。<sup class="footnote-reference"><a href="#structtype">1</a></sup></p>
 <p>结构体(<code>struct</code>)的实例可以用<a href="types/../expressions/struct-expr.html">结构体表达式</a>来构造。</p>
-<p>默认情况下，结构体(<code>struct</code>)的内存布局是未定义的（这样就允许进行一些编译器优化，比如字段重排），但也可以使用<a href="types/../type-layout.html#representations"><code>repr</code>属性</a> <sup class="footnote-reference"><a href="#译者注">2</a></sup>来使其布局在定义时就固定下来。在这两种布局规则下，字段可以在相应的结构体<em>表达式</em>中以任何顺序给出，（但在相同的编译目标中，）这两种布局规则下生成的结构体(<code>struct</code>)值将始终具有相同的内存布局。</p>
-<p>结构体(<code>struct</code>)的字段可以由<a href="types/../visibility-and-privacy.html">可见性修饰符</a>限定，以允许从模块之外来访问结构体中的数据。</p>
+<p>默认情况下，结构体(<code>struct</code>)的内存布局是未定义的（默认允许进行一些编译器优化，比如字段重排），但也可以使用<a href="types/../type-layout.html#representations"><code>repr</code>属性</a>来使其布局在定义时就固定下来。在这两种情况下，字段在相应的结构体<em>表达式</em>中都可以以任何顺序给出；（但在相同的编译目标中，在）同一布局规则下生成的结构体(<code>struct</code>)值将始终具有相同的内存布局。</p>
+<p>结构体(<code>struct</code>)的字段可以由<a href="types/../visibility-and-privacy.html">可见性修饰符(visibility modifiers)</a>限定，以允许从模块之外来访问结构体中的数据。</p>
 <p>*元组结构体(uple struct)*类型与结构体类型类似，只是字段是匿名的。</p>
-<p>*单元结构体(unit-like struct)*类型类似于结构体类型，只是它没有字段。由相关<a href="types/../expressions/struct-expr.html">结构体表达式</a>构造的值是驻留在此类类型中的惟一值。</p>
+<p>*单元结构体(unit-like struct)*类型类似于结构体类型，只是它没有字段。由初始<a href="types/../expressions/struct-expr.html">结构体表达式</a>构造的值是驻留在此类类型中惟一的值。</p>
 <div class="footnote-definition" id="structtype"><sup class="footnote-definition-label">1</sup>
-<p>https://doc.rust-lang.org/<code>struct</code> 类型类似于 C 中的 <code>struct</code> 类型、ML家族的 <em>record</em> 类型或 Lisp家族的 <em>struct</em> 类型。
-<sup class="footnote-reference"><a href="#译者注">2</a></sup>: 注意这里是不带参数的 <code>repr</code>属性，这种不带参数的属性只是把在编译阶段才做的布局优化给提前了。</p>
+<p>../<code>struct</code>类型类似于 C 中的 <code>struct</code> 类型、ML家族的 <em>record</em> 类型或 Lisp 家族的 <em>struct</em> 类型。</p>
 </div>
 <!-- 2020-11-12-->
 <!-- checked -->
@@ -8838,15 +8837,17 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/enum.md">enum.md</a><br />
 commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
-<p><em>枚举类型</em>是一种标称型(nominal)的、异构的(heterogeneous)、不相交的联合类型(disjoint union type)，具体的枚举类型由<a href="types/../items/enumerations.html">枚举(<code>enum</code>)数据项</a>的名称来表示。<sup class="footnote-reference"><a href="#enumtype">1</a></sup></p>
-<p><a href="types/../items/enumerations.html">枚举(<code>enum</code>)数据项</a>的声明同时声明了它的类型和<em>变体(variants)</em>，其中每个变体都独立命名，可使用定义结构体、元组结构体或单元结构体(unit-like struct)的句法来定义它们。</p>
+<p><em>枚举类型</em>是一种标称型(nominal)的、异构的、不相交的类型组成的联合体类型，直接用<a href="types/../items/enumerations.html">枚举(<code>enum</code>)数据项</a>的名称来表示。<sup class="footnote-reference"><a href="#enumtype">1</a></sup></p>
+<p><a href="types/../items/enumerations.html">枚举(<code>enum</code>)数据项</a>同时声明了类型和它的各种<em>变体(variants)</em>，其中每个变体都独立命名，可使用定义结构体、元组结构体或单元结构体(unit-like struct)的句法来定义它们。</p>
 <p>枚举(<code>enum</code>)的实例可以在<a href="types/../expressions/enum-variant-expr.html">枚举变体表达式</a>中构造。</p>
-<p>任何枚举值消耗的内存和其同类型的其他变体都是相同的，具体都为其枚举类型的最大变体所需的内存再加上存储其判别值(discriminant)所需的内存。</p>
-<p>枚举类型不能直接表示为类型，必须通过对其<a href="types/../items/enumerations.html">枚举(<code>enum</code>)数据项</a>的名称的引用来表示。</p>
+<p>任何枚举值消耗的内存和其同类型的其他变体都是相同的，具体都为其枚举(<code>enum</code>)类型的最大变体所需的内存再加上存储其判别值(discriminant)所需的内存。</p>
+<p>枚举类型不能在<em>结构上</em>表示为类型，必须通过对<a href="types/../items/enumerations.html">枚举(<code>enum</code>)数据项</a>的命名引用(named reference)来表示。<sup class="footnote-reference"><a href="#译注1">2</a></sup></p>
+<p>Enum types cannot be denoted structurally as types, but must be denoted by named reference to an <code>enum</code> item.</p>
 <div class="footnote-definition" id="enumtype"><sup class="footnote-definition-label">1</sup>
-<p><code>enum</code>类型类似于 ML 中的数据(<code>data</code>)构造函数声明，或 Limbo 中的 <em>pick ADT</em>。</p>
+<p>../<code>enum</code>类型类似于 ML 中的数据(<code>data</code>)构造函数声明，或 Limbo 中的 <em>pick ADT</em>。
+<sup class="footnote-reference"><a href="#译注1">2</a></sup>: 译者理解这句话的意思是：枚举不同于普通结构化的类型，所有的枚举都是对模具数据项的引用；这里引用分两种，一种是类C枚举，就是对数据项的直接引用；另一种是带字段的枚举枚举变体，这种其实是类似于 <code>Box</code>、<code>Rc</code> 这样的命名引用类型，它通过封装其他类型来指导数据的存储和限定其上可用的操作。</p>
 </div>
 <!-- 2020-11-12-->
 <!-- checked -->

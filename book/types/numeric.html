@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/mumeric.md">mumeric.md</a><br />
 commit: 73ca198fb3ab52283d67d5fe28c541ee1d169f48 <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
 <h2><a class="header" href="#integer-types" id="integer-types">Integer types</a></h2>
 <h2><a class="header" href="#整型整数类型" id="整型整数类型">整型/整数类型</a></h2>
@@ -195,9 +195,9 @@ commit: 73ca198fb3ab52283d67d5fe28c541ee1d169f48 <br />
 <p>Rust 对应 IEEE 754-2008 的“binary32”和“binary64”浮点类型分别是 <code>f32</code> 和 <code>f64</code>。</p>
 <h2><a class="header" href="#machine-dependent-integer-types" id="machine-dependent-integer-types">Machine-dependent integer types</a></h2>
 <h2><a class="header" href="#和计算平台相关的整型" id="和计算平台相关的整型">和计算平台相关的整型</a></h2>
-<p><code>usize</code>类型是一种无符号整型，其位数与平台的指针类型的位数相同。它可以表示进程中的每个内存地址。</p>
-<p><code>isize</code>类型是一种有符号整型，其位数与平台的指针类型的位数相同。（Rust 规定）对象的尺寸和数组的长度的理论上限是 <code>isize</code>的最大值。这确保了 <code>isize</code> 可以用来计算指向对象或数组内部的指针之间的差异，并且可以寻址对象中的每个字节以及末尾的那个字节。</p>
-<p><code>usize</code> 和 <code>isize</code> 至少是 16-bits 宽。</p>
+<p><code>usize</code>类型是一种无符号整型，其宽度与平台的指针类型的宽度相同。它可以表示进程中的每个内存地址。</p>
+<p><code>isize</code>类型是一种有符号整型，其宽度与平台的指针类型的宽度相同。（Rust 规定）对象的尺寸和数组的长度的理论上限是 <code>isize</code> 的最大值。这确保了 <code>isize</code> 可以用来计算指向对象或数组内部的指针之间的差异，并且可以寻址对象中的每个字节以及末尾之后的那个字节。</p>
+<p><code>usize</code> 和 <code>isize</code> 的宽度至少是 16-bits。</p>
 <blockquote>
 <p><strong>注意</strong>：许多 Rust 代码可能会假设指针、<code>usize</code> 和 <code>isize</code> 是 32-bit 或 64-bit 的。因此，16-bit 指针的支持是有限的，这部分支持可能需要来自库的明确关注和确认。</p>
 </blockquote>

@@ -213,9 +213,9 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types.md">types.md</a><br />
 commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
-<p>Rust 程序中的每个变量、数据项和值都有一个类型。<em>值</em>的<em>类型</em>定义了对于保存它的内存的解释，以及定义了可以对该值执行的操作。</p>
+<p>Rust 程序中的每个变量、数据项和值都有一个类型。<em>值</em>的<em>类型</em>定义了该如何解释用于保存它的内存数据，以及定义了可以对该值执行的操作。</p>
 <p>内置的类型以非平凡的方式(in nontrivial ways)紧密地集成到语言中，这种方式是不可能在用户定义的类型中模拟的。用户定义的类型功能有限。</p>
 <p>内置类型列表：</p>
 <ul>
@@ -285,12 +285,12 @@ commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
    | <a href="types/function-pointer.html"><em>BareFunctionType</em></a><br />
    | <a href="macros.html#macro-invocation"><em>MacroInvocation</em></a></p>
 </blockquote>
-<p>上表中的 <em>Type</em> 文法规则中定义的各种<em>类型表达式</em>是指向某个具体类型的句法。它们可以指向：</p>
+<p>上表中的 <em>Type</em> 文法规则中定义的各种<em>类型表达式</em>都是某个具体类型的句法产生式。它们可以覆盖指代：</p>
 <ul>
 <li>序列类型（<a href="types/tuple.html">tuple</a>, <a href="types/array.html">array</a>, <a href="types/slice.html">slice</a>）。</li>
 <li><a href="paths.html#paths-in-types">类型路径(type paths)</a>，这些包括：
 <ul>
-<li>原生类型（<a href="types/boolean.html">布尔型</a>, <a href="types/numeric.html">数字类</a>, <a href="types/textual.html">文本类</a>）。</li>
+<li>原生类型（<a href="types/boolean.html">布尔型</a>, <a href="types/numeric.html">数字类类型</a>, <a href="types/textual.html">文本类类型</a>）。</li>
 <li>指向<a href="items.html">数据项</a>（<a href="types/struct.html">结构体(<code>struct</code>)</a>, <a href="types/enum.html">枚举(<code>enum</code>)</a>, <a href="types/union.html">联合体(<code>union</code>)</a>, <a href="items/type-aliases.html">类型别名</a>, <a href="types/trait-object.html">trait</a>）的路径。</li>
 <li><a href="paths.html#self-1"><code>Self</code>路径</a>，其中 <code>Self</code> 是实现类型。</li>
 <li>泛型<a href="types/parameters.html">类型参数</a>。</li>
@@ -300,7 +300,7 @@ commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
 <li><a href="types/inferred.html">自动推断型类型(inferred type)</a>，就是请求编译器确定类型的类型。</li>
 <li>用来消除歧义的<a href="#parenthesized-types">圆括号</a>。</li>
 <li>Trait类型：<a href="types/trait-object.html">trait对象(trait object)</a> 和 <a href="types/impl-trait.html">实现trait(impl trait)</a>.</li>
-<li><a href="types/never.html">never</a>型。</li>
+<li><a href="types/never.html">never</a>型(<code>!</code>)。</li>
 <li>展开成类型表达式的<a href="macros.html">宏</a>。</li>
 </ul>
 <h3><a class="header" href="#parenthesized-types" id="parenthesized-types">Parenthesized types</a></h3>
@@ -309,7 +309,7 @@ commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
 <p><em>ParenthesizedType</em> :<br />
    <code>(</code> <a href="types.html#type-expressions"><em>Type</em></a> <code>)</code></p>
 </blockquote>
-<p>在某些情况下，类型的组合可能会产生歧义。可以在类型周围使用元括号来避免歧义。例如，<a href="types/pointer.html#shared-references-">引用类型</a>中的<a href="trait-bounds.html">类型边界(type boundaries)</a>列表中的 <code>+</code>运算符搞不清楚其左值的边界位置在哪里，因此需要使用圆括号来明确其边界。这里需要的消除歧义的文法就是使用 <a href="types.html#type-expressions"><em>TypeNoBounds</em></a> 规则替代 <a href="types.html#type-expressions"><em>Type</em></a> 规则。</p>
+<p>在某些情况下，类型组合在一起时可能会产生二义性。此时可以在类型周围使用元括号来避免歧义。例如，<a href="types/pointer.html#shared-references-">引用类型</a>的<a href="trait-bounds.html">类型约束</a>列表中的 <code>+</code>运算符搞不清楚其左值的边界位置在哪里，因此需要使用圆括号来明确其边界。这里需要的消歧文法就是使用 <a href="types.html#type-expressions"><em>TypeNoBounds</em></a> 句法规则替代 <a href="types.html#type-expressions"><em>Type</em></a> 句法规则。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -319,13 +319,13 @@ commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
 </span></code></pre></pre>
 <h2><a class="header" href="#recursive-types" id="recursive-types">Recursive types</a></h2>
 <h2><a class="header" href="#递归类型" id="递归类型">递归类型</a></h2>
-<p>标称类型 — <a href="types/struct.html">结构体(<code>struct</code>)</a>、<a href="types/enum.html">枚举(<code>enum</code>)</a>和<a href="types/union.html">联合体(<code>union</code>)</a> — 可以是递归的。也就是说，每个枚举(<code>enum</code>)变体或结构体(<code>struct</code>)或联合体(<code>union</code>)字段可以直接或间接地指向此枚举(<code>enum</code>)或结构体(<code>struct</code>)类型本身。这种递归有一些限制：</p>
+<p>标称类型(nominal types) — <a href="types/struct.html">结构体(<code>struct</code>)</a>、<a href="types/enum.html">枚举(<code>enum</code>)</a>和<a href="types/union.html">联合体(<code>union</code>)</a> — 可以是递归的。也就是说，每个枚举(<code>enum</code>)变体或结构体(<code>struct</code>)或联合体(<code>union</code>)的字段可以直接或间接地指向此枚举(<code>enum</code>)或结构体(<code>struct</code>)类型本身。这种递归有一些限制：</p>
 <ul>
 <li>递归类型必须在递归中包含一个标称类型（不能仅是<a href="items/type-aliases.html">类型别名</a>或其他结构化的类型，如<a href="types/array.html">数组</a>或<a href="types/tuple.html">元组</a>）。因此不允许使用 <code>type Rec = &amp;'static [Rec]</code>。</li>
-<li>递归类型的次数必须是有限的；也就是说，类型的递归字段必须是<a href="types/pointer.html">指针类型</a>。</li>
-<li>递归类型定义可以跨越模块边界，但不能跨越模块<em>可见性</em>边界或 crate 边界（为了简化模块系统和类型检查）。</li>
+<li>递归类型的尺寸必须是有限的；也就是说，类型的递归字段必须是<a href="types/pointer.html">指针类型</a>。</li>
+<li>递归类型的定义可以跨越模块边界，但不能跨越模块<em>可见性</em>边界或 crate 边界（为了简化模块系统和类型检查）。</li>
 </ul>
-<p><em>递归</em>类型及其使用示例：</p>
+<p><em>递归</em>类型及使用示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

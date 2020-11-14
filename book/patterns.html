@@ -504,7 +504,7 @@ match tuple {
 <p><strong><sup>句法</sup></strong><br />
 <em>RangePattern</em> :<br />
    <em>RangePatternBound</em> <code>..=</code> <em>RangePatternBound</em></p>
-<p><em>ObsoleteRangePattern</em> :(译者注：废弃的区间模式句法) \ 
+<p><em>ObsoleteRangePattern</em> :(译者注：废弃的区间模式句法/产生式) \ 
    <em>RangePatternBound</em> <code>...</code> <em>RangePatternBound</em></p>
 <p><em>RangePatternBound</em> :<br />
       <a href="tokens.html#character-literals">CHAR_LITERAL</a><br />
@@ -651,7 +651,7 @@ match a {
    <code>..</code></p>
 </blockquote>
 <p>结构体模式匹配与子模式定义的所有条件匹配的结构体值。它也被用来<a href="#destructuring">解构</a>结构体。</p>
-<p>在结构体模式中，结构体字段需通过名称、索引（对于元组结构体来说）来指向，或者通过使用 <code>..</code> 来忽略：</p>
+<p>在结构体模式中，结构体字段需通过名称、索引（对于元组结构体来说）来指代，或者通过使用 <code>..</code> 来忽略：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -740,7 +740,7 @@ match a {
    | <a href="#patterns"><em>Pattern</em></a> (<code>,</code> <a href="#patterns"><em>Pattern</em></a>)<sup>+</sup> <code>,</code><sup>?</sup></p>
 </blockquote>
 <p>元组模式匹配与子模式定义的所有条件匹配的元组值。它们还被用来<a href="#destructuring">解构</a>元组值。</p>
-<p>带有单个<a href="#rest-patterns">剩余模式</a>(<em>RestPattern</em>)的句法结构 <code>(..)</code> 是一种内部不需要逗号分割的特殊匹配结构，它可以匹配任意长度的元组。</p>
+<p>内部只带有一个<a href="#rest-patterns">剩余模式</a>(<em>RestPattern</em>)的元组句法形式 <code>(..)</code> 是一种内部不需要逗号分割的特殊匹配形式，它可以匹配任意长度的元组。</p>
 <p>当元组模式的一个子模式是可反驳型的，那该元组模式就是可反驳型的。</p>
 <p>使用元组模式的示例：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -760,7 +760,7 @@ assert_eq!(b, &quot;ten&quot;);
 <em>GroupedPattern</em> :<br />
    <code>(</code> <a href="#patterns"><em>Pattern</em></a> <code>)</code></p>
 </blockquote>
-<p>将模式括在圆括号内可用于显式控制复合模式的优先级。例如，在区间模式（如 <code>&amp;0..=5</code>）和附近的引用模式会引起歧义，这时可以用圆括号来消除歧义。</p>
+<p>将模式括在圆括号内可用来显式控制复合模式的优先级。例如，像 <code>&amp;0..=5</code> 这样的引用模式和区间模式相邻就会引起歧义，这时可以用圆括号来消除歧义。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

@@ -3,7 +3,7 @@
 
 >[array.md](https://github.com/rust-lang/reference/blob/master/src/types/array.md)\
 >commit: 2f459e22ec30a94bafafe417da4e95044578df73 \
->本章译文最后维护日期：2020-10-29
+>本章译文最后维护日期：2020-11-14
 
 > **<sup>句法</sup>**\
 > _ArrayType_ :\
@@ -21,10 +21,10 @@ let array: [i32; 3] = [1, 2, 3];
 let boxed_array: Box<[i32]> = Box::new([1, 2, 3]);
 ```
 
-数组的所有元素总是初始化过的，使用 Rust 的安全(safe)方法或操作符来访问数组时总是会做越界检查。
+数组的所有元素总是初始化过的，使用 Rust 中的安全(safe)方法或操作符来访问数组时总是会先做越界检查。
 
 > 注意：标准库类型 [`Vec<T>`] 提供了堆分配方案的可调整大小的数组类型。
-> 
+
 [_Expression_]: ../expressions.md
 [_Type_]: ../types.md#type-expressions
 [`Vec<T>`]: https://doc.rust-lang.org/std/vec/struct.Vec.html

@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/array.md">array.md</a><br />
 commit: 2f459e22ec30a94bafafe417da4e95044578df73 <br />
-本章译文最后维护日期：2020-10-29</p>
+本章译文最后维护日期：2020-11-14</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -189,7 +189,7 @@ let array: [i32; 3] = [1, 2, 3];
 let boxed_array: Box&lt;[i32]&gt; = Box::new([1, 2, 3]);
 <span class="boring">}
 </span></code></pre></pre>
-<p>数组的所有元素总是初始化过的，使用 Rust 的安全(safe)方法或操作符来访问数组时总是会做越界检查。</p>
+<p>数组的所有元素总是初始化过的，使用 Rust 中的安全(safe)方法或操作符来访问数组时总是会先做越界检查。</p>
 <blockquote>
 <p>注意：标准库类型 <a href="https://doc.rust-lang.org/std/vec/struct.Vec.html"><code>Vec&lt;T&gt;</code></a> 提供了堆分配方案的可调整大小的数组类型。</p>
 </blockquote>
