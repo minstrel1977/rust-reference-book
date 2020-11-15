@@ -573,8 +573,10 @@ assert_eq!(std::mem::size_of::&lt;Enum16&gt;(), 4);
 <p>这与 <code>C</code>表形不同，因为带有 <code>C</code>表形的结构体将始终拥有 C结构体(<code>C</code> <code>struct</code>)的ABI，例如，那些只有一个原生类型字段的结构体如果应用了透明表形(<code>transparent</code>)，将具有此原生类型字段的ABI。</p>
 <p>因为此表形将类型布局委托给另一种类型，所以它不能与任何其他表形一起使用。</p>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
-<p>至此，上一个字段就填充完成，开始计算本字段了。也就是说每一个字段的偏移量是其字段的段首位置；那第一个字段的偏移量就始终为 0；
-<sup class="footnote-reference"><a href="#译注2">2</a></sup>: 这里合法的意思是变体的判别值受 <code>repr(u8)</code> 这样的表形属性约束，像这个例子中，变体的判别值就只能位于 0~255 之间。 </p>
+<p>至此，上一个字段就填充完成，开始计算本字段了。也就是说每一个字段的偏移量是其字段的段首位置；那第一个字段的偏移量就始终为 0。</p>
+</div>
+<div class="footnote-definition" id="译注2"><sup class="footnote-definition-label">2</sup>
+<p>这里合法的意思是变体的判别值受 <code>repr(u8)</code> 这样的表形属性约束，像这个例子中，变体的判别值就只能位于 0~255 之间。 </p>
 </div>
 <!-- 2020-11-12-->
 <!-- checked -->
