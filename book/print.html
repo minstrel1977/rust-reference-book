@@ -9593,10 +9593,7 @@ struct MyDFields;
 <h4><a class="header" href="#带字段枚举的原语表形" id="带字段枚举的原语表形">带字段枚举的原语表形</a></h4>
 <p>带字段枚举的原语表形是一个 <code>repr(C)</code>表形的联合体，此联合体的每个字段对应一个和原枚举变体对应的 <code>repr(C)</code>表形的结构体。这些结构体的第一个字段是原枚举的变体移除了它们所有的字段组成的原语表形版的无字段枚举（“the tag”），那这些结构体的其余字段是原变体移走的字段。</p>
 <blockquote>
-<p>Note: This representation is unchanged if the tag is given its own member in
-the union, should that make manipulation more clear for you (although to
-follow the C++ standard the tag member should be wrapped in a <code>struct</code>).
-注意：如果在联合体中，直接把标签的成员赋予给标签(“the tag”)，那么这种表形结构仍不变的，并且这样操作对您来说可能会更清晰（尽管遵循 c++ 的标准，标签也应该被包装在结构体中）。</p>
+<p>注意：如果在联合体中，直接把标签的成员赋予给标签(“the tag”)，那么这种表形结构仍不变的，并且这样操作对您来说可能会更清晰（尽管遵循 c++ 的标准，标签也应该被包装在结构体中）。</p>
 </blockquote>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
