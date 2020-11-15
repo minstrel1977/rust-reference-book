@@ -208,9 +208,9 @@
 <li>Syntax，这个词很多译者的随意的翻译为“语法”，但在本书里它大部分时候特指单一语言部件的产生式格式，所以本书统一翻译为“句法”。在它之上一层的语言组织方式才翻译为“文法”，有时也翻译为“语法”。</li>
 <li>nominal type：标称类型。这是译者自创的一个翻译方法，首先 nominal type 在目前国内 Rust 社区里还没有合适的翻译先例，所以译者这里就蹭机器学习的热点翻译为“标称类型”，这种行径虽然降低了Rust的逼格，但在目前状态下，收益可能还是值得的。</li>
 <li>item，这个一般翻译为“项”或“条目”，译者期初为了读起来更符合习惯，选择了“项”的翻译方法，但后来发现这个方法太容易引起歧义，无法体现出其作为语法单元的特殊含义，所以又给它添了两个字，变成了“数据项”。而其他名词复合时，又一般会简化翻译为“XX项”，如：“static item”，译者就翻译为“静态项”。</li>
-<li>size，社区内常把这个词在表示 Rust 数据类型的位宽时也译做“大小”，但在中文语境中，有时无法把其和数值大小，以及比较意义的大小，或长度等含义快速区分开来，所以本文在表示 Rust 数据类型的位宽时统一译做“尺寸”。</li>
+<li>size，社区内常把这个词在表示 Rust 数据类型的位宽时译做“大小”，但在中文语境中，有时无法把其和数值大小，以及比较意义的大小，或长度等含义快速区分开来，所以本文在表示 Rust 数据类型的位宽时统一译做“尺寸”。</li>
 <li>bit，这个通常译为“位”，但有时它会和中文中的“两位数”的“位”混淆，所以在代表二进制位宽时译者干脆保持不译。</li>
-<li>alignment，这个词通常译作“对齐”，但本书由于体量较大，行文中行内和动词的“对齐”，以及普通意义上的“对齐”区分开来，所以在特指布局属性中的 alignment 时，统一翻译为“对齐量”。出于同样的考虑，representation 在表示类型的布局属性时统一翻译为“表形”。</li>
+<li>alignment，这个词在表示一种布局属性时，通常译作“对齐”，但本书由于体量较大，行文中很难把其和动词的“对齐”，以及普通意义上的“对齐”区分开来，所以在特指布局属性中的 alignment 时，统一翻译为“对齐量”。出于同样的考虑，representation 在表示类型的布局属性时统一翻译为“表形”。</li>
 <li>更多常用词汇的翻译对照见<a href="%E6%9C%AC%E4%B9%A6%E6%9C%AF%E8%AF%AD%E7%BF%BB%E8%AF%91%E5%AF%B9%E7%85%A7%E8%A1%A8.html">本书术语翻译对照表</a>。</li>
 </ol>
 <h2><a class="header" href="#阅读建议" id="阅读建议">阅读建议</a></h2>
@@ -8840,7 +8840,7 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 本章译文最后维护日期：2020-11-14</p>
 </blockquote>
-<p><em>枚举类型</em>是一种标称型(nominal)的、异构的、不相交的类型组成的联合体类型，直接用<a href="types/../items/enumerations.html">枚举(<code>enum</code>)数据项</a>的名称来表示。<sup class="footnote-reference"><a href="#enumtype">1</a></sup></p>
+<p><em>枚举类型</em>是一种标称型(nominal)的、异构的、不相交的类型联合起来组成的类型，它直接用<a href="types/../items/enumerations.html">枚举(<code>enum</code>)数据项</a>的名称来表示。<sup class="footnote-reference"><a href="#enumtype">1</a></sup></p>
 <p><a href="types/../items/enumerations.html">枚举(<code>enum</code>)数据项</a>同时声明了类型和它的各种<em>变体(variants)</em>，其中每个变体都独立命名，可使用定义结构体、元组结构体或单元结构体(unit-like struct)的句法来定义它们。</p>
 <p>枚举(<code>enum</code>)的实例可以在<a href="types/../expressions/enum-variant-expr.html">枚举变体表达式</a>中构造。</p>
 <p>任何枚举值消耗的内存和其同类型的其他变体都是相同的，具体都为其枚举(<code>enum</code>)类型的最大变体所需的内存再加上存储其判别值(discriminant)所需的内存。</p>
@@ -9357,13 +9357,12 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <h2><a class="header" href="#slice-layout" id="slice-layout">Slice Layout</a></h2>
 <h2><a class="header" href="#切片的布局" id="切片的布局">切片的布局</a></h2>
 <p>切片的布局与它们所切的那部分数组片段相同。</p>
-<!-- check from here -->
 <blockquote>
 <p>注意：这是关于原生的 <code>[T]</code>类型，而不是指向切片的指针（<code>&amp;[T]</code>、<code>Box&lt;[T]&gt;</code> 等）。</p>
 </blockquote>
 <h2><a class="header" href="#str-layout" id="str-layout"><code>str</code> Layout</a></h2>
 <h2><a class="header" href="#字符串切片str的布局" id="字符串切片str的布局">字符串切片(<code>str</code>)的布局</a></h2>
-<p>字符串切片是与 <code>[u8]</code>类型的切片具有相同布局的字符序列的 UTF-8 表示形式(representation)。</p>
+<p>字符串切片是一种 UTF-8 表示形式(representation)的字符序列，它们与 <code>[u8]</code>类型的切片拥有相同的类型布局。</p>
 <h2><a class="header" href="#tuple-layout" id="tuple-layout">Tuple Layout</a></h2>
 <h2><a class="header" href="#元组的布局" id="元组的布局">元组的布局</a></h2>
 <p>元组对于其布局没有任何保证。</p>
@@ -9376,7 +9375,7 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 </blockquote>
 <h2><a class="header" href="#closure-layout" id="closure-layout">Closure Layout</a></h2>
 <h2><a class="header" href="#闭包的布局" id="闭包的布局">闭包的布局</a></h2>
-<p>闭包没有布局保证。</p>
+<p>闭包的布局没有保证。</p>
 <h2><a class="header" href="#representations" id="representations">Representations</a></h2>
 <h2><a class="header" href="#表形表示形式" id="表形表示形式">表形/表示形式</a></h2>
 <p>所有用户定义的复合类型（结构体(<code>struct</code>)、枚举(<code>enum</code>)和联合体(<code>union</code>)）都有一个*表形(representation)*属性，该属性用于指定该类型的布局。类型的可能表形有：</p>
@@ -9398,7 +9397,7 @@ struct ThreeInts {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>可以分别使用 <code>align</code> 和 <code>packed</code> 修饰符增大或缩小对齐量。它们可以更改属性中指定的表形的对齐量。如果未指定表形，则更改默认表形的。</p>
+<p>可以分别使用 <code>align</code> 和 <code>packed</code> 修饰符增大或缩小对齐量。它们可以更改属性中指定表形的对齐量。如果未指定表形，则更改默认表形的。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -9422,7 +9421,7 @@ struct AlignedStruct {
 <blockquote>
 <p>注意：由于表形是数据项的属性，因此表形不依赖于泛型参数。具有相同名称的任何两种类型都具有相同的表形。例如，<code>Foo&lt;Bar&gt;</code> 和 <code>Foo&lt;Baz&gt;</code> 都有相同的表形。</p>
 </blockquote>
-<p>类型的表形可以更改字段之间的填充，但不会更改字段本身的布局。例如一个使用 <code>C</code>表形的结构体，如果它包含一个默认表形的字段 <code>Inner</code>，那么它不会改变  <code>Inner</code> 的布局。</p>
+<p>类型的表形可以更改字段之间的填充，但不会更改字段本身的布局。例如一个使用 <code>C</code>表形的结构体，如果它包含一个默认表形的字段 <code>Inner</code>，那么它不会改变 <code>Inner</code> 的布局。</p>
 <h3><a class="header" href="#the-default-representation" id="the-default-representation">The Default Representation</a></h3>
 <h3><a class="header" href="#默认表形" id="默认表形">默认表形</a></h3>
 <p>没有 <code>repr</code>属性的标称(nominal)类型具有默认表形。非正式地的情况下，也称这种表形为 <code>rust</code>表形。</p>
@@ -9430,7 +9429,7 @@ struct AlignedStruct {
 <h3><a class="header" href="#the-c-representation" id="the-c-representation">The <code>C</code> Representation</a></h3>
 <h3><a class="header" href="#c表形" id="c表形"><code>C</code>表形</a></h3>
 <p><code>C</code>表形被设计用于双重目的：一个目的是创建可以与 C语言互操作的类型；第二个目的是创建可以正确执行依赖于数据布局的操作的类型，比如将值重新解释为其他类型。</p>
-<p>因为这种双重目的存在，可以只利用其中的一个目的，如只创建有固定布局的类型，而放弃与C语言互操作的目的。</p>
+<p>因为这种双重目的存在，可以只利用其中的一个目的，如只创建有固定布局的类型，而放弃与 C语言的互操作。</p>
 <p>这种表型可以应用于结构体(structs)、联合体(unions)和枚举(enums)。一个例外是<a href="items/enumerations.html#zero-variant-enums">零变体枚举(zero-variant enums)</a>，它的 <code>C</code>表形是错误的。</p>
 <h4><a class="header" href="#reprc-structs" id="reprc-structs"><code>#[repr(C)]</code> Structs</a></h4>
 <h4><a class="header" href="#reprc结构体" id="reprc结构体"><code>#[repr(C)]</code>结构体</a></h4>
@@ -9438,10 +9437,10 @@ struct AlignedStruct {
 <p>字段的尺寸和偏移量则由以下算法确定：</p>
 <ol>
 <li>
-<p>把当前偏移量设为 0 字节开始。</p>
+<p>把当前偏移量设为从 0 字节开始。</p>
 </li>
 <li>
-<p>对于结构体中的每个字段，按其声明的先后顺序，首先确定当前字段的尺寸和对齐量；如果当前偏移量不是对齐量的整倍数，则向当前偏移量添加填充字节，直到它是对齐量的倍数；那此字段的偏移量是当前偏移量（译者注：首字段此值一直为0）；下一步再根据当前字段的尺寸增加当前偏移量。然后重复本逻辑，直到所有字段都完成。</p>
+<p>对于结构体中的每个字段，按其声明的先后顺序，首先确定其尺寸和对齐量；如果当前偏移量不是对其齐量的整倍数，则向当前偏移量添加填充字节，直至其对齐量的倍数<sup class="footnote-reference"><a href="#译注1">1</a></sup>；至此，当前字段的偏移量就是当前偏移量；下一步再根据当前字段的尺寸增加当前偏移量。</p>
 </li>
 <li>
 <p>最后，整个结构体的尺寸就是当前偏移量向上取整到结构体对齐量的最小整数倍数。</p>
@@ -9486,7 +9485,7 @@ struct.size = current_offset + padding_needed_for(current_offset, struct.alignme
 </blockquote>
 <h4><a class="header" href="#reprc-unions" id="reprc-unions"><code>#[repr(C)]</code> Unions</a></h4>
 <h4><a class="header" href="#reprc联合体" id="reprc联合体"><code>#[repr(C)]</code>联合体</a></h4>
-<p>使用 <code>#[repr(C)]</code> 声明的联合体将与相同目标平台上的 C 语言中的 C联合体声明具有相同的尺寸和对齐量。联合体的对齐量等同于其所有字段的最大对齐量，尺寸将为其所有字段的最大尺寸，再对其向上取整到对齐量的最小整数倍。这些最大值可能来自不同的字段</p>
+<p>使用 <code>#[repr(C)]</code> 声明的联合体将与相同目标平台上的 C语言中的 C联合体声明具有相同的尺寸和对齐量。联合体的对齐量等同于其所有字段的最大对齐量，尺寸将为其所有字段的最大尺寸，再对其向上取整到对齐量的最小整数倍。这些最大值可能来自不同的字段。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -9513,22 +9512,22 @@ assert_eq!(std::mem::size_of::&lt;SizeRoundedUp&gt;(), 12);  // 首先来自于b
 </span></code></pre></pre>
 <h4><a class="header" href="#reprc-field-less-enums" id="reprc-field-less-enums"><code>#[repr(C)]</code> Field-less Enums</a></h4>
 <h4><a class="header" href="#reprc无字段枚举" id="reprc无字段枚举"><code>#[repr(C)]</code>无字段枚举</a></h4>
-<p>对于<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举(field-less enums)</a>，C表形的尺寸和对齐量与目标平台的 C ABI 的默认枚举尺寸和对齐量相同。</p>
+<p>对于<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举(field-less enums)</a>，<code>C</code>表形的尺寸和对齐量与目标平台的 C ABI 的默认枚举尺寸和对齐量相同。</p>
 <blockquote>
-<p>注意：C中的枚举的表形是由枚举的相应实现定义的，所以在 Rust 中，给无字段枚举应用 C表形得到的表型很可能是一个“最佳猜测”。特别是，当使用某些命令行参数选项来编译感兴趣的 C代码时，这可能是不正确的。</p>
+<p>注意：C中的枚举的表形是由枚举的相应实现定义的，所以在 Rust 中，给无字段枚举应用 C表形得到的表型很可能是一个“最佳猜测”。特别是，当使用某些特定命令行参数来编译特定的 C代码时，这可能是不正确的。</p>
 </blockquote>
 <div class="warning">
-<p>警告：C语言中的枚举与 Rust 中的那些应用了 <code>#[repr(C)]</code>表型的<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举</a>之间有着重要的区别。C语言中的枚举主要是 <code>typedef</code> 加上一些命名常量；换句话说，枚举(<code>enum</code>)类型的对象可以包含任何整数值。例如，C语言中的枚举通常用做标志位。相比之下，Rust的<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举</a>只能合法地保存判别式的值，其他的都是<a href="behavior-considered-undefined.html">未定义行为</a>。因此，在 FFI 中使用无字段枚举来建模 C语言中的枚举(<code>enum</code>)通常是错误的。</p>
+<p>警告：C语言中的枚举与 Rust 中的那些应用了 <code>#[repr(C)]</code>表型的<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举</a>之间有着重要的区别。C语言中的枚举主要是 <code>typedef</code> 加上一些命名常量；换句话说，C枚举(<code>enum</code>)类型的对象可以包含任何整数值。例如，C枚举通常被用做标志位。相比之下，Rust的<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举</a>只能合法地<sup class="footnote-reference"><a href="#译注2">2</a></sup>保存判别式的值，其他的都是<a href="behavior-considered-undefined.html">未定义行为</a>。因此，在 FFI 中使用无字段枚举来建模 C语言中的枚举(<code>enum</code>)通常是错误的。</p>
 </div>
 <h4><a class="header" href="#reprc-enums-with-fields" id="reprc-enums-with-fields"><code>#[repr(C)]</code> Enums With Fields</a></h4>
 <h4><a class="header" href="#reprc带字段枚举" id="reprc带字段枚举"><code>#[repr(C)]</code>带字段枚举</a></h4>
-<p>带字段的 <code>repr(C)</code>枚举的表形其实等效于一个带两个字段的 <code>repr(C)</code>结构体（这种在C语言中也被称为“标签联合(tagged union)”），这两个字段：</p>
+<p>带字段的 <code>repr(C)</code>枚举的表形其实等效于一个带两个字段的 <code>repr(C)</code>结构体（这种在 C语言中也被称为“标签联合(tagged union)”），这两个字段：</p>
 <ul>
-<li>一个为 <code>repr(C)</code>表形的枚举（在这个等效结构体内，它也被叫做“the tag”），它就是原枚举所有的判别值组合成的新枚举，也就是它的变体是原枚举变体移除了它们自身所带的所有字段。</li>
-<li>一个为 <code>repr(C)</code>表形的联合体（在这个等效结构体内，它也被叫做“the payload”），它的各个字段就是原枚举的各个变体的字段组合成的 <code>repr(C)</code> 版本的结构体。</li>
+<li>一个为 <code>repr(C)</code>表形的枚举（在这个等效结构体内，它也被叫做标签(the tag)字段），它就是原枚举所有的判别值组合成的新枚举，也就是它的变体是原枚举变体移除了它们自身所带的所有字段。</li>
+<li>一个为 <code>repr(C)</code>表形的联合体（在这个等效结构体内，它也被叫做载荷(the payload)字段），它的各个字段就是原枚举的各个变体把自己下面的字段重新组合成的 <code>repr(C)</code>表形的结构体。</li>
 </ul>
 <blockquote>
-<p>注意：由于等效结构体和联合体是 <code>repr(C)</code>表形的，因此如果原来某一变体只有单个字段，则直接将该字段放入等效出的联合体或将其包装进一个次级结构体中没有区别；因此，任何希望操作此类枚举表形的系统都可以选择使用这两种形式里对它们来说更方便或更一致的形式。</p>
+<p>注意：由于等效出的结构体和联合体是 <code>repr(C)</code>表形的，因此如果原来某一变体只有单个字段，则直接将该字段放入等效出的联合体中，或将其包装进一个次级结构体后再放入联合体中是没有区别的；因此，任何希望操作此类枚举表形的系统都可以选择使用这两种形式里对它们来说更方便或更一致的形式。</p>
 </blockquote>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -9556,7 +9555,7 @@ enum MyEnumDiscriminant { A, B, C, D }
 // 这是原变体的字段组成的联合体.
 #[repr(C)]
 union MyEnumFields {
-    A: MyAFields,   // 译者注：因为原枚举变体A只有一个字段，所以此处的类型标注可以直接替换为 u32,以省略 MyAFields这层封装
+    A: MyAFields,   // 译者注：因为原枚举变体A只有一个字段，所以此处的类型标注也可以直接替换为 u32,以省略 MyAFields这层封装
     B: MyBFields,
     C: MyCFields,
     D: MyDFields,
@@ -9574,14 +9573,14 @@ struct MyBFields(f32, u64);
 #[derive(Copy, Clone)]
 struct MyCFields { x: u32, y: u8 }
 
-// 这个结构体可以被省略(它是一个零尺寸类型)，但它必须在 C/C++ 头文件中
+// 这个结构体可以被省略(它是一个零尺寸类型)，但它必须出现在 C/C++ 头文件中
 #[repr(C)]
 #[derive(Copy, Clone)]
 struct MyDFields;
 <span class="boring">}
 </span></code></pre></pre>
 <blockquote>
-<p>注意： 联合体(<code>union</code>)带有未实现 <code>Copy</code> trait 的字段的功能还没有纳入稳定版，具体参见 <a href="https://github.com/rust-lang/rust/issues/55149">55149</a>。</p>
+<p>注意： 联合体(<code>union</code>)可带有未实现 <code>Copy</code> 的字段的功能还没有纳入稳定版，具体参见 <a href="https://github.com/rust-lang/rust/issues/55149">55149</a>。</p>
 </blockquote>
 <h3><a class="header" href="#primitive-representations" id="primitive-representations">Primitive representations</a></h3>
 <h3><a class="header" href="#原语表形" id="原语表形">原语表形</a></h3>
@@ -9592,9 +9591,12 @@ struct MyDFields;
 <p>对于<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举</a>，原语表形将其尺寸和对齐量设置成与给定表形同名的原生类型的表形的值。例如，一个 <code>u8</code>表形的无字段枚举只能有0和255之间的判别值。</p>
 <h4><a class="header" href="#primitive-representation-of-enums-with-fields" id="primitive-representation-of-enums-with-fields">Primitive Representation of Enums With Fields</a></h4>
 <h4><a class="header" href="#带字段枚举的原语表形" id="带字段枚举的原语表形">带字段枚举的原语表形</a></h4>
-<p>枚举的原语表形是一个 <code>repr(C)</code>表形的联合体。此联合体的每个字段对应一个和原枚举变体对应的 <code>repr(C)</code>表形的结构体。这些结构体的第一个字段是原枚举的变体移除了它们所有的字段组成的原语表形的枚举（“the tag”），那这些结构体的其余字段是原变体移走的字段。</p>
+<p>带字段枚举的原语表形是一个 <code>repr(C)</code>表形的联合体，此联合体的每个字段对应一个和原枚举变体对应的 <code>repr(C)</code>表形的结构体。这些结构体的第一个字段是原枚举的变体移除了它们所有的字段组成的原语表形版的无字段枚举（“the tag”），那这些结构体的其余字段是原变体移走的字段。</p>
 <blockquote>
-<p>注意：如果在联合体中，直接把标签(“the tag”)的成员被赋予给标签，那么这种表形结构仍不变的，并且这样操作对您来说可能会更清晰（尽管遵循 c++ 的标准，标签也应该被包装在结构体中）。</p>
+<p>Note: This representation is unchanged if the tag is given its own member in
+the union, should that make manipulation more clear for you (although to
+follow the C++ standard the tag member should be wrapped in a <code>struct</code>).
+注意：如果在联合体中，直接把标签的成员赋予给标签(“the tag”)，那么这种表形结构仍不变的，并且这样操作对您来说可能会更清晰（尽管遵循 c++ 的标准，标签也应该被包装在结构体中）。</p>
 </blockquote>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -9611,8 +9613,8 @@ enum MyEnum {
 // ... 这个联合体.
 #[repr(C)]
 union MyEnumRepr {
-    A: MyVariantA,  //译者注：此字段类型也可直接用 A(u32) 直接替代
-    B: MyVariantB,
+    A: MyVariantA,  //译者注：此字段类型也可直接用 u32 直接替代
+    B: MyVariantB,  //译者注：此字段类型也可直接用 (f32, u64) 直接替代
     C: MyVariantC,
     D: MyVariantD,
 }
@@ -9717,6 +9719,10 @@ assert_eq!(std::mem::size_of::&lt;Enum16&gt;(), 4);
 <p>使用这种表形的结构体和枚举与只有那个非零尺寸的字段具有相同的布局和 ABI。</p>
 <p>这与 <code>C</code>表形不同，因为带有 <code>C</code>表形的结构体将始终拥有 C结构体(<code>C</code> <code>struct</code>)的ABI，例如，那些只有一个原生类型字段的结构体如果应用了透明表形(<code>transparent</code>)，将具有此原生类型字段的ABI。</p>
 <p>因为此表形将类型布局委托给另一种类型，所以它不能与任何其他表形一起使用。</p>
+<div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
+<p>至此，上一个字段就填充完成，开始计算本字段了。也就是说每一个字段的偏移量是其字段的段首位置；那第一个字段的偏移量就始终为 0；
+<sup class="footnote-reference"><a href="#译注2">2</a></sup>: 这里合法的意思是变体的判别值受 <code>repr(u8)</code> 这样的表形属性约束，像这个例子中，变体的判别值就只能位于 0~255 之间。 </p>
+</div>
 <!-- 2020-11-12-->
 <!-- checked -->
 <h1><a class="header" href="#interior-mutability" id="interior-mutability">Interior Mutability</a></h1>

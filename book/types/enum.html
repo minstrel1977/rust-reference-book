@@ -172,7 +172,7 @@
 commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 本章译文最后维护日期：2020-11-14</p>
 </blockquote>
-<p><em>枚举类型</em>是一种标称型(nominal)的、异构的、不相交的类型组成的联合体类型，直接用<a href="../items/enumerations.html">枚举(<code>enum</code>)数据项</a>的名称来表示。<sup class="footnote-reference"><a href="#enumtype">1</a></sup></p>
+<p><em>枚举类型</em>是一种标称型(nominal)的、异构的、不相交的类型联合起来组成的类型，它直接用<a href="../items/enumerations.html">枚举(<code>enum</code>)数据项</a>的名称来表示。<sup class="footnote-reference"><a href="#enumtype">1</a></sup></p>
 <p><a href="../items/enumerations.html">枚举(<code>enum</code>)数据项</a>同时声明了类型和它的各种<em>变体(variants)</em>，其中每个变体都独立命名，可使用定义结构体、元组结构体或单元结构体(unit-like struct)的句法来定义它们。</p>
 <p>枚举(<code>enum</code>)的实例可以在<a href="../expressions/enum-variant-expr.html">枚举变体表达式</a>中构造。</p>
 <p>任何枚举值消耗的内存和其同类型的其他变体都是相同的，具体都为其枚举(<code>enum</code>)类型的最大变体所需的内存再加上存储其判别值(discriminant)所需的内存。</p>
