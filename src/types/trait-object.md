@@ -12,7 +12,7 @@
 > _TraitObjectTypeOneBound_ :\
 > &nbsp;&nbsp; `dyn`<sup>?</sup> [_TraitBound_]
 
-*trait对象[^译注1]*是另一种类型的不透明值(opaque value)，它实现了一组 trait。[^译注1] 这组 trait 是由一个[对象安全的][object safe]*基础trait(base trait)* 加上任意数量的[自动trait(auto traits)][auto traits]组成。
+*trait对象[^译注1]*是另一种类型的不透明值(opaque value)，它实现了一组 trait。[^译注2] 这组 trait 是由一个[对象安全的][object safe]*基础trait(base trait)* 加上任意数量的[自动trait(auto traits)][auto traits]组成。
 
 trait对象实现了基础trait、它的自动trait 以及其基础trait 的任何[超类trait(supertraits)][supertraits]。
 
@@ -73,7 +73,8 @@ fn main() {
 因为 trait对象可以包含引用，所以这些引用的生存期需要表示为 trait对象的一部分。这种生存期被写为 `Trait + 'a`。[默认情况][defaults]下，可以通过合理的选择来推断此生存期。
 
 [^译注1]: 本书行文中，使用“trait对象”这个词时，没区分 trait对象的值和类型本身，但一般都指类型。
-[^译注1]: 译者认为这样翻译可能更容易理解：*trait对象*是丢失了/隐藏了具体真实类型的 trait实现的类型，此类型本身一般会实现了一组 trait。
+
+[^译注2]: 译者认为这样翻译可能更容易理解：*trait对象*是丢失了/隐藏了具体真实类型的 trait实现的类型，此类型本身一般会实现了一组 trait。
 
 [_TraitBound_]: ../trait-bounds.md
 [_TypeParamBounds_]: ../trait-bounds.md

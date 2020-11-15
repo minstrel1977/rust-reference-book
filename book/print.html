@@ -9148,7 +9148,7 @@ commit: fd10e7043934711ef96b4dd2009db3e4d0182a33 <br />
 <p><em>TraitObjectTypeOneBound</em> :<br />
    <code>dyn</code><sup>?</sup> <a href="types/../trait-bounds.html"><em>TraitBound</em></a></p>
 </blockquote>
-<p>*trait对象<sup class="footnote-reference"><a href="#译注1">1</a></sup>*是另一种类型的不透明值(opaque value)，它实现了一组 trait。<sup class="footnote-reference"><a href="#译注1">1</a></sup> 这组 trait 是由一个<a href="types/../items/traits.html#object-safety">对象安全的</a><em>基础trait(base trait)</em> 加上任意数量的<a href="types/../special-types-and-traits.html#auto-traits">自动trait(auto traits)</a>组成。</p>
+<p>*trait对象<sup class="footnote-reference"><a href="#译注1">1</a></sup>*是另一种类型的不透明值(opaque value)，它实现了一组 trait。<sup class="footnote-reference"><a href="#译注2">2</a></sup> 这组 trait 是由一个<a href="types/../items/traits.html#object-safety">对象安全的</a><em>基础trait(base trait)</em> 加上任意数量的<a href="types/../special-types-and-traits.html#auto-traits">自动trait(auto traits)</a>组成。</p>
 <p>trait对象实现了基础trait、它的自动trait 以及其基础trait 的任何<a href="types/../items/traits.html#supertraits">超类trait(supertraits)</a>。</p>
 <p>trait对象被写为为可选的关键字 <code>dyn</code> 后跟一组 trait约束，这些 trait约束有如此限制：除了第一个 trait 外，其他所有 trait 都必须是自动trait；生存期不能超过一个；不允许选择退出约束(opt-out bounds)（例如 <code>?Sized</code>）。此外，trait 的路径可以用圆括号括起来。</p>
 <p>例如，给定一个trait <code>Trait</code>，下面所有的形式都是 trait对象：</p>
@@ -9197,8 +9197,10 @@ fn main() {
 <h2><a class="header" href="#trait对象的生存期约束" id="trait对象的生存期约束">trait对象的生存期约束</a></h2>
 <p>因为 trait对象可以包含引用，所以这些引用的生存期需要表示为 trait对象的一部分。这种生存期被写为 <code>Trait + 'a</code>。<a href="types/../lifetime-elision.html#default-trait-object-lifetimes">默认情况</a>下，可以通过合理的选择来推断此生存期。</p>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
-<p>本书行文中，使用“trait对象”这个词时，没区分 trait对象的值和类型本身，但一般都指类型。
-<sup class="footnote-reference"><a href="#译注1">1</a></sup>: 译者认为这样翻译可能更容易理解：<em>trait对象</em>是丢失了/隐藏了具体真实类型的 trait实现的类型，此类型本身一般会实现了一组 trait。</p>
+<p>本书行文中，使用“trait对象”这个词时，没区分 trait对象的值和类型本身，但一般都指类型。</p>
+</div>
+<div class="footnote-definition" id="译注2"><sup class="footnote-definition-label">2</sup>
+<p>译者认为这样翻译可能更容易理解：<em>trait对象</em>是丢失了/隐藏了具体真实类型的 trait实现的类型，此类型本身一般会实现了一组 trait。</p>
 </div>
 <!-- 2020-11-12-->
 <!-- checked -->
@@ -9729,11 +9731,14 @@ assert_eq!(std::mem::size_of::&lt;Enum16&gt;(), 4);
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/interior-mutability.md">interior-mutability.md</a><br />
 commit: e7dd3618d78928322f53a20e2947e428b12eda2b <br />
-本章译文最后维护日期：2020-10-31</p>
+本章译文最后维护日期：2020-11-15</p>
 </blockquote>
-<p>有时一个类型需要在存在多个别名时进行更改。在 Rust 中，这是通过一种叫做<em>内部可变性</em>的模式实现的。如果一个类型的内部状态可以通过对它的<a href="types/pointer.html#shared-references-">共享引用</a>来进行更改，那么就说这个类型就具有内部可变性。这违背了共享引用所引向的值不能被更改的通常<a href="behavior-considered-undefined.html">要求</a>。</p>
-<p><a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>std::cell::UnsafeCell&lt;T&gt;</code></a>类型是 Rust 中唯一可以合法违反此要求的方法。当 <code>UnsafeCell&lt;T&gt;</code> 具有不变的别名时，仍然可以安全地对它包含的 <code>T</code> 进行更改或获得 <code>T</code> 的一个可变引用。与所有其他类型一样，拥有多个 <code>&amp;mut UnsafeCell&lt;T&gt;</code> 别名是未定义行为。</p>
+<p>有时一个类型需要在存在多个别名时进行更改。在 Rust 中，这是通过一种叫做<em>内部可变性</em>的模式实现的。如果一个类型的内部状态可以通过对它的<a href="types/pointer.html#shared-references-">共享引用</a>来进行更改，那么就说这个类型就具有内部可变性。这违背了共享引用所指向的值不能被更改的通常<a href="behavior-considered-undefined.html">要求</a>。</p>
+<p><a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>std::cell::UnsafeCell&lt;T&gt;</code></a>类型是 Rust 中唯一可以合法失效此要求的方法。当 <code>UnsafeCell&lt;T&gt;</code> 存在其他不变性的别名<sup class="footnote-reference"><a href="#译注1">1</a></sup>时，仍然可以安全地对它包含的 <code>T</code> 进行更改或获得 <code>T</code> 的一个可变引用。与所有其他类型一样，拥有多个 <code>&amp;mut UnsafeCell&lt;T&gt;</code> 别名是未定义行为。</p>
 <p>通过使用 <code>UnsafeCell&lt;T&gt;</code> 作为字段，可以创建具有内部可变性的其他类型。标准库提供了几种这样的类型，这些类型都提供了安全的内部变更的 API。例如，<a href="https://doc.rust-lang.org/std/cell/struct.RefCell.html"><code>std::cell::RefCell&lt;T&gt;</code></a> 使用运行时借用检查来确保多个引用存在时的常规规则的执行。<a href="https://doc.rust-lang.org/std/sync/atomic/index.html"><code>std::sync::atomic</code></a>模块包含了一些类型，这些类型包装了一个只能通过原子操作访问的值，以允许在线程之间共享和修改该值。</p>
+<div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
+<p>当变量和指针表示的内存区域有重叠时，它们互为对方的别名。</p>
+</div>
 <!-- 2020-11-12-->
 <!-- checked -->
 <h1><a class="header" href="#subtyping-and-variance" id="subtyping-and-variance">Subtyping and Variance</a></h1>
@@ -9741,9 +9746,9 @@ commit: e7dd3618d78928322f53a20e2947e428b12eda2b <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/subtyping.md">subtyping.md</a><br />
 commit: ecb53d2015ce93b3519ee0b358fc13fa9b3f723d <br />
-本章译文最后维护日期：2020-10-31</p>
+本章译文最后维护日期：2020-11-15</p>
 </blockquote>
-<p>子类型化是隐式的，可以出现在类型检查或推断的任何阶段。Rust 中的子类型化的使用非常受限制，并且锈病中的亚型非常有限，仅出现在和生存期的型变(variance)相关的地方，以及适配那些带有高阶生存期的类型之间的型变。如果我们擦除了类型的生存期，那么唯一的子类型化将是由于类型相等。</p>
+<p>子类型化是隐式的，可以出现在类型检查或类型推断的任何阶段。Rust 中的子类型化的适用范围非常有限，仅出现在和生存期(lifetimes)的型变(variance)相关的地方，以及那些和高阶生存期相关的类型型变之间。如果我们擦除了类型的生存期，那么唯一的子类型化就只是类型相等(type equality)了。</p>
 <p>考虑下面的例子：字符串字面量总是拥有 <code>'static</code>生存期。不过，我们还是可以把 <code>s</code> 赋值给 <code>t</code>：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -9755,7 +9760,7 @@ commit: ecb53d2015ce93b3519ee0b358fc13fa9b3f723d <br />
 <span class="boring">}
 </span></code></pre></pre>
 <p>因为 <code>'static</code> 比生存期参数 <code>'a</code> 的寿命长，所以 <code>&amp;'static str</code> 是 <code>&amp;'a str</code> 的子类型。</p>
-<p><a href="https://doc.rust-lang.org/nomicon/hrtb.html">高阶</a><a href="types/function-pointer.html">函数指针</a>和<a href="types/trait-object.html">trait对象</a>它们都可以形成另一种子父子类型的关系。它们是那些通过替换高阶生存期而得出的类型的子类型。举些例子：</p>
+<p><a href="https://doc.rust-lang.org/nomicon/hrtb.html">高阶</a><a href="types/function-pointer.html">函数指针</a>和<a href="types/trait-object.html">trait对象</a>可以形成另一种父子类型的关系。它们是那些通过替换高阶生存期而得出的类型的子类型。举些例子：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -9774,7 +9779,7 @@ let supertype: &amp;for&lt;'c&gt; fn(&amp;'c i32, &amp;'c i32) = subtype;
 </span></code></pre></pre>
 <h2><a class="header" href="#variance" id="variance">Variance</a></h2>
 <h2><a class="header" href="#型变" id="型变">型变</a></h2>
-<p>型变是泛型类型相对其参数具有的属性。泛型类型在某参数上的<em>型变</em>是对该参数子类型化了反过来会如何影响此泛型类型的子类型化的描述。</p>
+<p>型变是泛型类型相对其参数具有的属性。泛型类型在它的某个参数上的<em>型变</em>是描述该参数的子类型化去如何影响此泛型类型的子类型化。</p>
 <ul>
 <li>如果 <code>T</code> 是 <code>U</code> 的一个子类型意味着 <code>F&lt;T&gt;</code> 是 <code>F&lt;U&gt;</code> 的一个子类型（即子类型化“通过(passes through)”），则 <code>F&lt;T&gt;</code> 在 <code>T</code> 上是<em>协变的(covariant)</em>。</li>
 <li>如果 <code>T</code> 是 <code>U</code> 的一个子类型意味着 <code>F&lt;U&gt;</code> 是 <code>F&lt;T&gt;</code> 的一个子类型，则 <code>F&lt;T&gt;</code> 在 <code>T</code> 上是<em>逆变的(contravariant)</em>。</li>
@@ -9813,7 +9818,7 @@ struct Variance&lt;'a, 'b, T, U: 'a&gt; {
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md">trait-bounds.md</a><br />
 commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
-本章译文最后维护日期：2020-10-31</p>
+本章译文最后维护日期：2020-11-15</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -9833,13 +9838,13 @@ commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
    | <code>'static</code><br />
    | <code>'_</code></p>
 </blockquote>
-<p><a href="items/traits.html#trait-bounds">trait</a>约束和生存期约束为<a href="items/generics.html">泛型项</a>提供了一种方法来限制将哪些类型和生存期可被用作它们的参数。通过 <a href="items/generics.html#where-clauses">where子句</a>可以为任何泛型提供约束。对于某些常见的情况，也可以使用如下简写形式：</p>
+<p><a href="items/traits.html#trait-bounds">trait</a>约束和生存期约束为<a href="items/generics.html">泛型数据项</a>提供了一种方法来限制将哪些类型和生存期可被用作它们的参数。通过 <a href="items/generics.html#where-clauses">where子句</a>可以为任何泛型提供约束。对于某些常见的情况，也可以使用如下简写形式：</p>
 <ul>
-<li>跟在<a href="items/generics.html">泛型参数</a>声明之后的约束：<code>fn f&lt;A: Copy&gt;() {}</code> 与 <code>fn f&lt;A&gt; where A: Copy () {}</code> 效果一样。</li>
+<li>跟在<a href="items/generics.html">泛型参数</a>声明之后的约束：<code>fn f&lt;A: Copy&gt;() {}</code> 与 <code>fn f&lt;A&gt; where A: Copy () {}</code> 效果等价。</li>
 <li>在 trait声明中作为指定<a href="items/traits.html#supertraits">超类trait(supertraits)</a> 约束时：<code>trait Circle : Shape {}</code> 等同于 <code>trait Circle where Self : Shape {}</code>。</li>
 <li>在 trait声明中作为指定关联类型上的约束时：<code>trait A { type B: Copy; }</code> 等同于 <code>trait A where Self::B: Copy { type B; }</code>。</li>
 </ul>
-<p>在数据项上应用了约束就要求在使用该数据项时使用者必须满足这些约束。当对泛型项进行类型检查和借用检查时，约束可用来确认当前准备用来单态化此泛型的实例类型是否实现了约束给出的 trait。例如，给定 <code>Ty: Trait</code>：</p>
+<p>在数据项上应用了约束就要求在使用该数据项时使用者必须满足这些约束。当对泛型数据项进行类型检查和借用检查时，约束可用来确认当前准备用来单态化此泛型的实例类型是否实现了约束给出的 trait。例如，给定 <code>Ty: Trait</code>：</p>
 <ul>
 <li>在泛型函数体中，<code>Trait</code> 中的方法可以被 <code>Ty</code>类型的值调用。同样，<code>Trait</code> 上的相关常数也可以被使用。</li>
 <li><code>Trait</code> 上的关联类型可以被使用。</li>
@@ -9881,7 +9886,7 @@ fn name_figure&lt;U: Shape&gt;(
 <p><code>?</code> 仅用于声明 <a href="special-types-and-traits.html#sized"><code>Sized</code></a> trait 可能不会被某类型参数或关联类型实现。<code>?Sized</code> 还不能用作其他类型的约束。</p>
 <h2><a class="header" href="#lifetime-bounds" id="lifetime-bounds">Lifetime bounds</a></h2>
 <h2><a class="header" href="#生存期约束" id="生存期约束">生存期约束</a></h2>
-<p>生存期约束可以应用于类型或其他生存期。约束 <code>'a: 'b</code> 通常被解读为 <em><code>'a</code> 比 <code>'b</code> 存活的时间久</em>。<code>'a: 'b</code>意味着 <code>'a</code> 存活的时间比 <code>'b</code> 长，所以只要 <code>&amp;'b ()</code> 有效，引用 <code>&amp;'a ()</code> 就有效。</p>
+<p>生存期约束可以应用于类型或其他生存期。约束 <code>'a: 'b</code> 通常被解读为 <em><code>'a</code> 比 <code>'b</code> 存活的时间久</em>。<code>'a: 'b</code>意味着 <code>'a</code> 持续的时间比 <code>'b</code> 长，所以只要 <code>&amp;'b ()</code> 有效，引用 <code>&amp;'a ()</code> 就有效。<sup class="footnote-reference"><a href="#译注1">1</a></sup></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -9894,8 +9899,7 @@ fn name_figure&lt;U: Shape&gt;(
 <p><code>T: 'a</code> 意味着 <code>T</code> 的所有生存期参数都比 <code>'a</code> 存活得时间长。例如，如果 <code>'a</code> 是一个任意的(unconstrained)生存期参数，那么 <code>i32: 'static</code> 和 <code>&amp;'static str: 'a</code> 都合法，但 <code>Vec&lt;&amp;'a ()&gt;: 'static</code> 不合法。</p>
 <h2><a class="header" href="#higher-ranked-trait-bounds" id="higher-ranked-trait-bounds">Higher-ranked trait bounds</a></h2>
 <h2><a class="header" href="#高阶trait约束" id="高阶trait约束">高阶trait约束</a></h2>
-<p>可以在生存期上再进行更高阶的类型约束。这些高阶约束指定了一个对<em>所有</em>生存期都为真的约束。例如，像 <code>for&lt;'a&gt; &amp;'a T: PartialEq&lt;i32&gt;</code> 这样的约束需要一个如下的实现</p>
-<!-- 高阶trait约束是对带生存期的类型进行了进一步约束，像这句里的例子就是对`&'a T`加上了PartialEq<i32>的约束，其中for<'a>可以理解为：对于'a的所有可能选择。https://doc.rust-lang.org/std/cmp/trait.PartialEq.html 和 https://doc.rust-lang.org/nightly/nomicon/hrtb.html -->
+<p>可以在生存期上再进行<em>更高阶的</em>类型约束。这些高阶约束指定了一个对<em>所有</em>生存期都为真的约束。例如，像 <code>for&lt;'a&gt; &amp;'a T: PartialEq&lt;i32&gt;</code> 这样的约束需要一个如下的实现</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -9906,24 +9910,29 @@ fn name_figure&lt;U: Shape&gt;(
 </span>}
 <span class="boring">}
 </span></code></pre></pre>
-<p>然后就可以比较任意生存期的 <code>&amp;'a T</code> 和 <code>i32</code> 啦。</p>
-<p>下面这类场景只能使用高阶trait约束，因为引用的生命周期比函数的生命周期参数短：</p>
+<p>这样就可以拿任意生存期的 <code>&amp;'a T</code> 和 <code>i32</code> 做比较啦。</p>
+<p>下面这类场景只能使用高阶trait约束，因为引用的生命周期比函数的生命周期参数短：<sup class="footnote-reference"><a href="#译注3">2</a></sup></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>fn call_on_ref_zero&lt;F&gt;(f: F) where for&lt;'a&gt; F: Fn(&amp;'a i32) {
+</span>fn call_on_ref_zero&lt;F&gt;(f: F) where for&lt;'a&gt; F: Fn(&amp;'a i32) { 
     let zero = 0;
-    f(&amp;zero);
+    f(&amp;zero);}
+<span class="boring">}
+</span></code></pre></pre>
+<blockquote>
+<p>译者注：译者下面举例代码可以和上面原文的代码对比着看。下面代码中，因为 <code>F</code> 没约束 <code>'a</code>，导致参数 <code>f</code> 引用了未经扩展生存期的 <code>zero</code></p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn call_on_ref_zero&lt;'a, F&gt;(f: F) where F: Fn(&amp;'a i32) {
+   let zero = 0;
+   f(&amp;zero);
 }
 <span class="boring">}
 </span></code></pre></pre>
-<!-- ```rust compile_error 这里F就没约束'a,导致参数f引用了未经扩展（生存期）的生存期更短的zero
-fn call_on_ref_zero<'a, F>(f: F) where  F: Fn(&'a i32) {
-    let zero = 0;
-    f(&zero);
-}
-``` -->
-<p>高阶生存期也可以贴近 trait 来指定，唯一的区别是生存期参数的作用域，像下面这样 <code>'a</code> 的作用域只扩展到后面跟的 trait 的末尾，而不是整个约束。下面这个函数和上一个等价。<!-- 这句的意思是如果F的约束有多个trait，那'a的作用域只是扩展它后面紧跟的那个trait的方法 --></p>
+</blockquote>
+<p>高阶生存期也可以贴近 trait 来指定，唯一的区别是生存期参数的作用域，像下面这样 <code>'a</code> 的作用域只扩展到后面跟的 trait 的末尾，而不是整个约束<sup class="footnote-reference"><a href="#译注4">3</a></sup>。下面这个函数和上一个等价。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -9933,6 +9942,18 @@ fn call_on_ref_zero<'a, F>(f: F) where  F: Fn(&'a i32) {
 }
 <span class="boring">}
 </span></code></pre></pre>
+<div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
+<p>译者理解：理解这种关系时，可以把生存期 <code>'a</code> 和 <code>'b</code> 理解成去引用对象时需传入的参数，给定 <code>'a: 'b</code> 和类型 <code>T</code>，如果 <code>'b T</code>有效，那此时再传入 <code>'a</code> 就去引用 <code>T</code> 必定有效。</p>
+</div>
+<div class="footnote-definition" id="译注2"><sup class="footnote-definition-label">4</sup>
+<p>译者理解：高阶 trait约束就是对带生存期的类型重新进行约束。像这句中的例子就是对 <code>&amp;'a T</code> 加上了 <code>PartialEq&lt;i32&gt;</code> 的约束，其中 <code>for&lt;'a&gt;</code> 可以理解为：对于 <code>'a</code> 的所有可能选择。更多信息请参见：https://doc.rust-lang.org/std/cmp/trait.PartialEq.html 和 https://doc.rust-lang.org/nightly/nomicon/hrtb.html</p>
+</div>
+<div class="footnote-definition" id="译注3"><sup class="footnote-definition-label">2</sup>
+<p>译者理解此例中的代码 <code>for&lt;'a&gt; F: Fn(&amp;'a i32)</code> 为：<code>F</code> 对于 <code>'a</code> 的所有可能选择都受 <code>Fn(&amp;'a i32)</code> 的约束。</p>
+</div>
+<div class="footnote-definition" id="译注4"><sup class="footnote-definition-label">3</sup>
+<p>译者理解这句的意思是：如果 <code>F</code> 的约束有多个 trait，那这种方式里， <code>'a</code> 的作用域只是扩展它后面紧跟的那个 trait 的方法，即 <code>Fn(&amp;'a i32)</code> 里。</p>
+</div>
 <!-- 2020-11-12-->
 <!-- checked -->
 <h1><a class="header" href="#type-coercions" id="type-coercions">Type coercions</a></h1>
@@ -9940,14 +9961,14 @@ fn call_on_ref_zero<'a, F>(f: F) where  F: Fn(&'a i32) {
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-coercions.md">type-coercions.md</a><br />
 commit: d5a5e32d3cda8a297d2a91a85b91ff2629b0e896 <br />
-本章译文最后维护日期：2020-10-31</p>
+本章译文最后维护日期：2020-11-15</p>
 </blockquote>
-<p><strong>类型自动强转</strong>是改变值的类型的隐式操作。它们在特定的位置自动发生，并且在实际自动强转的类型上受到很多限制。</p>
+<p><strong>类型自动强转</strong>是改变值的类型的隐式操作。它们在特定的位置自动发生，但实际自动强转的类型也受到很多限制。</p>
 <p>任何允许自动强转的转换都可以由<a href="expressions/operator-expr.html#type-cast-expressions">类型强制转换操作符</a> <code>as</code> 来显式执行。</p>
 <p>自动强转最初是在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0401-coercions.md">RFC 401</a> 中定义的，并在[ RFC 1558] 中进行了扩展。</p>
 <h2><a class="header" href="#coercion-sites" id="coercion-sites">Coercion sites</a></h2>
 <h2><a class="header" href="#自动强转点" id="自动强转点">自动强转点</a></h2>
-<p>自动强转只能发生在程序中的某些自动强转点(coercion sites)上；通常在这些位置上，所需的类型是显式给出了或者可以从给出的显式类型传播推导(be derived by propagation)得到（不是类型推断）。可能的强转点有：</p>
+<p>自动强转只能发生在程序中的某些自动强转点(coercion sites)上；典型的位置是那些所需的类型是显式给出了的地方，或者是那些可以从给出的显式类型传播推导(be derived by propagation)出所需的类型（注意这里不是类型推断）的地方。可能的强转点有：</p>
 <ul>
 <li>
 <p><code>let</code>语句中显式给出了类型。</p>
@@ -9955,7 +9976,7 @@ commit: d5a5e32d3cda8a297d2a91a85b91ff2629b0e896 <br />
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let _: &amp;i8 = &amp;mut 42;
+</span>let _: &amp;i8 = &amp;mut 42; // 译者注释：`&amp;i8` 是显示给出的所需类型
 <span class="boring">}
 </span></code></pre></pre>
 </li>
@@ -10067,7 +10088,7 @@ fn main() {
 <p><code>&amp;mut T</code> 到 <code>&amp;mut U</code> 如果 <code>T</code> 实现了 <code>DerefMut&lt;Target = U&gt;</code>.</p>
 </li>
 <li>
-<p>TyCtor(<code>T</code>) 到 TyCtor(<code>U</code>)，其中 TyCtor(<code>T</code>) 是下列之一（译者注：TyCtor为类型构造器 type constructor 的简写）</p>
+<p>TyCtor(<code>T</code>) 到 TyCtor(<code>U</code>)，其中 TyCtor(<code>T</code>) 是下列之一<sup class="footnote-reference"><a href="#译注1">1</a></sup></p>
 <ul>
 <li><code>&amp;T</code></li>
 <li><code>&amp;mut T</code></li>
@@ -10087,9 +10108,8 @@ fn main() {
 </ul>
 <h3><a class="header" href="#unsized-coercions" id="unsized-coercions">Unsized Coercions</a></h3>
 <h3><a class="header" href="#非固定尺寸类型自动强转" id="非固定尺寸类型自动强转">非固定尺寸类型自动强转</a></h3>
-<p>下列自动强转被称为非固定尺寸类型自动强转(<code>unsized coercions</code>)，因为它们与<em>将固定尺寸类型转换为非固定尺寸类型</em>有关，并且在一些其他自动强转不允许的情况（也就是上面罗列的情况之外的情况）下允许使用。也就是他们可以发生在任何自动强转发生的地方。</p>
-<p><a href="https://doc.rust-lang.org/std/marker/trait.Unsize.html"><code>Unsize</code></a> 和 <a href="https://doc.rust-lang.org/std/ops/trait.CoerceUnsized.html"><code>CoerceUnsized</code></a> 这两个 trait 被用来协助这种转换的发生，并公开给标准库来使用。以下自动强转形式是内置的，并且——如果 <code>T</code> 可以用其中一个自动强转转换成 <code>U</code>——会为 <code>T</code> 提供一个 <code>Unsize&lt;U&gt;</code> 内置实现：
-The following coercions are built-ins and, if <code>T</code> can be coerced to <code>U</code> with one of them, then an implementation of <code>Unsize&lt;U&gt;</code> for <code>T</code> will be provided:</p>
+<p>下列自动强转被称为非固定尺寸类型自动强转(<code>unsized coercions</code>)，因为它们与将固定尺寸类型(sized types)转换为非固定尺寸类型(unsized types)有关，并且在一些其他自动强转不允许的情况（也就是上面罗列的情况之外的情况）下允许使用。也就是说它们可以发生在任何自动强转发生的地方。</p>
+<p><a href="https://doc.rust-lang.org/std/marker/trait.Unsize.html"><code>Unsize</code></a> 和 <a href="https://doc.rust-lang.org/std/ops/trait.CoerceUnsized.html"><code>CoerceUnsized</code></a> 这两个 trait 被用来协助这种转换的发生，并公开给标准库来使用。以下自动强转方式是内置的，并且，如果 <code>T</code> 可以用其中任一方式自动强转成 <code>U</code>，那么就会为 <code>T</code> 提供一个 <code>Unsize&lt;U&gt;</code> 的内置实现：</p>
 <ul>
 <li>
 <p><code>[T; n]</code> 到 <code>[T]</code>.</p>
@@ -10108,13 +10128,13 @@ The following coercions are built-ins and, if <code>T</code> can be coerced to <
 </ul>
 </li>
 </ul>
-<p>此外，当 <code>T</code> 实现了 <code>Unsize&lt;U&gt;</code> 或 <code>CoerceUnsized&lt;Foo&lt;U&gt;&gt;</code> 时，类型 <code>Foo&lt;T&gt;</code> 可以实现 <code>CoerceUnsized&lt;Foo&lt;U&gt;&gt;</code>。这为 <code>Foo&lt;T&gt;</code> 提供了一个向 <code>Foo&lt;U&gt;</code> 的非固定尺寸类型自动强转的实现。</p>
+<p>此外，当 <code>T</code> 实现了 <code>Unsize&lt;U&gt;</code> 或 <code>CoerceUnsized&lt;Foo&lt;U&gt;&gt;</code> 时，类型 <code>Foo&lt;T&gt;</code> 可以实现 <code>CoerceUnsized&lt;Foo&lt;U&gt;&gt;</code>。这就允许 <code>Foo&lt;T&gt;</code> 提供一个到 <code>Foo&lt;U&gt;</code> 的非固定尺寸类型自动强转。</p>
 <blockquote>
 <p>注：虽然非固定尺寸类型自动强转的定义及其实现已经稳定下来，但 <a href="https://doc.rust-lang.org/std/marker/trait.Unsize.html"><code>Unsize</code></a> 和 <a href="https://doc.rust-lang.org/std/ops/trait.CoerceUnsized.html"><code>CoerceUnsized</code></a> 这两个 trait 本身还没稳定下来，因此还不能直接用于稳定版的 Rust。</p>
 </blockquote>
 <h2><a class="header" href="#least-upper-bound-coercions" id="least-upper-bound-coercions">Least upper bound coercions</a></h2>
 <h2><a class="header" href="#最小上界自动强转" id="最小上界自动强转">最小上界自动强转</a></h2>
-<p>在某些上下文中，编译器必须将多个类型强制在一起，以尝试找到最通用的类型。这被称为“最小上界(Least Upper Bound,简称LUB)”自动强转。LUB自动强转只在以下情况中使用：</p>
+<p>在某些上下文中，编译器必须将多个类型强制在一起，以尝试找到最通用的类型。这被称为“最小上界(Least Upper Bound,简称 LUB)”自动强转。LUB自动强转只在以下情况中使用：</p>
 <ul>
 <li>为一系列的 if分支查找共同的类型。</li>
 <li>为一系列的匹配臂查找共同的类型。</li>
@@ -10179,7 +10199,10 @@ fn foo() -&gt; i32 {
 <p>在这些例子中，<code>ba*</code> 的类型可以通过 LUB自动强转找到。编译器检查 LUB自动强转在处理函数 <code>foo</code> 时，是否把 <code>a</code>，<code>b</code>，<code>c</code> 的结果转为了 <code>i32</code>。</p>
 <h3><a class="header" href="#caveat" id="caveat">Caveat</a></h3>
 <h3><a class="header" href="#警告" id="警告">警告</a></h3>
-<p>这种描述显然是非正式的，但目前使文字描述更精确的工作正作为精细化 Rust 类型检查器的一般性工作的一部分正紧锣密鼓的进行中。</p>
+<p>我们这种描述显然是非正式的，但目前使文字描述更精确的工作正作为精细化 Rust 类型检查器的一般性工作的一部分正紧锣密鼓的进行中。</p>
+<div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
+<p>TyCtor为类型构造器 type constructor 的简写。</p>
+</div>
 <!-- 2020-11-12-->
 <!-- checked -->
 <h1><a class="header" href="#destructors" id="destructors">Destructors</a></h1>

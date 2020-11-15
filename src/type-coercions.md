@@ -3,9 +3,9 @@
 
 >[type-coercions.md](https://github.com/rust-lang/reference/blob/master/src/type-coercions.md)\
 >commit: d5a5e32d3cda8a297d2a91a85b91ff2629b0e896 \
->本章译文最后维护日期：2020-10-31
+>本章译文最后维护日期：2020-11-15
 
-**类型自动强转**是改变值的类型的隐式操作。它们在特定的位置自动发生，并且在实际自动强转的类型上受到很多限制。
+**类型自动强转**是改变值的类型的隐式操作。它们在特定的位置自动发生，但实际自动强转的类型也受到很多限制。
 
 任何允许自动强转的转换都可以由[类型强制转换操作符][type cast operator] `as` 来显式执行。
 
@@ -14,14 +14,14 @@
 ## Coercion sites
 ## 自动强转点
 
-自动强转只能发生在程序中的某些自动强转点(coercion sites)上；通常在这些位置上，所需的类型是显式给出了或者可以从给出的显式类型传播推导(be derived by propagation)得到（不是类型推断）。可能的强转点有：
+自动强转只能发生在程序中的某些自动强转点(coercion sites)上；典型的位置是那些所需的类型是显式给出了的地方，或者是那些可以从给出的显式类型传播推导(be derived by propagation)出所需的类型（注意这里不是类型推断）的地方。可能的强转点有：
 
 * `let`语句中显式给出了类型。
 
    例如，下面例子中 `&mut 42` 自动强转成 `&i8` 类型：
 
    ```rust
-   let _: &i8 = &mut 42;
+   let _: &i8 = &mut 42; // 译者注释：`&i8` 是显示给出的所需类型
    ```
 
 * 静态(`static`)项和常量(`const`)项声明（类似于 `let`语句）。
@@ -123,7 +123,7 @@
 
 * `&mut T` 到 `&mut U` 如果 `T` 实现了 `DerefMut<Target = U>`.
 
-* TyCtor(`T`) 到 TyCtor(`U`)，其中 TyCtor(`T`) 是下列之一（译者注：TyCtor为类型构造器 type constructor 的简写）
+* TyCtor(`T`) 到 TyCtor(`U`)，其中 TyCtor(`T`) 是下列之一[^译注1]
     - `&T`
     - `&mut T`
     - `*const T`
@@ -141,10 +141,10 @@
 ### Unsized Coercions
 ### 非固定尺寸类型自动强转
 
-下列自动强转被称为非固定尺寸类型自动强转(`unsized coercions`)，因为它们与*将固定尺寸类型转换为非固定尺寸类型*有关，并且在一些其他自动强转不允许的情况（也就是上面罗列的情况之外的情况）下允许使用。也就是他们可以发生在任何自动强转发生的地方。
+下列自动强转被称为非固定尺寸类型自动强转(`unsized coercions`)，因为它们与将固定尺寸类型(sized types)转换为非固定尺寸类型(unsized types)有关，并且在一些其他自动强转不允许的情况（也就是上面罗列的情况之外的情况）下允许使用。也就是说它们可以发生在任何自动强转发生的地方。
 
-[`Unsize`] 和 [`CoerceUnsized`] 这两个 trait 被用来协助这种转换的发生，并公开给标准库来使用。以下自动强转形式是内置的，并且——如果 `T` 可以用其中一个自动强转转换成 `U`——会为 `T` 提供一个 `Unsize<U>` 内置实现：
-The following coercions are built-ins and, if `T` can be coerced to `U` with one of them, then an implementation of `Unsize<U>` for `T` will be provided:
+[`Unsize`] 和 [`CoerceUnsized`] 这两个 trait 被用来协助这种转换的发生，并公开给标准库来使用。以下自动强转方式是内置的，并且，如果 `T` 可以用其中任一方式自动强转成 `U`，那么就会为 `T` 提供一个 `Unsize<U>` 的内置实现：
+
 * `[T; n]` 到 `[T]`.
 
 * `T` 到 `dyn U`, 当 `T` 实现 `U + Sized`, 并且 `U` 是[对象安全的][object safe]时。
@@ -156,14 +156,14 @@ The following coercions are built-ins and, if `T` can be coerced to `U` with one
     * 如果这最后一个字段是类型 `Bar<T>`，那么 `Bar<T>` 实现了 `Unsized<Bar<U>>`。
     * `T` 不是任何其他字段的类型的一部分。
 
-此外，当 `T` 实现了 `Unsize<U>` 或 `CoerceUnsized<Foo<U>>` 时，类型 `Foo<T>` 可以实现 `CoerceUnsized<Foo<U>>`。这为 `Foo<T>` 提供了一个向 `Foo<U>` 的非固定尺寸类型自动强转的实现。
+此外，当 `T` 实现了 `Unsize<U>` 或 `CoerceUnsized<Foo<U>>` 时，类型 `Foo<T>` 可以实现 `CoerceUnsized<Foo<U>>`。这就允许 `Foo<T>` 提供一个到 `Foo<U>` 的非固定尺寸类型自动强转。
 
 > 注：虽然非固定尺寸类型自动强转的定义及其实现已经稳定下来，但 [`Unsize`] 和 [`CoerceUnsized`] 这两个 trait 本身还没稳定下来，因此还不能直接用于稳定版的 Rust。
 
 ## Least upper bound coercions
 ## 最小上界自动强转
 
-在某些上下文中，编译器必须将多个类型强制在一起，以尝试找到最通用的类型。这被称为“最小上界(Least Upper Bound,简称LUB)”自动强转。LUB自动强转只在以下情况中使用：
+在某些上下文中，编译器必须将多个类型强制在一起，以尝试找到最通用的类型。这被称为“最小上界(Least Upper Bound,简称 LUB)”自动强转。LUB自动强转只在以下情况中使用：
 
 + 为一系列的 if分支查找共同的类型。
 + 为一系列的匹配臂查找共同的类型。
@@ -229,7 +229,9 @@ fn foo() -> i32 {
 ### Caveat
 ### 警告
 
-这种描述显然是非正式的，但目前使文字描述更精确的工作正作为精细化 Rust 类型检查器的一般性工作的一部分正紧锣密鼓的进行中。
+我们这种描述显然是非正式的，但目前使文字描述更精确的工作正作为精细化 Rust 类型检查器的一般性工作的一部分正紧锣密鼓的进行中。
+
+[^译注1]: TyCtor为类型构造器 type constructor 的简写。
 
 [RFC 401]: https://github.com/rust-lang/rfcs/blob/master/text/0401-coercions.md
 [RFC 1558]: https://github.com/rust-lang/rfcs/blob/master/text/1558-closure-to-fn-coercion.md

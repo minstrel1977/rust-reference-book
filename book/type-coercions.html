@@ -170,14 +170,14 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-coercions.md">type-coercions.md</a><br />
 commit: d5a5e32d3cda8a297d2a91a85b91ff2629b0e896 <br />
-本章译文最后维护日期：2020-10-31</p>
+本章译文最后维护日期：2020-11-15</p>
 </blockquote>
-<p><strong>类型自动强转</strong>是改变值的类型的隐式操作。它们在特定的位置自动发生，并且在实际自动强转的类型上受到很多限制。</p>
+<p><strong>类型自动强转</strong>是改变值的类型的隐式操作。它们在特定的位置自动发生，但实际自动强转的类型也受到很多限制。</p>
 <p>任何允许自动强转的转换都可以由<a href="expressions/operator-expr.html#type-cast-expressions">类型强制转换操作符</a> <code>as</code> 来显式执行。</p>
 <p>自动强转最初是在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0401-coercions.md">RFC 401</a> 中定义的，并在[ RFC 1558] 中进行了扩展。</p>
 <h2><a class="header" href="#coercion-sites" id="coercion-sites">Coercion sites</a></h2>
 <h2><a class="header" href="#自动强转点" id="自动强转点">自动强转点</a></h2>
-<p>自动强转只能发生在程序中的某些自动强转点(coercion sites)上；通常在这些位置上，所需的类型是显式给出了或者可以从给出的显式类型传播推导(be derived by propagation)得到（不是类型推断）。可能的强转点有：</p>
+<p>自动强转只能发生在程序中的某些自动强转点(coercion sites)上；典型的位置是那些所需的类型是显式给出了的地方，或者是那些可以从给出的显式类型传播推导(be derived by propagation)出所需的类型（注意这里不是类型推断）的地方。可能的强转点有：</p>
 <ul>
 <li>
 <p><code>let</code>语句中显式给出了类型。</p>
@@ -185,7 +185,7 @@ commit: d5a5e32d3cda8a297d2a91a85b91ff2629b0e896 <br />
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let _: &amp;i8 = &amp;mut 42;
+</span>let _: &amp;i8 = &amp;mut 42; // 译者注释：`&amp;i8` 是显示给出的所需类型
 <span class="boring">}
 </span></code></pre></pre>
 </li>
@@ -297,7 +297,7 @@ fn main() {
 <p><code>&amp;mut T</code> 到 <code>&amp;mut U</code> 如果 <code>T</code> 实现了 <code>DerefMut&lt;Target = U&gt;</code>.</p>
 </li>
 <li>
-<p>TyCtor(<code>T</code>) 到 TyCtor(<code>U</code>)，其中 TyCtor(<code>T</code>) 是下列之一（译者注：TyCtor为类型构造器 type constructor 的简写）</p>
+<p>TyCtor(<code>T</code>) 到 TyCtor(<code>U</code>)，其中 TyCtor(<code>T</code>) 是下列之一<sup class="footnote-reference"><a href="#译注1">1</a></sup></p>
 <ul>
 <li><code>&amp;T</code></li>
 <li><code>&amp;mut T</code></li>
@@ -317,9 +317,8 @@ fn main() {
 </ul>
 <h3><a class="header" href="#unsized-coercions" id="unsized-coercions">Unsized Coercions</a></h3>
 <h3><a class="header" href="#非固定尺寸类型自动强转" id="非固定尺寸类型自动强转">非固定尺寸类型自动强转</a></h3>
-<p>下列自动强转被称为非固定尺寸类型自动强转(<code>unsized coercions</code>)，因为它们与<em>将固定尺寸类型转换为非固定尺寸类型</em>有关，并且在一些其他自动强转不允许的情况（也就是上面罗列的情况之外的情况）下允许使用。也就是他们可以发生在任何自动强转发生的地方。</p>
-<p><a href="https://doc.rust-lang.org/std/marker/trait.Unsize.html"><code>Unsize</code></a> 和 <a href="https://doc.rust-lang.org/std/ops/trait.CoerceUnsized.html"><code>CoerceUnsized</code></a> 这两个 trait 被用来协助这种转换的发生，并公开给标准库来使用。以下自动强转形式是内置的，并且——如果 <code>T</code> 可以用其中一个自动强转转换成 <code>U</code>——会为 <code>T</code> 提供一个 <code>Unsize&lt;U&gt;</code> 内置实现：
-The following coercions are built-ins and, if <code>T</code> can be coerced to <code>U</code> with one of them, then an implementation of <code>Unsize&lt;U&gt;</code> for <code>T</code> will be provided:</p>
+<p>下列自动强转被称为非固定尺寸类型自动强转(<code>unsized coercions</code>)，因为它们与将固定尺寸类型(sized types)转换为非固定尺寸类型(unsized types)有关，并且在一些其他自动强转不允许的情况（也就是上面罗列的情况之外的情况）下允许使用。也就是说它们可以发生在任何自动强转发生的地方。</p>
+<p><a href="https://doc.rust-lang.org/std/marker/trait.Unsize.html"><code>Unsize</code></a> 和 <a href="https://doc.rust-lang.org/std/ops/trait.CoerceUnsized.html"><code>CoerceUnsized</code></a> 这两个 trait 被用来协助这种转换的发生，并公开给标准库来使用。以下自动强转方式是内置的，并且，如果 <code>T</code> 可以用其中任一方式自动强转成 <code>U</code>，那么就会为 <code>T</code> 提供一个 <code>Unsize&lt;U&gt;</code> 的内置实现：</p>
 <ul>
 <li>
 <p><code>[T; n]</code> 到 <code>[T]</code>.</p>
@@ -338,13 +337,13 @@ The following coercions are built-ins and, if <code>T</code> can be coerced to <
 </ul>
 </li>
 </ul>
-<p>此外，当 <code>T</code> 实现了 <code>Unsize&lt;U&gt;</code> 或 <code>CoerceUnsized&lt;Foo&lt;U&gt;&gt;</code> 时，类型 <code>Foo&lt;T&gt;</code> 可以实现 <code>CoerceUnsized&lt;Foo&lt;U&gt;&gt;</code>。这为 <code>Foo&lt;T&gt;</code> 提供了一个向 <code>Foo&lt;U&gt;</code> 的非固定尺寸类型自动强转的实现。</p>
+<p>此外，当 <code>T</code> 实现了 <code>Unsize&lt;U&gt;</code> 或 <code>CoerceUnsized&lt;Foo&lt;U&gt;&gt;</code> 时，类型 <code>Foo&lt;T&gt;</code> 可以实现 <code>CoerceUnsized&lt;Foo&lt;U&gt;&gt;</code>。这就允许 <code>Foo&lt;T&gt;</code> 提供一个到 <code>Foo&lt;U&gt;</code> 的非固定尺寸类型自动强转。</p>
 <blockquote>
 <p>注：虽然非固定尺寸类型自动强转的定义及其实现已经稳定下来，但 <a href="https://doc.rust-lang.org/std/marker/trait.Unsize.html"><code>Unsize</code></a> 和 <a href="https://doc.rust-lang.org/std/ops/trait.CoerceUnsized.html"><code>CoerceUnsized</code></a> 这两个 trait 本身还没稳定下来，因此还不能直接用于稳定版的 Rust。</p>
 </blockquote>
 <h2><a class="header" href="#least-upper-bound-coercions" id="least-upper-bound-coercions">Least upper bound coercions</a></h2>
 <h2><a class="header" href="#最小上界自动强转" id="最小上界自动强转">最小上界自动强转</a></h2>
-<p>在某些上下文中，编译器必须将多个类型强制在一起，以尝试找到最通用的类型。这被称为“最小上界(Least Upper Bound,简称LUB)”自动强转。LUB自动强转只在以下情况中使用：</p>
+<p>在某些上下文中，编译器必须将多个类型强制在一起，以尝试找到最通用的类型。这被称为“最小上界(Least Upper Bound,简称 LUB)”自动强转。LUB自动强转只在以下情况中使用：</p>
 <ul>
 <li>为一系列的 if分支查找共同的类型。</li>
 <li>为一系列的匹配臂查找共同的类型。</li>
@@ -409,7 +408,10 @@ fn foo() -&gt; i32 {
 <p>在这些例子中，<code>ba*</code> 的类型可以通过 LUB自动强转找到。编译器检查 LUB自动强转在处理函数 <code>foo</code> 时，是否把 <code>a</code>，<code>b</code>，<code>c</code> 的结果转为了 <code>i32</code>。</p>
 <h3><a class="header" href="#caveat" id="caveat">Caveat</a></h3>
 <h3><a class="header" href="#警告" id="警告">警告</a></h3>
-<p>这种描述显然是非正式的，但目前使文字描述更精确的工作正作为精细化 Rust 类型检查器的一般性工作的一部分正紧锣密鼓的进行中。</p>
+<p>我们这种描述显然是非正式的，但目前使文字描述更精确的工作正作为精细化 Rust 类型检查器的一般性工作的一部分正紧锣密鼓的进行中。</p>
+<div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
+<p>TyCtor为类型构造器 type constructor 的简写。</p>
+</div>
 <!-- 2020-11-12-->
 <!-- checked -->
 
