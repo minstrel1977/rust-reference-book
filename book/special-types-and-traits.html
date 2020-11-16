@@ -176,7 +176,7 @@ commit: fcdc0cab546c10921d66054be25c6afc9dd6b3bc <br />
 <h2><a class="header" href="#boxt" id="boxt"><code>Box&lt;T&gt;</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box&lt;T&gt;</code></a> 有一些特殊的特性，Rust 目前还不允许用户定义类型时使用。</p>
 <ul>
-<li><code>Box&lt;T&gt;</code> 的[解引用操作符]会产生一个可从中移出值的内存位置<sup class="footnote-reference"><a href="#译者注1">1</a></sup>。这（种特殊性）意味着应用在 <code>Box&lt;T&gt;</code> 上的 <code>*</code>运算符和 <code>Box&lt;T&gt;</code> 的析构函数都是语言内置的。</li>
+<li><code>Box&lt;T&gt;</code> 的[解引用操作符]会产生一个可从中移出值的内存位置<sup class="footnote-reference"><a href="#译注1">1</a></sup>。这（种特殊性）意味着应用在 <code>Box&lt;T&gt;</code> 上的 <code>*</code>运算符和 <code>Box&lt;T&gt;</code> 的析构函数都是语言内置的。</li>
 <li><a href="items/associated-items.html#associated-functions-and-methods">方法</a>可以使用 <code>Box&lt;Self&gt;</code> 作为接受者。</li>
 <li><code>Box&lt;T&gt;</code> 可以绕过<a href="items/implementations.html#trait-implementation-coherence">孤儿规则(orphan rules)</a>，与 <code>T</code> 在同一 crate 中实现同一 trait，其他泛型类型无法绕过。</li>
 </ul>
@@ -237,7 +237,7 @@ commit: fcdc0cab546c10921d66054be25c6afc9dd6b3bc <br />
 <p>自动trait 可以作为额外的约束添加到任何 <a href="types/trait-object.html">trait对象</a>上，尽管通常我们见到的 trait对象的类型名上一般只显示一个 trait。例如，<code>Box&lt;dyn Debug + Send + UnwindSafe&gt;</code> 就是一个有效的类型。</p>
 <h2><a class="header" href="#sized" id="sized"><code>Sized</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/marker/trait.Sized.html"><code>Sized</code></a> trait表明这种类型的尺寸在编译时是已知的；也就是说，它不是一个<a href="dynamically-sized-types.html">动态尺寸类型</a>。<a href="types/parameters.html">类型参数</a>默认是 <code>Sized</code> 的。<code>Sized</code> 总是由编译器自动实现，而不是由<a href="items/implementations.html">实现(implementation items)</a>主动实现的。</p>
-<div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">4</sup>
+<div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
 <p>这里是相对普通的借用/引用来说，普通的借用/引用对指向的内存位置不拥有所有权，所以无法从中移出值。</p>
 </div>
 <div class="footnote-definition" id="译注2"><sup class="footnote-definition-label">2</sup>
