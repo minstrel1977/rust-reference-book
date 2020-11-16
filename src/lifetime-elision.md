@@ -3,21 +3,21 @@
 
 >[lifetime-elision.md](https://github.com/rust-lang/reference/blob/master/src/lifetime-elision.md)\
 >commit: f8e76ee9368f498f7f044c719de68c7d95da9972 \
->本章译文最后维护日期：2020-11-1
+>本章译文最后维护日期：2020-11-16
 
-Rust 有一套允许在多种位置省略生存期的规则，但前提是编译器在这些位置上能推断出合理的默认生存期。
+Rust 拥有一套允许在多种位置省略生存期的规则，但前提是编译器在这些位置上能推断出合理的默认生存期。
 
 ## Lifetime elision in functions
 ## 函数上的生存期(类型参数)省略
 
-为了使常用模式使用起来更方便，可以在[函数项][function item]、[函数指针][function pointer]和[闭包trait]的签名中*省略*生存期类型参数。以下规则用于推断被省略的生存期类型参数。省略不能推断出的生存期类型参数是错误的。占位符形式的生存期，`'_`，也可以用这一套规则来推断出。对于路径中的生存期，首选使用 `'_`。trait对象的生存期类型参数遵循不同的规则，具体[这里](#default-trait-object-lifetimes)讨论。
+为了使常用模式使用起来更方便，可以在[函数项][function item]、[函数指针][function pointer]和[闭包trait][closure trait][^译注1]的签名中*省略*生存期类型参数。以下规则用于推断出被省略的生存期类型参数。省略不能被推断出的生存期类型参数是错误的。占位符形式的生存期，`'_`，也可以用这一套规则来推断出。对于路径中的生存期，首选使用 `'_`。trait对象的生存期类型参数遵循不同的规则，具体[这里](#default-trait-object-lifetimes)讨论。
 
-* 参数中省略的每个生存期类型参数都会成为一个独立的生存期类型参数。
+* 参数中省略的每个生存期类型参数都会（被推断）成为一个独立的生存期类型参数。
 * 如果参数中只使用了一个生存期（省略或不省略都行），则将该生存期作为*所有*省略的输出生存期类型参数。
 
 在方法签名中有另一条规则
 
-* 如果接受者类型为 `&Self` 或 `&mut Self`，那么对 `Self` 的引用的生存期会被作为所有省略的输出生存期类型参数。
+* 如果接受者(receiver)类型为 `&Self` 或 `&mut Self`，那么对 `Self` 的引用的生存期会被作为所有省略的输出生存期类型参数。
 
 示例：
 
@@ -71,27 +71,28 @@ fn frob(s: &str, t: &str) -> &str;                    // 非法
 ## Default trait object lifetimes
 ## 默认的 trait对象的生存期
 
-一个 [trait对象][trait object]所持有的引用的假定生存期(assumed lifetime)称为它的*默认对象生存期约束(default object lifetime bound)*。这些在 [RFC 599] 中定义，在 [RFC 1156] 中修定增补。
+假定存在于（代表） [trait对象][trait object]（的那个胖指针）上的生存期(assumed lifetime)类型参数称为此 trait对象的*默认对象生存期约束(default object lifetime bound)*。这些在 [RFC 599] 中定义，在 [RFC 1156] 中修定增补。
 
-当 trait对象的生存期约束被完全省略时，会使用默认对象生存期约束，而不是应用了上面定义的生存期类型参数省略规则的生存期约束。但如果使用 `'_` 作为生存期约束，则该约束仍遵循上面通常的省略规则。
+当 trait对象的生存期约束被完全省略时，会使用默认对象生存期约束来替代上面定义的生存期类型参数省略规则。但如果使用 `'_` 作为生存期约束，则该约束仍遵循上面通常的省略规则。
 
-如果将 trait对象用作泛型类型的类型参数，则首先使用此泛型类型来尝试为此 trait对象推断一个约束。
+如果将 trait对象用作泛型类型的类型参数，则首先使用此容器泛型来尝试为此 trait对象推断一个约束（来替代那个假定的生存期）。
 
-* 如果存在来自泛型类型的唯一约束，则该约束就为此 trait对象的默认约束
-* 如果此泛型有多个约束，则必须指定一个约显式束为此 trait对象的默认约束
+* 如果存在来自此容器泛型的唯一约束，则该约束就为此 trait对象的默认约束
+* 如果此容器泛型有多个约束，则必须指定一个约显式束为此 trait对象的默认约束
 
-如果这两个规则都不适用，则此该 trait对象的原 trait声明来推断：
+如果这两个规则都不适用，则使用该 trait对象的声明时的 trait约束：
 
-* 如果原 trait声明为单生命周期*约束*，则此 trait对象使用该约束。
-* 如果 `'static` 被用于原 trait声明的其中的一个生存期约束，则此 trait对象使用 `'static`。
-* 如果原 trait声明没有生存期约束，那么此泛型的生存期会在表达式中根据上下文被推断出来，在表达式之外直接用 `'static`。
+* 如果原 trait 声明为单生命周期*约束*，则此 trait对象使用该约束作为默认约束。
+* 如果 `'static` 被用做原 trait声明的任一一个生存期约束，则此 trait对象使用 `'static` 作为默认约束。
+* 如果原 trait声明没有生存期约束，那么此 trait对象的生存期会在表达式中根据上下文被推断出来，在表达式之外直接用 `'static`。
 
 ```rust
 // 对下面的 trait 来说，...
 trait Foo { }
 
-// 这两个是等价的，就如`Box<T>`对没有生存期约束的`T`一样
-type T1 = Box<dyn Foo>;  //译者注：此处的 `T1` 和 上行备注中提到的 `Box<T>` 都是本节规则中所说的泛型类型
+// 这两个是等价的，就如 `Box<T>` 对 `T` 没有生存期约束一样
+// These two are the same as Box<T> has no lifetime bound on T
+type T1 = Box<dyn Foo>;  //译者注：此处的 `T1` 和 上行备注中提到的 `Box<T>` 都是本节规则中所说的泛型类型，即容器泛型
 type T2 = Box<dyn Foo + 'static>;
 
 // ...这也是等价的
@@ -138,7 +139,7 @@ impl<'a> dyn Bar<'a> + 'a {}
 ## `'static` lifetime elision
 ## 静态(`'static`)生存期省略
 
-除非指定了显式的生存期，引用类型的[常量][constant]声明和[静态][static]声明都具有*隐式的*静态(`'static`)生存期。因此，有 `'static` 在其上的常量声明在编写时都可以略去其生存期声明。
+除非指定了显式的生存期，引用类型的[常量项][constant]声明和[静态项][static]声明都具有*隐式的*静态(`'static`)生存期。因此，有 `'static`生存期的常量项声明在编写时可以略去其生存期。
 
 ```rust
 // STRING: &'static str
@@ -156,7 +157,7 @@ const BITS_N_STRINGS: BitsNStrings<'_> = BitsNStrings {
 };
 ```
 
-注意，如果静态项(`static`)或常量项(`const`)包含函数引用或闭包引用，而它们本身也包含引用，此时编译器将首先尝试使用标准的省略规则。如果它不能通过其通常的规则来推断出生存期，那么它将报错。举个例子：
+注意，如果静态项(`static`)或常量项(`const`)包含对函数或闭包的引用，而这些函数或闭包本身也包含引用，此时编译器将首先尝试使用标准的省略规则来推断生存期类型参数。如果它不能通过通常的生存期省略规则来推断出生存期类型参数，那么它将报错。举个例子：
 
 ```rust
 # struct Foo;
@@ -180,6 +181,8 @@ const RESOLVED_STATIC: &dyn Fn(&Foo, &Bar) -> &Baz = &somefunc;
 //                                            ^
 // 这个函数的返回类型包含一个借用来的值，但是签名没有说明它是从参数1还是从参数2借用来的
 ```
+
+[^译注1]: 指 Fn、FnMute 和 FnOnce 这三个 trait。
 
 [closure trait]: types/closure.md
 [constant]: items/constant-items.md

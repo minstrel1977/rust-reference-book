@@ -22,7 +22,7 @@
 
 如果析构函数必须手动运行，比如在实现自定义的智能指针时，可以使用标准库函数 [`std::ptr::drop_in_place`]。
 
-举些例子：
+举些（析构函数的）例子：
 
 ```rust
 struct PrintOnDrop(&'static str);
