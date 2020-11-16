@@ -10795,10 +10795,10 @@ commit: 2d3085f1bab9d751e8a9b92c3b27c049ad23fdd7 <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/memory-allocation-and-lifetime.md">memory-allocation-and-lifetime.md</a><br />
 commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
-本章译文最后维护日期：2020-11-2</p>
+本章译文最后维护日期：2020-11-16</p>
 </blockquote>
 <p>程序的<em>数据项</em>是那些函数、模块和类型，它们的值在编译时被计算出来，并且唯一地存储在 Rust 进程的内存映像中。数据项既不是动态分配的，也不是动态释放的。</p>
-<p><em>堆</em>是描述 box化的类型（译者注：box化是一个堆分配过程，该堆分配返回一个指向该堆分配的内存地址的引用，后文称这个引用为 box指针或 box引用）的通用术语。堆分配的生存期取决于指向它的 box指针的生存期。由于 box指针本身可能被传入或传出栈帧，或者存储在堆中，因此堆分配可能比初始分配它们的栈帧存活的时间长。在堆分配的整个生存期内，该堆分配被保证驻留在堆中的单一位置 — 它永远不会因移动 box指针而重新分配内存地址。</p>
+<p><em>堆</em>是描述 box类型（译者注：box是一种堆分配形式，该堆分配返回一个指向该堆分配的内存地址的指针，后文称这个指针为 box指针或 box引用）的通用术语。堆分配的生存期取决于指向它的 box指针的生存期。由于 box指针本身可能被传入或传出栈帧，或者存储在堆中，因此堆分配可能比初始分配它们的栈帧存活的时间长。在堆分配的整个生存期内，该堆分配被保证驻留在堆中的单一位置 — 它永远不会因移动 box指针而重新分配内存地址。</p>
 <!-- 2020-11-12-->
 <!-- checked -->
 <h2><a class="header" href="#memory-ownership" id="memory-ownership">Memory ownership</a></h2>
@@ -10816,13 +10816,13 @@ commit: 4a2bdf896cd2df370a91d14cb8ba04e326cd21db <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/variables.md">variables.md</a><br />
 commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
-本章译文最后维护日期：2020-11-2</p>
+本章译文最后维护日期：2020-11-16</p>
 </blockquote>
-<p><em>变量</em>是栈帧里的一个组件，可以是命名的函数参数、匿名的<a href="expressions.html#temporaries">临时变量</a>或命名的局部变量。</p>
+<p><em>变量</em>是栈帧里的一个组件，可以是命名函数参数、匿名的<a href="expressions.html#temporaries">临时变量</a>或命名局部变量。</p>
 <p><em>局部变量</em>（或*本地栈(stack-local)*分配）直接持有一个值，该值在栈内存中分配。该值是栈帧的一部分。</p>
 <p>局部变量是不可变的，除非特别声明。例如：<code>let mut x = ...</code>。</p>
 <p>函数参数是不可变的，除非用 <code>mut</code> 声明。关键字 <code>mut</code> 只应用于紧跟着它的那个参数。例如：<code>|mut x, y|</code> 和 <code>fn f(mut x: Box&lt;i32&gt;, y: Box&lt;i32&gt;)</code> 声明了一个可变变量 <code>x</code> 和一个不可变变量 <code>y</code>。</p>
-<p>分配时不会初始化局部变量。取而代之的是，在帧建立时，以未初始化状态分配整个帧值的局部变量。函数中的后续语句可以初始化局部变量，也可以不初始化局部变量。局部变量在所有可达的控制流路径初经过时才会被初始化，之后才能被使用。</p>
+<p>分配时不会初始化局部变量。此处一反常态的是在帧建立时，以未初始化状态分配整个帧值的局部变量。函数中的后续语句可以初始化局部变量，也可以不初始化局部变量。局部变量只有在通过所有可到达的控制流路径初始化后才能使用</p>
 <p>在下面示例中，<code>init_after_if</code> 是在 <a href="expressions/if-expr.html#if-expressions"><code>if</code>表达式</a>执行后被初始化的，而 <code>uninit_after_if</code> 不是，因为它没有在 <code>else</code> 分支里被初始化。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -10960,10 +10960,9 @@ fn main() {
 commit:  b0e0ad6490d6517c19546b1023948986578fc378 <br />
 本章译文最后维护日期：2020-11-2</p>
 </blockquote>
-<p>非安全操作(Unsafe operations)是那些潜在地可能违反 Rust 静态语义里的和内存安全保障相关的操作。</p>
+<p>非安全操作(Unsafe operations)是那些可能潜在地违反 Rust 静态语义里的和内存安全保障相关的操作。</p>
 <p>以下语言级别的特性不能在 Rust 的安全(safe)子集中使用:</p>
 <ul>
-<li>解引用<a href="types/pointer.html">裸指针</a>.</li>
 <li>读取或写入<a href="items/static-items.html#mutable-statics">可变</a>静态变量；读取或写入或<a href="items/external-blocks.html">外部</a>静态变量。</li>
 <li>访问[联合体(<code>union</code>)]的字段，注意不是给它的字段赋值。</li>
 <li>调用一个非安全(unsafe)函数（包括内部函数和外部函数）。</li>
@@ -10978,7 +10977,7 @@ commit:  b0e0ad6490d6517c19546b1023948986578fc378 <br />
 commit:  4a2bdf896cd2df370a91d14cb8ba04e326cd21db <br />
 本章译文最后维护日期：2020-11-2</p>
 </blockquote>
-<p>非安全函数是指在所有上下文和/或所有可能的输入中都不安全的函数。这样的函数必须以关键字 <code>unsafe</code> 前缀修饰，并且只能在非安全(<code>unsafe</code>)块或其他非安全(<code>unsafe</code>)函数中调用此类函数。</p>
+<p>非安全函数是指在所有可能的上下文和/或所有可能的输入中可能出现不安全情况的函数。这样的函数必须以关键字 <code>unsafe</code> 前缀修饰，并且只能在非安全(<code>unsafe</code>)块或其他非安全(<code>unsafe</code>)函数中调用此类函数。</p>
 <!-- 2020-11-12-->
 <!-- checked -->
 <h1><a class="header" href="#unsafe-blocks-1" id="unsafe-blocks-1">Unsafe blocks</a></h1>
