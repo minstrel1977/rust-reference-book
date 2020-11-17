@@ -338,8 +338,8 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <tr><td>( )</td><td>(<code>,</code> <em>Parameter</em>)<sup>?</sup></td><td>数据项分组</td></tr>
 </tbody></table>
 <h2><a class="header" href="#string-table-productions" id="string-table-productions">String table productions</a></h2>
-<h2><a class="header" href="#字串表产生式" id="字串表产生式">字串表产生式</a></h2>
-<p>文法中的一些规则 — 比如<a href="expressions/operator-expr.html#borrow-operators">一元运算符</a>，<a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">二元运算符</a>和<a href="keywords.html">关键字</a> — 会以简化形式：作为可打印字符串的列表形式（在本书的相关章节的头部）给出。这些规则构成了关于 <a href="tokens.html">token</a>规则的规则子集，并且它们被假定为源码编译时的词法分析阶段的结果被再次输入给解析器，然后由一个<abbr title="确定性有限自动机(Deterministic Finite Automaton)">DFA</abbr>驱动，对所有此字串表条目(string table entries)进行析取操作（来进行句法分析）。</p>
+<h2><a class="header" href="#字符串表产生式" id="字符串表产生式">字符串表产生式</a></h2>
+<p>文法中的一些规则 — 比如<a href="expressions/operator-expr.html#borrow-operators">一元运算符</a>，<a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">二元运算符</a>和<a href="keywords.html">关键字</a> — 会以简化形式：作为可打印字符串的列表形式（在本书的相关章节的头部的各种产生式定义/句法规则里）给出。这些规则构成了关于 <a href="tokens.html">token</a>规则的规则子集，并且它们被假定为源码编译时的词法分析阶段的结果被再次输入给解析器，然后由一个<abbr title="确定性有限自动机(Deterministic Finite Automaton)">DFA</abbr>驱动，对此字符串表里的所有条目(string table entries)进行析取(disjunction)操作（来进行句法分析）。</p>
 <p>本书还约定，当文法表中出现如 <code>monospace</code> 这样的字符串时，它代表对这些产生式中的单一 token 成员的隐式引用。查阅 <a href="tokens.html">tokens</a> 以获取更多信息。</p>
 <!-- 2020-11-12-->
 <!-- checked --><h1><a class="header" href="#词法结构" id="词法结构">词法结构</a></h1>
@@ -662,7 +662,7 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <li><a href="tokens.html#punctuation">标点符号</a></li>
 <li><a href="tokens.html#delimiters">分隔符</a></li>
 </ul>
-<p>在本文档中，“简单”token 会直接在（相关章节头部的）[字串表产生式(production)][string table production]表单中给出，并以 <code>monospace</code> 字体显示。（译者注：本译作的原文中，在文法表之外的行文中也会大量出现这种直接使用简单token 来替代相关名词的做法，一般此时如果译者觉得这种 token 需要翻译时，会使用诸如：结构体(<code>struct</code>) 这种形式来翻译。读者需要意识到“struct”是文法里的一个 token，能以其字面形式直接出现在源码里。）</p>
+<p>在本文档中，“简单”token 会直接在（相关章节头部的）[字符串表产生式(production)][string table production]表单中给出，并以 <code>monospace</code> 字体显示。（译者注：本译作的原文中，在文法表之外的行文中也会大量出现这种直接使用简单token 来替代相关名词的做法，一般此时如果译者觉得这种 token 需要翻译时，会使用诸如：结构体(<code>struct</code>) 这种形式来翻译。读者需要意识到“struct”是文法里的一个 token，能以其字面形式直接出现在源码里。）</p>
 <h2><a class="header" href="#literals" id="literals">Literals</a></h2>
 <h2><a class="header" href="#字面量" id="字面量">字面量</a></h2>
 <p>字面量是一个由单一 token（而不是由一连串 tokens）组成的表达式，它立即、直接表示它所代表的值，而不是通过名称或其他一些求值/计算规则来引用它。字面量是<a href="const_eval.html#constant-expressions">常量表达式</a>的一种形式，所以它（主要）用在编译时求值。</p>
@@ -4906,17 +4906,17 @@ pub fn f() {}
 <li><a href="attributes/diagnostics.html#the-must_use-attribute"><code>must_use</code></a> — 为未使用的值生成 lint 提醒。</li>
 </ul>
 </li>
-<li>ABI、链接(linking)、symbol、和 FFI
+<li>ABI、链接(linking)、符号(symbol)、和 FFI
 <ul>
 <li><a href="items/external-blocks.html#the-link-attribute"><code>link</code></a> — 指定要与外部(<code>extern</code>)块链接的本地库。</li>
-<li><a href="items/external-blocks.html#the-link_name-attribute"><code>link_name</code></a> — 指定外部(<code>extern</code>)块中的函数或静态项的 symbol 的名称。</li>
+<li><a href="items/external-blocks.html#the-link_name-attribute"><code>link_name</code></a> — 指定外部(<code>extern</code>)块中的函数或静态项的符号(symbol)名。</li>
 <li><a href="items/extern-crates.html#the-no_link-attribute"><code>no_link</code></a> — 防止链接外部crate。</li>
 <li><a href="type-layout.html#representations"><code>repr</code></a> — 控制类型的布局。</li>
 <li><a href="linkage.html"><code>crate_type</code></a> — 指定 crate 的类别(库、可执行文件等)。</li>
-<li><a href="crates-and-source-files.html#the-no_main-attribute"><code>no_main</code></a> — 禁止发布 <code>main</code> symbol。</li>
-<li><a href="abi.html#the-export_name-attribute"><code>export_name</code></a> — 指定函数或静态项导出的 symbol名。</li>
+<li><a href="crates-and-source-files.html#the-no_main-attribute"><code>no_main</code></a> — 禁止发布 <code>main</code>符号(symbol)。</li>
+<li><a href="abi.html#the-export_name-attribute"><code>export_name</code></a> — 指定函数或静态项导出的符号(symbol)名。</li>
 <li><a href="abi.html#the-link_section-attribute"><code>link_section</code></a> — 指定用于函数或静态项的对象文件的部分。</li>
-<li><a href="abi.html#the-no_mangle-attribute"><code>no_mangle</code></a> — 禁用对 symbol名重新编码。</li>
+<li><a href="abi.html#the-no_mangle-attribute"><code>no_mangle</code></a> — 禁用对符号(symbol)名编码。</li>
 <li><a href="abi.html#the-used-attribute"><code>used</code></a> — 强制编译器在输出对象文件中保留静态项。</li>
 <li><a href="crates-and-source-files.html#the-crate_name-attribute"><code>crate_name</code></a> — 指定 crate名。</li>
 </ul>
@@ -10851,31 +10851,31 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/linkage.md">linkage.md</a><br />
 commit: 79364a6583803c270ff5be1085434631aba30858 <br />
-本章译文最后维护日期：2020-11-2</p>
+本章译文最后维护日期：2020-11-17</p>
 </blockquote>
 <blockquote>
 <p>注意：本节更多的是从编译器的角度来描述的，而不是语言。</p>
 </blockquote>
-<p>Rust 编译器支持多种将 crate 以静态方式和动态方式链接起来使用的方法。本节将探索各种将 crate 链接在一起的方法，关于本地库的更多信息请参阅 <a href="https://doc.rust-lang.org/book/ffi.html">The Book 中的 FFI 相关章节</a>。</p>
-<p>在一个编译会话中，编译器可以通过使用命令行参数或内部 <code>crate_type</code>属性来生成多个构件(artifacts)。如果指定了一个或多个命令行参数，则将忽略所有 <code>crate_type</code>属性，以便只构建由命令行指定的构件。</p>
+<p>Rust 编译器支持多种将 crate 链接起来使用的方法，这些链接方法可以是静态的，也可以是动态的。本节将聚焦探索这些链接方法，关于本地库的更多信息请参阅 <a href="https://doc.rust-lang.org/book/ffi.html">The Book 中的 FFI 相关章节</a>。</p>
+<p>在一个编译会话中，编译器可以通过使用命令行参数或内部 <code>crate_type</code>属性来生成多个构件(artifacts)。如果指定了一个或多个命令行参数，则将忽略（源码内部指定的）所有 <code>crate_type</code>属性，以便只构建由命令行指定的构件。</p>
 <ul>
 <li>
-<p><code>--crate-type=bin</code> 或 <code>#[crate_type = &quot;bin&quot;]</code> - 将生成一个可执行文件。这就要求在 crate 中有一个 <code>main</code> 函数，它将在程序开始执行时运行。这将链接所有 Rust 和本地依赖，生成一个可分发的二进制文件。</p>
+<p><code>--crate-type=bin</code> 或 <code>#[crate_type = &quot;bin&quot;]</code> - 将生成一个可执行文件。这就要求在 crate 中有一个 <code>main</code>函数，它将在程序开始执行时运行。这将链接所有 Rust 和本地依赖，生成一个可分发的二进制文件。</p>
 </li>
 <li>
-<p><code>--crate-type=lib</code> 或 <code>#[crate_type = &quot;lib&quot;]</code> - 将生成一个 Rust 库(library)。但最终会确切输出/生成什么类型的库在未生成之前还不好清晰确定，因为库有多种表现形式。使用 <code>lib</code> 这个通用的选项的目的是生成“编译器推荐”的类型的库。像种指定输出库类型的选项在 rustc 里始终可用，但是每次实际输出的库的类型可能会随实际情况而不同。其它的选项都指定了生成的具体库的类型，而 <code>lib</code> 可以看作是那些类型中的某个类型的别名（具体实际的输出的类型是编译器决定的）。</p>
+<p><code>--crate-type=lib</code> 或 <code>#[crate_type = &quot;lib&quot;]</code> - 将生成一个 Rust库(library)。但最终会确切输出/生成什么类型的库在未生成之前还不好清晰确定，因为库有多种表现形式。使用 <code>lib</code> 这个通用选项的目的是生成“编译器推荐”的类型的库。像种指定输出库类型的选项在 rustc 里始终可用，但是每次实际输出的库的类型可能会随着实际情况的不同而不同。其它的输出（库的）类型选项都指定了不同风格的库类型，而 <code>lib</code> 可以看作是那些类型中的某个类型的别名（具体实际的输出的类型是编译器决定的）。</p>
 </li>
 <li>
-<p><code>--crate-type=dylib</code> 或 <code>#[crate_type = &quot;dylib&quot;]</code> - 将生成一个动态 Rust 库。这与 <code>lib</code> 选项的输出类型不同，因为这个选项会强制生成动态库。生成的动态库可以用作其他库和/或可执行文件的依赖。这种输出类型将创建依赖于具体平台的库（linux 上为 <code>*.so</code>，osx 上为 <code>*.dylib</code>、windows 上为 <code>*.dll</code>）。</p>
+<p><code>--crate-type=dylib</code> 或 <code>#[crate_type = &quot;dylib&quot;]</code> - 将生成一个动态 Rust库。这与 <code>lib</code> 选项的输出类型不同，因为这个选项会强制生成动态库。生成的动态库可以用作其他库和/或可执行文件的依赖。这种输出类型将创建依赖于具体平台的库（linux 上为 <code>*.so</code>，osx 上为 <code>*.dylib</code>、windows 上为 <code>*.dll</code>）。</p>
 </li>
 <li>
-<p><code>--crate-type=staticlib</code> 或 <code>#[crate_type = &quot;staticlib&quot;]</code> - 将生成一个静态系统库。这个选项与其他选项的库输出的不同之处在于——编译器永远不会尝试去链接此 <code>staticlib</code> 输出（译者注：此编译选项是将本地 Rust crate 和其上游依赖资源编译输出成一个库，供其他应用程序使用的。所以对当前编译而言，当前编译器没必要去链接自己的输出；又因为其他的 Rust crate 无法将此编译出的库作为上游依赖，所以编译其他 Rust crate 的编译器也不会来链接此 <code>staticlib</code> 输出）。此选项的目的是创建一个包含所有本地 crate 的代码以及所有上游依赖的静态库。静态库实际上是 linux、osx 和 windows(MinGW) 平台上的 <code>*.a</code> 归档文件(archive)，或者 windows(MSVC) 平台上的 <code>*.lib</code> 库文件。在这些情况下，例如将 Rust 代码链接到现有的非 Rust 应用程序中，推荐使用这种类型，因为它不会动态依赖于其他 Rust 代码。</p>
+<p><code>--crate-type=staticlib</code> 或 <code>#[crate_type = &quot;staticlib&quot;]</code> - 将生成一个静态系统库。这个选项与其他选项的库输出的不同之处在于——当前编译器永远不会尝试去链接此 <code>staticlib</code> 输出<sup class="footnote-reference"><a href="#译注1">1</a></sup>。此选项的目的是创建一个包含所有本地 crate 的代码以及所有上游依赖的静态库。静态库实际上是 linux、osx 和 windows(MinGW) 平台上的 <code>*.a</code> 归档文件(archive)，或者 windows(MSVC) 平台上的 <code>*.lib</code> 库文件。在这些情况下，例如将 Rust代码链接到现有的非 Rust应用程序中，推荐使用这种类型，因为它不会动态依赖于其他 Rust 代码。</p>
 </li>
 <li>
 <p><code>--crate-type=cdylib</code> 或 <code>#[crate_type = &quot;cdylib&quot;]</code> - 将生成一个动态系统库。如果编译输出的动态库要被另一种语言加载使用，请使用这种编译选项。这种选项的输出将在 Linux 上创建 <code>*.so</code> 文件，在 macOS 上创建 <code>*.dylib</code> 文件，在 Windows 上创建 <code>*.dll</code> 文件。</p>
 </li>
 <li>
-<p><code>--crate-type=rlib</code> 或 <code>#[crate_type = &quot;rlib&quot;]</code> - 将生成一个“Rust库”。它被用作一个中间构件，可以被认为是一个“静态 Rust 库”。与 <code>staticlib</code> 类型的库文件不同，这些 <code>rlib</code> 类型的库文件以后会作为其他Rust代码文件的上游依赖，未来对那些Rust代码文件进行编译时，那时的编译器会链并解释此 <code>rlib</code>文件。这本质上意味着（那时的） <code>rustc</code> 将在（此） <code>rlib</code> 文件中查找元数据(metadata)，就像在动态库中查找元数据一样。跟 <code>staticlib</code> 输出类型类似，这种类型的输出常配合用于生成静态链接的可执行文件(statically linked executable)。</p>
+<p><code>--crate-type=rlib</code> 或 <code>#[crate_type = &quot;rlib&quot;]</code> - 将生成一个“Rust库”。它被用作一个中间构件，可以被认为是一个“静态 Rust库”。与 <code>staticlib</code> 类型的库文件不同，这些 <code>rlib</code> 类型的库文件以后会作为其他 Rust代码文件的上游依赖，未来对那些 Rust代码文件进行编译时，那时的编译器会链并解释此 <code>rlib</code>文件。这本质上意味着（那时的） <code>rustc</code> 将在（此） <code>rlib</code> 文件中查找元数据(metadata)，就像在动态库中查找元数据一样。跟 <code>staticlib</code> 输出类型类似，这种类型的输出常配合用于生成静态链接的可执行文件(statically linked executable)。</p>
 </li>
 <li>
 <p><code>--crate-type=proc-macro</code> 或 <code>#[crate_type = &quot;proc-macro&quot;]</code> - 生成的输出类型没有被指定，但是如果通过 <code>-L</code> 提供了路径参数，编译器将把输出构件识别为宏，输出的宏可以被其他 Rust 程序加载使用。使用此 crate 类型编译的 crate 只能导出<a href="procedural-macros.html">过程宏</a>。编译器将自动设置 <code>proc_macro</code><a href="conditional-compilation.html">属性配置选项</a>。编译 crate 的目标平台(target)总是和当前编译器所在平台一致。例如，如果在 <code>x86_64</code> CPU 的 Linux 平台上执行编译，那么目标将是 <code>x86_64-unknown-linux-gnu</code>，即使该 crate 是另一个不同编译目标的 crate 的依赖。</p>
@@ -10951,6 +10951,9 @@ fn main() {
 <p>要在本地使用此特性，通常需要使用 <code>RUSTFLAGS</code> 环境变量通过 Cargo 来为编译器指定参数。例如，要在 MSVC 平台上编译静态链接的二进制文件，需要执行：</p>
 <pre><code class="language-sh">RUSTFLAGS='-C target-feature=+crt-static' cargo build --target x86_64-pc-windows-msvc
 </code></pre>
+<div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
+<p>译者理解此编译选项是将本地 Rust crate 和其上游依赖资源编译输出成一个库，供其他应用程序使用的。所以对当前编译而言，不能依赖还不存在的资源；又因为其他 Rust crate 的编译无法将静态库作为编译时依赖的上游资源，所以编译其他 Rust crate 的编译器也不会来链接此 <code>staticlib</code> 输出。</p>
+</div>
 <!-- 2020-11-12-->
 <!-- checked -->
 <h1><a class="header" href="#unsafety" id="unsafety">Unsafety</a></h1>
@@ -11147,25 +11150,25 @@ commit:  7ad799da00dd162638999e38dad10905bf6c7ec6 <br />
 </ul>
 <h2><a class="header" href="#const-functions-1" id="const-functions-1">Const Functions</a></h2>
 <h2><a class="header" href="#常量函数-1" id="常量函数-1">常量函数</a></h2>
-<p>*常量函数(const fn)*可以在常量上下文中调用。给一个函数加一个常量(<code>const</code>)标志对该函数的任何现有的使用都没有影响，它只限制参数和返回可以使用的类型，并防止在这两个位置上使用不被允许的表达式类型。你可以自由地用常量函数去做任何你可以用常规函数做的事情。</p>
-<p>当从常量上下文中调用这类函数时，编译器会在编译时解释该函数。这种解释发生在编译目标环境中，而不是在当前主机环境中。因此，如果是针对一个 <code>32</code> 位系统进行编译，那么 <code>usize</code> 就是 <code>32</code> 位，这与在一个 <code>64</code> 位还是在一个 <code>32</code> 位主机系统上进行编译无关。</p>
+<p>*常量函数(const fn)*可以在常量上下文中调用。给一个函数加一个常量(<code>const</code>)标志对该函数的任何现有的使用都没有影响，它只限制参数和返回可以使用的类型，并防止在这两个位置上使用不被允许的表达式类型。程序员可以自由地用常量函数去做任何用常规函数能做的事情。</p>
+<p>当从常量上下文中调用这类函数时，编译器会在编译时解释该函数。这种解释发生在编译目标环境中，而不是在当前主机环境中。因此，如果是针对一个 <code>32</code> 位目标系统进行编译，那么 <code>usize</code> 就是 <code>32</code> 位，这与在一个 <code>64</code> 位还是在一个 <code>32</code> 位主机环境中进行编译动作无关。</p>
 <p>常量函数有各种限制以确保其可以在编译时被求值。因此，例如，不可以将随机数生成器编写为常量函数。在编译时调用常量函数将始终产生与运行时调用它相同的结果，即使多次调用也是如此。这个规则有一个例外：如果在极端情况下执行复杂的浮点运算，那么可能得到（非常轻微）不同的结果。建议不要让数组长度和枚举判别值/式依赖于浮点计算。</p>
 <p>常量上下文有，但常量函数不具备的显著特性有：</p>
 <ul>
 <li>浮点运算
 <ul>
-<li>处理浮点值就像处理只有 <code>Copy</code> 这个 trait约束的泛型参数一样，你不能用它们做任何事，只能复制/移动它们。</li>
+<li>（在常量函数中，）处理浮点值就像处理只有 <code>Copy</code> trait约束的泛型参数一样，不能用它们做任何事，只能复制/移动它们。</li>
 </ul>
 </li>
 <li>trait对象(<code>dyn Trait</code>)/动态分发类型</li>
-<li>使用 <code>?Sized</code> 约束(generic bounds on generic parameters beyond <code>Sized</code>)</li>
+<li>泛型参数上除 <code>Sized</code> 之外的泛型约束</li>
 <li>比较裸指针</li>
 <li>访问联合体字段</li>
 <li>调用 <a href="https://doc.rust-lang.org/std/mem/fn.transmute.html"><code>transmute</code></a>。</li>
 </ul>
-<p>相反，以下情况在常量函数中是可能的，但在常量上下文中则不可能：</p>
+<p>相反，以下情况在常量函数中是可能的，但在常量上下文中则不可能有：</p>
 <ul>
-<li>使用泛型参数。（译者注：这条感觉和上面的说法矛盾，但原文就是这么说的，等回头译者用代码验证了再来确认。）</li>
+<li>使用泛型参数。</li>
 </ul>
 <!-- 2020-11-12-->
 <!-- checked -->
@@ -11174,13 +11177,13 @@ commit:  7ad799da00dd162638999e38dad10905bf6c7ec6 <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/abi.md">abi.md.md</a><br />
 commit:  24137b49a3c02f53e5a7699a78a47501aef3e769 <br />
-本章译文最后维护日期：2020-11-3</p>
+本章译文最后维护日期：2020-11-17</p>
 </blockquote>
 <p>本节介绍影响 crate 编译输出的 ABI 的各种特性。</p>
 <p>有关为导出函数(exporting functions)指定 ABI 的信息，请参阅<a href="items/functions.html#extern-function-qualifier"><em>外部函数</em></a>。参阅[<em>外部块</em>]]<a href="items/external-blocks.html">external blocks</a>了解关于指定 ABI 来链接外部库的信息。</p>
 <h2><a class="header" href="#the-used-attribute" id="the-used-attribute">The <code>used</code> attribute</a></h2>
 <h2><a class="header" href="#used属性" id="used属性"><code>used</code>属性</a></h2>
-<p><em><code>used</code>属性</em>只能用在<a href="items/static-items.html">静态(<code>static</code>)项</a>上。此<a href="attributes.html">属性</a>强制编译器将该变量保留在输出对象文件中(.o、.rlib等，不包括最终的二进制文件)，即使该变量没有被 crate 中的任何其他项使用或引用。注意，链接器(linker)仍有权移除此类变量。</p>
+<p><em><code>used</code>属性</em>只能用在<a href="items/static-items.html">静态(<code>static</code>)项</a>上。此<a href="attributes.html">属性</a>强制编译器将该变量保留在输出对象文件中(.o、.rlib 等，不包括最终的二进制文件)，即使该变量没有被 crate 中的任何其他项使用或引用。注意，链接器(linker)仍有权移除此类变量。</p>
 <p>下面的示例显示了编译器在什么条件下在输出对象文件中保留静态(<code>static</code>)项。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -11224,7 +11227,7 @@ $ nm -C foo.o
 </code></pre>
 <h2><a class="header" href="#the-no_mangle-attribute" id="the-no_mangle-attribute">The <code>no_mangle</code> attribute</a></h2>
 <h2><a class="header" href="#no_mangle属性" id="no_mangle属性"><code>no_mangle</code>属性</a></h2>
-<p>可以在任何<a href="items.html">数据项</a>上使用 <em><code>no_mangle</code>属性</em>来禁用标准名称符号化改编(standard symbol name mangling。禁用此功能后，此数据项的导出 symbol 将直接是此数据项的原来的名称标识符。</p>
+<p>可以在任何<a href="items.html">数据项</a>上使用 <em><code>no_mangle</code>属性</em>来禁用标准名称符号名混淆(standard symbol name mangling)。禁用此功能后，此数据项的导出符号(symbol)名将直接是此数据项的原来的名称标识符。</p>
 <h2><a class="header" href="#the-link_section-attribute" id="the-link_section-attribute">The <code>link_section</code> attribute</a></h2>
 <h2><a class="header" href="#link_section属性" id="link_section属性"><code>link_section</code>属性</a></h2>
 <p><code>link_section</code>属性指定了输出对象文件中<a href="items/functions.html">函数</a>或<a href="items/static-items.html">静态项</a>的内容将被放置到的节点位置。它使用 <a href="attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法指定节点名称。</p>
@@ -11260,7 +11263,7 @@ commit:  f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
 <h2><a class="header" href="#the-panic_handler-attribute" id="the-panic_handler-attribute">The <code>panic_handler</code> attribute</a></h2>
 <h2><a class="header" href="#panic_handler属性" id="panic_handler属性"><code>panic_handler</code>属性</a></h2>
 <p><em><code>panic_handler</code>属性</em>只能应用于签名为 <code>fn(&amp;PanicInfo) -&gt; !</code> 的函数。有此<a href="attributes.html">属性</a>标记的函数定义了 panic 的行为。核心库内的结构体 <a href="https://doc.rust-lang.org/core/panic/struct.PanicInfo.html"><code>PanicInfo</code></a> 可以收集 panic 发生点的一些信息。在二进制、dylib 或 cdylib 类型的 crate 的依赖关系图(dependency graph)中必须有一个<code>panic_handler</code> 函数。</p>
-<p>下面展示了一个 <code>panic_handler</code> 函数，它记录(log)  panic  消息，然后终止线程。</p>
+<p>下面展示了一个 <code>panic_handler</code> 函数，它记录(log) panic 消息，然后终止(halts)线程。</p>
 <!-- ignore: test infrastructure can't handle no_std -->
 <pre><code class="language-rust ignore">#![no_std]
 
@@ -11308,11 +11311,12 @@ fn panic(info: &amp;PanicInfo) -&gt; ! {
 <!-- 2020-11-12-->
 <!-- checked -->
 <h1><a class="header" href="#appendices" id="appendices">Appendices</a></h1>
+<h1><a class="header" href="#附录" id="附录">附录</a></h1>
 <h1><a class="header" href="#appendixmacro-follow-set-ambiguity-formal-specification" id="appendixmacro-follow-set-ambiguity-formal-specification">Appendix：Macro Follow-Set Ambiguity Formal Specification</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macro-ambiguity.md">macro-ambiguity.md</a><br />
 commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 <br />
-本章译文最后维护日期：2020-11-7</p>
+本章译文最后维护日期：2020-11-17</p>
 </blockquote>
 <p>本文介绍了下述<a href="macros-by-example.html">声明宏</a>规则的正式规范。它们最初是在 [RFC550] 中指定的（本文的大部分内容都是从其中复制过来的），并在后续的 RFC 中进行了进一步的展开。</p>
 <h2><a class="header" href="#definitions--conventions" id="definitions--conventions">Definitions &amp; Conventions</a></h2>
@@ -11328,7 +11332,7 @@ commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 <br />
 <li><code>simple NT</code>：简单NT，“元变量”类型的非终结符（下面会进一步讨论）。</li>
 <li><code>complex NT</code>：复杂NT，重复元类型的非终结符，通过重复元操作符（<code>\*</code>, <code>+</code>, <code>?</code>）指定重复次数。 <!-- a repetition matching non-terminal, specified via repetition operators (`\*`, `+`, `?`). --></li>
 <li><code>token</code>：匹配器中不可再细分的元素；例如，标识符、操作符、开/闭定界符<em>和</em>简单NT(simple NT)。</li>
-<li><code>token tree</code>：token树，token树由 token(叶)、复杂NT和子token树（token树的有限序列）组成的树形数据结构。</li>
+<li><code>token tree</code>：token树，token树由 token(叶)、复杂NT 和子token树（token树的有限序列）组成的树形数据结构。</li>
 <li><code>delimiter token</code>：定界符，一种用于划分一个匹配段的结束和下一个匹配段的开始的 token。</li>
 <li><code>separator token</code>：分隔符，复杂NT 中的可选定界符，用在重复元里以分隔元素。</li>
 <li><code>separated complex NT</code>：带分隔符的复杂NT，分隔符是重复元的一部分的复杂NT。</li>
@@ -11346,11 +11350,11 @@ commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 <br />
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>(start $foo:expr $($i:ident),\* end)</code> 是一个匹配器(matcher)。整个匹配器是一个有界序列（使用开闭定界符 <code>(</code> 和 <code>)</code> 界定），<code>$foo</code> 和 <code>$i</code> 是简单NT(simple NT)， <code>expr</code> 和 <code>ident</code> 是它们各自的匹配段选择器(fragment specifiers)。</p>
+<p><code>(start $foo:expr $($i:ident),\* end)</code> 是一个匹配器(matcher)。整个匹配器是一个有界代码序列（使用开闭定界符 <code>(</code> 和 <code>)</code> 界定），<code>$foo</code> 和 <code>$i</code> 是简单NT(simple NT)， <code>expr</code> 和 <code>ident</code> 是它们各自的匹配段选择器(fragment specifiers)。</p>
 <p><code>$(i:ident),\*</code> <em>也</em>是一个 NT；它是一个复杂NT，匹配那些被逗号分隔成的标识符类型的重复元。<code>,</code> 是这个复杂NT 的分隔符；它出现在匹配段的每对元素（如果有的话）之间。</p>
-<p>复杂NT 的另一个例子是 <code>$(hi $e:expr ;)+</code>，它匹配 <code>hi &lt;expr&gt;; hi &lt;expr&gt;; ...</code> 这种格式的代码，其中 <code>hi &lt;expr&gt;;</code> 至少出现一次。注意，这个复杂NT 没有专用的分隔符。</p>
-<p>(请注意，Rust 解析器确保有界序列始终具有正确的token树结构嵌套以及开/闭定界符的正确匹配。)</p>
-<p>我们倾向于使用变量“M”表示匹配器，变量“t”和“u”表示任意单个token，变量“tt”和“uu”表示任意token树。（使用“tt”确实存在潜在的歧义，因为它的额外角色是一个匹配段选择器；但不用太担心，因为从上下文中，可以很清楚地看出哪个解释更符合语义）</p>
+<p>复杂NT 的另一个例子是 <code>$(hi $e:expr ;)+</code>，它匹配 <code>hi &lt;expr&gt;; hi &lt;expr&gt;; ...</code> 这种格式的代码，其中 <code>hi &lt;expr&gt;;</code> 至少出现一次。注意，这种复杂NT 没有专用的分隔符。</p>
+<p>(请注意，Rust 解析器会确保这类有界代码序列始终具有正确的 token树的嵌套结构以及开/闭定界符的正确匹配。)</p>
+<p>我们倾向于使用变量“M”表示匹配器，变量“t”和“u”表示任意单个 token，变量“tt”和“uu”表示任意token树。（使用“tt”确实存在潜在的歧义，因为它的额外角色是一个匹配段选择器；但不用太担心，因为从上下文中，可以很清楚地看出哪个解释更符合语义）</p>
 <p>“SEP”将代表分隔符，“OP”将代表重复元运算符 <code>\*</code>, <code>+</code>, 和 <code>?</code> “OPEN”/“CLOSE”覆盖围绕定界序列的匹配 token对（例如 <code>[</code> 和 <code>]</code> ）。</p>
 <p>希腊字母 &quot;α&quot; &quot;β&quot; &quot;γ&quot; &quot;δ&quot; 代表潜在的空token树序列。（然而，希腊字母 &quot;ε&quot;(epsilon)在表示形式中有特殊的作用，并不代表token树序列。）</p>
 <ul>
@@ -11642,11 +11646,11 @@ commit:  dc3808468e37ff4c1f663d26c491a3549a42c201 <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/glossary.md">glossary.md</a><br />
 commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
-本章译文最后维护日期：2020-11-3</p>
+本章译文最后维护日期：2020-11-17</p>
 </blockquote>
 <h3><a class="header" href="#abstract-syntax-tree" id="abstract-syntax-tree">Abstract syntax tree</a></h3>
-<h3><a class="header" href="#抽象语法树" id="抽象语法树">抽象语法树</a></h3>
-<p>“抽象语法树”，或“AST”，是编译器编译程序时，程序结构的中间表示形式。<br />
+<h3><a class="header" href="#抽象句法树" id="抽象句法树">抽象句法树</a></h3>
+<p>“抽象句法树”，或“AST”，是编译器编译程序时，程序结构的中间表示形式。<br />
 An ‘abstract syntax tree’, or ‘AST’, is an intermediate representation of the structure of the program when the compiler is compiling it.</p>
 <h3><a class="header" href="#alignment" id="alignment">Alignment</a></h3>
 <h3><a class="header" href="#对齐量" id="对齐量">对齐量</a></h3>
@@ -11787,7 +11791,7 @@ Generic functions and generic structs can use traits to constrain, or bound, the
 A type which does not appear as an argument to another type. For example, <code>T</code> is uncovered, but the <code>T</code> in <code>Vec&lt;T&gt;</code> is covered. This is only relevant for type arguments.</p>
 <h3><a class="header" href="#undefined-behavior" id="undefined-behavior">Undefined behavior</a></h3>
 <h3><a class="header" href="#未定义行为" id="未定义行为">未定义行为</a></h3>
-<p>未指定的编译时或运行时行为。这可能导致，但不限于：进程终止或崩溃；不正确的、不正确的或非预定计算；或特定于平台的结果。查看<a href="behavior-considered-undefined.html">更多</a><br />
+<p>非指定的编译时或运行时行为。这可能导致，但不限于：进程终止或崩溃；不正确的、不正确的或非预定计算；或特定于平台的结果。查看<a href="behavior-considered-undefined.html">更多</a><br />
 Compile-time or run-time behavior that is not specified. This may result in, but is not limited to: process termination or corruption; improper, incorrect, or unintended computation; or platform-specific results. <a href="behavior-considered-undefined.html">More</a>.</p>
 <h3><a class="header" href="#uninhabited" id="uninhabited">Uninhabited</a></h3>
 <p>如果类型没有构造函数，因此永远不能实例化，则该类型是 Uninhabited。一个 Uninhabited 类型是“空的”，意思是该类型没有值。Uninhabited 类型的典型例子是 <a href="types/never.html">never type</a> <code>!</code>，或不带变体的 <code>enum Never { }</code>。与之相对的是 <a href="glossary.html#inhabited">Inhabited</a>。<br />

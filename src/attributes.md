@@ -178,16 +178,16 @@ pub fn f() {}
   - [`allow`]、[`warn`]、[`deny`]、[`forbid`] — 更改默认的 lint检查级别。
   - [`deprecated`] — 生成弃用通知。
   - [`must_use`] — 为未使用的值生成 lint 提醒。
-- ABI、链接(linking)、symbol、和 FFI
+- ABI、链接(linking)、符号(symbol)、和 FFI
   - [`link`] — 指定要与外部(`extern`)块链接的本地库。
-  - [`link_name`] — 指定外部(`extern`)块中的函数或静态项的 symbol 的名称。
+  - [`link_name`] — 指定外部(`extern`)块中的函数或静态项的符号(symbol)名。
   - [`no_link`] — 防止链接外部crate。
   - [`repr`] — 控制类型的布局。
   - [`crate_type`] — 指定 crate 的类别(库、可执行文件等)。
-  - [`no_main`] — 禁止发布 `main` symbol。
-  - [`export_name`] — 指定函数或静态项导出的 symbol名。
+  - [`no_main`] — 禁止发布 `main`符号(symbol)。
+  - [`export_name`] — 指定函数或静态项导出的符号(symbol)名。
   - [`link_section`] — 指定用于函数或静态项的对象文件的部分。
-  - [`no_mangle`] — 禁用对 symbol名重新编码。
+  - [`no_mangle`] — 禁用对符号(symbol)名编码。
   - [`used`] — 强制编译器在输出对象文件中保留静态项。
   - [`crate_name`] — 指定 crate名。
 - 代码生成(Code generation)

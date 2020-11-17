@@ -170,11 +170,11 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/glossary.md">glossary.md</a><br />
 commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
-本章译文最后维护日期：2020-11-3</p>
+本章译文最后维护日期：2020-11-17</p>
 </blockquote>
 <h3><a class="header" href="#abstract-syntax-tree" id="abstract-syntax-tree">Abstract syntax tree</a></h3>
-<h3><a class="header" href="#抽象语法树" id="抽象语法树">抽象语法树</a></h3>
-<p>“抽象语法树”，或“AST”，是编译器编译程序时，程序结构的中间表示形式。<br />
+<h3><a class="header" href="#抽象句法树" id="抽象句法树">抽象句法树</a></h3>
+<p>“抽象句法树”，或“AST”，是编译器编译程序时，程序结构的中间表示形式。<br />
 An ‘abstract syntax tree’, or ‘AST’, is an intermediate representation of the structure of the program when the compiler is compiling it.</p>
 <h3><a class="header" href="#alignment" id="alignment">Alignment</a></h3>
 <h3><a class="header" href="#对齐量" id="对齐量">对齐量</a></h3>
@@ -315,7 +315,7 @@ Generic functions and generic structs can use traits to constrain, or bound, the
 A type which does not appear as an argument to another type. For example, <code>T</code> is uncovered, but the <code>T</code> in <code>Vec&lt;T&gt;</code> is covered. This is only relevant for type arguments.</p>
 <h3><a class="header" href="#undefined-behavior" id="undefined-behavior">Undefined behavior</a></h3>
 <h3><a class="header" href="#未定义行为" id="未定义行为">未定义行为</a></h3>
-<p>未指定的编译时或运行时行为。这可能导致，但不限于：进程终止或崩溃；不正确的、不正确的或非预定计算；或特定于平台的结果。查看<a href="behavior-considered-undefined.html">更多</a><br />
+<p>非指定的编译时或运行时行为。这可能导致，但不限于：进程终止或崩溃；不正确的、不正确的或非预定计算；或特定于平台的结果。查看<a href="behavior-considered-undefined.html">更多</a><br />
 Compile-time or run-time behavior that is not specified. This may result in, but is not limited to: process termination or corruption; improper, incorrect, or unintended computation; or platform-specific results. <a href="behavior-considered-undefined.html">More</a>.</p>
 <h3><a class="header" href="#uninhabited" id="uninhabited">Uninhabited</a></h3>
 <p>如果类型没有构造函数，因此永远不能实例化，则该类型是 Uninhabited。一个 Uninhabited 类型是“空的”，意思是该类型没有值。Uninhabited 类型的典型例子是 <a href="types/never.html">never type</a> <code>!</code>，或不带变体的 <code>enum Never { }</code>。与之相对的是 <a href="#inhabited">Inhabited</a>。<br />

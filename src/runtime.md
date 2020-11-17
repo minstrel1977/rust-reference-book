@@ -12,7 +12,7 @@
 
 *`panic_handler`属性*只能应用于签名为 `fn(&PanicInfo) -> !` 的函数。有此[属性][attribute]标记的函数定义了 panic 的行为。核心库内的结构体 [`PanicInfo`] 可以收集 panic 发生点的一些信息。在二进制、dylib 或 cdylib 类型的 crate 的依赖关系图(dependency graph)中必须有一个`panic_handler` 函数。
 
-下面展示了一个 `panic_handler` 函数，它记录(log)  panic  消息，然后终止线程。
+下面展示了一个 `panic_handler` 函数，它记录(log) panic 消息，然后终止(halts)线程。
 
 <!-- ignore: test infrastructure can't handle no_std -->
 ```rust,ignore

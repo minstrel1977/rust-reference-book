@@ -28,9 +28,9 @@
 | ( )               | (`,` _Parameter_)<sup>?</sup> | 数据项分组                        |
 
 ## String table productions
-## 字串表产生式
+## 字符串表产生式
 
-文法中的一些规则 &mdash; 比如[一元运算符][unary operators]，[二元运算符][binary operators]和[关键字][keywords] &mdash; 会以简化形式：作为可打印字符串的列表形式（在本书的相关章节的头部）给出。这些规则构成了关于 [token][tokens]规则的规则子集，并且它们被假定为源码编译时的词法分析阶段的结果被再次输入给解析器，然后由一个<abbr title="确定性有限自动机(Deterministic Finite Automaton)">DFA</abbr>驱动，对所有此字串表条目(string table entries)进行析取操作（来进行句法分析）。
+文法中的一些规则 &mdash; 比如[一元运算符][unary operators]，[二元运算符][binary operators]和[关键字][keywords] &mdash; 会以简化形式：作为可打印字符串的列表形式（在本书的相关章节的头部的各种产生式定义/句法规则里）给出。这些规则构成了关于 [token][tokens]规则的规则子集，并且它们被假定为源码编译时的词法分析阶段的结果被再次输入给解析器，然后由一个<abbr title="确定性有限自动机(Deterministic Finite Automaton)">DFA</abbr>驱动，对此字符串表里的所有条目(string table entries)进行析取(disjunction)操作（来进行句法分析）。
 
 本书还约定，当文法表中出现如 `monospace` 这样的字符串时，它代表对这些产生式中的单一 token 成员的隐式引用。查阅 [tokens] 以获取更多信息。
 

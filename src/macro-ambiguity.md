@@ -2,7 +2,7 @@
 
 >[macro-ambiguity.md](https://github.com/rust-lang/reference/blob/master/src/macro-ambiguity.md)\
 >commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 \
->本章译文最后维护日期：2020-11-7
+>本章译文最后维护日期：2020-11-17
 
 本文介绍了下述[声明宏][Macros By Example]规则的正式规范。它们最初是在 [RFC550] 中指定的（本文的大部分内容都是从其中复制过来的），并在后续的 RFC 中进行了进一步的展开。
 
@@ -19,7 +19,7 @@
   - `simple NT`：简单NT，“元变量”类型的非终结符（下面会进一步讨论）。
   - `complex NT`：复杂NT，重复元类型的非终结符，通过重复元操作符（`\*`, `+`, `?`）指定重复次数。 <!-- a repetition matching non-terminal, specified via repetition operators (`\*`, `+`, `?`). -->
   - `token`：匹配器中不可再细分的元素；例如，标识符、操作符、开/闭定界符*和*简单NT(simple NT)。
-  - `token tree`：token树，token树由 token(叶)、复杂NT和子token树（token树的有限序列）组成的树形数据结构。
+  - `token tree`：token树，token树由 token(叶)、复杂NT 和子token树（token树的有限序列）组成的树形数据结构。
   - `delimiter token`：定界符，一种用于划分一个匹配段的结束和下一个匹配段的开始的 token。
   - `separator token`：分隔符，复杂NT 中的可选定界符，用在重复元里以分隔元素。
   - `separated complex NT`：带分隔符的复杂NT，分隔符是重复元的一部分的复杂NT。
@@ -36,15 +36,15 @@ macro_rules! i_am_an_mbe {
 }
 ```
 
-`(start $foo:expr $($i:ident),\* end)` 是一个匹配器(matcher)。整个匹配器是一个有界序列（使用开闭定界符 `(` 和 `)` 界定），`$foo` 和 `$i` 是简单NT(simple NT)， `expr` 和 `ident` 是它们各自的匹配段选择器(fragment specifiers)。
+`(start $foo:expr $($i:ident),\* end)` 是一个匹配器(matcher)。整个匹配器是一个有界代码序列（使用开闭定界符 `(` 和 `)` 界定），`$foo` 和 `$i` 是简单NT(simple NT)， `expr` 和 `ident` 是它们各自的匹配段选择器(fragment specifiers)。
 
 `$(i:ident),\*` *也*是一个 NT；它是一个复杂NT，匹配那些被逗号分隔成的标识符类型的重复元。`,` 是这个复杂NT 的分隔符；它出现在匹配段的每对元素（如果有的话）之间。
 
-复杂NT 的另一个例子是 `$(hi $e:expr ;)+`，它匹配 `hi <expr>; hi <expr>; ...` 这种格式的代码，其中 `hi <expr>;` 至少出现一次。注意，这个复杂NT 没有专用的分隔符。
+复杂NT 的另一个例子是 `$(hi $e:expr ;)+`，它匹配 `hi <expr>; hi <expr>; ...` 这种格式的代码，其中 `hi <expr>;` 至少出现一次。注意，这种复杂NT 没有专用的分隔符。
 
-(请注意，Rust 解析器确保有界序列始终具有正确的token树结构嵌套以及开/闭定界符的正确匹配。)
+(请注意，Rust 解析器会确保这类有界代码序列始终具有正确的 token树的嵌套结构以及开/闭定界符的正确匹配。)
 
-我们倾向于使用变量“M”表示匹配器，变量“t”和“u”表示任意单个token，变量“tt”和“uu”表示任意token树。（使用“tt”确实存在潜在的歧义，因为它的额外角色是一个匹配段选择器；但不用太担心，因为从上下文中，可以很清楚地看出哪个解释更符合语义）
+我们倾向于使用变量“M”表示匹配器，变量“t”和“u”表示任意单个 token，变量“tt”和“uu”表示任意token树。（使用“tt”确实存在潜在的歧义，因为它的额外角色是一个匹配段选择器；但不用太担心，因为从上下文中，可以很清楚地看出哪个解释更符合语义）
 
 “SEP”将代表分隔符，“OP”将代表重复元运算符 `\*`, `+`, 和 `?` “OPEN”/“CLOSE”覆盖围绕定界序列的匹配 token对（例如 `[` 和 `]` ）。
 

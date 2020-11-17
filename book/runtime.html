@@ -176,7 +176,7 @@ commit:  f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
 <h2><a class="header" href="#the-panic_handler-attribute" id="the-panic_handler-attribute">The <code>panic_handler</code> attribute</a></h2>
 <h2><a class="header" href="#panic_handler属性" id="panic_handler属性"><code>panic_handler</code>属性</a></h2>
 <p><em><code>panic_handler</code>属性</em>只能应用于签名为 <code>fn(&amp;PanicInfo) -&gt; !</code> 的函数。有此<a href="attributes.html">属性</a>标记的函数定义了 panic 的行为。核心库内的结构体 <a href="https://doc.rust-lang.org/core/panic/struct.PanicInfo.html"><code>PanicInfo</code></a> 可以收集 panic 发生点的一些信息。在二进制、dylib 或 cdylib 类型的 crate 的依赖关系图(dependency graph)中必须有一个<code>panic_handler</code> 函数。</p>
-<p>下面展示了一个 <code>panic_handler</code> 函数，它记录(log)  panic  消息，然后终止线程。</p>
+<p>下面展示了一个 <code>panic_handler</code> 函数，它记录(log) panic 消息，然后终止(halts)线程。</p>
 <!-- ignore: test infrastructure can't handle no_std -->
 <pre><code class="language-rust ignore">#![no_std]
 

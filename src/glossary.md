@@ -3,12 +3,12 @@
 
 >[glossary.md](https://github.com/rust-lang/reference/blob/master/src/glossary.md)\
 >commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e \
->本章译文最后维护日期：2020-11-3
+>本章译文最后维护日期：2020-11-17
 
 ### Abstract syntax tree
-### 抽象语法树
+### 抽象句法树
 
-“抽象语法树”，或“AST”，是编译器编译程序时，程序结构的中间表示形式。\
+“抽象句法树”，或“AST”，是编译器编译程序时，程序结构的中间表示形式。\
 An ‘abstract syntax tree’, or ‘AST’, is an intermediate representation of the structure of the program when the compiler is compiling it.
 
 ### Alignment
@@ -211,7 +211,7 @@ A type which does not appear as an argument to another type. For example, `T` is
 ### Undefined behavior
 ### 未定义行为
 
-未指定的编译时或运行时行为。这可能导致，但不限于：进程终止或崩溃；不正确的、不正确的或非预定计算；或特定于平台的结果。查看[更多][undefined-behavior]\
+非指定的编译时或运行时行为。这可能导致，但不限于：进程终止或崩溃；不正确的、不正确的或非预定计算；或特定于平台的结果。查看[更多][undefined-behavior]\
 Compile-time or run-time behavior that is not specified. This may result in, but is not limited to: process termination or corruption; improper, incorrect, or unintended computation; or platform-specific results. [More][undefined-behavior].
 
 ### Uninhabited

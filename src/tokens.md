@@ -14,7 +14,7 @@ token 是采用非递归方式的正则文法(regular languages)定义的基本�
 * [标点符号](#punctuation)
 * [分隔符](#delimiters)
 
-在本文档中，“简单”token 会直接在（相关章节头部的）[字串表产生式(production)][string table production]表单中给出，并以 `monospace` 字体显示。（译者注：本译作的原文中，在文法表之外的行文中也会大量出现这种直接使用简单token 来替代相关名词的做法，一般此时如果译者觉得这种 token 需要翻译时，会使用诸如：结构体(`struct`) 这种形式来翻译。读者需要意识到“struct”是文法里的一个 token，能以其字面形式直接出现在源码里。）
+在本文档中，“简单”token 会直接在（相关章节头部的）[字符串表产生式(production)][string table production]表单中给出，并以 `monospace` 字体显示。（译者注：本译作的原文中，在文法表之外的行文中也会大量出现这种直接使用简单token 来替代相关名词的做法，一般此时如果译者觉得这种 token 需要翻译时，会使用诸如：结构体(`struct`) 这种形式来翻译。读者需要意识到“struct”是文法里的一个 token，能以其字面形式直接出现在源码里。）
 
 ## Literals
 ## 字面量

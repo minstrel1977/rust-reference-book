@@ -3,7 +3,7 @@
 
 >[abi.md.md](https://github.com/rust-lang/reference/blob/master/src/abi.md)\
 >commit:  24137b49a3c02f53e5a7699a78a47501aef3e769 \
->本章译文最后维护日期：2020-11-3
+>本章译文最后维护日期：2020-11-17
 
 本节介绍影响 crate 编译输出的 ABI 的各种特性。
 
@@ -12,7 +12,7 @@
 ## The `used` attribute
 ## `used`属性
 
-*`used`属性*只能用在[静态(`static`)项][`static` items]上。此[属性][attribute]强制编译器将该变量保留在输出对象文件中(.o、.rlib等，不包括最终的二进制文件)，即使该变量没有被 crate 中的任何其他项使用或引用。注意，链接器(linker)仍有权移除此类变量。
+*`used`属性*只能用在[静态(`static`)项][`static` items]上。此[属性][attribute]强制编译器将该变量保留在输出对象文件中(.o、.rlib 等，不包括最终的二进制文件)，即使该变量没有被 crate 中的任何其他项使用或引用。注意，链接器(linker)仍有权移除此类变量。
 
 下面的示例显示了编译器在什么条件下在输出对象文件中保留静态(`static`)项。
 
@@ -59,7 +59,7 @@ $ nm -C foo.o
 ## The `no_mangle` attribute
 ## `no_mangle`属性
 
-可以在任何[数据项][item]上使用 *`no_mangle`属性*来禁用标准名称符号化改编(standard symbol name mangling。禁用此功能后，此数据项的导出 symbol 将直接是此数据项的原来的名称标识符。
+可以在任何[数据项][item]上使用 *`no_mangle`属性*来禁用标准名称符号名混淆(standard symbol name mangling)。禁用此功能后，此数据项的导出符号(symbol)名将直接是此数据项的原来的名称标识符。
 
 ## The `link_section` attribute
 ## `link_section`属性
