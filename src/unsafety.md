@@ -11,7 +11,7 @@
 
 - 读取或写入[可变][mutable]静态变量；读取或写入或[外部][external]静态变量。
 - 访问[联合体(`union`)]的字段，注意不是给它的字段赋值。
-- 调用一个非安全(unsafe)函数（包括内部函数和外部函数）。
+- 调用一个非安全(unsafe)函数（包括外部函数和和内部函数(intrinsic)）。
 - 实现[非安全(unsafe) trait][unsafe trait].
 
 [`union`]: items/unions.md

@@ -240,7 +240,7 @@ assert_eq!(std::mem::size_of::<SizeRoundedUp>(), 12);  // 首先来自于b的尺
 
 <div class="warning">
 
-警告：C语言中的枚举与 Rust 中的那些应用了 `#[repr(C)]`表型的[无字段枚举][field-less enums]之间有着重要的区别。C语言中的枚举主要是 `typedef` 加上一些命名常量；换句话说，C枚举(`enum`)类型的对象可以包含任何整数值。例如，C枚举通常被用做标志位。相比之下，Rust的[无字段枚举][field-less enums]只能合法地[^译注2]保存判别式的值，其他的都是[未定义行为][undefined behavior]。因此，在 FFI 中使用无字段枚举来建模 C语言中的枚举(`enum`)通常是错误的。
+警告：C语言中的枚举与 Rust 中的那些应用了 `#[repr(C)]`表型的[无字段枚举][field-less enums]之间有着重要的区别。C语言中的枚举主要是 `typedef` 加上一些具名常量；换句话说，C枚举(`enum`)类型的对象可以包含任何整数值。例如，C枚举通常被用做标志位。相比之下，Rust的[无字段枚举][field-less enums]只能合法地[^译注2]保存判别式的值，其他的都是[未定义行为][undefined behavior]。因此，在 FFI 中使用无字段枚举来建模 C语言中的枚举(`enum`)通常是错误的。
 
 </div>
 

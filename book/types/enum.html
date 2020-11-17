@@ -176,12 +176,12 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <p><a href="../items/enumerations.html">枚举(<code>enum</code>)数据项</a>同时声明了类型和它的各种<em>变体(variants)</em>，其中每个变体都独立命名，可使用定义结构体、元组结构体或单元结构体(unit-like struct)的句法来定义它们。</p>
 <p>枚举(<code>enum</code>)的实例可以在<a href="../expressions/enum-variant-expr.html">枚举变体表达式</a>中构造。</p>
 <p>任何枚举值消耗的内存和其同类型的其他变体都是相同的，具体都为其枚举(<code>enum</code>)类型的最大变体所需的内存再加上存储其判别值(discriminant)所需的内存。</p>
-<p>枚举类型不能在<em>结构上</em>表示为类型，必须通过对<a href="../items/enumerations.html">枚举数据项</a>的命名引用(named reference)来表示。<sup class="footnote-reference"><a href="#译注1">2</a></sup></p>
+<p>枚举类型不能在<em>结构上</em>表示为类型，必须通过对<a href="../items/enumerations.html">枚举数据项</a>的具名引用(named reference)来表示。<sup class="footnote-reference"><a href="#译注1">2</a></sup></p>
 <div class="footnote-definition" id="enumtype"><sup class="footnote-definition-label">1</sup>
 <p>../<code>enum</code>类型类似于 ML 中的数据(<code>data</code>)构造函数声明，或 Limbo 中的 <em>pick ADT</em>。</p>
 </div>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">2</sup>
-<p>译者理解这句话的意思是：枚举不同于普通结构化的类型，所有的枚举类型都是对枚举数据项的引用；这里引用分两种，一种是类C枚举，就是对数据项的直接命名引用；另一种是带字段的枚举变体，这种其实是类似于 <code>Box</code>、<code>Rc</code> 这样的命名引用，它通过封装其他类型来指导数据的存储和限定其上可用的操作。</p>
+<p>译者理解这句话的意思是：枚举不同于普通结构化的类型，所有的枚举类型都是对枚举数据项的引用；这里引用分两种，一种是类C枚举，就是对数据项的直接具名引用；另一种是带字段的枚举变体，这种其实是类似于 <code>Box</code>、<code>Rc</code> 这样的具名引用，它通过封装其他类型来指导数据的存储和限定其上可用的操作。</p>
 </div>
 <!-- 2020-11-12-->
 <!-- checked -->

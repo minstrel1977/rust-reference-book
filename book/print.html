@@ -2422,7 +2422,7 @@ commit: fbf34356b709cfc0debb01acaaff038d4e339aab <br />
       <code>}</code></p>
 </blockquote>
 <p>模块是零个或多个<a href="items/../items.html">数据项</a>的容器。</p>
-<p><em>模块项</em>是一个用花括号括起来的，有命名的，并以关键字 <code>mod</code> 作为前缀的模块。模块项将一个新的命名模块引入到组成 crate 的模块树中。模块可以任意嵌套。</p>
+<p><em>模块项</em>是一个用花括号括起来的，有名称的，并以关键字 <code>mod</code> 作为前缀的模块。模块项将一个新的具名模块引入到组成 crate 的模块树中。模块可以任意嵌套。</p>
 <p>模块的一个例子：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -2444,7 +2444,7 @@ commit: fbf34356b709cfc0debb01acaaff038d4e339aab <br />
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>模块和类型共享相同的命名空间。禁止在同一个作用域中声明与此作用域下模块同名的命名类型(named type)：也就是说，类型定义、trait、结构体、枚举、联合体、类型参数或 crate 不能在其作用域中屏蔽此作用域中也生效的模块名称，反之亦然。使用 <code>use</code> 引入到当前作用域的数据项也受这个限制。</p>
+<p>模块和类型共享相同的命名空间。禁止在同一个作用域中声明与此作用域下模块同名的具名类型(named type)：也就是说，类型定义、trait、结构体、枚举、联合体、类型参数或 crate 不能在其作用域中屏蔽此作用域中也生效的模块名称，反之亦然。使用 <code>use</code> 引入到当前作用域的数据项也受这个限制。</p>
 <p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>mod</code> 之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从 token流中移除之前利用此句法来使用此关键字。</p>
 <h2><a class="header" href="#module-source-filenames" id="module-source-filenames">Module Source Filenames</a></h2>
 <h2><a class="header" href="#模块的源文件名" id="模块的源文件名">模块的源文件名</a></h2>
@@ -2526,7 +2526,7 @@ extern crate std; // 等同于: extern crate std as std;
 
 extern crate std as ruststd; // 使用其他名字去链接 'std'
 </code></pre>
-<p>当命名 Rust crate 时，不允许使用连字符(<code>-</code>)。然而 Cargo 包却可以使用它们。在这种情况下，当 <code>Cargo.toml</code> 文件中没有指定 crate 名称时， Cargo 将透明地将 <code>-</code> 替换为 <code>_</code> 以供 Rust 源文件内的外部crate(<code>extern crate</code>)声明引用 (详见 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0940-hyphens-considered-harmful.md">RFC 940</a>)。</p>
+<p>当给 Rust crate 命名时，不允许使用连字符(<code>-</code>)。然而 Cargo 包却可以使用它们。在这种情况下，当 <code>Cargo.toml</code> 文件中没有指定 crate 名称时， Cargo 将透明地将 <code>-</code> 替换为 <code>_</code> 以供 Rust 源文件内的外部crate(<code>extern crate</code>)声明引用 (详见 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0940-hyphens-considered-harmful.md">RFC 940</a>)。</p>
 <p>这有一个示例：</p>
 <!-- ignore: requires external crates -->
 <pre><code class="language-rust ignore">// 导入 Cargo 包 hello-world
@@ -3133,7 +3133,7 @@ let mut a: Animal = Animal::Dog;
 a = Animal::Cat;
 <span class="boring">}
 </span></code></pre></pre>
-<p>枚举构造器可以带有命名字段或未命名字段：</p>
+<p>枚举构造器可以带有具名字段或未具名字段：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3413,7 +3413,7 @@ commit: da910b725a59ba9bb32c6954074f377589a2a689 <br />
 <em>ConstantItem</em> :<br />
    <code>const</code> ( <a href="items/../identifiers.html">IDENTIFIER</a> | <code>_</code> ) <code>:</code> <a href="items/../types.html#type-expressions"><em>Type</em></a> <code>=</code> <a href="items/../expressions.html"><em>Expression</em></a> <code>;</code></p>
 </blockquote>
-<p><em>常量项</em>是一个可选的命名 <em><a href="items/../const_eval.html#constant-expressions">常量值</a></em>，它与程序中的具体内存位置没有关联。无论常量在哪里使用，它们本质上都是内联的，这意味着当它们被使用时，都是直接被拷贝到相关的上下文中来使用的。这包括使用非拷贝(non-<a href="items/../special-types-and-traits.html#copy"><code>Copy</code></a>)类型的值和来自外部的 crate 的常量。对相同常量的引用不保证它们引用的是相同的内存地址。</p>
+<p><em>常量项</em>是一个可选的具名 <em><a href="items/../const_eval.html#constant-expressions">常量值</a></em>，它与程序中的具体内存位置没有关联。无论常量在哪里使用，它们本质上都是内联的，这意味着当它们被使用时，都是直接被拷贝到相关的上下文中来使用的。这包括使用非拷贝(non-<a href="items/../special-types-and-traits.html#copy"><code>Copy</code></a>)类型的值和来自外部的 crate 的常量。对相同常量的引用不保证它们引用的是相同的内存地址。</p>
 <p>常量必须显式指定数据类型。类型必须具有 <code>'static</code>生存期：程序初始化器(initializer)中的任何引用都必须具有 <code>'static</code>生存期。</p>
 <p>常量可以引用其他常量的地址，在这种情况下，如果适用，该地址将具有省略的生存期，否则（在大多数情况下）默认为 <code>'static</code>生存期。（请参阅<a href="items/../lifetime-elision.html#static-lifetime-elision">静态生存期省略</a>。）但是，编译器仍有权多次调整转移该常量，因此引用的地址可能并不固定。</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -3471,7 +3471,7 @@ fn create_and_drop_zero_with_destructor() {
 const _: () =  { struct _SameNameTwice; };
 <span class="boring">}
 </span></code></pre></pre>
-<p>与<a href="items/use-declarations.html#underscore-imports">下划线导入</a>一样，宏可以多次安全地在同一作用域中扩展出相同的未命名常量。例如，以下内容不应该产生错误:</p>
+<p>与<a href="items/use-declarations.html#underscore-imports">下划线导入</a>一样，宏可以多次安全地在同一作用域中扩展出相同的未具名常量。例如，以下内容不应该产生错误:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -4100,7 +4100,7 @@ extern &quot;stdcall&quot; { }
 </ul>
 <h2><a class="header" href="#variadic-functions" id="variadic-functions">Variadic functions</a></h2>
 <h2><a class="header" href="#可变参数函数" id="可变参数函数">可变参数函数</a></h2>
-<p>可以在外部块内的函数的参数列表中的一个或多个命名参数后通过引入 <code>...</code> 来让该函数成为可变参数函数：</p>
+<p>可以在外部块内的函数的参数列表中的一个或多个具名参数后通过引入 <code>...</code> 来让该函数成为可变参数函数：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -5412,7 +5412,7 @@ fn f() {
 <span class="boring">}
 </span></code></pre></pre>
 <blockquote>
-<p>注意：<code>core</code> 提供了 <a href="https://doc.rust-lang.org/core/panic/struct.Location.html#method.caller"><code>core::panic::Location::caller</code></a> 来观察调用者的位置。它封装(wrap)了由 <code>rustc</code> 实现的内部函数 <a href="https://doc.rust-lang.org/core/intrinsics/fn.caller_location.html"><code>core::intrinsics::caller_location</code></a>。</p>
+<p>注意：<code>core</code> 提供了 <a href="https://doc.rust-lang.org/core/panic/struct.Location.html#method.caller"><code>core::panic::Location::caller</code></a> 来观察调用者的位置。它封装(wrap)了由 <code>rustc</code> 实现的内部函数(intrinsic) <a href="https://doc.rust-lang.org/core/intrinsics/fn.caller_location.html"><code>core::intrinsics::caller_location</code></a>。</p>
 </blockquote>
 <blockquote>
 <p>注意：由于结果 <code>Location</code> 是一个提示，所以具体实现可能会提前终止对堆栈的遍历。请参阅<a href="attributes/codegen.html#limitations">限制</a>以了解重要的注意事项。</p>
@@ -6041,7 +6041,7 @@ commit: 6b90080371ff44d0074a465945dfdb0de4b50774 <br />
    | <a href="expressions/../statements.html"><em>Statement</em></a><sup>+</sup> <a href="expressions/../expressions.html"><em>ExpressionWithoutBlock</em></a><br />
    | <a href="expressions/../expressions.html"><em>ExpressionWithoutBlock</em></a></p>
 </blockquote>
-<p><em>块表达式</em>或<em>块</em>是一个控制流表达式(control flow expression)，同时也是数据项声明和变量声明的匿名命名空间作用域。作为控制流表达式，块按顺序执行其非数据项声明的语句组件，最后执行可选的最终表达式(final expression)。作为一个匿名命名空间作用域，在本块内声明的数据项只在块本身围成的作用域内有效，而块内由 <code>let</code>语句声明的变量的作用域为下一条语句到块尾。</p>
+<p><em>块表达式</em>或<em>块</em>是一个控制流表达式(control flow expression)，同时也是数据项声明和变量声明的匿名空间作用域。作为控制流表达式，块按顺序执行其非数据项声明的语句组件，最后执行可选的最终表达式(final expression)。作为一个匿名空间作用域，在本块内声明的数据项只在块本身围成的作用域内有效，而块内由 <code>let</code>语句声明的变量的作用域为下一条语句到块尾。</p>
 <p>块的书写形式为：先是一个 <code>{</code>，然后是<a href="expressions/../attributes.html">内部属性</a>，再后是各条<a href="expressions/../statements.html">语句</a>，再后是一个可选表达式，最后是一个 <code>}</code>。语句之间通常需要后跟分号，但有两个例外。数据项声明语句不需要后跟分号；表达式语句通常需要后面的分号，但它的外层表达式是控制流表达式时不需要。此外，允许在语句之间使用额外的分号，但是这些分号并不影响语义。</p>
 <p>在对块表达式求值时，除了数据项声明语句外，每个语句都是按顺序执行的。如果给出了块尾的可选的最终表达式(final expression)，则最后会执行它。</p>
 <p>块的类型是最此块的最终表达式(final expression)的类型，但如果省略了最终表达式，则块的类型为 <code>()</code>。</p>
@@ -8844,12 +8844,12 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <p><a href="types/../items/enumerations.html">枚举(<code>enum</code>)数据项</a>同时声明了类型和它的各种<em>变体(variants)</em>，其中每个变体都独立命名，可使用定义结构体、元组结构体或单元结构体(unit-like struct)的句法来定义它们。</p>
 <p>枚举(<code>enum</code>)的实例可以在<a href="types/../expressions/enum-variant-expr.html">枚举变体表达式</a>中构造。</p>
 <p>任何枚举值消耗的内存和其同类型的其他变体都是相同的，具体都为其枚举(<code>enum</code>)类型的最大变体所需的内存再加上存储其判别值(discriminant)所需的内存。</p>
-<p>枚举类型不能在<em>结构上</em>表示为类型，必须通过对<a href="types/../items/enumerations.html">枚举数据项</a>的命名引用(named reference)来表示。<sup class="footnote-reference"><a href="#译注1">2</a></sup></p>
+<p>枚举类型不能在<em>结构上</em>表示为类型，必须通过对<a href="types/../items/enumerations.html">枚举数据项</a>的具名引用(named reference)来表示。<sup class="footnote-reference"><a href="#译注1">2</a></sup></p>
 <div class="footnote-definition" id="enumtype"><sup class="footnote-definition-label">1</sup>
 <p>../<code>enum</code>类型类似于 ML 中的数据(<code>data</code>)构造函数声明，或 Limbo 中的 <em>pick ADT</em>。</p>
 </div>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">2</sup>
-<p>译者理解这句话的意思是：枚举不同于普通结构化的类型，所有的枚举类型都是对枚举数据项的引用；这里引用分两种，一种是类C枚举，就是对数据项的直接命名引用；另一种是带字段的枚举变体，这种其实是类似于 <code>Box</code>、<code>Rc</code> 这样的命名引用，它通过封装其他类型来指导数据的存储和限定其上可用的操作。</p>
+<p>译者理解这句话的意思是：枚举不同于普通结构化的类型，所有的枚举类型都是对枚举数据项的引用；这里引用分两种，一种是类C枚举，就是对数据项的直接具名引用；另一种是带字段的枚举变体，这种其实是类似于 <code>Box</code>、<code>Rc</code> 这样的具名引用，它通过封装其他类型来指导数据的存储和限定其上可用的操作。</p>
 </div>
 <!-- 2020-11-12-->
 <!-- checked -->
@@ -9519,7 +9519,7 @@ assert_eq!(std::mem::size_of::&lt;SizeRoundedUp&gt;(), 12);  // 首先来自于b
 <p>注意：C中的枚举的表形是由枚举的相应实现定义的，所以在 Rust 中，给无字段枚举应用 C表形得到的表型很可能是一个“最佳猜测”。特别是，当使用某些特定命令行参数来编译特定的 C代码时，这可能是不正确的。</p>
 </blockquote>
 <div class="warning">
-<p>警告：C语言中的枚举与 Rust 中的那些应用了 <code>#[repr(C)]</code>表型的<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举</a>之间有着重要的区别。C语言中的枚举主要是 <code>typedef</code> 加上一些命名常量；换句话说，C枚举(<code>enum</code>)类型的对象可以包含任何整数值。例如，C枚举通常被用做标志位。相比之下，Rust的<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举</a>只能合法地<sup class="footnote-reference"><a href="#译注2">2</a></sup>保存判别式的值，其他的都是<a href="behavior-considered-undefined.html">未定义行为</a>。因此，在 FFI 中使用无字段枚举来建模 C语言中的枚举(<code>enum</code>)通常是错误的。</p>
+<p>警告：C语言中的枚举与 Rust 中的那些应用了 <code>#[repr(C)]</code>表型的<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举</a>之间有着重要的区别。C语言中的枚举主要是 <code>typedef</code> 加上一些具名常量；换句话说，C枚举(<code>enum</code>)类型的对象可以包含任何整数值。例如，C枚举通常被用做标志位。相比之下，Rust的<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举</a>只能合法地<sup class="footnote-reference"><a href="#译注2">2</a></sup>保存判别式的值，其他的都是<a href="behavior-considered-undefined.html">未定义行为</a>。因此，在 FFI 中使用无字段枚举来建模 C语言中的枚举(<code>enum</code>)通常是错误的。</p>
 </div>
 <h4><a class="header" href="#reprc-enums-with-fields" id="reprc-enums-with-fields"><code>#[repr(C)]</code> Enums With Fields</a></h4>
 <h4><a class="header" href="#reprc带字段枚举" id="reprc带字段枚举"><code>#[repr(C)]</code>带字段枚举</a></h4>
@@ -10350,7 +10350,7 @@ let declared_last = PrintOnDrop(&quot;在外层作用域内最先销毁&quot;);
 </ul>
 <blockquote>
 <p><strong>注意</strong>：</p>
-<p>在函数体的最终表达式(final expression)中创建的临时变量会在任何命名变量销毁<em>之后</em>销毁，因为这里没有更小的封闭它的临时作用域。</p>
+<p>在函数体的最终表达式(final expression)中创建的临时变量会在任何具名变量销毁<em>之后</em>销毁，因为这里没有更小的封闭它的临时作用域。</p>
 <p>匹配表达式的<a href="glossary.html#scrutinee">检验对象</a>表达式本身不是一个临时作用域（，但它内部可以包含临时作用域），因此可以在匹配(<code>match</code>)表达式之后销毁检验对象表达式中的临时作用域。例如，<code>match 1 { ref mut z =&gt; z };</code> 中的 <code>1</code> 所在的临时变量一直存活到此语句结束。</p>
 </blockquote>
 <p>一些示例：</p>
@@ -10498,7 +10498,7 @@ let x = (&amp;temp()).use_temp();  // ERROR
 <p>这里说这句是因为操作符的操作数也涉及到销毁作用域范围的确定。</p>
 </div>
 <div class="footnote-definition" id="译注3"><sup class="footnote-definition-label">3</sup>
-<p>对这句话，这里译者按自己的理解再翻译一遍：一个表达式在位置表达式上使用时会被求值，如果此时没有命名变量和此值绑定，那就会先被保存进一个临时变量里，临时作用域就是伴随这此临时变量而生成。此作用域通常在此表达式所在的语句结束时结束，但如果求出的值被通过借用绑定给命名变量，此作用域会扩展到此命名变量的作用域（后面<a href="destructors.html#temporary-lifetime-extension">生存期扩展</a>会讲到）。如果求出的值比较特殊，这个作用域还会提升到全局作用域，这就是所谓的<a href="destructors.html#constant-promotion">常量提升</a>。</p>
+<p>对这句话，这里译者按自己的理解再翻译一遍：一个表达式在位置表达式上使用时会被求值，如果此时没有具名变量和此值绑定，那就会先被保存进一个临时变量里，临时作用域就是伴随这此临时变量而生成。此作用域通常在此表达式所在的语句结束时结束，但如果求出的值被通过借用绑定给具名变量，此作用域会扩展到此具名变量的作用域（后面<a href="destructors.html#temporary-lifetime-extension">生存期扩展</a>会讲到）。如果求出的值比较特殊，这个作用域还会提升到全局作用域，这就是所谓的<a href="destructors.html#constant-promotion">常量提升</a>。</p>
 </div>
 <!-- 2020-11-12-->
 <!-- checked -->
@@ -10818,7 +10818,7 @@ commit: 4a2bdf896cd2df370a91d14cb8ba04e326cd21db <br />
 commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 本章译文最后维护日期：2020-11-16</p>
 </blockquote>
-<p><em>变量</em>是栈帧里的一个组件，可以是命名函数参数、匿名的<a href="expressions.html#temporaries">临时变量</a>或命名局部变量。</p>
+<p><em>变量</em>是栈帧里的一个组件，可以是具名函数参数、匿名的<a href="expressions.html#temporaries">临时变量</a>或具名局部变量。</p>
 <p><em>局部变量</em>（或*本地栈(stack-local)*分配）直接持有一个值，该值在栈内存中分配。该值是栈帧的一部分。</p>
 <p>局部变量是不可变的，除非特别声明。例如：<code>let mut x = ...</code>。</p>
 <p>函数参数是不可变的，除非用 <code>mut</code> 声明。关键字 <code>mut</code> 只应用于紧跟着它的那个参数。例如：<code>|mut x, y|</code> 和 <code>fn f(mut x: Box&lt;i32&gt;, y: Box&lt;i32&gt;)</code> 声明了一个可变变量 <code>x</code> 和一个不可变变量 <code>y</code>。</p>
@@ -10965,7 +10965,7 @@ commit:  b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <ul>
 <li>读取或写入<a href="items/static-items.html#mutable-statics">可变</a>静态变量；读取或写入或<a href="items/external-blocks.html">外部</a>静态变量。</li>
 <li>访问[联合体(<code>union</code>)]的字段，注意不是给它的字段赋值。</li>
-<li>调用一个非安全(unsafe)函数（包括内部函数和外部函数）。</li>
+<li>调用一个非安全(unsafe)函数（包括外部函数和和内部函数(intrinsic)）。</li>
 <li>实现<a href="items/traits.html#unsafe-traits">非安全(unsafe) trait</a>.</li>
 </ul>
 <!-- 2020-11-12-->
@@ -10998,23 +10998,23 @@ commit:  4a2bdf896cd2df370a91d14cb8ba04e326cd21db <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md">behavior-considered-undefined.md</a><br />
 commit: 8aa6f0f5471a23621f52d16e823c6316fda2b904 <br />
-本章译文最后维护日期：2020-11-2</p>
+本章译文最后维护日期：2020-11-17</p>
 </blockquote>
-<p>如果 Rust 代码出现了下列列表中的任何行为，则此代码被认为不正确。这包括非安全(<code>unsafe</code>)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。</p>
-<p>在编写非安全代码时，确保任何与非安全代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何使用非安全代码的安全代码(safe client)，如果当前条件满足了此非安全代码对于安全条件的要求，那此此非安全代码对于此安全代码就是<em>健全的(sound)</em>；如果非安全(<code>unsafe</code>)代码可以被安全代码滥用以致出现未定义行为，那么此非安全(<code>unsafe</code>)代码对这些安全代码来说就是<em>不健全的(unsound)</em>。</p>
+<p>如果 Rust 代码出现了下面列表中的任何行为，则此代码被认为不正确。这包括非安全(<code>unsafe</code>)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。</p>
+<p>在编写非安全代码时，确保任何与非安全代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何使用非安全代码的安全客户端(safe client)，如果当前条件满足了此非安全代码对于安全条件的要求，那此此非安全代码对于此安全客户端就是<em>健全的(sound)</em>；如果非安全(<code>unsafe</code>)代码可以被安全代码滥用以致出现未定义行为，那么此非安全(<code>unsafe</code>)代码对这些安全代码来说就是<em>不健全的(unsound)</em>。</p>
 <div class="warning">
-<p><em><strong>警告：</strong></em> 下面的列表并非详尽无遗地罗列了 Rust 中的未定义行为。而且对于在非安全代码中什么是明确不允许的，目前 Rust 还没有正式的语义模型，因此将来可能会有更多的行为被认为是不安全的。下面的列表是仅仅是我们当前确定知晓的未定义行为。在编写非安全代码之前，请阅读 <a href="https://doc.rust-lang.org/nomicon/index.html">Rustonomicon</a>。</p>
+<p><em><strong>警告：</strong></em> 下面的列表并非详尽无遗地罗列了 Rust 中的未定义行为。而且对于在非安全代码中什么是明确不允许的，目前 Rust 还没有正式的语义模型，因此将来可能会有更多的行为被认为是不安全的。下面的列表仅仅是我们当前确定知晓的未定义行为。在编写非安全代码之前，请阅读 <a href="https://doc.rust-lang.org/nomicon/index.html">Rustonomicon</a>。</p>
 </div>
 <ul>
 <li>数据竞争。</li>
 <li>解引用（使用 <code>*</code> 操作符）悬垂或未对齐裸指针。</li>
-<li>破坏<a href="http://llvm.org/docs/LangRef.html#pointer-aliasing-rules">指针别名规则</a>。<code>&amp;mut T</code> 和 <code>&amp;T</code> 遵循 LLVM 的作用域<a href="http://llvm.org/docs/LangRef.html#noalias">无别名(noalias)</a>模型，除非 <code>&amp;T</code> 内部包含 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 类型。</li>
-<li>修改不可变的数据。[常量(<code>const</code>)]项内的所有数据都是不可变的。此外，所有通过共享引用接触到的数据或不可变绑定所拥有的数据都是不可变的，除非该数据包含在 <code>UnsafeCell&lt;U&gt;</code>] 中。</li>
-<li>通过编译器内部函数(compiler intrinsics)调用未定义行为。</li>
-<li>执行用当前平台不支持的平台特性编译的代码（参见 <a href="attributes/codegen.html#the-target_feature-attribute"><code>target_feature</code></a>）。</li>
-<li>用错误的 ABI约定调用函数，或使用错误的 ABI展开约定展开(unwinding)函数。</li>
-<li>产生非法值(invalid value)，即使在私有字段和本地变量中也是如此。“产生”值发生在任何这些时候：把值赋给位置表达式、从位置表达式里读取值、传递值给函数/基本运算(primitive operation)或从函数/基本运算中返回值。
-以下值非法值（相对于其各自的类型来说）：
+<li>破坏<a href="http://llvm.org/docs/LangRef.html#pointer-aliasing-rules">指针别名规则</a>。<code>&amp;mut T</code> 和 <code>&amp;T</code> 遵循 LLVM 的作用域<a href="http://llvm.org/docs/LangRef.html#noalias">无别名(noalias)</a>模型(scoped noalias model)，除非 <code>&amp;T</code> 内部包含 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 类型。</li>
+<li>修改不可变的数据。<a href="items/constant-items.html">常量(<code>const</code>)</a>项内的所有数据都是不可变的。此外，所有通过共享引用接触到的数据或不可变绑定所拥有的数据都是不可变的，除非该数据包含在 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 中。</li>
+<li>通过编译器内部函数(compiler intrinsics)调用未定义行为。<sup class="footnote-reference"><a href="#译注1">1</a></sup></li>
+<li>执行基于当前平台不支持的平台特性编译的代码（参见 <a href="attributes/codegen.html#the-target_feature-attribute"><code>target_feature</code></a>）。</li>
+<li>用错误的 ABI约定来调用函数，或使用错误的 ABI展开约定来从某函数里发起展开(unwinding)。</li>
+<li>产生非法值(invalid value)，即使在私有字段和本地变量中也是如此。“产生”值发生在这些时候：把值赋给位置表达式、从位置表达式里读取值、传递值给函数/基本运算(primitive operation)或从函数/基本运算中返回值。
+以下值非法值（相对于它们各自的类型来说）：
 <ul>
 <li>
 <p>布尔型中除 <code>false</code> (<code>0</code>) 或 <code>true</code> (<code>1</code>) 之外的值。</p>
@@ -11032,32 +11032,35 @@ commit: 8aa6f0f5471a23621f52d16e823c6316fda2b904 <br />
 <p><code>!</code>类型的值（任何此类型的值都是非法的）。</p>
 </li>
 <li>
-<p>从<a href="http://llvm.org/docs/LangRef.html#undefined-values">未初始化的内存</a>中，或从字符串切片(<code>str</code>)的未初始化部分获取的整数(i*/u*)、浮点值(f*)或裸指针。</p>
+<p>从<a href="http://llvm.org/docs/LangRef.html#undefined-values">未初始化的内存</a>中，或从字符串切片(<code>str</code>)的未初始化部分获取的整数（i*/u*）、浮点值（f*）或裸指针。</p>
 </li>
 <li>
 <p>悬垂(dangling)、未对齐或指向非法值的引用和 <code>Box&lt;T&gt;</code>。</p>
 </li>
 <li>
-<p>宽(wide)引用、<code>Box&lt;T&gt;</code> 或原始指针中的非法元数据(metadata)：</p>
+<p>宽(wide)引用、<code>Box&lt;T&gt;</code> 或原始指针中带有非法元数据(metadata)：</p>
 <ul>
-<li>如果 <code>dyn Trait</code> 的元数据不是指向 <code>Trait</code> 的虚函数表(vtable)（该虚函数表与该指针或引用所指向的实际动态 trait 相匹配）的指针，则 <code>dyn Trait</code> 元数据非法。</li>
-<li>如果切片的长度不是有效的 <code>usize</code>，则该切片的元数据是非法的（也就是说，不能从未初始化的内存中读取它）。</li>
+<li>如果 trait对象(<code>dyn Trait</code>)的元数据不是指向 <code>Trait</code> 的虚函数表(vtable)（该虚函数表与该指针或引用所指向的实际动态 trait 相匹配）的指针，则 <code>dyn Trait</code> 元数据非法。</li>
+<li>如果切片的长度不是有效的 <code>usize</code>，则该切片的元数据是非法的（也就是说，不能从它未初始化的内存中读取它）。</li>
 </ul>
 </li>
 <li>
 <p>带有非法值的自定义类型的值非法。在标准库中，这条促成了 <a href="https://doc.rust-lang.org/core/ptr/struct.NonNull.html"><code>NonNull&lt;T&gt;</code></a> 和 <a href="https://doc.rust-lang.org/core/num/index.html"><code>NonZero*</code></a> 的出现。</p>
 <blockquote>
-<p><strong>注意</strong>：<code>rustc</code> 是通过还未稳定下来的属性 <code>rustc_layout_scalar_valid_range_*</code> 来验证这条规则的。</p>
+<p><strong>注意</strong>：<code>rustc</code> 是使用还未稳定下来的属性 <code>rustc_layout_scalar_valid_range_*</code> 来验证这条规则的。</p>
 </blockquote>
 </li>
 </ul>
 </li>
 </ul>
-<p><strong>注意：</strong> 未初始化的内存对于任何具有有限有效值集的类型也隐式非法。也就是说，允许读取未初始化内存的情况只发生在联合体(<code>union</code>)内部和“对齐填充区(padding)”里（类型的字段/元素之间的间隙）。</p>
-<p>如果引用/指针为空或者它指向的所有字节不是同一次分配(allocation)的一部分（因此，它们都必须是某次分配的一部分），那么它就是“悬垂”的。它指向的字节跨度(span)由指针本身和指针所指对象的类型的大小决定（可使用 <code>size_of_val</code> 求得）。因此，如果这个字节跨度为空，则“悬垂”与“非空”相同。请注意，切片和字符串指向它们的整个区间(range)，因此切片的长度元数据永远不要太大这点很重要。因此切片和字符串的分配不能大于  <code>isize::MAX</code> 个字节。</p>
+<p><strong>注意：</strong> 未初始化的内存对于任何具有有限有效值集的类型来说也隐式非法。也就是说，允许读取未初始化内存的情况只发生在联合体(<code>union</code>)内部和“对齐填充区(padding)”里（类型的字段/元素之间的间隙）。</p>
+<p>如果引用/指针为空或者它指向的所有字节不是同一次分配(allocation)的一部分（因此，它们都必须是<em>某次</em>分配的一部分），那么它就是“悬垂”的。它指向的字节跨度(span)由指针本身和指针所指对象的类型的尺寸决定（此尺寸可使用 <code>size_of_val</code> 检测）。因此，如果这个字节跨度为空，则此时“悬垂”与“非空(non-null)”相同。请注意，切片和字符串指向它们的整个区间(range)，因此切片的长度元数据永远不要太大这点很重要。因此切片和字符串的分配不能大于  <code>isize::MAX</code> 个字节。</p>
 <blockquote>
-<p><strong>注意</strong>：未定义行为影响整个程序。例如，在 C 中调用一个 C函数已经出现了未定义行为，这意味着包含此调用的整个程序都包含了未定义行为。如果 Rust 通过 FFI 来调用这段C程序/代码，那这段 Rust 代码也包含了未定义性外。反之亦然。因此 Rust 中的未定义行为会对任何对其他语言的通过 FFI 调用所执行的代码造成不利影响。</p>
+<p><strong>注意</strong>：未定义行为影响整个程序。例如，在 C 中调用一个 C函数已经出现了未定义行为，这意味着包含此调用的整个程序都包含了未定义行为。如果 Rust 再通过 FFI 来调用这段 C程序/代码，那这段 Rust 代码也包含了未定义行为。反之亦然。因此 Rust 中的未定义行为会对任何其他通过 FFI 过来调用的代码造成不利影响。</p>
 </blockquote>
+<div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
+<p>因为编译器内部函数(compiler intrinsics)很多都是和平台相关的，移植性很差。</p>
+</div>
 <!-- 2020-11-12-->
 <!-- checked -->
 <h2><a class="header" href="#behavior-not-considered-unsafe" id="behavior-not-considered-unsafe">Behavior not considered <code>unsafe</code></a></h2>
@@ -11065,7 +11068,7 @@ commit: 8aa6f0f5471a23621f52d16e823c6316fda2b904 <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/behavior-not-considered-unsafe.md">behavior-not-considered-unsafe.md</a><br />
 commit: 75fd23737cd08ec1ae14deae5e2680d9007575ae <br />
-本章译文最后维护日期：2020-11-2</p>
+本章译文最后维护日期：2020-11-17</p>
 </blockquote>
 <p>虽然程序员可能（应该）发现下列行为是不良的、意外的或错误的，但 Rust 编译器并不认为这些行为是<em>非安全的(unsafe)</em>。</p>
 <h5><a class="header" href="#死锁deadlocks" id="死锁deadlocks">死锁(Deadlocks)</a></h5>
@@ -11074,9 +11077,9 @@ commit: 75fd23737cd08ec1ae14deae5e2680d9007575ae <br />
 <h5><a class="header" href="#通过指针泄漏暴露随机基地址exposing-randomized-base-addresses-through-pointer-leaks" id="通过指针泄漏暴露随机基地址exposing-randomized-base-addresses-through-pointer-leaks">通过指针泄漏暴露随机基地址(Exposing randomized base addresses through pointer leaks)</a></h5>
 <h5><a class="header" href="#整数溢出integer-overflow" id="整数溢出integer-overflow">整数溢出(Integer overflow)</a></h5>
 <p>如果程序包含算术溢出(arithmetic overflow)，则说明程序员犯了错误。在下面的讨论中，我们将区分算术溢出和包装算法(wrapping arithmetic)。前者是错误的，而后者是有意为之的。</p>
-<p>当程序员启用了 <code>debug_assert!</code> 断言（例如，通过启用非优化的构建方式），相应的实现就必须插进来以便在溢出时触发 <code>panic</code>。而其他类型的构建形式则有可能也在溢出时触发 <code>panics</code>，或仅仅隐式包装一下溢出值，对溢出过程做静音处理。也就是说具体怎么对待溢出由插进来的编译实现决定。</p>
-<p>在隐式包装溢出的情况下，（编译器实现的包装算法）实现必须通过使用2的补码溢出(two's complement overflow)约定来提供定义良好的（即使仍然被认为是错误的）溢出包装结果。</p>
-<p>整型提供了一些固有方法，允许程序员显式地执行包装算法。例如，<code>i32::wrapping_add</code> 提供了使用2的补码溢出约定算法的加法，即包装类加法(wrapping addition)。</p>
+<p>当程序员启用了 <code>debug_assert!</code> 断言（例如，通过启用非优化的构建方式），相应的实现就必须插进来以便在溢出时触发 <code>panic</code>。而其他类型的构建形式有可能也在溢出时触发 <code>panics</code>，也有可能仅仅隐式包装一下溢出值，对溢出过程做静音处理。也就是说具体怎么对待溢出由插进来的编译实现决定。</p>
+<p>在隐式包装溢出的情况下，（编译器实现的包装算法）实现必须通过使用 2的补码溢出(two's complement overflow)约定来提供定义良好的（即使仍然被认为是错误的）溢出包装结果。</p>
+<p>整型提供了一些固有方法(inherent methods)，允许程序员显式地执行包装算法。例如，<code>i32::wrapping_add</code> 提供了使用 2的补码溢出约定算法的加法，即包装类加法(wrapping addition)。</p>
 <p>标准库还提供了一个 <code>Wrapping&lt;T&gt;</code> 的新类型，该类型确保 <code>T</code> 的所有标准算术操作都具有包装语义。</p>
 <p>请参阅 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0560-integer-overflow.md">RFC 560</a> 以了解错误条件、基本原理以及有关整数溢出的更多详细信息。</p>
 <!-- 2020-11-12-->
@@ -11086,17 +11089,17 @@ commit: 75fd23737cd08ec1ae14deae5e2680d9007575ae <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/const_eval.md">const_eval.md</a><br />
 commit:  7ad799da00dd162638999e38dad10905bf6c7ec6 <br />
-本章译文最后维护日期：2020-11-2</p>
+本章译文最后维护日期：2020-11-17</p>
 </blockquote>
 <p>常量求值是在编译过程中计算[表达式][<a href="expressions.html">expressions</a>]结果的过程。（不是所有表达式都可以在编译时求值，也就是说）只有全部表达式的某个子集可以在编译时求值。</p>
 <h2><a class="header" href="#constant-expressions" id="constant-expressions">Constant expressions</a></h2>
 <h2><a class="header" href="#常量表达式" id="常量表达式">常量表达式</a></h2>
-<p>某些形式的表达式（被称为常量表达式）可以在编译时求值。在<a href="const_eval.html#const-context">常量(const)上下文</a>中，常量表达式是唯一允许的表达式，并且总是在编译时求值。在其他地方，比如 <a href="statements.html#let-statements">let语句</a>，常量表达式<em>可以</em>在编译时求值，但不能保证总能在此时求值。如果值必须在编译时求得（例如在常量上下文中），则像<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">数组索引</a>越界或<a href="expressions/operator-expr.html#overflow">溢出</a>这样的行为都是编译错误。如果不是必须在编译时求值，则这些行为在编译时只是警告，但它们在运行时可能会引起 panic。</p>
-<p>下列表达式中，只要它们的所有操作数都是常量表达式，并且求值/计算不会引起任何 <a href="destructors.html"><code>Drop::drop</code></a> 函数的运行，那这些表达式就是常量表达式。</p>
+<p>某些形式的表达式（被称为常量表达式）可以在编译时求值。在<a href="const_eval.html#const-context">常量(const)上下文</a>中，常量表达式是唯一允许的表达式，并且总是在编译时求值。在其他地方，比如 <a href="statements.html#let-statements">let语句</a>，常量表达式<em>可以</em>在编译时求值，但不能保证总能在此时求值。如果值必须在编译时求得（例如在常量上下文中），则像<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">数组索引</a>越界或<a href="expressions/operator-expr.html#overflow">溢出</a>这样的行为都是编译错误。如果不是必须在编译时求值，则这些行为在编译时只是警告，但它们在运行时可能会触发 panic。</p>
+<p>下列表达式中，只要它们的所有操作数都是常量表达式，并且求值/计算不会引起任何 <a href="destructors.html"><code>Drop::drop</code></a>函数的运行，那这些表达式就是常量表达式。</p>
 <ul>
 <li><a href="expressions/literal-expr.html">字面量</a>。</li>
-<li>指向<a href="items/functions.html">函数项</a>和<a href="items/constant-items.html">常量项</a>的<a href="expressions/path-expr.html">路径</a>。不允许递归定义常量项。</li>
-<li>指向<a href="items/static-items.html">静态项</a>的路径。这种路径只允许出现在静态项的初始化器。</li>
+<li>指向<a href="items/functions.html">函数项</a>和<a href="items/constant-items.html">常量项</a>的<a href="expressions/path-expr.html">路径</a>。不允许递归地定义常量项。</li>
+<li>指向<a href="items/static-items.html">静态项</a>的路径。这种路径只允许出现在静态项的初始化器中。</li>
 <li><a href="expressions/tuple-expr.html">元组表达式</a>。</li>
 <li><a href="expressions/array-expr.html">数组表达式</a>。</li>
 <li><a href="expressions/struct-expr.html">结构体</a>表达式。</li>
@@ -11114,7 +11117,7 @@ commit:  7ad799da00dd162638999e38dad10905bf6c7ec6 <br />
 <li><a href="expressions/range-expr.html">区间表达式</a>。</li>
 <li>未从环境捕获变量的<a href="expressions/closure-expr.html">闭包</a>。</li>
 <li>在整型、浮点型、布尔型(<code>bool</code>)和字符型(<code>char</code>)上做的各种内置运算，包括：<a href="expressions/operator-expr.html#negation-operators">取反</a>、<a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">算术</a>、<a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">逻辑</a>、<a href="expressions/operator-expr.html#comparison-operators">比较</a> 或 <a href="expressions/operator-expr.html#lazy-boolean-operators">惰性布尔</a>运算。</li>
-<li>排除借用类型为<a href="interior-mutability.html">内部可变借用</a>的共享<a href="expressions/operator-expr.html#borrow-operators">借用</a>。</li>
+<li>排除借用类型为<a href="interior-mutability.html">内部可变借用</a>的共享<a href="expressions/operator-expr.html#borrow-operators">借用</a>表达式。</li>
 <li>排除解引用裸指针的<a href="expressions/operator-expr.html#the-dereference-operator">解引用操作</a>。</li>
 <li><a href="expressions/grouped-expr.html">分组</a>表达式。</li>
 <li><a href="expressions/operator-expr.html#type-cast-expressions">强制转换(Cast)</a>表达式，排除
@@ -11144,7 +11147,7 @@ commit:  7ad799da00dd162638999e38dad10905bf6c7ec6 <br />
 </ul>
 <h2><a class="header" href="#const-functions-1" id="const-functions-1">Const Functions</a></h2>
 <h2><a class="header" href="#常量函数-1" id="常量函数-1">常量函数</a></h2>
-<p>*常量函数(const fn)*可以在常量上下文中调用。给一个函数加一个常量(<code>const</code>)标志对该函数的任何现有的使用都没有影响，它只限制参数的类型和返回类型可以使用的类型，并防止在这两个位置上使用不被允许的表达式类型。你可以自由地用常量函数去做任何你可以用常规函数做的事情。</p>
+<p>*常量函数(const fn)*可以在常量上下文中调用。给一个函数加一个常量(<code>const</code>)标志对该函数的任何现有的使用都没有影响，它只限制参数和返回可以使用的类型，并防止在这两个位置上使用不被允许的表达式类型。你可以自由地用常量函数去做任何你可以用常规函数做的事情。</p>
 <p>当从常量上下文中调用这类函数时，编译器会在编译时解释该函数。这种解释发生在编译目标环境中，而不是在当前主机环境中。因此，如果是针对一个 <code>32</code> 位系统进行编译，那么 <code>usize</code> 就是 <code>32</code> 位，这与在一个 <code>64</code> 位还是在一个 <code>32</code> 位主机系统上进行编译无关。</p>
 <p>常量函数有各种限制以确保其可以在编译时被求值。因此，例如，不可以将随机数生成器编写为常量函数。在编译时调用常量函数将始终产生与运行时调用它相同的结果，即使多次调用也是如此。这个规则有一个例外：如果在极端情况下执行复杂的浮点运算，那么可能得到（非常轻微）不同的结果。建议不要让数组长度和枚举判别值/式依赖于浮点计算。</p>
 <p>常量上下文有，但常量函数不具备的显著特性有：</p>
@@ -11763,8 +11766,8 @@ It is often seen in its borrowed forms, either mutable or shared. The shared sli
 A statement is the smallest standalone element of a programming language that commands a computer to perform an action.</p>
 <h3><a class="header" href="#string-literal" id="string-literal">String literal</a></h3>
 <h3><a class="header" href="#字符串字面量-1" id="字符串字面量-1">字符串字面量</a></h3>
-<p>字符串字面量是直接存储在最终二进制文件中的字符串，因此在 <code>'static</code> 有效期内是有效的。<br />
-它的类型是借用形式的有效期为 <code>'static</code> 的字符串切片，即：<code>&amp;'static str</code>。<br />
+<p>字符串字面量是直接存储在最终二进制文件中的字符串，因此在 <code>'static</code> 生存期内是有效的。<br />
+它的类型是借用形式的生存期 <code>'static</code> 的字符串切片，即：<code>&amp;'static str</code>。<br />
 A string literal is a string stored directly in the final binary, and so will be valid for the <code>'static</code> duration.<br />
 Its type is <code>'static</code> duration borrowed string slice, <code>&amp;'static str</code>.</p>
 <h3><a class="header" href="#string-slice" id="string-slice">String slice</a></h3>

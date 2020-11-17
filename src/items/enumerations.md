@@ -46,7 +46,7 @@ let mut a: Animal = Animal::Dog;
 a = Animal::Cat;
 ```
 
-枚举构造器可以带有命名字段或未命名字段：
+枚举构造器可以带有具名字段或未具名字段：
 
 ```rust
 enum Animal {

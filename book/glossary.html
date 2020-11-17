@@ -294,8 +294,8 @@ It is often seen in its borrowed forms, either mutable or shared. The shared sli
 A statement is the smallest standalone element of a programming language that commands a computer to perform an action.</p>
 <h3><a class="header" href="#string-literal" id="string-literal">String literal</a></h3>
 <h3><a class="header" href="#字符串字面量" id="字符串字面量">字符串字面量</a></h3>
-<p>字符串字面量是直接存储在最终二进制文件中的字符串，因此在 <code>'static</code> 有效期内是有效的。<br />
-它的类型是借用形式的有效期为 <code>'static</code> 的字符串切片，即：<code>&amp;'static str</code>。<br />
+<p>字符串字面量是直接存储在最终二进制文件中的字符串，因此在 <code>'static</code> 生存期内是有效的。<br />
+它的类型是借用形式的生存期 <code>'static</code> 的字符串切片，即：<code>&amp;'static str</code>。<br />
 A string literal is a string stored directly in the final binary, and so will be valid for the <code>'static</code> duration.<br />
 Its type is <code>'static</code> duration borrowed string slice, <code>&amp;'static str</code>.</p>
 <h3><a class="header" href="#string-slice" id="string-slice">String slice</a></h3>

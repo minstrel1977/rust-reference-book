@@ -192,7 +192,7 @@ extern crate std; // 等同于: extern crate std as std;
 
 extern crate std as ruststd; // 使用其他名字去链接 'std'
 </code></pre>
-<p>当命名 Rust crate 时，不允许使用连字符(<code>-</code>)。然而 Cargo 包却可以使用它们。在这种情况下，当 <code>Cargo.toml</code> 文件中没有指定 crate 名称时， Cargo 将透明地将 <code>-</code> 替换为 <code>_</code> 以供 Rust 源文件内的外部crate(<code>extern crate</code>)声明引用 (详见 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0940-hyphens-considered-harmful.md">RFC 940</a>)。</p>
+<p>当给 Rust crate 命名时，不允许使用连字符(<code>-</code>)。然而 Cargo 包却可以使用它们。在这种情况下，当 <code>Cargo.toml</code> 文件中没有指定 crate 名称时， Cargo 将透明地将 <code>-</code> 替换为 <code>_</code> 以供 Rust 源文件内的外部crate(<code>extern crate</code>)声明引用 (详见 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0940-hyphens-considered-harmful.md">RFC 940</a>)。</p>
 <p>这有一个示例：</p>
 <!-- ignore: requires external crates -->
 <pre><code class="language-rust ignore">// 导入 Cargo 包 hello-world

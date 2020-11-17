@@ -172,7 +172,7 @@
 commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 本章译文最后维护日期：2020-11-16</p>
 </blockquote>
-<p><em>变量</em>是栈帧里的一个组件，可以是命名函数参数、匿名的<a href="expressions.html#temporaries">临时变量</a>或命名局部变量。</p>
+<p><em>变量</em>是栈帧里的一个组件，可以是具名函数参数、匿名的<a href="expressions.html#temporaries">临时变量</a>或具名局部变量。</p>
 <p><em>局部变量</em>（或*本地栈(stack-local)*分配）直接持有一个值，该值在栈内存中分配。该值是栈帧的一部分。</p>
 <p>局部变量是不可变的，除非特别声明。例如：<code>let mut x = ...</code>。</p>
 <p>函数参数是不可变的，除非用 <code>mut</code> 声明。关键字 <code>mut</code> 只应用于紧跟着它的那个参数。例如：<code>|mut x, y|</code> 和 <code>fn f(mut x: Box&lt;i32&gt;, y: Box&lt;i32&gt;)</code> 声明了一个可变变量 <code>x</code> 和一个不可变变量 <code>y</code>。</p>

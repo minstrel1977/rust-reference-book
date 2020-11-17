@@ -310,7 +310,7 @@ let declared_last = PrintOnDrop(&quot;在外层作用域内最先销毁&quot;);
 </ul>
 <blockquote>
 <p><strong>注意</strong>：</p>
-<p>在函数体的最终表达式(final expression)中创建的临时变量会在任何命名变量销毁<em>之后</em>销毁，因为这里没有更小的封闭它的临时作用域。</p>
+<p>在函数体的最终表达式(final expression)中创建的临时变量会在任何具名变量销毁<em>之后</em>销毁，因为这里没有更小的封闭它的临时作用域。</p>
 <p>匹配表达式的<a href="glossary.html#scrutinee">检验对象</a>表达式本身不是一个临时作用域（，但它内部可以包含临时作用域），因此可以在匹配(<code>match</code>)表达式之后销毁检验对象表达式中的临时作用域。例如，<code>match 1 { ref mut z =&gt; z };</code> 中的 <code>1</code> 所在的临时变量一直存活到此语句结束。</p>
 </blockquote>
 <p>一些示例：</p>
@@ -458,7 +458,7 @@ let x = (&amp;temp()).use_temp();  // ERROR
 <p>这里说这句是因为操作符的操作数也涉及到销毁作用域范围的确定。</p>
 </div>
 <div class="footnote-definition" id="译注3"><sup class="footnote-definition-label">3</sup>
-<p>对这句话，这里译者按自己的理解再翻译一遍：一个表达式在位置表达式上使用时会被求值，如果此时没有命名变量和此值绑定，那就会先被保存进一个临时变量里，临时作用域就是伴随这此临时变量而生成。此作用域通常在此表达式所在的语句结束时结束，但如果求出的值被通过借用绑定给命名变量，此作用域会扩展到此命名变量的作用域（后面<a href="#temporary-lifetime-extension">生存期扩展</a>会讲到）。如果求出的值比较特殊，这个作用域还会提升到全局作用域，这就是所谓的<a href="destructors.html#constant-promotion">常量提升</a>。</p>
+<p>对这句话，这里译者按自己的理解再翻译一遍：一个表达式在位置表达式上使用时会被求值，如果此时没有具名变量和此值绑定，那就会先被保存进一个临时变量里，临时作用域就是伴随这此临时变量而生成。此作用域通常在此表达式所在的语句结束时结束，但如果求出的值被通过借用绑定给具名变量，此作用域会扩展到此具名变量的作用域（后面<a href="#temporary-lifetime-extension">生存期扩展</a>会讲到）。如果求出的值比较特殊，这个作用域还会提升到全局作用域，这就是所谓的<a href="destructors.html#constant-promotion">常量提升</a>。</p>
 </div>
 <!-- 2020-11-12-->
 <!-- checked -->

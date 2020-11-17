@@ -32,7 +32,7 @@ extern crate std; // 等同于: extern crate std as std;
 extern crate std as ruststd; // 使用其他名字去链接 'std'
 ```
 
-当命名 Rust crate 时，不允许使用连字符(`-`)。然而 Cargo 包却可以使用它们。在这种情况下，当 `Cargo.toml` 文件中没有指定 crate 名称时， Cargo 将透明地将 `-` 替换为 `_` 以供 Rust 源文件内的外部crate(`extern crate`)声明引用 (详见 [RFC 940])。
+当给 Rust crate 命名时，不允许使用连字符(`-`)。然而 Cargo 包却可以使用它们。在这种情况下，当 `Cargo.toml` 文件中没有指定 crate 名称时， Cargo 将透明地将 `-` 替换为 `_` 以供 Rust 源文件内的外部crate(`extern crate`)声明引用 (详见 [RFC 940])。
 
 这有一个示例：
 

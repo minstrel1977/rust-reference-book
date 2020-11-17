@@ -182,8 +182,8 @@ A statement is the smallest standalone element of a programming language that co
 ### String literal
 ### 字符串字面量
 
-字符串字面量是直接存储在最终二进制文件中的字符串，因此在 `'static` 有效期内是有效的。\
-它的类型是借用形式的有效期为 `'static` 的字符串切片，即：`&'static str`。\
+字符串字面量是直接存储在最终二进制文件中的字符串，因此在 `'static` 生存期内是有效的。\
+它的类型是借用形式的生存期 `'static` 的字符串切片，即：`&'static str`。\
 A string literal is a string stored directly in the final binary, and so will be valid for the `'static` duration.\
 Its type is `'static` duration borrowed string slice, `&'static str`.
 
