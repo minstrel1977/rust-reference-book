@@ -1,4 +1,5 @@
 # Appendix：Macro Follow-Set Ambiguity Formal Specification
+# 附录：关于宏随集的二义性的形式化规范
 
 >[macro-ambiguity.md](https://github.com/rust-lang/reference/blob/master/src/macro-ambiguity.md)\
 >commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 \
@@ -36,82 +37,79 @@ macro_rules! i_am_an_mbe {
 }
 ```
 
-`(start $foo:expr $($i:ident),\* end)` 是一个匹配器(matcher)。整个匹配器是一个有界代码序列（使用开闭定界符 `(` 和 `)` 界定），`$foo` 和 `$i` 是简单NT(simple NT)， `expr` 和 `ident` 是它们各自的匹配段选择器(fragment specifiers)。
+`(start $foo:expr $($i:ident),\* end)` 是一个匹配器(matcher)。整个匹配器是一段有界字符序列（使用开闭定界符 `(` 和 `)` 界定），`$foo` 和 `$i` 是简单NT(simple NT)， `expr` 和 `ident` 是它们各自的匹配段选择器(fragment specifiers)。
 
 `$(i:ident),\*` *也*是一个 NT；它是一个复杂NT，匹配那些被逗号分隔成的标识符类型的重复元。`,` 是这个复杂NT 的分隔符；它出现在匹配段的每对元素（如果有的话）之间。
 
 复杂NT 的另一个例子是 `$(hi $e:expr ;)+`，它匹配 `hi <expr>; hi <expr>; ...` 这种格式的代码，其中 `hi <expr>;` 至少出现一次。注意，这种复杂NT 没有专用的分隔符。
 
-(请注意，Rust 解析器会确保这类有界代码序列始终具有正确的 token树的嵌套结构以及开/闭定界符的正确匹配。)
+(请注意，Rust 解析器会确保这类有界字符序列始终具有正确的 token树的嵌套结构以及开/闭定界符的正确匹配。)
 
-我们倾向于使用变量“M”表示匹配器，变量“t”和“u”表示任意单个 token，变量“tt”和“uu”表示任意token树。（使用“tt”确实存在潜在的歧义，因为它的额外角色是一个匹配段选择器；但不用太担心，因为从上下文中，可以很清楚地看出哪个解释更符合语义）
+下面，我们将用变量“M”表示匹配器，变量“t”和“u”表示任意单一 token，变量“tt”和“uu”表示任意 token树。（使用“tt”确实存在潜在的歧义，因为它的额外角色是一个匹配段选择器；但不用太担心，因为从上下文中，可以很清楚地看出哪个解释更符合语义）
 
-“SEP”将代表分隔符，“OP”将代表重复元运算符 `\*`, `+`, 和 `?` “OPEN”/“CLOSE”覆盖围绕定界序列的匹配 token对（例如 `[` 和 `]` ）。
+用“SEP”代表分隔符，“OP”代表重复元运算符 `\*`, `+`, 和 `?` “OPEN”/“CLOSE”代表包围定界字符序列的 token对（例如 `[` 和 `]` ）。
 
-希腊字母 "α" "β" "γ" "δ" 代表潜在的空token树序列。（然而，希腊字母 "ε"(epsilon)在表示形式中有特殊的作用，并不代表token树序列。）
+用希腊字母 "α" "β" "γ" "δ" 代表潜在的空token树序列。（注意没有使用希腊字母 "ε"，"ε"(epsilon)在此表示形式中代表一类特殊的角色，不代表 token树序列。）
 
-  * 这种希腊字母约定通常只是在需要表现一个序列的技术细节时才被引入；特别是，当我们希望*强调*我们操作的是一个token树序列时，我们将对该序列使用表义符 "tt ..."，而不是一个希腊字母。
+  * 这种希腊字母约定通常只是在需要展现一段字符序列的技术细节时才被引入；特别是，当我们希望*强调*我们操作的是一个 token树序列时，我们将对该序列使用表义符 "tt ..."，而不是一个希腊字母。
 
-请注意，匹配器仅仅是一个token树。如前所述，“简单NT”是一个元变量NT；因此，这是一个非重复元。例如，`$foo:ty` 是一个简单NT，而 `$($foo:ty)+` 是一个复杂NT。
+请注意，匹配器仅仅是一个 token树。如前所述，“简单NT”是一个元变量类型的 NT；因此，这是一个非重复元。例如，`$foo:ty` 是一个简单NT，而 `$($foo:ty)+` 是一个复杂NT。
 
-还请注意，在这种形式的上下文中，术语“token”通常*包括*简单NT。
+还请注意，在这种形式体系的上下文中，术语“token”通常*包括*简单NT。
 
-最后，读者要记住，根据这种形式的定义，没有简单NT 会匹配空匹配段，同样也没有token会匹配 Rust句法的空匹配段。(因此，能够匹配空匹配段的*唯一的* NT是复杂NT。)这实际上不是真的，因为 `vis` 匹配器可以匹配空匹配段。因此，为了达到形式统一的目的，我们将把 `$v:vis` 看作是 `$($v:vis)?`，来要求匹配器匹配一个空匹配段。
+最后，读者要记住，根据这种形式体系的定义，简单NT 不会匹配空匹配段，因此也没有 token 会匹配 Rust句法的空匹配段。（因此，能够匹配空匹配段的 NT *唯有*复杂NT。）但这还不是全部事实，因为 `vis` 匹配器可以匹配空匹配段。因此，为了达到这种形式体系自洽统一的目的，我们将把 `$v:vis` 看作是 `$($v:vis)?`，来让匹配器匹配一个空匹配段。
 
 ### The Matcher Invariants
 ### 匹配器的不变式
 
 为了有效，匹配器必须满足以下三个不变式。注意其中 FIRST 和 FOLLOW 的定义将在后面进行描述。
-To be valid, a matcher must meet the following three invariants. The definitions of FIRST and FOLLOW are described later.
 
-1.  对于形式如 `M = ... tt uu ...`，其中 `uu ...` 非空的匹配器 `M` 中的任意两个连续的token树序列，我们必须遵循 FOLLOW(`... tt`) ∪ {ε} ⊇ FIRST(`uu ...`)
-For any two successive token tree sequences in a matcher `M` (i.e. `M = ... tt uu ...`) with `uu ...` nonempty, we must have FOLLOW(`... tt`) ∪ {ε} ⊇ FIRST(`uu ...`).
-2.  对于匹配器中任何带分隔符的复杂NT，`M = ... $(tt ...) SEP OP ...`，我们必须遵循 `SEP` ∈ FOLLOW(`tt ...`)
-For any separated complex NT in a matcher, `M = ... $(tt ...) SEP OP ...`, we must have `SEP` ∈ FOLLOW(`tt ...`).
-3.  对于匹配器中不带分隔符的复杂NT，`M = ... $(tt ...) OP ...`，如果 OP = `\*` 或 `+`，我们必须遵循 FOLLOW(`tt ...`) ⊇ FIRST(`tt ...`)
-For an unseparated complex NT in a matcher, `M = ... $(tt ...) OP ...`, if OP = `\*` or `+`, we must have FOLLOW(`tt ...`) ⊇ FIRST(`tt ...`).
+1.  对于匹配器 `M` 中的任意两个连续的 token树序列（即 `M = ... tt uu ...`），并且 `uu ...` 非空，必有 FOLLOW(`... tt`) ∪ {ε} ⊇ FIRST(`uu ...`)。
+2.  对于匹配器中任何带分隔符的复杂NT，`M = ... $(tt ...) SEP OP ...`，必有 `SEP` ∈ FOLLOW(`tt ...`)
+3.  对于匹配器中不带分隔符的复杂NT，`M = ... $(tt ...) OP ...`，如果 OP = `\*` 或 `+`，必有 FOLLOW(`tt ...`) ⊇ FIRST(`tt ...`)。
 
-第一个不变式表示，无论匹配器后出现什么标记(如果有的话)，它都必须出现在先决随集(predetermined follow set)中的某个地方。这将确保合法的宏观定义将继续对 `... tt` 的结束和 `uu ...` 的开始执行相同的判定(determination)，即使在将来语言中添加了新的语法形式。
-The first invariant says that whatever actual token that comes after a matcher, if any, must be somewhere in the predetermined follow set.  This ensures that a legal macro definition will continue to assign the same determination as to where `... tt` ends and `uu ...` begins, even as new syntactic forms are added to the language.
+第一个不变式表示，无论匹配器后出现什么 token（如果有的话），它都必须出现在先决随集(predetermined follow set)中的某个地方。这将确保合法的宏定义将继续对 `... tt` 的结束和 `uu ...` 的开始执行相同的判定(determination)，即使将来语言中添加了新的句法形式。
+The first invariant says that whatever actual token that comes after a matcher, if any, must be somewhere in the predetermined follow set. This ensures that a legal macro definition will continue to assign the same determination as to where `... tt` ends and `uu ...` begins, even as new syntactic forms are added to the language.
 
-第二个不变式表示一个带分隔符的复杂NT必须使用一个分隔符，它是NT的内部内容的先决随集的一部分。这将确保合法的宏定义将继续将输入匹配段解析成相同的定界序列 `tt ...`，即使在将来语言中添加了新的语法形式。
+第二个不变式表示一个带分隔符的复杂NT 必须使用一个分隔符，它是 NT 的内部内容的先决随集的一部分。这将确保合法的宏定义将继续将输入匹配段解析成相同的定界字符序列 `tt ...`，即使在将来语言中添加了新的语法形式。
 The second invariant says that a separated complex NT must use a separator token that is part of the predetermined follow set for the internal contents of the NT. This ensures that a legal macro definition will continue to parse an input fragment into the same delimited sequence of `tt ...`'s, even as new syntactic forms are added to the language.
 
-第三个不变式说的是，当我们有一个复杂NT，它可以匹配同一事物的两个或多个副本，并且两者之间没有分隔符，那么根据第一个不变式，它们必须被允许放在一起。这个不变式还要求它们是非空的，这消除了可能的歧义。
+第三个不变式说的是，当我们有一个复杂NT，它可以匹配同一字符序列的两个或多个副本，并且两者之间没有分隔符，那么根据第一个不变式，它们必须可以放在一起。这个不变式还要求它们是非空的，这消除了可能出现的歧义。
 The third invariant says that when we have a complex NT that can match two or more copies of the same thing with no separation in between, it must be permissible for them to be placed next to each other as per the first invariant. This invariant also requires they be nonempty, which eliminates a possible ambiguity.
 
-**注意：由于历史疏忽和对行为的严重依赖，第三个不变式目前没有执行。目前还没有决定下一步该怎么做。不尊重这种行为的宏可能会在Rust的未来版本中失效。参见[跟踪问题][tracking issue]**
+**注意：由于历史疏忽和对行为的严重依赖，第三个不变式目前没有被执行。目前还没有决定下一步该怎么做。不遵循这个不变式的宏可能会在未来的 Rust版本中失效。参见[跟踪问题][tracking issue]**
 **NOTE：The third invariant is currently unenforced due to historical oversight and significant reliance on the behaviour. It is currently undecided what to do about this going forward. Macros that do not respect the behaviour may become invalid in a future edition of Rust. See the [tracking issue].**
 
 ### FIRST and FOLLOW, informally
+### 非正式的 FIRST集合和 FOLLOW集合定义
 
 给定匹配器 M 映射到三个集合：FIRST(M)，LAST(M) 和 FOLLOW(M)。
 A given matcher M maps to three sets：FIRST(M), LAST(M) and FOLLOW(M).
 
-这三个集合中的每一个都是由 token组成的。FIRST(M) 和 LAST(M) 也可能包含一个可区分的非token元素 ε ("epsilon")，这表示 M 可以匹配空匹配段。（但是 FOLLOW(M) 始终只是一组token。）
+这三个集合中的每一个都是由一组 token 组成的。FIRST(M) 和 LAST(M) 也可能包含一个可区分的非token元素 ε ("epsilon")，这表示 M 可以匹配空匹配段。（但是 FOLLOW(M) 始终只是一组 token。）
 Each of the three sets is made up of tokens. FIRST(M) and LAST(M) may also contain a distinguished non-token element ε ("epsilon"), which indicates that M can match the empty fragment. (But FOLLOW(M) is always just a set of tokens.)
 
-非正式描述(Informally)：
+非正式定义(Informally)：
 
-  * FIRST(M)：收集匹配段与 M 匹配时可能首先使用的token。collects the tokens potentially used first when matching a fragment to M.
+  * FIRST(M)：收集匹配段与 M 匹配时可能首先使用的 token。collects the tokens potentially used first when matching a fragment to M.
 
-  * LAST(M)：收集匹配段与 M 匹配时可能最后使用的token。collects the tokens potentially used last when matching a fragment to M.
+  * LAST(M)：收集匹配段与 M 匹配时可能最后使用的 token。collects the tokens potentially used last when matching a fragment to M.
 
-  * FOLLOW(M)：允许紧跟在由 M 匹配的某个匹配段之后的token集合。the set of tokens allowed to follow immediately after some fragment matched by M.
+  * FOLLOW(M)：允许紧跟在由 M 匹配的某个匹配段之后的 token集合。the set of tokens allowed to follow immediately after some fragment matched by M.
 
     换言之：t ∈ FOLLOW(M) 当且仅当存在（可能为空的）token序列 α、β、γ、δ，其中：
       * M 匹配 β，
       * t 与 γ 匹配，并且
-      * 连结 α β γ δ 是一个可解析的 Rust程序。
+      * 连结 α β γ δ 是一段可解析的 Rust程序。
     In other words：t ∈ FOLLOW(M) if and only if there exists (potentially empty) token sequences α, β, γ, δ where:
       * M matches β,
       * t matches γ, and
       * The concatenation α β γ δ is a parseable Rust program.
 
-我们使用简写的 ANYTOKEN 来表示所有 token(包括简单NT)的集合。例如，如果任何 token 在匹配器 M 之后是合法的，那么 FOLLOW(M) = ANYTOKEN。
+我们使用简写的 ANYTOKEN 来表示所有 token（包括简单NT）的集合。例如，如果任何 token 在匹配器 M 之后都是合法的，那么 FOLLOW(M) = ANYTOKEN。
 We use the shorthand ANYTOKEN to denote the set of all tokens (including simple NTs). For example, if any token is legal after a matcher M, then FOLLOW(M) = ANYTOKEN.
 
-（为了回顾一下对上述非正式描述的理解，读者在阅读正式定义之前，可以先读一遍 [关于 FIRST 和 LAST 的示例](#examples-of FIRST -and- LAST)。）
+（为了加深对上述非正式定义描述的理解，读者在阅读正式定义之前，可以先在这里读一遍后面 [关于 FIRST 和 LAST 的示例](#examples-of FIRST -and- LAST)。）
 (To review one's understanding of the above informal descriptions, the reader at this point may want to jump ahead to the [examples of FIRST/LAST](#examples-of-first-and-last) before reading their formal definitions.)
 
 ### FIRST, LAST
