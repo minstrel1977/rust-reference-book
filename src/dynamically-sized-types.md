@@ -14,8 +14,6 @@
 * 可以为 <abbr title="dynamically sized types">DST</abbr> 实现 trait。与类型参数中的默认设置不同，在 trait定义中默认存在 `Self: ?Sized`约束。
 * 结构体可以包含一个 <abbr title="dynamically sized type">DST</abbr> 作为最后一个字段，这使得该结构体也成为是一个 <abbr title="dynamically sized type">DST</abbr>。
 
-> **Note**: [variables], function parameters, [const] items, and [static] items must be
-`Sized`.
 > **注意**：[变量][variables]、函数参数、[常量][const]项和[静态][static]项必须是 `Sized`。
 
 [sized]: special-types-and-traits.md#sized
