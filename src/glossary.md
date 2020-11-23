@@ -30,9 +30,9 @@ Arity refers to the number of arguments a function or operator takes. For some e
 An array, sometimes also called a fixed-size array or an inline array, is a value describing a collection of elements, each selected by an index that can be computed at run time by the program. It occupies a contiguous region of memory.
 
 ### Associated item
-### 关联数据项/关联项
+### 关联程序项/关联项
 
-关联数据项是与另一个数据项关联的数据项。关联数据项在 [trait][traits] 中声明，在[实现][implementations]中定义。只有函数、常量和类型别名可以作为关联数据项。它与[自由数据项][free item]形成对比。\
+关联程序项是与另一个程序项关联的程序项。关联程序项在 [trait][traits] 中声明，在[实现][implementations]中定义。只有函数、常量和类型别名可以作为关联程序项。它与[自由程序项][free item]形成对比。\
 An associated item is an item that is associated with another item. Associated items are defined in [implementations] and declared in [traits]. Only functions, constants, and type aliases can be associated. Contrast to a [free item].
 
 ### Blanket implementation
@@ -74,9 +74,9 @@ An expression is a combination of values, constants, variables, operators and fu
 For example, `2 + (3 * 4)` is an expression that returns the value 14.
 
 ### Free item
-### 自由数据项
+### 自由程序项
 
-不是任何[实现][implementation][item]的成员的[数据项]，如*自由函数*或*自由常量*。自由数据项是与[关联数据项][associated item]相对的概念。\
+不是任何[实现][implementation][item]的成员的[程序项]，如*自由函数*或*自由常量*。自由程序项是与[关联程序项][associated item]相对的概念。\
 An [item] that is not a member of an [implementation], such as a *free function* or a *free const*. Contrast to an [associated item].
 
 ### Fundamental traits
@@ -143,7 +143,7 @@ Types that can be referred to by a path directly. Specifically [enums], [structs
 ### Prelude
 ### 预加载模块集/预导入包
 
-预加载模块集，或者 Rust 预加载模块集，是一个会被导入到每个 crate 中的每个模块的小型数据项集合（其中大部分是 trait）。trait 在预加载模块集中很普遍。\
+预加载模块集，或者 Rust 预加载模块集，是一个会被导入到每个 crate 中的每个模块的小型程序项集合（其中大部分是 trait）。trait 在预加载模块集中很普遍。\
 Prelude, or The Rust Prelude, is a small collection of items - mostly traits - that are imported into every module of every crate. The traits in the prelude are pervasive.
 
 ### Scrutinee
@@ -197,7 +197,7 @@ Strings slices are always valid UTF-8.
 
 ### Trait
 
-trait 是一种数据项，用于描述类型必须提供的功能。它允许类型对其行为做出某些承诺。\
+trait 是一种程序项，用于描述类型必须提供的功能。它允许类型对其行为做出某些承诺。\
 泛型函数和泛型结构体可以使用 trait 来限制或约束它们所接受的类型。\
 A trait is a language item that is used for describing the functionalities a type must provide. It allows a type to make certain promises about its behavior.\
 Generic functions and generic structs can use traits to constrain, or bound, the types they accept.

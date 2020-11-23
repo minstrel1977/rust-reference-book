@@ -6,7 +6,7 @@
 >commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 \
 >本章译文最后维护日期：2020-11-14
 
-Rust 程序中的每个变量、数据项和值都有一个类型。*值*的*类型*定义了该如何解释用于保存它的内存数据，以及定义了可以对该值执行的操作。
+Rust 程序中的每个变量、程序项和值都有一个类型。*值*的*类型*定义了该如何解释用于保存它的内存数据，以及定义了可以对该值执行的操作。
 
 内置的类型以非平凡的方式(in nontrivial ways)紧密地集成到语言中，这种方式是不可能在用户定义的类型中模拟的。用户定义的类型功能有限。
 
@@ -66,7 +66,7 @@ Rust 程序中的每个变量、数据项和值都有一个类型。*值*的*类
 * 序列类型（[tuple], [array], [slice]）。
 * [类型路径(type paths)][Type paths]，这些包括：
     * 原生类型（[布尔型][boolean], [数字类类型][numeric], [文本类类型][textual]）。
-    * 指向[数据项][item]（[结构体(`struct`)][struct], [枚举(`enum`)][enum], [联合体(`union`)][union], [类型别名][type alias], [trait]）的路径。
+    * 指向[程序项][item]（[结构体(`struct`)][struct], [枚举(`enum`)][enum], [联合体(`union`)][union], [类型别名][type alias], [trait]）的路径。
     * [`Self`路径][`Self` path]，其中 `Self` 是实现类型。
     * 泛型[类型参数][type parameters]。
 * 指针类型（[引用][reference], [裸指针][raw pointer], [函数指针][function pointer]）。

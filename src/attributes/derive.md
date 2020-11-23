@@ -5,7 +5,7 @@
 >commit: a52543267554541a95088b79f46a8bd36f487603 \
 >本章译文最后维护日期：2020-11-10
 
-*`derive`属性*允许为数据结构自动生成新的[数据项][items]。它使用 [_MetaListPaths_]元项属性句法（为数据项）指定一系列要实现的 trait 或指定要执行的[派生宏][derive macros]的路径。
+*`derive`属性*允许为数据结构自动生成新的[程序项][items]。它使用 [_MetaListPaths_]元项属性句法（为程序项）指定一系列要实现的 trait 或指定要执行的[派生宏][derive macros]的路径。
 
 例如，下面的派生属性将为结构体 `Foo` 创建一个实现 [`PartialEq`] trait 和 [`Clone`] trait 的[实现(`impl` item)][`impl` item]，类型参数 `T` 将被派生出的实现(`impl`)加上 `PartialEq` 或[^or-and] `Clone` 约束：
 

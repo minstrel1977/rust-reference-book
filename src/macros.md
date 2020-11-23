@@ -37,12 +37,12 @@
 * [表达式][Expressions]和[语句][statements]
 * [模式][Patterns]
 * [类型][Types]
-* [数据项][Items]，包括[关联数据项][associated items]
+* [程序项][Items]，包括[关联程序项][associated items]
 * [`macro_rules`] 转码器
 * [外部块][External blocks]
 
 
-当宏调用被用作数据项或语句时，此时它应用的 _MacroInvocationSemi_ 句法规则要求它如果不使用花括号，则在结尾处须添加分号。在宏调用或[宏(`macro_rules`)][`macro_rules`]定义之前不允许使用[可见性限定符][Visibility qualifiers]。
+当宏调用被用作程序项或语句时，此时它应用的 _MacroInvocationSemi_ 句法规则要求它如果不使用花括号，则在结尾处须添加分号。在宏调用或[宏(`macro_rules`)][`macro_rules`]定义之前不允许使用[可见性限定符][Visibility qualifiers]。
 
 ```rust
 // 作为表达式使用.
@@ -67,11 +67,11 @@ macro_rules! Tuple {
 
 type N2 = Tuple!(i32, i32);
 
-// 作为数据项使用.
+// 作为程序项使用.
 # use std::cell::RefCell;
 thread_local!(static FOO: RefCell<u32> = RefCell::new(1));
 
-// 作为关联数据项使用.
+// 作为关联程序项使用.
 macro_rules! const_maker {
     ($t:ty, $v:tt) => { const CONST: $t = $v; };
 }

@@ -102,17 +102,17 @@ fn foo() {
 ## The `deprecated` attribute
 ## `deprecated`属性
 
-*`deprecated`属性*将数据项标记为已弃用。`rustc` 将对被 `#[deprecated]` 限定的数据项的行为发出警告。`rustdoc` 将特别展示已弃用的数据项，包括展示 `since` 版本和 `note` 提示（如果可用）。
+*`deprecated`属性*将程序项标记为已弃用。`rustc` 将对被 `#[deprecated]` 限定的程序项的行为发出警告。`rustdoc` 将特别展示已弃用的程序项，包括展示 `since` 版本和 `note` 提示（如果可用）。
 
 `deprecated`属性有几种形式：
 
 - `deprecated` — 发布一个通用的弃用消息。
 - `deprecated = "message"` — 在弃用消息中包含给定的字符串。
 - [_MetaListNameValueStr_]元项属性句法形式里带有两个可选字段：
-  - `since` — 指定数据项被弃用时的版本号。`rustc` 目前不解释此字符串，但是像 [Clippy] 这样的外部工具可以检查此值的有效性。
+  - `since` — 指定程序项被弃用时的版本号。`rustc` 目前不解释此字符串，但是像 [Clippy] 这样的外部工具可以检查此值的有效性。
   - `note` — 指定一个应该包含在弃用消息中的字符串。这通常用于提供关于不推荐的解释和推荐首选替代。
 
-`deprecated`属性可以应用于任何[数据项][item]，[trait项][trait item]，[枚举变体][enum variant]，[结构体字段][struct field]，[外部块项][external block item]，或[宏定义][macro definition]。它不能应用于 [trait实现项][trait implementation items]。当应用于包含其他数据项的数据项时，如[模块][module]或[实现][implementation]，所有子数据项都继承此 deprecation属性。
+`deprecated`属性可以应用于任何[程序项][item]，[trait项][trait item]，[枚举变体][enum variant]，[结构体字段][struct field]，[外部块项][external block item]，或[宏定义][macro definition]。它不能应用于 [trait实现项][trait implementation items]。当应用于包含其他程序项的程序项时，如[模块][module]或[实现][implementation]，所有子程序项都继承此 deprecation属性。
 
 <!-- 注意: 它只被 trait实现(AnnotationKind::Prohibited)拒绝。在这些之外的所有其他位置，它会被静默忽略。应用于元组结构体的字段时，此属性直接也被忽略。-->
 
@@ -195,7 +195,7 @@ impl Trait for i32 {
 
 当在 trait实现里的函数上使用 `must_use`属性时，此属性将被忽略。
 
-> 注意：包含了此（属性应用的数据项产生的值）的普通空操作(no-op)表达式不会违反该 lint。例如，将此类值包装在没有实现 [`Drop`] 的类型中，然后不使用该类型，并成为未使用的[块表达式][block expression]的最终表达式(final expression)。
+> 注意：包含了此（属性应用的程序项产生的值）的普通空操作(no-op)表达式不会违反该 lint。例如，将此类值包装在没有实现 [`Drop`] 的类型中，然后不使用该类型，并成为未使用的[块表达式][block expression]的最终表达式(final expression)。
 >
 > ```rust
 > #[must_use]

@@ -59,7 +59,7 @@ $ nm -C foo.o
 ## The `no_mangle` attribute
 ## `no_mangle`属性
 
-可以在任何[数据项][item]上使用 *`no_mangle`属性*来禁用标准名称符号名混淆(standard symbol name mangling)。禁用此功能后，此数据项的导出符号(symbol)名将直接是此数据项的原来的名称标识符。
+可以在任何[程序项][item]上使用 *`no_mangle`属性*来禁用标准名称符号名混淆(standard symbol name mangling)。禁用此功能后，此程序项的导出符号(symbol)名将直接是此程序项的原来的名称标识符。
 
 ## The `link_section` attribute
 ## `link_section`属性

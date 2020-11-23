@@ -175,7 +175,7 @@ assert_eq!(sum, 55);
 }
 ```
 
-这里的 `IntoIterator`、`Iterator` 和 `Option` 是标准库的数据项(standard library item)，不是当前作用域中解析的的任何名称。变量名 `next`、`iter` 和 `val` 也仅用于表述需要，实际上它们不是用户可以输入的名称。
+这里的 `IntoIterator`、`Iterator` 和 `Option` 是标准库的程序项(standard library item)，不是当前作用域中解析的的任何名称。变量名 `next`、`iter` 和 `val` 也仅用于表述需要，实际上它们不是用户可以输入的名称。
 
 > **注意**：上面代码里使用外层 `matche` 来确保 `iter_expr` 中的任何[临时值][temporary values]在循环结束前不会被销毁。`next` 先声明后赋值是因为这样能让编译器更准确地推断出类型。
 

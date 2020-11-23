@@ -5,7 +5,7 @@
 >commit: ecfd8761829d6b1025f2a0a8df6905043b2c5e8a \
 >本章译文最后维护日期：2020-11-5
 
-*路径*是一个或多个由命名空间<span class="parenthetical">限定符(`::`)</span>*逻辑*分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，`::` 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的[数据项][item]或[变量][variable]。如果路径包含多个路径段，则总是引用数据项。
+*路径*是一个或多个由命名空间<span class="parenthetical">限定符(`::`)</span>*逻辑*分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，`::` 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的[程序项][item]或[变量][variable]。如果路径包含多个路径段，则总是引用程序项。
 
 仅由标识符段组成的简单路径(simple paths)的两个示例：
 <!-- ignore: syntax fragment -->
@@ -27,7 +27,7 @@ x::y::z;
 > _SimplePathSegment_ :\
 > &nbsp;&nbsp; [IDENTIFIER] | `super` | `self` | `crate` | `$crate`
 
-简单路径可用于[可见性][visibility]标记、[属性][attributes]、[宏][macros]和 [`use`]数据项中。示例：
+简单路径可用于[可见性][visibility]标记、[属性][attributes]、[宏][macros]和 [`use`]程序项中。示例：
 
 ```rust
 use std::io::{self, Write};
@@ -157,9 +157,9 @@ type G = std::boxed::Box<dyn std::ops::FnOnce(isize) -> isize>;
 
 ### `::`
 
-以 `::` 开头的路径被认为是全局路径，其中的路径首段从当前 crate 根位置/模块开始解析。路径中的每个标识符都必须解析为一个数据项。
+以 `::` 开头的路径被认为是全局路径，其中的路径首段从当前 crate 根位置/模块开始解析。路径中的每个标识符都必须解析为一个程序项。
 
-> **版本差异**: 2015 版中，crate 根（模块）包含多种不同的数据项，包括：外部crate、默认crate（如 `std` 和 `core`），以及 crate 顶层内的各种数据项（包括 `use` 导入的各种数据项）。
+> **版本差异**: 2015 版中，crate 根（模块）包含多种不同的程序项，包括：外部crate、默认crate（如 `std` 和 `core`），以及 crate 顶层内的各种程序项（包括 `use` 导入的各种程序项）。
 >
 >从 2018 版开始，以 `::` 开头的路径仅能引用 crate。
 
@@ -266,7 +266,7 @@ mod a {
 
 ### `$crate`
 
-$crate 仅用在[宏转码器(macro transcriber)][macro transcribers]中，且仅能用作路径首段，不能有前置 `::`。`$crate` 将被扩展为从定义宏的 crate 的顶层访问该 crate 中的各数据项的路径，而不用去考虑宏调用发生时所在的现场 crate。
+$crate 仅用在[宏转码器(macro transcriber)][macro transcribers]中，且仅能用作路径首段，不能有前置 `::`。`$crate` 将被扩展为从定义宏的 crate 的顶层访问该 crate 中的各程序项的路径，而不用去考虑宏调用发生时所在的现场 crate。
 
 ```rust
 pub fn increment(x: u32) -> u32 {
@@ -283,16 +283,16 @@ macro_rules! inc {
 ## Canonical paths
 ## 规范路径
 
-定义在模块或者实现中的数据项都有一个*规范路径*，该路径对应于其在其 crate 中定义的位置。在该路径之外，所有指向这些数据项的路径都是别名（路径）。规范路径被定义为一个*路径前缀*后跟一个代表数据项本身的那段路径段。
+定义在模块或者实现中的程序项都有一个*规范路径*，该路径对应于其在其 crate 中定义的位置。在该路径之外，所有指向这些程序项的路径都是别名（路径）。规范路径被定义为一个*路径前缀*后跟一个代表程序项本身的那段路径段。
 
-尽管实现所定义/实现的数据项有规范路径，但[实现][Implementations]作为一个整体，自身没有规范路径。[use声明][use declarations]也没有规范路径。块表达式中定义的数据项也没有规范路径。在没有规范路径的模块中定义的数据项也没有规范路径。在实现中定义的关联项(associated items)如果它指向没有规范路径的数据项——例如，实现类型(implementing type)、被实现的 trait、类型参数或类型参数上的约束——那它也没有规范路径。
+尽管实现所定义/实现的程序项有规范路径，但[实现][Implementations]作为一个整体，自身没有规范路径。[use声明][use declarations]也没有规范路径。块表达式中定义的程序项也没有规范路径。在没有规范路径的模块中定义的程序项也没有规范路径。在实现中定义的关联项(associated items)如果它指向没有规范路径的程序项——例如，实现类型(implementing type)、被实现的 trait、类型参数或类型参数上的约束——那它也没有规范路径。
 
-模块的路径前缀就是该模块的规范路径。对于裸实现(bare implementations)来说，它里面的数据项的路径前缀是：它当前实现的数据项的规范路径，再用<span class="parenthetical">尖括号（`<>`）</span>括把此路径括起来。对于 [trait实现][trait implementations]来说，它内部的数据项的路径前缀是：*当前实现的数据项的规范路径后跟一个 `as`，再后跟 trait 本身的规范路径，然后整个使用<span class="parenthetical">尖括号（`<>`）</span>括起来。*
+模块的路径前缀就是该模块的规范路径。对于裸实现(bare implementations)来说，它里面的程序项的路径前缀是：它当前实现的程序项的规范路径，再用<span class="parenthetical">尖括号（`<>`）</span>括把此路径括起来。对于 [trait实现][trait implementations]来说，它内部的程序项的路径前缀是：*当前实现的程序项的规范路径后跟一个 `as`，再后跟 trait 本身的规范路径，然后整个使用<span class="parenthetical">尖括号（`<>`）</span>括起来。*
 
-规范路径只在给定的 crate 中有意义。在 crate 之间没有全局命名空间，所以数据项的规范路径只在其 crate 中可标识。
+规范路径只在给定的 crate 中有意义。在 crate 之间没有全局命名空间，所以程序项的规范路径只在其 crate 中可标识。
 
 ```rust
-// 注释解释了数据项的规范路径
+// 注释解释了程序项的规范路径
 
 mod a { // ::a
     pub struct Struct; // ::a::Struct

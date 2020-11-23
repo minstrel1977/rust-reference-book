@@ -23,7 +23,7 @@ let name: &'static str = (|| "Rust")();
 ## Disambiguating Function Calls
 ## 函数调用的消歧
 
-为获得更直观的、[完全限定的句法][fully-qualified syntax]，Rust 对所有函数调都作了糖化(sugar)处理，以方便代码编写。而在编译时，Rust 又会把所有函数调用进行脱糖(desugar)处理，转换为显式形式。Rust 有时可能要求程序员带上 trait 来限定具体的函数调用，这取决于调用作用域内的数据项时是否出现了二义性(ambiguity)。
+为获得更直观的、[完全限定的句法][fully-qualified syntax]，Rust 对所有函数调都作了糖化(sugar)处理，以方便代码编写。而在编译时，Rust 又会把所有函数调用进行脱糖(desugar)处理，转换为显式形式。Rust 有时可能要求程序员带上 trait 来限定具体的函数调用，这取决于调用作用域内的程序项时是否出现了二义性(ambiguity)。
 
 > **注意**：过去，Rust 社区在文档、议题、RFC 和其他社区文章中使用了术语“确定性函数调用句法(Unambiguous Function Call Syntax)”、“通用函数调用句法(Universal Function Call Syntax)” 或 “UFCS”。但是，这个术语缺乏描述力，可能会混淆当前的议题。我们在这里提起这个词是为了便于搜索。
 
@@ -63,7 +63,7 @@ fn main() {
     let f = Foo;
     let b = Bar;
 
-    // 我们可以这样做，因为对于`Foo`，我们只有一个名为 `print` 的数据项
+    // 我们可以这样做，因为对于`Foo`，我们只有一个名为 `print` 的程序项
     f.print();
     // 对于 `Foo`来说，这样是更明确了，但没必要
     Foo::print(&f);
@@ -73,7 +73,7 @@ fn main() {
     // b.print(); // 错误： 发现多个 `print`
     // Bar::print(&b); // 仍错： 发现多个 `print`
 
-    // 必要，因为作用域内的多个数据项定义了 `print`
+    // 必要，因为作用域内的多个程序项定义了 `print`
     <Bar as Pretty>::print(&b);
 }
 ```

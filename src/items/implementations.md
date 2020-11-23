@@ -36,7 +36,7 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; | ( [_Visibility_]<sup>?</sup> ( [_TypeAlias_] | [_ConstantItem_] | [_Function_] | [_Method_] ) )\
 > &nbsp;&nbsp; )
 
-*实现*是将数据项与*实现类型(implementing type)*关联起来的数据项。实现使用关键字 `impl` 定义，它包含了属于当前实现的类型的实例的函数，或者包含了当前实现的类型本身的静态函数。
+*实现*是将程序项与*实现类型(implementing type)*关联起来的程序项。实现使用关键字 `impl` 定义，它包含了属于当前实现的类型的实例的函数，或者包含了当前实现的类型本身的静态函数。
 
 有两种类型的实现:
 
@@ -48,11 +48,11 @@
 
 固有实现被定义为一段由关键字 `impl`，泛型类型声明，指向标称类型(nominal type)的路径，一个 where子句和一对花括号括起来的一组*类型关联项(associable items)*组成的序列。
 
-（这里）*标称类型*也被称作*实现类型(implementing type)*；*类型关联项(associable items)*可理解为实现类型的各种*关联数据项(associated items)*。
+（这里）*标称类型*也被称作*实现类型(implementing type)*；*类型关联项(associable items)*可理解为实现类型的各种*关联程序项(associated items)*。
 
-固有实现将其包含的数据项与其的实现类型关联起来。固有实现可以包含[关联函数][associated functions]（包括方法）和[关联常量][associated constants]。固有实现不能包含关联类型别名。
+固有实现将其包含的程序项与其的实现类型关联起来。固有实现可以包含[关联函数][associated functions]（包括方法）和[关联常量][associated constants]。固有实现不能包含关联类型别名。
 
-关联数据项的[路径][path]是其实现类型的所有（形式的）路径中的任一种，然后再拼接上这个关联数据项的标识符来作为整个路径的末段路径组件(final path component)。
+关联程序项的[路径][path]是其实现类型的所有（形式的）路径中的任一种，然后再拼接上这个关联程序项的标识符来作为整个路径的末段路径组件(final path component)。
 
 类型可以有多个固有实现。但作为原始类型定义的实现类型必须与这些固有实现处在同一个 crate 里。
 
@@ -83,7 +83,7 @@ fn main() {
     // 实现类型 和 固有实现 在同一个模块下。
     color::Color::WHITE;
 
-    // 固有实现和类型声明不在同一个模块下，此时对通过固有实现关联进的数据项的存取仍通过指向实现类型的路径
+    // 固有实现和类型声明不在同一个模块下，此时对通过固有实现关联进的程序项的存取仍通过指向实现类型的路径
     color::Color::red();
 
     // 实现类型重导出后，使用这类快捷路径效果也一样。
@@ -103,9 +103,9 @@ fn main() {
 
 这里讨论的 trait 也被称为*被实现trait(implemented trait)*。实现类型去实现该被实现trait。
 
-trait实现必须去定义被实现trait 声明里的所有非默认关联数据项，可以重新定义被实现trait 定义的默认关联数据项，但不能定义任何其他数据项。
+trait实现必须去定义被实现trait 声明里的所有非默认关联程序项，可以重新定义被实现trait 定义的默认关联程序项，但不能定义任何其他程序项。
 
-关联数据项的完整路径为 `<` 后跟实现类型的路径，再后跟 `as`，然后是指向 trait 的路径，再后跟 `>`，这整体作为一个路径组件，然后再后接关联数据项自己的路径组件。
+关联程序项的完整路径为 `<` 后跟实现类型的路径，再后跟 `as`，然后是指向 trait 的路径，再后跟 `>`，这整体作为一个路径组件，然后再后接关联程序项自己的路径组件。
 
 [非安全(unsafe) trait][Unsafe traits] 需要 trait实现以关键字 `unsafe` 开头。
 
@@ -180,7 +180,7 @@ impl Seq<bool> for u32 {
 ## Attributes on Implementations
 ## 实现上的属性
 
-实现可以在关键字 `impl` 之前引入外部[属性][attributes]，在代码体内引入内部[属性][attributes]。内部属性必须位于任何关联数据项之前。这里有意义的属性有 [`cfg`]、[`deprecated`]、[`doc`] 和 [lint检查类属性][the lint check attributes]。
+实现可以在关键字 `impl` 之前引入外部[属性][attributes]，在代码体内引入内部[属性][attributes]。内部属性必须位于任何关联程序项之前。这里有意义的属性有 [`cfg`]、[`deprecated`]、[`doc`] 和 [lint检查类属性][the lint check attributes]。
 
 [_ConstantItem_]: constant-items.md
 [_Function_]: functions.md

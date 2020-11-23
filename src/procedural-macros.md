@@ -39,9 +39,9 @@
 ### Procedural macro hygiene
 ### 过程宏的卫生性
 
-过程宏是*非卫生的(unhygienic)*。这意味着它的行为就好像它输出的 token流是被简单地内联写入它周围的代码中一样。这意味着它会受到外部数据项的影响，也会影响外部导入。
+过程宏是*非卫生的(unhygienic)*。这意味着它的行为就好像它输出的 token流是被简单地内联写入它周围的代码中一样。这意味着它会受到外部程序项的影响，也会影响外部导入。
 
-鉴于此限制，宏作者需要小心地确保他们的宏能在尽可能多的上下文中正常工作。这通常包括对库中数据项使用绝对路径(例如，使用 `::std::option::Option` 而不是 `Option`)，或者确保生成的函数具有不太可能与其他函数冲突的名称（如 `__internal_foo`，而不是 `foo`）。
+鉴于此限制，宏作者需要小心地确保他们的宏能在尽可能多的上下文中正常工作。这通常包括对库中程序项使用绝对路径(例如，使用 `::std::option::Option` 而不是 `Option`)，或者确保生成的函数具有不太可能与其他函数冲突的名称（如 `__internal_foo`，而不是 `foo`）。
 
 ### Function-like procedural macros
 ### 类函数过程宏
@@ -78,16 +78,16 @@ fn main() {
 }
 ```
 
-类函数过程宏可以在任何宏调用位置调用，这些位置包括[语句][statements]、[表达式][expressions]、[模式][patterns]、[类型表达式][type expressions]、[数据项][item]可以出现的位置（包括[`extern`块][`extern` blocks]里、固有(inherent)[实现][implementations]里和 trait实现里、以及 [trait声明][trait definitions]里）。
+类函数过程宏可以在任何宏调用位置调用，这些位置包括[语句][statements]、[表达式][expressions]、[模式][patterns]、[类型表达式][type expressions]、[程序项][item]可以出现的位置（包括[`extern`块][`extern` blocks]里、固有(inherent)[实现][implementations]里和 trait实现里、以及 [trait声明][trait definitions]里）。
 
 ### Derive macros
 ### 派生宏
 
-*派生宏*为[派生(`derive`)属性][`derive` attribute]定义新输入。这类宏在给定输入[结构体(`struct`)][struct]、[枚举(`enum`)][enum]或[联合体(`union`)][union] token流的情况下创建新[数据项][items]。它们也可以定义[派生宏辅助属性][derive macro helper attributes]。
+*派生宏*为[派生(`derive`)属性][`derive` attribute]定义新输入。这类宏在给定输入[结构体(`struct`)][struct]、[枚举(`enum`)][enum]或[联合体(`union`)][union] token流的情况下创建新[程序项][items]。它们也可以定义[派生宏辅助属性][derive macro helper attributes]。
 
 自定义派生宏由带有 `proc_macro_derive`属性和 `(TokenStream) -> TokenStream`签名的[公有][public]可见性[函数][function]定义。
 
-输入 [`TokenStream`] 是带有 `derive` 属性的数据项的 token流。输出 [`TokenStream`] 必须是一组数据项，然后将这组数据项追加到输入 [`TokenStream`] 中的那条数据项所在的[模块][module]或[块][block]中。
+输入 [`TokenStream`] 是带有 `derive` 属性的程序项的 token流。输出 [`TokenStream`] 必须是一组程序项，然后将这组程序项追加到输入 [`TokenStream`] 中的那条程序项所在的[模块][module]或[块][block]中。
 
 下面是派生宏的一个示例。它没有对输入执行任何有用的操作，只是追加了一个函数 `answer`。
 
@@ -121,7 +121,7 @@ fn main() {
 #### Derive macro helper attributes
 #### 派生宏辅助属性
 
-派生宏可以将额外的[属性][attributes]添加到它们所在的[数据项][item]的作用域中。这些属性被称为*派生宏辅助属性*。这些属性是[惰性的][inert]，它们存在的唯一目的是将这些属性在使用现场获得的属性值反向输入到定义它们的派生宏中。也就是说所有该宏的宏应用都可以看到它们。
+派生宏可以将额外的[属性][attributes]添加到它们所在的[程序项][item]的作用域中。这些属性被称为*派生宏辅助属性*。这些属性是[惰性的][inert]，它们存在的唯一目的是将这些属性在使用现场获得的属性值反向输入到定义它们的派生宏中。也就是说所有该宏的宏应用都可以看到它们。
 
 定义辅助属性的方法是在 `proc_macro_derive` 宏中放置一个 `attributes` 键，此键带有一个使用逗号分隔的标识符列表，这些标识符是辅助属性的名称。
 
@@ -152,9 +152,9 @@ struct Struct {
 ### Attribute macros
 ### 属性宏
 
-*属性宏*定义可以附加到[数据项][items]上的新的[外部属性][attributes]，这些数据项包括[外部(`extern`)块][`extern` blocks]、固有[实现][implementations]、trate实现，以及 [trait声明][trait definitions]中的各类数据项。
+*属性宏*定义可以附加到[程序项][items]上的新的[外部属性][attributes]，这些程序项包括[外部(`extern`)块][`extern` blocks]、固有[实现][implementations]、trate实现，以及 [trait声明][trait definitions]中的各类程序项。
 
-属性宏由带有 `proc_macro_attribute`[属性][attribute]和 `(TokenStream, TokenStream) -> TokenStream`签名的[公有][public]可见性[函数][function]定义。签名中的第一个 [`TokenStream`] 是属性名称后面的定界 token树(delimited token tree)（不包括外层定界符）。如果该属性作为裸属性(bare attribute)给出，则第一个 [`TokenStream`] 值为空。第二个 [`TokenStream`] 是[数据项][item]的其余部分，包括该数据项的其他[属性][attributes]。输出的 [`TokenStream`] 将此属性宏应用的[数据项][item]替换为任意数量的数据项。
+属性宏由带有 `proc_macro_attribute`[属性][attribute]和 `(TokenStream, TokenStream) -> TokenStream`签名的[公有][public]可见性[函数][function]定义。签名中的第一个 [`TokenStream`] 是属性名称后面的定界 token树(delimited token tree)（不包括外层定界符）。如果该属性作为裸属性(bare attribute)给出，则第一个 [`TokenStream`] 值为空。第二个 [`TokenStream`] 是[程序项][item]的其余部分，包括该程序项的其他[属性][attributes]。输出的 [`TokenStream`] 将此属性宏应用的[程序项][item]替换为任意数量的程序项。
 
 例如，下面这个属性宏接受输入流并按原样返回，实际上对属性并无操作。
 

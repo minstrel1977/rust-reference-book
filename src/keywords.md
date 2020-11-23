@@ -16,7 +16,7 @@ Rust 将关键字分为三类：
 
 这类关键字只能在正确的上下文中使用。它们不能用作以下名称：
 
-* [数据项(item)][Items]
+* [程序项(item)][Items]
 * [变量][Variables]和函数参数
 * 字段(field)和[变体][variants]
 * [类型参数][Type parameters]

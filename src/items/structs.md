@@ -43,7 +43,7 @@
 
 *结构体*是一个使用关键字 `struct` 定义的标称型(nominal)[结构体类型][struct type]。
 
-结构体(`struct`)数据项的一个示例和它的使用方法：
+结构体(`struct`)程序项的一个示例和它的使用方法：
 
 ```rust
 struct Point {x: i32, y: i32}

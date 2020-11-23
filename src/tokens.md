@@ -506,13 +506,13 @@ let x: f64 = 2.; // 类型 f64
 | `>=`   | Ge          | [大于或等于][comparison], [泛型][generics]
 | `<=`   | Le          | [小于或等于][comparison]
 | `@`    | At          | [子模式绑定][Subpattern binding]
-| `_`    | Underscore  | [通配符模式][Wildcard patterns], [自动推断型类型][Inferred types], [常量项][constants]中的非命名数据项, [外部 crate][extern crates], 和 [use声明][use declarations]
+| `_`    | Underscore  | [通配符模式][Wildcard patterns], [自动推断型类型][Inferred types], [常量项][constants]中的非命名程序项, [外部 crate][extern crates], 和 [use声明][use declarations]
 | `.`    | Dot         | [字段访问][field], [元组索引][Tuple index]
 | `..`   | DotDot      | [区间][range], [结构体表达式][Struct expressions], [模式][Patterns]
 | `...`  | DotDotDot   | [可变参数函数][extern], [区间模式][Range patterns]
 | `..=`  | DotDotEq    | [闭区间][range], [区间模式][Range patterns]
 | `,`    | Comma       | 各种分隔符
-| `;`    | Semi        | 各种数据项和语句的结束符, [数组类型][Array types]
+| `;`    | Semi        | 各种程序项和语句的结束符, [数组类型][Array types]
 | `:`    | Colon       | 各种分隔符
 | `::`   | PathSep     | [路径分隔符][路径][Paths]
 | `->`   | RArrow      | [函数返回类型][functions], [闭包返回类型][Closures], [数组指针类型][Function pointer type]

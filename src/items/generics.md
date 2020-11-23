@@ -25,7 +25,7 @@
 > _TypeParam_ :\
 > &nbsp;&nbsp; [_OuterAttribute_]<sup>?</sup> [IDENTIFIER] ( `:` [_TypeParamBounds_]<sup>?</sup> )<sup>?</sup> ( `=` [_Type_] )<sup>?</sup>
 
-函数、类型别名、结构体、枚举、联合体、trait 和实现可以通过类型参数和生存期参数达到*参数化*配置的的效果。这些参数在尖括号<span class="parenthetical">（`<…>`）</span>中列出，通常都是紧跟在数据项名称之后和数据项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 `impl` 之后。生存期参数必须在类型参数之前声明。下面给出一些带类型参数和生存期参数的数据项的示例：
+函数、类型别名、结构体、枚举、联合体、trait 和实现可以通过类型参数和生存期参数达到*参数化*配置的的效果。这些参数在尖括号<span class="parenthetical">（`<…>`）</span>中列出，通常都是紧跟在程序项名称之后和程序项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 `impl` 之后。生存期参数必须在类型参数之前声明。下面给出一些带类型参数和生存期参数的程序项的示例：
 
 ```rust
 fn foo<'a, T>() {}
@@ -33,7 +33,7 @@ trait A<U> {}
 struct Ref<'a, T> where T: 'a { r: &'a T }
 ```
 
-[引用][References]、[裸指针][raw pointers]、[数组][arrays]、[切片][arrays]、[元组][tuples]和[函数指针][function pointers]也有生存期参数或类型参数，但这些数据项不能使用路径句法去引用。
+[引用][References]、[裸指针][raw pointers]、[数组][arrays]、[切片][arrays]、[元组][tuples]和[函数指针][function pointers]也有生存期参数或类型参数，但这些程序项不能使用路径句法去引用。
 
 ## Where clauses
 ## where子句
@@ -57,7 +57,7 @@ struct Ref<'a, T> where T: 'a { r: &'a T }
 
 *where子句*提供了另一种方法来为类型参数和生存期参数指定约束(bound)，甚至可以为非类型参数的类型指定约束。
 
-当定义数据项时，where子句提供的约束与该数据项的各种参数（包括生存期和高阶生存期）无关也是可以通过安全检查的。但这样做会带来潜在的错误。
+当定义程序项时，where子句提供的约束与该程序项的各种参数（包括生存期和高阶生存期）无关也是可以通过安全检查的。但这样做会带来潜在的错误。
 
 对某些泛型类型来说，在定义它的 where子句时，[`Copy`]、[`Clone`] 和 [`Sized`] 这些约束也可以通过安全检查。但将 `Copy` 或 `Clone` 作为可变引用、[trait对象][trait object]或[切片][arrays]的约束上错误的，将 `Sized` 作为 trait对象或切片的约束也是错误的。
 

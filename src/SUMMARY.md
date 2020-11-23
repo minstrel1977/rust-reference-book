@@ -22,7 +22,7 @@
 
 - [条件编译](conditional-compilation.md)
 
-- [数据项](items.md)
+- [程序项](items.md)
     - [模块](items/modules.md)
     - [外部crate](items/extern-crates.md)
     - [use声明](items/use-declarations.md)
@@ -37,7 +37,7 @@
     - [实现](items/implementations.md)
     - [外部块](items/external-blocks.md)
     - [类型参数和生存期参数](items/generics.md)
-    - [关联数据项](items/associated-items.md)
+    - [关联程序项](items/associated-items.md)
     - [可见性与隐私权](visibility-and-privacy.md)
 
 - [属性](attributes.md)

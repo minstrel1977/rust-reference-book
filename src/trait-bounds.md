@@ -26,13 +26,13 @@
 > &nbsp;&nbsp; | `'static`\
 > &nbsp;&nbsp; | `'_`
 
-[trait][Trait]约束和生存期约束为[泛型数据项][generic]提供了一种方法来限制将哪些类型和生存期可被用作它们的参数。通过 [where子句][where clause]可以为任何泛型提供约束。对于某些常见的情况，也可以使用如下简写形式：
+[trait][Trait]约束和生存期约束为[泛型程序项][generic]提供了一种方法来限制将哪些类型和生存期可被用作它们的参数。通过 [where子句][where clause]可以为任何泛型提供约束。对于某些常见的情况，也可以使用如下简写形式：
 
 * 跟在[泛型参数][generic]声明之后的约束：`fn f<A: Copy>() {}` 与 `fn f<A> where A: Copy () {}` 效果等价。
 * 在 trait声明中作为指定[超类trait(supertraits)][supertraits] 约束时：`trait Circle : Shape {}` 等同于 `trait Circle where Self : Shape {}`。
 * 在 trait声明中作为指定关联类型上的约束时：`trait A { type B: Copy; }` 等同于 `trait A where Self::B: Copy { type B; }`。
 
-在数据项上应用了约束就要求在使用该数据项时使用者必须满足这些约束。当对泛型数据项进行类型检查和借用检查时，约束可用来确认当前准备用来单态化此泛型的实例类型是否实现了约束给出的 trait。例如，给定 `Ty: Trait`：
+在程序项上应用了约束就要求在使用该程序项时使用者必须满足这些约束。当对泛型程序项进行类型检查和借用检查时，约束可用来确认当前准备用来单态化此泛型的实例类型是否实现了约束给出的 trait。例如，给定 `Ty: Trait`：
 
 * 在泛型函数体中，`Trait` 中的方法可以被 `Ty`类型的值调用。同样，`Trait` 上的相关常数也可以被使用。
 * `Trait` 上的关联类型可以被使用。

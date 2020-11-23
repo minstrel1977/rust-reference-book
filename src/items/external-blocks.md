@@ -35,9 +35,9 @@
 > _NamedFunctionParametersWithVariadics_ :\
 > &nbsp;&nbsp; ( _NamedFunctionParam_ `,` )<sup>\*</sup> _NamedFunctionParam_ `,` [_OuterAttribute_]<sup>\*</sup> `...`
 
-外部块提供未在当前 crate 中*定义*的数据项的*声明*，外部块是 Rust 外部函数接口的基础。这其实是某种意义上的不受安全检查的导入入口。
+外部块提供未在当前 crate 中*定义*的程序项的*声明*，外部块是 Rust 外部函数接口的基础。这其实是某种意义上的不受安全检查的导入入口。
 
-外部块里允许存在两种形式的数据项*声明*：[函数][functions]和[静态项][statics]。只有在非安全(`unsafe`)上下文中才能调用在外部块中声明的函数或访问在外部块中声明的静态项。
+外部块里允许存在两种形式的程序项*声明*：[函数][functions]和[静态项][statics]。只有在非安全(`unsafe`)上下文中才能调用在外部块中声明的函数或访问在外部块中声明的静态项。
 
 在句法上，关键字 `unsafe` 允许出现在关键字 `extern` 之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 `unsafe` 从 token流中移除之前利用此句法来使用此关键字。
 
@@ -101,7 +101,7 @@ extern {
 ### The `link` attribute
 ### `link`属性
 
-*`link`属性*为外部(`extern`)块中的数据项指定编译器应该链接的本地库的名称。它使用 [_MetaListNameValueStr_]元项属性句法指定其输入参数。`name`键指定要链接的本地库的名称。`kind`键是一个可选值，它指定具有以下可选值的库类型：
+*`link`属性*为外部(`extern`)块中的程序项指定编译器应该链接的本地库的名称。它使用 [_MetaListNameValueStr_]元项属性句法指定其输入参数。`name`键指定要链接的本地库的名称。`kind`键是一个可选值，它指定具有以下可选值的库类型：
 
 - `dylib` — 表示库类型是动态库。如果没有指定 `kind`，这是默认值。
 - `static` — 表示库类型是静态库。
@@ -109,7 +109,7 @@ extern {
 
 如果指定了 `kind`键，则必须指定 `name`键。
 
-当从主机环境导入 symbols 时，`wasm_import_module`键可用于为外部(`extern`)块中的数据项指定 [WebAssembly模块][WebAssembly module]名称。如果未指定 `wasm_import_module`，则默认模块名为 `env`。
+当从主机环境导入 symbols 时，`wasm_import_module`键可用于为外部(`extern`)块中的程序项指定 [WebAssembly模块][WebAssembly module]名称。如果未指定 `wasm_import_module`，则默认模块名为 `env`。
 
 <!-- ignore: requires extern linking -->
 ```rust,ignore
@@ -134,7 +134,7 @@ extern {
 ### The `link_name` attribute
 ### `link_name`属性
 
-可以在外部(`extern`)块内的数据项声明上指定 `link_name`属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 [_MetaNameValueStr_]元项属性句法指定 symbol 的名称。
+可以在外部(`extern`)块内的程序项声明上指定 `link_name`属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 [_MetaNameValueStr_]元项属性句法指定 symbol 的名称。
 
 ```rust
 extern {

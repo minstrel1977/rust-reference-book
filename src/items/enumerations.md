@@ -34,7 +34,7 @@
 
 枚举使用关键字 `enum` 来声明。
 
-`enum` 数据项的一个示例和它的使用方法：
+`enum` 程序项的一个示例和它的使用方法：
 
 ```rust
 enum Animal {
@@ -132,7 +132,7 @@ let y: u32 = x; // 类型不匹配错误
 ## Variant visibility
 ## 变体的可见性
 
-依照句法规则，枚举变体是允许有自己的[*可见性(visibility)*][Visibility]限定/注解(annotation)的，但当枚举被（句法分析程序）验证(validate)通过后，可见性注解又被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的数据项使用统一的句法规则进行解析。
+依照句法规则，枚举变体是允许有自己的[*可见性(visibility)*][Visibility]限定/注解(annotation)的，但当枚举被（句法分析程序）验证(validate)通过后，可见性注解又被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的程序项使用统一的句法规则进行解析。
 
 ```rust
 macro_rules! mac_variant {
