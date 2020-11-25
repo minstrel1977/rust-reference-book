@@ -7861,7 +7861,7 @@ commit: ff68c99b2b2003998b0f951fcb8dc290370a0275 <br />
 </ul>
 <h2><a class="header" href="#destructuring" id="destructuring">Destructuring</a></h2>
 <h2><a class="header" href="#解构" id="解构">解构</a></h2>
-<p>模式可用于<em>解构</em><a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/enumerations.html">枚举(<code>enum</code>)</a>和<a href="types/tuple.html">元组</a>。解构将一个值分解成它的内部组件组成，使用的句法与创建此类值时的几乎相同。在<a href="glossary.html#scrutinee">检验对象</a>表达式的类型为结构体(<code>struct</code>)、枚举(<code>enum</code>)或元组(<code>tuple</code>)的模式中，占位符(<code>_</code>) 代表<em>一个</em>数据字段，而通配符 <code>..</code> 代表特定变量/变体(variant)的<em>所有</em>剩余字段。当使用字段的名称（而不是字段序号）来解构数据结构时，允许将 <code>fieldname</code> 当作 <code>fieldname: fieldname</code> 的简写形式书写。</p>
+<p>模式可用于<em>解构</em><a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/enumerations.html">枚举(<code>enum</code>)</a>和<a href="types/tuple.html">元组</a>。解构将一个值分解成它的组件组成，使用的句法与创建此类值时的几乎相同。在<a href="glossary.html#scrutinee">检验对象</a>表达式的类型为结构体(<code>struct</code>)、枚举(<code>enum</code>)或元组(<code>tuple</code>)的模式中，占位符(<code>_</code>) 代表<em>一个</em>数据字段，而通配符 <code>..</code> 代表特定变量/变体(variant)的<em>所有</em>剩余字段。当使用字段的名称（而不是字段序号）来解构数据结构时，允许将 <code>fieldname</code> 当作 <code>fieldname: fieldname</code> 的简写形式书写。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -7950,7 +7950,7 @@ fn sum(x: i32, y: i32) -&gt; i32 {
 </span><span class="boring">}
 </span><span class="boring">}
 </span></code></pre></pre>
-<p>要将模式匹配到值绑定到变量，也可使用句法 <code>variable @ subpattern</code>。例如，下面示例中将值 2 绑定到 <code>e</code> 上（不是整个区间(range)：这里的区间是一个区间子模式(range subpattern)）。</p>
+<p>要将模式匹配到的值绑定到变量上，也可使用句法 <code>variable @ subpattern</code>。例如，下面示例中将值 2 绑定到 <code>e</code> 上（不是整个区间(range)：这里的区间是一个区间子模式(range subpattern)）。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -8017,8 +8017,8 @@ if let Some(y) = x {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>*非引用模式(Non-reference patterns)*包括<strong>除</strong>上面这种绑定模式、后面会讲到的<a href="patterns.html#wildcard-pattern">通配符模式</a>（<code>_</code>）、引用类型的<a href="patterns.html#path-patterns">常量(<code>const</code>)模式</a>和<a href="patterns.html#reference-patterns">引用模式</a>以外的所有模式。</p>
-<p>如果绑定模式(binding pattern)中没有显式地包含 <code>ref</code>、<code>ref mut</code>、<code>mut</code>，那么它将使用<em>默认绑定方式</em>来确定如何绑定变量。默认绑定方式以使用移动语义的“移动(move)”方式开始。当匹配一个模式时，编译器对模式从外到内逐层匹配。每次非引用模式和引用匹配上了时，引用都会自动解引用出最后的值，并更新默认绑定方式。此时引用会将默认绑定方式设置为 <code>ref</code> 方式。可变引用会将模式设置为 <code>ref mut</code> 方式，除非绑定方式已经是 <code>ref</code> 了（在这种情况下它仍然是 <code>ref</code> 方式）。如果自动解引用出的值仍然是引用，则会重复解引用（直至解出最后的值，然后使用 <code>ref</code> 或 <code>ref mut</code> 方式绑定）。</p>
+<p>*非引用模式(Non-reference patterns)*包括<strong>除</strong>上面这种绑定模式和后面会讲到的<a href="patterns.html#wildcard-pattern">通配符模式</a>（<code>_</code>）、匹配引用类型的<a href="patterns.html#path-patterns">常量(<code>const</code>)模式</a>和<a href="patterns.html#reference-patterns">引用模式</a>这些模式以外的所有模式。</p>
+<p>如果绑定模式(binding pattern)中没有显式地包含 <code>ref</code>、<code>ref mut</code>、<code>mut</code>，那么它将使用<em>默认绑定方式</em>来确定如何绑定变量。默认绑定方式以使用移动语义的“移动(move)”方式开始。当匹配一个模式时，编译器对模式从外到内逐层匹配。每次非引用模式和引用匹配上了时，引用都会自动解引用出最后的值，并更新默认绑定方式，再进行最终的匹配。此时引用会将默认绑定方式设置为 <code>ref</code> 方式。可变引用会将模式设置为 <code>ref mut</code> 方式，除非绑定方式已经是 <code>ref</code> 了（在这种情况下它仍然是 <code>ref</code> 方式）。如果自动解引用解出的值仍然是引用，则会重复解引用。<sup class="footnote-reference"><a href="#译注2">2</a></sup></p>
 <p>移动语义的绑定方式和引用语义的绑定方式可以在同一个模式中混合使用，这样做会导致绑定对象的部分被移走，并且之后无法再使用该对象。这只适用于类型无法拷贝的情况下。</p>
 <p>下面的示例中，<code>name</code> 被移出了 <code>person</code>，因此如果再试图把 <code>person</code> 作为一个整体使用，或再次使用 <code>person.name</code>，将会因为*部分移出(partial move)*的问题而报错。</p>
 <p>示例：</p>
@@ -8446,7 +8446,10 @@ match v[..] {
 <p>常量不能是联合体类型。结构体常量和枚举常量必须带有 <code>#[derive(PartialEq, Eq)]</code> 属性（不只是实现）。</p>
 <p>当路径模式指向结构体或枚举变体(枚举只有一个变体)或类型为不可反驳型的常量时，该路径模式是不可反驳型的。当路径模式指向的是可反驳型常量或带有多个变体的枚举时，该路径模式是可反驳型的。</p>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
-<p>请仔细参研<a href="expressions/match-expr.html">匹配表达式</a>中的 MatchExpression产生式，搞清楚匹配臂(MatchArm)的位置。 </p>
+<p>请仔细参研<a href="expressions/match-expr.html">匹配表达式</a>中的 MatchExpression产生式，搞清楚匹配臂(MatchArm)的位置。</p>
+</div>
+<div class="footnote-definition" id="译注2"><sup class="footnote-definition-label">2</sup>
+<p>文字叙述有些晦涩，译者举个例子：假如 <code>if let &amp;Some(y) = &amp;&amp;&amp;Some(3) {</code>，此时会首先剥掉等号两边的第一层 <code>&amp;</code>号，然后是 <code>Some(y)</code> 和 <code>&amp;&amp;Some(3)</code>匹配，此时发现是非引用模式和引用匹配上了，就再对 <code>&amp;&amp;Some(3)</code> 做重复解引用，解出 <code>Some(3)</code>，然后从外部转向内部，见到最后的变量 <code>y</code> 和检验对象 <code>3</code>，就更新 <code>y</code> 的默认绑定方式为 <code>ref</code>，所以 <code>y</code> 就匹配为 <code>&amp;3</code>；如果我们这个例子的变量 <code>y</code> 改为 <code>ref y</code>，不影响 <code>y</code> 的绑定效果；极端的情况 <code>if let &amp;Some(y) = &amp;&amp;&amp;Some(x) {</code>，如果 <code>x</code> 是可变的，那么此时 <code>y</code> 的绑定方式就是 <code>ref mut</code>，再进一步极端 <code>if let &amp;Some(ref y) = &amp;&amp;&amp;Some(x) {</code>，此时 <code>y</code> 的绑定方式仍是 <code>ref</code>。</p>
 </div>
 <!-- 2020-11-12-->
 <!-- checked -->
