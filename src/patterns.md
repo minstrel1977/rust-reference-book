@@ -3,7 +3,7 @@
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
 >commit: ff68c99b2b2003998b0f951fcb8dc290370a0275 \
->本章译文最后维护日期：2020-11-25
+>本章译文最后维护日期：2020-11-27
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\
@@ -208,8 +208,8 @@ match a {
 #    name: String,
 #    age: u8,
 # }
-# let value = Person{ name: String::from("John"), age: 23 };
-if let Person{name: &person_name, age: 18..=150} = value { }
+# let value = Person { name: String::from("John"), age: 23 };
+if let Person { name: &person_name, age: 18..=150 } = value { }
 ```
 
 要使其有效，请按如下方式编写代码：
@@ -219,8 +219,8 @@ if let Person{name: &person_name, age: 18..=150} = value { }
 #    name: String,
 #    age: u8,
 # }
-# let value = Person{ name: String::from("John"), age: 23 };
-if let Person{ name: ref person_name, age: 18..=150 } = value { }
+# let value = Person { name: String::from("John"), age: 23 };
+if let Person { name: ref person_name, age: 18..=150 } = value { }
 ```
 
 这里，`ref` 不是被匹配的一部分。这里它唯一的目的就是使变量和匹配值的引用绑定起来，而不是潜在地拷贝或移动匹配到的内容。
@@ -251,7 +251,7 @@ if let Some(y) = x {
 
 示例：
 
-```rust,compile_fail
+```rust
 # struct Person {
 #    name: String,
 #    age: u8,

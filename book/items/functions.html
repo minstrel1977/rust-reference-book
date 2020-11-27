@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/functions.md">functions.md</a><br />
 commit: f35a6003ad9aff52e3cd459917b737bb5b1e56f8 <br />
-本章译文最后维护日期：2020-11-8</p>
+本章译文最后维护日期：2020-11-27</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -386,12 +386,12 @@ async fn safe_example() {
 <h2><a class="header" href="#attributes-on-functions" id="attributes-on-functions">Attributes on functions</a></h2>
 <h2><a class="header" href="#函数上的属性" id="函数上的属性">函数上的属性</a></h2>
 <p>在函数上允许使用<a href="../attributes.html">外部属性</a>，也允许在<a href="../expressions/block-expr.html">函数体</a>中的 <code>{</code> 后面直接放置<a href="../attributes.html">内部属性</a>。</p>
-<p>下面这个例子显示了一个函数的内部属性。该函数仅在执行测试时可用。</p>
+<p>下面这个例子显示了一个函数的内部属性。该函数的文档中只会出现单词“Example”。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>fn test_only() {
-    #![test]
+</span>fn documented() {
+    #![doc = &quot;Example&quot;]
 }
 <span class="boring">}
 </span></code></pre></pre>

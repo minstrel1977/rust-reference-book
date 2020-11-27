@@ -170,7 +170,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
 commit: ff68c99b2b2003998b0f951fcb8dc290370a0275 <br />
-本章译文最后维护日期：2020-11-13</p>
+本章译文最后维护日期：2020-11-27</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -365,8 +365,8 @@ match a {
 </span><span class="boring">   name: String,
 </span><span class="boring">   age: u8,
 </span><span class="boring">}
-</span><span class="boring">let value = Person{ name: String::from(&quot;John&quot;), age: 23 };
-</span>if let Person{name: &amp;person_name, age: 18..=150} = value { }
+</span><span class="boring">let value = Person { name: String::from(&quot;John&quot;), age: 23 };
+</span>if let Person { name: &amp;person_name, age: 18..=150 } = value { }
 <span class="boring">}
 </span></code></pre></pre>
 <p>要使其有效，请按如下方式编写代码：</p>
@@ -377,8 +377,8 @@ match a {
 </span><span class="boring">   name: String,
 </span><span class="boring">   age: u8,
 </span><span class="boring">}
-</span><span class="boring">let value = Person{ name: String::from(&quot;John&quot;), age: 23 };
-</span>if let Person{ name: ref person_name, age: 18..=150 } = value { }
+</span><span class="boring">let value = Person { name: String::from(&quot;John&quot;), age: 23 };
+</span>if let Person { name: ref person_name, age: 18..=150 } = value { }
 <span class="boring">}
 </span></code></pre></pre>
 <p>这里，<code>ref</code> 不是被匹配的一部分。这里它唯一的目的就是使变量和匹配值的引用绑定起来，而不是潜在地拷贝或移动匹配到的内容。</p>
@@ -401,7 +401,7 @@ if let Some(y) = x {
 <p>移动语义的绑定方式和引用语义的绑定方式可以在同一个模式中混合使用，这样做会导致绑定对象的部分被移走，并且之后无法再使用该对象。这只适用于类型无法拷贝的情况下。</p>
 <p>下面的示例中，<code>name</code> 被移出了 <code>person</code>，因此如果再试图把 <code>person</code> 作为一个整体使用，或再次使用 <code>person.name</code>，将会因为*部分移出(partial move)*的问题而报错。</p>
 <p>示例：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Person {

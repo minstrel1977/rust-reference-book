@@ -3,7 +3,7 @@
 
 >[functions.md](https://github.com/rust-lang/reference/blob/master/src/items/functions.md)\
 >commit: f35a6003ad9aff52e3cd459917b737bb5b1e56f8 \
->本章译文最后维护日期：2020-11-8
+>本章译文最后维护日期：2020-11-27
 
 > **<sup>句法</sup>**\
 > _Function_ :\
@@ -237,11 +237,11 @@ async fn safe_example() {
 
 在函数上允许使用[外部属性][attributes]，也允许在[函数体][block]中的 `{` 后面直接放置[内部属性][attributes]。
 
-下面这个例子显示了一个函数的内部属性。该函数仅在执行测试时可用。
+下面这个例子显示了一个函数的内部属性。该函数的文档中只会出现单词“Example”。
 
 ```rust
-fn test_only() {
-    #![test]
+fn documented() {
+    #![doc = "Example"]
 }
 ```
 
