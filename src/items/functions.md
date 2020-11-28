@@ -2,7 +2,7 @@
 # 函数
 
 >[functions.md](https://github.com/rust-lang/reference/blob/master/src/items/functions.md)\
->commit: f35a6003ad9aff52e3cd459917b737bb5b1e56f8 \
+>commit: 645a7b1a809842f03e71f7211b1e22ee301a703a \
 >本章译文最后维护日期：2020-11-27
 
 > **<sup>句法</sup>**\

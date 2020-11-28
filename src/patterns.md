@@ -2,7 +2,7 @@
 # 模式
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
->commit: ff68c99b2b2003998b0f951fcb8dc290370a0275 \
+>commit: c996a06b47094715507090eddde7a5bc5c76995c \
 >本章译文最后维护日期：2020-11-27
 
 > **<sup>句法</sup>**\
