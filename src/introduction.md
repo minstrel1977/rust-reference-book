@@ -2,8 +2,8 @@
 # 介绍
 
 >[introduction.md](https://github.com/rust-lang/reference/blob/master/src/introduction.md)\
->commit: 95de3e8bd57ce4fb239aa1cfc0171c3305e5eb56 \
->本章译文最后维护日期：2020-11-13
+>commit: a8afdca5d0715b2257b6f8b9a032fd4dd7dae855 \
+>本章译文最后维护日期：2020-12-3
 
 本书是 Rust 编程语言的主要参考手册，本书提供了3类资料：
   - 一些章节非正式地介绍了该语言的各种语言结构及其用法。
@@ -27,6 +27,8 @@
 类似地，本书通常不能作为记录 rustc 或者 Cargo 细节的工具书。rustc 有自己专门的书 [rustc book]，Cargo 也有一本书 [cargo book]，该书中包含了 Cargo 的[参考手册] [cargo reference]。本书也涉及了少量和它们的相关知识，比如[链接][linkage]的章节，介绍了 rustc 是如何工作的。
 
 本书仅作为稳定版 Rust 的参考资料存在，关于尚在开发中的非稳定特性，请参阅 [Unstable Book]。
+
+Rust编译器（包括 `rustc`）将执行编译优化，但本参考手册不指导这些编译器的优化工作，所以只能把编译后的程序看作一个黑盒子。如果想侦测它的优化方式，只能通过运行它、给它提供输入并观察它的输出来推断。所有的编译器优化结果和程序的运行效果都必须和本参考手册所说的保持一致。
 
 最后，本书并非 Rust 语言规范。它可能包含特定于 `rustc` 的细节，这不应该被当作 Rust 语言的规范。我们打算以后出版这样一本书，但在那之前，本手册是最接近的东西。
 

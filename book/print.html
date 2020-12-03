@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2020-11-27</p>
+<p>本书跟随原文截止日期：2020-12-3</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -237,8 +237,8 @@
 <h1><a class="header" href="#介绍" id="介绍">介绍</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/introduction.md">introduction.md</a><br />
-commit: 95de3e8bd57ce4fb239aa1cfc0171c3305e5eb56 <br />
-本章译文最后维护日期：2020-11-13</p>
+commit: a8afdca5d0715b2257b6f8b9a032fd4dd7dae855 <br />
+本章译文最后维护日期：2020-12-3</p>
 </blockquote>
 <p>本书是 Rust 编程语言的主要参考手册，本书提供了3类资料：</p>
 <ul>
@@ -256,6 +256,7 @@ commit: 95de3e8bd57ce4fb239aa1cfc0171c3305e5eb56 <br />
 <p>这本书也不作为 Rust 语言发行版中包含的<a href="https://doc.rust-lang.org/std/index.html">标准库</a>的参考资料。Rust 的库文档是从其源代码文件中提取的文档属性。此外，有许多可能被可能认为是语言自带特性(features)的特性其实都是 Rust 的标准库的特性，所以您要寻找的特性可能在那里，而不是在这里。</p>
 <p>类似地，本书通常不能作为记录 rustc 或者 Cargo 细节的工具书。rustc 有自己专门的书 <a href="https://doc.rust-lang.org/rustc/index.html">rustc book</a>，Cargo 也有一本书 <a href="https://doc.rust-lang.org/cargo/index.html">cargo book</a>，该书中包含了 Cargo 的[参考手册] <a href="https://doc.rust-lang.org/cargo/reference/index.html">cargo reference</a>。本书也涉及了少量和它们的相关知识，比如<a href="linkage.html">链接</a>的章节，介绍了 rustc 是如何工作的。</p>
 <p>本书仅作为稳定版 Rust 的参考资料存在，关于尚在开发中的非稳定特性，请参阅 <a href="https://doc.rust-lang.org/nightly/unstable-book/">Unstable Book</a>。</p>
+<p>Rust编译器（包括 <code>rustc</code>）将执行编译优化，但本参考手册不指导这些编译器的优化工作，所以只能把编译后的程序看作一个黑盒子。如果想侦测它的优化方式，只能通过运行它、给它提供输入并观察它的输出来推断。所有的编译器优化结果和程序的运行效果都必须和本参考手册所说的保持一致。</p>
 <p>最后，本书并非 Rust 语言规范。它可能包含特定于 <code>rustc</code> 的细节，这不应该被当作 Rust 语言的规范。我们打算以后出版这样一本书，但在那之前，本手册是最接近的东西。</p>
 <h2><a class="header" href="#how-to-use-this-book" id="how-to-use-this-book">How to Use This Book</a></h2>
 <h2><a class="header" href="#如何使用此书" id="如何使用此书">如何使用此书</a></h2>
@@ -6924,8 +6925,8 @@ let m = Message::Move { x: 50, y: 200 };
 <h1><a class="header" href="#调用表达式" id="调用表达式">调用表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/call-expr.md">call-expr.md</a><br />
-commit: e06136b1cd06d3d72dcc0ed7ccf5fbab5574f901 <br />
-本章译文最后维护日期：2020-11-12</p>
+commit: 367da0184f98354d14fa36f24ca74d941a0e974c <br />
+本章译文最后维护日期：2020-12-3</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6974,7 +6975,7 @@ struct Bar;
 impl Pretty for Bar {
     fn print(&amp;self) {}
 }
-impl Ugly for Bar{
+impl Ugly for Bar {
     fn print(&amp;self) {}
 }
 
