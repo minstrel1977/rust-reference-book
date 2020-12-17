@@ -2,8 +2,8 @@
 # 类型布局
 
 >[type-layout.md](https://github.com/rust-lang/reference/blob/master/src/type-layout.md)\
->commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 \
->本章译文最后维护日期：2020-11-14
+>commit: be4332c6a8f93c425d6f9a8f59b2a6dec63f8ffe \
+>本章译文最后维护日期：2020-12-17
 
 类型的布局描述类型的尺寸(size)、对齐量(alignment)和字段(fields)的*相对偏移量(relative offsets)*。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。
 
@@ -18,7 +18,7 @@
 
 值的*尺寸*是同类型的值组成的数组中连续两个元素之间的字节偏移量，此偏移量包括了为保持程序项类型内部对齐而对此类型做的对齐填充。值的尺寸总是其对齐量的非负整数倍数。值的尺寸可以通过函数 [`size_of_val`] 来检测。
 
-类型如果实现了 [`Sized`] trait，那它的所有值在编译时都具有相同尺寸和对齐量，并且可以使用函数 [`size_of`] 和 [`align_of`] 对此类型进行检测。没有实现 `Sized` trait 的类型被称为[动态尺寸类型][dynamically sized types]。由于实现了 `Sized` trait 的某一类型的所有值共享相同的尺寸和对齐量，所以我们分别将这俩共享值称为类型的尺寸和类型的对齐量。
+如果某类型的所有的值都具有相同的尺寸和对齐量，并且两者在编译时都是已知的，并且实现了 [`Sized`] trait，则可以使用函数 [`size_of`] 和 [`align_of`] 对此类型进行检测。没有实现 `Sized` trait 的类型被称为[动态尺寸类型][dynamically sized types]。由于实现了 `Sized` trait 的某一类型的所有值共享相同的尺寸和对齐量，所以我们分别将这俩共享值称为该类型的尺寸和该类型的对齐量。
 
 ## Primitive Data Layout
 ## 原生类型的布局
@@ -483,5 +483,5 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 [`transparent`]: #the-transparent-representation
 [`Layout`]: https://doc.rust-lang.org/std/alloc/struct.Layout.html
 
-<!-- 2020-11-12-->
+<!-- 2020-12-17-->
 <!-- checked -->

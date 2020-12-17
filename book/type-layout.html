@@ -169,8 +169,8 @@
 <h1><a class="header" href="#类型布局" id="类型布局">类型布局</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-layout.md">type-layout.md</a><br />
-commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
-本章译文最后维护日期：2020-11-14</p>
+commit: be4332c6a8f93c425d6f9a8f59b2a6dec63f8ffe <br />
+本章译文最后维护日期：2020-12-17</p>
 </blockquote>
 <p>类型的布局描述类型的尺寸(size)、对齐量(alignment)和字段(fields)的<em>相对偏移量(relative offsets)</em>。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。</p>
 <p>每次编译都有可能更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。</p>
@@ -179,7 +179,7 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <p>所有值都有对一个齐量和尺寸。</p>
 <p>值的<em>对齐量</em>指定了哪些地址可以有效地存储该值。对齐量为 <code>n</code> 的值只能存储地址为 n 的倍数的内存地址上。例如，对齐量为 2 的值必须存储在偶数地址上，而对齐量为 1 的值可以存储在任何地址上。对齐量是用字节数来度量的，必须至少是 1，并且总是 2 的幂次。值的对齐量可以通过函数 <a href="https://doc.rust-lang.org/std/mem/fn.align_of_val.html"><code>align_of_val</code></a> 来检测。</p>
 <p>值的<em>尺寸</em>是同类型的值组成的数组中连续两个元素之间的字节偏移量，此偏移量包括了为保持程序项类型内部对齐而对此类型做的对齐填充。值的尺寸总是其对齐量的非负整数倍数。值的尺寸可以通过函数 <a href="https://doc.rust-lang.org/std/mem/fn.size_of_val.html"><code>size_of_val</code></a> 来检测。</p>
-<p>类型如果实现了 <a href="https://doc.rust-lang.org/std/marker/trait.Sized.html"><code>Sized</code></a> trait，那它的所有值在编译时都具有相同尺寸和对齐量，并且可以使用函数 <a href="https://doc.rust-lang.org/std/mem/fn.size_of.html"><code>size_of</code></a> 和 <a href="https://doc.rust-lang.org/std/mem/fn.align_of.html"><code>align_of</code></a> 对此类型进行检测。没有实现 <code>Sized</code> trait 的类型被称为<a href="dynamically-sized-types.html">动态尺寸类型</a>。由于实现了 <code>Sized</code> trait 的某一类型的所有值共享相同的尺寸和对齐量，所以我们分别将这俩共享值称为类型的尺寸和类型的对齐量。</p>
+<p>如果某类型的所有的值都具有相同的尺寸和对齐量，并且两者在编译时都是已知的，并且实现了 <a href="https://doc.rust-lang.org/std/marker/trait.Sized.html"><code>Sized</code></a> trait，则可以使用函数 <a href="https://doc.rust-lang.org/std/mem/fn.size_of.html"><code>size_of</code></a> 和 <a href="https://doc.rust-lang.org/std/mem/fn.align_of.html"><code>align_of</code></a> 对此类型进行检测。没有实现 <code>Sized</code> trait 的类型被称为<a href="dynamically-sized-types.html">动态尺寸类型</a>。由于实现了 <code>Sized</code> trait 的某一类型的所有值共享相同的尺寸和对齐量，所以我们分别将这俩共享值称为该类型的尺寸和该类型的对齐量。</p>
 <h2><a class="header" href="#primitive-data-layout" id="primitive-data-layout">Primitive Data Layout</a></h2>
 <h2><a class="header" href="#原生类型的布局" id="原生类型的布局">原生类型的布局</a></h2>
 <p>下表给出了大多数原生类型(primitives)的尺寸。</p>
@@ -575,7 +575,7 @@ assert_eq!(std::mem::size_of::&lt;Enum16&gt;(), 4);
 <div class="footnote-definition" id="译注2"><sup class="footnote-definition-label">2</sup>
 <p>这里合法的意思是变体的判别值受 <code>repr(u8)</code> 这样的表形属性约束，像这个例子中，变体的判别值就只能位于 0~255 之间。 </p>
 </div>
-<!-- 2020-11-12-->
+<!-- 2020-12-17-->
 <!-- checked -->
 
                     </main>
