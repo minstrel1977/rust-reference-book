@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2020-12-3</p>
+<p>本书跟随原文截止日期：2020-12-24</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -3258,8 +3258,8 @@ enum E {
 <h1><a class="header" href="#联合体" id="联合体">联合体</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/unions.md">unions.md</a><br />
-commit: 0d6f579859c875371c8cfdd6314bb23b19c7a2e8 <br />
-本章译文最后维护日期：2020-11-8</p>
+commit: cd996a4e6e9b98929c3718fd76988bfee51d757c <br />
+本章译文最后维护日期：2020-12-24</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -3315,14 +3315,17 @@ union MyUnion {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>对实现 <code>Copy</code> trait 的联合体字段的写操作不需要事先的析构读操作，也因此这些写操作不必放在非安全(<code>unsafe</code>)块中。<sup class="footnote-reference"><a href="#译者备注">1</a></sup></p>
+<p>对实现了 <a href="https://doc.rust-lang.org/std/marker/trait.Copy.html"><code>Copy</code></a> trait 或 [<code>ManuallyDrop</code>][ManuallyDrop] trait 的联合体字段的写操作不需要事先的析构读操作，也因此这些写操作不必放在非安全(<code>unsafe</code>)块中。<sup class="footnote-reference"><a href="#译者备注">1</a></sup></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">union MyUnion { f1: u32, f2: f32 }
-</span><span class="boring">let mut u = MyUnion { f1: 1 };
-</span><span class="boring">
-</span>u.f1 = 2;
+</span><span class="boring">use std::mem::ManuallyDrop;
+</span>union MyUnion { f1: u32, f2: ManuallyDrop&lt;String&gt; }
+let mut u = MyUnion { f1: 1 };
+
+// 这些都不是必须要放在 `unsafe` 里的
+u.f1 = 2;
+u.f2 = ManuallyDrop::new(String::from(&quot;example&quot;));
 <span class="boring">}
 </span></code></pre></pre>
 <p>通常，那些用到联合体的程序代码会先在非安全的联合体字段访问操作上提供一层安全包装，然后再使用。</p>
@@ -3404,7 +3407,7 @@ fn test() {
 <div class="footnote-definition" id="译者备注"><sup class="footnote-definition-label">1</sup>
 <p>这句译者简单理解就是对已经初始化的变量再去覆写的时候要先去读一下这个变量代表的地址上的值的状态，如果有值，并且允许覆写，那 Rust 为防止内存泄漏就先执行那变量的析构行为（drop()），清空那个地址上的关联堆数据，再写入。我们这里对联合体的预设条件是此联合体值有 Copy特性，有 Copy特性了，对值的直接覆写不会造成内存泄漏，就不必调用析构行为，也不需要事先的非安全读操作了。对于这个问题<a href="https://learnku.com/docs/nomicon/2018">nomicon</a>的“未初始化内存”章有讲述，博主<a href="https://www.zhihu.com/people/crlf0710">CrLF0710</a>的两篇“学一点 Rust 内存模型会发生什么呢？”里也都有精彩讲解。</p>
 </div>
-<!-- 2020-11-12-->
+<!-- 2020-12-24-->
 <!-- checked -->
 <h1><a class="header" href="#constant-items" id="constant-items">Constant items</a></h1>
 <h1><a class="header" href="#常量项" id="常量项">常量项</a></h1>
@@ -8865,13 +8868,14 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <h1><a class="header" href="#联合体类型" id="联合体类型">联合体类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/union.md">union.md</a><br />
-commit: 0c8df59ff60f341ff0cf4d766a7c442b4a5837a4 <br />
-本章译文最后维护日期：2020-11-14</p>
+commit: cd996a4e6e9b98929c3718fd76988bfee51d757c <br />
+本章译文最后维护日期：2020-12-24</p>
 </blockquote>
 <p><em>联合体类型</em>是一种标称型(nominal)的、异构的、类似C语言里的 union 的类型，具体的类型名称由<a href="types/../items/unions.html">联合体(<code>union</code>)程序项</a>的名称表示。</p>
-<p>联合体没有“活跃字段(active field)”的概念。相反，每次对联合体的访问都将联合体的部分存储内容转换为被访问字段的类型。由于转换可能会导致意外或未定义行为，所以读取联合体字段，或写入未实现 <a href="types/../special-types-and-traits.html#copy"><code>Copy</code></a> 的联合体字段的操作都需要放在 <code>unsafe</code>块内进行。有关详细信息，请参阅<a href="types/../items/unions.html">程序项</a>文档。</p>
+<p>Since transmutes can cause unexpected or undefined behaviour, <code>unsafe</code> is required to read from a union field, or to write to a field that doesn't implement <a href="types/../special-types-and-traits.html#copy"><code>Copy</code></a> or has a [<code>ManuallyDrop</code>] type. See the <a href="types/../items/unions.html">item</a> documentation for further details.
+联合体没有“活跃字段(active field)”的概念。相反，每次对联合体的访问都将联合体的部分存储内容转换为被访问字段的类型。由于转换可能会导致意外或未定义行为，所以读取联合体字段，或写入未实现 <a href="types/../special-types-and-traits.html#copy"><code>Copy</code></a> 或 [<code>ManuallyDrop</code>] 的联合体字段的操作都需要放在 <code>unsafe</code>块内进行。有关详细信息，请参阅相应的<a href="types/../items/unions.html">程序项</a>文档。</p>
 <p>默认情况下，联合体(<code>union</code>)的内存布局是未定义的，但是可以使用 <code>#[repr(...)]</code>属性来固定为某一类型布局。</p>
-<!-- 2020-11-12-->
+<!-- 2020-12-24-->
 <!-- checked -->
 <h1><a class="header" href="#function-item-types" id="function-item-types">Function item types</a></h1>
 <h1><a class="header" href="#函数项类型" id="函数项类型">函数项类型</a></h1>
@@ -11158,7 +11162,7 @@ commit:  7ad799da00dd162638999e38dad10905bf6c7ec6 <br />
 <h2><a class="header" href="#常量函数-1" id="常量函数-1">常量函数</a></h2>
 <p>*常量函数(const fn)*可以在常量上下文中调用。给一个函数加一个常量(<code>const</code>)标志对该函数的任何现有的使用都没有影响，它只限制参数和返回可以使用的类型，并防止在这两个位置上使用不被允许的表达式类型。程序员可以自由地用常量函数去做任何用常规函数能做的事情。</p>
 <p>当从常量上下文中调用这类函数时，编译器会在编译时解释该函数。这种解释发生在编译目标环境中，而不是在当前主机环境中。因此，如果是针对一个 <code>32</code> 位目标系统进行编译，那么 <code>usize</code> 就是 <code>32</code> 位，这与在一个 <code>64</code> 位还是在一个 <code>32</code> 位主机环境中进行编译动作无关。</p>
-<p>常量函数有各种限制以确保其可以在编译时被求值。因此，例如，不可以将随机数生成器编写为常量函数。在编译时调用常量函数将始终产生与运行时调用它相同的结果，即使多次调用也是如此。这个规则有一个例外：如果在极端情况下执行复杂的浮点运算，那么可能得到（非常轻微）不同的结果。建议不要让数组长度和枚举判别值/式依赖于浮点计算。</p>
+<p>常量函数有各种限制以确保其可以在编译时可被求值。因此，例如，不可以将随机数生成器编写为常量函数。在编译时调用常量函数将始终产生与运行时调用它相同的结果，即使多次调用也是如此。这个规则有一个例外：如果在极端情况下执行复杂的浮点运算，那么可能得到（非常轻微）不同的结果。建议不要让数组长度和枚举判别值/式依赖于浮点计算。</p>
 <p>常量上下文有，但常量函数不具备的显著特性有：</p>
 <ul>
 <li>浮点运算

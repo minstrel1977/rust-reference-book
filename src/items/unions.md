@@ -2,8 +2,8 @@
 # 联合体
 
 >[unions.md](https://github.com/rust-lang/reference/blob/master/src/items/unions.md)\
->commit: 0d6f579859c875371c8cfdd6314bb23b19c7a2e8 \
->本章译文最后维护日期：2020-11-8
+>commit: cd996a4e6e9b98929c3718fd76988bfee51d757c \
+>本章译文最后维护日期：2020-12-24
 
 > **<sup>句法</sup>**\
 > _Union_ :\
@@ -58,13 +58,16 @@ unsafe {
 }
 ```
 
-对实现 `Copy` trait 的联合体字段的写操作不需要事先的析构读操作，也因此这些写操作不必放在非安全(`unsafe`)块中。[^译者备注]
+对实现了 [`Copy`] trait 或 [`ManuallyDrop`][ManuallyDrop] trait 的联合体字段的写操作不需要事先的析构读操作，也因此这些写操作不必放在非安全(`unsafe`)块中。[^译者备注]
 
 ```rust
-# union MyUnion { f1: u32, f2: f32 }
-# let mut u = MyUnion { f1: 1 };
-#
+# use std::mem::ManuallyDrop;
+union MyUnion { f1: u32, f2: ManuallyDrop<String> }
+let mut u = MyUnion { f1: 1 };
+
+// 这些都不是必须要放在 `unsafe` 里的
 u.f1 = 2;
+u.f2 = ManuallyDrop::new(String::from("example"));
 ```
 
 通常，那些用到联合体的程序代码会先在非安全的联合体字段访问操作上提供一层安全包装，然后再使用。
@@ -154,7 +157,8 @@ fn test() {
 [_WhereClause_]: generics.md#where-clauses
 [_StructFields_]: structs.md
 [`transmute`]: https://doc.rust-lang.org/std/mem/fn.transmute.html
+[`Copy`]: https://doc.rust-lang.org/std/marker/trait.Copy.html
 [`ManuallyDrop<_>`]: https://doc.rust-lang.org/std/mem/struct.ManuallyDrop.html
 
-<!-- 2020-11-12-->
+<!-- 2020-12-24-->
 <!-- checked -->
