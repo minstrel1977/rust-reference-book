@@ -2,8 +2,8 @@
 # 数组和数组索引表达式
 
 >[array-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/array-expr.md)\
->commit: 65c523479abb8024672918444ff839426ff5c3a7 \
->本章译文最后维护日期：2020-11-12
+>commit: 0feff1c68bbedc2d5c93d5464a50f8d94998322a \
+>本章译文最后维护日期：2021-1-5
 
 ## Array expressions
 ## 数组表达式
@@ -18,7 +18,16 @@
 
 [数组][Array]表达式可以通过在方括号中放置零个或多个统一类型的、逗号分隔的表达式来编写。这样编写将生成一个包含这些值的数组，其中元素的顺序就是其写入的顺序。
 
-也可以在方括号内放置两用个分号(`;`)分隔的表达式。这种形式里，分号后面的表达式必须是 `usize` 类型的，并且必须是[常量表达式][constant expression]，例如[字面量][literal]或[常量项][constant item]。使用 `[a; b]` 形式创建的数组，语义为该数组内包含 `b` 个 `a` 值的副本。如果分号后面的表达式的值大于 1，则要求 `a` 的类型实现了 [`Copy`][`Copy`]。
+也可以在方括号内放置两用个分号(`;`)分隔的表达式。这种形式里，分号后面的表达式必须是 `usize` 类型的，并且必须是[常量表达式][constant expression]，例如[字面量][literal]或[常量项][constant item]。使用 `[a; b]` 形式创建的数组，语义为该数组内包含 `b` 个 `a` 值的副本。如果分号后面的表达式的值大于 1，则要求 `a` 的类型实现了 [`Copy`][`Copy`]，或 `a` 自己是一个常量项的路径。
+
+当 `[a; b]` 形式的表达式中的 `a` 是常量项时，其将被求值 `b` 次。如果 `b` 为 0，则常量项根本不会被求值。对于非常量项的表达式，只求值一次，然后将结果复制 `b` 次。
+
+<div class="warning">
+
+警告：当 `b` 为 0 时，而 `a` 是一个非常量项的情况下，目前在 `rustc` 中存在一个 bug，即值 `a` 会被求值，但不会被销毁而导致的内存泄漏。参见 [issue#74836](https://github.com/rust-lang/rust/issues/74836).
+
+</div>
+
 
 ```rust
 [1, 2, 3, 4];
@@ -26,6 +35,8 @@
 [0; 128];              // 内含128个0的数组
 [0u8, 0u8, 0u8, 0u8,];
 [[1, 0, 0], [0, 1, 0], [0, 0, 1]]; // 二维数组
+const EMPTY: Vec<i32> = Vec::new();
+[EMPTY; 2];
 ```
 
 ### Array expression attributes
@@ -88,5 +99,5 @@ arr[10];                  // 告警：索引越界
 [constant expression]: ../const_eval.md#constant-expressions
 [memory location]: ../expressions.md#place-expressions-and-value-expressions
 
-<!-- 2020-11-12-->
+<!-- 2021-1-5-->
 <!-- checked -->

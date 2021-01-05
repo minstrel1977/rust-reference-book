@@ -2,14 +2,14 @@
 # 链接
 
 >[linkage.md](https://github.com/rust-lang/reference/blob/master/src/linkage.md)\
->commit: 79364a6583803c270ff5be1085434631aba30858 \
->本章译文最后维护日期：2020-11-17
+>commit: f2ebdf23dc2c2c1b10de39f65aadb21a8f489938\
+>本章译文最后维护日期：2021-1-5
 
 > 注意：本节更多的是从编译器的角度来描述的，而不是语言。
 
 Rust 编译器支持多种将 crate 链接起来使用的方法，这些链接方法可以是静态的，也可以是动态的。本节将聚焦探索这些链接方法，关于本地库的更多信息请参阅 [The Book 中的 FFI 相关章节][ffi]。
 
-[ffi]: https://doc.rust-lang.org/book/ffi.html
+[ffi]: https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code
 
 在一个编译会话中，编译器可以通过使用命令行参数或内部 `crate_type`属性来生成多个构件(artifacts)。如果指定了一个或多个命令行参数，则将忽略（源码内部指定的）所有 `crate_type`属性，以便只构建由命令行指定的构件。
 

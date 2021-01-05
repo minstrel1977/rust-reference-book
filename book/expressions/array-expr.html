@@ -169,8 +169,8 @@
 <h1><a class="header" href="#数组和数组索引表达式" id="数组和数组索引表达式">数组和数组索引表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/array-expr.md">array-expr.md</a><br />
-commit: 65c523479abb8024672918444ff839426ff5c3a7 <br />
-本章译文最后维护日期：2020-11-12</p>
+commit: 0feff1c68bbedc2d5c93d5464a50f8d94998322a <br />
+本章译文最后维护日期：2021-1-5</p>
 </blockquote>
 <h2><a class="header" href="#array-expressions" id="array-expressions">Array expressions</a></h2>
 <h2><a class="header" href="#数组表达式" id="数组表达式">数组表达式</a></h2>
@@ -183,7 +183,11 @@ commit: 65c523479abb8024672918444ff839426ff5c3a7 <br />
    | <a href="../expressions.html"><em>Expression</em></a> <code>;</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
 <p><a href="../types/array.html">数组</a>表达式可以通过在方括号中放置零个或多个统一类型的、逗号分隔的表达式来编写。这样编写将生成一个包含这些值的数组，其中元素的顺序就是其写入的顺序。</p>
-<p>也可以在方括号内放置两用个分号(<code>;</code>)分隔的表达式。这种形式里，分号后面的表达式必须是 <code>usize</code> 类型的，并且必须是<a href="../const_eval.html#constant-expressions">常量表达式</a>，例如<a href="../tokens.html#literals">字面量</a>或<a href="../items/constant-items.html">常量项</a>。使用 <code>[a; b]</code> 形式创建的数组，语义为该数组内包含 <code>b</code> 个 <code>a</code> 值的副本。如果分号后面的表达式的值大于 1，则要求 <code>a</code> 的类型实现了 <a href="../special-types-and-traits.html#copy"><code>Copy</code></a>。</p>
+<p>也可以在方括号内放置两用个分号(<code>;</code>)分隔的表达式。这种形式里，分号后面的表达式必须是 <code>usize</code> 类型的，并且必须是<a href="../const_eval.html#constant-expressions">常量表达式</a>，例如<a href="../tokens.html#literals">字面量</a>或<a href="../items/constant-items.html">常量项</a>。使用 <code>[a; b]</code> 形式创建的数组，语义为该数组内包含 <code>b</code> 个 <code>a</code> 值的副本。如果分号后面的表达式的值大于 1，则要求 <code>a</code> 的类型实现了 <a href="../special-types-and-traits.html#copy"><code>Copy</code></a>，或 <code>a</code> 自己是一个常量项的路径。</p>
+<p>当 <code>[a; b]</code> 形式的表达式中的 <code>a</code> 是常量项时，其将被求值 <code>b</code> 次。如果 <code>b</code> 为 0，则常量项根本不会被求值。对于非常量项的表达式，只求值一次，然后将结果复制 <code>b</code> 次。</p>
+<div class="warning">
+<p>警告：当 <code>b</code> 为 0 时，而 <code>a</code> 是一个非常量项的情况下，目前在 <code>rustc</code> 中存在一个 bug，即值 <code>a</code> 会被求值，但不会被销毁而导致的内存泄漏。参见 <a href="https://github.com/rust-lang/rust/issues/74836">issue#74836</a>.</p>
+</div>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -192,6 +196,8 @@ commit: 65c523479abb8024672918444ff839426ff5c3a7 <br />
 [0; 128];              // 内含128个0的数组
 [0u8, 0u8, 0u8, 0u8,];
 [[1, 0, 0], [0, 1, 0], [0, 0, 1]]; // 二维数组
+const EMPTY: Vec&lt;i32&gt; = Vec::new();
+[EMPTY; 2];
 <span class="boring">}
 </span></code></pre></pre>
 <h3><a class="header" href="#array-expression-attributes" id="array-expression-attributes">Array expression attributes</a></h3>
@@ -236,7 +242,7 @@ arr[10];                  // 告警：索引越界
 </span></code></pre></pre>
 <p>数组和切片以外的类型可以通过实现 <a href="https://doc.rust-lang.org/std/ops/trait.Index.html">Index</a> trait 和 <a href="https://doc.rust-lang.org/std/ops/trait.IndexMut.html">IndexMut</a> trait 来达成数组索引表达式的效果。</p>
 <!-- 上面这几个链接从原文来替换时需小心 -->
-<!-- 2020-11-12-->
+<!-- 2021-1-5-->
 <!-- checked -->
 
                     </main>

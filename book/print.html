@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2020-12-24</p>
+<p>本书跟随原文截止日期：2021-1-5</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -232,7 +232,7 @@
 </blockquote>
 <h2><a class="header" href="#版权说明" id="版权说明">版权说明</a></h2>
 <p>Nightly 版本放在国内 Gitee 上，采用 <a href="https://gitee.com/minstrel1977/rust-reference/blob/master/LICENSE">MulanPSL-2.0</a>；stable 版放在 github 上，采用 MIT。</p>
-<!-- 2020-11-12-->
+<!-- 2021-1-5-->
 <!-- checked --><h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
 <h1><a class="header" href="#介绍" id="介绍">介绍</a></h1>
 <blockquote>
@@ -6502,7 +6502,7 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 </li>
 <li>从整数强制转换为浮点数将产生最接近的浮点数 *
 <ul>
-<li>如有必要，舍入采用 <code>roundTiesToEven</code> 模式 ***</li>
+<li>如有必要，舍入采用 <code>roundTiesToEven</code>模式 ***</li>
 <li>在溢出时，将会产生该浮点型的常量 Infinity(∞)（与输入符号相同）</li>
 <li>注意：对于当前的数值类型集，溢出只会发生在 <code>u128 as f32</code> 这种转换形式，且数字大于或等于 <code>f32::MAX + (0.5 ULP)</code> 时。</li>
 </ul>
@@ -6510,7 +6510,7 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <li>从 f32 到 f64 的转换是无损转换</li>
 <li>从 f64 到 f32 的转换将产生最接近的 f32 **
 <ul>
-<li>如有必要，舍入采用 <code>roundTiesToEven</code> 模式 ***</li>
+<li>如有必要，舍入采用 <code>roundTiesToEven</code>模式 ***</li>
 <li>在溢出时，将会产生 f32 的常量 Infinity(∞)（与输入符号相同）</li>
 </ul>
 </li>
@@ -6634,8 +6634,8 @@ assert_eq!((a.f)(), &quot;The field f&quot;);
 <h1><a class="header" href="#数组和数组索引表达式" id="数组和数组索引表达式">数组和数组索引表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/array-expr.md">array-expr.md</a><br />
-commit: 65c523479abb8024672918444ff839426ff5c3a7 <br />
-本章译文最后维护日期：2020-11-12</p>
+commit: 0feff1c68bbedc2d5c93d5464a50f8d94998322a <br />
+本章译文最后维护日期：2021-1-5</p>
 </blockquote>
 <h2><a class="header" href="#array-expressions" id="array-expressions">Array expressions</a></h2>
 <h2><a class="header" href="#数组表达式" id="数组表达式">数组表达式</a></h2>
@@ -6648,7 +6648,11 @@ commit: 65c523479abb8024672918444ff839426ff5c3a7 <br />
    | <a href="expressions/../expressions.html"><em>Expression</em></a> <code>;</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
 <p><a href="expressions/../types/array.html">数组</a>表达式可以通过在方括号中放置零个或多个统一类型的、逗号分隔的表达式来编写。这样编写将生成一个包含这些值的数组，其中元素的顺序就是其写入的顺序。</p>
-<p>也可以在方括号内放置两用个分号(<code>;</code>)分隔的表达式。这种形式里，分号后面的表达式必须是 <code>usize</code> 类型的，并且必须是<a href="expressions/../const_eval.html#constant-expressions">常量表达式</a>，例如<a href="expressions/../tokens.html#literals">字面量</a>或<a href="expressions/../items/constant-items.html">常量项</a>。使用 <code>[a; b]</code> 形式创建的数组，语义为该数组内包含 <code>b</code> 个 <code>a</code> 值的副本。如果分号后面的表达式的值大于 1，则要求 <code>a</code> 的类型实现了 <a href="expressions/../special-types-and-traits.html#copy"><code>Copy</code></a>。</p>
+<p>也可以在方括号内放置两用个分号(<code>;</code>)分隔的表达式。这种形式里，分号后面的表达式必须是 <code>usize</code> 类型的，并且必须是<a href="expressions/../const_eval.html#constant-expressions">常量表达式</a>，例如<a href="expressions/../tokens.html#literals">字面量</a>或<a href="expressions/../items/constant-items.html">常量项</a>。使用 <code>[a; b]</code> 形式创建的数组，语义为该数组内包含 <code>b</code> 个 <code>a</code> 值的副本。如果分号后面的表达式的值大于 1，则要求 <code>a</code> 的类型实现了 <a href="expressions/../special-types-and-traits.html#copy"><code>Copy</code></a>，或 <code>a</code> 自己是一个常量项的路径。</p>
+<p>当 <code>[a; b]</code> 形式的表达式中的 <code>a</code> 是常量项时，其将被求值 <code>b</code> 次。如果 <code>b</code> 为 0，则常量项根本不会被求值。对于非常量项的表达式，只求值一次，然后将结果复制 <code>b</code> 次。</p>
+<div class="warning">
+<p>警告：当 <code>b</code> 为 0 时，而 <code>a</code> 是一个非常量项的情况下，目前在 <code>rustc</code> 中存在一个 bug，即值 <code>a</code> 会被求值，但不会被销毁而导致的内存泄漏。参见 <a href="https://github.com/rust-lang/rust/issues/74836">issue#74836</a>.</p>
+</div>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6657,6 +6661,8 @@ commit: 65c523479abb8024672918444ff839426ff5c3a7 <br />
 [0; 128];              // 内含128个0的数组
 [0u8, 0u8, 0u8, 0u8,];
 [[1, 0, 0], [0, 1, 0], [0, 0, 1]]; // 二维数组
+const EMPTY: Vec&lt;i32&gt; = Vec::new();
+[EMPTY; 2];
 <span class="boring">}
 </span></code></pre></pre>
 <h3><a class="header" href="#array-expression-attributes" id="array-expression-attributes">Array expression attributes</a></h3>
@@ -6701,7 +6707,7 @@ arr[10];                  // 告警：索引越界
 </span></code></pre></pre>
 <p>数组和切片以外的类型可以通过实现 <a href="https://doc.rust-lang.org/std/ops/trait.Index.html">Index</a> trait 和 <a href="https://doc.rust-lang.org/std/ops/trait.IndexMut.html">IndexMut</a> trait 来达成数组索引表达式的效果。</p>
 <!-- 上面这几个链接从原文来替换时需小心 -->
-<!-- 2020-11-12-->
+<!-- 2021-1-5-->
 <!-- checked -->
 <h1><a class="header" href="#tuple-and-tuple-indexing-expressions" id="tuple-and-tuple-indexing-expressions">Tuple and tuple indexing expressions</a></h1>
 <h1><a class="header" href="#元组和元组索引表达式" id="元组和元组索引表达式">元组和元组索引表达式</a></h1>
@@ -10860,13 +10866,13 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 <h1><a class="header" href="#链接" id="链接">链接</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/linkage.md">linkage.md</a><br />
-commit: 79364a6583803c270ff5be1085434631aba30858 <br />
-本章译文最后维护日期：2020-11-17</p>
+commit: f2ebdf23dc2c2c1b10de39f65aadb21a8f489938<br />
+本章译文最后维护日期：2021-1-5</p>
 </blockquote>
 <blockquote>
 <p>注意：本节更多的是从编译器的角度来描述的，而不是语言。</p>
 </blockquote>
-<p>Rust 编译器支持多种将 crate 链接起来使用的方法，这些链接方法可以是静态的，也可以是动态的。本节将聚焦探索这些链接方法，关于本地库的更多信息请参阅 <a href="https://doc.rust-lang.org/book/ffi.html">The Book 中的 FFI 相关章节</a>。</p>
+<p>Rust 编译器支持多种将 crate 链接起来使用的方法，这些链接方法可以是静态的，也可以是动态的。本节将聚焦探索这些链接方法，关于本地库的更多信息请参阅 <a href="https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code">The Book 中的 FFI 相关章节</a>。</p>
 <p>在一个编译会话中，编译器可以通过使用命令行参数或内部 <code>crate_type</code>属性来生成多个构件(artifacts)。如果指定了一个或多个命令行参数，则将忽略（源码内部指定的）所有 <code>crate_type</code>属性，以便只构建由命令行指定的构件。</p>
 <ul>
 <li>
