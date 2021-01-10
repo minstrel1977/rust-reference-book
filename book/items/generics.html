@@ -178,7 +178,8 @@ commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
    <code>&lt;</code> <em>GenericParams</em> <code>&gt;</code></p>
 <p><em>GenericParams</em> :<br />
       <em>LifetimeParams</em><br />
-   | ( <em>LifetimeParam</em> <code>,</code> )<sup>*</sup> <em>TypeParams</em></p>
+   | ( <em>LifetimeParam</em> <code>,</code> )<sup>*</sup> <em>TypeParams</em><br />
+   | ( <em>LifetimeParam</em> <code>,</code> )<sup>*</sup> ( <em>TypeParam</em> <code>,</code> )<sup>*</sup> <em>ConstParams</em></p>
 <p><em>LifetimeParams</em> :<br />
    ( <em>LifetimeParam</em> <code>,</code> )<sup>*</sup> <em>LifetimeParam</em><sup>?</sup></p>
 <p><em>LifetimeParam</em> :<br />
@@ -186,15 +187,46 @@ commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
 <p><em>TypeParams</em>:<br />
    ( <em>TypeParam</em> <code>,</code> )<sup>*</sup> <em>TypeParam</em><sup>?</sup></p>
 <p><em>TypeParam</em> :<br />
-   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>?</sup> <a href="../identifiers.html">IDENTIFIER</a> ( <code>:</code> <a href="../trait-bounds.html"><em>TypeParamBounds</em></a><sup>?</sup> )<sup>?</sup> ( <code>=</code> <a href="../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
+   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>?</sup> <a href="../identifiers.html">IDENTIFIER</a>( <code>:</code> <a href="../trait-bounds.html"><em>TypeParamBounds</em></a><sup>?</sup> )<sup>?</sup> ( <code>=</code> <a href="../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
+<p><em>ConstParams</em>:<br />
+   ( <em>ConstParam</em> <code>,</code> )<sup>*</sup> <em>ConstParam</em><sup>?</sup></p>
+<p><em>ConstParam</em>:<br />
+   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>?</sup> <code>const</code> <a href="../identifiers.html">IDENTIFIER</a> <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a></p>
 </blockquote>
-<p>函数、类型别名、结构体、枚举、联合体、trait 和实现可以通过类型参数和生存期参数达到<em>参数化</em>配置的的效果。这些参数在尖括号<span class="parenthetical">（<code>&lt;…&gt;</code>）</span>中列出，通常都是紧跟在程序项名称之后和程序项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 <code>impl</code> 之后。生存期参数必须在类型参数之前声明。下面给出一些带类型参数和生存期参数的程序项的示例：</p>
+<p>函数、类型别名、结构体、枚举、联合体、trait 和实现可以通过类型参数、常量参数和生存期参数达到<em>参数化</em>配置的的效果。这些参数在尖括号<span class="parenthetical">（<code>&lt;...&gt;</code>）</span>中列出，通常都是紧跟在程序项名称之后和程序项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 <code>impl</code> 之后。泛型参数的申明顺序是生存期参数在最前面，然后是类型参数，最后是常量参数。</p>
+<p>下面给出一些带类型参数、常量参数和生存期参数的程序项的示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn foo&lt;'a, T&gt;() {}
 trait A&lt;U&gt; {}
 struct Ref&lt;'a, T&gt; where T: 'a { r: &amp;'a T }
+struct InnerArray&lt;T, const N: usize&gt;([T; N]);
+<span class="boring">}
+</span></code></pre></pre>
+<p>常量参数类型值允许为：<code>u8</code>, <code>u16</code>, <code>u32</code>, <code>u64</code>, <code>u128</code>, <code>usize</code>, <code>i8</code>, <code>i16</code>, <code>i32</code>, <code>i64</code>, <code>i128</code>, <code>isize</code>, <code>char</code> 和 <code>bool</code> 这些类型。</p>
+<p>常量参数只能在各种<a href="../types.html">类型表达式</a>和数组里的[重复表达式]中作为独立实参使用，但也可以在其他地方自由使用。</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ok: 作为独立的实参使用
+fn foo&lt;const N: usize&gt;() -&gt; [u8; N] { todo!() }
+
+// 错误: 常量型的泛型参数参与了运算
+fn bar&lt;const N: usize&gt;() -&gt; [u8; N + 1] { todo!() }
+<span class="boring">}
+</span></code></pre></pre>
+<p>与类型参数和生存期参数不同，类型的常量参数在该类型内部不一定必须被提及使用：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// ok
+struct Foo&lt;const N: usize&gt;;
+enum Bar&lt;const M: usize&gt; { A, B }
+
+// ERROR: unused parameter
+struct Baz&lt;T&gt;;
+struct Biz&lt;'a&gt;;
 <span class="boring">}
 </span></code></pre></pre>
 <p><a href="../types/pointer.html#shared-references-">引用</a>、<a href="../types/pointer.html#raw-pointers-const-and-mut">裸指针</a>、<a href="../types/array.html">数组</a>、<a href="../types/array.html">切片</a>、<a href="../types/tuple.html">元组</a>和<a href="../types/function-pointer.html">函数指针</a>也有生存期参数或类型参数，但这些程序项不能使用路径句法去引用。</p>
@@ -212,7 +244,7 @@ struct Ref&lt;'a, T&gt; where T: 'a { r: &amp;'a T }
 <p><em>TypeBoundWhereClauseItem</em> :<br />
    <em>ForLifetimes</em><sup>?</sup> <a href="../types.html#type-expressions"><em>Type</em></a> <code>:</code> <a href="../trait-bounds.html"><em>TypeParamBounds</em></a><sup>?</sup></p>
 <p><em>ForLifetimes</em> :<br />
-   <code>for</code> <code>&lt;</code> <a href="#type-and-lifetime-parameters"><em>LifetimeParams</em></a> <code>&gt;</code></p>
+   <code>for</code> <code>&lt;</code> <a href="#generic-parameters"><em>LifetimeParams</em></a> <code>&gt;</code></p>
 </blockquote>
 <p><em>where子句</em>提供了另一种方法来为类型参数和生存期参数指定约束(bound)，甚至可以为非类型参数的类型指定约束。</p>
 <p>当定义程序项时，where子句提供的约束与该程序项的各种参数（包括生存期和高阶生存期）无关也是可以通过安全检查的。但这样做会带来潜在的错误。</p>
@@ -244,7 +276,7 @@ struct Foo&lt;#[my_flexible_clone(unbounded)] H&gt; {
     a: *const H
 }
 </code></pre>
-<!-- 2020-11-12-->
+<!-- 2021-1-20-->
 <!-- checked -->
 
                     </main>

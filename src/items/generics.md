@@ -11,7 +11,8 @@
 >
 > _GenericParams_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _LifetimeParams_\
-> &nbsp;&nbsp; | ( _LifetimeParam_ `,` )<sup>\*</sup> _TypeParams_
+> &nbsp;&nbsp; | ( _LifetimeParam_ `,` )<sup>\*</sup> _TypeParams_\
+> &nbsp;&nbsp; | ( _LifetimeParam_ `,` )<sup>\*</sup> ( _TypeParam_ `,` )<sup>\*</sup> _ConstParams_
 >
 > _LifetimeParams_ :\
 > &nbsp;&nbsp; ( _LifetimeParam_ `,` )<sup>\*</sup> _LifetimeParam_<sup>?</sup>
@@ -23,14 +24,47 @@
 > &nbsp;&nbsp; ( _TypeParam_ `,` )<sup>\*</sup> _TypeParam_<sup>?</sup>
 >
 > _TypeParam_ :\
-> &nbsp;&nbsp; [_OuterAttribute_]<sup>?</sup> [IDENTIFIER] ( `:` [_TypeParamBounds_]<sup>?</sup> )<sup>?</sup> ( `=` [_Type_] )<sup>?</sup>
+> &nbsp;&nbsp; [_OuterAttribute_]<sup>?</sup> [IDENTIFIER]( `:` [_TypeParamBounds_]<sup>?</sup> )<sup>?</sup> ( `=` [_Type_] )<sup>?</sup>
+>
+> _ConstParams_:\
+> &nbsp;&nbsp; ( _ConstParam_ `,` )<sup>\*</sup> _ConstParam_<sup>?</sup>
+>
+> _ConstParam_:\
+> &nbsp;&nbsp; [_OuterAttribute_]<sup>?</sup> `const` [IDENTIFIER] `:` [_Type_]
 
-函数、类型别名、结构体、枚举、联合体、trait 和实现可以通过类型参数和生存期参数达到*参数化*配置的的效果。这些参数在尖括号<span class="parenthetical">（`<…>`）</span>中列出，通常都是紧跟在程序项名称之后和程序项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 `impl` 之后。生存期参数必须在类型参数之前声明。下面给出一些带类型参数和生存期参数的程序项的示例：
+函数、类型别名、结构体、枚举、联合体、trait 和实现可以通过类型参数、常量参数和生存期参数达到*参数化*配置的的效果。这些参数在尖括号<span class="parenthetical">（`<...>`）</span>中列出，通常都是紧跟在程序项名称之后和程序项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 `impl` 之后。泛型参数的申明顺序是生存期参数在最前面，然后是类型参数，最后是常量参数。
+
+下面给出一些带类型参数、常量参数和生存期参数的程序项的示例：
 
 ```rust
 fn foo<'a, T>() {}
 trait A<U> {}
 struct Ref<'a, T> where T: 'a { r: &'a T }
+struct InnerArray<T, const N: usize>([T; N]);
+```
+
+常量参数类型值允许为：`u8`, `u16`, `u32`, `u64`, `u128`, `usize`, `i8`, `i16`, `i32`, `i64`, `i128`, `isize`, `char` 和 `bool` 这些类型。
+
+常量参数只能在各种[类型表达式][types]和数组里的[重复表达式]中作为独立实参使用，但也可以在其他地方自由使用。
+
+```rust,compile_fail
+// ok: 作为独立的实参使用
+fn foo<const N: usize>() -> [u8; N] { todo!() }
+
+// 错误: 常量型的泛型参数参与了运算
+fn bar<const N: usize>() -> [u8; N + 1] { todo!() }
+```
+
+与类型参数和生存期参数不同，类型的常量参数在该类型内部不一定必须被提及使用：
+
+```rust,compile_fail
+// ok
+struct Foo<const N: usize>;
+enum Bar<const M: usize> { A, B }
+
+// ERROR: unused parameter
+struct Baz<T>;
+struct Biz<'a>;
 ```
 
 [引用][References]、[裸指针][raw pointers]、[数组][arrays]、[切片][arrays]、[元组][tuples]和[函数指针][function pointers]也有生存期参数或类型参数，但这些程序项不能使用路径句法去引用。
@@ -53,7 +87,7 @@ struct Ref<'a, T> where T: 'a { r: &'a T }
 > &nbsp;&nbsp; _ForLifetimes_<sup>?</sup> [_Type_] `:` [_TypeParamBounds_]<sup>?</sup>
 >
 > _ForLifetimes_ :\
-> &nbsp;&nbsp; `for` `<` [_LifetimeParams_](#type-and-lifetime-parameters) `>`
+> &nbsp;&nbsp; `for` `<` [_LifetimeParams_](#generic-parameters) `>`
 
 *where子句*提供了另一种方法来为类型参数和生存期参数指定约束(bound)，甚至可以为非类型参数的类型指定约束。
 
@@ -101,15 +135,18 @@ struct Foo<#[my_flexible_clone(unbounded)] H> {
 [_TypeParamBounds_]: ../trait-bounds.md
 
 [arrays]: ../types/array.md
+[const contexts]: ../const_eval.md#const-context
 [function pointers]: ../types/function-pointer.md
 [references]: ../types/pointer.md#shared-references-
+[repeat expressions]: ../expressions/array-expr.md
 [raw pointers]: ../types/pointer.md#raw-pointers-const-and-mut
 [`Clone`]: ../special-types-and-traits.md#clone
 [`Copy`]: ../special-types-and-traits.md#copy
 [`Sized`]: ../special-types-and-traits.md#sized
 [tuples]: ../types/tuple.md
 [trait object]: ../types/trait-object.md
+[types]: ../types.md
 [attributes]: ../attributes.md
 
-<!-- 2020-11-12-->
+<!-- 2021-1-20-->
 <!-- checked -->

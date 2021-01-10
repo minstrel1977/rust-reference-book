@@ -2,8 +2,8 @@
 # 路径
 
 >[paths.md](https://github.com/rust-lang/reference/blob/master/src/paths.md)\
->commit: ecfd8761829d6b1025f2a0a8df6905043b2c5e8a \
->本章译文最后维护日期：2020-11-5
+>commit: 15ec5a6f6c9c867242cb231413094dd4568babb2 \
+>本章译文最后维护日期：2020-1-10
 
 *路径*是一个或多个由命名空间<span class="parenthetical">限定符(`::`)</span>*逻辑*分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，`::` 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的[程序项][item]或[变量][variable]。如果路径包含多个路径段，则总是引用程序项。
 
@@ -54,17 +54,31 @@ mod m {
 > &nbsp;&nbsp; &nbsp;&nbsp; `<` `>`\
 > &nbsp;&nbsp; | `<` _GenericArgsLifetimes_ `,`<sup>?</sup> `>`\
 > &nbsp;&nbsp; | `<` _GenericArgsTypes_ `,`<sup>?</sup> `>`\
+> &nbsp;&nbsp; | `<` _GenericArgsConsts_ `,`<sup>?</sup> `>`\
 > &nbsp;&nbsp; | `<` _GenericArgsBindings_ `,`<sup>?</sup> `>`\
-> &nbsp;&nbsp; | `<` _GenericArgsTypes_ `,` _GenericArgsBindings_ `,`<sup>?</sup> `>`\
 > &nbsp;&nbsp; | `<` _GenericArgsLifetimes_ `,` _GenericArgsTypes_ `,`<sup>?</sup> `>`\
+> &nbsp;&nbsp; | `<` _GenericArgsLifetimes_ `,` _GenericArgsConsts_ `,`<sup>?</sup> `>`\
 > &nbsp;&nbsp; | `<` _GenericArgsLifetimes_ `,` _GenericArgsBindings_ `,`<sup>?</sup> `>`\
-> &nbsp;&nbsp; | `<` _GenericArgsLifetimes_ `,` _GenericArgsTypes_ `,` _GenericArgsBindings_ `,`<sup>?</sup> `>`
+> &nbsp;&nbsp; | `<` _GenericArgsLifetimes_ `,` _GenericArgsTypes_ `,` _GenericArgsConsts_ `,`<sup>?</sup> `>`\
+> &nbsp;&nbsp; | `<` _GenericArgsLifetimes_ `,` _GenericArgsTypes_ `,` _GenericArgsBindings_ `,`<sup>?</sup> `>`\
+> &nbsp;&nbsp; | `<` _GenericArgsLifetimes_ `,` _GenericArgsConsts_ `,` _GenericArgsBindings_ `,`<sup>?</sup> `>`\
+> &nbsp;&nbsp; | `<` _GenericArgsTypes_ `,` _GenericArgsConsts_ `,` _GenericArgsBindings_ `,`<sup>?</sup> `>`\
+> &nbsp;&nbsp; | `<` _GenericArgsLifetimes_ `,` _GenericArgsTypes_ `,` _GenericArgsConsts_ `,` _GenericArgsBindings_ `,`<sup>?</sup> `>`
 >
 > _GenericArgsLifetimes_ :\
 > &nbsp;&nbsp; [_Lifetime_] (`,` [_Lifetime_])<sup>\*</sup>
 >
 > _GenericArgsTypes_ :\
 > &nbsp;&nbsp; [_Type_] (`,` [_Type_])<sup>\*</sup>
+>
+> _GenericArgsConsts_ :\
+> &nbsp;&nbsp; _GenericArgsConst_ (`,` _GenericArgsConst_)<sup>\*</sup>
+>
+> _GenericArgsConst_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_BlockExpression_]\
+> &nbsp;&nbsp; | [_LiteralExpression_]\
+> &nbsp;&nbsp; | `-` [_LiteralExpression_]\
+> &nbsp;&nbsp; | [_SimplePathSegment_]
 >
 > _GenericArgsBindings_ :\
 > &nbsp;&nbsp; _GenericArgsBinding_ (`,` _GenericArgsBinding_)<sup>\*</sup>
@@ -80,6 +94,8 @@ token `::` 必须在泛型参数的左尖括号（`<`）的前面，以避免和
 (0..10).collect::<Vec<_>>();
 Vec::<u8>::with_capacity(1024);
 ```
+
+常量实参必须用花括号括起来，除非它们是[字面量][literal]或单段路径。
 
 ## Qualified paths
 ## 限定性路径
@@ -335,9 +351,14 @@ mod without { // ::without
 # fn main() {}
 ```
 
+[_BlockExpression_]: expressions/block-expr.md
+[_Expression_]: expressions.md
 [_GenericArgs_]: #paths-in-expressions
 [_Lifetime_]: trait-bounds.md
+[_LiteralExpression_]: expressions/literal-expr.md
+[_SimplePathSegment_]: #simple-paths
 [_Type_]: types.md#type-expressions
+[literal]: expressions/literal-expr.md
 [item]: items.md
 [variable]: variables.md
 [implementations]: items/implementations.md
@@ -353,5 +374,5 @@ mod without { // ::without
 [traits]: items/traits.md
 [visibility]: visibility-and-privacy.md
 
-<!-- 2020-11-12-->
+<!-- 2021-1-10-->
 <!-- checked -->

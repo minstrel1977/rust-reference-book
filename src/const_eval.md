@@ -2,8 +2,8 @@
 # 常量求值
 
 >[const_eval.md](https://github.com/rust-lang/reference/blob/master/src/const_eval.md)\
->commit:  7ad799da00dd162638999e38dad10905bf6c7ec6 \
->本章译文最后维护日期：2020-11-17
+>commit:  1c55d2790c738ddffc696ad065163a9766ca9e2f \
+>本章译文最后维护日期：2021-1-10
 
 常量求值是在编译过程中计算[表达式][[expressions]]结果的过程。（不是所有表达式都可以在编译时求值，也就是说）只有全部表达式的某个子集可以在编译时求值。
 
@@ -15,6 +15,7 @@
 下列表达式中，只要它们的所有操作数都是常量表达式，并且求值/计算不会引起任何 [`Drop::drop`][destructors]函数的运行，那这些表达式就是常量表达式。
 
 * [字面量][Literals]。
+* [常量参数][Const parameters]。
 * 指向[函数项][functions]和[常量项][constants]的[路径][Paths]。不允许递归地定义常量项。
 * 指向[静态项][statics]的路径。这种路径只允许出现在静态项的初始化器中。
 * [元组表达式][Tuple expressions]。
@@ -91,6 +92,7 @@
 [comparison]:           expressions/operator-expr.md#comparison-operators
 [const functions]:      items/functions.md#const-functions
 [constants]:            items/constant-items.md
+[Const parameters]:     items/generics.md
 [dereference operator]: expressions/operator-expr.md#the-dereference-operator
 [destructors]:          destructors.md
 [enum discriminants]:   items/enumerations.md#custom-discriminant-values-for-fieldless-enumerations
@@ -122,5 +124,5 @@
 [while]:                expressions/loop-expr.md#predicate-loops
 [`while let`]:          expressions/loop-expr.md#predicate-pattern-loops
 
-<!-- 2020-11-12-->
+<!-- 2021-1-10-->
 <!-- checked -->

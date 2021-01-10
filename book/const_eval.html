@@ -169,8 +169,8 @@
 <h1><a class="header" href="#常量求值" id="常量求值">常量求值</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/const_eval.md">const_eval.md</a><br />
-commit:  7ad799da00dd162638999e38dad10905bf6c7ec6 <br />
-本章译文最后维护日期：2020-11-17</p>
+commit:  1c55d2790c738ddffc696ad065163a9766ca9e2f <br />
+本章译文最后维护日期：2021-1-10</p>
 </blockquote>
 <p>常量求值是在编译过程中计算[表达式][<a href="expressions.html">expressions</a>]结果的过程。（不是所有表达式都可以在编译时求值，也就是说）只有全部表达式的某个子集可以在编译时求值。</p>
 <h2><a class="header" href="#constant-expressions" id="constant-expressions">Constant expressions</a></h2>
@@ -179,6 +179,7 @@ commit:  7ad799da00dd162638999e38dad10905bf6c7ec6 <br />
 <p>下列表达式中，只要它们的所有操作数都是常量表达式，并且求值/计算不会引起任何 <a href="destructors.html"><code>Drop::drop</code></a>函数的运行，那这些表达式就是常量表达式。</p>
 <ul>
 <li><a href="expressions/literal-expr.html">字面量</a>。</li>
+<li><a href="items/generics.html">常量参数</a>。</li>
 <li>指向<a href="items/functions.html">函数项</a>和<a href="items/constant-items.html">常量项</a>的<a href="expressions/path-expr.html">路径</a>。不允许递归地定义常量项。</li>
 <li>指向<a href="items/static-items.html">静态项</a>的路径。这种路径只允许出现在静态项的初始化器中。</li>
 <li><a href="expressions/tuple-expr.html">元组表达式</a>。</li>
@@ -248,7 +249,7 @@ commit:  7ad799da00dd162638999e38dad10905bf6c7ec6 <br />
 <ul>
 <li>使用泛型参数。</li>
 </ul>
-<!-- 2020-11-12-->
+<!-- 2021-1-10-->
 <!-- checked -->
 
                     </main>
