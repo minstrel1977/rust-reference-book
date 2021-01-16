@@ -2,8 +2,8 @@
 # 应用程序二进制接口(ABI)
 
 >[abi.md.md](https://github.com/rust-lang/reference/blob/master/src/abi.md)\
->commit:  24137b49a3c02f53e5a7699a78a47501aef3e769 \
->本章译文最后维护日期：2020-11-17
+>commit:  e773318a837092d7b5276bbeaf9fda06cca61cee \
+>本章译文最后维护日期：2021-1-16
 
 本节介绍影响 crate 编译输出的 ABI 的各种特性。
 
@@ -61,6 +61,8 @@ $ nm -C foo.o
 
 可以在任何[程序项][item]上使用 *`no_mangle`属性*来禁用标准名称符号名混淆(standard symbol name mangling)。禁用此功能后，此程序项的导出符号(symbol)名将直接是此程序项的原来的名称标识符。
 
+此外，就跟[`used`属性](#the-used-attribute)一样，此属性修饰的程序项也将从生成的库或对象文件中公开导出。
+
 ## The `link_section` attribute
 ## `link_section`属性
 
@@ -92,5 +94,5 @@ pub fn name_in_rust() { }
 [item]: items.md
 [static]: items/static-items.md
 
-<!-- 2020-11-12-->
+<!-- 2021-1-16-->
 <!-- checked -->

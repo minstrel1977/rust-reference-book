@@ -2,8 +2,8 @@
 ## 不被认为是非安全的行为
 
 >[behavior-not-considered-unsafe.md](https://github.com/rust-lang/reference/blob/master/src/behavior-not-considered-unsafe.md)\
->commit: 75fd23737cd08ec1ae14deae5e2680d9007575ae \
->本章译文最后维护日期：2020-11-17
+>commit: a7473287cc6e2fb972165dc5a7ffd26dad1fc907 \
+>本章译文最后维护日期：2021-1-16
 
 虽然程序员可能（应该）发现下列行为是不良的、意外的或错误的，但 Rust 编译器并不认为这些行为是*非安全的(unsafe)*。
 
@@ -25,7 +25,13 @@
 
 请参阅 [RFC 560] 以了解错误条件、基本原理以及有关整数溢出的更多详细信息。
 
+##### 逻辑错误(Logic errors)
+
+安全代码可能会被添加一些既不能在编译时也不能在运行时检查到的逻辑限制。如果程序打破了这样的限制，其表现可能是未指定的(unspecified)，但不会导致未定义行为(undefined behavior)。这些表现可能包括 panics、错误的结果、程序中止(aborts)和程序无法终止(non-termination)。并且这些表现在运行期、构建期或各种构建期之间的的具体表现也可能有所不同。
+
+例如，同时实现 `Hash` 和 `Eq` 就要求被认为相等的值具有相等的散列。另一个例子是像 `BinaryHeap`、`BTreeMap`、`BTreeSet`、`HashMap` 和 `HashSet` 这样的数据结构，它们描述了在数据结构中修改键的约束。违反这些约束并不被认为是非安全的，但程序（在逻辑上却）被认为是错误的，其行为是不可预测的。
+
 [RFC 560]: https://github.com/rust-lang/rfcs/blob/master/text/0560-integer-overflow.md
 
-<!-- 2020-11-12-->
+<!-- 2021-1-16-->
 <!-- checked -->

@@ -2,8 +2,8 @@
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit: 03dc50769738a643be1451a4ff1516fa5fab92bd \
->本章译文最后维护日期：2020-11-12
+>commit: 5967ac11bcc3c8279ddd32b121001afda72ab42a \
+>本章译文最后维护日期：2021-1-16
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -171,18 +171,18 @@ assert_eq!(true, !false);
 
 二元运算符表达式都用中缀表示法(infix notation)书写。下表总结了算术和逻辑二元运算符在原生类型(primitive type)上的行为，同时指出其他类型要重载这些操作符需要实现的 trait。记住，有符号整数总是用 2 的补码形式表示。所有这些运算符的操作数都在[值表达式上下文][value expression]中求值，因此这些操作数的值会被移走或复制。
 
-| 符号 | 整数                 | `bool`      | 浮点数 | 用于重载的 trait  |
-|--------|-------------------------|-------------|----------------|--------------------|
-| `+`    | 加法                |             | 加法       | `std::ops::Add`    |
-| `-`    | 减法             |             | 减法    | `std::ops::Sub`    |
-| `*`    | 乘法          |             | 乘法 | `std::ops::Mul`    |
-| `/`    | 除法*                |             | 取余       | `std::ops::Div`    |
-| `%`    | 取余               |             | Remainder      | `std::ops::Rem`    |
-| `&`    | 按位与             | 逻辑与 |                | `std::ops::BitAnd` |
-| <code>&#124;</code> | 按位或 | 逻辑或  |                | `std::ops::BitOr`  |
-| `^`    | 按位异或             | 逻辑异或 |                | `std::ops::BitXor` |
-| `<<`   | 左移位              |             |                | `std::ops::Shl`    |
-| `>>`   | 右移位**            |             |                | `std::ops::Shr`    |
+| 符号 | 整数                 | `bool`      | 浮点数 | 用于重载此运算符的 trait  | 用于重载此运算符的复合赋值(Compound Assignment) Trait |
+|--------|-------------------------|-------------|----------------|--------------------| ------------------------------------- |
+| `+`    | 加法                |             | 加法       | `std::ops::Add`    | `std::ops::AddAssign`                 |
+| `-`    | 减法             |             | 减法    | `std::ops::Sub`    | `std::ops::SubAssign`                 |
+| `*`    | 乘法          |             | 乘法 | `std::ops::Mul`    | `std::ops::MulAssign`                 |
+| `/`    | 除法*                |             | 取余       | `std::ops::Div`    | `std::ops::DivAssign`                 |
+| `%`    | 取余               |             | Remainder      | `std::ops::Rem`    | `std::ops::RemAssign`                 |
+| `&`    | 按位与             | 逻辑与 |                | `std::ops::BitAnd` | `std::ops::BitAndAssign`              |
+| <code>&#124;</code> | 按位或 | 逻辑或  |                | `std::ops::BitOr`  | `std::ops::BitOrAssign`               |
+| `^`    | 按位异或             | 逻辑异或 |                | `std::ops::BitXor` | `std::ops::BitXorAssign`              |
+| `<<`   | 左移位              |             |                | `std::ops::Shl`    | `std::ops::ShlAssign`                 |
+| `>>`   | 右移位**            |             |                | `std::ops::Shr`    |  `std::ops::ShrAssign`                |
 
 \* 整数除法趋零取整。
 
@@ -217,7 +217,7 @@ assert_eq!(-10 >> 2, -3);
 
 Rust 还为原生类型以及标准库中的多种类型都定义了比较运算符。链式比较运算时需要借助圆括号，例如，表达式 `a == b == c` 是无效的，（但如果逻辑允许）可以写成 `(a == b) == c`。
 
-与算术运算符和逻辑运算符不同，比较运算符所使用的 trait（这些 trait 也可以被其他类型所实现以重载这些比较运算符）通常用于显示/约定如何比较一个类型，并且还很可能会假定使用这些 trait 作为约束条件的函数定义了实际的比较逻辑。其实标准库中的许多函数和宏都使用了这个假定（尽管不能确保这些假定的安全性）。与上面的算术和逻辑运算符不同，这些运算符会隐式地对它们的操作数执行共享借用，并在[位置表达式上下文][place expression]中对它们进行求值：
+与算术运算符和逻辑运算符不同，重载这些运算符的 trait 通常用于显示/约定如何比较一个类型，并且还很可能会假定使用这些 trait 作为约束条件的函数定义了实际的比较逻辑。其实标准库中的许多函数和宏都使用了这个假定（尽管不能确保这些假定的安全性）。与上面的算术和逻辑运算符不同，这些运算符会隐式地对它们的操作数执行共享借用，并在[位置表达式上下文][place expression]中对它们进行求值：
 
 ```rust
 # let a = 1;
@@ -352,13 +352,25 @@ fn average(values: &[f64]) -> f64 {
 > _AssignmentExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `=` [_Expression_]
 
-*赋值表达式*由[位置表达式][place expression]后跟等号（`=`）和[值表达式][value expression]组成。这样的表达式的类型总是[单元(`unit`)类型][`unit` type]。
+*赋值表达式*会把某个值移入到一个特定的位置。
 
-对赋值表达式求值时会先[销毁(drop)][drops]左操作数（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将其右操作数[复制(copy)或移动(move)][either copies or moves]到左操作数中。左边的操作数必须是位置表达式：此时使用值表达式不会将其提升为临时位置，而是会导致编译器报错。
+*赋值表达式*由一个[可变][mutable] [位置表达式][place expression]（就是*被赋值的位置操作数*）后跟等号（`=`）和[值表达式][value expression]（就是被赋值的值操作数）组成。
+
+与其他位置操作数不同，赋值位置操作数必须是一个位置表达式。试图使用值表达式将导致编译器报错，而不是将其提升为临时位置。
+
+赋值表达式要先计算它的操作数。赋值的值操作数先被求值，然后是赋值的位置操作数。
+
+> **注意**：此表达式与其他表达式的求值顺序不同，此表达式的右操作数在左操作数之前被求值。
+
+对赋值表达的位置表达式求值时会先[销毁(drop)][drops]此位置（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将赋值值[复制(copy)或移动(move)][either copies or moves]到此位置中。
+
+赋值表达式总是会产生[单元类型值][unit]。
+
+示例：
 
 ```rust
-# let mut x = 0;
-# let y = 0;
+let mut x = 0;
+let y = 0;
 x = y;
 ```
 
@@ -378,13 +390,76 @@ x = y;
 > &nbsp;&nbsp; | [_Expression_] `<<=` [_Expression_]\
 > &nbsp;&nbsp; | [_Expression_] `>>=` [_Expression_]
 
-`+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`, `<<`, 和 `>>`运算符可以和 `=`运算符复合组成新的运算符。表达式 `place_exp OP= value` 等效于 `place_expr = place_expr OP val`。例如，`x = x + 1` 可以写成 `x += 1`。任何这样的表达式的类型总是[单元(`unit`)类型][`unit` type]。这些运算符都可以使用与普通操作的相同的 trait 来重载，只是相应的 trait名称后要加上 “Assign”，例如，`std::ops::AddAssign` 用于重载 `+=`。因为带有 `=`，所以 `place_expr` 必须是[位置表达式][place expression]。
+*复合赋值表达式*将算术符（以及二进制逻辑操作符）与赋值表达式相结合在一起使用。
+
+比如：
 
 ```rust
-let mut x = 10;
-x += 4;
-assert_eq!(x, 14);
+let mut x = 5;
+x += 1;
+assert!(x == 6);
 ```
+
+The syntax of compound assignment is a [mutable] [place expression], the
+*assigned operand*, then one of the operators followed by an `=` as a single
+token (no whitespace), and then a [value expression], the *modifying operand*.
+
+Unlike other place operands, the assigned place operand must be a place
+expression. Attempting to use a value expression is a compiler error rather
+than promoting it to a temporary.
+
+Evaluation of compound assignment expressions depends on the types of the
+operators.
+
+If both types are primitives, then the modifying operand will be evaluated
+first followed by the assigned operand. It will then set the value of the
+assigned operand's place to the value of performing the operation of the
+operator with the values of the assigned operand and modifying operand.
+
+> **Note**: This is different than other expressions in that the right operand
+> is evaluated before the left one.
+
+Otherwise, this expression is syntactic sugar for calling the function of the
+overloading compound assigment trait of the operator (see the table earlier in
+this chapter). A mutable borrow of the assigned operand is automatically taken.
+
+For example, the following expression statements in `example` are equivalent:
+
+```rust
+# struct Addable;
+# use std::ops::AddAssign;
+
+impl AddAssign<Addable> for Addable {
+    /* */
+# fn add_assign(&mut self, other: Addable) {}
+}
+
+fn example() {
+# let (mut a1, a2) = (Addable, Addable);
+  a1 += a2;
+
+# let (mut a1, a2) = (Addable, Addable);
+  AddAssign::add_assign(&mut a1, a2);
+}
+```
+
+<div class="warning">
+
+Warning: The evaluation order of operands swaps depending on the types of the
+operands: with primitive types the right-hand side will get evaluated first,
+while with non-primitive types the left-hand side will get evaluated first.
+Try not to write code that depends on the evaluation order of operands in
+compound assignment expressions. See [this test] for an example of using this
+dependency.
+
+</div>
+
+
+
+
+
+`+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`, `<<`, 和 `>>`运算符可以和 `=`运算符复合组成新的运算符。表达式 `place_exp OP= value` 等效于 `place_expr = place_expr OP val`。例如，`x = x + 1` 可以写成 `x += 1`。任何这样的表达式的类型总是[单元(`unit`)类型][`unit` type]。这些运算符都可以使用与普通操作的相同的 trait 来重载，只是相应的 trait名称后要加上 “Assign”，例如，`std::ops::AddAssign` 用于重载 `+=`。因为带有 `=`，所以 `place_expr` 必须是[位置表达式][place expression]。
+
 [^译者注]:截断，即一个值范围较大的变量A转换为值范围较小的变量B，如果超出范围，则将A减去B的区间长度。例如，128超出了i8类型的范围（-128,127），截断之后的值等于128-256=-128。
 
 [pointer]: ../types/pointer.md
@@ -393,9 +468,14 @@ assert_eq!(x, 14);
 [drops]: ../destructors.md
 [either copies or moves]: ../expressions.md#moved-and-copied-types
 <!-- 上面这几个链接从原文来替换时需小心 -->
+[copies or moves]: ../expressions.md#moved-and-copied-types
+[dropping]: ../destructors.md
+[mutable]: ../expressions.md#mutability
 [place expression]: ../expressions.md#place-expressions-and-value-expressions
+[unit]: ../types/tuple.md
 [value expression]: ../expressions.md#place-expressions-and-value-expressions
 [temporary value]: ../expressions.md#temporaries
+[this test]: https://github.com/rust-lang/rust/blob/master/src/test/ui/expr/compound-assignment/eval-order.rs
 [float-float]: https://github.com/rust-lang/rust/issues/15536
 [`unit` type]: ../types/tuple.md
 [Function pointer]: ../types/function-pointer.md

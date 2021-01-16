@@ -2,8 +2,8 @@
 # 表达式
 
 >[expressions.md](https://github.com/rust-lang/reference/blob/master/src/expressions.md)\
->commit: 8c4522851452563b715b11d4cd755b36d8e4bca5 \
->本章译文最后维护日期：2020-11-11
+>commit: 9360ab990a253174bedff15a3191d5657b04ec31 \
+>本章译文最后维护日期：2021-1-17
 
 > **<sup>句法</sup>**\
 > _Expression_ :\
@@ -48,11 +48,11 @@
 > &nbsp;&nbsp; )
 
 一个表达式可能有两个角色：它总是能产生[^译者注1]一个*值*；它还有可能表达出*效果(effects)*（也被称为“副作用(side effects)”）。表达式 _求值/计算为(evaluates to)_ 值，并在 _求值(evaluation)_ 期间表达出效果。 \
-许多表达式包含子表达式（操作数）。每种表达式都表达了以下几点含义：
+许多表达式包含子表达式，此子表达式也被称为此表达式的*操作数*。每种表达式都表达了以下几点含义：
 
-* 在对表达式求值时是否对子表达式求值
-* 对子表达式求值的顺序
-* 如何组合子表达式的值来获取表达式的值
+* 在对表达式求值时是否对操作数求值
+* 对操作数求值的顺序
+* 如何组合操作数的值来获取表达式的值
 
 基于对这几种含义的实现要求，表达式通过其内在结构规定了其执行结构。\
 块只是另一种表达式，所以块、语句和表达式可以递归地彼此嵌套到任意深度。
@@ -83,6 +83,50 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 | `..` `..=`                  | 需要圆括号 |
 | `=` `+=` `-=` `*=` `/=` `%=` <br> `&=` <code>&#124;=</code> `^=` `<<=` `>>=` | 从右向左 |
 | `return` `break` closures（返回、中断、闭包）   |                     |
+
+## Evaluation order of operands
+## 操作数的求值顺序
+
+下面的表达式列表都以相同的方式计算它们的操作数，具体列表后面也有详述。其他表达式要么不接受操作数，要么按照各自约定（后续章节会有讲述）的条件进行求值。
+The following list of expressions all evaluate their operands the same way, as described after the list. Other expressions either don't take operands or evaluate them conditionally as described on their respective pages.
+
+* 解引用表达式(Dereference expression)
+* 错误传播表达式(Error propagation expression)
+* 取反表达式(Negation expression)
+* 算术和二进制逻辑运算(Arithmetic and logical binary operators)
+* 比较运算(Comparison operators)
+* 类型转换表达式(Type cast expression)
+* 分组表达式(Grouped expression)
+* 数组表达式(Array expression)
+* 等待表达式(Await expression)
+* 索引表达式(Index expression)
+* 元组表达式(Tuple expression)
+* 元组索引表达式(Tuple index expression)
+* 结构体表达式(Struct expression)
+* 枚举变体表达式(Enumeration variant expression)
+* 调用表达式(Call expression)
+* 方法调用表达式(Method call expression)
+* 字段表达式(Field expression)
+* 中断表达式(Break expression)
+* 区间表达式(Range expression)
+* 返回表达式(Return expression)
+
+在实现执行这些表达式的效果之前，会先对这些表达式的操作数进行求值。拥有多个操作数的表达式会按照源代码书写的顺序从左到右计算。
+
+> **注意**：子表达式是一个表达式的操作数时，此子表达式内部的求值顺序是由根据前面的章节规定的优先级来确定的。
+
+例如，下面两个 `next`方法的调用总是以相同的顺序调用：
+
+```rust
+# // 使用 vec 代替 array 来避免引用，因为在编写本例时，拥有内部元素的所有权的数组迭代器还没有稳定下来。
+let mut one_two = vec![1, 2].into_iter();
+assert_eq!(
+    (1, 2),
+    (one_two.next().unwrap(), one_two.next().unwrap())
+);
+```
+
+> **注意**：由于表达式是递归执行的，那这些表达式也会从最内层到最外层逐层求值，忽略兄弟表达式，直到没有（未求值的）内部子表达式为止。
 
 ## Place Expressions and Value Expressions
 ## 位置表达式和值表达式
