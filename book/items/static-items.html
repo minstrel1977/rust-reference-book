@@ -169,14 +169,14 @@
 <h1><a class="header" href="#静态项" id="静态项">静态项</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/static-items.md">static-items.md</a><br />
-commit: 2f459e22ec30a94bafafe417da4e95044578df73 <br />
-本章译文最后维护日期：2020-11-9</p>
+commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>StaticItem</em> :<br />
    <code>static</code> <code>mut</code><sup>?</sup> <a href="../identifiers.html">IDENTIFIER</a> <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a>
-<code>=</code> <a href="../expressions.html"><em>Expression</em></a> <code>;</code></p>
+( <code>=</code> <a href="../expressions.html"><em>Expression</em></a> )<sup>?</sup> <code>;</code></p>
 </blockquote>
 <p><em>静态项</em>类似于<a href="constant-items.html">常量项</a>，除了它在程序中表示一个精确的内存位置。所有对静态项的引用都指向相同的内存位置。静态项拥有 <code>'static</code> 生存期，它比 Rust 程序中的所有其他生存期都要长。静态项不会在程序结束时调用析构动作 <a href="../destructors.html"><code>drop</code></a>。</p>
 <p>静态初始化器是在编译时求值的<a href="../const_eval.html#constant-expressions">常量表达式</a>。静态初始化器可以引用其他静态项。</p>
@@ -186,6 +186,7 @@ commit: 2f459e22ec30a94bafafe417da4e95044578df73 <br />
 <li>静态项的数据类型必须有 <code>Sync</code> trait约束，这样才可以让线程安全地访问。</li>
 <li>常量项不能引用静态项。</li>
 </ul>
+<p>必须为自由静态项提供初始化表达式，但在<a href="external-blocks.html">外部块</a>中静态项必须省略初始化表达式。</p>
 <h2><a class="header" href="#mutable-statics" id="mutable-statics">Mutable statics</a></h2>
 <h2><a class="header" href="#可变静态项" id="可变静态项">可变静态项</a></h2>
 <p>如果静态项是用关键字 <code>mut</code> 声明的，则它允许被程序修改。Rust 的目标之一是使尽可能的避免出现并发 bug，那允许修改可变静态项显然是竞争条件(race conditions)或其他 bug 的一个非常大的来源。因此，读取或写入可变静态项变量时需要引入非安全(<code>unsafe</code>)块。应注意确保对可变静态项的修改相对于运行在同一进程中的其他线程来说是安全的。</p>
@@ -220,7 +221,7 @@ unsafe fn bump_levels_unsafe2() -&gt; u32 {
 <li>需要静态项的存储地址不变的特性。</li>
 <li>需要内部可变性。</li>
 </ul>
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->
 
                     </main>

@@ -1,8 +1,8 @@
 # Tokens
 
 >[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
->commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 \
->本章译文最后维护日期：2020-11-5
+>commit: 8e62ab3e5dc57f5db7581cf763bcbbea75ab58eb \
+>本章译文最后维护日期：2020-1-17
 
 
 token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：
@@ -434,14 +434,13 @@ let horse = example.0b10;  // 错误：没有 `0b10` 字段
 0.1f64;          // 类型 f64
 0.1f32;          // 类型 f32
 12E+99_f64;      // 类型 f64
+5f32;            // 类型 f32
 let x: f64 = 2.; // 类型 f64
 ```
 
 最后一个例子稍显不同，因为不能对一个以句点结尾的浮点型字面量使用后缀句法，`2.f64` 会尝试在 `2` 上调用名为 `f64` 的方法。
 
-浮点数的表形(representation)语义在[“和平台相关的类型”]["Machine Types"]中有描述。
-
-["Machine Types"]: types/numeric.md
+浮点数的表形(representation)语义在[“和平台相关的类型”][machine types]中有描述。
 
 ### Boolean literals
 ### 布尔型字面量
@@ -558,6 +557,7 @@ let x: f64 = 2.; // 类型 f64
 [`if let`]: expressions/if-expr.md#if-let-expressions
 [keywords]: keywords.md
 [lazy-bool]: expressions/operator-expr.md#lazy-boolean-operators
+[machine types]: types/numeric.md
 [macros]: macros-by-example.md
 [match]: expressions/match-expr.md
 [negation]: expressions/operator-expr.md#negation-operators

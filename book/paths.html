@@ -169,8 +169,8 @@
 <h1><a class="header" href="#路径" id="路径">路径</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/paths.md">paths.md</a><br />
-commit: 15ec5a6f6c9c867242cb231413094dd4568babb2 <br />
-本章译文最后维护日期：2020-1-10</p>
+commit: 8511cf48f93fc37c44a87f5823cce1338da1bb7e <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，<code>::</code> 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">程序项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用程序项。</p>
 <p>仅由标识符段组成的简单路径(simple paths)的两个示例：</p>
@@ -212,31 +212,14 @@ mod m {
    <a href="identifiers.html">IDENTIFIER</a> | <code>super</code> | <code>self</code> | <code>Self</code> | <code>crate</code> | <code>$crate</code></p>
 <p><em>GenericArgs</em> :<br />
       <code>&lt;</code> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsLifetimes</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsTypes</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsConsts</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsBindings</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsLifetimes</em> <code>,</code> <em>GenericArgsTypes</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsLifetimes</em> <code>,</code> <em>GenericArgsConsts</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsLifetimes</em> <code>,</code> <em>GenericArgsBindings</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsLifetimes</em> <code>,</code> <em>GenericArgsTypes</em> <code>,</code> <em>GenericArgsConsts</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsLifetimes</em> <code>,</code> <em>GenericArgsTypes</em> <code>,</code> <em>GenericArgsBindings</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsLifetimes</em> <code>,</code> <em>GenericArgsConsts</em> <code>,</code> <em>GenericArgsBindings</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsTypes</em> <code>,</code> <em>GenericArgsConsts</em> <code>,</code> <em>GenericArgsBindings</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsLifetimes</em> <code>,</code> <em>GenericArgsTypes</em> <code>,</code> <em>GenericArgsConsts</em> <code>,</code> <em>GenericArgsBindings</em> <code>,</code><sup>?</sup> <code>&gt;</code></p>
-<p><em>GenericArgsLifetimes</em> :<br />
-   <a href="trait-bounds.html"><em>Lifetime</em></a> (<code>,</code> <a href="trait-bounds.html"><em>Lifetime</em></a>)<sup>*</sup></p>
-<p><em>GenericArgsTypes</em> :<br />
-   <a href="types.html#type-expressions"><em>Type</em></a> (<code>,</code> <a href="types.html#type-expressions"><em>Type</em></a>)<sup>*</sup></p>
-<p><em>GenericArgsConsts</em> :<br />
-   <em>GenericArgsConst</em> (<code>,</code> <em>GenericArgsConst</em>)<sup>*</sup></p>
+   | <code>&lt;</code> ( <em>GenericArg</em> <code>,</code> )<sup>*</sup> <em>GenericArg</em> <code>,</code><sup>?</sup> <code>&gt;</code></p>
+<p><em>GenericArg</em> :<br />
+   <a href="trait-bounds.html"><em>Lifetime</em></a> | <a href="types.html#type-expressions"><em>Type</em></a> | <em>GenericArgsConst</em> | <em>GenericArgsBinding</em></p>
 <p><em>GenericArgsConst</em> :<br />
       <a href="expressions/block-expr.html"><em>BlockExpression</em></a><br />
    | <a href="expressions/literal-expr.html"><em>LiteralExpression</em></a><br />
    | <code>-</code> <a href="expressions/literal-expr.html"><em>LiteralExpression</em></a><br />
    | <a href="#simple-paths"><em>SimplePathSegment</em></a></p>
-<p><em>GenericArgsBindings</em> :<br />
-   <em>GenericArgsBinding</em> (<code>,</code> <em>GenericArgsBinding</em>)<sup>*</sup></p>
 <p><em>GenericArgsBinding</em> :<br />
    <a href="identifiers.html">IDENTIFIER</a> <code>=</code> <a href="types.html#type-expressions"><em>Type</em></a></p>
 </blockquote>
@@ -249,6 +232,7 @@ mod m {
 Vec::&lt;u8&gt;::with_capacity(1024);
 <span class="boring">}
 </span></code></pre></pre>
+<p>泛型参数的顺序被限制为生存期参数，然后是类型参数，然后是常量参数，再后是相应的约束。</p>
 <p>常量实参必须用花括号括起来，除非它们是<a href="expressions/literal-expr.html">字面量</a>或单段路径。</p>
 <h2><a class="header" href="#qualified-paths" id="qualified-paths">Qualified paths</a></h2>
 <h2><a class="header" href="#限定性路径" id="限定性路径">限定性路径</a></h2>
@@ -467,7 +451,7 @@ mod without { // ::without
 
 <span class="boring">fn main() {}
 </span></code></pre></pre>
-<!-- 2021-1-10-->
+<!-- 2021-1-17-->
 <!-- checked -->
 
                     </main>

@@ -2,39 +2,27 @@
 # 实现
 
 >[implementations.md](https://github.com/rust-lang/reference/blob/master/src/items/implementations.md)\
->commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e \
->本章译文最后维护日期：2020-11-8
+>commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 \
+>本章译文最后维护日期：2021-1-17
 
 > **<sup>句法</sup>**\
 > _Implementation_ :\
 > &nbsp;&nbsp; _InherentImpl_ | _TraitImpl_
 >
 > _InherentImpl_ :\
-> &nbsp;&nbsp; `impl` [_Generics_]<sup>?</sup>&nbsp;[_Type_]&nbsp;[_WhereClause_]<sup>?</sup> `{`\
+> &nbsp;&nbsp; `impl` [_GenericParams_]<sup>?</sup>&nbsp;[_Type_]&nbsp;[_WhereClause_]<sup>?</sup> `{`\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_InnerAttribute_]<sup>\*</sup>\
-> &nbsp;&nbsp; &nbsp;&nbsp; _InherentImplItem_<sup>\*</sup>\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_AssociatedItem_]<sup>\*</sup>\
 > &nbsp;&nbsp; `}`
 >
-> _InherentImplItem_ :\
-> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> (\
-> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_MacroInvocationSemi_]\
-> &nbsp;&nbsp; &nbsp;&nbsp; | ( [_Visibility_]<sup>?</sup> ( [_ConstantItem_] | [_Function_] | [_Method_] ) )\
-> &nbsp;&nbsp; )
->
 > _TraitImpl_ :\
-> &nbsp;&nbsp; `unsafe`<sup>?</sup> `impl` [_Generics_]<sup>?</sup> `!`<sup>?</sup>
+> &nbsp;&nbsp; `unsafe`<sup>?</sup> `impl` [_GenericParams_]<sup>?</sup> `!`<sup>?</sup>
 >              [_TypePath_] `for` [_Type_]\
 > &nbsp;&nbsp; [_WhereClause_]<sup>?</sup>\
 > &nbsp;&nbsp; `{`\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_InnerAttribute_]<sup>\*</sup>\
-> &nbsp;&nbsp; &nbsp;&nbsp; _TraitImplItem_<sup>\*</sup>\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_AssociatedItem_]<sup>\*</sup>\
 > &nbsp;&nbsp; `}`
->
-> _TraitImplItem_ :\
-> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> (\
-> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_MacroInvocationSemi_]\
-> &nbsp;&nbsp; &nbsp;&nbsp; | ( [_Visibility_]<sup>?</sup> ( [_TypeAlias_] | [_ConstantItem_] | [_Function_] | [_Method_] ) )\
-> &nbsp;&nbsp; )
 
 *实现*是将程序项与*实现类型(implementing type)*关联起来的程序项。实现使用关键字 `impl` 定义，它包含了属于当前实现的类型的实例的函数，或者包含了当前实现的类型本身的静态函数。
 
@@ -50,7 +38,7 @@
 
 （这里）*标称类型*也被称作*实现类型(implementing type)*；*类型关联项(associable items)*可理解为实现类型的各种*关联程序项(associated items)*。
 
-固有实现将其包含的程序项与其的实现类型关联起来。固有实现可以包含[关联函数][associated functions]（包括方法）和[关联常量][associated constants]。固有实现不能包含关联类型别名。
+固有实现将其包含的程序项与其的实现类型关联起来。固有实现可以包含[关联函数][associated functions]（包括[方法][methods]）和[关联常量][associated constants]。固有实现不能包含关联类型别名。
 
 关联程序项的[路径][path]是其实现类型的所有（形式的）路径中的任一种，然后再拼接上这个关联程序项的标识符来作为整个路径的末段路径组件(final path component)。
 
@@ -165,7 +153,7 @@ impl Shape for Circle {
 ## Generic Implementations
 ## 泛型实现
 
-实现可以带有类型参数和生存期参数，这些参数可用在实现中的其他地方。为实现所声明的类型参数必须在此声明的被实现trait(implemented trait)中或其实现类型(implementing type)中至少使用一次。实现的参数直接写在关键字 `impl` 之后。
+实现可以带有[泛型参数][generic parameters]，这些参数可用在此实现中的其他地方。实现里的泛型参数直接写在关键字 `impl` 之后。
 
 ```rust
 # trait Seq<T> { fn dummy(&self, _: T) { } }
@@ -177,30 +165,101 @@ impl Seq<bool> for u32 {
 }
 ```
 
+如果泛型参数在以下情况下出现过，则其就能约束某个实现：
+
+* 需要被实现的 trait中存在泛型参数
+* 实现类型中存在泛型参数
+* 作为类型的[约束][bounds]中的[关联类型]，该类型包含另一个约束实现的形参。
+
+类型和常量参数必须能在相应实现里体现出约束逻辑。如果关联类型中有生存期参数在使用，则该生存期的约束意义也必须在实现中体现。
+
+约束必须被传递实现的例子：
+
+```rust
+# trait Trait{}
+# trait GenericTrait<T> {}
+# trait HasAssocType { type Ty; }
+# struct Struct;
+# struct GenericStruct<T>(T);
+# struct ConstGenericStruct<const N: usize>([(); N]);
+// T 通过作为 GenericTrait 的参数来体现约束
+impl<T> GenericTrait<T> for i32 { /* ... */ }
+
+// T 是作为 GenericStruct 的参数来体现约束
+impl<T> Trait for GenericStruct<T> { /* ... */ }
+
+// 同样，N 作为 ConstGenericStruct 的参数来体现约束
+impl<const N: usize> Trait for ConstGenericStruct<N> { /* ... */ }
+
+// T 通过类型 `U` 内的关联类型来体现约束，而 `U` 本身就是一个trait的泛型参数
+impl<T, U> GenericTrait<U> for u32 where U: HasAssocType<Ty = T> { /* ... */ }
+
+// 这个和前面一样，除了类型变为 `(U, isize)`。`U` 出现在包含 `T` 的类型中，而不是类型本身。
+impl<T, U> GenericStruct<U> where (U, isize): HasAssocType<Ty = T> { /* ... */ }
+```
+
+约束未能被传递实现的例子：
+
+```rust,compile_fail
+// 下面的都是错误的，因为它们的类型或常量参数没能被传递和实现约束
+
+// T没有实现约束，因为实现内部根本就没有出现 T
+impl<T> Struct { /* ... */ }
+
+// 同样 N 也没有可能被实现
+impl<const N: usize> Struct { /* ... */ }
+
+// 在实现中使用了 T，但却并不约束此实现
+impl<T> Struct {
+    fn uses_t(t: &T) { /* ... */ }
+}
+
+// 在 U 的约束中，T 被用作关联类型，但 U 本身在 Struct 里无法被约束
+impl<T, U> Struct where U: HasAssocType<Ty = T> { /* ... */ }
+
+// T 是在约束中使用了，但不是作为关联类型使用的，所以它没有实现约束
+impl<T, U> GenericTrait<U> for u32 where U: GenericTrait<T> {}
+```
+
+允许的非约束生存期参数的示例：
+
+```rust
+# struct Struct;
+impl<'a> Struct {}
+```
+
+不允许的非约束生存期参数的示例：
+
+```rust,compile_fail
+# struct Struct;
+# trait HasAssocType { type Ty; }
+impl<'a> HasAssocType for Struct {
+    type Ty = &'a Struct;
+}
+```
+
 ## Attributes on Implementations
 ## 实现上的属性
 
 实现可以在关键字 `impl` 之前引入外部[属性][attributes]，在代码体内引入内部[属性][attributes]。内部属性必须位于任何关联程序项之前。这里有意义的属性有 [`cfg`]、[`deprecated`]、[`doc`] 和 [lint检查类属性][the lint check attributes]。
 
-[_ConstantItem_]: constant-items.md
-[_Function_]: functions.md
-[_Generics_]: generics.md
+[_AssociatedItem_]: associated-items.md
+[_GenericParams_]: generics.md
 [_InnerAttribute_]: ../attributes.md
-[_MacroInvocationSemi_]: ../macros.md#macro-invocation
-[_Method_]: associated-items.md#methods
-[_OuterAttribute_]: ../attributes.md
-[_TypeAlias_]: type-aliases.md
 [_TypePath_]: ../paths.md#paths-in-types
 [_Type_]: ../types.md#type-expressions
-[_Visibility_]: ../visibility-and-privacy.md
 [_WhereClause_]: generics.md#where-clauses
 [trait]: traits.md
-[associated functions]: associated-items.md#associated-functions-and-methods
 [associated constants]: associated-items.md#associated-constants
+[associated functions]: associated-items.md#associated-functions-and-methods
+[associated type]: associated-items.md#associated-types
 [attributes]: ../attributes.md
+[bounds]: ../trait-bounds.md
 [`cfg`]: ../conditional-compilation.md
 [`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
 [`doc`]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
+[generic parameters]: generics.md
+[methods]: associated-items.md#methods
 [path]: ../paths.md
 [the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
 [Unsafe traits]: traits.md#unsafe-traits

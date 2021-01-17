@@ -2,14 +2,14 @@
 # 枚举
 
 >[enumerations.md](https://github.com/rust-lang/reference/blob/master/src/items/enumerations.md)\
->commit: 2264855271fae0a915a0fa769e57f5a5d09ff5ef \
->本章译文最后维护日期：2020-11-8
+>commit: 9d0aa172932ed15ec1b13556e6809b74bc58a02b \
+>本章译文最后维护日期：2021-1-17
 
 > **<sup>句法</sup>**\
 > _Enumeration_ :\
 > &nbsp;&nbsp; `enum`
 >    [IDENTIFIER]&nbsp;
->    [_Generics_]<sup>?</sup>
+>    [_GenericParams_]<sup>?</sup>
 >    [_WhereClause_]<sup>?</sup>
 >    `{` _EnumItems_<sup>?</sup> `}`
 >
@@ -160,7 +160,7 @@ enum E {
 ```
 
 [IDENTIFIER]: ../identifiers.md
-[_Generics_]: generics.md
+[_GenericParams_]: generics.md
 [_WhereClause_]: generics.md#where-clauses
 [_Expression_]: ../expressions.md
 [_TupleFields_]: structs.md
@@ -175,5 +175,5 @@ enum E {
 [primitive representation]: ../type-layout.md#primitive-representations
 [`C` representation]: ../type-layout.md#the-c-representation
 
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->

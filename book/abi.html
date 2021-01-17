@@ -169,8 +169,8 @@
 <h1><a class="header" href="#应用程序二进制接口abi" id="应用程序二进制接口abi">应用程序二进制接口(ABI)</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/abi.md">abi.md.md</a><br />
-commit:  24137b49a3c02f53e5a7699a78a47501aef3e769 <br />
-本章译文最后维护日期：2020-11-17</p>
+commit:  e773318a837092d7b5276bbeaf9fda06cca61cee <br />
+本章译文最后维护日期：2021-1-16</p>
 </blockquote>
 <p>本节介绍影响 crate 编译输出的 ABI 的各种特性。</p>
 <p>有关为导出函数(exporting functions)指定 ABI 的信息，请参阅<a href="items/functions.html#extern-function-qualifier"><em>外部函数</em></a>。参阅[<em>外部块</em>]]<a href="items/external-blocks.html">external blocks</a>了解关于指定 ABI 来链接外部库的信息。</p>
@@ -221,6 +221,7 @@ $ nm -C foo.o
 <h2><a class="header" href="#the-no_mangle-attribute" id="the-no_mangle-attribute">The <code>no_mangle</code> attribute</a></h2>
 <h2><a class="header" href="#no_mangle属性" id="no_mangle属性"><code>no_mangle</code>属性</a></h2>
 <p>可以在任何<a href="items.html">程序项</a>上使用 <em><code>no_mangle</code>属性</em>来禁用标准名称符号名混淆(standard symbol name mangling)。禁用此功能后，此程序项的导出符号(symbol)名将直接是此程序项的原来的名称标识符。</p>
+<p>此外，就跟<a href="#the-used-attribute"><code>used</code>属性</a>一样，此属性修饰的程序项也将从生成的库或对象文件中公开导出。</p>
 <h2><a class="header" href="#the-link_section-attribute" id="the-link_section-attribute">The <code>link_section</code> attribute</a></h2>
 <h2><a class="header" href="#link_section属性" id="link_section属性"><code>link_section</code>属性</a></h2>
 <p><code>link_section</code>属性指定了输出对象文件中<a href="items/functions.html">函数</a>或<a href="items/static-items.html">静态项</a>的内容将被放置到的节点位置。它使用 <a href="attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法指定节点名称。</p>
@@ -243,7 +244,7 @@ pub static VAR1: u32 = 1;
 pub fn name_in_rust() { }
 <span class="boring">}
 </span></code></pre></pre>
-<!-- 2020-11-12-->
+<!-- 2021-1-16-->
 <!-- checked -->
 
                     </main>

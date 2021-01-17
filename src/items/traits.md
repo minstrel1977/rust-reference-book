@@ -1,55 +1,18 @@
 # Trait
 
 >[traits.md](https://github.com/rust-lang/reference/blob/master/src/items/traits.md)\
->commit: d5cc65a70f66a243d84cd251188d80fbe9926747 \
->本章译文最后维护日期：2020-10-21
+>commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 \
+>本章译文最后维护日期：2021-1-17
 
 > **<sup>句法</sup>**\
 > _Trait_ :\
 > &nbsp;&nbsp; `unsafe`<sup>?</sup> `trait` [IDENTIFIER]&nbsp;
->              [_Generics_]<sup>?</sup>
+>              [_GenericParams_]<sup>?</sup>
 >              ( `:` [_TypeParamBounds_]<sup>?</sup> )<sup>?</sup>
 >              [_WhereClause_]<sup>?</sup> `{`\
 > &nbsp;&nbsp;&nbsp;&nbsp; [_InnerAttribute_]<sup>\*</sup>\
-> &nbsp;&nbsp;&nbsp;&nbsp; _TraitItem_<sup>\*</sup>\
+> &nbsp;&nbsp;&nbsp;&nbsp; [_AssociatedItem_]<sup>\*</sup>\
 > &nbsp;&nbsp; `}`
->
-> _TraitItem_ :\
-> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> [_Visibility_]<sup>?</sup> (\
-> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; _TraitFunc_\
-> &nbsp;&nbsp; &nbsp;&nbsp; | _TraitMethod_\
-> &nbsp;&nbsp; &nbsp;&nbsp; | _TraitConst_\
-> &nbsp;&nbsp; &nbsp;&nbsp; | _TraitType_\
-> &nbsp;&nbsp; &nbsp;&nbsp; | [_MacroInvocationSemi_]\
-> &nbsp;&nbsp; )
->
-> _TraitFunc_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; _TraitFunctionDecl_ ( `;` | [_BlockExpression_] )
->
-> _TraitMethod_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; _TraitMethodDecl_ ( `;` | [_BlockExpression_] )
->
-> _TraitFunctionDecl_ :\
-> &nbsp;&nbsp; [_FunctionQualifiers_] `fn` [IDENTIFIER]&nbsp;[_Generics_]<sup>?</sup>\
-> &nbsp;&nbsp; &nbsp;&nbsp; `(` _TraitFunctionParameters_<sup>?</sup> `)`\
-> &nbsp;&nbsp; &nbsp;&nbsp; [_FunctionReturnType_]<sup>?</sup> [_WhereClause_]<sup>?</sup>
->
-> _TraitMethodDecl_ :\
-> &nbsp;&nbsp; [_FunctionQualifiers_] `fn` [IDENTIFIER]&nbsp;[_Generics_]<sup>?</sup>\
-> &nbsp;&nbsp; &nbsp;&nbsp; `(` [_SelfParam_] (`,` _TraitFunctionParam_)<sup>\*</sup> `,`<sup>?</sup> `)`\
-> &nbsp;&nbsp; &nbsp;&nbsp; [_FunctionReturnType_]<sup>?</sup> [_WhereClause_]<sup>?</sup>
->
-> _TraitFunctionParameters_ :\
-> &nbsp;&nbsp; _TraitFunctionParam_ (`,` _TraitFunctionParam_)<sup>\*</sup> `,`<sup>?</sup>
->
-> _TraitFunctionParam_<sup>[†](#parameter-patterns)</sup> :\
-> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> ( [_Pattern_] `:` )<sup>?</sup> [_Type_]
->
-> _TraitConst_ :\
-> &nbsp;&nbsp; `const` [IDENTIFIER] `:` [_Type_]&nbsp;( `=` [_Expression_] )<sup>?</sup> `;`
->
-> _TraitType_ :\
-> &nbsp;&nbsp; `type` [IDENTIFIER] ( `:` [_TypeParamBounds_]<sup>?</sup> )<sup>?</sup> `;`
 
 _trait_ 描述类型可以实现的抽象接口。这类接口由三种[关联程序项(associated items)][associated items]组成，它们分别是：
 
@@ -61,7 +24,20 @@ _trait_ 描述类型可以实现的抽象接口。这类接口由三种[关联�
 
 trait 需要具体的类型去实现，具体的实现方法是通过该类型的各种独立实现(implementations)来完成的。
 
-trait 关联程序项/自带的程序项不需要在该 trait 中提供具体定义，但也可以提供。如果 trait 提供了定义，那么该定义将作为任何不覆盖它的实现的默认定义。如果没有提供，那么任何实现都必须提供具体定义。
+trait函数可以通过使用分号代替函数体来省略函数体。这表明此 trait的实现必须去定义实现该函数。如果 trait函数定义了一个函数体，那么这个定义就会作为任何不覆盖它的实现的默认函数实现。类似地，关联常量可以省略等号和表达式，以指示相应的实现必须定义该常量值。关联类型不能定义类型，只能在实现中指定类型。
+
+```rust
+// 有定义和没有定义的相关联trait项的例子
+trait Example {
+    const CONST_NO_DEFAULT: i32;
+    const CONST_WITH_DEFAULT: i32 = 99;
+    type TypeNoDefault;
+    fn method_without_default(&self);
+    fn method_with_default(&self) {}
+}
+```
+
+Trait函数不能是 [`async`] 或 [`const`] 类型的。
 
 ## Trait bounds
 ## trait约束
@@ -319,18 +295,10 @@ fn main() {
 
 [IDENTIFIER]: ../identifiers.md
 [WildcardPattern]: ../patterns.md#wildcard-pattern
-[_BlockExpression_]: ../expressions/block-expr.md
-[_Expression_]: ../expressions.md
-[_FunctionQualifiers_]: functions.md
-[_FunctionReturnType_]: functions.md
-[_Generics_]: generics.md
-[_MacroInvocationSemi_]: ../macros.md#macro-invocation
-[_OuterAttribute_]: ../attributes.md
+[_AssociatedItem_]: associated-items.md
+[_GenericParams_]: generics.md
 [_InnerAttribute_]: ../attributes.md
-[_Pattern_]: ../patterns.md
-[_SelfParam_]: associated-items.md#methods
 [_TypeParamBounds_]: ../trait-bounds.md
-[_Type_]: ../types.md#type-expressions
 [_Visibility_]: ../visibility-and-privacy.md
 [_WhereClause_]: generics.md#where-clauses
 [bounds]: ../trait-bounds.md
@@ -350,6 +318,8 @@ fn main() {
 [`Box<Self>`]: ../special-types-and-traits.md#boxt
 [`Pin<P>`]: ../special-types-and-traits.md#pinp
 [`Rc<Self>`]: ../special-types-and-traits.md#rct
+[`async`]: functions.md#async-functions
+[`const`]: functions.md#const-functions
 
 <!-- 2020-11-12-->
 <!-- checked -->

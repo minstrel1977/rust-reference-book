@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2021-1-10</p>
+<p>本书跟随原文截止日期：2021-1-17</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -655,8 +655,8 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <h1><a class="header" href="#tokens" id="tokens">Tokens</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/tokens.md">tokens.md</a><br />
-commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
-本章译文最后维护日期：2020-11-5</p>
+commit: 8e62ab3e5dc57f5db7581cf763bcbbea75ab58eb <br />
+本章译文最后维护日期：2020-1-17</p>
 </blockquote>
 <p>token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：</p>
 <ul>
@@ -1043,6 +1043,7 @@ static type error.
 0.1f64;          // 类型 f64
 0.1f32;          // 类型 f32
 12E+99_f64;      // 类型 f64
+5f32;            // 类型 f32
 let x: f64 = 2.; // 类型 f64
 <span class="boring">}
 </span></code></pre></pre>
@@ -1131,8 +1132,8 @@ LIFETIME_TOKEN :<br />
 <h1><a class="header" href="#路径" id="路径">路径</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/paths.md">paths.md</a><br />
-commit: 15ec5a6f6c9c867242cb231413094dd4568babb2 <br />
-本章译文最后维护日期：2020-1-10</p>
+commit: 8511cf48f93fc37c44a87f5823cce1338da1bb7e <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，<code>::</code> 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">程序项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用程序项。</p>
 <p>仅由标识符段组成的简单路径(simple paths)的两个示例：</p>
@@ -1174,31 +1175,14 @@ mod m {
    <a href="identifiers.html">IDENTIFIER</a> | <code>super</code> | <code>self</code> | <code>Self</code> | <code>crate</code> | <code>$crate</code></p>
 <p><em>GenericArgs</em> :<br />
       <code>&lt;</code> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsLifetimes</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsTypes</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsConsts</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsBindings</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsLifetimes</em> <code>,</code> <em>GenericArgsTypes</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsLifetimes</em> <code>,</code> <em>GenericArgsConsts</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsLifetimes</em> <code>,</code> <em>GenericArgsBindings</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsLifetimes</em> <code>,</code> <em>GenericArgsTypes</em> <code>,</code> <em>GenericArgsConsts</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsLifetimes</em> <code>,</code> <em>GenericArgsTypes</em> <code>,</code> <em>GenericArgsBindings</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsLifetimes</em> <code>,</code> <em>GenericArgsConsts</em> <code>,</code> <em>GenericArgsBindings</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsTypes</em> <code>,</code> <em>GenericArgsConsts</em> <code>,</code> <em>GenericArgsBindings</em> <code>,</code><sup>?</sup> <code>&gt;</code><br />
-   | <code>&lt;</code> <em>GenericArgsLifetimes</em> <code>,</code> <em>GenericArgsTypes</em> <code>,</code> <em>GenericArgsConsts</em> <code>,</code> <em>GenericArgsBindings</em> <code>,</code><sup>?</sup> <code>&gt;</code></p>
-<p><em>GenericArgsLifetimes</em> :<br />
-   <a href="trait-bounds.html"><em>Lifetime</em></a> (<code>,</code> <a href="trait-bounds.html"><em>Lifetime</em></a>)<sup>*</sup></p>
-<p><em>GenericArgsTypes</em> :<br />
-   <a href="types.html#type-expressions"><em>Type</em></a> (<code>,</code> <a href="types.html#type-expressions"><em>Type</em></a>)<sup>*</sup></p>
-<p><em>GenericArgsConsts</em> :<br />
-   <em>GenericArgsConst</em> (<code>,</code> <em>GenericArgsConst</em>)<sup>*</sup></p>
+   | <code>&lt;</code> ( <em>GenericArg</em> <code>,</code> )<sup>*</sup> <em>GenericArg</em> <code>,</code><sup>?</sup> <code>&gt;</code></p>
+<p><em>GenericArg</em> :<br />
+   <a href="trait-bounds.html"><em>Lifetime</em></a> | <a href="types.html#type-expressions"><em>Type</em></a> | <em>GenericArgsConst</em> | <em>GenericArgsBinding</em></p>
 <p><em>GenericArgsConst</em> :<br />
       <a href="expressions/block-expr.html"><em>BlockExpression</em></a><br />
    | <a href="expressions/literal-expr.html"><em>LiteralExpression</em></a><br />
    | <code>-</code> <a href="expressions/literal-expr.html"><em>LiteralExpression</em></a><br />
    | <a href="paths.html#simple-paths"><em>SimplePathSegment</em></a></p>
-<p><em>GenericArgsBindings</em> :<br />
-   <em>GenericArgsBinding</em> (<code>,</code> <em>GenericArgsBinding</em>)<sup>*</sup></p>
 <p><em>GenericArgsBinding</em> :<br />
    <a href="identifiers.html">IDENTIFIER</a> <code>=</code> <a href="types.html#type-expressions"><em>Type</em></a></p>
 </blockquote>
@@ -1211,6 +1195,7 @@ mod m {
 Vec::&lt;u8&gt;::with_capacity(1024);
 <span class="boring">}
 </span></code></pre></pre>
+<p>泛型参数的顺序被限制为生存期参数，然后是类型参数，然后是常量参数，再后是相应的约束。</p>
 <p>常量实参必须用花括号括起来，除非它们是<a href="expressions/literal-expr.html">字面量</a>或单段路径。</p>
 <h2><a class="header" href="#qualified-paths" id="qualified-paths">Qualified paths</a></h2>
 <h2><a class="header" href="#限定性路径" id="限定性路径">限定性路径</a></h2>
@@ -1429,7 +1414,7 @@ mod without { // ::without
 
 <span class="boring">fn main() {}
 </span></code></pre></pre>
-<!-- 2021-1-10-->
+<!-- 2021-1-17-->
 <!-- checked -->
 <h1><a class="header" href="#macros" id="macros">Macros</a></h1>
 <h1><a class="header" href="#宏" id="宏">宏</a></h1>
@@ -2741,28 +2726,43 @@ m!(use std as _;);
 <h1><a class="header" href="#函数" id="函数">函数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/functions.md">functions.md</a><br />
-commit: 645a7b1a809842f03e71f7211b1e22ee301a703a <br />
-本章译文最后维护日期：2020-11-27</p>
+commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>Function</em> :<br />
-   <em>FunctionQualifiers</em> <code>fn</code> <a href="items/../identifiers.html">IDENTIFIER</a> <a href="items/generics.html"><em>Generics</em></a><sup>?</sup><br />
+   <em>FunctionQualifiers</em> <code>fn</code> <a href="items/../identifiers.html">IDENTIFIER</a> <a href="items/generics.html"><em>GenericParams</em></a><sup>?</sup><br />
       <code>(</code> <em>FunctionParameters</em><sup>?</sup> <code>)</code><br />
       <em>FunctionReturnType</em><sup>?</sup> <a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup><br />
-      <a href="items/../expressions/block-expr.html"><em>BlockExpression</em></a></p>
+      ( <a href="items/../expressions/block-expr.html"><em>BlockExpression</em></a> | <code>;</code> )</p>
 <p><em>FunctionQualifiers</em> :<br />
-   <em>AsyncConstQualifiers</em><sup>?</sup> <code>unsafe</code><sup>?</sup> (<code>extern</code> <em>Abi</em><sup>?</sup>)<sup>?</sup></p>
-<p><em>AsyncConstQualifiers</em> :<br />
-   <code>async</code> | <code>const</code></p>
+   <code>const</code><sup>?</sup> <code>async</code><sup class="footnote-reference"><a href="#async-edition">1</a></sup><sup>?</sup> <code>unsafe</code><sup>?</sup> (<code>extern</code> <em>Abi</em><sup>?</sup>)<sup>?</sup></p>
 <p><em>Abi</em> :<br />
    <a href="items/../tokens.html#string-literals">STRING_LITERAL</a> | <a href="items/../tokens.html#raw-string-literals">RAW_STRING_LITERAL</a></p>
 <p><em>FunctionParameters</em> :<br />
-   <em>FunctionParam</em> (<code>,</code> <em>FunctionParam</em>)<sup>*</sup> <code>,</code><sup>?</sup></p>
+      <em>SelfParam</em> <code>,</code><sup>?</sup><br />
+   | (<em>SelfParam</em> <code>,</code>)<sup>?</sup> <em>FunctionParam</em> (<code>,</code> <em>FunctionParam</em>)<sup>*</sup> <code>,</code><sup>?</sup></p>
+<p><em>SelfParam</em> :<br />
+   <a href="items/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> ( <em>ShorthandSelf</em> | <em>TypedSelf</em> )</p>
+<p><em>ShorthandSelf</em> :<br />
+    (<code>&amp;</code> | <code>&amp;</code> <a href="items/../trait-bounds.html"><em>Lifetime</em></a>)<sup>?</sup> <code>mut</code><sup>?</sup> <code>self</code></p>
+<p><em>TypedSelf</em> :<br />
+   <code>mut</code><sup>?</sup> <code>self</code> <code>:</code> <a href="items/../types.html#type-expressions"><em>Type</em></a></p>
 <p><em>FunctionParam</em> :<br />
-   <a href="items/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <a href="items/../patterns.html"><em>Pattern</em></a> <code>:</code> <a href="items/../types.html#type-expressions"><em>Type</em></a></p>
+   <a href="items/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> (
+<em>FunctionParamPattern</em> | <code>...</code> | <a href="items/../types.html#type-expressions"><em>Type</em></a> <sup class="footnote-reference"><a href="#fn-param-2015">2</a></sup>
+)</p>
+<p><em>FunctionParamPattern</em> :<br />
+   <a href="items/../patterns.html"><em>Pattern</em></a> <code>:</code> ( <a href="items/../types.html#type-expressions"><em>Type</em></a> | <code>...</code> )</p>
 <p><em>FunctionReturnType</em> :<br />
    <code>-&gt;</code> <a href="items/../types.html#type-expressions"><em>Type</em></a></p>
+<div class="footnote-definition" id="async-edition"><sup class="footnote-definition-label">1</sup>
+<p>限定符<code>async</code>不能在 2015版中使用。</p>
+</div>
+<div class="footnote-definition" id="fn-param-2015"><sup class="footnote-definition-label">2</sup>
+<p>在2015版中，只有类型的函数参数只允许出现在<a href="items/traits.html">trait项</a>的关联函数中。</p>
+</div>
 </blockquote>
 <p><em>函数</em>由一个<a href="items/../expressions/block-expr.html">块</a>以及一个名称和一组参数组成。除了名称，其他的都是可选的。函数使用关键字 <code>fn</code> 声明。函数可以声明一组<em>输入</em><a href="items/../variables.html"><em>变量</em></a>作为参数，调用者通过它向函数传递参数，函数完成后，它再将带有<em>输出</em><a href="items/../types.html#type-expressions"><em>类型</em></a>的结果值返回给调用者。</p>
 <p>当一个<em>函数</em>被引用时，该函数会产生一个相应的零尺寸<a href="items/../types/function-item.html"><em>函数项类型(function item type)</em></a>的一等(first-class)<em>值</em>，调用该值就相当于直接调用该函数。</p>
@@ -2775,6 +2775,8 @@ commit: 645a7b1a809842f03e71f7211b1e22ee301a703a <br />
 }
 <span class="boring">}
 </span></code></pre></pre>
+<h2><a class="header" href="#function-parameters" id="function-parameters">Function parameters</a></h2>
+<h2><a class="header" href="#函数参数" id="函数参数">函数参数</a></h2>
 <p>和 <code>let</code>绑定一样，函数参数是不可反驳型<a href="items/../patterns.html">模式</a>，所以任何在 let绑定中有效的模式都可以有效应用在函数参数上:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -2782,6 +2784,10 @@ commit: 645a7b1a809842f03e71f7211b1e22ee301a703a <br />
 </span>fn first((value, _): (i32, i32)) -&gt; i32 { value }
 <span class="boring">}
 </span></code></pre></pre>
+<p>如果第一个参数是一个<em>SelfParam</em>类型的参数，这表明该函数是一个<a href="items/associated-items.html#methods">方法</a>。带 self参数的函数只能在 <a href="items/traits.html">trait</a> 或<a href="items/implementations.html">实现</a>中作为<a href="items/associated-items.html#associated-functions-and-methods">关联函数</a>出现。</p>
+<p>带有 <code>...</code>token 的参数表示此函数是一个<a href="items/external-blocks.html#variadic-functions">可变参数函数</a>，<code>...</code> 只能作为<a href="items/external-blocks.html">外部块</a>里的函数的最后一个参数使用。可变参数可以有一个可选标识符，例如 <code>args: ...</code>。</p>
+<h2><a class="header" href="#function-body" id="function-body">Function body</a></h2>
+<h2><a class="header" href="#函数体" id="函数体">函数体</a></h2>
 <p>函数的块在概念上被包装进在一个块中，该块绑定该函数的参数模式，然后返回(<code>return</code>)该函数的块的值。这意味着如果轮到块的*尾部表达式(tail expression)*被求值计算了，该块将结束，求得的值将被返回给调用者。通常，程序执行时如果流碰到函数体中的显式返回表达式(return expression)，就会截断那个隐式的最终表达式的执行。</p>
 <p>例如，上面例子里函数的行为就像下面被改写的这样:</p>
 <!-- ignore: example expansion -->
@@ -2791,6 +2797,7 @@ return {
     value
 };
 </code></pre>
+<p>没有主体块的函数以分号结束。这种形式只能出现在 <a href="items/traits.html">trait</a> 或<a href="items/external-blocks.html">外部块</a>中。</p>
 <h2><a class="header" href="#generic-functions" id="generic-functions">Generic functions</a></h2>
 <h2><a class="header" href="#泛型函数" id="泛型函数">泛型函数</a></h2>
 <p><em>泛型函数</em>允许在其签名中出现一个或多个<em>参数化类型(parameterized types)</em>。每个类型参数必须在函数名后面的尖括号封闭逗号分隔的列表中显式声明。</p>
@@ -2889,6 +2896,7 @@ let fptr: extern &quot;C&quot; fn() -&gt; i32 = new_i32;
 <h2><a class="header" href="#const-functions" id="const-functions">Const functions</a></h2>
 <h2><a class="header" href="#常量函数" id="常量函数">常量函数</a></h2>
 <p>使用关键字 <code>const</code> 限定的函数是<a href="items/../const_eval.html#const-functions">常量(const)函数</a>，<a href="items/structs.html">元组结构体</a>构造函数和<a href="items/enumerations.html">元组变体</a>构造函数也是如此。可以在<a href="items/../const_eval.html#const-context">常量上下文</a>中调用<em>常量函数</em>。</p>
+<p>常量函数不允许是 <a href="items/functions.html#async-functions">async</a>类型的，并且不能使用 <a href="items/functions.html#extern-function-qualifier"><code>extern</code>函数限定符</a>。</p>
 <h2><a class="header" href="#async-functions" id="async-functions">Async functions</a></h2>
 <h2><a class="header" href="#异步函数" id="异步函数">异步函数</a></h2>
 <p>函数可以被限定为异步的，这还可以与 <code>unsafe</code> 限定符结合在一起使用：</p>
@@ -2992,20 +3000,20 @@ async fn safe_example() {
 fn foo_oof(#[some_inert_attribute] arg: u8) {
 }
 </code></pre>
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->
 <h1><a class="header" href="#type-aliases" id="type-aliases">Type aliases</a></h1>
 <h1><a class="header" href="#类型别名" id="类型别名">类型别名</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/type-aliases.md">type-aliases.md</a><br />
-commit: d150e88973ffccc4439111d8e1b26da745670fa8 <br />
-本章译文最后维护日期：2020-11-8</p>
+commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>TypeAlias</em> :<br />
-   <code>type</code> <a href="items/../identifiers.html">IDENTIFIER</a> <a href="items/generics.html"><em>Generics</em></a><sup>?</sup>
-<a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup> <code>=</code> <a href="items/../types.html#type-expressions"><em>Type</em></a> <code>;</code></p>
+   <code>type</code> <a href="items/../identifiers.html">IDENTIFIER</a> <a href="items/generics.html"><em>GenericParams</em></a><sup>?</sup>
+<a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup> ( <code>=</code> <a href="items/../types.html#type-expressions"><em>Type</em></a> ) <code>;</code></p>
 </blockquote>
 <p><em>类型别名</em>为现有的<a href="items/../types.html">类型</a>定义一个新名称。类型别名用关键字 <code>type</code> 声明。每个值都是一个唯一的特定的类型，但是可以实现几个不同的 trait，或者兼容几个不同的类型约束。</p>
 <p>例如，下面将类型 <code>Point</code> 定义为类型 <code>(u8, u8)</code> 的同义词/别名：</p>
@@ -3029,14 +3037,15 @@ let _ = UseAlias(5); // OK
 let _ = TypeAlias(5); // 不能正常执行
 <span class="boring">}
 </span></code></pre></pre>
-<!-- 2020-11-12-->
+<p>没有指定代表<a href="items/../types.html#type-expressions">类型</a>的类型别名只能作为 <a href="items/traits.html">trait</a> 中的<a href="items/associated-items.html#associated-types">关联类型</a>出现。</p>
+<!-- 2021-1-17-->
 <!-- checked -->
 <h1><a class="header" href="#structs" id="structs">Structs</a></h1>
 <h1><a class="header" href="#结构体" id="结构体">结构体</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/structs.md">structs.md</a><br />
-commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本章译文最后维护日期：2020-11-8</p>
+commit: 9d0aa172932ed15ec1b13556e6809b74bc58a02b <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -3046,13 +3055,13 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <p><em>StructStruct</em> :<br />
    <code>struct</code>
 <a href="items/../identifiers.html">IDENTIFIER</a> 
-<a href="items/generics.html"><em>Generics</em></a><sup>?</sup>
+<a href="items/generics.html"><em>GenericParams</em></a><sup>?</sup>
 <a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup>
 ( <code>{</code> <em>StructFields</em><sup>?</sup> <code>}</code> | <code>;</code> )</p>
 <p><em>TupleStruct</em> :<br />
    <code>struct</code>
 <a href="items/../identifiers.html">IDENTIFIER</a> 
-<a href="items/generics.html"><em>Generics</em></a><sup>?</sup>
+<a href="items/generics.html"><em>GenericParams</em></a><sup>?</sup>
 <code>(</code> <em>TupleFields</em><sup>?</sup> <code>)</code>
 <a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup>
 <code>;</code></p>
@@ -3112,15 +3121,15 @@ let c = [Cookie, Cookie {}, Cookie, Cookie {}];
 <h1><a class="header" href="#枚举" id="枚举">枚举</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/enumerations.md">enumerations.md</a><br />
-commit: 2264855271fae0a915a0fa769e57f5a5d09ff5ef <br />
-本章译文最后维护日期：2020-11-8</p>
+commit: 9d0aa172932ed15ec1b13556e6809b74bc58a02b <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>Enumeration</em> :<br />
    <code>enum</code>
 <a href="items/../identifiers.html">IDENTIFIER</a> 
-<a href="items/generics.html"><em>Generics</em></a><sup>?</sup>
+<a href="items/generics.html"><em>GenericParams</em></a><sup>?</sup>
 <a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup>
 <code>{</code> <em>EnumItems</em><sup>?</sup> <code>}</code></p>
 <p><em>EnumItems</em> :<br />
@@ -3265,19 +3274,19 @@ enum E {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->
 <h1><a class="header" href="#unions" id="unions">Unions</a></h1>
 <h1><a class="header" href="#联合体" id="联合体">联合体</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/unions.md">unions.md</a><br />
-commit: cd996a4e6e9b98929c3718fd76988bfee51d757c <br />
-本章译文最后维护日期：2020-12-24</p>
+commit: 9d0aa172932ed15ec1b13556e6809b74bc58a02b <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>Union</em> :<br />
-   <code>union</code> <a href="items/../identifiers.html">IDENTIFIER</a> <a href="items/generics.html"><em>Generics</em></a><sup>?</sup> <a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup>
+   <code>union</code> <a href="items/../identifiers.html">IDENTIFIER</a> <a href="items/generics.html"><em>GenericParams</em></a><sup>?</sup> <a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup>
 <code>{</code><a href="items/structs.html"><em>StructFields</em></a> <code>}</code></p>
 </blockquote>
 <p>除了用 <code>union</code> 代替 <code>struct</code>外，联合体声明使用和结构体声明相同的句法。</p>
@@ -3420,19 +3429,19 @@ fn test() {
 <div class="footnote-definition" id="译者备注"><sup class="footnote-definition-label">1</sup>
 <p>这句译者简单理解就是对已经初始化的变量再去覆写的时候要先去读一下这个变量代表的地址上的值的状态，如果有值，并且允许覆写，那 Rust 为防止内存泄漏就先执行那变量的析构行为（drop()），清空那个地址上的关联堆数据，再写入。我们这里对联合体的预设条件是此联合体值有 Copy特性，有 Copy特性了，对值的直接覆写不会造成内存泄漏，就不必调用析构行为，也不需要事先的非安全读操作了。对于这个问题<a href="https://learnku.com/docs/nomicon/2018">nomicon</a>的“未初始化内存”章有讲述，博主<a href="https://www.zhihu.com/people/crlf0710">CrLF0710</a>的两篇“学一点 Rust 内存模型会发生什么呢？”里也都有精彩讲解。</p>
 </div>
-<!-- 2020-12-24-->
+<!-- 2021-1-17-->
 <!-- checked -->
 <h1><a class="header" href="#constant-items" id="constant-items">Constant items</a></h1>
 <h1><a class="header" href="#常量项" id="常量项">常量项</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/constant-items.md">constant-items.md</a><br />
-commit: da910b725a59ba9bb32c6954074f377589a2a689 <br />
-本章译文最后维护日期：2020-11-9</p>
+commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
+本章译文最后维护日期：2020-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ConstantItem</em> :<br />
-   <code>const</code> ( <a href="items/../identifiers.html">IDENTIFIER</a> | <code>_</code> ) <code>:</code> <a href="items/../types.html#type-expressions"><em>Type</em></a> <code>=</code> <a href="items/../expressions.html"><em>Expression</em></a> <code>;</code></p>
+   <code>const</code> ( <a href="items/../identifiers.html">IDENTIFIER</a> | <code>_</code> ) <code>:</code> <a href="items/../types.html#type-expressions"><em>Type</em></a> ( <code>=</code> <a href="items/../expressions.html"><em>Expression</em></a> )<sup>?</sup> <code>;</code></p>
 </blockquote>
 <p><em>常量项</em>是一个可选的具名 <em><a href="items/../const_eval.html#constant-expressions">常量值</a></em>，它与程序中的具体内存位置没有关联。无论常量在哪里使用，它们本质上都是内联的，这意味着当它们被使用时，都是直接被拷贝到相关的上下文中来使用的。这包括使用非拷贝(non-<a href="items/../special-types-and-traits.html#copy"><code>Copy</code></a>)类型的值和来自外部的 crate 的常量。对相同常量的引用不保证它们引用的是相同的内存地址。</p>
 <p>常量必须显式指定数据类型。类型必须具有 <code>'static</code>生存期：程序初始化器(initializer)中的任何引用都必须具有 <code>'static</code>生存期。</p>
@@ -3457,6 +3466,7 @@ const BITS_N_STRINGS: BitsNStrings&lt;'static&gt; = BitsNStrings {
 };
 <span class="boring">}
 </span></code></pre></pre>
+<p>常量表达式只能在<a href="items/traits.html">trait定义中省略</a>。</p>
 <h2><a class="header" href="#constants-with-destructors" id="constants-with-destructors">Constants with Destructors</a></h2>
 <h2><a class="header" href="#常量与析构函数" id="常量与析构函数">常量与析构函数</a></h2>
 <p>常量可以包含析构函数。析构函数在值超出作用域时运行。<sup class="footnote-reference"><a href="#译者备注">1</a></sup></p>
@@ -3509,20 +3519,20 @@ m!(const _: () = (););
 <div class="footnote-definition" id="译者备注"><sup class="footnote-definition-label">1</sup>
 <p>在程序退出前，析构销毁的只是其中的一份拷贝；这句还有另一层含义是常量在整个程序结束时会调用析构函数。</p>
 </div>
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->
 <h1><a class="header" href="#static-items" id="static-items">Static items</a></h1>
 <h1><a class="header" href="#静态项" id="静态项">静态项</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/static-items.md">static-items.md</a><br />
-commit: 2f459e22ec30a94bafafe417da4e95044578df73 <br />
-本章译文最后维护日期：2020-11-9</p>
+commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>StaticItem</em> :<br />
    <code>static</code> <code>mut</code><sup>?</sup> <a href="items/../identifiers.html">IDENTIFIER</a> <code>:</code> <a href="items/../types.html#type-expressions"><em>Type</em></a>
-<code>=</code> <a href="items/../expressions.html"><em>Expression</em></a> <code>;</code></p>
+( <code>=</code> <a href="items/../expressions.html"><em>Expression</em></a> )<sup>?</sup> <code>;</code></p>
 </blockquote>
 <p><em>静态项</em>类似于<a href="items/constant-items.html">常量项</a>，除了它在程序中表示一个精确的内存位置。所有对静态项的引用都指向相同的内存位置。静态项拥有 <code>'static</code> 生存期，它比 Rust 程序中的所有其他生存期都要长。静态项不会在程序结束时调用析构动作 <a href="items/../destructors.html"><code>drop</code></a>。</p>
 <p>静态初始化器是在编译时求值的<a href="items/../const_eval.html#constant-expressions">常量表达式</a>。静态初始化器可以引用其他静态项。</p>
@@ -3532,6 +3542,7 @@ commit: 2f459e22ec30a94bafafe417da4e95044578df73 <br />
 <li>静态项的数据类型必须有 <code>Sync</code> trait约束，这样才可以让线程安全地访问。</li>
 <li>常量项不能引用静态项。</li>
 </ul>
+<p>必须为自由静态项提供初始化表达式，但在<a href="items/external-blocks.html">外部块</a>中静态项必须省略初始化表达式。</p>
 <h2><a class="header" href="#mutable-statics" id="mutable-statics">Mutable statics</a></h2>
 <h2><a class="header" href="#可变静态项" id="可变静态项">可变静态项</a></h2>
 <p>如果静态项是用关键字 <code>mut</code> 声明的，则它允许被程序修改。Rust 的目标之一是使尽可能的避免出现并发 bug，那允许修改可变静态项显然是竞争条件(race conditions)或其他 bug 的一个非常大的来源。因此，读取或写入可变静态项变量时需要引入非安全(<code>unsafe</code>)块。应注意确保对可变静态项的修改相对于运行在同一进程中的其他线程来说是安全的。</p>
@@ -3566,52 +3577,24 @@ unsafe fn bump_levels_unsafe2() -&gt; u32 {
 <li>需要静态项的存储地址不变的特性。</li>
 <li>需要内部可变性。</li>
 </ul>
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->
 <h1><a class="header" href="#trait" id="trait">Trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/traits.md">traits.md</a><br />
-commit: d5cc65a70f66a243d84cd251188d80fbe9926747 <br />
-本章译文最后维护日期：2020-10-21</p>
+commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>Trait</em> :<br />
    <code>unsafe</code><sup>?</sup> <code>trait</code> <a href="items/../identifiers.html">IDENTIFIER</a> 
-<a href="items/generics.html"><em>Generics</em></a><sup>?</sup>
+<a href="items/generics.html"><em>GenericParams</em></a><sup>?</sup>
 ( <code>:</code> <a href="items/../trait-bounds.html"><em>TypeParamBounds</em></a><sup>?</sup> )<sup>?</sup>
 <a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup> <code>{</code><br />
      <a href="items/../attributes.html"><em>InnerAttribute</em></a><sup>*</sup><br />
-     <em>TraitItem</em><sup>*</sup><br />
+     <a href="items/associated-items.html"><em>AssociatedItem</em></a><sup>*</sup><br />
    <code>}</code></p>
-<p><em>TraitItem</em> :<br />
-   <a href="items/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <a href="items/../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup> (<br />
-         <em>TraitFunc</em><br />
-      | <em>TraitMethod</em><br />
-      | <em>TraitConst</em><br />
-      | <em>TraitType</em><br />
-      | <a href="items/../macros.html#macro-invocation"><em>MacroInvocationSemi</em></a><br />
-   )</p>
-<p><em>TraitFunc</em> :<br />
-      <em>TraitFunctionDecl</em> ( <code>;</code> | <a href="items/../expressions/block-expr.html"><em>BlockExpression</em></a> )</p>
-<p><em>TraitMethod</em> :<br />
-      <em>TraitMethodDecl</em> ( <code>;</code> | <a href="items/../expressions/block-expr.html"><em>BlockExpression</em></a> )</p>
-<p><em>TraitFunctionDecl</em> :<br />
-   <a href="items/functions.html"><em>FunctionQualifiers</em></a> <code>fn</code> <a href="items/../identifiers.html">IDENTIFIER</a> <a href="items/generics.html"><em>Generics</em></a><sup>?</sup><br />
-      <code>(</code> <em>TraitFunctionParameters</em><sup>?</sup> <code>)</code><br />
-      <a href="items/functions.html"><em>FunctionReturnType</em></a><sup>?</sup> <a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup></p>
-<p><em>TraitMethodDecl</em> :<br />
-   <a href="items/functions.html"><em>FunctionQualifiers</em></a> <code>fn</code> <a href="items/../identifiers.html">IDENTIFIER</a> <a href="items/generics.html"><em>Generics</em></a><sup>?</sup><br />
-      <code>(</code> <a href="items/associated-items.html#methods"><em>SelfParam</em></a> (<code>,</code> <em>TraitFunctionParam</em>)<sup>*</sup> <code>,</code><sup>?</sup> <code>)</code><br />
-      <a href="items/functions.html"><em>FunctionReturnType</em></a><sup>?</sup> <a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup></p>
-<p><em>TraitFunctionParameters</em> :<br />
-   <em>TraitFunctionParam</em> (<code>,</code> <em>TraitFunctionParam</em>)<sup>*</sup> <code>,</code><sup>?</sup></p>
-<p><em>TraitFunctionParam</em><sup><a href="items/traits.html#parameter-patterns">†</a></sup> :<br />
-   <a href="items/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> ( <a href="items/../patterns.html"><em>Pattern</em></a> <code>:</code> )<sup>?</sup> <a href="items/../types.html#type-expressions"><em>Type</em></a></p>
-<p><em>TraitConst</em> :<br />
-   <code>const</code> <a href="items/../identifiers.html">IDENTIFIER</a> <code>:</code> <a href="items/../types.html#type-expressions"><em>Type</em></a> ( <code>=</code> <a href="items/../expressions.html"><em>Expression</em></a> )<sup>?</sup> <code>;</code></p>
-<p><em>TraitType</em> :<br />
-   <code>type</code> <a href="items/../identifiers.html">IDENTIFIER</a> ( <code>:</code> <a href="items/../trait-bounds.html"><em>TypeParamBounds</em></a><sup>?</sup> )<sup>?</sup> <code>;</code></p>
 </blockquote>
 <p><em>trait</em> 描述类型可以实现的抽象接口。这类接口由三种<a href="items/associated-items.html">关联程序项(associated items)</a>组成，它们分别是：</p>
 <ul>
@@ -3621,7 +3604,21 @@ commit: d5cc65a70f66a243d84cd251188d80fbe9926747 <br />
 </ul>
 <p>所有 trait 都定义了一个隐式类型参数 <code>Self</code> ，它指向“实现此接口的类型”。trait 还可能包含额外的类型参数。这些类型参数，包括 <code>Self</code> 在内，都可能会<a href="items/generics.html">跟正常类型参数一样</a>受到其他 trait 的约束。</p>
 <p>trait 需要具体的类型去实现，具体的实现方法是通过该类型的各种独立实现(implementations)来完成的。</p>
-<p>trait 关联程序项/自带的程序项不需要在该 trait 中提供具体定义，但也可以提供。如果 trait 提供了定义，那么该定义将作为任何不覆盖它的实现的默认定义。如果没有提供，那么任何实现都必须提供具体定义。</p>
+<p>trait函数可以通过使用分号代替函数体来省略函数体。这表明此 trait的实现必须去定义实现该函数。如果 trait函数定义了一个函数体，那么这个定义就会作为任何不覆盖它的实现的默认函数实现。类似地，关联常量可以省略等号和表达式，以指示相应的实现必须定义该常量值。关联类型不能定义类型，只能在实现中指定类型。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 有定义和没有定义的相关联trait项的例子
+trait Example {
+    const CONST_NO_DEFAULT: i32;
+    const CONST_WITH_DEFAULT: i32 = 99;
+    type TypeNoDefault;
+    fn method_without_default(&amp;self);
+    fn method_with_default(&amp;self) {}
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Trait函数不能是 <a href="items/functions.html#async-functions"><code>async</code></a> 或 <a href="items/functions.html#const-functions"><code>const</code></a> 类型的。</p>
 <h2><a class="header" href="#trait-bounds" id="trait-bounds">Trait bounds</a></h2>
 <h2><a class="header" href="#trait约束" id="trait约束">trait约束</a></h2>
 <p>泛型程序项可以使用 trait 作为其类型参数的<a href="items/../trait-bounds.html">约束</a>。</p>
@@ -3887,36 +3884,26 @@ fn main() {
 <h1><a class="header" href="#实现" id="实现">实现</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/implementations.md">implementations.md</a><br />
-commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
-本章译文最后维护日期：2020-11-8</p>
+commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>Implementation</em> :<br />
    <em>InherentImpl</em> | <em>TraitImpl</em></p>
 <p><em>InherentImpl</em> :<br />
-   <code>impl</code> <a href="items/generics.html"><em>Generics</em></a><sup>?</sup> <a href="items/../types.html#type-expressions"><em>Type</em></a> <a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup> <code>{</code><br />
+   <code>impl</code> <a href="items/generics.html"><em>GenericParams</em></a><sup>?</sup> <a href="items/../types.html#type-expressions"><em>Type</em></a> <a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup> <code>{</code><br />
       <a href="items/../attributes.html"><em>InnerAttribute</em></a><sup>*</sup><br />
-      <em>InherentImplItem</em><sup>*</sup><br />
+      <a href="items/associated-items.html"><em>AssociatedItem</em></a><sup>*</sup><br />
    <code>}</code></p>
-<p><em>InherentImplItem</em> :<br />
-   <a href="items/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> (<br />
-         <a href="items/../macros.html#macro-invocation"><em>MacroInvocationSemi</em></a><br />
-      | ( <a href="items/../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup> ( <a href="items/constant-items.html"><em>ConstantItem</em></a> | <a href="items/functions.html"><em>Function</em></a> | <a href="items/associated-items.html#methods"><em>Method</em></a> ) )<br />
-   )</p>
 <p><em>TraitImpl</em> :<br />
-   <code>unsafe</code><sup>?</sup> <code>impl</code> <a href="items/generics.html"><em>Generics</em></a><sup>?</sup> <code>!</code><sup>?</sup>
+   <code>unsafe</code><sup>?</sup> <code>impl</code> <a href="items/generics.html"><em>GenericParams</em></a><sup>?</sup> <code>!</code><sup>?</sup>
 <a href="items/../paths.html#paths-in-types"><em>TypePath</em></a> <code>for</code> <a href="items/../types.html#type-expressions"><em>Type</em></a><br />
    <a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup><br />
    <code>{</code><br />
       <a href="items/../attributes.html"><em>InnerAttribute</em></a><sup>*</sup><br />
-      <em>TraitImplItem</em><sup>*</sup><br />
+      <a href="items/associated-items.html"><em>AssociatedItem</em></a><sup>*</sup><br />
    <code>}</code></p>
-<p><em>TraitImplItem</em> :<br />
-   <a href="items/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> (<br />
-         <a href="items/../macros.html#macro-invocation"><em>MacroInvocationSemi</em></a><br />
-      | ( <a href="items/../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup> ( <a href="items/type-aliases.html"><em>TypeAlias</em></a> | <a href="items/constant-items.html"><em>ConstantItem</em></a> | <a href="items/functions.html"><em>Function</em></a> | <a href="items/associated-items.html#methods"><em>Method</em></a> ) )<br />
-   )</p>
 </blockquote>
 <p><em>实现</em>是将程序项与*实现类型(implementing type)*关联起来的程序项。实现使用关键字 <code>impl</code> 定义，它包含了属于当前实现的类型的实例的函数，或者包含了当前实现的类型本身的静态函数。</p>
 <p>有两种类型的实现:</p>
@@ -3928,7 +3915,7 @@ commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
 <h2><a class="header" href="#固有实现" id="固有实现">固有实现</a></h2>
 <p>固有实现被定义为一段由关键字 <code>impl</code>，泛型类型声明，指向标称类型(nominal type)的路径，一个 where子句和一对花括号括起来的一组*类型关联项(associable items)*组成的序列。</p>
 <p>（这里）<em>标称类型</em>也被称作<em>实现类型(implementing type)</em>；<em>类型关联项(associable items)<em>可理解为实现类型的各种</em>关联程序项(associated items)</em>。</p>
-<p>固有实现将其包含的程序项与其的实现类型关联起来。固有实现可以包含<a href="items/associated-items.html#associated-functions-and-methods">关联函数</a>（包括方法）和<a href="items/associated-items.html#associated-constants">关联常量</a>。固有实现不能包含关联类型别名。</p>
+<p>固有实现将其包含的程序项与其的实现类型关联起来。固有实现可以包含<a href="items/associated-items.html#associated-functions-and-methods">关联函数</a>（包括<a href="items/associated-items.html#methods">方法</a>）和<a href="items/associated-items.html#associated-constants">关联常量</a>。固有实现不能包含关联类型别名。</p>
 <p>关联程序项的<a href="items/../paths.html">路径</a>是其实现类型的所有（形式的）路径中的任一种，然后再拼接上这个关联程序项的标识符来作为整个路径的末段路径组件(final path component)。</p>
 <p>类型可以有多个固有实现。但作为原始类型定义的实现类型必须与这些固有实现处在同一个 crate 里。</p>
 <pre><pre class="playground"><code class="language-rust">pub mod color {
@@ -4032,7 +4019,7 @@ impl Shape for Circle {
 <p>这里只有<em>无覆盖</em>类型参数的外观被限制（译者注：为方便理解“无覆盖类型参数”，译者提醒读者把它想象成上面译者举例中的 <code>T</code>）。注意，理解“无覆盖类型参数”时需要注意：为了保持一致性，<a href="items/../glossary.html#fundamental-type-constructors">基本类型</a>虽然外观形式特殊，但仍不认为是有覆盖的，比如 <code>Box&lt;T&gt;</code> 中的 <code>T</code> 就不认为是有覆盖的，<code>Box&lt;LocalType&gt;</code> 这样的就被认为是本地的。</p>
 <h2><a class="header" href="#generic-implementations" id="generic-implementations">Generic Implementations</a></h2>
 <h2><a class="header" href="#泛型实现" id="泛型实现">泛型实现</a></h2>
-<p>实现可以带有类型参数和生存期参数，这些参数可用在实现中的其他地方。为实现所声明的类型参数必须在此声明的被实现trait(implemented trait)中或其实现类型(implementing type)中至少使用一次。实现的参数直接写在关键字 <code>impl</code> 之后。</p>
+<p>实现可以带有<a href="items/generics.html">泛型参数</a>，这些参数可用在此实现中的其他地方。实现里的泛型参数直接写在关键字 <code>impl</code> 之后。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -4045,6 +4032,82 @@ impl Seq&lt;bool&gt; for u32 {
 }
 <span class="boring">}
 </span></code></pre></pre>
+<p>如果泛型参数在以下情况下出现过，则其就能约束某个实现：</p>
+<ul>
+<li>需要被实现的 trait中存在泛型参数</li>
+<li>实现类型中存在泛型参数</li>
+<li>作为类型的<a href="items/../trait-bounds.html">约束</a>中的[关联类型]，该类型包含另一个约束实现的形参。</li>
+</ul>
+<p>类型和常量参数必须能在相应实现里体现出约束逻辑。如果关联类型中有生存期参数在使用，则该生存期的约束意义也必须在实现中体现。</p>
+<p>约束必须被传递实现的例子：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">trait Trait{}
+</span><span class="boring">trait GenericTrait&lt;T&gt; {}
+</span><span class="boring">trait HasAssocType { type Ty; }
+</span><span class="boring">struct Struct;
+</span><span class="boring">struct GenericStruct&lt;T&gt;(T);
+</span><span class="boring">struct ConstGenericStruct&lt;const N: usize&gt;([(); N]);
+</span>// T 通过作为 GenericTrait 的参数来体现约束
+impl&lt;T&gt; GenericTrait&lt;T&gt; for i32 { /* ... */ }
+
+// T 是作为 GenericStruct 的参数来体现约束
+impl&lt;T&gt; Trait for GenericStruct&lt;T&gt; { /* ... */ }
+
+// 同样，N 作为 ConstGenericStruct 的参数来体现约束
+impl&lt;const N: usize&gt; Trait for ConstGenericStruct&lt;N&gt; { /* ... */ }
+
+// T 通过类型 `U` 内的关联类型来体现约束，而 `U` 本身就是一个trait的泛型参数
+impl&lt;T, U&gt; GenericTrait&lt;U&gt; for u32 where U: HasAssocType&lt;Ty = T&gt; { /* ... */ }
+
+// 这个和前面一样，除了类型变为 `(U, isize)`。`U` 出现在包含 `T` 的类型中，而不是类型本身。
+impl&lt;T, U&gt; GenericStruct&lt;U&gt; where (U, isize): HasAssocType&lt;Ty = T&gt; { /* ... */ }
+<span class="boring">}
+</span></code></pre></pre>
+<p>约束未能被传递实现的例子：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 下面的都是错误的，因为它们的类型或常量参数没能被传递和实现约束
+
+// T没有实现约束，因为实现内部根本就没有出现 T
+impl&lt;T&gt; Struct { /* ... */ }
+
+// 同样 N 也没有可能被实现
+impl&lt;const N: usize&gt; Struct { /* ... */ }
+
+// 在实现中使用了 T，但却并不约束此实现
+impl&lt;T&gt; Struct {
+    fn uses_t(t: &amp;T) { /* ... */ }
+}
+
+// 在 U 的约束中，T 被用作关联类型，但 U 本身在 Struct 里无法被约束
+impl&lt;T, U&gt; Struct where U: HasAssocType&lt;Ty = T&gt; { /* ... */ }
+
+// T 是在约束中使用了，但不是作为关联类型使用的，所以它没有实现约束
+impl&lt;T, U&gt; GenericTrait&lt;U&gt; for u32 where U: GenericTrait&lt;T&gt; {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>允许的非约束生存期参数的示例：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Struct;
+</span>impl&lt;'a&gt; Struct {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>不允许的非约束生存期参数的示例：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Struct;
+</span><span class="boring">trait HasAssocType { type Ty; }
+</span>impl&lt;'a&gt; HasAssocType for Struct {
+    type Ty = &amp;'a Struct;
+}
+<span class="boring">}
+</span></code></pre></pre>
 <h2><a class="header" href="#attributes-on-implementations" id="attributes-on-implementations">Attributes on Implementations</a></h2>
 <h2><a class="header" href="#实现上的属性" id="实现上的属性">实现上的属性</a></h2>
 <p>实现可以在关键字 <code>impl</code> 之前引入外部<a href="items/../attributes.html">属性</a>，在代码体内引入内部<a href="items/../attributes.html">属性</a>。内部属性必须位于任何关联程序项之前。这里有意义的属性有 <a href="items/../conditional-compilation.html"><code>cfg</code></a>、<a href="items/../attributes/diagnostics.html#the-deprecated-attribute"><code>deprecated</code></a>、<a href="https://doc.rust-lang.org/rustdoc/the-doc-attribute.html"><code>doc</code></a> 和 <a href="items/../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>。</p>
@@ -4054,8 +4117,8 @@ impl Seq&lt;bool&gt; for u32 {
 <h1><a class="header" href="#外部块" id="外部块">外部块</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md">external-blocks.md</a><br />
-commit: fbf34356b709cfc0debb01acaaff038d4e339aab <br />
-本章译文最后维护日期：2020-11-9</p>
+commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -4067,27 +4130,15 @@ commit: fbf34356b709cfc0debb01acaaff038d4e339aab <br />
 <p><em>ExternalItem</em> :<br />
    <a href="items/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> (<br />
          <a href="items/../macros.html#macro-invocation"><em>MacroInvocationSemi</em></a><br />
-      | ( <a href="items/../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup> ( <em>ExternalStaticItem</em> | <em>ExternalFunctionItem</em> ) )<br />
+      | ( <a href="items/../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup> ( <a href="items/static-items.html"><em>StaticItem</em></a> | <a href="items/functions.html"><em>Function</em></a> ) )<br />
    )</p>
-<p><em>ExternalStaticItem</em> :<br />
-   <code>static</code> <code>mut</code><sup>?</sup> <a href="items/../identifiers.html">IDENTIFIER</a> <code>:</code> <a href="items/../types.html#type-expressions"><em>Type</em></a> <code>;</code></p>
-<p><em>ExternalFunctionItem</em> :<br />
-   <code>fn</code> <a href="items/../identifiers.html">IDENTIFIER</a> <a href="items/generics.html"><em>Generics</em></a><sup>?</sup><br />
-   <code>(</code> ( <em>NamedFunctionParameters</em> | <em>NamedFunctionParametersWithVariadics</em> )<sup>?</sup> <code>)</code><br />
-   <a href="items/functions.html"><em>FunctionReturnType</em></a><sup>?</sup> <a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup> <code>;</code></p>
-<p><em>NamedFunctionParameters</em> :<br />
-   <em>NamedFunctionParam</em> ( <code>,</code> <em>NamedFunctionParam</em> )<sup>*</sup> <code>,</code><sup>?</sup></p>
-<p><em>NamedFunctionParam</em> :<br />
-   <a href="items/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> ( <a href="items/../identifiers.html">IDENTIFIER</a> | <code>_</code> ) <code>:</code> <a href="items/../types.html#type-expressions"><em>Type</em></a></p>
-<p><em>NamedFunctionParametersWithVariadics</em> :<br />
-   ( <em>NamedFunctionParam</em> <code>,</code> )<sup>*</sup> <em>NamedFunctionParam</em> <code>,</code> <a href="items/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <code>...</code></p>
 </blockquote>
 <p>外部块提供未在当前 crate 中<em>定义</em>的程序项的<em>声明</em>，外部块是 Rust 外部函数接口的基础。这其实是某种意义上的不受安全检查的导入入口。</p>
 <p>外部块里允许存在两种形式的程序项<em>声明</em>：<a href="items/functions.html">函数</a>和<a href="items/static-items.html">静态项</a>。只有在非安全(<code>unsafe</code>)上下文中才能调用在外部块中声明的函数或访问在外部块中声明的静态项。</p>
 <p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>extern</code> 之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从 token流中移除之前利用此句法来使用此关键字。</p>
 <h2><a class="header" href="#functions-1" id="functions-1">Functions</a></h2>
 <h2><a class="header" href="#函数-1" id="函数-1">函数</a></h2>
-<p>外部块中的函数与其他 Rust 函数的声明方式相同，但这里的函数允许没有函数体，取而代之的是直接以分号结尾。外部块中的函数的参数不允许使用模式，只能使用<a href="items/../identifiers.html">标识符(IDENTIFIER)</a> 和 <code>_</code> 。</p>
+<p>外部块中的函数与其他 Rust函数的声明方式相同，但这里的函数不能有函数体，取而代之的是直接以分号结尾。外部块中的函数的参数不允许使用模式，只能使用<a href="items/../identifiers.html">标识符(IDENTIFIER)</a> 或 <code>_</code> 。函数限定符（<code>const</code>、<code>async</code>、<code>unsafe</code> 和 <code>extern</code>）也不允许在这里使用。</p>
 <p>外部块中的函数可以被 Rust 代码调用，就跟调用在 Rust 中定义的函数一样。Rust 编译器会自动在 Rust ABI 和外部 ABI 之间进行转换。</p>
 <p>在外部块中声明的函数隐式为非安全(<code>unsafe</code>)的。当强转为函数指针时，外部块中声明的函数的类型就为 <code>unsafe extern &quot;abi&quot; for&lt;'l1, ..., 'lm&gt; fn(A1, ..., An) -&gt; R</code>，其中 <code>'l1</code>，…<code>'lm</code> 是其生存期参数，<code>A1</code>，…，<code>An</code> 是该声明的参数的类型，<code>R</code> 是该声明的返回类型。</p>
 <h2><a class="header" href="#statics" id="statics">Statics</a></h2>
@@ -4121,12 +4172,13 @@ extern &quot;stdcall&quot; { }
 </ul>
 <h2><a class="header" href="#variadic-functions" id="variadic-functions">Variadic functions</a></h2>
 <h2><a class="header" href="#可变参数函数" id="可变参数函数">可变参数函数</a></h2>
-<p>可以在外部块内的函数的参数列表中的一个或多个具名参数后通过引入 <code>...</code> 来让该函数成为可变参数函数：</p>
+<p>可以在外部块内的函数的参数列表中的一个或多个具名参数后通过引入 <code>...</code> 来让该函数成为可变参数函数。注意可变参数<code>...</code> 前至少有一个具名参数，并且只能位于参数列表的最后。可变参数可以通过标识符来指定：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>extern {
+</span>extern &quot;C&quot; {
     fn foo(x: i32, ...);
+    fn with_name(format: *const u8, args: ...);
 }
 <span class="boring">}
 </span></code></pre></pre>
@@ -4175,37 +4227,30 @@ extern {
 <h3><a class="header" href="#attributes-on-function-parameters-1" id="attributes-on-function-parameters-1">Attributes on function parameters</a></h3>
 <h3><a class="header" href="#函数参数上的属性-1" id="函数参数上的属性-1">函数参数上的属性</a></h3>
 <p>外部函数参数上的属性遵循与<a href="items/functions.html#attributes-on-function-parameters">常规函数参数</a>相同的规则和限制。</p>
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->
 <h1><a class="header" href="#type-and-lifetime-parameters" id="type-and-lifetime-parameters">Type and Lifetime Parameters</a></h1>
 <h1><a class="header" href="#类型参数和生存期参数" id="类型参数和生存期参数">类型参数和生存期参数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/generics.md">generics.md</a><br />
-commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
-本章译文最后维护日期：2020-11-9</p>
+commit: 7fd47ef4786f86ccdb5d6f0f198a6a9fdec5497c <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
-<em>Generics</em> :<br />
-   <code>&lt;</code> <em>GenericParams</em> <code>&gt;</code></p>
-<p><em>GenericParams</em> :<br />
-      <em>LifetimeParams</em><br />
-   | ( <em>LifetimeParam</em> <code>,</code> )<sup>*</sup> <em>TypeParams</em><br />
-   | ( <em>LifetimeParam</em> <code>,</code> )<sup>*</sup> ( <em>TypeParam</em> <code>,</code> )<sup>*</sup> <em>ConstParams</em></p>
-<p><em>LifetimeParams</em> :<br />
-   ( <em>LifetimeParam</em> <code>,</code> )<sup>*</sup> <em>LifetimeParam</em><sup>?</sup></p>
+<em>GenericParams</em> :<br />
+      <code>&lt;</code> <code>&gt;</code><br />
+    | <code>&lt;</code> (<em>GenericParam</em> <code>,</code>)<sup>*</sup> <em>GenericParam</em> <code>,</code><sup>?</sup> <code>&gt;</code></p>
+<p><em>GenericParam</em> :<br />
+   [<em>OuterAttribute</em>]<sup>*</sup> ( <em>LifetimeParam</em> | <em>TypeParam</em> | <em>ConstParam</em> )</p>
 <p><em>LifetimeParam</em> :<br />
-   <a href="items/../attributes.html"><em>OuterAttribute</em></a><sup>?</sup> <a href="items/../tokens.html#lifetimes-and-loop-labels">LIFETIME_OR_LABEL</a> ( <code>:</code> <a href="items/../trait-bounds.html"><em>LifetimeBounds</em></a> )<sup>?</sup></p>
-<p><em>TypeParams</em>:<br />
-   ( <em>TypeParam</em> <code>,</code> )<sup>*</sup> <em>TypeParam</em><sup>?</sup></p>
+   [LIFETIME_OR_LABEL] ( <code>:</code> [<em>LifetimeBounds</em>] )<sup>?</sup></p>
 <p><em>TypeParam</em> :<br />
-   <a href="items/../attributes.html"><em>OuterAttribute</em></a><sup>?</sup> <a href="items/../identifiers.html">IDENTIFIER</a>( <code>:</code> <a href="items/../trait-bounds.html"><em>TypeParamBounds</em></a><sup>?</sup> )<sup>?</sup> ( <code>=</code> <a href="items/../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
-<p><em>ConstParams</em>:<br />
-   ( <em>ConstParam</em> <code>,</code> )<sup>*</sup> <em>ConstParam</em><sup>?</sup></p>
+   [IDENTIFIER]( <code>:</code> [<em>TypeParamBounds</em>]<sup>?</sup> )<sup>?</sup> ( <code>=</code> [<em>Type</em>] )<sup>?</sup></p>
 <p><em>ConstParam</em>:<br />
-   <a href="items/../attributes.html"><em>OuterAttribute</em></a><sup>?</sup> <code>const</code> <a href="items/../identifiers.html">IDENTIFIER</a> <code>:</code> <a href="items/../types.html#type-expressions"><em>Type</em></a></p>
+   <code>const</code> [IDENTIFIER] <code>:</code> [<em>Type</em>]</p>
 </blockquote>
-<p>函数、类型别名、结构体、枚举、联合体、trait 和实现可以通过类型参数、常量参数和生存期参数达到<em>参数化</em>配置的的效果。这些参数在尖括号<span class="parenthetical">（<code>&lt;...&gt;</code>）</span>中列出，通常都是紧跟在程序项名称之后和程序项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 <code>impl</code> 之后。泛型参数的申明顺序是生存期参数在最前面，然后是类型参数，最后是常量参数。</p>
+<p><a href="items/functions.html">函数</a>、<a href="items/type-aliases.html">类型别名</a>、<a href="items/structs.html">结构体</a>、<a href="items/enumerations.html">枚举</a>、<a href="items/unions.html">联合体</a>、<a href="items/traits.html">trait</a> 和<a href="items/implementations.html">实现</a>可以通过类型参数、常量参数和生存期参数达到<em>参数化</em>配置的的效果。这些参数在尖括号<span class="parenthetical">（<code>&lt;...&gt;</code>）</span>中列出，通常都是紧跟在程序项名称之后和程序项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 <code>impl</code> 之后。泛型参数的申明顺序是生存期参数在最前面，然后是类型参数，最后是常量参数。</p>
 <p>下面给出一些带类型参数、常量参数和生存期参数的程序项的示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -4216,19 +4261,120 @@ struct Ref&lt;'a, T&gt; where T: 'a { r: &amp;'a T }
 struct InnerArray&lt;T, const N: usize&gt;([T; N]);
 <span class="boring">}
 </span></code></pre></pre>
+<p>泛型参数在声明它们的程序项定义的范围内有效。它们不是函数体中声明的程序项，这个在<a href="items/../statements.html#item-declarations">程序项声明</a>中有讲述。</p>
+<p><a href="items/../types/pointer.html#shared-references-">引用</a>、<a href="items/../types/pointer.html#raw-pointers-const-and-mut">裸指针</a>、<a href="items/../types/array.html">数组</a>、<a href="items/../types/array.html">切片</a>、<a href="items/../types/tuple.html">元组</a>和<a href="items/../types/function-pointer.html">函数指针</a>也有生存期参数或类型参数，但这些程序项不能使用路径句法去引用。</p>
+<h3><a class="header" href="#const-generics" id="const-generics">Const generics</a></h3>
+<h3><a class="header" href="#常量泛型" id="常量泛型">常量泛型</a></h3>
+<p><em>常量泛型参数</em>允许程序项在常量值上泛型化。const标识符为常量参数引入了一个名称，并且该程序项的所有实例必须用给定类型的值去实例化该参数。</p>
+<!-- TODO: update above to say "introduces a name in the [value namespace]" once namespaces are added. -->
 <p>常量参数类型值允许为：<code>u8</code>, <code>u16</code>, <code>u32</code>, <code>u64</code>, <code>u128</code>, <code>usize</code>, <code>i8</code>, <code>i16</code>, <code>i32</code>, <code>i64</code>, <code>i128</code>, <code>isize</code>, <code>char</code> 和 <code>bool</code> 这些类型。</p>
-<p>常量参数只能在各种<a href="items/../types.html">类型表达式</a>和数组里的[重复表达式]中作为独立实参使用，但也可以在其他地方自由使用。</p>
+<p>常量参数可以在任何可以使用<a href="items/constant-items.html">常量项</a>的地方使用，但在<a href="items/../types.html">类型</a>或<a href="items/../expressions/array-expr.html">数组定义中的重复表达式</a>中使用时，必须如下所述是独立的。也就是说，它们可以在以下地方上允许：</p>
+<ol>
+<li>可以用于类型内部，用它来构成所涉及的程序项签名的一部分。</li>
+<li>作为常量表达式的一部分，用于定义<a href="items/associated-items.html#associated-constants">关联常量项</a>，或作为<a href="items/associated-items.html#associated-types">关联类型</a>的形参。</li>
+<li>作为程序项里的任何函数体中的任何运行时表达式中的值。</li>
+<li>作为程序项中任何函数体中使用到的任何类型的参数。</li>
+<li>作为程序项中任何字段类型的一部分使用。</li>
+</ol>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 可以使用常量泛型参数的示例。
+
+// 用于程序项本身的签名
+fn foo&lt;const N: usize&gt;(arr: [i32; N]) {
+    // 在函数体中用作类型。
+    let x: [i32; N];
+    // 用作表达。
+    println!(&quot;{}&quot;, N * 2);
+}
+
+// 用作结构体的字段
+struct Foo&lt;const N: usize&gt;([i32; N]);
+
+impl&lt;const N: usize&gt; Foo&lt;N&gt; {
+    // 用作关联常数
+    const CONST: usize = N * 4;
+}
+
+trait Trait {
+    type Output;
+}
+
+impl&lt;const N: usize&gt; Trait for Foo&lt;N&gt; {
+    // 用作关联类型
+    type Output = [i32; N];
+}
+<span class="boring">}
+</span></code></pre></pre>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// ok: 作为独立的实参使用
-fn foo&lt;const N: usize&gt;() -&gt; [u8; N] { todo!() }
-
-// 错误: 常量型的泛型参数参与了运算
-fn bar&lt;const N: usize&gt;() -&gt; [u8; N + 1] { todo!() }
+</span>// 不能使用常量泛型参数的示例
+fn foo&lt;const N: usize&gt;() {
+    // 能在函数体中的程序项定义中使用
+    const BAD_CONST: [usize; N] = [1; N];
+    static BAD_STATIC: [usize; N] = [1; N];
+    fn inner(bad_arg: [usize; N]) {
+        let bad_value = N * 2;
+    }
+    type BadAlias = [usize; N];
+    struct BadStruct([usize; N]);
+}
 <span class="boring">}
 </span></code></pre></pre>
-<p>与类型参数和生存期参数不同，类型的常量参数在该类型内部不一定必须被提及使用：</p>
+<p>作为进一步的限制，常量只能作为<a href="items/../types.html">类型</a>或<a href="items/../expressions/array-expr.html">数组定义中的重复表达式</a>中的独立实参出现。在这种上下文限制下，它们只能以单段<a href="items/../expressions/path-expr.html">路径表达式</a>的形式使用（例如 <code>N</code> 或以<a href="items/../expressions/block-expr.html">块</a><code>{N}</code> 的形式出现）。也就是说，它们不能与其他表达式结合使用。</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 不能使用常量参数的示例。
+
+// 不允许在类型中的表达式中组合使用，例如这里的返回类型中的算术表达式
+fn bad_function&lt;const N: usize&gt;() -&gt; [u8; {N + 1}] {
+    // 同样的，这种情况也不允许在数组定义里的重复表达式中使用
+    [1; {N + 1}]
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><a href="items/../paths.html">路径</a>中的常量实参指定了该程序项使用的常量值。实参必须是常量形参所属类型的<a href="items/../const_eval.html#constant-expressions">常量表达式</a>。常量表达式必须是<a href="items/../expressions/block-expr.html">块表达式</a>（用花括号括起来），除非它是单独路径段（一个[标识符][IDENTIFIER]）或一个<a href="items/../expressions/literal-expr.html">字面量</a>（此字面量可以是以 <code>-</code> 打头的 token）。</p>
+<blockquote>
+<p><strong>注意</strong>：这种句法限制是必要的，用以避免在解析类型内部的表达式时可能会导致无限递归(infinite lookahead)。</p>
+</blockquote>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn double&lt;const N: i32&gt;() {
+    println!(&quot;doubled: {}&quot;, N * 2);
+}
+
+const SOME_CONST: i32 = 12;
+
+fn example() {
+    // 常量参数的使用示例。
+    double::&lt;9&gt;();
+    double::&lt;-123&gt;();
+    double::&lt;{7 + 8}&gt;();
+    double::&lt;SOME_CONST&gt;();
+    double::&lt;{ SOME_CONST + 5 }&gt;();
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>当存在歧义时，如果泛型参数可以同时被解析为类型或常量参数，那么它总是被解析为类型。在块表达式中放置实参可以强制将其解释为常量实参。</p>
+<!-- TODO: Rewrite the paragraph above to be in terms of namespaces, once
+    namespaces are introduced, and it is clear which namespace each parameter
+    lives in. -->
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>type N = u32;
+struct Foo&lt;const N: usize&gt;;
+// 下面用法是错误的，因为 `N` 被解释为类型别名。
+fn foo&lt;const N: usize&gt;() -&gt; Foo&lt;N&gt; { todo!() } // ERROR
+// 可以使用花括号来强制将 `N` 解释为常量形参。
+fn bar&lt;const N: usize&gt;() -&gt; Foo&lt;{ N }&gt; { todo!() } // ok
+<span class="boring">}
+</span></code></pre></pre>
+<p>与类型参数和生存期参数不同，常量参数可以声明而不必在被它参数化的程序项中使用，但和<a href="items/implementations.html#generic-implementations">泛型实现</a>关联的实现例外：</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -4236,12 +4382,29 @@ fn bar&lt;const N: usize&gt;() -&gt; [u8; N + 1] { todo!() }
 struct Foo&lt;const N: usize&gt;;
 enum Bar&lt;const M: usize&gt; { A, B }
 
-// ERROR: unused parameter
+// ERROR: 参数未使用
 struct Baz&lt;T&gt;;
 struct Biz&lt;'a&gt;;
+struct Unconstrained;
+impl&lt;const N: usize&gt; Unconstrained {}
 <span class="boring">}
 </span></code></pre></pre>
-<p><a href="items/../types/pointer.html#shared-references-">引用</a>、<a href="items/../types/pointer.html#raw-pointers-const-and-mut">裸指针</a>、<a href="items/../types/array.html">数组</a>、<a href="items/../types/array.html">切片</a>、<a href="items/../types/tuple.html">元组</a>和<a href="items/../types/function-pointer.html">函数指针</a>也有生存期参数或类型参数，但这些程序项不能使用路径句法去引用。</p>
+<p>当处理 trait约束时，在确定是否满足相关约束时，不会考虑常量参数的所有实现的穷尽性。例如，在下面的例子中，即使实现了 <code>bool</code>类型的所有可能的常量值，仍会报错提示 trait约束不满足。</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Foo&lt;const B: bool&gt;;
+trait Bar {}
+impl Bar for Foo&lt;true&gt; {}
+impl Bar for Foo&lt;false&gt; {}
+
+fn needs_bar(_: impl Bar) {}
+fn generic&lt;const B: bool&gt;() {
+    let v = Foo::&lt;B&gt;;
+    needs_bar(v); // ERROR: trait约束 `Foo&lt;B&gt;: Bar` 未被满足
+}
+<span class="boring">}
+</span></code></pre></pre>
 <h2><a class="header" href="#where-clauses" id="where-clauses">Where clauses</a></h2>
 <h2><a class="header" href="#where子句" id="where子句">where子句</a></h2>
 <blockquote>
@@ -4252,15 +4415,16 @@ struct Biz&lt;'a&gt;;
       <em>LifetimeWhereClauseItem</em><br />
    | <em>TypeBoundWhereClauseItem</em></p>
 <p><em>LifetimeWhereClauseItem</em> :<br />
-   <a href="items/../trait-bounds.html"><em>Lifetime</em></a> <code>:</code> <a href="items/../trait-bounds.html"><em>LifetimeBounds</em></a></p>
+   [<em>Lifetime</em>] <code>:</code> [<em>LifetimeBounds</em>]</p>
 <p><em>TypeBoundWhereClauseItem</em> :<br />
-   <em>ForLifetimes</em><sup>?</sup> <a href="items/../types.html#type-expressions"><em>Type</em></a> <code>:</code> <a href="items/../trait-bounds.html"><em>TypeParamBounds</em></a><sup>?</sup></p>
+   <em>ForLifetimes</em><sup>?</sup> [<em>Type</em>] <code>:</code> [<em>TypeParamBounds</em>]<sup>?</sup></p>
 <p><em>ForLifetimes</em> :<br />
-   <code>for</code> <code>&lt;</code> <a href="items/generics.html#generic-parameters"><em>LifetimeParams</em></a> <code>&gt;</code></p>
+   <code>for</code> <code>&lt;</code> <a href="items/generics.html#generic-parameters"><em>GenericParams</em></a> <code>&gt;</code></p>
 </blockquote>
 <p><em>where子句</em>提供了另一种方法来为类型参数和生存期参数指定约束(bound)，甚至可以为非类型参数的类型指定约束。</p>
-<p>当定义程序项时，where子句提供的约束与该程序项的各种参数（包括生存期和高阶生存期）无关也是可以通过安全检查的。但这样做会带来潜在的错误。</p>
-<p>对某些泛型类型来说，在定义它的 where子句时，<a href="items/../special-types-and-traits.html#copy"><code>Copy</code></a>、<a href="items/../special-types-and-traits.html#clone"><code>Clone</code></a> 和 <a href="items/../special-types-and-traits.html#sized"><code>Sized</code></a> 这些约束也可以通过安全检查。但将 <code>Copy</code> 或 <code>Clone</code> 作为可变引用、<a href="items/../types/trait-object.html">trait对象</a>或<a href="items/../types/array.html">切片</a>的约束上错误的，将 <code>Sized</code> 作为 trait对象或切片的约束也是错误的。</p>
+<p>关键字<code>for</code> 可以用来引入<a href="items/../trait-bounds.html#higher-ranked-trait-bounds">高阶生存期参数</a>。它只允许在 [<em>LifetimeParam</em>] 参数上使用。</p>
+<p>定义程序项时，其约束没有使用程序项的泛型参数或<a href="items/../trait-bounds.html#higher-ranked-trait-bounds">高阶生存期参数</a>，这样是可以通过编译器的安全检查，但这样的做法将必然导致错误。</p>
+<p>在定义程序项时，编译器还会检查某些泛型参数的类型是否存在 <a href="items/../special-types-and-traits.html#copy"><code>Copy</code></a>、<a href="items/../special-types-and-traits.html#clone"><code>Clone</code></a> 和 <a href="items/../special-types-and-traits.html#sized"><code>Sized</code></a> 这些约束。将<code>Copy</code> 或 <code>Clone</code> 作为可变引用、<a href="items/../types/trait-object.html">trait object</a>或<a href="items/../types/array.html">slice</a>这些程序项的约束是错误的，或将 <code>Sized</code> 作为 trait对象或切片的约束也是错误的。</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -4294,8 +4458,16 @@ struct Foo&lt;#[my_flexible_clone(unbounded)] H&gt; {
 <h1><a class="header" href="#关联程序项关联项" id="关联程序项关联项">关联程序项/关联项</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/associated-items.md">associated-items.md</a><br />
-commit: 136bd7da8b9c509c17c9619813b57dd1a47a8e25 <br />
-本章译文最后维护日期：2020-10-10</p>
+commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
+本章译文最后维护日期：2021-1-17</p>
+</blockquote>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>AssociatedItem</em> :<br />
+   <a href="items/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> (<br />
+         <a href="items/../macros.html#macro-invocation"><em>MacroInvocationSemi</em></a><br />
+      | ( <a href="items/../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup> ( <a href="items/type-aliases.html"><em>TypeAlias</em></a> | <a href="items/constant-items.html"><em>ConstantItem</em></a> | <a href="items/functions.html"><em>Function</em></a> ) )<br />
+   )</p>
 </blockquote>
 <p><em>关联程序项</em>是在 <a href="items/traits.html">traits</a> 中声明或在<a href="items/implementations.html">实现</a>中定义的程序项。之所以这样称呼它们，是因为它们是被定义在一个相关联的类型（即实现里指定的类型）上的。关联程序项是那些可在模块中声明的程序项的子集。具体来说，有[关联函数][associated functions]（包括方法）、[关联类型][associated types]和[关联常量][associated constants]。</p>
 <p>当关联程序项与被关联程序项在逻辑上相关时，关联程序项就非常有用。例如，<code>Option</code> 上的 <code>is_some</code> 方法内在逻辑定义上就与 Option枚举类型相关，所以它应该和 Option 关联在一起。</p>
@@ -4345,19 +4517,6 @@ let _: f64 = f64::from_i32(42);
 </span></code></pre></pre>
 <h3><a class="header" href="#methods" id="methods">Methods</a></h3>
 <h3><a class="header" href="#方法" id="方法">方法</a></h3>
-<blockquote>
-<p><em>Method</em> :<br />
-   <a href="items/functions.html"><em>FunctionQualifiers</em></a> <code>fn</code> <a href="items/../identifiers.html">IDENTIFIER</a> <a href="items/generics.html"><em>Generics</em></a><sup>?</sup><br />
-      <code>(</code> <em>SelfParam</em> (<code>,</code> <a href="items/functions.html"><em>FunctionParam</em></a>)<sup>*</sup> <code>,</code><sup>?</sup> <code>)</code><br />
-      <a href="items/functions.html"><em>FunctionReturnType</em></a><sup>?</sup> <a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup><br />
-      <a href="items/../expressions/block-expr.html"><em>BlockExpression</em></a></p>
-<p><em>SelfParam</em> :<br />
-   <a href="items/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> ( <em>ShorthandSelf</em> | <em>TypedSelf</em> )</p>
-<p><em>ShorthandSelf</em> :<br />
-    (<code>&amp;</code> | <code>&amp;</code> <a href="items/../trait-bounds.html"><em>Lifetime</em></a>)<sup>?</sup> <code>mut</code><sup>?</sup> <code>self</code></p>
-<p><em>TypedSelf</em> :<br />
-   <code>mut</code><sup>?</sup> <code>self</code> <code>:</code> <a href="items/../types.html#type-expressions"><em>Type</em></a></p>
-</blockquote>
 <p>如果关联函数的参数列表中的第一个参数名为 <code>self</code><sup class="footnote-reference"><a href="#译者备注2">2</a></sup>，则此关联函数被称为<em>方法</em>，方法可以使用<a href="items/../expressions/method-call-expr.html">方法调用操作符</a>(<code>.</code>)来调用，例如 <code>x.foo()</code>，也可以使用常用的函数调用形式进行调用。</p>
 <p>如果名为 <code>self</code> 的参数的类型被指定了，它就通过以下文法（其中 <code>'lt</code> 表示生存期参数）来把此指定的参数限制解析成此文法中的一个类型：</p>
 <pre><code class="language-text">P = &amp;'lt S | &amp;'lt mut S | Box&lt;S&gt; | Rc&lt;S&gt; | Arc&lt;S&gt; | Pin&lt;P&gt;
@@ -4469,6 +4628,7 @@ let bounding_box = circle_shape.bounding_box();
 <p>这里的标识符是声明的类型的别名名称；可选的 trait约束必须由此类型别名的实现来履行实现。</p>
 <p><em>关联类型定义</em>在另一个类型上定义了一个类型别名。书写形式为：先是 <code>type</code>，然后是一个[标识符]，然后再是一个 <code>=</code>，最后是一个<a href="items/../types.html#type-expressions">类型</a>。</p>
 <p>如果类型 <code>Item</code> 上有一个来自 trait <code>Trait</code>的关联类型 <code>Assoc</code>，则表达式 <code>&lt;Item as Trait&gt;::Assoc</code> 也是一个类型，具体就是<em>关联类型定义</em>中指定的类型的一个别名。此外，如果 <code>Item</code> 是类型参数，则 <code>Item::Assoc</code> 也可以在类型参数中使用。</p>
+<p>关联类型不能包括<a href="items/generics.html">泛型参数</a>或 <a href="items/generics.html#where-clauses">where子句</a>。</p>
 <pre><pre class="playground"><code class="language-rust">trait AssociatedType {
     // 关联类型声明
     type Assoc;
@@ -4574,7 +4734,7 @@ fn main() {
 <div class="footnote-definition" id="译者备注3"><sup class="footnote-definition-label">3</sup>
 <p>结合下面的示例理解。</p>
 </div>
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->
 <h1><a class="header" href="#visibility-and-privacy" id="visibility-and-privacy">Visibility and Privacy</a></h1>
 <h1><a class="header" href="#可见性与隐私权" id="可见性与隐私权">可见性与隐私权</a></h1>
@@ -5833,8 +5993,8 @@ if true {
 <h1><a class="header" href="#表达式" id="表达式">表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions.md">expressions.md</a><br />
-commit: 8c4522851452563b715b11d4cd755b36d8e4bca5 <br />
-本章译文最后维护日期：2020-11-11</p>
+commit: 9360ab990a253174bedff15a3191d5657b04ec31 <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -5878,11 +6038,11 @@ commit: 8c4522851452563b715b11d4cd755b36d8e4bca5 <br />
    )</p>
 </blockquote>
 <p>一个表达式可能有两个角色：它总是能产生<sup class="footnote-reference"><a href="#译者注1">1</a></sup>一个<em>值</em>；它还有可能表达出<em>效果(effects)</em>（也被称为“副作用(side effects)”）。表达式 <em>求值/计算为(evaluates to)</em> 值，并在 <em>求值(evaluation)</em> 期间表达出效果。 <br />
-许多表达式包含子表达式（操作数）。每种表达式都表达了以下几点含义：</p>
+许多表达式包含子表达式，此子表达式也被称为此表达式的<em>操作数</em>。每种表达式都表达了以下几点含义：</p>
 <ul>
-<li>在对表达式求值时是否对子表达式求值</li>
-<li>对子表达式求值的顺序</li>
-<li>如何组合子表达式的值来获取表达式的值</li>
+<li>在对表达式求值时是否对操作数求值</li>
+<li>对操作数求值的顺序</li>
+<li>如何组合操作数的值来获取表达式的值</li>
 </ul>
 <p>基于对这几种含义的实现要求，表达式通过其内在结构规定了其执行结构。<br />
 块只是另一种表达式，所以块、语句和表达式可以递归地彼此嵌套到任意深度。</p>
@@ -5910,6 +6070,50 @@ commit: 8c4522851452563b715b11d4cd755b36d8e4bca5 <br />
 <tr><td><code>=</code> <code>+=</code> <code>-=</code> <code>*=</code> <code>/=</code> <code>%=</code> <br> <code>&amp;=</code> <code>|=</code> <code>^=</code> <code>&lt;&lt;=</code> <code>&gt;&gt;=</code></td><td>从右向左</td></tr>
 <tr><td><code>return</code> <code>break</code> closures（返回、中断、闭包）</td><td></td></tr>
 </tbody></table>
+<h2><a class="header" href="#evaluation-order-of-operands" id="evaluation-order-of-operands">Evaluation order of operands</a></h2>
+<h2><a class="header" href="#操作数的求值顺序" id="操作数的求值顺序">操作数的求值顺序</a></h2>
+<p>下面的表达式列表都以相同的方式计算它们的操作数，具体列表后面也有详述。其他表达式要么不接受操作数，要么按照各自约定（后续章节会有讲述）的条件进行求值。</p>
+<ul>
+<li>解引用表达式(Dereference expression)</li>
+<li>错误传播表达式(Error propagation expression)</li>
+<li>取反表达式(Negation expression)</li>
+<li>算术和二进制逻辑运算(Arithmetic and logical binary operators)</li>
+<li>比较运算(Comparison operators)</li>
+<li>类型转换表达式(Type cast expression)</li>
+<li>分组表达式(Grouped expression)</li>
+<li>数组表达式(Array expression)</li>
+<li>等待表达式(Await expression)</li>
+<li>索引表达式(Index expression)</li>
+<li>元组表达式(Tuple expression)</li>
+<li>元组索引表达式(Tuple index expression)</li>
+<li>结构体表达式(Struct expression)</li>
+<li>枚举变体表达式(Enumeration variant expression)</li>
+<li>调用表达式(Call expression)</li>
+<li>方法调用表达式(Method call expression)</li>
+<li>字段表达式(Field expression)</li>
+<li>中断表达式(Break expression)</li>
+<li>区间表达式(Range expression)</li>
+<li>返回表达式(Return expression)</li>
+</ul>
+<p>在实现执行这些表达式的效果之前，会先对这些表达式的操作数进行求值。拥有多个操作数的表达式会按照源代码书写的顺序从左到右计算。</p>
+<blockquote>
+<p><strong>注意</strong>：子表达式是一个表达式的操作数时，此子表达式内部的求值顺序是由根据前面的章节规定的优先级来确定的。</p>
+</blockquote>
+<p>例如，下面两个 <code>next</code>方法的调用总是以相同的顺序调用：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">// 使用 vec 代替 array 来避免引用，因为在编写本例时，拥有内部元素的所有权的数组迭代器还没有稳定下来。
+</span>let mut one_two = vec![1, 2].into_iter();
+assert_eq!(
+    (1, 2),
+    (one_two.next().unwrap(), one_two.next().unwrap())
+);
+<span class="boring">}
+</span></code></pre></pre>
+<blockquote>
+<p><strong>注意</strong>：由于表达式是递归执行的，那这些表达式也会从最内层到最外层逐层求值，忽略兄弟表达式，直到没有（未求值的）内部子表达式为止。</p>
+</blockquote>
 <h2><a class="header" href="#place-expressions-and-value-expressions" id="place-expressions-and-value-expressions">Place Expressions and Value Expressions</a></h2>
 <h2><a class="header" href="#位置表达式和值表达式" id="位置表达式和值表达式">位置表达式和值表达式</a></h2>
 <p>表达式分为两大类：位置表达式和值表达式（，它们各自形成了自己的上下文）。因此，在每个表达式中，子表达式可以出现在位置上下文，也可出现在值上下文中。表达式的求值既依赖于它自己的类别，也依赖于它所在的上下文。</p>
@@ -6227,8 +6431,8 @@ fn move_by_block_expression() {
 <h1><a class="header" href="#operator-expressions" id="operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: 03dc50769738a643be1451a4ff1516fa5fab92bd <br />
-本章译文最后维护日期：2020-11-12</p>
+commit: 5967ac11bcc3c8279ddd32b121001afda72ab42a <br />
+本章译文最后维护日期：2021-1-16</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6393,17 +6597,17 @@ assert_eq!(true, !false);
    | <a href="expressions/../expressions.html"><em>Expression</em></a> <code>&gt;&gt;</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
 <p>二元运算符表达式都用中缀表示法(infix notation)书写。下表总结了算术和逻辑二元运算符在原生类型(primitive type)上的行为，同时指出其他类型要重载这些操作符需要实现的 trait。记住，有符号整数总是用 2 的补码形式表示。所有这些运算符的操作数都在<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中求值，因此这些操作数的值会被移走或复制。</p>
-<table><thead><tr><th>符号</th><th>整数</th><th><code>bool</code></th><th>浮点数</th><th>用于重载的 trait</th></tr></thead><tbody>
-<tr><td><code>+</code></td><td>加法</td><td></td><td>加法</td><td><code>std::ops::Add</code></td></tr>
-<tr><td><code>-</code></td><td>减法</td><td></td><td>减法</td><td><code>std::ops::Sub</code></td></tr>
-<tr><td><code>*</code></td><td>乘法</td><td></td><td>乘法</td><td><code>std::ops::Mul</code></td></tr>
-<tr><td><code>/</code></td><td>除法*</td><td></td><td>取余</td><td><code>std::ops::Div</code></td></tr>
-<tr><td><code>%</code></td><td>取余</td><td></td><td>Remainder</td><td><code>std::ops::Rem</code></td></tr>
-<tr><td><code>&amp;</code></td><td>按位与</td><td>逻辑与</td><td></td><td><code>std::ops::BitAnd</code></td></tr>
-<tr><td><code>|</code></td><td>按位或</td><td>逻辑或</td><td></td><td><code>std::ops::BitOr</code></td></tr>
-<tr><td><code>^</code></td><td>按位异或</td><td>逻辑异或</td><td></td><td><code>std::ops::BitXor</code></td></tr>
-<tr><td><code>&lt;&lt;</code></td><td>左移位</td><td></td><td></td><td><code>std::ops::Shl</code></td></tr>
-<tr><td><code>&gt;&gt;</code></td><td>右移位**</td><td></td><td></td><td><code>std::ops::Shr</code></td></tr>
+<table><thead><tr><th>符号</th><th>整数</th><th><code>bool</code></th><th>浮点数</th><th>用于重载此运算符的 trait</th><th>用于重载此运算符的复合赋值(Compound Assignment) Trait</th></tr></thead><tbody>
+<tr><td><code>+</code></td><td>加法</td><td></td><td>加法</td><td><code>std::ops::Add</code></td><td><code>std::ops::AddAssign</code></td></tr>
+<tr><td><code>-</code></td><td>减法</td><td></td><td>减法</td><td><code>std::ops::Sub</code></td><td><code>std::ops::SubAssign</code></td></tr>
+<tr><td><code>*</code></td><td>乘法</td><td></td><td>乘法</td><td><code>std::ops::Mul</code></td><td><code>std::ops::MulAssign</code></td></tr>
+<tr><td><code>/</code></td><td>除法*</td><td></td><td>取余</td><td><code>std::ops::Div</code></td><td><code>std::ops::DivAssign</code></td></tr>
+<tr><td><code>%</code></td><td>取余</td><td></td><td>Remainder</td><td><code>std::ops::Rem</code></td><td><code>std::ops::RemAssign</code></td></tr>
+<tr><td><code>&amp;</code></td><td>按位与</td><td>逻辑与</td><td></td><td><code>std::ops::BitAnd</code></td><td><code>std::ops::BitAndAssign</code></td></tr>
+<tr><td><code>|</code></td><td>按位或</td><td>逻辑或</td><td></td><td><code>std::ops::BitOr</code></td><td><code>std::ops::BitOrAssign</code></td></tr>
+<tr><td><code>^</code></td><td>按位异或</td><td>逻辑异或</td><td></td><td><code>std::ops::BitXor</code></td><td><code>std::ops::BitXorAssign</code></td></tr>
+<tr><td><code>&lt;&lt;</code></td><td>左移位</td><td></td><td></td><td><code>std::ops::Shl</code></td><td><code>std::ops::ShlAssign</code></td></tr>
+<tr><td><code>&gt;&gt;</code></td><td>右移位**</td><td></td><td></td><td><code>std::ops::Shr</code></td><td><code>std::ops::ShrAssign</code></td></tr>
 </tbody></table>
 <p>* 整数除法趋零取整。</p>
 <p>** 有符号整数类型算术右移位，无符号整数类型逻辑右移位。</p>
@@ -6436,7 +6640,7 @@ assert_eq!(-10 &gt;&gt; 2, -3);
    | <a href="expressions/../expressions.html"><em>Expression</em></a> <code>&lt;=</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
 <p>Rust 还为原生类型以及标准库中的多种类型都定义了比较运算符。链式比较运算时需要借助圆括号，例如，表达式 <code>a == b == c</code> 是无效的，（但如果逻辑允许）可以写成 <code>(a == b) == c</code>。</p>
-<p>与算术运算符和逻辑运算符不同，比较运算符所使用的 trait（这些 trait 也可以被其他类型所实现以重载这些比较运算符）通常用于显示/约定如何比较一个类型，并且还很可能会假定使用这些 trait 作为约束条件的函数定义了实际的比较逻辑。其实标准库中的许多函数和宏都使用了这个假定（尽管不能确保这些假定的安全性）。与上面的算术和逻辑运算符不同，这些运算符会隐式地对它们的操作数执行共享借用，并在<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式上下文</a>中对它们进行求值：</p>
+<p>与算术运算符和逻辑运算符不同，重载这些运算符的 trait 通常用于显示/约定如何比较一个类型，并且还很可能会假定使用这些 trait 作为约束条件的函数定义了实际的比较逻辑。其实标准库中的许多函数和宏都使用了这个假定（尽管不能确保这些假定的安全性）。与上面的算术和逻辑运算符不同，这些运算符会隐式地对它们的操作数执行共享借用，并在<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式上下文</a>中对它们进行求值：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6588,14 +6792,22 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <em>AssignmentExpression</em> :<br />
    <a href="expressions/../expressions.html"><em>Expression</em></a> <code>=</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><em>赋值表达式</em>由<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>后跟等号（<code>=</code>）和<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>组成。这样的表达式的类型总是<a href="expressions/../types/tuple.html">单元(<code>unit</code>)类型</a>。</p>
-<p>对赋值表达式求值时会先<a href="expressions/../destructors.html">销毁(drop)</a>左操作数（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将其右操作数<a href="expressions/../expressions.html#moved-and-copied-types">复制(copy)或移动(move)</a>到左操作数中。左边的操作数必须是位置表达式：此时使用值表达式不会将其提升为临时位置，而是会导致编译器报错。</p>
+<p><em>赋值表达式</em>会把某个值移入到一个特定的位置。</p>
+<p><em>赋值表达式</em>由一个<a href="expressions/../expressions.html#mutability">可变</a> <a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>（就是<em>被赋值的位置操作数</em>）后跟等号（<code>=</code>）和<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>（就是被赋值的值操作数）组成。</p>
+<p>与其他位置操作数不同，赋值位置操作数必须是一个位置表达式。试图使用值表达式将导致编译器报错，而不是将其提升转换为临时位置。</p>
+<p>赋值表达式要先计算它的操作数。赋值的值操作数先被求值，然后是赋值的位置操作数。</p>
+<blockquote>
+<p><strong>注意</strong>：此表达式与其他表达式的求值顺序不同，此表达式的右操作数在左操作数之前被求值。</p>
+</blockquote>
+<p>对赋值表达的位置表达式求值时会先<a href="expressions/../destructors.html">销毁(drop)</a>此位置（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将赋值值<a href="expressions/../expressions.html#moved-and-copied-types">复制(copy)或移动(move)</a>到此位置中。</p>
+<p>赋值表达式总是会产生<a href="expressions/../types/tuple.html">单元类型值</a>。</p>
+<p>示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">let mut x = 0;
-</span><span class="boring">let y = 0;
-</span>x = y;
+</span>let mut x = 0;
+let y = 0;
+x = y;
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#复合赋值表达式" id="复合赋值表达式">复合赋值表达式</a></h2>
@@ -6614,15 +6826,48 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
    | <a href="expressions/../expressions.html"><em>Expression</em></a> <code>&lt;&lt;=</code> <a href="expressions/../expressions.html"><em>Expression</em></a><br />
    | <a href="expressions/../expressions.html"><em>Expression</em></a> <code>&gt;&gt;=</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, <code>&amp;</code>, <code>|</code>, <code>^</code>, <code>&lt;&lt;</code>, 和 <code>&gt;&gt;</code>运算符可以和 <code>=</code>运算符复合组成新的运算符。表达式 <code>place_exp OP= value</code> 等效于 <code>place_expr = place_expr OP val</code>。例如，<code>x = x + 1</code> 可以写成 <code>x += 1</code>。任何这样的表达式的类型总是<a href="expressions/../types/tuple.html">单元(<code>unit</code>)类型</a>。这些运算符都可以使用与普通操作的相同的 trait 来重载，只是相应的 trait名称后要加上 “Assign”，例如，<code>std::ops::AddAssign</code> 用于重载 <code>+=</code>。因为带有 <code>=</code>，所以 <code>place_expr</code> 必须是<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>。</p>
+<p><em>复合赋值表达式</em>将算术符（以及二进制逻辑操作符）与赋值表达式相结合在一起使用。</p>
+<p>比如：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let mut x = 10;
-x += 4;
-assert_eq!(x, 14);
+</span>let mut x = 5;
+x += 1;
+assert!(x == 6);
 <span class="boring">}
 </span></code></pre></pre>
+<p>复合赋值的句法是<a href="expressions/../expressions.html#mutability">可变</a> <a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>（<em>被赋值操作数</em>），然后是一个操作符再后跟一个 <code>=</code>（这两个符号共同作为一个单独的 token），最后是一个<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>（也叫被复合修改操作数(modifying operand)）。</p>
+<p>与其他位置操作数不同，被赋值的位置操作数必须是一个位置表达式。试图使用值表达式将导致编译器报错，而不是将其提升转换为临时位置。</p>
+<p>复合赋值表达式的求值取决于操作符的类型。</p>
+<p>如果复合赋值表达式了两个操作数的类型都是原生类型，则首先对被复合修改操作数进行求值，然后再对被赋值操作数求值。最后将被赋值操作数的位置值设置为原被赋值操作数的值和复合修改操作数执行运算后的值。</p>
+<blockquote>
+<p><strong>注意</strong>：此表达式与其他表达式的求值顺序不同，此表达式的右操作数在左操作数之前被求值。</p>
+</blockquote>
+<p>此外，这个表达式是调用操作符重载复合赋值trait 的函数的语法糖（见本章前面的表格）。被赋值操作数必须是可变的。</p>
+<p>例如，下面 <code>example</code>函数中的两个表达式语句是等价的：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Addable;
+</span><span class="boring">use std::ops::AddAssign;
+</span>
+impl AddAssign&lt;Addable&gt; for Addable {
+    /* */
+<span class="boring">fn add_assign(&amp;mut self, other: Addable) {}
+</span>}
+
+fn example() {
+<span class="boring">let (mut a1, a2) = (Addable, Addable);
+</span>  a1 += a2;
+
+<span class="boring">let (mut a1, a2) = (Addable, Addable);
+</span>  AddAssign::add_assign(&amp;mut a1, a2);
+}
+<span class="boring">}
+</span></code></pre></pre>
+<div class="warning">
+<p>警告：复合赋值表达式的操作数的求值顺序取决于操作数的类型：对于原生类型，右边操作数将首先被求值，而对于非原生类型，左边操作数将首先被求值。建议尽量不要编写依赖于复合赋值表达式中操作数的求值顺序的代码。请参阅<a href="https://github.com/rust-lang/rust/blob/master/src/test/ui/expr/compound-assignment/eval-order.rs">这里的测试</a>以获得使用此依赖项的示例。</p>
+</div>
 <div class="footnote-definition" id="译者注"><sup class="footnote-definition-label">1</sup>
 <p>截断，即一个值范围较大的变量A转换为值范围较小的变量B，如果超出范围，则将A减去B的区间长度。例如，128超出了i8类型的范围（-128,127），截断之后的值等于128-256=-128。</p>
 </div>
@@ -8883,8 +9128,8 @@ let slice: &amp;[i32] = &amp;boxed_array[..];
 <h1><a class="header" href="#结构体类型" id="结构体类型">结构体类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/struct.md">struct.md</a><br />
-commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本章译文最后维护日期：2020-11-14</p>
+commit: 8a98437835db5f3cf57044aedcd1e00bd0d889f9 <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <p>结构体(<code>struct</code>)<em>类型</em>是其由他类型异构产生的类型，这些其他类型被称为结构体类型的字段。<sup class="footnote-reference"><a href="#structtype">1</a></sup></p>
 <p>结构体(<code>struct</code>)的实例可以用<a href="types/../expressions/struct-expr.html">结构体表达式</a>来构造。</p>
@@ -8893,7 +9138,7 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <p>*元组结构体(uple struct)*类型与结构体类型类似，只是字段是匿名的。</p>
 <p>*单元结构体(unit-like struct)*类型类似于结构体类型，只是它没有字段。由初始<a href="types/../expressions/struct-expr.html">结构体表达式</a>构造的值是驻留在此类类型中惟一的值。</p>
 <div class="footnote-definition" id="structtype"><sup class="footnote-definition-label">1</sup>
-<p>../<code>struct</code>类型类似于 C 中的 <code>struct</code> 类型、ML家族的 <em>record</em> 类型或 Lisp 家族的 <em>struct</em> 类型。</p>
+<p><code>struct</code>类型类似于 C 中的 <code>struct</code> 类型、ML家族的 <em>record</em> 类型或 Lisp 家族的 <em>struct</em> 类型。</p>
 </div>
 <!-- 2020-11-12-->
 <!-- checked -->
@@ -8901,8 +9146,8 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <h1><a class="header" href="#枚举类型" id="枚举类型">枚举类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/enum.md">enum.md</a><br />
-commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本章译文最后维护日期：2020-11-14</p>
+commit: 8a98437835db5f3cf57044aedcd1e00bd0d889f9 <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <p><em>枚举类型</em>是一种标称型(nominal)的、异构的、不相交的类型联合起来组成的类型，它直接用<a href="types/../items/enumerations.html">枚举(<code>enum</code>)程序项</a>的名称来表示。<sup class="footnote-reference"><a href="#enumtype">1</a></sup></p>
 <p><a href="types/../items/enumerations.html">枚举(<code>enum</code>)程序项</a>同时声明了类型和它的各种<em>变体(variants)</em>，其中每个变体都独立命名，可使用定义结构体、元组结构体或单元结构体(unit-like struct)的句法来定义它们。</p>
@@ -8910,12 +9155,12 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <p>任何枚举值消耗的内存和其同类型的其他变体都是相同的，具体都为其枚举(<code>enum</code>)类型的最大变体所需的内存再加上存储其判别值(discriminant)所需的内存。</p>
 <p>枚举类型不能在<em>结构上</em>表示为类型，必须通过对<a href="types/../items/enumerations.html">枚举程序项</a>的具名引用(named reference)来表示。<sup class="footnote-reference"><a href="#译注1">2</a></sup></p>
 <div class="footnote-definition" id="enumtype"><sup class="footnote-definition-label">1</sup>
-<p>../<code>enum</code>类型类似于 ML 中的数据(<code>data</code>)构造函数声明，或 Limbo 中的 <em>pick ADT</em>。</p>
+<p><code>enum</code>类型类似于 ML 中的数据(<code>data</code>)构造函数声明，或 Limbo 中的 <em>pick ADT</em>。</p>
 </div>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">2</sup>
 <p>译者理解这句话的意思是：枚举不同于普通结构化的类型，所有的枚举类型都是对枚举程序项的引用；这里引用分两种，一种是类C枚举，就是对程序项的直接具名引用；另一种是带字段的枚举变体，这种其实是类似于 <code>Box</code>、<code>Rc</code> 这样的具名引用，它通过封装其他类型来指导数据的存储和限定其上可用的操作。</p>
 </div>
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->
 <h1><a class="header" href="#union-types" id="union-types">Union types</a></h1>
 <h1><a class="header" href="#联合体类型" id="联合体类型">联合体类型</a></h1>
@@ -9157,14 +9402,16 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 <h1><a class="header" href="#函数指针类型" id="函数指针类型">函数指针类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/function-pointer.md">function-pointer.md</a><br />
-commit: 3d1b9ae5e7a61da43ac83cc42815e29b34b350ba <br />
-本章译文最后维护日期：2020-11-14</p>
+commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>BareFunctionType</em> :<br />
-   <a href="types/../items/generics.html#where-clauses"><em>ForLifetimes</em></a><sup>?</sup> <a href="types/../items/functions.html"><em>FunctionQualifiers</em></a> <code>fn</code><br />
+   <a href="types/../items/generics.html#where-clauses"><em>ForLifetimes</em></a><sup>?</sup> <em>FunctionTypeQualifiers</em> <code>fn</code><br />
        <code>(</code> <em>FunctionParametersMaybeNamedVariadic</em><sup>?</sup> <code>)</code> <em>BareFunctionReturnType</em><sup>?</sup></p>
+<p><em>FunctionTypeQualifiers</em>:<br />
+   <code>unsafe</code><sup>?</sup> (<code>extern</code> <a href="types/../items/functions.html"><em>Abi</em></a><sup>?</sup>)<sup>?</sup></p>
 <p><em>BareFunctionReturnType</em>:<br />
    <code>-&gt;</code> <a href="types/../types.html#type-expressions"><em>TypeNoBounds</em></a></p>
 <p><em>FunctionParametersMaybeNamedVariadic</em> :<br />
@@ -9197,7 +9444,7 @@ x = bo(5,7);
 <h2><a class="header" href="#attributes-on-function-pointer-parameters" id="attributes-on-function-pointer-parameters">Attributes on function pointer parameters</a></h2>
 <h2><a class="header" href="#函数指针参数上的属性" id="函数指针参数上的属性">函数指针参数上的属性</a></h2>
 <p>函数指针参数上的属性遵循与<a href="types/../items/functions.html#attributes-on-function-parameters">常规函数参数</a>相同的规则和限制。</p>
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->
 <h1><a class="header" href="#trait-objects" id="trait-objects">Trait objects</a></h1>
 <h1><a class="header" href="#trait对象" id="trait对象">trait对象</a></h1>
@@ -11133,8 +11380,8 @@ commit: 8aa6f0f5471a23621f52d16e823c6316fda2b904 <br />
 <h2><a class="header" href="#不被认为是非安全的行为" id="不被认为是非安全的行为">不被认为是非安全的行为</a></h2>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/behavior-not-considered-unsafe.md">behavior-not-considered-unsafe.md</a><br />
-commit: 75fd23737cd08ec1ae14deae5e2680d9007575ae <br />
-本章译文最后维护日期：2020-11-17</p>
+commit: a7473287cc6e2fb972165dc5a7ffd26dad1fc907 <br />
+本章译文最后维护日期：2021-1-16</p>
 </blockquote>
 <p>虽然程序员可能（应该）发现下列行为是不良的、意外的或错误的，但 Rust 编译器并不认为这些行为是<em>非安全的(unsafe)</em>。</p>
 <h5><a class="header" href="#死锁deadlocks" id="死锁deadlocks">死锁(Deadlocks)</a></h5>
@@ -11148,7 +11395,10 @@ commit: 75fd23737cd08ec1ae14deae5e2680d9007575ae <br />
 <p>整型提供了一些固有方法(inherent methods)，允许程序员显式地执行包装算法。例如，<code>i32::wrapping_add</code> 提供了使用 2的补码溢出约定算法的加法，即包装类加法(wrapping addition)。</p>
 <p>标准库还提供了一个 <code>Wrapping&lt;T&gt;</code> 的新类型，该类型确保 <code>T</code> 的所有标准算术操作都具有包装语义。</p>
 <p>请参阅 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0560-integer-overflow.md">RFC 560</a> 以了解错误条件、基本原理以及有关整数溢出的更多详细信息。</p>
-<!-- 2020-11-12-->
+<h5><a class="header" href="#逻辑错误logic-errors" id="逻辑错误logic-errors">逻辑错误(Logic errors)</a></h5>
+<p>安全代码可能会被添加一些既不能在编译时也不能在运行时检查到的逻辑限制。如果程序打破了这样的限制，其表现可能是未指定的(unspecified)，但不会导致未定义行为(undefined behavior)。这些表现可能包括 panics、错误的结果、程序中止(aborts)和程序无法终止(non-termination)。并且这些表现在运行期、构建期或各种构建期之间的的具体表现也可能有所不同。</p>
+<p>例如，同时实现 <code>Hash</code> 和 <code>Eq</code> 就要求被认为相等的值具有相等的散列。另一个例子是像 <code>BinaryHeap</code>、<code>BTreeMap</code>、<code>BTreeSet</code>、<code>HashMap</code> 和 <code>HashSet</code> 这样的数据结构，它们描述了在数据结构中修改键的约束。违反这些约束并不被认为是非安全的，但程序（在逻辑上却）被认为是错误的，其行为是不可预测的。</p>
+<!-- 2021-1-16-->
 <!-- checked -->
 <h1><a class="header" href="#constant-evaluation" id="constant-evaluation">Constant evaluation</a></h1>
 <h1><a class="header" href="#常量求值" id="常量求值">常量求值</a></h1>
@@ -11240,8 +11490,8 @@ commit:  1c55d2790c738ddffc696ad065163a9766ca9e2f <br />
 <h1><a class="header" href="#应用程序二进制接口abi" id="应用程序二进制接口abi">应用程序二进制接口(ABI)</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/abi.md">abi.md.md</a><br />
-commit:  24137b49a3c02f53e5a7699a78a47501aef3e769 <br />
-本章译文最后维护日期：2020-11-17</p>
+commit:  e773318a837092d7b5276bbeaf9fda06cca61cee <br />
+本章译文最后维护日期：2021-1-16</p>
 </blockquote>
 <p>本节介绍影响 crate 编译输出的 ABI 的各种特性。</p>
 <p>有关为导出函数(exporting functions)指定 ABI 的信息，请参阅<a href="items/functions.html#extern-function-qualifier"><em>外部函数</em></a>。参阅[<em>外部块</em>]]<a href="items/external-blocks.html">external blocks</a>了解关于指定 ABI 来链接外部库的信息。</p>
@@ -11292,6 +11542,7 @@ $ nm -C foo.o
 <h2><a class="header" href="#the-no_mangle-attribute" id="the-no_mangle-attribute">The <code>no_mangle</code> attribute</a></h2>
 <h2><a class="header" href="#no_mangle属性" id="no_mangle属性"><code>no_mangle</code>属性</a></h2>
 <p>可以在任何<a href="items.html">程序项</a>上使用 <em><code>no_mangle</code>属性</em>来禁用标准名称符号名混淆(standard symbol name mangling)。禁用此功能后，此程序项的导出符号(symbol)名将直接是此程序项的原来的名称标识符。</p>
+<p>此外，就跟<a href="abi.html#the-used-attribute"><code>used</code>属性</a>一样，此属性修饰的程序项也将从生成的库或对象文件中公开导出。</p>
 <h2><a class="header" href="#the-link_section-attribute" id="the-link_section-attribute">The <code>link_section</code> attribute</a></h2>
 <h2><a class="header" href="#link_section属性" id="link_section属性"><code>link_section</code>属性</a></h2>
 <p><code>link_section</code>属性指定了输出对象文件中<a href="items/functions.html">函数</a>或<a href="items/static-items.html">静态项</a>的内容将被放置到的节点位置。它使用 <a href="attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法指定节点名称。</p>
@@ -11314,7 +11565,7 @@ pub static VAR1: u32 = 1;
 pub fn name_in_rust() { }
 <span class="boring">}
 </span></code></pre></pre>
-<!-- 2020-11-12-->
+<!-- 2021-1-16-->
 <!-- checked -->
 <h1><a class="header" href="#the-rust-runtime" id="the-rust-runtime">The Rust runtime</a></h1>
 <h1><a class="header" href="#rust运行时" id="rust运行时">Rust运行时</a></h1>

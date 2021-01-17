@@ -356,7 +356,7 @@ fn average(values: &[f64]) -> f64 {
 
 *赋值表达式*由一个[可变][mutable] [位置表达式][place expression]（就是*被赋值的位置操作数*）后跟等号（`=`）和[值表达式][value expression]（就是被赋值的值操作数）组成。
 
-与其他位置操作数不同，赋值位置操作数必须是一个位置表达式。试图使用值表达式将导致编译器报错，而不是将其提升为临时位置。
+与其他位置操作数不同，赋值位置操作数必须是一个位置表达式。试图使用值表达式将导致编译器报错，而不是将其提升转换为临时位置。
 
 赋值表达式要先计算它的操作数。赋值的值操作数先被求值，然后是赋值的位置操作数。
 
@@ -400,30 +400,19 @@ x += 1;
 assert!(x == 6);
 ```
 
-The syntax of compound assignment is a [mutable] [place expression], the
-*assigned operand*, then one of the operators followed by an `=` as a single
-token (no whitespace), and then a [value expression], the *modifying operand*.
+复合赋值的句法是[可变][mutable] [位置表达式][place expression]（*被赋值操作数*），然后是一个操作符再后跟一个 `=`（这两个符号共同作为一个单独的 token），最后是一个[值表达式][value expression]（也叫被复合修改操作数(modifying operand)）。
 
-Unlike other place operands, the assigned place operand must be a place
-expression. Attempting to use a value expression is a compiler error rather
-than promoting it to a temporary.
+与其他位置操作数不同，被赋值的位置操作数必须是一个位置表达式。试图使用值表达式将导致编译器报错，而不是将其提升转换为临时位置。
 
-Evaluation of compound assignment expressions depends on the types of the
-operators.
+复合赋值表达式的求值取决于操作符的类型。
 
-If both types are primitives, then the modifying operand will be evaluated
-first followed by the assigned operand. It will then set the value of the
-assigned operand's place to the value of performing the operation of the
-operator with the values of the assigned operand and modifying operand.
+如果复合赋值表达式了两个操作数的类型都是原生类型，则首先对被复合修改操作数进行求值，然后再对被赋值操作数求值。最后将被赋值操作数的位置值设置为原被赋值操作数的值和复合修改操作数执行运算后的值。
 
-> **Note**: This is different than other expressions in that the right operand
-> is evaluated before the left one.
+> **注意**：此表达式与其他表达式的求值顺序不同，此表达式的右操作数在左操作数之前被求值。
 
-Otherwise, this expression is syntactic sugar for calling the function of the
-overloading compound assigment trait of the operator (see the table earlier in
-this chapter). A mutable borrow of the assigned operand is automatically taken.
+此外，这个表达式是调用操作符重载复合赋值trait 的函数的语法糖（见本章前面的表格）。被赋值操作数必须是可变的。
 
-For example, the following expression statements in `example` are equivalent:
+例如，下面 `example`函数中的两个表达式语句是等价的：
 
 ```rust
 # struct Addable;
@@ -445,20 +434,9 @@ fn example() {
 
 <div class="warning">
 
-Warning: The evaluation order of operands swaps depending on the types of the
-operands: with primitive types the right-hand side will get evaluated first,
-while with non-primitive types the left-hand side will get evaluated first.
-Try not to write code that depends on the evaluation order of operands in
-compound assignment expressions. See [this test] for an example of using this
-dependency.
+警告：复合赋值表达式的操作数的求值顺序取决于操作数的类型：对于原生类型，右边操作数将首先被求值，而对于非原生类型，左边操作数将首先被求值。建议尽量不要编写依赖于复合赋值表达式中操作数的求值顺序的代码。请参阅[这里的测试][this test]以获得使用此依赖项的示例。
 
 </div>
-
-
-
-
-
-`+`, `-`, `*`, `/`, `%`, `&`, `|`, `^`, `<<`, 和 `>>`运算符可以和 `=`运算符复合组成新的运算符。表达式 `place_exp OP= value` 等效于 `place_expr = place_expr OP val`。例如，`x = x + 1` 可以写成 `x += 1`。任何这样的表达式的类型总是[单元(`unit`)类型][`unit` type]。这些运算符都可以使用与普通操作的相同的 trait 来重载，只是相应的 trait名称后要加上 “Assign”，例如，`std::ops::AddAssign` 用于重载 `+=`。因为带有 `=`，所以 `place_expr` 必须是[位置表达式][place expression]。
 
 [^译者注]:截断，即一个值范围较大的变量A转换为值范围较小的变量B，如果超出范围，则将A减去B的区间长度。例如，128超出了i8类型的范围（-128,127），截断之后的值等于128-256=-128。
 

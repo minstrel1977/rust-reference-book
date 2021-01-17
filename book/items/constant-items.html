@@ -169,13 +169,13 @@
 <h1><a class="header" href="#常量项" id="常量项">常量项</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/constant-items.md">constant-items.md</a><br />
-commit: da910b725a59ba9bb32c6954074f377589a2a689 <br />
-本章译文最后维护日期：2020-11-9</p>
+commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
+本章译文最后维护日期：2020-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ConstantItem</em> :<br />
-   <code>const</code> ( <a href="../identifiers.html">IDENTIFIER</a> | <code>_</code> ) <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a> <code>=</code> <a href="../expressions.html"><em>Expression</em></a> <code>;</code></p>
+   <code>const</code> ( <a href="../identifiers.html">IDENTIFIER</a> | <code>_</code> ) <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a> ( <code>=</code> <a href="../expressions.html"><em>Expression</em></a> )<sup>?</sup> <code>;</code></p>
 </blockquote>
 <p><em>常量项</em>是一个可选的具名 <em><a href="../const_eval.html#constant-expressions">常量值</a></em>，它与程序中的具体内存位置没有关联。无论常量在哪里使用，它们本质上都是内联的，这意味着当它们被使用时，都是直接被拷贝到相关的上下文中来使用的。这包括使用非拷贝(non-<a href="../special-types-and-traits.html#copy"><code>Copy</code></a>)类型的值和来自外部的 crate 的常量。对相同常量的引用不保证它们引用的是相同的内存地址。</p>
 <p>常量必须显式指定数据类型。类型必须具有 <code>'static</code>生存期：程序初始化器(initializer)中的任何引用都必须具有 <code>'static</code>生存期。</p>
@@ -200,6 +200,7 @@ const BITS_N_STRINGS: BitsNStrings&lt;'static&gt; = BitsNStrings {
 };
 <span class="boring">}
 </span></code></pre></pre>
+<p>常量表达式只能在<a href="traits.html">trait定义中省略</a>。</p>
 <h2><a class="header" href="#constants-with-destructors" id="constants-with-destructors">Constants with Destructors</a></h2>
 <h2><a class="header" href="#常量与析构函数" id="常量与析构函数">常量与析构函数</a></h2>
 <p>常量可以包含析构函数。析构函数在值超出作用域时运行。<sup class="footnote-reference"><a href="#译者备注">1</a></sup></p>
@@ -252,7 +253,7 @@ m!(const _: () = (););
 <div class="footnote-definition" id="译者备注"><sup class="footnote-definition-label">1</sup>
 <p>在程序退出前，析构销毁的只是其中的一份拷贝；这句还有另一层含义是常量在整个程序结束时会调用析构函数。</p>
 </div>
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->
 
                     </main>

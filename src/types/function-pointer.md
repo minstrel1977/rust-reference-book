@@ -2,13 +2,16 @@
 # 函数指针类型
 
 >[function-pointer.md](https://github.com/rust-lang/reference/blob/master/src/types/function-pointer.md)\
->commit: 3d1b9ae5e7a61da43ac83cc42815e29b34b350ba \
->本章译文最后维护日期：2020-11-14
+>commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 \
+>本章译文最后维护日期：2021-1-17
 
 > **<sup>句法</sup>**\
 > _BareFunctionType_ :\
-> &nbsp;&nbsp; [_ForLifetimes_]<sup>?</sup> [_FunctionQualifiers_] `fn`\
+> &nbsp;&nbsp; [_ForLifetimes_]<sup>?</sup> _FunctionTypeQualifiers_ `fn`\
 > &nbsp;&nbsp; &nbsp;&nbsp;  `(` _FunctionParametersMaybeNamedVariadic_<sup>?</sup> `)` _BareFunctionReturnType_<sup>?</sup>
+>
+> _FunctionTypeQualifiers_:\
+> &nbsp;&nbsp; `unsafe`<sup>?</sup> (`extern` [_Abi_]<sup>?</sup>)<sup>?</sup>
 >
 > _BareFunctionReturnType_:\
 > &nbsp;&nbsp; `->` [_TypeNoBounds_]
@@ -51,8 +54,8 @@ x = bo(5,7);
 函数指针参数上的属性遵循与[常规函数参数][regular function parameters]相同的规则和限制。
 
 [IDENTIFIER]: ../identifiers.md
+[_Abi_]: ../items/functions.md
 [_ForLifetimes_]: ../items/generics.md#where-clauses
-[_FunctionQualifiers_]: ../items/functions.md
 [_TypeNoBounds_]: ../types.md#type-expressions
 [_Type_]: ../types.md#type-expressions
 [_OuterAttribute_]: ../attributes.md
@@ -63,5 +66,5 @@ x = bo(5,7);
 [unsafe function]: ../unsafe-functions.md
 [regular function parameters]: ../items/functions.md#attributes-on-function-parameters
 
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->

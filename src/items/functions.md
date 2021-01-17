@@ -2,33 +2,49 @@
 # 函数
 
 >[functions.md](https://github.com/rust-lang/reference/blob/master/src/items/functions.md)\
->commit: 645a7b1a809842f03e71f7211b1e22ee301a703a \
->本章译文最后维护日期：2020-11-27
+>commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 \
+>本章译文最后维护日期：2021-1-17
 
 > **<sup>句法</sup>**\
 > _Function_ :\
-> &nbsp;&nbsp; _FunctionQualifiers_ `fn` [IDENTIFIER]&nbsp;[_Generics_]<sup>?</sup>\
+> &nbsp;&nbsp; _FunctionQualifiers_ `fn` [IDENTIFIER]&nbsp;[_GenericParams_]<sup>?</sup>\
 > &nbsp;&nbsp; &nbsp;&nbsp; `(` _FunctionParameters_<sup>?</sup> `)`\
 > &nbsp;&nbsp; &nbsp;&nbsp; _FunctionReturnType_<sup>?</sup> [_WhereClause_]<sup>?</sup>\
-> &nbsp;&nbsp; &nbsp;&nbsp; [_BlockExpression_]
+> &nbsp;&nbsp; &nbsp;&nbsp; ( [_BlockExpression_] | `;` )
 >
 > _FunctionQualifiers_ :\
-> &nbsp;&nbsp; _AsyncConstQualifiers_<sup>?</sup> `unsafe`<sup>?</sup> (`extern` _Abi_<sup>?</sup>)<sup>?</sup>
->
-> _AsyncConstQualifiers_ :\
-> &nbsp;&nbsp; `async` | `const`
+> &nbsp;&nbsp; `const`<sup>?</sup> `async`[^async-edition]<sup>?</sup> `unsafe`<sup>?</sup> (`extern` _Abi_<sup>?</sup>)<sup>?</sup>
 >
 > _Abi_ :\
 > &nbsp;&nbsp; [STRING_LITERAL] | [RAW_STRING_LITERAL]
 >
 > _FunctionParameters_ :\
-> &nbsp;&nbsp; _FunctionParam_ (`,` _FunctionParam_)<sup>\*</sup> `,`<sup>?</sup>
+> &nbsp;&nbsp; &nbsp;&nbsp; _SelfParam_ `,`<sup>?</sup>\
+> &nbsp;&nbsp; | (_SelfParam_ `,`)<sup>?</sup> _FunctionParam_ (`,` _FunctionParam_)<sup>\*</sup> `,`<sup>?</sup>
+>
+> _SelfParam_ :\
+> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> ( _ShorthandSelf_ | _TypedSelf_ )
+>
+> _ShorthandSelf_ :\
+> &nbsp;&nbsp;  (`&` | `&` [_Lifetime_])<sup>?</sup> `mut`<sup>?</sup> `self`
+>
+> _TypedSelf_ :\
+> &nbsp;&nbsp; `mut`<sup>?</sup> `self` `:` [_Type_]
 >
 > _FunctionParam_ :\
-> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> [_Pattern_] `:` [_Type_]
+> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> (
+>   _FunctionParamPattern_ | `...` | [_Type_] [^fn-param-2015]
+> )
+>
+> _FunctionParamPattern_ :\
+> &nbsp;&nbsp; [_Pattern_] `:` ( [_Type_] | `...` )
 >
 > _FunctionReturnType_ :\
 > &nbsp;&nbsp; `->` [_Type_]
+>
+> [^async-edition]: 限定符`async`不能在 2015版中使用。
+>
+> [^fn-param-2015]: 在2015版中，只有类型的函数参数只允许出现在[trait项][trait item]的关联函数中。
 
 *函数*由一个[块][block]以及一个名称和一组参数组成。除了名称，其他的都是可选的。函数使用关键字 `fn` 声明。函数可以声明一组*输入*[*变量*][variables]作为参数，调用者通过它向函数传递参数，函数完成后，它再将带有*输出*[*类型*][type]的结果值返回给调用者。
 
@@ -41,11 +57,21 @@ fn answer_to_life_the_universe_and_everything() -> i32 {
 }
 ```
 
+## Function parameters
+## 函数参数
+
 和 `let`绑定一样，函数参数是不可反驳型[模式][patterns]，所以任何在 let绑定中有效的模式都可以有效应用在函数参数上:
 
 ```rust
 fn first((value, _): (i32, i32)) -> i32 { value }
 ```
+
+如果第一个参数是一个*SelfParam*类型的参数，这表明该函数是一个[方法][method]。带 self参数的函数只能在 [trait] 或[实现][implementation]中作为[关联函数][associated function]出现。
+
+带有 `...`token 的参数表示此函数是一个[可变参数函数][variadic function]，`...` 只能作为[外部块][external block]里的函数的最后一个参数使用。可变参数可以有一个可选标识符，例如 `args: ...`。
+
+## Function body
+## 函数体
 
 函数的块在概念上被包装进在一个块中，该块绑定该函数的参数模式，然后返回(`return`)该函数的块的值。这意味着如果轮到块的*尾部表达式(tail expression)*被求值计算了，该块将结束，求得的值将被返回给调用者。通常，程序执行时如果流碰到函数体中的显式返回表达式(return expression)，就会截断那个隐式的最终表达式的执行。
 
@@ -59,6 +85,8 @@ return {
     value
 };
 ```
+
+没有主体块的函数以分号结束。这种形式只能出现在 [trait] 或[外部块][external block]中。
 
 ## Generic functions
 ## 泛型函数
@@ -161,6 +189,8 @@ let fptr: extern "C" fn() -> i32 = new_i32;
 ## 常量函数
 
 使用关键字 `const` 限定的函数是[常量(const)函数][const functions]，[元组结构体][tuple struct]构造函数和[元组变体][tuple variant]构造函数也是如此。可以在[常量上下文][const context]中调用*常量函数*。
+
+常量函数不允许是 [async](#async-functions)类型的，并且不能使用 [`extern`函数限定符](#extern-function-qualifier)。
 
 ## Async functions
 ## 异步函数
@@ -278,7 +308,8 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [RAW_STRING_LITERAL]: ../tokens.md#raw-string-literals
 [STRING_LITERAL]: ../tokens.md#string-literals
 [_BlockExpression_]: ../expressions/block-expr.md
-[_Generics_]: generics.md
+[_GenericParams_]: generics.md
+[_Lifetime_]: ../trait-bounds.md
 [_Pattern_]: ../patterns.md
 [_Type_]: ../types.md#type-expressions
 [_WhereClause_]: generics.md#where-clauses
@@ -309,6 +340,11 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [`link_section`]: ../abi.md#the-link_section-attribute
 [`no_mangle`]: ../abi.md#the-no_mangle-attribute
 [built-in attributes]: ../attributes.html#built-in-attributes-index
+[trait item]: traits.md
+[method]: associated-items.md#methods
+[associated function]: associated-items.md#associated-functions-and-methods
+[implementation]: implementations.md
+[variadic function]: external-blocks.md#variadic-functions
 
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->

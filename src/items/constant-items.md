@@ -2,12 +2,12 @@
 # 常量项
 
 >[constant-items.md](https://github.com/rust-lang/reference/blob/master/src/items/constant-items.md)\
->commit: da910b725a59ba9bb32c6954074f377589a2a689 \
->本章译文最后维护日期：2020-11-9
+>commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 \
+>本章译文最后维护日期：2020-1-17
 
 > **<sup>句法</sup>**\
 > _ConstantItem_ :\
-> &nbsp;&nbsp; `const` ( [IDENTIFIER] | `_` ) `:` [_Type_] `=` [_Expression_] `;`
+> &nbsp;&nbsp; `const` ( [IDENTIFIER] | `_` ) `:` [_Type_] ( `=` [_Expression_] )<sup>?</sup> `;`
 
 *常量项*是一个可选的具名 *[常量值][constant value]*，它与程序中的具体内存位置没有关联。无论常量在哪里使用，它们本质上都是内联的，这意味着当它们被使用时，都是直接被拷贝到相关的上下文中来使用的。这包括使用非拷贝(non-[`Copy`])类型的值和来自外部的 crate 的常量。对相同常量的引用不保证它们引用的是相同的内存地址。
 
@@ -32,6 +32,8 @@ const BITS_N_STRINGS: BitsNStrings<'static> = BitsNStrings {
     mystring: STRING,
 };
 ```
+
+常量表达式只能在[trait定义中省略][trait definition]。
 
 ## Constants with Destructors
 ## 常量与析构函数
@@ -88,10 +90,11 @@ m!(const _: () = (););
 [free]: ../glossary.md#free-item
 [static lifetime elision]: ../lifetime-elision.md#static-lifetime-elision
 [IDENTIFIER]: ../identifiers.md
+[trait definition]: traits.md
 [underscore imports]: use-declarations.md#underscore-imports
 [_Type_]: ../types.md#type-expressions
 [_Expression_]: ../expressions.md
 [`Copy`]: ../special-types-and-traits.md#copy
 
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->

@@ -169,8 +169,16 @@
 <h1><a class="header" href="#关联程序项关联项" id="关联程序项关联项">关联程序项/关联项</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/associated-items.md">associated-items.md</a><br />
-commit: 136bd7da8b9c509c17c9619813b57dd1a47a8e25 <br />
-本章译文最后维护日期：2020-10-10</p>
+commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
+本章译文最后维护日期：2021-1-17</p>
+</blockquote>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>AssociatedItem</em> :<br />
+   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> (<br />
+         <a href="../macros.html#macro-invocation"><em>MacroInvocationSemi</em></a><br />
+      | ( <a href="../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup> ( <a href="type-aliases.html"><em>TypeAlias</em></a> | <a href="constant-items.html"><em>ConstantItem</em></a> | <a href="functions.html"><em>Function</em></a> ) )<br />
+   )</p>
 </blockquote>
 <p><em>关联程序项</em>是在 <a href="traits.html">traits</a> 中声明或在<a href="implementations.html">实现</a>中定义的程序项。之所以这样称呼它们，是因为它们是被定义在一个相关联的类型（即实现里指定的类型）上的。关联程序项是那些可在模块中声明的程序项的子集。具体来说，有[关联函数][associated functions]（包括方法）、[关联类型][associated types]和[关联常量][associated constants]。</p>
 <p>当关联程序项与被关联程序项在逻辑上相关时，关联程序项就非常有用。例如，<code>Option</code> 上的 <code>is_some</code> 方法内在逻辑定义上就与 Option枚举类型相关，所以它应该和 Option 关联在一起。</p>
@@ -220,19 +228,6 @@ let _: f64 = f64::from_i32(42);
 </span></code></pre></pre>
 <h3><a class="header" href="#methods" id="methods">Methods</a></h3>
 <h3><a class="header" href="#方法" id="方法">方法</a></h3>
-<blockquote>
-<p><em>Method</em> :<br />
-   <a href="functions.html"><em>FunctionQualifiers</em></a> <code>fn</code> <a href="../identifiers.html">IDENTIFIER</a> <a href="generics.html"><em>Generics</em></a><sup>?</sup><br />
-      <code>(</code> <em>SelfParam</em> (<code>,</code> <a href="functions.html"><em>FunctionParam</em></a>)<sup>*</sup> <code>,</code><sup>?</sup> <code>)</code><br />
-      <a href="functions.html"><em>FunctionReturnType</em></a><sup>?</sup> <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup><br />
-      <a href="../expressions/block-expr.html"><em>BlockExpression</em></a></p>
-<p><em>SelfParam</em> :<br />
-   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> ( <em>ShorthandSelf</em> | <em>TypedSelf</em> )</p>
-<p><em>ShorthandSelf</em> :<br />
-    (<code>&amp;</code> | <code>&amp;</code> <a href="../trait-bounds.html"><em>Lifetime</em></a>)<sup>?</sup> <code>mut</code><sup>?</sup> <code>self</code></p>
-<p><em>TypedSelf</em> :<br />
-   <code>mut</code><sup>?</sup> <code>self</code> <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a></p>
-</blockquote>
 <p>如果关联函数的参数列表中的第一个参数名为 <code>self</code><sup class="footnote-reference"><a href="#译者备注2">2</a></sup>，则此关联函数被称为<em>方法</em>，方法可以使用<a href="../expressions/method-call-expr.html">方法调用操作符</a>(<code>.</code>)来调用，例如 <code>x.foo()</code>，也可以使用常用的函数调用形式进行调用。</p>
 <p>如果名为 <code>self</code> 的参数的类型被指定了，它就通过以下文法（其中 <code>'lt</code> 表示生存期参数）来把此指定的参数限制解析成此文法中的一个类型：</p>
 <pre><code class="language-text">P = &amp;'lt S | &amp;'lt mut S | Box&lt;S&gt; | Rc&lt;S&gt; | Arc&lt;S&gt; | Pin&lt;P&gt;
@@ -344,6 +339,7 @@ let bounding_box = circle_shape.bounding_box();
 <p>这里的标识符是声明的类型的别名名称；可选的 trait约束必须由此类型别名的实现来履行实现。</p>
 <p><em>关联类型定义</em>在另一个类型上定义了一个类型别名。书写形式为：先是 <code>type</code>，然后是一个[标识符]，然后再是一个 <code>=</code>，最后是一个<a href="../types.html#type-expressions">类型</a>。</p>
 <p>如果类型 <code>Item</code> 上有一个来自 trait <code>Trait</code>的关联类型 <code>Assoc</code>，则表达式 <code>&lt;Item as Trait&gt;::Assoc</code> 也是一个类型，具体就是<em>关联类型定义</em>中指定的类型的一个别名。此外，如果 <code>Item</code> 是类型参数，则 <code>Item::Assoc</code> 也可以在类型参数中使用。</p>
+<p>关联类型不能包括<a href="generics.html">泛型参数</a>或 <a href="generics.html#where-clauses">where子句</a>。</p>
 <pre><pre class="playground"><code class="language-rust">trait AssociatedType {
     // 关联类型声明
     type Assoc;
@@ -449,7 +445,7 @@ fn main() {
 <div class="footnote-definition" id="译者备注3"><sup class="footnote-definition-label">3</sup>
 <p>结合下面的示例理解。</p>
 </div>
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->
 
                     </main>

@@ -2,8 +2,8 @@
 # 外部块
 
 >[external-blocks.md](https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md)\
->commit: fbf34356b709cfc0debb01acaaff038d4e339aab \
->本章译文最后维护日期：2020-11-9
+>commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 \
+>本章译文最后维护日期：2021-1-17
 
 > **<sup>句法</sup>**\
 > _ExternBlock_ :\
@@ -15,25 +15,8 @@
 > _ExternalItem_ :\
 > &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> (\
 > &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_MacroInvocationSemi_]\
-> &nbsp;&nbsp; &nbsp;&nbsp; | ( [_Visibility_]<sup>?</sup> ( _ExternalStaticItem_ | _ExternalFunctionItem_ ) )\
+> &nbsp;&nbsp; &nbsp;&nbsp; | ( [_Visibility_]<sup>?</sup> ( [_StaticItem_] | [_Function_] ) )\
 > &nbsp;&nbsp; )
->
-> _ExternalStaticItem_ :\
-> &nbsp;&nbsp; `static` `mut`<sup>?</sup> [IDENTIFIER] `:` [_Type_] `;`
->
-> _ExternalFunctionItem_ :\
-> &nbsp;&nbsp; `fn` [IDENTIFIER]&nbsp;[_Generics_]<sup>?</sup>\
-> &nbsp;&nbsp; `(` ( _NamedFunctionParameters_ | _NamedFunctionParametersWithVariadics_ )<sup>?</sup> `)`\
-> &nbsp;&nbsp; [_FunctionReturnType_]<sup>?</sup> [_WhereClause_]<sup>?</sup> `;`
->
-> _NamedFunctionParameters_ :\
-> &nbsp;&nbsp; _NamedFunctionParam_ ( `,` _NamedFunctionParam_ )<sup>\*</sup> `,`<sup>?</sup>
->
-> _NamedFunctionParam_ :\
-> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> ( [IDENTIFIER] | `_` ) `:` [_Type_]
->
-> _NamedFunctionParametersWithVariadics_ :\
-> &nbsp;&nbsp; ( _NamedFunctionParam_ `,` )<sup>\*</sup> _NamedFunctionParam_ `,` [_OuterAttribute_]<sup>\*</sup> `...`
 
 外部块提供未在当前 crate 中*定义*的程序项的*声明*，外部块是 Rust 外部函数接口的基础。这其实是某种意义上的不受安全检查的导入入口。
 
@@ -44,7 +27,7 @@
 ## Functions
 ## 函数
 
-外部块中的函数与其他 Rust 函数的声明方式相同，但这里的函数允许没有函数体，取而代之的是直接以分号结尾。外部块中的函数的参数不允许使用模式，只能使用[标识符(IDENTIFIER)][IDENTIFIER] 和 `_` 。
+外部块中的函数与其他 Rust函数的声明方式相同，但这里的函数不能有函数体，取而代之的是直接以分号结尾。外部块中的函数的参数不允许使用模式，只能使用[标识符(IDENTIFIER)][IDENTIFIER] 或 `_` 。函数限定符（`const`、`async`、`unsafe` 和 `extern`）也不允许在这里使用。
 
 外部块中的函数可以被 Rust 代码调用，就跟调用在 Rust 中定义的函数一样。Rust 编译器会自动在 Rust ABI 和外部 ABI 之间进行转换。
 
@@ -85,11 +68,12 @@ extern "stdcall" { }
 ## Variadic functions
 ## 可变参数函数
 
-可以在外部块内的函数的参数列表中的一个或多个具名参数后通过引入 `...` 来让该函数成为可变参数函数：
+可以在外部块内的函数的参数列表中的一个或多个具名参数后通过引入 `...` 来让该函数成为可变参数函数。注意可变参数`...` 前至少有一个具名参数，并且只能位于参数列表的最后。可变参数可以通过标识符来指定：
 
 ```rust
-extern {
+extern "C" {
     fn foo(x: i32, ...);
+    fn with_name(format: *const u8, args: ...);
 }
 ```
 
@@ -153,18 +137,16 @@ extern {
 [functions]: functions.md
 [statics]: static-items.md
 [_Abi_]: functions.md
-[_FunctionReturnType_]: functions.md
-[_Generics_]: generics.md
+[_Function_]: functions.md
 [_InnerAttribute_]: ../attributes.md
 [_MacroInvocationSemi_]: ../macros.md#macro-invocation
 [_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
 [_MetaNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
 [_OuterAttribute_]: ../attributes.md
-[_Type_]: ../types.md#type-expressions
+[_StaticItem_]: static-items.md
 [_Visibility_]: ../visibility-and-privacy.md
-[_WhereClause_]: generics.md#where-clauses
 [attributes]: ../attributes.md
 [regular function parameters]: functions.md#attributes-on-function-parameters
 
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->

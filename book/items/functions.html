@@ -169,28 +169,43 @@
 <h1><a class="header" href="#函数" id="函数">函数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/functions.md">functions.md</a><br />
-commit: 645a7b1a809842f03e71f7211b1e22ee301a703a <br />
-本章译文最后维护日期：2020-11-27</p>
+commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>Function</em> :<br />
-   <em>FunctionQualifiers</em> <code>fn</code> <a href="../identifiers.html">IDENTIFIER</a> <a href="generics.html"><em>Generics</em></a><sup>?</sup><br />
+   <em>FunctionQualifiers</em> <code>fn</code> <a href="../identifiers.html">IDENTIFIER</a> <a href="generics.html"><em>GenericParams</em></a><sup>?</sup><br />
       <code>(</code> <em>FunctionParameters</em><sup>?</sup> <code>)</code><br />
       <em>FunctionReturnType</em><sup>?</sup> <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup><br />
-      <a href="../expressions/block-expr.html"><em>BlockExpression</em></a></p>
+      ( <a href="../expressions/block-expr.html"><em>BlockExpression</em></a> | <code>;</code> )</p>
 <p><em>FunctionQualifiers</em> :<br />
-   <em>AsyncConstQualifiers</em><sup>?</sup> <code>unsafe</code><sup>?</sup> (<code>extern</code> <em>Abi</em><sup>?</sup>)<sup>?</sup></p>
-<p><em>AsyncConstQualifiers</em> :<br />
-   <code>async</code> | <code>const</code></p>
+   <code>const</code><sup>?</sup> <code>async</code><sup class="footnote-reference"><a href="#async-edition">1</a></sup><sup>?</sup> <code>unsafe</code><sup>?</sup> (<code>extern</code> <em>Abi</em><sup>?</sup>)<sup>?</sup></p>
 <p><em>Abi</em> :<br />
    <a href="../tokens.html#string-literals">STRING_LITERAL</a> | <a href="../tokens.html#raw-string-literals">RAW_STRING_LITERAL</a></p>
 <p><em>FunctionParameters</em> :<br />
-   <em>FunctionParam</em> (<code>,</code> <em>FunctionParam</em>)<sup>*</sup> <code>,</code><sup>?</sup></p>
+      <em>SelfParam</em> <code>,</code><sup>?</sup><br />
+   | (<em>SelfParam</em> <code>,</code>)<sup>?</sup> <em>FunctionParam</em> (<code>,</code> <em>FunctionParam</em>)<sup>*</sup> <code>,</code><sup>?</sup></p>
+<p><em>SelfParam</em> :<br />
+   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> ( <em>ShorthandSelf</em> | <em>TypedSelf</em> )</p>
+<p><em>ShorthandSelf</em> :<br />
+    (<code>&amp;</code> | <code>&amp;</code> <a href="../trait-bounds.html"><em>Lifetime</em></a>)<sup>?</sup> <code>mut</code><sup>?</sup> <code>self</code></p>
+<p><em>TypedSelf</em> :<br />
+   <code>mut</code><sup>?</sup> <code>self</code> <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a></p>
 <p><em>FunctionParam</em> :<br />
-   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <a href="../patterns.html"><em>Pattern</em></a> <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a></p>
+   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> (
+<em>FunctionParamPattern</em> | <code>...</code> | <a href="../types.html#type-expressions"><em>Type</em></a> <sup class="footnote-reference"><a href="#fn-param-2015">2</a></sup>
+)</p>
+<p><em>FunctionParamPattern</em> :<br />
+   <a href="../patterns.html"><em>Pattern</em></a> <code>:</code> ( <a href="../types.html#type-expressions"><em>Type</em></a> | <code>...</code> )</p>
 <p><em>FunctionReturnType</em> :<br />
    <code>-&gt;</code> <a href="../types.html#type-expressions"><em>Type</em></a></p>
+<div class="footnote-definition" id="async-edition"><sup class="footnote-definition-label">1</sup>
+<p>限定符<code>async</code>不能在 2015版中使用。</p>
+</div>
+<div class="footnote-definition" id="fn-param-2015"><sup class="footnote-definition-label">2</sup>
+<p>在2015版中，只有类型的函数参数只允许出现在<a href="traits.html">trait项</a>的关联函数中。</p>
+</div>
 </blockquote>
 <p><em>函数</em>由一个<a href="../expressions/block-expr.html">块</a>以及一个名称和一组参数组成。除了名称，其他的都是可选的。函数使用关键字 <code>fn</code> 声明。函数可以声明一组<em>输入</em><a href="../variables.html"><em>变量</em></a>作为参数，调用者通过它向函数传递参数，函数完成后，它再将带有<em>输出</em><a href="../types.html#type-expressions"><em>类型</em></a>的结果值返回给调用者。</p>
 <p>当一个<em>函数</em>被引用时，该函数会产生一个相应的零尺寸<a href="../types/function-item.html"><em>函数项类型(function item type)</em></a>的一等(first-class)<em>值</em>，调用该值就相当于直接调用该函数。</p>
@@ -203,6 +218,8 @@ commit: 645a7b1a809842f03e71f7211b1e22ee301a703a <br />
 }
 <span class="boring">}
 </span></code></pre></pre>
+<h2><a class="header" href="#function-parameters" id="function-parameters">Function parameters</a></h2>
+<h2><a class="header" href="#函数参数" id="函数参数">函数参数</a></h2>
 <p>和 <code>let</code>绑定一样，函数参数是不可反驳型<a href="../patterns.html">模式</a>，所以任何在 let绑定中有效的模式都可以有效应用在函数参数上:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -210,6 +227,10 @@ commit: 645a7b1a809842f03e71f7211b1e22ee301a703a <br />
 </span>fn first((value, _): (i32, i32)) -&gt; i32 { value }
 <span class="boring">}
 </span></code></pre></pre>
+<p>如果第一个参数是一个<em>SelfParam</em>类型的参数，这表明该函数是一个<a href="associated-items.html#methods">方法</a>。带 self参数的函数只能在 <a href="traits.html">trait</a> 或<a href="implementations.html">实现</a>中作为<a href="associated-items.html#associated-functions-and-methods">关联函数</a>出现。</p>
+<p>带有 <code>...</code>token 的参数表示此函数是一个<a href="external-blocks.html#variadic-functions">可变参数函数</a>，<code>...</code> 只能作为<a href="external-blocks.html">外部块</a>里的函数的最后一个参数使用。可变参数可以有一个可选标识符，例如 <code>args: ...</code>。</p>
+<h2><a class="header" href="#function-body" id="function-body">Function body</a></h2>
+<h2><a class="header" href="#函数体" id="函数体">函数体</a></h2>
 <p>函数的块在概念上被包装进在一个块中，该块绑定该函数的参数模式，然后返回(<code>return</code>)该函数的块的值。这意味着如果轮到块的*尾部表达式(tail expression)*被求值计算了，该块将结束，求得的值将被返回给调用者。通常，程序执行时如果流碰到函数体中的显式返回表达式(return expression)，就会截断那个隐式的最终表达式的执行。</p>
 <p>例如，上面例子里函数的行为就像下面被改写的这样:</p>
 <!-- ignore: example expansion -->
@@ -219,6 +240,7 @@ return {
     value
 };
 </code></pre>
+<p>没有主体块的函数以分号结束。这种形式只能出现在 <a href="traits.html">trait</a> 或<a href="external-blocks.html">外部块</a>中。</p>
 <h2><a class="header" href="#generic-functions" id="generic-functions">Generic functions</a></h2>
 <h2><a class="header" href="#泛型函数" id="泛型函数">泛型函数</a></h2>
 <p><em>泛型函数</em>允许在其签名中出现一个或多个<em>参数化类型(parameterized types)</em>。每个类型参数必须在函数名后面的尖括号封闭逗号分隔的列表中显式声明。</p>
@@ -317,6 +339,7 @@ let fptr: extern &quot;C&quot; fn() -&gt; i32 = new_i32;
 <h2><a class="header" href="#const-functions" id="const-functions">Const functions</a></h2>
 <h2><a class="header" href="#常量函数" id="常量函数">常量函数</a></h2>
 <p>使用关键字 <code>const</code> 限定的函数是<a href="../const_eval.html#const-functions">常量(const)函数</a>，<a href="structs.html">元组结构体</a>构造函数和<a href="enumerations.html">元组变体</a>构造函数也是如此。可以在<a href="../const_eval.html#const-context">常量上下文</a>中调用<em>常量函数</em>。</p>
+<p>常量函数不允许是 <a href="#async-functions">async</a>类型的，并且不能使用 <a href="#extern-function-qualifier"><code>extern</code>函数限定符</a>。</p>
 <h2><a class="header" href="#async-functions" id="async-functions">Async functions</a></h2>
 <h2><a class="header" href="#异步函数" id="异步函数">异步函数</a></h2>
 <p>函数可以被限定为异步的，这还可以与 <code>unsafe</code> 限定符结合在一起使用：</p>
@@ -420,7 +443,7 @@ async fn safe_example() {
 fn foo_oof(#[some_inert_attribute] arg: u8) {
 }
 </code></pre>
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->
 
                     </main>

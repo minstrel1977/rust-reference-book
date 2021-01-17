@@ -169,8 +169,8 @@
 <h1><a class="header" href="#表达式" id="表达式">表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions.md">expressions.md</a><br />
-commit: 8c4522851452563b715b11d4cd755b36d8e4bca5 <br />
-本章译文最后维护日期：2020-11-11</p>
+commit: 9360ab990a253174bedff15a3191d5657b04ec31 <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -214,11 +214,11 @@ commit: 8c4522851452563b715b11d4cd755b36d8e4bca5 <br />
    )</p>
 </blockquote>
 <p>一个表达式可能有两个角色：它总是能产生<sup class="footnote-reference"><a href="#译者注1">1</a></sup>一个<em>值</em>；它还有可能表达出<em>效果(effects)</em>（也被称为“副作用(side effects)”）。表达式 <em>求值/计算为(evaluates to)</em> 值，并在 <em>求值(evaluation)</em> 期间表达出效果。 <br />
-许多表达式包含子表达式（操作数）。每种表达式都表达了以下几点含义：</p>
+许多表达式包含子表达式，此子表达式也被称为此表达式的<em>操作数</em>。每种表达式都表达了以下几点含义：</p>
 <ul>
-<li>在对表达式求值时是否对子表达式求值</li>
-<li>对子表达式求值的顺序</li>
-<li>如何组合子表达式的值来获取表达式的值</li>
+<li>在对表达式求值时是否对操作数求值</li>
+<li>对操作数求值的顺序</li>
+<li>如何组合操作数的值来获取表达式的值</li>
 </ul>
 <p>基于对这几种含义的实现要求，表达式通过其内在结构规定了其执行结构。<br />
 块只是另一种表达式，所以块、语句和表达式可以递归地彼此嵌套到任意深度。</p>
@@ -246,6 +246,50 @@ commit: 8c4522851452563b715b11d4cd755b36d8e4bca5 <br />
 <tr><td><code>=</code> <code>+=</code> <code>-=</code> <code>*=</code> <code>/=</code> <code>%=</code> <br> <code>&amp;=</code> <code>|=</code> <code>^=</code> <code>&lt;&lt;=</code> <code>&gt;&gt;=</code></td><td>从右向左</td></tr>
 <tr><td><code>return</code> <code>break</code> closures（返回、中断、闭包）</td><td></td></tr>
 </tbody></table>
+<h2><a class="header" href="#evaluation-order-of-operands" id="evaluation-order-of-operands">Evaluation order of operands</a></h2>
+<h2><a class="header" href="#操作数的求值顺序" id="操作数的求值顺序">操作数的求值顺序</a></h2>
+<p>下面的表达式列表都以相同的方式计算它们的操作数，具体列表后面也有详述。其他表达式要么不接受操作数，要么按照各自约定（后续章节会有讲述）的条件进行求值。</p>
+<ul>
+<li>解引用表达式(Dereference expression)</li>
+<li>错误传播表达式(Error propagation expression)</li>
+<li>取反表达式(Negation expression)</li>
+<li>算术和二进制逻辑运算(Arithmetic and logical binary operators)</li>
+<li>比较运算(Comparison operators)</li>
+<li>类型转换表达式(Type cast expression)</li>
+<li>分组表达式(Grouped expression)</li>
+<li>数组表达式(Array expression)</li>
+<li>等待表达式(Await expression)</li>
+<li>索引表达式(Index expression)</li>
+<li>元组表达式(Tuple expression)</li>
+<li>元组索引表达式(Tuple index expression)</li>
+<li>结构体表达式(Struct expression)</li>
+<li>枚举变体表达式(Enumeration variant expression)</li>
+<li>调用表达式(Call expression)</li>
+<li>方法调用表达式(Method call expression)</li>
+<li>字段表达式(Field expression)</li>
+<li>中断表达式(Break expression)</li>
+<li>区间表达式(Range expression)</li>
+<li>返回表达式(Return expression)</li>
+</ul>
+<p>在实现执行这些表达式的效果之前，会先对这些表达式的操作数进行求值。拥有多个操作数的表达式会按照源代码书写的顺序从左到右计算。</p>
+<blockquote>
+<p><strong>注意</strong>：子表达式是一个表达式的操作数时，此子表达式内部的求值顺序是由根据前面的章节规定的优先级来确定的。</p>
+</blockquote>
+<p>例如，下面两个 <code>next</code>方法的调用总是以相同的顺序调用：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">// 使用 vec 代替 array 来避免引用，因为在编写本例时，拥有内部元素的所有权的数组迭代器还没有稳定下来。
+</span>let mut one_two = vec![1, 2].into_iter();
+assert_eq!(
+    (1, 2),
+    (one_two.next().unwrap(), one_two.next().unwrap())
+);
+<span class="boring">}
+</span></code></pre></pre>
+<blockquote>
+<p><strong>注意</strong>：由于表达式是递归执行的，那这些表达式也会从最内层到最外层逐层求值，忽略兄弟表达式，直到没有（未求值的）内部子表达式为止。</p>
+</blockquote>
 <h2><a class="header" href="#place-expressions-and-value-expressions" id="place-expressions-and-value-expressions">Place Expressions and Value Expressions</a></h2>
 <h2><a class="header" href="#位置表达式和值表达式" id="位置表达式和值表达式">位置表达式和值表达式</a></h2>
 <p>表达式分为两大类：位置表达式和值表达式（，它们各自形成了自己的上下文）。因此，在每个表达式中，子表达式可以出现在位置上下文，也可出现在值上下文中。表达式的求值既依赖于它自己的类别，也依赖于它所在的上下文。</p>

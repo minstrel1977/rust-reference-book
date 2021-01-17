@@ -169,13 +169,13 @@
 <h1><a class="header" href="#联合体" id="联合体">联合体</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/unions.md">unions.md</a><br />
-commit: cd996a4e6e9b98929c3718fd76988bfee51d757c <br />
-本章译文最后维护日期：2020-12-24</p>
+commit: 9d0aa172932ed15ec1b13556e6809b74bc58a02b <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>Union</em> :<br />
-   <code>union</code> <a href="../identifiers.html">IDENTIFIER</a> <a href="generics.html"><em>Generics</em></a><sup>?</sup> <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup>
+   <code>union</code> <a href="../identifiers.html">IDENTIFIER</a> <a href="generics.html"><em>GenericParams</em></a><sup>?</sup> <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup>
 <code>{</code><a href="structs.html"><em>StructFields</em></a> <code>}</code></p>
 </blockquote>
 <p>除了用 <code>union</code> 代替 <code>struct</code>外，联合体声明使用和结构体声明相同的句法。</p>
@@ -318,7 +318,7 @@ fn test() {
 <div class="footnote-definition" id="译者备注"><sup class="footnote-definition-label">1</sup>
 <p>这句译者简单理解就是对已经初始化的变量再去覆写的时候要先去读一下这个变量代表的地址上的值的状态，如果有值，并且允许覆写，那 Rust 为防止内存泄漏就先执行那变量的析构行为（drop()），清空那个地址上的关联堆数据，再写入。我们这里对联合体的预设条件是此联合体值有 Copy特性，有 Copy特性了，对值的直接覆写不会造成内存泄漏，就不必调用析构行为，也不需要事先的非安全读操作了。对于这个问题<a href="https://learnku.com/docs/nomicon/2018">nomicon</a>的“未初始化内存”章有讲述，博主<a href="https://www.zhihu.com/people/crlf0710">CrLF0710</a>的两篇“学一点 Rust 内存模型会发生什么呢？”里也都有精彩讲解。</p>
 </div>
-<!-- 2020-12-24-->
+<!-- 2021-1-17-->
 <!-- checked -->
 
                     </main>

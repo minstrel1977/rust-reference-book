@@ -88,7 +88,6 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 ## 操作数的求值顺序
 
 下面的表达式列表都以相同的方式计算它们的操作数，具体列表后面也有详述。其他表达式要么不接受操作数，要么按照各自约定（后续章节会有讲述）的条件进行求值。
-The following list of expressions all evaluate their operands the same way, as described after the list. Other expressions either don't take operands or evaluate them conditionally as described on their respective pages.
 
 * 解引用表达式(Dereference expression)
 * 错误传播表达式(Error propagation expression)

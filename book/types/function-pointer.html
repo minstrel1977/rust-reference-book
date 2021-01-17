@@ -169,14 +169,16 @@
 <h1><a class="header" href="#函数指针类型" id="函数指针类型">函数指针类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/function-pointer.md">function-pointer.md</a><br />
-commit: 3d1b9ae5e7a61da43ac83cc42815e29b34b350ba <br />
-本章译文最后维护日期：2020-11-14</p>
+commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>BareFunctionType</em> :<br />
-   <a href="../items/generics.html#where-clauses"><em>ForLifetimes</em></a><sup>?</sup> <a href="../items/functions.html"><em>FunctionQualifiers</em></a> <code>fn</code><br />
+   <a href="../items/generics.html#where-clauses"><em>ForLifetimes</em></a><sup>?</sup> <em>FunctionTypeQualifiers</em> <code>fn</code><br />
        <code>(</code> <em>FunctionParametersMaybeNamedVariadic</em><sup>?</sup> <code>)</code> <em>BareFunctionReturnType</em><sup>?</sup></p>
+<p><em>FunctionTypeQualifiers</em>:<br />
+   <code>unsafe</code><sup>?</sup> (<code>extern</code> <a href="../items/functions.html"><em>Abi</em></a><sup>?</sup>)<sup>?</sup></p>
 <p><em>BareFunctionReturnType</em>:<br />
    <code>-&gt;</code> <a href="../types.html#type-expressions"><em>TypeNoBounds</em></a></p>
 <p><em>FunctionParametersMaybeNamedVariadic</em> :<br />
@@ -209,7 +211,7 @@ x = bo(5,7);
 <h2><a class="header" href="#attributes-on-function-pointer-parameters" id="attributes-on-function-pointer-parameters">Attributes on function pointer parameters</a></h2>
 <h2><a class="header" href="#函数指针参数上的属性" id="函数指针参数上的属性">函数指针参数上的属性</a></h2>
 <p>函数指针参数上的属性遵循与<a href="../items/functions.html#attributes-on-function-parameters">常规函数参数</a>相同的规则和限制。</p>
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->
 
                     </main>

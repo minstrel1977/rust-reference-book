@@ -168,47 +168,19 @@
                         <h1><a class="header" href="#trait" id="trait">Trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/traits.md">traits.md</a><br />
-commit: d5cc65a70f66a243d84cd251188d80fbe9926747 <br />
-本章译文最后维护日期：2020-10-21</p>
+commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>Trait</em> :<br />
    <code>unsafe</code><sup>?</sup> <code>trait</code> <a href="../identifiers.html">IDENTIFIER</a> 
-<a href="generics.html"><em>Generics</em></a><sup>?</sup>
+<a href="generics.html"><em>GenericParams</em></a><sup>?</sup>
 ( <code>:</code> <a href="../trait-bounds.html"><em>TypeParamBounds</em></a><sup>?</sup> )<sup>?</sup>
 <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup> <code>{</code><br />
      <a href="../attributes.html"><em>InnerAttribute</em></a><sup>*</sup><br />
-     <em>TraitItem</em><sup>*</sup><br />
+     <a href="associated-items.html"><em>AssociatedItem</em></a><sup>*</sup><br />
    <code>}</code></p>
-<p><em>TraitItem</em> :<br />
-   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <a href="../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup> (<br />
-         <em>TraitFunc</em><br />
-      | <em>TraitMethod</em><br />
-      | <em>TraitConst</em><br />
-      | <em>TraitType</em><br />
-      | <a href="../macros.html#macro-invocation"><em>MacroInvocationSemi</em></a><br />
-   )</p>
-<p><em>TraitFunc</em> :<br />
-      <em>TraitFunctionDecl</em> ( <code>;</code> | <a href="../expressions/block-expr.html"><em>BlockExpression</em></a> )</p>
-<p><em>TraitMethod</em> :<br />
-      <em>TraitMethodDecl</em> ( <code>;</code> | <a href="../expressions/block-expr.html"><em>BlockExpression</em></a> )</p>
-<p><em>TraitFunctionDecl</em> :<br />
-   <a href="functions.html"><em>FunctionQualifiers</em></a> <code>fn</code> <a href="../identifiers.html">IDENTIFIER</a> <a href="generics.html"><em>Generics</em></a><sup>?</sup><br />
-      <code>(</code> <em>TraitFunctionParameters</em><sup>?</sup> <code>)</code><br />
-      <a href="functions.html"><em>FunctionReturnType</em></a><sup>?</sup> <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup></p>
-<p><em>TraitMethodDecl</em> :<br />
-   <a href="functions.html"><em>FunctionQualifiers</em></a> <code>fn</code> <a href="../identifiers.html">IDENTIFIER</a> <a href="generics.html"><em>Generics</em></a><sup>?</sup><br />
-      <code>(</code> <a href="associated-items.html#methods"><em>SelfParam</em></a> (<code>,</code> <em>TraitFunctionParam</em>)<sup>*</sup> <code>,</code><sup>?</sup> <code>)</code><br />
-      <a href="functions.html"><em>FunctionReturnType</em></a><sup>?</sup> <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup></p>
-<p><em>TraitFunctionParameters</em> :<br />
-   <em>TraitFunctionParam</em> (<code>,</code> <em>TraitFunctionParam</em>)<sup>*</sup> <code>,</code><sup>?</sup></p>
-<p><em>TraitFunctionParam</em><sup><a href="#parameter-patterns">†</a></sup> :<br />
-   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> ( <a href="../patterns.html"><em>Pattern</em></a> <code>:</code> )<sup>?</sup> <a href="../types.html#type-expressions"><em>Type</em></a></p>
-<p><em>TraitConst</em> :<br />
-   <code>const</code> <a href="../identifiers.html">IDENTIFIER</a> <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a> ( <code>=</code> <a href="../expressions.html"><em>Expression</em></a> )<sup>?</sup> <code>;</code></p>
-<p><em>TraitType</em> :<br />
-   <code>type</code> <a href="../identifiers.html">IDENTIFIER</a> ( <code>:</code> <a href="../trait-bounds.html"><em>TypeParamBounds</em></a><sup>?</sup> )<sup>?</sup> <code>;</code></p>
 </blockquote>
 <p><em>trait</em> 描述类型可以实现的抽象接口。这类接口由三种<a href="associated-items.html">关联程序项(associated items)</a>组成，它们分别是：</p>
 <ul>
@@ -218,7 +190,21 @@ commit: d5cc65a70f66a243d84cd251188d80fbe9926747 <br />
 </ul>
 <p>所有 trait 都定义了一个隐式类型参数 <code>Self</code> ，它指向“实现此接口的类型”。trait 还可能包含额外的类型参数。这些类型参数，包括 <code>Self</code> 在内，都可能会<a href="generics.html">跟正常类型参数一样</a>受到其他 trait 的约束。</p>
 <p>trait 需要具体的类型去实现，具体的实现方法是通过该类型的各种独立实现(implementations)来完成的。</p>
-<p>trait 关联程序项/自带的程序项不需要在该 trait 中提供具体定义，但也可以提供。如果 trait 提供了定义，那么该定义将作为任何不覆盖它的实现的默认定义。如果没有提供，那么任何实现都必须提供具体定义。</p>
+<p>trait函数可以通过使用分号代替函数体来省略函数体。这表明此 trait的实现必须去定义实现该函数。如果 trait函数定义了一个函数体，那么这个定义就会作为任何不覆盖它的实现的默认函数实现。类似地，关联常量可以省略等号和表达式，以指示相应的实现必须定义该常量值。关联类型不能定义类型，只能在实现中指定类型。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 有定义和没有定义的相关联trait项的例子
+trait Example {
+    const CONST_NO_DEFAULT: i32;
+    const CONST_WITH_DEFAULT: i32 = 99;
+    type TypeNoDefault;
+    fn method_without_default(&amp;self);
+    fn method_with_default(&amp;self) {}
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Trait函数不能是 <a href="functions.html#async-functions"><code>async</code></a> 或 <a href="functions.html#const-functions"><code>const</code></a> 类型的。</p>
 <h2><a class="header" href="#trait-bounds" id="trait-bounds">Trait bounds</a></h2>
 <h2><a class="header" href="#trait约束" id="trait约束">trait约束</a></h2>
 <p>泛型程序项可以使用 trait 作为其类型参数的<a href="../trait-bounds.html">约束</a>。</p>

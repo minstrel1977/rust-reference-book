@@ -169,8 +169,8 @@
 <h1><a class="header" href="#外部块" id="外部块">外部块</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md">external-blocks.md</a><br />
-commit: fbf34356b709cfc0debb01acaaff038d4e339aab <br />
-本章译文最后维护日期：2020-11-9</p>
+commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
+本章译文最后维护日期：2021-1-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -182,27 +182,15 @@ commit: fbf34356b709cfc0debb01acaaff038d4e339aab <br />
 <p><em>ExternalItem</em> :<br />
    <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> (<br />
          <a href="../macros.html#macro-invocation"><em>MacroInvocationSemi</em></a><br />
-      | ( <a href="../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup> ( <em>ExternalStaticItem</em> | <em>ExternalFunctionItem</em> ) )<br />
+      | ( <a href="../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup> ( <a href="static-items.html"><em>StaticItem</em></a> | <a href="functions.html"><em>Function</em></a> ) )<br />
    )</p>
-<p><em>ExternalStaticItem</em> :<br />
-   <code>static</code> <code>mut</code><sup>?</sup> <a href="../identifiers.html">IDENTIFIER</a> <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a> <code>;</code></p>
-<p><em>ExternalFunctionItem</em> :<br />
-   <code>fn</code> <a href="../identifiers.html">IDENTIFIER</a> <a href="generics.html"><em>Generics</em></a><sup>?</sup><br />
-   <code>(</code> ( <em>NamedFunctionParameters</em> | <em>NamedFunctionParametersWithVariadics</em> )<sup>?</sup> <code>)</code><br />
-   <a href="functions.html"><em>FunctionReturnType</em></a><sup>?</sup> <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup> <code>;</code></p>
-<p><em>NamedFunctionParameters</em> :<br />
-   <em>NamedFunctionParam</em> ( <code>,</code> <em>NamedFunctionParam</em> )<sup>*</sup> <code>,</code><sup>?</sup></p>
-<p><em>NamedFunctionParam</em> :<br />
-   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> ( <a href="../identifiers.html">IDENTIFIER</a> | <code>_</code> ) <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a></p>
-<p><em>NamedFunctionParametersWithVariadics</em> :<br />
-   ( <em>NamedFunctionParam</em> <code>,</code> )<sup>*</sup> <em>NamedFunctionParam</em> <code>,</code> <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <code>...</code></p>
 </blockquote>
 <p>外部块提供未在当前 crate 中<em>定义</em>的程序项的<em>声明</em>，外部块是 Rust 外部函数接口的基础。这其实是某种意义上的不受安全检查的导入入口。</p>
 <p>外部块里允许存在两种形式的程序项<em>声明</em>：<a href="functions.html">函数</a>和<a href="static-items.html">静态项</a>。只有在非安全(<code>unsafe</code>)上下文中才能调用在外部块中声明的函数或访问在外部块中声明的静态项。</p>
 <p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>extern</code> 之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从 token流中移除之前利用此句法来使用此关键字。</p>
 <h2><a class="header" href="#functions" id="functions">Functions</a></h2>
 <h2><a class="header" href="#函数" id="函数">函数</a></h2>
-<p>外部块中的函数与其他 Rust 函数的声明方式相同，但这里的函数允许没有函数体，取而代之的是直接以分号结尾。外部块中的函数的参数不允许使用模式，只能使用<a href="../identifiers.html">标识符(IDENTIFIER)</a> 和 <code>_</code> 。</p>
+<p>外部块中的函数与其他 Rust函数的声明方式相同，但这里的函数不能有函数体，取而代之的是直接以分号结尾。外部块中的函数的参数不允许使用模式，只能使用<a href="../identifiers.html">标识符(IDENTIFIER)</a> 或 <code>_</code> 。函数限定符（<code>const</code>、<code>async</code>、<code>unsafe</code> 和 <code>extern</code>）也不允许在这里使用。</p>
 <p>外部块中的函数可以被 Rust 代码调用，就跟调用在 Rust 中定义的函数一样。Rust 编译器会自动在 Rust ABI 和外部 ABI 之间进行转换。</p>
 <p>在外部块中声明的函数隐式为非安全(<code>unsafe</code>)的。当强转为函数指针时，外部块中声明的函数的类型就为 <code>unsafe extern &quot;abi&quot; for&lt;'l1, ..., 'lm&gt; fn(A1, ..., An) -&gt; R</code>，其中 <code>'l1</code>，…<code>'lm</code> 是其生存期参数，<code>A1</code>，…，<code>An</code> 是该声明的参数的类型，<code>R</code> 是该声明的返回类型。</p>
 <h2><a class="header" href="#statics" id="statics">Statics</a></h2>
@@ -236,12 +224,13 @@ extern &quot;stdcall&quot; { }
 </ul>
 <h2><a class="header" href="#variadic-functions" id="variadic-functions">Variadic functions</a></h2>
 <h2><a class="header" href="#可变参数函数" id="可变参数函数">可变参数函数</a></h2>
-<p>可以在外部块内的函数的参数列表中的一个或多个具名参数后通过引入 <code>...</code> 来让该函数成为可变参数函数：</p>
+<p>可以在外部块内的函数的参数列表中的一个或多个具名参数后通过引入 <code>...</code> 来让该函数成为可变参数函数。注意可变参数<code>...</code> 前至少有一个具名参数，并且只能位于参数列表的最后。可变参数可以通过标识符来指定：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>extern {
+</span>extern &quot;C&quot; {
     fn foo(x: i32, ...);
+    fn with_name(format: *const u8, args: ...);
 }
 <span class="boring">}
 </span></code></pre></pre>
@@ -290,7 +279,7 @@ extern {
 <h3><a class="header" href="#attributes-on-function-parameters" id="attributes-on-function-parameters">Attributes on function parameters</a></h3>
 <h3><a class="header" href="#函数参数上的属性" id="函数参数上的属性">函数参数上的属性</a></h3>
 <p>外部函数参数上的属性遵循与<a href="functions.html#attributes-on-function-parameters">常规函数参数</a>相同的规则和限制。</p>
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->
 
                     </main>

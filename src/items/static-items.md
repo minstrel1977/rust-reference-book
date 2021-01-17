@@ -2,13 +2,13 @@
 # 静态项
 
 >[static-items.md](https://github.com/rust-lang/reference/blob/master/src/items/static-items.md)\
->commit: 2f459e22ec30a94bafafe417da4e95044578df73 \
->本章译文最后维护日期：2020-11-9
+>commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 \
+>本章译文最后维护日期：2021-1-17
 
 > **<sup>句法</sup>**\
 > _StaticItem_ :\
 > &nbsp;&nbsp; `static` `mut`<sup>?</sup> [IDENTIFIER] `:` [_Type_]
->              `=` [_Expression_] `;`
+>              ( `=` [_Expression_] )<sup>?</sup> `;`
 
 *静态项*类似于[常量项][constant]，除了它在程序中表示一个精确的内存位置。所有对静态项的引用都指向相同的内存位置。静态项拥有 `'static` 生存期，它比 Rust 程序中的所有其他生存期都要长。静态项不会在程序结束时调用析构动作 [`drop`]。
 
@@ -20,6 +20,8 @@
 
 * 静态项的数据类型必须有 `Sync` trait约束，这样才可以让线程安全地访问。
 * 常量项不能引用静态项。
+
+必须为自由静态项提供初始化表达式，但在[外部块][external block]中静态项必须省略初始化表达式。
 
 ## Mutable statics
 ## 可变静态项
@@ -61,10 +63,11 @@ unsafe fn bump_levels_unsafe2() -> u32 {
 [constant]: constant-items.md
 [`drop`]: ../destructors.md
 [constant expression]: ../const_eval.md#constant-expressions
+[external block]: external-blocks.md
 [interior mutable]: ../interior-mutability.md
 [IDENTIFIER]: ../identifiers.md
 [_Type_]: ../types.md#type-expressions
 [_Expression_]: ../expressions.md
 
-<!-- 2020-11-12-->
+<!-- 2021-1-17-->
 <!-- checked -->

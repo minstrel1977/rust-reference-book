@@ -169,8 +169,8 @@
 <h1><a class="header" href="#operator-expressions" id="operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: 03dc50769738a643be1451a4ff1516fa5fab92bd <br />
-本章译文最后维护日期：2020-11-12</p>
+commit: 5967ac11bcc3c8279ddd32b121001afda72ab42a <br />
+本章译文最后维护日期：2021-1-16</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -335,17 +335,17 @@ assert_eq!(true, !false);
    | <a href="../expressions.html"><em>Expression</em></a> <code>&gt;&gt;</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
 <p>二元运算符表达式都用中缀表示法(infix notation)书写。下表总结了算术和逻辑二元运算符在原生类型(primitive type)上的行为，同时指出其他类型要重载这些操作符需要实现的 trait。记住，有符号整数总是用 2 的补码形式表示。所有这些运算符的操作数都在<a href="../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中求值，因此这些操作数的值会被移走或复制。</p>
-<table><thead><tr><th>符号</th><th>整数</th><th><code>bool</code></th><th>浮点数</th><th>用于重载的 trait</th></tr></thead><tbody>
-<tr><td><code>+</code></td><td>加法</td><td></td><td>加法</td><td><code>std::ops::Add</code></td></tr>
-<tr><td><code>-</code></td><td>减法</td><td></td><td>减法</td><td><code>std::ops::Sub</code></td></tr>
-<tr><td><code>*</code></td><td>乘法</td><td></td><td>乘法</td><td><code>std::ops::Mul</code></td></tr>
-<tr><td><code>/</code></td><td>除法*</td><td></td><td>取余</td><td><code>std::ops::Div</code></td></tr>
-<tr><td><code>%</code></td><td>取余</td><td></td><td>Remainder</td><td><code>std::ops::Rem</code></td></tr>
-<tr><td><code>&amp;</code></td><td>按位与</td><td>逻辑与</td><td></td><td><code>std::ops::BitAnd</code></td></tr>
-<tr><td><code>|</code></td><td>按位或</td><td>逻辑或</td><td></td><td><code>std::ops::BitOr</code></td></tr>
-<tr><td><code>^</code></td><td>按位异或</td><td>逻辑异或</td><td></td><td><code>std::ops::BitXor</code></td></tr>
-<tr><td><code>&lt;&lt;</code></td><td>左移位</td><td></td><td></td><td><code>std::ops::Shl</code></td></tr>
-<tr><td><code>&gt;&gt;</code></td><td>右移位**</td><td></td><td></td><td><code>std::ops::Shr</code></td></tr>
+<table><thead><tr><th>符号</th><th>整数</th><th><code>bool</code></th><th>浮点数</th><th>用于重载此运算符的 trait</th><th>用于重载此运算符的复合赋值(Compound Assignment) Trait</th></tr></thead><tbody>
+<tr><td><code>+</code></td><td>加法</td><td></td><td>加法</td><td><code>std::ops::Add</code></td><td><code>std::ops::AddAssign</code></td></tr>
+<tr><td><code>-</code></td><td>减法</td><td></td><td>减法</td><td><code>std::ops::Sub</code></td><td><code>std::ops::SubAssign</code></td></tr>
+<tr><td><code>*</code></td><td>乘法</td><td></td><td>乘法</td><td><code>std::ops::Mul</code></td><td><code>std::ops::MulAssign</code></td></tr>
+<tr><td><code>/</code></td><td>除法*</td><td></td><td>取余</td><td><code>std::ops::Div</code></td><td><code>std::ops::DivAssign</code></td></tr>
+<tr><td><code>%</code></td><td>取余</td><td></td><td>Remainder</td><td><code>std::ops::Rem</code></td><td><code>std::ops::RemAssign</code></td></tr>
+<tr><td><code>&amp;</code></td><td>按位与</td><td>逻辑与</td><td></td><td><code>std::ops::BitAnd</code></td><td><code>std::ops::BitAndAssign</code></td></tr>
+<tr><td><code>|</code></td><td>按位或</td><td>逻辑或</td><td></td><td><code>std::ops::BitOr</code></td><td><code>std::ops::BitOrAssign</code></td></tr>
+<tr><td><code>^</code></td><td>按位异或</td><td>逻辑异或</td><td></td><td><code>std::ops::BitXor</code></td><td><code>std::ops::BitXorAssign</code></td></tr>
+<tr><td><code>&lt;&lt;</code></td><td>左移位</td><td></td><td></td><td><code>std::ops::Shl</code></td><td><code>std::ops::ShlAssign</code></td></tr>
+<tr><td><code>&gt;&gt;</code></td><td>右移位**</td><td></td><td></td><td><code>std::ops::Shr</code></td><td><code>std::ops::ShrAssign</code></td></tr>
 </tbody></table>
 <p>* 整数除法趋零取整。</p>
 <p>** 有符号整数类型算术右移位，无符号整数类型逻辑右移位。</p>
@@ -378,7 +378,7 @@ assert_eq!(-10 &gt;&gt; 2, -3);
    | <a href="../expressions.html"><em>Expression</em></a> <code>&lt;=</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
 <p>Rust 还为原生类型以及标准库中的多种类型都定义了比较运算符。链式比较运算时需要借助圆括号，例如，表达式 <code>a == b == c</code> 是无效的，（但如果逻辑允许）可以写成 <code>(a == b) == c</code>。</p>
-<p>与算术运算符和逻辑运算符不同，比较运算符所使用的 trait（这些 trait 也可以被其他类型所实现以重载这些比较运算符）通常用于显示/约定如何比较一个类型，并且还很可能会假定使用这些 trait 作为约束条件的函数定义了实际的比较逻辑。其实标准库中的许多函数和宏都使用了这个假定（尽管不能确保这些假定的安全性）。与上面的算术和逻辑运算符不同，这些运算符会隐式地对它们的操作数执行共享借用，并在<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式上下文</a>中对它们进行求值：</p>
+<p>与算术运算符和逻辑运算符不同，重载这些运算符的 trait 通常用于显示/约定如何比较一个类型，并且还很可能会假定使用这些 trait 作为约束条件的函数定义了实际的比较逻辑。其实标准库中的许多函数和宏都使用了这个假定（尽管不能确保这些假定的安全性）。与上面的算术和逻辑运算符不同，这些运算符会隐式地对它们的操作数执行共享借用，并在<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式上下文</a>中对它们进行求值：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -530,14 +530,22 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <em>AssignmentExpression</em> :<br />
    <a href="../expressions.html"><em>Expression</em></a> <code>=</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><em>赋值表达式</em>由<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>后跟等号（<code>=</code>）和<a href="../expressions.html#place-expressions-and-value-expressions">值表达式</a>组成。这样的表达式的类型总是<a href="../types/tuple.html">单元(<code>unit</code>)类型</a>。</p>
-<p>对赋值表达式求值时会先<a href="../destructors.html">销毁(drop)</a>左操作数（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将其右操作数<a href="../expressions.html#moved-and-copied-types">复制(copy)或移动(move)</a>到左操作数中。左边的操作数必须是位置表达式：此时使用值表达式不会将其提升为临时位置，而是会导致编译器报错。</p>
+<p><em>赋值表达式</em>会把某个值移入到一个特定的位置。</p>
+<p><em>赋值表达式</em>由一个<a href="../expressions.html#mutability">可变</a> <a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>（就是<em>被赋值的位置操作数</em>）后跟等号（<code>=</code>）和<a href="../expressions.html#place-expressions-and-value-expressions">值表达式</a>（就是被赋值的值操作数）组成。</p>
+<p>与其他位置操作数不同，赋值位置操作数必须是一个位置表达式。试图使用值表达式将导致编译器报错，而不是将其提升转换为临时位置。</p>
+<p>赋值表达式要先计算它的操作数。赋值的值操作数先被求值，然后是赋值的位置操作数。</p>
+<blockquote>
+<p><strong>注意</strong>：此表达式与其他表达式的求值顺序不同，此表达式的右操作数在左操作数之前被求值。</p>
+</blockquote>
+<p>对赋值表达的位置表达式求值时会先<a href="../destructors.html">销毁(drop)</a>此位置（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将赋值值<a href="../expressions.html#moved-and-copied-types">复制(copy)或移动(move)</a>到此位置中。</p>
+<p>赋值表达式总是会产生<a href="../types/tuple.html">单元类型值</a>。</p>
+<p>示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">let mut x = 0;
-</span><span class="boring">let y = 0;
-</span>x = y;
+</span>let mut x = 0;
+let y = 0;
+x = y;
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#复合赋值表达式" id="复合赋值表达式">复合赋值表达式</a></h2>
@@ -556,15 +564,48 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
    | <a href="../expressions.html"><em>Expression</em></a> <code>&lt;&lt;=</code> <a href="../expressions.html"><em>Expression</em></a><br />
    | <a href="../expressions.html"><em>Expression</em></a> <code>&gt;&gt;=</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, <code>&amp;</code>, <code>|</code>, <code>^</code>, <code>&lt;&lt;</code>, 和 <code>&gt;&gt;</code>运算符可以和 <code>=</code>运算符复合组成新的运算符。表达式 <code>place_exp OP= value</code> 等效于 <code>place_expr = place_expr OP val</code>。例如，<code>x = x + 1</code> 可以写成 <code>x += 1</code>。任何这样的表达式的类型总是<a href="../types/tuple.html">单元(<code>unit</code>)类型</a>。这些运算符都可以使用与普通操作的相同的 trait 来重载，只是相应的 trait名称后要加上 “Assign”，例如，<code>std::ops::AddAssign</code> 用于重载 <code>+=</code>。因为带有 <code>=</code>，所以 <code>place_expr</code> 必须是<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>。</p>
+<p><em>复合赋值表达式</em>将算术符（以及二进制逻辑操作符）与赋值表达式相结合在一起使用。</p>
+<p>比如：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let mut x = 10;
-x += 4;
-assert_eq!(x, 14);
+</span>let mut x = 5;
+x += 1;
+assert!(x == 6);
 <span class="boring">}
 </span></code></pre></pre>
+<p>复合赋值的句法是<a href="../expressions.html#mutability">可变</a> <a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>（<em>被赋值操作数</em>），然后是一个操作符再后跟一个 <code>=</code>（这两个符号共同作为一个单独的 token），最后是一个<a href="../expressions.html#place-expressions-and-value-expressions">值表达式</a>（也叫被复合修改操作数(modifying operand)）。</p>
+<p>与其他位置操作数不同，被赋值的位置操作数必须是一个位置表达式。试图使用值表达式将导致编译器报错，而不是将其提升转换为临时位置。</p>
+<p>复合赋值表达式的求值取决于操作符的类型。</p>
+<p>如果复合赋值表达式了两个操作数的类型都是原生类型，则首先对被复合修改操作数进行求值，然后再对被赋值操作数求值。最后将被赋值操作数的位置值设置为原被赋值操作数的值和复合修改操作数执行运算后的值。</p>
+<blockquote>
+<p><strong>注意</strong>：此表达式与其他表达式的求值顺序不同，此表达式的右操作数在左操作数之前被求值。</p>
+</blockquote>
+<p>此外，这个表达式是调用操作符重载复合赋值trait 的函数的语法糖（见本章前面的表格）。被赋值操作数必须是可变的。</p>
+<p>例如，下面 <code>example</code>函数中的两个表达式语句是等价的：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Addable;
+</span><span class="boring">use std::ops::AddAssign;
+</span>
+impl AddAssign&lt;Addable&gt; for Addable {
+    /* */
+<span class="boring">fn add_assign(&amp;mut self, other: Addable) {}
+</span>}
+
+fn example() {
+<span class="boring">let (mut a1, a2) = (Addable, Addable);
+</span>  a1 += a2;
+
+<span class="boring">let (mut a1, a2) = (Addable, Addable);
+</span>  AddAssign::add_assign(&amp;mut a1, a2);
+}
+<span class="boring">}
+</span></code></pre></pre>
+<div class="warning">
+<p>警告：复合赋值表达式的操作数的求值顺序取决于操作数的类型：对于原生类型，右边操作数将首先被求值，而对于非原生类型，左边操作数将首先被求值。建议尽量不要编写依赖于复合赋值表达式中操作数的求值顺序的代码。请参阅<a href="https://github.com/rust-lang/rust/blob/master/src/test/ui/expr/compound-assignment/eval-order.rs">这里的测试</a>以获得使用此依赖项的示例。</p>
+</div>
 <div class="footnote-definition" id="译者注"><sup class="footnote-definition-label">1</sup>
 <p>截断，即一个值范围较大的变量A转换为值范围较小的变量B，如果超出范围，则将A减去B的区间长度。例如，128超出了i8类型的范围（-128,127），截断之后的值等于128-256=-128。</p>
 </div>
