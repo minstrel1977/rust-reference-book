@@ -6564,7 +6564,7 @@ assert_eq!(try_option_none(), None);
       <code>-</code> <a href="expressions/../expressions.html"><em>Expression</em></a><br />
    | <code>!</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p>这是最后两个一元运算符。下表总结了它们用在基本类型上的表现，同时指出其他类型要重载这些操作符需要实现的 trait。记住，有符号整数总是用 2 的补码形式表示。所有这些运算符的操作数都在<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中被求值，所以这些操作数的值会被移走或复制。</p>
+<p>这是最后两个一元运算符。下表总结了它们用在基本类型上的表现，同时指出其他类型要重载这些操作符需要实现的 trait。记住，有符号整数总是用二进制补码形式表示。所有这些运算符的操作数都在<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中被求值，所以这些操作数的值会被移走或复制。</p>
 <table><thead><tr><th>符号</th><th>整数</th><th><code>bool</code></th><th>浮点数</th><th>用于重载的 trait</th></tr></thead><tbody>
 <tr><td><code>-</code></td><td>符号取反*</td><td></td><td>符号取反</td><td><code>std::ops::Neg</code></td></tr>
 <tr><td><code>!</code></td><td>按位取反</td><td>逻辑非</td><td></td><td><code>std::ops::Not</code></td></tr>
@@ -6596,7 +6596,7 @@ assert_eq!(true, !false);
    | <a href="expressions/../expressions.html"><em>Expression</em></a> <code>&lt;&lt;</code> <a href="expressions/../expressions.html"><em>Expression</em></a><br />
    | <a href="expressions/../expressions.html"><em>Expression</em></a> <code>&gt;&gt;</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p>二元运算符表达式都用中缀表示法(infix notation)书写。下表总结了算术和逻辑二元运算符在原生类型(primitive type)上的行为，同时指出其他类型要重载这些操作符需要实现的 trait。记住，有符号整数总是用 2 的补码形式表示。所有这些运算符的操作数都在<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中求值，因此这些操作数的值会被移走或复制。</p>
+<p>二元运算符表达式都用中缀表示法(infix notation)书写。下表总结了算术和逻辑二元运算符在原生类型(primitive type)上的行为，同时指出其他类型要重载这些操作符需要实现的 trait。记住，有符号整数总是用二进制补码形式表示。所有这些运算符的操作数都在<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中求值，因此这些操作数的值会被移走或复制。</p>
 <table><thead><tr><th>符号</th><th>整数</th><th><code>bool</code></th><th>浮点数</th><th>用于重载此运算符的 trait</th><th>用于重载此运算符的复合赋值(Compound Assignment) Trait</th></tr></thead><tbody>
 <tr><td><code>+</code></td><td>加法</td><td></td><td>加法</td><td><code>std::ops::Add</code></td><td><code>std::ops::AddAssign</code></td></tr>
 <tr><td><code>-</code></td><td>减法</td><td></td><td>减法</td><td><code>std::ops::Sub</code></td><td><code>std::ops::SubAssign</code></td></tr>
@@ -8973,7 +8973,7 @@ commit: 73ca198fb3ab52283d67d5fe28c541ee1d169f48 <br />
 <tr><td><code>u64</code></td><td>0</td><td>2<sup>64</sup>-1</td></tr>
 <tr><td><code>u128</code></td><td>0</td><td>2<sup>128</sup>-1</td></tr>
 </tbody></table>
-<p>有符号整数类型：</p>
+<p>有符号二进制补码整型包括：</p>
 <table><thead><tr><th>类型</th><th>最小值</th><th>最大值</th></tr></thead><tbody>
 <tr><td><code>i8</code></td><td>-(2<sup>7</sup>)</td><td>2<sup>7</sup>-1</td></tr>
 <tr><td><code>i16</code></td><td>-(2<sup>15</sup>)</td><td>2<sup>15</sup>-1</td></tr>
@@ -11391,8 +11391,8 @@ commit: a7473287cc6e2fb972165dc5a7ffd26dad1fc907 <br />
 <h5><a class="header" href="#整数溢出integer-overflow" id="整数溢出integer-overflow">整数溢出(Integer overflow)</a></h5>
 <p>如果程序包含算术溢出(arithmetic overflow)，则说明程序员犯了错误。在下面的讨论中，我们将区分算术溢出和包装算法(wrapping arithmetic)。前者是错误的，而后者是有意为之的。</p>
 <p>当程序员启用了 <code>debug_assert!</code> 断言（例如，通过启用非优化的构建方式），相应的实现就必须插进来以便在溢出时触发 <code>panic</code>。而其他类型的构建形式有可能也在溢出时触发 <code>panics</code>，也有可能仅仅隐式包装一下溢出值，对溢出过程做静音处理。也就是说具体怎么对待溢出由插进来的编译实现决定。</p>
-<p>在隐式包装溢出的情况下，（编译器实现的包装算法）实现必须通过使用 2的补码溢出(two's complement overflow)约定来提供定义良好的（即使仍然被认为是错误的）溢出包装结果。</p>
-<p>整型提供了一些固有方法(inherent methods)，允许程序员显式地执行包装算法。例如，<code>i32::wrapping_add</code> 提供了使用 2的补码溢出约定算法的加法，即包装类加法(wrapping addition)。</p>
+<p>在隐式包装溢出的情况下，（编译器实现的包装算法）实现必须通过使用二进制补码溢出(two's complement overflow)约定来提供定义良好的（即使仍然被认为是错误的）溢出包装结果。</p>
+<p>整型提供了一些固有方法(inherent methods)，允许程序员显式地执行包装算法。例如，<code>i32::wrapping_add</code> 提供了使用二进制补码溢出约定算法的加法，即包装类加法(wrapping addition)。</p>
 <p>标准库还提供了一个 <code>Wrapping&lt;T&gt;</code> 的新类型，该类型确保 <code>T</code> 的所有标准算术操作都具有包装语义。</p>
 <p>请参阅 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0560-integer-overflow.md">RFC 560</a> 以了解错误条件、基本原理以及有关整数溢出的更多详细信息。</p>
 <h5><a class="header" href="#逻辑错误logic-errors" id="逻辑错误logic-errors">逻辑错误(Logic errors)</a></h5>

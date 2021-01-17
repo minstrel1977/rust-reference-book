@@ -302,7 +302,7 @@ assert_eq!(try_option_none(), None);
       <code>-</code> <a href="../expressions.html"><em>Expression</em></a><br />
    | <code>!</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p>这是最后两个一元运算符。下表总结了它们用在基本类型上的表现，同时指出其他类型要重载这些操作符需要实现的 trait。记住，有符号整数总是用 2 的补码形式表示。所有这些运算符的操作数都在<a href="../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中被求值，所以这些操作数的值会被移走或复制。</p>
+<p>这是最后两个一元运算符。下表总结了它们用在基本类型上的表现，同时指出其他类型要重载这些操作符需要实现的 trait。记住，有符号整数总是用二进制补码形式表示。所有这些运算符的操作数都在<a href="../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中被求值，所以这些操作数的值会被移走或复制。</p>
 <table><thead><tr><th>符号</th><th>整数</th><th><code>bool</code></th><th>浮点数</th><th>用于重载的 trait</th></tr></thead><tbody>
 <tr><td><code>-</code></td><td>符号取反*</td><td></td><td>符号取反</td><td><code>std::ops::Neg</code></td></tr>
 <tr><td><code>!</code></td><td>按位取反</td><td>逻辑非</td><td></td><td><code>std::ops::Not</code></td></tr>
@@ -334,7 +334,7 @@ assert_eq!(true, !false);
    | <a href="../expressions.html"><em>Expression</em></a> <code>&lt;&lt;</code> <a href="../expressions.html"><em>Expression</em></a><br />
    | <a href="../expressions.html"><em>Expression</em></a> <code>&gt;&gt;</code> <a href="../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p>二元运算符表达式都用中缀表示法(infix notation)书写。下表总结了算术和逻辑二元运算符在原生类型(primitive type)上的行为，同时指出其他类型要重载这些操作符需要实现的 trait。记住，有符号整数总是用 2 的补码形式表示。所有这些运算符的操作数都在<a href="../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中求值，因此这些操作数的值会被移走或复制。</p>
+<p>二元运算符表达式都用中缀表示法(infix notation)书写。下表总结了算术和逻辑二元运算符在原生类型(primitive type)上的行为，同时指出其他类型要重载这些操作符需要实现的 trait。记住，有符号整数总是用二进制补码形式表示。所有这些运算符的操作数都在<a href="../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中求值，因此这些操作数的值会被移走或复制。</p>
 <table><thead><tr><th>符号</th><th>整数</th><th><code>bool</code></th><th>浮点数</th><th>用于重载此运算符的 trait</th><th>用于重载此运算符的复合赋值(Compound Assignment) Trait</th></tr></thead><tbody>
 <tr><td><code>+</code></td><td>加法</td><td></td><td>加法</td><td><code>std::ops::Add</code></td><td><code>std::ops::AddAssign</code></td></tr>
 <tr><td><code>-</code></td><td>减法</td><td></td><td>减法</td><td><code>std::ops::Sub</code></td><td><code>std::ops::SubAssign</code></td></tr>
