@@ -2,8 +2,8 @@
 # Use声明
 
 >[use-declarations.md](https://github.com/rust-lang/reference/blob/master/src/items/use-declarations.md)\
->commit: da3098c49b2f62c878ca9a36099d7dffb4bd9474 \
->本章译文最后维护日期：2020-11-8
+>commit: eabdf09207bf3563ae96db9d576de0758c413d5d \
+>本章译文最后维护日期：2021-1-24
 
 > **<sup>句法:</sup>**\
 > _UseDeclaration_ :\
@@ -176,7 +176,7 @@ m!(use std as _;);
 [IDENTIFIER]: ../identifiers.md
 [_SimplePath_]: ../paths.md#simple-paths
 [`extern crate`]: extern-crates.md
-[extern prelude]: extern-crates.md#extern-prelude
+[extern prelude]: ../names/preludes.md#extern-prelude
 [path qualifiers]: ../paths.md#path-qualifiers
 
 <!-- 2020-11-12-->

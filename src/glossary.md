@@ -2,8 +2,8 @@
 # 术语表
 
 >[glossary.md](https://github.com/rust-lang/reference/blob/master/src/glossary.md)\
->commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e \
->本章译文最后维护日期：2020-11-17
+>commit: 10da84befd0e79f5e1490912a02cb74368cd3f4a \
+>本章译文最后维护日期：2021-1-24
 
 ### Abstract syntax tree
 ### 抽象句法树
@@ -64,6 +64,12 @@ Dispatch is the mechanism to determine which specific version of code is actuall
 
 动态尺寸类型(DST)是一种没有静态已知尺寸或对齐量的类型。\
 A dynamically sized type (DST) is a type without a statically known size or alignment.
+
+### Entity
+### 实体
+
+[*实体(entity)*][*entity*]是一种语言结构，可以在源程序中以某种方式引用，通常通过[路径(path)][paths]。实体包括[类型][types]、[程序项][items]、[泛型参数][generic parameters]、[变量绑定][variable bindings]、[循环标签][loop labels]、[生存期][lifetimes]、[字段][fields]、[属性][attributes]和[lints]。\
+An [*entity*] is a language construct that can be referred to in some way within the source program, usually via a [path][paths]. Entities include [types], [items], [generic parameters], [variable bindings], [loop labels], [lifetimes], [fields], [attributes], and [lints].
 
 ### Expression
 ### 表达式
@@ -128,6 +134,26 @@ A `trait` which was defined in the current crate. A trait definition is local or
 指在当前 crate 中定义的 `struct`、`enum`、或 `union` 。本地类型不会受到类型参数的影响。`struct Foo` 被认为是本地的，但 `Vec<Foo>` 不是。`LocalType<ForeignType>` 是本地的。类型别名不影响本地性。\
 A `struct`, `enum`, or `union` which was defined in the current crate. This is not affected by applied type arguments. `struct Foo` is considered local, but `Vec<Foo>` is not. `LocalType<ForeignType>` is local. Type aliases do not affect locality.
 
+### Name
+### 名称
+
+[*名称*][*name*]是一个指向[实体](#entity)的[标识符][identifier]或[生存期或循环标签][lifetime or loop label]。*名称绑定(name binding)*是指实体声明时引入了与该实体相关联的标识符或标签。[路径][Paths]、标识符和标签用于引用实体。\
+A [*name*] is an [identifier] or [lifetime or loop label] that refers to an [entity](#entity). A *name binding* is when an entity declaration introduces an identifier or label associated with that entity. [Paths], identifiers, and labels are used to refer to an entity.
+
+### Name resolution
+### 名称解析
+
+[*名称解析*][*Name resolution*]是将[路径][paths]、[标识符][identifiers]、[标签][labels]和[实体(entity)](#entity)声明绑定在一起的的编译过程。\
+[*Name resolution*] is the compile-time process of tying [paths], [identifiers], and [labels] to [entity](#entity) declarations.
+
+### Namespace
+### 命名空间
+
+*命名空间*是基于名称所引用的[实体](#entity)类型的声明[名称](#name)的逻辑分组。命名空间让在一个命名空间中出现的名称不会与另一个命名空间中的相同名称冲突。\
+A *namespace* is a logical grouping of declared [names](#name) based on the kind of [entity](#entity) the name refers to. Namespaces allow the occurrence of a name in one namespace to not conflict with the same name in another namespace.\
+在命名空间中，名称统一组织在一个层次结构中，层次结构的每一层都有自己的命名实体集合。\
+Within a namespace, names are organized in a hierarchy, where each level of the hierarchy has its own collection of named entities.
+
 ### Nominal types
 ### 标称类型
 
@@ -140,11 +166,23 @@ Types that can be referred to by a path directly. Specifically [enums], [structs
 可以用作 [trait对象]的 [trait][Traits]。只有遵循特定[规则][object safety]的 trait 才是对象安全的。\
 [Traits] that can be used as [trait objects]. Only traits that follow specific [rules][object safety] are object safe.
 
+### Path
+### 路径
+
+[*路径*][*path*]是一个或多个路径段组成的序列，用于引用当前作用域或某[命名空间](#namespace)层次结构中的[实体](#entity)。\
+A [*path*] is a sequence of one or more path segments used to refer to an [entity](#entity) in the current scope or other levels of a [namespace](#namespace) hierarchy.
+
 ### Prelude
 ### 预加载模块集/预导入包
 
 预加载模块集，或者 Rust 预加载模块集，是一个会被导入到每个 crate 中的每个模块的小型程序项集合（其中大部分是 trait）。trait 在预加载模块集中很普遍。\
 Prelude, or The Rust Prelude, is a small collection of items - mostly traits - that are imported into every module of every crate. The traits in the prelude are pervasive.
+
+### Scope
+### 作用域
+
+[*作用域*][*scope*]是源文本的一个区域，在该区域中可以直接使用其名称来引用在其下命名的命名[实体](#entity)。\
+A [*scope*] is the region of source text where a named [entity](#entity) may be referenced with that name.
 
 ### Scrutinee
 ### 检验对象\检验对象表达式
@@ -221,20 +259,40 @@ A type is uninhabited if it has no constructors and therefore can never be insta
 
 [alignment]: type-layout.md#size-and-alignment
 [associated item]: #associated-item
+[attributes]: attributes.md
+[*entity*]: names.md
 [enums]: items/enumerations.md
+[fields]: expressions/field-expr.md
 [free item]: #free-item
+[generic parameters]: items/generics.md
+[identifier]: identifiers.md
+[identifiers]: identifiers.md
 [implementation]: items/implementations.md
 [implementations]: items/implementations.md
 [inherent implementation]: items/implementations.md#inherent-implementations
 [item]: items.md
+[items]: items.md
+[labels]: tokens.md#lifetimes-and-loop-labels
+[lifetime or loop label]: tokens.md#lifetimes-and-loop-labels
+[lifetimes]: tokens.md#lifetimes-and-loop-labels
+[lints]: attributes/diagnostics.md#lint-check-attributes
+[loop labels]: tokens.md#lifetimes-and-loop-labels
 [method]: items/associated-items.md#methods
+[*Name resolution*]: names/name-resolution.md
+[*name*]: names.md
+[*namespace*]: names/namespaces.md
 [never type]: types/never.md
 [object safety]: items/traits.md#object-safety
+[*path*]: paths.md
+[Paths]: paths.md
+[*scope*]: names/scopes.md
 [structs]: items/structs.md
 [trait objects]: types/trait-object.md
 [traits]: items/traits.md
+[types]: types.md
 [undefined-behavior]: behavior-considered-undefined.md
 [unions]: items/unions.md
+[variable bindings]: patterns.md
 
-<!-- 2020-11-12-->
+<!-- 2021-1-24-->
 <!-- checked -->

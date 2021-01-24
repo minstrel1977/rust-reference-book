@@ -2,8 +2,8 @@
 # 关键字
 
 >[keywords.md](https://github.com/rust-lang/reference/blob/master/src/keywords.md)\
->commit: 64923185890763048d190ce92cb668b58acbc49a
->本章译文最后维护日期：2020-11-5
+>commit: eabdf09207bf3563ae96db9d576de0758c413d5d
+>本章译文最后维护日期：2020-1-24
 
 Rust 将关键字分为三类：
 
@@ -99,8 +99,8 @@ Rust 将关键字分为三类：
 这类关键字只有在特定的上下文中才有特殊的意义。例如，可以声明名为 `union` 的变量或方法。
 
 * `union` 用于声明[联合体(`union`)][union]，它只有在联合体声明中使用时才是关键字。
-* `'static` 用于静态生存期，不能用作通用生存期参数
-
+* `'static` 用于静态生存期，不能用作通用[泛型生存期参数][generic lifetime parameter]和[循环标签][loop label]
+  
   ```compile_fail
   // error[E0262]: invalid lifetime parameter name: `'static`
   fn invalid_lifetime_parameter<'static>(s: &'static str) -> &'static str { s }
@@ -127,6 +127,5 @@ Rust 将关键字分为三类：
 [union]: items/unions.md
 [variants]: items/enumerations.md
 [`dyn`]: types/trait-object.md
-
-<!-- 2020-11-12-->
-<!-- checked -->
+[loop label]: expressions/loop-expr.md#loop-labels
+[generic lifetime parameter]: items/generics.md

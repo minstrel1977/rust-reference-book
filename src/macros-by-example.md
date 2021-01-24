@@ -2,7 +2,7 @@
 # 声明宏
 
 >[macros-by-example.md](https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md)\
->commit: 30ccf092c7c1d92b2398e28d4abf8c5ba6c31cba \
+>commit: eabdf09207bf3563ae96db9d576de0758c413d5d \
 >本章译文最后维护日期：2020-11-7
 
 > **<sup>句法</sup>**\
@@ -237,7 +237,7 @@ mod inner {
 m!();
 ```
 
-其次，它可以用于从另一个 crate 里来导入宏，方法是将它附加到当前 crate 根模块中的 `extern crate` 声明前。以这种方式导入的宏会被导入到当前 crate 的预导入包(prelude)里，而不是直接文本导入，这意味着它们可以被任何其他同名宏屏蔽。虽然可以在导入语句之前使用 `#[macro_use]` 导入宏，但如果发生冲突，则最后导入的宏将胜出。可以使用可选的 [_MetaListIdents_]元项属性句法指定要导入的宏列表；当将 `#[macro_use]` 应用于模块上时，则不支持此指定操作。
+其次，它可以用于从另一个 crate 里来导入宏，方法是将它附加到当前 crate 根模块中的 `extern crate` 声明前。以这种方式导入的宏会被导入到[`macro_use`预导入包][`macro_use` prelude]里，而不是直接文本导入，这意味着它们可以被任何其他同名宏屏蔽。虽然可以在导入语句之前使用 `#[macro_use]` 导入宏，但如果发生冲突，则最后导入的宏将胜出。可以使用可选的 [_MetaListIdents_]元项属性句法指定要导入的宏列表；当将 `#[macro_use]` 应用于模块上时，则不支持此指定操作。
 
 <!-- ignore: requires external crates -->
 ```rust,ignore
@@ -390,6 +390,4 @@ macro_rules! helper {
 [_Visibility_]: visibility-and-privacy.md
 [formal specification]: macro-ambiguity.md
 [token]: tokens.md
-
-<!-- 2020-11-12-->
-<!-- checked -->
+[`macro_use` prelude]: names/preludes.md#macro_use-prelude

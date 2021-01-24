@@ -3,8 +3,8 @@
 # 属性
 
 >[attributes.md](https://github.com/rust-lang/reference/blob/master/src/attributes.md)\
->commit: 814a530db0a3f91821095a830fa321fdd5a41d17 \
->本章译文最后维护日期：2020-11-10
+>commit: eabdf09207bf3563ae96db9d576de0758c413d5d \
+>本章译文最后维护日期：2021-1-24
 
 > **<sup>句法</sup>**\
 > _InnerAttribute_ :\
@@ -134,7 +134,7 @@ _MetaListNameValueStr_ | `link(name = "CoreFoundation", kind = "framework")`
 ## Tool attributes
 ## 外部工具属性
 
-编译器可以允许和具体外部工具相关的属性，但这些工具在编译和检查过程中必须存在并驻留在编译器为它们提供的命名空间中。这种属性的（命名空间）路径的第一段是工具的名称，后跟一个或多个工具自己解释的附加段。
+编译器可能允许和具体外部工具相关联的属性，但这些工具在编译和检查过程中必须存在并驻留在编译器提供的[工具类预导入包][tool prelude]下对应的命名空间中（才能让这些属性生效）。这种属性的（命名空间）路径的第一段是工具的名称，后跟一个或多个工具自己解释的附加段。
 
 当工具在编译期不可用时，该工具的属性将被静默接受而不提示警告。当工具可用时，该工具负责处理和解释这些属性。
 
@@ -249,11 +249,11 @@ pub fn f() {}
 [`macro_use`]: macros-by-example.md#the-macro_use-attribute
 [`must_use`]: attributes/diagnostics.md#the-must_use-attribute
 [`no_builtins`]: attributes/codegen.md#the-no_builtins-attribute
-[`no_implicit_prelude`]: items/modules.md#prelude-items
+[`no_implicit_prelude`]: names/preludes.md#the-no_implicit_prelude-attribute
 [`no_link`]: items/extern-crates.md#the-no_link-attribute
 [`no_main`]: crates-and-source-files.md#the-no_main-attribute
 [`no_mangle`]: abi.md#the-no_mangle-attribute
-[`no_std`]: crates-and-source-files.md#preludes-and-no_std
+[`no_std`]: names/preludes.md#the-no_std-attribute
 [`non_exhaustive`]: attributes/type_system.md#the-non_exhaustive-attribute
 [`panic_handler`]: runtime.md#the-panic_handler-attribute
 [`path`]: items/modules.md#the-path-attribute
@@ -285,10 +285,11 @@ pub fn f() {}
 [modules]: items/modules.md
 [statements]: statements.md
 [struct]: items/structs.md
+[tool prelude]: names/preludes.md#tool-prelude
 [union]: items/unions.md
 [closure]: expressions/closure-expr.md
 [function pointer]: types/function-pointer.md
 [variadic functions]: items/external-blocks.html#variadic-functions
 
-<!-- 2020-11-12-->
+<!-- 2021-1-24-->
 <!-- checked -->

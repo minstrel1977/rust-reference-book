@@ -1,8 +1,8 @@
 # crate 和源文件
 
 >[crates-and-source-files.md](https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md)\
->commit: 277587a55aa24d8f6a66ddb43493e150c916ef43 \
->本章译文最后维护日期：2020-11-8
+>commit: eabdf09207bf3563ae96db9d576de0758c413d5d \
+>本章译文最后维护日期：2021-1-24
 
 > **<sup>句法</sup>**\
 > _Crate_ :\
@@ -64,15 +64,8 @@ fn main() {
 ## Preludes and `no_std`
 ## 预导入包和 `no_std`
 
-所有的 crate 都有一个 *预导入包(prelude)*，它会自动将一个特定模块（*预导入包模块*）里的名称插入到每个[模块][module]的作用域内，并将一个 [`extern crate`] 插入到当前 crate 的根模块中。默认情况下，这个预导入包为*标准预导入包(standard prelude)*。它链接的 crate 是 [`std`]，预导入模块是 [`std::prelude::v1`]。
-
-在根 crate 模块上使用 `no_std` [属性][attribute]，可以将预导入包改成 *核心预导入包(core prelude)*。它链接的 crate 是 [`core`]，预导入模块为 [`core::prelude::v1`]。当 crate 的目标平台不支持标准库或有意不使用标准库的功能时，使用核心预导入包而不是标准预导入包是可行的。这么做放弃的主要功能是动态内存分配（例如：`Box` 和 `Vec`）、文件和网络功能（例如： `std::fs` 和 `std::io`）。
-
-<div class="warning">
-
-警告：使用 `no_std` 不会阻止主动把标准库链接进来的操作。仍然可以合法地将 `extern crate std;` 这条语句引入到当前 crate 中，同时其完整的依赖关系也可以成功地加载到当前 crate 中。
-
-</div>
+本节内容已经移入[预导入包那章里](names/preludes.md)了。
+<!-- 本节是为了让其他资料的链入链接不止于立即失效，一旦其他链接被更新，本节就会删除 -->
 
 ## Main Functions
 ## main函数
@@ -115,11 +108,6 @@ crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 `-`(U+
 [_shebang_]: https://en.wikipedia.org/wiki/Shebang_(Unix)
 [_utf8 byte order mark_]: https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8
 [`Termination`]: https://doc.rust-lang.org/std/process/trait.Termination.html
-[`core`]: https://doc.rust-lang.org/core/index.html
-[`core::prelude::v1`]: https://doc.rust-lang.org/core/prelude/index.html
-[`extern crate`]: items/extern-crates.md
-[`std`]: https://doc.rust-lang.org/std/index.html
-[`std::prelude::v1`]: https://doc.rust-lang.org/std/prelude/index.html
 [attribute]: attributes.md
 [attributes]: attributes.md
 [comments]: comments.md
@@ -129,6 +117,20 @@ crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 `-`(U+
 [trait or lifetime bounds]: trait-bounds.md
 [where clauses]: items/generics.md#where-clauses
 [whitespace]: whitespace.md
+
+<script>
+(function() {
+    var fragments = {
+        "#preludes-and-no_std": "names/preludes.html",
+    };
+    var target = fragments[window.location.hash];
+    if (target) {
+        var url = window.location.toString();
+        var base = url.substring(0, url.lastIndexOf('/'));
+        window.location.replace(base + "/" + target);
+    }
+})();
+</script>
 
 <!-- 2020-11-12-->
 <!-- checked -->

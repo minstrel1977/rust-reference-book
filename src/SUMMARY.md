@@ -12,7 +12,6 @@
     - [注释](comments.md)
     - [空白符](whitespace.md)
     - [token](tokens.md)
-    - [路径](paths.md)
 
 - [宏](macros.md)
     - [声明宏](macros-by-example.md)
@@ -36,9 +35,8 @@
     - [trait](items/traits.md)
     - [实现](items/implementations.md)
     - [外部块](items/external-blocks.md)
-    - [类型参数和生存期参数](items/generics.md)
+    - [泛型参数](items/generics.md)
     - [关联程序项](items/associated-items.md)
-    - [可见性与隐私权](visibility-and-privacy.md)
 
 - [属性](attributes.md)
     - [测试](attributes/testing.md)
@@ -103,6 +101,14 @@
     - [生存期省略](lifetime-elision.md)
 
 - [特殊类型和 trait](special-types-and-traits.md)
+
+- [名称](names.md)
+    - [命名空间](names/namespaces.md)
+    - [作用域](names/scopes.md)
+    - [预导入包](names/preludes.md)
+    - [路径](paths.md)
+    - [名称解析](names/name-resolution.md)
+    - [可见性与隐私权](visibility-and-privacy.md)
 
 - [内存模型](memory-model.md)
     - [内存分配和其生存期](memory-allocation-and-lifetime.md)

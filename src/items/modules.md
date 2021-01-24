@@ -2,8 +2,8 @@
 # 模块
 
 >[modules.md](https://github.com/rust-lang/reference/blob/master/src/items/modules.md)\
->commit: fbf34356b709cfc0debb01acaaff038d4e339aab \
->本章译文最后维护日期：2020-11-7
+>commit: eabdf09207bf3563ae96db9d576de0758c413d5d \
+>本章译文最后维护日期：2021-1-24
 
 
 > **<sup>句法:</sup>**\
@@ -102,17 +102,12 @@ mod thread { // 译者注：有模块要内联进来的内联模块
 }
 ```
 
-## Prelude Items
-## 预导入项
-
-模块在作用域中隐式地就有一些模块名称。这些名称是内置的，除了宏（是在外部crate声明上）用 [`#[macro_use]`][macro_use] 导入这些名称外，其他都是通过当前 crate 的[预导入包][prelude]导入的。这些名称都由唯一的标识符组成。这些名称不是当前模块的一部分，因此，例如，任何名为 `name`、 `self::name` 的路径都不是有效路径。由[预导入包][prelude]添加进来的各种模块名称可以通过将 `no_implicit_prelude`[属性][attribute]放在当前模块或当前模块的任意祖先模块上来移除。
-
 ## Attributes on Modules
 ## 模块上的属性
 
 模块和所有程序项一样能接受外部属性。它们也能接受内部属性：可以在带有代码体的模块的 `{` 之后，也可以在模块源文件的开头（但须在可选的 BOM 和 shebang 之后）。
 
-在模块中有意义的内置属性是 [`cfg`]、[`deprecated`]、[`doc`]、[lint检查类属性][the lint check attributes]、`path` 和 `no_implicit_prelude`。模块也能接受宏属性。
+在模块中有意义的内置属性是 [`cfg`]、[`deprecated`]、[`doc`]、[lint检查类属性][the lint check attributes]、[`path`] 和 [`no_implicit_prelude`]。模块也能接受宏属性。
 
 [_InnerAttribute_]: ../attributes.md
 [_Item_]: ../items.md
@@ -120,12 +115,24 @@ mod thread { // 译者注：有模块要内联进来的内联模块
 [`cfg`]: ../conditional-compilation.md
 [`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
 [`doc`]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
+[`no_implicit_prelude`]: ../names/preludes.md#the-no_implicit_prelude-attribute
+[`path`]: #the-path-attribute
 [IDENTIFIER]: ../identifiers.md
 [attribute]: ../attributes.md
 [items]: ../items.md
 [module path]: ../paths.md
-[prelude]: ../crates-and-source-files.md#preludes-and-no_std
 [the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
 
-<!-- 2020-11-12-->
-<!-- checked -->
+<script>
+(function() {
+    var fragments = {
+        "#prelude-items": "../names/preludes.html",
+    };
+    var target = fragments[window.location.hash];
+    if (target) {
+        var url = window.location.toString();
+        var base = url.substring(0, url.lastIndexOf('/'));
+        window.location.replace(base + "/" + target);
+    }
+})();
+</script>
