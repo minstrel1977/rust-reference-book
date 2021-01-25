@@ -3,7 +3,7 @@
 
 >[glossary.md](https://github.com/rust-lang/reference/blob/master/src/glossary.md)\
 >commit: 10da84befd0e79f5e1490912a02cb74368cd3f4a \
->本章译文最后维护日期：2021-1-24
+>本章译文最后维护日期：2021-1-25
 
 ### Abstract syntax tree
 ### 抽象句法树
@@ -68,7 +68,7 @@ A dynamically sized type (DST) is a type without a statically known size or alig
 ### Entity
 ### 实体
 
-[*实体(entity)*][*entity*]是一种语言结构，可以在源程序中以某种方式引用，通常通过[路径(path)][paths]。实体包括[类型][types]、[程序项][items]、[泛型参数][generic parameters]、[变量绑定][variable bindings]、[循环标签][loop labels]、[生存期][lifetimes]、[字段][fields]、[属性][attributes]和[lints]。\
+[*实体(entity)*][*entity*]是一种语言结构，在源程序中可以以某种方式被引用，通常是通过[路径(path)][paths]。实体包括[类型][types]、[程序项][items]、[泛型参数][generic parameters]、[变量绑定][variable bindings]、[循环标签][loop labels]、[生存期][lifetimes]、[字段][fields]、[属性][attributes]和[lints]。\
 An [*entity*] is a language construct that can be referred to in some way within the source program, usually via a [path][paths]. Entities include [types], [items], [generic parameters], [variable bindings], [loop labels], [lifetimes], [fields], [attributes], and [lints].
 
 ### Expression

@@ -10635,211 +10635,181 @@ commit: fcdc0cab546c10921d66054be25c6afc9dd6b3bc <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/names.md">keywords.md</a><br />
 commit: a989af055ff4fd7e1212754490fff72c3f7cc1be
-本章译文最后维护日期：2020-1-24</p>
+本章译文最后维护日期：2020-1-25</p>
 </blockquote>
-<p>An <em>entity</em> is a language construct that can be referred to in some way within
-the source program, usually via a <a href="paths.html">path</a>. Entities include <a href="types.html">types</a>, <a href="items.html">items</a>,
-<a href="items/generics.html">generic parameters</a>, <a href="patterns.html">variable bindings</a>, <a href="expressions/loop-expr.html#loop-labels">loop labels</a>, <a href="tokens.html#lifetimes-and-loop-labels">lifetimes</a>,
-<a href="expressions/field-expr.html">fields</a>, <a href="attributes.html">attributes</a>, and <a href="attributes/diagnostics.html#lint-check-attributes">lints</a>.</p>
-<p>A <em>declaration</em> is a syntactical construct that can introduce a <em>name</em> to
-refer to an entity. Entity names are valid within a <a href="names/scopes.html"><em>scope</em></a> — a region of
-source text where that name may be referenced.</p>
-<p>Some entities are <a href="names.html#explicitly-declared-entities">explicitly declared</a> in the
-source code, and some are <a href="names.html#implicitly-declared-entities">implicitly declared</a>
-as part of the language or compiler extensions.</p>
-<p><a href="paths.html"><em>Paths</em></a> are used to refer to an entity, possibly in another scope. Lifetimes
-and loop labels use a <a href="tokens.html#lifetimes-and-loop-labels">dedicated syntax</a> using a
-leading quote.</p>
-<p>Names are segregated into different <a href="names/namespaces.html"><em>namespaces</em></a>, allowing entities in
-different namespaces to share the same name without conflict.</p>
-<p><a href="names/name-resolution.html"><em>Name resolution</em></a> is the compile-time process of tying paths, identifiers,
-and labels to entity declarations.</p>
-<p>Access to certain names may be restricted based on their <a href="visibility-and-privacy.html"><em>visibility</em></a>.</p>
+<p>*实体(entity)*是一种语言结构，在源程序中可以以某种方式被引用，通常是通过[路径(path)][paths]。实体包括<a href="types.html">类型</a>、<a href="items.html">程序项</a>、<a href="items/generics.html">泛型参数</a>、<a href="patterns.html">变量绑定</a>、<a href="expressions/loop-expr.html#loop-labels">循环标签</a>、<a href="tokens.html#lifetimes-and-loop-labels">生存期</a>、<a href="expressions/field-expr.html">字段</a>、<a href="attributes.html">属性</a>和各种<a href="attributes/diagnostics.html#lint-check-attributes">lints</a>。</p>
+<p><em>声明(declaration)<em>是一种句法结构，它可以引入</em>名称</em>来引用实体。实体的名称在相关<a href="names/scopes.html"><em>作用域(scope)</em></a>内有效。作用域是指可以引用该名称的源码区域。</p>
+<p>有些实体是在源码中<a href="names.html#explicitly-declared-entities">显式声明的</a>，有些则<a href="names.html#implicitly-declared-entities">隐式声明</a>为语言或编译器扩展的一部分。</p>
+<p><a href="paths.html"><em>路径</em></a>用于引用实体，该引用的实体可以在其他的作用域内。生存期和循环标签使用一个带有前导单引号的<a href="tokens.html#lifetimes-and-loop-labels">专用语法来表达</a>。</p>
+<p>名称被分隔成不同的<a href="names/namespaces.html"><em>命名空间</em></a>，这样允许不同名称空间中的实体拥有相同的名称，且不会发生冲突。</p>
+<p><a href="names/name-resolution.html"><em>名称解析</em></a>是将路径、标识符和标签绑定到实体声明的编译时过程。</p>
+<p>对某些名称的访问可能会受到此名称的<a href="visibility-and-privacy.html"><em>可见性</em></a>的限制。</p>
 <h2><a class="header" href="#explicitly-declared-entities" id="explicitly-declared-entities">Explicitly declared entities</a></h2>
-<p>Entities that explicitly introduce a name in the source code are:</p>
+<h2><a class="header" href="#显式声明的实体" id="显式声明的实体">显式声明的实体</a></h2>
+<p>在源码中显式引入名称的实体有：</p>
 <ul>
-<li><a href="items.html">Items</a>:
+<li><a href="items.html">程序项</a>:
 <ul>
-<li><a href="items/modules.html">Module declarations</a></li>
-<li><a href="items/extern-crates.html">External crate declarations</a></li>
-<li><a href="items/use-declarations.html">Use declarations</a></li>
-<li><a href="items/functions.html">Function declarations</a> and <a href="items/functions.html#function-parameters">function parameters</a></li>
-<li><a href="items/type-aliases.html">Type aliases</a></li>
-<li><a href="items/structs.html">struct</a>, <a href="items/unions.html">union</a>, <a href="items/enumerations.html">enum</a>, enum variant declarations, and their named
-fields</li>
-<li><a href="items/constant-items.html">Constant item declarations</a></li>
-<li><a href="items/static-items.html">Static item declarations</a></li>
-<li><a href="items/traits.html">Trait item declarations</a> and their <a href="items/associated-items.html">associated items</a></li>
-<li><a href="items/external-blocks.html">External block items</a></li>
-<li><a href="macros-by-example.html"><code>macro_rules</code> declarations</a> and <a href="macros-by-example.html#metavariables">matcher metavariables</a></li>
-<li><a href="items/implementations.html">Implementation</a> associated items</li>
+<li><a href="items/modules.html">模块声明</a></li>
+<li><a href="items/extern-crates.html">外部crate声明</a></li>
+<li><a href="items/use-declarations.html">Use声明</a></li>
+<li><a href="items/functions.html">函数声明</a> 和 <a href="items/functions.html#function-parameters">函数的参数</a></li>
+<li><a href="items/type-aliases.html">类型别名</a></li>
+<li><a href="items/structs.html">结构体</a>、<a href="items/unions.html">联合体</a>、<a href="items/enumerations.html">枚举</a>、枚举变体声明和它们的字段</li>
+<li><a href="items/constant-items.html">常量项声明</a></li>
+<li><a href="items/static-items.html">静态项声明</a></li>
+<li><a href="items/traits.html">trait项声明</a>和它们的<a href="items/associated-items.html">关联项</a></li>
+<li><a href="items/external-blocks.html">外部块</a></li>
+<li><a href="macros-by-example.html"><code>macro_rules</code>声明</a> 和 <a href="macros-by-example.html#metavariables">匹配器元变量</a></li>
+<li><a href="items/implementations.html">实现</a>中的关联项</li>
 </ul>
 </li>
-<li><a href="expressions.html">Expressions</a>:
+<li><a href="expressions.html">表达式</a>:
 <ul>
-<li><a href="expressions/closure-expr.html">Closure</a> parameters</li>
-<li><a href="expressions/loop-expr.html#predicate-pattern-loops"><code>while let</code></a> pattern bindings</li>
-<li><a href="expressions/loop-expr.html#iterator-loops"><code>for</code></a> pattern bindings</li>
-<li><a href="expressions/if-expr.html#if-let-expressions"><code>if let</code></a> pattern bindings</li>
-<li><a href="expressions/match-expr.html"><code>match</code></a> pattern bindings</li>
-<li><a href="expressions/loop-expr.html#loop-labels">Loop labels</a></li>
+<li><a href="expressions/closure-expr.html">闭包</a>的参数</li>
+<li><a href="expressions/loop-expr.html#predicate-pattern-loops"><code>while let</code></a> 模式绑定</li>
+<li><a href="expressions/loop-expr.html#iterator-loops"><code>for</code></a> 模式绑定</li>
+<li><a href="expressions/if-expr.html#if-let-expressions"><code>if let</code></a> 模式绑定</li>
+<li><a href="expressions/match-expr.html"><code>match</code></a> 模式绑定</li>
+<li><a href="expressions/loop-expr.html#loop-labels">循环标签</a></li>
 </ul>
 </li>
-<li><a href="items/generics.html">Generic parameters</a></li>
-<li><a href="trait-bounds.html#higher-ranked-trait-bounds">Higher ranked trait bounds</a></li>
-<li><a href="statements.html#let-statements"><code>let</code> statement</a> pattern bindings</li>
-<li>The <a href="macros-by-example.html#the-macro_use-attribute"><code>macro_use</code> attribute</a> can introduce macro names from another crate</li>
-<li>The <a href="macros-by-example.html#path-based-scope"><code>macro_export</code> attribute</a> can introduce an alias for the macro into the crate root</li>
+<li><a href="items/generics.html">泛型参数</a></li>
+<li><a href="trait-bounds.html#higher-ranked-trait-bounds">高阶trait约束</a></li>
+<li><a href="statements.html#let-statements"><code>let</code>语句</a>中的模式绑定</li>
+<li><a href="macros-by-example.html#the-macro_use-attribute"><code>macro_use</code>属性</a>可以从其他 crate 里引入宏名称。</li>
+<li><a href="macros-by-example.html#path-based-scope"><code>macro_export</code>属性</a>可以为当前宏引入一个在当前 crate 的根模块下生效的别名</li>
 </ul>
-<p>Additionally, <a href="macros.html#macro-invocation">macro invocations</a> and <a href="attributes.html">attributes</a> can introduce names by
-expanding to one of the above items.</p>
+<p>此外，<a href="macros.html#macro-invocation">宏调用</a>和<a href="attributes.html">属性</a>可以通过扩展源代码到上述程序项之一来引入名称。</p>
 <h2><a class="header" href="#implicitly-declared-entities" id="implicitly-declared-entities">Implicitly declared entities</a></h2>
-<p>The following entities are implicitly defined by the language, or are
-introduced by compiler options and extensions:</p>
+<h2><a class="header" href="#隐式声明的实体" id="隐式声明的实体">隐式声明的实体</a></h2>
+<p>以下实体由语言隐式定义，或由编译器选项和编译器扩展引入：</p>
 <ul>
-<li><a href="names/preludes.html#language-prelude">Language prelude</a>:
+<li><a href="names/preludes.html#language-prelude">语言预导入包</a>:
 <ul>
-<li><a href="types/boolean.html">Boolean type</a> — <code>bool</code></li>
-<li><a href="types/textual.html">Textual types</a> — <code>char</code> and <code>str</code></li>
-<li><a href="types/numeric.html#integer-types">Integer types</a> — <code>i8</code>, <code>i16</code>, <code>i32</code>, <code>i64</code>, <code>i128</code>, <code>u8</code>, <code>u16</code>, <code>u32</code>, <code>u64</code>, <code>u128</code></li>
-<li><a href="types/numeric.html#machine-dependent-integer-types">Machine-dependent integer types</a> — <code>usize</code> and <code>isize</code></li>
-<li><a href="types/numeric.html#floating-point-types">floating-point types</a> — <code>f32</code> and <code>f64</code></li>
+<li><a href="types/boolean.html">布尔型</a> — <code>bool</code></li>
+<li><a href="types/textual.html">文本型</a> — <code>char</code> and <code>str</code></li>
+<li><a href="types/numeric.html#integer-types">整型</a> — <code>i8</code>, <code>i16</code>, <code>i32</code>, <code>i64</code>, <code>i128</code>, <code>u8</code>, <code>u16</code>, <code>u32</code>, <code>u64</code>, <code>u128</code></li>
+<li><a href="types/numeric.html#machine-dependent-integer-types">和机器平台相关的整型</a> — <code>usize</code> and <code>isize</code></li>
+<li><a href="types/numeric.html#floating-point-types">浮点型</a> — <code>f32</code> and <code>f64</code></li>
 </ul>
 </li>
-<li><a href="attributes.html#built-in-attributes-index">Built-in attributes</a></li>
-<li><a href="names/preludes.html#standard-library-prelude">Standard library prelude</a> items, attributes, and macros</li>
-<li><a href="names/preludes.html#extern-prelude">Standard library</a> crates in the root module</li>
-<li><a href="names/preludes.html#extern-prelude">External crates</a> linked by the compiler</li>
-<li><a href="attributes.html#tool-attributes">Tool attributes</a></li>
-<li><a href="attributes/diagnostics.html#lint-check-attributes">Lints</a> and <a href="attributes/diagnostics.html#tool-lint-attributes">tool lint attributes</a></li>
-<li><a href="procedural-macros.html#derive-macro-helper-attributes">Derive helper attributes</a> are valid within an item without being explicitly imported</li>
-<li>The <a href="keywords.html#weak-keywords"><code>'static</code></a> lifetime</li>
+<li><a href="attributes.html#built-in-attributes-index">内置属性</a></li>
+<li><a href="names/preludes.html#standard-library-prelude">标准库预导入包</a>里的程序项、属性和宏</li>
+<li>在根模块下的<a href="names/preludes.html#extern-prelude">标准库</a>里的crate</li>
+<li>通过编译器链接进的<a href="names/preludes.html#extern-prelude">外部crate</a></li>
+<li><a href="attributes.html#tool-attributes">工具类属性</a></li>
+<li><a href="attributes/diagnostics.html#lint-check-attributes">Lints</a> 和 <a href="attributes/diagnostics.html#tool-lint-attributes">工具类lint属性</a></li>
+<li><a href="procedural-macros.html#derive-macro-helper-attributes">派生辅助属性</a>无需显示引入，就在其程序项内有效</li>
+<li><a href="keywords.html#weak-keywords"><code>'static</code></a>生存期标签</li>
 </ul>
-<p>Additionally, the crate root module does not have a name, but can be referred
-to with certain <a href="paths.html#path-qualifiers">path qualifiers</a> or aliases.</p>
+<p>此外，crate 的根模块没有名称，但可以使用某些<a href="paths.html#path-qualifiers">路径限定符</a>或别名来引用。</p>
 <h1><a class="header" href="#namespaces" id="namespaces">Namespaces</a></h1>
 <h1><a class="header" href="#命名空间" id="命名空间">命名空间</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/names/namespaces.md">use-declarations.md</a><br />
 commit: 10da84befd0e79f5e1490912a02cb74368cd3f4a <br />
-本章译文最后维护日期：2021-1-24</p>
+本章译文最后维护日期：2021-1-25</p>
 </blockquote>
-<p>A <em>namespace</em> is a logical grouping of declared <a href="names/../names.html">names</a>. Names are segregated
-into separate namespaces based on the kind of entity the name refers to.
-Namespaces allow the occurrence of a name in one namespace to not conflict
-with the same name in another namespace.</p>
-<p>Within a namespace, names are organized in a hierarchy, where each level of
-the hierarchy has its own collection of named entities.</p>
-<p>There are several different namespaces that each contain different kinds of
-entities. The usage of a name will look for the declaration of that name in
-different namespaces, based on the context, as described in the <a href="names/name-resolution.html">name
-resolution</a> chapter.</p>
-<p>The following is a list of namespaces, with their corresponding entities:</p>
+<p><em>命名空间</em>是已声明的<a href="names/../names.html">名称</a>的逻辑分组。根据名称所指的实体类型，名称被分隔到不同的命名空间中。
+名称空间允许一个名称空间中出现的名称与另一个名称空间中的相同，且不会导致冲突。</p>
+<p>在命名空间中，名称被组织在不同的层次结构中，层次结构的每一层都有自己的命名实体集合。</p>
+<p>程序有几个不同的命名空间，每个名称空间包含不同种类的实体。使用名称时将根据上下文来在不同的命名空间中去查找该名称的声明，<a href="names/name-resolution.html">名称解析</a>一章有讲到这些。</p>
+<p>下面是一系列命名空间及其对应实体的列表：</p>
 <ul>
-<li>Type Namespace
+<li>类型命名空间
 <ul>
-<li><a href="names/../items/modules.html">Module declarations</a></li>
-<li><a href="names/../items/extern-crates.html">External crate declarations</a></li>
-<li><a href="names/preludes.html#extern-prelude">External crate prelude</a> items</li>
-<li><a href="names/../items/structs.html">Struct</a>, <a href="names/../items/unions.html">union</a>, <a href="names/../items/enumerations.html">enum</a>, enum variant declarations</li>
-<li><a href="names/../items/traits.html">Trait item declarations</a></li>
-<li><a href="names/../items/type-aliases.html">Type aliases</a></li>
-<li><a href="names/../items/associated-items.html#associated-types">Associated type declarations</a></li>
-<li>Built-in types: <a href="names/../types/boolean.html">boolean</a>, <a href="names/../types/numeric.html">numeric</a>, and <a href="names/../types/textual.html">textual</a></li>
-<li><a href="names/../items/generics.html">Generic type parameters</a></li>
-<li><a href="names/../paths.html#self-1"><code>Self</code> type</a></li>
-<li><a href="names/../attributes.html#tool-attributes">Tool attribute modules</a></li>
+<li><a href="names/../items/modules.html">模块声明</a></li>
+<li><a href="names/../items/extern-crates.html">外部crate声明</a></li>
+<li><a href="names/preludes.html#extern-prelude">外部预导入包</a>中的程序项</li>
+<li><a href="names/../items/structs.html">结构体</a>声明、<a href="names/../items/unions.html">联合体</a>声明、<a href="names/../items/enumerations.html">枚举</a>声明和枚举变体声明</li>
+<li><a href="names/../items/traits.html">trait项声明</a></li>
+<li><a href="names/../items/type-aliases.html">类型别名</a></li>
+<li><a href="names/../items/associated-items.html#associated-types">关联类型声明</a></li>
+<li>内置类型：<a href="names/../types/boolean.html">布尔型</a>、<a href="names/../types/numeric.html">数字型</a>和<a href="names/../types/textual.html">文本型</a></li>
+<li><a href="names/../items/generics.html">泛型类型参数</a></li>
+<li><a href="names/../paths.html#self-1"><code>Self</code>类型</a></li>
+<li><a href="names/../attributes.html#tool-attributes">工具类属性模块</a></li>
 </ul>
 </li>
-<li>Value Namespace
+<li>值命名空间
 <ul>
-<li><a href="names/../items/functions.html">Function declarations</a></li>
-<li><a href="names/../items/constant-items.html">Constant item declarations</a></li>
-<li><a href="names/../items/static-items.html">Static item declarations</a></li>
-<li><a href="names/../items/structs.html">Struct constructors</a></li>
-<li><a href="names/../items/enumerations.html">Enum variant constructors</a></li>
-<li><a href="names/../paths.html#self-1"><code>Self</code> constructors</a></li>
-<li><a href="names/../items/generics.html#const-generics">Generic const parameters</a></li>
-<li><a href="names/../items/associated-items.html#associated-constants">Associated const declarations</a></li>
-<li><a href="names/../items/associated-items.html#associated-functions-and-methods">Associated function declarations</a></li>
-<li>Local bindings — <a href="names/../statements.html#let-statements"><code>let</code></a>, <a href="names/../expressions/if-expr.html#if-let-expressions"><code>if let</code></a>, <a href="names/../expressions/loop-expr.html#predicate-pattern-loops"><code>while let</code></a>, <a href="names/../expressions/loop-expr.html#iterator-loops"><code>for</code></a>, <a href="names/../expressions/match-expr.html"><code>match</code></a>
-arms, <a href="names/../items/functions.html#function-parameters">function parameters</a>, <a href="names/../expressions/closure-expr.html">closure parameters</a></li>
-<li>Captured <a href="names/../expressions/closure-expr.html">closure</a> variables</li>
+<li><a href="names/../items/functions.html">函数声明</a></li>
+<li><a href="names/../items/constant-items.html">常量项声明</a></li>
+<li><a href="names/../items/static-items.html">静态项声明</a></li>
+<li><a href="names/../items/structs.html">结构体构造器</a></li>
+<li><a href="names/../items/enumerations.html">枚举变体构造器</a></li>
+<li><a href="names/../paths.html#self-1"><code>Self</code>构造器</a></li>
+<li><a href="names/../items/generics.html#const-generics">泛型常量参数</a></li>
+<li><a href="names/../items/associated-items.html#associated-constants">关联常量声明</a></li>
+<li><a href="names/../items/associated-items.html#associated-functions-and-methods">关联函数声明</a></li>
+<li>本地绑定 — <a href="names/../statements.html#let-statements"><code>let</code></a>, <a href="names/../expressions/if-expr.html#if-let-expressions"><code>if let</code></a>, <a href="names/../expressions/loop-expr.html#predicate-pattern-loops"><code>while let</code></a>, <a href="names/../expressions/loop-expr.html#iterator-loops"><code>for</code></a>, <a href="names/../expressions/match-expr.html"><code>match</code></a>臂, <a href="names/../items/functions.html#function-parameters">函数参数</a>, <a href="names/../expressions/closure-expr.html">闭包参数</a></li>
+<li><a href="names/../expressions/closure-expr.html">闭包</a>捕获的变量</li>
 </ul>
 </li>
-<li>Macro Namespace
+<li>宏命名空间
 <ul>
-<li><a href="names/../macros-by-example.html"><code>macro_rules</code> declarations</a></li>
-<li><a href="names/../attributes.html#built-in-attributes-index">Built-in attributes</a></li>
-<li><a href="names/../attributes.html#tool-attributes">Tool attributes</a></li>
-<li><a href="names/../procedural-macros.html#function-like-procedural-macros">Function-like procedural macros</a></li>
-<li><a href="names/../procedural-macros.html#derive-macros">Derive macros</a></li>
-<li><a href="names/../procedural-macros.html#derive-macro-helper-attributes">Derive macro helpers</a></li>
-<li><a href="names/../procedural-macros.html#attribute-macros">Attribute macros</a></li>
+<li><a href="names/../macros-by-example.html"><code>macro_rules</code>声明</a></li>
+<li><a href="names/../attributes.html#built-in-attributes-index">内置属性</a></li>
+<li><a href="names/../attributes.html#tool-attributes">工具类属性</a></li>
+<li><a href="names/../procedural-macros.html#function-like-procedural-macros">类函数过程宏</a></li>
+<li><a href="names/../procedural-macros.html#derive-macros">派生宏</a></li>
+<li><a href="names/../procedural-macros.html#derive-macro-helper-attributes">辅助派生宏</a></li>
+<li><a href="names/../procedural-macros.html#attribute-macros">属性宏</a></li>
 </ul>
 </li>
-<li>Lifetime Namespace
+<li>生存期命名空间
 <ul>
-<li><a href="names/../items/generics.html">Generic lifetime parameters</a></li>
+<li><a href="names/../items/generics.html">泛型生存期参数</a></li>
 </ul>
 </li>
-<li>Label Namespace<sup class="footnote-reference"><a href="#rustc-lifetime-shadow">1</a></sup>
+<li>标签命名空间<sup class="footnote-reference"><a href="#rustc-lifetime-shadow">1</a></sup>
 <ul>
-<li><a href="names/../expressions/loop-expr.html#loop-labels">Loop labels</a></li>
+<li><a href="names/../expressions/loop-expr.html#loop-labels">循环标签</a></li>
 </ul>
 </li>
 </ul>
-<p>An example of how overlapping names in different namespaces can be used unambiguously:</p>
+<p>如何清晰地使用不同命名空间中的同名名称的示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// Foo introduces a type in the type namespace and a constructor in the value
-// namespace.
+</span>// Foo 在类型命名空间中引入了一个类型，在值命名空间中引入了一个构造函数
 struct Foo(u32);
 
-// The `Foo` macro is declared in the macro namespace.
+// 宏`Foo`在宏命名空间中声明
 macro_rules! Foo {
     () =&gt; {};
 }
 
-// `Foo` in the `f` parameter type refers to `Foo` in the type namespace.
-// `'Foo` introduces a new lifetime in the lifetime namespace.
+// 参数`f` 的类型中的 `Foo` 指向类型命名空间中的 `Foo`
+// `'Foo` 引入一个生存期命名空间里的新的生存期
 fn example&lt;'Foo&gt;(f: Foo) {
-    // `Foo` refers to the `Foo` constructor in the value namespace.
+    // `Foo` 引用值命名空间里的 `Foo`构造器。
     let ctor = Foo;
-    // `Foo` refers to the `Foo` macro in the macro namespace.
+    // `Foo` 引用宏命名空间里的 `Foo`宏。
     Foo!{}
-    // `'Foo` introduces a label in the label namespace.
+    // `'Foo` 引入一个标签命名空间里的标签。
     'Foo: loop {
-        // `'Foo` refers to the `'Foo` lifetime parameter, and `Foo`
-        // refers to the type namespace.
+        // `'Foo` 引用 `'Foo`生存期参数, `Foo` 引用类型命名空间中的类型。
         let x: &amp;'Foo Foo;
-        // `'Foo` refers to the label.
+        // `'Foo` 引用了 `'Foo`标签.
         break 'Foo;
     }
 }
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#named-entities-without-a-namespace" id="named-entities-without-a-namespace">Named entities without a namespace</a></h2>
-<p>The following entities have explicit names, but the names are not a part of
-any specific namespace.</p>
+<h2><a class="header" href="#无命名空间的命名实体" id="无命名空间的命名实体">无命名空间的命名实体</a></h2>
+<p>下面的实体有显式的名称，但是这些名称不属于任何特定的命名空间。</p>
 <h3><a class="header" href="#fields" id="fields">Fields</a></h3>
-<p>Even though struct, enum, and union fields are named, the named fields do not
-live in an explicit namespace. They can only be accessed via a <a href="names/../expressions/field-expr.html">field
-expression</a>, which only inspects the field names of the specific type being
-accessed.</p>
+<h3><a class="header" href="#字段" id="字段">字段</a></h3>
+<p>即使结构体、枚举和联合体的字段被命名，但这些命名字段并不存在于任何显式的命名空间中。它们只能通过<a href="names/../expressions/field-expr.html">字段表达式</a>访问，该表达式只检测被访问的特定类型的字段名。</p>
 <h3><a class="header" href="#use-declarations-1" id="use-declarations-1">Use declarations</a></h3>
-<p>A <a href="names/../items/use-declarations.html">use declaration</a> has named aliases that it imports into scope, but the
-<code>use</code> item itself does not belong to a specific namespace. Instead, it can
-introduce aliases into multiple namespaces, depending on the item kind being
-imported.</p>
+<h3><a class="header" href="#use声明-1" id="use声明-1">use声明</a></h3>
+<p><a href="names/../items/use-declarations.html">use声明</a>命名了导入到当前作用域中的实体，但 <code>use</code>项本身不属于任何特定的命名空间。相反，它可以在多个名称空间中引入别名，这取决于所导入的程序项类型。</p>
 <!-- TODO: describe how `use` works on the use-declarations page, and link to it here. -->
 <div class="footnote-definition" id="rustc-lifetime-shadow"><sup class="footnote-definition-label">1</sup>
-<p><code>rustc</code> currently warns about shadowing when using
-the same name for a label and lifetime in the same scope, but it still
-treats them independently. This is intended as a future-compatibility
-warning about a possible extension to the language. See <a href="https://github.com/rust-lang/rust/pull/24162">PR
-#24162</a>.</p>
+<p>目前，在同一个作用域中，标签和生命周期使用相同名称时，<code>rustc</code> 会警告出现命名重复，但编译器内部仍然会独立地区别对待它们。这是一个关于该语言可能扩展的未来兼容性警告。具体见<a href="https://github.com/rust-lang/rust/pull/24162">PR #24162</a>。</p>
 </div>
 <h1><a class="header" href="#scopes" id="scopes">Scopes</a></h1>
 <h1><a class="header" href="#作用域" id="作用域">作用域</a></h1>
@@ -12286,7 +12256,7 @@ commit:  dc3808468e37ff4c1f663d26c491a3549a42c201 <br />
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/glossary.md">glossary.md</a><br />
 commit: 10da84befd0e79f5e1490912a02cb74368cd3f4a <br />
-本章译文最后维护日期：2021-1-24</p>
+本章译文最后维护日期：2021-1-25</p>
 </blockquote>
 <h3><a class="header" href="#abstract-syntax-tree" id="abstract-syntax-tree">Abstract syntax tree</a></h3>
 <h3><a class="header" href="#抽象句法树" id="抽象句法树">抽象句法树</a></h3>
@@ -12330,7 +12300,7 @@ Dispatch is the mechanism to determine which specific version of code is actuall
 A dynamically sized type (DST) is a type without a statically known size or alignment.</p>
 <h3><a class="header" href="#entity" id="entity">Entity</a></h3>
 <h3><a class="header" href="#实体" id="实体">实体</a></h3>
-<p><a href="names.html"><em>实体(entity)</em></a>是一种语言结构，可以在源程序中以某种方式引用，通常通过<a href="paths.html">路径(path)</a>。实体包括<a href="types.html">类型</a>、<a href="items.html">程序项</a>、<a href="items/generics.html">泛型参数</a>、<a href="patterns.html">变量绑定</a>、<a href="tokens.html#lifetimes-and-loop-labels">循环标签</a>、<a href="tokens.html#lifetimes-and-loop-labels">生存期</a>、<a href="expressions/field-expr.html">字段</a>、<a href="attributes.html">属性</a>和<a href="attributes/diagnostics.html#lint-check-attributes">lints</a>。<br />
+<p><a href="names.html"><em>实体(entity)</em></a>是一种语言结构，在源程序中可以以某种方式被引用，通常是通过<a href="paths.html">路径(path)</a>。实体包括<a href="types.html">类型</a>、<a href="items.html">程序项</a>、<a href="items/generics.html">泛型参数</a>、<a href="patterns.html">变量绑定</a>、<a href="tokens.html#lifetimes-and-loop-labels">循环标签</a>、<a href="tokens.html#lifetimes-and-loop-labels">生存期</a>、<a href="expressions/field-expr.html">字段</a>、<a href="attributes.html">属性</a>和<a href="attributes/diagnostics.html#lint-check-attributes">lints</a>。<br />
 An <a href="names.html"><em>entity</em></a> is a language construct that can be referred to in some way within the source program, usually via a <a href="paths.html">path</a>. Entities include <a href="types.html">types</a>, <a href="items.html">items</a>, <a href="items/generics.html">generic parameters</a>, <a href="patterns.html">variable bindings</a>, <a href="tokens.html#lifetimes-and-loop-labels">loop labels</a>, <a href="tokens.html#lifetimes-and-loop-labels">lifetimes</a>, <a href="expressions/field-expr.html">fields</a>, <a href="attributes.html">attributes</a>, and <a href="attributes/diagnostics.html#lint-check-attributes">lints</a>.</p>
 <h3><a class="header" href="#expression" id="expression">Expression</a></h3>
 <h3><a class="header" href="#表达式-1" id="表达式-1">表达式</a></h3>

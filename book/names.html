@@ -170,88 +170,75 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/names.md">keywords.md</a><br />
 commit: a989af055ff4fd7e1212754490fff72c3f7cc1be
-本章译文最后维护日期：2020-1-24</p>
+本章译文最后维护日期：2020-1-25</p>
 </blockquote>
-<p>An <em>entity</em> is a language construct that can be referred to in some way within
-the source program, usually via a <a href="paths.html">path</a>. Entities include <a href="types.html">types</a>, <a href="items.html">items</a>,
-<a href="items/generics.html">generic parameters</a>, <a href="patterns.html">variable bindings</a>, <a href="expressions/loop-expr.html#loop-labels">loop labels</a>, <a href="tokens.html#lifetimes-and-loop-labels">lifetimes</a>,
-<a href="expressions/field-expr.html">fields</a>, <a href="attributes.html">attributes</a>, and <a href="attributes/diagnostics.html#lint-check-attributes">lints</a>.</p>
-<p>A <em>declaration</em> is a syntactical construct that can introduce a <em>name</em> to
-refer to an entity. Entity names are valid within a <a href="names/scopes.html"><em>scope</em></a> — a region of
-source text where that name may be referenced.</p>
-<p>Some entities are <a href="#explicitly-declared-entities">explicitly declared</a> in the
-source code, and some are <a href="#implicitly-declared-entities">implicitly declared</a>
-as part of the language or compiler extensions.</p>
-<p><a href="paths.html"><em>Paths</em></a> are used to refer to an entity, possibly in another scope. Lifetimes
-and loop labels use a <a href="tokens.html#lifetimes-and-loop-labels">dedicated syntax</a> using a
-leading quote.</p>
-<p>Names are segregated into different <a href="names/namespaces.html"><em>namespaces</em></a>, allowing entities in
-different namespaces to share the same name without conflict.</p>
-<p><a href="names/name-resolution.html"><em>Name resolution</em></a> is the compile-time process of tying paths, identifiers,
-and labels to entity declarations.</p>
-<p>Access to certain names may be restricted based on their <a href="visibility-and-privacy.html"><em>visibility</em></a>.</p>
+<p>*实体(entity)*是一种语言结构，在源程序中可以以某种方式被引用，通常是通过[路径(path)][paths]。实体包括<a href="types.html">类型</a>、<a href="items.html">程序项</a>、<a href="items/generics.html">泛型参数</a>、<a href="patterns.html">变量绑定</a>、<a href="expressions/loop-expr.html#loop-labels">循环标签</a>、<a href="tokens.html#lifetimes-and-loop-labels">生存期</a>、<a href="expressions/field-expr.html">字段</a>、<a href="attributes.html">属性</a>和各种<a href="attributes/diagnostics.html#lint-check-attributes">lints</a>。</p>
+<p><em>声明(declaration)<em>是一种句法结构，它可以引入</em>名称</em>来引用实体。实体的名称在相关<a href="names/scopes.html"><em>作用域(scope)</em></a>内有效。作用域是指可以引用该名称的源码区域。</p>
+<p>有些实体是在源码中<a href="#explicitly-declared-entities">显式声明的</a>，有些则<a href="#implicitly-declared-entities">隐式声明</a>为语言或编译器扩展的一部分。</p>
+<p><a href="paths.html"><em>路径</em></a>用于引用实体，该引用的实体可以在其他的作用域内。生存期和循环标签使用一个带有前导单引号的<a href="tokens.html#lifetimes-and-loop-labels">专用语法来表达</a>。</p>
+<p>名称被分隔成不同的<a href="names/namespaces.html"><em>命名空间</em></a>，这样允许不同名称空间中的实体拥有相同的名称，且不会发生冲突。</p>
+<p><a href="names/name-resolution.html"><em>名称解析</em></a>是将路径、标识符和标签绑定到实体声明的编译时过程。</p>
+<p>对某些名称的访问可能会受到此名称的<a href="visibility-and-privacy.html"><em>可见性</em></a>的限制。</p>
 <h2><a class="header" href="#explicitly-declared-entities" id="explicitly-declared-entities">Explicitly declared entities</a></h2>
-<p>Entities that explicitly introduce a name in the source code are:</p>
+<h2><a class="header" href="#显式声明的实体" id="显式声明的实体">显式声明的实体</a></h2>
+<p>在源码中显式引入名称的实体有：</p>
 <ul>
-<li><a href="items.html">Items</a>:
+<li><a href="items.html">程序项</a>:
 <ul>
-<li><a href="items/modules.html">Module declarations</a></li>
-<li><a href="items/extern-crates.html">External crate declarations</a></li>
-<li><a href="items/use-declarations.html">Use declarations</a></li>
-<li><a href="items/functions.html">Function declarations</a> and <a href="items/functions.html#function-parameters">function parameters</a></li>
-<li><a href="items/type-aliases.html">Type aliases</a></li>
-<li><a href="items/structs.html">struct</a>, <a href="items/unions.html">union</a>, <a href="items/enumerations.html">enum</a>, enum variant declarations, and their named
-fields</li>
-<li><a href="items/constant-items.html">Constant item declarations</a></li>
-<li><a href="items/static-items.html">Static item declarations</a></li>
-<li><a href="items/traits.html">Trait item declarations</a> and their <a href="items/associated-items.html">associated items</a></li>
-<li><a href="items/external-blocks.html">External block items</a></li>
-<li><a href="macros-by-example.html"><code>macro_rules</code> declarations</a> and <a href="macros-by-example.html#metavariables">matcher metavariables</a></li>
-<li><a href="items/implementations.html">Implementation</a> associated items</li>
+<li><a href="items/modules.html">模块声明</a></li>
+<li><a href="items/extern-crates.html">外部crate声明</a></li>
+<li><a href="items/use-declarations.html">Use声明</a></li>
+<li><a href="items/functions.html">函数声明</a> 和 <a href="items/functions.html#function-parameters">函数的参数</a></li>
+<li><a href="items/type-aliases.html">类型别名</a></li>
+<li><a href="items/structs.html">结构体</a>、<a href="items/unions.html">联合体</a>、<a href="items/enumerations.html">枚举</a>、枚举变体声明和它们的字段</li>
+<li><a href="items/constant-items.html">常量项声明</a></li>
+<li><a href="items/static-items.html">静态项声明</a></li>
+<li><a href="items/traits.html">trait项声明</a>和它们的<a href="items/associated-items.html">关联项</a></li>
+<li><a href="items/external-blocks.html">外部块</a></li>
+<li><a href="macros-by-example.html"><code>macro_rules</code>声明</a> 和 <a href="macros-by-example.html#metavariables">匹配器元变量</a></li>
+<li><a href="items/implementations.html">实现</a>中的关联项</li>
 </ul>
 </li>
-<li><a href="expressions.html">Expressions</a>:
+<li><a href="expressions.html">表达式</a>:
 <ul>
-<li><a href="expressions/closure-expr.html">Closure</a> parameters</li>
-<li><a href="expressions/loop-expr.html#predicate-pattern-loops"><code>while let</code></a> pattern bindings</li>
-<li><a href="expressions/loop-expr.html#iterator-loops"><code>for</code></a> pattern bindings</li>
-<li><a href="expressions/if-expr.html#if-let-expressions"><code>if let</code></a> pattern bindings</li>
-<li><a href="expressions/match-expr.html"><code>match</code></a> pattern bindings</li>
-<li><a href="expressions/loop-expr.html#loop-labels">Loop labels</a></li>
+<li><a href="expressions/closure-expr.html">闭包</a>的参数</li>
+<li><a href="expressions/loop-expr.html#predicate-pattern-loops"><code>while let</code></a> 模式绑定</li>
+<li><a href="expressions/loop-expr.html#iterator-loops"><code>for</code></a> 模式绑定</li>
+<li><a href="expressions/if-expr.html#if-let-expressions"><code>if let</code></a> 模式绑定</li>
+<li><a href="expressions/match-expr.html"><code>match</code></a> 模式绑定</li>
+<li><a href="expressions/loop-expr.html#loop-labels">循环标签</a></li>
 </ul>
 </li>
-<li><a href="items/generics.html">Generic parameters</a></li>
-<li><a href="trait-bounds.html#higher-ranked-trait-bounds">Higher ranked trait bounds</a></li>
-<li><a href="statements.html#let-statements"><code>let</code> statement</a> pattern bindings</li>
-<li>The <a href="macros-by-example.html#the-macro_use-attribute"><code>macro_use</code> attribute</a> can introduce macro names from another crate</li>
-<li>The <a href="macros-by-example.html#path-based-scope"><code>macro_export</code> attribute</a> can introduce an alias for the macro into the crate root</li>
+<li><a href="items/generics.html">泛型参数</a></li>
+<li><a href="trait-bounds.html#higher-ranked-trait-bounds">高阶trait约束</a></li>
+<li><a href="statements.html#let-statements"><code>let</code>语句</a>中的模式绑定</li>
+<li><a href="macros-by-example.html#the-macro_use-attribute"><code>macro_use</code>属性</a>可以从其他 crate 里引入宏名称。</li>
+<li><a href="macros-by-example.html#path-based-scope"><code>macro_export</code>属性</a>可以为当前宏引入一个在当前 crate 的根模块下生效的别名</li>
 </ul>
-<p>Additionally, <a href="macros.html#macro-invocation">macro invocations</a> and <a href="attributes.html">attributes</a> can introduce names by
-expanding to one of the above items.</p>
+<p>此外，<a href="macros.html#macro-invocation">宏调用</a>和<a href="attributes.html">属性</a>可以通过扩展源代码到上述程序项之一来引入名称。</p>
 <h2><a class="header" href="#implicitly-declared-entities" id="implicitly-declared-entities">Implicitly declared entities</a></h2>
-<p>The following entities are implicitly defined by the language, or are
-introduced by compiler options and extensions:</p>
+<h2><a class="header" href="#隐式声明的实体" id="隐式声明的实体">隐式声明的实体</a></h2>
+<p>以下实体由语言隐式定义，或由编译器选项和编译器扩展引入：</p>
 <ul>
-<li><a href="names/preludes.html#language-prelude">Language prelude</a>:
+<li><a href="names/preludes.html#language-prelude">语言预导入包</a>:
 <ul>
-<li><a href="types/boolean.html">Boolean type</a> — <code>bool</code></li>
-<li><a href="types/textual.html">Textual types</a> — <code>char</code> and <code>str</code></li>
-<li><a href="types/numeric.html#integer-types">Integer types</a> — <code>i8</code>, <code>i16</code>, <code>i32</code>, <code>i64</code>, <code>i128</code>, <code>u8</code>, <code>u16</code>, <code>u32</code>, <code>u64</code>, <code>u128</code></li>
-<li><a href="types/numeric.html#machine-dependent-integer-types">Machine-dependent integer types</a> — <code>usize</code> and <code>isize</code></li>
-<li><a href="types/numeric.html#floating-point-types">floating-point types</a> — <code>f32</code> and <code>f64</code></li>
+<li><a href="types/boolean.html">布尔型</a> — <code>bool</code></li>
+<li><a href="types/textual.html">文本型</a> — <code>char</code> and <code>str</code></li>
+<li><a href="types/numeric.html#integer-types">整型</a> — <code>i8</code>, <code>i16</code>, <code>i32</code>, <code>i64</code>, <code>i128</code>, <code>u8</code>, <code>u16</code>, <code>u32</code>, <code>u64</code>, <code>u128</code></li>
+<li><a href="types/numeric.html#machine-dependent-integer-types">和机器平台相关的整型</a> — <code>usize</code> and <code>isize</code></li>
+<li><a href="types/numeric.html#floating-point-types">浮点型</a> — <code>f32</code> and <code>f64</code></li>
 </ul>
 </li>
-<li><a href="attributes.html#built-in-attributes-index">Built-in attributes</a></li>
-<li><a href="names/preludes.html#standard-library-prelude">Standard library prelude</a> items, attributes, and macros</li>
-<li><a href="names/preludes.html#extern-prelude">Standard library</a> crates in the root module</li>
-<li><a href="names/preludes.html#extern-prelude">External crates</a> linked by the compiler</li>
-<li><a href="attributes.html#tool-attributes">Tool attributes</a></li>
-<li><a href="attributes/diagnostics.html#lint-check-attributes">Lints</a> and <a href="attributes/diagnostics.html#tool-lint-attributes">tool lint attributes</a></li>
-<li><a href="procedural-macros.html#derive-macro-helper-attributes">Derive helper attributes</a> are valid within an item without being explicitly imported</li>
-<li>The <a href="keywords.html#weak-keywords"><code>'static</code></a> lifetime</li>
+<li><a href="attributes.html#built-in-attributes-index">内置属性</a></li>
+<li><a href="names/preludes.html#standard-library-prelude">标准库预导入包</a>里的程序项、属性和宏</li>
+<li>在根模块下的<a href="names/preludes.html#extern-prelude">标准库</a>里的crate</li>
+<li>通过编译器链接进的<a href="names/preludes.html#extern-prelude">外部crate</a></li>
+<li><a href="attributes.html#tool-attributes">工具类属性</a></li>
+<li><a href="attributes/diagnostics.html#lint-check-attributes">Lints</a> 和 <a href="attributes/diagnostics.html#tool-lint-attributes">工具类lint属性</a></li>
+<li><a href="procedural-macros.html#derive-macro-helper-attributes">派生辅助属性</a>无需显示引入，就在其程序项内有效</li>
+<li><a href="keywords.html#weak-keywords"><code>'static</code></a>生存期标签</li>
 </ul>
-<p>Additionally, the crate root module does not have a name, but can be referred
-to with certain <a href="paths.html#path-qualifiers">path qualifiers</a> or aliases.</p>
+<p>此外，crate 的根模块没有名称，但可以使用某些<a href="paths.html#path-qualifiers">路径限定符</a>或别名来引用。</p>
 
                     </main>
 
