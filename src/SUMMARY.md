@@ -111,8 +111,7 @@
     - [可见性与隐私权](visibility-and-privacy.md)
 
 - [内存模型](memory-model.md)
-    - [内存分配和其生存期](memory-allocation-and-lifetime.md)
-    - [内存所有权](memory-ownership.md)
+    - [内存分配和生存期](memory-allocation-and-lifetime.md)
     - [变量](variables.md)
 
 - [链接(linkage)](linkage.md)
