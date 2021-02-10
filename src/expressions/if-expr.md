@@ -2,8 +2,8 @@
 # `if`和 `if let`表达式
 
 >[if-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/if-expr.md)\
->commit: f8e76ee9368f498f7f044c719de68c7d95da9972 \
->本章译文最后维护日期：2020-11-13
+>commit: 7c6e0c00aaa043c89e0d9f07e78999268e8ac054 \
+>本章译文最后维护日期：2021-2-10
 
 ## `if` expressions
 ## `if`表达式
@@ -16,7 +16,7 @@
 > | _IfExpression_
 > | _IfLetExpression_ ) )<sup>\?</sup>
 
-`if`表达式是程序控制中的一个条件分支。`if`表达式的形式是一个条件表达式，紧跟一个相应的块，再后面是任意数量的 `else if`条件表达式和块，最后是一个可选的尾部 `else`块。条件表达式的类型必须是布尔型(`bool`)。如果条件表达式的求值结果为 `true`，则执行紧跟的块，并跳过后续的 `else if`块或 `else`块。如果条件表达式的求值结果为 `false`，则跳过紧跟的块，并按顺序求值后续的 `else if`条件表达式。如果所有 `if`条件表达式和 `else if`条件表达式的求值结果均为 `false`，则执行 `else`块。if表达式的求值结果就是所执行的块的返回值，或者如果没有块被求值那 if表达式的求值结果就是 `()`。`if`表达式在所有情况下的类型必须一致。
+`if`表达式是程序控制中的一个条件分支。`if`表达式的句法是一个条件操作数（operand）后紧跟一个块，再后面是任意数量的 `else if`条件表达式和块，最后是一个可选的尾部 `else`块。条件操作数的类型必须是[布尔型][boolean type]。如果条件操作数的求值结果为 `true`，则执行紧跟的块，并跳过后续的 `else if`块或 `else`块。如果条件操作数的求值结果为 `false`，则跳过紧跟的块，并按顺序求值后续的 `else if`条件表达式。如果所有 `if`条件表达式和 `else if`条件表达式的求值结果均为 `false`，则执行 `else`块。if表达式的求值结果就是所执行的块的返回值，或者如果没有块被求值那 if表达式的求值结果就是 `()`。`if`表达式在所有情况下的类型必须一致。
 
 ```rust
 # let x = 3;
@@ -48,7 +48,7 @@ assert_eq!(y, "Bigger");
 > | _IfExpression_
 > | _IfLetExpression_ ) )<sup>\?</sup>
 
-`if let`表达式在语义上类似于 `if`表达式，但是代替条件表达式的是一个关键字 `let`，再后面是一个模式、一个 `=` 和一个[检验对象(scrutinee)][scrutinee]表达式。如果检验对象表达式的值与模式匹配，则执行相应的块。否则，如果存在 `else`块，则继续处理后面的 `else`块。和 `if`表达式一样，`if let`表达式也可以有返回值，这个返回值是由被求值的块确定。
+`if let`表达式在语义上类似于 `if`表达式，但是代替条件操作数的是一个关键字 `let`，再后面是一个模式、一个 `=` 和一个[检验对象(scrutinee)][scrutinee]操作数。如果检验对象操作数的值与模式匹配，则执行相应的块。否则，如果存在 `else`块，则继续处理后面的 `else`块。和 `if`表达式一样，`if let`表达式也可以有返回值，这个返回值是由被求值的块确定。
 
 ```rust
 let dish = ("Ham", "Eggs");
@@ -145,7 +145,5 @@ if let PAT = ( EXPR || EXPR ) { .. }
 [_MatchArmPatterns_]: match-expr.md
 [_eRFCIfLetChain_]: https://github.com/rust-lang/rfcs/blob/master/text/2497-if-let-chains.md#rollout-plan-and-transitioning-to-rust-2018
 [`match` expression]: match-expr.md
+[boolean type]: ../types/boolean.md
 [scrutinee]: ../glossary.md#scrutinee
-
-<!-- 2020-11-12-->
-<!-- checked -->

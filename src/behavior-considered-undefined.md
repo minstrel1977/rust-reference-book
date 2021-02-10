@@ -2,12 +2,12 @@
 ## 未定义的行为
 
 >[behavior-considered-undefined.md](https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md)\
->commit: 8aa6f0f5471a23621f52d16e823c6316fda2b904 \
->本章译文最后维护日期：2020-11-17
+>commit: 7c6e0c00aaa043c89e0d9f07e78999268e8ac054 \
+>本章译文最后维护日期：2021-2-10
 
 如果 Rust 代码出现了下面列表中的任何行为，则此代码被认为不正确。这包括非安全(`unsafe`)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。
 
-在编写非安全代码时，确保任何与非安全代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何使用非安全代码的安全客户端(safe client)，如果当前条件满足了此非安全代码对于安全条件的要求，那此此非安全代码对于此安全客户端就是*健全的(sound)*；如果非安全(`unsafe`)代码可以被安全代码滥用以致出现未定义行为，那么此非安全(`unsafe`)代码对这些安全代码来说就是*不健全的(unsound)*。
+在编写非安全代码时，确保任何与非安全代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何使用非安全代码的安全客户端(safe client)，如果当前条件满足了此非安全代码对于安全条件的要求，那此此非安全代码对于此安全客户端就是*健壮的(sound)*；如果非安全(`unsafe`)代码可以被安全代码滥用以致出现未定义行为，那么此非安全(`unsafe`)代码对这些安全代码来说就是*不健壮的(unsound)*。
 
 <div class="warning">
 
@@ -24,7 +24,7 @@
 * 用错误的 ABI约定来调用函数，或使用错误的 ABI展开约定来从某函数里发起展开(unwinding)。  
 * 产生非法值(invalid value)，即使在私有字段和本地变量中也是如此。“产生”值发生在这些时候：把值赋给位置表达式、从位置表达式里读取值、传递值给函数/基本运算(primitive operation)或从函数/基本运算中返回值。
   以下值非法值（相对于它们各自的类型来说）：
-  * 布尔型中除 `false` (`0`) 或 `true` (`1`) 之外的值。
+  * 布尔型[`bool`]中除 `false` (`0`) 或 `true` (`1`) 之外的值。
   * 不包括在该枚举(`enum`)类型定义中的判别值。
   * 指向为空(null)的函数指针(`fn` pointer)。
   * 代理码点(Surrogate)或码点大于 `char::MAX` 的字符(`char`)值。
@@ -44,9 +44,10 @@
 
 > **注意**：未定义行为影响整个程序。例如，在 C 中调用一个 C函数已经出现了未定义行为，这意味着包含此调用的整个程序都包含了未定义行为。如果 Rust 再通过 FFI 来调用这段 C程序/代码，那这段 Rust 代码也包含了未定义行为。反之亦然。因此 Rust 中的未定义行为会对任何其他通过 FFI 过来调用的代码造成不利影响。
 
-[^译注1]: 因为编译器内部函数(compiler intrinsics)很多都是和平台相关的，移植性很差。
+[^译注1]: 因为编译器内部函数(compiler intrinsics)很多都是和平台相关的，移植性差。
 
-[`const`]: items/constant-items.html
+[`bool`]: types/boolean.md
+[`const`]: items/constant-items.md
 [noalias]: http://llvm.org/docs/LangRef.html#noalias
 [pointer aliasing rules]: http://llvm.org/docs/LangRef.html#pointer-aliasing-rules
 [undef]: http://llvm.org/docs/LangRef.html#undefined-values
@@ -55,6 +56,3 @@
 [Rustonomicon]: https://doc.rust-lang.org/nomicon/index.html
 [`NonNull<T>`]: https://doc.rust-lang.org/core/ptr/struct.NonNull.html
 [`NonZero*`]: https://doc.rust-lang.org/core/num/index.html
-
-<!-- 2020-11-12-->
-<!-- checked -->

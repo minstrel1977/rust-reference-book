@@ -2,8 +2,8 @@
 # 联合体
 
 >[unions.md](https://github.com/rust-lang/reference/blob/master/src/items/unions.md)\
->commit: 9d0aa172932ed15ec1b13556e6809b74bc58a02b \
->本章译文最后维护日期：2021-1-17
+>commit: 7c6e0c00aaa043c89e0d9f07e78999268e8ac054 \
+>本章译文最后维护日期：2021-2-10
 
 > **<sup>句法</sup>**\
 > _Union_ :\
@@ -45,7 +45,7 @@ let f = unsafe { u.f1 };
 ## Reading and writing union fields
 ## 读写联合体字段
 
-联合体没有“活跃字段(active field)”的概念。相反，每次访问联合体只是用访问所指定的字段的类型解释此联合体的存储。读取联合体的字段就是以当前读取字段的类型来解读此联合体的存储位。字段（间）可以有非零的偏移量存在（使用表型 `#[repr(C)]` 的除外）；在这种情况下，读取将从字段的相对偏移量的 bit 开始。程序员有责任确保此数据在当前字段类型下有效。否则会导致未定义行为(undefined behavior)。例如，在 `bool` 类型下读取到数值 `3` 是未定义行为。实际上，对一个 `#[repr(C)]` 表型的联合体进行写操作，然后再从中读取，就好比从用于写入的类型到用于读取的类型的 [`transmute`] 操作。
+联合体没有“活跃字段(active field)”的概念。相反，每次访问联合体只是用访问所指定的字段的类型解释此联合体的存储。读取联合体的字段就是以当前读取字段的类型来解读此联合体的存储位。字段（间）可以有非零的偏移量存在（使用 [C表型][the C representation]的除外）；在这种情况下，读取将从字段的相对偏移量的 bit 开始。程序员有责任确保此数据在当前字段类型下有效。否则会导致[未定义行为(undefined behavior)][undefined behavior]。例如，在 [`bool`类型][boolean type]的字段下读取到数值 `3` 是未定义行为。实际上，对一个 [C表型][the C representation]的联合体进行写操作，然后再从中读取，就好比从用于写入的类型到用于读取的类型的 [`transmute`] 操作。
 
 因此，所有的联合体字段的读取必须放在非安全(`unsafe`)块里：
 
@@ -158,7 +158,7 @@ fn test() {
 [_StructFields_]: structs.md
 [`transmute`]: https://doc.rust-lang.org/std/mem/fn.transmute.html
 [`Copy`]: https://doc.rust-lang.org/std/marker/trait.Copy.html
+[boolean type]: ../types/boolean.md
 [`ManuallyDrop<_>`]: https://doc.rust-lang.org/std/mem/struct.ManuallyDrop.html
-
-<!-- 2021-1-17-->
-<!-- checked -->
+[the C representation]: ../type-layout.md#reprc-unions
+[undefined behavior]: ../behavior-considered-undefined.html

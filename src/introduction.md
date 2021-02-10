@@ -2,20 +2,31 @@
 # 介绍
 
 >[introduction.md](https://github.com/rust-lang/reference/blob/master/src/introduction.md)\
->commit: a8afdca5d0715b2257b6f8b9a032fd4dd7dae855 \
->本章译文最后维护日期：2020-12-3
+>commit: b16ae389daf1e0b7b61f9103b33591017422717d \
+>本章译文最后维护日期：2021-2-10
 
 本书是 Rust 编程语言的主要参考手册，本书提供了3类资料：
   - 一些章节非正式地介绍了该语言的各种语言结构及其用法。
-  - 一些章节非正式地介绍了该语言的内存模型、并发模型、运行时服务、链接模型，以及调试工具。
-  - 附录章节提供了影响设计的 Rust 语言基础原理和其参考资料。
-  - 附录章节提供了一些对 Rust 语言有影响的编程原理和参考。
+  - 一些章节非正式地介绍了该语言的内存模型、并发模型、运行时服务、链接模型，以及调试工具。-
+  - 附录章节提供了一些对 Rust 语言有影响的编程原理和参考资料。
 
 <div class="warning">
 
 警告：此书尚未完成，记录 Rust 的所有内容需要花些时间。有关本书未记录的内容，请查阅 [GitHub issues]。
 
 </div>
+
+## Rust releases
+## Rust 发行版
+
+Rust 每六周发布一种新的版本。
+该语言的第一个稳定版本是 Rust 1.0.0，然后是 Rust 1.1.0，以此类推。
+相应的工具（`rustc`、’`cargo`，等）和文档([标准库][Standard library]、本书，等等)与语言版本一起发布。
+
+本书的最新版本，与最新的 Rust 版本相匹配，它总是在 <https://doc.rust-lang.org/reference/> 等你。
+
+通过在此链接的“reference”路径段之前添加相应的 Rust版本号，可以找到以往的版本。
+比如，Rust 1.49.0版在 <https://doc.rust-lang.org/1.49.0/reference/> 下。
 
 ## What *The Reference* is Not
 ## *参考手册* 并非——

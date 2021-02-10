@@ -2,8 +2,8 @@
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit: 5967ac11bcc3c8279ddd32b121001afda72ab42a \
->本章译文最后维护日期：2021-1-16
+>commit: 503768310a24f5e2e3674683587e2aa7b1dfbf63 \
+>本章译文最后维护日期：2021-2-10
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -140,7 +140,7 @@ assert_eq!(try_option_none(), None);
 | 符号 | 整数     | `bool`      | 浮点数 | 用于重载的 trait  |
 |--------|-------------|-------------|----------------|--------------------|
 | `-`    | 符号取反*   |             | 符号取反       | `std::ops::Neg`    |
-| `!`    | 按位取反 | 逻辑非 |                | `std::ops::Not`    |
+| `!`    | 按位取反 | [逻辑非][Logical NOT] |                | `std::ops::Not`    |
 
 \* 仅适用于有符号整数类型。
 
@@ -178,9 +178,9 @@ assert_eq!(true, !false);
 | `*`    | 乘法          |             | 乘法 | `std::ops::Mul`    | `std::ops::MulAssign`                 |
 | `/`    | 除法*                |             | 取余       | `std::ops::Div`    | `std::ops::DivAssign`                 |
 | `%`    | 取余               |             | Remainder      | `std::ops::Rem`    | `std::ops::RemAssign`                 |
-| `&`    | 按位与             | 逻辑与 |                | `std::ops::BitAnd` | `std::ops::BitAndAssign`              |
-| <code>&#124;</code> | 按位或 | 逻辑或  |                | `std::ops::BitOr`  | `std::ops::BitOrAssign`               |
-| `^`    | 按位异或             | 逻辑异或 |                | `std::ops::BitXor` | `std::ops::BitXorAssign`              |
+| `&`    | 按位与             | [逻辑与][Logical AND] |                | `std::ops::BitAnd` | `std::ops::BitAndAssign`              |
+| <code>&#124;</code> | 按位或 | [逻辑或][Logical OR]  |                | `std::ops::BitOr`  | `std::ops::BitOrAssign`               |
+| `^`    | 按位异或             | [逻辑异或][Logical XOR] |                | `std::ops::BitXor` | `std::ops::BitXorAssign`              |
 | `<<`   | 左移位              |             |                | `std::ops::Shl`    | `std::ops::ShlAssign`                 |
 | `>>`   | 右移位**            |             |                | `std::ops::Shr`    |  `std::ops::ShrAssign`                |
 
@@ -448,6 +448,10 @@ fn example() {
 <!-- 上面这几个链接从原文来替换时需小心 -->
 [copies or moves]: ../expressions.md#moved-and-copied-types
 [dropping]: ../destructors.md
+[logical and]: ../types/boolean.md#logical-and
+[logical not]: ../types/boolean.md#logical-not
+[logical or]: ../types/boolean.md#logical-or
+[logical xor]: ../types/boolean.md#logical-xor
 [mutable]: ../expressions.md#mutability
 [place expression]: ../expressions.md#place-expressions-and-value-expressions
 [unit]: ../types/tuple.md

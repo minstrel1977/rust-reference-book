@@ -2,8 +2,8 @@
 # 循环
 
 >[loop-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/loop-expr.md)\
->commit: 37f61d3347d0813bce53a25c8ee068650d9a025f \
->本章译文最后维护日期：2020-11-13
+>commit: 7c6e0c00aaa043c89e0d9f07e78999268e8ac054 \
+>本章译文最后维护日期：2021-2-10
 
 > **<sup>句法</sup>**\
 > _LoopExpression_ :\
@@ -47,7 +47,7 @@ Rust支持四种循环表达式：
 > _PredicateLoopExpression_ :\
 > &nbsp;&nbsp; `while` [_Expression_]<sub>_排除结构体表达式_</sub> [_BlockExpression_]
 
-`while`循环从对布尔型的循环条件表达式求值开始。如果循环条件表达式的求值结果为 `true`，则执行循环体块，然后控制流返回到循环条件表达式。如果循环条件表达式的求值结果为 `false`，则 `while`表达式完成。
+`while`循环从对[布尔型][boolean]的循环条件操作数求值开始。如果循环条件操作数的求值结果为 `true`，则执行循环体块，然后控制流返回到循环条件操作数。如果循环条件操作数的求值结果为 `false`，则 `while`表达式完成。
 
 举个例子：
 
@@ -262,6 +262,7 @@ assert_eq!(result, 13);
 [_MatchArmPatterns_]: match-expr.md
 [_Pattern_]: ../patterns.md
 [`match` expression]: match-expr.md
+[boolean]: ../types/boolean.md
 [scrutinee]: ../glossary.md#scrutinee
 [temporary values]: ../expressions.md#temporaries
 [_LazyBooleanOperatorExpression_]: operator-expr.md#lazy-boolean-operators
