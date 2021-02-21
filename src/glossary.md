@@ -2,8 +2,8 @@
 # 术语表
 
 >[glossary.md](https://github.com/rust-lang/reference/blob/master/src/glossary.md)\
->commit: 10da84befd0e79f5e1490912a02cb74368cd3f4a \
->本章译文最后维护日期：2021-1-25
+>commit: c28dfe483375849678793dbe86c69a1953f3bb00 \
+>本章译文最后维护日期：2021-02-21
 
 ### Abstract syntax tree
 ### 抽象句法树
@@ -127,6 +127,27 @@ A variable is initialized if it has been assigned a value and hasn't since been 
 
 本地 trait 是在当前 crate 中定义的 `trait`。它可以在模块局部定义，也可以是依附于其他类型参数而定义。给定 `trait Foo<T, U>`，`Foo` 总是本地的，不管替代 `T` 和 `U` 的类型是什么。\
 A `trait` which was defined in the current crate. A trait definition is local or not independent of applied type arguments. Given `trait Foo<T, U>`, `Foo` is always local, regardless of the types substituted for `T` and `U`.
+
+### Turbofish
+
+表达式中带有泛型参数的路径必须在左尖括号前加上一个 `::`。
+这种为表达泛型而结合起来形式（`::<>`）看起来有些像一条鱼。
+因此，在口头上就被称为 turbofish句法。\
+Paths with generic parameters in expressions must prefix the opening brackets with a `::`.
+Combined with the angular brackets for generics, this looks like a fish `::<>`.
+As such, this syntax is colloquially referred to as turbofish syntax.
+
+例如：
+
+```rust
+let ok_num = Ok::<_, ()>(5);
+let vec = [1, 2, 3].iter().map(|n| n * 2).collect::<Vec<_>>();
+```
+
+这里必须使用 `::`前缀，以便在逗号分隔的列表中进行多次比较时消除泛型路径可能的歧义。
+参见 [the bastion of the turbofish][turbofish test] 中因为没有此前缀的而引起歧义的示例。\
+This `::` prefix is required to disambiguate generic paths with multiple comparisons in a comma-separate list.
+See [the bastion of the turbofish][turbofish test] for an example where not having the prefix would be ambiguous.
 
 ### Local type
 ### 本地类型
@@ -289,6 +310,7 @@ A type is uninhabited if it has no constructors and therefore can never be insta
 [structs]: items/structs.md
 [trait objects]: types/trait-object.md
 [traits]: items/traits.md
+[turbofish test]: https://github.com/rust-lang/rust/blob/master/src/test/ui/bastion-of-the-turbofish.rs
 [types]: types.md
 [undefined-behavior]: behavior-considered-undefined.md
 [unions]: items/unions.md

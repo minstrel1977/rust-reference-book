@@ -2,8 +2,8 @@
 # 数组和数组索引表达式
 
 >[array-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/array-expr.md)\
->commit: 0feff1c68bbedc2d5c93d5464a50f8d94998322a \
->本章译文最后维护日期：2021-1-5
+>commit: eb5290329316e96c48c032075f7dbfa56990702b \
+>本章译文最后维护日期：2021-02-21
 
 ## Array expressions
 ## 数组表达式
@@ -16,11 +16,16 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; [_Expression_] ( `,` [_Expression_] )<sup>\*</sup> `,`<sup>?</sup>\
 > &nbsp;&nbsp; | [_Expression_] `;` [_Expression_]
 
-[数组][Array]表达式可以通过在方括号中放置零个或多个统一类型的、逗号分隔的表达式来编写。这样编写将生成一个包含这些值的数组，其中元素的顺序就是其写入的顺序。
+[数组][Array]表达式可以通过在方括号中放置零个或多个统一类型的、逗号分隔的表达式来编写。
+这样编写将生成一个包含这些值的数组，其中元素的顺序就是其写入的顺序。
 
-也可以在方括号内放置两用个分号(`;`)分隔的表达式。这种形式里，分号后面的表达式必须是 `usize` 类型的，并且必须是[常量表达式][constant expression]，例如[字面量][literal]或[常量项][constant item]。使用 `[a; b]` 形式创建的数组，语义为该数组内包含 `b` 个 `a` 值的副本。如果分号后面的表达式的值大于 1，则要求 `a` 的类型实现了 [`Copy`][`Copy`]，或 `a` 自己是一个常量项的路径。
+也可以在方括号内放置两用个分号(`;`)分隔的表达式。
+这种形式里，分号后面的表达式必须是 `usize` 类型的，并且必须是[常量表达式][constant expression]，例如[字面量][literal]或[常量项][constant item]。
+使用 `[a; b]` 形式创建的数组，语义为该数组内包含 `b` 个 `a` 值的副本。
+如果分号后面的表达式的值大于 1，则要求 `a` 的类型实现了 [`Copy`][`Copy`]，或 `a` 自己是一个常量项的路径。
 
-当 `[a; b]` 形式的表达式中的 `a` 是常量项时，其将被求值 `b` 次。如果 `b` 为 0，则常量项根本不会被求值。对于非常量项的表达式，只求值一次，然后将结果复制 `b` 次。
+当 `[a; b]` 形式的表达式中的 `a` 是常量项时，其将被求值 `b` 次。如果 `b` 为 0，则常量项根本不会被求值。
+对于非常量项的表达式，只求值一次，然后将结果复制 `b` 次。
 
 <div class="warning">
 
@@ -53,9 +58,11 @@ const EMPTY: Vec<i32> = Vec::new();
 
 [数组][Array]表达式和[切片][slice]类表达式(slice-typed expressions)可以通过后跟一个由方括号封闭一个类型为 `usize` 的表达式（索引）的方式来对此数组或切片进行索引检索。如果数组是可变的，则其检索出的[内存位置][memory location]还可以被赋值。
 
-对于数组和切片类型之外的索引表达式 `a[b]` 其实相当于执行 `*std::ops::Index::index(&a, b)`， 或者在可变位置表达式上下文中相当于执行 `*std::ops::IndexMut::index_mut(&mut a, b)`。与普通方法一样，Rust 也将在 `a` 上反复插入解引用操作，直到查找到对上述方法的实现。
+对于数组和切片类型之外的索引表达式 `a[b]` 其实相当于执行 `*std::ops::Index::index(&a, b)`，或者在可变位置表达式上下文中相当于执行 `*std::ops::IndexMut::index_mut(&mut a, b)`。
+与普通方法一样，Rust 也将在 `a` 上反复插入解引用操作，直到查找到对上述方法的实现。
 
-数组和切片的索引是从零开始的。数组访问是一个[常量表达式][constant expression]，因此数组索引的越界检查可以在编译时通过检查常量索引值本身进行。否则，越界检查将在运行时执行，如果此时越界检查未通过，那将把当前线程置于 *panicked 状态*。
+数组和切片的索引是从零开始的。数组访问是一个[常量表达式][constant expression]，因此数组索引的越界检查可以在编译时通过检查常量索引值本身进行。
+否则，越界检查将在运行时执行，如果此时越界检查未通过，那将把当前线程置于 *panicked 状态*。
 
 ```rust,should_panic
 // 默认情况下,`unconditional_panic` lint检查会执行 deny 级别的设置，
@@ -98,6 +105,3 @@ arr[10];                  // 告警：索引越界
 [attributes on block expressions]: block-expr.md#attributes-on-block-expressions
 [constant expression]: ../const_eval.md#constant-expressions
 [memory location]: ../expressions.md#place-expressions-and-value-expressions
-
-<!-- 2021-1-5-->
-<!-- checked -->

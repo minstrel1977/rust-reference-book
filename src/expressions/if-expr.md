@@ -2,8 +2,8 @@
 # `if`和 `if let`表达式
 
 >[if-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/if-expr.md)\
->commit: 7c6e0c00aaa043c89e0d9f07e78999268e8ac054 \
->本章译文最后维护日期：2021-2-10
+>commit: eb5290329316e96c48c032075f7dbfa56990702b \
+>本章译文最后维护日期：2021-2-21
 
 ## `if` expressions
 ## `if`表达式
@@ -16,7 +16,12 @@
 > | _IfExpression_
 > | _IfLetExpression_ ) )<sup>\?</sup>
 
-`if`表达式是程序控制中的一个条件分支。`if`表达式的句法是一个条件操作数（operand）后紧跟一个块，再后面是任意数量的 `else if`条件表达式和块，最后是一个可选的尾部 `else`块。条件操作数的类型必须是[布尔型][boolean type]。如果条件操作数的求值结果为 `true`，则执行紧跟的块，并跳过后续的 `else if`块或 `else`块。如果条件操作数的求值结果为 `false`，则跳过紧跟的块，并按顺序求值后续的 `else if`条件表达式。如果所有 `if`条件表达式和 `else if`条件表达式的求值结果均为 `false`，则执行 `else`块。if表达式的求值结果就是所执行的块的返回值，或者如果没有块被求值那 if表达式的求值结果就是 `()`。`if`表达式在所有情况下的类型必须一致。
+`if`表达式是程序控制中的一个条件分支。`if`表达式的句法是一个条件操作数（operand）后紧跟一个块，再后面是任意数量的 `else if`条件表达式和块，最后是一个可选的尾部 `else`块。
+条件操作数的类型必须是[布尔型][boolean type]。如果条件操作数的求值结果为 `true`，则执行紧跟的块，并跳过后续的 `else if`块或 `else`块。
+如果条件操作数的求值结果为 `false`，则跳过紧跟的块，并按顺序求值后续的 `else if`条件表达式。
+如果所有 `if`条件表达式和 `else if`条件表达式的求值结果均为 `false`，则执行 `else`块。
+if表达式的求值结果就是所执行的块的返回值，或者如果没有块被求值那 if表达式的求值结果就是 `()`。
+`if`表达式在所有情况下的类型必须一致。
 
 ```rust
 # let x = 3;
@@ -41,14 +46,16 @@ assert_eq!(y, "Bigger");
 
 > **<sup>句法</sup>**\
 > _IfLetExpression_ :\
-> &nbsp;&nbsp; `if` `let` [_MatchArmPatterns_] `=` [_Expression_]<sub>_除了结构体表达式和惰性布尔运算符表达式_</sub>
+> &nbsp;&nbsp; `if` `let` [_MatchArmPatterns_] `=` [_Expression_]<sub>_排除结构体表达式和惰性布尔运算符表达式_</sub>
 >              [_BlockExpression_]\
 > &nbsp;&nbsp; (`else` (
 >   [_BlockExpression_]
 > | _IfExpression_
 > | _IfLetExpression_ ) )<sup>\?</sup>
 
-`if let`表达式在语义上类似于 `if`表达式，但是代替条件操作数的是一个关键字 `let`，再后面是一个模式、一个 `=` 和一个[检验对象(scrutinee)][scrutinee]操作数。如果检验对象操作数的值与模式匹配，则执行相应的块。否则，如果存在 `else`块，则继续处理后面的 `else`块。和 `if`表达式一样，`if let`表达式也可以有返回值，这个返回值是由被求值的块确定。
+`if let`表达式在语义上类似于 `if`表达式，但是代替条件操作数的是一个关键字 `let`，再后面是一个模式、一个 `=` 和一个[检验对象(scrutinee)][scrutinee]操作数。
+如果检验对象操作数的值与模式匹配，则执行相应的块。
+否则，如果存在 `else`块，则继续处理后面的 `else`块。和 `if`表达式一样，`if let`表达式也可以有返回值，这个返回值是由被求值的块确定。
 
 ```rust
 let dish = ("Ham", "Eggs");
@@ -108,7 +115,8 @@ match EXPR {
 }
 ```
 
-可以使用操作符 `|` 指定多个模式。这与匹配(`match`)表达式中的 `|` 具有相同的语义：
+可以使用操作符 `|` 指定多个模式。
+这与匹配(`match`)表达式中的 `|` 具有相同的语义：
 
 ```rust
 enum E {
@@ -122,7 +130,9 @@ if let E::X(n) | E::Y(n) = v {
 }
 ```
 
-`if let`表达式不能是[惰性布尔运算符表达式][_LazyBooleanOperatorExpression_]。使用惰性布尔运算符的效果是不明确的，因为 Rust 里一个新特性（if-let执行链(if-let chains)的实现-请参阅[eRFC 2947][_eRFCIfLetChain_]）正被提上日程。当确实需要惰性布尔运算符表达式时，可以像下面一样使用圆括号来实现：
+`if let`表达式不能是[惰性布尔运算符表达式][_LazyBooleanOperatorExpression_]。
+使用惰性布尔运算符的效果是不明确的，因为 Rust 里一个新特性（if-let执行链(if-let chains)的实现-请参阅[eRFC 2947][_eRFCIfLetChain_]）正被提上日程。
+当确实需要惰性布尔运算符表达式时，可以像下面一样使用圆括号来实现：
 
 <!-- ignore: psuedo code -->
 ```rust,ignore

@@ -2,8 +2,8 @@
 # 类型系统属性
 
 >[type_system.md](https://github.com/rust-lang/reference/blob/master/src/attributes/type_system.md)\
->commit: 363a64a939bf246d7373776826e14065e912131f \
->本章译文最后维护日期：2020-11-11
+>commit: d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 \
+>本章译文最后维护日期：2021-02-21
 
 以下[属性][attributes]用于改变类型的使用方式。
 
@@ -65,7 +65,7 @@ match message {
 非穷尽类型(non-exhaustive types)不能在定义它的 crate 之外构建：
 
 - 非穷尽变体（[结构体(`struct`)][struct]或[枚举变体(`enum` variant)][enum]）不能用 [_StructExpression_]句法（包括[函数式更新(functional update)句法][functional update syntax]）构建。
-- 但[枚举(`enum`)]实例能用 [_EnumerationVariantExpression_]句法构建。
+- [枚举(`enum`)][enum]实例能被构建。
 
 示例：（译者注：本例把上例看成本例的 `upstream` ）
 <!-- ignore: requires external crates -->
@@ -97,7 +97,7 @@ let message = Message::Quit;
 示例：（译者注：可以把上上例看成本例的 `upstream` ）
 <!-- ignore: requires external crates -->
 ```rust, ignore
-// `Config`、`Error` `Message`是在上游 crate 中定义的类型，这些类型已被标注为 `#[non_exhaustive]`。
+// `Config`、`Error` `Message` 是在上游 crate 中定义的类型，这些类型已被标注为 `#[non_exhaustive]`。
 use upstream::{Config, Error, Message};
 
 // 不包含通配符匹配臂，无法匹配非穷尽枚举。
@@ -123,7 +123,6 @@ match message {
 
 非穷尽类型最好放在下游 crate 里。
 
-[_EnumerationVariantExpression_]: ../expressions/enum-variant-expr.md
 [_MetaWord_]: ../attributes.md#meta-item-attribute-syntax
 [_StructExpression_]: ../expressions/struct-expr.md
 [_StructPattern_]: ../patterns.md#struct-patterns
@@ -134,6 +133,3 @@ match message {
 [enum]: ../items/enumerations.md
 [functional update syntax]: ../expressions/struct-expr.md#functional-update-syntax
 [struct]: ../items/structs.md
-
-<!-- 2020-11-12-->
-<!-- checked -->

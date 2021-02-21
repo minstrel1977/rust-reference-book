@@ -57,7 +57,6 @@
         - [数组和索引表达式](expressions/array-expr.md)
         - [元组和索引表达式](expressions/tuple-expr.md)
         - [结构体表达式](expressions/struct-expr.md)
-        - [枚举变体表达式](expressions/enum-variant-expr.md)
         - [调用表达式](expressions/call-expr.md)
         - [方法调用表达式](expressions/method-call-expr.md)
         - [字段访问表达式](expressions/field-expr.md)

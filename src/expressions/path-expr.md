@@ -2,15 +2,17 @@
 # 路径表达式
 
 >[path-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/path-expr.md)\
->commit: b0e0ad6490d6517c19546b1023948986578fc378 \
->本章译文最后维护日期：2020-11-11
+>commit: eb5290329316e96c48c032075f7dbfa56990702b \
+>本章译文最后维护日期：2021-02-21
 
 > **<sup>句法</sup>**\
 > _PathExpression_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_PathInExpression_]\
 > &nbsp;&nbsp; | [_QualifiedPathInExpression_]
 
-[路径][path]被用做表达式上下文时表示局部变量或程序项。解析为局部变量或静态变量的路径表达式是[位置表达式][place expressions]，其他路径是[值表达式][value expressions]。使用 [`static mut`]变量需在 [`unsafe`块][`unsafe` block]中。
+[路径][path]被用做表达式上下文时表示局部变量或程序项。
+解析为局部变量或静态变量的路径表达式是[位置表达式][place expressions]，其他路径是[值表达式][value expressions]。
+使用 [`static mut`]变量需在 [`unsafe`块][`unsafe` block]中。
 
 ```rust
 # mod globals {
@@ -33,6 +35,3 @@ let slice_reverse = <[i32]>::reverse;
 [path]: ../paths.md
 [`static mut`]: ../items/static-items.md#mutable-statics
 [`unsafe` block]: block-expr.md#unsafe-blocks
-
-<!-- 2020-11-12-->
-<!-- checked -->

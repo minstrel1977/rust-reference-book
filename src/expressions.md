@@ -23,7 +23,6 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_TupleExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_TupleIndexingExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_StructExpression_]\
-> &nbsp;&nbsp; &nbsp;&nbsp; | [_EnumerationVariantExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_CallExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_MethodCallExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_FieldExpression_]\
@@ -102,7 +101,6 @@ Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同
 * 元组表达式(Tuple expression)
 * 元组索引表达式(Tuple index expression)
 * 结构体表达式(Struct expression)
-* 枚举变体表达式(Enumeration variant expression)
 * 调用表达式(Call expression)
 * 方法调用表达式(Method call expression)
 * 字段表达式(Field expression)
@@ -222,8 +220,8 @@ let b: &[i32];
 只有在少数特定情况下，才允许在表达式之前使用[外部属性][_OuterAttribute_]：
 
 * 在被当作[语句][statement]用的表达式之前。
-* [数组表达式][array expressions]、[元组表达式][tuple expressions]、[调用表达式][call expressions]、[元组结构体(tuple-style struct)][struct]表达式、[枚举变体][enum variant] 表达式这些中的元素。
-  <!-- 这些可能在无意中稳定下来了。参见 https://github.com/rust-lang/rust/issues/32796 和 https://github.com/rust-lang/rust/issues/15701 -->
+* [数组表达式][array expressions]、[元组表达式][tuple expressions]、[调用表达式][call expressions]、[元组结构体(tuple-style struct)][struct]表达式这些中的元素。
+  <!-- 这些可能已无意中稳定下来了。参见 https://github.com/rust-lang/rust/issues/32796 和 https://github.com/rust-lang/rust/issues/15701 -->
 * [块表达式][block expressions]的尾部表达式(tail expression)。
 <!-- 本列表需要和 block-expr.md 保持同步-->
 
@@ -237,7 +235,6 @@ let b: &[i32];
 
 [block expressions]:    expressions/block-expr.md
 [call expressions]:     expressions/call-expr.md
-[enum variant]:         expressions/enum-variant-expr.md
 [field]:                expressions/field-expr.md
 [functional update]:    expressions/struct-expr.md#functional-update-syntax
 [`if let`]:             expressions/if-expr.md#if-let-expressions
@@ -289,7 +286,6 @@ let b: &[i32];
 [_ComparisonExpression_]:         expressions/operator-expr.md#comparison-operators
 [_CompoundAssignmentExpression_]: expressions/operator-expr.md#compound-assignment-expressions
 [_ContinueExpression_]:           expressions/loop-expr.md#continue-expressions
-[_EnumerationVariantExpression_]: expressions/enum-variant-expr.md
 [_FieldExpression_]:              expressions/field-expr.md
 [_GroupedExpression_]:            expressions/grouped-expr.md
 [_IfExpression_]:                 expressions/if-expr.md#if-expressions
@@ -311,6 +307,3 @@ let b: &[i32];
 [_TupleIndexingExpression_]:      expressions/tuple-expr.md#tuple-indexing-expressions
 [_TypeCastExpression_]:           expressions/operator-expr.md#type-cast-expressions
 [_UnsafeBlockExpression_]:        expressions/block-expr.md#unsafe-blocks
-
-<!-- 2020-11-12-->
-<!-- checked -->

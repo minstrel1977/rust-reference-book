@@ -2,8 +2,8 @@
 # 常量求值
 
 >[const_eval.md](https://github.com/rust-lang/reference/blob/master/src/const_eval.md)\
->commit:  1c55d2790c738ddffc696ad065163a9766ca9e2f \
->本章译文最后维护日期：2021-1-10
+>commit:  d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 \
+>本章译文最后维护日期：2021-2-21
 
 常量求值是在编译过程中计算[表达式][[expressions]]结果的过程。（不是所有表达式都可以在编译时求值，也就是说）只有全部表达式的某个子集可以在编译时求值。
 
@@ -21,7 +21,6 @@
 * [元组表达式][Tuple expressions]。
 * [数组表达式][Array expressions]。
 * [结构体][Struct]表达式。
-* [枚举变体][Enum variant]表达式。
 * [块表达式][Block expressions]，包括非安全(`unsafe`)块。
     * [let语句][let statements]以及类似这样的不可反驳型[模式][patterns]绑定，包括可变绑定。
     * [赋值表达式][assignment expressions]
@@ -96,7 +95,6 @@
 [dereference operator]: expressions/operator-expr.md#the-dereference-operator
 [destructors]:          destructors.md
 [enum discriminants]:   items/enumerations.md#custom-discriminant-values-for-fieldless-enumerations
-[enum variant]:         expressions/enum-variant-expr.md
 [expression statements]: statements.md#expression-statements
 [expressions]:          expressions.md
 [field]:                expressions/field-expr.md
@@ -123,6 +121,3 @@
 [`transmute`]:          https://doc.rust-lang.org/std/mem/fn.transmute.html
 [while]:                expressions/loop-expr.md#predicate-loops
 [`while let`]:          expressions/loop-expr.md#predicate-pattern-loops
-
-<!-- 2021-1-10-->
-<!-- checked -->

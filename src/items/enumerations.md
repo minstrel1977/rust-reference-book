@@ -2,8 +2,8 @@
 # 枚举
 
 >[enumerations.md](https://github.com/rust-lang/reference/blob/master/src/items/enumerations.md)\
->commit: 9d0aa172932ed15ec1b13556e6809b74bc58a02b \
->本章译文最后维护日期：2021-1-17
+>commit: d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 \
+>本章译文最后维护日期：2021-2-21
 
 > **<sup>句法</sup>**\
 > _Enumeration_ :\
@@ -30,7 +30,7 @@
 > _EnumItemDiscriminant_ :\
 > &nbsp;&nbsp; `=` [_Expression_]
 
-*枚举*，英文为 *enumeration*，也常用其简写形式 *enum*，它同时定义了一个标称型(nominal)[枚举类型][enumerated type]和一组*构造器*，这可用于创建或使用模式来匹配相应枚举类型的值。
+*枚举*，英文为 *enumeration*，常见其简写形式 *enum*，它同时定义了一个标称型(nominal)[枚举类型][enumerated type]和一组*构造器*，这可用于创建或使用模式来匹配相应枚举类型的值。
 
 枚举使用关键字 `enum` 来声明。
 
@@ -174,6 +174,3 @@ enum E {
 [default representation]: ../type-layout.md#the-default-representation
 [primitive representation]: ../type-layout.md#primitive-representations
 [`C` representation]: ../type-layout.md#the-c-representation
-
-<!-- 2021-1-17-->
-<!-- checked -->

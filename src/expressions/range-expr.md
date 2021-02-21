@@ -2,8 +2,8 @@
 # 区间表达式
 
 >[range-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/range-expr.md)\
->commit: 1cc592ee270b4d9ad190a8cacce0a1ed356b54d0 \
->本章译文最后维护日期：2020-11-13
+>commit: eb5290329316e96c48c032075f7dbfa56990702b \
+>本章译文最后维护日期：2021-02-21
 
 > **<sup>句法</sup>**\
 > _RangeExpression_ :\

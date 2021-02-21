@@ -2,14 +2,15 @@
 # 等待(await)表达式
 
 >[await-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/await-expr.md)\
->commit: f8e76ee9368f498f7f044c719de68c7d95da9972 \
->本章译文最后维护日期：2020-11-13
+>commit: eb5290329316e96c48c032075f7dbfa56990702b \
+>本章译文最后维护日期：2021-02-21
 
 > **<sup>句法</sup>**\
 > _AwaitExpression_ :\
 > &nbsp;&nbsp; [_Expression_] `.` `await`
 
-等待(await)表达式仅在[异步上下文][async context]中才能使用，例如 [异步函数(`async fn`)][`async fn`] 或 [异步(`async`)块][`async` block]。等待(await)表达式内部操作一个 [future] 。它的作用是挂起当前计算，直到给定的 future 准备好生成返回值。
+等待(await)表达式仅在[异步上下文][async context]中才能使用，例如 [异步函数(`async fn`)][`async fn`] 或 [异步(`async`)块][`async` block]。
+等待(await)表达式内部操作一个 [future] 。它的作用是挂起当前计算，直到给定的 future 准备好生成返回值。
 
 更具体地说 `<expr>.await`表达式有以下效果。
 
@@ -34,7 +35,8 @@
 ## Task context
 ## 任务上下文
 
-任务上下文是指在对[异步上下文][async context]本身进行轮询时提供给当前异步上下文的[上下文(`Context`)][`Context`]。因为等待(`await`)表达式只能在异步上下文中才能使用，所以此时必须有一些任务上下文可用。
+任务上下文是指在对[异步上下文][async context]本身进行轮询时提供给当前异步上下文的[上下文(`Context`)][`Context`]。
+因为等待(`await`)表达式只能在异步上下文中才能使用，所以此时必须有一些任务上下文可用。
 
 [`Context`]: https://doc.rust-lang.org/std/task/struct.Context.html
 [async context]: ../expressions/block-expr.md#async-context
@@ -57,7 +59,5 @@ match /* <expr> */ {
 }
 ```
 
-其中，`yield`伪代码返回 `Poll::Pending`，当再次调用时，从该点继续执行。变量 `current_context` 是指从异步环境中获取的上下文。
-
-<!-- 2020-11-12-->
-<!-- checked -->
+其中，`yield`伪代码返回 `Poll::Pending`，当再次调用时，从该点继续执行。
+变量 `current_context` 是指从异步环境中获取的上下文。
