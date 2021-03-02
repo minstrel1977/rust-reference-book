@@ -169,10 +169,12 @@
 <h1><a class="header" href="#子类型化和型变" id="子类型化和型变">子类型化和型变</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/subtyping.md">subtyping.md</a><br />
-commit: ecb53d2015ce93b3519ee0b358fc13fa9b3f723d <br />
-本章译文最后维护日期：2020-11-15</p>
+commit: 3b6fe80c205d2a2b5dc8a276192bbce9eeb9e9cf <br />
+本章译文最后维护日期：2021-03-02</p>
 </blockquote>
-<p>子类型化是隐式的，可以出现在类型检查或类型推断的任何阶段。Rust 中的子类型化的适用范围非常有限，仅出现在和生存期(lifetimes)的型变(variance)相关的地方，以及那些和高阶生存期相关的类型型变之间。如果我们擦除了类型的生存期，那么唯一的子类型化就只是类型相等(type equality)了。</p>
+<p>子类型化是隐式的，可以出现在类型检查或类型推断的任何阶段。
+Rust 中的子类型化的适用范围非常有限，仅出现在和生存期(lifetimes)的型变(variance)相关的地方，以及那些和高阶生存期相关的类型型变之间。
+如果我们擦除了类型的生存期，那么唯一的子类型化就只是类型相等(type equality)了。</p>
 <p>考虑下面的例子：字符串字面量总是拥有 <code>'static</code>生存期。不过，我们还是可以把 <code>s</code> 赋值给 <code>t</code>：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -184,7 +186,8 @@ commit: ecb53d2015ce93b3519ee0b358fc13fa9b3f723d <br />
 <span class="boring">}
 </span></code></pre></pre>
 <p>因为 <code>'static</code> 比生存期参数 <code>'a</code> 的寿命长，所以 <code>&amp;'static str</code> 是 <code>&amp;'a str</code> 的子类型。</p>
-<p><a href="https://doc.rust-lang.org/nomicon/hrtb.html">高阶</a><a href="types/function-pointer.html">函数指针</a>和<a href="types/trait-object.html">trait对象</a>可以形成另一种父子类型的关系。它们是那些通过替换高阶生存期而得出的类型的子类型。举些例子：</p>
+<p><a href="https://doc.rust-lang.org/nomicon/hrtb.html">高阶</a><a href="types/function-pointer.html">函数指针</a>和<a href="types/trait-object.html">trait对象</a>可以形成另一种父子类型的关系。
+它们是那些通过替换高阶生存期而得出的类型的子类型。举些例子：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -203,7 +206,8 @@ let supertype: &amp;for&lt;'c&gt; fn(&amp;'c i32, &amp;'c i32) = subtype;
 </span></code></pre></pre>
 <h2><a class="header" href="#variance" id="variance">Variance</a></h2>
 <h2><a class="header" href="#型变" id="型变">型变</a></h2>
-<p>型变是泛型类型相对其参数具有的属性。泛型类型在它的某个参数上的<em>型变</em>是描述该参数的子类型化去如何影响此泛型类型的子类型化。</p>
+<p>型变是泛型类型相对其参数具有的属性。
+泛型类型在它的某个参数上的<em>型变</em>是描述该参数的子类型化去如何影响此泛型类型的子类型化。</p>
 <ul>
 <li>如果 <code>T</code> 是 <code>U</code> 的一个子类型意味着 <code>F&lt;T&gt;</code> 是 <code>F&lt;U&gt;</code> 的一个子类型（即子类型化“通过(passes through)”），则 <code>F&lt;T&gt;</code> 在 <code>T</code> 上是<em>协变的(covariant)</em>。</li>
 <li>如果 <code>T</code> 是 <code>U</code> 的一个子类型意味着 <code>F&lt;U&gt;</code> 是 <code>F&lt;T&gt;</code> 的一个子类型，则 <code>F&lt;T&gt;</code> 在 <code>T</code> 上是<em>逆变的(contravariant)</em>。</li>
@@ -218,11 +222,14 @@ let supertype: &amp;for&lt;'c&gt; fn(&amp;'c i32, &amp;'c i32) = subtype;
 <tr><td><code>[T]</code> 和 <code>[T; n]</code></td><td></td><td>协变的</td></tr>
 <tr><td><code>fn() -&gt; T</code></td><td></td><td>协变的</td></tr>
 <tr><td><code>fn(T) -&gt; ()</code></td><td></td><td>逆变的</td></tr>
+<tr><td><code>fn(T) -&gt; T</code></td><td></td><td>不变的</td></tr>
 <tr><td><code>std::cell::UnsafeCell&lt;T&gt;</code></td><td></td><td>不变的</td></tr>
 <tr><td><code>std::marker::PhantomData&lt;T&gt;</code></td><td></td><td>协变的</td></tr>
 <tr><td><code>dyn Trait&lt;T&gt; + 'a</code></td><td>协变的</td><td>不变的</td></tr>
 </tbody></table>
-<p>结构体(<code>struct</code>)、枚举(<code>enum</code>)、联合体(<code>union</code>)和元组(tuple)类型上的型变关系是通过查看其字段类型的型变关系来决定的。如果参数用在了多处且具有不同型变关系的位置上，则该类型在该参数上是不变的。例如，下面示例的结构体在 <code>'a</code> 和 <code>T</code> 上是协变的，在 <code>'b</code> 和 <code>U</code> 上是不变的。</p>
+<p>结构体(<code>struct</code>)、枚举(<code>enum</code>)、联合体(<code>union</code>)和元组(tuple)类型上的型变关系是通过查看其字段类型的型变关系来决定的。
+如果参数用在了多处且具有不同型变关系的位置上，则该类型在该参数上是不变的。
+例如，下面示例的结构体在 <code>'a</code> 和 <code>T</code> 上是协变的，在 <code>'b</code> 和 <code>U</code> 上是不变的。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -235,8 +242,6 @@ struct Variance&lt;'a, 'b, T, U: 'a&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<!-- 2020-11-12-->
-<!-- checked -->
 
                     </main>
 
