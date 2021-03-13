@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2021-03-02</p>
+<p>本书跟随原文截止日期：2021-03-13</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -3267,7 +3267,7 @@ commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
 <p>必须为自由静态项提供初始化表达式，但在<a href="items/external-blocks.html">外部块</a>中静态项必须省略初始化表达式。</p>
 <h2><a class="header" href="#mutable-statics" id="mutable-statics">Mutable statics</a></h2>
 <h2><a class="header" href="#可变静态项" id="可变静态项">可变静态项</a></h2>
-<p>如果静态项是用关键字 <code>mut</code> 声明的，则它允许被程序修改。Rust 的目标之一是使尽可能的避免出现并发 bug，那允许修改可变静态项显然是竞争条件(race conditions)或其他 bug 的一个非常大的来源。因此，读取或写入可变静态项变量时需要引入非安全(<code>unsafe</code>)块。应注意确保对可变静态项的修改相对于运行在同一进程中的其他线程来说是安全的。</p>
+<p>如果静态项是用关键字 <code>mut</code> 声明的，则它允许被程序修改。Rust 的目标之一是使尽可能的避免出现并发 bug，那允许修改可变静态项显然是竞态(race conditions)或其他 bug 的一个重要来源。因此，读取或写入可变静态项变量时需要引入非安全(<code>unsafe</code>)块。应注意确保对可变静态项的修改相对于运行在同一进程中的其他线程来说是安全的。</p>
 <p>尽管有这些缺点，可变静态项仍然非常有用。它们可以与 C库一起使用，也可以在外部(<code>extern</code>)块中从 C库中来绑定它。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -11069,14 +11069,14 @@ use alloc::rc::Rc;
 <h1><a class="header" href="#路径" id="路径">路径</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/paths.md">paths.md</a><br />
-commit: 8511cf48f93fc37c44a87f5823cce1338da1bb7e <br />
-本章译文最后维护日期：2021-1-17</p>
+commit: 80241b46c68380735f05fb53bd99632b87ac2872 <br />
+本章译文最后维护日期：2021-3-13</p>
 </blockquote>
 <p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，<code>::</code> 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">程序项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用程序项。</p>
 <p>仅由标识符段组成的简单路径(simple paths)的两个示例：</p>
 <!-- ignore: syntax fragment -->
 <pre><code class="language-rust ignore">x;
-x::y::z;
+x::y::z;net
 </code></pre>
 <h2><a class="header" href="#types-of-paths" id="types-of-paths">Types of paths</a></h2>
 <h2><a class="header" href="#路径分类" id="路径分类">路径分类</a></h2>
@@ -11090,7 +11090,7 @@ x::y::z;
    <a href="identifiers.html">IDENTIFIER</a> | <code>super</code> | <code>self</code> | <code>crate</code> | <code>$crate</code></p>
 </blockquote>
 <p>简单路径可用于<a href="visibility-and-privacy.html">可见性</a>标记、<a href="attributes.html">属性</a>、<a href="macros-by-example.html">宏</a>和 <a href="items/use-declarations.html"><code>use</code></a>程序项中。示例：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rustnet">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::io::{self, Write};
@@ -11104,7 +11104,7 @@ mod m {
 <h3><a class="header" href="#表达式中的路径" id="表达式中的路径">表达式中的路径</a></h3>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
-<em>PathInExpression</em> :<br />
+<em>PathInExpression</em> :\net
    <code>::</code><sup>?</sup> <em>PathExprSegment</em> (<code>::</code> <em>PathExprSegment</em>)<sup>*</sup></p>
 <p><em>PathExprSegment</em> :<br />
    <em>PathIdentSegment</em> (<code>::</code> <em>GenericArgs</em>)<sup>?</sup></p>
@@ -11113,7 +11113,7 @@ mod m {
 <p><em>GenericArgs</em> :<br />
       <code>&lt;</code> <code>&gt;</code><br />
    | <code>&lt;</code> ( <em>GenericArg</em> <code>,</code> )<sup>*</sup> <em>GenericArg</em> <code>,</code><sup>?</sup> <code>&gt;</code></p>
-<p><em>GenericArg</em> :<br />
+<p><em>GenericArg</em> :\net
    <a href="trait-bounds.html"><em>Lifetime</em></a> | <a href="types.html#type-expressions"><em>Type</em></a> | <em>GenericArgsConst</em> | <em>GenericArgsBinding</em></p>
 <p><em>GenericArgsConst</em> :<br />
       <a href="expressions/block-expr.html"><em>BlockExpression</em></a><br />
@@ -11128,7 +11128,7 @@ mod m {
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>(0..10).collect::&lt;Vec&lt;_&gt;&gt;();
+</span>(0..10).collect::&lt;Vec&lt;_&gt;&gt;();net
 Vec::&lt;u8&gt;::with_capacity(1024);
 <span class="boring">}
 </span></code></pre></pre>
@@ -11157,34 +11157,27 @@ trait T1 {
     fn f() { println!(&quot;T1 f&quot;); }
 }
 impl T1 for S {}
-trait T2 {
+trait T2 {net
     fn f() { println!(&quot;T2 f&quot;); }
-}
-impl T2 for S {}
-S::f();  // 调用本身的实现.
-&lt;S as T1&gt;::f();  // 调用 T1 trait 的函数.
-&lt;S as T2&gt;::f();  // 调用 T2 trait 的函数.
-<span class="boring">}
-</span></code></pre></pre>
-<h3><a class="header" href="#paths-in-types" id="paths-in-types">Paths in types</a></h3>
-<h3><a class="header" href="#类型中的路径类型路径" id="类型中的路径类型路径">类型中的路径/类型路径</a></h3>
-<blockquote>
-<p><strong><sup>句法</sup></strong><br />
-<em>TypePath</em> :<br />
-   <code>::</code><sup>?</sup> <em>TypePathSegment</em> (<code>::</code> <em>TypePathSegment</em>)<sup>*</sup></p>
-<p><em>TypePathSegment</em> :<br />
-   <em>PathIdentSegment</em> <code>::</code><sup>?</sup> (<a href="paths.html#paths-in-expressions"><em>GenericArgs</em></a> | <em>TypePathFn</em>)<sup>?</sup></p>
-<p><em>TypePathFn</em> :<br />
-<code>(</code> <em>TypePathFnInputs</em><sup>?</sup> <code>)</code> (<code>-&gt;</code> <a href="types.html#type-expressions"><em>Type</em></a>)<sup>?</sup></p>
-<p><em>TypePathFnInputs</em> :<br />
-<a href="types.html#type-expressions"><em>Type</em></a> (<code>,</code> <a href="types.html#type-expressions"><em>Type</em></a>)<sup>*</sup> <code>,</code><sup>?</sup></p>
-</blockquote>
-<p>类型路径用于类型定义、trait约束(trait bound)、类型参数约束，以及限定性路径。</p>
-<p>尽管在泛型参数之前允许使用 token <code>::</code>，但它不是必需的，因为在类型路径中不存在像 <em>PathInExpression</em> 句法中那样的歧义。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">mod ops {
+}net
+&gt; _TypePath_ :\
+&gt; &amp;nbsp;&amp;nbsp; `::`&lt;sup&gt;?&lt;/sup&gt; _TypePathSegment_ (`::` _TypePathSegment_)&lt;sup&gt;\*&lt;/sup&gt;
+&gt;
+&gt; _TypePathSegment_ :\
+&gt; &amp;nbsp;&amp;nbsp; _PathIdentSegment_ `::`&lt;sup&gt;?&lt;/sup&gt; ([_GenericArgs_] | _TypePathFn_)&lt;sup&gt;?&lt;/sup&gt;
+&gt;
+&gt; _TypePathFn_ :\
+&gt; `(` _TypePathFnInputs_&lt;sup&gt;?&lt;/sup&gt; `)` (`-&gt;` [_Type_])&lt;sup&gt;?&lt;/sup&gt;
+&gt;
+&gt; _TypePathFnInputs_ :\
+&gt; [_Type_] (`,` [_Type_])&lt;sup&gt;\*&lt;/sup&gt; `,`&lt;sup&gt;?&lt;/sup&gt;
+
+类型路径用于类型定义、trait约束(trait bound)、类型参数约束，以及限定性路径。
+
+尽管在泛型参数之前允许使用 token `::`，但它不是必需的，因为在类型路径中不存在像 _PathInExpression_ 句法中那样的歧义。
+
+```rust
+<span class="boring">mod ops {
 </span><span class="boring">    pub struct Range&lt;T&gt; {f1: T}
 </span><span class="boring">    pub trait Index&lt;T&gt; {}
 </span><span class="boring">    pub struct Example&lt;'a&gt; {f1: &amp;'a i32}
@@ -11192,7 +11185,7 @@ S::f();  // 调用本身的实现.
 </span><span class="boring">struct S;
 </span>impl ops::Index&lt;ops::Range&lt;usize&gt;&gt; for S { /*...*/ }
 fn i&lt;'a&gt;() -&gt; impl Iterator&lt;Item = ops::Example&lt;'a&gt;&gt; {
-    // ...
+    // ...net
 <span class="boring">   const EXAMPLE: Vec&lt;ops::Example&lt;'static&gt;&gt; = Vec::new();
 </span><span class="boring">   EXAMPLE.into_iter()
 </span>}
@@ -11203,10 +11196,10 @@ type G = std::boxed::Box&lt;dyn std::ops::FnOnce(isize) -&gt; isize&gt;;
 <h2><a class="header" href="#路径限定符" id="路径限定符">路径限定符</a></h2>
 <p>路径可以被各种能改变其解析方式的前导限定符限定。</p>
 <h3><a class="header" href="#" id=""><code>::</code></a></h3>
-<p>以 <code>::</code> 开头的路径被认为是全局路径，其中的路径首段从当前 crate 根位置/模块开始解析。路径中的每个标识符都必须解析为一个程序项。</p>
+<p>以 <code>::</code> 开头的路径被认为是全局路径，其中的路径首段在不同的版本中的解析方式有所不同。但路径中的每个标识符都必须解析为一个程序项。</p>
 <blockquote>
-<p><strong>版本差异</strong>: 2015 版中，crate 根（模块）包含多种不同的程序项，包括：外部crate、默认crate（如 <code>std</code> 和 <code>core</code>），以及 crate 顶层内的各种程序项（包括 <code>use</code> 导入的各种程序项）。</p>
-<p>从 2018 版开始，以 <code>::</code> 开头的路径仅能引用 crate。</p>
+<p><strong>版本差异</strong>: 在2015版中，标识符解析从“create 根模块(crate root)”（2018版中表示为 <code>crate::</code>）开始，“create 根模块(crate root)”中包含了一系列不同的程序项，包括外部crate、默认create（如 <code>std</code> 或 <code>core</code>），以及 crate下的各种顶层程序项（包括 <code>use</code>导入）。</p>
+<p>从 2018 版开始，以 <code>::</code> 开头的路径被解析为<a href="names/preludes.html#extern-prelude">外部预导入包</a>中的一个 crate。也就是说，其后必须跟一个 crate的名称。</p>
 </blockquote>
 <pre><pre class="playground"><code class="language-rust">mod a {
     pub fn foo() {}
@@ -11351,8 +11344,6 @@ mod without { // ::without
 
 <span class="boring">fn main() {}
 </span></code></pre></pre>
-<!-- 2021-1-17-->
-<!-- checked -->
 <h1><a class="header" href="#name-resolution" id="name-resolution">Name resolution</a></h1>
 <h1><a class="header" href="#名称解析" id="名称解析">名称解析</a></h1>
 <blockquote>

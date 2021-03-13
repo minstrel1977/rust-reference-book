@@ -2,8 +2,8 @@
 # 路径
 
 >[paths.md](https://github.com/rust-lang/reference/blob/master/src/paths.md)\
->commit: 8511cf48f93fc37c44a87f5823cce1338da1bb7e \
->本章译文最后维护日期：2021-1-17
+>commit: 80241b46c68380735f05fb53bd99632b87ac2872 \
+>本章译文最后维护日期：2021-3-13
 
 *路径*是一个或多个由命名空间<span class="parenthetical">限定符(`::`)</span>*逻辑*分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，`::` 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的[程序项][item]或[变量][variable]。如果路径包含多个路径段，则总是引用程序项。
 
@@ -11,7 +11,7 @@
 <!-- ignore: syntax fragment -->
 ```rust,ignore
 x;
-x::y::z;
+x::y::z;net
 ```
 
 ## Types of paths
@@ -29,7 +29,7 @@ x::y::z;
 
 简单路径可用于[可见性][visibility]标记、[属性][attributes]、[宏][macros]和 [`use`]程序项中。示例：
 
-```rust
+```rustnet
 use std::io::{self, Write};
 mod m {
     #[clippy::cyclomatic_complexity = "0"]
@@ -41,7 +41,7 @@ mod m {
 ### 表达式中的路径
 
 > **<sup>句法</sup>**\
-> _PathInExpression_ :\
+> _PathInExpression_ :\net
 > &nbsp;&nbsp; `::`<sup>?</sup> _PathExprSegment_ (`::` _PathExprSegment_)<sup>\*</sup>
 >
 > _PathExprSegment_ :\
@@ -54,7 +54,7 @@ mod m {
 > &nbsp;&nbsp; &nbsp;&nbsp; `<` `>`\
 > &nbsp;&nbsp; | `<` ( _GenericArg_ `,` )<sup>\*</sup> _GenericArg_ `,`<sup>?</sup> `>`
 >
-> _GenericArg_ :\
+> _GenericArg_ :\net
 > &nbsp;&nbsp; [_Lifetime_] | [_Type_] | _GenericArgsConst_ | _GenericArgsBinding_
 >
 > _GenericArgsConst_ :\
@@ -71,7 +71,7 @@ mod m {
 token `::` 必须在泛型参数的左尖括号（`<`）的前面，以避免和小于号操作符产生混淆。这就是俗称的“涡轮鱼(turbofish)”句法。
 
 ```rust
-(0..10).collect::<Vec<_>>();
+(0..10).collect::<Vec<_>>();net
 Vec::<u8>::with_capacity(1024);
 ```
 
@@ -103,19 +103,9 @@ trait T1 {
     fn f() { println!("T1 f"); }
 }
 impl T1 for S {}
-trait T2 {
+trait T2 {net
     fn f() { println!("T2 f"); }
-}
-impl T2 for S {}
-S::f();  // 调用本身的实现.
-<S as T1>::f();  // 调用 T1 trait 的函数.
-<S as T2>::f();  // 调用 T2 trait 的函数.
-```
-
-### Paths in types
-### 类型中的路径/类型路径
-
-> **<sup>句法</sup>**\
+}net
 > _TypePath_ :\
 > &nbsp;&nbsp; `::`<sup>?</sup> _TypePathSegment_ (`::` _TypePathSegment_)<sup>\*</sup>
 >
@@ -141,7 +131,7 @@ S::f();  // 调用本身的实现.
 # struct S;
 impl ops::Index<ops::Range<usize>> for S { /*...*/ }
 fn i<'a>() -> impl Iterator<Item = ops::Example<'a>> {
-    // ...
+    // ...net
 #    const EXAMPLE: Vec<ops::Example<'static>> = Vec::new();
 #    EXAMPLE.into_iter()
 }
@@ -155,11 +145,11 @@ type G = std::boxed::Box<dyn std::ops::FnOnce(isize) -> isize>;
 
 ### `::`
 
-以 `::` 开头的路径被认为是全局路径，其中的路径首段从当前 crate 根位置/模块开始解析。路径中的每个标识符都必须解析为一个程序项。
+以 `::` 开头的路径被认为是全局路径，其中的路径首段在不同的版本中的解析方式有所不同。但路径中的每个标识符都必须解析为一个程序项。
 
-> **版本差异**: 2015 版中，crate 根（模块）包含多种不同的程序项，包括：外部crate、默认crate（如 `std` 和 `core`），以及 crate 顶层内的各种程序项（包括 `use` 导入的各种程序项）。
->
->从 2018 版开始，以 `::` 开头的路径仅能引用 crate。
+> **版本差异**: 在2015版中，标识符解析从“create 根模块(crate root)”（2018版中表示为 `crate::`）开始，“create 根模块(crate root)”中包含了一系列不同的程序项，包括外部crate、默认create（如 `std` 或 `core`），以及 crate下的各种顶层程序项（包括 `use`导入）。
+> 
+>从 2018 版开始，以 `::` 开头的路径被解析为[外部预导入包][extern prelude]中的一个 crate。也就是说，其后必须跟一个 crate的名称。
 
 ```rust
 mod a {
@@ -349,12 +339,10 @@ mod without { // ::without
 [`use`]: items/use-declarations.md
 [attributes]: attributes.md
 [expressions]: expressions.md
+[extern prelude]: names/preludes.md#extern-prelude
 [macro transcribers]: macros-by-example.md
 [macros]: macros-by-example.md
 [patterns]: patterns.md
 [trait implementations]: items/implementations.md#trait-implementations
 [traits]: items/traits.md
 [visibility]: visibility-and-privacy.md
-
-<!-- 2021-1-17-->
-<!-- checked -->
