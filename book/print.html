@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2021-03-13</p>
+<p>本书跟随原文截止日期：2021-03-20</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -5983,8 +5983,8 @@ fn move_by_block_expression() {
 <h1><a class="header" href="#operator-expressions" id="operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-2-21</p>
+commit: 3b3a6a52a66132349cf04eb3e29f1771fdf3df2a <br />
+本章译文最后维护日期：2021-3-20</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6021,11 +6021,11 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
    | (<code>&amp;</code>|<code>&amp;&amp;</code>) <code>mut</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
 <p><code>&amp;</code>（共享借用）和 <code>&amp;mut</code>（可变借用）运算符是一元前缀运算符。
-当应用于<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>上时，此表达式生成指向值所在的内存位置的引用（指针）。
+当应用于[位置表达式][place expression]上时，此表达式生成指向值所在的内存位置的引用（指针）。
 在引用存续期间，该内存位置也被置于借出状态。
 对于共享借用（<code>&amp;</code>），这意味着该位置可能不会发生变化，但可能会被再次读取或共享。
 对于可变借用（<code>&amp;mut</code>），在借用到期之前，不能以任何方式访问该位置。<code>&amp;mut</code> 在可变位置表达式上下文中会对其操作数求值。
-如果 <code>&amp;</code> 或 <code>&amp;mut</code> 运算符应用于<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>上，则会创建一个<a href="expressions/../expressions.html#temporaries">临时值</a>。</p>
+如果 <code>&amp;</code> 或 <code>&amp;mut</code> 运算符应用于[值表达式][value expression]上，则会创建一个[临时值][temporary value]。</p>
 <p>这类操作符不能重载。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -6062,9 +6062,9 @@ let a = &amp; &amp; &amp; &amp; mut 10;
 <em>DereferenceExpression</em> :<br />
    <code>*</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><code>*</code>（解引用）操作符也是一元前缀操作符。当应用于<a href="expressions/../types/pointer.html">指针</a>上时，它表示该指针指向的内存位置。
-如果表达式的类型为 <code>&amp;mut T</code> 或 <code>*mut T</code>，并且该表达式是局部变量、局部变量的（内嵌）字段、或是可变的<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>，则它代表的内存位置可以被赋值。解引用原始指针需要在非安全(<code>unsafe</code>)块才能进行。</p>
-<p>在<a href="expressions/../expressions.html#mutability">不可变位置表达式上下文</a>中对非指针类型作 <code>*x</code> 相当于执行 <code>*std::ops::Deref::deref(&amp;x)</code>；同样的，在可变位置表达式上下文中这个动作就相当于执行 <code>*std::ops::DerefMut::deref_mut(&amp;mut x)</code>。</p>
+<p><code>*</code>（解引用）操作符也是一元前缀操作符。当应用于[指针][pointer]上时，它表示该指针指向的内存位置。
+如果表达式的类型为 <code>&amp;mut T</code> 或 <code>*mut T</code>，并且该表达式是局部变量、局部变量的（内嵌）字段、或是可变的[位置表达式][place expression]，则它代表的内存位置可以被赋值。解引用原始指针需要在非安全(<code>unsafe</code>)块才能进行。</p>
+<p>在[不可变位置表达式上下文][immutable place expression context]中对非指针类型作 <code>*x</code> 相当于执行 <code>*std::ops::Deref::deref(&amp;x)</code>；同样的，在可变位置表达式上下文中这个动作就相当于执行 <code>*std::ops::DerefMut::deref_mut(&amp;mut x)</code>。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6133,10 +6133,10 @@ assert_eq!(try_option_none(), None);
 <p>这是最后两个一元运算符。
 下表总结了它们用在基本类型上的表现，同时指出其他类型要重载这些操作符需要实现的 trait。
 记住，有符号整数总是用二进制补码形式表示。
-所有这些运算符的操作数都在<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中被求值，所以这些操作数的值会被移走或复制。</p>
+所有这些运算符的操作数都在[值表达式上下文][value expression]中被求值，所以这些操作数的值会被移走或复制。</p>
 <table><thead><tr><th>符号</th><th>整数</th><th><code>bool</code></th><th>浮点数</th><th>用于重载的 trait</th></tr></thead><tbody>
 <tr><td><code>-</code></td><td>符号取反*</td><td></td><td>符号取反</td><td><code>std::ops::Neg</code></td></tr>
-<tr><td><code>!</code></td><td>按位取反</td><td><a href="expressions/../types/boolean.html#logical-not">逻辑非</a></td><td></td><td><code>std::ops::Not</code></td></tr>
+<tr><td><code>!</code></td><td>按位取反</td><td>[逻辑非][Logical NOT]</td><td></td><td><code>std::ops::Not</code></td></tr>
 </tbody></table>
 <p>* 仅适用于有符号整数类型。</p>
 <p>下面是这些运算符的一些示例：</p>
@@ -6168,16 +6168,16 @@ assert_eq!(true, !false);
 <p>二元运算符表达式都用中缀表示法(infix notation)书写。
 下表总结了算术和逻辑二元运算符在原生类型(primitive type)上的行为，同时指出其他类型要重载这些操作符需要实现的 trait。
 记住，有符号整数总是用二进制补码形式表示。
-所有这些运算符的操作数都在<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中求值，因此这些操作数的值会被移走或复制。</p>
+所有这些运算符的操作数都在[值表达式上下文][value expression]中求值，因此这些操作数的值会被移走或复制。</p>
 <table><thead><tr><th>符号</th><th>整数</th><th><code>bool</code></th><th>浮点数</th><th>用于重载此运算符的 trait</th><th>用于重载此运算符的复合赋值(Compound Assignment) Trait</th></tr></thead><tbody>
 <tr><td><code>+</code></td><td>加法</td><td></td><td>加法</td><td><code>std::ops::Add</code></td><td><code>std::ops::AddAssign</code></td></tr>
 <tr><td><code>-</code></td><td>减法</td><td></td><td>减法</td><td><code>std::ops::Sub</code></td><td><code>std::ops::SubAssign</code></td></tr>
 <tr><td><code>*</code></td><td>乘法</td><td></td><td>乘法</td><td><code>std::ops::Mul</code></td><td><code>std::ops::MulAssign</code></td></tr>
 <tr><td><code>/</code></td><td>除法*</td><td></td><td>取余</td><td><code>std::ops::Div</code></td><td><code>std::ops::DivAssign</code></td></tr>
 <tr><td><code>%</code></td><td>取余</td><td></td><td>Remainder</td><td><code>std::ops::Rem</code></td><td><code>std::ops::RemAssign</code></td></tr>
-<tr><td><code>&amp;</code></td><td>按位与</td><td><a href="expressions/../types/boolean.html#logical-and">逻辑与</a></td><td></td><td><code>std::ops::BitAnd</code></td><td><code>std::ops::BitAndAssign</code></td></tr>
-<tr><td><code>|</code></td><td>按位或</td><td><a href="expressions/../types/boolean.html#logical-or">逻辑或</a></td><td></td><td><code>std::ops::BitOr</code></td><td><code>std::ops::BitOrAssign</code></td></tr>
-<tr><td><code>^</code></td><td>按位异或</td><td><a href="expressions/../types/boolean.html#logical-xor">逻辑异或</a></td><td></td><td><code>std::ops::BitXor</code></td><td><code>std::ops::BitXorAssign</code></td></tr>
+<tr><td><code>&amp;</code></td><td>按位与</td><td>[逻辑与][Logical AND]</td><td></td><td><code>std::ops::BitAnd</code></td><td><code>std::ops::BitAndAssign</code></td></tr>
+<tr><td><code>|</code></td><td>按位或</td><td>[逻辑或][Logical OR]</td><td></td><td><code>std::ops::BitOr</code></td><td><code>std::ops::BitOrAssign</code></td></tr>
+<tr><td><code>^</code></td><td>按位异或</td><td>[逻辑异或][Logical XOR]</td><td></td><td><code>std::ops::BitXor</code></td><td><code>std::ops::BitXorAssign</code></td></tr>
 <tr><td><code>&lt;&lt;</code></td><td>左移位</td><td></td><td></td><td><code>std::ops::Shl</code></td><td><code>std::ops::ShlAssign</code></td></tr>
 <tr><td><code>&gt;&gt;</code></td><td>右移位**</td><td></td><td></td><td><code>std::ops::Shr</code></td><td><code>std::ops::ShrAssign</code></td></tr>
 </tbody></table>
@@ -6215,7 +6215,7 @@ assert_eq!(-10 &gt;&gt; 2, -3);
 链式比较运算时需要借助圆括号，例如，表达式 <code>a == b == c</code> 是无效的，（但如果逻辑允许）可以写成 <code>(a == b) == c</code>。</p>
 <p>与算术运算符和逻辑运算符不同，重载这些运算符的 trait 通常用于显示/约定如何比较一个类型，并且还很可能会假定使用这些 trait 作为约束条件的函数定义了实际的比较逻辑。
 其实标准库中的许多函数和宏都使用了这个假定（尽管不能确保这些假定的安全性）。
-与上面的算术和逻辑运算符不同，这些运算符会隐式地对它们的操作数执行共享借用，并在<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式上下文</a>中对它们进行求值：</p>
+与上面的算术和逻辑运算符不同，这些运算符会隐式地对它们的操作数执行共享借用，并在[位置表达式上下文][place expression]中对它们进行求值：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6242,27 +6242,21 @@ assert_eq!(-10 &gt;&gt; 2, -3);
 </span>assert!(123 == 123);
 assert!(23 != -12);
 assert!(12.5 &gt; 12.2);
-assert!([1, 2, 3] &lt; [1, 3, 4]);
-assert!('A' &lt;= 'B');
-assert!(&quot;World&quot; &gt;= &quot;Hello&quot;);
-<span class="boring">}
-</span></code></pre></pre>
-<h2><a class="header" href="#短路布尔运算符" id="短路布尔运算符">短路布尔运算符</a></h2>
-<h2><a class="header" href="#lazy-boolean-operators" id="lazy-boolean-operators">Lazy boolean operators</a></h2>
-<blockquote>
-<p><strong><sup>句法</sup></strong><br />
-<em>LazyBooleanExpression</em> :<br />
-      <a href="expressions/../expressions.html"><em>Expression</em></a> <code>||</code> <a href="expressions/../expressions.html"><em>Expression</em></a><br />
-   | <a href="expressions/../expressions.html"><em>Expression</em></a> <code>&amp;&amp;</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
-</blockquote>
-<p>运算符 <code>||</code> 和 <code>&amp;&amp;</code> 可以应用在布尔类型的操作数上。
-运算符 <code>||</code> 表示逻辑“或”，运算符 <code>&amp;&amp;</code> 表示逻辑“与”。
-它们与 <code>|</code> 和 <code>&amp;</code> 的不同之处在于，只有在左操作数尚未确定表达式的结果时，才计算右操作数。
-也就是说，<code>||</code> 只在左操作数的计算结果为 <code>false</code> 时才计算其右操作数，而只有在计算结果为 <code>true</code> 时才计算 <code>&amp;&amp;</code> 的操作数。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let x = false || true; // true
+assert!([1, 2, 3] &lt; [1, 3, 4]);13
+# Lazy boolean operators
+
+&gt; **&lt;sup&gt;句法&lt;/sup&gt;**\
+&gt; _LazyBooleanExpression_ :\
+&gt; &amp;nbsp;&amp;nbsp; &amp;nbsp;&amp;nbsp; [_Expression_] `||` [_Expression_]\
+&gt; &amp;nbsp;&amp;nbsp; | [_Expression_] `&amp;&amp;` [_Expression_]
+
+运算符 `||` 和 `&amp;&amp;` 可以应用在布尔类型的操作数上。
+运算符 `||` 表示逻辑“或”，运算符 `&amp;&amp;` 表示逻辑“与”。
+它们与 `|` 和 `&amp;` 的不同之处在于，只有在左操作数尚未确定表达式的结果时，才计算右操作数。
+也就是说，`||` 只在左操作数的计算结果为 `false` 时才计算其右操作数，而只有在计算结果为 `true` 时才计算 `&amp;&amp;` 的操作数。
+
+```rust
+let x = false || true; // true
 let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <span class="boring">}
 </span></code></pre></pre>
@@ -6288,7 +6282,8 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>as</code> 可用于显式执行<a href="expressions/../type-coercions.html">自动强转(coercions)</a>，以及下列形式的强制转换。
+<p><code>as</code> 可用于显式执行[自动强转(coercions)][coercions]，以及下列形式的强制转换。
+任何不符合强转规则或不在下表中的转换都会导致编译器报错。
 下表中 <code>*T</code> 代表 <code>*const T</code> 或 <code>*mut T</code>。</p>
 <table><thead><tr><th><code>e</code> 的类型</th><th><code>U</code></th><th>通过 <code>e as U</code> 执行转换</th></tr></thead><tbody>
 <tr><td>整型或浮点型</td><td>整型或浮点型</td><td>数字转换</td></tr>
@@ -6299,11 +6294,11 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <tr><td><code>*T</code> where <code>T: Sized</code></td><td>数字型(Numeric type)</td><td>指针到地址的转换</td></tr>
 <tr><td>整型</td><td><code>*V</code> where <code>V: Sized</code></td><td>地址到指针的转换</td></tr>
 <tr><td><code>&amp;[T; n]</code></td><td><code>*const T</code></td><td>数组到指针的转换</td></tr>
-<tr><td><a href="expressions/../types/function-item.html">函数项</a></td><td><a href="expressions/../types/function-pointer.html">函数指针</a></td><td>函数到函数指针的转换</td></tr>
-<tr><td><a href="expressions/../types/function-item.html">函数项</a></td><td><code>*V</code> where <code>V: Sized</code></td><td>函数到指针的转换</td></tr>
-<tr><td><a href="expressions/../types/function-item.html">函数项</a></td><td>整型</td><td>函数到地址的转换</td></tr>
-<tr><td><a href="expressions/../types/function-pointer.html">函数指针</a></td><td><code>*V</code> where <code>V: Sized</code></td><td>函数指针到指针的转换</td></tr>
-<tr><td><a href="expressions/../types/function-pointer.html">函数指针</a></td><td>整型</td><td>函数指针到地址的转换</td></tr>
+<tr><td>[函数项][Function item]</td><td>[函数指针][Function pointer]</td><td>函数到函数指针的转换</td></tr>
+<tr><td>[函数项][Function item]</td><td><code>*V</code> where <code>V: Sized</code></td><td>函数到指针的转换</td></tr>
+<tr><td>[函数项][Function item]</td><td>整型</td><td>函数到地址的转换</td></tr>
+<tr><td>[函数指针][Function pointer]</td><td><code>*V</code> where <code>V: Sized</code></td><td>函数指针到指针的转换</td></tr>
+<tr><td>[函数指针][Function pointer]</td><td>整型</td><td>函数指针到地址的转换</td></tr>
 <tr><td>闭包 **</td><td>函数指针</td><td>闭包到函数指针的转换</td></tr>
 </tbody></table>
 <p>* 或者 <code>T</code>和<code>V</code> 也可以都是兼容的 unsized 类型，例如，两个都是切片，或者都是同一种 trait对象。</p>
@@ -6355,12 +6350,12 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <li><code>char</code> 会先强制转换为代码点的值，然后在需要时使用数值转换。</li>
 </ul>
 </li>
-<li><code>u8</code> 到 <code>char</code> 的转换
-<ul>
-<li>转换为具有相应代码点的 <code>char</code> 值。</li>
+<li><code>u8</code> 到 <code>char</code> 的转换</li>
 </ul>
-</li>
-</ul>
+<!-- 2020-11-12-->
+<!-- checked -->
+<pre><code>* 转换为具有相应代码点的 `char` 值。
+</code></pre>
 <p>* 如果硬件本身不支持这种舍入模式和溢出行为，那么这些整数到浮点型的转换可能会比预期的要慢。</p>
 <p>** 如果硬件本身不支持这种舍入模式和溢出行为，那么这些 f64 到 f32 的转换可能会比预期的要慢。</p>
 <p>*** 按照 IEEE 754-2008§4.3.1 的定义：选择最接近的浮点数，如果恰好在两个浮点数中间，则优先选择最低有效位为偶数的那个。</p>
@@ -6372,7 +6367,7 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
    <a href="expressions/../expressions.html"><em>Expression</em></a> <code>=</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
 <p><em>赋值表达式</em>会把某个值移入到一个特定的位置。</p>
-<p><em>赋值表达式</em>由一个<a href="expressions/../expressions.html#mutability">可变</a> <a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>（就是<em>被赋值的位置操作数</em>）后跟等号（<code>=</code>）和<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>（就是被赋值的值操作数）组成。</p>
+<p><em>赋值表达式</em>由一个[可变][mutable] [位置表达式][place expression]（就是<em>被赋值的位置操作数</em>）后跟等号（<code>=</code>）和[值表达式][value expression]（就是被赋值的值操作数）组成。</p>
 <p>与其他位置操作数不同，赋值位置操作数必须是一个位置表达式。
 试图使用值表达式将导致编译器报错，而不是将其提升转换为临时位置。</p>
 <p>赋值表达式要先计算它的操作数。
@@ -6380,18 +6375,11 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <blockquote>
 <p><strong>注意</strong>：此表达式与其他表达式的求值顺序不同，此表达式的右操作数在左操作数之前被求值。</p>
 </blockquote>
-<p>对赋值表达的位置表达式求值时会先<a href="expressions/../destructors.html">销毁(drop)</a>此位置（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将赋值值<a href="expressions/../expressions.html#moved-and-copied-types">复制(copy)或移动(move)</a>到此位置中。</p>
-<p>赋值表达式总是会产生<a href="expressions/../types/tuple.html">单元类型值</a>。</p>
+<p>对赋值表达的位置表达式求值时会先[销毁(drop)][drops]此位置（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将赋值值[复制(copy)或移动(move)][either copies or moves]到此位置中。</p>
+<p>赋值表达式总是会产生[单元类型值][unit]。</p>
 <p>示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let mut x = 0;
-let y = 0;
-x = y;
-<span class="boring">}
-</span></code></pre></pre>
-<h2><a class="header" href="#复合赋值表达式" id="复合赋值表达式">复合赋值表达式</a></h2>
+<!-- 2020-11-12-->
+<!-- checked -->
 <h2><a class="header" href="#compound-assignment-expressions" id="compound-assignment-expressions">Compound assignment expressions</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6417,9 +6405,11 @@ x += 1;
 assert!(x == 6);
 <span class="boring">}
 </span></code></pre></pre>
-<p>复合赋值的句法是<a href="expressions/../expressions.html#mutability">可变</a> <a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>（<em>被赋值操作数</em>），然后是一个操作符再后跟一个 <code>=</code>（这两个符号共同作为一个单独的 token），最后是一个<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>（也叫被复合修改操作数(modifying operand)）。</p>
+<p>复合赋值的句法是[可变][mutable] [位置表达式][place expression]（<em>被赋值操作数</em>），然后是一个操作符再后跟一个 <code>=</code>（这两个符号共同作为一个单独的 token），最后是一个[值表达式][value expression]（也叫被复合修改操作数(modifying operand)）。</p>
 <p>与其他位置操作数不同，被赋值的位置操作数必须是一个位置表达式。
 试图使用值表达式将导致编译器报错，而不是将其提升转换为临时位置。</p>
+<!-- 2020-11-12-->
+<!-- checked -->
 <p>复合赋值表达式的求值取决于操作符的类型。</p>
 <p>如果复合赋值表达式了两个操作数的类型都是原生类型，则首先对被复合修改操作数进行求值，然后再对被赋值操作数求值。
 最后将被赋值操作数的位置值设置为原被赋值操作数的值和复合修改操作数执行运算后的值。</p>
@@ -6427,38 +6417,75 @@ assert!(x == 6);
 <p><strong>注意</strong>：此表达式与其他表达式的求值顺序不同，此表达式的右操作数在左操作数之前被求值。</p>
 </blockquote>
 <p>此外，这个表达式是调用操作符重载复合赋值trait 的函数的语法糖（见本章前面的表格）。
-被赋值操作数必须是可变的。</p>
-<p>例如，下面 <code>example</code>函数中的两个表达式语句是等价的：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">struct Addable;
-</span><span class="boring">use std::ops::AddAssign;
-</span>
-impl AddAssign&lt;Addable&gt; for Addable {
-    /* */
-<span class="boring">fn add_assign(&amp;mut self, other: Addable) {}
-</span>}
+被赋值操作数必须是可变的。[copies or moves]: ../expressions.md#moved-and-copied-types
+[dropping]: ../destructors.md
+[logical and]: ../types/boolean.md#logical-and
+[logical not]: ../types/boolean.md#logical-not
+[logical or]: ../types/boolean.md#logical-or
+[logical xor]: ../types/boolean.md#logical-xor
+[mutable]: ../expressions.md#mutability
+[place expression]: ../expressions.md#place-expressions-and-value-expressions
+[unit]: ../types/tuple.md
+[value expression]: ../expressions.md#place-expressions-and-value-expressions
+[temporary value]: ../expressions.md#temporaries
+[this test]: https://github.com/rust-lang/rust/blob/master/src/test/ui/expr/compound-assignment/eval-order.rs
+[float-float]: https://github.com/rust-lang/rust/issues/15536
+[Function pointer]: ../types/function-pointer.md
+[Function item]: ../types/function-item.md</p>
+<h1><a class="header" href="#fn-add_assignmut-self-other-addable-" id="fn-add_assignmut-self-other-addable-">fn add_assign(&amp;mut self, other: Addable) {}</a></h1>
+<p>}</p>
+<p>fn example() {</p>
+<h1><a class="header" href="#let-mut-a1-a2--addable-addable" id="let-mut-a1-a2--addable-addable">let (mut a1, a2) = (Addable, Addable);</a></h1>
+<p>a1 += a2;</p>
+<h1><a class="header" href="#let-mut-a1-a2--addable-addable-1" id="let-mut-a1-a2--addable-addable-1">let (mut a1, a2) = (Addable, Addable);</a></h1>
+<p>AddAssign::add_assign(&amp;mut a1, a2);
+}</p>
+<pre><code>
+&lt;div class=&quot;warning&quot;&gt;
 
-fn example() {
-<span class="boring">let (mut a1, a2) = (Addable, Addable);
-</span>  a1 += a2;
+警告：复合赋值表达式的操作数的求值顺序取决于操作数的类型：对于原生类型，右边操作数将首先被求值，而对于非原生类型，左边操作数将首先被求值。
+建议尽量不要编写依赖于复合赋值表达式中操作数的求值顺序的代码。请参阅[这里的测试][this test]以获得使用此依赖项的示例。
 
-<span class="boring">let (mut a1, a2) = (Addable, Addable);
-</span>  AddAssign::add_assign(&amp;mut a1, a2);
-}
-<span class="boring">}
-</span></code></pre></pre>
-<div class="warning">
-<p>警告：复合赋值表达式的操作数的求值顺序取决于操作数的类型：对于原生类型，右边操作数将首先被求值，而对于非原生类型，左边操作数将首先被求值。
-建议尽量不要编写依赖于复合赋值表达式中操作数的求值顺序的代码。请参阅<a href="https://github.com/rust-lang/rust/blob/master/src/test/ui/expr/compound-assignment/eval-order.rs">这里的测试</a>以获得使用此依赖项的示例。</p>
-</div>
-<div class="footnote-definition" id="译者注"><sup class="footnote-definition-label">1</sup>
-<p>截断，即一个值范围较大的变量A转换为值范围较小的变量B，如果超出范围，则将A减去B的区间长度。例如，128超出了i8类型的范围（-128,127），截断之后的值等于128-256=-128。</p>
-</div>
-<!-- 上面这几个链接从原文来替换时需小心 -->
-<!-- 2020-11-12-->
-<!-- checked -->
+&lt;/div&gt;
+
+[^译者注]:截断，即一个值范围较大的变量A转换为值范围较小的变量B，如果超出范围，则将A减去B的区间长度。例如，128超出了i8类型的范围（-128,127），截断之后的值等于128-256=-128。
+
+[pointer]: ../types/pointer.md
+[immutable place expression context]: ../expressions.md#mutability
+[coercions]: ../type-coercions.md
+[drops]: ../destructors.md
+[either copies or moves]: ../expressions.md#moved-and-copied-types
+&lt;!-- 上面这几个链接从原文来替换时需小心 --&gt;
+[copies or moves]: ../expressions.md#moved-and-copied-types
+[dropping]: ../destructors.md
+[logical and]: ../types/boolean.md#logical-and
+[logical not]: ../types/boolean.md#logical-not
+[logical or]: ../types/boolean.md#logical-or
+[logical xor]: ../types/boolean.md#logical-xor
+[mutable]: ../expressions.md#mutability
+[place expression]: ../expressions.md#place-expressions-and-value-expressions
+[unit]: ../types/tuple.md
+[value expression]: ../expressions.md#place-expressions-and-value-expressions
+[temporary value]: ../expressions.md#temporaries
+[this test]: https://github.com/rust-lang/rust/blob/master/src/test/ui/expr/compound-assignment/eval-order.rs
+[float-float]: https://github.com/rust-lang/rust/issues/15536
+[Function pointer]: ../types/function-pointer.md
+[Function item]: ../types/function-item.md
+
+[_BorrowExpression_]: #borrow-operators
+[_DereferenceExpression_]: #the-dereference-operator
+[_ErrorPropagationExpression_]: #the-question-mark-operator
+[_NegationExpression_]: #negation-operators
+[_ArithmeticOrLogicalExpression_]: #arithmetic-and-logical-binary-operators
+[_ComparisonExpression_]: #comparison-operators
+[_LazyBooleanExpression_]: #lazy-boolean-operators
+[_TypeCastExpression_]: #type-cast-expressions
+[_AssignmentExpression_]: #assignment-expressions
+[_CompoundAssignmentExpression_]: #compound-assignment-expressions
+
+[_Expression_]: ../expressions.md
+[_TypeNoBounds_]: ../types.md#type-expressions
+</code></pre>
 <h1><a class="header" href="#grouped-expressions" id="grouped-expressions">Grouped expressions</a></h1>
 <h1><a class="header" href="#分组表达式" id="分组表达式">分组表达式</a></h1>
 <blockquote>
