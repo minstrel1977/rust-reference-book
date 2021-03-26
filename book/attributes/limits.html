@@ -173,7 +173,7 @@ commit: e7208a29f943e986c815734282c5cc5fd30f4708 <br />
 本章译文最后维护日期：2021-3-26</p>
 </blockquote>
 <p>以下<a href="../attributes.html">属性</a>影响部分编译期参数的极限值设置。</p>
-<h2><a class="header" href="#the-recursion_limit-attributehttpswwwzhihucom" id="the-recursion_limit-attributehttpswwwzhihucom">The <code>recursion_limit</code> attributehttps://www.zhihu.com/</a></h2>
+<h2><a class="header" href="#the-recursion_limit-attribute" id="the-recursion_limit-attribute">The <code>recursion_limit</code> attribute</a></h2>
 <h2><a class="header" href="#recursion_limit属性" id="recursion_limit属性"><code>recursion_limit</code>属性</a></h2>
 <p><em><code>recursion_limit</code>属性</em>可以应用于 <a href="../crates-and-source-files.html">crate</a> 级别，为可能无限递归的编译期操作（如宏扩展或自动解引用）设置最大递归深度。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法来指定递归深度。</p>
 <blockquote>
@@ -186,7 +186,7 @@ commit: e7208a29f943e986c815734282c5cc5fd30f4708 <br />
 <span class="boring">fn main() {
 </span>macro_rules! a {
     () =&gt; { a!(1) };
-    (1) =&gt; { a!(2) };e7208a29f943e986c815734282c5cc5fd30f4708
+    (1) =&gt; { a!(2) };
     (2) =&gt; { a!(3) };
     (3) =&gt; { a!(4) };
     (4) =&gt; { };
@@ -198,23 +198,27 @@ a!{}
 </span></code></pre></pre>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
-</span>#![recursion_limit = &quot;1&quot;]https://www.zhihu.com/
+</span>#![recursion_limit = &quot;1&quot;]
 
 <span class="boring">fn main() {
 </span>// 这里的失败是因为需要两个递归步骤来自动解引用
-(|_: &amp;u8| {})(&amp;&amp;&amp;1);https://www.zhihu.com/
-
-&lt;!-- This code should fail to compile. Unfortunately rustdoc's `compile_fail` stops after analysis phase, and this error is generated after that. So this needs to be `ignore` for now. --&gt;
-
-```rust,compile_fail,ignore
-#![type_length_limit = &quot;8&quot;]
+(|_: &amp;u8| {})(&amp;&amp;&amp;1);
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#the-type_length_limit-attribute" id="the-type_length_limit-attribute">The <code>type_length_limit</code> attribute</a></h2>
+<h2><a class="header" href="#type_length_limit属性" id="type_length_limit属性"><code>type_length_limit</code>属性</a></h2>
+<p><em><code>type_length_limit</code>属性</em>限制在单态化过程中构造具体类型时所做的最大类型替换次数。它应用于 <a href="../crates-and-source-files.html">crate</a> 级别，并使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法来设置类型替换数量的上限。</p>
+<blockquote>
+<p>注意：<code>rustc</code> 中这个参数的默认值是 1048576。</p>
+</blockquote>
+<!-- This code should fail to compile. Unfortunately rustdoc's `compile_fail` stops after analysis phase, and this error is generated after that. So this needs to be `ignore` for now. -->
+<pre><code class="language-rust compile_fail ignore">#![type_length_limit = &quot;8&quot;]
 
 fn f&lt;T&gt;(x: T) {}
 
 // 这里的编译失败是因为单态化 `f::&lt;(i32, i32, i32, i32, i32, i32, i32, i32, i32)&gt;&gt;` 需要大于8个类型元素。
 f((1, 2, 3, 4, 5, 6, 7, 8, 9));
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 
                     </main>
 
