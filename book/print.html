@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2021-03-20</p>
+<p>本书跟随原文截止日期：2021-03-26</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -2732,16 +2732,17 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 <h1><a class="header" href="#类型别名" id="类型别名">类型别名</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/type-aliases.md">type-aliases.md</a><br />
-commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
-本章译文最后维护日期：2021-1-17</p>
+commit: 4e7812ddd9e75ce5623bddb24fa04efcebe2e98f <br />
+本章译文最后维护日期：2021-3-26</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>TypeAlias</em> :<br />
    <code>type</code> <a href="items/../identifiers.html">IDENTIFIER</a> <a href="items/generics.html"><em>GenericParams</em></a><sup>?</sup>
-<a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup> ( <code>=</code> <a href="items/../types.html#type-expressions"><em>Type</em></a> ) <code>;</code></p>
+<a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup> ( <code>=</code> <a href="items/../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup> <code>;</code>
+761ad774fcb300f2b506fed7b4dbe753cda88d80
+<em>类型别名</em>为现有的<a href="items/../types.html">类型</a>定义一个新名称。类型别名用关键字 <code>type</code> 声明。每个值都是一个唯一的特定的类型，但是可以实现几个不同的 trait，或者兼容几个不同的类型约束。</p>
 </blockquote>
-<p><em>类型别名</em>为现有的<a href="items/../types.html">类型</a>定义一个新名称。类型别名用关键字 <code>type</code> 声明。每个值都是一个唯一的特定的类型，但是可以实现几个不同的 trait，或者兼容几个不同的类型约束。</p>
 <p>例如，下面将类型 <code>Point</code> 定义为类型 <code>(u8, u8)</code> 的同义词/别名：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -2750,22 +2751,10 @@ commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
 let p: Point = (41, 68);
 <span class="boring">}
 </span></code></pre></pre>
-<p>元组结构体或单元结构体的类型别名不能用于充当该类型的构造函数:</p>
-<pre><pre class="playground"><code class="language-rust edition2018 compile_fail">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>struct MyStruct(u32);
-
-use MyStruct as UseAlias;
-type TypeAlias = MyStruct;
-
-let _ = UseAlias(5); // OK
-let _ = TypeAlias(5); // 不能正常执行
-<span class="boring">}
-</span></code></pre></pre>
-<p>没有指定代表<a href="items/../types.html#type-expressions">类型</a>的类型别名只能作为 <a href="items/traits.html">trait</a> 中的<a href="items/associated-items.html#associated-types">关联类型</a>出现。</p>
-<!-- 2021-1-17-->
-<!-- checked -->
+<p>761ad774fcb300f2b506fed7b4dbe753cda88d80
+元组结构体或单元结构体的类型别名不能用于充当该类型的构造函数:
+761ad774fcb300f2b506fed7b4dbe753cda88d80</p>
+<p>没有使用 <a href="items/../types.html#type-expressions"><em>Type</em></a> 来定义的类型别名只能作为 <a href="items/traits.html">trait</a> 中的<a href="items/associated-items.html#associated-types">关联类型</a>出现。</p>
 <h1><a class="header" href="#structs" id="structs">Structs</a></h1>
 <h1><a class="header" href="#结构体" id="结构体">结构体</a></h1>
 <blockquote>
@@ -5254,11 +5243,11 @@ fn calls_h() {
 <h1><a class="header" href="#极值设置" id="极值设置">极值设置</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/limits.md">limits.md</a><br />
-commit: a258c97b95c9c1bf27f4b6684e5b5d080eb8aa69 <br />
-本章译文最后维护日期：2020-11-11</p>
+commit: e7208a29f943e986c815734282c5cc5fd30f4708 <br />
+本章译文最后维护日期：2021-3-26</p>
 </blockquote>
 <p>以下<a href="attributes/../attributes.html">属性</a>影响部分编译期参数的极限值设置。</p>
-<h2><a class="header" href="#the-recursion_limit-attribute" id="the-recursion_limit-attribute">The <code>recursion_limit</code> attribute</a></h2>
+<h2><a class="header" href="#the-recursion_limit-attributehttpswwwzhihucom" id="the-recursion_limit-attributehttpswwwzhihucom">The <code>recursion_limit</code> attributehttps://www.zhihu.com/</a></h2>
 <h2><a class="header" href="#recursion_limit属性" id="recursion_limit属性"><code>recursion_limit</code>属性</a></h2>
 <p><em><code>recursion_limit</code>属性</em>可以应用于 <a href="attributes/../crates-and-source-files.html">crate</a> 级别，为可能无限递归的编译期操作（如宏扩展或自动解引用）设置最大递归深度。它使用 <a href="attributes/../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法来指定递归深度。</p>
 <blockquote>
@@ -5271,7 +5260,7 @@ commit: a258c97b95c9c1bf27f4b6684e5b5d080eb8aa69 <br />
 <span class="boring">fn main() {
 </span>macro_rules! a {
     () =&gt; { a!(1) };
-    (1) =&gt; { a!(2) };
+    (1) =&gt; { a!(2) };e7208a29f943e986c815734282c5cc5fd30f4708
     (2) =&gt; { a!(3) };
     (3) =&gt; { a!(4) };
     (4) =&gt; { };
@@ -5283,29 +5272,23 @@ a!{}
 </span></code></pre></pre>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
-</span>#![recursion_limit = &quot;1&quot;]
+</span>#![recursion_limit = &quot;1&quot;]https://www.zhihu.com/
 
 <span class="boring">fn main() {
 </span>// 这里的失败是因为需要两个递归步骤来自动解引用
-(|_: &amp;u8| {})(&amp;&amp;1);
-<span class="boring">}
-</span></code></pre></pre>
-<h2><a class="header" href="#the-type_length_limit-attribute" id="the-type_length_limit-attribute">The <code>type_length_limit</code> attribute</a></h2>
-<h2><a class="header" href="#type_length_limit属性" id="type_length_limit属性"><code>type_length_limit</code>属性</a></h2>
-<p><em><code>type_length_limit</code>属性</em>限制在单态化过程中构造具体类型时所做的最大类型替换次数。它应用于 <a href="attributes/../crates-and-source-files.html">crate</a> 级别，并使用 <a href="attributes/../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法来设置类型替换数量的上限。</p>
-<blockquote>
-<p>注意：<code>rustc</code> 中这个参数的默认值是 1048576。</p>
-</blockquote>
-<!-- This code should fail to compile. Unfortunately rustdoc's `compile_fail` stops after analysis phase, and this error is generated after that. So this needs to be `ignore` for now. -->
-<pre><code class="language-rust compile_fail ignore">#![type_length_limit = &quot;8&quot;]
+(|_: &amp;u8| {})(&amp;&amp;&amp;1);https://www.zhihu.com/
+
+&lt;!-- This code should fail to compile. Unfortunately rustdoc's `compile_fail` stops after analysis phase, and this error is generated after that. So this needs to be `ignore` for now. --&gt;
+
+```rust,compile_fail,ignore
+#![type_length_limit = &quot;8&quot;]
 
 fn f&lt;T&gt;(x: T) {}
 
 // 这里的编译失败是因为单态化 `f::&lt;(i32, i32, i32, i32, i32, i32, i32, i32, i32)&gt;&gt;` 需要大于8个类型元素。
 f((1, 2, 3, 4, 5, 6, 7, 8, 9));
-</code></pre>
-<!-- 2020-11-12-->
-<!-- checked -->
+<span class="boring">}
+</span></code></pre></pre>
 <h1><a class="header" href="#type-system-attributes" id="type-system-attributes">Type system attributes</a></h1>
 <h1><a class="header" href="#类型系统属性" id="类型系统属性">类型系统属性</a></h1>
 <blockquote>

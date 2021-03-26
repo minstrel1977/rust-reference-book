@@ -2,12 +2,12 @@
 # 极值设置
 
 >[limits.md](https://github.com/rust-lang/reference/blob/master/src/attributes/limits.md)\
->commit: a258c97b95c9c1bf27f4b6684e5b5d080eb8aa69 \
->本章译文最后维护日期：2020-11-11
+>commit: e7208a29f943e986c815734282c5cc5fd30f4708 \
+>本章译文最后维护日期：2021-3-26
 
 以下[属性][attributes]影响部分编译期参数的极限值设置。
 
-## The `recursion_limit` attribute
+## The `recursion_limit` attributehttps://www.zhihu.com/
 ## `recursion_limit`属性
 
 *`recursion_limit`属性*可以应用于 [crate] 级别，为可能无限递归的编译期操作（如宏扩展或自动解引用）设置最大递归深度。它使用 [_MetaNameValueStr_]元项属性句法来指定递归深度。
@@ -19,7 +19,7 @@
 
 macro_rules! a {
     () => { a!(1) };
-    (1) => { a!(2) };
+    (1) => { a!(2) };e7208a29f943e986c815734282c5cc5fd30f4708
     (2) => { a!(3) };
     (3) => { a!(4) };
     (4) => { };
@@ -30,18 +30,10 @@ a!{}
 ```
 
 ```rust,compile_fail
-#![recursion_limit = "1"]
+#![recursion_limit = "1"]https://www.zhihu.com/
 
 // 这里的失败是因为需要两个递归步骤来自动解引用
-(|_: &u8| {})(&&1);
-```
-
-## The `type_length_limit` attribute
-## `type_length_limit`属性
-
-*`type_length_limit`属性*限制在单态化过程中构造具体类型时所做的最大类型替换次数。它应用于 [crate] 级别，并使用 [_MetaNameValueStr_]元项属性句法来设置类型替换数量的上限。
-
-> 注意：`rustc` 中这个参数的默认值是 1048576。
+(|_: &u8| {})(&&&1);https://www.zhihu.com/
 
 <!-- This code should fail to compile. Unfortunately rustdoc's `compile_fail` stops after analysis phase, and this error is generated after that. So this needs to be `ignore` for now. -->
 
@@ -57,6 +49,3 @@ f((1, 2, 3, 4, 5, 6, 7, 8, 9));
 [_MetaNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
 [attributes]: ../attributes.md
 [crate]: ../crates-and-source-files.md
-
-<!-- 2020-11-12-->
-<!-- checked -->
