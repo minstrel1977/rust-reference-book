@@ -165,12 +165,12 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#操作符运算符表达式" id="操作符运算符表达式">操作符/运算符表达式</a></h1>
+                        <h1><a class="header" href="#操作符运算符表达式eb5290329316e96c48c032075f7dbfa56990702b" id="操作符运算符表达式eb5290329316e96c48c032075f7dbfa56990702b">操作符/运算符表达式eb5290329316e96c48c032075f7dbfa56990702b</a></h1>
 <h1><a class="header" href="#operator-expressions" id="operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: 3b3a6a52a66132349cf04eb3e29f1771fdf3df2a <br />
-本章译文最后维护日期：2021-3-20</p>
+commit: 72e25aa16d69d320af602b4794555ec57cf30197 <br />
+本章译文最后维护日期：2021-4-5</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -470,7 +470,7 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 </span></code></pre></pre>
 <p><code>as</code> 可用于显式执行[自动强转(coercions)][coercions]，以及下列形式的强制转换。
 任何不符合强转规则或不在下表中的转换都会导致编译器报错。
-下表中 <code>*T</code> 代表 <code>*const T</code> 或 <code>*mut T</code>。</p>
+下表中 <code>*T</code> 代表 <code>*const T</code> 或 <code>*mut T</code>。<code>m</code> 引用类型中代表可选的 <code>mut</code> 或指针类型中的 <code>mut</code> 或 <code>const</code>。</p>
 <table><thead><tr><th><code>e</code> 的类型</th><th><code>U</code></th><th>通过 <code>e as U</code> 执行转换</th></tr></thead><tbody>
 <tr><td>整型或浮点型</td><td>整型或浮点型</td><td>数字转换</td></tr>
 <tr><td>类C(C-like)枚举</td><td>整型</td><td>枚举转换</td></tr>
@@ -479,16 +479,18 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <tr><td><code>*T</code></td><td><code>*V</code> where <code>V: Sized</code> *</td><td>指针到指针的转换</td></tr>
 <tr><td><code>*T</code> where <code>T: Sized</code></td><td>数字型(Numeric type)</td><td>指针到地址的转换</td></tr>
 <tr><td>整型</td><td><code>*V</code> where <code>V: Sized</code></td><td>地址到指针的转换</td></tr>
-<tr><td><code>&amp;[T; n]</code></td><td><code>*const T</code></td><td>数组到指针的转换</td></tr>
+<tr><td><code>&amp;m₁ T</code></td><td><code>*m₂ T</code> **</td><td>引用到指针的转换</td></tr>
+<tr><td><code>&amp;m₁ [T; n]</code></td><td><code>*m₂ T</code> **</td><td>数组到指针的转换</td></tr>
 <tr><td>[函数项][Function item]</td><td>[函数指针][Function pointer]</td><td>函数到函数指针的转换</td></tr>
 <tr><td>[函数项][Function item]</td><td><code>*V</code> where <code>V: Sized</code></td><td>函数到指针的转换</td></tr>
 <tr><td>[函数项][Function item]</td><td>整型</td><td>函数到地址的转换</td></tr>
 <tr><td>[函数指针][Function pointer]</td><td><code>*V</code> where <code>V: Sized</code></td><td>函数指针到指针的转换</td></tr>
 <tr><td>[函数指针][Function pointer]</td><td>整型</td><td>函数指针到地址的转换</td></tr>
-<tr><td>闭包 **</td><td>函数指针</td><td>闭包到函数指针的转换</td></tr>
+<tr><td>闭包 ***</td><td>函数指针</td><td>闭包到函数指针的转换</td></tr>
 </tbody></table>
 <p>* 或者 <code>T</code>和<code>V</code> 也可以都是兼容的 unsized 类型，例如，两个都是切片，或者都是同一种 trait对象。</p>
-<p>** 仅适用于不捕获（遮蔽(close over)）任何环境变量的闭包。</p>
+<p>** 仅当 <code>m₁</code> 是 <code>mut</code> 或 <code>m₂</code> 是 <code>const</code>时， 可变(<code>mut</code>)引用到 <code>const</code>指针才会被允许。</p>
+<p>*** 仅适用于不捕获（遮蔽(close over)）任何环境变量的闭包。</p>
 <h3><a class="header" href="#语义" id="语义">语义</a></h3>
 <h3><a class="header" href="#semantics" id="semantics">Semantics</a></h3>
 <ul>

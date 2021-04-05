@@ -169,8 +169,8 @@
 <h1><a class="header" href="#块表达式" id="块表达式">块表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/block-expr.md">block-expr.md</a><br />
-commit: d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: 23672971a16c69ea894bef24992b74912cfe5d25 <br />
+本章译文最后维护日期：2021-4-5</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -187,13 +187,14 @@ commit: d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
 <p><em>块表达式</em>或<em>块</em>是一个控制流表达式(control flow expression)，同时也是程序项声明和变量声明的匿名空间作用域。
 作为控制流表达式，块按顺序执行其非程序项声明的语句组件，最后执行可选的最终表达式(final expression)。
 作为一个匿名空间作用域，在本块内声明的程序项只在块本身围成的作用域内有效，而块内由 <code>let</code>语句声明的变量的作用域为下一条语句到块尾。</p>
-<p>块的书写形式为：先是一个 <code>{</code>，然后是<a href="../attributes.html">内部属性</a>，再后是各条<a href="../statements.html">语句</a>，再后是一个可选表达式，最后是一个 <code>}</code>。
-语句之间通常需要后跟分号，但有两个例外。
-程序项声明语句不需要后跟分号；表达式语句通常需要后面的分号，但它的外层表达式是控制流表达式时不需要。
-此外，允许在语句之间使用额外的分号，但是这些分号并不影响语义。</p>
-<p>在对块表达式求值时，除了程序项声明语句外，每个语句都是按顺序执行的。
-如果给出了块尾的可选的最终表达式(final expression)，则最后会执行它。</p>
-<p>块的类型是最此块的最终表达式(final expression)的类型，但如果省略了最终表达式，则块的类型为 <code>()</code>。</p>
+<p>块的局发格式为：先是一个 <code>{</code>，后跟<a href="../attributes.html">内部属性</a>，再后是任意条<a href="../statements.html">语句</a>，再后是一个被称为最终操作数（final operand）的可选表达式，最后是一个 <code>}</code>。</p>
+<p>语句之间通常需要后跟分号，但有两个例外：
+1、程序项声明语句不需要后跟分号
+2、表达式语句通常需要后面的分号，但它的外层表达式是控制流表达式时不需要。</p>
+<p>此外，允许在语句之间使用额外的分号，但是这些分号并不影响语义。</p>
+<p>在对块表达式进行求值时，除了程序项声明语句外，每个语句都是按顺序执行的。
+如果给出了块尾的可选的最终操作数(final operand)，则最后会执行它。</p>
+<p>块的类型是最此块的最终操作数(final operand)的类型，但如果省略了最终操作数，则块的类型为 <code>()</code>。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -213,8 +214,9 @@ assert_eq!(5, five);
 <blockquote>
 <p>注意：作为控制流表达式，如果块表达式是一个表达式语句的外层表达式，则该块表达式的预期类型为 <code>()</code>，除非该块后面紧跟着一个分号。</p>
 </blockquote>
-<p>块总是<a href="../expressions.html#place-expressions-and-value-expressions">值表达式</a>，并会在值表达式上下文中对最终表达式求值。
-如果确实有需要，块可以用于强制移动值。
+<p>块总是<a href="../expressions.html#place-expressions-and-value-expressions">值表达式</a>，并会在值表达式上下文中对最后的那个操作数进行求值。</p>
+<blockquote>
+<p><strong>注意</strong>：如果确实有需要，块可以用于强制移动值。
 例如，下面的示例在调用 <code>consume_self</code> 时失败，因为结构体已经在之前的块表达式里被从 <code>s</code> 里移出了。</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
@@ -237,6 +239,7 @@ fn move_by_block_expression() {
 }
 <span class="boring">}
 </span></code></pre></pre>
+</blockquote>
 <h2><a class="header" href="#async-blocks" id="async-blocks"><code>async</code> blocks</a></h2>
 <h2><a class="header" href="#async块" id="async块"><code>async</code>块</a></h2>
 <blockquote>
@@ -285,50 +288,33 @@ fn move_by_block_expression() {
 <h2><a class="header" href="#unsafe-blocks" id="unsafe-blocks"><code>unsafe</code> blocks</a></h2>
 <h2><a class="header" href="#非安全unsafe块" id="非安全unsafe块">非安全(<code>unsafe</code>)块</a></h2>
 <blockquote>
-<p><strong><sup>句法</sup></strong><br />
-<em>UnsafeBlockExpression</em> :<br />
-   <code>unsafe</code> <em>BlockExpression</em></p>
+<p><strong><sup>句法</sup></strong>\23672971a16c69ea894bef24992b74912cfe5d25e` 的信息_</p>
 </blockquote>
-<p><em>查看 <a href="../unsafe-blocks.html"><code>unsafe</code>块</a>以了解更多该何时使用<code> unsafe</code> 的信息</em></p>
 <p>可以在代码块前面加上关键字 <code>unsafe</code> 以允许<a href="../unsafety.html">非安全操作</a>。
 例如：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust23672971a16c69ea894bef24992b74912cfe5d25">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>unsafe {
-    let b = [13u8, 17u8];
-    let a = &amp;b[0] as *const u8;
-    assert_eq!(*a, 13);
-    assert_eq!(*a.offset(1), 17);
-}
+</span>在以下上下文中，允许在块表达式的左括号之后直接使用[内部属性][inner attributes]：
 
-<span class="boring">unsafe fn an_unsafe_fn() -&gt; i32 { 10 }
-</span>let a = unsafe { an_unsafe_fn() };
-<span class="boring">}
-</span></code></pre></pre>
-<h2><a class="header" href="#attributes-on-block-expressions" id="attributes-on-block-expressions">Attributes on block expressions</a></h2>
-<h2><a class="header" href="#块表达式上的属性" id="块表达式上的属性">块表达式上的属性</a></h2>
-<p>在以下上下文中，允许在块表达式的左括号之后直接使用<a href="../attributes.html">内部属性</a>：</p>
-<ul>
-<li><a href="../items/functions.html">函数</a>和<a href="../items/associated-items.html#methods">方法</a>的代码体。</li>
-<li>循环体（<a href="loop-expr.html#infinite-loops"><code>loop</code></a>, <a href="loop-expr.html#predicate-loops"><code>while</code></a>, <a href="loop-expr.html#predicate-pattern-loops"><code>while let</code></a>, 和 <a href="loop-expr.html#iterator-loops"><code>for</code></a>）。</li>
-<li>被用作<a href="../statements.html">语句</a>的块表达式。</li>
-<li>块表达式作为<a href="array-expr.html">数组表达式</a>、<a href="tuple-expr.html">元组表达式</a>、<a href="call-expr.html">调用表达式</a>、<a href="struct-expr.html">元组结构体</a>表达式和[枚举变体][enum variant]表达式的元素。</li>
-<li>作为另一个块表达式的尾部表达式(tail expression)的块表达式。</li>
-</ul>
-<!-- 本列表需要和 expressions.md 保持同步 -->
-<p>在块表达式上有意义的属性有 <a href="../conditional-compilation.html"><code>cfg</code></a> 和 <a href="../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>。</p>
-<p>例如，下面这个函数在 unix 平台上返回 <code>true</code>，在其他平台上返回 <code>false</code>。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn is_unix_platform() -&gt; bool {
+* [函数][function]和[方法][method]的代码体。
+* 循环体（[`loop`], [`while`], [`while let`], 和 [`for`]）。
+* 被用作[语句][statement]的块表达式。
+* 块表达式作为[数组表达式][array expressions]、[元组表达式][tuple expressions]、[调用表达式][call expressions]、[元组结构体][struct]表达式和[枚举变体][enum variant]表达式的元素。
+* 作为另一个块表达式的尾部表达式(tail expression)的块表达式。
+&lt;!-- 本列表需要和 expressions.md 保持同步 --&gt;
+
+在块表达式上有意义的属性有 [`cfg`] 和 [lint检查类属性][the lint check attributes]。
+
+例如，下面这个函数在 unix 平台上返回 `true`，在其他平台上返回 `false`。
+
+```rust
+fn is_unix_platform() -&gt; bool {
     #[cfg(unix)] { true }
     #[cfg(not(unix))] { false }
 }
 <span class="boring">}
 </span></code></pre></pre>
-<!-- 上面这几个链接从原文来替换时需小心 -->
 
                     </main>
 

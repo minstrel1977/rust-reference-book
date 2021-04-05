@@ -169,8 +169,8 @@
 <h1><a class="header" href="#常量求值" id="常量求值">常量求值</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/const_eval.md">const_eval.md</a><br />
-commit:  d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
-本章译文最后维护日期：2021-2-21</p>
+commit:  8425f5bad3ac40e807e3f75f13b989944da28b62 <br />
+本章译文最后维护日期：2021-4-5</p>
 </blockquote>
 <p>常量求值是在编译过程中计算[表达式][<a href="expressions.html">expressions</a>]结果的过程。（不是所有表达式都可以在编译时求值，也就是说）只有全部表达式的某个子集可以在编译时求值。</p>
 <h2><a class="header" href="#constant-expressions" id="constant-expressions">Constant expressions</a></h2>
@@ -199,9 +199,7 @@ commit:  d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
 <li>未从环境捕获变量的<a href="expressions/closure-expr.html">闭包</a>。</li>
 <li>在整型、浮点型、布尔型(<code>bool</code>)和字符型(<code>char</code>)上做的各种内置运算，包括：<a href="expressions/operator-expr.html#negation-operators">取反</a>、<a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">算术</a>、<a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">逻辑</a>、<a href="expressions/operator-expr.html#comparison-operators">比较</a> 或 <a href="expressions/operator-expr.html#lazy-boolean-operators">惰性布尔</a>运算。</li>
 <li>排除借用类型为<a href="interior-mutability.html">内部可变借用</a>的共享<a href="expressions/operator-expr.html#borrow-operators">借用</a>表达式。</li>
-<li>排除解引用裸指针的<a href="expressions/operator-expr.html#the-dereference-operator">解引用操作</a>。</li>
-<li><a href="expressions/grouped-expr.html">分组</a>表达式。</li>
-<li><a href="expressions/operator-expr.html#type-cast-expressions">强制转换(Cast)</a>表达式，排除
+<li>排除解引用裸指针的<a href="expressions/operator-expr.html#the-dereference-operator">解引用操作</a>。8425f5bad3ac40e807e3f75f13b989944da28b62
 <ul>
 <li>指针到地址的强制转换，</li>
 <li>函数指针到地址的强制转换，和</li>
@@ -225,6 +223,7 @@ commit:  d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
 <li><a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">枚举判别值</a></li>
 </ul>
 </li>
+<li><a href="items/generics.html#const-generics">常量型泛型实参</a></li>
 </ul>
 <h2><a class="header" href="#const-functions" id="const-functions">Const Functions</a></h2>
 <h2><a class="header" href="#常量函数" id="常量函数">常量函数</a></h2>
@@ -244,9 +243,13 @@ commit:  d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
 <li>访问联合体字段</li>
 <li>调用 <a href="https://doc.rust-lang.org/std/mem/fn.transmute.html"><code>transmute</code></a>。</li>
 </ul>
-<p>相反，以下情况在常量函数中是可能的，但在常量上下文中则不可能有：</p>
+<p>相反，以下情况在常量函数中是有可能的，但在常量上下文中则不可能：</p>
 <ul>
-<li>使用泛型参数。</li>
+<li>使用泛型类型和生存期参数。
+<ul>
+<li>常量上下文允许有限地使用<a href="items/generics.html#const-generics">常量型泛型形参</a>。</li>
+</ul>
+</li>
 </ul>
 
                     </main>

@@ -166,11 +166,11 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#grouped-expressions" id="grouped-expressions">Grouped expressions</a></h1>
-<h1><a class="header" href="#分组表达式" id="分组表达式">分组表达式</a></h1>
+<h1><a class="header" href="#圆括号表达式分组表达式" id="圆括号表达式分组表达式">圆括号表达式(分组表达式)</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/grouped-expr.md">grouped-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
+本章译文最后维护日期：2021-4-5</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -179,6 +179,12 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
 </blockquote>
 <p>由圆括号封闭的表达式的求值结果就是在其内的表达式的求值结果。
 在表达式内部，圆括号可用于显式地指定表达式内部的求值顺序。</p>
+<p>*圆括号表达式(parenthesized expression)<em>包装单个表达式，并对该表达式求值。
+圆括号表达式的句法规则是一对圆括号封闭一个被称为</em>封闭操作数(enclosed operand)*的表达式。</p>
+<p>圆括号表达式被求值为其封闭操作数的值。
+与其他表达式不同，圆括号表达式可以是[位置表达式或值表达式][place]。
+当封闭操作数是位置表达式时，它是一个位置表达式；当封闭操作数是一个值表达式是，它是一个值表达式。</p>
+<p>圆括号可用于显式修改表达式中的子表达式的优先顺序。</p>
 <p>圆括号表达式的一个例子：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -210,8 +216,8 @@ assert_eq!((a.f)(), &quot;The field f&quot;);
 <h2><a class="header" href="#group-expression-attributes" id="group-expression-attributes">Group expression attributes</a></h2>
 <h2><a class="header" href="#分组表达式上的属性" id="分组表达式上的属性">分组表达式上的属性</a></h2>
 <p>在允许<a href="../attributes.html">块表达式上的属性</a>存在的那几种表达式上下文中，可以在分组表达式的左括号后直接使用<a href="block-expr.html#attributes-on-block-expressions">内部属性</a>。</p>
-<!-- 2020-11-12-->
-<!-- checked -->
+<p>md#attributes-on-block-expressions
+[place]: ../expressions.md#place-expressions-and-value-expressions</p>
 
                     </main>
 

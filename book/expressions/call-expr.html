@@ -169,8 +169,8 @@
 <h1><a class="header" href="#调用表达式" id="调用表达式">调用表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/call-expr.md">call-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
+本章译文最后维护日期：2021-4-5</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -179,11 +179,13 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
 <p><em>CallParams</em> :<br />
    <a href="../expressions.html"><em>Expression</em></a> ( <code>,</code> <a href="../expressions.html"><em>Expression</em></a> )<sup>*</sup> <code>,</code><sup>?</sup></p>
 </blockquote>
-<p><em>调用表达式</em>由一个表达式和一个圆括号封闭的表达式列表组成。
-它调用一个函数，并给其提供零个或多个输入变量。
-如果函数最终返回，则该表达式执行完成。
-对于<a href="../types/function-item.html">非函数类型</a>，表达式 <code>f(...)</code> 会使用 <a href="https://doc.rust-lang.org/std/ops/trait.Fn.html"><code>std::ops::Fn</code></a>、<a href="https://doc.rust-lang.org/std/ops/trait.FnMut.html"><code>std::ops::FnMut</code></a> 或 <a href="https://doc.rust-lang.org/std/ops/trait.FnOnce.html"><code>std::ops::FnOnce</code></a> 这些 trait 上的方法，选择使用其中的哪些 trait 要看 <code>f</code> 如何获取其输入参数的，具体就是看是通过引用、可变引用、还是通过获取所有权来获取的。
-如有需要，也可通过自动借用。Rust 也会根据需要自动对 <code>f</code> 作解引用处理。下面是一些调用表达式的示例：</p>
+<p><em>调用表达式</em>用来调用函数。
+调用表达式的句法规则是一个被称作*函数操作数(function operand)<em>的表达式，后跟一个圆括号封闭的逗号分割的被称为</em>参数操作数(argument operands)*的表达式列表。
+如果函数最终返回，则此调用表达式执行完成。
+对于<a href="../types/function-item.html">非函数类型</a>，表达式 <code>f(...)</code> 会使用 <a href="https://doc.rust-lang.org/std/ops/trait.Fn.html"><code>std::ops::Fn</code></a>、<a href="https://doc.rust-lang.org/std/ops/trait.FnMut.html"><code>std::ops::FnMut</code></a> 或 <a href="https://doc.rust-lang.org/std/ops/trait.FnOnce.html"><code>std::ops::FnOnce</code></a> 这些 trait 上的某一方法，选择使用哪个要看 <code>f</code> 如何获取其输入的参数，具体就是看是通过引用、可变引用、还是通过获取所有权来获取的。
+如有需要，也可通过自动借用。
+Rust 也会根据需要自动对 <code>f</code> 作解引用处理。</p>
+<p>下面是一些调用表达式的示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -194,12 +196,12 @@ let name: &amp;'static str = (|| &quot;Rust&quot;)();
 </span></code></pre></pre>
 <h2><a class="header" href="#disambiguating-function-calls" id="disambiguating-function-calls">Disambiguating Function Calls</a></h2>
 <h2><a class="header" href="#函数调用的消歧" id="函数调用的消歧">函数调用的消歧</a></h2>
-<p>为获得更直观的、<a href="../paths.html#qualified-paths">完全限定的句法</a>，Rust 对所有函数调都作了糖化(sugar)处理，以方便代码编写。
-而在编译时，Rust 又会把所有函数调用进行脱糖(desugar)处理，转换为显式形式。
-Rust 有时可能要求程序员带上 trait 来限定具体的函数调用，这取决于调用作用域内的程序项时是否出现了二义性(ambiguity)。</p>
+<p>为获得更直观的<a href="../paths.html#qualified-paths">完全限定的句法规则</a>，Rust 对所有函数调都作了糖化(sugar)处理。
+根据当前作用域内的程序项调用的二义性，函数调用有可能需要完全限定。</p>
 <blockquote>
 <p><strong>注意</strong>：过去，Rust 社区在文档、议题、RFC 和其他社区文章中使用了术语“确定性函数调用句法(Unambiguous Function Call Syntax)”、“通用函数调用句法(Universal Function Call Syntax)” 或 “UFCS”。
-但是，这个术语缺乏描述力，可能会混淆当前的议题。我们在这里提起这个词是为了便于搜索。</p>
+但是，这个术语缺乏描述力，可能还会混淆当前的议题。
+我们在这里提起这个词是为了便于搜索。</p>
 </blockquote>
 <p>少数几种情况下经常会出现一些导致方法调用或关联函数调用的接受者或引用对象不明确的情况。这些情况可包括：</p>
 <ul>
@@ -249,7 +251,6 @@ fn main() {
 }
 </code></pre></pre>
 <p>更多细节和动机说明请参考<a href="https://github.com/rust-lang/rfcs/blob/master/text/0132-ufcs.md">RFC 132</a>。</p>
-<!-- 上面这几个链接从原文来替换时需小心 -->
 
                     </main>
 

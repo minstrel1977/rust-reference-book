@@ -169,8 +169,8 @@
 <h1><a class="header" href="#表达式" id="表达式">表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions.md">expressions.md</a><br />
-commit: 9360ab990a253174bedff15a3191d5657b04ec31 <br />
-本章译文最后维护日期：2021-1-17</p>
+commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
+本章译文最后维护日期：2021-4-5</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -221,6 +221,9 @@ commit: 9360ab990a253174bedff15a3191d5657b04ec31 <br />
 </ul>
 <p>基于对这几种含义的实现要求，表达式通过其内在结构规定了其执行结构。<br />
 块只是另一种表达式，所以块、语句和表达式可以递归地彼此嵌套到任意深度。</p>
+<blockquote>
+<p><strong>注意</strong>：我们给表达式的操作数做了（如上）命名，以便于我们去讨论它们，但这些名称并没有最终稳定下来，以后可能还会更改。</p>
+</blockquote>
 <h2><a class="header" href="#expression-precedence" id="expression-precedence">Expression precedence</a></h2>
 <h2><a class="header" href="#表达式的优先级" id="表达式的优先级">表达式的优先级</a></h2>
 <p>Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同优先级的二元运算符按其结合(associativity)顺序做了分组。</p>
@@ -290,7 +293,7 @@ assert_eq!(
 </blockquote>
 <h2><a class="header" href="#place-expressions-and-value-expressions" id="place-expressions-and-value-expressions">Place Expressions and Value Expressions</a></h2>
 <h2><a class="header" href="#位置表达式和值表达式" id="位置表达式和值表达式">位置表达式和值表达式</a></h2>
-<p>表达式分为两大类：位置表达式和值表达式（，它们各自形成了自己的上下文）。因此，在每个表达式中，子表达式可以出现在位置上下文，也可出现在值上下文中。表达式的求值既依赖于它自己的类别，也依赖于它所在的上下文。</p>
+<p>表达式分为两大类：位置表达式和值表达式（，它们各自形成了自己的上下文）。因此，在每个表达式中，操作数可以出现在位置上下文，也可出现在值上下文中。表达式的求值既依赖于它自己的类别，也依赖于它所在的上下文。</p>
 <p><em>位置表达式</em>是表示内存位置的表达式。语言中表现为指向<strong>局部变量、<a href="items/static-items.html">静态变量</a>、<a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>(<code>*expr</code>)、<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">数组索引</a>表达式(<code>expr[expr]</code>)、<a href="expressions/field-expr.html">字段</a>引用(<code>expr.f</code>)、圆括号括起来的位置表达式</strong>的<a href="expressions/path-expr.html">路径</a>。所有其他形式的表达式都是值表达式。</p>
 <p><em>值表达式</em>是代表实际值的表达式。</p>
 <p>下面的上下文是<em>位置表达式</em>上下文：</p>
@@ -371,7 +374,7 @@ let b: &amp;[i32];
 <p>只有在少数特定情况下，才允许在表达式之前使用<a href="attributes.html">外部属性</a>：</p>
 <ul>
 <li>在被当作<a href="statements.html">语句</a>用的表达式之前。</li>
-<li><a href="expressions/array-expr.html">数组表达式</a>、<a href="expressions/tuple-expr.html">元组表达式</a>、<a href="expressions/call-expr.html">调用表达式</a>、<a href="expressions/struct-expr.html">元组结构体(tuple-style struct)</a>表达式这些中的元素。<!-- 这些可能已无意中稳定下来了。参见 https://github.com/rust-lang/rust/issues/32796 和 https://github.com/rust-lang/rust/issues/15701 -->
+<li><a href="expressions/array-expr.html">数组表达式</a>、<a href="expressions/tuple-expr.html">元组表达式</a>、<a href="expressions/call-expr.html">调用表达式</a>、<a href="expressions/struct-expr.html">元组结构体(tuple-style struct)</a>表达式这些中的元素。<!-- 这些可能已无意中被稳定下来了。参见 https://github.com/rust-lang/rust/issues/32796 和 https://github.com/rust-lang/rust/issues/15701 -->
 </li>
 <li><a href="expressions/block-expr.html">块表达式</a>的尾部表达式(tail expression)。</li>
 </ul>

@@ -5521,8 +5521,8 @@ if true {
 <h1><a class="header" href="#表达式" id="表达式">表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions.md">expressions.md</a><br />
-commit: 9360ab990a253174bedff15a3191d5657b04ec31 <br />
-本章译文最后维护日期：2021-1-17</p>
+commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
+本章译文最后维护日期：2021-4-5</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -5573,6 +5573,9 @@ commit: 9360ab990a253174bedff15a3191d5657b04ec31 <br />
 </ul>
 <p>基于对这几种含义的实现要求，表达式通过其内在结构规定了其执行结构。<br />
 块只是另一种表达式，所以块、语句和表达式可以递归地彼此嵌套到任意深度。</p>
+<blockquote>
+<p><strong>注意</strong>：我们给表达式的操作数做了（如上）命名，以便于我们去讨论它们，但这些名称并没有最终稳定下来，以后可能还会更改。</p>
+</blockquote>
 <h2><a class="header" href="#expression-precedence" id="expression-precedence">Expression precedence</a></h2>
 <h2><a class="header" href="#表达式的优先级" id="表达式的优先级">表达式的优先级</a></h2>
 <p>Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同优先级的二元运算符按其结合(associativity)顺序做了分组。</p>
@@ -5642,7 +5645,7 @@ assert_eq!(
 </blockquote>
 <h2><a class="header" href="#place-expressions-and-value-expressions" id="place-expressions-and-value-expressions">Place Expressions and Value Expressions</a></h2>
 <h2><a class="header" href="#位置表达式和值表达式" id="位置表达式和值表达式">位置表达式和值表达式</a></h2>
-<p>表达式分为两大类：位置表达式和值表达式（，它们各自形成了自己的上下文）。因此，在每个表达式中，子表达式可以出现在位置上下文，也可出现在值上下文中。表达式的求值既依赖于它自己的类别，也依赖于它所在的上下文。</p>
+<p>表达式分为两大类：位置表达式和值表达式（，它们各自形成了自己的上下文）。因此，在每个表达式中，操作数可以出现在位置上下文，也可出现在值上下文中。表达式的求值既依赖于它自己的类别，也依赖于它所在的上下文。</p>
 <p><em>位置表达式</em>是表示内存位置的表达式。语言中表现为指向<strong>局部变量、<a href="items/static-items.html">静态变量</a>、<a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>(<code>*expr</code>)、<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">数组索引</a>表达式(<code>expr[expr]</code>)、<a href="expressions/field-expr.html">字段</a>引用(<code>expr.f</code>)、圆括号括起来的位置表达式</strong>的<a href="expressions/path-expr.html">路径</a>。所有其他形式的表达式都是值表达式。</p>
 <p><em>值表达式</em>是代表实际值的表达式。</p>
 <p>下面的上下文是<em>位置表达式</em>上下文：</p>
@@ -5723,7 +5726,7 @@ let b: &amp;[i32];
 <p>只有在少数特定情况下，才允许在表达式之前使用<a href="attributes.html">外部属性</a>：</p>
 <ul>
 <li>在被当作<a href="statements.html">语句</a>用的表达式之前。</li>
-<li><a href="expressions/array-expr.html">数组表达式</a>、<a href="expressions/tuple-expr.html">元组表达式</a>、<a href="expressions/call-expr.html">调用表达式</a>、<a href="expressions/struct-expr.html">元组结构体(tuple-style struct)</a>表达式这些中的元素。<!-- 这些可能已无意中稳定下来了。参见 https://github.com/rust-lang/rust/issues/32796 和 https://github.com/rust-lang/rust/issues/15701 -->
+<li><a href="expressions/array-expr.html">数组表达式</a>、<a href="expressions/tuple-expr.html">元组表达式</a>、<a href="expressions/call-expr.html">调用表达式</a>、<a href="expressions/struct-expr.html">元组结构体(tuple-style struct)</a>表达式这些中的元素。<!-- 这些可能已无意中被稳定下来了。参见 https://github.com/rust-lang/rust/issues/32796 和 https://github.com/rust-lang/rust/issues/15701 -->
 </li>
 <li><a href="expressions/block-expr.html">块表达式</a>的尾部表达式(tail expression)。</li>
 </ul>
@@ -5806,8 +5809,8 @@ let slice_reverse = &lt;[i32]&gt;::reverse;
 <h1><a class="header" href="#块表达式" id="块表达式">块表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/block-expr.md">block-expr.md</a><br />
-commit: d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: 23672971a16c69ea894bef24992b74912cfe5d25 <br />
+本章译文最后维护日期：2021-4-5</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -5824,13 +5827,14 @@ commit: d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
 <p><em>块表达式</em>或<em>块</em>是一个控制流表达式(control flow expression)，同时也是程序项声明和变量声明的匿名空间作用域。
 作为控制流表达式，块按顺序执行其非程序项声明的语句组件，最后执行可选的最终表达式(final expression)。
 作为一个匿名空间作用域，在本块内声明的程序项只在块本身围成的作用域内有效，而块内由 <code>let</code>语句声明的变量的作用域为下一条语句到块尾。</p>
-<p>块的书写形式为：先是一个 <code>{</code>，然后是<a href="expressions/../attributes.html">内部属性</a>，再后是各条<a href="expressions/../statements.html">语句</a>，再后是一个可选表达式，最后是一个 <code>}</code>。
-语句之间通常需要后跟分号，但有两个例外。
-程序项声明语句不需要后跟分号；表达式语句通常需要后面的分号，但它的外层表达式是控制流表达式时不需要。
-此外，允许在语句之间使用额外的分号，但是这些分号并不影响语义。</p>
-<p>在对块表达式求值时，除了程序项声明语句外，每个语句都是按顺序执行的。
-如果给出了块尾的可选的最终表达式(final expression)，则最后会执行它。</p>
-<p>块的类型是最此块的最终表达式(final expression)的类型，但如果省略了最终表达式，则块的类型为 <code>()</code>。</p>
+<p>块的局发格式为：先是一个 <code>{</code>，后跟<a href="expressions/../attributes.html">内部属性</a>，再后是任意条<a href="expressions/../statements.html">语句</a>，再后是一个被称为最终操作数（final operand）的可选表达式，最后是一个 <code>}</code>。</p>
+<p>语句之间通常需要后跟分号，但有两个例外：
+1、程序项声明语句不需要后跟分号
+2、表达式语句通常需要后面的分号，但它的外层表达式是控制流表达式时不需要。</p>
+<p>此外，允许在语句之间使用额外的分号，但是这些分号并不影响语义。</p>
+<p>在对块表达式进行求值时，除了程序项声明语句外，每个语句都是按顺序执行的。
+如果给出了块尾的可选的最终操作数(final operand)，则最后会执行它。</p>
+<p>块的类型是最此块的最终操作数(final operand)的类型，但如果省略了最终操作数，则块的类型为 <code>()</code>。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -5850,8 +5854,9 @@ assert_eq!(5, five);
 <blockquote>
 <p>注意：作为控制流表达式，如果块表达式是一个表达式语句的外层表达式，则该块表达式的预期类型为 <code>()</code>，除非该块后面紧跟着一个分号。</p>
 </blockquote>
-<p>块总是<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>，并会在值表达式上下文中对最终表达式求值。
-如果确实有需要，块可以用于强制移动值。
+<p>块总是<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>，并会在值表达式上下文中对最后的那个操作数进行求值。</p>
+<blockquote>
+<p><strong>注意</strong>：如果确实有需要，块可以用于强制移动值。
 例如，下面的示例在调用 <code>consume_self</code> 时失败，因为结构体已经在之前的块表达式里被从 <code>s</code> 里移出了。</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
@@ -5874,6 +5879,7 @@ fn move_by_block_expression() {
 }
 <span class="boring">}
 </span></code></pre></pre>
+</blockquote>
 <h2><a class="header" href="#async-blocks" id="async-blocks"><code>async</code> blocks</a></h2>
 <h2><a class="header" href="#async块" id="async块"><code>async</code>块</a></h2>
 <blockquote>
@@ -5922,56 +5928,39 @@ fn move_by_block_expression() {
 <h2><a class="header" href="#unsafe-blocks" id="unsafe-blocks"><code>unsafe</code> blocks</a></h2>
 <h2><a class="header" href="#非安全unsafe块" id="非安全unsafe块">非安全(<code>unsafe</code>)块</a></h2>
 <blockquote>
-<p><strong><sup>句法</sup></strong><br />
-<em>UnsafeBlockExpression</em> :<br />
-   <code>unsafe</code> <em>BlockExpression</em></p>
+<p><strong><sup>句法</sup></strong>\23672971a16c69ea894bef24992b74912cfe5d25e` 的信息_</p>
 </blockquote>
-<p><em>查看 <a href="expressions/../unsafe-blocks.html"><code>unsafe</code>块</a>以了解更多该何时使用<code> unsafe</code> 的信息</em></p>
 <p>可以在代码块前面加上关键字 <code>unsafe</code> 以允许<a href="expressions/../unsafety.html">非安全操作</a>。
 例如：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust23672971a16c69ea894bef24992b74912cfe5d25">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>unsafe {
-    let b = [13u8, 17u8];
-    let a = &amp;b[0] as *const u8;
-    assert_eq!(*a, 13);
-    assert_eq!(*a.offset(1), 17);
-}
+</span>在以下上下文中，允许在块表达式的左括号之后直接使用[内部属性][inner attributes]：
 
-<span class="boring">unsafe fn an_unsafe_fn() -&gt; i32 { 10 }
-</span>let a = unsafe { an_unsafe_fn() };
-<span class="boring">}
-</span></code></pre></pre>
-<h2><a class="header" href="#attributes-on-block-expressions" id="attributes-on-block-expressions">Attributes on block expressions</a></h2>
-<h2><a class="header" href="#块表达式上的属性" id="块表达式上的属性">块表达式上的属性</a></h2>
-<p>在以下上下文中，允许在块表达式的左括号之后直接使用<a href="expressions/../attributes.html">内部属性</a>：</p>
-<ul>
-<li><a href="expressions/../items/functions.html">函数</a>和<a href="expressions/../items/associated-items.html#methods">方法</a>的代码体。</li>
-<li>循环体（<a href="expressions/loop-expr.html#infinite-loops"><code>loop</code></a>, <a href="expressions/loop-expr.html#predicate-loops"><code>while</code></a>, <a href="expressions/loop-expr.html#predicate-pattern-loops"><code>while let</code></a>, 和 <a href="expressions/loop-expr.html#iterator-loops"><code>for</code></a>）。</li>
-<li>被用作<a href="expressions/../statements.html">语句</a>的块表达式。</li>
-<li>块表达式作为<a href="expressions/array-expr.html">数组表达式</a>、<a href="expressions/tuple-expr.html">元组表达式</a>、<a href="expressions/call-expr.html">调用表达式</a>、<a href="expressions/struct-expr.html">元组结构体</a>表达式和[枚举变体][enum variant]表达式的元素。</li>
-<li>作为另一个块表达式的尾部表达式(tail expression)的块表达式。</li>
-</ul>
-<!-- 本列表需要和 expressions.md 保持同步 -->
-<p>在块表达式上有意义的属性有 <a href="expressions/../conditional-compilation.html"><code>cfg</code></a> 和 <a href="expressions/../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>。</p>
-<p>例如，下面这个函数在 unix 平台上返回 <code>true</code>，在其他平台上返回 <code>false</code>。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn is_unix_platform() -&gt; bool {
+* [函数][function]和[方法][method]的代码体。
+* 循环体（[`loop`], [`while`], [`while let`], 和 [`for`]）。
+* 被用作[语句][statement]的块表达式。
+* 块表达式作为[数组表达式][array expressions]、[元组表达式][tuple expressions]、[调用表达式][call expressions]、[元组结构体][struct]表达式和[枚举变体][enum variant]表达式的元素。
+* 作为另一个块表达式的尾部表达式(tail expression)的块表达式。
+&lt;!-- 本列表需要和 expressions.md 保持同步 --&gt;
+
+在块表达式上有意义的属性有 [`cfg`] 和 [lint检查类属性][the lint check attributes]。
+
+例如，下面这个函数在 unix 平台上返回 `true`，在其他平台上返回 `false`。
+
+```rust
+fn is_unix_platform() -&gt; bool {
     #[cfg(unix)] { true }
     #[cfg(not(unix))] { false }
 }
 <span class="boring">}
 </span></code></pre></pre>
-<!-- 上面这几个链接从原文来替换时需小心 -->
-<h1><a class="header" href="#操作符运算符表达式" id="操作符运算符表达式">操作符/运算符表达式</a></h1>
+<h1><a class="header" href="#操作符运算符表达式eb5290329316e96c48c032075f7dbfa56990702b" id="操作符运算符表达式eb5290329316e96c48c032075f7dbfa56990702b">操作符/运算符表达式eb5290329316e96c48c032075f7dbfa56990702b</a></h1>
 <h1><a class="header" href="#operator-expressions" id="operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: 3b3a6a52a66132349cf04eb3e29f1771fdf3df2a <br />
-本章译文最后维护日期：2021-3-20</p>
+commit: 72e25aa16d69d320af602b4794555ec57cf30197 <br />
+本章译文最后维护日期：2021-4-5</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6271,7 +6260,7 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 </span></code></pre></pre>
 <p><code>as</code> 可用于显式执行[自动强转(coercions)][coercions]，以及下列形式的强制转换。
 任何不符合强转规则或不在下表中的转换都会导致编译器报错。
-下表中 <code>*T</code> 代表 <code>*const T</code> 或 <code>*mut T</code>。</p>
+下表中 <code>*T</code> 代表 <code>*const T</code> 或 <code>*mut T</code>。<code>m</code> 引用类型中代表可选的 <code>mut</code> 或指针类型中的 <code>mut</code> 或 <code>const</code>。</p>
 <table><thead><tr><th><code>e</code> 的类型</th><th><code>U</code></th><th>通过 <code>e as U</code> 执行转换</th></tr></thead><tbody>
 <tr><td>整型或浮点型</td><td>整型或浮点型</td><td>数字转换</td></tr>
 <tr><td>类C(C-like)枚举</td><td>整型</td><td>枚举转换</td></tr>
@@ -6280,16 +6269,18 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <tr><td><code>*T</code></td><td><code>*V</code> where <code>V: Sized</code> *</td><td>指针到指针的转换</td></tr>
 <tr><td><code>*T</code> where <code>T: Sized</code></td><td>数字型(Numeric type)</td><td>指针到地址的转换</td></tr>
 <tr><td>整型</td><td><code>*V</code> where <code>V: Sized</code></td><td>地址到指针的转换</td></tr>
-<tr><td><code>&amp;[T; n]</code></td><td><code>*const T</code></td><td>数组到指针的转换</td></tr>
+<tr><td><code>&amp;m₁ T</code></td><td><code>*m₂ T</code> **</td><td>引用到指针的转换</td></tr>
+<tr><td><code>&amp;m₁ [T; n]</code></td><td><code>*m₂ T</code> **</td><td>数组到指针的转换</td></tr>
 <tr><td>[函数项][Function item]</td><td>[函数指针][Function pointer]</td><td>函数到函数指针的转换</td></tr>
 <tr><td>[函数项][Function item]</td><td><code>*V</code> where <code>V: Sized</code></td><td>函数到指针的转换</td></tr>
 <tr><td>[函数项][Function item]</td><td>整型</td><td>函数到地址的转换</td></tr>
 <tr><td>[函数指针][Function pointer]</td><td><code>*V</code> where <code>V: Sized</code></td><td>函数指针到指针的转换</td></tr>
 <tr><td>[函数指针][Function pointer]</td><td>整型</td><td>函数指针到地址的转换</td></tr>
-<tr><td>闭包 **</td><td>函数指针</td><td>闭包到函数指针的转换</td></tr>
+<tr><td>闭包 ***</td><td>函数指针</td><td>闭包到函数指针的转换</td></tr>
 </tbody></table>
 <p>* 或者 <code>T</code>和<code>V</code> 也可以都是兼容的 unsized 类型，例如，两个都是切片，或者都是同一种 trait对象。</p>
-<p>** 仅适用于不捕获（遮蔽(close over)）任何环境变量的闭包。</p>
+<p>** 仅当 <code>m₁</code> 是 <code>mut</code> 或 <code>m₂</code> 是 <code>const</code>时， 可变(<code>mut</code>)引用到 <code>const</code>指针才会被允许。</p>
+<p>*** 仅适用于不捕获（遮蔽(close over)）任何环境变量的闭包。</p>
 <h3><a class="header" href="#语义" id="语义">语义</a></h3>
 <h3><a class="header" href="#semantics" id="semantics">Semantics</a></h3>
 <ul>
@@ -6474,11 +6465,11 @@ assert!(x == 6);
 [_TypeNoBounds_]: ../types.md#type-expressions
 </code></pre>
 <h1><a class="header" href="#grouped-expressions" id="grouped-expressions">Grouped expressions</a></h1>
-<h1><a class="header" href="#分组表达式" id="分组表达式">分组表达式</a></h1>
+<h1><a class="header" href="#圆括号表达式分组表达式" id="圆括号表达式分组表达式">圆括号表达式(分组表达式)</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/grouped-expr.md">grouped-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
+本章译文最后维护日期：2021-4-5</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6487,6 +6478,12 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
 </blockquote>
 <p>由圆括号封闭的表达式的求值结果就是在其内的表达式的求值结果。
 在表达式内部，圆括号可用于显式地指定表达式内部的求值顺序。</p>
+<p>*圆括号表达式(parenthesized expression)<em>包装单个表达式，并对该表达式求值。
+圆括号表达式的句法规则是一对圆括号封闭一个被称为</em>封闭操作数(enclosed operand)*的表达式。</p>
+<p>圆括号表达式被求值为其封闭操作数的值。
+与其他表达式不同，圆括号表达式可以是[位置表达式或值表达式][place]。
+当封闭操作数是位置表达式时，它是一个位置表达式；当封闭操作数是一个值表达式是，它是一个值表达式。</p>
+<p>圆括号可用于显式修改表达式中的子表达式的优先顺序。</p>
 <p>圆括号表达式的一个例子：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -6518,14 +6515,14 @@ assert_eq!((a.f)(), &quot;The field f&quot;);
 <h2><a class="header" href="#group-expression-attributes" id="group-expression-attributes">Group expression attributes</a></h2>
 <h2><a class="header" href="#分组表达式上的属性" id="分组表达式上的属性">分组表达式上的属性</a></h2>
 <p>在允许<a href="expressions/../attributes.html">块表达式上的属性</a>存在的那几种表达式上下文中，可以在分组表达式的左括号后直接使用<a href="expressions/block-expr.html#attributes-on-block-expressions">内部属性</a>。</p>
-<!-- 2020-11-12-->
-<!-- checked -->
+<p>md#attributes-on-block-expressions
+[place]: ../expressions.md#place-expressions-and-value-expressions</p>
 <h1><a class="header" href="#array-and-array-index-expressions" id="array-and-array-index-expressions">Array and array index expressions</a></h1>
 <h1><a class="header" href="#数组和数组索引表达式" id="数组和数组索引表达式">数组和数组索引表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/array-expr.md">array-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
+本章译文最后维护日期：2021-4-5</p>
 </blockquote>
 <h2><a class="header" href="#array-expressions" id="array-expressions">Array expressions</a></h2>
 <h2><a class="header" href="#数组表达式" id="数组表达式">数组表达式</a></h2>
@@ -6537,16 +6534,22 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
       <a href="expressions/../expressions.html"><em>Expression</em></a> ( <code>,</code> <a href="expressions/../expressions.html"><em>Expression</em></a> )<sup>*</sup> <code>,</code><sup>?</sup><br />
    | <a href="expressions/../expressions.html"><em>Expression</em></a> <code>;</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><a href="expressions/../types/array.html">数组</a>表达式可以通过在方括号中放置零个或多个统一类型的、逗号分隔的表达式来编写。
-这样编写将生成一个包含这些值的数组，其中元素的顺序就是其写入的顺序。</p>
-<p>也可以在方括号内放置两用个分号(<code>;</code>)分隔的表达式。
-这种形式里，分号后面的表达式必须是 <code>usize</code> 类型的，并且必须是<a href="expressions/../const_eval.html#constant-expressions">常量表达式</a>，例如<a href="expressions/../tokens.html#literals">字面量</a>或<a href="expressions/../items/constant-items.html">常量项</a>。
-使用 <code>[a; b]</code> 形式创建的数组，语义为该数组内包含 <code>b</code> 个 <code>a</code> 值的副本。
-如果分号后面的表达式的值大于 1，则要求 <code>a</code> 的类型实现了 <a href="expressions/../special-types-and-traits.html#copy"><code>Copy</code></a>，或 <code>a</code> 自己是一个常量项的路径。</p>
-<p>当 <code>[a; b]</code> 形式的表达式中的 <code>a</code> 是常量项时，其将被求值 <code>b</code> 次。如果 <code>b</code> 为 0，则常量项根本不会被求值。
-对于非常量项的表达式，只求值一次，然后将结果复制 <code>b</code> 次。</p>
+<p><em>数组表达式</em>用来构建<a href="expressions/../types/array.html">数组</a>。
+数组表达式有两种形式。</p>
+<p>第一种形式是在数组中列举出所有的元素值。
+这种形式的句法规则是通过在方括号中放置统一类型的、逗号分隔的表达式来编写。
+这样编写将生成一个包含这些表达式的值的数组，其中数组元素的顺序就是这些表达式写入的时顺序。</p>
+<p>第二种形式的句法规则是在方括号内放置两用个用分号(<code>;</code>)分隔的表达式。
+分号(<code>;</code>)前的表达式被称为<em>重复体操作数(repeat operand)</em>
+分号(<code>;</code>)后的表达式被称为<em>数组长度操作数(length operand)</em>
+其中，数组长度操作数必须是 <code>usize</code> 类型的，并且必须是<a href="expressions/../const_eval.html#constant-expressions">常量表达式</a>，比如是<a href="expressions/../tokens.html#literals">字面量</a>或<a href="expressions/../items/constant-items.html">常量项</a>。
+也就是说，<code>[a; b]</code> 这种形式会创建包含 <code>b</code> 个 <code>a</code> 值的数组。
+如果数组长度操作数的值大于 1，则要求 <code>a</code> 的类型实现了 <a href="expressions/../special-types-and-traits.html#copy"><code>Copy</code></a>，或 <code>a</code> 自己是一个常量项的<a href="expressions/path-expr.html">路径</a>。</p>
+<p>当 <code>[a; b]</code> 形式的重复体操作数 <code>a</code> 是一个常量项时，其将被计算求值数组长度操作数 <code>b</code> 次。
+如果数组长度操作数 <code>b</code> 为 0，则常量项根本不会被求值。
+对于非常量项的表达式，只计算求值一次，然后将结果复制数组长度操作数 <code>b</code> 次。</p>
 <div class="warning">
-<p>警告：当 <code>b</code> 为 0 时，而 <code>a</code> 是一个非常量项的情况下，目前在 <code>rustc</code> 中存在一个 bug，即值 <code>a</code> 会被求值，但不会被销毁而导致的内存泄漏。参见 <a href="https://github.com/rust-lang/rust/issues/74836">issue#74836</a>.</p>
+<p>警告：当数组长度操作数为 0 时，而重复体操作数是一个非常量项的情况下，目前在 <code>rustc</code> 中存在一个 bug，即值 <code>a</code> 会被求值，但不会被销毁而导致的内存泄漏。参见 <a href="https://github.com/rust-lang/rust/issues/74836">issue#74836</a>。</p>
 </div>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -6570,7 +6573,8 @@ const EMPTY: Vec&lt;i32&gt; = Vec::new();
 <em>IndexExpression</em> :<br />
    <a href="expressions/../expressions.html"><em>Expression</em></a> <code>[</code> <a href="expressions/../expressions.html"><em>Expression</em></a> <code>]</code></p>
 </blockquote>
-<p><a href="expressions/../types/array.html">数组</a>表达式和<a href="https://doc.rust-lang.org/types/slice.md">切片</a>类表达式(slice-typed expressions)可以通过后跟一个由方括号封闭一个类型为 <code>usize</code> 的表达式（索引）的方式来对此数组或切片进行索引检索。如果数组是可变的，则其检索出的<a href="expressions/../expressions.html#place-expressions-and-value-expressions">内存位置</a>还可以被赋值。</p>
+<p><a href="expressions/../types/array.html">数组</a>和<a href="expressions/../types/slice.html">切片</a>类型的值(slice-typed values)可以通过后跟一个由方括号封闭一个类型为 <code>usize</code> 的表达式（索引）的方式来对此数组或切片进行索引检索。
+如果数组是可变的，则其检索出的<a href="expressions/../expressions.html#place-expressions-and-value-expressions">内存位置</a>还可以被赋值。</p>
 <p>对于数组和切片类型之外的索引表达式 <code>a[b]</code> 其实相当于执行 <code>*std::ops::Index::index(&amp;a, b)</code>，或者在可变位置表达式上下文中相当于执行 <code>*std::ops::IndexMut::index_mut(&amp;mut a, b)</code>。
 与普通方法一样，Rust 也将在 <code>a</code> 上反复插入解引用操作，直到查找到对上述方法的实现。</p>
 <p>数组和切片的索引是从零开始的。数组访问是一个<a href="expressions/../const_eval.html#constant-expressions">常量表达式</a>，因此数组索引的越界检查可以在编译时通过检查常量索引值本身进行。
@@ -6602,8 +6606,7 @@ let arr = [&quot;a&quot;, &quot;b&quot;];
 arr[10];                  // 告警：索引越界
 <span class="boring">}
 </span></code></pre></pre>
-<p>数组和切片以外的类型可以通过实现 <a href="https://doc.rust-lang.org/std/ops/trait.Index.html">Index</a> trait 和 <a href="https://doc.rust-lang.org/std/ops/trait.IndexMut.html">IndexMut</a> trait 来达成数组索引表达式的效果。</p>
-<!-- 上面这几个链接从原文来替换时需小心 -->
+<p>数组和切片以外的类型可以通过实现 <a href="expressions/../../std/ops/trait.Index.html">Index</a> trait 和 <a href="expressions/../../std/ops/trait.IndexMut.html">IndexMut</a> trait 来达成数组索引表达式的效果。</p>
 <h1><a class="header" href="#tuple-and-tuple-indexing-expressions" id="tuple-and-tuple-indexing-expressions">Tuple and tuple indexing expressions</a></h1>
 <h1><a class="header" href="#元组和元组索引表达式" id="元组和元组索引表达式">元组和元组索引表达式</a></h1>
 <blockquote>
@@ -6666,7 +6669,6 @@ assert_eq!(point.1, 0.0);
 <p><strong>注意</strong>: 与字段访问表达式不同，元组索引表达式可以是<a href="expressions/./call-expr.html">调用表达式</a>的函数操作数。
 （这之所以可行，）因为元组索引表达式不会与方法调用相混淆，因为方法名不可能是数字。</p>
 </blockquote>
-<!-- 上面这几个链接从原文来替换时需小心 -->
 <h1><a class="header" href="#struct-expressions" id="struct-expressions">Struct expressions</a></h1>
 <h1><a class="header" href="#结构体表达式" id="结构体表达式">结构体表达式</a></h1>
 <blockquote>
@@ -6799,8 +6801,8 @@ let b = Gamma{};  // 和`a`的值完全一样。
 <h1><a class="header" href="#调用表达式" id="调用表达式">调用表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/call-expr.md">call-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
+本章译文最后维护日期：2021-4-5</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6809,11 +6811,13 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
 <p><em>CallParams</em> :<br />
    <a href="expressions/../expressions.html"><em>Expression</em></a> ( <code>,</code> <a href="expressions/../expressions.html"><em>Expression</em></a> )<sup>*</sup> <code>,</code><sup>?</sup></p>
 </blockquote>
-<p><em>调用表达式</em>由一个表达式和一个圆括号封闭的表达式列表组成。
-它调用一个函数，并给其提供零个或多个输入变量。
-如果函数最终返回，则该表达式执行完成。
-对于<a href="expressions/../types/function-item.html">非函数类型</a>，表达式 <code>f(...)</code> 会使用 <a href="https://doc.rust-lang.org/std/ops/trait.Fn.html"><code>std::ops::Fn</code></a>、<a href="https://doc.rust-lang.org/std/ops/trait.FnMut.html"><code>std::ops::FnMut</code></a> 或 <a href="https://doc.rust-lang.org/std/ops/trait.FnOnce.html"><code>std::ops::FnOnce</code></a> 这些 trait 上的方法，选择使用其中的哪些 trait 要看 <code>f</code> 如何获取其输入参数的，具体就是看是通过引用、可变引用、还是通过获取所有权来获取的。
-如有需要，也可通过自动借用。Rust 也会根据需要自动对 <code>f</code> 作解引用处理。下面是一些调用表达式的示例：</p>
+<p><em>调用表达式</em>用来调用函数。
+调用表达式的句法规则是一个被称作*函数操作数(function operand)<em>的表达式，后跟一个圆括号封闭的逗号分割的被称为</em>参数操作数(argument operands)*的表达式列表。
+如果函数最终返回，则此调用表达式执行完成。
+对于<a href="expressions/../types/function-item.html">非函数类型</a>，表达式 <code>f(...)</code> 会使用 <a href="https://doc.rust-lang.org/std/ops/trait.Fn.html"><code>std::ops::Fn</code></a>、<a href="https://doc.rust-lang.org/std/ops/trait.FnMut.html"><code>std::ops::FnMut</code></a> 或 <a href="https://doc.rust-lang.org/std/ops/trait.FnOnce.html"><code>std::ops::FnOnce</code></a> 这些 trait 上的某一方法，选择使用哪个要看 <code>f</code> 如何获取其输入的参数，具体就是看是通过引用、可变引用、还是通过获取所有权来获取的。
+如有需要，也可通过自动借用。
+Rust 也会根据需要自动对 <code>f</code> 作解引用处理。</p>
+<p>下面是一些调用表达式的示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6824,12 +6828,12 @@ let name: &amp;'static str = (|| &quot;Rust&quot;)();
 </span></code></pre></pre>
 <h2><a class="header" href="#disambiguating-function-calls" id="disambiguating-function-calls">Disambiguating Function Calls</a></h2>
 <h2><a class="header" href="#函数调用的消歧" id="函数调用的消歧">函数调用的消歧</a></h2>
-<p>为获得更直观的、<a href="expressions/../paths.html#qualified-paths">完全限定的句法</a>，Rust 对所有函数调都作了糖化(sugar)处理，以方便代码编写。
-而在编译时，Rust 又会把所有函数调用进行脱糖(desugar)处理，转换为显式形式。
-Rust 有时可能要求程序员带上 trait 来限定具体的函数调用，这取决于调用作用域内的程序项时是否出现了二义性(ambiguity)。</p>
+<p>为获得更直观的<a href="expressions/../paths.html#qualified-paths">完全限定的句法规则</a>，Rust 对所有函数调都作了糖化(sugar)处理。
+根据当前作用域内的程序项调用的二义性，函数调用有可能需要完全限定。</p>
 <blockquote>
 <p><strong>注意</strong>：过去，Rust 社区在文档、议题、RFC 和其他社区文章中使用了术语“确定性函数调用句法(Unambiguous Function Call Syntax)”、“通用函数调用句法(Universal Function Call Syntax)” 或 “UFCS”。
-但是，这个术语缺乏描述力，可能会混淆当前的议题。我们在这里提起这个词是为了便于搜索。</p>
+但是，这个术语缺乏描述力，可能还会混淆当前的议题。
+我们在这里提起这个词是为了便于搜索。</p>
 </blockquote>
 <p>少数几种情况下经常会出现一些导致方法调用或关联函数调用的接受者或引用对象不明确的情况。这些情况可包括：</p>
 <ul>
@@ -6879,7 +6883,6 @@ fn main() {
 }
 </code></pre></pre>
 <p>更多细节和动机说明请参考<a href="https://github.com/rust-lang/rfcs/blob/master/text/0132-ufcs.md">RFC 132</a>。</p>
-<!-- 上面这几个链接从原文来替换时需小心 -->
 <h1><a class="header" href="#method-call-expressions" id="method-call-expressions">Method-call expressions</a></h1>
 <h1><a class="header" href="#方法调用表达式" id="方法调用表达式">方法调用表达式</a></h1>
 <blockquote>
@@ -6957,30 +6960,52 @@ fn main() {
 <h1><a class="header" href="#字段访问表达式" id="字段访问表达式">字段访问表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/field-expr.md">field-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: 23672971a16c69ea894bef24992b74912cfe5d25 <br />
+本章译文最后维护日期：2021-4-5</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>FieldExpression</em> :<br />
    <a href="expressions/../expressions.html"><em>Expression</em></a> <code>.</code> <a href="expressions/../identifiers.html">IDENTIFIER</a></p>
 </blockquote>
-<p>*字段表达式(field expression)*由一个表达式，后跟一个单点号(<code>.</code>)和一个<a href="expressions/../identifiers.html">标识符</a>组成，此时后面不能再紧跟着一个被圆括号封闭起来的表达式列表（后者是一个<a href="expressions/method-call-expr.html">方法调用表达式</a>）。
-字段表达式代表<a href="expressions/../items/structs.html">结构体(<code>struct</code>)</a>或<a href="expressions/../items/unions.html">联合体(<code>union</code>)</a>的字段。要调用存储在结构体的字段中的函数，需要在此字段表达式外加上圆括号。</p>
+<p>*字段表达式(field expression)*是计算求取<a href="expressions/../items/structs.html">结构体</a>或<a href="expressions/../items/unions.html">联合体</a>的字段的内存位置的<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>。
+当操作数<a href="expressions/../expressions.html#mutability">可变</a>时，其字段表达式也是可变的。</p>
+<p>*字段表达式(field expression)<em>的句法规则要求它由一个被称为</em>容器操作数(container operand)*的表达式后跟一个单点号(<code>.</code>)，最后是一个<a href="expressions/../identifiers.html">标识符</a>组成。
+字段表达式后面不能再紧跟着一个被圆括号封闭起来的逗号分割的表达式列表（这种表示这是一个<a href="expressions/method-call-expr.html">方法调用表达式</a>）。
+因此字段表达式不能是调用表达式的函数调用者。</p>
+<p>字段表达式代表<a href="expressions/../items/structs.html">结构体(<code>struct</code>)</a>或<a href="expressions/../items/unions.html">联合体(<code>union</code>)</a>的字段。要调用存储在结构体的字段中的函数，需要在此字段表达式外加上圆括号。</p>
+<blockquote>
+<p><strong>注意</strong>：如果要在调用表达式中使用它(来调用函数)，要把此字段表达式先用圆括号包装成一个<a href="expressions/grouped-expr.html">圆括号表达式</a>。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct HoldsCallable&lt;F: Fn()&gt; { callable: F }
+</span>let holds_callable = HoldsCallable { callable: || () };
+
+// 非法: 会被解析为调用 &quot;callable&quot;方法
+// holds_callable.callable();
+
+// 合法
+(holds_callable.callable)();
+<span class="boring">}
+</span></code></pre></pre>
+</blockquote>
+<p>示例：</p>
 <!-- ignore: needs lots of support code -->
 <pre><code class="language-rust ignore">mystruct.myfield;
 foo().x;
 (Struct {a: 10, b: 20}).a;
-mystruct.method();          // 方法表达式
 (mystruct.function_field)() // 调用表达式里包含一个字段表达式
 </code></pre>
-<p>字段访问是用一个<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>去引用该字段的内存位置。
-当字段表达式的子表达式是<a href="expressions/../expressions.html#mutability">可变的</a>时，此字段表达式也是可变的。</p>
-<p>另外，如果点号左侧的表达式类型是指针型的，则会根据需要自动对其多次应用解引用来使字段访问成为可能。
-在存在二义性的情况下，Rust 倾向于较少次数的自动解引用。</p>
-<p>最后，当借用时，结构体的各个字段以及对结构体的整体引用都被视为彼此分离的实体。
+<h2><a class="header" href="#automatic-dereferencing" id="automatic-dereferencing">Automatic dereferencing</a></h2>
+<h2><a class="header" href="#自动解引用" id="自动解引用">自动解引用</a></h2>
+<p>如果容器操作数的类型实现了 <a href="expressions/../special-types-and-traits.html#deref-and-derefmut"><code>Deref</code></a> 或 <a href="expressions/../special-types-and-traits.html#deref-and-derefmut"><code>DerefMut</code></a>（这取决于该操作数是否为<a href="expressions/../expressions.html#mutability">可变</a>），则会尽可能多次地<em>自动解引用(automatically dereferenced)</em>，以使字段访问成为可能。
+这个过程也被简称为<em>自动解引用(autoderef)</em>。</p>
+<h2><a class="header" href="#borrowing" id="borrowing">Borrowing</a></h2>
+<h2><a class="header" href="#借用" id="借用">借用</a></h2>
+<p>当借用时，结构体的各个字段以及对结构体的整体引用都被视为彼此分离的实体。
 如果结构体没有实现 <a href="expressions/../special-types-and-traits.html#drop"><code>Drop</code></a>，同时该结构体又存储在局部变量中，（这种各个字段被视为彼此分离的单独实体的逻辑）还适用于每个字段的移出(move out)。
-如果对 <a href="expressions/../special-types-and-traits.html#boxt"><code>Box</code></a>类型之外的用户定义的类型执行自动解引用，这（种各个字段被视为彼此分离的单独实体的逻辑）就不适用了。</p>
+但如果对 <a href="expressions/../special-types-and-traits.html#boxt"><code>Box</code></a>化之外的用户自定义类型执行自动解引用，这（种各个字段被视为彼此分离的单独实体的逻辑）就不适用了。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6997,43 +7022,52 @@ let c: &amp;String = &amp;x.f2;         // 可以被再次借用
 let d: String = x.f3;           // 从 x.f3 中移出
 <span class="boring">}
 </span></code></pre></pre>
-<!-- 上面这几个链接从原文来替换时需小心 -->
 <h1><a class="header" href="#closure-expressions" id="closure-expressions">Closure expressions</a></h1>
 <h1><a class="header" href="#闭包表达式" id="闭包表达式">闭包表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/closure-expr.md">closure-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
+本章译文最后维护日期：2021-4-5</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ClosureExpression</em> :<br />
    <code>move</code><sup>?</sup><br />
    ( <code>||</code> | <code>|</code> <em>ClosureParameters</em><sup>?</sup> <code>|</code> )<br />
-   (<a href="expressions/../expressions.html"><em>Expression</em></a> | <code>-&gt;</code> <a href="expressions/../types.html#type-expressions"><em>TypeNoBounds</em></a> <a href="expressions/block-expr.html"><em>BlockExpression</em></a>)</p>
+   (<a href="expressions/../expressions.html"><em>Expression</em></a> | <code>-&gt;</code> <a href="expressions/../types.html#type-expressions"><em>TypeNoBounds</em></a> <a href="expressions/block-expr.html"><em>BlockExpression</em></a>)
+编译器将通过闭包对其捕获的变量的处置方式来确定此闭包类型将实现的[闭包trait][closure traits]。
+如果所有捕获的类型都实现了 <a href="expressions/../special-types-and-traits.html#send"><code>Send</code></a> 和/或 <a href="expressions/../special-types-and-traits.html#sync"><code>Sync</code></a>，那么此闭包类型也实现了 <code>Send</code> 和/或 <code>Sync</code>。
+这些存在这些 trait，函数可以通过泛型的方式接受各种闭包，即便闭包的类型名无法被确切指定。</p>
+</blockquote>
+<blockquote>
 <p><em>ClosureParameters</em> :<br />
    <em>ClosureParam</em> (<code>,</code> <em>ClosureParam</em>)<sup>*</sup> <code>,</code><sup>?</sup></p>
 <p><em>ClosureParam</em> :<br />
    <a href="expressions/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <a href="expressions/../patterns.html"><em>Pattern</em></a> ( <code>:</code> <a href="expressions/../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
 </blockquote>
-<p><em>闭包表达式</em>，也被称为 lambda表达式或 lambda。
-每个闭包表达式都定义了一个单独类型的闭包，其值就是闭包本身。
-闭包表达式是由管道定界符(<code>|</code>)封闭的不可反驳型<a href="expressions/../patterns.html">模式</a>参数列表，再后跟一个表达式组成。
-可以选择为参数类型或返回类型添加类型标注(type annotations)。
-如果存在返回类型，则用于闭包主体的表达式必须是一个普通的<a href="expressions/block-expr.html">块</a>。
-闭包表达式也可以以位于起始的 <code>|</code> 之前的关键字 <code>move</code> 为开头。</p>
-<p>闭包表达式表示了将一组参数映射到参数后面的表达式的函数。
-与 <a href="expressions/../statements.html#let-statements"><code>let</code>绑定</a>一样，这里的参数也是不可反驳型<a href="expressions/../patterns.html">模式</a>的，其类型标注是可选的，如果没有给出，则从上下文推断。
+<p><em>闭包表达式</em>，也被称为 lambda表达式或 lambda，它定义了一个<a href="expressions/../types/closure.html">闭包类型</a>，并把此表达式求值计算为该类型的值。
+闭包表达式的句法规则是由一个可选的 <code>move</code>关键字，再后跟一对管道定界符(<code>|</code>)封闭的逗号分割的被称为<em>闭包参数(closure parameters)<em>的<a href="expressions/../patterns.html">模式</a>列表（每个闭包参数都可选地通过 <code>:</code> 后跟其类型），再可选地通过 <code>-&gt;</code> 后跟一个</em>返回类型</em>，最后是被称为<em>闭包体操作数(closure body operand)</em> 的表达式。
+代表闭包参数的每个模式后面的可选类型是该模式的类型标注(type annotations)。
+如果存在返回类型，则用于闭包主体的表达式必须是一个普通的<a href="expressions/block-expr.html">块</a>(表达式)。</p>
+<p>闭包表达式本质是将一组参数映射到参数后面的表达式的函数。
+与 <a href="expressions/../statements.html#let-statements"><code>let</code>绑定</a>一样，闭包参数也是不可反驳型<a href="expressions/../patterns.html">模式</a>的，其类型标注是可选的，如果没有给出，则从上下文推断。
 每个闭包表达式都有一个唯一的匿名类型。</p>
-<p>闭包表达式在将函数作为参数传递给其他函数时非常有用，它常被用作为定义和捕获独立函数(separate function)的便捷手段。</p>
-<p>特别值得注意的是闭包表达式能<em>捕获它们被定义时的环境中的变量(capture their environment)</em>，而正常<a href="expressions/../items/functions.html">函数定义</a>则不能。
-如果没有关键字 <code>move</code>，闭包表达式将<a href="expressions/../types/closure.html#capture-modes">推断它该如何从其环境中捕获每个变量</a>，它倾向于通过共享引用来捕获，从而有效地借用闭包体中用到的所有外部变量。
-如果有必要，编译器将推断出应该采用可变引用，或者应该从环境中移动或复制值（取决于这些变量的类型）。
-闭包可以通过前缀关键字 <code>move</code> 来强制通过复制值或移动值的方式捕获其环境变量。这通常是为了确保当前闭包的生存期类型为 <code>'static</code>。</p>
-<p>编译器将通过闭包对其捕获的变量的处置方式来确定此闭包类型将实现的<a href="expressions/../types/closure.html#call-traits-and-coercions">闭包trait</a>。
+<p>特别值得注意的是闭包表达式能<em>捕获它们被定义时的环境中的变量(capture their environment)</em>，而普通的<a href="expressions/../items/functions.html">函数定义</a>则不能。
+如果没有关键字 <code>move</code>，闭包表达式将[推断它该如何从其环境中捕获每个变量][infers how it captures each variable from its environment]，它倾向于通过共享引用来捕获，从而有效地借用闭包体中用到的所有外部变量。
+如果有必要，编译器会推断出应该采用可变引用，还是应该从环境中移动或复制值（取决于这些变量的类型）。
+闭包可以通过前缀关键字 <code>move</code> 来强制通过复制值或移动值的方式捕获其环境变量。
+这通常是为了确保当前闭包的生存期类型为 <code>'static</code>。</p>
+<p>编译器将通过闭包对其捕获的变量的处置方式来确定此闭包类型将实现的[闭包trait][closure traits]。
 如果所有捕获的类型都实现了 <a href="expressions/../special-types-and-traits.html#send"><code>Send</code></a> 和/或 <a href="expressions/../special-types-and-traits.html#sync"><code>Sync</code></a>，那么此闭包类型也实现了 <code>Send</code> 和/或 <code>Sync</code>。
 这些存在这些 trait，函数可以通过泛型的方式接受各种闭包，即便闭包的类型名无法被确切指定。</p>
-<p>在本例中，我们定义了一个名为 <code>ten_times</code> 的函数，它接受高阶函数参数，然后我们传给它一个闭包表达式作为实参并调用它。
+<h2><a class="header" href="#closure-trait-implementations" id="closure-trait-implementations">Closure trait implementations</a></h2>
+<h2><a class="header" href="#闭包trait-的实现" id="闭包trait-的实现">闭包trait 的实现</a></h2>
+<p>当前闭包类型实现哪一个闭包trait 依赖于该闭包如何捕获变量和这些变量的类型。
+了解闭包如何和何时实现 <code>Fn</code>、<code>FnMut</code> 和 <code>FnOnce</code> 这三类 trait，请参看<a href="expressions/../types/closure.html#call-traits-and-coercions">调用trait 和自动强转</a>那一章。
+如果所有捕获的类型都实现了 <a href="expressions/../special-types-and-traits.html#send"><code>Send</code></a> 和/或 <a href="expressions/../special-types-and-traits.html#sync"><code>Sync</code></a>，那么此闭包类型也实现了 <code>Send</code> 和/或 <code>Sync</code>。</p>
+<h2><a class="header" href="#example" id="example">Example</a></h2>
+<h2><a class="header" href="#示例-3" id="示例-3">示例</a></h2>
+<p>在下面例子中，我们定义了一个名为 <code>ten_times</code> 的函数，它接受高阶函数参数，然后我们传给它一个闭包表达式作为实参并调用它。
 之后又定义了一个使用移动语义从环境中捕获变量的闭包表达式来供该函数调用。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -7055,7 +7089,6 @@ ten_times(move |j| println!(&quot;{}, {}&quot;, word, j));
 <h2><a class="header" href="#attributes-on-closure-parameters" id="attributes-on-closure-parameters">Attributes on closure parameters</a></h2>
 <h2><a class="header" href="#闭包参数上的属性" id="闭包参数上的属性">闭包参数上的属性</a></h2>
 <p>闭包参数上的属性遵循与<a href="expressions/../items/functions.html#attributes-on-function-parameters">常规函数参数</a>上相同的规则和限制。</p>
-<!-- 上面这几个链接从原文来替换时需小心 -->
 <h1><a class="header" href="#loops" id="loops">Loops</a></h1>
 <h1><a class="header" href="#循环" id="循环">循环</a></h1>
 <blockquote>
@@ -7689,23 +7722,23 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
 <h1><a class="header" href="#等待await表达式" id="等待await表达式">等待(await)表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/await-expr.md">await-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: 23672971a16c69ea894bef24992b74912cfe5d25 <br />
+本章译文最后维护日期：2021-4-5</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>AwaitExpression</em> :<br />
    <a href="expressions/../expressions.html"><em>Expression</em></a> <code>.</code> <code>await</code></p>
 </blockquote>
-<p>等待(await)表达式仅在<a href="expressions/../expressions/block-expr.html#async-context">异步上下文</a>中才能使用，例如 <a href="expressions/../items/functions.html#async-functions">异步函数(<code>async fn</code>)</a> 或 <a href="expressions/block-expr.html#async-blocks">异步(<code>async</code>)块</a>。
-等待(await)表达式内部操作一个 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">future</a> 。它的作用是挂起当前计算，直到给定的 future 准备好生成返回值。</p>
-<p>更具体地说 <code>&lt;expr&gt;.await</code>表达式有以下效果。</p>
+<p><em>等待(await)表达式</em>挂起当前计算，直到给定的 future 准备好生成值。
+等待(await)表达式的句法格式是一个其类型实现了 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">Future</a> trait 的表达式（此表达式本身被称为 <em>future操作数</em>）后跟一 <code>.</code>标记，再后跟一个 <code>await</code>关键字。</p>
+<p>等待(await)表达式仅在<a href="expressions/../expressions/block-expr.html#async-context">异步上下文</a>中才能使用，例如 <a href="expressions/../items/functions.html#async-functions">异步函数(<code>async fn</code>)</a> 或 <a href="expressions/block-expr.html#async-blocks">异步(<code>async</code>)块</a>。<em>Expression</em></p>
+<p>更具体地说，等待(await)表达式具有以下效果：</p>
 <ol>
-<li>计算 <code>&lt;expr&gt;</code> 到一个 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">future</a> <code>tmp</code> 中；</li>
+<li>把 future操作数求值计算到一个 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">future</a>类型的 <code>tmp</code> 中；</li>
 <li>使用 <a href="https://doc.rust-lang.org/std/pin/struct.Pin.html#method.new_unchecked"><code>Pin::new_unchecked</code></a> 固定住(Pin)这个 <code>tmp</code>；</li>
 <li>然后通过调用 <a href="https://doc.rust-lang.org/std/future/trait.Future.html#tymethod.poll"><code>Future::poll</code></a> 方法对这个固定住的 future 进行轮询，同事将当前<a href="expressions/await-expr.html#task-context">任务上下文</a>传递给它；</li>
-<li>如果轮询(<code>poll</code>)调用返回 <a href="https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Pending"><code>Poll::Pending</code></a>，那么这个 future 就也返回 <code>Poll::Pending</code>，并相应地挂起它的状态，这样，当包围它的异步上下文被再次轮询时，执行流返回到步骤2；</li>
-<li>否则，轮询(<code>poll</code>)调用必定返回了 <a href="https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Ready"><code>Poll::Ready</code></a>，在这种情况下，<a href="https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Ready"><code>Poll::Ready</code></a>变体中包含的值将被当作这个 <code>await</code>表达式本身的求值结果。</li>
+<li>如果轮询(<code>poll</code>)调用返回 <a href="https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Pending"><code>Poll::Pending</code></a>，那么这个 future 就也返回 `<em>Expression</em></li>
 </ol>
 <blockquote>
 <p><strong>版本差异</strong>： 等待(await)表达式只能从 Rust 2018 版开始才可用</p>
@@ -7716,9 +7749,9 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
 因为等待(<code>await</code>)表达式只能在异步上下文中才能使用，所以此时必须有一些任务上下文可用。</p>
 <h2><a class="header" href="#approximate-desugaring" id="approximate-desugaring">Approximate desugaring</a></h2>
 <h2><a class="header" href="#近似脱糖" id="近似脱糖">近似脱糖</a></h2>
-<p>实际上,一个 <code>&lt;expr&gt;.await</code>表达式大致相当于如下代码（此脱糖不规范）：</p>
+<p>实际上,一个等待(await)表达式大致相当于如下这个非正规的脱糖过程：</p>
 <!-- ignore: example expansion -->
-<pre><code class="language-rust ignore">match /* &lt;expr&gt; */ {
+<pre><code class="language-rust ignore">match future_operand {
     mut pinned =&gt; loop {
         let mut pin = unsafe { Pin::new_unchecked(&amp;mut pinned) };
         match Pin::future::poll(Pin::borrow(&amp;mut pin), &amp;mut current_context) {
@@ -10168,7 +10201,7 @@ fn main() {
 <li>如果不是，尝试计算一个 <code>T_t</code> 和 <code>Ti</code> 的共同的超类型(supertype)，此超类型将成为新的目标类型。</li>
 </ul>
 <h3><a class="header" href="#examples-2" id="examples-2">Examples:</a></h3>
-<h3><a class="header" href="#示例-3" id="示例-3">示例：</a></h3>
+<h3><a class="header" href="#示例-4" id="示例-4">示例：</a></h3>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -10475,7 +10508,7 @@ println!(&quot;{}&quot;, x);
 <p>因此，在 <code>&amp;mut 0</code>、<code>(&amp;1, &amp;mut 2)</code> 和 <code>Some { 0: &amp;mut 3 }</code> 中的借用表达式都是扩展临时作用域的表达式。在 <code>&amp;0 + &amp;1</code> 和一些 <code>Some(&amp;mut 0)</code> 中的借用不是：它们在句法上是函数调用表达式。</p>
 <p>任何扩展了临时作用域的借用表达式的操作数的临时作用域都随此表达式的临时作用域的扩展而扩展。</p>
 <h4><a class="header" href="#examples-3" id="examples-3">Examples</a></h4>
-<h4><a class="header" href="#示例-4" id="示例-4">示例</a></h4>
+<h4><a class="header" href="#示例-5" id="示例-5">示例</a></h4>
 <p>这是一些带有扩展的临时作用域的表达式：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -11849,8 +11882,8 @@ commit: a7473287cc6e2fb972165dc5a7ffd26dad1fc907 <br />
 <h1><a class="header" href="#常量求值" id="常量求值">常量求值</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/const_eval.md">const_eval.md</a><br />
-commit:  d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
-本章译文最后维护日期：2021-2-21</p>
+commit:  8425f5bad3ac40e807e3f75f13b989944da28b62 <br />
+本章译文最后维护日期：2021-4-5</p>
 </blockquote>
 <p>常量求值是在编译过程中计算[表达式][<a href="expressions.html">expressions</a>]结果的过程。（不是所有表达式都可以在编译时求值，也就是说）只有全部表达式的某个子集可以在编译时求值。</p>
 <h2><a class="header" href="#constant-expressions" id="constant-expressions">Constant expressions</a></h2>
@@ -11879,9 +11912,7 @@ commit:  d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
 <li>未从环境捕获变量的<a href="expressions/closure-expr.html">闭包</a>。</li>
 <li>在整型、浮点型、布尔型(<code>bool</code>)和字符型(<code>char</code>)上做的各种内置运算，包括：<a href="expressions/operator-expr.html#negation-operators">取反</a>、<a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">算术</a>、<a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">逻辑</a>、<a href="expressions/operator-expr.html#comparison-operators">比较</a> 或 <a href="expressions/operator-expr.html#lazy-boolean-operators">惰性布尔</a>运算。</li>
 <li>排除借用类型为<a href="interior-mutability.html">内部可变借用</a>的共享<a href="expressions/operator-expr.html#borrow-operators">借用</a>表达式。</li>
-<li>排除解引用裸指针的<a href="expressions/operator-expr.html#the-dereference-operator">解引用操作</a>。</li>
-<li><a href="expressions/grouped-expr.html">分组</a>表达式。</li>
-<li><a href="expressions/operator-expr.html#type-cast-expressions">强制转换(Cast)</a>表达式，排除
+<li>排除解引用裸指针的<a href="expressions/operator-expr.html#the-dereference-operator">解引用操作</a>。8425f5bad3ac40e807e3f75f13b989944da28b62
 <ul>
 <li>指针到地址的强制转换，</li>
 <li>函数指针到地址的强制转换，和</li>
@@ -11905,6 +11936,7 @@ commit:  d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
 <li><a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">枚举判别值</a></li>
 </ul>
 </li>
+<li><a href="items/generics.html#const-generics">常量型泛型实参</a></li>
 </ul>
 <h2><a class="header" href="#const-functions-1" id="const-functions-1">Const Functions</a></h2>
 <h2><a class="header" href="#常量函数-1" id="常量函数-1">常量函数</a></h2>
@@ -11924,9 +11956,13 @@ commit:  d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
 <li>访问联合体字段</li>
 <li>调用 <a href="https://doc.rust-lang.org/std/mem/fn.transmute.html"><code>transmute</code></a>。</li>
 </ul>
-<p>相反，以下情况在常量函数中是可能的，但在常量上下文中则不可能有：</p>
+<p>相反，以下情况在常量函数中是有可能的，但在常量上下文中则不可能：</p>
 <ul>
-<li>使用泛型参数。</li>
+<li>使用泛型类型和生存期参数。
+<ul>
+<li>常量上下文允许有限地使用<a href="items/generics.html#const-generics">常量型泛型形参</a>。</li>
+</ul>
+</li>
 </ul>
 <h1><a class="header" href="#application-binary-interface-abi" id="application-binary-interface-abi">Application Binary Interface (ABI)</a></h1>
 <h1><a class="header" href="#应用程序二进制接口abi" id="应用程序二进制接口abi">应用程序二进制接口(ABI)</a></h1>
