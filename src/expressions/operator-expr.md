@@ -1,9 +1,9 @@
-# 操作符/运算符表达式
+# 操作符/运算符表达式eb5290329316e96c48c032075f7dbfa56990702b
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit: 3b3a6a52a66132349cf04eb3e29f1771fdf3df2a \
->本章译文最后维护日期：2021-3-20
+>commit: 72e25aa16d69d320af602b4794555ec57cf30197 \
+>本章译文最后维护日期：2021-4-5
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -310,7 +310,7 @@ fn average(values: &[f64]) -> f64 {
 
 `as` 可用于显式执行[自动强转(coercions)][coercions]，以及下列形式的强制转换。
 任何不符合强转规则或不在下表中的转换都会导致编译器报错。
-下表中 `*T` 代表 `*const T` 或 `*mut T`。
+下表中 `*T` 代表 `*const T` 或 `*mut T`。`m` 引用类型中代表可选的 `mut` 或指针类型中的 `mut` 或 `const`。
 
 | `e` 的类型          | `U`                   | 通过 `e as U` 执行转换      |
 |-----------------------|-----------------------|----------------------------------|
@@ -321,17 +321,20 @@ fn average(values: &[f64]) -> f64 {
 | `*T`                  | `*V` where `V: Sized` \* | 指针到指针的转换       |
 | `*T` where `T: Sized` | 数字型(Numeric type)         |  指针到地址的转换         |
 | 整型          | `*V` where `V: Sized` | 地址到指针的转换          |
-| `&[T; n]`             | `*const T`            | 数组到指针的转换            |
+| `&m₁ T`               | `*m₂ T` \*\*          | 引用到指针的转换        |
+| `&m₁ [T; n]`          | `*m₂ T` \*\*          | 数组到指针的转换            |
 | [函数项][Function item]       | [函数指针][Function pointer]    | 函数到函数指针的转换 |
 | [函数项][Function item]       | `*V` where `V: Sized` | 函数到指针的转换    |
 | [函数项][Function item]       | 整型               | 函数到地址的转换    |
 | [函数指针][Function pointer]    | `*V` where `V: Sized` | 函数指针到指针的转换  |
 | [函数指针][Function pointer]    | 整型               | 函数指针到地址的转换 |
-| 闭包 \*\*          | 函数指针      | 闭包到函数指针的转换 |
+| 闭包 \*\*\*          | 函数指针      | 闭包到函数指针的转换 |
 
 \* 或者 `T`和`V` 也可以都是兼容的 unsized 类型，例如，两个都是切片，或者都是同一种 trait对象。
 
-\*\* 仅适用于不捕获（遮蔽(close over)）任何环境变量的闭包。
+\*\* 仅当 `m₁` 是 `mut` 或 `m₂` 是 `const`时， 可变(`mut`)引用到 `const`指针才会被允许。
+
+\*\*\* 仅适用于不捕获（遮蔽(close over)）任何环境变量的闭包。
 
 ### 语义
 ### Semantics

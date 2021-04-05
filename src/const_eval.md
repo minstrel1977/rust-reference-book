@@ -2,8 +2,8 @@
 # 常量求值
 
 >[const_eval.md](https://github.com/rust-lang/reference/blob/master/src/const_eval.md)\
->commit:  d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 \
->本章译文最后维护日期：2021-2-21
+>commit:  8425f5bad3ac40e807e3f75f13b989944da28b62 \
+>本章译文最后维护日期：2021-4-5
 
 常量求值是在编译过程中计算[表达式][[expressions]]结果的过程。（不是所有表达式都可以在编译时求值，也就是说）只有全部表达式的某个子集可以在编译时求值。
 
@@ -32,9 +32,7 @@
 * 未从环境捕获变量的[闭包][Closure expressions]。
 * 在整型、浮点型、布尔型(`bool`)和字符型(`char`)上做的各种内置运算，包括：[取反][negation]、[算术][arithmetic]、[逻辑][logical]、[比较][comparison] 或 [惰性布尔][lazy boolean]运算。
 * 排除借用类型为[内部可变借用][interior mutability]的共享[借用][borrow]表达式。
-* 排除解引用裸指针的[解引用操作][dereference operator]。
-* [分组][Grouped]表达式。
-* [强制转换(Cast)][Cast]表达式，排除
+* 排除解引用裸指针的[解引用操作][dereference operator]。8425f5bad3ac40e807e3f75f13b989944da28b62
   * 指针到地址的强制转换，
   * 函数指针到地址的强制转换，和
   * 到 trait对象的非固定尺寸类型强换(unsizing casts)。
@@ -53,6 +51,7 @@
   * [常量项][constants]
   * [静态项][statics]
   * [枚举判别值][enum discriminants]
+* [常量型泛型实参][const generic argument]
 
 ## Const Functions
 ## 常量函数
@@ -73,9 +72,10 @@
 * 访问联合体字段
 * 调用 [`transmute`]。
 
-相反，以下情况在常量函数中是可能的，但在常量上下文中则不可能有：
+相反，以下情况在常量函数中是有可能的，但在常量上下文中则不可能：
 
-* 使用泛型参数。
+* 使用泛型类型和生存期参数。
+  * 常量上下文允许有限地使用[常量型泛型形参][const generic parameters]。
 
 [arithmetic]:           expressions/operator-expr.md#arithmetic-and-logical-binary-operators
 [array expressions]:    expressions/array-expr.md
@@ -90,6 +90,8 @@
 [closure expressions]:  expressions/closure-expr.md
 [comparison]:           expressions/operator-expr.md#comparison-operators
 [const functions]:      items/functions.md#const-functions
+[const generic argument]: items/generics.md#const-generics
+[const generic parameters]: items/generics.md#const-generics
 [constants]:            items/constant-items.md
 [Const parameters]:     items/generics.md
 [dereference operator]: expressions/operator-expr.md#the-dereference-operator

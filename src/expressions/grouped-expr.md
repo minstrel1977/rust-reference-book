@@ -1,9 +1,9 @@
 # Grouped expressions
-# 分组表达式
+# 圆括号表达式(分组表达式)
 
 >[grouped-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/grouped-expr.md)\
->commit: eb5290329316e96c48c032075f7dbfa56990702b \
->本章译文最后维护日期：2021-02-21
+>commit: 31dc83fe187a87af2b162801d50f4bed171fecdb \
+>本章译文最后维护日期：2021-4-5
 
 
 > **<sup>句法</sup>**\
@@ -12,6 +12,15 @@
 
 由圆括号封闭的表达式的求值结果就是在其内的表达式的求值结果。
 在表达式内部，圆括号可用于显式地指定表达式内部的求值顺序。
+
+*圆括号表达式(parenthesized expression)*包装单个表达式，并对该表达式求值。
+圆括号表达式的句法规则是一对圆括号封闭一个被称为*封闭操作数(enclosed operand)*的表达式。
+
+圆括号表达式被求值为其封闭操作数的值。
+与其他表达式不同，圆括号表达式可以是[位置表达式或值表达式][place]。
+当封闭操作数是位置表达式时，它是一个位置表达式；当封闭操作数是一个值表达式是，它是一个值表达式。
+
+圆括号可用于显式修改表达式中的子表达式的优先顺序。
 
 圆括号表达式的一个例子：
 
@@ -48,6 +57,5 @@ assert_eq!((a.f)(), "The field f");
 [_Expression_]: ../expressions.md
 [_InnerAttribute_]: ../attributes.md
 [attributes on block expressions]: block-expr.md#attributes-on-block-expressions
-
-<!-- 2020-11-12-->
-<!-- checked -->
+md#attributes-on-block-expressions
+[place]: ../expressions.md#place-expressions-and-value-expressions

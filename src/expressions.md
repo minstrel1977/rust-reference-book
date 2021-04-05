@@ -2,8 +2,8 @@
 # 表达式
 
 >[expressions.md](https://github.com/rust-lang/reference/blob/master/src/expressions.md)\
->commit: 9360ab990a253174bedff15a3191d5657b04ec31 \
->本章译文最后维护日期：2021-1-17
+>commit: 31dc83fe187a87af2b162801d50f4bed171fecdb \
+>本章译文最后维护日期：2021-4-5
 
 > **<sup>句法</sup>**\
 > _Expression_ :\
@@ -55,6 +55,8 @@
 
 基于对这几种含义的实现要求，表达式通过其内在结构规定了其执行结构。\
 块只是另一种表达式，所以块、语句和表达式可以递归地彼此嵌套到任意深度。
+
+> **注意**：我们给表达式的操作数做了（如上）命名，以便于我们去讨论它们，但这些名称并没有最终稳定下来，以后可能还会更改。
 
 ## Expression precedence
 ## 表达式的优先级
@@ -128,7 +130,7 @@ assert_eq!(
 ## Place Expressions and Value Expressions
 ## 位置表达式和值表达式
 
-表达式分为两大类：位置表达式和值表达式（，它们各自形成了自己的上下文）。因此，在每个表达式中，子表达式可以出现在位置上下文，也可出现在值上下文中。表达式的求值既依赖于它自己的类别，也依赖于它所在的上下文。
+表达式分为两大类：位置表达式和值表达式（，它们各自形成了自己的上下文）。因此，在每个表达式中，操作数可以出现在位置上下文，也可出现在值上下文中。表达式的求值既依赖于它自己的类别，也依赖于它所在的上下文。
 
 *位置表达式*是表示内存位置的表达式。语言中表现为指向**局部变量、[静态变量][static variables]、[解引用][deref](`*expr`)、[数组索引][array indexing]表达式(`expr[expr]`)、[字段][field]引用(`expr.f`)、圆括号括起来的位置表达式**的[路径][paths]。所有其他形式的表达式都是值表达式。
 
@@ -221,7 +223,7 @@ let b: &[i32];
 
 * 在被当作[语句][statement]用的表达式之前。
 * [数组表达式][array expressions]、[元组表达式][tuple expressions]、[调用表达式][call expressions]、[元组结构体(tuple-style struct)][struct]表达式这些中的元素。
-  <!-- 这些可能已无意中稳定下来了。参见 https://github.com/rust-lang/rust/issues/32796 和 https://github.com/rust-lang/rust/issues/15701 -->
+  <!-- 这些可能已无意中被稳定下来了。参见 https://github.com/rust-lang/rust/issues/32796 和 https://github.com/rust-lang/rust/issues/15701 -->
 * [块表达式][block expressions]的尾部表达式(tail expression)。
 <!-- 本列表需要和 block-expr.md 保持同步-->
 

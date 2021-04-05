@@ -68,7 +68,6 @@ assert_eq!(point.1, 0.0);
 > **注意**: 与字段访问表达式不同，元组索引表达式可以是[调用表达式][call expression]的函数操作数。
 > （这之所以可行，）因为元组索引表达式不会与方法调用相混淆，因为方法名不可能是数字。
 
-<!-- 上面这几个链接从原文来替换时需小心 -->
 [_Expression_]: ../expressions.md
 [_InnerAttribute_]: ../attributes.md
 [attributes on block expressions]: block-expr.md#attributes-on-block-expressions

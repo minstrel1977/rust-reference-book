@@ -2,8 +2,8 @@
 # 块表达式
 
 >[block-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/block-expr.md)\
->commit: d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 \
->本章译文最后维护日期：2021-02-21
+>commit: 23672971a16c69ea894bef24992b74912cfe5d25 \
+>本章译文最后维护日期：2021-4-5
 
 > **<sup>句法</sup>**\
 > _BlockExpression_ :\
@@ -21,15 +21,18 @@
 作为控制流表达式，块按顺序执行其非程序项声明的语句组件，最后执行可选的最终表达式(final expression)。
 作为一个匿名空间作用域，在本块内声明的程序项只在块本身围成的作用域内有效，而块内由 `let`语句声明的变量的作用域为下一条语句到块尾。
 
-块的书写形式为：先是一个 `{`，然后是[内部属性][inner attributes]，再后是各条[语句][statements]，再后是一个可选表达式，最后是一个 `}`。
-语句之间通常需要后跟分号，但有两个例外。
-程序项声明语句不需要后跟分号；表达式语句通常需要后面的分号，但它的外层表达式是控制流表达式时不需要。
+块的局发格式为：先是一个 `{`，后跟[内部属性][inner attributes]，再后是任意条[语句][statements]，再后是一个被称为最终操作数（final operand）的可选表达式，最后是一个 `}`。
+
+语句之间通常需要后跟分号，但有两个例外：
+1、程序项声明语句不需要后跟分号
+2、表达式语句通常需要后面的分号，但它的外层表达式是控制流表达式时不需要。
+
 此外，允许在语句之间使用额外的分号，但是这些分号并不影响语义。
 
-在对块表达式求值时，除了程序项声明语句外，每个语句都是按顺序执行的。
-如果给出了块尾的可选的最终表达式(final expression)，则最后会执行它。
+在对块表达式进行求值时，除了程序项声明语句外，每个语句都是按顺序执行的。
+如果给出了块尾的可选的最终操作数(final operand)，则最后会执行它。
 
-块的类型是最此块的最终表达式(final expression)的类型，但如果省略了最终表达式，则块的类型为 `()`。
+块的类型是最此块的最终操作数(final operand)的类型，但如果省略了最终操作数，则块的类型为 `()`。
 
 ```rust
 # fn fn_call() {}
@@ -47,28 +50,29 @@ assert_eq!(5, five);
 
 > 注意：作为控制流表达式，如果块表达式是一个表达式语句的外层表达式，则该块表达式的预期类型为 `()`，除非该块后面紧跟着一个分号。
 
-块总是[值表达式][value expressions]，并会在值表达式上下文中对最终表达式求值。
-如果确实有需要，块可以用于强制移动值。
-例如，下面的示例在调用 `consume_self` 时失败，因为结构体已经在之前的块表达式里被从 `s` 里移出了。
+块总是[值表达式][value expressions]，并会在值表达式上下文中对最后的那个操作数进行求值。
 
-```rust,compile_fail
-struct Struct;
-
-impl Struct {
-    fn consume_self(self) {}
-    fn borrow_self(&self) {}
-}
-
-fn move_by_block_expression() {
-    let s = Struct;
-
-    // 将值从块表达式里的 `s` 里移出。
-    (&{ s }).borrow_self();
-
-    // 执行失败，因为 `s` 里的值已经被移出。
-    s.consume_self();
-}
-```
+> **注意**：如果确实有需要，块可以用于强制移动值。
+> 例如，下面的示例在调用 `consume_self` 时失败，因为结构体已经在之前的块表达式里被从 `s` 里移出了。
+> 
+> ```rust,compile_fail
+> struct Struct;
+> 
+> impl Struct {
+>     fn consume_self(self) {}
+>     fn borrow_self(&self) {}
+> }
+> 
+> fn move_by_block_expression() {
+>     let s = Struct;
+> 
+>     // 将值从块表达式里的 `s` 里移出。
+>     (&{ s }).borrow_self();
+> 
+>     // 执行失败，因为 `s` 里的值已经被移出。
+>     s.consume_self();
+> }
+> ```
 
 ## `async` blocks
 ## `async`块
@@ -132,30 +136,12 @@ loop {
 ## `unsafe` blocks
 ## 非安全(`unsafe`)块
 
-> **<sup>句法</sup>**\
-> _UnsafeBlockExpression_ :\
-> &nbsp;&nbsp; `unsafe` _BlockExpression_
-
-_查看 [`unsafe`块][`unsafe` block]以了解更多该何时使用` unsafe` 的信息_
+> **<sup>句法</sup>**\23672971a16c69ea894bef24992b74912cfe5d25e` 的信息_
 
 可以在代码块前面加上关键字 `unsafe` 以允许[非安全操作][unsafe operations]。
 例如：
 
-```rust
-unsafe {
-    let b = [13u8, 17u8];
-    let a = &b[0] as *const u8;
-    assert_eq!(*a, 13);
-    assert_eq!(*a.offset(1), 17);
-}
-
-# unsafe fn an_unsafe_fn() -> i32 { 10 }
-let a = unsafe { an_unsafe_fn() };
-```
-
-## Attributes on block expressions
-## 块表达式上的属性
-
+```rust23672971a16c69ea894bef24992b74912cfe5d25
 在以下上下文中，允许在块表达式的左括号之后直接使用[内部属性][inner attributes]：
 
 * [函数][function]和[方法][method]的代码体。
@@ -176,21 +162,25 @@ fn is_unix_platform() -> bool {
 }
 ```
 
-[`unsafe` block]: ../unsafe-blocks.md
-<!-- 上面这几个链接从原文来替换时需小心 -->
 [_ExpressionWithoutBlock_]: ../expressions.md
 [_InnerAttribute_]: ../attributes.md
 [_Statement_]: ../statements.md
+[`await` expressions]: await-expr.md
 [`cfg`]: ../conditional-compilation.md
 [`for`]: loop-expr.md#iterator-loops
 [`loop`]: loop-expr.md#infinite-loops
+[`std::ops::Fn`]: https://doc.rust-lang.org/std/ops/trait.Fn.html
+[`std::future::Future`]: https://doc.rust-lang.org/std/future/trait.Future.html
 [`while let`]: loop-expr.md#predicate-pattern-loops
 [`while`]: loop-expr.md#predicate-loops
 [array expressions]: array-expr.md
 [call expressions]: call-expr.md
+[capture modes]: ../types/closure.md#capture-modes
 [function]: ../items/functions.md
 [inner attributes]: ../attributes.md
 [method]: ../items/associated-items.md#methods
+[mutable reference]: ../types/pointer.md#mutables-references-
+[shared references]: ../types/pointer.md#shared-references-
 [statement]: ../statements.md
 [statements]: ../statements.md
 [struct]: struct-expr.md

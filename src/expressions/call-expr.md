@@ -2,8 +2,8 @@
 # 调用表达式
 
 >[call-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/call-expr.md)\
->commit: eb5290329316e96c48c032075f7dbfa56990702b \
->本章译文最后维护日期：2021-02-21
+>commit: 31dc83fe187a87af2b162801d50f4bed171fecdb \
+>本章译文最后维护日期：2021-4-5
 
 > **<sup>句法</sup>**\
 > _CallExpression_ :\
@@ -12,11 +12,14 @@
 > _CallParams_ :\
 > &nbsp;&nbsp; [_Expression_]&nbsp;( `,` [_Expression_] )<sup>\*</sup> `,`<sup>?</sup>
 
-*调用表达式*由一个表达式和一个圆括号封闭的表达式列表组成。
-它调用一个函数，并给其提供零个或多个输入变量。
-如果函数最终返回，则该表达式执行完成。
-对于[非函数类型][non-function types]，表达式 `f(...)` 会使用 [`std::ops::Fn`]、[`std::ops::FnMut`] 或 [`std::ops::FnOnce`] 这些 trait 上的方法，选择使用其中的哪些 trait 要看 `f` 如何获取其输入参数的，具体就是看是通过引用、可变引用、还是通过获取所有权来获取的。
-如有需要，也可通过自动借用。Rust 也会根据需要自动对 `f` 作解引用处理。下面是一些调用表达式的示例：
+*调用表达式*用来调用函数。
+调用表达式的句法规则是一个被称作*函数操作数(function operand)*的表达式，后跟一个圆括号封闭的逗号分割的被称为*参数操作数(argument operands)*的表达式列表。
+如果函数最终返回，则此调用表达式执行完成。
+对于[非函数类型][non-function types]，表达式 `f(...)` 会使用 [`std::ops::Fn`]、[`std::ops::FnMut`] 或 [`std::ops::FnOnce`] 这些 trait 上的某一方法，选择使用哪个要看 `f` 如何获取其输入的参数，具体就是看是通过引用、可变引用、还是通过获取所有权来获取的。
+如有需要，也可通过自动借用。
+Rust 也会根据需要自动对 `f` 作解引用处理。
+
+下面是一些调用表达式的示例：
 
 ```rust
 # fn add(x: i32, y: i32) -> i32 { 0 }
@@ -27,12 +30,12 @@ let name: &'static str = (|| "Rust")();
 ## Disambiguating Function Calls
 ## 函数调用的消歧
 
-为获得更直观的、[完全限定的句法][fully-qualified syntax]，Rust 对所有函数调都作了糖化(sugar)处理，以方便代码编写。
-而在编译时，Rust 又会把所有函数调用进行脱糖(desugar)处理，转换为显式形式。
-Rust 有时可能要求程序员带上 trait 来限定具体的函数调用，这取决于调用作用域内的程序项时是否出现了二义性(ambiguity)。
+为获得更直观的[完全限定的句法规则][fully-qualified syntax]，Rust 对所有函数调都作了糖化(sugar)处理。
+根据当前作用域内的程序项调用的二义性，函数调用有可能需要完全限定。
 
 > **注意**：过去，Rust 社区在文档、议题、RFC 和其他社区文章中使用了术语“确定性函数调用句法(Unambiguous Function Call Syntax)”、“通用函数调用句法(Universal Function Call Syntax)” 或 “UFCS”。
-> 但是，这个术语缺乏描述力，可能会混淆当前的议题。我们在这里提起这个词是为了便于搜索。
+> 但是，这个术语缺乏描述力，可能还会混淆当前的议题。
+> 我们在这里提起这个词是为了便于搜索。
 
 少数几种情况下经常会出现一些导致方法调用或关联函数调用的接受者或引用对象不明确的情况。这些情况可包括：
 
@@ -87,8 +90,6 @@ fn main() {
 
 更多细节和动机说明请参考[RFC 132]。
 
-[non-function types]: ../types/function-item.md
-<!-- 上面这几个链接从原文来替换时需小心 -->
 [RFC 132]: https://github.com/rust-lang/rfcs/blob/master/text/0132-ufcs.md
 [_Expression_]: ../expressions.md
 [`default()`]: https://doc.rust-lang.org/std/default/trait.Default.html#tymethod.default
@@ -96,4 +97,6 @@ fn main() {
 [`std::ops::FnMut`]: https://doc.rust-lang.org/std/ops/trait.FnMut.html
 [`std::ops::FnOnce`]: https://doc.rust-lang.org/std/ops/trait.FnOnce.html
 [`std::ops::Fn`]: https://doc.rust-lang.org/std/ops/trait.Fn.html
+[automatically dereferenced]: field-expr.md#automatic-dereferencing
 [fully-qualified syntax]: ../paths.md#qualified-paths
+[non-function types]: ../types/function-item.md
