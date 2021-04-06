@@ -10,9 +10,9 @@
 > &nbsp;&nbsp; [_Expression_] `.` `await`
 
 *等待(await)表达式*挂起当前计算，直到给定的 future 准备好生成值。
-等待(await)表达式的句法格式是一个其类型实现了 [Future] trait 的表达式（此表达式本身被称为 *future操作数*）后跟一 `.`标记，再后跟一个 `await`关键字。
+等待(await)表达式的句法格式为：一个其类型实现了 [Future] trait 的表达式（此表达式本身被称为 *future操作数*）后跟一 `.`标记，再后跟一个 `await`关键字。
 
-等待(await)表达式仅在[异步上下文][async context]中才能使用，例如 [异步函数(`async fn`)][`async fn`] 或 [异步(`async`)块][`async` block]。_Expression_
+等待(await)表达式仅在[异步上下文][async context]中才能使用，例如 [异步函数(`async fn`)][`async fn`] 或 [异步(`async`)块][`async` block]。
 
 更具体地说，等待(await)表达式具有以下效果：
 
@@ -28,9 +28,6 @@
 
 任务上下文是指在对[异步上下文][async context]本身进行轮询时提供给当前异步上下文的[上下文(`Context`)][`Context`]。
 因为等待(`await`)表达式只能在异步上下文中才能使用，所以此时必须有一些任务上下文可用。
-
-[`Context`]: https://doc.rust-lang.org/std/task/struct.Context.html
-[async context]: ../expressions/block-expr.md#async-context
 
 ## Approximate desugaring
 ## 近似脱糖

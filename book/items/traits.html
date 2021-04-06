@@ -168,8 +168,8 @@
                         <h1><a class="header" href="#trait" id="trait">Trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/traits.md">traits.md</a><br />
-commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
-本章译文最后维护日期：2021-1-17</p>
+commit: 11517246f6bd543b8b74b2411d2d92ff102acc7a <br />
+本章译文最后维护日期：2021-4-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -225,24 +225,35 @@ trait Example {
 <h2><a class="header" href="#对象安全条款" id="对象安全条款">对象安全条款</a></h2>
 <p>对象安全的 trait 可以是 <a href="../types/trait-object.html">trait对象</a>的底层 trait。如果 trait 符合以下限定条件（在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md">RFC 255</a> 中定义），则认为它是<em>对象安全的(object safe)</em>：</p>
 <ul>
-<li>trait 本身不能有 <code>Self: Sized</code>约束 <sup class="footnote-reference"><a href="#译者备注">1</a></sup></li>
-<li>所有的关联函数要么有 <code>where Self: Sized</code> 约束，要么
-<ul>
-<li>不能有类型参数（生存期参数可以有），并且</li>
-<li>作为方法时，<code>Self</code> 只能出现在<a href="associated-items.html#methods">方法</a>的接受者(receiver)的类型里，其它地方不能使用 <code>Self</code>。</li>
-</ul>
-</li>
+<li>所有的超类trait<a href="#supertraits">supertraits</a> 也必须也是对象安全的。</li>
+<li>超类trait 中不能有 <code>Sized</code>。也就是说不能有 <code>Self: Sized</code>约束。</li>
 <li>它必须没有任何关联常量。</li>
-<li>其所有的超类trait 也必须也是对象安全的。</li>
-</ul>
-<p>（作为上面第二条的补充，）当方法上没有 <code>Self: Sized</code> 绑定时，方法的接受者的类型必须是以下类型之一：</p>
+<li>所有关联函数必须可以从 trait对象调度分派，或者是显式不可调度分派：
 <ul>
-<li><code>&amp;Self</code></li>
-<li><code>&amp;mut Self</code></li>
+<li>可调度分派函数要求：
+<ul>
+<li>不能有类型参数（尽管生存期参数可以有）</li>
+<li>作为方法时，<code>Self</code> 只能出现在<a href="associated-items.html#methods">方法</a>的接受者(receiver)的类型里，其它地方不能使用 <code>Self</code>。</li>
+<li>方法的接受者的类型必须是以下类型之一：
+<ul>
+<li><code>&amp;Self</code> (例如：<code>&amp;self</code>)</li>
+<li><code>&amp;mut Self</code> (例如：<code>&amp;mut self</code>)</li>
 <li><a href="../special-types-and-traits.html#boxt"><code>Box&lt;Self&gt;</code></a></li>
 <li><a href="../special-types-and-traits.html#rct"><code>Rc&lt;Self&gt;</code></a></li>
 <li><a href="../special-types-and-traits.html#arct"><code>Arc&lt;Self&gt;</code></a></li>
 <li><a href="../special-types-and-traits.html#pinp"><code>Pin&lt;P&gt;</code></a> 当 <code>P</code> 是上面类型中的一种</li>
+</ul>
+</li>
+<li>没有 <code>where Self: Sized</code>约束（即接受者的类型 <code>Self</code>(例如：<code>self</code>) 不能有 <code>Sized</code>约束）。</li>
+</ul>
+</li>
+<li>显式不可调度分派函数要求：
+<ul>
+<li>有 <code>where Self: Sized</code>约束（即接受者的类型 <code>Self</code>(例如：<code>self</code>) 有 <code>Sized</code>约束）。</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -464,8 +475,6 @@ fn main() {
 <div class="footnote-definition" id="译者备注"><sup class="footnote-definition-label">1</sup>
 <p>两点提醒：所有 trait 都定义了一个隐式类型参数 <code>Self</code> ，它指向“实现此接口的类型”；trait 的 Self 默认满足：<code>Self: ?Sized</code></p>
 </div>
-<!-- 2020-11-12-->
-<!-- checked -->
 
                     </main>
 

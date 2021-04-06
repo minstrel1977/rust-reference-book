@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2021-03-26</p>
+<p>本书跟随原文截止日期：2021-4-6</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -1223,8 +1223,8 @@ example!();
 <h1><a class="header" href="#声明宏" id="声明宏">声明宏</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md">macros-by-example.md</a><br />
-commit: eabdf09207bf3563ae96db9d576de0758c413d5d <br />
-本章译文最后维护日期：2020-11-7</p>
+commit: 161b6338db6c1ef7cbf64be0638a674609d3bbb4 <br />
+本章译文最后维护日期：2021-4-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -1338,7 +1338,7 @@ foo!(3);
 <p>在转码过程中，重复元会受到额外的限制，以便于编译器知道该如何正确地扩展它们：</p>
 <ol>
 <li>在转码器中，元变量必须与它在匹配器中出现的次数、指示符类型以及其在重复元内的嵌套顺序都完全相同。因此，对于匹配器 <code>$( $i:ident ),*</code>，转码器 <code>=&gt; { $i }</code>, <code>=&gt; { $( $( $i)* )* }</code> 和 <code>=&gt; { $( $i )+ }</code> 都是非法的，但是 <code>=&gt; { $( $i );* }</code> 是正确的，它用分号分隔的标识符列表替换了逗号分隔的标识符列表。</li>
-<li>转码器中的每个重复元必须至少包含一个元变量，以便确定扩展多少次。如果在同一个重复元中出现多个元变量，则它们必须绑定到相同数量的匹配段上，不能有的多，有的少。例如，<code>( $( $i:ident ),* ; $( $j:ident ),* ) =&gt;( $( ($i,$j) ),*</code> 里，绑定到 <code>$j</code> 的匹配段的数量必须与绑定到 <code>$i</code> 上的相同。这意味着用 <code>(a, b, c; d, e, f</code>) 调用这个宏是合法的，并且可扩展到 <code>((a,d), (b,e), (c,f))</code>，但是 <code>(a, b, c; d, e)</code> 是非法的，因为前后绑定的数量不同。此要求适用于嵌套的重复元的每一层。</li>
+<li>转码器中的每个重复元必须至少包含一个元变量，以便确定扩展多少次。如果在同一个重复元中出现多个元变量，则它们必须绑定到相同数量的匹配段上，不能有的多，有的少。例如，<code>( $( $i:ident ),* ; $( $j:ident ),* ) =&gt; (( $( ($i,$j) ),* ))</code> 里，绑定到 <code>$j</code> 的匹配段的数量必须与绑定到 <code>$i</code> 上的相同。这意味着用 <code>(a, b, c; d, e, f)</code> 调用这个宏是合法的，并且可扩展到 <code>((a,d), (b,e), (c,f))</code>，但是 <code>(a, b, c; d, e)</code> 是非法的，因为前后绑定的数量不同。此要求适用于嵌套的重复元的每一层。</li>
 </ol>
 <h2><a class="header" href="#scoping-exporting-and-importing" id="scoping-exporting-and-importing">Scoping, Exporting, and Importing</a></h2>
 <h2><a class="header" href="#作用域导出以及导入" id="作用域导出以及导入">作用域、导出以及导入</a></h2>
@@ -3293,8 +3293,8 @@ unsafe fn bump_levels_unsafe2() -&gt; u32 {
 <h1><a class="header" href="#trait" id="trait">Trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/traits.md">traits.md</a><br />
-commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
-本章译文最后维护日期：2021-1-17</p>
+commit: 11517246f6bd543b8b74b2411d2d92ff102acc7a <br />
+本章译文最后维护日期：2021-4-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -3350,24 +3350,35 @@ trait Example {
 <h2><a class="header" href="#对象安全条款" id="对象安全条款">对象安全条款</a></h2>
 <p>对象安全的 trait 可以是 <a href="items/../types/trait-object.html">trait对象</a>的底层 trait。如果 trait 符合以下限定条件（在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md">RFC 255</a> 中定义），则认为它是<em>对象安全的(object safe)</em>：</p>
 <ul>
-<li>trait 本身不能有 <code>Self: Sized</code>约束 <sup class="footnote-reference"><a href="#译者备注">1</a></sup></li>
-<li>所有的关联函数要么有 <code>where Self: Sized</code> 约束，要么
-<ul>
-<li>不能有类型参数（生存期参数可以有），并且</li>
-<li>作为方法时，<code>Self</code> 只能出现在<a href="items/associated-items.html#methods">方法</a>的接受者(receiver)的类型里，其它地方不能使用 <code>Self</code>。</li>
-</ul>
-</li>
+<li>所有的超类trait<a href="items/traits.html#supertraits">supertraits</a> 也必须也是对象安全的。</li>
+<li>超类trait 中不能有 <code>Sized</code>。也就是说不能有 <code>Self: Sized</code>约束。</li>
 <li>它必须没有任何关联常量。</li>
-<li>其所有的超类trait 也必须也是对象安全的。</li>
-</ul>
-<p>（作为上面第二条的补充，）当方法上没有 <code>Self: Sized</code> 绑定时，方法的接受者的类型必须是以下类型之一：</p>
+<li>所有关联函数必须可以从 trait对象调度分派，或者是显式不可调度分派：
 <ul>
-<li><code>&amp;Self</code></li>
-<li><code>&amp;mut Self</code></li>
+<li>可调度分派函数要求：
+<ul>
+<li>不能有类型参数（尽管生存期参数可以有）</li>
+<li>作为方法时，<code>Self</code> 只能出现在<a href="items/associated-items.html#methods">方法</a>的接受者(receiver)的类型里，其它地方不能使用 <code>Self</code>。</li>
+<li>方法的接受者的类型必须是以下类型之一：
+<ul>
+<li><code>&amp;Self</code> (例如：<code>&amp;self</code>)</li>
+<li><code>&amp;mut Self</code> (例如：<code>&amp;mut self</code>)</li>
 <li><a href="items/../special-types-and-traits.html#boxt"><code>Box&lt;Self&gt;</code></a></li>
 <li><a href="items/../special-types-and-traits.html#rct"><code>Rc&lt;Self&gt;</code></a></li>
 <li><a href="items/../special-types-and-traits.html#arct"><code>Arc&lt;Self&gt;</code></a></li>
 <li><a href="items/../special-types-and-traits.html#pinp"><code>Pin&lt;P&gt;</code></a> 当 <code>P</code> 是上面类型中的一种</li>
+</ul>
+</li>
+<li>没有 <code>where Self: Sized</code>约束（即接受者的类型 <code>Self</code>(例如：<code>self</code>) 不能有 <code>Sized</code>约束）。</li>
+</ul>
+</li>
+<li>显式不可调度分派函数要求：
+<ul>
+<li>有 <code>where Self: Sized</code>约束（即接受者的类型 <code>Self</code>(例如：<code>self</code>) 有 <code>Sized</code>约束）。</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -3589,8 +3600,6 @@ fn main() {
 <div class="footnote-definition" id="译者备注"><sup class="footnote-definition-label">1</sup>
 <p>两点提醒：所有 trait 都定义了一个隐式类型参数 <code>Self</code> ，它指向“实现此接口的类型”；trait 的 Self 默认满足：<code>Self: ?Sized</code></p>
 </div>
-<!-- 2020-11-12-->
-<!-- checked -->
 <h1><a class="header" href="#implementations" id="implementations">Implementations</a></h1>
 <h1><a class="header" href="#实现" id="实现">实现</a></h1>
 <blockquote>
@@ -4837,8 +4846,8 @@ struct Foo&lt;T&gt; {
 <h1><a class="header" href="#诊断属性" id="诊断属性">诊断属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/diagnostics.md">diagnostics.md</a><br />
-commit: 2196589ccf8fefc4edeaa0ab430fe2ce6a57dec3 <br />
-本章译文最后维护日期：2020-11-10</p>
+commit: 12a4832c8eec1ad0df3edfb681571821708e0410 <br />
+本章译文最后维护日期：2021-4-6</p>
 </blockquote>
 <p>以下<a href="attributes/../attributes.html">属性</a>用于在编译期间控制或生成诊断消息。</p>
 <h2><a class="header" href="#lint-check-attributes" id="lint-check-attributes">Lint check attributes</a></h2>
@@ -4874,6 +4883,7 @@ commit: 2196589ccf8fefc4edeaa0ab430fe2ce6a57dec3 <br />
 }
 <span class="boring">}
 </span></code></pre></pre>
+<p>Lint属性可以覆盖上一个属性指定的级别，但该级别不能更改禁止性的 Lint。这里的上一个属性是指语法树中更高级别的属性，或者是同一实体上的前一个属性，按从左到右的源代码顺序列出。</p>
 <p>此示例展示了如何使用 <code>allow</code> 和 <code>warn</code> 来打开和关闭一个特定的 lint检查：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -4908,10 +4918,45 @@ pub mod m3 {
 }
 <span class="boring">}
 </span></code></pre></pre>
+<blockquote>
+<p>注意：<code>rustc</code>允许在<a href="https://doc.rust-lang.org/rustc/lints/levels.html#via-compiler-flag">命令行</a>上设置 lint级别，也支持在<a href="https://doc.rust-lang.org/rustc/lints/levels.html#capping-lints">setting caps</a>中设置 lint报告中的caps。</p>
+</blockquote>
+<h3><a class="header" href="#lint-groups" id="lint-groups">Lint groups</a></h3>
+<h3><a class="header" href="#lint分组" id="lint分组">lint分组</a></h3>
+<p>lint可以被组织成不同命名的组，以便相关lint的等级可以一起调整。使用命名组相当于给出该组中的 lint。</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 这允许 &quot;unused&quot;组下的所有lint。
+#[allow(unused)]
+// 这个禁止动作将覆盖前面 &quot;unused&quot;组中的 &quot;unused_must_use&quot; lint。
+#[deny(unused_must_use)]
+fn example() {
+    // 这里不会生成告警，因为 &quot;unused_variables&quot; lint 在 &quot;unused&quot;组下
+    let x = 1;
+    // 这里会产生报错信息，因为 &quot;unused_must_use&quot; lint 被标记为&quot;deny&quot;，而这行的返回结果未被使用
+    std::fs::remove_file(&quot;some_file&quot;); // ERROR: unused `Result` that must be used
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>有一个名为 “warnings” 的特殊组，它包含 “warn”级别的所有 lint。“warnings”组会忽略属性的顺序，并对实体执行所有告警lint 检查。</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">unsafe fn an_unsafe_fn() {}
+</span>// 这里的两个属性的前后顺序无所谓
+#[deny(warnings)]
+// unsafe_code lint 默认是 &quot;allow&quot; 的。
+#[warn(unsafe_code)]
+fn example_err() {
+    // 这里会编译报错，因为 `unsafe_code`告警的 lint 被提升为 &quot;deny&quot;级别了。
+    unsafe { an_unsafe_fn() } // ERROR: usage of `unsafe` block
+}
+<span class="boring">}
+</span></code></pre></pre>
 <h3><a class="header" href="#tool-lint-attributes" id="tool-lint-attributes">Tool lint attributes</a></h3>
 <h3><a class="header" href="#工具类lint属性" id="工具类lint属性">工具类lint属性</a></h3>
 <p>可以为 <code>allow</code>、<code>warn</code>、<code>deny</code> 或 <code>forbid</code> 这些调整代码检查级别的 lint属性添加/输入基于特定工具的 lint。注意该工具在当前作用域内可用才会起效。</p>
-<p>目前，<code>clippy</code> 是唯一可用的 lint工具。</p>
 <p>工具类lint 只有在相关工具处于活动状态时才会做相应的代码模式检查。如果一个 lint级别属性，如 <code>allow</code>，引用了一个不存在的工具类lint，编译器将不会去警告不存在该 lint类，只有使用了该工具（，才会报告该 lint类不存在）。</p>
 <p>在其他方面，这些工具类lint 就跟像常规的 lint 一样：</p>
 <pre><pre class="playground"><code class="language-rust">// 将 clippy 的整个 `pedantic` lint组设置为告警级别
@@ -4929,6 +4974,9 @@ fn foo() {
     // ...
 }
 </code></pre></pre>
+<blockquote>
+<p>注意：<code>rustc</code> 当前识别的工具类lint 有 &quot;<a href="https://github.com/rust-lang/rust-clippy">clippy</a>&quot; 和 &quot;<a href="https://doc.rust-lang.org/rustdoc/lints.html">rustdoc</a>&quot;。</p>
+</blockquote>
 <h2><a class="header" href="#the-deprecated-attribute" id="the-deprecated-attribute">The <code>deprecated</code> attribute</a></h2>
 <h2><a class="header" href="#deprecated属性" id="deprecated属性"><code>deprecated</code>属性</a></h2>
 <p><em><code>deprecated</code>属性</em>将程序项标记为已弃用。<code>rustc</code> 将对被 <code>#[deprecated]</code> 限定的程序项的行为发出警告。<code>rustdoc</code> 将特别展示已弃用的程序项，包括展示 <code>since</code> 版本和 <code>note</code> 提示（如果可用）。</p>
@@ -5054,8 +5102,6 @@ let _ = five();
 <span class="boring">}
 </span></code></pre></pre>
 </blockquote>
-<!-- 2020-11-12-->
-<!-- checked -->
 <h1><a class="header" href="#code-generation-attributes" id="code-generation-attributes">Code generation attributes</a></h1>
 <h1><a class="header" href="#代码生成属性" id="代码生成属性">代码生成属性</a></h1>
 <blockquote>
@@ -5827,9 +5873,9 @@ commit: 23672971a16c69ea894bef24992b74912cfe5d25 <br />
 <p><em>块表达式</em>或<em>块</em>是一个控制流表达式(control flow expression)，同时也是程序项声明和变量声明的匿名空间作用域。
 作为控制流表达式，块按顺序执行其非程序项声明的语句组件，最后执行可选的最终表达式(final expression)。
 作为一个匿名空间作用域，在本块内声明的程序项只在块本身围成的作用域内有效，而块内由 <code>let</code>语句声明的变量的作用域为下一条语句到块尾。</p>
-<p>块的局发格式为：先是一个 <code>{</code>，后跟<a href="expressions/../attributes.html">内部属性</a>，再后是任意条<a href="expressions/../statements.html">语句</a>，再后是一个被称为最终操作数（final operand）的可选表达式，最后是一个 <code>}</code>。</p>
+<p>块的句法规则为：先是一个 <code>{</code>，后跟<a href="expressions/../attributes.html">内部属性</a>，再后是任意条<a href="expressions/../statements.html">语句</a>，再后是一个被称为最终操作数（final operand）的可选表达式，最后是一个 <code>}</code>。</p>
 <p>语句之间通常需要后跟分号，但有两个例外：
-1、程序项声明语句不需要后跟分号
+1、程序项声明语句不需要后跟分号。
 2、表达式语句通常需要后面的分号，但它的外层表达式是控制流表达式时不需要。</p>
 <p>此外，允许在语句之间使用额外的分号，但是这些分号并不影响语义。</p>
 <p>在对块表达式进行求值时，除了程序项声明语句外，每个语句都是按顺序执行的。
@@ -6479,7 +6525,7 @@ commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
 <p>由圆括号封闭的表达式的求值结果就是在其内的表达式的求值结果。
 在表达式内部，圆括号可用于显式地指定表达式内部的求值顺序。</p>
 <p>*圆括号表达式(parenthesized expression)<em>包装单个表达式，并对该表达式求值。
-圆括号表达式的句法规则是一对圆括号封闭一个被称为</em>封闭操作数(enclosed operand)*的表达式。</p>
+圆括号表达式的句法规则就是一对圆括号封闭一个被称为</em>封闭操作数(enclosed operand)*的表达式。</p>
 <p>圆括号表达式被求值为其封闭操作数的值。
 与其他表达式不同，圆括号表达式可以是[位置表达式或值表达式][place]。
 当封闭操作数是位置表达式时，它是一个位置表达式；当封闭操作数是一个值表达式是，它是一个值表达式。</p>
@@ -6537,9 +6583,9 @@ commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
 <p><em>数组表达式</em>用来构建<a href="expressions/../types/array.html">数组</a>。
 数组表达式有两种形式。</p>
 <p>第一种形式是在数组中列举出所有的元素值。
-这种形式的句法规则是通过在方括号中放置统一类型的、逗号分隔的表达式来编写。
+这种形式的句法规则通过在方括号中放置统一类型的、逗号分隔的表达式来表现。
 这样编写将生成一个包含这些表达式的值的数组，其中数组元素的顺序就是这些表达式写入的时顺序。</p>
-<p>第二种形式的句法规则是在方括号内放置两用个用分号(<code>;</code>)分隔的表达式。
+<p>第二种形式的句法规则通过在方括号内放置两用个用分号(<code>;</code>)分隔的表达式来表现。
 分号(<code>;</code>)前的表达式被称为<em>重复体操作数(repeat operand)</em>
 分号(<code>;</code>)后的表达式被称为<em>数组长度操作数(length operand)</em>
 其中，数组长度操作数必须是 <code>usize</code> 类型的，并且必须是<a href="expressions/../const_eval.html#constant-expressions">常量表达式</a>，比如是<a href="expressions/../tokens.html#literals">字面量</a>或<a href="expressions/../items/constant-items.html">常量项</a>。
@@ -6611,8 +6657,8 @@ arr[10];                  // 告警：索引越界
 <h1><a class="header" href="#元组和元组索引表达式" id="元组和元组索引表达式">元组和元组索引表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/tuple-expr.md">tuple-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: 09142b820fe8713c4cba451713c7d11e67d7fbd8 <br />
+本章译文最后维护日期：2021-4-6</p>
 </blockquote>
 <h2><a class="header" href="#tuple-expressions" id="tuple-expressions">Tuple expressions</a></h2>
 <h2><a class="header" href="#元组表达式" id="元组表达式">元组表达式</a></h2>
@@ -6623,15 +6669,15 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
 <p><em>TupleElements</em> :<br />
    ( <a href="expressions/../expressions.html"><em>Expression</em></a> <code>,</code> )<sup>+</sup> <a href="expressions/../expressions.html"><em>Expression</em></a><sup>?</sup></p>
 </blockquote>
-<!-- 元组表达式是通过将零个或多个以逗号分隔的表达式括在圆括号中来编写的。可用它们来创建[元组类型][tuple type])的值。 -->
-<p>元组表达式的求值就是将其操作数初始化为<a href="expressions/../types/tuple.html">元组值</a>的元素。</p>
-<p>元组表达式的编写方法是在逗号分隔的圆括号列表中列出<a href="expressions/../expressions.html">操作数</a>。
-一元(1-ary)元组表达式的操作数后面需要一个逗号，以便能和<a href="expressions/grouped-expr.html">括号表达式</a>区分开来。</p>
-<p>操作数的数量构成元组的元数(arity)。
-没有操作数的元组表达式生成单元元组(unit tuple)。
-对于其他元组表达式，第一个被写入的操作数初始化第 0 个元素，随后的操作数依次初始化下一个开始的元素。
+<p><em>元组表达式</em>用来构建<a href="expressions/../types/tuple.html">元组值</a>。</p>
+<p>元组表达式的句法规则为：一对圆括号封闭的以逗号分隔的表达式列表，这些表达式被称为<em>元组初始化操作数(tuple initializer operands)</em>。
+为了避免和<a href="expressions/grouped-expr.html">圆括号表达式</a>混淆，一元元组表达式的元组初始化操作数后的逗号不能省略。</p>
+<p>元组表达式是一个<a href="expressions/../expressions.html#place-expressions-and-value-expressions">值表达式</a>，它会被求值计算成一个元组类型的新值。
+元组初始化操作数的数量构成元组的元数(arity)。
+没有元组初始化操作数的元组表达式生成单元元组(unit tuple)。
+对于其他元组表达式，第一个被写入的元组初始化操作数初始化第 0 个元素，随后的操作数依次初始化下一个开始的元素。
 例如，在元组表达式 <code>('a', 'b', 'c')</code> 中，<code>'a'</code> 初始化第 0 个元素的值，<code>'b'</code> 初始化第 1 个元素，<code>'c'</code> 初始化第2个元素。</p>
-<p>元组表达式示例：</p>
+<p>元组表达式和相应类型的示例：</p>
 <table><thead><tr><th>表达式</th><th>类型</th></tr></thead><tbody>
 <tr><td><code>()</code></td><td><code>()</code> (unit)</td></tr>
 <tr><td><code>(0.0, 4.5)</code></td><td><code>(f64, f64)</code></td></tr>
@@ -6648,17 +6694,23 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
 <em>TupleIndexingExpression</em> :<br />
    <a href="expressions/../expressions.html"><em>Expression</em></a> <code>.</code> <a href="expressions/../tokens.html#tuple-index">TUPLE_INDEX</a></p>
 </blockquote>
-<p>元组索引表达式的计算类似于<a href="expressions/./field-expr.html#field-access-expressions">字段访问表达式</a>，但是访问的是<a href="expressions/../types/tuple.html">元组</a>或<a href="expressions/../types/struct.html">元组结构体</a>的元素。</p>
-<p>元组索引表达式被写成操作数，后跟 <code>.</code>，以及一个元组索引。
-索引必须写成<a href="expressions/../tokens.html#integer-literals">十进制字面量</a>的形式，不能有前导零、下划线和后缀。
-元组索引表达式的操作数必须是元组或元组结构体类型。如果元组索引不是元组或元组结构体的元素，则报编译错误。</p>
+<p><em>元组索引表达式</em>被用来存取<a href="expressions/../types/tuple.html">元组</a>或[元组结构体][tuple structs]的字段。</p>
+<p>元组索引表达式的句法规则为：一个被称为*元组操作数(tuple operand)*的表达式后跟一个 <code>.</code>，最后再后跟一个元组索引。
+<em>元组索引</em>的句法规则要求该索引必须写成一个不能有前导零、下划线和后缀的<a href="expressions/../tokens.html#integer-literals">十进制字面量</a>的形式。
+例如 <code>0</code> 和 <code>2</code> 是合法的元祖索引，但 <code>01</code>、<code>0_</code>、<code>0i32</code> 这些不行。</p>
+<p>元组操作数的类型必须是<a href="expressions/../types/tuple.html">元组类型</a>或[元组结构体][tuple structs]。
+元组索引必须是元组操作数类型的字段的名称。（译者注：这句感觉原文表达有问题，这里也给出原文 The tuple index must be a name of a field of the type of the tuple operand.）</p>
+<p>对元组索引表达式的求值计算除了能求取其元组操作数的对应位置的值之外没有其他作用。
+作为<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>，元组索引表达式的求值结果是元组操作数字段的位置，该字段与元组索引同名。</p>
 <p>元组索引表达式示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let pair = (&quot;a string&quot;, 2);
+</span>// 索引检索一个元组
+let pair = (&quot;a string&quot;, 2);
 assert_eq!(pair.1, 2);
 
+// 索引检索一个元组结构体
 <span class="boring">struct Point(f32, f32);
 </span>let point = Point(1.0, 0.0);
 assert_eq!(point.0, 1.0);
@@ -6666,8 +6718,11 @@ assert_eq!(point.1, 0.0);
 <span class="boring">}
 </span></code></pre></pre>
 <blockquote>
-<p><strong>注意</strong>: 与字段访问表达式不同，元组索引表达式可以是<a href="expressions/./call-expr.html">调用表达式</a>的函数操作数。
+<p><strong>注意</strong>：与字段访问表达式不同，元组索引表达式可以是<a href="expressions/./call-expr.html">调用表达式</a>的函数操作数。
 （这之所以可行，）因为元组索引表达式不会与方法调用相混淆，因为方法名不可能是数字。</p>
+</blockquote>
+<blockquote>
+<p><strong>注意</strong>：虽然数组和切片也有元素，但它们必须使用<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">数组或切片索引表达式</a>或<a href="expressions/../patterns.html#slice-patterns">切片模式</a>去访问它们的元素。</p>
 </blockquote>
 <h1><a class="header" href="#struct-expressions" id="struct-expressions">Struct expressions</a></h1>
 <h1><a class="header" href="#结构体表达式" id="结构体表达式">结构体表达式</a></h1>
@@ -6812,7 +6867,7 @@ commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
    <a href="expressions/../expressions.html"><em>Expression</em></a> ( <code>,</code> <a href="expressions/../expressions.html"><em>Expression</em></a> )<sup>*</sup> <code>,</code><sup>?</sup></p>
 </blockquote>
 <p><em>调用表达式</em>用来调用函数。
-调用表达式的句法规则是一个被称作*函数操作数(function operand)<em>的表达式，后跟一个圆括号封闭的逗号分割的被称为</em>参数操作数(argument operands)*的表达式列表。
+调用表达式的句法规则为：一个被称作*函数操作数(function operand)<em>的表达式，后跟一个圆括号封闭的逗号分割的被称为</em>参数操作数(argument operands)*的表达式列表。
 如果函数最终返回，则此调用表达式执行完成。
 对于<a href="expressions/../types/function-item.html">非函数类型</a>，表达式 <code>f(...)</code> 会使用 <a href="https://doc.rust-lang.org/std/ops/trait.Fn.html"><code>std::ops::Fn</code></a>、<a href="https://doc.rust-lang.org/std/ops/trait.FnMut.html"><code>std::ops::FnMut</code></a> 或 <a href="https://doc.rust-lang.org/std/ops/trait.FnOnce.html"><code>std::ops::FnOnce</code></a> 这些 trait 上的某一方法，选择使用哪个要看 <code>f</code> 如何获取其输入的参数，具体就是看是通过引用、可变引用、还是通过获取所有权来获取的。
 如有需要，也可通过自动借用。
@@ -6970,7 +7025,7 @@ commit: 23672971a16c69ea894bef24992b74912cfe5d25 <br />
 </blockquote>
 <p>*字段表达式(field expression)*是计算求取<a href="expressions/../items/structs.html">结构体</a>或<a href="expressions/../items/unions.html">联合体</a>的字段的内存位置的<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式</a>。
 当操作数<a href="expressions/../expressions.html#mutability">可变</a>时，其字段表达式也是可变的。</p>
-<p>*字段表达式(field expression)<em>的句法规则要求它由一个被称为</em>容器操作数(container operand)*的表达式后跟一个单点号(<code>.</code>)，最后是一个<a href="expressions/../identifiers.html">标识符</a>组成。
+<p>*字段表达式(field expression)<em>的句法规则为：一个被称为</em>容器操作数(container operand)*的表达式后跟一个单点号(<code>.</code>)，最后是一个<a href="expressions/../identifiers.html">标识符</a>。
 字段表达式后面不能再紧跟着一个被圆括号封闭起来的逗号分割的表达式列表（这种表示这是一个<a href="expressions/method-call-expr.html">方法调用表达式</a>）。
 因此字段表达式不能是调用表达式的函数调用者。</p>
 <p>字段表达式代表<a href="expressions/../items/structs.html">结构体(<code>struct</code>)</a>或<a href="expressions/../items/unions.html">联合体(<code>union</code>)</a>的字段。要调用存储在结构体的字段中的函数，需要在此字段表达式外加上圆括号。</p>
@@ -7034,21 +7089,16 @@ commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
 <em>ClosureExpression</em> :<br />
    <code>move</code><sup>?</sup><br />
    ( <code>||</code> | <code>|</code> <em>ClosureParameters</em><sup>?</sup> <code>|</code> )<br />
-   (<a href="expressions/../expressions.html"><em>Expression</em></a> | <code>-&gt;</code> <a href="expressions/../types.html#type-expressions"><em>TypeNoBounds</em></a> <a href="expressions/block-expr.html"><em>BlockExpression</em></a>)
-编译器将通过闭包对其捕获的变量的处置方式来确定此闭包类型将实现的[闭包trait][closure traits]。
-如果所有捕获的类型都实现了 <a href="expressions/../special-types-and-traits.html#send"><code>Send</code></a> 和/或 <a href="expressions/../special-types-and-traits.html#sync"><code>Sync</code></a>，那么此闭包类型也实现了 <code>Send</code> 和/或 <code>Sync</code>。
-这些存在这些 trait，函数可以通过泛型的方式接受各种闭包，即便闭包的类型名无法被确切指定。</p>
-</blockquote>
-<blockquote>
+   (<a href="expressions/../expressions.html"><em>Expression</em></a> | <code>-&gt;</code> <a href="expressions/../types.html#type-expressions"><em>TypeNoBounds</em></a> <a href="expressions/block-expr.html"><em>BlockExpression</em></a>)</p>
 <p><em>ClosureParameters</em> :<br />
    <em>ClosureParam</em> (<code>,</code> <em>ClosureParam</em>)<sup>*</sup> <code>,</code><sup>?</sup></p>
 <p><em>ClosureParam</em> :<br />
    <a href="expressions/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <a href="expressions/../patterns.html"><em>Pattern</em></a> ( <code>:</code> <a href="expressions/../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
 </blockquote>
 <p><em>闭包表达式</em>，也被称为 lambda表达式或 lambda，它定义了一个<a href="expressions/../types/closure.html">闭包类型</a>，并把此表达式求值计算为该类型的值。
-闭包表达式的句法规则是由一个可选的 <code>move</code>关键字，再后跟一对管道定界符(<code>|</code>)封闭的逗号分割的被称为<em>闭包参数(closure parameters)<em>的<a href="expressions/../patterns.html">模式</a>列表（每个闭包参数都可选地通过 <code>:</code> 后跟其类型），再可选地通过 <code>-&gt;</code> 后跟一个</em>返回类型</em>，最后是被称为<em>闭包体操作数(closure body operand)</em> 的表达式。
+闭包表达式的句法规则为：先是一个可选的 <code>move</code>关键字，后跟一对管道定界符(<code>|</code>)封闭的逗号分割的被称为<em>闭包参数(closure parameters)<em>的<a href="expressions/../patterns.html">模式</a>列表（每个闭包参数都可选地通过 <code>:</code> 后跟其类型），再可选地通过 <code>-&gt;</code> 后跟一个</em>返回类型</em>，最后是被称为<em>闭包体操作数(closure body operand)</em> 的表达式。
 代表闭包参数的每个模式后面的可选类型是该模式的类型标注(type annotations)。
-如果存在返回类型，则用于闭包主体的表达式必须是一个普通的<a href="expressions/block-expr.html">块</a>(表达式)。</p>
+如果存在返回类型，则闭包体表达式必须是一个普通的<a href="expressions/block-expr.html">块</a>(表达式)。</p>
 <p>闭包表达式本质是将一组参数映射到参数后面的表达式的函数。
 与 <a href="expressions/../statements.html#let-statements"><code>let</code>绑定</a>一样，闭包参数也是不可反驳型<a href="expressions/../patterns.html">模式</a>的，其类型标注是可选的，如果没有给出，则从上下文推断。
 每个闭包表达式都有一个唯一的匿名类型。</p>
@@ -7731,8 +7781,8 @@ commit: 23672971a16c69ea894bef24992b74912cfe5d25 <br />
    <a href="expressions/../expressions.html"><em>Expression</em></a> <code>.</code> <code>await</code></p>
 </blockquote>
 <p><em>等待(await)表达式</em>挂起当前计算，直到给定的 future 准备好生成值。
-等待(await)表达式的句法格式是一个其类型实现了 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">Future</a> trait 的表达式（此表达式本身被称为 <em>future操作数</em>）后跟一 <code>.</code>标记，再后跟一个 <code>await</code>关键字。</p>
-<p>等待(await)表达式仅在<a href="expressions/../expressions/block-expr.html#async-context">异步上下文</a>中才能使用，例如 <a href="expressions/../items/functions.html#async-functions">异步函数(<code>async fn</code>)</a> 或 <a href="expressions/block-expr.html#async-blocks">异步(<code>async</code>)块</a>。<em>Expression</em></p>
+等待(await)表达式的句法格式为：一个其类型实现了 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">Future</a> trait 的表达式（此表达式本身被称为 <em>future操作数</em>）后跟一 <code>.</code>标记，再后跟一个 <code>await</code>关键字。</p>
+<p>等待(await)表达式仅在<a href="expressions/../expressions/block-expr.html#async-context">异步上下文</a>中才能使用，例如 <a href="expressions/../items/functions.html#async-functions">异步函数(<code>async fn</code>)</a> 或 <a href="expressions/block-expr.html#async-blocks">异步(<code>async</code>)块</a>。</p>
 <p>更具体地说，等待(await)表达式具有以下效果：</p>
 <ol>
 <li>把 future操作数求值计算到一个 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">future</a>类型的 <code>tmp</code> 中；</li>
@@ -8770,8 +8820,8 @@ let y: u32 = x;
 <h1><a class="header" href="#元组类型" id="元组类型">元组类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/tuple.md">tuple.md</a><br />
-commit: 97ed23e824990cef2db1e95521baf003e1bf3bcd <br />
-本章译文最后维护日期：2021-1-10</p>
+commit: ff6c3dc120ce6d06548b9045c43103f58720ee62 <br />
+本章译文最后维护日期：2021-4-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -8779,10 +8829,20 @@ commit: 97ed23e824990cef2db1e95521baf003e1bf3bcd <br />
       <code>(</code> <code>)</code><br />
    | <code>(</code> ( <a href="types/../types.html#type-expressions"><em>Type</em></a> <code>,</code> )<sup>+</sup> <a href="types/../types.html#type-expressions"><em>Type</em></a><sup>?</sup> <code>)</code></p>
 </blockquote>
-<p><em>元组类型</em>是把不同类型放在同一个列表中异构组成结构类型<sup class="footnote-reference"><a href="#1">1</a></sup>。这个列表中的每个条目(entry)都是对应元组的一个<em>元素</em><sup class="footnote-reference"><a href="#2">2</a></sup>。元素可以用它在列表中的位置数字来索引，读作<em>第 n 个元素</em>，索引从 0(<code>0</code>)开始。</p>
-<p>元素的数量决定元组的元数(arity)。有 <code>n</code> 个元素的元组叫做 n元元组(<code>n-ary tuple</code>)。例如，有两个元素的元组就是二元元组。</p>
-<p>出于方便和历史原因，不带元素(<code>()</code>)的元组类型通常被称为<em>单元(unit)<em>或</em>单元类型(unit type)</em>。它的值也被称为<em>单元</em>或<em>单元值</em>。</p>
-<p>元组类型是通过在圆括号封闭的逗号分隔的列表中列出其元素的类型来编写的。一元元组的元素类型后面需要一个逗号，以便和<a href="types/../types.html#parenthesized-types">圆括号组合类型(parenthesized type)</a>区分开来。</p>
+<p><em>元组类型</em>是由其他类型的异构列表组合成的一类结构化类型<sup class="footnote-reference"><a href="#1">1</a></sup>。</p>
+<p>元组类型的语法规则为一对圆括号封闭的逗号分割的类型列表。
+为和<a href="types/../types.html#parenthesized-types">圆括号类型</a>区分开来，一元元组的元素类型后面需要有一个逗号。</p>
+<p>元组类型的字段数量等同于其封闭的异构类型列表的长度。
+字段的数量决定元组的<em>元数(arity)</em>。
+有 <code>n</code> 个字段的元组叫做 <em>n元元组(n-ary tuple)</em>。
+例如，有两个字段的元组就是二元元组。</p>
+<p>元组的字段用它在列表中的位置数字来索引。
+第一个字段索引为 <code>0</code>。
+第二个字段索引为 <code>1</code>。
+然后以此类推。
+每个字段的类型都是元组类型列表中相同位置的类型。</p>
+<p>出于方便和历史原因，不带元素(<code>()</code>)的元组类型通常被称为<em>单元(unit)<em>或</em>单元类型(unit type)</em>。
+它的值也被称为<em>单元</em>或<em>单元值</em>。</p>
 <p>元组类型的示例：</p>
 <ul>
 <li><code>()</code> (单元)</li>
@@ -8791,12 +8851,11 @@ commit: 97ed23e824990cef2db1e95521baf003e1bf3bcd <br />
 <li><code>(i32, String)</code> (跟前一个示例类型不一样)</li>
 <li><code>(i32, f64, Vec&lt;String&gt;, Option&lt;bool&gt;)</code></li>
 </ul>
-<p>这种类型的值是使用<a href="types/../expressions/tuple-expr.html#tuple-expressions">元组表达式</a>来构造的。此外，如果没有其他有意义的值可供求得/返回，很多种表达式都将生成单元值。元组元素可以通过<a href="types/../expressions/tuple-expr.html#tuple-indexing-expressions">元组索引表达式</a>或<a href="types/../patterns.html#tuple-patterns">模式匹配</a>来访问。</p>
+<p>这种类型的值是使用<a href="types/../expressions/tuple-expr.html#tuple-expressions">元组表达式</a>来构造的。
+此外，如果没有其他有意义的值可供求得/返回，很多种表达式都将生成单元值。
+元组字段可以通过<a href="types/../expressions/tuple-expr.html#tuple-indexing-expressions">元组索引表达式</a>或<a href="types/../patterns.html#tuple-patterns">模式匹配</a>来访问。</p>
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
-<p>如果一些类型相互比较，发现它们对等位置的内部类型是相等的，那么这些结构化类型就总是相等的。有关元组的标称类型版本，请参见<a href="types/./struct.html">元组结构体</a>。</p>
-</div>
-<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
-<p>元素与字段等效，只是元素用数字索引代替标识符来标识和检索。</p>
+<p>结构化类型的特点就是其内部对等位置的类型如果是相等的，那么这些结构化类型就是相等的。有关元组的标称类型版本，请参见<a href="types/./struct.html">元组结构体</a>。</p>
 </div>
 <!-- 2021-1-10-->
 <!-- checked -->
@@ -9101,10 +9160,11 @@ f2(move || { t });
 <h1><a class="header" href="#指针类型" id="指针类型">指针类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/pointer.md">pointer.md</a><br />
-commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
-本章译文最后维护日期：2020-11-14</p>
+commit: 4664361ba2f7bcc568f6bef4d119b53971fdf8ad <br />
+本章译文最后维护日期：2021-4-6</p>
 </blockquote>
-<p>Rust 中所有的指针都是显式的头等(first-class)值。它们可以被移动或复制，存储到其他数据结构中，或从函数中返回。</p>
+<p>Rust 中所有的指针都是显式的头等(first-class)值。
+它们可以被移动或复制，存储到其他数据结构中，或从函数中返回。</p>
 <h2><a class="header" href="#references--and-mut" id="references--and-mut">References (<code>&amp;</code> and <code>&amp;mut</code>)</a></h2>
 <h2><a class="header" href="#引用-和-mut" id="引用-和-mut">引用(<code>&amp;</code> 和 <code>&amp;mut</code>)</a></h2>
 <blockquote>
@@ -9114,10 +9174,17 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 </blockquote>
 <h3><a class="header" href="#shared-references-" id="shared-references-">Shared references (<code>&amp;</code>)</a></h3>
 <h3><a class="header" href="#共享引用" id="共享引用">共享引用(<code>&amp;</code>)</a></h3>
-<p>共享引用(<code>&amp;</code>)指向<em>由其他值拥有的</em>内存。创建了对值的共享引用可以防止对该值的直接更改。但在某些特定情况下，<a href="types/../interior-mutability.html">内部可变性</a>又提供了这种情况的一种例外。顾名思义，对一个值的共享引用的次数没有限制。共享引用类型被写为 <code>&amp;type</code>；当需要指定显式的生存期时可写为 <code>&amp;'a type</code>。拷贝引用是一个“浅拷贝(shallow)”操作：它只涉及复制指针本身，也就是指针实现了 <code>Copy</code> trait 的意义所在。释放引用对共享引用所指向的值没有影响，但是对<a href="types/../expressions.html#temporaries">临时值</a>的引用的存在将使此临时值在此引用的作用域内保持存活状态。</p>
+<p>共享引用(<code>&amp;</code>)指向<em>由其他值拥有的</em>内存。
+创建了对值的共享引用可以防止对该值的直接更改。
+但在某些特定情况下，<a href="types/../interior-mutability.html">内部可变性</a>又提供了这种情况的一种例外。
+顾名思义，对一个值的共享引用的次数没有限制。共享引用类型被写为 <code>&amp;type</code>；当需要指定显式的生存期时可写为 <code>&amp;'a type</code>。
+拷贝一个引用是一个“浅拷贝(shallow)”操作：它只涉及复制指针本身，也就是指针实现了 <code>Copy</code> trait 的意义所在。
+释放引用对共享引用所指向的值没有影响，但是对<a href="types/../expressions.html#temporaries">临时值</a>的引用的存在将使此临时值在此引用的作用域内保持存活状态。</p>
 <h3><a class="header" href="#mutable-references-mut" id="mutable-references-mut">Mutable references (<code>&amp;mut</code>)</a></h3>
 <h3><a class="header" href="#可变引用mut" id="可变引用mut">可变引用(<code>&amp;mut</code>)</a></h3>
-<p>可变引用(<code>&amp;mut</code>)也指向其他值所拥有的内存。可变引用类型被写为 <code>&amp;mut type</code> 或 <code>&amp;'a mut type</code>。可变引用（其还未被借出<sup class="footnote-reference"><a href="#译注1">1</a></sup>）是访问它所指向的值的唯一方法，所以可变引用没有实现 <code>Copy</code> trait。</p>
+<p>可变引用(<code>&amp;mut</code>)也指向其他值所拥有的内存。
+可变引用类型被写为 <code>&amp;mut type</code> 或 <code>&amp;'a mut type</code>。
+可变引用（其还未被借出<sup class="footnote-reference"><a href="#译注1">1</a></sup>）是访问它所指向的值的唯一方法，所以可变引用没有实现 <code>Copy</code> trait。</p>
 <h2><a class="header" href="#raw-pointers-const-and-mut" id="raw-pointers-const-and-mut">Raw pointers (<code>*const</code> and <code>*mut</code>)</a></h2>
 <h2><a class="header" href="#裸指针const-和-mut" id="裸指针const-和-mut">裸指针(<code>*const</code> 和 <code>*mut</code>)</a></h2>
 <blockquote>
@@ -9125,16 +9192,20 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 <em>RawPointerType</em> :<br />
    <code>*</code> ( <code>mut</code> | <code>const</code> ) <a href="types/../types.html#type-expressions"><em>TypeNoBounds</em></a></p>
 </blockquote>
-<p>裸指针是没有安全性或可用性(liveness)保证的指针。裸指针写为 <code>*const T</code> 或 <code>*mut T</code>，例如，<code>*const i32</code> 表示指向 32-bit 有符号整数的裸指针。拷贝或销毁(dropping )裸指针对任何其他值的生命周期(lifecycle)都没有影响。对裸指针的解引用是<a href="types/../unsafety.html">非安全(<code>unsafe</code>)操作</a>，可以通过重新借用裸指针（<code>&amp;*</code> 或 <code>&amp;mut *</code>）将其转换为引用。在 Rust 代码中通常不鼓励使用裸指针；它们的存在是为了提升与外部代码的互操作性，以及编写对性能要求很高的函数或很底层的函数。</p>
-<p>在比较裸指针时，比较的是它们的地址，而不是它们指向的数据。当比较裸指针和<a href="types/../dynamically-sized-types.html">动态尺寸类型</a>时，还会比较它们指针上的附加/元数据。</p>
+<p>裸指针是没有安全性或可用性(liveness)保证的指针。
+裸指针写为 <code>*const T</code> 或 <code>*mut T</code>，例如，<code>*const i32</code> 表示指向 32-bit 有符号整数的裸指针。
+拷贝或销毁(dropping )裸指针对任何其他值的生命周期(lifecycle)都没有影响。对
+裸指针的解引用是<a href="types/../unsafety.html">非安全(<code>unsafe</code>)操作</a>，可以通过重新借用裸指针（<code>&amp;*</code> 或 <code>&amp;mut *</code>）将其转换为引用。
+在 Rust 代码中通常不鼓励使用裸指针；它们的存在是为了提升与外部代码的互操作性，以及编写对性能要求很高的函数或很底层的函数。</p>
+<p>在比较裸指针时，比较的是它们的地址，而不是它们指向的数据。
+当比较裸指针和<a href="types/../dynamically-sized-types.html">动态尺寸类型</a>时，还会比较它们指针上的附加/元数据。</p>
+<p>可以直接使用 <a href="types/../../core/ptr/macro.addr_of.html"><code>core::ptr::addr_of!</code></a> 创建 <code>*const</code> 类型的裸指针，通过 <a href="types/../../core/ptr/macro.addr_of_mut.html"><code>core::ptr::addr_of_mut!</code></a> 创建 <code>*mut</code> 类型的裸指针。</p>
 <h2><a class="header" href="#smart-pointers" id="smart-pointers">Smart Pointers</a></h2>
 <h2><a class="header" href="#智能指针" id="智能指针">智能指针</a></h2>
 <p>标准库包含了一些额外的“智能指针”类型，它们提供了在引用和裸指针这类低级指针之外的更多的功能。</p>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
 <p>译者理解这里是指 <code>&amp;mut type</code> 如果被借出，就成了 <code>&amp;&amp;mut type</code>，这样就又成了不可变借用了。</p>
 </div>
-<!-- 2020-11-12-->
-<!-- checked -->
 <h1><a class="header" href="#function-pointer-types" id="function-pointer-types">Function pointer types</a></h1>
 <h1><a class="header" href="#函数指针类型" id="函数指针类型">函数指针类型</a></h1>
 <blockquote>

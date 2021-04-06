@@ -21,10 +21,10 @@
 作为控制流表达式，块按顺序执行其非程序项声明的语句组件，最后执行可选的最终表达式(final expression)。
 作为一个匿名空间作用域，在本块内声明的程序项只在块本身围成的作用域内有效，而块内由 `let`语句声明的变量的作用域为下一条语句到块尾。
 
-块的局发格式为：先是一个 `{`，后跟[内部属性][inner attributes]，再后是任意条[语句][statements]，再后是一个被称为最终操作数（final operand）的可选表达式，最后是一个 `}`。
+块的句法规则为：先是一个 `{`，后跟[内部属性][inner attributes]，再后是任意条[语句][statements]，再后是一个被称为最终操作数（final operand）的可选表达式，最后是一个 `}`。
 
 语句之间通常需要后跟分号，但有两个例外：
-1、程序项声明语句不需要后跟分号
+1、程序项声明语句不需要后跟分号。
 2、表达式语句通常需要后面的分号，但它的外层表达式是控制流表达式时不需要。
 
 此外，允许在语句之间使用额外的分号，但是这些分号并不影响语义。
@@ -92,9 +92,6 @@ assert_eq!(5, five);
 
 > **版本差异**: 异步块从 Rust 2018 版才开始可用。
 
-[`std::ops::Fn`]: https://doc.rust-lang.org/std/ops/trait.Fn.html
-[`std::future::Future`]: https://doc.rust-lang.org/std/future/trait.Future.html
-
 ### Capture modes
 ### 捕获方式
 
@@ -102,17 +99,12 @@ assert_eq!(5, five);
 跟闭包一样，当编写 `async { .. }` 时，每个变量的捕获方式将从该块里的内容中推断出来。
 而 `async move { .. }` 类型的异步块将把所有需要捕获的变量使用移动语义移入(move)到相应的结果 future 中。
 
-[capture modes]: ../types/closure.md#capture-modes
-[shared references]: ../types/pointer.md#shared-references-
-[mutable reference]: ../types/pointer.md#mutables-references-
-
 ### Async context
 ### 异步上下文
 
 因为异步块构造了一个 future，所以它们定义了一个**async上下文**，这个上下文可以相应地包含 [`await`表达式][`await` expressions]。
 异步上下文是由异步块和异步函数的函数体建立的，它们的语义是依照异步块定义的。
 
-[`await` expressions]: await-expr.md
 
 ### Control-flow operators
 ### 控制流操作符

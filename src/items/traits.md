@@ -1,8 +1,8 @@
 # Trait
 
 >[traits.md](https://github.com/rust-lang/reference/blob/master/src/items/traits.md)\
->commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 \
->本章译文最后维护日期：2021-1-17
+>commit: 11517246f6bd543b8b74b2411d2d92ff102acc7a \
+>本章译文最后维护日期：2021-4-6
 
 > **<sup>句法</sup>**\
 > _Trait_ :\
@@ -62,21 +62,23 @@ trait Seq<T> {
 
 对象安全的 trait 可以是 [trait对象][trait object]的底层 trait。如果 trait 符合以下限定条件（在 [RFC 255] 中定义），则认为它是*对象安全的(object safe)*：
 
-* trait 本身不能有 `Self: Sized`约束 [^译者备注]
-* 所有的关联函数要么有 `where Self: Sized` 约束，要么
-  * 不能有类型参数（生存期参数可以有），并且
-  * 作为方法时，`Self` 只能出现在[方法][method]的接受者(receiver)的类型里，其它地方不能使用 `Self`。
+* 所有的超类trait[supertraits] 也必须也是对象安全的。
+* 超类trait 中不能有 `Sized`。也就是说不能有 `Self: Sized`约束。
 * 它必须没有任何关联常量。
-* 其所有的超类trait 也必须也是对象安全的。
-
-（作为上面第二条的补充，）当方法上没有 `Self: Sized` 绑定时，方法的接受者的类型必须是以下类型之一：
-
-* `&Self`
-* `&mut Self`
-* [`Box<Self>`]
-* [`Rc<Self>`]
-* [`Arc<Self>`]
-* [`Pin<P>`] 当 `P` 是上面类型中的一种
+* 所有关联函数必须可以从 trait对象调度分派，或者是显式不可调度分派：
+    * 可调度分派函数要求：
+        * 不能有类型参数（尽管生存期参数可以有）
+        * 作为方法时，`Self` 只能出现在[方法][method]的接受者(receiver)的类型里，其它地方不能使用 `Self`。
+        * 方法的接受者的类型必须是以下类型之一：
+            * `&Self` (例如：`&self`)
+            * `&mut Self` (例如：`&mut self`)
+            * [`Box<Self>`]
+            * [`Rc<Self>`]
+            * [`Arc<Self>`]
+            * [`Pin<P>`] 当 `P` 是上面类型中的一种
+        * 没有 `where Self: Sized`约束（即接受者的类型 `Self`(例如：`self`) 不能有 `Sized`约束）。
+    * 显式不可调度分派函数要求：
+        * 有 `where Self: Sized`约束（即接受者的类型 `Self`(例如：`self`) 有 `Sized`约束）。
 
 ```rust
 # use std::rc::Rc;
@@ -306,6 +308,7 @@ fn main() {
 [RFC 255]: https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md
 [associated items]: associated-items.md
 [method]: associated-items.md#methods
+[supertraits]: #supertraits
 [implementations]: implementations.md
 [generics]: generics.md
 [where clauses]: generics.md#where-clauses
@@ -320,6 +323,3 @@ fn main() {
 [`Rc<Self>`]: ../special-types-and-traits.md#rct
 [`async`]: functions.md#async-functions
 [`const`]: functions.md#const-functions
-
-<!-- 2020-11-12-->
-<!-- checked -->

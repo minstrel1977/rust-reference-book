@@ -13,7 +13,7 @@
 > &nbsp;&nbsp; [_Expression_]&nbsp;( `,` [_Expression_] )<sup>\*</sup> `,`<sup>?</sup>
 
 *调用表达式*用来调用函数。
-调用表达式的句法规则是一个被称作*函数操作数(function operand)*的表达式，后跟一个圆括号封闭的逗号分割的被称为*参数操作数(argument operands)*的表达式列表。
+调用表达式的句法规则为：一个被称作*函数操作数(function operand)*的表达式，后跟一个圆括号封闭的逗号分割的被称为*参数操作数(argument operands)*的表达式列表。
 如果函数最终返回，则此调用表达式执行完成。
 对于[非函数类型][non-function types]，表达式 `f(...)` 会使用 [`std::ops::Fn`]、[`std::ops::FnMut`] 或 [`std::ops::FnOnce`] 这些 trait 上的某一方法，选择使用哪个要看 `f` 如何获取其输入的参数，具体就是看是通过引用、可变引用、还是通过获取所有权来获取的。
 如有需要，也可通过自动借用。

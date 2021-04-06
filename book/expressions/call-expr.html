@@ -180,7 +180,7 @@ commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
    <a href="../expressions.html"><em>Expression</em></a> ( <code>,</code> <a href="../expressions.html"><em>Expression</em></a> )<sup>*</sup> <code>,</code><sup>?</sup></p>
 </blockquote>
 <p><em>调用表达式</em>用来调用函数。
-调用表达式的句法规则是一个被称作*函数操作数(function operand)<em>的表达式，后跟一个圆括号封闭的逗号分割的被称为</em>参数操作数(argument operands)*的表达式列表。
+调用表达式的句法规则为：一个被称作*函数操作数(function operand)<em>的表达式，后跟一个圆括号封闭的逗号分割的被称为</em>参数操作数(argument operands)*的表达式列表。
 如果函数最终返回，则此调用表达式执行完成。
 对于<a href="../types/function-item.html">非函数类型</a>，表达式 <code>f(...)</code> 会使用 <a href="https://doc.rust-lang.org/std/ops/trait.Fn.html"><code>std::ops::Fn</code></a>、<a href="https://doc.rust-lang.org/std/ops/trait.FnMut.html"><code>std::ops::FnMut</code></a> 或 <a href="https://doc.rust-lang.org/std/ops/trait.FnOnce.html"><code>std::ops::FnOnce</code></a> 这些 trait 上的某一方法，选择使用哪个要看 <code>f</code> 如何获取其输入的参数，具体就是看是通过引用、可变引用、还是通过获取所有权来获取的。
 如有需要，也可通过自动借用。

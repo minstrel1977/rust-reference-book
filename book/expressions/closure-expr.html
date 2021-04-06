@@ -177,21 +177,16 @@ commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
 <em>ClosureExpression</em> :<br />
    <code>move</code><sup>?</sup><br />
    ( <code>||</code> | <code>|</code> <em>ClosureParameters</em><sup>?</sup> <code>|</code> )<br />
-   (<a href="../expressions.html"><em>Expression</em></a> | <code>-&gt;</code> <a href="../types.html#type-expressions"><em>TypeNoBounds</em></a> <a href="block-expr.html"><em>BlockExpression</em></a>)
-编译器将通过闭包对其捕获的变量的处置方式来确定此闭包类型将实现的[闭包trait][closure traits]。
-如果所有捕获的类型都实现了 <a href="../special-types-and-traits.html#send"><code>Send</code></a> 和/或 <a href="../special-types-and-traits.html#sync"><code>Sync</code></a>，那么此闭包类型也实现了 <code>Send</code> 和/或 <code>Sync</code>。
-这些存在这些 trait，函数可以通过泛型的方式接受各种闭包，即便闭包的类型名无法被确切指定。</p>
-</blockquote>
-<blockquote>
+   (<a href="../expressions.html"><em>Expression</em></a> | <code>-&gt;</code> <a href="../types.html#type-expressions"><em>TypeNoBounds</em></a> <a href="block-expr.html"><em>BlockExpression</em></a>)</p>
 <p><em>ClosureParameters</em> :<br />
    <em>ClosureParam</em> (<code>,</code> <em>ClosureParam</em>)<sup>*</sup> <code>,</code><sup>?</sup></p>
 <p><em>ClosureParam</em> :<br />
    <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <a href="../patterns.html"><em>Pattern</em></a> ( <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
 </blockquote>
 <p><em>闭包表达式</em>，也被称为 lambda表达式或 lambda，它定义了一个<a href="../types/closure.html">闭包类型</a>，并把此表达式求值计算为该类型的值。
-闭包表达式的句法规则是由一个可选的 <code>move</code>关键字，再后跟一对管道定界符(<code>|</code>)封闭的逗号分割的被称为<em>闭包参数(closure parameters)<em>的<a href="../patterns.html">模式</a>列表（每个闭包参数都可选地通过 <code>:</code> 后跟其类型），再可选地通过 <code>-&gt;</code> 后跟一个</em>返回类型</em>，最后是被称为<em>闭包体操作数(closure body operand)</em> 的表达式。
+闭包表达式的句法规则为：先是一个可选的 <code>move</code>关键字，后跟一对管道定界符(<code>|</code>)封闭的逗号分割的被称为<em>闭包参数(closure parameters)<em>的<a href="../patterns.html">模式</a>列表（每个闭包参数都可选地通过 <code>:</code> 后跟其类型），再可选地通过 <code>-&gt;</code> 后跟一个</em>返回类型</em>，最后是被称为<em>闭包体操作数(closure body operand)</em> 的表达式。
 代表闭包参数的每个模式后面的可选类型是该模式的类型标注(type annotations)。
-如果存在返回类型，则用于闭包主体的表达式必须是一个普通的<a href="block-expr.html">块</a>(表达式)。</p>
+如果存在返回类型，则闭包体表达式必须是一个普通的<a href="block-expr.html">块</a>(表达式)。</p>
 <p>闭包表达式本质是将一组参数映射到参数后面的表达式的函数。
 与 <a href="../statements.html#let-statements"><code>let</code>绑定</a>一样，闭包参数也是不可反驳型<a href="../patterns.html">模式</a>的，其类型标注是可选的，如果没有给出，则从上下文推断。
 每个闭包表达式都有一个唯一的匿名类型。</p>

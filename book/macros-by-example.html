@@ -169,8 +169,8 @@
 <h1><a class="header" href="#声明宏" id="声明宏">声明宏</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md">macros-by-example.md</a><br />
-commit: eabdf09207bf3563ae96db9d576de0758c413d5d <br />
-本章译文最后维护日期：2020-11-7</p>
+commit: 161b6338db6c1ef7cbf64be0638a674609d3bbb4 <br />
+本章译文最后维护日期：2021-4-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -284,7 +284,7 @@ foo!(3);
 <p>在转码过程中，重复元会受到额外的限制，以便于编译器知道该如何正确地扩展它们：</p>
 <ol>
 <li>在转码器中，元变量必须与它在匹配器中出现的次数、指示符类型以及其在重复元内的嵌套顺序都完全相同。因此，对于匹配器 <code>$( $i:ident ),*</code>，转码器 <code>=&gt; { $i }</code>, <code>=&gt; { $( $( $i)* )* }</code> 和 <code>=&gt; { $( $i )+ }</code> 都是非法的，但是 <code>=&gt; { $( $i );* }</code> 是正确的，它用分号分隔的标识符列表替换了逗号分隔的标识符列表。</li>
-<li>转码器中的每个重复元必须至少包含一个元变量，以便确定扩展多少次。如果在同一个重复元中出现多个元变量，则它们必须绑定到相同数量的匹配段上，不能有的多，有的少。例如，<code>( $( $i:ident ),* ; $( $j:ident ),* ) =&gt;( $( ($i,$j) ),*</code> 里，绑定到 <code>$j</code> 的匹配段的数量必须与绑定到 <code>$i</code> 上的相同。这意味着用 <code>(a, b, c; d, e, f</code>) 调用这个宏是合法的，并且可扩展到 <code>((a,d), (b,e), (c,f))</code>，但是 <code>(a, b, c; d, e)</code> 是非法的，因为前后绑定的数量不同。此要求适用于嵌套的重复元的每一层。</li>
+<li>转码器中的每个重复元必须至少包含一个元变量，以便确定扩展多少次。如果在同一个重复元中出现多个元变量，则它们必须绑定到相同数量的匹配段上，不能有的多，有的少。例如，<code>( $( $i:ident ),* ; $( $j:ident ),* ) =&gt; (( $( ($i,$j) ),* ))</code> 里，绑定到 <code>$j</code> 的匹配段的数量必须与绑定到 <code>$i</code> 上的相同。这意味着用 <code>(a, b, c; d, e, f)</code> 调用这个宏是合法的，并且可扩展到 <code>((a,d), (b,e), (c,f))</code>，但是 <code>(a, b, c; d, e)</code> 是非法的，因为前后绑定的数量不同。此要求适用于嵌套的重复元的每一层。</li>
 </ol>
 <h2><a class="header" href="#scoping-exporting-and-importing" id="scoping-exporting-and-importing">Scoping, Exporting, and Importing</a></h2>
 <h2><a class="header" href="#作用域导出以及导入" id="作用域导出以及导入">作用域、导出以及导入</a></h2>

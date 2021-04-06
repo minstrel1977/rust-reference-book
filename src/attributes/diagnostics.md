@@ -2,8 +2,8 @@
 # 诊断属性
 
 >[diagnostics.md](https://github.com/rust-lang/reference/blob/master/src/attributes/diagnostics.md)\
->commit: 2196589ccf8fefc4edeaa0ab430fe2ce6a57dec3 \
->本章译文最后维护日期：2020-11-10
+>commit: 12a4832c8eec1ad0df3edfb681571821708e0410 \
+>本章译文最后维护日期：2021-4-6
 
 以下[属性][attributes]用于在编译期间控制或生成诊断消息。
 
@@ -38,6 +38,7 @@ pub mod m1 {
     pub fn undocumented_end() -> i32 { 3 }
 }
 ```
+Lint属性可以覆盖上一个属性指定的级别，但该级别不能更改禁止性的 Lint。这里的上一个属性是指语法树中更高级别的属性，或者是同一实体上的前一个属性，按从左到右的源代码顺序列出。
 
 此示例展示了如何使用 `allow` 和 `warn` 来打开和关闭一个特定的 lint检查：
 
@@ -71,13 +72,45 @@ pub mod m3 {
 }
 ```
 
+> 注意：`rustc`允许在[命令行][rustc-lint-cli]上设置 lint级别，也支持在[setting caps][rustc-lint-caps]中设置 lint报告中的caps。
+
+### Lint groups
+### lint分组
+
+lint可以被组织成不同命名的组，以便相关lint的等级可以一起调整。使用命名组相当于给出该组中的 lint。
+
+```rust,compile_fail
+// 这允许 "unused"组下的所有lint。
+#[allow(unused)]
+// 这个禁止动作将覆盖前面 "unused"组中的 "unused_must_use" lint。
+#[deny(unused_must_use)]
+fn example() {
+    // 这里不会生成告警，因为 "unused_variables" lint 在 "unused"组下
+    let x = 1;
+    // 这里会产生报错信息，因为 "unused_must_use" lint 被标记为"deny"，而这行的返回结果未被使用
+    std::fs::remove_file("some_file"); // ERROR: unused `Result` that must be used
+}
+```
+
+有一个名为 “warnings” 的特殊组，它包含 “warn”级别的所有 lint。“warnings”组会忽略属性的顺序，并对实体执行所有告警lint 检查。
+
+```rust,compile_fail
+# unsafe fn an_unsafe_fn() {}
+// 这里的两个属性的前后顺序无所谓
+#[deny(warnings)]
+// unsafe_code lint 默认是 "allow" 的。
+#[warn(unsafe_code)]
+fn example_err() {
+    // 这里会编译报错，因为 `unsafe_code`告警的 lint 被提升为 "deny"级别了。
+    unsafe { an_unsafe_fn() } // ERROR: usage of `unsafe` block
+}
+```
+
 ### Tool lint attributes
 ### 工具类lint属性
 
 
 可以为 `allow`、`warn`、`deny` 或 `forbid` 这些调整代码检查级别的 lint属性添加/输入基于特定工具的 lint。注意该工具在当前作用域内可用才会起效。
-
-目前，`clippy` 是唯一可用的 lint工具。
 
 工具类lint 只有在相关工具处于活动状态时才会做相应的代码模式检查。如果一个 lint级别属性，如 `allow`，引用了一个不存在的工具类lint，编译器将不会去警告不存在该 lint类，只有使用了该工具（，才会报告该 lint类不存在）。
 
@@ -99,6 +132,9 @@ fn foo() {
     // ...
 }
 ```
+
+> 注意：`rustc` 当前识别的工具类lint 有 "[clippy]" 和 "[rustdoc]"。
+
 ## The `deprecated` attribute
 ## `deprecated`属性
 
@@ -242,6 +278,9 @@ impl Trait for i32 {
 [macro definition]: ../macros-by-example.md
 [module]: ../items/modules.md
 [rustc book]: https://doc.rust-lang.org/rustc/lints/index.html
+[rustc-lint-caps]: https://doc.rust-lang.org/rustc/lints/levels.html#capping-lints
+[rustc-lint-cli]: https://doc.rust-lang.org/rustc/lints/levels.html#via-compiler-flag
+[rustdoc]: https://doc.rust-lang.org/rustdoc/lints.html
 [struct field]: ../items/structs.md
 [struct]: ../items/structs.md
 [trait declaration]: ../items/traits.md
@@ -249,6 +288,3 @@ impl Trait for i32 {
 [trait item]: ../items/traits.md
 [traits]: ../items/traits.md
 [union]: ../items/unions.md
-
-<!-- 2020-11-12-->
-<!-- checked -->

@@ -12,7 +12,7 @@
 *字段表达式(field expression)*是计算求取[结构体][struct]或[联合体][union]的字段的内存位置的[位置表达式][place expression]。
 当操作数[可变][mutable]时，其字段表达式也是可变的。
 
-*字段表达式(field expression)*的句法规则要求它由一个被称为*容器操作数(container operand)*的表达式后跟一个单点号(`.`)，最后是一个[标识符][identifier]组成。
+*字段表达式(field expression)*的句法规则为：一个被称为*容器操作数(container operand)*的表达式后跟一个单点号(`.`)，最后是一个[标识符][identifier]。
 字段表达式后面不能再紧跟着一个被圆括号封闭起来的逗号分割的表达式列表（这种表示这是一个[方法调用表达式][method call expression]）。
 因此字段表达式不能是调用表达式的函数调用者。
 

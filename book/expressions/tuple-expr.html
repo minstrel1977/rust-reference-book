@@ -169,8 +169,8 @@
 <h1><a class="header" href="#元组和元组索引表达式" id="元组和元组索引表达式">元组和元组索引表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/tuple-expr.md">tuple-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: 09142b820fe8713c4cba451713c7d11e67d7fbd8 <br />
+本章译文最后维护日期：2021-4-6</p>
 </blockquote>
 <h2><a class="header" href="#tuple-expressions" id="tuple-expressions">Tuple expressions</a></h2>
 <h2><a class="header" href="#元组表达式" id="元组表达式">元组表达式</a></h2>
@@ -181,15 +181,15 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
 <p><em>TupleElements</em> :<br />
    ( <a href="../expressions.html"><em>Expression</em></a> <code>,</code> )<sup>+</sup> <a href="../expressions.html"><em>Expression</em></a><sup>?</sup></p>
 </blockquote>
-<!-- 元组表达式是通过将零个或多个以逗号分隔的表达式括在圆括号中来编写的。可用它们来创建[元组类型][tuple type])的值。 -->
-<p>元组表达式的求值就是将其操作数初始化为<a href="../types/tuple.html">元组值</a>的元素。</p>
-<p>元组表达式的编写方法是在逗号分隔的圆括号列表中列出<a href="../expressions.html">操作数</a>。
-一元(1-ary)元组表达式的操作数后面需要一个逗号，以便能和<a href="grouped-expr.html">括号表达式</a>区分开来。</p>
-<p>操作数的数量构成元组的元数(arity)。
-没有操作数的元组表达式生成单元元组(unit tuple)。
-对于其他元组表达式，第一个被写入的操作数初始化第 0 个元素，随后的操作数依次初始化下一个开始的元素。
+<p><em>元组表达式</em>用来构建<a href="../types/tuple.html">元组值</a>。</p>
+<p>元组表达式的句法规则为：一对圆括号封闭的以逗号分隔的表达式列表，这些表达式被称为<em>元组初始化操作数(tuple initializer operands)</em>。
+为了避免和<a href="grouped-expr.html">圆括号表达式</a>混淆，一元元组表达式的元组初始化操作数后的逗号不能省略。</p>
+<p>元组表达式是一个<a href="../expressions.html#place-expressions-and-value-expressions">值表达式</a>，它会被求值计算成一个元组类型的新值。
+元组初始化操作数的数量构成元组的元数(arity)。
+没有元组初始化操作数的元组表达式生成单元元组(unit tuple)。
+对于其他元组表达式，第一个被写入的元组初始化操作数初始化第 0 个元素，随后的操作数依次初始化下一个开始的元素。
 例如，在元组表达式 <code>('a', 'b', 'c')</code> 中，<code>'a'</code> 初始化第 0 个元素的值，<code>'b'</code> 初始化第 1 个元素，<code>'c'</code> 初始化第2个元素。</p>
-<p>元组表达式示例：</p>
+<p>元组表达式和相应类型的示例：</p>
 <table><thead><tr><th>表达式</th><th>类型</th></tr></thead><tbody>
 <tr><td><code>()</code></td><td><code>()</code> (unit)</td></tr>
 <tr><td><code>(0.0, 4.5)</code></td><td><code>(f64, f64)</code></td></tr>
@@ -206,17 +206,23 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
 <em>TupleIndexingExpression</em> :<br />
    <a href="../expressions.html"><em>Expression</em></a> <code>.</code> <a href="../tokens.html#tuple-index">TUPLE_INDEX</a></p>
 </blockquote>
-<p>元组索引表达式的计算类似于<a href="./field-expr.html#field-access-expressions">字段访问表达式</a>，但是访问的是<a href="../types/tuple.html">元组</a>或<a href="../types/struct.html">元组结构体</a>的元素。</p>
-<p>元组索引表达式被写成操作数，后跟 <code>.</code>，以及一个元组索引。
-索引必须写成<a href="../tokens.html#integer-literals">十进制字面量</a>的形式，不能有前导零、下划线和后缀。
-元组索引表达式的操作数必须是元组或元组结构体类型。如果元组索引不是元组或元组结构体的元素，则报编译错误。</p>
+<p><em>元组索引表达式</em>被用来存取<a href="../types/tuple.html">元组</a>或[元组结构体][tuple structs]的字段。</p>
+<p>元组索引表达式的句法规则为：一个被称为*元组操作数(tuple operand)*的表达式后跟一个 <code>.</code>，最后再后跟一个元组索引。
+<em>元组索引</em>的句法规则要求该索引必须写成一个不能有前导零、下划线和后缀的<a href="../tokens.html#integer-literals">十进制字面量</a>的形式。
+例如 <code>0</code> 和 <code>2</code> 是合法的元祖索引，但 <code>01</code>、<code>0_</code>、<code>0i32</code> 这些不行。</p>
+<p>元组操作数的类型必须是<a href="../types/tuple.html">元组类型</a>或[元组结构体][tuple structs]。
+元组索引必须是元组操作数类型的字段的名称。（译者注：这句感觉原文表达有问题，这里也给出原文 The tuple index must be a name of a field of the type of the tuple operand.）</p>
+<p>对元组索引表达式的求值计算除了能求取其元组操作数的对应位置的值之外没有其他作用。
+作为<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>，元组索引表达式的求值结果是元组操作数字段的位置，该字段与元组索引同名。</p>
 <p>元组索引表达式示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let pair = (&quot;a string&quot;, 2);
+</span>// 索引检索一个元组
+let pair = (&quot;a string&quot;, 2);
 assert_eq!(pair.1, 2);
 
+// 索引检索一个元组结构体
 <span class="boring">struct Point(f32, f32);
 </span>let point = Point(1.0, 0.0);
 assert_eq!(point.0, 1.0);
@@ -224,8 +230,11 @@ assert_eq!(point.1, 0.0);
 <span class="boring">}
 </span></code></pre></pre>
 <blockquote>
-<p><strong>注意</strong>: 与字段访问表达式不同，元组索引表达式可以是<a href="./call-expr.html">调用表达式</a>的函数操作数。
+<p><strong>注意</strong>：与字段访问表达式不同，元组索引表达式可以是<a href="./call-expr.html">调用表达式</a>的函数操作数。
 （这之所以可行，）因为元组索引表达式不会与方法调用相混淆，因为方法名不可能是数字。</p>
+</blockquote>
+<blockquote>
+<p><strong>注意</strong>：虽然数组和切片也有元素，但它们必须使用<a href="array-expr.html#array-and-slice-indexing-expressions">数组或切片索引表达式</a>或<a href="../patterns.html#slice-patterns">切片模式</a>去访问它们的元素。</p>
 </blockquote>
 
                     </main>

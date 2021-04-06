@@ -179,7 +179,7 @@ commit: 23672971a16c69ea894bef24992b74912cfe5d25 <br />
 </blockquote>
 <p>*字段表达式(field expression)*是计算求取<a href="../items/structs.html">结构体</a>或<a href="../items/unions.html">联合体</a>的字段的内存位置的<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>。
 当操作数<a href="../expressions.html#mutability">可变</a>时，其字段表达式也是可变的。</p>
-<p>*字段表达式(field expression)<em>的句法规则要求它由一个被称为</em>容器操作数(container operand)*的表达式后跟一个单点号(<code>.</code>)，最后是一个<a href="../identifiers.html">标识符</a>组成。
+<p>*字段表达式(field expression)<em>的句法规则为：一个被称为</em>容器操作数(container operand)*的表达式后跟一个单点号(<code>.</code>)，最后是一个<a href="../identifiers.html">标识符</a>。
 字段表达式后面不能再紧跟着一个被圆括号封闭起来的逗号分割的表达式列表（这种表示这是一个<a href="method-call-expr.html">方法调用表达式</a>）。
 因此字段表达式不能是调用表达式的函数调用者。</p>
 <p>字段表达式代表<a href="../items/structs.html">结构体(<code>struct</code>)</a>或<a href="../items/unions.html">联合体(<code>union</code>)</a>的字段。要调用存储在结构体的字段中的函数，需要在此字段表达式外加上圆括号。</p>

@@ -10,10 +10,7 @@
 > &nbsp;&nbsp; `move`<sup>?</sup>\
 > &nbsp;&nbsp; ( `||` | `|` _ClosureParameters_<sup>?</sup> `|` )\
 > &nbsp;&nbsp; ([_Expression_] | `->` [_TypeNoBounds_]&nbsp;[_BlockExpression_])
->编译器将通过闭包对其捕获的变量的处置方式来确定此闭包类型将实现的[闭包trait][closure traits]。
-如果所有捕获的类型都实现了 [`Send`] 和/或 [`Sync`]，那么此闭包类型也实现了 `Send` 和/或 `Sync`。
-这些存在这些 trait，函数可以通过泛型的方式接受各种闭包，即便闭包的类型名无法被确切指定。
-
+>
 > _ClosureParameters_ :\
 > &nbsp;&nbsp; _ClosureParam_ (`,` _ClosureParam_)<sup>\*</sup> `,`<sup>?</sup>
 >
@@ -21,9 +18,9 @@
 > &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> [_Pattern_]&nbsp;( `:` [_Type_] )<sup>?</sup>
 
 *闭包表达式*，也被称为 lambda表达式或 lambda，它定义了一个[闭包类型][closure type]，并把此表达式求值计算为该类型的值。
-闭包表达式的句法规则是由一个可选的 `move`关键字，再后跟一对管道定界符(`|`)封闭的逗号分割的被称为*闭包参数(closure parameters)*的[模式][patterns]列表（每个闭包参数都可选地通过 `:` 后跟其类型），再可选地通过 `->` 后跟一个*返回类型*，最后是被称为*闭包体操作数(closure body operand)* 的表达式。
+闭包表达式的句法规则为：先是一个可选的 `move`关键字，后跟一对管道定界符(`|`)封闭的逗号分割的被称为*闭包参数(closure parameters)*的[模式][patterns]列表（每个闭包参数都可选地通过 `:` 后跟其类型），再可选地通过 `->` 后跟一个*返回类型*，最后是被称为*闭包体操作数(closure body operand)* 的表达式。
 代表闭包参数的每个模式后面的可选类型是该模式的类型标注(type annotations)。
-如果存在返回类型，则用于闭包主体的表达式必须是一个普通的[块][block](表达式)。
+如果存在返回类型，则闭包体表达式必须是一个普通的[块][block](表达式)。
 
 闭包表达式本质是将一组参数映射到参数后面的表达式的函数。
 与 [`let`绑定][`let` binding]一样，闭包参数也是不可反驳型[模式][patterns]的，其类型标注是可选的，如果没有给出，则从上下文推断。

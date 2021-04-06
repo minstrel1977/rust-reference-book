@@ -169,8 +169,8 @@
 <h1><a class="header" href="#诊断属性" id="诊断属性">诊断属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/diagnostics.md">diagnostics.md</a><br />
-commit: 2196589ccf8fefc4edeaa0ab430fe2ce6a57dec3 <br />
-本章译文最后维护日期：2020-11-10</p>
+commit: 12a4832c8eec1ad0df3edfb681571821708e0410 <br />
+本章译文最后维护日期：2021-4-6</p>
 </blockquote>
 <p>以下<a href="../attributes.html">属性</a>用于在编译期间控制或生成诊断消息。</p>
 <h2><a class="header" href="#lint-check-attributes" id="lint-check-attributes">Lint check attributes</a></h2>
@@ -206,6 +206,7 @@ commit: 2196589ccf8fefc4edeaa0ab430fe2ce6a57dec3 <br />
 }
 <span class="boring">}
 </span></code></pre></pre>
+<p>Lint属性可以覆盖上一个属性指定的级别，但该级别不能更改禁止性的 Lint。这里的上一个属性是指语法树中更高级别的属性，或者是同一实体上的前一个属性，按从左到右的源代码顺序列出。</p>
 <p>此示例展示了如何使用 <code>allow</code> 和 <code>warn</code> 来打开和关闭一个特定的 lint检查：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -240,10 +241,45 @@ pub mod m3 {
 }
 <span class="boring">}
 </span></code></pre></pre>
+<blockquote>
+<p>注意：<code>rustc</code>允许在<a href="https://doc.rust-lang.org/rustc/lints/levels.html#via-compiler-flag">命令行</a>上设置 lint级别，也支持在<a href="https://doc.rust-lang.org/rustc/lints/levels.html#capping-lints">setting caps</a>中设置 lint报告中的caps。</p>
+</blockquote>
+<h3><a class="header" href="#lint-groups" id="lint-groups">Lint groups</a></h3>
+<h3><a class="header" href="#lint分组" id="lint分组">lint分组</a></h3>
+<p>lint可以被组织成不同命名的组，以便相关lint的等级可以一起调整。使用命名组相当于给出该组中的 lint。</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 这允许 &quot;unused&quot;组下的所有lint。
+#[allow(unused)]
+// 这个禁止动作将覆盖前面 &quot;unused&quot;组中的 &quot;unused_must_use&quot; lint。
+#[deny(unused_must_use)]
+fn example() {
+    // 这里不会生成告警，因为 &quot;unused_variables&quot; lint 在 &quot;unused&quot;组下
+    let x = 1;
+    // 这里会产生报错信息，因为 &quot;unused_must_use&quot; lint 被标记为&quot;deny&quot;，而这行的返回结果未被使用
+    std::fs::remove_file(&quot;some_file&quot;); // ERROR: unused `Result` that must be used
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>有一个名为 “warnings” 的特殊组，它包含 “warn”级别的所有 lint。“warnings”组会忽略属性的顺序，并对实体执行所有告警lint 检查。</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">unsafe fn an_unsafe_fn() {}
+</span>// 这里的两个属性的前后顺序无所谓
+#[deny(warnings)]
+// unsafe_code lint 默认是 &quot;allow&quot; 的。
+#[warn(unsafe_code)]
+fn example_err() {
+    // 这里会编译报错，因为 `unsafe_code`告警的 lint 被提升为 &quot;deny&quot;级别了。
+    unsafe { an_unsafe_fn() } // ERROR: usage of `unsafe` block
+}
+<span class="boring">}
+</span></code></pre></pre>
 <h3><a class="header" href="#tool-lint-attributes" id="tool-lint-attributes">Tool lint attributes</a></h3>
 <h3><a class="header" href="#工具类lint属性" id="工具类lint属性">工具类lint属性</a></h3>
 <p>可以为 <code>allow</code>、<code>warn</code>、<code>deny</code> 或 <code>forbid</code> 这些调整代码检查级别的 lint属性添加/输入基于特定工具的 lint。注意该工具在当前作用域内可用才会起效。</p>
-<p>目前，<code>clippy</code> 是唯一可用的 lint工具。</p>
 <p>工具类lint 只有在相关工具处于活动状态时才会做相应的代码模式检查。如果一个 lint级别属性，如 <code>allow</code>，引用了一个不存在的工具类lint，编译器将不会去警告不存在该 lint类，只有使用了该工具（，才会报告该 lint类不存在）。</p>
 <p>在其他方面，这些工具类lint 就跟像常规的 lint 一样：</p>
 <pre><pre class="playground"><code class="language-rust">// 将 clippy 的整个 `pedantic` lint组设置为告警级别
@@ -261,6 +297,9 @@ fn foo() {
     // ...
 }
 </code></pre></pre>
+<blockquote>
+<p>注意：<code>rustc</code> 当前识别的工具类lint 有 &quot;<a href="https://github.com/rust-lang/rust-clippy">clippy</a>&quot; 和 &quot;<a href="https://doc.rust-lang.org/rustdoc/lints.html">rustdoc</a>&quot;。</p>
+</blockquote>
 <h2><a class="header" href="#the-deprecated-attribute" id="the-deprecated-attribute">The <code>deprecated</code> attribute</a></h2>
 <h2><a class="header" href="#deprecated属性" id="deprecated属性"><code>deprecated</code>属性</a></h2>
 <p><em><code>deprecated</code>属性</em>将程序项标记为已弃用。<code>rustc</code> 将对被 <code>#[deprecated]</code> 限定的程序项的行为发出警告。<code>rustdoc</code> 将特别展示已弃用的程序项，包括展示 <code>since</code> 版本和 <code>note</code> 提示（如果可用）。</p>
@@ -386,8 +425,6 @@ let _ = five();
 <span class="boring">}
 </span></code></pre></pre>
 </blockquote>
-<!-- 2020-11-12-->
-<!-- checked -->
 
                     </main>
 

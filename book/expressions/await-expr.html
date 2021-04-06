@@ -178,8 +178,8 @@ commit: 23672971a16c69ea894bef24992b74912cfe5d25 <br />
    <a href="../expressions.html"><em>Expression</em></a> <code>.</code> <code>await</code></p>
 </blockquote>
 <p><em>等待(await)表达式</em>挂起当前计算，直到给定的 future 准备好生成值。
-等待(await)表达式的句法格式是一个其类型实现了 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">Future</a> trait 的表达式（此表达式本身被称为 <em>future操作数</em>）后跟一 <code>.</code>标记，再后跟一个 <code>await</code>关键字。</p>
-<p>等待(await)表达式仅在<a href="../expressions/block-expr.html#async-context">异步上下文</a>中才能使用，例如 <a href="../items/functions.html#async-functions">异步函数(<code>async fn</code>)</a> 或 <a href="block-expr.html#async-blocks">异步(<code>async</code>)块</a>。<em>Expression</em></p>
+等待(await)表达式的句法格式为：一个其类型实现了 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">Future</a> trait 的表达式（此表达式本身被称为 <em>future操作数</em>）后跟一 <code>.</code>标记，再后跟一个 <code>await</code>关键字。</p>
+<p>等待(await)表达式仅在<a href="../expressions/block-expr.html#async-context">异步上下文</a>中才能使用，例如 <a href="../items/functions.html#async-functions">异步函数(<code>async fn</code>)</a> 或 <a href="block-expr.html#async-blocks">异步(<code>async</code>)块</a>。</p>
 <p>更具体地说，等待(await)表达式具有以下效果：</p>
 <ol>
 <li>把 future操作数求值计算到一个 <a href="https://doc.rust-lang.org/std/future/trait.Future.html">future</a>类型的 <code>tmp</code> 中；</li>
