@@ -2,8 +2,8 @@
 # 介绍
 
 >[introduction.md](https://github.com/rust-lang/reference/blob/master/src/introduction.md)\
->commit: b16ae389daf1e0b7b61f9103b33591017422717d \
->本章译文最后维护日期：2021-2-10
+>commit: 85653e89c7fb7e3cf49522fb2e7e1f4900c6b165 \
+>本章译文最后维护日期：2021-4-11
 
 本书是 Rust 编程语言的主要参考手册，本书提供了3类资料：
   - 一些章节非正式地介绍了该语言的各种语言结构及其用法。
@@ -123,6 +123,3 @@ Rust编译器（包括 `rustc`）将执行编译优化，但本参考手册不�
 [rustc book]: https://doc.rust-lang.org/rustc/index.html
 [Notation]: notation.md
 [Zulip]: https://rust-lang.zulipchat.com/#narrow/stream/237824-t-lang.2Fdoc
-
-<!-- 2020-11-12-->
-<!-- checked -->
