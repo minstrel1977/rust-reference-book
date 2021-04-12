@@ -1,9 +1,9 @@
-# 操作符/运算符表达式eb5290329316e96c48c032075f7dbfa56990702b
+# 操作符/运算符表达式
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
 >commit: 72e25aa16d69d320af602b4794555ec57cf30197 \
->本章译文最后维护日期：2021-4-5
+>本章译文最后维护日期：2021-4-12
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -267,7 +267,11 @@ a == b;
 assert!(123 == 123);
 assert!(23 != -12);
 assert!(12.5 > 12.2);
-assert!([1, 2, 3] < [1, 3, 4]);13
+assert!([1, 2, 3] < [1, 3, 4]);
+assert!('A' <= 'B');
+assert!("World" >= "Hello");
+```
+## 短路布尔运算符
 ## Lazy boolean operators
 
 > **<sup>句法</sup>**\
@@ -363,9 +367,6 @@ fn average(values: &[f64]) -> f64 {
     * `false` 转换为 `0`, `true` 转换为 `1`
     * `char` 会先强制转换为代码点的值，然后在需要时使用数值转换。
 * `u8` 到 `char` 的转换
-<!-- 2020-11-12-->
-<!-- checked -->
-
     * 转换为具有相应代码点的 `char` 值。
 
 \* 如果硬件本身不支持这种舍入模式和溢出行为，那么这些整数到浮点型的转换可能会比预期的要慢。
@@ -398,9 +399,14 @@ fn average(values: &[f64]) -> f64 {
 赋值表达式总是会产生[单元类型值][unit]。
 
 示例：
-<!-- 2020-11-12-->
-<!-- checked -->
 
+```rust
+let mut x = 0;
+let y = 0;
+x = y;
+```
+
+## 复合赋值表达式
 ## Compound assignment expressions
 
 > **<sup>句法</sup>**\
@@ -430,9 +436,6 @@ assert!(x == 6);
 
 与其他位置操作数不同，被赋值的位置操作数必须是一个位置表达式。
 试图使用值表达式将导致编译器报错，而不是将其提升转换为临时位置。
-<!-- 2020-11-12-->
-<!-- checked -->
-
 
 复合赋值表达式的求值取决于操作符的类型。
 
@@ -442,36 +445,16 @@ assert!(x == 6);
 > **注意**：此表达式与其他表达式的求值顺序不同，此表达式的右操作数在左操作数之前被求值。
 
 此外，这个表达式是调用操作符重载复合赋值trait 的函数的语法糖（见本章前面的表格）。
-被赋值操作数必须是可变的。[copies or moves]: ../expressions.md#moved-and-copied-types
-[dropping]: ../destructors.md
-[logical and]: ../types/boolean.md#logical-and
-[logical not]: ../types/boolean.md#logical-not
-[logical or]: ../types/boolean.md#logical-or
-[logical xor]: ../types/boolean.md#logical-xor
-[mutable]: ../expressions.md#mutability
-[place expression]: ../expressions.md#place-expressions-and-value-expressions
-[unit]: ../types/tuple.md
-[value expression]: ../expressions.md#place-expressions-and-value-expressions
-[temporary value]: ../expressions.md#temporaries
-[this test]: https://github.com/rust-lang/rust/blob/master/src/test/ui/expr/compound-assignment/eval-order.rs
-[float-float]: https://github.com/rust-lang/rust/issues/15536
-[Function pointer]: ../types/function-pointer.md
-[Function item]: ../types/function-item.md
+被赋值操作数必须是可变的。
 
-[_BorrowExpression_]: #borrow-operators
-[_DereferenceExpression_]: #the-dereference-operator
-[_ErrorPropagationExpression_]: #the-question-mark-operator
-[_NegationExpression_]: #negation-operators
-[_ArithmeticOrLogicalExpression_]: #arithmetic-and-logical-binary-operators
-[_ComparisonExpression_]: #comparison-operators
-[_LazyBooleanExpression_]: #lazy-boolean-operators
-[_TypeCastExpression_]: #type-cast-expressions
-[_AssignmentExpression_]: #assignment-expressions
-[_CompoundAssignmentExpression_]: #compound-assignment-expressions
+例如，下面 `example`函数中的两个表达式语句是等价的：
 
-[_Expression_]: ../expressions.md
-[_TypeNoBounds_]: ../types.md#type-expressions
+```rust
+# struct Addable;
+# use std::ops::AddAssign;
 
+impl AddAssign<Addable> for Addable {
+    /* */
 # fn add_assign(&mut self, other: Addable) {}
 }
 
@@ -514,7 +497,6 @@ fn example() {
 [float-float]: https://github.com/rust-lang/rust/issues/15536
 [Function pointer]: ../types/function-pointer.md
 [Function item]: ../types/function-item.md
-
 [_BorrowExpression_]: #borrow-operators
 [_DereferenceExpression_]: #the-dereference-operator
 [_ErrorPropagationExpression_]: #the-question-mark-operator
