@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2021-4-11</p>
+<p>本书跟随原文截止日期：2021-4-23</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -373,8 +373,8 @@ commit: a2405b970b7c8222a483b82213adcb17d646c75d <br />
 <h1><a class="header" href="#关键字" id="关键字">关键字</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/keywords.md">keywords.md</a><br />
-commit: eabdf09207bf3563ae96db9d576de0758c413d5d
-本章译文最后维护日期：2020-1-24</p>
+commit: 6eb3e87af2c7743d6c7c783154cc380c4b0ea270
+本章译文最后维护日期：2021-04-23</p>
 </blockquote>
 <p>Rust 将关键字分为三类：</p>
 <ul>
@@ -468,6 +468,9 @@ KW_TRY   : <code>try</code></p>
 <p>这类关键字只有在特定的上下文中才有特殊的意义。例如，可以声明名为 <code>union</code> 的变量或方法。</p>
 <ul>
 <li>
+<p><code>macro_rules</code> 用于创建自定义<a href="macros.html">宏</a>。</p>
+</li>
+<li>
 <p><code>union</code> 用于声明<a href="items/unions.html">联合体(<code>union</code>)</a>，它只有在联合体声明中使用时才是关键字。</p>
 </li>
 <li>
@@ -492,34 +495,35 @@ KW_DYN            : <code>dyn</code></p>
 <h1><a class="header" href="#标识符" id="标识符">标识符</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/identifiers.md">identifiers.md</a><br />
-commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
-本章译文最后维护日期：2020-11-5</p>
+commit: 28d628166940ffa982a1da552e0acfcc88ff8889 <br />
+本章译文最后维护日期：2021-04-23</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>词法分析:<sup></strong><br />
 IDENTIFIER_OR_KEYWORD :<br />
-      [<code>a</code>-<code>z</code> <code>A</code>-<code>Z</code>] [<code>a</code>-<code>z</code> <code>A</code>-<code>Z</code> <code>0</code>-<code>9</code> <code>_</code>]<sup>*</sup><br />
-   | <code>_</code> [<code>a</code>-<code>z</code> <code>A</code>-<code>Z</code> <code>0</code>-<code>9</code> <code>_</code>]<sup>+</sup></p>
+      XID_start XID_continue<sup>*</sup><br />
+   | <code>_</code> XID_continue<sup>+</sup></p>
 <p>RAW_IDENTIFIER : <code>r#</code> IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>crate</code>, <code>self</code>, <code>super</code>, <code>Self</code></em></sub></p>
 <p>NON_KEYWORD_IDENTIFIER : IDENTIFIER_OR_KEYWORD <sub>*排除<a href="keywords.html#strict-keywords">严格关键字</a>和<a href="keywords.html#reserved-keywords">保留关键字</a> *</sub></p>
 <p>IDENTIFIER :<br />
 NON_KEYWORD_IDENTIFIER | RAW_IDENTIFIER</p>
 </blockquote>
-<p>标识符是如下形式的任何非空 ASCII 字符串：</p>
+<p>标识符是如下形式的任何非空 Unicode 字符串：</p>
 <p>要么是:</p>
 <ul>
-<li>首字符是字母。</li>
-<li>其余字符是字母、数字，或 <code>_</code>。</li>
+<li>首字符拥有 <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Start%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_start</code></a> 字符属性。</li>
+<li>其余字符拥有 <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Continue%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_continue</code></a> 字符属性。</li>
 </ul>
 <p>要么是：</p>
 <ul>
 <li>首字符是 <code>_</code>。</li>
 <li>整个字符串由多个字符组成。单个 <code>_</code> 不是有效标识符。</li>
-<li>其余字符是字母、数字，或 <code>_</code>。</li>
+<li>其余字符拥有 <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Continue%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_continue</code></a> 字符属性。</li>
 </ul>
+<blockquote>
+<p><strong>注意</strong>：<a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Start%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_start</code></a> 和 <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Continue%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_continue</code></a> 作为字符属性涵盖了用于构成常见的 C 和 Java语言族标识符的字符范围。</p>
+</blockquote>
 <p>除了有形式前缀 <code>r#</code> 修饰外，原生标识符(raw identifier)与普通标识符类似。（注意形式前缀 <code>r#</code> 不包括在实际标识符中。）与普通标识符不同，原生标识符可以是除上面列出的 <code>RAW_IDENTIFIER</code> 之外的任何严格关键字或保留关键字。</p>
-<!-- 2020-11-12-->
-<!-- checked -->
 <h1><a class="header" href="#comments" id="comments">Comments</a></h1>
 <h1><a class="header" href="#注释" id="注释">注释</a></h1>
 <blockquote>
@@ -3292,8 +3296,8 @@ unsafe fn bump_levels_unsafe2() -&gt; u32 {
 <h1><a class="header" href="#trait" id="trait">Trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/traits.md">traits.md</a><br />
-commit: 11517246f6bd543b8b74b2411d2d92ff102acc7a <br />
-本章译文最后维护日期：2021-4-6</p>
+commit: 47ccc3831cf9ee71b92b918188075b28de18a136 <br />
+本章译文最后维护日期：2021-4-23</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -11682,8 +11686,8 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 <h1><a class="header" href="#链接" id="链接">链接</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/linkage.md">linkage.md</a><br />
-commit: f2ebdf23dc2c2c1b10de39f65aadb21a8f489938<br />
-本章译文最后维护日期：2021-1-5</p>
+commit: 1426474192ecc9c13165c1d4772b26e8445f5734<br />
+本章译文最后维护日期：2021-4-23</p>
 </blockquote>
 <blockquote>
 <p>注意：本节更多的是从编译器的角度来描述的，而不是语言。</p>
@@ -11692,16 +11696,16 @@ commit: f2ebdf23dc2c2c1b10de39f65aadb21a8f489938<br />
 <p>在一个编译会话中，编译器可以通过使用命令行参数或内部 <code>crate_type</code>属性来生成多个构件(artifacts)。如果指定了一个或多个命令行参数，则将忽略（源码内部指定的）所有 <code>crate_type</code>属性，以便只构建由命令行指定的构件。</p>
 <ul>
 <li>
-<p><code>--crate-type=bin</code> 或 <code>#[crate_type = &quot;bin&quot;]</code> - 将生成一个可执行文件。这就要求在 crate 中有一个 <code>main</code>函数，它将在程序开始执行时运行。这将链接所有 Rust 和本地依赖，生成一个可分发的二进制文件。</p>
+<p><code>--crate-type=bin</code> 或 <code>#[crate_type = &quot;bin&quot;]</code> - 将生成一个可执行文件。这就要求在 crate 中有一个 <code>main</code>函数，它将在程序开始执行时运行。这将链接所有 Rust 和本地依赖，生成一个单独的可分发的二进制文件。此类型为默认的 crate 类型。</p>
 </li>
 <li>
 <p><code>--crate-type=lib</code> 或 <code>#[crate_type = &quot;lib&quot;]</code> - 将生成一个 Rust库(library)。但最终会确切输出/生成什么类型的库在未生成之前还不好清晰确定，因为库有多种表现形式。使用 <code>lib</code> 这个通用选项的目的是生成“编译器推荐”的类型的库。像种指定输出库类型的选项在 rustc 里始终可用，但是每次实际输出的库的类型可能会随着实际情况的不同而不同。其它的输出（库的）类型选项都指定了不同风格的库类型，而 <code>lib</code> 可以看作是那些类型中的某个类型的别名（具体实际的输出的类型是编译器决定的）。</p>
 </li>
 <li>
-<p><code>--crate-type=dylib</code> 或 <code>#[crate_type = &quot;dylib&quot;]</code> - 将生成一个动态 Rust库。这与 <code>lib</code> 选项的输出类型不同，因为这个选项会强制生成动态库。生成的动态库可以用作其他库和/或可执行文件的依赖。这种输出类型将创建依赖于具体平台的库（linux 上为 <code>*.so</code>，osx 上为 <code>*.dylib</code>、windows 上为 <code>*.dll</code>）。</p>
+<p><code>--crate-type=dylib</code> 或 <code>#[crate_type = &quot;dylib&quot;]</code> - 将生成一个动态 Rust库。这与 <code>lib</code> 选项的输出类型不同，因为这个选项会强制生成动态库。生成的动态库可以用作其他库和/或可执行文件的依赖。这种输出类型将创建依赖于具体平台的库（Linux 上为 <code>*.so</code>，macOS 上为 <code>*.dylib</code>、Windows 上为 <code>*.dll</code>）。</p>
 </li>
 <li>
-<p><code>--crate-type=staticlib</code> 或 <code>#[crate_type = &quot;staticlib&quot;]</code> - 将生成一个静态系统库。这个选项与其他选项的库输出的不同之处在于——当前编译器永远不会尝试去链接此 <code>staticlib</code> 输出<sup class="footnote-reference"><a href="#译注1">1</a></sup>。此选项的目的是创建一个包含所有本地 crate 的代码以及所有上游依赖的静态库。静态库实际上是 linux、osx 和 windows(MinGW) 平台上的 <code>*.a</code> 归档文件(archive)，或者 windows(MSVC) 平台上的 <code>*.lib</code> 库文件。在这些情况下，例如将 Rust代码链接到现有的非 Rust应用程序中，推荐使用这种类型，因为它不会动态依赖于其他 Rust 代码。</p>
+<p><code>--crate-type=staticlib</code> 或 <code>#[crate_type = &quot;staticlib&quot;]</code> - 将生成一个静态系统库。这个选项与其他选项的库输出的不同之处在于——当前编译器永远不会尝试去链接此 <code>staticlib</code> 输出<sup class="footnote-reference"><a href="#译注1">1</a></sup>。此选项的目的是创建一个包含所有本地 crate 的代码以及所有上游依赖的静态库。此输出类型将在 Linux、macOS 和 Windows(MinGW) 平台上创建 <code>*.a</code> 归档文件(archive)，或者在 Windows(MSVC) 平台上创建 <code>*.lib</code> 库文件。在这些情况下，例如将 Rust代码链接到现有的非 Rust应用程序中，推荐使用这种类型，因为它不会动态依赖于其他 Rust 代码。</p>
 </li>
 <li>
 <p><code>--crate-type=cdylib</code> 或 <code>#[crate_type = &quot;cdylib&quot;]</code> - 将生成一个动态系统库。如果编译输出的动态库要被另一种语言加载使用，请使用这种编译选项。这种选项的输出将在 Linux 上创建 <code>*.so</code> 文件，在 macOS 上创建 <code>*.dylib</code> 文件，在 Windows 上创建 <code>*.dll</code> 文件。</p>

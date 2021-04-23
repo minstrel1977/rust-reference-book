@@ -2,8 +2,8 @@
 # 关键字
 
 >[keywords.md](https://github.com/rust-lang/reference/blob/master/src/keywords.md)\
->commit: eabdf09207bf3563ae96db9d576de0758c413d5d
->本章译文最后维护日期：2020-1-24
+>commit: 6eb3e87af2c7743d6c7c783154cc380c4b0ea270
+>本章译文最后维护日期：2021-04-23
 
 Rust 将关键字分为三类：
 
@@ -98,6 +98,7 @@ Rust 将关键字分为三类：
 
 这类关键字只有在特定的上下文中才有特殊的意义。例如，可以声明名为 `union` 的变量或方法。
 
+* `macro_rules` 用于创建自定义[宏][macros]。
 * `union` 用于声明[联合体(`union`)][union]，它只有在联合体声明中使用时才是关键字。
 * `'static` 用于静态生存期，不能用作通用[泛型生存期参数][generic lifetime parameter]和[循环标签][loop label]
   

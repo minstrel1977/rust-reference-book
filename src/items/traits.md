@@ -1,8 +1,8 @@
 # Trait
 
 >[traits.md](https://github.com/rust-lang/reference/blob/master/src/items/traits.md)\
->commit: 11517246f6bd543b8b74b2411d2d92ff102acc7a \
->本章译文最后维护日期：2021-4-6
+>commit: 47ccc3831cf9ee71b92b918188075b28de18a136 \
+>本章译文最后维护日期：2021-4-23
 
 > **<sup>句法</sup>**\
 > _Trait_ :\

@@ -169,34 +169,35 @@
 <h1><a class="header" href="#标识符" id="标识符">标识符</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/identifiers.md">identifiers.md</a><br />
-commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
-本章译文最后维护日期：2020-11-5</p>
+commit: 28d628166940ffa982a1da552e0acfcc88ff8889 <br />
+本章译文最后维护日期：2021-04-23</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>词法分析:<sup></strong><br />
 IDENTIFIER_OR_KEYWORD :<br />
-      [<code>a</code>-<code>z</code> <code>A</code>-<code>Z</code>] [<code>a</code>-<code>z</code> <code>A</code>-<code>Z</code> <code>0</code>-<code>9</code> <code>_</code>]<sup>*</sup><br />
-   | <code>_</code> [<code>a</code>-<code>z</code> <code>A</code>-<code>Z</code> <code>0</code>-<code>9</code> <code>_</code>]<sup>+</sup></p>
+      XID_start XID_continue<sup>*</sup><br />
+   | <code>_</code> XID_continue<sup>+</sup></p>
 <p>RAW_IDENTIFIER : <code>r#</code> IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>crate</code>, <code>self</code>, <code>super</code>, <code>Self</code></em></sub></p>
 <p>NON_KEYWORD_IDENTIFIER : IDENTIFIER_OR_KEYWORD <sub>*排除<a href="keywords.html#strict-keywords">严格关键字</a>和<a href="keywords.html#reserved-keywords">保留关键字</a> *</sub></p>
 <p>IDENTIFIER :<br />
 NON_KEYWORD_IDENTIFIER | RAW_IDENTIFIER</p>
 </blockquote>
-<p>标识符是如下形式的任何非空 ASCII 字符串：</p>
+<p>标识符是如下形式的任何非空 Unicode 字符串：</p>
 <p>要么是:</p>
 <ul>
-<li>首字符是字母。</li>
-<li>其余字符是字母、数字，或 <code>_</code>。</li>
+<li>首字符拥有 <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Start%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_start</code></a> 字符属性。</li>
+<li>其余字符拥有 <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Continue%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_continue</code></a> 字符属性。</li>
 </ul>
 <p>要么是：</p>
 <ul>
 <li>首字符是 <code>_</code>。</li>
 <li>整个字符串由多个字符组成。单个 <code>_</code> 不是有效标识符。</li>
-<li>其余字符是字母、数字，或 <code>_</code>。</li>
+<li>其余字符拥有 <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Continue%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_continue</code></a> 字符属性。</li>
 </ul>
+<blockquote>
+<p><strong>注意</strong>：<a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Start%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_start</code></a> 和 <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Continue%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_continue</code></a> 作为字符属性涵盖了用于构成常见的 C 和 Java语言族标识符的字符范围。</p>
+</blockquote>
 <p>除了有形式前缀 <code>r#</code> 修饰外，原生标识符(raw identifier)与普通标识符类似。（注意形式前缀 <code>r#</code> 不包括在实际标识符中。）与普通标识符不同，原生标识符可以是除上面列出的 <code>RAW_IDENTIFIER</code> 之外的任何严格关键字或保留关键字。</p>
-<!-- 2020-11-12-->
-<!-- checked -->
 
                     </main>
 
