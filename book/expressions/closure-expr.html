@@ -169,8 +169,8 @@
 <h1><a class="header" href="#闭包表达式" id="闭包表达式">闭包表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/closure-expr.md">closure-expr.md</a><br />
-commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
-本章译文最后维护日期：2021-4-5</p>
+commit: d23f9da8469617e6c81121d9fd123443df70595d <br />
+本章译文最后维护日期：2021-5-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -181,7 +181,7 @@ commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
 <p><em>ClosureParameters</em> :<br />
    <em>ClosureParam</em> (<code>,</code> <em>ClosureParam</em>)<sup>*</sup> <code>,</code><sup>?</sup></p>
 <p><em>ClosureParam</em> :<br />
-   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <a href="../patterns.html"><em>Pattern</em></a> ( <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
+   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <a href="../patterns.html"><em>PatternNoTopAlt</em></a> ( <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
 </blockquote>
 <p><em>闭包表达式</em>，也被称为 lambda表达式或 lambda，它定义了一个<a href="../types/closure.html">闭包类型</a>，并把此表达式求值计算为该类型的值。
 闭包表达式的句法规则为：先是一个可选的 <code>move</code>关键字，后跟一对管道定界符(<code>|</code>)封闭的逗号分割的被称为<em>闭包参数(closure parameters)<em>的<a href="../patterns.html">模式</a>列表（每个闭包参数都可选地通过 <code>:</code> 后跟其类型），再可选地通过 <code>-&gt;</code> 后跟一个</em>返回类型</em>，最后是被称为<em>闭包体操作数(closure body operand)</em> 的表达式。

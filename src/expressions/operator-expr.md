@@ -2,8 +2,8 @@
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit: 72e25aa16d69d320af602b4794555ec57cf30197 \
->本章译文最后维护日期：2021-4-12
+>commit: 0a626ce599bcae4fa1a48535c0883beaca38f4db \
+>本章译文最后维护日期：2021-5-6
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -396,7 +396,7 @@ fn average(values: &[f64]) -> f64 {
 
 对赋值表达的位置表达式求值时会先[销毁(drop)][drops]此位置（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将赋值值[复制(copy)或移动(move)][either copies or moves]到此位置中。
 
-赋值表达式总是会产生[单元类型值][unit]。
+赋值表达式总是会生成[单元类型值][unit]。
 
 示例：
 
@@ -466,6 +466,8 @@ fn example() {
   AddAssign::add_assign(&mut a1, a2);
 }
 ```
+
+与赋值表达式一样，复合赋值表达式也总是会生成[单元类型值][unit]。
 
 <div class="warning">
 

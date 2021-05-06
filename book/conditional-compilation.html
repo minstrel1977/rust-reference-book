@@ -169,8 +169,8 @@
 <h1><a class="header" href="#条件编译" id="条件编译">条件编译</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md">conditional-compilation.md</a><br />
-commit: 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7 <br />
-本章译文最后维护日期：2020-11-8</p>
+commit: 949726950a4ac5c8674e902dc33c09b48fc7434c <br />
+本章译文最后维护日期：2021-5-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -255,11 +255,13 @@ commit: 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7 <br />
 <li><code>&quot;netbsd&quot;</code></li>
 </ul>
 <h3><a class="header" href="#target_family" id="target_family"><code>target_family</code></a></h3>
-<p>键值对选项，最多设置一次，用于设置编译目标的操作系统类别。</p>
+<p>键值对选项提供了对具体目标平台更通用化的描述，比如编译目标操作系统或架构。可以设置任意数量的键值对。
+最多设置一次，用于设置编译目标的操作系统类别。</p>
 <p>示例值：</p>
 <ul>
 <li><code>&quot;unix&quot;</code></li>
 <li><code>&quot;windows&quot;</code></li>
+<li><code>&quot;wasm&quot;</code></li>
 </ul>
 <h3><a class="header" href="#unix-and-windows" id="unix-and-windows"><code>unix</code> and <code>windows</code></a></h3>
 <h3><a class="header" href="#unix-和-windows" id="unix-和-windows"><code>unix</code> 和 <code>windows</code></a></h3>
@@ -401,8 +403,6 @@ Rust 下查看当前平台的三元组属性可以用 <code>rustc --version --ve
 我另一台 windows 机器为：<code>host: x86_64-pc-windows-msvc</code>，那这台的目标三元组的信息为：CPU 架构为 x86_64 ，供应商为 pc ，操作系统为 windows ，ABI 为 msvc 。<br />
 Rust 官方对一些平台提供了默认的目标三元组，我们可以通过 <code>rustc --print target-list</code> 命令来查看完整列表。</p>
 </div>
-<!-- 2020-11-12-->
-<!-- checked -->
 
                     </main>
 

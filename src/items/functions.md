@@ -2,8 +2,8 @@
 # 函数
 
 >[functions.md](https://github.com/rust-lang/reference/blob/master/src/items/functions.md)\
->commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 \
->本章译文最后维护日期：2021-1-17
+>commit: 245b8336818913beafa7a35a9ad59c85f28338fb \
+>本章译文最后维护日期：2021-5-6
 
 > **<sup>句法</sup>**\
 > _Function_ :\
@@ -37,7 +37,7 @@
 > )
 >
 > _FunctionParamPattern_ :\
-> &nbsp;&nbsp; [_Pattern_] `:` ( [_Type_] | `...` )
+> &nbsp;&nbsp; [_PatternNoTopAlt_] `:` ( [_Type_] | `...` )
 >
 > _FunctionReturnType_ :\
 > &nbsp;&nbsp; `->` [_Type_]
@@ -310,7 +310,7 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [_BlockExpression_]: ../expressions/block-expr.md
 [_GenericParams_]: generics.md
 [_Lifetime_]: ../trait-bounds.md
-[_Pattern_]: ../patterns.md
+[_PatternNoTopAlt_]: ../patterns.md
 [_Type_]: ../types.md#type-expressions
 [_WhereClause_]: generics.md#where-clauses
 [_OuterAttribute_]: ../attributes.md

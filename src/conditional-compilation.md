@@ -2,8 +2,8 @@
 # 条件编译
 
 >[conditional-compilation.md](https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md)\
->commit: 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7 \
->本章译文最后维护日期：2020-11-8
+>commit: 949726950a4ac5c8674e902dc33c09b48fc7434c \
+>本章译文最后维护日期：2021-5-6
 
 > **<sup>句法</sup>**\
 > _ConfigurationPredicate_ :\
@@ -105,12 +105,14 @@
 
 ### `target_family`
 
-键值对选项，最多设置一次，用于设置编译目标的操作系统类别。
+键值对选项提供了对具体目标平台更通用化的描述，比如编译目标操作系统或架构。可以设置任意数量的键值对。
+最多设置一次，用于设置编译目标的操作系统类别。
 
 示例值：
 
 * `"unix"`
 * `"windows"`
+* `"wasm"`
 
 ### `unix` and `windows`
 ### `unix` 和 `windows`
@@ -298,6 +300,3 @@ Rust 官方对一些平台提供了默认的目标三元组，我们可以通过
 [cargo-feature]: https://doc.rust-lang.org/cargo/reference/features.html
 [crate type]: linkage.md
 [static C runtime]: linkage.md#static-and-dynamic-c-runtimes
-
-<!-- 2020-11-12-->
-<!-- checked -->

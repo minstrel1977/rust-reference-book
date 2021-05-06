@@ -169,8 +169,8 @@
 <h1><a class="header" href="#循环" id="循环">循环</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/loop-expr.md">loop-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-2-21</p>
+commit: d23f9da8469617e6c81121d9fd123443df70595d <br />
+本章译文最后维护日期：2021-5-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -227,7 +227,7 @@ while i &lt; 10 {
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <a href="#predicate-pattern-loops"><em>PredicatePatternLoopExpression</em></a> :<br />
-   <code>while</code> <code>let</code> <a href="match-expr.html"><em>MatchArmPatterns</em></a> <code>=</code> <a href="../expressions.html"><em>Expression</em></a><sub><em>排除结构体表达式和惰性布尔运算符表达式</em></sub>
+   <code>while</code> <code>let</code> <a href="../patterns.html"><em>Pattern</em></a> <code>=</code> <a href="../expressions.html"><em>Expression</em></a><sub><em>排除结构体表达式和惰性布尔运算符表达式</em></sub>
 <a href="block-expr.html"><em>BlockExpression</em></a></p>
 </blockquote>
 <p><code>while let</code>循环在语义上类似于 <code>while</code>循环，但它用 <code>let</code>关键字后紧跟着一个模式、一个 <code>=</code>、一个<a href="../glossary.html#scrutinee">检验对象(scrutinee)</a>表达式和一个块表达式，来替代原来的条件表达式。

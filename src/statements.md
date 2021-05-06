@@ -2,8 +2,8 @@
 # 语句
 
 >[statements.md](https://github.com/rust-lang/reference/blob/master/src/statements.md)\
->commit: 6b90080371ff44d0074a465945dfdb0de4b50774 \
->本章译文最后维护日期：2020-11-11
+>commit: 245b8336818913beafa7a35a9ad59c85f28338fb \
+>本章译文最后维护日期：2021-5-6
 
 > **<sup>句法</sup>**\
 > _Statement_ :\
@@ -47,7 +47,7 @@ fn outer() {
 
 > **<sup>句法</sup>**\
 > _LetStatement_ :\
-> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> `let` [_Pattern_]
+> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> `let` [_PatternNoTopAlt_]
 >     ( `:` [_Type_] )<sup>?</sup> (`=` [_Expression_] )<sup>?</sup> `;`
 
 *`let`语句*通过一个不可反驳型[模式][pattern]引入了一组新的[变量][variables]，变量由该模式给定。模式后面有一个可选的类型标注(annotation)，再后面是一个可选的初始化表达式。当没有给出类型标注时，编译器将自行推断类型，如果没有足够的信息来执行有限次的类型推断，则将触发编译器报错。由变量声明引入的任何变量从声明开始直到封闭块作用域结束都是可见的。
@@ -117,8 +117,5 @@ if true {
 [_LetStatement_]: #let-statements
 [_MacroInvocationSemi_]: macros.md#macro-invocation
 [_OuterAttribute_]: attributes.md
-[_Pattern_]: patterns.md
+[_PatternNoTopAlt_]: patterns.md
 [_Type_]: types.md
-
-<!-- 2020-11-12-->
-<!-- checked -->

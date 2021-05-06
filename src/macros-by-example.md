@@ -2,8 +2,8 @@
 # 声明宏
 
 >[macros-by-example.md](https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md)\
->commit: 161b6338db6c1ef7cbf64be0638a674609d3bbb4 \
->本章译文最后维护日期：2021-4-6
+>commit: d23f9da8469617e6c81121d9fd123443df70595d \
+>本章译文最后维护日期：2021-5-6
 
 > **<sup>句法</sup>**\
 > _MacroRulesDefinition_ :\
@@ -101,7 +101,7 @@ foo!(3);
   * `item`: [_程序项_][_Item_]
   * `block`: [_块表达式_][_BlockExpression_]
   * `stmt`: [_语句_][_Statement_]，注意此选择器不匹配句尾的分号（如果匹配器中提供了分号，会被当做分隔符），但碰到分号是自身的一部分的程序项语句的情况又会匹配。
-  * `pat`: [_模式_][_Pattern_]
+  * `pat`: [_模式_][_PatternNoTopAlt_]
   * `expr`: [_表达式_][_Expression_]
   * `ty`: [_类型_][_Type_]
   * `ident`: [标识符或关键字][IDENTIFIER_OR_KEYWORD]
@@ -381,7 +381,7 @@ macro_rules! helper {
 [_Item_]: items.md
 [_LiteralExpression_]: expressions/literal-expr.md
 [_MetaListIdents_]: attributes.md#meta-item-attribute-syntax
-[_Pattern_]: patterns.md
+[_PatternNoTopAlt_]: patterns.md
 [_Statement_]: statements.md
 [_TokenTree_]: macros.md#macro-invocation
 [_Token_]: tokens.md

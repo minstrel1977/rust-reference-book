@@ -2,11 +2,14 @@
 # 模式
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
->commit: c996a06b47094715507090eddde7a5bc5c76995c \
->本章译文最后维护日期：2020-11-27
+>commit: 100fa060ce1d2db7e4d1533efd289f9c18d08d53 \
+>本章译文最后维护日期：2021-5-6
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `|`<sup>?</sup> _PatternNoTopAlt_  ( `|` _PatternNoTopAlt_ )<sup>\*</sup>
+>
+> _PatternNoTopAlt_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _PatternWithoutRange_\
 > &nbsp;&nbsp; | [_RangePattern_]
 >
@@ -695,6 +698,41 @@ match v[..] {
 
 当路径模式指向结构体或枚举变体(枚举只有一个变体)或类型为不可反驳型的常量时，该路径模式是不可反驳型的。当路径模式指向的是可反驳型常量或带有多个变体的枚举时，该路径模式是可反驳型的。
 
+
+## Or-patterns
+## or模式
+
+_or模式_是能匹配两个或多个并列子模式（例如：`A | B | C`）中的一个的模式。此模式可以任意嵌套。除了 `let`绑定和函数参数（包括闭包参数）中的模式（此时句法上使用 _PatternNoTopAlt_产生式），or模式在句法上允许在任何其他模式出现的地方出现（这些模式句法上使用 _Pattern_产生式）。
+
+### Static semantics
+### 静态语义
+
+1. 假定在某个代码深度上给定任意模式 `p` 和 `q`，现假定它们组成模式 `p | q`，则以下情况会导致这种组成的非法：
+
+   + 从 `p` 推断出的类型和从 `q` 推断出的类型不一致，或
+   + `p` 和 `q` 引入的绑定标识符不一样，或
+   + `p` 和 `q` 中引入的同名绑定标识符的类型和绑定模式中的类型不一致。
+
+   前面提到的所有实例中的类型都必须是精确的，隐式的[类型强转][type coercions]在这里不适用。
+
+2. 当对表达式 `match e_s { a_1 => e_1, ... a_n => e_n }` 做类型检查时，假定在 `e_s` 内部深度为 `d` 的地方存一个表达式片段，那对于此片段，每一个匹配臂 `a_i` 都包含了一个 `p_i | q_i` 来与此段内容进行匹配，但如果表达式片段的类型与 `p_i | q_i` 的类型不一致，则该模式 `p_i | q_i` 被认为是格式错误的。
+
+3. 为了遵从匹配模式的穷尽性检查，模式 `p | q` 被认为同时覆盖了 `p` 和 `q`。对于某些构造器 `c(x, ..)` 来说，此时应用分配律能使 `c(p | q, ..rest)` 与 `c(p, ..rest) | c(q, ..rest)` 覆盖相同的一组匹配值。这个规律可以递归地应用，直到不再有形式为 `p | q`  的嵌套模式。
+   
+  注意这里的*“构造器”*这个用词，我们并没有特定提到它是元组结构模式，因为它本意是指任何能够生成类型的模式。这包括枚举变量、元组结构、具有命名字段的结构、数组、元组和切片。
+
+
+### Dynamic semantics
+### 动态语义
+
+1. 检查对象表达式(scrutinee expression) `e_s` 与深度为 `d` 的模式 `c(p | q, ..rest)`（这里`c`是某种构造器，`p` 和 `q` 是任意的模式，`rest` 是 `c`构造器的任意的可选因子）进行匹配的动态语义与此表达式与 `c(p, ..rest) | c(q, ..rest)` 进行匹配的语法定义相同。
+
+### Precedence with other undelimited patterns
+### 无分解符模式的优先级
+
+如本章其他部分所示，有几种类型的模式在语法上没有定义分界符，它们包括标识符模式、引用模式和 or模式。它们组合在一起时，or模式的优先级总是最低的。这允许我们为将来可能的类型特性保留语法空间，同时也可以减少歧义。例如，`x @ A(..) | B(..)` 将导致一个错误，即 `x` 不是在所有模式中都存在绑定关系； `&A(x) | B(x)`将导致不同子模式中的 `x` 之的类型不匹配。
+
+
 [^译注1]: 请仔细参研[匹配表达式](expressions/match-expr.md)中的 MatchExpression产生式，搞清楚匹配臂(MatchArm)的位置。
 
 [^译注2]: 文字叙述有些晦涩，译者举个例子：假如 `if let &Some(y) = &&&Some(3) {`，此时会首先剥掉等号两边的第一层 `&`号，然后是 `Some(y)` 和 `&&Some(3)`匹配，此时发现是非引用模式和引用匹配上了，就再对 `&&Some(3)` 做重复解引用，解出 `Some(3)`，然后从外部转向内部，见到最后的变量 `y` 和检验对象 `3`，就更新 `y` 的默认绑定方式为 `ref`，所以 `y` 就匹配为 `&3`；如果我们这个例子的变量 `y` 改为 `ref y`，不影响 `y` 的绑定效果；极端的情况 `if let &Some(y) = &&&Some(x) {`，如果 `x` 是可变的，那么此时 `y` 的绑定方式就是 `ref mut`，再进一步极端 `if let &Some(ref y) = &&&Some(x) {`，此时 `y` 的绑定方式仍是 `ref`。
@@ -725,6 +763,4 @@ match v[..] {
 [structs]: items/structs.md
 [tuples]: types/tuple.md
 [scrutinee]: glossary.md#scrutinee
-
-<!-- 2020-11-12-->
-<!-- checked -->
+[type coercions]: type-coercions.md

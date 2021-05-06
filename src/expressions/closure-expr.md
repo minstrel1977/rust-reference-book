@@ -2,8 +2,8 @@
 # 闭包表达式
 
 >[closure-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/closure-expr.md)\
->commit: 31dc83fe187a87af2b162801d50f4bed171fecdb \
->本章译文最后维护日期：2021-4-5
+>commit: d23f9da8469617e6c81121d9fd123443df70595d \
+>本章译文最后维护日期：2021-5-6
 
 > **<sup>句法</sup>**\
 > _ClosureExpression_ :\
@@ -15,7 +15,7 @@
 > &nbsp;&nbsp; _ClosureParam_ (`,` _ClosureParam_)<sup>\*</sup> `,`<sup>?</sup>
 >
 > _ClosureParam_ :\
-> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> [_Pattern_]&nbsp;( `:` [_Type_] )<sup>?</sup>
+> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> [_PatternNoTopAlt_]&nbsp;( `:` [_Type_] )<sup>?</sup>
 
 *闭包表达式*，也被称为 lambda表达式或 lambda，它定义了一个[闭包类型][closure type]，并把此表达式求值计算为该类型的值。
 闭包表达式的句法规则为：先是一个可选的 `move`关键字，后跟一对管道定界符(`|`)封闭的逗号分割的被称为*闭包参数(closure parameters)*的[模式][patterns]列表（每个闭包参数都可选地通过 `:` 后跟其类型），再可选地通过 `->` 后跟一个*返回类型*，最后是被称为*闭包体操作数(closure body operand)* 的表达式。
@@ -73,7 +73,7 @@ ten_times(move |j| println!("{}, {}", word, j));
 [_Expression_]: ../expressions.md
 [_BlockExpression_]: block-expr.md
 [_TypeNoBounds_]: ../types.md#type-expressions
-[_Pattern_]: ../patterns.md
+[_PatternNoTopAlt_]: ../patterns.md
 [_Type_]: ../types.md#type-expressions
 [`let` binding]: ../statements.md#let-statements
 [`Send`]: ../special-types-and-traits.md#send

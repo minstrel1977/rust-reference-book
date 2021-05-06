@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2021-4-23</p>
+<p>本书跟随原文截止日期：2021-5-6</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -1226,8 +1226,8 @@ example!();
 <h1><a class="header" href="#声明宏" id="声明宏">声明宏</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md">macros-by-example.md</a><br />
-commit: 161b6338db6c1ef7cbf64be0638a674609d3bbb4 <br />
-本章译文最后维护日期：2021-4-6</p>
+commit: d23f9da8469617e6c81121d9fd123443df70595d <br />
+本章译文最后维护日期：2021-5-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -1848,8 +1848,8 @@ fn main() {
 <h1><a class="header" href="#条件编译" id="条件编译">条件编译</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md">conditional-compilation.md</a><br />
-commit: 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7 <br />
-本章译文最后维护日期：2020-11-8</p>
+commit: 949726950a4ac5c8674e902dc33c09b48fc7434c <br />
+本章译文最后维护日期：2021-5-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -1934,11 +1934,13 @@ commit: 5c857384ca17d0c81d48cc4bd0ae0d03c54580b7 <br />
 <li><code>&quot;netbsd&quot;</code></li>
 </ul>
 <h3><a class="header" href="#target_family" id="target_family"><code>target_family</code></a></h3>
-<p>键值对选项，最多设置一次，用于设置编译目标的操作系统类别。</p>
+<p>键值对选项提供了对具体目标平台更通用化的描述，比如编译目标操作系统或架构。可以设置任意数量的键值对。
+最多设置一次，用于设置编译目标的操作系统类别。</p>
 <p>示例值：</p>
 <ul>
 <li><code>&quot;unix&quot;</code></li>
 <li><code>&quot;windows&quot;</code></li>
+<li><code>&quot;wasm&quot;</code></li>
 </ul>
 <h3><a class="header" href="#unix-and-windows" id="unix-and-windows"><code>unix</code> and <code>windows</code></a></h3>
 <h3><a class="header" href="#unix-和-windows" id="unix-和-windows"><code>unix</code> 和 <code>windows</code></a></h3>
@@ -2080,8 +2082,6 @@ Rust 下查看当前平台的三元组属性可以用 <code>rustc --version --ve
 我另一台 windows 机器为：<code>host: x86_64-pc-windows-msvc</code>，那这台的目标三元组的信息为：CPU 架构为 x86_64 ，供应商为 pc ，操作系统为 windows ，ABI 为 msvc 。<br />
 Rust 官方对一些平台提供了默认的目标三元组，我们可以通过 <code>rustc --print target-list</code> 命令来查看完整列表。</p>
 </div>
-<!-- 2020-11-12-->
-<!-- checked -->
 <h1><a class="header" href="#items" id="items">Items</a></h1>
 <h1><a class="header" href="#程序项" id="程序项">程序项</a></h1>
 <blockquote>
@@ -2455,8 +2455,8 @@ m!(use std as _;);
 <h1><a class="header" href="#函数" id="函数">函数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/functions.md">functions.md</a><br />
-commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
-本章译文最后维护日期：2021-1-17</p>
+commit: 245b8336818913beafa7a35a9ad59c85f28338fb <br />
+本章译文最后维护日期：2021-5-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -2483,7 +2483,7 @@ commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
 <em>FunctionParamPattern</em> | <code>...</code> | <a href="items/../types.html#type-expressions"><em>Type</em></a> <sup class="footnote-reference"><a href="#fn-param-2015">2</a></sup>
 )</p>
 <p><em>FunctionParamPattern</em> :<br />
-   <a href="items/../patterns.html"><em>Pattern</em></a> <code>:</code> ( <a href="items/../types.html#type-expressions"><em>Type</em></a> | <code>...</code> )</p>
+   <a href="items/../patterns.html"><em>PatternNoTopAlt</em></a> <code>:</code> ( <a href="items/../types.html#type-expressions"><em>Type</em></a> | <code>...</code> )</p>
 <p><em>FunctionReturnType</em> :<br />
    <code>-&gt;</code> <a href="items/../types.html#type-expressions"><em>Type</em></a></p>
 <div class="footnote-definition" id="async-edition"><sup class="footnote-definition-label">1</sup>
@@ -3296,8 +3296,8 @@ unsafe fn bump_levels_unsafe2() -&gt; u32 {
 <h1><a class="header" href="#trait" id="trait">Trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/traits.md">traits.md</a><br />
-commit: 47ccc3831cf9ee71b92b918188075b28de18a136 <br />
-本章译文最后维护日期：2021-4-23</p>
+commit: 20340ce30db8ec17b0a09dc6e07c0fa2f5c3c0ab <br />
+本章译文最后维护日期：2021-5-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -5473,8 +5473,8 @@ commit: 4a2bdf896cd2df370a91d14cb8ba04e326cd21db <br />
 <h1><a class="header" href="#语句" id="语句">语句</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/statements.md">statements.md</a><br />
-commit: 6b90080371ff44d0074a465945dfdb0de4b50774 <br />
-本章译文最后维护日期：2020-11-11</p>
+commit: 245b8336818913beafa7a35a9ad59c85f28338fb <br />
+本章译文最后维护日期：2021-5-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -5513,7 +5513,7 @@ commit: 6b90080371ff44d0074a465945dfdb0de4b50774 <br />
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>LetStatement</em> :<br />
-   <a href="attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <code>let</code> <a href="patterns.html"><em>Pattern</em></a>
+   <a href="attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <code>let</code> <a href="patterns.html"><em>PatternNoTopAlt</em></a>
 ( <code>:</code> <a href="types.html"><em>Type</em></a> )<sup>?</sup> (<code>=</code> <a href="expressions.html"><em>Expression</em></a> )<sup>?</sup> <code>;</code></p>
 </blockquote>
 <p><em><code>let</code>语句</em>通过一个不可反驳型<a href="patterns.html">模式</a>引入了一组新的<a href="variables.html">变量</a>，变量由该模式给定。模式后面有一个可选的类型标注(annotation)，再后面是一个可选的初始化表达式。当没有给出类型标注时，编译器将自行推断类型，如果没有足够的信息来执行有限次的类型推断，则将触发编译器报错。由变量声明引入的任何变量从声明开始直到封闭块作用域结束都是可见的。</p>
@@ -5564,8 +5564,6 @@ if true {
 <div class="footnote-definition" id="译者注"><sup class="footnote-definition-label">1</sup>
 <p>本书原文还有 <code>block of code</code> 的写法，这种有些类似于我们口语中说的那种任意的代码段的“代码块”。原文中 <code>block of code</code> 的典型情况是非安全(<code>unsafe</code>)块。</p>
 </div>
-<!-- 2020-11-12-->
-<!-- checked -->
 <h1><a class="header" href="#expressions" id="expressions">Expressions</a></h1>
 <h1><a class="header" href="#表达式" id="表达式">表达式</a></h1>
 <blockquote>
@@ -6008,8 +6006,8 @@ fn is_unix_platform() -&gt; bool {
 <h1><a class="header" href="#operator-expressions" id="operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: 72e25aa16d69d320af602b4794555ec57cf30197 <br />
-本章译文最后维护日期：2021-4-12</p>
+commit: 0a626ce599bcae4fa1a48535c0883beaca38f4db <br />
+本章译文最后维护日期：2021-5-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6409,7 +6407,7 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <p><strong>注意</strong>：此表达式与其他表达式的求值顺序不同，此表达式的右操作数在左操作数之前被求值。</p>
 </blockquote>
 <p>对赋值表达的位置表达式求值时会先<a href="expressions/../destructors.html">销毁(drop)</a>此位置（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将赋值值<a href="expressions/../expressions.html#moved-and-copied-types">复制(copy)或移动(move)</a>到此位置中。</p>
-<p>赋值表达式总是会产生<a href="expressions/../types/tuple.html">单元类型值</a>。</p>
+<p>赋值表达式总是会生成<a href="expressions/../types/tuple.html">单元类型值</a>。</p>
 <p>示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -6477,6 +6475,7 @@ fn example() {
 }
 <span class="boring">}
 </span></code></pre></pre>
+<p>与赋值表达式一样，复合赋值表达式也总是会生成<a href="expressions/../types/tuple.html">单元类型值</a>。</p>
 <div class="warning">
 <p>警告：复合赋值表达式的操作数的求值顺序取决于操作数的类型：对于原生类型，右边操作数将首先被求值，而对于非原生类型，左边操作数将首先被求值。
 建议尽量不要编写依赖于复合赋值表达式中操作数的求值顺序的代码。请参阅<a href="https://github.com/rust-lang/rust/blob/master/src/test/ui/expr/compound-assignment/eval-order.rs">这里的测试</a>以获得使用此依赖项的示例。</p>
@@ -7056,8 +7055,8 @@ let d: String = x.f3;           // 从 x.f3 中移出
 <h1><a class="header" href="#闭包表达式" id="闭包表达式">闭包表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/closure-expr.md">closure-expr.md</a><br />
-commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
-本章译文最后维护日期：2021-4-5</p>
+commit: d23f9da8469617e6c81121d9fd123443df70595d <br />
+本章译文最后维护日期：2021-5-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -7068,7 +7067,7 @@ commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
 <p><em>ClosureParameters</em> :<br />
    <em>ClosureParam</em> (<code>,</code> <em>ClosureParam</em>)<sup>*</sup> <code>,</code><sup>?</sup></p>
 <p><em>ClosureParam</em> :<br />
-   <a href="expressions/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <a href="expressions/../patterns.html"><em>Pattern</em></a> ( <code>:</code> <a href="expressions/../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
+   <a href="expressions/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <a href="expressions/../patterns.html"><em>PatternNoTopAlt</em></a> ( <code>:</code> <a href="expressions/../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
 </blockquote>
 <p><em>闭包表达式</em>，也被称为 lambda表达式或 lambda，它定义了一个<a href="expressions/../types/closure.html">闭包类型</a>，并把此表达式求值计算为该类型的值。
 闭包表达式的句法规则为：先是一个可选的 <code>move</code>关键字，后跟一对管道定界符(<code>|</code>)封闭的逗号分割的被称为<em>闭包参数(closure parameters)<em>的<a href="expressions/../patterns.html">模式</a>列表（每个闭包参数都可选地通过 <code>:</code> 后跟其类型），再可选地通过 <code>-&gt;</code> 后跟一个</em>返回类型</em>，最后是被称为<em>闭包体操作数(closure body operand)</em> 的表达式。
@@ -7118,8 +7117,8 @@ ten_times(move |j| println!(&quot;{}, {}&quot;, word, j));
 <h1><a class="header" href="#循环" id="循环">循环</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/loop-expr.md">loop-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-2-21</p>
+commit: d23f9da8469617e6c81121d9fd123443df70595d <br />
+本章译文最后维护日期：2021-5-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -7176,7 +7175,7 @@ while i &lt; 10 {
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <a href="expressions/loop-expr.html#predicate-pattern-loops"><em>PredicatePatternLoopExpression</em></a> :<br />
-   <code>while</code> <code>let</code> <a href="expressions/match-expr.html"><em>MatchArmPatterns</em></a> <code>=</code> <a href="expressions/../expressions.html"><em>Expression</em></a><sub><em>排除结构体表达式和惰性布尔运算符表达式</em></sub>
+   <code>while</code> <code>let</code> <a href="expressions/../patterns.html"><em>Pattern</em></a> <code>=</code> <a href="expressions/../expressions.html"><em>Expression</em></a><sub><em>排除结构体表达式和惰性布尔运算符表达式</em></sub>
 <a href="expressions/block-expr.html"><em>BlockExpression</em></a></p>
 </blockquote>
 <p><code>while let</code>循环在语义上类似于 <code>while</code>循环，但它用 <code>let</code>关键字后紧跟着一个模式、一个 <code>=</code>、一个<a href="expressions/../glossary.html#scrutinee">检验对象(scrutinee)</a>表达式和一个块表达式，来替代原来的条件表达式。
@@ -7445,8 +7444,8 @@ assert_eq!(x, y);
 <h1><a class="header" href="#if和-if-let表达式" id="if和-if-let表达式"><code>if</code>和 <code>if let</code>表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/if-expr.md">if-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-2-21</p>
+commit: d23f9da8469617e6c81121d9fd123443df70595d <br />
+本章译文最后维护日期：2021-5-6</p>
 </blockquote>
 <h2><a class="header" href="#if-expressions" id="if-expressions"><code>if</code> expressions</a></h2>
 <h2><a class="header" href="#if表达式" id="if表达式"><code>if</code>表达式</a></h2>
@@ -7490,7 +7489,7 @@ assert_eq!(y, &quot;Bigger&quot;);
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>IfLetExpression</em> :<br />
-   <code>if</code> <code>let</code> <a href="expressions/match-expr.html"><em>MatchArmPatterns</em></a> <code>=</code> <a href="expressions/../expressions.html"><em>Expression</em></a><sub><em>排除结构体表达式和惰性布尔运算符表达式</em></sub>
+   <code>if</code> <code>let</code> <a href="expressions/../patterns.html"><em>Pattern</em></a> <code>=</code> <a href="expressions/../expressions.html"><em>Expression</em></a><sub><em>排除结构体表达式和惰性布尔运算符表达式</em></sub>
 <a href="expressions/block-expr.html"><em>BlockExpression</em></a><br />
    (<code>else</code> (
 <a href="expressions/block-expr.html"><em>BlockExpression</em></a>
@@ -7591,8 +7590,8 @@ if let PAT = ( EXPR || EXPR ) { .. }
 <h1><a class="header" href="#匹配match表达式" id="匹配match表达式">匹配(<code>match</code>)表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/match-expr.md">match-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: d23f9da8469617e6c81121d9fd123443df70595d <br />
+本章译文最后维护日期：2021-5-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -7608,9 +7607,7 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
 )<sup>*</sup><br />
    <em>MatchArm</em> <code>=&gt;</code> <a href="expressions/../expressions.html"><em>Expression</em></a> <code>,</code><sup>?</sup></p>
 <p><em>MatchArm</em> :<br />
-   <a href="expressions/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <em>MatchArmPatterns</em> <em>MatchArmGuard</em><sup>?</sup></p>
-<p><em>MatchArmPatterns</em> :<br />
-   <code>|</code><sup>?</sup> <a href="expressions/../patterns.html"><em>Pattern</em></a> ( <code>|</code> <a href="expressions/../patterns.html"><em>Pattern</em></a> )<sup>*</sup></p>
+   <a href="expressions/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <a href="expressions/../patterns.html"><em>Pattern</em></a> <em>MatchArmGuard</em><sup>?</sup></p>
 <p><em>MatchArmGuard</em> :<br />
    <code>if</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 </blockquote>
@@ -7792,12 +7789,14 @@ commit: 23672971a16c69ea894bef24992b74912cfe5d25 <br />
 <h1><a class="header" href="#模式" id="模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
-commit: c996a06b47094715507090eddde7a5bc5c76995c <br />
-本章译文最后维护日期：2020-11-27</p>
+commit: 100fa060ce1d2db7e4d1533efd289f9c18d08d53 <br />
+本章译文最后维护日期：2021-5-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>Pattern</em> :<br />
+      <code>|</code><sup>?</sup> <em>PatternNoTopAlt</em>  ( <code>|</code> <em>PatternNoTopAlt</em> )<sup>*</sup></p>
+<p><em>PatternNoTopAlt</em> :<br />
       <em>PatternWithoutRange</em><br />
    | <a href="patterns.html#range-patterns"><em>RangePattern</em></a></p>
 <p><em>PatternWithoutRange</em> :<br />
@@ -8447,14 +8446,43 @@ match v[..] {
 <p>限定路径模式只能指向关联常量。</p>
 <p>常量不能是联合体类型。结构体常量和枚举常量必须带有 <code>#[derive(PartialEq, Eq)]</code> 属性（不只是实现）。</p>
 <p>当路径模式指向结构体或枚举变体(枚举只有一个变体)或类型为不可反驳型的常量时，该路径模式是不可反驳型的。当路径模式指向的是可反驳型常量或带有多个变体的枚举时，该路径模式是可反驳型的。</p>
+<h2><a class="header" href="#or-patterns" id="or-patterns">Or-patterns</a></h2>
+<h2><a class="header" href="#or模式" id="or模式">or模式</a></h2>
+<p>_or模式_是能匹配两个或多个并列子模式（例如：<code>A | B | C</code>）中的一个的模式。此模式可以任意嵌套。除了 <code>let</code>绑定和函数参数（包括闭包参数）中的模式（此时句法上使用 _PatternNoTopAlt_产生式），or模式在句法上允许在任何其他模式出现的地方出现（这些模式句法上使用 _Pattern_产生式）。</p>
+<h3><a class="header" href="#static-semantics" id="static-semantics">Static semantics</a></h3>
+<h3><a class="header" href="#静态语义" id="静态语义">静态语义</a></h3>
+<ol>
+<li>
+<p>假定在某个代码深度上给定任意模式 <code>p</code> 和 <code>q</code>，现假定它们组成模式 <code>p | q</code>，则以下情况会导致这种组成的非法：</p>
+<ul>
+<li>从 <code>p</code> 推断出的类型和从 <code>q</code> 推断出的类型不一致，或</li>
+<li><code>p</code> 和 <code>q</code> 引入的绑定标识符不一样，或</li>
+<li><code>p</code> 和 <code>q</code> 中引入的同名绑定标识符的类型和绑定模式中的类型不一致。</li>
+</ul>
+<p>前面提到的所有实例中的类型都必须是精确的，隐式的<a href="type-coercions.html">类型强转</a>在这里不适用。</p>
+</li>
+<li>
+<p>当对表达式 <code>match e_s { a_1 =&gt; e_1, ... a_n =&gt; e_n }</code> 做类型检查时，假定在 <code>e_s</code> 内部深度为 <code>d</code> 的地方存一个表达式片段，那对于此片段，每一个匹配臂 <code>a_i</code> 都包含了一个 <code>p_i | q_i</code> 来与此段内容进行匹配，但如果表达式片段的类型与 <code>p_i | q_i</code> 的类型不一致，则该模式 <code>p_i | q_i</code> 被认为是格式错误的。</p>
+</li>
+<li>
+<p>为了遵从匹配模式的穷尽性检查，模式 <code>p | q</code> 被认为同时覆盖了 <code>p</code> 和 <code>q</code>。对于某些构造器 <code>c(x, ..)</code> 来说，此时应用分配律能使 <code>c(p | q, ..rest)</code> 与 <code>c(p, ..rest) | c(q, ..rest)</code> 覆盖相同的一组匹配值。这个规律可以递归地应用，直到不再有形式为 <code>p | q</code>  的嵌套模式。</p>
+</li>
+</ol>
+<p>注意这里的*“构造器”*这个用词，我们并没有特定提到它是元组结构模式，因为它本意是指任何能够生成类型的模式。这包括枚举变量、元组结构、具有命名字段的结构、数组、元组和切片。</p>
+<h3><a class="header" href="#dynamic-semantics" id="dynamic-semantics">Dynamic semantics</a></h3>
+<h3><a class="header" href="#动态语义" id="动态语义">动态语义</a></h3>
+<ol>
+<li>检查对象表达式(scrutinee expression) <code>e_s</code> 与深度为 <code>d</code> 的模式 <code>c(p | q, ..rest)</code>（这里<code>c</code>是某种构造器，<code>p</code> 和 <code>q</code> 是任意的模式，<code>rest</code> 是 <code>c</code>构造器的任意的可选因子）进行匹配的动态语义与此表达式与 <code>c(p, ..rest) | c(q, ..rest)</code> 进行匹配的语法定义相同。</li>
+</ol>
+<h3><a class="header" href="#precedence-with-other-undelimited-patterns" id="precedence-with-other-undelimited-patterns">Precedence with other undelimited patterns</a></h3>
+<h3><a class="header" href="#无分解符模式的优先级" id="无分解符模式的优先级">无分解符模式的优先级</a></h3>
+<p>如本章其他部分所示，有几种类型的模式在语法上没有定义分界符，它们包括标识符模式、引用模式和 or模式。它们组合在一起时，or模式的优先级总是最低的。这允许我们为将来可能的类型特性保留语法空间，同时也可以减少歧义。例如，<code>x @ A(..) | B(..)</code> 将导致一个错误，即 <code>x</code> 不是在所有模式中都存在绑定关系； <code>&amp;A(x) | B(x)</code>将导致不同子模式中的 <code>x</code> 之的类型不匹配。</p>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
 <p>请仔细参研<a href="expressions/match-expr.html">匹配表达式</a>中的 MatchExpression产生式，搞清楚匹配臂(MatchArm)的位置。</p>
 </div>
 <div class="footnote-definition" id="译注2"><sup class="footnote-definition-label">2</sup>
 <p>文字叙述有些晦涩，译者举个例子：假如 <code>if let &amp;Some(y) = &amp;&amp;&amp;Some(3) {</code>，此时会首先剥掉等号两边的第一层 <code>&amp;</code>号，然后是 <code>Some(y)</code> 和 <code>&amp;&amp;Some(3)</code>匹配，此时发现是非引用模式和引用匹配上了，就再对 <code>&amp;&amp;Some(3)</code> 做重复解引用，解出 <code>Some(3)</code>，然后从外部转向内部，见到最后的变量 <code>y</code> 和检验对象 <code>3</code>，就更新 <code>y</code> 的默认绑定方式为 <code>ref</code>，所以 <code>y</code> 就匹配为 <code>&amp;3</code>；如果我们这个例子的变量 <code>y</code> 改为 <code>ref y</code>，不影响 <code>y</code> 的绑定效果；极端的情况 <code>if let &amp;Some(y) = &amp;&amp;&amp;Some(x) {</code>，如果 <code>x</code> 是可变的，那么此时 <code>y</code> 的绑定方式就是 <code>ref mut</code>，再进一步极端 <code>if let &amp;Some(ref y) = &amp;&amp;&amp;Some(x) {</code>，此时 <code>y</code> 的绑定方式仍是 <code>ref</code>。</p>
 </div>
-<!-- 2020-11-12-->
-<!-- checked -->
 <h1><a class="header" href="#type-system" id="type-system">Type system</a></h1>
 <h1><a class="header" href="#类型系统" id="类型系统">类型系统</a></h1>
 <blockquote>

@@ -169,8 +169,8 @@
 <h1><a class="header" href="#语句" id="语句">语句</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/statements.md">statements.md</a><br />
-commit: 6b90080371ff44d0074a465945dfdb0de4b50774 <br />
-本章译文最后维护日期：2020-11-11</p>
+commit: 245b8336818913beafa7a35a9ad59c85f28338fb <br />
+本章译文最后维护日期：2021-5-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -209,7 +209,7 @@ commit: 6b90080371ff44d0074a465945dfdb0de4b50774 <br />
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>LetStatement</em> :<br />
-   <a href="attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <code>let</code> <a href="patterns.html"><em>Pattern</em></a>
+   <a href="attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <code>let</code> <a href="patterns.html"><em>PatternNoTopAlt</em></a>
 ( <code>:</code> <a href="types.html"><em>Type</em></a> )<sup>?</sup> (<code>=</code> <a href="expressions.html"><em>Expression</em></a> )<sup>?</sup> <code>;</code></p>
 </blockquote>
 <p><em><code>let</code>语句</em>通过一个不可反驳型<a href="patterns.html">模式</a>引入了一组新的<a href="variables.html">变量</a>，变量由该模式给定。模式后面有一个可选的类型标注(annotation)，再后面是一个可选的初始化表达式。当没有给出类型标注时，编译器将自行推断类型，如果没有足够的信息来执行有限次的类型推断，则将触发编译器报错。由变量声明引入的任何变量从声明开始直到封闭块作用域结束都是可见的。</p>
@@ -260,8 +260,6 @@ if true {
 <div class="footnote-definition" id="译者注"><sup class="footnote-definition-label">1</sup>
 <p>本书原文还有 <code>block of code</code> 的写法，这种有些类似于我们口语中说的那种任意的代码段的“代码块”。原文中 <code>block of code</code> 的典型情况是非安全(<code>unsafe</code>)块。</p>
 </div>
-<!-- 2020-11-12-->
-<!-- checked -->
 
                     </main>
 

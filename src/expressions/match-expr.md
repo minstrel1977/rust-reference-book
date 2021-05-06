@@ -2,8 +2,8 @@
 # 匹配(`match`)表达式
 
 >[match-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/match-expr.md)\
->commit: eb5290329316e96c48c032075f7dbfa56990702b \
->本章译文最后维护日期：2021-02-21
+>commit: d23f9da8469617e6c81121d9fd123443df70595d \
+>本章译文最后维护日期：2021-5-6
 
 > **<sup>句法</sup>**\
 > _MatchExpression_ :\
@@ -20,11 +20,8 @@
 > &nbsp;&nbsp; _MatchArm_ `=>` [_Expression_] `,`<sup>?</sup>
 >
 > _MatchArm_ :\
-> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> _MatchArmPatterns_ _MatchArmGuard_<sup>?</sup>
->
-> _MatchArmPatterns_ :\
-> &nbsp;&nbsp; `|`<sup>?</sup> [_Pattern_] ( `|` [_Pattern_] )<sup>\*</sup>
->
+> &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> [_Pattern_] _MatchArmGuard_<sup>?</sup>
+> 
 > _MatchArmGuard_ :\
 > &nbsp;&nbsp; `if` [_Expression_]
 

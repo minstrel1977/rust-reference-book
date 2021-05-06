@@ -169,8 +169,8 @@
 <h1><a class="header" href="#operator-expressions" id="operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: 72e25aa16d69d320af602b4794555ec57cf30197 <br />
-本章译文最后维护日期：2021-4-12</p>
+commit: 0a626ce599bcae4fa1a48535c0883beaca38f4db <br />
+本章译文最后维护日期：2021-5-6</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -570,7 +570,7 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <p><strong>注意</strong>：此表达式与其他表达式的求值顺序不同，此表达式的右操作数在左操作数之前被求值。</p>
 </blockquote>
 <p>对赋值表达的位置表达式求值时会先<a href="../destructors.html">销毁(drop)</a>此位置（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将赋值值<a href="../expressions.html#moved-and-copied-types">复制(copy)或移动(move)</a>到此位置中。</p>
-<p>赋值表达式总是会产生<a href="../types/tuple.html">单元类型值</a>。</p>
+<p>赋值表达式总是会生成<a href="../types/tuple.html">单元类型值</a>。</p>
 <p>示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -638,6 +638,7 @@ fn example() {
 }
 <span class="boring">}
 </span></code></pre></pre>
+<p>与赋值表达式一样，复合赋值表达式也总是会生成<a href="../types/tuple.html">单元类型值</a>。</p>
 <div class="warning">
 <p>警告：复合赋值表达式的操作数的求值顺序取决于操作数的类型：对于原生类型，右边操作数将首先被求值，而对于非原生类型，左边操作数将首先被求值。
 建议尽量不要编写依赖于复合赋值表达式中操作数的求值顺序的代码。请参阅<a href="https://github.com/rust-lang/rust/blob/master/src/test/ui/expr/compound-assignment/eval-order.rs">这里的测试</a>以获得使用此依赖项的示例。</p>

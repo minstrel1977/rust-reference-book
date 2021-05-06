@@ -2,8 +2,8 @@
 # 循环
 
 >[loop-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/loop-expr.md)\
->commit: eb5290329316e96c48c032075f7dbfa56990702b \
->本章译文最后维护日期：2021-2-21
+>commit: d23f9da8469617e6c81121d9fd123443df70595d \
+>本章译文最后维护日期：2021-5-6
 
 > **<sup>句法</sup>**\
 > _LoopExpression_ :\
@@ -68,7 +68,7 @@ while i < 10 {
 
 > **<sup>句法</sup>**\
 > [_PredicatePatternLoopExpression_] :\
-> &nbsp;&nbsp; `while` `let` [_MatchArmPatterns_] `=` [_Expression_]<sub>_排除结构体表达式和惰性布尔运算符表达式_</sub>
+> &nbsp;&nbsp; `while` `let` [_Pattern_] `=` [_Expression_]<sub>_排除结构体表达式和惰性布尔运算符表达式_</sub>
 >              [_BlockExpression_]
 
 `while let`循环在语义上类似于 `while`循环，但它用 `let`关键字后紧跟着一个模式、一个 `=`、一个[检验对象(scrutinee)][scrutinee]表达式和一个块表达式，来替代原来的条件表达式。
@@ -278,7 +278,6 @@ assert_eq!(result, 13);
 [LIFETIME_OR_LABEL]: ../tokens.md#lifetimes-and-loop-labels
 [_BlockExpression_]: block-expr.md
 [_Expression_]: ../expressions.md
-[_MatchArmPatterns_]: match-expr.md
 [_Pattern_]: ../patterns.md
 [`match` expression]: match-expr.md
 [boolean]: ../types/boolean.md
