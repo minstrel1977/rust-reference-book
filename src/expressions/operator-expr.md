@@ -2,8 +2,8 @@
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit: 0a626ce599bcae4fa1a48535c0883beaca38f4db \
->本章译文最后维护日期：2021-5-6
+>commit: f34a622883da26f1c516711c5fcccd884c4dca21 \
+>本章译文最后维护日期：2021-5-23
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -361,19 +361,61 @@ fn average(values: &[f64]) -> f64 {
     * 从 f64 到 f32 的转换将产生最接近的 f32 \*\*
         * 如有必要，舍入采用 `roundTiesToEven`模式 \*\*\*
         * 在溢出时，将会产生 f32 的常量 Infinity(∞)（与输入符号相同）
-* 枚举转换(Enum cast)
-    * 先将枚举转换为它的判别值(discriminant)，然后在需要时使用数值转换。
-* 原生类型到整型的转换
-    * `false` 转换为 `0`, `true` 转换为 `1`
-    * `char` 会先强制转换为代码点的值，然后在需要时使用数值转换。
-* `u8` 到 `char` 的转换
-    * 转换为具有相应代码点的 `char` 值。
 
 \* 如果硬件本身不支持这种舍入模式和溢出行为，那么这些整数到浮点型的转换可能会比预期的要慢。
 
 \*\* 如果硬件本身不支持这种舍入模式和溢出行为，那么这些 f64 到 f32 的转换可能会比预期的要慢。
 
 \*\*\* 按照 IEEE 754-2008§4.3.1 的定义：选择最接近的浮点数，如果恰好在两个浮点数中间，则优先选择最低有效位为偶数的那个。
+
+#### Enum cast
+#### 枚举转换
+
+可将枚举类型转换为其判别值，然后在必要时可以使用数字类型转换。
+
+#### Primitive to integer cast
+#### 原生类型到整型
+
+* `false` 转换为 `0`，`true` 转换为 `1`。
+* `char` 转换为字符码点，然后在必要时可以使用数字类型转换。
+
+#### `u8` to `char` cast
+#### `u8` 到 `char`
+
+把为 `char` 的字符代码点的 `u8` 值转换为 `char`
+
+#### Pointer to address cast
+#### 指针到地址
+
+把原始指针转换为整数将产生此指针指向的内存的机器地址。
+如果被转换出的整数类型尺寸小于指针类型的位宽，地址可能会被截断；可以使用类型 `usize` 来避免这种情况。
+
+#### Address to pointer cast
+#### 地址到指针
+
+从整数转换为原始指针会将整数解释为内存地址，并生成一个引用该内存地址的指针。
+
+<div class="warning">
+
+警告：
+这将与 Rust内存模型交互，需要指出的是该模型仍在开发中。
+即便是按位转换后是一个有效的指针，但这种从转换中生成的指针可能会受到一些额外的限制。如果不遵循别名规则，那么解引用这样的指针可能是[未定义行为][undefined behavior]。
+
+</div>
+
+一个常见的健壮的地址转换算法的示例：
+
+```rust
+let mut values: [i32; 2] = [1, 2];
+let p1: *mut i32 = values.as_mut_ptr();
+let first_address = p1 as usize;
+let second_address = first_address + 4; // 4 == size_of::<i32>()
+let p2 = second_address as *mut i32;
+unsafe {
+    *p2 += 1;
+}
+assert_eq!(values[1], 3);
+```
 
 ## 赋值表达式
 ## Assignment expressions
@@ -492,6 +534,7 @@ fn example() {
 [logical xor]: ../types/boolean.md#logical-xor
 [mutable]: ../expressions.md#mutability
 [place expression]: ../expressions.md#place-expressions-and-value-expressions
+[undefined behavior]: ../behavior-considered-undefined.md
 [unit]: ../types/tuple.md
 [value expression]: ../expressions.md#place-expressions-and-value-expressions
 [temporary value]: ../expressions.md#temporaries
