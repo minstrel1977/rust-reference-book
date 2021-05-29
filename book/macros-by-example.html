@@ -169,8 +169,8 @@
 <h1><a class="header" href="#声明宏" id="声明宏">声明宏</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md">macros-by-example.md</a><br />
-commit: d23f9da8469617e6c81121d9fd123443df70595d <br />
-本章译文最后维护日期：2021-5-6</p>
+commit: 3a6ddea02244857362ac05d85ec98736b738c0ff <br />
+本章译文最后维护日期：2021-5-29</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -195,7 +195,7 @@ commit: d23f9da8469617e6c81121d9fd123443df70595d <br />
    | <code>$</code> <code>(</code> <em>MacroMatch</em><sup>+</sup> <code>)</code> <em>MacroRepSep</em><sup>?</sup> <em>MacroRepOp</em></p>
 <p><em>MacroFragSpec</em> :<br />
       <code>block</code> | <code>expr</code> | <code>ident</code> | <code>item</code> | <code>lifetime</code> | <code>literal</code><br />
-   | <code>meta</code> | <code>pat</code> | <code>path</code> | <code>stmt</code> | <code>tt</code> | <code>ty</code> | <code>vis</code></p>
+   | <code>meta</code> | <code>pat</code> | <code>pat_param</code> | <code>path</code> | <code>stmt</code> | <code>tt</code> | <code>ty</code> | <code>vis</code></p>
 <p><em>MacroRepSep</em> :<br />
    <a href="tokens.html"><em>Token</em></a><sub><em>排除 定界符 和 重复操作符</em></sub></p>
 <p><em>MacroRepOp</em> :<br />
@@ -258,7 +258,8 @@ foo!(3);
 <li><code>item</code>: <a href="items.html"><em>程序项</em></a></li>
 <li><code>block</code>: <a href="expressions/block-expr.html"><em>块表达式</em></a></li>
 <li><code>stmt</code>: <a href="statements.html"><em>语句</em></a>，注意此选择器不匹配句尾的分号（如果匹配器中提供了分号，会被当做分隔符），但碰到分号是自身的一部分的程序项语句的情况又会匹配。</li>
-<li><code>pat</code>: <a href="patterns.html"><em>模式</em></a></li>
+<li><code>pat_param</code>: <a href="patterns.html"><em>模式</em></a></li>
+<li><code>pat</code>: 等同于 <code>pat_param</code></li>
 <li><code>expr</code>: <a href="expressions.html"><em>表达式</em></a></li>
 <li><code>ty</code>: <a href="types.html#type-expressions"><em>类型</em></a></li>
 <li><code>ident</code>: <a href="identifiers.html">标识符或关键字</a></li>
@@ -492,7 +493,7 @@ macro_rules! helper {
 <p><code>expr</code> 和 <code>stmt</code> 只能后跟一个： <code>=&gt;</code>、<code>,</code>、<code>;</code>。</p>
 </li>
 <li>
-<p><code>pat</code> 只能后跟一个： <code>=&gt;</code>、<code>,</code>、<code>=</code>、<code>|</code>、<code>if</code>、<code>in</code>。</p>
+<p><code>pat</code> 和 <code>pat_param</code> 只能后跟一个： <code>=&gt;</code>、<code>,</code>、<code>=</code>、<code>|</code>、<code>if</code>、<code>in</code>。</p>
 </li>
 <li>
 <p><code>path</code> 和 <code>ty</code> 只能后跟一个： <code>=&gt;</code>、<code>,</code>、<code>=</code>、<code>|</code>、<code>;</code>、<code>:</code>、<code>&gt;</code>、<code>&gt;&gt;</code>、<code>[</code>、<code>{</code>、<code>as</code>、<code>where</code>、块(<code>block</code>)型非终结符(block nonterminals)。</p>

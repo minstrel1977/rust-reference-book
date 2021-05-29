@@ -169,8 +169,8 @@
 <h1><a class="header" href="#实现" id="实现">实现</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/implementations.md">implementations.md</a><br />
-commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
-本章译文最后维护日期：2021-1-17</p>
+commit: d1f22f659fae9cfbeb9e45c8226d134d4a272586 <br />
+本章译文最后维护日期：2021-5-29</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -254,7 +254,7 @@ fn main() {
 </span><span class="boring">struct Point {x: f64, y: f64};
 </span><span class="boring">type Surface = i32;
 </span><span class="boring">struct BoundingBox {x: f64, y: f64, width: f64, height: f64};
-</span><span class="boring">trait Shape { fn draw(&amp;self, Surface); fn bounding_box(&amp;self) -&gt; BoundingBox; }
+</span><span class="boring">trait Shape { fn draw(&amp;self, s: Surface); fn bounding_box(&amp;self) -&gt; BoundingBox; }
 </span><span class="boring">fn do_draw_circle(s: Surface, c: Circle) { }
 </span>struct Circle {
     radius: f64,
@@ -396,8 +396,6 @@ impl&lt;T, U&gt; GenericTrait&lt;U&gt; for u32 where U: GenericTrait&lt;T&gt; {}
 <h2><a class="header" href="#attributes-on-implementations" id="attributes-on-implementations">Attributes on Implementations</a></h2>
 <h2><a class="header" href="#实现上的属性" id="实现上的属性">实现上的属性</a></h2>
 <p>实现可以在关键字 <code>impl</code> 之前引入外部<a href="../attributes.html">属性</a>，在代码体内引入内部<a href="../attributes.html">属性</a>。内部属性必须位于任何关联程序项之前。这里有意义的属性有 <a href="../conditional-compilation.html"><code>cfg</code></a>、<a href="../attributes/diagnostics.html#the-deprecated-attribute"><code>deprecated</code></a>、<a href="https://doc.rust-lang.org/rustdoc/the-doc-attribute.html"><code>doc</code></a> 和 <a href="../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>。</p>
-<!-- 2020-11-12-->
-<!-- checked -->
 
                     </main>
 

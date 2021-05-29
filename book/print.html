@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2021-5-23</p>
+<p>本书跟随原文截止日期：2021-5-29</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -1226,8 +1226,8 @@ example!();
 <h1><a class="header" href="#声明宏" id="声明宏">声明宏</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md">macros-by-example.md</a><br />
-commit: d23f9da8469617e6c81121d9fd123443df70595d <br />
-本章译文最后维护日期：2021-5-6</p>
+commit: 3a6ddea02244857362ac05d85ec98736b738c0ff <br />
+本章译文最后维护日期：2021-5-29</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -1252,7 +1252,7 @@ commit: d23f9da8469617e6c81121d9fd123443df70595d <br />
    | <code>$</code> <code>(</code> <em>MacroMatch</em><sup>+</sup> <code>)</code> <em>MacroRepSep</em><sup>?</sup> <em>MacroRepOp</em></p>
 <p><em>MacroFragSpec</em> :<br />
       <code>block</code> | <code>expr</code> | <code>ident</code> | <code>item</code> | <code>lifetime</code> | <code>literal</code><br />
-   | <code>meta</code> | <code>pat</code> | <code>path</code> | <code>stmt</code> | <code>tt</code> | <code>ty</code> | <code>vis</code></p>
+   | <code>meta</code> | <code>pat</code> | <code>pat_param</code> | <code>path</code> | <code>stmt</code> | <code>tt</code> | <code>ty</code> | <code>vis</code></p>
 <p><em>MacroRepSep</em> :<br />
    <a href="tokens.html"><em>Token</em></a><sub><em>排除 定界符 和 重复操作符</em></sub></p>
 <p><em>MacroRepOp</em> :<br />
@@ -1315,7 +1315,8 @@ foo!(3);
 <li><code>item</code>: <a href="items.html"><em>程序项</em></a></li>
 <li><code>block</code>: <a href="expressions/block-expr.html"><em>块表达式</em></a></li>
 <li><code>stmt</code>: <a href="statements.html"><em>语句</em></a>，注意此选择器不匹配句尾的分号（如果匹配器中提供了分号，会被当做分隔符），但碰到分号是自身的一部分的程序项语句的情况又会匹配。</li>
-<li><code>pat</code>: <a href="patterns.html"><em>模式</em></a></li>
+<li><code>pat_param</code>: <a href="patterns.html"><em>模式</em></a></li>
+<li><code>pat</code>: 等同于 <code>pat_param</code></li>
 <li><code>expr</code>: <a href="expressions.html"><em>表达式</em></a></li>
 <li><code>ty</code>: <a href="types.html#type-expressions"><em>类型</em></a></li>
 <li><code>ident</code>: <a href="identifiers.html">标识符或关键字</a></li>
@@ -1549,7 +1550,7 @@ macro_rules! helper {
 <p><code>expr</code> 和 <code>stmt</code> 只能后跟一个： <code>=&gt;</code>、<code>,</code>、<code>;</code>。</p>
 </li>
 <li>
-<p><code>pat</code> 只能后跟一个： <code>=&gt;</code>、<code>,</code>、<code>=</code>、<code>|</code>、<code>if</code>、<code>in</code>。</p>
+<p><code>pat</code> 和 <code>pat_param</code> 只能后跟一个： <code>=&gt;</code>、<code>,</code>、<code>=</code>、<code>|</code>、<code>if</code>、<code>in</code>。</p>
 </li>
 <li>
 <p><code>path</code> 和 <code>ty</code> 只能后跟一个： <code>=&gt;</code>、<code>,</code>、<code>=</code>、<code>|</code>、<code>;</code>、<code>:</code>、<code>&gt;</code>、<code>&gt;&gt;</code>、<code>[</code>、<code>{</code>、<code>as</code>、<code>where</code>、块(<code>block</code>)型非终结符(block nonterminals)。</p>
@@ -3607,8 +3608,8 @@ fn main() {
 <h1><a class="header" href="#实现" id="实现">实现</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/implementations.md">implementations.md</a><br />
-commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
-本章译文最后维护日期：2021-1-17</p>
+commit: d1f22f659fae9cfbeb9e45c8226d134d4a272586 <br />
+本章译文最后维护日期：2021-5-29</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -3692,7 +3693,7 @@ fn main() {
 </span><span class="boring">struct Point {x: f64, y: f64};
 </span><span class="boring">type Surface = i32;
 </span><span class="boring">struct BoundingBox {x: f64, y: f64, width: f64, height: f64};
-</span><span class="boring">trait Shape { fn draw(&amp;self, Surface); fn bounding_box(&amp;self) -&gt; BoundingBox; }
+</span><span class="boring">trait Shape { fn draw(&amp;self, s: Surface); fn bounding_box(&amp;self) -&gt; BoundingBox; }
 </span><span class="boring">fn do_draw_circle(s: Surface, c: Circle) { }
 </span>struct Circle {
     radius: f64,
@@ -3834,8 +3835,6 @@ impl&lt;T, U&gt; GenericTrait&lt;U&gt; for u32 where U: GenericTrait&lt;T&gt; {}
 <h2><a class="header" href="#attributes-on-implementations" id="attributes-on-implementations">Attributes on Implementations</a></h2>
 <h2><a class="header" href="#实现上的属性" id="实现上的属性">实现上的属性</a></h2>
 <p>实现可以在关键字 <code>impl</code> 之前引入外部<a href="items/../attributes.html">属性</a>，在代码体内引入内部<a href="items/../attributes.html">属性</a>。内部属性必须位于任何关联程序项之前。这里有意义的属性有 <a href="items/../conditional-compilation.html"><code>cfg</code></a>、<a href="items/../attributes/diagnostics.html#the-deprecated-attribute"><code>deprecated</code></a>、<a href="https://doc.rust-lang.org/rustdoc/the-doc-attribute.html"><code>doc</code></a> 和 <a href="items/../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>。</p>
-<!-- 2020-11-12-->
-<!-- checked -->
 <h1><a class="header" href="#external-blocks" id="external-blocks">External blocks</a></h1>
 <h1><a class="header" href="#外部块" id="外部块">外部块</a></h1>
 <blockquote>
@@ -3956,8 +3955,8 @@ extern {
 <h1><a class="header" href="#类型参数和生存期参数" id="类型参数和生存期参数">类型参数和生存期参数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/generics.md">generics.md</a><br />
-commit: 7fd47ef4786f86ccdb5d6f0f198a6a9fdec5497c <br />
-本章译文最后维护日期：2021-1-17</p>
+commit: 33784fadb81c16918c7e6d207f8c838232c159b0 <br />
+本章译文最后维护日期：2021-5-29</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -3965,13 +3964,13 @@ commit: 7fd47ef4786f86ccdb5d6f0f198a6a9fdec5497c <br />
       <code>&lt;</code> <code>&gt;</code><br />
     | <code>&lt;</code> (<em>GenericParam</em> <code>,</code>)<sup>*</sup> <em>GenericParam</em> <code>,</code><sup>?</sup> <code>&gt;</code></p>
 <p><em>GenericParam</em> :<br />
-   [<em>OuterAttribute</em>]<sup>*</sup> ( <em>LifetimeParam</em> | <em>TypeParam</em> | <em>ConstParam</em> )</p>
+   <a href="items/../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> ( <em>LifetimeParam</em> | <em>TypeParam</em> | <em>ConstParam</em> )</p>
 <p><em>LifetimeParam</em> :<br />
-   [LIFETIME_OR_LABEL] ( <code>:</code> [<em>LifetimeBounds</em>] )<sup>?</sup></p>
+   <a href="items/../tokens.html#lifetimes-and-loop-labels">LIFETIME_OR_LABEL</a> ( <code>:</code> <a href="items/../trait-bounds.html"><em>LifetimeBounds</em></a> )<sup>?</sup></p>
 <p><em>TypeParam</em> :<br />
-   [IDENTIFIER]( <code>:</code> [<em>TypeParamBounds</em>]<sup>?</sup> )<sup>?</sup> ( <code>=</code> [<em>Type</em>] )<sup>?</sup></p>
+   <a href="items/../identifiers.html">IDENTIFIER</a>( <code>:</code> <a href="items/../trait-bounds.html"><em>TypeParamBounds</em></a><sup>?</sup> )<sup>?</sup> ( <code>=</code> <a href="items/../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
 <p><em>ConstParam</em>:<br />
-   <code>const</code> [IDENTIFIER] <code>:</code> [<em>Type</em>]</p>
+   <code>const</code> <a href="items/../identifiers.html">IDENTIFIER</a> <code>:</code> <a href="items/../types.html#type-expressions"><em>Type</em></a></p>
 </blockquote>
 <p><a href="items/functions.html">函数</a>、<a href="items/type-aliases.html">类型别名</a>、<a href="items/structs.html">结构体</a>、<a href="items/enumerations.html">枚举</a>、<a href="items/unions.html">联合体</a>、<a href="items/traits.html">trait</a> 和<a href="items/implementations.html">实现</a>可以通过类型参数、常量参数和生存期参数达到<em>参数化</em>配置的的效果。这些参数在尖括号<span class="parenthetical">（<code>&lt;...&gt;</code>）</span>中列出，通常都是紧跟在程序项名称之后和程序项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 <code>impl</code> 之后。泛型参数的申明顺序是生存期参数在最前面，然后是类型参数，最后是常量参数。</p>
 <p>下面给出一些带类型参数、常量参数和生存期参数的程序项的示例：</p>
@@ -4059,7 +4058,7 @@ fn bad_function&lt;const N: usize&gt;() -&gt; [u8; {N + 1}] {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p><a href="items/../paths.html">路径</a>中的常量实参指定了该程序项使用的常量值。实参必须是常量形参所属类型的<a href="items/../const_eval.html#constant-expressions">常量表达式</a>。常量表达式必须是<a href="items/../expressions/block-expr.html">块表达式</a>（用花括号括起来），除非它是单独路径段（一个[标识符][IDENTIFIER]）或一个<a href="items/../expressions/literal-expr.html">字面量</a>（此字面量可以是以 <code>-</code> 打头的 token）。</p>
+<p><a href="items/../paths.html">路径</a>中的常量实参指定了该程序项使用的常量值。实参必须是常量形参所属类型的<a href="items/../const_eval.html#constant-expressions">常量表达式</a>。常量表达式必须是<a href="items/../expressions/block-expr.html">块表达式</a>（用花括号括起来），除非它是单独路径段（一个<a href="items/../identifiers.html">标识符</a>）或一个<a href="items/../expressions/literal-expr.html">字面量</a>（此字面量可以是以 <code>-</code> 打头的 token）。</p>
 <blockquote>
 <p><strong>注意</strong>：这种句法限制是必要的，用以避免在解析类型内部的表达式时可能会导致无限递归(infinite lookahead)。</p>
 </blockquote>
@@ -4138,14 +4137,12 @@ fn generic&lt;const B: bool&gt;() {
       <em>LifetimeWhereClauseItem</em><br />
    | <em>TypeBoundWhereClauseItem</em></p>
 <p><em>LifetimeWhereClauseItem</em> :<br />
-   [<em>Lifetime</em>] <code>:</code> [<em>LifetimeBounds</em>]</p>
+   <a href="items/../trait-bounds.html"><em>Lifetime</em></a> <code>:</code> <a href="items/../trait-bounds.html"><em>LifetimeBounds</em></a></p>
 <p><em>TypeBoundWhereClauseItem</em> :<br />
-   <em>ForLifetimes</em><sup>?</sup> [<em>Type</em>] <code>:</code> [<em>TypeParamBounds</em>]<sup>?</sup></p>
-<p><em>ForLifetimes</em> :<br />
-   <code>for</code> <code>&lt;</code> <a href="items/generics.html#generic-parameters"><em>GenericParams</em></a> <code>&gt;</code></p>
+   <a href="items/../trait-bounds.html#higher-ranked-trait-bounds"><em>ForLifetimes</em></a><sup>?</sup> <a href="items/../types.html#type-expressions"><em>Type</em></a> <code>:</code> <a href="items/../trait-bounds.html"><em>TypeParamBounds</em></a><sup>?</sup></p>
 </blockquote>
 <p><em>where子句</em>提供了另一种方法来为类型参数和生存期参数指定约束(bound)，甚至可以为非类型参数的类型指定约束。</p>
-<p>关键字<code>for</code> 可以用来引入<a href="items/../trait-bounds.html#higher-ranked-trait-bounds">高阶生存期参数</a>。它只允许在 [<em>LifetimeParam</em>] 参数上使用。</p>
+<p>关键字<code>for</code> 可以用来引入<a href="items/../trait-bounds.html#higher-ranked-trait-bounds">高阶生存期参数</a>。它只允许在 <a href="items/generics.html#generic-parameters"><em>LifetimeParam</em></a> 参数上使用。</p>
 <p>定义程序项时，其约束没有使用程序项的泛型参数或<a href="items/../trait-bounds.html#higher-ranked-trait-bounds">高阶生存期参数</a>，这样是可以通过编译器的安全检查，但这样的做法将必然导致错误。</p>
 <p>在定义程序项时，编译器还会检查某些泛型参数的类型是否存在 <a href="items/../special-types-and-traits.html#copy"><code>Copy</code></a>、<a href="items/../special-types-and-traits.html#clone"><code>Clone</code></a> 和 <a href="items/../special-types-and-traits.html#sized"><code>Sized</code></a> 这些约束。将<code>Copy</code> 或 <code>Clone</code> 作为可变引用、<a href="items/../types/trait-object.html">trait object</a>或<a href="items/../types/array.html">slice</a>这些程序项的约束是错误的，或将 <code>Sized</code> 作为 trait对象或切片的约束也是错误的。</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
@@ -4175,8 +4172,6 @@ struct Foo&lt;#[my_flexible_clone(unbounded)] H&gt; {
     a: *const H
 }
 </code></pre>
-<!-- 2021-1-20-->
-<!-- checked -->
 <h1><a class="header" href="#associated-items" id="associated-items">Associated Items</a></h1>
 <h1><a class="header" href="#关联程序项关联项" id="关联程序项关联项">关联程序项/关联项</a></h1>
 <blockquote>
@@ -4492,8 +4487,8 @@ fn main() {
 <h1><a class="header" href="#属性-1" id="属性-1">属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes.md">attributes.md</a><br />
-commit: eabdf09207bf3563ae96db9d576de0758c413d5d <br />
-本章译文最后维护日期：2021-1-24</p>
+commit: efb2c1cab0302a985030a94adafae9e630a7894d <br />
+本章译文最后维护日期：2021-5-29</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -4505,11 +4500,11 @@ commit: eabdf09207bf3563ae96db9d576de0758c413d5d <br />
    <a href="paths.html#simple-paths"><em>SimplePath</em></a> <em>AttrInput</em><sup>?</sup></p>
 <p><em>AttrInput</em> :<br />
       <a href="macros.html"><em>DelimTokenTree</em></a><br />
-   | <code>=</code> <a href="expressions/literal-expr.html"><em>LiteralExpression</em></a><sub><em>不带后缀</em></sub></p>
+   | <code>=</code> <a href="expressions.html"><em>Expression</em></a></p>
 </blockquote>
 <p><em>属性</em>是一种通用的、格式自由的元数据(free-form metadatum)，这种元数据会（被编译器/解释器）依据名称、约定、语言和编译器版本进行解释。（Rust 语言中的）属性是根据 <a href="https://www.ecma-international.org/publications/standards/Ecma-335.htm">ECMA-335</a> 标准中的属性规范进行建模的，其语法来自 <a href="https://www.ecma-international.org/publications/standards/Ecma-334.htm">ECMA-334</a> (C#）。</p>
 <p>*内部属性(Inner attributes)*以 <code>#!</code> 开头的方式编写，应用于它在其中声明的程序项。*外部属性(Outer attributes)*以不后跟感叹号的(<code>!</code>)的 <code>#</code> 开头的方式编写，应用于属性后面的内容。</p>
-<p>属性由指向属性的路径和路径后跟的可选的带定界符的 token树(delimited token tree)（其解释由属性定义）组成。除了宏属性之外，其他属性的输入也允许使用等号(<code>=</code>)后跟文字表达式的格式。更多细节请参见下面的<a href="attributes.html#meta-item-attribute-syntax">元项属性句法(meta item syntax)</a>。</p>
+<p>属性由指向属性的路径和路径后跟的可选的带定界符的 token树(delimited token tree)（其解释由属性定义）组成。除了宏属性之外，其他属性的输入也允许使用等号(<code>=</code>)后跟表达式的格式。更多细节请参见下面的<a href="attributes.html#meta-item-attribute-syntax">元项属性句法(meta item syntax)</a>。</p>
 <p>属性可以分为以下几类：</p>
 <ul>
 <li><a href="attributes.html#built-in-attributes-index">内置属性</a></li>
@@ -4568,15 +4563,29 @@ fn some_unused_variables() {
 <p><strong><sup>句法</sup></strong><br />
 <em>MetaItem</em> :<br />
       <a href="paths.html#simple-paths"><em>SimplePath</em></a><br />
-   | <a href="paths.html#simple-paths"><em>SimplePath</em></a> <code>=</code> <a href="expressions/literal-expr.html"><em>LiteralExpression</em></a><sub><em>不带后缀</em></sub><br />
+   | <a href="paths.html#simple-paths"><em>SimplePath</em></a> <code>=</code> <a href="expressions.html"><em>Expression</em></a><br />
    | <a href="paths.html#simple-paths"><em>SimplePath</em></a> <code>(</code> <em>MetaSeq</em><sup>?</sup> <code>)</code></p>
 <p><em>MetaSeq</em> :<br />
    <em>MetaItemInner</em> ( <code>,</code> MetaItemInner )<sup>*</sup> <code>,</code><sup>?</sup></p>
 <p><em>MetaItemInner</em> :<br />
       <em>MetaItem</em><br />
-   | <a href="expressions/literal-expr.html"><em>LiteralExpression</em></a><sub><em>不带后缀</em></sub></p>
+   | <a href="expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p>元项中的字面量表达式不能包含整型或浮点类型的后缀。</p>
+<p>元项中的表达式必须能宏展开为字面量表达式，且字面量表达式不得包含整型或浮点型后缀。现在，非字面量表达式的表达式可以在语法上被接受（并且可以传递给过程宏）了，但在解析后却被丢弃。</p>
+<p>请注意，如果该属性出现在另一个宏中，它将在该外部宏展开之后再展开。例如，下面的代码将首先展开为名为 <code>Serialize</code> 的过程宏，在第一次展开时，它必须保留 <code>include_str!</code>调用，以便将来再次展开：</p>
+<pre><code class="language-rustignore">#[derive(Serialize)]
+struct Foo {
+    #[doc = include_str!(&quot;x.md&quot;)]
+    x: u32
+}
+</code></pre>
+<p>此外，对与某个程序项来说，如果它的属性中用到了宏，那这个宏仅在所有其他相关属性都展开生效之后才展开：</p>
+<pre><code class="language-rustignore">#[macro_attr1] // 展开排序为第一
+#[doc = mac!()] // `mac!` 展开排序为第四
+#[macro_attr2] // 展开排序为第二
+#[derive(MacroDerive1, MacroDerive2)] // 展开排序为第三
+fn foo() {}
+</code></pre>
 <p>各种内置属性使用元项句法的不同子集来指定它们的输入。下面的文法规则展示了一些常用的使用形式：</p>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -4727,8 +4736,6 @@ pub fn f() {}
 </ul>
 </li>
 </ul>
-<!-- 2021-1-24-->
-<!-- checked -->
 <h1><a class="header" href="#testing-attributes" id="testing-attributes">Testing attributes</a></h1>
 <h1><a class="header" href="#测试类属性" id="测试类属性">测试类属性</a></h1>
 <blockquote>
@@ -5292,8 +5299,8 @@ fn calls_h() {
 <h1><a class="header" href="#极值设置" id="极值设置">极值设置</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/limits.md">limits.md</a><br />
-commit: e7208a29f943e986c815734282c5cc5fd30f4708 <br />
-本章译文最后维护日期：2021-3-26</p>
+commit: 8758f30a7d62513cb3caea30000850c9742f2438 <br />
+本章译文最后维护日期：2021-5-29</p>
 </blockquote>
 <p>以下<a href="attributes/../attributes.html">属性</a>影响部分编译期参数的极限值设置。</p>
 <h2><a class="header" href="#the-recursion_limit-attribute" id="the-recursion_limit-attribute">The <code>recursion_limit</code> attribute</a></h2>
@@ -5334,13 +5341,12 @@ a!{}
 <blockquote>
 <p>注意：<code>rustc</code> 中这个参数的默认值是 1048576。</p>
 </blockquote>
-<!-- This code should fail to compile. Unfortunately rustdoc's `compile_fail` stops after analysis phase, and this error is generated after that. So this needs to be `ignore` for now. -->
-<pre><code class="language-rust compile_fail ignore">#![type_length_limit = &quot;8&quot;]
+<pre><code class="language-rust compile_fail ignore">#![type_length_limit = &quot;4&quot;]
 
 fn f&lt;T&gt;(x: T) {}
 
-// 这里的编译失败是因为单态化 `f::&lt;(i32, i32, i32, i32, i32, i32, i32, i32, i32)&gt;&gt;` 需要大于8个类型元素。
-f((1, 2, 3, 4, 5, 6, 7, 8, 9));
+// 这里的编译失败是因为单态化 `f::&lt;((((i32,), i32), i32), i32)&gt;` 需要大于4个类型元素。
+f(((((1,), 2), 3), 4));
 </code></pre>
 <h1><a class="header" href="#type-system-attributes" id="type-system-attributes">Type system attributes</a></h1>
 <h1><a class="header" href="#类型系统属性" id="类型系统属性">类型系统属性</a></h1>
@@ -9236,13 +9242,13 @@ commit: 4664361ba2f7bcc568f6bef4d119b53971fdf8ad <br />
 <h1><a class="header" href="#函数指针类型" id="函数指针类型">函数指针类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/function-pointer.md">function-pointer.md</a><br />
-commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
-本章译文最后维护日期：2021-1-17</p>
+commit: 33784fadb81c16918c7e6d207f8c838232c159b0 <br />
+本章译文最后维护日期：2021-5-29</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>BareFunctionType</em> :<br />
-   <a href="types/../items/generics.html#where-clauses"><em>ForLifetimes</em></a><sup>?</sup> <em>FunctionTypeQualifiers</em> <code>fn</code><br />
+   <a href="types/../trait-bounds.html#higher-ranked-trait-bounds"><em>ForLifetimes</em></a><sup>?</sup> <em>FunctionTypeQualifiers</em> <code>fn</code><br />
        <code>(</code> <em>FunctionParametersMaybeNamedVariadic</em><sup>?</sup> <code>)</code> <em>BareFunctionReturnType</em><sup>?</sup></p>
 <p><em>FunctionTypeQualifiers</em>:<br />
    <code>unsafe</code><sup>?</sup> (<code>extern</code> <a href="types/../items/functions.html"><em>Abi</em></a><sup>?</sup>)<sup>?</sup></p>
@@ -9351,39 +9357,112 @@ fn main() {
 <!-- 2020-11-12-->
 <!-- checked -->
 <h1><a class="header" href="#impl-trait" id="impl-trait">Impl trait</a></h1>
-<h1><a class="header" href="#实现trait" id="实现trait">实现trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/impl-object.md">impl-object.md</a><br />
-commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本章译文最后维护日期：2020-11-14</p>
+commit: 94085bbf726d53f3c7ace1ce122c82ab7b691d39 <br />
+本章译文最后维护日期：2020-5-29</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ImplTraitType</em> : <code>impl</code> <a href="types/../trait-bounds.html"><em>TypeParamBounds</em></a></p>
 <p><em>ImplTraitTypeOneBound</em> : <code>impl</code> <a href="types/../trait-bounds.html"><em>TraitBound</em></a></p>
 </blockquote>
+<p><code>impl Trait</code> 提供了指定实现某trait 的具体的但匿名的类型的方法。
+它可以出现在两种位置上：参数位置（在这里它可以充当函数的匿名类型参数）和返回位置（在这里它可以充当抽象返回类型）。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Trait {}
+<span class="boring">impl Trait for () {}
+</span>
+// 参数位置：匿名类型参数
+fn foo(arg: impl Trait) {
+}
+
+// 返回位置：抽象返回类型
+fn bar() -&gt; impl Trait {
+}
+<span class="boring">}
+</span></code></pre></pre>
 <h2><a class="header" href="#anonymous-type-parameters" id="anonymous-type-parameters">Anonymous type parameters</a></h2>
 <h2><a class="header" href="#匿名类型参数" id="匿名类型参数">匿名类型参数</a></h2>
 <blockquote>
-<p>注意：此部分只是一个占位符，预备将来这里会有更全面的参考资料。</p>
+<p>注意：匿名类型参数通常被称为“参数位置上的 trait约束(impl Trait in argument position)”。
+(术语“参数”在这里更正式和正确，但 “impl Trait in argument position” 是在开发该特性时就使用的措辞，所以它仍保留在部分实现中。)</p>
 </blockquote>
+<p>函数可以使用 <code>impl</code> 后跟一组 trait约束，将参数声明为具有某匿名类型。
+调用者必须提供一个满足匿名类型参数声明的约束的类型，并且在函数内只能使用该匿名参数类型的 trait约束内部声明的方法。</p>
+<p>例如，下面两种形式几乎等价：</p>
+<pre><code class="language-rust ignore">trait Trait {}
+
+// 泛型类型参数
+fn foo&lt;T: Trait&gt;(arg: T) {
+}
+
+// 参数位置上的trait
+fn foo(arg: impl Trait) {
+}
+</code></pre>
+<p>也就是说，参数位置上的 <code>impl Trait</code> 是泛型类型参数（如 <code>&lt;T: Trait&gt;</code>）的语法糖，只是该类型是匿名的，并且不出现在 <a href="types/../items/generics.html"><em>GenericParams</em></a> 列表中。</p>
 <blockquote>
-<p>注意：匿名类型参数通常被称为“参数位置上的实现trait(impl Trait in argument position)”。</p>
+<p><strong>注意：</strong>
+对于函数参数，泛型类型参数和 <code>impl Trait</code> 并不完全等价。
+使用诸如 <code>&lt;T:Trait&gt;</code> 之类的泛型参数，调用者可以在调用点使用 <a href="types/../paths.html#paths-in-expressions"><em>GenericArgs</em></a>（例如，<code>foo:：&lt;usize&gt;（1）</code>）形式来显式指定 <code>T</code> 的泛型参数。
+如果 <code>impl Trait</code> 是<em>任意</em>函数参数的类型，则调用者在调用该函数时不能提供任何泛型参数。这同样适用于返回类型或任何常量泛型的泛型参数。</p>
+<p>因此，这样将函数签名从一个变更为另一个，对函数的调用者来说仍可能是一种破坏性的变更。</p>
 </blockquote>
-<p>函数可以将其参数声明为匿名类型的参数，这种情况下函数内部只能使用匿名类型参数的 trait约束所提供的方法。之后的调用者(callee)在调用此函数时必须提供具体的类型，并且要求提供的具体类型必须拥有此匿名类型参数声明的约束。</p>
-<p>它们被写成 <code>impl</code> 后跟一组 trait约束。</p>
 <h2><a class="header" href="#abstract-return-types" id="abstract-return-types">Abstract return types</a></h2>
 <h2><a class="header" href="#抽象返回类型" id="抽象返回类型">抽象返回类型</a></h2>
 <blockquote>
-<p>注意：此部分只是一个占位符，预备将来这里会有更全面的参考资料。</p>
+<p>注意： 这通常被称为“返回位置上的 Trait约束”(impl Trait in return position)。</p>
 </blockquote>
-<blockquote>
-<p>注意：抽象返回类型(abstract return types)通常被称为“函数返回位置上的实现trait(impl Trait in return position)”。</p>
-</blockquote>
-<p>除了关联trait函数(associated trait function)外，其他函数都可以返回抽象返回类型。这些类型代表了某种具体类型，它要求在此返回类型的使用点(use-site)上只能使用由该类型的 trait约束声明的 trait方法。</p>
-<p>它们被写成 <code>impl</code> 后跟一组 trait约束。</p>
-<!-- 2020-11-12-->
-<!-- checked -->
+<p>函数可以使用 <code>impl Trait</code> 返回抽象返回类型。
+这些类型代表另一个具体类型，调用者只能使用指定的 <code>Trait</code> 内声明的方法。
+函数的每个可能的返回分支返回的返回值都必须解析为相同的具体类型。</p>
+<p>返回位置上的 <code>impl Trait</code> 允许函数返回非box化的抽象类型。
+这对于<a href="types/closure.html">闭包</a>和迭代器特别有用。
+例如，闭包具有唯一的、不可写的类型。
+以前，从函数返回闭包的唯一方法是使用<a href="types/trait-object.html">trait对象</a>：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn returns_closure() -&gt; Box&lt;dyn Fn(i32) -&gt; i32&gt; {
+    Box::new(|x| x + 1)
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>这不得不承受因堆分配和动态调度而带来的性能损失。
+并且者无法完全指定闭包的类型，只能使用 <code>Fn</code> trait。
+这意味着此时 trait对象是必要的。
+但是，使用 <code>impl Trait</code>，可以像如下这样来更简单地编写代码：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {
+    |x| x + 1
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>这也避免了使用 box化的 trait对象的缺陷。</p>
+<p>类似地，在迭代器的使用坏境中，如果将此步操作前的所有迭代器操作合并到一个执行链中，迭代器里的具体类型可能变得非常复杂。此时返回 <code>impl Iterator</code> 意味着一个函数只需将 <code>Iterator</code> trait 作为其返回类型的约束来公开，而不须显式指定链内所有其他涉及的迭代器类型。</p>
+<h3><a class="header" href="#differences-between-generics-and-impl-trait-in-return-position" id="differences-between-generics-and-impl-trait-in-return-position">Differences between generics and <code>impl Trait</code> in return position</a></h3>
+<h3><a class="header" href="#泛型与-impl-trait-在返回位置上的差异" id="泛型与-impl-trait-在返回位置上的差异">泛型与 <code>impl Trait</code> 在返回位置上的差异</a></h3>
+<p>在参数位置，<code>impl Trait</code> 在语义上与泛型类型参数非常相似。
+然而，两者在返回位置上存在显著差异。
+与泛型类型参数不同，使用 <code>impl Trait</code> 时，函数选择返回类型，调用者不能选择返回类型。</p>
+<p>泛型函数：</p>
+<pre><code class="language-rust ignore">fn foo&lt;T: Trait&gt;() -&gt; T {
+</code></pre>
+<p>允许调用者来指定返回类型<code>T</code>，然后函数返回该类型。</p>
+<p><code>impl Trait</code> 函数：</p>
+<pre><code class="language-rust ignore">fn foo() -&gt; impl Trait {
+</code></pre>
+<p>不允许调用者指定返回类型。
+相反，函数自身选择返回类型，但只承诺返回类型将实现 <code>Trait</code>。</p>
+<h2><a class="header" href="#limitations-1" id="limitations-1">Limitations</a></h2>
+<h2><a class="header" href="#限制-1" id="限制-1">限制</a></h2>
+<p><code>impl Trait</code> 只能作为自由函数或固有函数的参数或返回类型出现。
+它不能出现在 trait实现中，也不能出现在 let绑定的类型或出现在类型别名中。</p>
 <h1><a class="header" href="#type-parameters" id="type-parameters">Type parameters</a></h1>
 <h1><a class="header" href="#类型参数" id="类型参数">类型参数</a></h1>
 <blockquote>
@@ -9966,8 +10045,8 @@ struct Variance&lt;'a, 'b, T, U: 'a&gt; {
 <h1><a class="header" href="#trait约束和生存期约束" id="trait约束和生存期约束">trait约束和生存期约束</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md">trait-bounds.md</a><br />
-commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
-本章译文最后维护日期：2020-11-15</p>
+commit: 33784fadb81c16918c7e6d207f8c838232c159b0 <br />
+本章译文最后维护日期：2021-5-29</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -10048,6 +10127,10 @@ fn name_figure&lt;U: Shape&gt;(
 <p><code>T: 'a</code> 意味着 <code>T</code> 的所有生存期参数都比 <code>'a</code> 存活得时间长。例如，如果 <code>'a</code> 是一个任意的(unconstrained)生存期参数，那么 <code>i32: 'static</code> 和 <code>&amp;'static str: 'a</code> 都合法，但 <code>Vec&lt;&amp;'a ()&gt;: 'static</code> 不合法。</p>
 <h2><a class="header" href="#higher-ranked-trait-bounds" id="higher-ranked-trait-bounds">Higher-ranked trait bounds</a></h2>
 <h2><a class="header" href="#高阶trait约束" id="高阶trait约束">高阶trait约束</a></h2>
+<blockquote>
+<p><em>ForLifetimes</em> :<br />
+   <code>for</code> <a href="items/generics.html"><em>GenericParams</em></a></p>
+</blockquote>
 <p>可以在生存期上再进行<em>更高阶的</em>类型约束。这些高阶约束指定了一个对<em>所有</em>生存期都为真的约束。例如，像 <code>for&lt;'a&gt; &amp;'a T: PartialEq&lt;i32&gt;</code> 这样的约束需要一个如下的实现</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -10103,8 +10186,6 @@ fn name_figure&lt;U: Shape&gt;(
 <div class="footnote-definition" id="译注4"><sup class="footnote-definition-label">3</sup>
 <p>译者理解这句的意思是：如果 <code>F</code> 的约束有多个 trait，那这种方式里， <code>'a</code> 的作用域只是扩展它后面紧跟的那个 trait 的方法，即 <code>Fn(&amp;'a i32)</code> 里。</p>
 </div>
-<!-- 2020-11-12-->
-<!-- checked -->
 <h1><a class="header" href="#type-coercions" id="type-coercions">Type coercions</a></h1>
 <h1><a class="header" href="#类型自动强转" id="类型自动强转">类型自动强转</a></h1>
 <blockquote>

@@ -169,8 +169,8 @@
 <h1><a class="header" href="#trait约束和生存期约束" id="trait约束和生存期约束">trait约束和生存期约束</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md">trait-bounds.md</a><br />
-commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
-本章译文最后维护日期：2020-11-15</p>
+commit: 33784fadb81c16918c7e6d207f8c838232c159b0 <br />
+本章译文最后维护日期：2021-5-29</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -251,6 +251,10 @@ fn name_figure&lt;U: Shape&gt;(
 <p><code>T: 'a</code> 意味着 <code>T</code> 的所有生存期参数都比 <code>'a</code> 存活得时间长。例如，如果 <code>'a</code> 是一个任意的(unconstrained)生存期参数，那么 <code>i32: 'static</code> 和 <code>&amp;'static str: 'a</code> 都合法，但 <code>Vec&lt;&amp;'a ()&gt;: 'static</code> 不合法。</p>
 <h2><a class="header" href="#higher-ranked-trait-bounds" id="higher-ranked-trait-bounds">Higher-ranked trait bounds</a></h2>
 <h2><a class="header" href="#高阶trait约束" id="高阶trait约束">高阶trait约束</a></h2>
+<blockquote>
+<p><em>ForLifetimes</em> :<br />
+   <code>for</code> <a href="items/generics.html"><em>GenericParams</em></a></p>
+</blockquote>
 <p>可以在生存期上再进行<em>更高阶的</em>类型约束。这些高阶约束指定了一个对<em>所有</em>生存期都为真的约束。例如，像 <code>for&lt;'a&gt; &amp;'a T: PartialEq&lt;i32&gt;</code> 这样的约束需要一个如下的实现</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -306,8 +310,6 @@ fn name_figure&lt;U: Shape&gt;(
 <div class="footnote-definition" id="译注4"><sup class="footnote-definition-label">3</sup>
 <p>译者理解这句的意思是：如果 <code>F</code> 的约束有多个 trait，那这种方式里， <code>'a</code> 的作用域只是扩展它后面紧跟的那个 trait 的方法，即 <code>Fn(&amp;'a i32)</code> 里。</p>
 </div>
-<!-- 2020-11-12-->
-<!-- checked -->
 
                     </main>
 

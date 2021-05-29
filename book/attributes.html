@@ -198,8 +198,8 @@
 <h1><a class="header" href="#属性" id="属性">属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes.md">attributes.md</a><br />
-commit: eabdf09207bf3563ae96db9d576de0758c413d5d <br />
-本章译文最后维护日期：2021-1-24</p>
+commit: efb2c1cab0302a985030a94adafae9e630a7894d <br />
+本章译文最后维护日期：2021-5-29</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -211,11 +211,11 @@ commit: eabdf09207bf3563ae96db9d576de0758c413d5d <br />
    <a href="paths.html#simple-paths"><em>SimplePath</em></a> <em>AttrInput</em><sup>?</sup></p>
 <p><em>AttrInput</em> :<br />
       <a href="macros.html"><em>DelimTokenTree</em></a><br />
-   | <code>=</code> <a href="expressions/literal-expr.html"><em>LiteralExpression</em></a><sub><em>不带后缀</em></sub></p>
+   | <code>=</code> <a href="expressions.html"><em>Expression</em></a></p>
 </blockquote>
 <p><em>属性</em>是一种通用的、格式自由的元数据(free-form metadatum)，这种元数据会（被编译器/解释器）依据名称、约定、语言和编译器版本进行解释。（Rust 语言中的）属性是根据 <a href="https://www.ecma-international.org/publications/standards/Ecma-335.htm">ECMA-335</a> 标准中的属性规范进行建模的，其语法来自 <a href="https://www.ecma-international.org/publications/standards/Ecma-334.htm">ECMA-334</a> (C#）。</p>
 <p>*内部属性(Inner attributes)*以 <code>#!</code> 开头的方式编写，应用于它在其中声明的程序项。*外部属性(Outer attributes)*以不后跟感叹号的(<code>!</code>)的 <code>#</code> 开头的方式编写，应用于属性后面的内容。</p>
-<p>属性由指向属性的路径和路径后跟的可选的带定界符的 token树(delimited token tree)（其解释由属性定义）组成。除了宏属性之外，其他属性的输入也允许使用等号(<code>=</code>)后跟文字表达式的格式。更多细节请参见下面的<a href="#meta-item-attribute-syntax">元项属性句法(meta item syntax)</a>。</p>
+<p>属性由指向属性的路径和路径后跟的可选的带定界符的 token树(delimited token tree)（其解释由属性定义）组成。除了宏属性之外，其他属性的输入也允许使用等号(<code>=</code>)后跟表达式的格式。更多细节请参见下面的<a href="#meta-item-attribute-syntax">元项属性句法(meta item syntax)</a>。</p>
 <p>属性可以分为以下几类：</p>
 <ul>
 <li><a href="#built-in-attributes-index">内置属性</a></li>
@@ -274,15 +274,29 @@ fn some_unused_variables() {
 <p><strong><sup>句法</sup></strong><br />
 <em>MetaItem</em> :<br />
       <a href="paths.html#simple-paths"><em>SimplePath</em></a><br />
-   | <a href="paths.html#simple-paths"><em>SimplePath</em></a> <code>=</code> <a href="expressions/literal-expr.html"><em>LiteralExpression</em></a><sub><em>不带后缀</em></sub><br />
+   | <a href="paths.html#simple-paths"><em>SimplePath</em></a> <code>=</code> <a href="expressions.html"><em>Expression</em></a><br />
    | <a href="paths.html#simple-paths"><em>SimplePath</em></a> <code>(</code> <em>MetaSeq</em><sup>?</sup> <code>)</code></p>
 <p><em>MetaSeq</em> :<br />
    <em>MetaItemInner</em> ( <code>,</code> MetaItemInner )<sup>*</sup> <code>,</code><sup>?</sup></p>
 <p><em>MetaItemInner</em> :<br />
       <em>MetaItem</em><br />
-   | <a href="expressions/literal-expr.html"><em>LiteralExpression</em></a><sub><em>不带后缀</em></sub></p>
+   | <a href="expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p>元项中的字面量表达式不能包含整型或浮点类型的后缀。</p>
+<p>元项中的表达式必须能宏展开为字面量表达式，且字面量表达式不得包含整型或浮点型后缀。现在，非字面量表达式的表达式可以在语法上被接受（并且可以传递给过程宏）了，但在解析后却被丢弃。</p>
+<p>请注意，如果该属性出现在另一个宏中，它将在该外部宏展开之后再展开。例如，下面的代码将首先展开为名为 <code>Serialize</code> 的过程宏，在第一次展开时，它必须保留 <code>include_str!</code>调用，以便将来再次展开：</p>
+<pre><code class="language-rustignore">#[derive(Serialize)]
+struct Foo {
+    #[doc = include_str!(&quot;x.md&quot;)]
+    x: u32
+}
+</code></pre>
+<p>此外，对与某个程序项来说，如果它的属性中用到了宏，那这个宏仅在所有其他相关属性都展开生效之后才展开：</p>
+<pre><code class="language-rustignore">#[macro_attr1] // 展开排序为第一
+#[doc = mac!()] // `mac!` 展开排序为第四
+#[macro_attr2] // 展开排序为第二
+#[derive(MacroDerive1, MacroDerive2)] // 展开排序为第三
+fn foo() {}
+</code></pre>
 <p>各种内置属性使用元项句法的不同子集来指定它们的输入。下面的文法规则展示了一些常用的使用形式：</p>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -433,8 +447,6 @@ pub fn f() {}
 </ul>
 </li>
 </ul>
-<!-- 2021-1-24-->
-<!-- checked -->
 
                     </main>
 

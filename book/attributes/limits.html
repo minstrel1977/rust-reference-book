@@ -169,8 +169,8 @@
 <h1><a class="header" href="#极值设置" id="极值设置">极值设置</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/limits.md">limits.md</a><br />
-commit: e7208a29f943e986c815734282c5cc5fd30f4708 <br />
-本章译文最后维护日期：2021-3-26</p>
+commit: 8758f30a7d62513cb3caea30000850c9742f2438 <br />
+本章译文最后维护日期：2021-5-29</p>
 </blockquote>
 <p>以下<a href="../attributes.html">属性</a>影响部分编译期参数的极限值设置。</p>
 <h2><a class="header" href="#the-recursion_limit-attribute" id="the-recursion_limit-attribute">The <code>recursion_limit</code> attribute</a></h2>
@@ -211,13 +211,12 @@ a!{}
 <blockquote>
 <p>注意：<code>rustc</code> 中这个参数的默认值是 1048576。</p>
 </blockquote>
-<!-- This code should fail to compile. Unfortunately rustdoc's `compile_fail` stops after analysis phase, and this error is generated after that. So this needs to be `ignore` for now. -->
-<pre><code class="language-rust compile_fail ignore">#![type_length_limit = &quot;8&quot;]
+<pre><code class="language-rust compile_fail ignore">#![type_length_limit = &quot;4&quot;]
 
 fn f&lt;T&gt;(x: T) {}
 
-// 这里的编译失败是因为单态化 `f::&lt;(i32, i32, i32, i32, i32, i32, i32, i32, i32)&gt;&gt;` 需要大于8个类型元素。
-f((1, 2, 3, 4, 5, 6, 7, 8, 9));
+// 这里的编译失败是因为单态化 `f::&lt;((((i32,), i32), i32), i32)&gt;` 需要大于4个类型元素。
+f(((((1,), 2), 3), 4));
 </code></pre>
 
                     </main>

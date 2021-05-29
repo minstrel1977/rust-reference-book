@@ -169,8 +169,8 @@
 <h1><a class="header" href="#类型参数和生存期参数" id="类型参数和生存期参数">类型参数和生存期参数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/generics.md">generics.md</a><br />
-commit: 7fd47ef4786f86ccdb5d6f0f198a6a9fdec5497c <br />
-本章译文最后维护日期：2021-1-17</p>
+commit: 33784fadb81c16918c7e6d207f8c838232c159b0 <br />
+本章译文最后维护日期：2021-5-29</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -178,13 +178,13 @@ commit: 7fd47ef4786f86ccdb5d6f0f198a6a9fdec5497c <br />
       <code>&lt;</code> <code>&gt;</code><br />
     | <code>&lt;</code> (<em>GenericParam</em> <code>,</code>)<sup>*</sup> <em>GenericParam</em> <code>,</code><sup>?</sup> <code>&gt;</code></p>
 <p><em>GenericParam</em> :<br />
-   [<em>OuterAttribute</em>]<sup>*</sup> ( <em>LifetimeParam</em> | <em>TypeParam</em> | <em>ConstParam</em> )</p>
+   <a href="../attributes.html"><em>OuterAttribute</em></a><sup>*</sup> ( <em>LifetimeParam</em> | <em>TypeParam</em> | <em>ConstParam</em> )</p>
 <p><em>LifetimeParam</em> :<br />
-   [LIFETIME_OR_LABEL] ( <code>:</code> [<em>LifetimeBounds</em>] )<sup>?</sup></p>
+   <a href="../tokens.html#lifetimes-and-loop-labels">LIFETIME_OR_LABEL</a> ( <code>:</code> <a href="../trait-bounds.html"><em>LifetimeBounds</em></a> )<sup>?</sup></p>
 <p><em>TypeParam</em> :<br />
-   [IDENTIFIER]( <code>:</code> [<em>TypeParamBounds</em>]<sup>?</sup> )<sup>?</sup> ( <code>=</code> [<em>Type</em>] )<sup>?</sup></p>
+   <a href="../identifiers.html">IDENTIFIER</a>( <code>:</code> <a href="../trait-bounds.html"><em>TypeParamBounds</em></a><sup>?</sup> )<sup>?</sup> ( <code>=</code> <a href="../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
 <p><em>ConstParam</em>:<br />
-   <code>const</code> [IDENTIFIER] <code>:</code> [<em>Type</em>]</p>
+   <code>const</code> <a href="../identifiers.html">IDENTIFIER</a> <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a></p>
 </blockquote>
 <p><a href="functions.html">函数</a>、<a href="type-aliases.html">类型别名</a>、<a href="structs.html">结构体</a>、<a href="enumerations.html">枚举</a>、<a href="unions.html">联合体</a>、<a href="traits.html">trait</a> 和<a href="implementations.html">实现</a>可以通过类型参数、常量参数和生存期参数达到<em>参数化</em>配置的的效果。这些参数在尖括号<span class="parenthetical">（<code>&lt;...&gt;</code>）</span>中列出，通常都是紧跟在程序项名称之后和程序项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 <code>impl</code> 之后。泛型参数的申明顺序是生存期参数在最前面，然后是类型参数，最后是常量参数。</p>
 <p>下面给出一些带类型参数、常量参数和生存期参数的程序项的示例：</p>
@@ -272,7 +272,7 @@ fn bad_function&lt;const N: usize&gt;() -&gt; [u8; {N + 1}] {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p><a href="../paths.html">路径</a>中的常量实参指定了该程序项使用的常量值。实参必须是常量形参所属类型的<a href="../const_eval.html#constant-expressions">常量表达式</a>。常量表达式必须是<a href="../expressions/block-expr.html">块表达式</a>（用花括号括起来），除非它是单独路径段（一个[标识符][IDENTIFIER]）或一个<a href="../expressions/literal-expr.html">字面量</a>（此字面量可以是以 <code>-</code> 打头的 token）。</p>
+<p><a href="../paths.html">路径</a>中的常量实参指定了该程序项使用的常量值。实参必须是常量形参所属类型的<a href="../const_eval.html#constant-expressions">常量表达式</a>。常量表达式必须是<a href="../expressions/block-expr.html">块表达式</a>（用花括号括起来），除非它是单独路径段（一个<a href="../identifiers.html">标识符</a>）或一个<a href="../expressions/literal-expr.html">字面量</a>（此字面量可以是以 <code>-</code> 打头的 token）。</p>
 <blockquote>
 <p><strong>注意</strong>：这种句法限制是必要的，用以避免在解析类型内部的表达式时可能会导致无限递归(infinite lookahead)。</p>
 </blockquote>
@@ -351,14 +351,12 @@ fn generic&lt;const B: bool&gt;() {
       <em>LifetimeWhereClauseItem</em><br />
    | <em>TypeBoundWhereClauseItem</em></p>
 <p><em>LifetimeWhereClauseItem</em> :<br />
-   [<em>Lifetime</em>] <code>:</code> [<em>LifetimeBounds</em>]</p>
+   <a href="../trait-bounds.html"><em>Lifetime</em></a> <code>:</code> <a href="../trait-bounds.html"><em>LifetimeBounds</em></a></p>
 <p><em>TypeBoundWhereClauseItem</em> :<br />
-   <em>ForLifetimes</em><sup>?</sup> [<em>Type</em>] <code>:</code> [<em>TypeParamBounds</em>]<sup>?</sup></p>
-<p><em>ForLifetimes</em> :<br />
-   <code>for</code> <code>&lt;</code> <a href="#generic-parameters"><em>GenericParams</em></a> <code>&gt;</code></p>
+   <a href="../trait-bounds.html#higher-ranked-trait-bounds"><em>ForLifetimes</em></a><sup>?</sup> <a href="../types.html#type-expressions"><em>Type</em></a> <code>:</code> <a href="../trait-bounds.html"><em>TypeParamBounds</em></a><sup>?</sup></p>
 </blockquote>
 <p><em>where子句</em>提供了另一种方法来为类型参数和生存期参数指定约束(bound)，甚至可以为非类型参数的类型指定约束。</p>
-<p>关键字<code>for</code> 可以用来引入<a href="../trait-bounds.html#higher-ranked-trait-bounds">高阶生存期参数</a>。它只允许在 [<em>LifetimeParam</em>] 参数上使用。</p>
+<p>关键字<code>for</code> 可以用来引入<a href="../trait-bounds.html#higher-ranked-trait-bounds">高阶生存期参数</a>。它只允许在 <a href="#generic-parameters"><em>LifetimeParam</em></a> 参数上使用。</p>
 <p>定义程序项时，其约束没有使用程序项的泛型参数或<a href="../trait-bounds.html#higher-ranked-trait-bounds">高阶生存期参数</a>，这样是可以通过编译器的安全检查，但这样的做法将必然导致错误。</p>
 <p>在定义程序项时，编译器还会检查某些泛型参数的类型是否存在 <a href="../special-types-and-traits.html#copy"><code>Copy</code></a>、<a href="../special-types-and-traits.html#clone"><code>Clone</code></a> 和 <a href="../special-types-and-traits.html#sized"><code>Sized</code></a> 这些约束。将<code>Copy</code> 或 <code>Clone</code> 作为可变引用、<a href="../types/trait-object.html">trait object</a>或<a href="../types/array.html">slice</a>这些程序项的约束是错误的，或将 <code>Sized</code> 作为 trait对象或切片的约束也是错误的。</p>
 <pre><pre class="playground"><code class="language-rust compile_fail">
@@ -388,8 +386,6 @@ struct Foo&lt;#[my_flexible_clone(unbounded)] H&gt; {
     a: *const H
 }
 </code></pre>
-<!-- 2021-1-20-->
-<!-- checked -->
 
                     </main>
 
