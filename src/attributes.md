@@ -3,8 +3,8 @@
 # 属性
 
 >[attributes.md](https://github.com/rust-lang/reference/blob/master/src/attributes.md)\
->commit: eabdf09207bf3563ae96db9d576de0758c413d5d \
->本章译文最后维护日期：2021-1-24
+>commit: efb2c1cab0302a985030a94adafae9e630a7894d \
+>本章译文最后维护日期：2021-5-29
 
 > **<sup>句法</sup>**\
 > _InnerAttribute_ :\
@@ -18,13 +18,13 @@
 >
 > _AttrInput_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_DelimTokenTree_]\
-> &nbsp;&nbsp; | `=` [_LiteralExpression_]<sub>_不带后缀_</sub>
+> &nbsp;&nbsp; | `=` [_Expression_]
 
 *属性*是一种通用的、格式自由的元数据(free-form metadatum)，这种元数据会（被编译器/解释器）依据名称、约定、语言和编译器版本进行解释。（Rust 语言中的）属性是根据 [ECMA-335] 标准中的属性规范进行建模的，其语法来自 [ECMA-334] \(C#）。
 
 *内部属性(Inner attributes)*以 `#!` 开头的方式编写，应用于它在其中声明的程序项。*外部属性(Outer attributes)*以不后跟感叹号的(`!`)的 `#` 开头的方式编写，应用于属性后面的内容。
 
-属性由指向属性的路径和路径后跟的可选的带定界符的 token树(delimited token tree)（其解释由属性定义）组成。除了宏属性之外，其他属性的输入也允许使用等号(`=`)后跟文字表达式的格式。更多细节请参见下面的[元项属性句法(meta item syntax)](#meta-item-attribute-syntax)。
+属性由指向属性的路径和路径后跟的可选的带定界符的 token树(delimited token tree)（其解释由属性定义）组成。除了宏属性之外，其他属性的输入也允许使用等号(`=`)后跟表达式的格式。更多细节请参见下面的[元项属性句法(meta item syntax)](#meta-item-attribute-syntax)。
 
 属性可以分为以下几类：
 
@@ -84,7 +84,7 @@ fn some_unused_variables() {
 > **<sup>句法</sup>**\
 > _MetaItem_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_SimplePath_]\
-> &nbsp;&nbsp; | [_SimplePath_] `=` [_LiteralExpression_]<sub>_不带后缀_</sub>\
+> &nbsp;&nbsp; | [_SimplePath_] `=` [_Expression_]\
 > &nbsp;&nbsp; | [_SimplePath_] `(` _MetaSeq_<sup>?</sup> `)`
 >
 > _MetaSeq_ :\
@@ -92,9 +92,29 @@ fn some_unused_variables() {
 >
 > _MetaItemInner_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _MetaItem_\
-> &nbsp;&nbsp; | [_LiteralExpression_]<sub>_不带后缀_</sub>
+> &nbsp;&nbsp; | [_Expression_]
 
-元项中的字面量表达式不能包含整型或浮点类型的后缀。
+元项中的表达式必须能宏展开为字面量表达式，且字面量表达式不得包含整型或浮点型后缀。现在，非字面量表达式的表达式可以在语法上被接受（并且可以传递给过程宏）了，但在解析后却被丢弃。
+
+请注意，如果该属性出现在另一个宏中，它将在该外部宏展开之后再展开。例如，下面的代码将首先展开为名为 `Serialize` 的过程宏，在第一次展开时，它必须保留 `include_str!`调用，以便将来再次展开：
+
+```rust ignore
+#[derive(Serialize)]
+struct Foo {
+    #[doc = include_str!("x.md")]
+    x: u32
+}
+```
+
+此外，对与某个程序项来说，如果它的属性中用到了宏，那这个宏仅在所有其他相关属性都展开生效之后才展开：
+
+```rust ignore
+#[macro_attr1] // 展开排序为第一
+#[doc = mac!()] // `mac!` 展开排序为第四
+#[macro_attr2] // 展开排序为第二
+#[derive(MacroDerive1, MacroDerive2)] // 展开排序为第三
+fn foo() {}
+```
 
 各种内置属性使用元项句法的不同子集来指定它们的输入。下面的文法规则展示了一些常用的使用形式：
 
@@ -225,7 +245,7 @@ pub fn f() {}
 [The Rustdoc Book]: https://doc.rust-lang.org/rustdoc/the-doc-attribute.html
 [The Unstable Book]: https://doc.rust-lang.org/unstable-book/index.html
 [_DelimTokenTree_]: macros.md
-[_LiteralExpression_]: expressions/literal-expr.md
+[_Expression_]: expressions.md
 [_SimplePath_]: paths.md#simple-paths
 [`allow`]: attributes/diagnostics.md#lint-check-attributes
 [`automatically_derived`]: attributes/derive.md#the-automatically_derived-attribute
@@ -290,6 +310,3 @@ pub fn f() {}
 [closure]: expressions/closure-expr.md
 [function pointer]: types/function-pointer.md
 [variadic functions]: items/external-blocks.html#variadic-functions
-
-<!-- 2021-1-24-->
-<!-- checked -->

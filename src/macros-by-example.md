@@ -2,8 +2,8 @@
 # 声明宏
 
 >[macros-by-example.md](https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md)\
->commit: d23f9da8469617e6c81121d9fd123443df70595d \
->本章译文最后维护日期：2021-5-6
+>commit: 3a6ddea02244857362ac05d85ec98736b738c0ff \
+>本章译文最后维护日期：2021-5-29
 
 > **<sup>句法</sup>**\
 > _MacroRulesDefinition_ :\
@@ -33,7 +33,7 @@
 >
 > _MacroFragSpec_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `block` | `expr` | `ident` | `item` | `lifetime` | `literal`\
-> &nbsp;&nbsp; | `meta` | `pat` | `path` | `stmt` | `tt` | `ty` | `vis`
+> &nbsp;&nbsp; | `meta` | `pat` | `pat_param` | `path` | `stmt` | `tt` | `ty` | `vis`
 >
 > _MacroRepSep_ :\
 > &nbsp;&nbsp; [_Token_]<sub>_排除 定界符 和 重复操作符_</sub>
@@ -101,7 +101,8 @@ foo!(3);
   * `item`: [_程序项_][_Item_]
   * `block`: [_块表达式_][_BlockExpression_]
   * `stmt`: [_语句_][_Statement_]，注意此选择器不匹配句尾的分号（如果匹配器中提供了分号，会被当做分隔符），但碰到分号是自身的一部分的程序项语句的情况又会匹配。
-  * `pat`: [_模式_][_PatternNoTopAlt_]
+  * `pat_param`: [_模式_][_PatternNoTopAlt_]
+  * `pat`: 等同于 `pat_param`
   * `expr`: [_表达式_][_Expression_]
   * `ty`: [_类型_][_Type_]
   * `ident`: [标识符或关键字][IDENTIFIER_OR_KEYWORD]
@@ -351,7 +352,7 @@ macro_rules! helper {
 例如，像 `$i:expr [ , ]` 这样的宏匹配器在现今的 Rust 中理论上是可以接受的，因为现在 `[,]` 不可能是合法表达式的一部分，因此解析始终是明确的。但是，由于 `[` 可以开始一个尾随表达式(trailing expressions)，因此 `[` 不是一个可以安全排除在表达式后面出现的字符。如果在接下来的 Rust 版本中接受了 `[,]`，那么这个匹配器就会产生歧义或是错误解析，破坏正常代码。但是，像`$i:expr,` 或 `$i:expr;` 这样的匹配符始终是合法的，因为 `,` 和`;` 是合法的表达式分隔符。目前规范中的规则是：（译者注：下面的规则不是绝对的，因为宏的基础理论还在发展中。）
 
   * `expr` 和 `stmt` 只能后跟一个： `=>`、`,`、`;`。
-  * `pat` 只能后跟一个： `=>`、`,`、`=`、`|`、`if`、`in`。
+  * `pat` 和 `pat_param` 只能后跟一个： `=>`、`,`、`=`、`|`、`if`、`in`。
   * `path` 和 `ty` 只能后跟一个： `=>`、`,`、`=`、`|`、`;`、`:`、`>`、`>>`、`[`、`{`、`as`、`where`、块(`block`)型非终结符(block nonterminals)。
   * `vis` 只能后跟一个：`,`、非原生字符串 `priv` 以外的任何标识符和关键字、可以表示类型开始的任何 token、`ident`或`ty`或`path`型非终结符。    
     

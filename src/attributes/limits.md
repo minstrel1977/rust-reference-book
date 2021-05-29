@@ -2,8 +2,8 @@
 # 极值设置
 
 >[limits.md](https://github.com/rust-lang/reference/blob/master/src/attributes/limits.md)\
->commit: e7208a29f943e986c815734282c5cc5fd30f4708 \
->本章译文最后维护日期：2021-3-26
+>commit: 8758f30a7d62513cb3caea30000850c9742f2438 \
+>本章译文最后维护日期：2021-5-29
 
 以下[属性][attributes]影响部分编译期参数的极限值设置。
 
@@ -43,15 +43,13 @@ a!{}
 
 > 注意：`rustc` 中这个参数的默认值是 1048576。
 
-<!-- This code should fail to compile. Unfortunately rustdoc's `compile_fail` stops after analysis phase, and this error is generated after that. So this needs to be `ignore` for now. -->
-
 ```rust,compile_fail,ignore
-#![type_length_limit = "8"]
+#![type_length_limit = "4"]
 
 fn f<T>(x: T) {}
 
-// 这里的编译失败是因为单态化 `f::<(i32, i32, i32, i32, i32, i32, i32, i32, i32)>>` 需要大于8个类型元素。
-f((1, 2, 3, 4, 5, 6, 7, 8, 9));
+// 这里的编译失败是因为单态化 `f::<((((i32,), i32), i32), i32)>` 需要大于4个类型元素。
+f(((((1,), 2), 3), 4));
 ```
 
 [_MetaNameValueStr_]: ../attributes.md#meta-item-attribute-syntax

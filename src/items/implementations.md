@@ -2,8 +2,8 @@
 # 实现
 
 >[implementations.md](https://github.com/rust-lang/reference/blob/master/src/items/implementations.md)\
->commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 \
->本章译文最后维护日期：2021-1-17
+>commit: d1f22f659fae9cfbeb9e45c8226d134d4a272586 \
+>本章译文最后维护日期：2021-5-29
 
 > **<sup>句法</sup>**\
 > _Implementation_ :\
@@ -102,7 +102,7 @@ trait实现必须去定义被实现trait 声明里的所有非默认关联程序
 # struct Point {x: f64, y: f64};
 # type Surface = i32;
 # struct BoundingBox {x: f64, y: f64, width: f64, height: f64};
-# trait Shape { fn draw(&self, Surface); fn bounding_box(&self) -> BoundingBox; }
+# trait Shape { fn draw(&self, s: Surface); fn bounding_box(&self) -> BoundingBox; }
 # fn do_draw_circle(s: Surface, c: Circle) { }
 struct Circle {
     radius: f64,
@@ -267,6 +267,3 @@ impl<'a> HasAssocType for Struct {
 [local type]: ../glossary.md#local-type
 [fundamental types]: ../glossary.md#fundamental-type-constructors
 [uncovered type]: ../glossary.md#uncovered-type
-
-<!-- 2020-11-12-->
-<!-- checked -->

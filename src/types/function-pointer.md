@@ -2,8 +2,8 @@
 # 函数指针类型
 
 >[function-pointer.md](https://github.com/rust-lang/reference/blob/master/src/types/function-pointer.md)\
->commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 \
->本章译文最后维护日期：2021-1-17
+>commit: 33784fadb81c16918c7e6d207f8c838232c159b0 \
+>本章译文最后维护日期：2021-5-29
 
 > **<sup>句法</sup>**\
 > _BareFunctionType_ :\
@@ -55,7 +55,7 @@ x = bo(5,7);
 
 [IDENTIFIER]: ../identifiers.md
 [_Abi_]: ../items/functions.md
-[_ForLifetimes_]: ../items/generics.md#where-clauses
+[_ForLifetimes_]: ../trait-bounds.md#higher-ranked-trait-bounds
 [_TypeNoBounds_]: ../types.md#type-expressions
 [_Type_]: ../types.md#type-expressions
 [_OuterAttribute_]: ../attributes.md

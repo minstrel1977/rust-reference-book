@@ -2,8 +2,8 @@
 # trait约束和生存期约束
 
 >[trait-bounds.md](https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md)\
->commit: f8e76ee9368f498f7f044c719de68c7d95da9972 \
->本章译文最后维护日期：2020-11-15
+>commit: 33784fadb81c16918c7e6d207f8c838232c159b0 \
+>本章译文最后维护日期：2021-5-29
 
 > **<sup>句法</sup>**\
 > _TypeParamBounds_ :\
@@ -90,6 +90,9 @@ fn f<'a, 'b>(x: &'a i32, mut y: &'b i32) where 'a: 'b {
 ## Higher-ranked trait bounds
 ## 高阶trait约束
 
+> _ForLifetimes_ :\
+> &nbsp;&nbsp; `for` [_GenericParams_]
+
 可以在生存期上再进行*更高阶的*类型约束。这些高阶约束指定了一个对*所有*生存期都为真的约束。例如，像 `for<'a> &'a T: PartialEq<i32>` 这样的约束需要一个如下的实现
 
 ```rust
@@ -136,6 +139,7 @@ fn call_on_ref_zero<F>(f: F) where F: for<'a> Fn(&'a i32) {
 [^译注4]: 译者理解这句的意思是：如果 `F` 的约束有多个 trait，那这种方式里， `'a` 的作用域只是扩展它后面紧跟的那个 trait 的方法，即 `Fn(&'a i32)` 里。
 
 [LIFETIME_OR_LABEL]: tokens.md#lifetimes-and-loop-labels
+[_GenericParams_]: items/generics.md
 [_TypePath_]: paths.md#paths-in-types
 [`Sized`]: special-types-and-traits.md#sized
 
@@ -145,6 +149,3 @@ fn call_on_ref_zero<F>(f: F) where F: for<'a> Fn(&'a i32) {
 [Trait]: items/traits.md#trait-bounds
 [trait objects]: types/trait-object.md
 [where clause]: items/generics.md#where-clauses
-
-<!-- 2020-11-12-->
-<!-- checked -->

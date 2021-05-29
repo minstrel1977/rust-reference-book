@@ -2,8 +2,8 @@
 # 类型参数和生存期参数
 
 >[generics.md](https://github.com/rust-lang/reference/blob/master/src/items/generics.md)\
->commit: 7fd47ef4786f86ccdb5d6f0f198a6a9fdec5497c \
->本章译文最后维护日期：2021-1-17
+>commit: 33784fadb81c16918c7e6d207f8c838232c159b0 \
+>本章译文最后维护日期：2021-5-29
 
 > **<sup>句法</sup>**\
 > _GenericParams_ :\
@@ -189,10 +189,7 @@ fn generic<const B: bool>() {
 > &nbsp;&nbsp; [_Lifetime_] `:` [_LifetimeBounds_]
 >
 > _TypeBoundWhereClauseItem_ :\
-> &nbsp;&nbsp; _ForLifetimes_<sup>?</sup> [_Type_] `:` [_TypeParamBounds_]<sup>?</sup>
->
-> _ForLifetimes_ :\
-> &nbsp;&nbsp; `for` `<` [_GenericParams_](#generic-parameters) `>`
+> &nbsp;&nbsp; [_ForLifetimes_]<sup>?</sup> [_Type_] `:` [_TypeParamBounds_]<sup>?</sup>
 
 *where子句*提供了另一种方法来为类型参数和生存期参数指定约束(bound)，甚至可以为非类型参数的类型指定约束。
 
@@ -232,6 +229,17 @@ struct Foo<#[my_flexible_clone(unbounded)] H> {
 }
 ```
 
+[IDENTIFIER]: ../identifiers.md
+[LIFETIME_OR_LABEL]: ../tokens.md#lifetimes-and-loop-labels
+
+[_ForLifetimes_]: ../trait-bounds.md#higher-ranked-trait-bounds
+[_LifetimeParam_]: #generic-parameters
+[_LifetimeBounds_]: ../trait-bounds.md
+[_Lifetime_]: ../trait-bounds.md
+[_OuterAttribute_]: ../attributes.md
+[_Type_]: ../types.md#type-expressions
+[_TypeParamBounds_]: ../trait-bounds.md
+
 [array repeat expression]: ../expressions/array-expr.md
 [arrays]: ../types/array.md
 [associated const]: associated-items.md#associated-constants
@@ -264,6 +272,3 @@ struct Foo<#[my_flexible_clone(unbounded)] H> {
 [type]: ../types.md
 [unions]: unions.md
 [attributes]: ../attributes.md
-
-<!-- 2021-1-20-->
-<!-- checked -->
