@@ -169,8 +169,8 @@
 <h1><a class="header" href="#术语表" id="术语表">术语表</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/glossary.md">glossary.md</a><br />
-commit: c28dfe483375849678793dbe86c69a1953f3bb00 <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: e9862d82e92bb0d6f89df4036a98f96bcdd61c95 <br />
+本章译文最后维护日期：2021-06-09</p>
 </blockquote>
 <h3><a class="header" href="#abstract-syntax-tree" id="abstract-syntax-tree">Abstract syntax tree</a></h3>
 <h3><a class="header" href="#抽象句法树" id="抽象句法树">抽象句法树</a></h3>
@@ -204,6 +204,11 @@ Bounds are constraints on a type or trait. For example, if a bound is placed on 
 <h3><a class="header" href="#组合子" id="组合子">组合子</a></h3>
 <p>组合子是高阶函数，它的参数全是函数或之前定义的组合子。组合子利用这些函数或组合子返回的结果作为入参进行进一步的逻辑计算和输出。组合子可用于以模块化的方式管理控制流。<br />
 Combinators are higher-order functions that apply only functions and earlier defined combinators to provide a result from its arguments. They can be used to manage control flow in a modular fashion.</p>
+<h3><a class="header" href="#crate" id="crate">Crate</a></h3>
+<p>crate 是编译和链接的最小单元。<a href="linkage.html">crate的类型</a>有多种，如常见的库或可执行文件。crate 可以链接和引用其他被称为外部crate 的库crate。crate是一个自包含的<a href="items/modules.html">模块</a>树，此树从一个未命名模块（此模块一般称为此crate的根模块）开始。crate内的[程序项]可以通过在根模块中将其标记为公有(pub)来让其对其他 crate 可见（注意在标记公有的过程中也要让此程序项的完整路径公有）。
+<a href="crates-and-source-files.html">查看更多</a>。<br />
+A crate is the unit of compilation and linking. There are different <a href="linkage.html">types of crates</a>, such as libraries or executables. Crates may link and refer to other library crates, called external crates. A crate has a self-contained tree of <a href="items/modules.html">modules</a>, starting from an unnamed root module called the crate root. <a href="items.html">Items</a> may be made visible to other crates by marking them as public in the crate root, including through <a href="paths.html">paths</a> of public modules.
+<a href="crates-and-source-files.html">More</a>.</p>
 <h3><a class="header" href="#dispatch" id="dispatch">Dispatch</a></h3>
 <h3><a class="header" href="#分发" id="分发">分发</a></h3>
 <p>分发是一种机制，用于确定涉及到多态性时实际运行的是哪个版本的代码。分发的两种主要形式是静态分发和动态分发。虽然 Rust 支持静态分发，但它也通过一种称为 trait对象的机制支持动态分发。<br />
@@ -278,6 +283,12 @@ See <a href="https://github.com/rust-lang/rust/blob/master/src/test/ui/bastion-o
 <h3><a class="header" href="#本地类型" id="本地类型">本地类型</a></h3>
 <p>指在当前 crate 中定义的 <code>struct</code>、<code>enum</code>、或 <code>union</code> 。本地类型不会受到类型参数的影响。<code>struct Foo</code> 被认为是本地的，但 <code>Vec&lt;Foo&gt;</code> 不是。<code>LocalType&lt;ForeignType&gt;</code> 是本地的。类型别名不影响本地性。<br />
 A <code>struct</code>, <code>enum</code>, or <code>union</code> which was defined in the current crate. This is not affected by applied type arguments. <code>struct Foo</code> is considered local, but <code>Vec&lt;Foo&gt;</code> is not. <code>LocalType&lt;ForeignType&gt;</code> is local. Type aliases do not affect locality.</p>
+<h3><a class="header" href="#module" id="module">Module</a></h3>
+<h3><a class="header" href="#模块" id="模块">模块</a></h3>
+<p>模块是容纳零个或多个<a href="items.html">程序项</a>的容器。模块以树的形式组织，从一个被称为当前crate的根或根模块的未命名的模块开始。在模块内，可使用<a href="paths.html">路径</a>来引用其他模块的程序项，但这些程序项的可见性要受到<a href="visibility-and-privacy.html">可见性规则</a>的限定。
+<a href="items/modules.html">查看更多</a>。<br />
+A module is a container for zero or more <a href="items.html">items</a>. Modules are organized in a tree, starting from an unnamed module at the root called the crate root or the root module. <a href="paths.html">Paths</a> may be used to refer to items from other modules, which may be restricted by <a href="visibility-and-privacy.html">visibility rules</a>.
+<a href="items/modules.html">More</a></p>
 <h3><a class="header" href="#name" id="name">Name</a></h3>
 <h3><a class="header" href="#名称" id="名称">名称</a></h3>
 <p><a href="names.html"><em>名称</em></a>是一个指向<a href="#entity">实体</a>的<a href="identifiers.html">标识符</a>或<a href="tokens.html#lifetimes-and-loop-labels">生存期或循环标签</a>。*名称绑定(name binding)*是指实体声明时引入了与该实体相关联的标识符或标签。<a href="paths.html">路径</a>、标识符和标签用于引用实体。<br />
@@ -365,8 +376,6 @@ Compile-time or run-time behavior that is not specified. This may result in, but
 <h3><a class="header" href="#uninhabited" id="uninhabited">Uninhabited</a></h3>
 <p>如果类型没有构造函数，因此永远不能实例化，则该类型是 Uninhabited。一个 Uninhabited 类型是“空的”，意思是该类型没有值。Uninhabited 类型的典型例子是 <a href="types/never.html">never type</a> <code>!</code>，或不带变体的 <code>enum Never { }</code>。与之相对的是 <a href="#inhabited">Inhabited</a>。<br />
 A type is uninhabited if it has no constructors and therefore can never be instantiated. An uninhabited type is &quot;empty&quot; in the sense that there are no values of the type. The canonical example of an uninhabited type is the <a href="types/never.html">never type</a> <code>!</code>, or an enum with no variants <code>enum Never { }</code>. Opposite of <a href="#inhabited">Inhabited</a>.</p>
-<!-- 2021-1-24-->
-<!-- checked -->
 
                     </main>
 

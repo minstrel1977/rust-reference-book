@@ -2,8 +2,8 @@
 # 术语表
 
 >[glossary.md](https://github.com/rust-lang/reference/blob/master/src/glossary.md)\
->commit: c28dfe483375849678793dbe86c69a1953f3bb00 \
->本章译文最后维护日期：2021-02-21
+>commit: e9862d82e92bb0d6f89df4036a98f96bcdd61c95 \
+>本章译文最后维护日期：2021-06-09
 
 ### Abstract syntax tree
 ### 抽象句法树
@@ -52,6 +52,13 @@ Bounds are constraints on a type or trait. For example, if a bound is placed on 
 
 组合子是高阶函数，它的参数全是函数或之前定义的组合子。组合子利用这些函数或组合子返回的结果作为入参进行进一步的逻辑计算和输出。组合子可用于以模块化的方式管理控制流。\
 Combinators are higher-order functions that apply only functions and earlier defined combinators to provide a result from its arguments. They can be used to manage control flow in a modular fashion.
+
+### Crate
+
+crate 是编译和链接的最小单元。[crate的类型][types of crates]有多种，如常见的库或可执行文件。crate 可以链接和引用其他被称为外部crate 的库crate。crate是一个自包含的[模块][modules]树，此树从一个未命名模块（此模块一般称为此crate的根模块）开始。crate内的[程序项]可以通过在根模块中将其标记为公有(pub)来让其对其他 crate 可见（注意在标记公有的过程中也要让此程序项的完整路径公有）。
+[查看更多][crate]。\
+A crate is the unit of compilation and linking. There are different [types of crates], such as libraries or executables. Crates may link and refer to other library crates, called external crates. A crate has a self-contained tree of [modules], starting from an unnamed root module called the crate root. [Items] may be made visible to other crates by marking them as public in the crate root, including through [paths] of public modules.
+[More][crate].
 
 ### Dispatch
 ### 分发
@@ -154,6 +161,15 @@ See [the bastion of the turbofish][turbofish test] for an example where not havi
 
 指在当前 crate 中定义的 `struct`、`enum`、或 `union` 。本地类型不会受到类型参数的影响。`struct Foo` 被认为是本地的，但 `Vec<Foo>` 不是。`LocalType<ForeignType>` 是本地的。类型别名不影响本地性。\
 A `struct`, `enum`, or `union` which was defined in the current crate. This is not affected by applied type arguments. `struct Foo` is considered local, but `Vec<Foo>` is not. `LocalType<ForeignType>` is local. Type aliases do not affect locality.
+
+### Module
+### 模块
+
+模块是容纳零个或多个[程序项][items]的容器。模块以树的形式组织，从一个被称为当前crate的根或根模块的未命名的模块开始。在模块内，可使用[路径][Paths]来引用其他模块的程序项，但这些程序项的可见性要受到[可见性规则][visibility rules]的限定。
+[查看更多][modules]。\
+A module is a container for zero or more [items]. Modules are organized in a tree, starting from an unnamed module at the root called the crate root or the root module. [Paths] may be used to refer to items from other modules, which may be restricted by [visibility rules].
+[More][modules]
+
 
 ### Name
 ### 名称
@@ -282,6 +298,7 @@ A type is uninhabited if it has no constructors and therefore can never be insta
 [associated item]: #associated-item
 [attributes]: attributes.md
 [*entity*]: names.md
+[crate]: crates-and-source-files.md
 [enums]: items/enumerations.md
 [fields]: expressions/field-expr.md
 [free item]: #free-item
@@ -299,6 +316,7 @@ A type is uninhabited if it has no constructors and therefore can never be insta
 [lints]: attributes/diagnostics.md#lint-check-attributes
 [loop labels]: tokens.md#lifetimes-and-loop-labels
 [method]: items/associated-items.md#methods
+[modules]: items/modules.md
 [*Name resolution*]: names/name-resolution.md
 [*name*]: names.md
 [*namespace*]: names/namespaces.md
@@ -311,10 +329,9 @@ A type is uninhabited if it has no constructors and therefore can never be insta
 [trait objects]: types/trait-object.md
 [traits]: items/traits.md
 [turbofish test]: https://github.com/rust-lang/rust/blob/master/src/test/ui/bastion-of-the-turbofish.rs
+[types of crates]: linkage.md
 [types]: types.md
 [undefined-behavior]: behavior-considered-undefined.md
 [unions]: items/unions.md
 [variable bindings]: patterns.md
-
-<!-- 2021-1-24-->
-<!-- checked -->
+[visibility rules]: visibility-and-privacy.md
