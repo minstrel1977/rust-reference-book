@@ -207,7 +207,7 @@ commit: d23f9da8469617e6c81121d9fd123443df70595d <br />
 <h2><a class="header" href="#示例" id="示例">示例</a></h2>
 <p>在下面例子中，我们定义了一个名为 <code>ten_times</code> 的函数，它接受高阶函数参数，然后我们传给它一个闭包表达式作为实参并调用它。
 之后又定义了一个使用移动语义从环境中捕获变量的闭包表达式来供该函数调用。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn ten_times&lt;F&gt;(f: F) where F: Fn(i32) {

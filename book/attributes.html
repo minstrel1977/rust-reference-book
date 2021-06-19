@@ -235,7 +235,7 @@ commit: efb2c1cab0302a985030a94adafae9e630a7894d <br />
 <li><a href="items/functions.html">函数</a>、<a href="expressions/closure-expr.html">闭包</a>和<a href="types/function-pointer.html">函数指针</a>的参数可接受外部属性。这包括函数指针和<a href="items/external-blocks.html#variadic-functions">外部块</a>中用 <code>...</code> 表示的可变参数上的属性。</li>
 </ul>
 <p>属性的一些例子：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 应用于当前模块或 crate 的一般性元数据。
@@ -328,7 +328,7 @@ fn foo() {}
 <p>编译器可能允许和具体外部工具相关联的属性，但这些工具在编译和检查过程中必须存在并驻留在编译器提供的<a href="names/preludes.html#tool-prelude">工具类预导入包</a>下对应的命名空间中（才能让这些属性生效）。这种属性的（命名空间）路径的第一段是工具的名称，后跟一个或多个工具自己解释的附加段。</p>
 <p>当工具在编译期不可用时，该工具的属性将被静默接受而不提示警告。当工具可用时，该工具负责处理和解释这些属性。</p>
 <p>如果使用了 <a href="names/preludes.html#the-no_implicit_prelude-attribute"><code>no_implicit_prelude</code></a>属性，则外部工具属性不可用。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 告诉rustfmt工具不要格式化以下元素。

@@ -186,7 +186,7 @@ commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
 当封闭操作数是位置表达式时，它是一个位置表达式；当封闭操作数是一个值表达式是，它是一个值表达式。</p>
 <p>圆括号可用于显式修改表达式中的子表达式的优先顺序。</p>
 <p>圆括号表达式的一个例子：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x: i32 = 2 + 3 * 4;
@@ -196,7 +196,7 @@ assert_eq!(y, 20);
 <span class="boring">}
 </span></code></pre></pre>
 <p>当调用结构体的函数指针类型的成员时，必须使用括号，示例如下：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct A {

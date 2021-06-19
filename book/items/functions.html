@@ -169,8 +169,8 @@
 <h1><a class="header" href="#函数" id="函数">函数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/functions.md">functions.md</a><br />
-commit: 245b8336818913beafa7a35a9ad59c85f28338fb <br />
-本章译文最后维护日期：2021-5-6</p>
+commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
+本章译文最后维护日期：2021-06-19</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -210,7 +210,7 @@ commit: 245b8336818913beafa7a35a9ad59c85f28338fb <br />
 <p><em>函数</em>由一个<a href="../expressions/block-expr.html">块</a>以及一个名称和一组参数组成。除了名称，其他的都是可选的。函数使用关键字 <code>fn</code> 声明。函数可以声明一组<em>输入</em><a href="../variables.html"><em>变量</em></a>作为参数，调用者通过它向函数传递参数，函数完成后，它再将带有<em>输出</em><a href="../types.html#type-expressions"><em>类型</em></a>的结果值返回给调用者。</p>
 <p>当一个<em>函数</em>被引用时，该函数会产生一个相应的零尺寸<a href="../types/function-item.html"><em>函数项类型(function item type)</em></a>的一等(first-class)<em>值</em>，调用该值就相当于直接调用该函数。</p>
 <p>举个简单的定义函数的例子:</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn answer_to_life_the_universe_and_everything() -&gt; i32 {
@@ -221,7 +221,7 @@ commit: 245b8336818913beafa7a35a9ad59c85f28338fb <br />
 <h2><a class="header" href="#function-parameters" id="function-parameters">Function parameters</a></h2>
 <h2><a class="header" href="#函数参数" id="函数参数">函数参数</a></h2>
 <p>和 <code>let</code>绑定一样，函数参数是不可反驳型<a href="../patterns.html">模式</a>，所以任何在 let绑定中有效的模式都可以有效应用在函数参数上:</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn first((value, _): (i32, i32)) -&gt; i32 { value }
@@ -244,7 +244,7 @@ return {
 <h2><a class="header" href="#generic-functions" id="generic-functions">Generic functions</a></h2>
 <h2><a class="header" href="#泛型函数" id="泛型函数">泛型函数</a></h2>
 <p><em>泛型函数</em>允许在其签名中出现一个或多个<em>参数化类型(parameterized types)</em>。每个类型参数必须在函数名后面的尖括号封闭逗号分隔的列表中显式声明。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// foo 是建立在 A 和 B 基础上的泛型函数
@@ -254,7 +254,7 @@ fn foo&lt;A, B&gt;(x: A, y: B) {
 </span><span class="boring">}
 </span></code></pre></pre>
 <p>在函数签名上和函数体内部，类型参数的名称可以被用作类型名。可以为类型参数指定 <a href="traits.html">trait</a>约束，以允许对该类型的值调用这些 trait 的方法。这种约束是使用 <code>where</code>句法指定的：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::fmt::Debug;
@@ -263,7 +263,7 @@ fn foo&lt;A, B&gt;(x: A, y: B) {
 </span><span class="boring">}
 </span></code></pre></pre>
 <p>当使用泛型函数时，它的（类型参数的）类型会基于调用的上下文被实例化。例如，这里调用 <code>foo</code> 函数:</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fmt::Debug;
@@ -291,21 +291,21 @@ foo(&amp;[1, 2]);
 unsafe { foo() }
 </code></pre>
 <p>当函数的 <code>FunctionQualifiers</code> 句法规则中的 <code>&quot;extern&quot; Abi?*</code> 选项被省略时，会默认使用 <code>&quot;Rust&quot;</code> 类型的 ABI。例如:</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn foo() {}
 <span class="boring">}
 </span></code></pre></pre>
 <p>等价于：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>extern &quot;Rust&quot; fn foo() {}
 <span class="boring">}
 </span></code></pre></pre>
 <p>使用 <code>&quot;Rust&quot;</code> 之外的 ABI 可以让 Rust 中声明的函数被其他编程语言调用。比如下面声明了一个可以从 C 中调用的函数：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 使用 &quot;C&quot; ABI 声明一个函数
@@ -317,7 +317,7 @@ extern &quot;C&quot; fn new_i32() -&gt; i32 { 0 }
 <span class="boring">}
 </span></code></pre></pre>
 <p>与<a href="external-blocks.html">外部块</a>一样，当使用关键字 <code>extern</code> 而省略 <code>&quot;ABI</code> 时，ABI 默认使用的是 <code>&quot;C&quot;</code>。也就是说这个：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>extern fn new_i32() -&gt; i32 { 0 }
@@ -325,7 +325,7 @@ let fptr: extern fn() -&gt; i32 = new_i32;
 <span class="boring">}
 </span></code></pre></pre>
 <p>等价于：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>extern &quot;C&quot; fn new_i32() -&gt; i32 { 0 }
@@ -410,7 +410,7 @@ async fn safe_example() {
 <h2><a class="header" href="#函数上的属性" id="函数上的属性">函数上的属性</a></h2>
 <p>在函数上允许使用<a href="../attributes.html">外部属性</a>，也允许在<a href="../expressions/block-expr.html">函数体</a>中的 <code>{</code> 后面直接放置<a href="../attributes.html">内部属性</a>。</p>
 <p>下面这个例子显示了一个函数的内部属性。该函数的文档中只会出现单词“Example”。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn documented() {
@@ -425,7 +425,7 @@ async fn safe_example() {
 <h2><a class="header" href="#attributes-on-function-parameters" id="attributes-on-function-parameters">Attributes on function parameters</a></h2>
 <h2><a class="header" href="#函数参数上的属性" id="函数参数上的属性">函数参数上的属性</a></h2>
 <p>函数参数允许使用<a href="../attributes.html">外部属性</a>，允许的<a href="../attributes.html#built-in-attributes-index">内置属性</a>仅限于 <code>cfg</code>、<code>cfg_attr</code>、<code>allow</code>、<code>warn</code>、<code>deny</code> 和 <code>forbid</code>。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn len(
@@ -443,8 +443,6 @@ async fn safe_example() {
 fn foo_oof(#[some_inert_attribute] arg: u8) {
 }
 </code></pre>
-<!-- 2021-1-17-->
-<!-- checked -->
 
                     </main>
 

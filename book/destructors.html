@@ -190,7 +190,7 @@ commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
 </ol>
 <p>如果析构函数必须手动运行，比如在实现自定义的智能指针时，可以使用标准库函数 <a href="https://doc.rust-lang.org/std/ptr/fn.drop_in_place.html"><code>std::ptr::drop_in_place</code></a>。</p>
 <p>举些（析构函数的）例子：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct PrintOnDrop(&amp;'static str);
@@ -253,7 +253,7 @@ core::mem::forget(partial_move.1);
 <h3><a class="header" href="#scopes-of-function-parameters" id="scopes-of-function-parameters">Scopes of function parameters</a></h3>
 <h3><a class="header" href="#函数参数的作用域" id="函数参数的作用域">函数参数的作用域</a></h3>
 <p>所有函数参数都在整个函数体的作用域内有效，因此在对函数求值时，它们是最后被销毁的。实参会在其内部值被形参的模式绑定之后销毁。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct PrintOnDrop(&amp;'static str);
@@ -278,7 +278,7 @@ patterns_in_parameters(
 <h3><a class="header" href="#scopes-of-local-variables" id="scopes-of-local-variables">Scopes of local variables</a></h3>
 <h3><a class="header" href="#本地变量的作用域" id="本地变量的作用域">本地变量的作用域</a></h3>
 <p>在 <code>let</code>语句中声明的局部变量与包含此 <code>let</code>语句的块作用域相关联。在匹配(<code>match</code>)表达式中声明的局部变量与声明它们的匹配(<code>match</code>)臂的匹配臂作用域相关联。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct PrintOnDrop(&amp;'static str);
@@ -314,7 +314,7 @@ let declared_last = PrintOnDrop(&quot;在外层作用域内最先销毁&quot;);
 <p>匹配表达式的<a href="glossary.html#scrutinee">检验对象</a>表达式本身不是一个临时作用域（，但它内部可以包含临时作用域），因此可以在匹配(<code>match</code>)表达式之后销毁检验对象表达式中的临时作用域。例如，<code>match 1 { ref mut z =&gt; z };</code> 中的 <code>1</code> 所在的临时变量一直存活到此语句结束。</p>
 </blockquote>
 <p>一些示例：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct PrintOnDrop(&amp;'static str);
@@ -353,7 +353,7 @@ match PrintOnDrop(&quot;Matched value in final expression&quot;) {
 <h3><a class="header" href="#operands" id="operands">Operands</a></h3>
 <h3><a class="header" href="#操作数" id="操作数">操作数</a></h3>
 <p>在同一表达式中，在对其他操作数求值时，也会创建临时变量来将已求值的操作数的结果保存起来。临时变量与该操作数所属的表达式的作用域相关联。因为一旦表达式求值，临时变量就被移走了，所以销毁它们没有任何效果和意义，除非整个表达式的某一操作数出现异常，导致表达式求值失败，或提前返回，或触发了 panic。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct PrintOnDrop(&amp;'static str);
@@ -386,7 +386,7 @@ match PrintOnDrop(&quot;Matched value in final expression&quot;) {
 <p><strong>注意</strong>：临时生存期扩展的确切规则可能还会改变。这里只描述了当前的行为表现。</p>
 </blockquote>
 <p><code>let</code>语句中表达式的临时作用域有时会<em>扩展</em>到包含此 <code>let</code>语句的块作用域内。根据某些句法规则，当通常的临时作用域太小时，就会这样做。例如：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = &amp;mut 0;
@@ -418,7 +418,7 @@ println!(&quot;{}&quot;, x);
 <h4><a class="header" href="#examples" id="examples">Examples</a></h4>
 <h4><a class="header" href="#示例" id="示例">示例</a></h4>
 <p>这是一些带有扩展的临时作用域的表达式：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">fn temp() {}
@@ -435,7 +435,7 @@ let ref x = *&amp;temp();
 </span><span class="boring">}
 </span></code></pre></pre>
 <p>下面是一些表达式没有扩展临时作用域的例子：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">fn temp() {}

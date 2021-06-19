@@ -200,7 +200,7 @@ commit: d23f9da8469617e6c81121d9fd123443df70595d <br />
 <p>当检验对象表达式是一个<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>时，此匹配(<code>match</code>)表达式不用先去内存上分配一个临时位置；但是，按值匹配的绑定方式(by-value binding)会复制或移动这个（位置表达式代表的）内存位置里面的值。
 如果可能，最好还是在位置表达式上进行匹配，因为这种匹配的生存期继承了该位置表达式的生存期，而不会（让其生存期仅）局限于此匹配的内部。</p>
 <p>匹配(<code>match</code>)表达式的一个示例：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 1;
@@ -219,7 +219,7 @@ match x {
 <a href="../patterns.html#binding-modes">变量绑定方式</a>（移动、复制或引用）取决于使用的具体模式。</p>
 <p>可以使用操作符 <code>|</code> 连接多个匹配模式。
 每个模式将按照从左到右的顺序进行测试，直到找到一个成功的匹配。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 9;
@@ -253,7 +253,7 @@ match S(1, 2) {
 <p>当模式匹配成功时，将执行匹配守卫表达式。
 如果此表达式的计算结果为真，则此模式将进一步被确认为匹配成功。
 否则，匹配将测试下一个模式，包括测试同一匹配臂中运算符 <code>|</code> 分割的后续匹配模式。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">let maybe_digit = Some(0);
@@ -269,7 +269,7 @@ match S(1, 2) {
 <blockquote>
 <p>注意：使用操作符 <code>|</code> 的多次匹配可能会导致后跟的匹配守卫必须多次执行的副作用。
 例如：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::cell::Cell;

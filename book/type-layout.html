@@ -239,7 +239,7 @@ commit: be4332c6a8f93c425d6f9a8f59b2a6dec63f8ffe <br />
 <li><a href="#the-transparent-representation">透明表形(<code>transparent</code>)</a></li>
 </ul>
 <p>类型的表形可以通过对其应用 <code>repr</code>属性来更改。下面的示例展示了一个 <code>C</code>表形的结构体。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[repr(C)]
@@ -251,7 +251,7 @@ struct ThreeInts {
 <span class="boring">}
 </span></code></pre></pre>
 <p>可以分别使用 <code>align</code> 和 <code>packed</code> 修饰符增大或缩小对齐量。它们可以更改属性中指定表形的对齐量。如果未指定表形，则更改默认表形的。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 默认表形，把对齐量缩小到2。
@@ -339,7 +339,7 @@ struct.size = current_offset + padding_needed_for(current_offset, struct.alignme
 <h4><a class="header" href="#reprc-unions" id="reprc-unions"><code>#[repr(C)]</code> Unions</a></h4>
 <h4><a class="header" href="#reprc联合体" id="reprc联合体"><code>#[repr(C)]</code>联合体</a></h4>
 <p>使用 <code>#[repr(C)]</code> 声明的联合体将与相同目标平台上的 C语言中的 C联合体声明具有相同的尺寸和对齐量。联合体的对齐量等同于其所有字段的最大对齐量，尺寸将为其所有字段的最大尺寸，再对其向上取整到对齐量的最小整数倍。这些最大值可能来自不同的字段。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[repr(C)]
@@ -382,7 +382,7 @@ assert_eq!(std::mem::size_of::&lt;SizeRoundedUp&gt;(), 12);  // 首先来自于b
 <blockquote>
 <p>注意：由于等效出的结构体和联合体是 <code>repr(C)</code>表形的，因此如果原来某一变体只有单个字段，则直接将该字段放入等效出的联合体中，或将其包装进一个次级结构体后再放入联合体中是没有区别的；因此，任何希望操作此类枚举表形的系统都可以选择使用这两种形式里对它们来说更方便或更一致的形式。</p>
 </blockquote>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 这个枚举的表形等效于 ...
@@ -448,7 +448,7 @@ struct MyDFields;
 <blockquote>
 <p>注意：如果在联合体中，直接把标签的成员赋予给标签(“the tag”)，那么这种表形结构仍不变的，并且这样操作对您来说可能会更清晰（尽管遵循 c++ 的标准，标签也应该被包装在结构体中）。</p>
 </blockquote>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 这个枚举的表形效同于 ...
@@ -498,7 +498,7 @@ struct MyVariantD(MyEnumDiscriminant);
 <h4><a class="header" href="#带字段枚举的原语表形与reprc表形的组合使用" id="带字段枚举的原语表形与reprc表形的组合使用">带字段枚举的原语表形与<code>#[repr(C)]</code>表形的组合使用</a></h4>
 <p>对于带字段枚举，还可以将 <code>repr(C)</code> 和原语表形（例如，<code>repr(C, u8)</code>）结合起来使用。这是通过将判别值组成的枚举的表形改为原语表形来实现的。因此，如果选择组合 <code>u8</code>表形，那么组合出的判别值枚举的尺寸和对齐量将为 1 个字节。</p>
 <p>那么这个判别值枚举就从<a href="#reprc-enums-with-fields">前面</a>示例中的样子变成：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[repr(C, u8)] // 这里加上了 `u8`
@@ -519,7 +519,7 @@ enum MyEnumDiscriminant { A, B, C, D }
 </span></code></pre></pre>
 <p>例如，对于有 <code>repr(C, u8)</code>属性的枚举，不可能有257个唯一的判别值（“tags”），而同一个枚举，如果只有单一 <code>repr(C)</code>表形属性，那在编译时就不会出任何问题。</p>
 <p>在 <code>repr(C)</code> 附加原语表形可以改变 <code>repr(C)</code>表形的枚举的尺寸：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[repr(C)]

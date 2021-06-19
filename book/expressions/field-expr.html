@@ -185,7 +185,7 @@ commit: 23672971a16c69ea894bef24992b74912cfe5d25 <br />
 <p>字段表达式代表<a href="../items/structs.html">结构体(<code>struct</code>)</a>或<a href="../items/unions.html">联合体(<code>union</code>)</a>的字段。要调用存储在结构体的字段中的函数，需要在此字段表达式外加上圆括号。</p>
 <blockquote>
 <p><strong>注意</strong>：如果要在调用表达式中使用它(来调用函数)，要把此字段表达式先用圆括号包装成一个<a href="grouped-expr.html">圆括号表达式</a>。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct HoldsCallable&lt;F: Fn()&gt; { callable: F }
@@ -215,7 +215,7 @@ foo().x;
 <p>当借用时，结构体的各个字段以及对结构体的整体引用都被视为彼此分离的实体。
 如果结构体没有实现 <a href="../special-types-and-traits.html#drop"><code>Drop</code></a>，同时该结构体又存储在局部变量中，（这种各个字段被视为彼此分离的单独实体的逻辑）还适用于每个字段的移出(move out)。
 但如果对 <a href="../special-types-and-traits.html#boxt"><code>Box</code></a>化之外的用户自定义类型执行自动解引用，这（种各个字段被视为彼此分离的单独实体的逻辑）就不适用了。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct A { f1: String, f2: String, f3: String }

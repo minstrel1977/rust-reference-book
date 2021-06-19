@@ -193,7 +193,7 @@ SHEBANG : <code>#!</code> ~<code>\n</code><sup>+</sup><a href="#shebang">†</a>
 <p>Rust 编译器总是使用单个源文件作为输入来开启编译过程的，并且总是生成单个输出 crate。对输入源文件的处理可能导致其他源文件作为模块被加载进来。源文件的扩展名为 <code>.rs</code>。</p>
 <p>Rust 源文件描述了一个模块，其名称和（在当前 crate 的模块树中的）位置是从源文件外部定义的：要么通过引用源文件中的显式<a href="items/modules.html">模块(<em>Module</em>)</a>项，要么由 crate 本身的名称定义。每个源文件都是一个模块，但并非每个模块都需要自己的源文件：多个<a href="items/modules.html">模块定义</a>可以嵌套在同一个文件中。</p>
 <p>每个源文件包含一个由零个或多个<a href="items.html">程序项</a>定义组成的代码序列，并且这些源文件都可选地从应用于其内部模块的任意数量的<a href="attributes.html">属性</a>开始，大部分这些属性都会会影响编译器行为。匿名的 crate 根模块可附带一些应用于整个 crate 的属性。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 指定 crate 名称.
@@ -243,7 +243,7 @@ fn main() {
 <h2><a class="header" href="#the-crate_name-attribute" id="the-crate_name-attribute">The <code>crate_name</code> attribute</a></h2>
 <h2><a class="header" href="#crate_name属性" id="crate_name属性"><code>crate_name</code>属性</a></h2>
 <p>可在 crate 层级应用 <em><code>crate_name</code><a href="attributes.html">属性</a></em>，并通过使用 <a href="attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法来指定 crate 的名称。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span>#![crate_name = &quot;mycrate&quot;]
 <span class="boring">fn main() {

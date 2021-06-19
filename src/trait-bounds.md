@@ -2,8 +2,8 @@
 # trait约束和生存期约束
 
 >[trait-bounds.md](https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md)\
->commit: 33784fadb81c16918c7e6d207f8c838232c159b0 \
->本章译文最后维护日期：2021-5-29
+>commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef \
+>本章译文最后维护日期：2021-06-19
 
 > **<sup>句法</sup>**\
 > _TypeParamBounds_ :\
@@ -41,7 +41,7 @@
 ```rust
 # type Surface = i32;
 trait Shape {
-    fn draw(&self, Surface);
+    fn draw(&self, surface: Surface);
     fn name() -> &'static str;
 }
 

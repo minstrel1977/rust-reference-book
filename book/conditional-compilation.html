@@ -315,7 +315,7 @@ commit: 949726950a4ac5c8674e902dc33c09b48fc7434c <br />
 <p>它被写成 <code>cfg</code> 后跟一个 <code>(</code>，再跟一个配置谓词，最后是一个 <code>)</code>。</p>
 <p>如果谓词为真，则重写该部分代码，使其上没有 <code>cfg</code> 属性。如果谓词为假，则从源代码中删除该内容。</p>
 <p>在函数上的一些例子:</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 该函数只会在编译目标为 macOS 时才会包含在构建中
@@ -381,7 +381,7 @@ fn bewitched() {}
 <h3><a class="header" href="#cfg宏" id="cfg宏"><code>cfg</code>宏</a></h3>
 <p>内置的 <code>cfg</code>宏接受单个配置谓词，当谓词为真时计算为 <code>true</code> 字面量，当谓词为假时计算为 <code>false</code> 字面量。</p>
 <p>例如：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let machine_kind = if cfg!(unix) {

@@ -2,8 +2,8 @@
 # Use声明
 
 >[use-declarations.md](https://github.com/rust-lang/reference/blob/master/src/items/use-declarations.md)\
->commit: eabdf09207bf3563ae96db9d576de0758c413d5d \
->本章译文最后维护日期：2021-1-24
+>commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef \
+>本章译文最后维护日期：2021-06-19
 
 > **<sup>句法:</sup>**\
 > _UseDeclaration_ :\
@@ -125,7 +125,7 @@ fn main() {}
 >
 > 在 2018 版中，如果本地程序项与外部的 crate 名称相同，那么使用该 crate 名称需要一个前导的 `::` 来明确地选择该 crate 名称。这种做法是为了与未来可能发生的更改保持兼容。<!-- uniform_paths future-proofing -->
 >
-> ```rust,edition2018
+> ```rust
 > // use std::fs; // 错误, 这样有歧义.
 > use ::std::fs;  // 从`std` crate 里导入, 不是下面这个 mod.
 > use self::std::fs as self_fs;  // 从下面这个 mod 导入.
@@ -178,6 +178,3 @@ m!(use std as _;);
 [`extern crate`]: extern-crates.md
 [extern prelude]: ../names/preludes.md#extern-prelude
 [path qualifiers]: ../paths.md#path-qualifiers
-
-<!-- 2020-11-12-->
-<!-- checked -->

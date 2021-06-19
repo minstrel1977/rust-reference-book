@@ -169,8 +169,8 @@
 <h1><a class="header" href="#use声明" id="use声明">Use声明</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/use-declarations.md">use-declarations.md</a><br />
-commit: eabdf09207bf3563ae96db9d576de0758c413d5d <br />
-本章译文最后维护日期：2021-1-24</p>
+commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
+本章译文最后维护日期：2021-06-19</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法:</sup></strong><br />
@@ -191,7 +191,7 @@ commit: eabdf09207bf3563ae96db9d576de0758c413d5d <br />
 <li>将前面的方法嵌套重复使用，例如 <code>use a::b::{self as ab, c, d::{*, e::f}};</code>。</li>
 </ul>
 <p><code>use</code>声明的一个示例：</p>
-<pre><pre class="playground"><code class="language-rust">use std::option::Option::{Some, None};
+<pre><pre class="playground"><code class="language-rust edition2018">use std::option::Option::{Some, None};
 use std::collections::hash_map::{self, HashMap};
 
 fn foo&lt;T&gt;(_: T){}
@@ -211,7 +211,7 @@ fn main() {
 <h2><a class="header" href="#use可见性" id="use可见性"><code>use</code>可见性</a></h2>
 <p>与其他程序项一样，默认情况下，<code>use</code>声明对包含它的模块来说是私有的。同样的，如果使用关键字 <code>pub</code> 进行限定，<code>use</code>声明也可以是公有的。<code>use</code>声明可用于*重导出(re-expor)*名称。因此，公有的 <code>use</code>声明可以将某些公有名称重定向到不同的目标定义中：甚至是位于不同模块内具有私有可见性的规范路径定义中。如果这样的重定向序列形成一个循环或不能明确地解析，则会导致编译期错误。</p>
 <p>重导出的一个示例：</p>
-<pre><pre class="playground"><code class="language-rust">mod quux {
+<pre><pre class="playground"><code class="language-rust edition2018">mod quux {
     pub use self::foo::{bar, baz};
     pub mod foo {
         pub fn bar() {}
@@ -232,7 +232,7 @@ fn main() {
 </blockquote>
 <p>一些正常和不正常的使用 <code>use</code>程序项的例子：</p>
 <!-- 注意: 这个例子在 2015 版或 2018 版都能正常工作。 -->
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused_imports)]
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused_imports)]
 </span>use std::path::{self, Path, PathBuf};  // good: std 是一个 crate 名称
 use crate::foo::baz::foobaz;    // good: foo 在当前 crate 的第一层
 
@@ -286,7 +286,7 @@ mod std {
 <h2><a class="header" href="#下划线导入" id="下划线导入">下划线导入</a></h2>
 <p>通过使用形如为 <code>use path as _</code> 的带下划线的 use声明，可以在不绑定名称的情况下导入程序项。这对于导入一个 trait 特别有用，这样就可以在不导入 trait 的 symbol 的情况下使用这个 trait 的方法，例如，如果 trait 的 symbol 可能与另一个 symbol 冲突。再一个例子是链接外部的 crate 而不导入其名称。</p>
 <p>使用星号全局导入(Asterisk glob imports,即 <code>::*</code>)句法将以 <code>_</code> 的形式导入能匹配到的所有程序项，但这些程序项在当前作用域中将处于不可命名的状态。</p>
-<pre><pre class="playground"><code class="language-rust">mod foo {
+<pre><pre class="playground"><code class="language-rust edition2018">mod foo {
     pub trait Zoo {
         fn zoo(&amp;self) {}
     }
@@ -303,7 +303,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>在宏扩展之后会创建一些惟一的、不可命名的 symbols，这样宏就可以安全地扩展出(emit)对 <code>_</code> 导入的多个引用。例如，下面代码不应该产生错误:</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! m {
@@ -316,8 +316,6 @@ m!(use std as _;);
 // use std as _;
 <span class="boring">}
 </span></code></pre></pre>
-<!-- 2020-11-12-->
-<!-- checked -->
 
                     </main>
 

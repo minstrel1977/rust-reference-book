@@ -208,7 +208,7 @@ LINE_COMMENT :(译者注：行注释)<br />
 <p>以 <code>//!</code> 开始的行文档型注释，以及 <code>/*! ... */</code> 形式的块文档型注释属于注释体所在对象的文档型注释，而非注释体之后的程序项的。也就是说，它们等同于把注释内容写入 <code>#![doc=&quot;...&quot;]</code> 里。<code>//!</code> 注释通常用于标注模块位于的文件。</p>
 <p>孤立的 CRs（<code>\r</code>），如果其后没有紧跟有 LF（<code>\n</code>），则不能出现在文档型注释中。</p>
 <h2><a class="header" href="#示例" id="示例">示例</a></h2>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>//! 应用于此 crate 的隐式匿名模块的文档型注释

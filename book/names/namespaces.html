@@ -169,8 +169,8 @@
 <h1><a class="header" href="#命名空间" id="命名空间">命名空间</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/names/namespaces.md">use-declarations.md</a><br />
-commit: 10da84befd0e79f5e1490912a02cb74368cd3f4a <br />
-本章译文最后维护日期：2021-1-25</p>
+commit: 222c426ec1464757e7477ad836d97e427dde886b <br />
+本章译文最后维护日期：2021-06-19</p>
 </blockquote>
 <p><em>命名空间</em>是已声明的<a href="../names.html">名称</a>的逻辑分组。根据名称所指的实体类型，名称被分隔到不同的命名空间中。
 名称空间允许一个名称空间中出现的名称与另一个名称空间中的相同，且不会导致冲突。</p>
@@ -231,7 +231,7 @@ commit: 10da84befd0e79f5e1490912a02cb74368cd3f4a <br />
 </li>
 </ul>
 <p>如何清晰地使用不同命名空间中的同名名称的示例：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Foo 在类型命名空间中引入了一个类型，在值命名空间中引入了一个构造函数
@@ -269,6 +269,14 @@ fn example&lt;'Foo&gt;(f: Foo) {
 <h3><a class="header" href="#use声明" id="use声明">use声明</a></h3>
 <p><a href="../items/use-declarations.html">use声明</a>命名了导入到当前作用域中的实体，但 <code>use</code>项本身不属于任何特定的命名空间。相反，它可以在多个名称空间中引入别名，这取决于所导入的程序项类型。</p>
 <!-- TODO: describe how `use` works on the use-declarations page, and link to it here. -->
+<h2><a class="header" href="#sub-namespaces" id="sub-namespaces">Sub-namespaces</a></h2>
+<h2><a class="header" href="#子命名空间" id="子命名空间">子命名空间</a></h2>
+<p>宏的命名空间分为两个子命名空间：一个子命名空间用于[那种带感叹号(!)的宏][bang style macros]，另一个子命名空间用于<a href="../attributes.html">属性</a>。
+解析属性时，此属性所影响的作用域中的任何带感叹号(!)的宏都将被忽略。
+反之，解析带感叹号(!)的宏将忽略作用域中的任何属性宏。
+这样可以防止一种形式的宏遮挡另一种形式的。</p>
+<p>例如，<a href="../conditional-compilation.html#the-cfg-attribute"><code>cfg</code>属性</a>和<a href="../conditional-compilation.html#the-cfg-macro"><code>cfg</code>宏</a>是宏命名空间中具有相同名称的两个不同实体，但它们仍然可以在各自的上下文中使用。</p>
+<p>使用 <a href="../items/use-declarations.html"><code>use</code>导入</a>来对另一个宏进行遮蔽处理仍然是错误的，不管它们的子命名空间是什么</p>
 <div class="footnote-definition" id="rustc-lifetime-shadow"><sup class="footnote-definition-label">1</sup>
 <p>目前，在同一个作用域中，标签和生命周期使用相同名称时，<code>rustc</code> 会警告出现命名重复，但编译器内部仍然会独立地区别对待它们。这是一个关于该语言可能扩展的未来兼容性警告。具体见<a href="https://github.com/rust-lang/rust/pull/24162">PR #24162</a>。</p>
 </div>

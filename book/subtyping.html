@@ -176,7 +176,7 @@ commit: 3b6fe80c205d2a2b5dc8a276192bbce9eeb9e9cf <br />
 Rust 中的子类型化的适用范围非常有限，仅出现在和生存期(lifetimes)的型变(variance)相关的地方，以及那些和高阶生存期相关的类型型变之间。
 如果我们擦除了类型的生存期，那么唯一的子类型化就只是类型相等(type equality)了。</p>
 <p>考虑下面的例子：字符串字面量总是拥有 <code>'static</code>生存期。不过，我们还是可以把 <code>s</code> 赋值给 <code>t</code>：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn bar&lt;'a&gt;() {
@@ -188,7 +188,7 @@ Rust 中的子类型化的适用范围非常有限，仅出现在和生存期(li
 <p>因为 <code>'static</code> 比生存期参数 <code>'a</code> 的寿命长，所以 <code>&amp;'static str</code> 是 <code>&amp;'a str</code> 的子类型。</p>
 <p><a href="https://doc.rust-lang.org/nomicon/hrtb.html">高阶</a><a href="types/function-pointer.html">函数指针</a>和<a href="types/trait-object.html">trait对象</a>可以形成另一种父子类型的关系。
 它们是那些通过替换高阶生存期而得出的类型的子类型。举些例子：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 这里 'a 被替换成了 'static
@@ -230,7 +230,7 @@ let supertype: &amp;for&lt;'c&gt; fn(&amp;'c i32, &amp;'c i32) = subtype;
 <p>结构体(<code>struct</code>)、枚举(<code>enum</code>)、联合体(<code>union</code>)和元组(tuple)类型上的型变关系是通过查看其字段类型的型变关系来决定的。
 如果参数用在了多处且具有不同型变关系的位置上，则该类型在该参数上是不变的。
 例如，下面示例的结构体在 <code>'a</code> 和 <code>T</code> 上是协变的，在 <code>'b</code> 和 <code>U</code> 上是不变的。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::cell::UnsafeCell;

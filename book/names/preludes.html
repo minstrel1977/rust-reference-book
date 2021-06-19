@@ -195,7 +195,7 @@ commit: 0ce54e64e3c98d99862485c57087d0ab36f40ef0 <br />
 </blockquote>
 <blockquote>
 <p><strong>注意</strong>: 随 <code>rustc</code> 一起引入的 crate，如 <a href="../../alloc/index.html"><code>alloc</code></a> 和 <a href="../../test/index.html"><code>test</code></a>，在使用 Cargo 时不会自动被包含在 <code>--extern</code> 命令行参数选项中。即使在 2018 版中，也必须通过外部crate(<code>extern crate</code>)声明来把它们引入到当前作用域内。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>extern crate alloc;

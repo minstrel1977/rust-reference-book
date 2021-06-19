@@ -179,7 +179,7 @@ commit: 8758f30a7d62513cb3caea30000850c9742f2438 <br />
 <blockquote>
 <p>注意：<code>rustc</code> 中这个参数的默认值是128。</p>
 </blockquote>
-<pre><pre class="playground"><code class="language-rust compile_fail">
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
 <span class="boring">#![allow(unused)]
 </span>#![recursion_limit = &quot;4&quot;]
 
@@ -196,7 +196,7 @@ commit: 8758f30a7d62513cb3caea30000850c9742f2438 <br />
 a!{}
 <span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust compile_fail">
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
 <span class="boring">#![allow(unused)]
 </span>#![recursion_limit = &quot;1&quot;]
 

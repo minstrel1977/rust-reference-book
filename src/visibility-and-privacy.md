@@ -2,8 +2,8 @@
 # 可见性与隐私权
 
 >[visibility-and-privacy.md](https://github.com/rust-lang/reference/blob/master/src/visibility-and-privacy.md)\
->commit: f41afd4f69a7996ac66b01f75e333bccf43337f7 \
->本章译文最后维护日期：2020-11-10
+>commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef \
+>本章译文最后维护日期：2021-06-19
 
 > **<sup>句法<sup>**\
 > _Visibility_ :\
@@ -75,7 +75,7 @@ pub fn public_api() {}
 
 // 与 'public_api' 类似，此模块是公有的，因此其他的crate 是能够看到此模块内部的。
 pub mod submodule {
-    use crate_helper_module;
+    use crate::crate_helper_module;
 
     pub fn my_method() {
         // 本地crate 中的任何程序项都可以通过上述两个规则的组合来调用辅助模块里的公共接口。
@@ -114,7 +114,7 @@ pub mod submodule {
 
 这里是一些示例：
 
-```rust
+```rust,edition2015
 pub mod outer_mod {
     pub mod inner_mod {
         // 此函数在 `outer_mod` 内部可见

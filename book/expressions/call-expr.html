@@ -186,7 +186,7 @@ commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
 如有需要，也可通过自动借用。
 Rust 也会根据需要自动对 <code>f</code> 作解引用处理。</p>
 <p>下面是一些调用表达式的示例：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">fn add(x: i32, y: i32) -&gt; i32 { 0 }
@@ -211,7 +211,7 @@ let name: &amp;'static str = (|| &quot;Rust&quot;)();
 </ul>
 <p>为了解决这种二义性，程序员可以使用更具体的路径、类型或 trait 来明确指代他们想要的方法或函数。</p>
 <p>例如：</p>
-<pre><pre class="playground"><code class="language-rust">trait Pretty {
+<pre><pre class="playground"><code class="language-rust edition2018">trait Pretty {
     fn print(&amp;self);
 }
 

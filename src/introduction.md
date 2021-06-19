@@ -2,8 +2,8 @@
 # 介绍
 
 >[introduction.md](https://github.com/rust-lang/reference/blob/master/src/introduction.md)\
->commit: 85653e89c7fb7e3cf49522fb2e7e1f4900c6b165 \
->本章译文最后维护日期：2021-4-11
+>commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef \
+>本章译文最后维护日期：2021-06-19
 
 本书是 Rust 编程语言的主要参考手册，本书提供了3类资料：
   - 一些章节非正式地介绍了该语言的各种语言结构及其用法。
@@ -91,6 +91,7 @@ Rust编译器（包括 `rustc`）将执行编译优化，但本参考手册不�
       println!("这是一段示例代码。");
   }
   ```
+  除非另有说明，否则所有示例均使用最新版本的语法和编译检查。
 
 * 文法和词法结构放在块引用中，第一行为粗体上标的 <sup>**词法**</sup> 或 <sup>**句法**</sup>。
 

@@ -174,7 +174,7 @@ commit: a52543267554541a95088b79f46a8bd36f487603 <br />
 </blockquote>
 <p><em><code>derive</code>属性</em>允许为数据结构自动生成新的<a href="../items.html">程序项</a>。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListPaths</em></a>元项属性句法（为程序项）指定一系列要实现的 trait 或指定要执行的<a href="../procedural-macros.html#derive-macros">派生宏</a>的路径。</p>
 <p>例如，下面的派生属性将为结构体 <code>Foo</code> 创建一个实现 <a href="https://doc.rust-lang.org/std/cmp/trait.PartialEq.html"><code>PartialEq</code></a> trait 和 <a href="https://doc.rust-lang.org/std/clone/trait.Clone.html"><code>Clone</code></a> trait 的<a href="../items/implementations.html">实现(<code>impl</code> item)</a>，类型参数 <code>T</code> 将被派生出的实现(<code>impl</code>)加上 <code>PartialEq</code> 或<sup class="footnote-reference"><a href="#or-and">1</a></sup> <code>Clone</code> 约束：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[derive(PartialEq, Clone)]
@@ -185,7 +185,7 @@ struct Foo&lt;T&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <p>上面代码为 <code>PartialEq</code> 生成的实现(<code>impl</code>)等价于</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Foo&lt;T&gt; { a: i32, b: T }

@@ -199,7 +199,7 @@ commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
 <div class="warning">
 <p>警告：当数组长度操作数为 0 时，而重复体操作数是一个非常量项的情况下，目前在 <code>rustc</code> 中存在一个 bug，即值 <code>a</code> 会被求值，但不会被销毁而导致的内存泄漏。参见 <a href="https://github.com/rust-lang/rust/issues/74836">issue#74836</a>。</p>
 </div>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>[1, 2, 3, 4];
@@ -227,7 +227,7 @@ const EMPTY: Vec&lt;i32&gt; = Vec::new();
 与普通方法一样，Rust 也将在 <code>a</code> 上反复插入解引用操作，直到查找到对上述方法的实现。</p>
 <p>数组和切片的索引是从零开始的。数组访问是一个<a href="../const_eval.html#constant-expressions">常量表达式</a>，因此数组索引的越界检查可以在编译时通过检查常量索引值本身进行。
 否则，越界检查将在运行时执行，如果此时越界检查未通过，那将把当前线程置于 <em>panicked 状态</em>。</p>
-<pre><pre class="playground"><code class="language-rust should_panic">
+<pre><pre class="playground"><code class="language-rust should_panic edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 默认情况下,`unconditional_panic` lint检查会执行 deny 级别的设置，

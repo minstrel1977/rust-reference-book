@@ -2,8 +2,8 @@
 # 命名空间
 
 >[use-declarations.md](https://github.com/rust-lang/reference/blob/master/src/names/namespaces.md)\
->commit: 10da84befd0e79f5e1490912a02cb74368cd3f4a \
->本章译文最后维护日期：2021-1-25
+>commit: 222c426ec1464757e7477ad836d97e427dde886b \
+>本章译文最后维护日期：2021-06-19
 
 *命名空间*是已声明的[名称][names]的逻辑分组。根据名称所指的实体类型，名称被分隔到不同的命名空间中。
 名称空间允许一个名称空间中出现的名称与另一个名称空间中的相同，且不会导致冲突。
@@ -95,9 +95,22 @@ fn example<'Foo>(f: Foo) {
 [use声明][use declaration]命名了导入到当前作用域中的实体，但 `use`项本身不属于任何特定的命名空间。相反，它可以在多个名称空间中引入别名，这取决于所导入的程序项类型。
 
 <!-- TODO: describe how `use` works on the use-declarations page, and link to it here. -->
+## Sub-namespaces
+## 子命名空间
+
+宏的命名空间分为两个子命名空间：一个子命名空间用于[那种带感叹号(!)的宏][bang style macros]，另一个子命名空间用于[属性][attributes]。
+解析属性时，此属性所影响的作用域中的任何带感叹号(!)的宏都将被忽略。
+反之，解析带感叹号(!)的宏将忽略作用域中的任何属性宏。
+这样可以防止一种形式的宏遮挡另一种形式的。
+
+例如，[`cfg`属性][`cfg` attribute]和[`cfg`宏][`cfg` macro]是宏命名空间中具有相同名称的两个不同实体，但它们仍然可以在各自的上下文中使用。
+
+使用 [`use`导入][`use` import]来对另一个宏进行遮蔽处理仍然是错误的，不管它们的子命名空间是什么
 
 [^rustc-lifetime-shadow]: 目前，在同一个作用域中，标签和生命周期使用相同名称时，`rustc` 会警告出现命名重复，但编译器内部仍然会独立地区别对待它们。这是一个关于该语言可能扩展的未来兼容性警告。具体见[PR #24162](https://github.com/rust-lang/rust/pull/24162)。
 
+[`cfg` attribute]: ../conditional-compilation.md#the-cfg-attribute
+[`cfg` macro]: ../conditional-compilation.md#the-cfg-macro
 [`for`]: ../expressions/loop-expr.md#iterator-loops
 [`if let`]: ../expressions/if-expr.md#if-let-expressions
 [`let`]: ../statements.md#let-statements
@@ -105,11 +118,14 @@ fn example<'Foo>(f: Foo) {
 [`match`]: ../expressions/match-expr.md
 [`Self` constructors]: ../paths.md#self-1
 [`Self` type]: ../paths.md#self-1
+[`use` import]: ../items/use-declarations.md
 [`while let`]: ../expressions/loop-expr.md#predicate-pattern-loops
 [Associated const declarations]: ../items/associated-items.md#associated-constants
 [Associated function declarations]: ../items/associated-items.md#associated-functions-and-methods
 [Associated type declarations]: ../items/associated-items.md#associated-types
 [Attribute macros]: ../procedural-macros.md#attribute-macros
+[attributes]: ../attributes.md
+[bang-style macros]: ../macros.md
 [boolean]: ../types/boolean.md
 [Built-in attributes]: ../attributes.md#built-in-attributes-index
 [closure parameters]: ../expressions/closure-expr.md

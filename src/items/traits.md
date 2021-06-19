@@ -1,8 +1,8 @@
 # Trait
 
 >[traits.md](https://github.com/rust-lang/reference/blob/master/src/items/traits.md)\
->commit: 20340ce30db8ec17b0a09dc6e07c0fa2f5c3c0ab \
->本章译文最后维护日期：2021-5-6
+>commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef \
+>本章译文最后维护日期：2021-06-19
 
 > **<sup>句法</sup>**\
 > _Trait_ :\
@@ -237,7 +237,8 @@ let nonsense = circle.radius() * circle.area();
 
 在 2015 版中，trait 的函数或方法的参数模式是可选的：
 
-```rust
+```rust,edition2015
+// 2015版
 trait T {
     fn f(i32);  // 不需要参数的标识符.
 }
@@ -253,7 +254,7 @@ trait T {
 
 （跟普通函数一样，）从 2018 版开始，（trait 中）函数或方法的参数模式不再是可选的。同时，也跟普通函数一样，（trait 中）函数或方法只要有代码体，其参数模式可以是任何不可反驳型模式。但如果没有代码体，上面列出的限制仍然有效。
 
-```rust,edition2018
+```rust
 trait T {
     fn f1((a, b): (i32, i32)) {}
     fn f2(_: (i32, i32));  // 没有代码体不能使用元组模式。

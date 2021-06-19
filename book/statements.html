@@ -169,8 +169,8 @@
 <h1><a class="header" href="#语句" id="语句">语句</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/statements.md">statements.md</a><br />
-commit: 245b8336818913beafa7a35a9ad59c85f28338fb <br />
-本章译文最后维护日期：2021-5-6</p>
+commit: f5cd2519c0e61a2c640345c2e5cda329008ead3a <br />
+本章译文最后维护日期：2021-06-19</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -192,7 +192,7 @@ commit: 245b8336818913beafa7a35a9ad59c85f28338fb <br />
 <p><em>程序项声明语句</em>的句法形式与<a href="items/modules.html">模块</a>中的<a href="items.html">程序项声明</a>的句法形式相同。在语句块中声明的程序项会将其作用域限制为包含该语句的块。这类程序项以及在其内声明子项(sub-items)都没有给定的<a href="paths.html#canonical-paths">规范路径</a>。例外的是，只要程序项和 trait（如果有的话）的可见性允许，在（程序项声明语句内定义的和此程序项或 trait 关联的）<a href="items/implementations.html">实现</a>中定义的关联项在外层作用域内仍然是可访问的。除了这些区别外，它与在模块中声明的程序项的意义也是相同的。</p>
 <p>程序项声明语句不会隐式捕获包含它的函数的泛型参数、参数和局部变量。如下，<code>inner</code> 不能访问 <code>outer_var</code>。</p>
 <p><code>outer_var</code>.</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn outer() {
@@ -212,7 +212,7 @@ commit: 245b8336818913beafa7a35a9ad59c85f28338fb <br />
    <a href="attributes.html"><em>OuterAttribute</em></a><sup>*</sup> <code>let</code> <a href="patterns.html"><em>PatternNoTopAlt</em></a>
 ( <code>:</code> <a href="types.html"><em>Type</em></a> )<sup>?</sup> (<code>=</code> <a href="expressions.html"><em>Expression</em></a> )<sup>?</sup> <code>;</code></p>
 </blockquote>
-<p><em><code>let</code>语句</em>通过一个不可反驳型<a href="patterns.html">模式</a>引入了一组新的<a href="variables.html">变量</a>，变量由该模式给定。模式后面有一个可选的类型标注(annotation)，再后面是一个可选的初始化表达式。当没有给出类型标注时，编译器将自行推断类型，如果没有足够的信息来执行有限次的类型推断，则将触发编译器报错。由变量声明引入的任何变量从声明开始直到封闭块作用域结束都是可见的。</p>
+<p><em><code>let</code>语句</em>通过一个不可反驳型<a href="patterns.html">模式</a>引入了一组新的<a href="variables.html">变量</a>，变量由该模式给定。模式后面有一个可选的类型标注(annotation)，再后面是一个可选的初始化表达式。当没有给出类型标注时，编译器将自行推断类型，如果没有足够的信息来执行有限次的类型推断，则将触发编译器报错。由变量声明引入的任何变量从声明点到封闭块作用域的结束都是可见的，除非它们被另一个变量声明遮蔽。</p>
 <h2><a class="header" href="#expression-statements" id="expression-statements">Expression statements</a></h2>
 <h2><a class="header" href="#表达式语句" id="表达式语句">表达式语句</a></h2>
 <blockquote>
@@ -223,7 +223,7 @@ commit: 245b8336818913beafa7a35a9ad59c85f28338fb <br />
 </blockquote>
 <p><em>表达式语句</em>是对<a href="expressions.html">表达式</a>求值并忽略其结果的语句。通常，表达式语句存在的目的是触发对其内部的表达式的求值时的效果。</p>
 <p>仅由<a href="expressions/block-expr.html">块表达式</a>或控制流表达式组成的表达式，如果它们在允许使用语句的上下文中使用时，是可以省略其后面的分号的。这有可能会导致解析歧义，因为它可以被解析为独立语句，也可以被解析为另一个表达式的一部分；下例中的控制流表达式被解析为一个语句。注意 <a href="expressions.html"><em>ExpressionWithBlock</em></a> 形式的表达式用作语句时，其类型必须是单元类型(<code>()</code>)。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">let mut v = vec![1, 2, 3];
@@ -237,7 +237,7 @@ if v.is_empty() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>当省略后面的分号时，结果必须是 <code>()</code> 类型。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// bad: 下面块的类型是i32，而不是 `()` 

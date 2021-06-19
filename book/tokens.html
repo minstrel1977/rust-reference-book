@@ -242,7 +242,7 @@ commit: 8e62ab3e5dc57f5db7581cf763bcbbea75ab58eb <br />
 <h4><a class="header" href="#后缀" id="后缀">后缀</a></h4>
 <p>后缀是紧跟（无空白符）在字面量主体部分之后的非<a href="identifiers.html">原生标识符</a>(non-raw identifier)。</p>
 <p>任何带有后缀的字面量（如字符串、整数等）都可以作为有效的 token，并且可以传递给宏而不会产生错误。宏自己决定如何解释这种 token，以及是否该报错。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! blackhole { ($tt:tt) =&gt; () }
@@ -288,7 +288,7 @@ STRING_LITERAL :<br />
 </blockquote>
 <p><em>字符串字面量</em>是位于两个 <code>U+0022</code> （双引号 <code>&quot;</code>）字符内的任意 Unicode 字符序列。当它是 <code>U+0022</code> 自身时，必须前置<em>转义</em>字符 <code>U+005C</code>（<code>\</code>）。</p>
 <p>字符串字面量允许换行书写。换行可以用换行符（<code>U+000A</code>）表示，也可以用一对回车符换行符（<code>U+000D</code>, <code>U+000A</code>）的字节序列表示。这两种字节序列通常都会被转换为 <code>U+000A</code>，但有例外：当换行符前置一个未转义的字符 <code>U+005C</code>（<code>\</code>）时，会导致字符 <code>U+005C</code>、换行符和下一行开头的所有空白符都被忽略。因此下述示例中，<code>a</code> 和 <code>b</code> 是一样的：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let a = &quot;foobar&quot;;
@@ -321,7 +321,7 @@ RAW_STRING_LITERAL :<br />
 <p>原生字符串字面量不做任何转义。它以字符 <code>U+0072</code>（<code>r</code>）后跟零个或多个字符 <code>U+0023</code>（<code>#</code>），以及一个字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；中间<em>原生字符串文本主体</em>部分可包含任意的 Unicode 字符序列；再后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。</p>
 <p>所有包含在原生字符串文本主体中的 Unicode 字符都代表他们自身：字符 <code>U+0022</code>（双引号 <code>&quot;</code>）（除非后跟的纯 <code>U+0023</code> (<code>#</code>)字符串与文本主体开始前的对称相等）或字符 <code>U+005C</code>（<code>\</code>）此时都没有特殊含义。</p>
 <p>字符串字面量示例:</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>&quot;foo&quot;; r&quot;foo&quot;;                     // foo
@@ -381,7 +381,7 @@ RAW_BYTE_STRING_LITERAL :<br />
 <p>原生字节串字面量不做任何转义。它们以字符 <code>U+0062</code>（<code>b</code>）后跟 <code>U+0072</code>（<code>r</code>），再后跟零个或多个字符 <code>U+0023</code>（<code>#</code>）及字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；之后是<em>原生字节串文本主体</em>，这部分可包含任意的 ASCII 字符序列；后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。原生字节串字面量不能包含任何非 ASCII 字节。</p>
 <p>原生字节串文本主体中的所有字符都代表它们自身的 ASCII 编码，字符 <code>U+0022</code>（双引号 <code>&quot;</code>）（除非后跟的纯 <code>U+0023</code>（<code>#</code>）字符串与文本主体开始前的对称相等）或字符 <code>U+005C</code>（<code>\</code>）此时都没有特殊含义。</p>
 <p>字节串字面量示例：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>b&quot;foo&quot;; br&quot;foo&quot;;                     // foo
@@ -435,7 +435,7 @@ INTEGER_SUFFIX<sup>?</sup></p>
 <li>如果程序上下文对类型约束过度，则报静态类型错误。</li>
 </ul>
 <p>各种形式的整型字面量示例：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>123;                               // 类型 i32
@@ -458,7 +458,7 @@ let a: u64 = 123;                  // 类型 u64
 <span class="boring">}
 </span></code></pre></pre>
 <p>无效整型字面量示例:</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 无效后缀
@@ -492,7 +492,7 @@ TUPLE_INDEX: <br />
 </blockquote>
 <p>元组索引用于引用<a href="types/tuple.html">元组</a>、<a href="items/structs.html">元组结构体</a>和<a href="items/enumerations.html">元组变体</a>的字段。</p>
 <p>元组索引直接与字面量token 进行比较。元组索引以 <code>0</code> 开始，每个后续索引的值以十进制的 <code>1</code> 递增。因此，元组索引只能匹配十进制值，并且该值不能用 <code>0</code> 做前缀字符。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let example = (&quot;dog&quot;, &quot;cat&quot;, &quot;horse&quot;);
@@ -549,7 +549,7 @@ static type error.
 </li>
 </ul>
 <p>各种形式的浮点型字面量示例：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>123.0f64;        // 类型 f64

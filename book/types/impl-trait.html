@@ -178,7 +178,7 @@ commit: 94085bbf726d53f3c7ace1ce122c82ab7b691d39 <br />
 </blockquote>
 <p><code>impl Trait</code> 提供了指定实现某trait 的具体的但匿名的类型的方法。
 它可以出现在两种位置上：参数位置（在这里它可以充当函数的匿名类型参数）和返回位置（在这里它可以充当抽象返回类型）。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Trait {}
@@ -232,7 +232,7 @@ fn foo(arg: impl Trait) {
 这对于<a href="closure.html">闭包</a>和迭代器特别有用。
 例如，闭包具有唯一的、不可写的类型。
 以前，从函数返回闭包的唯一方法是使用<a href="trait-object.html">trait对象</a>：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn returns_closure() -&gt; Box&lt;dyn Fn(i32) -&gt; i32&gt; {
@@ -244,7 +244,7 @@ fn foo(arg: impl Trait) {
 并且者无法完全指定闭包的类型，只能使用 <code>Fn</code> trait。
 这意味着此时 trait对象是必要的。
 但是，使用 <code>impl Trait</code>，可以像如下这样来更简单地编写代码：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {

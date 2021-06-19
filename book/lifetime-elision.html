@@ -185,7 +185,7 @@ commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
 <li>如果接受者(receiver)类型为 <code>&amp;Self</code> 或 <code>&amp;mut Self</code>，那么对 <code>Self</code> 的引用的生存期会被作为所有省略的输出生存期类型参数。</li>
 </ul>
 <p>示例：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">trait T {}
@@ -222,7 +222,7 @@ type FunTrait1 = dyn Fn(&amp;str) -&gt; &amp;str;                // 省略
 type FunTrait2 = dyn for&lt;'a&gt; Fn(&amp;'a str) -&gt; &amp;'a str;  // 未省略
 <span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust compile_fail">
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 下面的示例展示了不允许省略生存期类型参数的情况。
@@ -251,7 +251,7 @@ fn frob(s: &amp;str, t: &amp;str) -&gt; &amp;str;                    // 非法
 <li>如果 <code>'static</code> 被用做原 trait声明的任一一个生存期约束，则此 trait对象使用 <code>'static</code> 作为默认约束。</li>
 <li>如果原 trait声明没有生存期约束，那么此 trait对象的生存期会在表达式中根据上下文被推断出来，在表达式之外直接用 <code>'static</code>。</li>
 </ul>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 对下面的 trait 来说，...
@@ -275,7 +275,7 @@ type T5&lt;'a&gt; = std::cell::Ref&lt;'a, dyn Foo&gt;;
 type T6&lt;'a&gt; = std::cell::Ref&lt;'a, dyn Foo + 'a&gt;;
 <span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust compile_fail">
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 这是一个反面示例：
@@ -291,7 +291,7 @@ type T7&lt;'a, 'b&gt; = TwoBounds&lt;'a, 'b, dyn Foo&gt;;
 <span class="boring">}
 </span></code></pre></pre>
 <p>注意，像 <code>&amp;'a Box&lt;dyn Foo&gt;</code> 这样多层包装的，只需要看最内层包装 <code>dyn Foo</code> 的那层，所以扩展后仍然为 <code>&amp;'a Box&lt;dyn Foo + 'static&gt;</code></p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 对下面的 trait 来说，...
@@ -309,7 +309,7 @@ impl&lt;'a&gt; dyn Bar&lt;'a&gt; + 'a {}
 <h2><a class="header" href="#static-lifetime-elision" id="static-lifetime-elision"><code>'static</code> lifetime elision</a></h2>
 <h2><a class="header" href="#静态static生存期省略" id="静态static生存期省略">静态(<code>'static</code>)生存期省略</a></h2>
 <p>除非指定了显式的生存期，引用类型的<a href="items/constant-items.html">常量项</a>声明和<a href="items/static-items.html">静态项</a>声明都具有<em>隐式的</em>静态(<code>'static</code>)生存期。因此，有 <code>'static</code>生存期的常量项声明在编写时可以略去其生存期。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// STRING: &amp;'static str
@@ -328,7 +328,7 @@ const BITS_N_STRINGS: BitsNStrings&lt;'_&gt; = BitsNStrings {
 <span class="boring">}
 </span></code></pre></pre>
 <p>注意，如果静态项(<code>static</code>)或常量项(<code>const</code>)包含对函数或闭包的引用，而这些函数或闭包本身也包含引用，此时编译器将首先尝试使用标准的省略规则来推断生存期类型参数。如果它不能通过通常的生存期省略规则来推断出生存期类型参数，那么它将报错。举个例子：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Foo;
@@ -342,7 +342,7 @@ const RESOLVED_SINGLE: fn(&amp;str) -&gt; &amp;str = |x| x;
 const RESOLVED_MULTIPLE: &amp;dyn Fn(&amp;Foo, &amp;Bar, &amp;Baz) -&gt; usize = &amp;somefunc;
 <span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust compile_fail">
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Foo;

@@ -2,8 +2,8 @@
 # 函数
 
 >[functions.md](https://github.com/rust-lang/reference/blob/master/src/items/functions.md)\
->commit: 245b8336818913beafa7a35a9ad59c85f28338fb \
->本章译文最后维护日期：2021-5-6
+>commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef \
+>本章译文最后维护日期：2021-06-19
 
 > **<sup>句法</sup>**\
 > _Function_ :\
@@ -197,7 +197,7 @@ let fptr: extern "C" fn() -> i32 = new_i32;
 
 函数可以被限定为异步的，这还可以与 `unsafe` 限定符结合在一起使用：
 
-```rust,edition2018
+```rust
 async fn regular_example() { }
 async unsafe fn unsafe_example() { }
 ```
@@ -206,7 +206,7 @@ async unsafe fn unsafe_example() { }
 
 一个异步函数大致相当于返回一个以 [`async move`块][async-blocks]为代码体的 [`impl Future`] 的函数：
 
-```rust,edition2018
+```rust
 // 源代码
 async fn example(x: &str) -> usize {
     x.len()
@@ -215,7 +215,7 @@ async fn example(x: &str) -> usize {
 
 大致等价于：
 
-```rust,edition2018
+```rust
 # use std::future::Future;
 // 脱糖后的
 fn example<'a>(x: &'a str) -> impl Future<Output = usize> + 'a {
@@ -240,7 +240,7 @@ fn example<'a>(x: &'a str) -> impl Future<Output = usize> + 'a {
 
 声明一个既异步又非安全(`unsafe`)的函数是合法的。调用这样的函数是非安全的，并且（像任何异步函数一样）会返回一个 future。这个 future 只是一个普通的 future，因此“await”它不需要一个 `unsafe` 的上下文：
 
-```rust,edition2018
+```rust
 // 等待这个返回的 future 相当于解引用 `x`。
 //
 // 安全条件: 在返回的 future 执行完成前，`x` 必须能被安全解引用
@@ -345,6 +345,3 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [associated function]: associated-items.md#associated-functions-and-methods
 [implementation]: implementations.md
 [variadic function]: external-blocks.md#variadic-functions
-
-<!-- 2021-1-17-->
-<!-- checked -->

@@ -177,7 +177,7 @@ commit: 43dc1a42f19026f580e34a095e91804c3d6da186 <br />
 <em>InferredType</em> : <code>_</code></p>
 </blockquote>
 <p>自动推断型类型要求编译器尽可能根据周围可用的信息推断出实际使用类型。它不能用于程序项的签名中。它经常用于泛型参数中：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x: Vec&lt;_&gt; = (0..10).collect();

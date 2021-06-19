@@ -168,8 +168,8 @@
                         <h1><a class="header" href="#trait" id="trait">Trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/traits.md">traits.md</a><br />
-commit: 20340ce30db8ec17b0a09dc6e07c0fa2f5c3c0ab <br />
-本章译文最后维护日期：2021-5-6</p>
+commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
+本章译文最后维护日期：2021-06-19</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -191,7 +191,7 @@ commit: 20340ce30db8ec17b0a09dc6e07c0fa2f5c3c0ab <br />
 <p>所有 trait 都定义了一个隐式类型参数 <code>Self</code> ，它指向“实现此接口的类型”。trait 还可能包含额外的类型参数。这些类型参数，包括 <code>Self</code> 在内，都可能会<a href="generics.html">跟正常类型参数一样</a>受到其他 trait 的约束。</p>
 <p>trait 需要具体的类型去实现，具体的实现方法是通过该类型的各种独立实现(implementations)来完成的。</p>
 <p>trait函数可以通过使用分号代替函数体来省略函数体。这表明此 trait的实现必须去定义实现该函数。如果 trait函数定义了一个函数体，那么这个定义就会作为任何不覆盖它的实现的默认函数实现。类似地，关联常量可以省略等号和表达式，以指示相应的实现必须定义该常量值。关联类型不能定义类型，只能在实现中指定类型。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 有定义和没有定义的相关联trait项的例子
@@ -211,7 +211,7 @@ trait Example {
 <h2><a class="header" href="#generic-traits" id="generic-traits">Generic Traits</a></h2>
 <h2><a class="header" href="#泛型trait" id="泛型trait">泛型trait</a></h2>
 <p>可以为 trait 指定类型参数来使该 trait 成为泛型trait/泛型类型。这些类型参数出现在 trait 名称之后，使用与<a href="functions.html#generic-functions">泛型函数</a>相同的句法。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Seq&lt;T&gt; {
@@ -255,7 +255,7 @@ trait Example {
 </ul>
 </li>
 </ul>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::rc::Rc;
@@ -277,7 +277,7 @@ trait TraitMethods {
 </span><span class="boring">let t: Box&lt;dyn TraitMethods&gt; = Box::new(S);
 </span><span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust compile_fail">
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 此 trait 是对象安全的，但不能在 trait对象上分发(dispatch)使用这些方法。
@@ -302,7 +302,7 @@ obj.param(S);  // 错误: 不能调用带有 Self 类型的参数的方法
 obj.typed(1);  // 错误: 不能调用带有泛型类型参数的方法
 <span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust compile_fail">
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::rc::Rc;
@@ -323,7 +323,7 @@ impl NotObjectSafe for S {
 let obj: Box&lt;dyn NotObjectSafe&gt; = Box::new(S); // 错误
 <span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust compile_fail">
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Self: Sized trait 非对象安全的。
@@ -334,7 +334,7 @@ impl TraitWithSize for S {}
 let obj: Box&lt;dyn TraitWithSize&gt; = Box::new(S); // 错误
 <span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust compile_fail">
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 如果有 `Self` 这样的泛型参数，那 trait 就是非对象安全的
@@ -353,7 +353,7 @@ let obj: Box&lt;dyn WithSelf&gt; = Box::new(S); // 错误: 不能使用 `Self` �
 <p>超类trait 是通过 trait 的 <code>Self</code>类型上的 trait约束来声明的，并且通过这种声明 trait约束的方式来传递这种超类trait 关系。一个 trait 不能是它自己的超类trait。</p>
 <p>有超类trait 的 trait 称其为其超类trait 的<strong>子trait(subtrait)</strong>。</p>
 <p>下面是一个声明 <code>Shape</code> 是 <code>Circle</code> 的超类trait 的例子。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Shape { fn area(&amp;self) -&gt; f64; }
@@ -361,7 +361,7 @@ trait Circle : Shape { fn radius(&amp;self) -&gt; f64; }
 <span class="boring">}
 </span></code></pre></pre>
 <p>下面是同一个示例，除了改成使用 <a href="generics.html#where-clauses">where子句</a>来等效实现。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Shape { fn area(&amp;self) -&gt; f64; }
@@ -369,7 +369,7 @@ trait Circle where Self: Shape { fn radius(&amp;self) -&gt; f64; }
 <span class="boring">}
 </span></code></pre></pre>
 <p>下面例子通过 <code>Shape</code> 的 <code>area</code> 函数为 <code>radius</code> 提供了一个默认实现：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">trait Shape { fn area(&amp;self) -&gt; f64; }
@@ -382,7 +382,7 @@ trait Circle where Self: Shape { fn radius(&amp;self) -&gt; f64; }
 <span class="boring">}
 </span></code></pre></pre>
 <p>下一个示例调用了一个泛型参数的超类trait 上的方法。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">trait Shape { fn area(&amp;self) -&gt; f64; }
@@ -395,7 +395,7 @@ trait Circle where Self: Shape { fn radius(&amp;self) -&gt; f64; }
 <span class="boring">}
 </span></code></pre></pre>
 <p>类似地，这里是一个在 trait对象上调用超类trait 的方法的例子。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">trait Shape { fn area(&amp;self) -&gt; f64; }
@@ -417,10 +417,11 @@ let nonsense = circle.radius() * circle.area();
 <p>（trait 中）没有代码体的函数声明或方法声明（的参数模式）只允许使用<a href="../identifiers.html">标识符/IDENTIFIER</a>模式 或 <code>_</code> <a href="../patterns.html#wildcard-pattern">通配符</a>模式。当前 <code>mut</code> <a href="../identifiers.html">IDENTIFIER</a> 还是允许的，但已被弃用，未来将成为一个硬编码错误(hard error)。</p>
 <!-- https://github.com/rust-lang/rust/issues/35203 -->
 <p>在 2015 版中，trait 的函数或方法的参数模式是可选的：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2015">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>trait T {
+</span>// 2015版
+trait T {
     fn f(i32);  // 不需要参数的标识符.
 }
 <span class="boring">}
@@ -446,7 +447,7 @@ let nonsense = circle.radius() * circle.area();
 <h2><a class="header" href="#item-visibility" id="item-visibility">Item visibility</a></h2>
 <h2><a class="header" href="#程序项的可见性" id="程序项的可见性">程序项的可见性</a></h2>
 <p>依照句法规定，trait程序项在语法上允许使用 <a href="../visibility-and-privacy.html"><em>Visibility</em></a>句法的注释，但是当 trait 被（句法法分析程序）验证(validate)后，该可见性注释又被弃用。因此，在源码解析层面，可以在使用程序项的不同上下文中使用统一的语法对这些程序项进行解析。例如，空的 <code>vis</code> 宏匹配段选择器可以用于 trait程序项，而在其他允许使用非空可见性的情况下，也可使用这同一套宏规则。</p>
-<pre><pre class="playground"><code class="language-rust">macro_rules! create_method {
+<pre><pre class="playground"><code class="language-rust edition2018">macro_rules! create_method {
     ($vis:vis $name:ident) =&gt; {
         $vis fn $name(&amp;self) {}
     };

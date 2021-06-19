@@ -2,8 +2,8 @@
 # 语句
 
 >[statements.md](https://github.com/rust-lang/reference/blob/master/src/statements.md)\
->commit: 245b8336818913beafa7a35a9ad59c85f28338fb \
->本章译文最后维护日期：2021-5-6
+>commit: f5cd2519c0e61a2c640345c2e5cda329008ead3a \
+>本章译文最后维护日期：2021-06-19
 
 > **<sup>句法</sup>**\
 > _Statement_ :\
@@ -50,7 +50,7 @@ fn outer() {
 > &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> `let` [_PatternNoTopAlt_]
 >     ( `:` [_Type_] )<sup>?</sup> (`=` [_Expression_] )<sup>?</sup> `;`
 
-*`let`语句*通过一个不可反驳型[模式][pattern]引入了一组新的[变量][variables]，变量由该模式给定。模式后面有一个可选的类型标注(annotation)，再后面是一个可选的初始化表达式。当没有给出类型标注时，编译器将自行推断类型，如果没有足够的信息来执行有限次的类型推断，则将触发编译器报错。由变量声明引入的任何变量从声明开始直到封闭块作用域结束都是可见的。
+*`let`语句*通过一个不可反驳型[模式][pattern]引入了一组新的[变量][variables]，变量由该模式给定。模式后面有一个可选的类型标注(annotation)，再后面是一个可选的初始化表达式。当没有给出类型标注时，编译器将自行推断类型，如果没有足够的信息来执行有限次的类型推断，则将触发编译器报错。由变量声明引入的任何变量从声明点到封闭块作用域的结束都是可见的，除非它们被另一个变量声明遮蔽。
 
 ## Expression statements
 ## 表达式语句

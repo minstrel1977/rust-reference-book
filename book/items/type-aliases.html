@@ -169,28 +169,37 @@
 <h1><a class="header" href="#类型别名" id="类型别名">类型别名</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/type-aliases.md">type-aliases.md</a><br />
-commit: 4e7812ddd9e75ce5623bddb24fa04efcebe2e98f <br />
-本章译文最后维护日期：2021-3-26</p>
+commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
+本章译文最后维护日期：2021-06-19</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>TypeAlias</em> :<br />
    <code>type</code> <a href="../identifiers.html">IDENTIFIER</a> <a href="generics.html"><em>GenericParams</em></a><sup>?</sup>
-<a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup> ( <code>=</code> <a href="../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup> <code>;</code>
-761ad774fcb300f2b506fed7b4dbe753cda88d80
-<em>类型别名</em>为现有的<a href="../types.html">类型</a>定义一个新名称。类型别名用关键字 <code>type</code> 声明。每个值都是一个唯一的特定的类型，但是可以实现几个不同的 trait，或者兼容几个不同的类型约束。</p>
+<a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup> ( <code>=</code> <a href="../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup> <code>;</code></p>
 </blockquote>
+<p><em>类型别名</em>为现有的<a href="../types.html">类型</a>定义一个新名称。类型别名用关键字 <code>type</code> 声明。每个值都是一个唯一的特定的类型，但是可以实现几个不同的 trait，或者兼容几个不同的类型约束。</p>
 <p>例如，下面将类型 <code>Point</code> 定义为类型 <code>(u8, u8)</code> 的同义词/别名：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>type Point = (u8, u8);
 let p: Point = (41, 68);
 <span class="boring">}
 </span></code></pre></pre>
-<p>761ad774fcb300f2b506fed7b4dbe753cda88d80
-元组结构体或单元结构体的类型别名不能用于充当该类型的构造函数:
-761ad774fcb300f2b506fed7b4dbe753cda88d80</p>
+<p>元组结构体或单元结构体的类型别名不能用于充当该类型的构造函数:</p>
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct MyStruct(u32);
+
+use MyStruct as UseAlias;
+type TypeAlias = MyStruct;
+
+let _ = UseAlias(5); // OK
+let _ = TypeAlias(5); // 无法工作
+<span class="boring">}
+</span></code></pre></pre>
 <p>没有使用 <a href="../types.html#type-expressions"><em>Type</em></a> 来定义的类型别名只能作为 <a href="traits.html">trait</a> 中的<a href="associated-items.html#associated-types">关联类型</a>出现。</p>
 
                     </main>

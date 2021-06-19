@@ -2,8 +2,8 @@
 # 块表达式
 
 >[block-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/block-expr.md)\
->commit: 23672971a16c69ea894bef24992b74912cfe5d25 \
->本章译文最后维护日期：2021-4-5
+>commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef \
+>本章译文最后维护日期：2021-6-19
 
 > **<sup>句法</sup>**\
 > _BlockExpression_ :\
@@ -117,7 +117,7 @@ assert_eq!(5, five);
 最后，关键字 `break` 和 `continue` 不能用于从异步块中跳出分支。
 因此，以下内容是非法的：
 
-```rust,edition2018,compile_fail
+```rust,compile_fail
 loop {
     async move {
         break; // 这将打破循环。

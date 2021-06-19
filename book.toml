@@ -11,3 +11,6 @@ git-repository-url = "https://gitee.com/minstrel1977/rust-reference"
 
 [output.html.redirect]
 "/expressions/enum-variant-expr.html" = "struct-expr.html"
+
+[rust]
+edition = "2018"

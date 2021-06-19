@@ -169,8 +169,8 @@
 <h1><a class="header" href="#代码生成属性" id="代码生成属性">代码生成属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md">codegen.md</a><br />
-commit: 646ef8d240a798da5891deb5dbdbebe557f878b8 <br />
-本章译文最后维护日期：2020-11-10</p>
+commit: 7cdf88d28428065209e49ee70e28af86fcc64351 <br />
+本章译文最后维护日期：2021-06-19</p>
 </blockquote>
 <p>下述<a href="../attributes.html">属性</a>用于控制代码生成。</p>
 <h2><a class="header" href="#optimization-hints" id="optimization-hints">Optimization hints</a></h2>
@@ -200,8 +200,8 @@ commit: 646ef8d240a798da5891deb5dbdbebe557f878b8 <br />
 <p><em><code>no_builtins</code><a href="../attributes.html">属性</a></em> 可以应用在 crate 级别，用以禁用对假定存在的库函数调用的某些代码模式优化。<sup class="footnote-reference"><a href="#译者注2">2</a></sup></p>
 <h2><a class="header" href="#the-target_feature-attribute" id="the-target_feature-attribute">The <code>target_feature</code> attribute</a></h2>
 <h2><a class="header" href="#target_feature属性" id="target_feature属性"><code>target_feature</code>属性</a></h2>
-<p><em><code>target_feature</code>[属性]</em> 可应用于<a href="../unsafe-functions.html">非安全(unsafe)函数</a>上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 <code>enable</code>键，其对应值是一个逗号分隔的由平台特性名字组成的符串。</p>
-<pre><pre class="playground"><code class="language-rust">
+<p><em><code>target_feature</code>[属性]</em> 可应用于函数上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 <code>enable</code>键，其对应值是一个逗号分隔的由平台特性名字组成的符串。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">#[cfg(target_feature = &quot;avx2&quot;)]
@@ -214,8 +214,9 @@ unsafe fn foo_avx2() {}
 <p>应用了 <code>target_feature</code> 的函数不会内联到不支持给定特性的上下文中。<code>#[inline(always)]</code> 属性不能与 <code>target_feature</code>属性一起使用。</p>
 <h3><a class="header" href="#available-features" id="available-features">Available features</a></h3>
 <h3><a class="header" href="#可用特性" id="可用特性">可用特性</a></h3>
-<p>下面是可用特性列表。</p>
+<p>下面是可用的特性的名称列表。</p>
 <h4><a class="header" href="#x86-or-x86_64" id="x86-or-x86_64"><code>x86</code> or <code>x86_64</code></a></h4>
+<p>在这两种平台架构下,<code>#[target_feature]</code> 只能应用于<a href="../unsafe-functions.html">非安全(<code>unsafe</code>)函数</a>。</p>
 <table><thead><tr><th>特性</th><th>隐式启用</th><th>描述</th><th>中文描述</th></tr></thead><tbody>
 <tr><td><code>aes</code></td><td><code>sse2</code></td><td><a href="https://en.wikipedia.org/wiki/AES_instruction_set">AES</a> — Advanced Encryption Standard</td><td>高级加密标准</td></tr>
 <tr><td><code>avx</code></td><td><code>sse4.2</code></td><td><a href="https://en.wikipedia.org/wiki/Advanced_Vector_Extensions">AVX</a> — Advanced Vector Extensions</td><td>高级矢量扩展指令集</td></tr>
@@ -242,6 +243,11 @@ unsafe fn foo_avx2() {}
 <tr><td><code>xsaves</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/xsaves"><code>xsaves</code></a> — Save processor extended states supervisor</td><td>保存处理器扩展状态监视程序</td></tr>
 </tbody></table>
 <!-- 保持各个链接靠近其表格，便于以后的增删改 -->
+<h4><a class="header" href="#wasm32-or-wasm64" id="wasm32-or-wasm64"><code>wasm32</code> or <code>wasm64</code></a></h4>
+<p>在这两个平台下，安全函数和<a href="../unsafe-functions.html">非安全函数</a>均可使用<code>#[target_feature]</code>。</p>
+<table><thead><tr><th>特性</th><th>描述</th></tr></thead><tbody>
+<tr><td><code>simd128</code></td><td><a href="https://github.com/webassembly/simd">WebAssembly simd 提案</a></td></tr>
+</tbody></table>
 <h3><a class="header" href="#additional-information" id="additional-information">Additional information</a></h3>
 <h3><a class="header" href="#附加信息" id="附加信息">附加信息</a></h3>
 <p>请参阅 <a href="../conditional-compilation.html#target_feature"><code>target_feature</code>-条件编译选项</a>，了解如何基于编译时的设置来有选择地启用或禁用对某些代码的编译。注意，条件编译选项不受 <code>target_feature</code>属性的影响，只是被整个 crate 启用的特性所驱动。</p>
@@ -256,7 +262,7 @@ unsafe fn foo_avx2() {}
 <h3><a class="header" href="#behavior" id="behavior">Behavior</a></h3>
 <h3><a class="header" href="#表现" id="表现">表现</a></h3>
 <p>将此属性应用到函数 <code>f</code> 上将允许 <code>f</code> 内的代码获得 <code>f</code> 被调用时建立的调用栈的“最顶层”的调用的<a href="https://doc.rust-lang.org/core/panic/struct.Location.html">位置(<code>Location</code>)</a>信息的提示。从观察的角度来看，此属性的实现表现地就像从 <code>f</code> 所在的帧向上遍历调用栈，定位找到最近的有<em>非此属性限定</em>的调用函数 <code>outer</code>，并返回 <code>outer</code> 调用时的<a href="https://doc.rust-lang.org/core/panic/struct.Location.html">位置(<code>Location</code>)</a>信息。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[track_caller]
@@ -274,7 +280,7 @@ fn f() {
 <h4><a class="header" href="#examples" id="examples">Examples</a></h4>
 <h4><a class="header" href="#示例" id="示例">示例</a></h4>
 <p>当 <code>f</code> 直接被 <code>calls_f</code> 调用时，<code>f</code> 中的代码观察其在 <code>calls_f</code> 内的调用位置：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">#[track_caller]
@@ -287,7 +293,7 @@ fn f() {
 <span class="boring">}
 </span></code></pre></pre>
 <p><code>f</code> 被另一个有此属性限定的函数 <code>g</code> 调用，<code>g</code> 又被 <code>calls_g</code>' 调用，<code>f</code> 和 <code>g</code> 内的代码又同时观察 <code>g</code> 在 <code>calls_g</code> 内的调用位置：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">#[track_caller]
@@ -306,7 +312,7 @@ fn calls_g() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>当<code>g</code> 又被另一个有此属性限定的函数 <code>h</code> 调用，而<code>g</code> 又被 <code>calls_h</code>' 调用，<code>f</code>、<code>g</code> 和 <code>h</code> 内的代码又同时观察 <code>h</code> 在 <code>calls_h</code> 内的调用位置：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">#[track_caller]
@@ -346,8 +352,6 @@ fn calls_h() {
 <div class="footnote-definition" id="译者注3"><sup class="footnote-definition-label">3</sup>
 <p>因为 trait对象的值不能直接使用，只能自动强转为指针引用，那这里的调用就无法观察到真实的调用位置。</p>
 </div>
-<!-- 2020-11-12-->
-<!-- checked -->
 
                     </main>
 

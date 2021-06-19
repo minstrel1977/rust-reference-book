@@ -2,8 +2,8 @@
 # 路径
 
 >[paths.md](https://github.com/rust-lang/reference/blob/master/src/paths.md)\
->commit: 80241b46c68380735f05fb53bd99632b87ac2872 \
->本章译文最后维护日期：2021-3-13
+>commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef \
+>本章译文最后维护日期：2021-06-19
 
 *路径*是一个或多个由命名空间<span class="parenthetical">限定符(`::`)</span>*逻辑*分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，`::` 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的[程序项][item]或[变量][variable]。如果路径包含多个路径段，则总是引用程序项。
 
@@ -152,6 +152,16 @@ type G = std::boxed::Box<dyn std::ops::FnOnce(isize) -> isize>;
 >从 2018 版开始，以 `::` 开头的路径被解析为[外部预导入包][extern prelude]中的一个 crate。也就是说，其后必须跟一个 crate的名称。
 
 ```rust
+pub fn foo() {
+    // 在 2018版中，这种访问 `std` 的方法是通过外部预导入包的形式达到的
+    // 在 2015版中, 这种访问 `std` 的方法是通过crate根的形式达到的
+    let now = ::std::time::Instant::now();
+    println!("{:?}", now);
+}
+```
+
+```rust,edition2015
+// 2015 Edition
 mod a {
     pub fn foo() {}
 }
@@ -310,11 +320,11 @@ mod without { // ::without
             fn g(&self) {} // None
         }
 
-        impl OtherTrait for ::a::Struct {
+        impl OtherTrait for crate::a::Struct {
             fn g(&self) {} // None
         }
 
-        impl ::a::Trait for OtherStruct {
+        impl crate::a::Trait for OtherStruct {
             fn f(&self) {} // None
         }
     }

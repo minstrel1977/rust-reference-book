@@ -182,7 +182,7 @@ commit: d5a5e32d3cda8a297d2a91a85b91ff2629b0e896 <br />
 <li>
 <p><code>let</code>语句中显式给出了类型。</p>
 <p>例如，下面例子中 <code>&amp;mut 42</code> 自动强转成 <code>&amp;i8</code> 类型：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let _: &amp;i8 = &amp;mut 42; // 译者注释：`&amp;i8` 是显示给出的所需类型
@@ -196,7 +196,7 @@ commit: d5a5e32d3cda8a297d2a91a85b91ff2629b0e896 <br />
 <p>函数调用的参数</p>
 <p>被强制的值是实参(actual parameter)，它的类型被自动强转为形参(formal parameter)的类型。</p>
 <p>例如，下面例子中 <code>&amp;mut 42</code> 自动强转成 <code>&amp;i8</code> 类型：</p>
-<pre><pre class="playground"><code class="language-rust">fn bar(_: &amp;i8) { }
+<pre><pre class="playground"><code class="language-rust edition2018">fn bar(_: &amp;i8) { }
 
 fn main() {
     bar(&amp;mut 42);
@@ -207,7 +207,7 @@ fn main() {
 <li>
 <p>实例化结构体、联合体或枚举变体的字段。</p>
 <p>例如，下面例子中 <code>&amp;mut 42</code> 自动强转成 <code>&amp;i8</code> 类型：</p>
-<pre><pre class="playground"><code class="language-rust">struct Foo&lt;'a&gt; { x: &amp;'a i8 }
+<pre><pre class="playground"><code class="language-rust edition2018">struct Foo&lt;'a&gt; { x: &amp;'a i8 }
 
 fn main() {
     Foo { x: &amp;mut 42 };
@@ -217,7 +217,7 @@ fn main() {
 <li>
 <p>函数结果—块中的最终表达式或者 <code>return</code>语句中的任何表达式。</p>
 <p>例如，下面例子中 <code>x</code> 将自动强转成 <code>&amp;dyn Display</code> 类型：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fmt::Display;
@@ -271,7 +271,7 @@ fn foo(x: &amp;u32) -&gt; &amp;dyn Display {
 </li>
 <li>
 <p><code>&amp;T</code> 或 <code>&amp;mut T</code> 到 <code>&amp;U</code> 如果 <code>T</code> 实现了 <code>Deref&lt;Target = U&gt;</code>。例如：</p>
-<pre><pre class="playground"><code class="language-rust">use std::ops::Deref;
+<pre><pre class="playground"><code class="language-rust edition2018">use std::ops::Deref;
 
 struct CharContainer {
     value: char,
@@ -359,7 +359,7 @@ fn main() {
 </ul>
 <h3><a class="header" href="#examples" id="examples">Examples:</a></h3>
 <h3><a class="header" href="#示例" id="示例">示例：</a></h3>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">let (a, b, c) = (0, 1, 2);

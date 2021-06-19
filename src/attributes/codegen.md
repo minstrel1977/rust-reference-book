@@ -2,8 +2,8 @@
 # 代码生成属性
 
 >[codegen.md](https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md)\
->commit: 646ef8d240a798da5891deb5dbdbebe557f878b8 \
->本章译文最后维护日期：2020-11-10
+>commit: 7cdf88d28428065209e49ee70e28af86fcc64351 \
+>本章译文最后维护日期：2021-06-19
 
 下述[属性][attributes]用于控制代码生成。
 
@@ -42,7 +42,7 @@
 ## The `target_feature` attribute
 ## `target_feature`属性
 
-*`target_feature`[属性]* 可应用于[非安全(unsafe)函数][unsafe function]上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 [_MetaListNameValueStr_]元项属性句法来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 `enable`键，其对应值是一个逗号分隔的由平台特性名字组成的符串。
+*`target_feature`[属性]* 可应用于函数上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 [_MetaListNameValueStr_]元项属性句法来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 `enable`键，其对应值是一个逗号分隔的由平台特性名字组成的符串。
 
 ```rust
 # #[cfg(target_feature = "avx2")]
@@ -59,9 +59,11 @@ unsafe fn foo_avx2() {}
 ### Available features
 ### 可用特性
 
-下面是可用特性列表。
+下面是可用的特性的名称列表。
 
 #### `x86` or `x86_64`
+
+在这两种平台架构下,`#[target_feature]` 只能应用于[非安全(`unsafe`)函数][unsafe function]。
 
 特性     | 隐式启用 | 描述 | 中文描述
 ------------|--------------------|-------------------|-------------------
@@ -115,6 +117,16 @@ unsafe fn foo_avx2() {}
 [`xsavec`]: https://www.felixcloutier.com/x86/xsavec
 [`xsaveopt`]: https://www.felixcloutier.com/x86/xsaveopt
 [`xsaves`]: https://www.felixcloutier.com/x86/xsaves
+
+#### `wasm32` or `wasm64`
+
+在这两个平台下，安全函数和[非安全函数][unsafe function]均可使用`#[target_feature]`。
+
+特性     | 描述
+------------|-------------------
+`simd128`   | [WebAssembly simd 提案][simd128]
+
+[simd128]: https://github.com/webassembly/simd
 
 ### Additional information
 ### 附加信息
@@ -237,6 +249,3 @@ fn calls_h() {
 [`core::intrinsics::caller_location`]: https://doc.rust-lang.org/core/intrinsics/fn.caller_location.html
 [`core::panic::Location::caller`]: https://doc.rust-lang.org/core/panic/struct.Location.html#method.caller
 [`Location`]: https://doc.rust-lang.org/core/panic/struct.Location.html
-
-<!-- 2020-11-12-->
-<!-- checked -->

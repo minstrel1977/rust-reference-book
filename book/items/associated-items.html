@@ -191,7 +191,7 @@ commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
 <p>标识符是关联函数的名称。关联函数的泛型参数、参数列表、返回类型 和 where子句必须与它们在<em>关联函数声明</em>中声明的格式一致。</p>
 <p><em>关联函数定义</em>定义与另一个类型相关联的函数。它的编写方式与<a href="../types/function-item.html">函数项</a>相同。</p>
 <p>常见的关联函数的一个例子是 <code>new</code>函数，它返回此关联函数所关联的类型的值。</p>
-<pre><pre class="playground"><code class="language-rust">struct Struct {
+<pre><pre class="playground"><code class="language-rust edition2018">struct Struct {
     field: i32
 }
 
@@ -208,7 +208,7 @@ fn main () {
 }
 </code></pre></pre>
 <p>当关联函数在 trait 上声明时，此函数也可以通过一个指向 trait，再后跟函数名的<a href="../paths.html">路径</a>来调用。当发生这种情况时，可以用 trait 的实际路径和关联函数的标识符按 <code>&lt;_ as Trait&gt;::function_name</code> 这样的形式来组织实际的调用路径。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Num {
@@ -240,7 +240,7 @@ The <code>Self</code> terminal in this grammar denotes a type resolving to the i
 译者在此先邀请读者中的高手帮忙翻译清楚。感谢感谢。另外译者还是要啰嗦以下译者对这句话背后知识的理解，希望有人能指出其中的错误，以让译者有机会进步：<br />
 首先终结符(terminal)就是不能再更细分的词法单元，可以理解它是一个 token，这里它代表 self（即方法接受者）的类型的基础类型。上面句法中的 P 代表一个产生式，它内部定义的规则是并联的，就是自动机在应用这个产生式时碰到任意符合条件的输入就直接进入终态。S 代表有限自动机从 S 这里开始读取 self 的类型。这里 S 是 Self 和 P 的并联，应该表示是：如果 self 的类型直接是 Self，那就直接进入终态，即返回 Self，即方法接收者的直接类型就是结果类型；如果 self 的类型是 P 中的任一种，就返回那一种，比如 self 的类型是一个 box指针，那么就返回 <code>Box&lt;S&gt;</code>。</p>
 </blockquote>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::rc::Rc;
@@ -276,7 +276,7 @@ impl Example {
 <p><strong>注意</strong>: （方法的）生存期也能，其实也经常是使用这种方式来省略。</p>
 </blockquote>
 <p>如果 <code>self</code> 参数以 <code>mut</code> 为前缀，它就变成了一个可变的变量，类似于使用 <code>mut</code> <a href="../patterns.html#identifier-patterns">标识符模式</a>的常规参数。例如：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Changer: Sized {
@@ -286,7 +286,7 @@ impl Example {
 <span class="boring">}
 </span></code></pre></pre>
 <p>以下是一个关于 trait 的方法的例子，现给定如下内容：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">type Surface = i32;
@@ -298,7 +298,7 @@ impl Example {
 <span class="boring">}
 </span></code></pre></pre>
 <p>这里定义了一个带有两个方法的 trait。当此 trait 被引入当前作用域内后，所有此 trait 的<a href="implementations.html">实现</a>的值都可以调用此 trait 的 <code>draw</code> 和 <code>bounding_box</code> 方法。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">type Surface = i32;
@@ -340,7 +340,7 @@ let bounding_box = circle_shape.bounding_box();
 <p><em>关联类型定义</em>在另一个类型上定义了一个类型别名。书写形式为：先是 <code>type</code>，然后是一个[标识符]，然后再是一个 <code>=</code>，最后是一个<a href="../types.html#type-expressions">类型</a>。</p>
 <p>如果类型 <code>Item</code> 上有一个来自 trait <code>Trait</code>的关联类型 <code>Assoc</code>，则表达式 <code>&lt;Item as Trait&gt;::Assoc</code> 也是一个类型，具体就是<em>关联类型定义</em>中指定的类型的一个别名。此外，如果 <code>Item</code> 是类型参数，则 <code>Item::Assoc</code> 也可以在类型参数中使用。</p>
 <p>关联类型不能包括<a href="generics.html">泛型参数</a>或 <a href="generics.html#where-clauses">where子句</a>。</p>
-<pre><pre class="playground"><code class="language-rust">trait AssociatedType {
+<pre><pre class="playground"><code class="language-rust edition2018">trait AssociatedType {
     // 关联类型声明
     type Assoc;
 }
@@ -368,7 +368,7 @@ fn main() {
 <h3><a class="header" href="#associated-types-container-example" id="associated-types-container-example">Associated Types Container Example</a></h3>
 <h3><a class="header" href="#示例展示容器内的关联类型" id="示例展示容器内的关联类型">示例展示容器内的关联类型</a></h3>
 <p>下面给出一个 <code>Container</code> trait 示例。请注意，该类型可用在方法签名内：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Container {
@@ -379,7 +379,7 @@ fn main() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>为了能让实现类型来实现此 trait，实现类型不仅必须为每个方法提供实现，而且必须指定类型 <code>E</code>。下面是一个为标准库类型 <code>Vec</code> 实现了此 <code>Container</code> 的实现：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">trait Container {
@@ -403,7 +403,7 @@ fn main() {
 <h3><a class="header" href="#associated-constants-examples" id="associated-constants-examples">Associated Constants Examples</a></h3>
 <h3><a class="header" href="#示例展示关联常量" id="示例展示关联常量">示例展示关联常量</a></h3>
 <p>基本示例：</p>
-<pre><pre class="playground"><code class="language-rust">trait ConstantId {
+<pre><pre class="playground"><code class="language-rust edition2018">trait ConstantId {
     const ID: i32;
 }
 
@@ -418,7 +418,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>使用默认值：</p>
-<pre><pre class="playground"><code class="language-rust">trait ConstantIdDefault {
+<pre><pre class="playground"><code class="language-rust edition2018">trait ConstantIdDefault {
     const ID: i32 = 1;
 }
 

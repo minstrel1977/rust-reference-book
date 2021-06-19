@@ -179,7 +179,7 @@ commit: 7c6e0c00aaa043c89e0d9f07e78999268e8ac054 <br />
 <code>{</code><a href="structs.html"><em>StructFields</em></a> <code>}</code></p>
 </blockquote>
 <p>除了用 <code>union</code> 代替 <code>struct</code>外，联合体声明使用和结构体声明相同的句法。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[repr(C)]
@@ -193,7 +193,7 @@ union MyUnion {
 <h2><a class="header" href="#initialization-of-a-union" id="initialization-of-a-union">Initialization of a union</a></h2>
 <h2><a class="header" href="#联合体的初始化" id="联合体的初始化">联合体的初始化</a></h2>
 <p>可以使用与结构体类型相同的句法创建联合体类型的值，但必须只能指定一个字段：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">union MyUnion { f1: u32, f2: f32 }
@@ -202,7 +202,7 @@ union MyUnion {
 <span class="boring">}
 </span></code></pre></pre>
 <p>上面的表达式创建了一个类型为 <code>MyUnion</code> 的值，并使用字段 <code>f1</code> 初始化了其存储。可以使用与结构体字段相同的句法访问联合体：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">union MyUnion { f1: u32, f2: f32 }
@@ -215,7 +215,7 @@ union MyUnion {
 <h2><a class="header" href="#读写联合体字段" id="读写联合体字段">读写联合体字段</a></h2>
 <p>联合体没有“活跃字段(active field)”的概念。相反，每次访问联合体只是用访问所指定的字段的类型解释此联合体的存储。读取联合体的字段就是以当前读取字段的类型来解读此联合体的存储位。字段（间）可以有非零的偏移量存在（使用 <a href="../type-layout.html#reprc-unions">C表型</a>的除外）；在这种情况下，读取将从字段的相对偏移量的 bit 开始。程序员有责任确保此数据在当前字段类型下有效。否则会导致<a href="../behavior-considered-undefined.html">未定义行为(undefined behavior)</a>。例如，在 <a href="../types/boolean.html"><code>bool</code>类型</a>的字段下读取到数值 <code>3</code> 是未定义行为。实际上，对一个 <a href="../type-layout.html#reprc-unions">C表型</a>的联合体进行写操作，然后再从中读取，就好比从用于写入的类型到用于读取的类型的 <a href="https://doc.rust-lang.org/std/mem/fn.transmute.html"><code>transmute</code></a> 操作。</p>
 <p>因此，所有的联合体字段的读取必须放在非安全(<code>unsafe</code>)块里：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">union MyUnion { f1: u32, f2: f32 }
@@ -227,7 +227,7 @@ union MyUnion {
 <span class="boring">}
 </span></code></pre></pre>
 <p>对实现了 <a href="https://doc.rust-lang.org/std/marker/trait.Copy.html"><code>Copy</code></a> trait 或 [<code>ManuallyDrop</code>][ManuallyDrop] trait 的联合体字段的写操作不需要事先的析构读操作，也因此这些写操作不必放在非安全(<code>unsafe</code>)块中。<sup class="footnote-reference"><a href="#译者备注">1</a></sup></p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::mem::ManuallyDrop;
@@ -247,7 +247,7 @@ u.f2 = ManuallyDrop::new(String::from(&quot;example&quot;));
 <h2><a class="header" href="#pattern-matching-on-unions" id="pattern-matching-on-unions">Pattern matching on unions</a></h2>
 <h2><a class="header" href="#联合体上的模式匹配" id="联合体上的模式匹配">联合体上的模式匹配</a></h2>
 <p>访问联合体字段的另一种方法是使用模式匹配。联合体字段上的模式匹配与结构体上的模式匹配使用相同的句法，只是这种模式只能一次指定一个字段。因为模式匹配就像使用特定字段来读取联合体，所以它也必须被放在非安全(<code>unsafe</code>)块中。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">union MyUnion { f1: u32, f2: f32 }
@@ -263,7 +263,7 @@ u.f2 = ManuallyDrop::new(String::from(&quot;example&quot;));
 <span class="boring">}
 </span></code></pre></pre>
 <p>模式匹配可以将联合体作为更大的数据结构的一个字段进行匹配。特别是，当使用 Rust 联合体通过 FFI 实现 C标签联合体(C tagged union)时，这允许同时在标签和相应字段上进行匹配：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[repr(u32)]
@@ -295,7 +295,7 @@ fn is_zero(v: Value) -&gt; bool {
 <h2><a class="header" href="#references-to-union-fields" id="references-to-union-fields">References to union fields</a></h2>
 <h2><a class="header" href="#引用联合体字段" id="引用联合体字段">引用联合体字段</a></h2>
 <p>由于联合体字段共享存储，因此拥有对联合体一个字段的写访问权就同时拥有了对其所有其他字段的写访问权。因为这一事实，引用的借用检查规则必须调整。因此，如果联合体的一个字段是被出借，那么在相同的生存期内它的所有其他字段也都处于出借状态。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">union MyUnion { f1: u32, f2: f32 }

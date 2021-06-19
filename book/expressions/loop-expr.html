@@ -211,7 +211,7 @@ commit: d23f9da8469617e6c81121d9fd123443df70595d <br />
 <p><code>while</code>循环从对<a href="../types/boolean.html">布尔型</a>的循环条件操作数求值开始。
 如果循环条件操作数的求值结果为 <code>true</code>，则执行循环体块，然后控制流返回到循环条件操作数。如果循环条件操作数的求值结果为 <code>false</code>，则 <code>while</code>表达式完成。</p>
 <p>举个例子：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut i = 0;
@@ -232,7 +232,7 @@ while i &lt; 10 {
 </blockquote>
 <p><code>while let</code>循环在语义上类似于 <code>while</code>循环，但它用 <code>let</code>关键字后紧跟着一个模式、一个 <code>=</code>、一个<a href="../glossary.html#scrutinee">检验对象(scrutinee)</a>表达式和一个块表达式，来替代原来的条件表达式。
 如果检验对象表达式的值与模式匹配，则执行循环体块，然后控制流再返回到模式匹配语句。如果不匹配，则 <code>while</code>表达式执行完成。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut x = vec![1, 2, 3];
@@ -265,7 +265,7 @@ while let _ = 5 {
 </code></pre>
 <p>可以使用操作符 <code>|</code> 指定多个模式。
 这与匹配(<code>match</code>)表达式中的 <code>|</code> 具有相同的语义：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut vals = vec![2, 3, 1, 2, 2];
@@ -288,7 +288,7 @@ while let Some(v @ 1) | Some(v @ 2) = vals.pop() {
 如果迭代器生成一个值，该值将与此 <code>for</code>表达式提供的不可反驳型模式进行匹配，执行循环体，然后控制流返回到 <code>for</code>循环的头部。
 如果迭代器为空了，则 <code>for</code>表达式执行完成。</p>
 <p><code>for</code>循环遍历数组内容的示例：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v = &amp;[&quot;apples&quot;, &quot;cake&quot;, &quot;coffee&quot;];
@@ -299,7 +299,7 @@ for text in v {
 <span class="boring">}
 </span></code></pre></pre>
 <p><code>for</code>循环遍历一个整数序列的例子：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut sum = 0;
@@ -357,7 +357,7 @@ assert_eq!(sum, 55);
    <code>break</code> <a href="../tokens.html#lifetimes-and-loop-labels">LIFETIME_OR_LABEL</a><sup>?</sup> <a href="../expressions.html"><em>Expression</em></a><sup>?</sup></p>
 </blockquote>
 <p>当遇到 <code>break</code> 时，相关的循环体的执行将立即结束，例如：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut last = 0;
@@ -372,7 +372,7 @@ assert_eq!(last, 12);
 </span></code></pre></pre>
 <p><code>break</code>表达式通常与包含 <code>break</code>表达式的最内层 <code>loop</code>、<code>for</code>或 <code>while</code>循环相关联，但是可以使用<a href="#loop-labels">循环标签</a>来指定受影响的循环层（此循环层必须是封闭该 break表达式的循环之一）。
 例如：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>'outer: loop {
@@ -399,7 +399,7 @@ assert_eq!(last, 12);
 <h2><a class="header" href="#break和loop返回值" id="break和loop返回值"><code>break</code>和<code>loop</code>返回值</a></h2>
 <p>当使用 <code>loop</code>循环时，可以使用 <code>break</code>表达式从循环中返回一个值，通过形如 <code>break EXPR</code> 或 <code>break 'label EXPR</code> 来返回，其中 <code>EXPR</code> 是一个表达式，它的结果被从 <code>loop</code>循环中返回。
 例如：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let (mut a, mut b) = (1, 1);

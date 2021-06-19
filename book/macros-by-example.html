@@ -208,7 +208,7 @@ commit: 3a6ddea02244857362ac05d85ec98736b738c0ff <br />
 <h2><a class="header" href="#transcribing" id="transcribing">Transcribing</a></h2>
 <h2><a class="header" href="#转码" id="转码">转码</a></h2>
 <p>当宏被调用时，宏扩展器(macro expander)按名称查找宏调用，并依次尝试此宏中的每条宏规则。宏会根据第一个成功的匹配进行转码；如果当前转码结果导致错误，不会再尝试进行后续匹配。在匹配时，不会执行预判；如果编译器不能明确地确定如何一个 token 一个 token 地解析宏调用，则会报错。在下面的示例中，编译器不会越过标识符，去提前查看后跟的 token 是 <code>)</code>，尽管这能帮助它明确地解析调用：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! ambiguity {
@@ -220,7 +220,7 @@ ambiguity!(error); // 错误: 局部歧义(local ambiguity)
 </span></code></pre></pre>
 <p>在匹配器和转码器中，token <code>$</code> 用于从宏引擎中调用特殊行为（下文<a href="#metavariables">元变量</a>和<a href="#repetitions">重复元</a>中有详述）。不属于此类调用的 token 将按字面意义进行匹配和转码，除了一个例外。这个例外是匹配器的外层定界符将匹配任何一对定界符。因此，比如匹配器 <code>(())</code> 将匹配 <code>{()}</code>，而 <code>{{}}</code> 不行。字符 <code>$</code> 不能按字面意义匹配或转码。</p>
 <p>当将当前匹配的匹配段转发给另一个声明宏时，第二个宏中的匹配器看到的将是此匹配段类型的不透明抽象句法树(opaque AST)。第二个宏不能使用字面量token 来匹配匹配器中的这个匹配段，唯一可看到/使用的就是此匹配段类型一样的匹配段选择器(fragment specifier)。但匹配段类型 <code>ident</code>、<code>lifetime</code>、和 <code>tt</code> 是几个例外，它们<em>可以</em>通过字面量token 进行匹配。下面示例展示了这一限制：（译者注：匹配段选择器和匹配段，以及宏中各部件的定义可以凑合着看看译者未能翻译完成的<a href="macro-ambiguity.html">宏定义规范</a>）</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! foo {
@@ -236,7 +236,7 @@ foo!(3);
 <span class="boring">}
 </span></code></pre></pre>
 <p>以下示例展示了 <code>tt</code> 类型的匹配段在成功匹配（转码）一次之后生成的 tokens 如何能够再次直接匹配：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 成功编译
@@ -324,7 +324,7 @@ mod has_macro {
 m!{} // OK: m 在上层模块文件 src/lib.rs 中声明后使用
 </code></pre>
 <p>多次定义宏并不报错；除非超出作用域，否则最近的宏声明将屏蔽前一个。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! m {
@@ -352,7 +352,7 @@ m!(1);
 <span class="boring">}
 </span></code></pre></pre>
 <p>宏也可以在函数内部声明和使用，其工作方式类似：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn foo() {
@@ -370,7 +370,7 @@ m!(1);
 <h3><a class="header" href="#the-macro_use-attribute" id="the-macro_use-attribute">The <code>macro_use</code> attribute</a></h3>
 <h3><a class="header" href="#macro_use属性" id="macro_use属性"><code>macro_use</code>属性</a></h3>
 <p><em><code>macro_use</code>属性</em>有两种用途。首先，它可以通过作用于模块的方式让模块内的宏的作用域在模块关闭时不结束：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[macro_use]
@@ -395,7 +395,7 @@ lazy_static!{}
 <h3><a class="header" href="#path-based-scope" id="path-based-scope">Path-Based Scope</a></h3>
 <h3><a class="header" href="#基于路径的作用域" id="基于路径的作用域">基于路径的作用域</a></h3>
 <p>默认情况下，宏没有基于路径的作用域。但是如果该宏带有 <code>#[macro_export]</code> 属性，则相当于它在当前 crate 的根作用域的顶部被声明，它通常可以这样引用：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>self::m!();
@@ -440,7 +440,7 @@ fn unit() {
 }
 </code></pre>
 <p>请注意，由于 <code>$crate</code> 指的是当前的（<code>$crate</code> 源码出现的）crate，因此在引用非宏程序项时，它必须与全限定模块路径一起使用：</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub mod inner {
@@ -454,7 +454,7 @@ fn unit() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>此外，尽管 <code>$crate</code> 允许宏在扩展时引用其自身 crate 中的程序项，但它的使用对可见性没有影响（，或者说它的使用仍受可见性条件的约束）。引用的程序项或宏必须仍然在调用位置处可见。在下面的示例中，任何试图从此 crate 外部调用 <code>call_foo!()</code> 的行为都将失败，因为 <code>foo()</code> 不是公有的。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[macro_export]
@@ -470,7 +470,7 @@ fn foo() {}
 <p><strong>版本&amp;版次差异</strong>：在 Rust 1.30 之前，<code>$crate</code> 和 <code>local_inner_macros</code>（后面会讲）不受支持。从该版本开始，它们与基于路径的宏导入（前面讲过）一起被添加进来，用以确保不需要在当前 crate 已经使用导入了某导出宏的情况下再额外手动导入此导出宏下面用到的辅助宏。如果要让 Rust 的早期版本编写的 crate 要使用辅助宏，需要修改为使用 <code>$crate</code> 或 <code>local_inner_macros</code>，以便与基于路径的导入一起工作。</p>
 </blockquote>
 <p>当一个宏被导出时，可以在 <code>#[macro_export]</code> 属性里添加 <code>local_inner_macros</code> 属性值，用以自动为该属性修饰的宏内包含的所有宏调用自动添加 <code>$crate::</code> 前缀。这主要是作为一个工具来迁移那些在引入 <code>$crate</code> 之前的版本编写的 Rust 代码，以便它们能与 Rust 2018 版中基于路径的宏导入一起工作。在使用新版本编写的代码中不鼓励使用它。</p>
-<pre><pre class="playground"><code class="language-rust">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[macro_export(local_inner_macros)]

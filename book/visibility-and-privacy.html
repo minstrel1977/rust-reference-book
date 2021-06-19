@@ -169,8 +169,8 @@
 <h1><a class="header" href="#可见性与隐私权" id="可见性与隐私权">可见性与隐私权</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/visibility-and-privacy.md">visibility-and-privacy.md</a><br />
-commit: f41afd4f69a7996ac66b01f75e333bccf43337f7 <br />
-本章译文最后维护日期：2020-11-10</p>
+commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
+本章译文最后维护日期：2021-06-19</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法<sup></strong><br />
@@ -185,7 +185,7 @@ commit: f41afd4f69a7996ac66b01f75e333bccf43337f7 <br />
 <p>Rust 的名称解析是在命名空间的层级结构的全局层（即最顶层）上运行的。此层级结构中的每个级别都可以看作是某个程序项。这些程序项就是我们前面提到的那些程序项之一（注意这也包括外部crate）。声明或定义一个新模块可以被认为是在定义的位置向此层次结构中插入一个新的（层级）树。</p>
 <p>为了控制接口是否可以被跨模块使用，Rust 会检查每个程序项的使用，来看看它是否被允许使用。此处就是生成隐私告警的地方，或者说是提示：“you used a private item of another module and weren't allowed to.”的地方。（译者注：这句提示可以翻译为：您使用了另一个模块的私有程序项，但不允许这样做。）</p>
 <p>默认情况下，Rust 中的所有内容都是<em>私有的</em>，但有两个例外：<code>pub</code> trait 中的关联程序项默认为公有的；<code>pub</code> 枚举中的枚举变体也默认为公有的。当一个程序项被声明为 <code>pub</code> 时，它可以被认为是外部世界能以访问的。例如：</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {}
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">fn main() {}
 </span>// 声明一个私有结构体
 struct Foo;
 
@@ -223,7 +223,7 @@ pub enum State {
 </ul>
 <p>在第二种情况下，我们提到了当前模块及其后代“可以访问”私有项，但是访问一个程序项的确切含义取决于该项是什么。例如，访问一个模块意味着要查看它的内部（以导入更多的程序项）；访问一个函数意味着它被调用了。此外，路径表达式和导入语句也被视为访问一个程序项，但只有当访问目标位于当前可见的作用域内时，它们才算是有效的数据访问。</p>
 <p>下面是一段示例程序，它例证了上述三种情况：</p>
-<pre><pre class="playground"><code class="language-rust">// 这个模块是私有的，这意味着没有外部crate 可以访问这个模块。
+<pre><pre class="playground"><code class="language-rust edition2018">// 这个模块是私有的，这意味着没有外部crate 可以访问这个模块。
 // 但是，由于它在当前 crate 的根模块下，
 // 因此当前 crate 中的任何模块都可以访问该模块中任何公有可见性程序项。
 mod crate_helper_module {
@@ -241,7 +241,7 @@ pub fn public_api() {}
 
 // 与 'public_api' 类似，此模块是公有的，因此其他的crate 是能够看到此模块内部的。
 pub mod submodule {
-    use crate_helper_module;
+    use crate::crate_helper_module;
 
     pub fn my_method() {
         // 本地crate 中的任何程序项都可以通过上述两个规则的组合来调用辅助模块里的公共接口。
@@ -277,7 +277,7 @@ pub mod submodule {
 <p><strong>版本差异</strong>: 从 2018版开始，<code>pub(in path)</code> 的路径必须以 <code>crate</code>、<code>self</code>或<code>super</code>开头。2015版还可以使用以 <code>::</code> 开头的路径，或以根模块下的模块名的开头的路径。</p>
 </blockquote>
 <p>这里是一些示例：</p>
-<pre><pre class="playground"><code class="language-rust">pub mod outer_mod {
+<pre><pre class="playground"><code class="language-rust edition2015">pub mod outer_mod {
     pub mod inner_mod {
         // 此函数在 `outer_mod` 内部可见
         pub(in crate::outer_mod) fn outer_mod_visible_fn() {}
@@ -330,7 +330,7 @@ fn main() { bar() }
 <h2><a class="header" href="#re-exporting-and-visibility" id="re-exporting-and-visibility">Re-exporting and Visibility</a></h2>
 <h2><a class="header" href="#重导出和可见性" id="重导出和可见性">重导出和可见性</a></h2>
 <p>Rust 允许使用指令 <code>pub use</code> 公开重导出程序项。因为这是一个公有指令，所以允许通过上面的规则验证后在当前模块中使用该程序项。重导出本质上允许使用公有方式访问重导出的程序项的内部。例如，下面程序是有效的：</p>
-<pre><pre class="playground"><code class="language-rust">pub use self::implementation::api;
+<pre><pre class="playground"><code class="language-rust edition2018">pub use self::implementation::api;
 
 mod implementation {
     pub mod api {
