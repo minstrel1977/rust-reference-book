@@ -169,13 +169,14 @@
 <h1><a class="header" href="#类型别名" id="类型别名">类型别名</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/type-aliases.md">type-aliases.md</a><br />
-commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
-本章译文最后维护日期：2021-06-19</p>
+commit: 91fb8ee654a7eb566eea719e6f3404fff7789e48 <br />
+本章译文最后维护日期：2021-06-27</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>TypeAlias</em> :<br />
    <code>type</code> <a href="../identifiers.html">IDENTIFIER</a> <a href="generics.html"><em>GenericParams</em></a><sup>?</sup>
+( <code>:</code> <a href="../trait-bounds.html"><em>TypeParamBounds</em></a> )<sup>?</sup>
 <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup> ( <code>=</code> <a href="../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup> <code>;</code></p>
 </blockquote>
 <p><em>类型别名</em>为现有的<a href="../types.html">类型</a>定义一个新名称。类型别名用关键字 <code>type</code> 声明。每个值都是一个唯一的特定的类型，但是可以实现几个不同的 trait，或者兼容几个不同的类型约束。</p>
@@ -201,6 +202,7 @@ let _ = TypeAlias(5); // 无法工作
 <span class="boring">}
 </span></code></pre></pre>
 <p>没有使用 <a href="../types.html#type-expressions"><em>Type</em></a> 来定义的类型别名只能作为 <a href="traits.html">trait</a> 中的<a href="associated-items.html#associated-types">关联类型</a>出现。</p>
+<p>带 <a href="../trait-bounds.html"><em>TypeParamBounds</em></a> 的别名只能在 <a href="traits.html">trait</a> 中指定<a href="associated-items.html#associated-types">关联类型</a>时使用。</p>
 
                     </main>
 

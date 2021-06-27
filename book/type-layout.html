@@ -169,8 +169,8 @@
 <h1><a class="header" href="#类型布局" id="类型布局">类型布局</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-layout.md">type-layout.md</a><br />
-commit: be4332c6a8f93c425d6f9a8f59b2a6dec63f8ffe <br />
-本章译文最后维护日期：2020-12-17</p>
+commit: 0cb7e46722353a5de852d03684b4895516f92a4d <br />
+本章译文最后维护日期：2021-06-27</p>
 </blockquote>
 <p>类型的布局描述类型的尺寸(size)、对齐量(alignment)和字段(fields)的<em>相对偏移量(relative offsets)</em>。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。</p>
 <p>每次编译都有可能更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。</p>
@@ -206,7 +206,7 @@ commit: be4332c6a8f93c425d6f9a8f59b2a6dec63f8ffe <br />
 </blockquote>
 <h2><a class="header" href="#array-layout" id="array-layout">Array Layout</a></h2>
 <h2><a class="header" href="#数组的布局" id="数组的布局">数组的布局</a></h2>
-<p>数组的布局使得数组的第 n 个(<code>nth</code>)元素为从数组开始的位置向后偏移 <em>n * 元素类型的尺寸(<code>n * the size of the element's type</code>)</em> 个字节数。数组 <code>[T; n]</code> 的尺寸为 <code>size_of::&lt;T&gt;() * n</code>，对齐量和 <code>T</code> 的对齐量相同。</p>
+<p>数组 <code>[T; N]</code> 的尺寸为 <code>size_of::&lt;T&gt;() * N</code>，对齐量和 <code>T</code> 的对齐量相同。所以数组的布局使得数组的第 n 个(<code>nth</code>)元素（其中索引 n 是从0开始的）为从数组开始的位置向后偏移 <code>n * size_of::&lt;T&gt;()</code> 个字节数。</p>
 <h2><a class="header" href="#slice-layout" id="slice-layout">Slice Layout</a></h2>
 <h2><a class="header" href="#切片的布局" id="切片的布局">切片的布局</a></h2>
 <p>切片的布局与它们所切的那部分数组片段相同。</p>

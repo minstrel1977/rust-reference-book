@@ -169,16 +169,18 @@
 <h1><a class="header" href="#匹配match表达式" id="匹配match表达式">匹配(<code>match</code>)表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/match-expr.md">match-expr.md</a><br />
-commit: d23f9da8469617e6c81121d9fd123443df70595d <br />
-本章译文最后维护日期：2021-5-6</p>
+commit: 0e7115d32fec1a9f11208e0353457f528e36e0e8 <br />
+本章译文最后维护日期：2021-6-27</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>MatchExpression</em> :<br />
-   <code>match</code> <a href="../expressions.html"><em>Expression</em></a><sub><em>排除结构体表达式</em></sub> <code>{</code><br />
+   <code>match</code> <em>Scrutinee</em> <code>{</code><br />
       <a href="../attributes.html"><em>InnerAttribute</em></a><sup>*</sup><br />
       <em>MatchArms</em><sup>?</sup><br />
    <code>}</code></p>
+<p><em>Scrutinee</em> :<br />
+   <a href="../expressions.html"><em>Expression</em></a><sub><em>排除结构体表达式</em></sub></p>
 <p><em>MatchArms</em> :<br />
    ( <em>MatchArm</em> <code>=&gt;</code>
 ( <a href="../expressions.html"><em>ExpressionWithoutBlock</em></a> <code>,</code>

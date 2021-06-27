@@ -2,8 +2,8 @@
 # 类型布局
 
 >[type-layout.md](https://github.com/rust-lang/reference/blob/master/src/type-layout.md)\
->commit: be4332c6a8f93c425d6f9a8f59b2a6dec63f8ffe \
->本章译文最后维护日期：2020-12-17
+>commit: 0cb7e46722353a5de852d03684b4895516f92a4d \
+>本章译文最后维护日期：2021-06-27
 
 类型的布局描述类型的尺寸(size)、对齐量(alignment)和字段(fields)的*相对偏移量(relative offsets)*。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。
 
@@ -55,7 +55,7 @@
 ## Array Layout
 ## 数组的布局
 
-数组的布局使得数组的第 n 个(`nth`)元素为从数组开始的位置向后偏移 _n * 元素类型的尺寸(`n * the size of the element's type`)_ 个字节数。数组 `[T; n]` 的尺寸为 `size_of::<T>() * n`，对齐量和 `T` 的对齐量相同。
+数组 `[T; N]` 的尺寸为 `size_of::<T>() * N`，对齐量和 `T` 的对齐量相同。所以数组的布局使得数组的第 n 个(`nth`)元素（其中索引 n 是从0开始的）为从数组开始的位置向后偏移 `n * size_of::<T>()` 个字节数。
 
 ## Slice Layout
 ## 切片的布局

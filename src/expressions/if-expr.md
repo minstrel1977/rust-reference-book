@@ -2,8 +2,8 @@
 # `if`和 `if let`表达式
 
 >[if-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/if-expr.md)\
->commit: d23f9da8469617e6c81121d9fd123443df70595d \
->本章译文最后维护日期：2021-5-6
+>commit: ac4ff0f3d5f980798b2463777d07e6060554c8c3 \
+>本章译文最后维护日期：2021-06-27
 
 ## `if` expressions
 ## `if`表达式
@@ -46,7 +46,7 @@ assert_eq!(y, "Bigger");
 
 > **<sup>句法</sup>**\
 > _IfLetExpression_ :\
-> &nbsp;&nbsp; `if` `let` [_Pattern_] `=` [_Expression_]<sub>_排除结构体表达式和惰性布尔运算符表达式_</sub>
+> &nbsp;&nbsp; `if` `let` [_Pattern_] `=` [_Scrutinee_]<sub>_排除惰性布尔运算符表达式_</sub>
 >              [_BlockExpression_]\
 > &nbsp;&nbsp; (`else` (
 >   [_BlockExpression_]
@@ -153,6 +153,7 @@ if let PAT = ( EXPR || EXPR ) { .. }
 [_Expression_]: ../expressions.md
 [_LazyBooleanOperatorExpression_]: operator-expr.md#lazy-boolean-operators
 [_Pattern_]: ../patterns.md
+[_Scrutinee_]: match-expr.md
 [_eRFCIfLetChain_]: https://github.com/rust-lang/rfcs/blob/master/text/2497-if-let-chains.md#rollout-plan-and-transitioning-to-rust-2018
 [`match` expression]: match-expr.md
 [boolean type]: ../types/boolean.md

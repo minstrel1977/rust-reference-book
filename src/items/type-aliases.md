@@ -2,12 +2,13 @@
 # 类型别名
 
 >[type-aliases.md](https://github.com/rust-lang/reference/blob/master/src/items/type-aliases.md)\
->commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef \
->本章译文最后维护日期：2021-06-19
+>commit: 91fb8ee654a7eb566eea719e6f3404fff7789e48 \
+>本章译文最后维护日期：2021-06-27
 
 > **<sup>句法</sup>**\
 > _TypeAlias_ :\
 > &nbsp;&nbsp; `type` [IDENTIFIER]&nbsp;[_GenericParams_]<sup>?</sup>
+>              ( `:` [_TypeParamBounds_] )<sup>?</sup>
 >              [_WhereClause_]<sup>?</sup> ( `=` [_Type_] )<sup>?</sup> `;`
 
 *类型别名*为现有的[类型][type]定义一个新名称。类型别名用关键字 `type` 声明。每个值都是一个唯一的特定的类型，但是可以实现几个不同的 trait，或者兼容几个不同的类型约束。
@@ -33,8 +34,11 @@ let _ = TypeAlias(5); // 无法工作
 
 没有使用 [_Type_] 来定义的类型别名只能作为 [trait] 中的[关联类型][associated type]出现。
 
+带 [_TypeParamBounds_] 的别名只能在 [trait] 中指定[关联类型][associated type]时使用。
+
 [IDENTIFIER]: ../identifiers.md
 [_GenericParams_]: generics.md
+[_TypeParamBounds_]: ../trait-bounds.md
 [_WhereClause_]: generics.md#where-clauses
 [_Type_]: ../types.md#type-expressions
 [associated type]: associated-items.md#associated-types
