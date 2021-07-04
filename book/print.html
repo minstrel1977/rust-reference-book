@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2021-06-27</p>
+<p>本书跟随原文截止日期：2021-07-04</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -3248,8 +3248,8 @@ m!(const _: () = (););
 <h1><a class="header" href="#静态项" id="静态项">静态项</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/static-items.md">static-items.md</a><br />
-commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
-本章译文最后维护日期：2021-1-17</p>
+commit: bbb69d1e29ff3dc3acaa3f0011bf9b1c9991322c <br />
+本章译文最后维护日期：2021-07-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -3266,6 +3266,44 @@ commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
 <li>常量项不能引用静态项。</li>
 </ul>
 <p>必须为自由静态项提供初始化表达式，但在<a href="items/external-blocks.html">外部块</a>中静态项必须省略初始化表达式。</p>
+<h2><a class="header" href="#statics--generics" id="statics--generics">Statics &amp; generics</a></h2>
+<h2><a class="header" href="#静态项和泛型" id="静态项和泛型">静态项和泛型</a></h2>
+<p>在泛型作用域中（例如在包覆实现或默认实现中）定义的静态项将只会定义一个静态项，就好像该静态项定义是从当前作用域中拉入到模块内一样。<em>不会</em>出现程序项在单态化的过程中各自出现自己的独有静态项。</p>
+<p>例如：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use std::sync::atomic::{AtomicUsize, Ordering};
+
+trait Tr {
+    fn default_impl() {
+        static COUNTER: AtomicUsize = AtomicUsize::new(0);
+        println!(&quot;default_impl: counter was {}&quot;, COUNTER.fetch_add(1, Ordering::Relaxed));
+    }
+
+    fn blanket_impl();
+}
+
+struct Ty1 {}
+struct Ty2 {}
+
+impl&lt;T&gt; Tr for T {
+    fn blanket_impl() {
+        static COUNTER: AtomicUsize = AtomicUsize::new(0);
+        println!(&quot;blanket_impl: counter was {}&quot;, COUNTER.fetch_add(1, Ordering::Relaxed));
+    }
+}
+
+fn main() {
+    &lt;Ty1 as Tr&gt;::default_impl();
+    &lt;Ty2 as Tr&gt;::default_impl();
+    &lt;Ty1 as Tr&gt;::blanket_impl();
+    &lt;Ty2 as Tr&gt;::blanket_impl();
+}
+</code></pre></pre>
+<p>以上会打印如下：</p>
+<pre><code class="language-text">default_impl: counter was 0
+default_impl: counter was 1
+blanket_impl: counter was 0
+blanket_impl: counter was 1
+</code></pre>
 <h2><a class="header" href="#mutable-statics" id="mutable-statics">Mutable statics</a></h2>
 <h2><a class="header" href="#可变静态项" id="可变静态项">可变静态项</a></h2>
 <p>如果静态项是用关键字 <code>mut</code> 声明的，则它允许被程序修改。Rust 的目标之一是使尽可能的避免出现并发 bug，那允许修改可变静态项显然是竞态(race conditions)或其他 bug 的一个重要来源。因此，读取或写入可变静态项变量时需要引入非安全(<code>unsafe</code>)块。应注意确保对可变静态项的修改相对于运行在同一进程中的其他线程来说是安全的。</p>
@@ -12673,8 +12711,8 @@ An array, sometimes also called a fixed-size array or an inline array, is a valu
 <p>关联程序项是与另一个程序项关联的程序项。关联程序项在 <a href="items/traits.html">trait</a> 中声明，在<a href="items/implementations.html">实现</a>中定义。只有函数、常量和类型别名可以作为关联程序项。它与<a href="glossary.html#free-item">自由程序项</a>形成对比。<br />
 An associated item is an item that is associated with another item. Associated items are defined in <a href="items/implementations.html">implementations</a> and declared in <a href="items/traits.html">traits</a>. Only functions, constants, and type aliases can be associated. Contrast to a <a href="glossary.html#free-item">free item</a>.</p>
 <h3><a class="header" href="#blanket-implementation" id="blanket-implementation">Blanket implementation</a></h3>
-<h3><a class="header" href="#blanket实现" id="blanket实现">blanket实现</a></h3>
-<p>指为<a href="glossary.html#uncovered-type">无覆盖类型</a>实现的任何实现。<code>impl&lt;T&gt; Foo for T</code>、<code>impl&lt;T&gt; Bar&lt;T&gt; for T</code>、<code>impl&lt;T&gt; Bar&lt;Vec&lt;T&gt;&gt; for T</code>、 和 <code>impl&lt;T&gt; Bar&lt;T&gt; for Vec&lt;T&gt;</code> 被认为是 blanket实现。但是，<code>impl&lt;T&gt; Bar&lt;Vec&lt;T&gt;&gt; for Vec&lt;T&gt;</code> 不被认为是，因为这个 <code>impl</code> 中所有的 <code>T</code> 的实例都被 <code>Vec</code> 覆盖。<br />
+<h3><a class="header" href="#包覆实现" id="包覆实现">包覆实现</a></h3>
+<p>指为<a href="glossary.html#uncovered-type">无覆盖类型</a>实现的任何实现。<code>impl&lt;T&gt; Foo for T</code>、<code>impl&lt;T&gt; Bar&lt;T&gt; for T</code>、<code>impl&lt;T&gt; Bar&lt;Vec&lt;T&gt;&gt; for T</code>、 和 <code>impl&lt;T&gt; Bar&lt;T&gt; for Vec&lt;T&gt;</code> 被认为是 包覆实现。但是，<code>impl&lt;T&gt; Bar&lt;Vec&lt;T&gt;&gt; for Vec&lt;T&gt;</code> 不被认为是，因为这个 <code>impl</code> 中所有的 <code>T</code> 的实例都被 <code>Vec</code> 覆盖。<br />
 Any implementation where a type appears <a href="glossary.html#uncovered-type">uncovered</a>. <code>impl&lt;T&gt; Foo for T</code>, <code>impl&lt;T&gt; Bar&lt;T&gt; for T</code>, <code>impl&lt;T&gt; Bar&lt;Vec&lt;T&gt;&gt; for T</code>, and <code>impl&lt;T&gt; Bar&lt;T&gt; for Vec&lt;T&gt;</code> are considered blanket impls. However, <code>impl&lt;T&gt; Bar&lt;Vec&lt;T&gt;&gt; for Vec&lt;T&gt;</code> is not a blanket impl, as all instances of <code>T</code> which appear in this <code>impl</code> are covered by <code>Vec</code>.</p>
 <h3><a class="header" href="#bound" id="bound">Bound</a></h3>
 <h3><a class="header" href="#约束" id="约束">约束</a></h3>
@@ -12717,7 +12755,7 @@ An <a href="items.html">item</a> that is not a member of an <a href="items/imple
 A fundamental trait is one where adding an impl of it for an existing type is a breaking change. The <code>Fn</code> traits and <code>Sized</code> are fundamental.</p>
 <h3><a class="header" href="#fundamental-type-constructors" id="fundamental-type-constructors">Fundamental type constructors</a></h3>
 <h3><a class="header" href="#基本类型构造器" id="基本类型构造器">基本类型构造器</a></h3>
-<p>基本类型构造器是这样一种类型，在它之上实现一个 <a href="glossary.html#blanket-implementation">blanket实现</a>是一个突破性的改变。<code>&amp;</code>、<code>&amp;mut</code>、<code>Box</code>、和 <code>Pin</code> 是基本类型构造器。<br />
+<p>基本类型构造器是这样一种类型，在它之上实现一个 <a href="glossary.html#blanket-implementation">包覆实现</a>是一个突破性的改变。<code>&amp;</code>、<code>&amp;mut</code>、<code>Box</code>、和 <code>Pin</code> 是基本类型构造器。<br />
 如果任何时候 <code>T</code> 都被认为是<a href="glossary.html#local-type">本地类型</a>，那 <code>&amp;T</code>、<code>&amp;mut T</code>、<code>Box&lt;T&gt;</code>、和 <code>Pin&lt;T&gt;</code> 也被认为是本地类型。基本类型构造器不能<a href="glossary.html#uncovered-type">覆盖</a>其他类型。任何时候使用术语“有覆盖类型”时，都默认把<code>&amp;T</code>、<code>&amp;mut T</code>、<code>Box&lt;T&gt;</code>、和<code>Pin&lt;T&gt;</code> 排除在外。<br />
 A fundamental type constructor is a type where implementing a <a href="glossary.html#blanket-implementation">blanket implementation</a> over it is a breaking change. <code>&amp;</code>, <code>&amp;mut</code>, <code>Box</code>, and <code>Pin</code>  are fundamental. <br />
 Any time a type <code>T</code> is considered <a href="glossary.html#local-type">local</a>, <code>&amp;T</code>, <code>&amp;mut T</code>, <code>Box&lt;T&gt;</code>, and <code>Pin&lt;T&gt;</code> are also considered local. Fundamental type constructors cannot <a href="glossary.html#uncovered-type">cover</a> other types. Any time the term &quot;covered type&quot; is used, the <code>T</code> in <code>&amp;T</code>, <code>&amp;mut T</code>, <code>Box&lt;T&gt;</code>, and <code>Pin&lt;T&gt;</code> is not considered covered.</p>

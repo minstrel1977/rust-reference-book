@@ -36,9 +36,9 @@ An array, sometimes also called a fixed-size array or an inline array, is a valu
 An associated item is an item that is associated with another item. Associated items are defined in [implementations] and declared in [traits]. Only functions, constants, and type aliases can be associated. Contrast to a [free item].
 
 ### Blanket implementation
-### blanket实现
+### 包覆实现
 
-指为[无覆盖类型](#uncovered-type)实现的任何实现。`impl<T> Foo for T`、`impl<T> Bar<T> for T`、`impl<T> Bar<Vec<T>> for T`、 和 `impl<T> Bar<T> for Vec<T>` 被认为是 blanket实现。但是，`impl<T> Bar<Vec<T>> for Vec<T>` 不被认为是，因为这个 `impl` 中所有的 `T` 的实例都被 `Vec` 覆盖。\
+指为[无覆盖类型](#uncovered-type)实现的任何实现。`impl<T> Foo for T`、`impl<T> Bar<T> for T`、`impl<T> Bar<Vec<T>> for T`、 和 `impl<T> Bar<T> for Vec<T>` 被认为是 包覆实现。但是，`impl<T> Bar<Vec<T>> for Vec<T>` 不被认为是，因为这个 `impl` 中所有的 `T` 的实例都被 `Vec` 覆盖。\
 Any implementation where a type appears [uncovered](#uncovered-type). `impl<T> Foo for T`, `impl<T> Bar<T> for T`, `impl<T> Bar<Vec<T>> for T`, and `impl<T> Bar<T> for Vec<T>` are considered blanket impls. However, `impl<T> Bar<Vec<T>> for Vec<T>` is not a blanket impl, as all instances of `T` which appear in this `impl` are covered by `Vec`.
 
 ### Bound
@@ -101,7 +101,7 @@ A fundamental trait is one where adding an impl of it for an existing type is a 
 ### Fundamental type constructors
 ### 基本类型构造器
 
-基本类型构造器是这样一种类型，在它之上实现一个 [blanket实现](#blanket-implementation)是一个突破性的改变。`&`、`&mut`、`Box`、和 `Pin` 是基本类型构造器。\
+基本类型构造器是这样一种类型，在它之上实现一个 [包覆实现](#blanket-implementation)是一个突破性的改变。`&`、`&mut`、`Box`、和 `Pin` 是基本类型构造器。\
 如果任何时候 `T` 都被认为是[本地类型](#local-type)，那 `&T`、`&mut T`、`Box<T>`、和 `Pin<T>` 也被认为是本地类型。基本类型构造器不能[覆盖](#uncovered-type)其他类型。任何时候使用术语“有覆盖类型”时，都默认把`&T`、`&mut T`、`Box<T>`、和`Pin<T>` 排除在外。\
 A fundamental type constructor is a type where implementing a [blanket implementation](#blanket-implementation) over it is a breaking change. `&`, `&mut`, `Box`, and `Pin`  are fundamental. \
 Any time a type `T` is considered [local](#local-type), `&T`, `&mut T`, `Box<T>`, and `Pin<T>` are also considered local. Fundamental type constructors cannot [cover](#uncovered-type) other types. Any time the term "covered type" is used, the `T` in `&T`, `&mut T`, `Box<T>`, and `Pin<T>` is not considered covered.

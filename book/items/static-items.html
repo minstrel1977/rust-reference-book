@@ -169,8 +169,8 @@
 <h1><a class="header" href="#静态项" id="静态项">静态项</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/static-items.md">static-items.md</a><br />
-commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
-本章译文最后维护日期：2021-1-17</p>
+commit: bbb69d1e29ff3dc3acaa3f0011bf9b1c9991322c <br />
+本章译文最后维护日期：2021-07-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -187,6 +187,44 @@ commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
 <li>常量项不能引用静态项。</li>
 </ul>
 <p>必须为自由静态项提供初始化表达式，但在<a href="external-blocks.html">外部块</a>中静态项必须省略初始化表达式。</p>
+<h2><a class="header" href="#statics--generics" id="statics--generics">Statics &amp; generics</a></h2>
+<h2><a class="header" href="#静态项和泛型" id="静态项和泛型">静态项和泛型</a></h2>
+<p>在泛型作用域中（例如在包覆实现或默认实现中）定义的静态项将只会定义一个静态项，就好像该静态项定义是从当前作用域中拉入到模块内一样。<em>不会</em>出现程序项在单态化的过程中各自出现自己的独有静态项。</p>
+<p>例如：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use std::sync::atomic::{AtomicUsize, Ordering};
+
+trait Tr {
+    fn default_impl() {
+        static COUNTER: AtomicUsize = AtomicUsize::new(0);
+        println!(&quot;default_impl: counter was {}&quot;, COUNTER.fetch_add(1, Ordering::Relaxed));
+    }
+
+    fn blanket_impl();
+}
+
+struct Ty1 {}
+struct Ty2 {}
+
+impl&lt;T&gt; Tr for T {
+    fn blanket_impl() {
+        static COUNTER: AtomicUsize = AtomicUsize::new(0);
+        println!(&quot;blanket_impl: counter was {}&quot;, COUNTER.fetch_add(1, Ordering::Relaxed));
+    }
+}
+
+fn main() {
+    &lt;Ty1 as Tr&gt;::default_impl();
+    &lt;Ty2 as Tr&gt;::default_impl();
+    &lt;Ty1 as Tr&gt;::blanket_impl();
+    &lt;Ty2 as Tr&gt;::blanket_impl();
+}
+</code></pre></pre>
+<p>以上会打印如下：</p>
+<pre><code class="language-text">default_impl: counter was 0
+default_impl: counter was 1
+blanket_impl: counter was 0
+blanket_impl: counter was 1
+</code></pre>
 <h2><a class="header" href="#mutable-statics" id="mutable-statics">Mutable statics</a></h2>
 <h2><a class="header" href="#可变静态项" id="可变静态项">可变静态项</a></h2>
 <p>如果静态项是用关键字 <code>mut</code> 声明的，则它允许被程序修改。Rust 的目标之一是使尽可能的避免出现并发 bug，那允许修改可变静态项显然是竞态(race conditions)或其他 bug 的一个重要来源。因此，读取或写入可变静态项变量时需要引入非安全(<code>unsafe</code>)块。应注意确保对可变静态项的修改相对于运行在同一进程中的其他线程来说是安全的。</p>

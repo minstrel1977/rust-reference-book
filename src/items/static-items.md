@@ -2,8 +2,8 @@
 # 静态项
 
 >[static-items.md](https://github.com/rust-lang/reference/blob/master/src/items/static-items.md)\
->commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 \
->本章译文最后维护日期：2021-1-17
+>commit: bbb69d1e29ff3dc3acaa3f0011bf9b1c9991322c \
+>本章译文最后维护日期：2021-07-04
 
 > **<sup>句法</sup>**\
 > _StaticItem_ :\
@@ -22,6 +22,51 @@
 * 常量项不能引用静态项。
 
 必须为自由静态项提供初始化表达式，但在[外部块][external block]中静态项必须省略初始化表达式。
+
+## Statics & generics
+## 静态项和泛型
+在泛型作用域中（例如在包覆实现或默认实现中）定义的静态项将只会定义一个静态项，就好像该静态项定义是从当前作用域中拉入到模块内一样。*不会*出现程序项在单态化的过程中各自出现自己的独有静态项。
+
+例如：
+
+```rust
+use std::sync::atomic::{AtomicUsize, Ordering};
+
+trait Tr {
+    fn default_impl() {
+        static COUNTER: AtomicUsize = AtomicUsize::new(0);
+        println!("default_impl: counter was {}", COUNTER.fetch_add(1, Ordering::Relaxed));
+    }
+
+    fn blanket_impl();
+}
+
+struct Ty1 {}
+struct Ty2 {}
+
+impl<T> Tr for T {
+    fn blanket_impl() {
+        static COUNTER: AtomicUsize = AtomicUsize::new(0);
+        println!("blanket_impl: counter was {}", COUNTER.fetch_add(1, Ordering::Relaxed));
+    }
+}
+
+fn main() {
+    <Ty1 as Tr>::default_impl();
+    <Ty2 as Tr>::default_impl();
+    <Ty1 as Tr>::blanket_impl();
+    <Ty2 as Tr>::blanket_impl();
+}
+```
+
+以上会打印如下：
+
+```text
+default_impl: counter was 0
+default_impl: counter was 1
+blanket_impl: counter was 0
+blanket_impl: counter was 1
+```
 
 ## Mutable statics
 ## 可变静态项
