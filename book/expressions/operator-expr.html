@@ -169,8 +169,8 @@
 <h1><a class="header" href="#operator-expressions" id="operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: da0ec46c13b46af8a1bd88a1c4794e3b9402b522 <br />
-本章译文最后维护日期：2021-06-19</p>
+commit: 41aa8f948140fad27f0d3e29d1b77f46a4aedff5 <br />
+本章译文最后维护日期：2021-07-11</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -513,8 +513,8 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <li>从浮点数转换为整型将使浮点数趋零取整(round the float towards zero)
 <ul>
 <li><code>NaN</code> 将返回 <code>0</code></li>
-<li>大于转换到的整型类型的最大值时，取该整型类型的最大值。</li>
-<li>小于转换到的整型类型的最小值时，取该整型类型的最小值。</li>
+<li>大于转换到的整型类型的最大值时（包括 <code>INFINITY</code>），取该整型类型的最大值。</li>
+<li>小于转换到的整型类型的最小值时（包括 <code>INFINITY</code>），取该整型类型的最小值。</li>
 </ul>
 </li>
 <li>从整数强制转换为浮点数将产生最接近的浮点数 *

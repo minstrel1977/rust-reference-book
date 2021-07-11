@@ -2,8 +2,8 @@
 # 闭包类型
 
 >[closure.md](https://github.com/rust-lang/reference/blob/master/src/types/closure.md)\
->commit: 5642af891714145cb2a765f244fff7d6b618a4c7 \
->本章译文最后维护日期：2020-11-14
+>commit: 9f106217c7598d0ec7b39e936d88f843a5d5175f \
+>本章译文最后维护日期：2021-07-11
 
 [闭包表达式][closure expression]生成的闭包值具有唯一性和无法写出的匿名性。闭包类型近似相当于包含捕获变量的结构体。比如以下闭包示例：
 
@@ -50,7 +50,7 @@ f(Closure{s: s, t: &t});
 ## Capture modes
 ## 捕获方式
 
-编译器倾向于优先通过不可变借用(immutable borrow)来捕获闭合变量(closed-over variable)，其次是通过唯一不可变借用(unique immutable borrow)（见下文），再其次可变借用(mutable borrow)，最后使用移动语义(move)来捕获。编译器将选择这些中的第一个能让此闭包编译通过的选项。这个选择只与闭包表达式的内容有关；编译器不考虑闭包表达式之外的代码，比如所涉及的变量的生存期。
+编译器倾向于优先通过不可变借用(immutable borrow)来捕获闭合变量(closed-over variable)，其次是通过唯一不可变借用(unique immutable borrow)（见下文），再其次可变借用(mutable borrow)，最后使用移动语义(move)来捕获。编译器将选择与捕获的变量在闭包体中的使用方式兼容的第一种捕获方式。编译器不会考虑周围的代码，比如所涉及的变量的生存期，或者闭包本身的生存期。
 
 如果使用了关键字 `move` ，那么所有捕获都是通过移动(move)语义进行的（当然对于 `Copy`类型，则是通过拷贝语义进行的），而不管借用是否可用。关键字 `move` 通常用于允许闭包比其捕获的值活得更久，例如返回闭包或用于生成新线程。
 

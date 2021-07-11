@@ -2,8 +2,8 @@
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit: da0ec46c13b46af8a1bd88a1c4794e3b9402b522 \
->本章译文最后维护日期：2021-06-19
+>commit: 41aa8f948140fad27f0d3e29d1b77f46a4aedff5 \
+>本章译文最后维护日期：2021-07-11
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -353,8 +353,8 @@ fn average(values: &[f64]) -> f64 {
     * 如果源数据是有符号的，则进行符号扩展(sign-extend)
 * 从浮点数转换为整型将使浮点数趋零取整(round the float towards zero)
     * `NaN` 将返回 `0`
-    * 大于转换到的整型类型的最大值时，取该整型类型的最大值。
-    * 小于转换到的整型类型的最小值时，取该整型类型的最小值。
+    * 大于转换到的整型类型的最大值时（包括 `INFINITY`），取该整型类型的最大值。
+    * 小于转换到的整型类型的最小值时（包括 `INFINITY`），取该整型类型的最小值。
 * 从整数强制转换为浮点数将产生最接近的浮点数 \*
     * 如有必要，舍入采用 `roundTiesToEven`模式 \*\*\*
     * 在溢出时，将会产生该浮点型的常量 Infinity(∞)（与输入符号相同）

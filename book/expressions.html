@@ -169,8 +169,8 @@
 <h1><a class="header" href="#表达式" id="表达式">表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions.md">expressions.md</a><br />
-commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
-本章译文最后维护日期：2021-4-5</p>
+commit: 97ba67cbee415e263a054e9ce68baf0e75dca2b0 <br />
+本章译文最后维护日期：2021-07-11</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -293,7 +293,7 @@ assert_eq!(
 </blockquote>
 <h2><a class="header" href="#place-expressions-and-value-expressions" id="place-expressions-and-value-expressions">Place Expressions and Value Expressions</a></h2>
 <h2><a class="header" href="#位置表达式和值表达式" id="位置表达式和值表达式">位置表达式和值表达式</a></h2>
-<p>表达式分为两大类：位置表达式和值表达式（，它们各自形成了自己的上下文）。因此，在每个表达式中，操作数可以出现在位置上下文，也可出现在值上下文中。表达式的求值既依赖于它自己的类别，也依赖于它所在的上下文。</p>
+<p>表达式分为两大类：位置表达式和值表达式。跟在每个表达式中一样，操作数可以出现在位置上下文，也可出现在值上下文中。表达式的求值既依赖于它自己的类别，也依赖于它所在的上下文。</p>
 <p><em>位置表达式</em>是表示内存位置的表达式。语言中表现为指向<strong>局部变量、<a href="items/static-items.html">静态变量</a>、<a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>(<code>*expr</code>)、<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">数组索引</a>表达式(<code>expr[expr]</code>)、<a href="expressions/field-expr.html">字段</a>引用(<code>expr.f</code>)、圆括号括起来的位置表达式</strong>的<a href="expressions/path-expr.html">路径</a>。所有其他形式的表达式都是值表达式。</p>
 <p><em>值表达式</em>是代表实际值的表达式。</p>
 <p>下面的上下文是<em>位置表达式</em>上下文：</p>
@@ -319,7 +319,7 @@ assert_eq!(
 <li>可以移出且没实现 <a href="special-types-and-traits.html#drop"><code>Drop</code></a> 的位置表达式的字段。</li>
 <li>对可移出且类型为 <a href="../std/boxed/struct.Box.html"><code>Box&lt;T&gt;</code></a> 的表达式作<a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>的结果。</li>
 </ul>
-<p>把值从一个位置表达式里移出到一个局部变量，那此（表达式代表的）地址将被去初始化(deinitialized)，并且该地址在重新初始化之前无法被再次读取。<br />
+<p>当把值从一个位置表达式里移出到一个局部变量时，此（表达式代表的）地址将被去初始化(deinitialized)，并且该地址在重新初始化之前无法被再次读取。<br />
 除以上列出的情况外，任何在值表达式上下文中使用位置表达式都是错误的。</p>
 <h3><a class="header" href="#mutability" id="mutability">Mutability</a></h3>
 <h3><a class="header" href="#可变性" id="可变性">可变性</a></h3>
@@ -329,7 +329,7 @@ assert_eq!(
 <li>当前未被借出的可变<a href="variables.html">变量</a>。</li>
 <li><a href="items/static-items.html#mutable-statics">可变静态(<code>static</code>)项</a>。</li>
 <li><a href="#temporaries">临时值</a>。</li>
-<li><a href="expressions/field-expr.html">字段</a>，在可变位置表达式上下文中，可以对此子表达式求值。</li>
+<li><a href="expressions/field-expr.html">字段</a>：在可变位置表达式上下文中，可以对此子表达式求值。</li>
 <li>对 <code>*mut T</code> 指针的<a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>。</li>
 <li>对类型为 <code>&amp;mut T</code> 的变量或变量的字段的解引用。注意：这条是下一条规则的必要条件的例外情况。<sup class="footnote-reference"><a href="#译者注2">2</a></sup></li>
 <li>对实现 <code>DerefMut</code> 的类型的解引用，那对这里解出的表达式求值就需要在一个可变位置表达式上下文中进行。</li>

@@ -2,10 +2,10 @@
 # 附录：关于宏随集的二义性的形式化规范
 
 >[macro-ambiguity.md](https://github.com/rust-lang/reference/blob/master/src/macro-ambiguity.md)\
->commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 \
->本章译文最后维护日期：2020-11-17
+>commit:  6ee9fc95ac3b7df8a01079e13280a283a7a24612 \
+>本章译文最后维护日期：2021-07-11
 
-本文介绍了下述[声明宏][Macros By Example]规则的正式规范。它们最初是在 [RFC 550] 中指定的（本文的大部分内容都是从其中复制过来的），并在后续的 RFC 中进行了进一步的展开。
+本文介绍了下述[声明宏][Macros By Example]规则的正式规范。它们最初是在 [RFC 550] 中指定的（本文的大部分内容都是从其中复制过来的），并在后续的 RFC 中进行了进一步的展开论述。
 
 ## Definitions & Conventions
 ## 定义和约定
@@ -18,7 +18,7 @@
   - `repetition` ：重复元，遵循正则重复模式的匹配段。
   - `NT`：non-terminal，非终结符，可以出现在匹配器中的各种“元变量”或重复元匹配器，在声明宏(MBE)句法中用前导字符 `$` 标明。
   - `simple NT`：简单NT，“元变量”类型的非终结符（下面会进一步讨论）。
-  - `complex NT`：复杂NT，重复元类型的非终结符，通过重复元操作符（`\*`, `+`, `?`）指定重复次数。 <!-- a repetition matching non-terminal, specified via repetition operators (`\*`, `+`, `?`). -->
+  - `complex NT`：复杂NT，重复元类型的非终结符，通过重复元操作符（`*`, `+`, `?`）指定重复次数。 <!-- a repetition matching non-terminal, specified via repetition operators (`*`, `+`, `?`). -->
   - `token`：匹配器中不可再细分的元素；例如，标识符、操作符、开/闭定界符*和*简单NT(simple NT)。
   - `token tree`：token树，token树由 token(叶)、复杂NT 和子token树（token树的有限序列）组成的树形数据结构。
   - `delimiter token`：定界符，一种用于划分一个匹配段的结束和下一个匹配段的开始的 token。
@@ -37,9 +37,9 @@ macro_rules! i_am_an_mbe {
 }
 ```
 
-`(start $foo:expr $($i:ident),\* end)` 是一个匹配器(matcher)。整个匹配器是一段有界字符序列（使用开闭定界符 `(` 和 `)` 界定），`$foo` 和 `$i` 是简单NT(simple NT)， `expr` 和 `ident` 是它们各自的匹配段选择器(fragment specifiers)。
+`(start $foo:expr $($i:ident),* end)` 是一个匹配器(matcher)。整个匹配器是一段有界字符序列（使用开闭定界符 `(` 和 `)` 界定），`$foo` 和 `$i` 是简单NT(simple NT)， `expr` 和 `ident` 是它们各自的匹配段选择器(fragment specifiers)。
 
-`$(i:ident),\*` *也*是一个 NT；它是一个复杂NT，匹配那些被逗号分隔成的标识符类型的重复元。`,` 是这个复杂NT 的分隔符；它出现在匹配段的每对元素（如果有的话）之间。
+`$(i:ident),*` *也*是一个 NT；它是一个复杂NT，匹配那些被逗号分隔成的标识符类型的重复元。`,` 是这个复杂NT 的分隔符；它出现在匹配段的每对元素（如果有的话）之间。
 
 复杂NT 的另一个例子是 `$(hi $e:expr ;)+`，它匹配 `hi <expr>; hi <expr>; ...` 这种格式的代码，其中 `hi <expr>;` 至少出现一次。注意，这种复杂NT 没有专用的分隔符。
 
@@ -47,7 +47,7 @@ macro_rules! i_am_an_mbe {
 
 下面，我们将用变量“M”表示匹配器，变量“t”和“u”表示任意单一 token，变量“tt”和“uu”表示任意 token树。（使用“tt”确实存在潜在的歧义，因为它的额外角色是一个匹配段选择器；但不用太担心，因为从上下文中，可以很清楚地看出哪个解释更符合语义）
 
-用“SEP”代表分隔符，“OP”代表重复元运算符 `\*`, `+`, 和 `?` “OPEN”/“CLOSE”代表包围定界字符序列的 token对（例如 `[` 和 `]` ）。
+用“SEP”代表分隔符，“OP”代表重复元运算符 `*`, `+`, 和 `?` “OPEN”/“CLOSE”代表包围定界字符序列的 token对（例如 `[` 和 `]` ）。
 
 用希腊字母 "α" "β" "γ" "δ" 代表潜在的空token树序列。（注意没有使用希腊字母 "ε"，"ε"(epsilon)在此表示形式中代表一类特殊的角色，不代表 token树序列。）
 
@@ -66,7 +66,7 @@ macro_rules! i_am_an_mbe {
 
 1.  对于匹配器 `M` 中的任意两个连续的 token树序列（即 `M = ... tt uu ...`），并且 `uu ...` 非空，必有 FOLLOW(`... tt`) ∪ {ε} ⊇ FIRST(`uu ...`)。
 2.  对于匹配器中任何带分隔符的复杂NT，`M = ... $(tt ...) SEP OP ...`，必有 `SEP` ∈ FOLLOW(`tt ...`)
-3.  对于匹配器中不带分隔符的复杂NT，`M = ... $(tt ...) OP ...`，如果 OP = `\*` 或 `+`，必有 FOLLOW(`tt ...`) ⊇ FIRST(`tt ...`)。
+3.  对于匹配器中不带分隔符的复杂NT，`M = ... $(tt ...) OP ...`，如果 OP = `*` 或 `+`，必有 FOLLOW(`tt ...`) ⊇ FIRST(`tt ...`)。
 
 第一个不变式表示，无论匹配器后出现什么 token（如果有的话），它都必须出现在先决随集(predetermined follow set)中的某个地方。这将确保合法的宏定义将继续对 `... tt` 的结束和 `uu ...` 的开始执行相同的判定(determination)，即使将来语言中添加了新的句法形式。
 The first invariant says that whatever actual token that comes after a matcher, if any, must be somewhere in the predetermined follow set. This ensures that a legal macro definition will continue to assign the same determination as to where `... tt` ends and `uu ...` begins, even as new syntactic forms are added to the language.
@@ -137,11 +137,11 @@ FIRST(M) is defined by case analysis on the sequence M and the structure of its 
 
       * Let SEP\_SET(M) = { SEP } 如果存在 SEP 且 ε ∈ FIRST(`tt ...`)；否则 SEP\_SET(M) = {}。
 
-  * Let ALPHA\_SET(M) = FIRST(`α`) if OP = `\*` or `?` and ALPHA\_SET(M) = {} if OP = `+`.
+  * Let ALPHA\_SET(M) = FIRST(`α`) if OP = `*` or `?` and ALPHA\_SET(M) = {} if OP = `+`.
   * FIRST(M) = (FIRST(`tt ...`) \\ {ε}) ∪ SEP\_SET(M) ∪ ALPHA\_SET(M).
 
-复杂NT 的定义值得商榷。SEP\_SET(M) 定义了分隔符可能是 M 的第一个有效token的可能性，当定义了分隔符且重复匹配段可能为空时，就会发生这种情况。ALPHA\_SET(M)定义了复杂NT可能为空的可能性，这意味着 M 的第一个有效token集合是后继token树序列 `α` 。当使用了操作符 `\*` 或 `?` 时，这种情况下可能没有重复元。理论上，如果 `+` 与一个可能为空的重复匹配段一起使用，也会出现这种情况，但是第三个不变式禁止这样做。
-The definition for complex NTs deserves some justification. SEP\_SET(M) defines the possibility that the separator could be a valid first token for M, which happens when there is a separator defined and the repeated fragment could be empty. ALPHA\_SET(M) defines the possibility that the complex NT could be empty, meaning that M's valid first tokens are those of the following token-tree sequences `α`. This occurs when either `\*` or `?` is used, in which case there could be zero repetitions. In theory, this could also occur if `+` was used with a potentially-empty repeating fragment, but this is forbidden by the third invariant.
+复杂NT 的定义值得商榷。SEP\_SET(M) 定义了分隔符可能是 M 的第一个有效token的可能性，当定义了分隔符且重复匹配段可能为空时，就会发生这种情况。ALPHA\_SET(M)定义了复杂NT可能为空的可能性，这意味着 M 的第一个有效token集合是后继token树序列 `α` 。当使用了操作符 `*` 或 `?` 时，这种情况下可能没有重复元。理论上，如果 `+` 与一个可能为空的重复匹配段一起使用，也会出现这种情况，但是第三个不变式禁止这样做。
+The definition for complex NTs deserves some justification. SEP\_SET(M) defines the possibility that the separator could be a valid first token for M, which happens when there is a separator defined and the repeated fragment could be empty. ALPHA\_SET(M) defines the possibility that the complex NT could be empty, meaning that M's valid first tokens are those of the following token-tree sequences `α`. This occurs when either `*` or `?` is used, in which case there could be zero repetitions. In theory, this could also occur if `+` was used with a potentially-empty repeating fragment, but this is forbidden by the third invariant.
 
 From there, clearly FIRST(M) can include any token from SEP\_SET(M) or ALPHA\_SET(M), and if the complex NT match is nonempty, then any token starting FIRST(`tt ...`) could work too. The last piece to consider is ε. SEP\_SET(M) and FIRST(`tt ...`) \ {ε} cannot contain ε, but ALPHA\_SET(M) could. Hence, this definition allows M to accept ε if and only if ε ∈ ALPHA\_SET(M) does. This is correct because for M to accept ε in the complex NT case, both the complex NT and α must accept it. If OP = `+`, meaning that the complex NT cannot be empty, then by definition ε ∉ ALPHA\_SET(M). Otherwise, the complex NT can accept zero repetitions, and then ALPHA\_SET(M) = FOLLOW(`α`). So this definition is correct with respect to \varepsilon as well.
 
@@ -256,7 +256,7 @@ represent simple nonterminals with the given fragment specifier.
   * FOLLOW(M), for any other M, is defined as the intersection, as t ranges over
     (LAST(M) \ {ε}), of FOLLOW(t).
 
-The tokens that can begin a type are, as of this writing, {`(`, `[`, `!`, `\*`,
+The tokens that can begin a type are, as of this writing, {`(`, `[`, `!`, `*`,
 `&`, `&&`, `?`, lifetimes, `>`, `>>`, `::`, any non-keyword identifier, `super`,
 `self`, `Self`, `extern`, `crate`, `$crate`, `_`, `for`, `impl`, `fn`, `unsafe`,
 `typeof`, `dyn`}, although this list may not be complete because people won't
@@ -264,9 +264,9 @@ always remember to update the appendix when new ones are added.
 
 Examples of FOLLOW for complex M:
 
- * FOLLOW(`$( $d:ident $e:expr )\*`) = FOLLOW(`$e:expr`)
- * FOLLOW(`$( $d:ident $e:expr )\* $(;)\*`) = FOLLOW(`$e:expr`) ∩ ANYTOKEN = FOLLOW(`$e:expr`)
- * FOLLOW(`$( $d:ident $e:expr )\* $(;)\* $( f |)+`) = ANYTOKEN
+ * FOLLOW(`$( $d:ident $e:expr )*`) = FOLLOW(`$e:expr`)
+ * FOLLOW(`$( $d:ident $e:expr )* $(;)*`) = FOLLOW(`$e:expr`) ∩ ANYTOKEN = FOLLOW(`$e:expr`)
+ * FOLLOW(`$( $d:ident $e:expr )* $(;)* $( f |)+`) = ANYTOKEN
 
 ### Examples of valid and invalid matchers
 
@@ -292,6 +292,3 @@ why particular matchers are legal and others are not.
 [Macros by Example]: macros-by-example.md
 [RFC 550]: https://github.com/rust-lang/rfcs/blob/master/text/0550-macro-future-proofing.md
 [tracking issue]: https://github.com/rust-lang/rust/issues/56575
-
-<!-- 2020-11-12-->
-<!-- checked -->

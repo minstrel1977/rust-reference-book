@@ -2,8 +2,8 @@
 # 析构函数
 
 >[destructors.md](https://github.com/rust-lang/reference/blob/master/src/destructors.md)\
->commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e \
->本章译文最后维护日期：2020-11-16
+>commit: ed5ba7cebeab9780188005c78ca789bed73f381b \
+>本章译文最后维护日期：2021-07-11
 
 
 当一个[初始化][initialized]了的[变量][variable]或[临时变量][temporary]超出[作用域](#drop-scopes)时，其*析构函数(destructor)*将运行，或者说它将被*销毁(dropped)*。此外[赋值][Assignment]操作也会运行其左操作数的析构函数（如果它已经初始化了）。如果变量已部分初始化了，则只销毁其已初始化的字段。
@@ -94,7 +94,7 @@ core::mem::forget(partial_move.1);
 #         println!("drop({})", self.0);
 #     }
 # }
-// 先销毁第二个参数, 接下来是 `y`, 然后是第一个参数r, 最后是 `x`
+// 先销毁 `y`，然后是第二个参数, 接下来是 `x`, 最后是第一个参数
 fn patterns_in_parameters(
     (x, _): (PrintOnDrop, PrintOnDrop),
     (_, y): (PrintOnDrop, PrintOnDrop),

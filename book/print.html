@@ -5625,8 +5625,8 @@ if true {
 <h1><a class="header" href="#表达式" id="表达式">表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions.md">expressions.md</a><br />
-commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
-本章译文最后维护日期：2021-4-5</p>
+commit: 97ba67cbee415e263a054e9ce68baf0e75dca2b0 <br />
+本章译文最后维护日期：2021-07-11</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -5749,7 +5749,7 @@ assert_eq!(
 </blockquote>
 <h2><a class="header" href="#place-expressions-and-value-expressions" id="place-expressions-and-value-expressions">Place Expressions and Value Expressions</a></h2>
 <h2><a class="header" href="#位置表达式和值表达式" id="位置表达式和值表达式">位置表达式和值表达式</a></h2>
-<p>表达式分为两大类：位置表达式和值表达式（，它们各自形成了自己的上下文）。因此，在每个表达式中，操作数可以出现在位置上下文，也可出现在值上下文中。表达式的求值既依赖于它自己的类别，也依赖于它所在的上下文。</p>
+<p>表达式分为两大类：位置表达式和值表达式。跟在每个表达式中一样，操作数可以出现在位置上下文，也可出现在值上下文中。表达式的求值既依赖于它自己的类别，也依赖于它所在的上下文。</p>
 <p><em>位置表达式</em>是表示内存位置的表达式。语言中表现为指向<strong>局部变量、<a href="items/static-items.html">静态变量</a>、<a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>(<code>*expr</code>)、<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">数组索引</a>表达式(<code>expr[expr]</code>)、<a href="expressions/field-expr.html">字段</a>引用(<code>expr.f</code>)、圆括号括起来的位置表达式</strong>的<a href="expressions/path-expr.html">路径</a>。所有其他形式的表达式都是值表达式。</p>
 <p><em>值表达式</em>是代表实际值的表达式。</p>
 <p>下面的上下文是<em>位置表达式</em>上下文：</p>
@@ -5775,7 +5775,7 @@ assert_eq!(
 <li>可以移出且没实现 <a href="special-types-and-traits.html#drop"><code>Drop</code></a> 的位置表达式的字段。</li>
 <li>对可移出且类型为 <a href="../std/boxed/struct.Box.html"><code>Box&lt;T&gt;</code></a> 的表达式作<a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>的结果。</li>
 </ul>
-<p>把值从一个位置表达式里移出到一个局部变量，那此（表达式代表的）地址将被去初始化(deinitialized)，并且该地址在重新初始化之前无法被再次读取。<br />
+<p>当把值从一个位置表达式里移出到一个局部变量时，此（表达式代表的）地址将被去初始化(deinitialized)，并且该地址在重新初始化之前无法被再次读取。<br />
 除以上列出的情况外，任何在值表达式上下文中使用位置表达式都是错误的。</p>
 <h3><a class="header" href="#mutability" id="mutability">Mutability</a></h3>
 <h3><a class="header" href="#可变性" id="可变性">可变性</a></h3>
@@ -5785,7 +5785,7 @@ assert_eq!(
 <li>当前未被借出的可变<a href="variables.html">变量</a>。</li>
 <li><a href="items/static-items.html#mutable-statics">可变静态(<code>static</code>)项</a>。</li>
 <li><a href="expressions.html#temporaries">临时值</a>。</li>
-<li><a href="expressions/field-expr.html">字段</a>，在可变位置表达式上下文中，可以对此子表达式求值。</li>
+<li><a href="expressions/field-expr.html">字段</a>：在可变位置表达式上下文中，可以对此子表达式求值。</li>
 <li>对 <code>*mut T</code> 指针的<a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>。</li>
 <li>对类型为 <code>&amp;mut T</code> 的变量或变量的字段的解引用。注意：这条是下一条规则的必要条件的例外情况。<sup class="footnote-reference"><a href="#译者注2">2</a></sup></li>
 <li>对实现 <code>DerefMut</code> 的类型的解引用，那对这里解出的表达式求值就需要在一个可变位置表达式上下文中进行。</li>
@@ -6063,8 +6063,8 @@ fn is_unix_platform() -&gt; bool {
 <h1><a class="header" href="#operator-expressions" id="operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: da0ec46c13b46af8a1bd88a1c4794e3b9402b522 <br />
-本章译文最后维护日期：2021-06-19</p>
+commit: 41aa8f948140fad27f0d3e29d1b77f46a4aedff5 <br />
+本章译文最后维护日期：2021-07-11</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6407,8 +6407,8 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <li>从浮点数转换为整型将使浮点数趋零取整(round the float towards zero)
 <ul>
 <li><code>NaN</code> 将返回 <code>0</code></li>
-<li>大于转换到的整型类型的最大值时，取该整型类型的最大值。</li>
-<li>小于转换到的整型类型的最小值时，取该整型类型的最小值。</li>
+<li>大于转换到的整型类型的最大值时（包括 <code>INFINITY</code>），取该整型类型的最大值。</li>
+<li>小于转换到的整型类型的最小值时（包括 <code>INFINITY</code>），取该整型类型的最小值。</li>
 </ul>
 </li>
 <li>从整数强制转换为浮点数将产生最接近的浮点数 *
@@ -9097,8 +9097,8 @@ let foo_ptr_2 = if want_i32 {
 <h1><a class="header" href="#闭包类型" id="闭包类型">闭包类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/closure.md">closure.md</a><br />
-commit: 5642af891714145cb2a765f244fff7d6b618a4c7 <br />
-本章译文最后维护日期：2020-11-14</p>
+commit: 9f106217c7598d0ec7b39e936d88f843a5d5175f <br />
+本章译文最后维护日期：2021-07-11</p>
 </blockquote>
 <p><a href="types/../expressions/closure-expr.html">闭包表达式</a>生成的闭包值具有唯一性和无法写出的匿名性。闭包类型近似相当于包含捕获变量的结构体。比如以下闭包示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
@@ -9139,7 +9139,7 @@ impl&lt;'a&gt; FnOnce&lt;()&gt; for Closure&lt;'a&gt; {
 </code></pre>
 <h2><a class="header" href="#capture-modes-1" id="capture-modes-1">Capture modes</a></h2>
 <h2><a class="header" href="#捕获方式-1" id="捕获方式-1">捕获方式</a></h2>
-<p>编译器倾向于优先通过不可变借用(immutable borrow)来捕获闭合变量(closed-over variable)，其次是通过唯一不可变借用(unique immutable borrow)（见下文），再其次可变借用(mutable borrow)，最后使用移动语义(move)来捕获。编译器将选择这些中的第一个能让此闭包编译通过的选项。这个选择只与闭包表达式的内容有关；编译器不考虑闭包表达式之外的代码，比如所涉及的变量的生存期。</p>
+<p>编译器倾向于优先通过不可变借用(immutable borrow)来捕获闭合变量(closed-over variable)，其次是通过唯一不可变借用(unique immutable borrow)（见下文），再其次可变借用(mutable borrow)，最后使用移动语义(move)来捕获。编译器将选择与捕获的变量在闭包体中的使用方式兼容的第一种捕获方式。编译器不会考虑周围的代码，比如所涉及的变量的生存期，或者闭包本身的生存期。</p>
 <p>如果使用了关键字 <code>move</code> ，那么所有捕获都是通过移动(move)语义进行的（当然对于 <code>Copy</code>类型，则是通过拷贝语义进行的），而不管借用是否可用。关键字 <code>move</code> 通常用于允许闭包比其捕获的值活得更久，例如返回闭包或用于生成新线程。</p>
 <p>复合类型（如结构体、元组和枚举）始终是全部捕获的，而不是各个字段分开捕获的。如果真要捕获单个字段，那可能需要先借用该字段到本地局部变量中：</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
@@ -10490,8 +10490,8 @@ fn foo() -&gt; i32 {
 <h1><a class="header" href="#析构函数" id="析构函数">析构函数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/destructors.md">destructors.md</a><br />
-commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
-本章译文最后维护日期：2020-11-16</p>
+commit: ed5ba7cebeab9780188005c78ca789bed73f381b <br />
+本章译文最后维护日期：2021-07-11</p>
 </blockquote>
 <p>当一个<a href="glossary.html#initialized">初始化</a>了的<a href="variables.html">变量</a>或<a href="expressions.html#temporaries">临时变量</a>超出<a href="destructors.html#drop-scopes">作用域</a>时，其<em>析构函数(destructor)<em>将运行，或者说它将被</em>销毁(dropped)</em>。此外<a href="expressions/operator-expr.html#assignment-expressions">赋值</a>操作也会运行其左操作数的析构函数（如果它已经初始化了）。如果变量已部分初始化了，则只销毁其已初始化的字段。</p>
 <p>类型 <code>T</code> 的析构函数由以下内容组成：</p>
@@ -10583,7 +10583,7 @@ core::mem::forget(partial_move.1);
 </span><span class="boring">        println!(&quot;drop({})&quot;, self.0);
 </span><span class="boring">    }
 </span><span class="boring">}
-</span>// 先销毁第二个参数, 接下来是 `y`, 然后是第一个参数r, 最后是 `x`
+</span>// 先销毁 `y`，然后是第二个参数, 接下来是 `x`, 最后是第一个参数
 fn patterns_in_parameters(
     (x, _): (PrintOnDrop, PrintOnDrop),
     (_, y): (PrintOnDrop, PrintOnDrop),
@@ -12360,10 +12360,10 @@ fn panic(info: &amp;PanicInfo) -&gt; ! {
 <h1><a class="header" href="#附录关于宏随集的二义性的形式化规范" id="附录关于宏随集的二义性的形式化规范">附录：关于宏随集的二义性的形式化规范</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macro-ambiguity.md">macro-ambiguity.md</a><br />
-commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 <br />
-本章译文最后维护日期：2020-11-17</p>
+commit:  6ee9fc95ac3b7df8a01079e13280a283a7a24612 <br />
+本章译文最后维护日期：2021-07-11</p>
 </blockquote>
-<p>本文介绍了下述<a href="macros-by-example.html">声明宏</a>规则的正式规范。它们最初是在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0550-macro-future-proofing.md">RFC 550</a> 中指定的（本文的大部分内容都是从其中复制过来的），并在后续的 RFC 中进行了进一步的展开。</p>
+<p>本文介绍了下述<a href="macros-by-example.html">声明宏</a>规则的正式规范。它们最初是在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0550-macro-future-proofing.md">RFC 550</a> 中指定的（本文的大部分内容都是从其中复制过来的），并在后续的 RFC 中进行了进一步的展开论述。</p>
 <h2><a class="header" href="#definitions--conventions" id="definitions--conventions">Definitions &amp; Conventions</a></h2>
 <h2><a class="header" href="#定义和约定" id="定义和约定">定义和约定</a></h2>
 <ul>
@@ -12375,7 +12375,7 @@ commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 <br />
 <li><code>repetition</code> ：重复元，遵循正则重复模式的匹配段。</li>
 <li><code>NT</code>：non-terminal，非终结符，可以出现在匹配器中的各种“元变量”或重复元匹配器，在声明宏(MBE)句法中用前导字符 <code>$</code> 标明。</li>
 <li><code>simple NT</code>：简单NT，“元变量”类型的非终结符（下面会进一步讨论）。</li>
-<li><code>complex NT</code>：复杂NT，重复元类型的非终结符，通过重复元操作符（<code>\*</code>, <code>+</code>, <code>?</code>）指定重复次数。 <!-- a repetition matching non-terminal, specified via repetition operators (`\*`, `+`, `?`). --></li>
+<li><code>complex NT</code>：复杂NT，重复元类型的非终结符，通过重复元操作符（<code>*</code>, <code>+</code>, <code>?</code>）指定重复次数。 <!-- a repetition matching non-terminal, specified via repetition operators (`*`, `+`, `?`). --></li>
 <li><code>token</code>：匹配器中不可再细分的元素；例如，标识符、操作符、开/闭定界符<em>和</em>简单NT(simple NT)。</li>
 <li><code>token tree</code>：token树，token树由 token(叶)、复杂NT 和子token树（token树的有限序列）组成的树形数据结构。</li>
 <li><code>delimiter token</code>：定界符，一种用于划分一个匹配段的结束和下一个匹配段的开始的 token。</li>
@@ -12395,12 +12395,12 @@ commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 <br />
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>(start $foo:expr $($i:ident),\* end)</code> 是一个匹配器(matcher)。整个匹配器是一段有界字符序列（使用开闭定界符 <code>(</code> 和 <code>)</code> 界定），<code>$foo</code> 和 <code>$i</code> 是简单NT(simple NT)， <code>expr</code> 和 <code>ident</code> 是它们各自的匹配段选择器(fragment specifiers)。</p>
-<p><code>$(i:ident),\*</code> <em>也</em>是一个 NT；它是一个复杂NT，匹配那些被逗号分隔成的标识符类型的重复元。<code>,</code> 是这个复杂NT 的分隔符；它出现在匹配段的每对元素（如果有的话）之间。</p>
+<p><code>(start $foo:expr $($i:ident),* end)</code> 是一个匹配器(matcher)。整个匹配器是一段有界字符序列（使用开闭定界符 <code>(</code> 和 <code>)</code> 界定），<code>$foo</code> 和 <code>$i</code> 是简单NT(simple NT)， <code>expr</code> 和 <code>ident</code> 是它们各自的匹配段选择器(fragment specifiers)。</p>
+<p><code>$(i:ident),*</code> <em>也</em>是一个 NT；它是一个复杂NT，匹配那些被逗号分隔成的标识符类型的重复元。<code>,</code> 是这个复杂NT 的分隔符；它出现在匹配段的每对元素（如果有的话）之间。</p>
 <p>复杂NT 的另一个例子是 <code>$(hi $e:expr ;)+</code>，它匹配 <code>hi &lt;expr&gt;; hi &lt;expr&gt;; ...</code> 这种格式的代码，其中 <code>hi &lt;expr&gt;;</code> 至少出现一次。注意，这种复杂NT 没有专用的分隔符。</p>
 <p>(请注意，Rust 解析器会确保这类有界字符序列始终具有正确的 token树的嵌套结构以及开/闭定界符的正确匹配。)</p>
 <p>下面，我们将用变量“M”表示匹配器，变量“t”和“u”表示任意单一 token，变量“tt”和“uu”表示任意 token树。（使用“tt”确实存在潜在的歧义，因为它的额外角色是一个匹配段选择器；但不用太担心，因为从上下文中，可以很清楚地看出哪个解释更符合语义）</p>
-<p>用“SEP”代表分隔符，“OP”代表重复元运算符 <code>\*</code>, <code>+</code>, 和 <code>?</code> “OPEN”/“CLOSE”代表包围定界字符序列的 token对（例如 <code>[</code> 和 <code>]</code> ）。</p>
+<p>用“SEP”代表分隔符，“OP”代表重复元运算符 <code>*</code>, <code>+</code>, 和 <code>?</code> “OPEN”/“CLOSE”代表包围定界字符序列的 token对（例如 <code>[</code> 和 <code>]</code> ）。</p>
 <p>用希腊字母 &quot;α&quot; &quot;β&quot; &quot;γ&quot; &quot;δ&quot; 代表潜在的空token树序列。（注意没有使用希腊字母 &quot;ε&quot;，&quot;ε&quot;(epsilon)在此表示形式中代表一类特殊的角色，不代表 token树序列。）</p>
 <ul>
 <li>这种希腊字母约定通常只是在需要展现一段字符序列的技术细节时才被引入；特别是，当我们希望<em>强调</em>我们操作的是一个 token树序列时，我们将对该序列使用表义符 &quot;tt ...&quot;，而不是一个希腊字母。</li>
@@ -12414,7 +12414,7 @@ commit:  184b056086757e89d68f41c8c0e42721cb50a4a9 <br />
 <ol>
 <li>对于匹配器 <code>M</code> 中的任意两个连续的 token树序列（即 <code>M = ... tt uu ...</code>），并且 <code>uu ...</code> 非空，必有 FOLLOW(<code>... tt</code>) ∪ {ε} ⊇ FIRST(<code>uu ...</code>)。</li>
 <li>对于匹配器中任何带分隔符的复杂NT，<code>M = ... $(tt ...) SEP OP ...</code>，必有 <code>SEP</code> ∈ FOLLOW(<code>tt ...</code>)</li>
-<li>对于匹配器中不带分隔符的复杂NT，<code>M = ... $(tt ...) OP ...</code>，如果 OP = <code>\*</code> 或 <code>+</code>，必有 FOLLOW(<code>tt ...</code>) ⊇ FIRST(<code>tt ...</code>)。</li>
+<li>对于匹配器中不带分隔符的复杂NT，<code>M = ... $(tt ...) OP ...</code>，如果 OP = <code>*</code> 或 <code>+</code>，必有 FOLLOW(<code>tt ...</code>) ⊇ FIRST(<code>tt ...</code>)。</li>
 </ol>
 <p>第一个不变式表示，无论匹配器后出现什么 token（如果有的话），它都必须出现在先决随集(predetermined follow set)中的某个地方。这将确保合法的宏定义将继续对 <code>... tt</code> 的结束和 <code>uu ...</code> 的开始执行相同的判定(determination)，即使将来语言中添加了新的句法形式。
 The first invariant says that whatever actual token that comes after a matcher, if any, must be somewhere in the predetermined follow set. This ensures that a legal macro definition will continue to assign the same determination as to where <code>... tt</code> ends and <code>uu ...</code> begins, even as new syntactic forms are added to the language.</p>
@@ -12480,14 +12480,14 @@ FIRST(M) is defined by case analysis on the sequence M and the structure of its 
 </ul>
 </li>
 <li>
-<p>Let ALPHA_SET(M) = FIRST(<code>α</code>) if OP = <code>\*</code> or <code>?</code> and ALPHA_SET(M) = {} if OP = <code>+</code>.</p>
+<p>Let ALPHA_SET(M) = FIRST(<code>α</code>) if OP = <code>*</code> or <code>?</code> and ALPHA_SET(M) = {} if OP = <code>+</code>.</p>
 </li>
 <li>
 <p>FIRST(M) = (FIRST(<code>tt ...</code>) \ {ε}) ∪ SEP_SET(M) ∪ ALPHA_SET(M).</p>
 </li>
 </ul>
-<p>复杂NT 的定义值得商榷。SEP_SET(M) 定义了分隔符可能是 M 的第一个有效token的可能性，当定义了分隔符且重复匹配段可能为空时，就会发生这种情况。ALPHA_SET(M)定义了复杂NT可能为空的可能性，这意味着 M 的第一个有效token集合是后继token树序列 <code>α</code> 。当使用了操作符 <code>\*</code> 或 <code>?</code> 时，这种情况下可能没有重复元。理论上，如果 <code>+</code> 与一个可能为空的重复匹配段一起使用，也会出现这种情况，但是第三个不变式禁止这样做。
-The definition for complex NTs deserves some justification. SEP_SET(M) defines the possibility that the separator could be a valid first token for M, which happens when there is a separator defined and the repeated fragment could be empty. ALPHA_SET(M) defines the possibility that the complex NT could be empty, meaning that M's valid first tokens are those of the following token-tree sequences <code>α</code>. This occurs when either <code>\*</code> or <code>?</code> is used, in which case there could be zero repetitions. In theory, this could also occur if <code>+</code> was used with a potentially-empty repeating fragment, but this is forbidden by the third invariant.</p>
+<p>复杂NT 的定义值得商榷。SEP_SET(M) 定义了分隔符可能是 M 的第一个有效token的可能性，当定义了分隔符且重复匹配段可能为空时，就会发生这种情况。ALPHA_SET(M)定义了复杂NT可能为空的可能性，这意味着 M 的第一个有效token集合是后继token树序列 <code>α</code> 。当使用了操作符 <code>*</code> 或 <code>?</code> 时，这种情况下可能没有重复元。理论上，如果 <code>+</code> 与一个可能为空的重复匹配段一起使用，也会出现这种情况，但是第三个不变式禁止这样做。
+The definition for complex NTs deserves some justification. SEP_SET(M) defines the possibility that the separator could be a valid first token for M, which happens when there is a separator defined and the repeated fragment could be empty. ALPHA_SET(M) defines the possibility that the complex NT could be empty, meaning that M's valid first tokens are those of the following token-tree sequences <code>α</code>. This occurs when either <code>*</code> or <code>?</code> is used, in which case there could be zero repetitions. In theory, this could also occur if <code>+</code> was used with a potentially-empty repeating fragment, but this is forbidden by the third invariant.</p>
 <p>From there, clearly FIRST(M) can include any token from SEP_SET(M) or ALPHA_SET(M), and if the complex NT match is nonempty, then any token starting FIRST(<code>tt ...</code>) could work too. The last piece to consider is ε. SEP_SET(M) and FIRST(<code>tt ...</code>) \ {ε} cannot contain ε, but ALPHA_SET(M) could. Hence, this definition allows M to accept ε if and only if ε ∈ ALPHA_SET(M) does. This is correct because for M to accept ε in the complex NT case, both the complex NT and α must accept it. If OP = <code>+</code>, meaning that the complex NT cannot be empty, then by definition ε ∉ ALPHA_SET(M). Otherwise, the complex NT can accept zero repetitions, and then ALPHA_SET(M) = FOLLOW(<code>α</code>). So this definition is correct with respect to \varepsilon as well.</p>
 <h4><a class="header" href="#last" id="last">LAST</a></h4>
 <p>LAST(M), defined by case analysis on M itself (a sequence of token-trees):</p>
@@ -12617,16 +12617,16 @@ tt, item, lifetime, literal and meta simple nonterminals, and all terminals.</p>
 (LAST(M) \ {ε}), of FOLLOW(t).</p>
 </li>
 </ul>
-<p>The tokens that can begin a type are, as of this writing, {<code>(</code>, <code>[</code>, <code>!</code>, <code>\*</code>,
+<p>The tokens that can begin a type are, as of this writing, {<code>(</code>, <code>[</code>, <code>!</code>, <code>*</code>,
 <code>&amp;</code>, <code>&amp;&amp;</code>, <code>?</code>, lifetimes, <code>&gt;</code>, <code>&gt;&gt;</code>, <code>::</code>, any non-keyword identifier, <code>super</code>,
 <code>self</code>, <code>Self</code>, <code>extern</code>, <code>crate</code>, <code>$crate</code>, <code>_</code>, <code>for</code>, <code>impl</code>, <code>fn</code>, <code>unsafe</code>,
 <code>typeof</code>, <code>dyn</code>}, although this list may not be complete because people won't
 always remember to update the appendix when new ones are added.</p>
 <p>Examples of FOLLOW for complex M:</p>
 <ul>
-<li>FOLLOW(<code>$( $d:ident $e:expr )\*</code>) = FOLLOW(<code>$e:expr</code>)</li>
-<li>FOLLOW(<code>$( $d:ident $e:expr )\* $(;)\*</code>) = FOLLOW(<code>$e:expr</code>) ∩ ANYTOKEN = FOLLOW(<code>$e:expr</code>)</li>
-<li>FOLLOW(<code>$( $d:ident $e:expr )\* $(;)\* $( f |)+</code>) = ANYTOKEN</li>
+<li>FOLLOW(<code>$( $d:ident $e:expr )*</code>) = FOLLOW(<code>$e:expr</code>)</li>
+<li>FOLLOW(<code>$( $d:ident $e:expr )* $(;)*</code>) = FOLLOW(<code>$e:expr</code>) ∩ ANYTOKEN = FOLLOW(<code>$e:expr</code>)</li>
+<li>FOLLOW(<code>$( $d:ident $e:expr )* $(;)* $( f |)+</code>) = ANYTOKEN</li>
 </ul>
 <h3><a class="header" href="#examples-of-valid-and-invalid-matchers" id="examples-of-valid-and-invalid-matchers">Examples of valid and invalid matchers</a></h3>
 <p>With the above specification in hand, we can present arguments for
@@ -12657,8 +12657,6 @@ why particular matchers are legal and others are not.</p>
 <p><code>($($e:expr)*)</code> ：illegal, because expr NTs are not in FOLLOW(expr NT).</p>
 </li>
 </ul>
-<!-- 2020-11-12-->
-<!-- checked -->
 <h1><a class="header" href="#influences" id="influences">Influences</a></h1>
 <h1><a class="header" href="#影响来源" id="影响来源">影响来源</a></h1>
 <blockquote>
