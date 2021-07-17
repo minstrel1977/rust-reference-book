@@ -2,8 +2,8 @@
 # 关联程序项/关联项
 
 >[associated-items.md](https://github.com/rust-lang/reference/blob/master/src/items/associated-items.md)\
->commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 \
->本章译文最后维护日期：2021-1-17
+>commit: 4e138b37b49c49bc875b96b859fbe0caea5a82f3 \
+>本章译文最后维护日期：2021-07-17
 
 > **<sup>句法</sup>**\
 > _AssociatedItem_ :\
@@ -190,7 +190,8 @@ let bounding_box = circle_shape.bounding_box();
 
 *关联类型声明*为*关联类型定义*声明签名。书写形式为：先是 `type`，然后是一个[标识符][identifier]，最后是一个可选的 trait约束列表。
 
-这里的标识符是声明的类型的别名名称；可选的 trait约束必须由此类型别名的实现来履行实现。
+这里的标识符是声明的类型的别名名称；其可选的 trait约束必须由此类型别名的实现(implementations)来履行实现。
+关联类型上有一个隐式的 [`Sized`]约束，可以使用 `？Sized`放宽此约束。
 
 *关联类型定义*在另一个类型上定义了一个类型别名。书写形式为：先是 `type`，然后是一个[标识符]，然后再是一个 `=`，最后是一个[类型][type]。
 
@@ -323,6 +324,7 @@ fn main() {
 [`Box<Self>`]: ../special-types-and-traits.md#boxt
 [`Pin<P>`]: ../special-types-and-traits.md#pinp
 [`Rc<Self>`]: ../special-types-and-traits.md#rct
+[`Sized`]: ../special-types-and-traits.md#sized
 [traits]: traits.md
 [type aliases]: type-aliases.md
 [inherent implementations]: implementations.md#inherent-implementations
@@ -339,6 +341,3 @@ fn main() {
 [regular function parameters]: functions.md#attributes-on-function-parameters
 [generic parameters]: generics.md
 [where clauses]: generics.md#where-clauses
-
-<!-- 2021-1-17-->
-<!-- checked -->

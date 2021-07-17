@@ -169,8 +169,8 @@
 <h1><a class="header" href="#trait约束和生存期约束" id="trait约束和生存期约束">trait约束和生存期约束</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md">trait-bounds.md</a><br />
-commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
-本章译文最后维护日期：2021-06-19</p>
+commit: 82d75cf423e4a7824fb36e73ccb18519d6900610 <br />
+本章译文最后维护日期：2021-07-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -235,10 +235,13 @@ fn name_figure&lt;U: Shape&gt;(
 </span></code></pre></pre>
 <p>trait 和生存期约束也被用来命名 <a href="types/trait-object.html">trait对象</a>。</p>
 <h2><a class="header" href="#sized" id="sized"><code>?Sized</code></a></h2>
-<p><code>?</code> 仅用于声明 <a href="special-types-and-traits.html#sized"><code>Sized</code></a> trait 可能不会被某类型参数或关联类型实现。<code>?Sized</code> 还不能用作其他类型的约束。</p>
+<p><code>?</code> 仅用于放宽<a href="types/parameters.html">类型参数</a>或<a href="items/associated-items.html#associated-types">关联类型</a> 上的<a href="special-types-and-traits.html#sized"><code>Sized</code></a> trait。
+目前 <code>?Sized</code> 还不能用作其他类型的约束。</p>
 <h2><a class="header" href="#lifetime-bounds" id="lifetime-bounds">Lifetime bounds</a></h2>
 <h2><a class="header" href="#生存期约束" id="生存期约束">生存期约束</a></h2>
-<p>生存期约束可以应用于类型或其他生存期。约束 <code>'a: 'b</code> 通常被解读为 <em><code>'a</code> 比 <code>'b</code> 存活的时间久</em>。<code>'a: 'b</code>意味着 <code>'a</code> 持续的时间比 <code>'b</code> 长，所以只要 <code>&amp;'b ()</code> 有效，引用 <code>&amp;'a ()</code> 就有效。<sup class="footnote-reference"><a href="#译注1">1</a></sup></p>
+<p>生存期约束可以应用于类型或其他生存期。
+约束 <code>'a: 'b</code> 通常被读做 <em><code>'a</code> 比 <code>'b</code> 存活的时间久</em>。
+<code>'a: 'b</code> 意味着 <code>'a</code> 持续的时间至少和 <code>'b</code> 一样长，所以只要 <code>&amp;'b ()</code> 有效，则 <code>&amp;'a ()</code> 就有效。<sup class="footnote-reference"><a href="#译注1">1</a></sup></p>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -248,7 +251,8 @@ fn name_figure&lt;U: Shape&gt;(
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>T: 'a</code> 意味着 <code>T</code> 的所有生存期参数都比 <code>'a</code> 存活得时间长。例如，如果 <code>'a</code> 是一个任意的(unconstrained)生存期参数，那么 <code>i32: 'static</code> 和 <code>&amp;'static str: 'a</code> 都合法，但 <code>Vec&lt;&amp;'a ()&gt;: 'static</code> 不合法。</p>
+<p><code>T: 'a</code> 意味着 <code>T</code> 的所有生存期参数都比 <code>'a</code> 存活得时间长。
+例如，如果 <code>'a</code> 是一个任意的(unconstrained)生存期参数，那么 <code>i32: 'static</code> 和 <code>&amp;'static str: 'a</code> 都合法，但 <code>Vec&lt;&amp;'a ()&gt;: 'static</code> 不合法。</p>
 <h2><a class="header" href="#higher-ranked-trait-bounds" id="higher-ranked-trait-bounds">Higher-ranked trait bounds</a></h2>
 <h2><a class="header" href="#高阶trait约束" id="高阶trait约束">高阶trait约束</a></h2>
 <blockquote>
@@ -288,7 +292,7 @@ fn name_figure&lt;U: Shape&gt;(
 <span class="boring">}
 </span></code></pre></pre>
 </blockquote>
-<p>高阶生存期也可以贴近 trait 来指定，唯一的区别是生存期参数的作用域，像下面这样 <code>'a</code> 的作用域只扩展到后面跟的 trait 的末尾，而不是整个约束<sup class="footnote-reference"><a href="#译注4">3</a></sup>。下面这个函数和上一个等价。</p>
+<p>高阶生存期也可以在 trait 前面指定：唯一的区别是生存期参数的作用域，像下面这样 <code>'a</code> 的作用域只扩展到后面跟的 trait 的末尾，而不是整个约束<sup class="footnote-reference"><a href="#译注4">3</a></sup>。下面这个函数和上一个等价。</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

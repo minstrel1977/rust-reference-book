@@ -169,15 +169,15 @@
 <h1><a class="header" href="#数组和数组索引表达式" id="数组和数组索引表达式">数组和数组索引表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/array-expr.md">array-expr.md</a><br />
-commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
-本章译文最后维护日期：2021-4-5</p>
+commit: 37ca438c9ac58448ecf304b735e71644e8127f3d <br />
+本章译文最后维护日期：2021-07-17</p>
 </blockquote>
 <h2><a class="header" href="#array-expressions" id="array-expressions">Array expressions</a></h2>
 <h2><a class="header" href="#数组表达式" id="数组表达式">数组表达式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ArrayExpression</em> :<br />
-   <code>[</code> <a href="../attributes.html"><em>InnerAttribute</em></a><sup>*</sup> <em>ArrayElements</em><sup>?</sup> <code>]</code></p>
+   <code>[</code> <em>ArrayElements</em><sup>?</sup> <code>]</code></p>
 <p><em>ArrayElements</em> :<br />
       <a href="../expressions.html"><em>Expression</em></a> ( <code>,</code> <a href="../expressions.html"><em>Expression</em></a> )<sup>*</sup> <code>,</code><sup>?</sup><br />
    | <a href="../expressions.html"><em>Expression</em></a> <code>;</code> <a href="../expressions.html"><em>Expression</em></a></p>
@@ -211,9 +211,6 @@ const EMPTY: Vec&lt;i32&gt; = Vec::new();
 [EMPTY; 2];
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#array-expression-attributes" id="array-expression-attributes">Array expression attributes</a></h3>
-<h3><a class="header" href="#数组表达式上的属性" id="数组表达式上的属性">数组表达式上的属性</a></h3>
-<p>在允许<a href="../attributes.html">块表达式上的属性</a>存在的那几种表达式上下文中，可以在数组表达式的左括号后直接使用<a href="block-expr.html#attributes-on-block-expressions">内部属性</a>。</p>
 <h2><a class="header" href="#array-and-slice-indexing-expressions" id="array-and-slice-indexing-expressions">Array and slice indexing expressions</a></h2>
 <h2><a class="header" href="#数组和切片索引表达式" id="数组和切片索引表达式">数组和切片索引表达式</a></h2>
 <blockquote>

@@ -2,8 +2,8 @@
 # 特殊类型和 trait
 
 >[special-types-and-traits.md](https://github.com/rust-lang/reference/blob/master/src/special-types-and-traits.md)\
->commit: fcdc0cab546c10921d66054be25c6afc9dd6b3bc \
->本章译文最后维护日期：2020-11-16
+>commit: 4e138b37b49c49bc875b96b859fbe0caea5a82f3 \
+>本章译文最后维护日期：2021-07-17
 
 [标准库][the standard library]中的某些类型和 trait 在 Rust 编译器中也直接能用。本章就阐述了这些类型和 trait 的特殊特性。
 
@@ -101,7 +101,10 @@
 
 ## `Sized`
 
-[`Sized`] trait表明这种类型的尺寸在编译时是已知的；也就是说，它不是一个[动态尺寸类型][dynamically sized type]。[类型参数][Type parameters]默认是 `Sized` 的。`Sized` 总是由编译器自动实现，而不是由[实现(implementation items)][implementation items]主动实现的。
+[`Sized`] trait表明这种类型的尺寸在编译时是已知的；也就是说，它不是一个[动态尺寸类型][dynamically sized type]。
+[类型参数][Type parameters]和[关联类型][associated types]默认是 `Sized` 的。
+`Sized` 总是由编译器自动实现，而不是由[实现(implementation items)][implementation items]主动实现的。
+这些隐式的 `Sized`约束可以通过指定 `?Sized`约束来放宽约束。
 
 [^译注1]: 这里是相对普通的借用/引用来说，普通的借用/引用对指向的内存位置不拥有所有权，所以无法从中移出值。
 
@@ -130,6 +133,7 @@
 [`Unpin`]: https://doc.rust-lang.org/std/marker/trait.Unpin.html
 
 [Arrays]: types/array.md
+[associated types]: items/associated-items.md#associated-types
 [call expressions]: expressions/call-expr.md
 [deref coercions]: type-coercions.md#coercion-types
 [dereference operator]: expressions/operator-expr.md#the-dereference-operator

@@ -169,8 +169,8 @@
 <h1><a class="header" href="#结构体表达式" id="结构体表达式">结构体表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/struct-expr.md">struct-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: 37ca438c9ac58448ecf304b735e71644e8127f3d <br />
+本章译文最后维护日期：2021-07-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -179,7 +179,7 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
    | <em>StructExprTuple</em><br />
    | <em>StructExprUnit</em></p>
 <p><em>StructExprStruct</em> :<br />
-   <a href="../paths.html#paths-in-expressions"><em>PathInExpression</em></a> <code>{</code> <a href="../attributes.html"><em>InnerAttribute</em></a><sup>*</sup> (<em>StructExprFields</em> | <em>StructBase</em>)<sup>?</sup> <code>}</code></p>
+   <a href="../paths.html#paths-in-expressions"><em>PathInExpression</em></a> <code>{</code> (<em>StructExprFields</em> | <em>StructBase</em>)<sup>?</sup> <code>}</code></p>
 <p><em>StructExprFields</em> :<br />
    <em>StructExprField</em> (<code>,</code> <em>StructExprField</em>)<sup>*</sup> (<code>,</code> <em>StructBase</em> | <code>,</code><sup>?</sup>)</p>
 <p><em>StructExprField</em> :<br />
@@ -189,12 +189,11 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
    <code>..</code> <a href="../expressions.html"><em>Expression</em></a></p>
 <p><em>StructExprTuple</em> :<br />
    <a href="../paths.html#paths-in-expressions"><em>PathInExpression</em></a> <code>(</code><br />
-      <a href="../attributes.html"><em>InnerAttribute</em></a><sup>*</sup><br />
       ( <a href="../expressions.html"><em>Expression</em></a> (<code>,</code> <a href="../expressions.html"><em>Expression</em></a>)<sup>*</sup> <code>,</code><sup>?</sup> )<sup>?</sup><br />
    <code>)</code></p>
 <p><em>StructExprUnit</em> : <a href="../paths.html#paths-in-expressions"><em>PathInExpression</em></a></p>
 </blockquote>
-<p><em>结构体表达式</em>创建结构体或联合体的值。它由指向<a href="../items/structs.html">结构体</a>程序项、<a href="../items/enumerations.html">枚举变体</a>、<a href="../items/unions.html">联合体</a>程序项的路径，以及与此程序项的字段对应的值组成。
+<p><em>结构体表达式</em>用来创建结构体、枚举或联合体的值。它由指向<a href="../items/structs.html">结构体</a>程序项、<a href="../items/enumerations.html">枚举变体</a>、<a href="../items/unions.html">联合体</a>程序项的路径，以及与此程序项的字段对应的值组成。
 结构体表达式有三种形式：结构体(struct)、元组结构体(tuple)和单元结构体(unit)。</p>
 <p>下面是结构体表达式的示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
@@ -219,7 +218,7 @@ some_fn::&lt;Cookie&gt;(Cookie);
 <p><a href="../items/unions.html">联合体</a>类型的值只能使用此句法创建，并且只能指定一个字段。</p>
 <h2><a class="header" href="#functional-update-syntax" id="functional-update-syntax">Functional update syntax</a></h2>
 <h2><a class="header" href="#函数式更新句法" id="函数式更新句法">函数式更新句法</a></h2>
-<p>结构体表达式构建一个结构体类型的值时可以以 <code>..</code> 后跟一个表达式的句法结尾，这种句法表示这是一种函数式更新(functional update)。
+<p>构造结构体类型的值的结构体表达式可以以 <code>..</code> 后跟一个表达式的句法结尾，这种句法表示这是一种函数式更新(functional update)。
 <code>..</code> 后跟的表达式（此表达式被称为此函数式更新的基(base)）必须与正在构造的新结构体值是同一种结构体类型的。</p>
 <p>整个结构体表达式先为已指定的字段使用已给定的值，然后再从基表达式(base expression)里为剩余未指定的字段移动或复制值。
 与所有结构体表达式一样，此结构体类型的所有字段必须是<a href="../visibility-and-privacy.html">可见的</a>，甚至那些没有显式命名的字段也是如此。</p>
@@ -290,9 +289,6 @@ let a = Gamma;  // Gamma的值。
 let b = Gamma{};  // 和`a`的值完全一样。
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#struct-expression-attributes" id="struct-expression-attributes">Struct expression attributes</a></h2>
-<h2><a class="header" href="#结构体表达式上的属性" id="结构体表达式上的属性">结构体表达式上的属性</a></h2>
-<p>在允许<a href="../attributes.html">块表达式上的属性</a>存在的那几种表达式上下文中，可以在结构体表达式的左括号后直接使用<a href="block-expr.html#attributes-on-block-expressions">内部属性</a>。</p>
 
                     </main>
 

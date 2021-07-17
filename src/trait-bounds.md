@@ -2,8 +2,8 @@
 # trait约束和生存期约束
 
 >[trait-bounds.md](https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md)\
->commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef \
->本章译文最后维护日期：2021-06-19
+>commit: 82d75cf423e4a7824fb36e73ccb18519d6900610 \
+>本章译文最后维护日期：2021-07-17
 
 > **<sup>句法</sup>**\
 > _TypeParamBounds_ :\
@@ -71,12 +71,15 @@ trait 和生存期约束也被用来命名 [trait对象][trait objects]。
 
 ## `?Sized`
 
-`?` 仅用于声明 [`Sized`] trait 可能不会被某类型参数或关联类型实现。`?Sized` 还不能用作其他类型的约束。
+`?` 仅用于放宽[类型参数][type parameters]或[关联类型][associated types] 上的[`Sized`] trait。
+目前 `?Sized` 还不能用作其他类型的约束。
 
 ## Lifetime bounds
 ## 生存期约束
 
-生存期约束可以应用于类型或其他生存期。约束 `'a: 'b` 通常被解读为 *`'a` 比 `'b` 存活的时间久*。`'a: 'b`意味着 `'a` 持续的时间比 `'b` 长，所以只要 `&'b ()` 有效，引用 `&'a ()` 就有效。[^译注1]
+生存期约束可以应用于类型或其他生存期。
+约束 `'a: 'b` 通常被读做 *`'a` 比 `'b` 存活的时间久*。
+`'a: 'b` 意味着 `'a` 持续的时间至少和 `'b` 一样长，所以只要 `&'b ()` 有效，则 `&'a ()` 就有效。[^译注1]
 
 ```rust
 fn f<'a, 'b>(x: &'a i32, mut y: &'b i32) where 'a: 'b {
@@ -85,7 +88,8 @@ fn f<'a, 'b>(x: &'a i32, mut y: &'b i32) where 'a: 'b {
 }
 ```
 
-`T: 'a` 意味着 `T` 的所有生存期参数都比 `'a` 存活得时间长。例如，如果 `'a` 是一个任意的(unconstrained)生存期参数，那么 `i32: 'static` 和 `&'static str: 'a` 都合法，但 `Vec<&'a ()>: 'static` 不合法。
+`T: 'a` 意味着 `T` 的所有生存期参数都比 `'a` 存活得时间长。
+例如，如果 `'a` 是一个任意的(unconstrained)生存期参数，那么 `i32: 'static` 和 `&'static str: 'a` 都合法，但 `Vec<&'a ()>: 'static` 不合法。
 
 ## Higher-ranked trait bounds
 ## 高阶trait约束
@@ -121,7 +125,7 @@ fn call_on_ref_zero<F>(f: F) where for<'a> F: Fn(&'a i32) {
 >}
 >```
 
-高阶生存期也可以贴近 trait 来指定，唯一的区别是生存期参数的作用域，像下面这样 `'a` 的作用域只扩展到后面跟的 trait 的末尾，而不是整个约束[^译注4]。下面这个函数和上一个等价。
+高阶生存期也可以在 trait 前面指定：唯一的区别是生存期参数的作用域，像下面这样 `'a` 的作用域只扩展到后面跟的 trait 的末尾，而不是整个约束[^译注4]。下面这个函数和上一个等价。
 
 ```rust
 fn call_on_ref_zero<F>(f: F) where F: for<'a> Fn(&'a i32) {
@@ -141,11 +145,17 @@ fn call_on_ref_zero<F>(f: F) where F: for<'a> Fn(&'a i32) {
 [LIFETIME_OR_LABEL]: tokens.md#lifetimes-and-loop-labels
 [_GenericParams_]: items/generics.md
 [_TypePath_]: paths.md#paths-in-types
+[`Clone`]: special-types-and-traits.md#clone
+[`Copy`]: special-types-and-traits.md#copy
 [`Sized`]: special-types-and-traits.md#sized
-
+[arrays]: types/array.md
 [associated types]: items/associated-items.md#associated-types
 [supertraits]: items/traits.md#supertraits
 [generic]: items/generics.md
+[higher-ranked lifetimes]: #higher-ranked-trait-bounds
+[slice]: types/slice.md
 [Trait]: items/traits.md#trait-bounds
+[trait object]: types/trait-object.md
 [trait objects]: types/trait-object.md
+[type parameters]: types/parameters.md
 [where clause]: items/generics.md#where-clauses

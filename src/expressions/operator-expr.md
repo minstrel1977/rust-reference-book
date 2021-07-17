@@ -2,8 +2,8 @@
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit: 41aa8f948140fad27f0d3e29d1b77f46a4aedff5 \
->本章译文最后维护日期：2021-07-11
+>commit: 0b7f340e8963eccac662f97cb679855f043a658f \
+>本章译文最后维护日期：2021-07-17
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -197,16 +197,18 @@ assert_eq!(true, !false);
 | `-`    | 减法             |             | 减法    | `std::ops::Sub`    | `std::ops::SubAssign`                 |
 | `*`    | 乘法          |             | 乘法 | `std::ops::Mul`    | `std::ops::MulAssign`                 |
 | `/`    | 除法*                |             | 取余       | `std::ops::Div`    | `std::ops::DivAssign`                 |
-| `%`    | 取余               |             | Remainder      | `std::ops::Rem`    | `std::ops::RemAssign`                 |
+| `%`    | 取余**             |             | Remainder      | `std::ops::Rem`    | `std::ops::RemAssign`                 |
 | `&`    | 按位与             | [逻辑与][Logical AND] |                | `std::ops::BitAnd` | `std::ops::BitAndAssign`              |
 | <code>&#124;</code> | 按位或 | [逻辑或][Logical OR]  |                | `std::ops::BitOr`  | `std::ops::BitOrAssign`               |
 | `^`    | 按位异或             | [逻辑异或][Logical XOR] |                | `std::ops::BitXor` | `std::ops::BitXorAssign`              |
 | `<<`   | 左移位              |             |                | `std::ops::Shl`    | `std::ops::ShlAssign`                 |
-| `>>`   | 右移位**            |             |                | `std::ops::Shr`    |  `std::ops::ShrAssign`                |
+| `>>`   | 右移位***            |             |                | `std::ops::Shr`    |  `std::ops::ShrAssign`                |
 
 \* 整数除法趋零取整。
 
-\*\* 有符号整数类型算术右移位，无符号整数类型逻辑右移位。
+\*\* Rust使用由[截断除法](https://en.wikipedia.org/wiki/Modulo_operation#Variants_of_the_definition)定义的求宇运算。也就是 `余数=被除数%除数`，其中余数将与被除数的符号一致。
+
+\*\*\* 有符号整数类型算术右移位，无符号整数类型逻辑右移位。
 
 下面是使用这些操作符的示例:
 

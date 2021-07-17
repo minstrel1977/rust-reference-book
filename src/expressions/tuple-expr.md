@@ -2,15 +2,15 @@
 # 元组和元组索引表达式
 
 >[tuple-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/tuple-expr.md)\
->commit: 09142b820fe8713c4cba451713c7d11e67d7fbd8 \
->本章译文最后维护日期：2021-4-6
+>commit: 37ca438c9ac58448ecf304b735e71644e8127f3d \
+>本章译文最后维护日期：2021-07-17
 
 ## Tuple expressions
 ## 元组表达式
 
 > **<sup>句法</sup>**\
 > _TupleExpression_ :\
-> &nbsp;&nbsp; `(` [_InnerAttribute_]<sup>\*</sup> _TupleElements_<sup>?</sup> `)`
+> &nbsp;&nbsp; `(` _TupleElements_<sup>?</sup> `)`
 >
 > _TupleElements_ :\
 > &nbsp;&nbsp; ( [_Expression_] `,` )<sup>+</sup> [_Expression_]<sup>?</sup>
@@ -34,11 +34,6 @@
 | `(0.0, 4.5)`         | `(f64, f64)` |
 | `("x".to_string(), )` | `(String, )`  |
 | `("a", 4usize, true)`| `(&'static str, usize, bool)` |
-
-### Tuple expression attributes
-### 元组表达式上的属性
-
-在允许[块表达式上的属性][Inner attributes]存在的那几种表达式上下文中，可以在元组表达式的左括号后直接使用[内部属性][attributes on block expressions]。
 
 ## Tuple indexing expressions
 ## 元组索引表达式
@@ -79,13 +74,10 @@ assert_eq!(point.1, 0.0);
 > **注意**：虽然数组和切片也有元素，但它们必须使用[数组或切片索引表达式][array or slice indexing expression]或[切片模式][slice pattern]去访问它们的元素。
 
 [_Expression_]: ../expressions.md
-[_InnerAttribute_]: ../attributes.md
 [array or slice indexing expression]: array-expr.md#array-and-slice-indexing-expressions
-[attributes on block expressions]: block-expr.md#attributes-on-block-expressions
 [call expression]: ./call-expr.md
 [decimal literal]: ../tokens.md#integer-literals
 [field access expressions]: ./field-expr.html#field-access-expressions
-[inner attributes]: ../attributes.md
 [operands]: ../expressions.md
 [parenthetical expression]: grouped-expr.md
 [place expression]: ../expressions.md#place-expressions-and-value-expressions

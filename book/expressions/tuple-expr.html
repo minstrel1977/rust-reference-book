@@ -169,15 +169,15 @@
 <h1><a class="header" href="#元组和元组索引表达式" id="元组和元组索引表达式">元组和元组索引表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/tuple-expr.md">tuple-expr.md</a><br />
-commit: 09142b820fe8713c4cba451713c7d11e67d7fbd8 <br />
-本章译文最后维护日期：2021-4-6</p>
+commit: 37ca438c9ac58448ecf304b735e71644e8127f3d <br />
+本章译文最后维护日期：2021-07-17</p>
 </blockquote>
 <h2><a class="header" href="#tuple-expressions" id="tuple-expressions">Tuple expressions</a></h2>
 <h2><a class="header" href="#元组表达式" id="元组表达式">元组表达式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>TupleExpression</em> :<br />
-   <code>(</code> <a href="../attributes.html"><em>InnerAttribute</em></a><sup>*</sup> <em>TupleElements</em><sup>?</sup> <code>)</code></p>
+   <code>(</code> <em>TupleElements</em><sup>?</sup> <code>)</code></p>
 <p><em>TupleElements</em> :<br />
    ( <a href="../expressions.html"><em>Expression</em></a> <code>,</code> )<sup>+</sup> <a href="../expressions.html"><em>Expression</em></a><sup>?</sup></p>
 </blockquote>
@@ -196,9 +196,6 @@ commit: 09142b820fe8713c4cba451713c7d11e67d7fbd8 <br />
 <tr><td><code>(&quot;x&quot;.to_string(), )</code></td><td><code>(String, )</code></td></tr>
 <tr><td><code>(&quot;a&quot;, 4usize, true)</code></td><td><code>(&amp;'static str, usize, bool)</code></td></tr>
 </tbody></table>
-<h3><a class="header" href="#tuple-expression-attributes" id="tuple-expression-attributes">Tuple expression attributes</a></h3>
-<h3><a class="header" href="#元组表达式上的属性" id="元组表达式上的属性">元组表达式上的属性</a></h3>
-<p>在允许<a href="../attributes.html">块表达式上的属性</a>存在的那几种表达式上下文中，可以在元组表达式的左括号后直接使用<a href="block-expr.html#attributes-on-block-expressions">内部属性</a>。</p>
 <h2><a class="header" href="#tuple-indexing-expressions" id="tuple-indexing-expressions">Tuple indexing expressions</a></h2>
 <h2><a class="header" href="#元组索引表达式" id="元组索引表达式">元组索引表达式</a></h2>
 <blockquote>

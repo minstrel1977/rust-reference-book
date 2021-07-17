@@ -2,8 +2,8 @@
 # 结构体表达式
 
 >[struct-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/struct-expr.md)\
->commit: eb5290329316e96c48c032075f7dbfa56990702b \
->本章译文最后维护日期：2021-02-21
+>commit: 37ca438c9ac58448ecf304b735e71644e8127f3d \
+>本章译文最后维护日期：2021-07-17
 
 
 > **<sup>句法</sup>**\
@@ -13,7 +13,7 @@
 > &nbsp;&nbsp; | _StructExprUnit_
 >
 > _StructExprStruct_ :\
-> &nbsp;&nbsp; [_PathInExpression_] `{` [_InnerAttribute_]<sup>\*</sup> (_StructExprFields_ | _StructBase_)<sup>?</sup> `}`
+> &nbsp;&nbsp; [_PathInExpression_] `{` (_StructExprFields_ | _StructBase_)<sup>?</sup> `}`
 >
 > _StructExprFields_ :\
 > &nbsp;&nbsp; _StructExprField_ (`,` _StructExprField_)<sup>\*</sup> (`,` _StructBase_ | `,`<sup>?</sup>)
@@ -27,13 +27,12 @@
 >
 > _StructExprTuple_ :\
 > &nbsp;&nbsp; [_PathInExpression_] `(`\
-> &nbsp;&nbsp; &nbsp;&nbsp; [_InnerAttribute_]<sup>\*</sup>\
 > &nbsp;&nbsp; &nbsp;&nbsp; ( [_Expression_] (`,` [_Expression_])<sup>\*</sup> `,`<sup>?</sup> )<sup>?</sup>\
 > &nbsp;&nbsp; `)`
 >
 > _StructExprUnit_ : [_PathInExpression_]
 
-*结构体表达式*创建结构体或联合体的值。它由指向[结构体][struct]程序项、[枚举变体][enum variant]、[联合体][union]程序项的路径，以及与此程序项的字段对应的值组成。
+*结构体表达式*用来创建结构体、枚举或联合体的值。它由指向[结构体][struct]程序项、[枚举变体][enum variant]、[联合体][union]程序项的路径，以及与此程序项的字段对应的值组成。
 结构体表达式有三种形式：结构体(struct)、元组结构体(tuple)和单元结构体(unit)。
 
 下面是结构体表达式的示例：
@@ -62,7 +61,7 @@ some_fn::<Cookie>(Cookie);
 ## Functional update syntax
 ## 函数式更新句法
 
-结构体表达式构建一个结构体类型的值时可以以 `..` 后跟一个表达式的句法结尾，这种句法表示这是一种函数式更新(functional update)。
+构造结构体类型的值的结构体表达式可以以 `..` 后跟一个表达式的句法结尾，这种句法表示这是一种函数式更新(functional update)。
 `..` 后跟的表达式（此表达式被称为此函数式更新的基(base)）必须与正在构造的新结构体值是同一种结构体类型的。
 
 整个结构体表达式先为已指定的字段使用已给定的值，然后再从基表达式(base expression)里为剩余未指定的字段移动或复制值。
@@ -133,18 +132,10 @@ let a = Gamma;  // Gamma的值。
 let b = Gamma{};  // 和`a`的值完全一样。
 ```
 
-## Struct expression attributes
-## 结构体表达式上的属性
-
-在允许[块表达式上的属性][Inner attributes]存在的那几种表达式上下文中，可以在结构体表达式的左括号后直接使用[内部属性][attributes on block expressions]。
-
 [IDENTIFIER]: ../identifiers.md
-[Inner attributes]: ../attributes.md
 [TUPLE_INDEX]: ../tokens.md#tuple-index
 [_Expression_]: ../expressions.md
-[_InnerAttribute_]: ../attributes.md
 [_PathInExpression_]: ../paths.md#paths-in-expressions
-[attributes on block expressions]: block-expr.md#attributes-on-block-expressions
 [call expression]: call-expr.md
 [enum variant]: ../items/enumerations.md
 [if let]: if-expr.md#if-let-expressions

@@ -2,15 +2,15 @@
 # 数组和数组索引表达式
 
 >[array-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/array-expr.md)\
->commit: 31dc83fe187a87af2b162801d50f4bed171fecdb \
->本章译文最后维护日期：2021-4-5
+>commit: 37ca438c9ac58448ecf304b735e71644e8127f3d \
+>本章译文最后维护日期：2021-07-17
 
 ## Array expressions
 ## 数组表达式
 
 > **<sup>句法</sup>**\
 > _ArrayExpression_ :\
-> &nbsp;&nbsp; `[` [_InnerAttribute_]<sup>\*</sup> _ArrayElements_<sup>?</sup> `]`
+> &nbsp;&nbsp; `[` _ArrayElements_<sup>?</sup> `]`
 >
 > _ArrayElements_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_Expression_] ( `,` [_Expression_] )<sup>\*</sup> `,`<sup>?</sup>\
@@ -50,11 +50,6 @@
 const EMPTY: Vec<i32> = Vec::new();
 [EMPTY; 2];
 ```
-
-### Array expression attributes
-### 数组表达式上的属性
-
-在允许[块表达式上的属性][Inner attributes]存在的那几种表达式上下文中，可以在数组表达式的左括号后直接使用[内部属性][attributes on block expressions]。
 
 ## Array and slice indexing expressions
 ## 数组和切片索引表达式
@@ -102,11 +97,8 @@ arr[10];                  // 告警：索引越界
 [`Copy`]: ../special-types-and-traits.md#copy
 [IndexMut]: ../../std/ops/trait.IndexMut.html
 [Index]: ../../std/ops/trait.Index.html
-[Inner attributes]: ../attributes.md
 [_Expression_]: ../expressions.md
-[_InnerAttribute_]: ../attributes.md
 [array]: ../types/array.md
-[attributes on block expressions]: block-expr.md#attributes-on-block-expressions
 [constant expression]: ../const_eval.md#constant-expressions
 [constant item]: ../items/constant-items.md
 [literal]: ../tokens.md#literals

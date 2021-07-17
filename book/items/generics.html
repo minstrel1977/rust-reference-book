@@ -169,8 +169,8 @@
 <h1><a class="header" href="#类型参数和生存期参数" id="类型参数和生存期参数">类型参数和生存期参数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/generics.md">generics.md</a><br />
-commit: 33784fadb81c16918c7e6d207f8c838232c159b0 <br />
-本章译文最后维护日期：2021-5-29</p>
+commit: c0f756e054019646513e9b20f6d4f8193cc0c5b2 <br />
+本章译文最后维护日期：2021-07-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -357,19 +357,15 @@ fn generic&lt;const B: bool&gt;() {
 </blockquote>
 <p><em>where子句</em>提供了另一种方法来为类型参数和生存期参数指定约束(bound)，甚至可以为非类型参数的类型指定约束。</p>
 <p>关键字<code>for</code> 可以用来引入<a href="../trait-bounds.html#higher-ranked-trait-bounds">高阶生存期参数</a>。它只允许在 <a href="#generic-parameters"><em>LifetimeParam</em></a> 参数上使用。</p>
-<p>定义程序项时，其约束没有使用程序项的泛型参数或<a href="../trait-bounds.html#higher-ranked-trait-bounds">高阶生存期参数</a>，这样是可以通过编译器的安全检查，但这样的做法将必然导致错误。</p>
-<p>在定义程序项时，编译器还会检查某些泛型参数的类型是否存在 <a href="../special-types-and-traits.html#copy"><code>Copy</code></a>、<a href="../special-types-and-traits.html#clone"><code>Clone</code></a> 和 <a href="../special-types-and-traits.html#sized"><code>Sized</code></a> 这些约束。将<code>Copy</code> 或 <code>Clone</code> 作为可变引用、<a href="../types/trait-object.html">trait object</a>或<a href="../types/array.html">slice</a>这些程序项的约束是错误的，或将 <code>Sized</code> 作为 trait对象或切片的约束也是错误的。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct A&lt;T&gt;
 where
     T: Iterator,            // 可以用 A&lt;T: Iterator&gt; 来替代
-    T::Item: Copy,
-    String: PartialEq&lt;T&gt;,
+    T::Item: Copy,          // 在一个关联类型上设置约束
+    String: PartialEq&lt;T&gt;,   // 使用类型参数来在字段`String`上设置约束
     i32: Default,           // 允许，但没什么用
-    i32: Iterator,          // 错误: 此 trait约束不适合，i32 没有实现 Iterator
-    [T]: Copy,              // 错误: 此 trait约束不适合，切片上不能有此 trait约束
 {
     f: T,
 }

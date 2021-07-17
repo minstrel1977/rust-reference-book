@@ -2,13 +2,13 @@
 # 圆括号表达式(分组表达式)
 
 >[grouped-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/grouped-expr.md)\
->commit: 31dc83fe187a87af2b162801d50f4bed171fecdb \
->本章译文最后维护日期：2021-4-5
+>commit: 37ca438c9ac58448ecf304b735e71644e8127f3d \
+>本章译文最后维护日期：2021-07-17
 
 
 > **<sup>句法</sup>**\
 > _GroupedExpression_ :\
-> &nbsp;&nbsp; `(` [_InnerAttribute_]<sup>\*</sup> [_Expression_] `)`
+> &nbsp;&nbsp; `(` [_Expression_] `)`
 
 由圆括号封闭的表达式的求值结果就是在其内的表达式的求值结果。
 在表达式内部，圆括号可用于显式地指定表达式内部的求值顺序。
@@ -48,14 +48,5 @@ assert_eq!( a.f (), "The method f");
 assert_eq!((a.f)(), "The field f");
 ```
 
-## Group expression attributes
-## 分组表达式上的属性
-
-在允许[块表达式上的属性][Inner attributes]存在的那几种表达式上下文中，可以在分组表达式的左括号后直接使用[内部属性][attributes on block expressions]。
-
-[Inner attributes]: ../attributes.md
 [_Expression_]: ../expressions.md
-[_InnerAttribute_]: ../attributes.md
-[attributes on block expressions]: block-expr.md#attributes-on-block-expressions
-md#attributes-on-block-expressions
 [place]: ../expressions.md#place-expressions-and-value-expressions

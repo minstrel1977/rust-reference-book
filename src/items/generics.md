@@ -2,8 +2,8 @@
 # 类型参数和生存期参数
 
 >[generics.md](https://github.com/rust-lang/reference/blob/master/src/items/generics.md)\
->commit: 33784fadb81c16918c7e6d207f8c838232c159b0 \
->本章译文最后维护日期：2021-5-29
+>commit: c0f756e054019646513e9b20f6d4f8193cc0c5b2 \
+>本章译文最后维护日期：2021-07-17
 
 > **<sup>句法</sup>**\
 > _GenericParams_ :\
@@ -195,19 +195,13 @@ fn generic<const B: bool>() {
 
 关键字`for` 可以用来引入[高阶生存期参数][higher-ranked lifetimes]。它只允许在 [_LifetimeParam_] 参数上使用。
 
-定义程序项时，其约束没有使用程序项的泛型参数或[高阶生存期参数][higher-ranked lifetimes]，这样是可以通过编译器的安全检查，但这样的做法将必然导致错误。
-
-在定义程序项时，编译器还会检查某些泛型参数的类型是否存在 [`Copy`]、[`Clone`] 和 [`Sized`] 这些约束。将`Copy` 或 `Clone` 作为可变引用、[trait object]或[slice][arrays]这些程序项的约束是错误的，或将 `Sized` 作为 trait对象或切片的约束也是错误的。
-
-```rust,compile_fail
+```rust
 struct A<T>
 where
     T: Iterator,            // 可以用 A<T: Iterator> 来替代
-    T::Item: Copy,
-    String: PartialEq<T>,
+    T::Item: Copy,          // 在一个关联类型上设置约束
+    String: PartialEq<T>,   // 使用类型参数来在字段`String`上设置约束
     i32: Default,           // 允许，但没什么用
-    i32: Iterator,          // 错误: 此 trait约束不适合，i32 没有实现 Iterator
-    [T]: Copy,              // 错误: 此 trait约束不适合，切片上不能有此 trait约束
 {
     f: T,
 }
@@ -261,9 +255,6 @@ struct Foo<#[my_flexible_clone(unbounded)] H> {
 [path expression]: ../expressions/path-expr.md
 [raw pointers]: ../types/pointer.md#raw-pointers-const-and-mut
 [references]: ../types/pointer.md#shared-references-
-[`Clone`]: ../special-types-and-traits.md#clone
-[`Copy`]: ../special-types-and-traits.md#copy
-[`Sized`]: ../special-types-and-traits.md#sized
 [structs]: structs.md
 [tuples]: ../types/tuple.md
 [trait object]: ../types/trait-object.md

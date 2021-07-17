@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2021-07-04</p>
+<p>本书跟随原文截止日期：2021-07-17</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -4002,8 +4002,8 @@ extern {
 <h1><a class="header" href="#类型参数和生存期参数" id="类型参数和生存期参数">类型参数和生存期参数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/generics.md">generics.md</a><br />
-commit: 33784fadb81c16918c7e6d207f8c838232c159b0 <br />
-本章译文最后维护日期：2021-5-29</p>
+commit: c0f756e054019646513e9b20f6d4f8193cc0c5b2 <br />
+本章译文最后维护日期：2021-07-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -4190,19 +4190,15 @@ fn generic&lt;const B: bool&gt;() {
 </blockquote>
 <p><em>where子句</em>提供了另一种方法来为类型参数和生存期参数指定约束(bound)，甚至可以为非类型参数的类型指定约束。</p>
 <p>关键字<code>for</code> 可以用来引入<a href="items/../trait-bounds.html#higher-ranked-trait-bounds">高阶生存期参数</a>。它只允许在 <a href="items/generics.html#generic-parameters"><em>LifetimeParam</em></a> 参数上使用。</p>
-<p>定义程序项时，其约束没有使用程序项的泛型参数或<a href="items/../trait-bounds.html#higher-ranked-trait-bounds">高阶生存期参数</a>，这样是可以通过编译器的安全检查，但这样的做法将必然导致错误。</p>
-<p>在定义程序项时，编译器还会检查某些泛型参数的类型是否存在 <a href="items/../special-types-and-traits.html#copy"><code>Copy</code></a>、<a href="items/../special-types-and-traits.html#clone"><code>Clone</code></a> 和 <a href="items/../special-types-and-traits.html#sized"><code>Sized</code></a> 这些约束。将<code>Copy</code> 或 <code>Clone</code> 作为可变引用、<a href="items/../types/trait-object.html">trait object</a>或<a href="items/../types/array.html">slice</a>这些程序项的约束是错误的，或将 <code>Sized</code> 作为 trait对象或切片的约束也是错误的。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct A&lt;T&gt;
 where
     T: Iterator,            // 可以用 A&lt;T: Iterator&gt; 来替代
-    T::Item: Copy,
-    String: PartialEq&lt;T&gt;,
+    T::Item: Copy,          // 在一个关联类型上设置约束
+    String: PartialEq&lt;T&gt;,   // 使用类型参数来在字段`String`上设置约束
     i32: Default,           // 允许，但没什么用
-    i32: Iterator,          // 错误: 此 trait约束不适合，i32 没有实现 Iterator
-    [T]: Copy,              // 错误: 此 trait约束不适合，切片上不能有此 trait约束
 {
     f: T,
 }
@@ -4223,8 +4219,8 @@ struct Foo&lt;#[my_flexible_clone(unbounded)] H&gt; {
 <h1><a class="header" href="#关联程序项关联项" id="关联程序项关联项">关联程序项/关联项</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/associated-items.md">associated-items.md</a><br />
-commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
-本章译文最后维护日期：2021-1-17</p>
+commit: 4e138b37b49c49bc875b96b859fbe0caea5a82f3 <br />
+本章译文最后维护日期：2021-07-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -4390,7 +4386,8 @@ let bounding_box = circle_shape.bounding_box();
 <h2><a class="header" href="#关联类型" id="关联类型">关联类型</a></h2>
 <p><em>关联类型</em>是与另一个类型关联的<a href="items/type-aliases.html">类型别名(type aliases)</a> 。关联类型不能在<a href="items/implementations.html#inherent-implementations">固有实现</a>中定义，也不能在 trait 中给它们一个默认实现。</p>
 <p><em>关联类型声明</em>为<em>关联类型定义</em>声明签名。书写形式为：先是 <code>type</code>，然后是一个<a href="items/../identifiers.html">标识符</a>，最后是一个可选的 trait约束列表。</p>
-<p>这里的标识符是声明的类型的别名名称；可选的 trait约束必须由此类型别名的实现来履行实现。</p>
+<p>这里的标识符是声明的类型的别名名称；其可选的 trait约束必须由此类型别名的实现(implementations)来履行实现。
+关联类型上有一个隐式的 <a href="items/../special-types-and-traits.html#sized"><code>Sized</code></a>约束，可以使用 <code>？Sized</code>放宽此约束。</p>
 <p><em>关联类型定义</em>在另一个类型上定义了一个类型别名。书写形式为：先是 <code>type</code>，然后是一个[标识符]，然后再是一个 <code>=</code>，最后是一个<a href="items/../types.html#type-expressions">类型</a>。</p>
 <p>如果类型 <code>Item</code> 上有一个来自 trait <code>Trait</code>的关联类型 <code>Assoc</code>，则表达式 <code>&lt;Item as Trait&gt;::Assoc</code> 也是一个类型，具体就是<em>关联类型定义</em>中指定的类型的一个别名。此外，如果 <code>Item</code> 是类型参数，则 <code>Item::Assoc</code> 也可以在类型参数中使用。</p>
 <p>关联类型不能包括<a href="items/generics.html">泛型参数</a>或 <a href="items/generics.html#where-clauses">where子句</a>。</p>
@@ -4499,8 +4496,6 @@ fn main() {
 <div class="footnote-definition" id="译者备注3"><sup class="footnote-definition-label">3</sup>
 <p>结合下面的示例理解。</p>
 </div>
-<!-- 2021-1-17-->
-<!-- checked -->
 <script>
 (function() {
     var fragments = {
@@ -6063,8 +6058,8 @@ fn is_unix_platform() -&gt; bool {
 <h1><a class="header" href="#operator-expressions" id="operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: 41aa8f948140fad27f0d3e29d1b77f46a4aedff5 <br />
-本章译文最后维护日期：2021-07-11</p>
+commit: 0b7f340e8963eccac662f97cb679855f043a658f <br />
+本章译文最后维护日期：2021-07-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6254,15 +6249,16 @@ assert_eq!(true, !false);
 <tr><td><code>-</code></td><td>减法</td><td></td><td>减法</td><td><code>std::ops::Sub</code></td><td><code>std::ops::SubAssign</code></td></tr>
 <tr><td><code>*</code></td><td>乘法</td><td></td><td>乘法</td><td><code>std::ops::Mul</code></td><td><code>std::ops::MulAssign</code></td></tr>
 <tr><td><code>/</code></td><td>除法*</td><td></td><td>取余</td><td><code>std::ops::Div</code></td><td><code>std::ops::DivAssign</code></td></tr>
-<tr><td><code>%</code></td><td>取余</td><td></td><td>Remainder</td><td><code>std::ops::Rem</code></td><td><code>std::ops::RemAssign</code></td></tr>
+<tr><td><code>%</code></td><td>取余**</td><td></td><td>Remainder</td><td><code>std::ops::Rem</code></td><td><code>std::ops::RemAssign</code></td></tr>
 <tr><td><code>&amp;</code></td><td>按位与</td><td><a href="expressions/../types/boolean.html#logical-and">逻辑与</a></td><td></td><td><code>std::ops::BitAnd</code></td><td><code>std::ops::BitAndAssign</code></td></tr>
 <tr><td><code>|</code></td><td>按位或</td><td><a href="expressions/../types/boolean.html#logical-or">逻辑或</a></td><td></td><td><code>std::ops::BitOr</code></td><td><code>std::ops::BitOrAssign</code></td></tr>
 <tr><td><code>^</code></td><td>按位异或</td><td><a href="expressions/../types/boolean.html#logical-xor">逻辑异或</a></td><td></td><td><code>std::ops::BitXor</code></td><td><code>std::ops::BitXorAssign</code></td></tr>
 <tr><td><code>&lt;&lt;</code></td><td>左移位</td><td></td><td></td><td><code>std::ops::Shl</code></td><td><code>std::ops::ShlAssign</code></td></tr>
-<tr><td><code>&gt;&gt;</code></td><td>右移位**</td><td></td><td></td><td><code>std::ops::Shr</code></td><td><code>std::ops::ShrAssign</code></td></tr>
+<tr><td><code>&gt;&gt;</code></td><td>右移位***</td><td></td><td></td><td><code>std::ops::Shr</code></td><td><code>std::ops::ShrAssign</code></td></tr>
 </tbody></table>
 <p>* 整数除法趋零取整。</p>
-<p>** 有符号整数类型算术右移位，无符号整数类型逻辑右移位。</p>
+<p>** Rust使用由<a href="https://en.wikipedia.org/wiki/Modulo_operation#Variants_of_the_definition">截断除法</a>定义的求宇运算。也就是 <code>余数=被除数%除数</code>，其中余数将与被除数的符号一致。</p>
+<p>*** 有符号整数类型算术右移位，无符号整数类型逻辑右移位。</p>
 <p>下面是使用这些操作符的示例:</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
@@ -6566,20 +6562,20 @@ fn example() {
 <h1><a class="header" href="#圆括号表达式分组表达式" id="圆括号表达式分组表达式">圆括号表达式(分组表达式)</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/grouped-expr.md">grouped-expr.md</a><br />
-commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
-本章译文最后维护日期：2021-4-5</p>
+commit: 37ca438c9ac58448ecf304b735e71644e8127f3d <br />
+本章译文最后维护日期：2021-07-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>GroupedExpression</em> :<br />
-   <code>(</code> <a href="expressions/../attributes.html"><em>InnerAttribute</em></a><sup>*</sup> <a href="expressions/../expressions.html"><em>Expression</em></a> <code>)</code></p>
+   <code>(</code> <a href="expressions/../expressions.html"><em>Expression</em></a> <code>)</code></p>
 </blockquote>
 <p>由圆括号封闭的表达式的求值结果就是在其内的表达式的求值结果。
 在表达式内部，圆括号可用于显式地指定表达式内部的求值顺序。</p>
 <p>*圆括号表达式(parenthesized expression)<em>包装单个表达式，并对该表达式求值。
 圆括号表达式的句法规则就是一对圆括号封闭一个被称为</em>封闭操作数(enclosed operand)*的表达式。</p>
 <p>圆括号表达式被求值为其封闭操作数的值。
-与其他表达式不同，圆括号表达式可以是[位置表达式或值表达式][place]。
+与其他表达式不同，圆括号表达式可以是<a href="expressions/../expressions.html#place-expressions-and-value-expressions">位置表达式或值表达式</a>。
 当封闭操作数是位置表达式时，它是一个位置表达式；当封闭操作数是一个值表达式是，它是一个值表达式。</p>
 <p>圆括号可用于显式修改表达式中的子表达式的优先顺序。</p>
 <p>圆括号表达式的一个例子：</p>
@@ -6610,24 +6606,19 @@ assert_eq!(y, 20);
 assert_eq!((a.f)(), &quot;The field f&quot;);
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#group-expression-attributes" id="group-expression-attributes">Group expression attributes</a></h2>
-<h2><a class="header" href="#分组表达式上的属性" id="分组表达式上的属性">分组表达式上的属性</a></h2>
-<p>在允许<a href="expressions/../attributes.html">块表达式上的属性</a>存在的那几种表达式上下文中，可以在分组表达式的左括号后直接使用<a href="expressions/block-expr.html#attributes-on-block-expressions">内部属性</a>。</p>
-<p>md#attributes-on-block-expressions
-[place]: ../expressions.md#place-expressions-and-value-expressions</p>
 <h1><a class="header" href="#array-and-array-index-expressions" id="array-and-array-index-expressions">Array and array index expressions</a></h1>
 <h1><a class="header" href="#数组和数组索引表达式" id="数组和数组索引表达式">数组和数组索引表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/array-expr.md">array-expr.md</a><br />
-commit: 31dc83fe187a87af2b162801d50f4bed171fecdb <br />
-本章译文最后维护日期：2021-4-5</p>
+commit: 37ca438c9ac58448ecf304b735e71644e8127f3d <br />
+本章译文最后维护日期：2021-07-17</p>
 </blockquote>
 <h2><a class="header" href="#array-expressions" id="array-expressions">Array expressions</a></h2>
 <h2><a class="header" href="#数组表达式" id="数组表达式">数组表达式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ArrayExpression</em> :<br />
-   <code>[</code> <a href="expressions/../attributes.html"><em>InnerAttribute</em></a><sup>*</sup> <em>ArrayElements</em><sup>?</sup> <code>]</code></p>
+   <code>[</code> <em>ArrayElements</em><sup>?</sup> <code>]</code></p>
 <p><em>ArrayElements</em> :<br />
       <a href="expressions/../expressions.html"><em>Expression</em></a> ( <code>,</code> <a href="expressions/../expressions.html"><em>Expression</em></a> )<sup>*</sup> <code>,</code><sup>?</sup><br />
    | <a href="expressions/../expressions.html"><em>Expression</em></a> <code>;</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
@@ -6661,9 +6652,6 @@ const EMPTY: Vec&lt;i32&gt; = Vec::new();
 [EMPTY; 2];
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#array-expression-attributes" id="array-expression-attributes">Array expression attributes</a></h3>
-<h3><a class="header" href="#数组表达式上的属性" id="数组表达式上的属性">数组表达式上的属性</a></h3>
-<p>在允许<a href="expressions/../attributes.html">块表达式上的属性</a>存在的那几种表达式上下文中，可以在数组表达式的左括号后直接使用<a href="expressions/block-expr.html#attributes-on-block-expressions">内部属性</a>。</p>
 <h2><a class="header" href="#array-and-slice-indexing-expressions" id="array-and-slice-indexing-expressions">Array and slice indexing expressions</a></h2>
 <h2><a class="header" href="#数组和切片索引表达式" id="数组和切片索引表达式">数组和切片索引表达式</a></h2>
 <blockquote>
@@ -6709,15 +6697,15 @@ arr[10];                  // 告警：索引越界
 <h1><a class="header" href="#元组和元组索引表达式" id="元组和元组索引表达式">元组和元组索引表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/tuple-expr.md">tuple-expr.md</a><br />
-commit: 09142b820fe8713c4cba451713c7d11e67d7fbd8 <br />
-本章译文最后维护日期：2021-4-6</p>
+commit: 37ca438c9ac58448ecf304b735e71644e8127f3d <br />
+本章译文最后维护日期：2021-07-17</p>
 </blockquote>
 <h2><a class="header" href="#tuple-expressions" id="tuple-expressions">Tuple expressions</a></h2>
 <h2><a class="header" href="#元组表达式" id="元组表达式">元组表达式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>TupleExpression</em> :<br />
-   <code>(</code> <a href="expressions/../attributes.html"><em>InnerAttribute</em></a><sup>*</sup> <em>TupleElements</em><sup>?</sup> <code>)</code></p>
+   <code>(</code> <em>TupleElements</em><sup>?</sup> <code>)</code></p>
 <p><em>TupleElements</em> :<br />
    ( <a href="expressions/../expressions.html"><em>Expression</em></a> <code>,</code> )<sup>+</sup> <a href="expressions/../expressions.html"><em>Expression</em></a><sup>?</sup></p>
 </blockquote>
@@ -6736,9 +6724,6 @@ commit: 09142b820fe8713c4cba451713c7d11e67d7fbd8 <br />
 <tr><td><code>(&quot;x&quot;.to_string(), )</code></td><td><code>(String, )</code></td></tr>
 <tr><td><code>(&quot;a&quot;, 4usize, true)</code></td><td><code>(&amp;'static str, usize, bool)</code></td></tr>
 </tbody></table>
-<h3><a class="header" href="#tuple-expression-attributes" id="tuple-expression-attributes">Tuple expression attributes</a></h3>
-<h3><a class="header" href="#元组表达式上的属性" id="元组表达式上的属性">元组表达式上的属性</a></h3>
-<p>在允许<a href="expressions/../attributes.html">块表达式上的属性</a>存在的那几种表达式上下文中，可以在元组表达式的左括号后直接使用<a href="expressions/block-expr.html#attributes-on-block-expressions">内部属性</a>。</p>
 <h2><a class="header" href="#tuple-indexing-expressions" id="tuple-indexing-expressions">Tuple indexing expressions</a></h2>
 <h2><a class="header" href="#元组索引表达式" id="元组索引表达式">元组索引表达式</a></h2>
 <blockquote>
@@ -6780,8 +6765,8 @@ assert_eq!(point.1, 0.0);
 <h1><a class="header" href="#结构体表达式" id="结构体表达式">结构体表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/struct-expr.md">struct-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: 37ca438c9ac58448ecf304b735e71644e8127f3d <br />
+本章译文最后维护日期：2021-07-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6790,7 +6775,7 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
    | <em>StructExprTuple</em><br />
    | <em>StructExprUnit</em></p>
 <p><em>StructExprStruct</em> :<br />
-   <a href="expressions/../paths.html#paths-in-expressions"><em>PathInExpression</em></a> <code>{</code> <a href="expressions/../attributes.html"><em>InnerAttribute</em></a><sup>*</sup> (<em>StructExprFields</em> | <em>StructBase</em>)<sup>?</sup> <code>}</code></p>
+   <a href="expressions/../paths.html#paths-in-expressions"><em>PathInExpression</em></a> <code>{</code> (<em>StructExprFields</em> | <em>StructBase</em>)<sup>?</sup> <code>}</code></p>
 <p><em>StructExprFields</em> :<br />
    <em>StructExprField</em> (<code>,</code> <em>StructExprField</em>)<sup>*</sup> (<code>,</code> <em>StructBase</em> | <code>,</code><sup>?</sup>)</p>
 <p><em>StructExprField</em> :<br />
@@ -6800,12 +6785,11 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
    <code>..</code> <a href="expressions/../expressions.html"><em>Expression</em></a></p>
 <p><em>StructExprTuple</em> :<br />
    <a href="expressions/../paths.html#paths-in-expressions"><em>PathInExpression</em></a> <code>(</code><br />
-      <a href="expressions/../attributes.html"><em>InnerAttribute</em></a><sup>*</sup><br />
       ( <a href="expressions/../expressions.html"><em>Expression</em></a> (<code>,</code> <a href="expressions/../expressions.html"><em>Expression</em></a>)<sup>*</sup> <code>,</code><sup>?</sup> )<sup>?</sup><br />
    <code>)</code></p>
 <p><em>StructExprUnit</em> : <a href="expressions/../paths.html#paths-in-expressions"><em>PathInExpression</em></a></p>
 </blockquote>
-<p><em>结构体表达式</em>创建结构体或联合体的值。它由指向<a href="expressions/../items/structs.html">结构体</a>程序项、<a href="expressions/../items/enumerations.html">枚举变体</a>、<a href="expressions/../items/unions.html">联合体</a>程序项的路径，以及与此程序项的字段对应的值组成。
+<p><em>结构体表达式</em>用来创建结构体、枚举或联合体的值。它由指向<a href="expressions/../items/structs.html">结构体</a>程序项、<a href="expressions/../items/enumerations.html">枚举变体</a>、<a href="expressions/../items/unions.html">联合体</a>程序项的路径，以及与此程序项的字段对应的值组成。
 结构体表达式有三种形式：结构体(struct)、元组结构体(tuple)和单元结构体(unit)。</p>
 <p>下面是结构体表达式的示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
@@ -6830,7 +6814,7 @@ some_fn::&lt;Cookie&gt;(Cookie);
 <p><a href="expressions/../items/unions.html">联合体</a>类型的值只能使用此句法创建，并且只能指定一个字段。</p>
 <h2><a class="header" href="#functional-update-syntax" id="functional-update-syntax">Functional update syntax</a></h2>
 <h2><a class="header" href="#函数式更新句法" id="函数式更新句法">函数式更新句法</a></h2>
-<p>结构体表达式构建一个结构体类型的值时可以以 <code>..</code> 后跟一个表达式的句法结尾，这种句法表示这是一种函数式更新(functional update)。
+<p>构造结构体类型的值的结构体表达式可以以 <code>..</code> 后跟一个表达式的句法结尾，这种句法表示这是一种函数式更新(functional update)。
 <code>..</code> 后跟的表达式（此表达式被称为此函数式更新的基(base)）必须与正在构造的新结构体值是同一种结构体类型的。</p>
 <p>整个结构体表达式先为已指定的字段使用已给定的值，然后再从基表达式(base expression)里为剩余未指定的字段移动或复制值。
 与所有结构体表达式一样，此结构体类型的所有字段必须是<a href="expressions/../visibility-and-privacy.html">可见的</a>，甚至那些没有显式命名的字段也是如此。</p>
@@ -6901,9 +6885,6 @@ let a = Gamma;  // Gamma的值。
 let b = Gamma{};  // 和`a`的值完全一样。
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#struct-expression-attributes" id="struct-expression-attributes">Struct expression attributes</a></h2>
-<h2><a class="header" href="#结构体表达式上的属性" id="结构体表达式上的属性">结构体表达式上的属性</a></h2>
-<p>在允许<a href="expressions/../attributes.html">块表达式上的属性</a>存在的那几种表达式上下文中，可以在结构体表达式的左括号后直接使用<a href="expressions/block-expr.html#attributes-on-block-expressions">内部属性</a>。</p>
 <h1><a class="header" href="#call-expressions" id="call-expressions">Call expressions</a></h1>
 <h1><a class="header" href="#调用表达式" id="调用表达式">调用表达式</a></h1>
 <blockquote>
@@ -9568,8 +9549,8 @@ commit: 43dc1a42f19026f580e34a095e91804c3d6da186 <br />
 <h1><a class="header" href="#动态尺寸类型" id="动态尺寸类型">动态尺寸类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/dynamically-sized-types.md">dynamically-sized-types.md</a><br />
-commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
-本章译文最后维护日期：2020-11-14</p>
+commit: 4e138b37b49c49bc875b96b859fbe0caea5a82f3 <br />
+本章译文最后维护日期：2021-07-17</p>
 </blockquote>
 <p>大多数的类型都有一个在编译时就已知的固定尺寸，并实现了 trait <a href="special-types-and-traits.html#sized"><code>Sized</code></a>。只有在运行时才知道尺寸的类型称为<em>动态尺寸类型(dynamically sized type)</em>（<em>DST</em>），或者非正式地称为非固定尺寸类型(unsized type)。<a href="types/slice.html">切片</a>和 <a href="types/trait-object.html">trait对象</a>是 <abbr title="dynamically sized types">DSTs</abbr> 的两个例子。此类类型只能在某些情况下使用:</p>
 <ul>
@@ -9579,15 +9560,16 @@ commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
 <li>指向 trait对象的指针也存储了一个指向虚函数表(vtable)的指针地址</li>
 </ul>
 </li>
-<li>当接受了 <code>?Sized</code>约束时，<abbr title="dynamically sized types">DST</abbr> 可以作为类型实参( type arguments)使用。默认情况下，任何类型形参(type parameter)都拥有 <code>Sized</code>约束。</li>
-<li>可以为 <abbr title="dynamically sized types">DST</abbr> 实现 trait。与类型参数中的默认设置不同，在 trait定义中默认存在 <code>Self: ?Sized</code>约束。</li>
+<li><abbr title="dynamically sized types">DST</abbr> 可以作为类型实参( type arguments)来传给有 <code>?Sized</code>约束的泛型参数。
+当关联类型的声明有 <code>？size</code>约束时，它们也可以被用于关联类型定义。
+默认情况下，任何类型参数或关联类型都有 <code>Sized</code>约束，除非它们使用了 <code>Sized</code>来放宽其约束。</li>
+<li>可以为 <abbr title="dynamically sized types">DSTs</abbr> 实现 trait。
+与泛型类型参数中的默认设置不同，在 trait定义中，<code>Self: ?Sized</code>约束是默认情况。</li>
 <li>结构体可以包含一个 <abbr title="dynamically sized type">DST</abbr> 作为最后一个字段，这使得该结构体也成为是一个 <abbr title="dynamically sized type">DST</abbr>。</li>
 </ul>
 <blockquote>
 <p><strong>注意</strong>：<a href="variables.html">变量</a>、函数参数、<a href="items/constant-items.html">常量</a>项和<a href="items/static-items.html">静态</a>项必须是 <code>Sized</code>。</p>
 </blockquote>
-<!-- 2020-11-12-->
-<!-- checked -->
 <h1><a class="header" href="#type-layout" id="type-layout">Type Layout</a></h1>
 <h1><a class="header" href="#类型布局" id="类型布局">类型布局</a></h1>
 <blockquote>
@@ -10096,8 +10078,8 @@ struct Variance&lt;'a, 'b, T, U: 'a&gt; {
 <h1><a class="header" href="#trait约束和生存期约束" id="trait约束和生存期约束">trait约束和生存期约束</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md">trait-bounds.md</a><br />
-commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
-本章译文最后维护日期：2021-06-19</p>
+commit: 82d75cf423e4a7824fb36e73ccb18519d6900610 <br />
+本章译文最后维护日期：2021-07-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -10162,10 +10144,13 @@ fn name_figure&lt;U: Shape&gt;(
 </span></code></pre></pre>
 <p>trait 和生存期约束也被用来命名 <a href="types/trait-object.html">trait对象</a>。</p>
 <h2><a class="header" href="#sized" id="sized"><code>?Sized</code></a></h2>
-<p><code>?</code> 仅用于声明 <a href="special-types-and-traits.html#sized"><code>Sized</code></a> trait 可能不会被某类型参数或关联类型实现。<code>?Sized</code> 还不能用作其他类型的约束。</p>
+<p><code>?</code> 仅用于放宽<a href="types/parameters.html">类型参数</a>或<a href="items/associated-items.html#associated-types">关联类型</a> 上的<a href="special-types-and-traits.html#sized"><code>Sized</code></a> trait。
+目前 <code>?Sized</code> 还不能用作其他类型的约束。</p>
 <h2><a class="header" href="#lifetime-bounds" id="lifetime-bounds">Lifetime bounds</a></h2>
 <h2><a class="header" href="#生存期约束" id="生存期约束">生存期约束</a></h2>
-<p>生存期约束可以应用于类型或其他生存期。约束 <code>'a: 'b</code> 通常被解读为 <em><code>'a</code> 比 <code>'b</code> 存活的时间久</em>。<code>'a: 'b</code>意味着 <code>'a</code> 持续的时间比 <code>'b</code> 长，所以只要 <code>&amp;'b ()</code> 有效，引用 <code>&amp;'a ()</code> 就有效。<sup class="footnote-reference"><a href="#译注1">1</a></sup></p>
+<p>生存期约束可以应用于类型或其他生存期。
+约束 <code>'a: 'b</code> 通常被读做 <em><code>'a</code> 比 <code>'b</code> 存活的时间久</em>。
+<code>'a: 'b</code> 意味着 <code>'a</code> 持续的时间至少和 <code>'b</code> 一样长，所以只要 <code>&amp;'b ()</code> 有效，则 <code>&amp;'a ()</code> 就有效。<sup class="footnote-reference"><a href="#译注1">1</a></sup></p>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -10175,7 +10160,8 @@ fn name_figure&lt;U: Shape&gt;(
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>T: 'a</code> 意味着 <code>T</code> 的所有生存期参数都比 <code>'a</code> 存活得时间长。例如，如果 <code>'a</code> 是一个任意的(unconstrained)生存期参数，那么 <code>i32: 'static</code> 和 <code>&amp;'static str: 'a</code> 都合法，但 <code>Vec&lt;&amp;'a ()&gt;: 'static</code> 不合法。</p>
+<p><code>T: 'a</code> 意味着 <code>T</code> 的所有生存期参数都比 <code>'a</code> 存活得时间长。
+例如，如果 <code>'a</code> 是一个任意的(unconstrained)生存期参数，那么 <code>i32: 'static</code> 和 <code>&amp;'static str: 'a</code> 都合法，但 <code>Vec&lt;&amp;'a ()&gt;: 'static</code> 不合法。</p>
 <h2><a class="header" href="#higher-ranked-trait-bounds" id="higher-ranked-trait-bounds">Higher-ranked trait bounds</a></h2>
 <h2><a class="header" href="#高阶trait约束" id="高阶trait约束">高阶trait约束</a></h2>
 <blockquote>
@@ -10215,7 +10201,7 @@ fn name_figure&lt;U: Shape&gt;(
 <span class="boring">}
 </span></code></pre></pre>
 </blockquote>
-<p>高阶生存期也可以贴近 trait 来指定，唯一的区别是生存期参数的作用域，像下面这样 <code>'a</code> 的作用域只扩展到后面跟的 trait 的末尾，而不是整个约束<sup class="footnote-reference"><a href="#译注4">3</a></sup>。下面这个函数和上一个等价。</p>
+<p>高阶生存期也可以在 trait 前面指定：唯一的区别是生存期参数的作用域，像下面这样 <code>'a</code> 的作用域只扩展到后面跟的 trait 的末尾，而不是整个约束<sup class="footnote-reference"><a href="#译注4">3</a></sup>。下面这个函数和上一个等价。</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -10982,8 +10968,8 @@ const RESOLVED_STATIC: &amp;dyn Fn(&amp;Foo, &amp;Bar) -&gt; &amp;Baz = &amp;som
 <h1><a class="header" href="#特殊类型和-trait" id="特殊类型和-trait">特殊类型和 trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/special-types-and-traits.md">special-types-and-traits.md</a><br />
-commit: fcdc0cab546c10921d66054be25c6afc9dd6b3bc <br />
-本章译文最后维护日期：2020-11-16</p>
+commit: 4e138b37b49c49bc875b96b859fbe0caea5a82f3 <br />
+本章译文最后维护日期：2021-07-17</p>
 </blockquote>
 <p><a href="https://doc.rust-lang.org/std/index.html">标准库</a>中的某些类型和 trait 在 Rust 编译器中也直接能用。本章就阐述了这些类型和 trait 的特殊特性。</p>
 <h2><a class="header" href="#boxt" id="boxt"><code>Box&lt;T&gt;</code></a></h2>
@@ -11049,7 +11035,10 @@ commit: fcdc0cab546c10921d66054be25c6afc9dd6b3bc <br />
 <p>自动trait 也可以有否定实现，在标准库文档中表示为 <code>impl !AutoTrait for T</code>，它覆盖了自动实现。例如，<code>*mut T</code> 有一个关于 <code>Send</code> 的否定实现，所以 <code>*mut T</code> 不是 <code>Send</code> 的，即使 <code>T</code> 是。目前还没有稳下来的方法来指定其他类型的否定实现；目前否定实现只能在标准库里可以稳定使用。<sup class="footnote-reference"><a href="#译注3">3</a></sup></p>
 <p>自动trait 可以作为额外的约束添加到任何 <a href="types/trait-object.html">trait对象</a>上，尽管通常我们见到的 trait对象的类型名上一般只显示一个 trait。例如，<code>Box&lt;dyn Debug + Send + UnwindSafe&gt;</code> 就是一个有效的类型。</p>
 <h2><a class="header" href="#sized-1" id="sized-1"><code>Sized</code></a></h2>
-<p><a href="https://doc.rust-lang.org/std/marker/trait.Sized.html"><code>Sized</code></a> trait表明这种类型的尺寸在编译时是已知的；也就是说，它不是一个<a href="dynamically-sized-types.html">动态尺寸类型</a>。<a href="types/parameters.html">类型参数</a>默认是 <code>Sized</code> 的。<code>Sized</code> 总是由编译器自动实现，而不是由<a href="items/implementations.html">实现(implementation items)</a>主动实现的。</p>
+<p><a href="https://doc.rust-lang.org/std/marker/trait.Sized.html"><code>Sized</code></a> trait表明这种类型的尺寸在编译时是已知的；也就是说，它不是一个<a href="dynamically-sized-types.html">动态尺寸类型</a>。
+<a href="types/parameters.html">类型参数</a>和<a href="items/associated-items.html#associated-types">关联类型</a>默认是 <code>Sized</code> 的。
+<code>Sized</code> 总是由编译器自动实现，而不是由<a href="items/implementations.html">实现(implementation items)</a>主动实现的。
+这些隐式的 <code>Sized</code>约束可以通过指定 <code>?Sized</code>约束来放宽约束。</p>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
 <p>这里是相对普通的借用/引用来说，普通的借用/引用对指向的内存位置不拥有所有权，所以无法从中移出值。</p>
 </div>

@@ -169,8 +169,8 @@
 <h1><a class="header" href="#关联程序项关联项" id="关联程序项关联项">关联程序项/关联项</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/associated-items.md">associated-items.md</a><br />
-commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 <br />
-本章译文最后维护日期：2021-1-17</p>
+commit: 4e138b37b49c49bc875b96b859fbe0caea5a82f3 <br />
+本章译文最后维护日期：2021-07-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -336,7 +336,8 @@ let bounding_box = circle_shape.bounding_box();
 <h2><a class="header" href="#关联类型" id="关联类型">关联类型</a></h2>
 <p><em>关联类型</em>是与另一个类型关联的<a href="type-aliases.html">类型别名(type aliases)</a> 。关联类型不能在<a href="implementations.html#inherent-implementations">固有实现</a>中定义，也不能在 trait 中给它们一个默认实现。</p>
 <p><em>关联类型声明</em>为<em>关联类型定义</em>声明签名。书写形式为：先是 <code>type</code>，然后是一个<a href="../identifiers.html">标识符</a>，最后是一个可选的 trait约束列表。</p>
-<p>这里的标识符是声明的类型的别名名称；可选的 trait约束必须由此类型别名的实现来履行实现。</p>
+<p>这里的标识符是声明的类型的别名名称；其可选的 trait约束必须由此类型别名的实现(implementations)来履行实现。
+关联类型上有一个隐式的 <a href="../special-types-and-traits.html#sized"><code>Sized</code></a>约束，可以使用 <code>？Sized</code>放宽此约束。</p>
 <p><em>关联类型定义</em>在另一个类型上定义了一个类型别名。书写形式为：先是 <code>type</code>，然后是一个[标识符]，然后再是一个 <code>=</code>，最后是一个<a href="../types.html#type-expressions">类型</a>。</p>
 <p>如果类型 <code>Item</code> 上有一个来自 trait <code>Trait</code>的关联类型 <code>Assoc</code>，则表达式 <code>&lt;Item as Trait&gt;::Assoc</code> 也是一个类型，具体就是<em>关联类型定义</em>中指定的类型的一个别名。此外，如果 <code>Item</code> 是类型参数，则 <code>Item::Assoc</code> 也可以在类型参数中使用。</p>
 <p>关联类型不能包括<a href="generics.html">泛型参数</a>或 <a href="generics.html#where-clauses">where子句</a>。</p>
@@ -445,8 +446,6 @@ fn main() {
 <div class="footnote-definition" id="译者备注3"><sup class="footnote-definition-label">3</sup>
 <p>结合下面的示例理解。</p>
 </div>
-<!-- 2021-1-17-->
-<!-- checked -->
 
                     </main>
 
