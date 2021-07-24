@@ -2,8 +2,8 @@
 # 元组类型
 
 >[tuple.md](https://github.com/rust-lang/reference/blob/master/src/types/tuple.md)\
->commit: ff6c3dc120ce6d06548b9045c43103f58720ee62 \
->本章译文最后维护日期：2021-4-6
+>commit: 80f4867bcc2baaa9bcdb650c43276cd98883389c \
+>本章译文最后维护日期：2021-07-24
 
 > **<sup>句法</sup>**\
 > _TupleType_ :\

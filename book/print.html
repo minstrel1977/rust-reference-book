@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2021-07-17</p>
+<p>本书跟随原文截止日期：2021-07-24</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -496,35 +496,55 @@ KW_DYN            : <code>dyn</code></p>
 <h1><a class="header" href="#标识符" id="标识符">标识符</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/identifiers.md">identifiers.md</a><br />
-commit: 28d628166940ffa982a1da552e0acfcc88ff8889 <br />
-本章译文最后维护日期：2021-04-23</p>
+commit: 91c95a18e6aa0f5f687bab55a43fa0290afb6f1c <br />
+本章译文最后维护日期：2021-07-24</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>词法分析:<sup></strong><br />
 IDENTIFIER_OR_KEYWORD :<br />
-      XID_start XID_continue<sup>*</sup><br />
-   | <code>_</code> XID_continue<sup>+</sup></p>
+      XID_Start XID_Continue<sup>*</sup><br />
+   | <code>_</code> XID_Continue<sup>+</sup></p>
 <p>RAW_IDENTIFIER : <code>r#</code> IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>crate</code>, <code>self</code>, <code>super</code>, <code>Self</code></em></sub></p>
 <p>NON_KEYWORD_IDENTIFIER : IDENTIFIER_OR_KEYWORD <sub>*排除<a href="keywords.html#strict-keywords">严格关键字</a>和<a href="keywords.html#reserved-keywords">保留关键字</a> *</sub></p>
 <p>IDENTIFIER :<br />
 NON_KEYWORD_IDENTIFIER | RAW_IDENTIFIER</p>
 </blockquote>
-<p>标识符是如下形式的任何非空 Unicode 字符串：</p>
-<p>要么是:</p>
+<!-- When updating the version, update the UAX links, too. -->
+<p>标识符遵循 <a href="https://www.unicode.org/reports/tr31/tr31-33.html">Unicode标准附录31</a> 中针对 Unicode 13.0版的规范，后面所述内容在此版本中均有备述。
+这里举一些标识符的示例：</p>
 <ul>
-<li>首字符拥有 <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Start%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_start</code></a> 字符属性。</li>
-<li>其余字符拥有 <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Continue%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_continue</code></a> 字符属性。</li>
+<li><code>foo</code></li>
+<li><code>_identifier</code></li>
+<li><code>r#true</code></li>
+<li><code>Москва</code></li>
+<li><code>東京</code></li>
 </ul>
-<p>要么是：</p>
+<p>其中 UAX #31 中要求标识符使用的（产生式）参数如下：</p>
 <ul>
-<li>首字符是 <code>_</code>。</li>
-<li>整个字符串由多个字符组成。单个 <code>_</code> 不是有效标识符。</li>
-<li>其余字符拥有 <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Continue%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_continue</code></a> 字符属性。</li>
+<li>起始字符 := <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Start%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_Start</code></a>，外加一个下划线 (U+005F)</li>
+<li>后续字符 := <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Continue%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_Continue</code></a></li>
+<li>中间字符 := 空</li>
 </ul>
 <blockquote>
-<p><strong>注意</strong>：<a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Start%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_start</code></a> 和 <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Continue%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_continue</code></a> 作为字符属性涵盖了用于构成常见的 C 和 Java语言族标识符的字符范围。</p>
+<p><strong>注意</strong>: 以下划线开头的标识符通常用于表示有意不会被实际使用的标识符，且会使 <code>rustc</code> 中未被使用的警告静音。</p>
 </blockquote>
-<p>除了有形式前缀 <code>r#</code> 修饰外，原生标识符(raw identifier)与普通标识符类似。（注意形式前缀 <code>r#</code> 不包括在实际标识符中。）与普通标识符不同，原生标识符可以是除上面列出的 <code>RAW_IDENTIFIER</code> 之外的任何严格关键字或保留关键字。</p>
+<p>如果标识符没有下面<a href="identifiers.html#raw-identifiers">原生标识符</a>章节中描述的 <code>r#</code>前缀，那它不能是<a href="keywords.html#strict-keywords">严格关键字</a>或<a href="keywords.html#reserved-keywords">保留关键字</a>。</p>
+<p>标识符中不允许使用零宽度非连接符（ZWNJ U+200C）和零宽度连接符（ZWJ U+200D）。</p>
+<p>在下列情况下，标识符仅限于 <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Start%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_Start</code></a> 和 <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Continue%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_Continue</code></a> 的ASCII子集：</p>
+<ul>
+<li><a href="items/extern-crates.html"><code>extern crate</code></a>声明</li>
+<li><a href="paths.html">路径</a>中引用的外部 crate名</li>
+<li>从文件系统中载入的未被<a href="items/modules.html#the-path-attribute"><code>path</code>属性</a>限定的<a href="items/modules.html">模块</a>名</li>
+<li>被 <a href="abi.html#the-no_mangle-attribute"><code>no_mangle</code></a>属性限定的程序项</li>
+<li><a href="items/external-blocks.html">外部块</a>中的程序项名称</li>
+</ul>
+<h2><a class="header" href="#normalization" id="normalization">Normalization</a></h2>
+<h2><a class="header" href="#标准化" id="标准化">标准化</a></h2>
+<p>标识符使用<a href="https://www.unicode.org/reports/tr15/tr15-50.html">Unicode标准附录15</a>中定义的规范化形式C（NFC）进行规范化。如果两个标识符的 NFC形式相等，那么它们就是等价的。</p>
+<p>[过程宏][proc macro]和<a href="macros-by-example.html">声明宏</a>在其输入中接受规范化的标识符。</p>
+<h2><a class="header" href="#raw-identifiers" id="raw-identifiers">Raw identifiers</a></h2>
+<h2><a class="header" href="#原生标识符" id="原生标识符">原生标识符</a></h2>
+<p>除了有形式前缀 <code>r#</code> 修饰外，原生标识符与普通标识符类似。（注意形式前缀 <code>r#</code> 不包括在实际标识符中。）与普通标识符不同，原生标识符可以是除上面列出的 <code>RAW_IDENTIFIER</code> 之外的任何严格关键字或保留关键字。</p>
 <h1><a class="header" href="#comments" id="comments">Comments</a></h1>
 <h1><a class="header" href="#注释" id="注释">注释</a></h1>
 <blockquote>
@@ -8884,8 +8904,8 @@ let y: u32 = x;
 <h1><a class="header" href="#元组类型" id="元组类型">元组类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/tuple.md">tuple.md</a><br />
-commit: ff6c3dc120ce6d06548b9045c43103f58720ee62 <br />
-本章译文最后维护日期：2021-4-6</p>
+commit: 80f4867bcc2baaa9bcdb650c43276cd98883389c <br />
+本章译文最后维护日期：2021-07-24</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />

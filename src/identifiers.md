@@ -2,13 +2,13 @@
 # 标识符
 
 >[identifiers.md](https://github.com/rust-lang/reference/blob/master/src/identifiers.md)\
->commit: 28d628166940ffa982a1da552e0acfcc88ff8889 \
->本章译文最后维护日期：2021-04-23
+>commit: 91c95a18e6aa0f5f687bab55a43fa0290afb6f1c \
+>本章译文最后维护日期：2021-07-24
 
 > **<sup>词法分析:<sup>**\
 > IDENTIFIER_OR_KEYWORD :\
-> &nbsp;&nbsp; &nbsp;&nbsp; XID_start XID_continue<sup>\*</sup>\
-> &nbsp;&nbsp; | `_` XID_continue<sup>+</sup>
+> &nbsp;&nbsp; &nbsp;&nbsp; XID_Start XID_Continue<sup>\*</sup>\
+> &nbsp;&nbsp; | `_` XID_Continue<sup>+</sup>
 >
 > RAW_IDENTIFIER : `r#` IDENTIFIER_OR_KEYWORD <sub>*排除 `crate`, `self`, `super`, `Self`*</sub>
 >
@@ -17,24 +17,59 @@
 > IDENTIFIER :\
 > NON_KEYWORD_IDENTIFIER | RAW_IDENTIFIER
 
-标识符是如下形式的任何非空 Unicode 字符串：
+<!-- When updating the version, update the UAX links, too. -->
+标识符遵循 [Unicode标准附录31][UAX31] 中针对 Unicode 13.0版的规范，后面所述内容在此版本中均有备述。
+这里举一些标识符的示例：
 
-要么是:
+* `foo`
+* `_identifier`
+* `r#true`
+* `Москва`
+* `東京`
 
-* 首字符拥有 [`XID_start`] 字符属性。
-* 其余字符拥有 [`XID_continue`] 字符属性。
+其中 UAX #31 中要求标识符使用的（产生式）参数如下：
 
-要么是：
+* 起始字符 := [`XID_Start`]，外加一个下划线 (U+005F)
+* 后续字符 := [`XID_Continue`]
+* 中间字符 := 空
 
-* 首字符是 `_`。
-* 整个字符串由多个字符组成。单个 `_` 不是有效标识符。
-* 其余字符拥有 [`XID_continue`] 字符属性。
+> **注意**: 以下划线开头的标识符通常用于表示有意不会被实际使用的标识符，且会使 `rustc` 中未被使用的警告静音。
 
-> **注意**：[`XID_start`] 和 [`XID_continue`] 作为字符属性涵盖了用于构成常见的 C 和 Java语言族标识符的字符范围。
- 
-除了有形式前缀 `r#` 修饰外，原生标识符(raw identifier)与普通标识符类似。（注意形式前缀 `r#` 不包括在实际标识符中。）与普通标识符不同，原生标识符可以是除上面列出的 `RAW_IDENTIFIER` 之外的任何严格关键字或保留关键字。
+如果标识符没有下面[原生标识符](#raw-identifiers)章节中描述的 `r#`前缀，那它不能是[严格关键字][strict]或[保留关键字][reserved]。
 
-[strict]: keywords.md#strict-keywords
+标识符中不允许使用零宽度非连接符（ZWNJ U+200C）和零宽度连接符（ZWJ U+200D）。
+
+在下列情况下，标识符仅限于 [`XID_Start`] 和 [`XID_Continue`] 的ASCII子集：
+
+* [`extern crate`]声明
+* [路径][path]中引用的外部 crate名
+* 从文件系统中载入的未被[`path`属性][`path` attribute]限定的[模块][Module]名
+* 被 [`no_mangle`]属性限定的程序项
+* [外部块][external blocks]中的程序项名称
+
+## Normalization
+## 标准化
+
+标识符使用[Unicode标准附录15][UAX15]中定义的规范化形式C（NFC）进行规范化。如果两个标识符的 NFC形式相等，那么它们就是等价的。
+
+[过程宏][proc macro]和[声明宏][mbe]在其输入中接受规范化的标识符。
+
+## Raw identifiers
+## 原生标识符
+
+除了有形式前缀 `r#` 修饰外，原生标识符与普通标识符类似。（注意形式前缀 `r#` 不包括在实际标识符中。）与普通标识符不同，原生标识符可以是除上面列出的 `RAW_IDENTIFIER` 之外的任何严格关键字或保留关键字。
+
+[`extern crate`]: items/extern-crates.md
+[`no_mangle`]: abi.md#the-no_mangle-attribute
+[`path` attribute]: items/modules.md#the-path-attribute
+[`XID_Continue`]: http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Continue%3A%5D&abb=on&g=&i=
+[`XID_Start`]:  http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Start%3A%5D&abb=on&g=&i=
+[external blocks]: items/external-blocks.md
+[mbe]: macros-by-example.md
+[module]: items/modules.md
+[path]: paths.md
+[proc-macro]: procedural-macros.md
 [reserved]: keywords.md#reserved-keywords
-[`XID_start`]:  http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Start%3A%5D&abb=on&g=&i=
-[`XID_continue`]: http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Continue%3A%5D&abb=on&g=&i=
+[strict]: keywords.md#strict-keywords
+[UAX15]: https://www.unicode.org/reports/tr15/tr15-50.html
+[UAX31]: https://www.unicode.org/reports/tr31/tr31-33.html
