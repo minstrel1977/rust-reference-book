@@ -169,8 +169,8 @@
 <h1><a class="header" href="#外部crate声明" id="外部crate声明">外部crate声明</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/extern-crates.md">extern-crates.md</a><br />
-commit: 0ce54e64e3c98d99862485c57087d0ab36f40ef0 <br />
-本章译文最后维护日期：2021-1-24</p>
+commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
+本章译文最后维护日期：2021-07-31</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法:<sup></strong><br />
@@ -205,7 +205,7 @@ extern crate hello_world; // 连字符被替换为下划线
 <h2><a class="header" href="#underscore-imports" id="underscore-imports">Underscore Imports</a></h2>
 <h2><a class="header" href="#下划线导入" id="下划线导入">下划线导入</a></h2>
 <p>外部的 crate依赖可以通过使用带有下划线形如 <code>extern crate foo as _</code> 的形式来声明，而无需将其名称绑定到当前作用域内。这种声明方式对于只需要 crate 被链接进来，但 crate 从不会被当前代码引用的情况可能很有用，并且还可以避免未使用的 lint 提醒。</p>
-<p>下划线导入不会影响 <a href="../macros-by-example.html#the-macro_use-attribute"><code>macro_use</code>属性</a>的正常使用，这情况下使用 <code>macro_use</code>属性，宏名称仍会正常导入到 <a href="../names/preludes.html#macro_use-prelude"><code>macro_use</code>预导入包</a>中。</p>
+<p>下划线导入不会影响 <a href="../macros-by-example.html#the-macro_use-attribute"><code>macro_use</code>属性</a>的正常使用，<code>macro_use</code>属性仍会将各种宏名正常导入到 <a href="../names/preludes.html#macro_use-prelude"><code>macro_use</code>预导入包</a>中。</p>
 <h2><a class="header" href="#the-no_link-attribute" id="the-no_link-attribute">The <code>no_link</code> attribute</a></h2>
 <h2><a class="header" href="#no_link属性" id="no_link属性"><code>no_link</code>属性</a></h2>
 <p>可以在外部项(<code>extern crate</code> item)上指定使用 <em><code>no_link</code>属性</em>，以防止此 crate 被链接到编译输出中。这通常用于加载一个 crate 而只访问它的宏。</p>

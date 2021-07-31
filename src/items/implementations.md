@@ -2,8 +2,8 @@
 # 实现
 
 >[implementations.md](https://github.com/rust-lang/reference/blob/master/src/items/implementations.md)\
->commit: d1f22f659fae9cfbeb9e45c8226d134d4a272586 \
->本章译文最后维护日期：2021-5-29
+>commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e \
+>本章译文最后维护日期：2021-07-31
 
 > **<sup>句法</sup>**\
 > _Implementation_ :\
@@ -85,8 +85,7 @@ fn main() {
 ## Trait Implementations
 ## trait实现
 
-*trait实现*的定义与固有实现类似，只是可选的泛型类型声明后须跟一个 [trait]，再后跟关键字 `for`，之后再跟一个指向标称类型的路径。
-
+*trait实现*的定义与固有实现类似，只是在可选的泛型类型声明后须跟一个 [trait]关键字，再后跟关键字 `for`，之后再跟一个指向某个标称类型的路径。
 <!-- 为理解这个，你必须回去查看一下上一节的内容 :( -->
 
 这里讨论的 trait 也被称为*被实现trait(implemented trait)*。实现类型去实现该被实现trait。
@@ -241,7 +240,7 @@ impl<'a> HasAssocType for Struct {
 ## Attributes on Implementations
 ## 实现上的属性
 
-实现可以在关键字 `impl` 之前引入外部[属性][attributes]，在代码体内引入内部[属性][attributes]。内部属性必须位于任何关联程序项之前。这里有意义的属性有 [`cfg`]、[`deprecated`]、[`doc`] 和 [lint检查类属性][the lint check attributes]。
+实现可以在关键字 `impl` 之前引入外部[属性][attributes]，在包含了各种关联程序项的代码体内引入内部[属性][attributes]。内部属性必须位于任何关联程序项之前。这里有意义的属性有 [`cfg`]、[`deprecated`]、[`doc`] 和 [lint检查类属性][the lint check attributes]。
 
 [_AssociatedItem_]: associated-items.md
 [_GenericParams_]: generics.md

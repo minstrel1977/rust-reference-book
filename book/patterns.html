@@ -169,8 +169,8 @@
 <h1><a class="header" href="#模式" id="模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
-commit: 100fa060ce1d2db7e4d1533efd289f9c18d08d53 <br />
-本章译文最后维护日期：2021-5-6</p>
+commit: 702bad4479c1a79fc386bde916a5a21deafd75d8 <br />
+本章译文最后维护日期：2021-07-31</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -483,6 +483,9 @@ match slice {
 
     // `end` 是除第一个元素之外的所有元素的一个切片，第一个元素必须是 “a”
     [&quot;a&quot;, end @ ..] =&gt; println!(&quot;ends with: {:?}&quot;, end),
+
+    // 'whole' 是整个切片，`last` 是最后一个元素
+    whole @ [.., last] =&gt; println!(&quot;the last element of {:?} is {}&quot;, whole, last),
 
     rest =&gt; println!(&quot;{:?}&quot;, rest),
 }

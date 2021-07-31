@@ -169,8 +169,8 @@
 <h1><a class="header" href="#数组和数组索引表达式" id="数组和数组索引表达式">数组和数组索引表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/array-expr.md">array-expr.md</a><br />
-commit: 37ca438c9ac58448ecf304b735e71644e8127f3d <br />
-本章译文最后维护日期：2021-07-17</p>
+commit: 9dd6a1f1194946e0d5eb2c76525cbbfc187a6f6a <br />
+本章译文最后维护日期：2021-07-31</p>
 </blockquote>
 <h2><a class="header" href="#array-expressions" id="array-expressions">Array expressions</a></h2>
 <h2><a class="header" href="#数组表达式" id="数组表达式">数组表达式</a></h2>
@@ -188,16 +188,17 @@ commit: 37ca438c9ac58448ecf304b735e71644e8127f3d <br />
 这种形式的句法规则通过在方括号中放置统一类型的、逗号分隔的表达式来表现。
 这样编写将生成一个包含这些表达式的值的数组，其中数组元素的顺序就是这些表达式写入的时顺序。</p>
 <p>第二种形式的句法规则通过在方括号内放置两用个用分号(<code>;</code>)分隔的表达式来表现。
-分号(<code>;</code>)前的表达式被称为<em>重复体操作数(repeat operand)</em>
+分号(<code>;</code>)前的表达式被称为<em>重复值操作数(repeat operand)</em>
 分号(<code>;</code>)后的表达式被称为<em>数组长度操作数(length operand)</em>
 其中，数组长度操作数必须是 <code>usize</code> 类型的，并且必须是<a href="../const_eval.html#constant-expressions">常量表达式</a>，比如是<a href="../tokens.html#literals">字面量</a>或<a href="../items/constant-items.html">常量项</a>。
+此形式的数组表达式创建一个长度为长度操作数值的数组，每个元素都是重复值操作数的副本。
 也就是说，<code>[a; b]</code> 这种形式会创建包含 <code>b</code> 个 <code>a</code> 值的数组。
 如果数组长度操作数的值大于 1，则要求 <code>a</code> 的类型实现了 <a href="../special-types-and-traits.html#copy"><code>Copy</code></a>，或 <code>a</code> 自己是一个常量项的<a href="path-expr.html">路径</a>。</p>
-<p>当 <code>[a; b]</code> 形式的重复体操作数 <code>a</code> 是一个常量项时，其将被计算求值数组长度操作数 <code>b</code> 次。
+<p>当 <code>[a; b]</code> 形式的重复值操作数 <code>a</code> 是一个常量项时，其将被计算求值数组长度操作数 <code>b</code> 次。
 如果数组长度操作数 <code>b</code> 为 0，则常量项根本不会被求值。
 对于非常量项的表达式，只计算求值一次，然后将结果复制数组长度操作数 <code>b</code> 次。</p>
 <div class="warning">
-<p>警告：当数组长度操作数为 0 时，而重复体操作数是一个非常量项的情况下，目前在 <code>rustc</code> 中存在一个 bug，即值 <code>a</code> 会被求值，但不会被销毁而导致的内存泄漏。参见 <a href="https://github.com/rust-lang/rust/issues/74836">issue#74836</a>。</p>
+<p>警告：当数组长度操作数为 0 时，而重复值操作数是一个非常量项的情况下，目前在 <code>rustc</code> 中存在一个 bug，即值 <code>a</code> 会被求值，但不会被销毁而导致的内存泄漏。参见 <a href="https://github.com/rust-lang/rust/issues/74836">issue#74836</a>。</p>
 </div>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]

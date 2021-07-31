@@ -2,8 +2,8 @@
 # 循环
 
 >[loop-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/loop-expr.md)\
->commit: ac4ff0f3d5f980798b2463777d07e6060554c8c3 \
->本章译文最后维护日期：2021-6-27
+>commit: 91b36e4ca98dbb8a465a74fc3766d8643c84a25d \
+>本章译文最后维护日期：2021-07-31
 
 > **<sup>句法</sup>**\
 > _LoopExpression_ :\
@@ -154,7 +154,7 @@ for n in 1..11 {
 assert_eq!(sum, 55);
 ```
 
-`for`循环等价于后面的块表达式。
+`for`循环等价于如下这样包含了[匹配(`match`)表达式][`match` expression]的 `loop`表达式。
 
 <!-- ignore: expansion example -->
 ```rust,ignore

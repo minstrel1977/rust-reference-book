@@ -2,8 +2,8 @@
 # 术语表
 
 >[glossary.md](https://github.com/rust-lang/reference/blob/master/src/glossary.md)\
->commit: e9862d82e92bb0d6f89df4036a98f96bcdd61c95 \
->本章译文最后维护日期：2021-06-09
+>commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e \
+>本章译文最后维护日期：2021-07-31
 
 ### Abstract syntax tree
 ### 抽象句法树
@@ -126,8 +126,8 @@ A [method] defined in an [inherent implementation], not in a trait implementatio
 ### Initialized
 ###  初始化
 
-如果一个变量已经被分配了一个值，并且此值还没有被移动走，那此变量就被初始化了。对此变量而言，它会假设它之外的所有其他内存位置都未初始化。只有非安全Rust 可以在不初始化的情况下开辟内存新区域。\
-A variable is initialized if it has been assigned a value and hasn't since been moved from. All other memory locations are assumed to be uninitialized. Only unsafe Rust can create such a memory without initializing it.
+如果一个变量已经被分配了一个值，并且此值还没有被移动走，那此变量就被初始化了。对此变量而言，它会假设它之外的所有其他内存位置都未初始化。只有非安全Rust 可以在未初始化的情况下开辟内存区域。\
+A variable is initialized if it has been assigned a value and hasn't since been moved from. All other memory locations are assumed to be uninitialized. Only unsafe Rust can create a memory location without initializing it.
 
 ### Local trait
 ### 本地 trait

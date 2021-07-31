@@ -2,8 +2,8 @@
 # 模块
 
 >[modules.md](https://github.com/rust-lang/reference/blob/master/src/items/modules.md)\
->commit: eabdf09207bf3563ae96db9d576de0758c413d5d \
->本章译文最后维护日期：2021-1-24
+>commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e \
+>本章译文最后维护日期：2021-07-31
 
 
 > **<sup>句法:</sup>**\

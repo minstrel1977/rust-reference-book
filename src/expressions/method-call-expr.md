@@ -2,8 +2,8 @@
 # 方法调用表达式
 
 >[method-call-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/method-call-expr.md)\
->commit: eb5290329316e96c48c032075f7dbfa56990702b \
->本章译文最后维护日期：2021-02-21
+>commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e \
+>本章译文最后维护日期：2021-07-31
 
 > **<sup>句法</sup>**\
 > _MethodCallExpression_ :\
@@ -11,8 +11,6 @@
 
 *方法调用*由一个表达式（*接受者(receiver)*）后跟一个单点号(`.`)、一个表达式路径段(path segment)和一个圆括号封闭的的表达式列表组成。
 方法调用被解析为特定 trait 上的关联[方法][methods]时，如果点号左边的表达式有确切的已知的 `self`类型，则会静态地分发(statically dispatch)给在此类型下查找到的某个同名方法来执行；如果点号左边的表达式是间接的 [trait对象][trait object]，则会采用动态分发(dynamically dispatch)的方式。
-
-[trait object](../types/trait-object.md).
 
 ```rust
 let pi: Result<f32, _> = "3.14".parse();

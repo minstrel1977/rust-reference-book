@@ -169,8 +169,8 @@
 <h1><a class="header" href="#切片类型" id="切片类型">切片类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/slice.md">slice.md</a><br />
-commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本章译文最后维护日期：2020-11-14</p>
+commit: 5ae4a38e36135e02e01933ba81d206b1c2e9ce70 <br />
+本章译文最后维护日期：2021-07-31</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -178,11 +178,11 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
    <code>[</code> <a href="../types.html#type-expressions"><em>Type</em></a> <code>]</code></p>
 </blockquote>
 <p>切片是一种<a href="../dynamically-sized-types.html">动态尺寸类型(dynamically sized type)</a>，它代表类型为 <code>T</code> 的元素组成的数据序列的一个“视图(view)”。切片类型写为 <code>[T]</code>。</p>
-<p>要使用切片类型，通常必须放在指针后面使用，例如：</p>
+<p>切片类型通常都是通过指针类型来使用，例如：</p>
 <ul>
-<li><code>&amp;[T]</code>，共享切片('shared slice')，常被直接称为切片(<code>slice</code>)，它不拥有它指向的数据，只是借用。</li>
-<li><code>&amp;mut [T]</code>，可变切片('mutable slice')，可变借用它指向的数据。</li>
-<li><code>Box&lt;[T]&gt;</code>, boxed切片('boxed slice')。</li>
+<li><code>&amp;[T]</code>，共享切片('shared slice')，常被直接称为切片(<code>slice</code>)。它不拥有它指向的数据，只是借用。</li>
+<li><code>&amp;mut [T]</code>，可变切片('mutable slice')。它可变借用它指向的数据。</li>
+<li><code>Box&lt;[T]&gt;</code>, box化的切片('boxed slice')。</li>
 </ul>
 <p>示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
@@ -196,8 +196,6 @@ let slice: &amp;[i32] = &amp;boxed_array[..];
 <span class="boring">}
 </span></code></pre></pre>
 <p>切片的所有元素总是初始化过的，使用 Rust 中的安全(safe)方法或操作符来访问切片时总是会做越界检查。</p>
-<!-- 2020-11-12-->
-<!-- checked -->
 
                     </main>
 

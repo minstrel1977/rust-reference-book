@@ -2,8 +2,8 @@
 # 函数
 
 >[functions.md](https://github.com/rust-lang/reference/blob/master/src/items/functions.md)\
->commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef \
->本章译文最后维护日期：2021-06-19
+>commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e \
+>本章译文最后维护日期：2021-07-31
 
 > **<sup>句法</sup>**\
 > _Function_ :\

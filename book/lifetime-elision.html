@@ -169,8 +169,8 @@
 <h1><a class="header" href="#生存期类型参数省略" id="生存期类型参数省略">生存期(类型参数)省略</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/lifetime-elision.md">lifetime-elision.md</a><br />
-commit: f8e76ee9368f498f7f044c719de68c7d95da9972 <br />
-本章译文最后维护日期：2020-11-16</p>
+commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
+本章译文最后维护日期：2021-07-31</p>
 </blockquote>
 <p>Rust 拥有一套允许在多种位置省略生存期的规则，但前提是编译器在这些位置上能推断出合理的默认生存期。</p>
 <h2><a class="header" href="#lifetime-elision-in-functions" id="lifetime-elision-in-functions">Lifetime elision in functions</a></h2>
@@ -257,9 +257,8 @@ fn frob(s: &amp;str, t: &amp;str) -&gt; &amp;str;                    // 非法
 </span>// 对下面的 trait 来说，...
 trait Foo { }
 
-// 这两个是等价的，就如 `Box&lt;T&gt;` 对 `T` 没有生存期约束一样
-// These two are the same as Box&lt;T&gt; has no lifetime bound on T
-type T1 = Box&lt;dyn Foo&gt;;  //译者注：此处的 `T1` 和 上行备注中提到的 `Box&lt;T&gt;` 都是本节规则中所说的泛型类型，即容器泛型
+// 这两个是等价的，因为 `Box&lt;T&gt;` 对 `T` 没有生存期约束
+type T1 = Box&lt;dyn Foo&gt;;  //译者注：此处的 `T1` 和 上面备注中提到的 `Box&lt;T&gt;` 都是本节规则中所说的泛型类型，即容器泛型
 type T2 = Box&lt;dyn Foo + 'static&gt;;
 
 // ...这也是等价的
@@ -358,8 +357,6 @@ const RESOLVED_STATIC: &amp;dyn Fn(&amp;Foo, &amp;Bar) -&gt; &amp;Baz = &amp;som
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
 <p>指 Fn、FnMute 和 FnOnce 这三个 trait。</p>
 </div>
-<!-- 2020-11-12-->
-<!-- checked -->
 
                     </main>
 

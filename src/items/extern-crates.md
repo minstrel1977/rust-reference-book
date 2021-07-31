@@ -2,8 +2,8 @@
 # 外部crate声明
 
 >[extern-crates.md](https://github.com/rust-lang/reference/blob/master/src/items/extern-crates.md)\
->commit: 0ce54e64e3c98d99862485c57087d0ab36f40ef0 \
->本章译文最后维护日期：2021-1-24
+>commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e \
+>本章译文最后维护日期：2021-07-31
 
 > **<sup>句法:<sup>**\
 > _ExternCrate_ :\
@@ -53,7 +53,7 @@ extern crate hello_world; // 连字符被替换为下划线
 
 外部的 crate依赖可以通过使用带有下划线形如 `extern crate foo as _` 的形式来声明，而无需将其名称绑定到当前作用域内。这种声明方式对于只需要 crate 被链接进来，但 crate 从不会被当前代码引用的情况可能很有用，并且还可以避免未使用的 lint 提醒。
 
-下划线导入不会影响 [`macro_use`属性][`macro_use` attribute]的正常使用，这情况下使用 `macro_use`属性，宏名称仍会正常导入到 [`macro_use`预导入包][`macro_use` prelude]中。
+下划线导入不会影响 [`macro_use`属性][`macro_use` attribute]的正常使用，`macro_use`属性仍会将各种宏名正常导入到 [`macro_use`预导入包][`macro_use` prelude]中。
 
 ## The `no_link` attribute
 ## `no_link`属性

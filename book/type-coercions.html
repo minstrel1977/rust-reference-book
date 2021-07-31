@@ -169,8 +169,8 @@
 <h1><a class="header" href="#类型自动强转" id="类型自动强转">类型自动强转</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-coercions.md">type-coercions.md</a><br />
-commit: d5a5e32d3cda8a297d2a91a85b91ff2629b0e896 <br />
-本章译文最后维护日期：2020-11-15</p>
+commit: ae773c1a19d6ebe3922b9739b5dbf8b762fd327c <br />
+本章译文最后维护日期：2021-07-31</p>
 </blockquote>
 <p><strong>类型自动强转</strong>是改变值的类型的隐式操作。它们在特定的位置自动发生，但实际自动强转的类型也受到很多限制。</p>
 <p>任何允许自动强转的转换都可以由<a href="expressions/operator-expr.html#type-cast-expressions">类型强制转换操作符</a> <code>as</code> 来显式执行。</p>
@@ -309,6 +309,9 @@ fn main() {
 <!--将来，coerce_inner 会被递归扩展到元组和结构体上。此外从子 trait 到父类trait 的自动强转也会被加进来，更多细节请参见 [RFC 401] 。-->
 </li>
 <li>
+<p>函数项到函数指针(<code>fn</code> pointers)</p>
+</li>
+<li>
 <p>非捕获闭包(Non capturing closures)到函数指针(<code>fn</code> pointers)</p>
 </li>
 <li>
@@ -412,8 +415,6 @@ fn foo() -&gt; i32 {
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
 <p>TyCtor为类型构造器 type constructor 的简写。</p>
 </div>
-<!-- 2020-11-12-->
-<!-- checked -->
 
                     </main>
 

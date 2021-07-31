@@ -169,11 +169,11 @@
 <h1><a class="header" href="#预导入包" id="预导入包">预导入包</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/names/preludes.md">use-declarations.md</a><br />
-commit: 0ce54e64e3c98d99862485c57087d0ab36f40ef0 <br />
-本章译文最后维护日期：2021-1-24</p>
+commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
+本章译文最后维护日期：2021-07-31</p>
 </blockquote>
 <p><em>预导入包</em>是一组名称的集合，它会自动把这些名称导入到 crate 中的每个模块的作用域中。</p>
-<p>预导入包中的那些名称不是当前模块本身的一部分，它们在<a href="name-resolution.html">名称解析</a>期间被隐式导入。例如，即使像 <a href="../../std/boxed/struct.Box.html"><code>Box</code></a> 这样在每个模块的作用域中到处使用的名称，你也不能通过 <code>self::Box</code> 来引用它，因为它不是当前模块的成员。</p>
+<p>预导入包中的那些名称不是当前模块本身的一部分：它们在<a href="name-resolution.html">名称解析</a>期间被隐式导入。例如，即使像 <a href="../../std/boxed/struct.Box.html"><code>Box</code></a> 这样在每个模块的作用域中到处使用的名称，你也不能通过 <code>self::Box</code> 来引用它，因为它不是当前模块的成员。</p>
 <p>有几个不同的预导入包：</p>
 <ul>
 <li><a href="#standard-library-prelude">标准库预导入包</a></li>

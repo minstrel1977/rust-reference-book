@@ -2,8 +2,8 @@
 # 生存期(类型参数)省略
 
 >[lifetime-elision.md](https://github.com/rust-lang/reference/blob/master/src/lifetime-elision.md)\
->commit: f8e76ee9368f498f7f044c719de68c7d95da9972 \
->本章译文最后维护日期：2020-11-16
+>commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e \
+>本章译文最后维护日期：2021-07-31
 
 Rust 拥有一套允许在多种位置省略生存期的规则，但前提是编译器在这些位置上能推断出合理的默认生存期。
 
@@ -90,9 +90,8 @@ fn frob(s: &str, t: &str) -> &str;                    // 非法
 // 对下面的 trait 来说，...
 trait Foo { }
 
-// 这两个是等价的，就如 `Box<T>` 对 `T` 没有生存期约束一样
-// These two are the same as Box<T> has no lifetime bound on T
-type T1 = Box<dyn Foo>;  //译者注：此处的 `T1` 和 上行备注中提到的 `Box<T>` 都是本节规则中所说的泛型类型，即容器泛型
+// 这两个是等价的，因为 `Box<T>` 对 `T` 没有生存期约束
+type T1 = Box<dyn Foo>;  //译者注：此处的 `T1` 和 上面备注中提到的 `Box<T>` 都是本节规则中所说的泛型类型，即容器泛型
 type T2 = Box<dyn Foo + 'static>;
 
 // ...这也是等价的
@@ -192,6 +191,3 @@ const RESOLVED_STATIC: &dyn Fn(&Foo, &Bar) -> &Baz = &somefunc;
 [RFC 1156]: https://github.com/rust-lang/rfcs/blob/master/text/1156-adjust-default-object-bounds.md
 [static]: items/static-items.md
 [trait object]: types/trait-object.md
-
-<!-- 2020-11-12-->
-<!-- checked -->

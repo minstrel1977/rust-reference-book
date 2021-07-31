@@ -2,8 +2,8 @@
 # 外部块
 
 >[external-blocks.md](https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md)\
->commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 \
->本章译文最后维护日期：2021-1-17
+>commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e \
+>本章译文最后维护日期：2021-07-31
 
 > **<sup>句法</sup>**\
 > _ExternBlock_ :\
@@ -147,6 +147,3 @@ extern {
 [_Visibility_]: ../visibility-and-privacy.md
 [attributes]: ../attributes.md
 [regular function parameters]: functions.md#attributes-on-function-parameters
-
-<!-- 2021-1-17-->
-<!-- checked -->

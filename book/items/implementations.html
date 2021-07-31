@@ -169,8 +169,8 @@
 <h1><a class="header" href="#实现" id="实现">实现</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/implementations.md">implementations.md</a><br />
-commit: d1f22f659fae9cfbeb9e45c8226d134d4a272586 <br />
-本章译文最后维护日期：2021-5-29</p>
+commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
+本章译文最后维护日期：2021-07-31</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -241,7 +241,7 @@ fn main() {
 </code></pre></pre>
 <h2><a class="header" href="#trait-implementations" id="trait-implementations">Trait Implementations</a></h2>
 <h2><a class="header" href="#trait实现" id="trait实现">trait实现</a></h2>
-<p><em>trait实现</em>的定义与固有实现类似，只是可选的泛型类型声明后须跟一个 <a href="traits.html">trait</a>，再后跟关键字 <code>for</code>，之后再跟一个指向标称类型的路径。</p>
+<p><em>trait实现</em>的定义与固有实现类似，只是在可选的泛型类型声明后须跟一个 <a href="traits.html">trait</a>关键字，再后跟关键字 <code>for</code>，之后再跟一个指向某个标称类型的路径。</p>
 <!-- 为理解这个，你必须回去查看一下上一节的内容 :( -->
 <p>这里讨论的 trait 也被称为<em>被实现trait(implemented trait)</em>。实现类型去实现该被实现trait。</p>
 <p>trait实现必须去定义被实现trait 声明里的所有非默认关联程序项，可以重新定义被实现trait 定义的默认关联程序项，但不能定义任何其他程序项。</p>
@@ -395,7 +395,7 @@ impl&lt;T, U&gt; GenericTrait&lt;U&gt; for u32 where U: GenericTrait&lt;T&gt; {}
 </span></code></pre></pre>
 <h2><a class="header" href="#attributes-on-implementations" id="attributes-on-implementations">Attributes on Implementations</a></h2>
 <h2><a class="header" href="#实现上的属性" id="实现上的属性">实现上的属性</a></h2>
-<p>实现可以在关键字 <code>impl</code> 之前引入外部<a href="../attributes.html">属性</a>，在代码体内引入内部<a href="../attributes.html">属性</a>。内部属性必须位于任何关联程序项之前。这里有意义的属性有 <a href="../conditional-compilation.html"><code>cfg</code></a>、<a href="../attributes/diagnostics.html#the-deprecated-attribute"><code>deprecated</code></a>、<a href="https://doc.rust-lang.org/rustdoc/the-doc-attribute.html"><code>doc</code></a> 和 <a href="../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>。</p>
+<p>实现可以在关键字 <code>impl</code> 之前引入外部<a href="../attributes.html">属性</a>，在包含了各种关联程序项的代码体内引入内部<a href="../attributes.html">属性</a>。内部属性必须位于任何关联程序项之前。这里有意义的属性有 <a href="../conditional-compilation.html"><code>cfg</code></a>、<a href="../attributes/diagnostics.html#the-deprecated-attribute"><code>deprecated</code></a>、<a href="https://doc.rust-lang.org/rustdoc/the-doc-attribute.html"><code>doc</code></a> 和 <a href="../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>。</p>
 
                     </main>
 

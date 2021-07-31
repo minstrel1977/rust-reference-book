@@ -169,8 +169,8 @@
 <h1><a class="header" href="#循环" id="循环">循环</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/loop-expr.md">loop-expr.md</a><br />
-commit: ac4ff0f3d5f980798b2463777d07e6060554c8c3 <br />
-本章译文最后维护日期：2021-6-27</p>
+commit: 91b36e4ca98dbb8a465a74fc3766d8643c84a25d <br />
+本章译文最后维护日期：2021-07-31</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -309,7 +309,7 @@ for n in 1..11 {
 assert_eq!(sum, 55);
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>for</code>循环等价于后面的块表达式。</p>
+<p><code>for</code>循环等价于如下这样包含了<a href="match-expr.html">匹配(<code>match</code>)表达式</a>的 <code>loop</code>表达式。</p>
 <!-- ignore: expansion example -->
 <pre><code class="language-rust ignore">'label: for PATTERN in iter_expr {
     /* loop body */

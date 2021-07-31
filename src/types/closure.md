@@ -2,8 +2,8 @@
 # 闭包类型
 
 >[closure.md](https://github.com/rust-lang/reference/blob/master/src/types/closure.md)\
->commit: 9f106217c7598d0ec7b39e936d88f843a5d5175f \
->本章译文最后维护日期：2021-07-11
+>commit: e4833e4076305e4554baf480f7443eb82f09a28c \
+>本章译文最后维护日期：2021-07-31
 
 [闭包表达式][closure expression]生成的闭包值具有唯一性和无法写出的匿名性。闭包类型近似相当于包含捕获变量的结构体。比如以下闭包示例：
 
@@ -155,6 +155,3 @@ f2(move || { t });
 [`Sync`]: ../special-types-and-traits.md#sync
 [closure expression]: ../expressions/closure-expr.md
 [derived]: ../attributes/derive.md
-
-<!-- 2020-11-12-->
-<!-- checked -->

@@ -169,8 +169,8 @@
 <h1><a class="header" href="#表达式" id="表达式">表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions.md">expressions.md</a><br />
-commit: 97ba67cbee415e263a054e9ce68baf0e75dca2b0 <br />
-本章译文最后维护日期：2021-07-11</p>
+commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
+本章译文最后维护日期：2021-07-31</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -314,12 +314,12 @@ assert_eq!(
 <h3><a class="header" href="#移动语义类型和复制语义类型" id="移动语义类型和复制语义类型">移动语义类型和复制语义类型</a></h3>
 <p>当位置表达式在值表达式上下文中被求值时，或在模式中被值绑定时，这表示此值会*保存进(held in)*当前表达式代表的内存地址。如果该值的类型实现了 <a href="special-types-and-traits.html#copy"><code>Copy</code></a>，那么该值将被从原来的位置复制一份过来。如果该值的类型没有实现 <a href="special-types-and-traits.html#copy"><code>Copy</code></a>，但实现了 <a href="special-types-and-traits.html#sized"><code>Sized</code></a>，那么就有可能把该值从原来的位置移动(move)过来。从位置表达式里移出值对位置表达式也有要求，只有如下的位置表达式才可能把值从其中移出(move out)：</p>
 <ul>
-<li><a href="variables.html">变量</a>当前未被借用。</li>
-<li><a href="#temporaries">临时值(Temporary values)</a>。</li>
-<li>可以移出且没实现 <a href="special-types-and-traits.html#drop"><code>Drop</code></a> 的位置表达式的字段。</li>
+<li>当前未被借用的<a href="variables.html">变量</a>。</li>
+<li><a href="#temporaries">临时变量里的值(Temporary values)</a>。</li>
+<li>表达式本身就可以被移出值，那它的一些字段也可被移出，但要求这些字段（的类型）没实现 <a href="special-types-and-traits.html#drop"><code>Drop</code></a>。</li>
 <li>对可移出且类型为 <a href="../std/boxed/struct.Box.html"><code>Box&lt;T&gt;</code></a> 的表达式作<a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>的结果。</li>
 </ul>
-<p>当把值从一个位置表达式里移出到一个局部变量时，此（表达式代表的）地址将被去初始化(deinitialized)，并且该地址在重新初始化之前无法被再次读取。<br />
+<p>当把值从一个位置表达式里移出到一个局部变量中后，此（表达式代表的）地址将被去初始化(deinitialized)，并且该地址在重新初始化之前无法被再次读取。<br />
 除以上列出的情况外，任何在值表达式上下文中使用位置表达式都是错误的。</p>
 <h3><a class="header" href="#mutability" id="mutability">Mutability</a></h3>
 <h3><a class="header" href="#可变性" id="可变性">可变性</a></h3>
@@ -337,7 +337,7 @@ assert_eq!(
 </ul>
 <h3><a class="header" href="#temporaries" id="temporaries">Temporaries</a></h3>
 <h3><a class="header" href="#临时位置临时变量" id="临时位置临时变量">临时位置/临时变量</a></h3>
-<p>在大多数位置表达式上下文中使用值表达式时，会创建一个临时的未命名内存位置，并将该位置初始为该值，然后这个表达式的求值结果就为该内存位置。此过程也有例外，就是把此临时表达式<a href="destructors.html#constant-promotion">提升</a>为一个静态项(<code>static</code>)。（译者注：这种情况下表达式将直接在编译时就求值了，求值的结果会根据编译器要求重新选择地址存储）。临时位置/临时变量的<a href="destructors.html#drop-scopes">销毁作用域(drop scope)</a>通常在包含它的最内层语句的结尾处。</p>
+<p>在大多数位置表达式上下文中使用值表达式时，会创建一个临时的未命名内存位置，并将该位置初始为该值，然后这个表达式的求值结果就为该内存位置。此过程也有例外，就是把此临时表达式<a href="destructors.html#constant-promotion">提升</a>为一个静态项(<code>static</code>)。（译者注：这种情况下表达式将直接在编译时就求值了，求值的结果会根据编译器要求重新选择地址存储）。临时位置/临时变量的<a href="destructors.html#drop-scopes">存续作用域(drop scope)</a>通常在包含它的最内层语句的结尾处。</p>
 <h3><a class="header" href="#implicit-borrows" id="implicit-borrows">Implicit Borrows</a></h3>
 <h3><a class="header" href="#隐式借用" id="隐式借用">隐式借用</a></h3>
 <p>某些特定的表达式可以通过隐式借用一个表达式来将其视为位置表达式。例如，可以直接比较两个非固定尺寸的<a href="types/slice.html">切片</a>是否相等，因为 <code>==</code> 操作符隐式借用了它自身的操作数：</p>

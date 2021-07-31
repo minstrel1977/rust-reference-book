@@ -2,8 +2,8 @@
 # 类型自动强转
 
 >[type-coercions.md](https://github.com/rust-lang/reference/blob/master/src/type-coercions.md)\
->commit: d5a5e32d3cda8a297d2a91a85b91ff2629b0e896 \
->本章译文最后维护日期：2020-11-15
+>commit: ae773c1a19d6ebe3922b9739b5dbf8b762fd327c \
+>本章译文最后维护日期：2021-07-31
 
 **类型自动强转**是改变值的类型的隐式操作。它们在特定的位置自动发生，但实际自动强转的类型也受到很多限制。
 
@@ -134,6 +134,8 @@
 
     <!--将来，coerce_inner 会被递归扩展到元组和结构体上。此外从子 trait 到父类trait 的自动强转也会被加进来，更多细节请参见 [RFC 401] 。-->
 
+* 函数项到函数指针(`fn` pointers)
+
 * 非捕获闭包(Non capturing closures)到函数指针(`fn` pointers)
 
 * `!` 到任意 `T`
@@ -240,6 +242,3 @@ fn foo() -> i32 {
 [type cast operator]: expressions/operator-expr.md#type-cast-expressions
 [`Unsize`]: https://doc.rust-lang.org/std/marker/trait.Unsize.html
 [`CoerceUnsized`]: https://doc.rust-lang.org/std/ops/trait.CoerceUnsized.html
-
-<!-- 2020-11-12-->
-<!-- checked -->

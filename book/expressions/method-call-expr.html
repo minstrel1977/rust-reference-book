@@ -169,8 +169,8 @@
 <h1><a class="header" href="#方法调用表达式" id="方法调用表达式">方法调用表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/method-call-expr.md">method-call-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
+本章译文最后维护日期：2021-07-31</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -179,7 +179,6 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
 </blockquote>
 <p><em>方法调用</em>由一个表达式（<em>接受者(receiver)</em>）后跟一个单点号(<code>.</code>)、一个表达式路径段(path segment)和一个圆括号封闭的的表达式列表组成。
 方法调用被解析为特定 trait 上的关联<a href="../items/associated-items.html#methods">方法</a>时，如果点号左边的表达式有确切的已知的 <code>self</code>类型，则会静态地分发(statically dispatch)给在此类型下查找到的某个同名方法来执行；如果点号左边的表达式是间接的 <a href="../types/trait-object.html">trait对象</a>，则会采用动态分发(dynamically dispatch)的方式。</p>
-<p><a href="../types/trait-object.html">trait object</a>.</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

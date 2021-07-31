@@ -169,8 +169,8 @@
 <h1><a class="header" href="#术语表" id="术语表">术语表</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/glossary.md">glossary.md</a><br />
-commit: e9862d82e92bb0d6f89df4036a98f96bcdd61c95 <br />
-本章译文最后维护日期：2021-06-09</p>
+commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
+本章译文最后维护日期：2021-07-31</p>
 </blockquote>
 <h3><a class="header" href="#abstract-syntax-tree" id="abstract-syntax-tree">Abstract syntax tree</a></h3>
 <h3><a class="header" href="#抽象句法树" id="抽象句法树">抽象句法树</a></h3>
@@ -254,8 +254,8 @@ An <a href="items/implementations.html">implementation</a> that applies to a nom
 A <a href="items/associated-items.html#methods">method</a> defined in an <a href="items/implementations.html#inherent-implementations">inherent implementation</a>, not in a trait implementation.</p>
 <h3><a class="header" href="#initialized" id="initialized">Initialized</a></h3>
 <h3><a class="header" href="#初始化" id="初始化">初始化</a></h3>
-<p>如果一个变量已经被分配了一个值，并且此值还没有被移动走，那此变量就被初始化了。对此变量而言，它会假设它之外的所有其他内存位置都未初始化。只有非安全Rust 可以在不初始化的情况下开辟内存新区域。<br />
-A variable is initialized if it has been assigned a value and hasn't since been moved from. All other memory locations are assumed to be uninitialized. Only unsafe Rust can create such a memory without initializing it.</p>
+<p>如果一个变量已经被分配了一个值，并且此值还没有被移动走，那此变量就被初始化了。对此变量而言，它会假设它之外的所有其他内存位置都未初始化。只有非安全Rust 可以在未初始化的情况下开辟内存区域。<br />
+A variable is initialized if it has been assigned a value and hasn't since been moved from. All other memory locations are assumed to be uninitialized. Only unsafe Rust can create a memory location without initializing it.</p>
 <h3><a class="header" href="#local-trait" id="local-trait">Local trait</a></h3>
 <h3><a class="header" href="#本地-trait" id="本地-trait">本地 trait</a></h3>
 <p>本地 trait 是在当前 crate 中定义的 <code>trait</code>。它可以在模块局部定义，也可以是依附于其他类型参数而定义。给定 <code>trait Foo&lt;T, U&gt;</code>，<code>Foo</code> 总是本地的，不管替代 <code>T</code> 和 <code>U</code> 的类型是什么。<br />
