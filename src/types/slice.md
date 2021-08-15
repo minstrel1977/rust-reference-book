@@ -15,7 +15,7 @@
 
 * `&[T]`，共享切片('shared slice')，常被直接称为切片(`slice`)。它不拥有它指向的数据，只是借用。
 * `&mut [T]`，可变切片('mutable slice')。它可变借用它指向的数据。
-* `Box<[T]>`, box化的切片('boxed slice')。
+* `Box<[T]>`, 装箱的切片('boxed slice')。
 
 示例：
 

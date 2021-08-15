@@ -8991,7 +8991,7 @@ commit: 5ae4a38e36135e02e01933ba81d206b1c2e9ce70 <br />
 <ul>
 <li><code>&amp;[T]</code>，共享切片('shared slice')，常被直接称为切片(<code>slice</code>)。它不拥有它指向的数据，只是借用。</li>
 <li><code>&amp;mut [T]</code>，可变切片('mutable slice')。它可变借用它指向的数据。</li>
-<li><code>Box&lt;[T]&gt;</code>, box化的切片('boxed slice')。</li>
+<li><code>Box&lt;[T]&gt;</code>, 装箱的切片('boxed slice')。</li>
 </ul>
 <p>示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
@@ -9468,7 +9468,7 @@ fn foo(arg: impl Trait) {
 <p>函数可以使用 <code>impl Trait</code> 返回抽象返回类型。
 这些类型代表另一个具体类型，调用者只能使用指定的 <code>Trait</code> 内声明的方法。
 函数的每个可能的返回分支返回的返回值都必须解析为相同的具体类型。</p>
-<p>返回位置上的 <code>impl Trait</code> 允许函数返回非box化的抽象类型。
+<p>返回位置上的 <code>impl Trait</code> 允许函数返回不用装箱的抽象类型。
 这对于<a href="types/closure.html">闭包</a>和迭代器特别有用。
 例如，闭包具有唯一的、不可写的类型。
 以前，从函数返回闭包的唯一方法是使用<a href="types/trait-object.html">trait对象</a>：</p>
@@ -9492,7 +9492,7 @@ fn foo(arg: impl Trait) {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>这也避免了使用 box化的 trait对象的缺陷。</p>
+<p>这也避免了对 trait对象进行装箱的缺陷。</p>
 <p>类似地，在迭代器的使用坏境中，如果将此步操作前的所有迭代器操作合并到一个执行链中，迭代器里的具体类型可能变得非常复杂。此时返回 <code>impl Iterator</code> 意味着一个函数只需将 <code>Iterator</code> trait 作为其返回类型的约束来公开，而不须显式指定链内所有其他涉及的迭代器类型。</p>
 <h3><a class="header" href="#differences-between-generics-and-impl-trait-in-return-position" id="differences-between-generics-and-impl-trait-in-return-position">Differences between generics and <code>impl Trait</code> in return position</a></h3>
 <h3><a class="header" href="#泛型与-impl-trait-在返回位置上的差异" id="泛型与-impl-trait-在返回位置上的差异">泛型与 <code>impl Trait</code> 在返回位置上的差异</a></h3>
@@ -12906,6 +12906,7 @@ A type is uninhabited if it has no constructors and therefore can never be insta
 <li>bare attribute：裸属性。-指没有属性值或属性列表的属性</li>
 <li>block：块</li>
 <li>body： 代码体</li>
+<li>boxed: 装箱的、box化的</li>
 <li>byte order mark: 字节序标记</li>
 <li>checked：安全检查通过的
 <ul>
