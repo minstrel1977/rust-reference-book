@@ -7,7 +7,7 @@
 
 *变量*是栈帧里的一个组件，可以是具名函数参数、匿名的[临时变量](expressions.md#temporaries)或具名局部变量。
 
-*局部变量*（或*本地栈(stack-local)*分配）直接持有一个值，该值在栈内存中分配。该值是栈帧的一部分。
+*局部变量*（或本地栈(stack-local)分配）直接持有一个值，该值在栈内存中分配。该值是栈帧的一部分。
 
 局部变量是不可变的，除非特别声明。例如：`let mut x = ...`。
 
@@ -36,6 +36,3 @@ fn initialization_example() {
 ```
 
 [`if` expression]: expressions/if-expr.md#if-expressions
-
-<!-- 2020-11-12-->
-<!-- checked -->
