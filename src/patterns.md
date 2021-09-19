@@ -2,8 +2,8 @@
 # 模式
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
->commit: 702bad4479c1a79fc386bde916a5a21deafd75d8 \
->本章译文最后维护日期：2021-07-31
+>commit: df5799c00f751a91585e86ede479c1697dbb34c5 \
+>本章译文最后维护日期：2021-09-19
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\
@@ -18,7 +18,6 @@
 > &nbsp;&nbsp; | [_IdentifierPattern_]\
 > &nbsp;&nbsp; | [_WildcardPattern_]\
 > &nbsp;&nbsp; | [_RestPattern_]\
-> &nbsp;&nbsp; | [_ObsoleteRangePattern_]\
 > &nbsp;&nbsp; | [_ReferencePattern_]\
 > &nbsp;&nbsp; | [_StructPattern_]\
 > &nbsp;&nbsp; | [_TupleStructPattern_]\
@@ -359,7 +358,15 @@ match tuple {
 
 > **<sup>句法</sup>**\
 > _RangePattern_ :\
-> &nbsp;&nbsp; _RangePatternBound_ `..=` _RangePatternBound_
+> &nbsp;&nbsp; &nbsp;&nbsp; _InclusiveRangePattern_\
+> &nbsp;&nbsp; | _HalfOpenRangePattern_\
+> &nbsp;&nbsp; | _ObsoleteRangePattern_
+>
+> _InclusiveRangePattern_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _RangePatternBound_ `..=` _RangePatternBound_
+>
+> _HalfOpenRangePattern_ :\
+> &nbsp;&nbsp; | _RangePatternBound_ `..`
 >
 > _ObsoleteRangePattern_ :(译者注：废弃的区间模式句法/产生式) \ 
 > &nbsp;&nbsp; _RangePatternBound_ `...` _RangePatternBound_
@@ -372,9 +379,13 @@ match tuple {
 > &nbsp;&nbsp; | [_PathInExpression_]\
 > &nbsp;&nbsp; | [_QualifiedPathInExpression_]
 
-区间模式匹配在其上下边界定义的封闭区间内的值。例如，一个模式 `'m'..='p'` 将只能匹配值`'m'`、`'n'`、`'o'` 和 `'p'`。它的边界值可以是字面量，也可以是指向常量值的路径。
+区间模式匹配在区间上下边界内界定的值。区间模式可是闭区间或半开区间。如果区间模式的上界和下界均被包含在内则为闭区间模式。半开区间模式为包含下界数值，但不包含上界数值的区间模式。
 
-一个模式 a `..=` b 必须总是有 a &le; b。例如，`10..=0` 这样的区间模式是错误的。
+例如：模式 `'m'..='p'` 只匹配 `'m'`, `'n'`, `'o'` 和 `'p'` 这4个字符。 `1..` 可以匹配 9，或者 9001，或者 9007199254740991（如果此值的尺寸合适），但是不能匹配到 0，也不能匹配有符号整数的负值。区间模式中的界值可以是字面量，也可以是指向常量的路径。
+
+`a..` 这样的半开区间模式不能匹配切片中的内容。
+
+模式 `a..=b` 必须总是有 a &le; b。例如，`10..=0` 这样的区间模式是错误的。
 
 保留 `...`句法只是为了向后兼容。
 
@@ -402,6 +413,12 @@ println!("{}", match ph {
     8..=14 => "base",
     _ => unreachable!(),
 });
+
+# let uint: u32 = 5;
+match uint {
+    0 => "zero!",
+    1.. => "正数!",
+};
 
 // 使用指向常量值的路径：
 # const TROPOSPHERE_MIN : u8 = 6;
@@ -677,6 +694,10 @@ match v[..] {
 ```
 
 在匹配数组时，只要每个元素是不可反驳型的，切片模式就是不可反驳型的。当匹配切片时，只有单个 `..` [剩余模式](#rest-patterns)或带有 `..`（剩余模式）作为子模式的[标识符模式](#identifier-patterns)的情况才是不可反驳型的。
+
+
+对于匹配切片内的数值，像 `a..` 这样的半开区间模式必须使用使用圆括号包裹起来，即 `(a..)` 这样，这样是显式提醒它是用来匹配切片内一个单独的值的。
+在 Rust 的未来的版本中有可能会提供不用圆括号包裹的区间匹配模式作为替代选项。
 
 ## Path patterns
 ## 路径模式

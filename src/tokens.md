@@ -1,8 +1,8 @@
 # Tokens
 
 >[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
->commit: 8e62ab3e5dc57f5db7581cf763bcbbea75ab58eb \
->本章译文最后维护日期：2020-1-17
+>commit: df5799c00f751a91585e86ede479c1697dbb34c5 \
+>本章译文最后维护日期：2021-09-19
 
 
 token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：
@@ -507,7 +507,7 @@ let x: f64 = 2.; // 类型 f64
 | `@`    | At          | [子模式绑定][Subpattern binding]
 | `_`    | Underscore  | [通配符模式][Wildcard patterns], [自动推断型类型][Inferred types], [常量项][constants]中的非命名程序项, [外部 crate][extern crates], 和 [use声明][use declarations]
 | `.`    | Dot         | [字段访问][field], [元组索引][Tuple index]
-| `..`   | DotDot      | [区间][range], [结构体表达式][Struct expressions], [模式][Patterns]
+| `..`   | DotDot      | [区间][range], [结构体表达式][Struct expressions], [模式][Patterns],[区间模式][rangepat]
 | `...`  | DotDotDot   | [可变参数函数][extern], [区间模式][Range patterns]
 | `..=`  | DotDotEq    | [闭区间][range], [区间模式][Range patterns]
 | `,`    | Comma       | 各种分隔符
@@ -567,6 +567,7 @@ let x: f64 = 2.; // 类型 f64
 [patterns]: patterns.md
 [question]: expressions/operator-expr.md#the-question-mark-operator
 [range]: expressions/range-expr.md
+[rangepat]: patterns.md#range-patterns
 [raw pointers]: types/pointer.md#raw-pointers-const-and-mut
 [references]: types/pointer.md
 [sized]: trait-bounds.md#sized
@@ -579,6 +580,3 @@ let x: f64 = 2.; // 类型 f64
 [use declarations]: items/use-declarations.md
 [use wildcards]: items/use-declarations.md
 [`while let`]: expressions/loop-expr.md#predicate-pattern-loops
-
-<!-- 2020-11-12-->
-<!-- checked -->

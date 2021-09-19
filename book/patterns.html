@@ -169,8 +169,8 @@
 <h1><a class="header" href="#模式" id="模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
-commit: 702bad4479c1a79fc386bde916a5a21deafd75d8 <br />
-本章译文最后维护日期：2021-07-31</p>
+commit: df5799c00f751a91585e86ede479c1697dbb34c5 <br />
+本章译文最后维护日期：2021-09-19</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -184,7 +184,6 @@ commit: 702bad4479c1a79fc386bde916a5a21deafd75d8 <br />
    | <a href="#identifier-patterns"><em>IdentifierPattern</em></a><br />
    | <a href="#wildcard-pattern"><em>WildcardPattern</em></a><br />
    | <a href="#rest-patterns"><em>RestPattern</em></a><br />
-   | <a href="#range-patterns"><em>ObsoleteRangePattern</em></a><br />
    | <a href="#reference-patterns"><em>ReferencePattern</em></a><br />
    | <a href="#struct-patterns"><em>StructPattern</em></a><br />
    | <a href="#tuple-struct-patterns"><em>TupleStructPattern</em></a><br />
@@ -508,7 +507,13 @@ match tuple {
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>RangePattern</em> :<br />
-   <em>RangePatternBound</em> <code>..=</code> <em>RangePatternBound</em></p>
+      <em>InclusiveRangePattern</em><br />
+   | <em>HalfOpenRangePattern</em><br />
+   | <em>ObsoleteRangePattern</em></p>
+<p><em>InclusiveRangePattern</em> :<br />
+      <em>RangePatternBound</em> <code>..=</code> <em>RangePatternBound</em></p>
+<p><em>HalfOpenRangePattern</em> :<br />
+   | <em>RangePatternBound</em> <code>..</code></p>
 <p><em>ObsoleteRangePattern</em> :(译者注：废弃的区间模式句法/产生式) \ 
    <em>RangePatternBound</em> <code>...</code> <em>RangePatternBound</em></p>
 <p><em>RangePatternBound</em> :<br />
@@ -519,8 +524,10 @@ match tuple {
    | <a href="paths.html#paths-in-expressions"><em>PathInExpression</em></a><br />
    | <a href="paths.html#qualified-paths"><em>QualifiedPathInExpression</em></a></p>
 </blockquote>
-<p>区间模式匹配在其上下边界定义的封闭区间内的值。例如，一个模式 <code>'m'..='p'</code> 将只能匹配值<code>'m'</code>、<code>'n'</code>、<code>'o'</code> 和 <code>'p'</code>。它的边界值可以是字面量，也可以是指向常量值的路径。</p>
-<p>一个模式 a <code>..=</code> b 必须总是有 a ≤ b。例如，<code>10..=0</code> 这样的区间模式是错误的。</p>
+<p>区间模式匹配在区间上下边界内界定的值。区间模式可是闭区间或半开区间。如果区间模式的上界和下界均被包含在内则为闭区间模式。半开区间模式为包含下界数值，但不包含上界数值的区间模式。</p>
+<p>例如：模式 <code>'m'..='p'</code> 只匹配 <code>'m'</code>, <code>'n'</code>, <code>'o'</code> 和 <code>'p'</code> 这4个字符。 <code>1..</code> 可以匹配 9，或者 9001，或者 9007199254740991（如果此值的尺寸合适），但是不能匹配到 0，也不能匹配有符号整数的负值。区间模式中的界值可以是字面量，也可以是指向常量的路径。</p>
+<p><code>a..</code> 这样的半开区间模式不能匹配切片中的内容。</p>
+<p>模式 <code>a..=b</code> 必须总是有 a ≤ b。例如，<code>10..=0</code> 这样的区间模式是错误的。</p>
 <p>保留 <code>...</code>句法只是为了向后兼容。</p>
 <p>区间模式只适用于标量类型(scalar type)。可接受的类型有：</p>
 <ul>
@@ -547,6 +554,12 @@ match tuple {
     8..=14 =&gt; &quot;base&quot;,
     _ =&gt; unreachable!(),
 });
+
+<span class="boring">let uint: u32 = 5;
+</span>match uint {
+    0 =&gt; &quot;zero!&quot;,
+    1.. =&gt; &quot;正数!&quot;,
+};
 
 // 使用指向常量值的路径：
 <span class="boring">const TROPOSPHERE_MIN : u8 = 6;
@@ -810,6 +823,8 @@ match v[..] {
 <span class="boring">}
 </span></code></pre></pre>
 <p>在匹配数组时，只要每个元素是不可反驳型的，切片模式就是不可反驳型的。当匹配切片时，只有单个 <code>..</code> <a href="#rest-patterns">剩余模式</a>或带有 <code>..</code>（剩余模式）作为子模式的<a href="#identifier-patterns">标识符模式</a>的情况才是不可反驳型的。</p>
+<p>对于匹配切片内的数值，像 <code>a..</code> 这样的半开区间模式必须使用使用圆括号包裹起来，即 <code>(a..)</code> 这样，这样是显式提醒它是用来匹配切片内一个单独的值的。
+在 Rust 的未来的版本中有可能会提供不用圆括号包裹的区间匹配模式作为替代选项。</p>
 <h2><a class="header" href="#path-patterns" id="path-patterns">Path patterns</a></h2>
 <h2><a class="header" href="#路径模式" id="路径模式">路径模式</a></h2>
 <blockquote>

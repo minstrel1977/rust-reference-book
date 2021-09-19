@@ -168,8 +168,8 @@
                         <h1><a class="header" href="#tokens" id="tokens">Tokens</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/tokens.md">tokens.md</a><br />
-commit: 8e62ab3e5dc57f5db7581cf763bcbbea75ab58eb <br />
-本章译文最后维护日期：2020-1-17</p>
+commit: df5799c00f751a91585e86ede479c1697dbb34c5 <br />
+本章译文最后维护日期：2021-09-19</p>
 </blockquote>
 <p>token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：</p>
 <ul>
@@ -619,7 +619,7 @@ LIFETIME_TOKEN :<br />
 <tr><td><code>@</code></td><td>At</td><td><a href="patterns.html#identifier-patterns">子模式绑定</a></td></tr>
 <tr><td><code>_</code></td><td>Underscore</td><td><a href="patterns.html#wildcard-pattern">通配符模式</a>, <a href="types/inferred.html">自动推断型类型</a>, <a href="items/constant-items.html">常量项</a>中的非命名程序项, <a href="items/extern-crates.html">外部 crate</a>, 和 <a href="items/use-declarations.html">use声明</a></td></tr>
 <tr><td><code>.</code></td><td>Dot</td><td><a href="expressions/field-expr.html">字段访问</a>, <a href="expressions/tuple-expr.html#tuple-indexing-expressions">元组索引</a></td></tr>
-<tr><td><code>..</code></td><td>DotDot</td><td><a href="expressions/range-expr.html">区间</a>, <a href="expressions/struct-expr.html">结构体表达式</a>, <a href="patterns.html">模式</a></td></tr>
+<tr><td><code>..</code></td><td>DotDot</td><td><a href="expressions/range-expr.html">区间</a>, <a href="expressions/struct-expr.html">结构体表达式</a>, <a href="patterns.html">模式</a>,<a href="patterns.html#range-patterns">区间模式</a></td></tr>
 <tr><td><code>...</code></td><td>DotDotDot</td><td><a href="items/external-blocks.html">可变参数函数</a>, <a href="patterns.html#range-patterns">区间模式</a></td></tr>
 <tr><td><code>..=</code></td><td>DotDotEq</td><td><a href="expressions/range-expr.html">闭区间</a>, <a href="patterns.html#range-patterns">区间模式</a></td></tr>
 <tr><td><code>,</code></td><td>Comma</td><td>各种分隔符</td></tr>
@@ -640,8 +640,7 @@ LIFETIME_TOKEN :<br />
 <tr><td><code>[</code> <code>]</code></td><td>方/中括号</td></tr>
 <tr><td><code>(</code> <code>)</code></td><td>圆/小括号</td></tr>
 </tbody></table>
-<!-- 2020-11-12-->
-<!-- checked -->
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
