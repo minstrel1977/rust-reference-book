@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2021-09-19</p>
+<p>本书跟随原文截止日期：2021-10-17</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -4019,8 +4019,8 @@ extern {
 <h1><a class="header" href="#类型参数和生存期参数" id="类型参数和生存期参数">类型参数和生存期参数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/generics.md">generics.md</a><br />
-commit: c0f756e054019646513e9b20f6d4f8193cc0c5b2 <br />
-本章译文最后维护日期：2021-07-17</p>
+commit: 979707736cc937200ded3afae52bf8aa7501ebf2 <br />
+本章译文最后维护日期：2021-10-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -5362,8 +5362,8 @@ fn calls_h() {
 <h1><a class="header" href="#极值设置" id="极值设置">极值设置</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/limits.md">limits.md</a><br />
-commit: 8758f30a7d62513cb3caea30000850c9742f2438 <br />
-本章译文最后维护日期：2021-5-29</p>
+commit: 064e68d9f878d6e98e12776562fa9306ef851f10 <br />
+本章译文最后维护日期：2021-10-17</p>
 </blockquote>
 <p>以下<a href="attributes/../attributes.html">属性</a>影响部分编译期参数的极限值设置。</p>
 <h2><a class="header" href="#the-recursion_limit-attribute" id="the-recursion_limit-attribute">The <code>recursion_limit</code> attribute</a></h2>
@@ -5378,10 +5378,10 @@ commit: 8758f30a7d62513cb3caea30000850c9742f2438 <br />
 
 <span class="boring">fn main() {
 </span>macro_rules! a {
-    () =&gt; { a!(1) };
-    (1) =&gt; { a!(2) };
-    (2) =&gt; { a!(3) };
-    (3) =&gt; { a!(4) };
+    () =&gt; { a!(1); };
+    (1) =&gt; { a!(2); };
+    (2) =&gt; { a!(3); };
+    (3) =&gt; { a!(4); };
     (4) =&gt; { };
 }
 
@@ -10259,7 +10259,7 @@ fn name_figure&lt;U: Shape&gt;(
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-coercions.md">type-coercions.md</a><br />
 commit: ae773c1a19d6ebe3922b9739b5dbf8b762fd327c <br />
-本章译文最后维护日期：2021-07-31</p>
+本章译文最后维护日期：2021-07-17</p>
 </blockquote>
 <p><strong>类型自动强转</strong>是改变值的类型的隐式操作。它们在特定的位置自动发生，但实际自动强转的类型也受到很多限制。</p>
 <p>任何允许自动强转的转换都可以由<a href="expressions/operator-expr.html#type-cast-expressions">类型强制转换操作符</a> <code>as</code> 来显式执行。</p>
@@ -10395,7 +10395,7 @@ fn main() {
 <li><code>Box&lt;T&gt;</code></li>
 </ul>
 <p>并且 <code>U</code> 能够通过<a href="type-coercions.html#unsized-coercions">非固定尺寸类型自动强转</a>得到。</p>
-<!--将来，coerce_inner 会被递归扩展到元组和结构体上。此外从子 trait 到父类trait 的自动强转也会被加进来，更多细节请参见 [RFC 401] 。-->
+<!--将来，coerce_inner 会被递归扩展到元组和结构体上。此外从子trait 到父类trait 的自动强转也会被加进来，更多细节请参见 [RFC 401] 。-->
 </li>
 <li>
 <p>函数项到函数指针(<code>fn</code> pointers)</p>

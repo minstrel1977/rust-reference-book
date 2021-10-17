@@ -3,7 +3,7 @@
 
 >[type-coercions.md](https://github.com/rust-lang/reference/blob/master/src/type-coercions.md)\
 >commit: ae773c1a19d6ebe3922b9739b5dbf8b762fd327c \
->本章译文最后维护日期：2021-07-31
+>本章译文最后维护日期：2021-07-17
 
 **类型自动强转**是改变值的类型的隐式操作。它们在特定的位置自动发生，但实际自动强转的类型也受到很多限制。
 
@@ -132,7 +132,7 @@
 
     并且 `U` 能够通过[非固定尺寸类型自动强转](#unsized-coercions)得到。
 
-    <!--将来，coerce_inner 会被递归扩展到元组和结构体上。此外从子 trait 到父类trait 的自动强转也会被加进来，更多细节请参见 [RFC 401] 。-->
+    <!--将来，coerce_inner 会被递归扩展到元组和结构体上。此外从子trait 到父类trait 的自动强转也会被加进来，更多细节请参见 [RFC 401] 。-->
 
 * 函数项到函数指针(`fn` pointers)
 

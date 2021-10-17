@@ -169,8 +169,8 @@
 <h1><a class="header" href="#极值设置" id="极值设置">极值设置</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/limits.md">limits.md</a><br />
-commit: 8758f30a7d62513cb3caea30000850c9742f2438 <br />
-本章译文最后维护日期：2021-5-29</p>
+commit: 064e68d9f878d6e98e12776562fa9306ef851f10 <br />
+本章译文最后维护日期：2021-10-17</p>
 </blockquote>
 <p>以下<a href="../attributes.html">属性</a>影响部分编译期参数的极限值设置。</p>
 <h2><a class="header" href="#the-recursion_limit-attribute" id="the-recursion_limit-attribute">The <code>recursion_limit</code> attribute</a></h2>
@@ -185,10 +185,10 @@ commit: 8758f30a7d62513cb3caea30000850c9742f2438 <br />
 
 <span class="boring">fn main() {
 </span>macro_rules! a {
-    () =&gt; { a!(1) };
-    (1) =&gt; { a!(2) };
-    (2) =&gt; { a!(3) };
-    (3) =&gt; { a!(4) };
+    () =&gt; { a!(1); };
+    (1) =&gt; { a!(2); };
+    (2) =&gt; { a!(3); };
+    (3) =&gt; { a!(4); };
     (4) =&gt; { };
 }
 

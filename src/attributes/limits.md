@@ -2,8 +2,8 @@
 # 极值设置
 
 >[limits.md](https://github.com/rust-lang/reference/blob/master/src/attributes/limits.md)\
->commit: 8758f30a7d62513cb3caea30000850c9742f2438 \
->本章译文最后维护日期：2021-5-29
+>commit: 064e68d9f878d6e98e12776562fa9306ef851f10 \
+>本章译文最后维护日期：2021-10-17
 
 以下[属性][attributes]影响部分编译期参数的极限值设置。
 
@@ -18,10 +18,10 @@
 #![recursion_limit = "4"]
 
 macro_rules! a {
-    () => { a!(1) };
-    (1) => { a!(2) };
-    (2) => { a!(3) };
-    (3) => { a!(4) };
+    () => { a!(1); };
+    (1) => { a!(2); };
+    (2) => { a!(3); };
+    (3) => { a!(4); };
     (4) => { };
 }
 
