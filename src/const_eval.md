@@ -2,8 +2,8 @@
 # 常量求值
 
 >[const_eval.md](https://github.com/rust-lang/reference/blob/master/src/const_eval.md)\
->commit:  8425f5bad3ac40e807e3f75f13b989944da28b62 \
->本章译文最后维护日期：2021-4-5
+>commit:  089b98649ea2e0ad812cc994fc18a70afd834182 \
+>本章译文最后维护日期：2021-10-29
 
 常量求值是在编译过程中计算[表达式][[expressions]]结果的过程。（不是所有表达式都可以在编译时求值，也就是说）只有全部表达式的某个子集可以在编译时求值。
 
@@ -70,7 +70,6 @@
 * 泛型参数上除 `Sized` 之外的泛型约束
 * 比较裸指针
 * 访问联合体字段
-* 调用 [`transmute`]。
 
 相反，以下情况在常量函数中是有可能的，但在常量上下文中则不可能：
 
@@ -120,6 +119,5 @@
 [statics]:              items/static-items.md
 [struct]:               expressions/struct-expr.md
 [tuple expressions]:    expressions/tuple-expr.md
-[`transmute`]:          https://doc.rust-lang.org/std/mem/fn.transmute.html
 [while]:                expressions/loop-expr.md#predicate-loops
 [`while let`]:          expressions/loop-expr.md#predicate-pattern-loops

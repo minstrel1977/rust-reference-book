@@ -169,8 +169,8 @@
 <h1><a class="header" href="#常量求值" id="常量求值">常量求值</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/const_eval.md">const_eval.md</a><br />
-commit:  8425f5bad3ac40e807e3f75f13b989944da28b62 <br />
-本章译文最后维护日期：2021-4-5</p>
+commit:  089b98649ea2e0ad812cc994fc18a70afd834182 <br />
+本章译文最后维护日期：2021-10-29</p>
 </blockquote>
 <p>常量求值是在编译过程中计算[表达式][<a href="expressions.html">expressions</a>]结果的过程。（不是所有表达式都可以在编译时求值，也就是说）只有全部表达式的某个子集可以在编译时求值。</p>
 <h2><a class="header" href="#constant-expressions" id="constant-expressions">Constant expressions</a></h2>
@@ -241,7 +241,6 @@ commit:  8425f5bad3ac40e807e3f75f13b989944da28b62 <br />
 <li>泛型参数上除 <code>Sized</code> 之外的泛型约束</li>
 <li>比较裸指针</li>
 <li>访问联合体字段</li>
-<li>调用 <a href="https://doc.rust-lang.org/std/mem/fn.transmute.html"><code>transmute</code></a>。</li>
 </ul>
 <p>相反，以下情况在常量函数中是有可能的，但在常量上下文中则不可能：</p>
 <ul>
