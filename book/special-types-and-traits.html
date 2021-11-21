@@ -169,8 +169,8 @@
 <h1><a class="header" href="#特殊类型和-trait" id="特殊类型和-trait">特殊类型和 trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/special-types-and-traits.md">special-types-and-traits.md</a><br />
-commit: 4e138b37b49c49bc875b96b859fbe0caea5a82f3 <br />
-本章译文最后维护日期：2021-07-17</p>
+commit: d3cf0c6645e8049e7403e3e548d51773efd8a623 <br />
+本章译文最后维护日期：2021-11-21</p>
 </blockquote>
 <p><a href="https://doc.rust-lang.org/std/index.html">标准库</a>中的某些类型和 trait 在 Rust 编译器中也直接能用。本章就阐述了这些类型和 trait 的特殊特性。</p>
 <h2><a class="header" href="#boxt" id="boxt"><code>Box&lt;T&gt;</code></a></h2>
@@ -204,20 +204,16 @@ commit: 4e138b37b49c49bc875b96b859fbe0caea5a82f3 <br />
 对于联合体，这意味着所有的变体都必须是 <code>Copy</code> 的。</p>
 <p><code>Copy</code> 已由编译器实现给了下述类型：</p>
 <ul>
-<li><a href="types/numeric.html">数字类类型</a></li>
-<li><code>char</code>, <code>bool</code>, 和 <a href="types/never.html"><code>!</code></a></li>
-<li>由 <code>Copy</code> 类型的元素组成的<a href="types/tuple.html">元组</a></li>
-<li>由 <code>Copy</code> 类型的元素组成的<a href="types/array.html">数组</a></li>
-<li><a href="types/pointer.html#shared-references-">共享引用</a></li>
-<li><a href="types/pointer.html#raw-pointers-const-and-mut">裸指针</a></li>
-<li><a href="types/function-pointer.html">函数指针</a> 和 <a href="types/function-item.html">函数项类型</a></li>
+<li>由 <code>Copy</code>类型的元素组成的<a href="types/tuple.html">元组</a></li>
+<li><a href="types/function-pointer.html">函数指针</a></li>
+<li>[函数项][function item]</li>
+<li>不捕获环境变量或只捕获 <code>Copy</code>类型变量的<a href="types/closure.html">闭包</a></li>
 </ul>
 <h2><a class="header" href="#clone" id="clone"><code>Clone</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/clone/trait.Clone.html"><code>Clone</code></a> trait 是 <code>Copy</code> 的超类trait，所以它也需要编译器生成实现。它被编译器实现给了以下类型：</p>
 <ul>
 <li>实现了内置的 <code>Copy</code> trait 的类型（见上面）</li>
 <li>由 <code>Clone</code> 类型的元素组成的<a href="types/tuple.html">元组</a></li>
-<li>由 <code>Clone</code> 类型的元素组成的<a href="types/array.html">数组</a></li>
 </ul>
 <h2><a class="header" href="#send" id="send"><code>Send</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> trait 表明这种类型的值可以安全地从一个线程发送给另一个线程。</p>
@@ -249,8 +245,6 @@ commit: 4e138b37b49c49bc875b96b859fbe0caea5a82f3 <br />
 <div class="footnote-definition" id="译注3"><sup class="footnote-definition-label">3</sup>
 <p>标准库外使用需要打开特性 <code>#![feature(negative_impls)]</code>。</p>
 </div>
-<!-- 2020-11-12-->
-<!-- checked -->
 
                     </main>
 

@@ -2,8 +2,8 @@
 # 特殊类型和 trait
 
 >[special-types-and-traits.md](https://github.com/rust-lang/reference/blob/master/src/special-types-and-traits.md)\
->commit: 4e138b37b49c49bc875b96b859fbe0caea5a82f3 \
->本章译文最后维护日期：2021-07-17
+>commit: d3cf0c6645e8049e7403e3e548d51773efd8a623 \
+>本章译文最后维护日期：2021-11-21
 
 [标准库][the standard library]中的某些类型和 trait 在 Rust 编译器中也直接能用。本章就阐述了这些类型和 trait 的特殊特性。
 
@@ -58,13 +58,10 @@
 
 `Copy` 已由编译器实现给了下述类型：
 
-* [数字类类型][Numeric types]
-* `char`, `bool`, 和 [`!`]
-* 由 `Copy` 类型的元素组成的[元组][Tuples]
-* 由 `Copy` 类型的元素组成的[数组][Arrays]
-* [共享引用][Shared references]
-* [裸指针][Raw pointers]
-* [函数指针][Function pointers] 和 [函数项类型][function item types]
+* 由 `Copy`类型的元素组成的[元组][Tuples]
+* [函数指针][Function pointers]
+* [函数项][function item]
+* 不捕获环境变量或只捕获 `Copy`类型变量的[闭包][Closures]
 
 ## `Clone`
 
@@ -72,7 +69,6 @@
 
 * 实现了内置的 `Copy` trait 的类型（见上面）
 * 由 `Clone` 类型的元素组成的[元组][Tuples]
-* 由 `Clone` 类型的元素组成的[数组][Arrays]
 
 ## `Send`
 
@@ -141,24 +137,18 @@
 [drop check]: https://doc.rust-lang.org/nomicon/dropck.html
 [dynamically sized type]: dynamically-sized-types.md
 [Function pointers]: types/function-pointer.md
-[function item types]: types/function-item.md
+[Function items]: types/function-item.md
 [implementation items]: items/implementations.md
 [indexing expressions]: expressions/array-expr.md#array-and-slice-indexing-expressions
 [interior mutability]: interior-mutability.md
-[Numeric types]: types/numeric.md
 [Methods]: items/associated-items.md#associated-functions-and-methods
 [method resolution]: expressions/method-call-expr.md
 [operators]: expressions/operator-expr.md
 [orphan rules]: items/implementations.md#trait-implementation-coherence
-[Raw pointers]: types/pointer.md#raw-pointers-const-and-mut
 [`static` items]: items/static-items.md
-[Shared references]: types/pointer.md#shared-references-
 [the standard library]: https://doc.rust-lang.org/std/index.html
 [trait object]: types/trait-object.md
 [Tuples]: types/tuple.md
 [Type parameters]: types/parameters.md
 [variance]: subtyping.md#variance
-[`!`]: types/never.md
-
-<!-- 2020-11-12-->
-<!-- checked -->
+[Closures]: types/closure.md
