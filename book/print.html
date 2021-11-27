@@ -9609,7 +9609,7 @@ commit: 0cb7e46722353a5de852d03684b4895516f92a4d <br />
 <p>每次编译都有可能更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。</p>
 <h2><a class="header" href="#size-and-alignment" id="size-and-alignment">Size and Alignment</a></h2>
 <h2><a class="header" href="#尺寸和对齐量" id="尺寸和对齐量">尺寸和对齐量</a></h2>
-<p>所有值都有对一个齐量和尺寸。</p>
+<p>所有值都有一个对齐量和尺寸。</p>
 <p>值的<em>对齐量</em>指定了哪些地址可以有效地存储该值。对齐量为 <code>n</code> 的值只能存储地址为 n 的倍数的内存地址上。例如，对齐量为 2 的值必须存储在偶数地址上，而对齐量为 1 的值可以存储在任何地址上。对齐量是用字节数来度量的，必须至少是 1，并且总是 2 的幂次。值的对齐量可以通过函数 <a href="https://doc.rust-lang.org/std/mem/fn.align_of_val.html"><code>align_of_val</code></a> 来检测。</p>
 <p>值的<em>尺寸</em>是同类型的值组成的数组中连续两个元素之间的字节偏移量，此偏移量包括了为保持程序项类型内部对齐而对此类型做的对齐填充。值的尺寸总是其对齐量的非负整数倍数。值的尺寸可以通过函数 <a href="https://doc.rust-lang.org/std/mem/fn.size_of_val.html"><code>size_of_val</code></a> 来检测。</p>
 <p>如果某类型的所有的值都具有相同的尺寸和对齐量，并且两者在编译时都是已知的，并且实现了 <a href="https://doc.rust-lang.org/std/marker/trait.Sized.html"><code>Sized</code></a> trait，则可以使用函数 <a href="https://doc.rust-lang.org/std/mem/fn.size_of.html"><code>size_of</code></a> 和 <a href="https://doc.rust-lang.org/std/mem/fn.align_of.html"><code>align_of</code></a> 对此类型进行检测。没有实现 <code>Sized</code> trait 的类型被称为<a href="dynamically-sized-types.html">动态尺寸类型</a>。由于实现了 <code>Sized</code> trait 的某一类型的所有值共享相同的尺寸和对齐量，所以我们分别将这俩共享值称为该类型的尺寸和该类型的对齐量。</p>
