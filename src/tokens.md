@@ -1,8 +1,8 @@
 # Tokens
 
 >[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
->commit: df5799c00f751a91585e86ede479c1697dbb34c5 \
->本章译文最后维护日期：2021-09-19
+>commit: d8cce6597b0678c72c83678243e36d5033adc624 \
+>本章译文最后维护日期：2021-11-27
 
 
 token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：
@@ -212,7 +212,7 @@ r##"foo #"# bar"##;                // foo #"# bar
 >
 > BYTE_ESCAPE :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `\x` HEX_DIGIT HEX_DIGIT\
-> &nbsp;&nbsp; | `\n` | `\r` | `\t` | `\\` | `\0`
+> &nbsp;&nbsp; | `\n` | `\r` | `\t` | `\\` | `\0` | `\'` | `\"`
 
 *字节字面量*是单个 ASCII 字符（码值在 `U+0000` 到 `U+007F` 区间内）或一个*转义字节*作为字节字面量的真实主体跟在表示形式意义的字符 `U+0062`（`b`）和字符 `U+0027`（单引号 `'`）组合之后，然后再后接字符 `U+0027`。如果字符 `U+0027` 本身要出现在字面量中，它必须经由前置字符 `U+005C`（`\`）*转义*。字节字面量等价于一个 `u8` 8-bit 无符号整型*数字字面量*。
 

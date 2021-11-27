@@ -1,8 +1,8 @@
 # crate 和源文件
 
 >[crates-and-source-files.md](https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md)\
->commit: eabdf09207bf3563ae96db9d576de0758c413d5d \
->本章译文最后维护日期：2021-1-24
+>commit: 8da7c7d3d9bef2a4e71176cfba9e8390af175826 \
+>本章译文最后维护日期：2021-11-27
 
 > **<sup>句法</sup>**\
 > _Crate_ :\
@@ -95,7 +95,7 @@ fn main() {
 #![crate_name = "mycrate"]
 ```
 
-crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 `-`(U+002D)。
+crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 `_` (U+005F)。
 
 [^phase-distinction]: 这种区别也存在于解释器中。静态检查，如语法分析、类型检查和 lint检查，都应该在程序执行之前进行，而不要去管程序何时执行。
 
@@ -131,6 +131,3 @@ crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 `-`(U+
     }
 })();
 </script>
-
-<!-- 2020-11-12-->
-<!-- checked -->

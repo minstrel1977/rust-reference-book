@@ -168,8 +168,8 @@
                         <h1><a class="header" href="#tokens" id="tokens">Tokens</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/tokens.md">tokens.md</a><br />
-commit: df5799c00f751a91585e86ede479c1697dbb34c5 <br />
-本章译文最后维护日期：2021-09-19</p>
+commit: d8cce6597b0678c72c83678243e36d5033adc624 <br />
+本章译文最后维护日期：2021-11-27</p>
 </blockquote>
 <p>token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：</p>
 <ul>
@@ -346,7 +346,7 @@ BYTE_LITERAL :<br />
    <em>任何 ASCII 字符 （0x00 到 0x7F）, 排除</em> <code>'</code>, <code>\</code>, \n, \r 或者 \t</p>
 <p>BYTE_ESCAPE :<br />
       <code>\x</code> HEX_DIGIT HEX_DIGIT<br />
-   | <code>\n</code> | <code>\r</code> | <code>\t</code> | <code>\\</code> | <code>\0</code></p>
+   | <code>\n</code> | <code>\r</code> | <code>\t</code> | <code>\\</code> | <code>\0</code> | <code>\'</code> | <code>\&quot;</code></p>
 </blockquote>
 <p><em>字节字面量</em>是单个 ASCII 字符（码值在 <code>U+0000</code> 到 <code>U+007F</code> 区间内）或一个<em>转义字节</em>作为字节字面量的真实主体跟在表示形式意义的字符 <code>U+0062</code>（<code>b</code>）和字符 <code>U+0027</code>（单引号 <code>'</code>）组合之后，然后再后接字符 <code>U+0027</code>。如果字符 <code>U+0027</code> 本身要出现在字面量中，它必须经由前置字符 <code>U+005C</code>（<code>\</code>）<em>转义</em>。字节字面量等价于一个 <code>u8</code> 8-bit 无符号整型<em>数字字面量</em>。</p>
 <h4><a class="header" href="#byte-string-literals" id="byte-string-literals">Byte string literals</a></h4>

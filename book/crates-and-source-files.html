@@ -168,8 +168,8 @@
                         <h1><a class="header" href="#crate-和源文件" id="crate-和源文件">crate 和源文件</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md">crates-and-source-files.md</a><br />
-commit: eabdf09207bf3563ae96db9d576de0758c413d5d <br />
-本章译文最后维护日期：2021-1-24</p>
+commit: 8da7c7d3d9bef2a4e71176cfba9e8390af175826 <br />
+本章译文最后维护日期：2021-11-27</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -249,7 +249,7 @@ fn main() {
 <span class="boring">fn main() {
 </span><span class="boring">}
 </span></code></pre></pre>
-<p>crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 <code>-</code>(U+002D)。</p>
+<p>crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 <code>_</code> (U+005F)。</p>
 <div class="footnote-definition" id="phase-distinction"><sup class="footnote-definition-label">1</sup>
 <p>这种区别也存在于解释器中。静态检查，如语法分析、类型检查和 lint检查，都应该在程序执行之前进行，而不要去管程序何时执行。</p>
 </div>
@@ -269,9 +269,6 @@ fn main() {
     }
 })();
 </script>
-<!-- 2020-11-12-->
-<!-- checked -->
-
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
