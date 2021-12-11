@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2021-11-27</p>
+<p>本书跟随原文截止日期：2021-12-11</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -281,9 +281,9 @@ commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
 <p><em>示例术语</em> 这是一个定义术语的示例。</p>
 </li>
 <li>
-<p>编译 crate 所使用的版本之间的语言差异用一个块引用表示，以<strong>粗体</strong>的“版本差异：”开头。</p>
+<p>编译 crate 所使用的版次之间的语言差异用一个块引用表示，以<strong>粗体</strong>的“版次差异：”开头。</p>
 <blockquote>
-<p><strong>版本差异</strong>：此句法(syntax)在 2015 版本有效，2018 版本起不允许使用。</p>
+<p><strong>版次差异</strong>：此句法(syntax)在 2015 版次有效，2018 版次起不允许使用。</p>
 </blockquote>
 </li>
 <li>
@@ -481,7 +481,7 @@ fn invalid_lifetime_parameter&lt;'static&gt;(s: &amp;'static str) -&gt; &amp;'st
 </code></pre>
 </li>
 <li>
-<p>在 2015 版本中，当 <a href="types/trait-object.html"><code>dyn</code></a> 用在非 <code>::</code> 开头的路径限定的类型前时，它是关键字。</p>
+<p>在 2015 版次中，当 <a href="types/trait-object.html"><code>dyn</code></a> 用在非 <code>::</code> 开头的路径限定的类型前时，它是关键字。</p>
 <p>从 2018 版开始，<code>dyn</code> 被提升为一个严格关键字。</p>
 </li>
 </ul>
@@ -2412,7 +2412,7 @@ fn main() {}
 </code></pre></pre>
 <p>：</p>
 <blockquote>
-<p><strong>版本差异</strong>: 在 2015 版中，<code>use</code>路径也允许访问 crate 根模块中的程序项。继续使用上面的例子，那以下 <code>use</code>路径的用法在 2015 版中有效，在 2018 版中就无效了:</p>
+<p><strong>版次差异</strong>: 在 2015 版中，<code>use</code>路径也允许访问 crate 根模块中的程序项。继续使用上面的例子，那以下 <code>use</code>路径的用法在 2015 版中有效，在 2018 版中就无效了:</p>
 <pre><pre class="playground"><code class="language-rust edition2015"><span class="boring">mod foo {
 </span><span class="boring">    pub mod example { pub mod iter {} }
 </span><span class="boring">    pub mod baz { pub fn foobaz() {} }
@@ -2681,7 +2681,7 @@ fn example&lt;'a&gt;(x: &amp;'a str) -&gt; impl Future&lt;Output = usize&gt; + '
 </ul>
 <p>有关异步效果的详细信息，请参见 <a href="items/../expressions/block-expr.html#async-blocks"><code>async</code>块</a>。</p>
 <blockquote>
-<p><strong>版本差异</strong>: 异步函数只能从 Rust 2018 版才开始可用。</p>
+<p><strong>版次差异</strong>: 异步函数只能从 Rust 2018 版才开始可用。</p>
 </blockquote>
 <h3><a class="header" href="#combining-async-and-unsafe" id="combining-async-and-unsafe">Combining <code>async</code> and <code>unsafe</code></a></h3>
 <h3><a class="header" href="#async-和-unsafe-的联合使用" id="async-和-unsafe-的联合使用"><code>async</code> 和 <code>unsafe</code> 的联合使用</a></h3>
@@ -4391,7 +4391,7 @@ let bounding_box = circle_shape.bounding_box();
 <span class="boring">}
 </span></code></pre></pre>
 <blockquote>
-<p><strong>版本差异</strong>: 在 2015 版中, 使用匿名参数来声明 trait方法是可能的 (例如：<code>fn foo(u8)</code>)。在 2018 版本中，这已被弃用，再用会导致编译错误。新版本种所有的参数都必须有参数名。</p>
+<p><strong>版次差异</strong>: 在 2015 版中, 使用匿名参数来声明 trait方法是可能的 (例如：<code>fn foo(u8)</code>)。在 2018 版中，这已被弃用，再用会导致编译错误。新版次中所有的参数都必须有参数名。</p>
 </blockquote>
 <h4><a class="header" href="#attributes-on-method-parameters" id="attributes-on-method-parameters">Attributes on method parameters</a></h4>
 <h4><a class="header" href="#方法参数上的属性" id="方法参数上的属性">方法参数上的属性</a></h4>
@@ -6009,7 +6009,7 @@ fn move_by_block_expression() {
 <p><strong>注意：</strong> rustc 生成的 future类型大致相当于一个枚举，rustc 为这个 future 的每个 <code>await</code>点生成一个此枚举的变体，其中每个变体都存储了对应点再次恢复执行时需要的数据。</p>
 </blockquote>
 <blockquote>
-<p><strong>版本差异</strong>: 异步块从 Rust 2018 版才开始可用。</p>
+<p><strong>版次差异</strong>: 异步块从 Rust 2018 版才开始可用。</p>
 </blockquote>
 <h3><a class="header" href="#capture-modes" id="capture-modes">Capture modes</a></h3>
 <h3><a class="header" href="#捕获方式" id="捕获方式">捕获方式</a></h3>
@@ -7838,7 +7838,7 @@ commit: 23672971a16c69ea894bef24992b74912cfe5d25 <br />
 <li>如果轮询(<code>poll</code>)调用返回 <a href="https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Pending"><code>Poll::Pending</code></a>，那么这个 future 就也返回 `<em>Expression</em></li>
 </ol>
 <blockquote>
-<p><strong>版本差异</strong>： 等待(await)表达式只能从 Rust 2018 版开始才可用</p>
+<p><strong>版次差异</strong>： 等待(await)表达式只能从 Rust 2018 版开始才可用</p>
 </blockquote>
 <h2><a class="header" href="#task-context" id="task-context">Task context</a></h2>
 <h2><a class="header" href="#任务上下文" id="任务上下文">任务上下文</a></h2>
@@ -8953,8 +8953,6 @@ commit: 80f4867bcc2baaa9bcdb650c43276cd98883389c <br />
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
 <p>结构化类型的特点就是其内部对等位置的类型如果是相等的，那么这些结构化类型就是相等的。有关元组的标称类型版本，请参见<a href="types/./struct.html">元组结构体</a>。</p>
 </div>
-<!-- 2021-1-10-->
-<!-- checked -->
 <h1><a class="header" href="#array-types" id="array-types">Array types</a></h1>
 <h1><a class="header" href="#数组类型" id="数组类型">数组类型</a></h1>
 <blockquote>
@@ -9351,7 +9349,7 @@ x = bo(5,7);
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/trait-object.md">trait-object.md</a><br />
 commit: fd10e7043934711ef96b4dd2009db3e4d0182a33 <br />
-本章译文最后维护日期：2020-11-14</p>
+本章译文最后维护日期：2021-12-11</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -9362,7 +9360,7 @@ commit: fd10e7043934711ef96b4dd2009db3e4d0182a33 <br />
 </blockquote>
 <p>*trait对象<sup class="footnote-reference"><a href="#译注1">1</a></sup>*是另一种类型的不透明值(opaque value)，它实现了一组 trait。<sup class="footnote-reference"><a href="#译注2">2</a></sup> 这组 trait 是由一个<a href="types/../items/traits.html#object-safety">对象安全的</a><em>基础trait(base trait)</em> 加上任意数量的<a href="types/../special-types-and-traits.html#auto-traits">自动trait(auto traits)</a>组成。</p>
 <p>trait对象实现了基础trait、它的自动trait 以及其基础trait 的任何<a href="types/../items/traits.html#supertraits">超类trait(supertraits)</a>。</p>
-<p>trait对象被写为为可选的关键字 <code>dyn</code> 后跟一组 trait约束，这些 trait约束有如此限制：除了第一个 trait 外，其他所有 trait 都必须是自动trait；生存期不能超过一个；不允许选择退出约束(opt-out bounds)（例如 <code>?Sized</code>）。此外，trait 的路径可以用圆括号括起来。</p>
+<p>trait对象被写为关键字 <code>dyn</code> 后跟一组 trait约束，这些 trait约束有如此限制：除了第一个 trait 外，其他所有 trait 都必须是自动trait；生存期不能超过一个；不允许选择退出约束(opt-out bounds)（例如 <code>?Sized</code>）。此外，trait 的路径可以用圆括号括起来。</p>
 <p>例如，给定一个trait <code>Trait</code>，下面所有的形式都是 trait对象：</p>
 <ul>
 <li><code>Trait</code></li>
@@ -9376,9 +9374,12 @@ commit: fd10e7043934711ef96b4dd2009db3e4d0182a33 <br />
 <li><code>dyn (Trait)</code></li>
 </ul>
 <blockquote>
-<p><strong>版本差异</strong>：在 2015 版里，如果 trait对象的第一个约束是以 <code>::</code> 开头的路径，那么 <code>dyn</code> 会被视为路径的一部分。可以把第一条路径放在圆括号中来绕过这个问题。因此，如果希望 trait对象具有 <code>::your_module::Trait</code> 路径，那么应该将其写为  <code>dyn (::your_module::Trait)</code>。</p>
-<p>从2018版本开始，<code>dyn</code> 是一个真正的关键字了，不允许在路径中使用，（不存在二义性了，）因此括号就没必要了。</p>
-<p>注意：为了清晰起见，建议总是在 trait对象上使用关键字 <code>dyn</code>，除非你的代码库支持用Rust 1.26 或更低的版本来编译。</p>
+<p><strong>版次差异</strong>: 在2021之前的版次中, 关键字 <code>dyn</code> 可以省略。</p>
+<p>注意： 除非你的代码库需要在 1.26 或更低版本的 Rust 下编译，否则为了表意清晰，强烈建议总是给 trait对象加上 <code>dyn</code>关键字。</p>
+</blockquote>
+<blockquote>
+<p><strong>版次差异</strong>：在 2015 版里，如果 trait对象的第一个约束是以 <code>::</code> 开头的路径，那么 <code>dyn</code> 会被视为路径的一部分。可以把第一条路径放在圆括号中来绕过这个问题。因此，如果希望 trait对象具有 <code>::your_module::Trait</code> 路径，那么应该将其写为  <code>dyn (::your_module::Trait)</code>。</p>
+<p>从2018版开始，<code>dyn</code> 是一个真正的关键字了，不允许在路径中使用，（不存在二义性了，）因此括号就没必要了。</p>
 </blockquote>
 <p>如果基础trait 互为别名，并且自动trait 相同，生存期约束也相同，则这两种 trait对象类型互为别名。例如，<code>dyn Trait + Send + UnwindSafe</code> 和 <code>dyn Trait + UnwindSafe + Send</code> 是等价的。</p>
 <p>由于值的具体类型是不透明的，trait对象是<a href="types/../dynamically-sized-types.html">动态尺寸类型</a>。像所有的 <abbr title="dynamically sized types">DST</abbr> 一样，trait对象常被用在某种类型的指针后面；例如 <code>&amp;dyn SomeTrait</code> 或 <code>Box&lt;dyn SomeTrait&gt;</code>。每个指向 trait对象的指针实例包括：</p>
@@ -10029,8 +10030,8 @@ commit: e7dd3618d78928322f53a20e2947e428b12eda2b <br />
 <h1><a class="header" href="#子类型化和型变" id="子类型化和型变">子类型化和型变</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/subtyping.md">subtyping.md</a><br />
-commit: 3b6fe80c205d2a2b5dc8a276192bbce9eeb9e9cf <br />
-本章译文最后维护日期：2021-03-02</p>
+commit: f26485de1ad88be2cc9ff131a4aee57cea562a95 <br />
+本章译文最后维护日期：2021-12-11</p>
 </blockquote>
 <p>子类型化是隐式的，可以出现在类型检查或类型推断的任何阶段。
 Rust 中的子类型化的适用范围非常有限，仅出现在和生存期(lifetimes)的型变(variance)相关的地方，以及那些和高阶生存期相关的类型型变之间。
@@ -10056,8 +10057,8 @@ let subtype: &amp;(for&lt;'a&gt; fn(&amp;'a i32) -&gt; &amp;'a i32) = &amp;((|x|
 let supertype: &amp;(fn(&amp;'static i32) -&gt; &amp;'static i32) = subtype;
 
 // 这对于 trait对象也是类似的
-let subtype: &amp;(for&lt;'a&gt; Fn(&amp;'a i32) -&gt; &amp;'a i32) = &amp;|x| x;
-let supertype: &amp;(Fn(&amp;'static i32) -&gt; &amp;'static i32) = subtype;
+let subtype: &amp;(dyn for&lt;'a&gt; Fn(&amp;'a i32) -&gt; &amp;'a i32) = &amp;|x| x;
+let supertype: &amp;(dyn Fn(&amp;'static i32) -&gt; &amp;'static i32) = subtype;
 
 // 我们也可以用一个高阶生存期来代替另一个
 let subtype: &amp;(for&lt;'a, 'b&gt; fn(&amp;'a i32, &amp;'b i32))= &amp;((|x, y| {}) as fn(&amp;_, &amp;_));
@@ -11294,7 +11295,7 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 <p>在根模块中使用 <a href="names/../items/extern-crates.html"><code>extern crate</code></a> 导入的外部crate 或直接给编译器提供的的外部crate（也就是在 <code>rustc</code>命令下使用 <code>--extern</code>命令行参数选项）会被添加到<em>外部预导入包</em>中。如果使用 <code>extern crate orig_name as new_name</code> 这类别名导入，则符号 <code>new_name</code> 将被添加到此预导入包。</p>
 <p><a href="names/../../core/index.html"><code>core</code></a> crate 总是会被添加到外部预导入包中。只要 <a href="names/preludes.html#the-no_std-attribute"><code>no_std</code>属性</a>没有在 crate根模块中指定，那么<a href="names/../../std/index.html"><code>std</code></a> crate 就会被添加进来</p>
 <blockquote>
-<p><strong>版本差异</strong>：在 2015 版中，在外部预导入包中的 crate 不能通过 <a href="names/../items/use-declarations.html">use声明</a>来直接引用，因此通常标准做法是用 <code>extern crate</code> 将那它们纳入到当前作用域。</p>
+<p><strong>版次差异</strong>：在 2015 版中，在外部预导入包中的 crate 不能通过 <a href="names/../items/use-declarations.html">use声明</a>来直接引用，因此通常标准做法是用 <code>extern crate</code> 将那它们纳入到当前作用域。</p>
 <p>从 2018 版开始， <a href="names/../items/use-declarations.html">use声明</a>可以直接引用外部预导入包里的 crate，所以再在代码里使用 <code>extern crate</code> 就会被认为是不规范的。</p>
 </blockquote>
 <blockquote>
@@ -11356,7 +11357,7 @@ use alloc::rc::Rc;
 <p>*<code>no_implicit_prelude</code><a href="names/../attributes.html">属性</a>*可以应用在 crate级别或模块上，用以指示它不应该自动将<a href="names/preludes.html#standard-library-prelude">标准库预导入包</a>、<a href="names/preludes.html#extern-prelude">外部预导入包</a>或<a href="names/preludes.html#tool-prelude">工具类预导入包</a>引入到当前模块或其任何子模块的作用域中。</p>
 <p>此属性不影响<a href="names/preludes.html#language-prelude">语言预导入包</a>。</p>
 <blockquote>
-<p><strong>版本差异</strong>: 在 2015版中，<code>no_implicit_prelude</code>属性不会影响<a href="names/preludes.html#macro_use-prelude"><code>macro_use</code>预导入包</a>，从标准库导出的所有宏仍然包含在 <code>macro_use</code>预导入包中。从 2018版开始，它也会禁止 <code>macro_use</code>预导入包生效。</p>
+<p><strong>版次差异</strong>: 在 2015版中，<code>no_implicit_prelude</code>属性不会影响<a href="names/preludes.html#macro_use-prelude"><code>macro_use</code>预导入包</a>，从标准库导出的所有宏仍然包含在 <code>macro_use</code>预导入包中。从 2018版开始，它也会禁止 <code>macro_use</code>预导入包生效。</p>
 </blockquote>
 <h1><a class="header" href="#paths" id="paths">Paths</a></h1>
 <h1><a class="header" href="#路径" id="路径">路径</a></h1>
@@ -11489,9 +11490,9 @@ type G = std::boxed::Box&lt;dyn std::ops::FnOnce(isize) -&gt; isize&gt;;
 <h2><a class="header" href="#路径限定符" id="路径限定符">路径限定符</a></h2>
 <p>路径可以被各种能改变其解析方式的前导限定符限定。</p>
 <h3><a class="header" href="#" id=""><code>::</code></a></h3>
-<p>以 <code>::</code> 开头的路径被认为是全局路径，其中的路径首段在不同的版本中的解析方式有所不同。但路径中的每个标识符都必须解析为一个程序项。</p>
+<p>以 <code>::</code> 开头的路径被认为是全局路径，其中的路径首段在不同的版次中的解析方式有所不同。但路径中的每个标识符都必须解析为一个程序项。</p>
 <blockquote>
-<p><strong>版本差异</strong>: 在2015版中，标识符解析从“create 根模块(crate root)”（2018版中表示为 <code>crate::</code>）开始，“create 根模块(crate root)”中包含了一系列不同的程序项，包括外部crate、默认create（如 <code>std</code> 或 <code>core</code>），以及 crate下的各种顶层程序项（包括 <code>use</code>导入）。</p>
+<p><strong>版次差异</strong>: 在2015版中，标识符解析从“create 根模块(crate root)”（2018版中表示为 <code>crate::</code>）开始，“create 根模块(crate root)”中包含了一系列不同的程序项，包括外部crate、默认create（如 <code>std</code> 或 <code>core</code>），以及 crate下的各种顶层程序项（包括 <code>use</code>导入）。</p>
 <p>从 2018 版开始，以 <code>::</code> 开头的路径被解析为<a href="names/preludes.html#extern-prelude">外部预导入包</a>中的一个 crate。也就是说，其后必须跟一个 crate的名称。</p>
 </blockquote>
 <pre><pre class="playground"><code class="language-rust edition2018">
@@ -11768,7 +11769,7 @@ pub mod submodule {
 <li><code>pub(self)</code> 使一个程序项对当前模块可见。这相当于 <code>pub(in self)</code> 或者根本不使用 <code>pub</code>。</li>
 </ul>
 <blockquote>
-<p><strong>版本差异</strong>: 从 2018版开始，<code>pub(in path)</code> 的路径必须以 <code>crate</code>、<code>self</code>或<code>super</code>开头。2015版还可以使用以 <code>::</code> 开头的路径，或以根模块下的模块名的开头的路径。</p>
+<p><strong>版次差异</strong>: 从 2018版开始，<code>pub(in path)</code> 的路径必须以 <code>crate</code>、<code>self</code>或<code>super</code>开头。2015版还可以使用以 <code>::</code> 开头的路径，或以根模块下的模块名的开头的路径。</p>
 </blockquote>
 <p>这里是一些示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2015">pub mod outer_mod {

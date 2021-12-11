@@ -233,7 +233,7 @@ fn example<'a>(x: &'a str) -> impl Future<Output = usize> + 'a {
 [async-blocks]: ../expressions/block-expr.md#async-blocks
 [`impl Future`]: ../types/impl-trait.md
 
-> **版本差异**: 异步函数只能从 Rust 2018 版才开始可用。
+> **版次差异**: 异步函数只能从 Rust 2018 版才开始可用。
 
 ### Combining `async` and `unsafe`
 ### `async` 和 `unsafe` 的联合使用

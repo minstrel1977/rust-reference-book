@@ -29,7 +29,7 @@
 
 [`core`] crate 总是会被添加到外部预导入包中。只要 [`no_std`属性][`no_std` attribute]没有在 crate根模块中指定，那么[`std`] crate 就会被添加进来
 
-> **版本差异**：在 2015 版中，在外部预导入包中的 crate 不能通过 [use声明][use declarations]来直接引用，因此通常标准做法是用 `extern crate` 将那它们纳入到当前作用域。
+> **版次差异**：在 2015 版中，在外部预导入包中的 crate 不能通过 [use声明][use declarations]来直接引用，因此通常标准做法是用 `extern crate` 将那它们纳入到当前作用域。
 > 
 > 从 2018 版开始， [use声明][use declarations]可以直接引用外部预导入包里的 crate，所以再在代码里使用 `extern crate` 就会被认为是不规范的。
 
@@ -96,7 +96,7 @@
 
 此属性不影响[语言预导入包][language prelude]。
 
-> **版本差异**: 在 2015版中，`no_implicit_prelude`属性不会影响[`macro_use`预导入包][`macro_use` prelude]，从标准库导出的所有宏仍然包含在 `macro_use`预导入包中。从 2018版开始，它也会禁止 `macro_use`预导入包生效。
+> **版次差异**: 在 2015版中，`no_implicit_prelude`属性不会影响[`macro_use`预导入包][`macro_use` prelude]，从标准库导出的所有宏仍然包含在 `macro_use`预导入包中。从 2018版开始，它也会禁止 `macro_use`预导入包生效。
 
 
 [`alloc`]: ../../alloc/index.html

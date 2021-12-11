@@ -261,7 +261,7 @@ fn main() {}
 </code></pre></pre>
 <p>：</p>
 <blockquote>
-<p><strong>版本差异</strong>: 在 2015 版中，<code>use</code>路径也允许访问 crate 根模块中的程序项。继续使用上面的例子，那以下 <code>use</code>路径的用法在 2015 版中有效，在 2018 版中就无效了:</p>
+<p><strong>版次差异</strong>: 在 2015 版中，<code>use</code>路径也允许访问 crate 根模块中的程序项。继续使用上面的例子，那以下 <code>use</code>路径的用法在 2015 版中有效，在 2018 版中就无效了:</p>
 <pre><pre class="playground"><code class="language-rust edition2015"><span class="boring">mod foo {
 </span><span class="boring">    pub mod example { pub mod iter {} }
 </span><span class="boring">    pub mod baz { pub fn foobaz() {} }

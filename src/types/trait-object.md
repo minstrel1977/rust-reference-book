@@ -3,7 +3,7 @@
 
 >[trait-object.md](https://github.com/rust-lang/reference/blob/master/src/types/trait-object.md)\
 >commit: fd10e7043934711ef96b4dd2009db3e4d0182a33 \
->本章译文最后维护日期：2020-11-14
+>本章译文最后维护日期：2021-12-11
 
 > **<sup>句法</sup>**\
 > _TraitObjectType_ :\
@@ -16,7 +16,7 @@
 
 trait对象实现了基础trait、它的自动trait 以及其基础trait 的任何[超类trait(supertraits)][supertraits]。
 
-trait对象被写为为可选的关键字 `dyn` 后跟一组 trait约束，这些 trait约束有如此限制：除了第一个 trait 外，其他所有 trait 都必须是自动trait；生存期不能超过一个；不允许选择退出约束(opt-out bounds)（例如 `?Sized`）。此外，trait 的路径可以用圆括号括起来。
+trait对象被写为关键字 `dyn` 后跟一组 trait约束，这些 trait约束有如此限制：除了第一个 trait 外，其他所有 trait 都必须是自动trait；生存期不能超过一个；不允许选择退出约束(opt-out bounds)（例如 `?Sized`）。此外，trait 的路径可以用圆括号括起来。
 
 例如，给定一个trait `Trait`，下面所有的形式都是 trait对象：
 
@@ -30,11 +30,13 @@ trait对象被写为为可选的关键字 `dyn` 后跟一组 trait约束，这�
 * `dyn 'static + Trait`.
 * `dyn (Trait)`
 
-> **版本差异**：在 2015 版里，如果 trait对象的第一个约束是以 `::` 开头的路径，那么 `dyn` 会被视为路径的一部分。可以把第一条路径放在圆括号中来绕过这个问题。因此，如果希望 trait对象具有 `::your_module::Trait` 路径，那么应该将其写为  `dyn (::your_module::Trait)`。
+> **版次差异**: 在2021之前的版次中, 关键字 `dyn` 可以省略。
 >
-> 从2018版本开始，`dyn` 是一个真正的关键字了，不允许在路径中使用，（不存在二义性了，）因此括号就没必要了。
-> 
-> 注意：为了清晰起见，建议总是在 trait对象上使用关键字 `dyn`，除非你的代码库支持用Rust 1.26 或更低的版本来编译。
+> 注意： 除非你的代码库需要在 1.26 或更低版本的 Rust 下编译，否则为了表意清晰，强烈建议总是给 trait对象加上 `dyn`关键字。
+
+> **版次差异**：在 2015 版里，如果 trait对象的第一个约束是以 `::` 开头的路径，那么 `dyn` 会被视为路径的一部分。可以把第一条路径放在圆括号中来绕过这个问题。因此，如果希望 trait对象具有 `::your_module::Trait` 路径，那么应该将其写为  `dyn (::your_module::Trait)`。
+>
+> 从2018版开始，`dyn` 是一个真正的关键字了，不允许在路径中使用，（不存在二义性了，）因此括号就没必要了。
 
 如果基础trait 互为别名，并且自动trait 相同，生存期约束也相同，则这两种 trait对象类型互为别名。例如，`dyn Trait + Send + UnwindSafe` 和 `dyn Trait + UnwindSafe + Send` 是等价的。
 

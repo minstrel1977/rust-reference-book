@@ -190,7 +190,7 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 <p>在根模块中使用 <a href="../items/extern-crates.html"><code>extern crate</code></a> 导入的外部crate 或直接给编译器提供的的外部crate（也就是在 <code>rustc</code>命令下使用 <code>--extern</code>命令行参数选项）会被添加到<em>外部预导入包</em>中。如果使用 <code>extern crate orig_name as new_name</code> 这类别名导入，则符号 <code>new_name</code> 将被添加到此预导入包。</p>
 <p><a href="../../core/index.html"><code>core</code></a> crate 总是会被添加到外部预导入包中。只要 <a href="#the-no_std-attribute"><code>no_std</code>属性</a>没有在 crate根模块中指定，那么<a href="../../std/index.html"><code>std</code></a> crate 就会被添加进来</p>
 <blockquote>
-<p><strong>版本差异</strong>：在 2015 版中，在外部预导入包中的 crate 不能通过 <a href="../items/use-declarations.html">use声明</a>来直接引用，因此通常标准做法是用 <code>extern crate</code> 将那它们纳入到当前作用域。</p>
+<p><strong>版次差异</strong>：在 2015 版中，在外部预导入包中的 crate 不能通过 <a href="../items/use-declarations.html">use声明</a>来直接引用，因此通常标准做法是用 <code>extern crate</code> 将那它们纳入到当前作用域。</p>
 <p>从 2018 版开始， <a href="../items/use-declarations.html">use声明</a>可以直接引用外部预导入包里的 crate，所以再在代码里使用 <code>extern crate</code> 就会被认为是不规范的。</p>
 </blockquote>
 <blockquote>
@@ -252,7 +252,7 @@ use alloc::rc::Rc;
 <p>*<code>no_implicit_prelude</code><a href="../attributes.html">属性</a>*可以应用在 crate级别或模块上，用以指示它不应该自动将<a href="#standard-library-prelude">标准库预导入包</a>、<a href="#extern-prelude">外部预导入包</a>或<a href="#tool-prelude">工具类预导入包</a>引入到当前模块或其任何子模块的作用域中。</p>
 <p>此属性不影响<a href="#language-prelude">语言预导入包</a>。</p>
 <blockquote>
-<p><strong>版本差异</strong>: 在 2015版中，<code>no_implicit_prelude</code>属性不会影响<a href="#macro_use-prelude"><code>macro_use</code>预导入包</a>，从标准库导出的所有宏仍然包含在 <code>macro_use</code>预导入包中。从 2018版开始，它也会禁止 <code>macro_use</code>预导入包生效。</p>
+<p><strong>版次差异</strong>: 在 2015版中，<code>no_implicit_prelude</code>属性不会影响<a href="#macro_use-prelude"><code>macro_use</code>预导入包</a>，从标准库导出的所有宏仍然包含在 <code>macro_use</code>预导入包中。从 2018版开始，它也会禁止 <code>macro_use</code>预导入包生效。</p>
 </blockquote>
 
                     </main>

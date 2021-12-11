@@ -21,7 +21,7 @@
 3. 然后通过调用 [`Future::poll`] 方法对这个固定住的 future 进行轮询，同事将当前[任务上下文](#task-context)传递给它；
 4. 如果轮询(`poll`)调用返回 [`Poll::Pending`]，那么这个 future 就也返回 `_Expression_
 
-> **版本差异**： 等待(await)表达式只能从 Rust 2018 版开始才可用
+> **版次差异**： 等待(await)表达式只能从 Rust 2018 版开始才可用
 
 ## Task context
 ## 任务上下文

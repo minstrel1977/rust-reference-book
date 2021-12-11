@@ -296,9 +296,9 @@ type G = std::boxed::Box&lt;dyn std::ops::FnOnce(isize) -&gt; isize&gt;;
 <h2><a class="header" href="#路径限定符" id="路径限定符">路径限定符</a></h2>
 <p>路径可以被各种能改变其解析方式的前导限定符限定。</p>
 <h3><a class="header" href="#" id=""><code>::</code></a></h3>
-<p>以 <code>::</code> 开头的路径被认为是全局路径，其中的路径首段在不同的版本中的解析方式有所不同。但路径中的每个标识符都必须解析为一个程序项。</p>
+<p>以 <code>::</code> 开头的路径被认为是全局路径，其中的路径首段在不同的版次中的解析方式有所不同。但路径中的每个标识符都必须解析为一个程序项。</p>
 <blockquote>
-<p><strong>版本差异</strong>: 在2015版中，标识符解析从“create 根模块(crate root)”（2018版中表示为 <code>crate::</code>）开始，“create 根模块(crate root)”中包含了一系列不同的程序项，包括外部crate、默认create（如 <code>std</code> 或 <code>core</code>），以及 crate下的各种顶层程序项（包括 <code>use</code>导入）。</p>
+<p><strong>版次差异</strong>: 在2015版中，标识符解析从“create 根模块(crate root)”（2018版中表示为 <code>crate::</code>）开始，“create 根模块(crate root)”中包含了一系列不同的程序项，包括外部crate、默认create（如 <code>std</code> 或 <code>core</code>），以及 crate下的各种顶层程序项（包括 <code>use</code>导入）。</p>
 <p>从 2018 版开始，以 <code>::</code> 开头的路径被解析为<a href="names/preludes.html#extern-prelude">外部预导入包</a>中的一个 crate。也就是说，其后必须跟一个 crate的名称。</p>
 </blockquote>
 <pre><pre class="playground"><code class="language-rust edition2018">

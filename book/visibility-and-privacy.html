@@ -274,7 +274,7 @@ pub mod submodule {
 <li><code>pub(self)</code> 使一个程序项对当前模块可见。这相当于 <code>pub(in self)</code> 或者根本不使用 <code>pub</code>。</li>
 </ul>
 <blockquote>
-<p><strong>版本差异</strong>: 从 2018版开始，<code>pub(in path)</code> 的路径必须以 <code>crate</code>、<code>self</code>或<code>super</code>开头。2015版还可以使用以 <code>::</code> 开头的路径，或以根模块下的模块名的开头的路径。</p>
+<p><strong>版次差异</strong>: 从 2018版开始，<code>pub(in path)</code> 的路径必须以 <code>crate</code>、<code>self</code>或<code>super</code>开头。2015版还可以使用以 <code>::</code> 开头的路径，或以根模块下的模块名的开头的路径。</p>
 </blockquote>
 <p>这里是一些示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2015">pub mod outer_mod {

@@ -49,6 +49,3 @@
 [tuple expression]: ../expressions/tuple-expr.md#tuple-expressions
 [tuple index expression]: ../expressions/tuple-expr.md#tuple-indexing-expressions
 [tuple structs]: ./struct.md
-
-<!-- 2021-1-10-->
-<!-- checked -->

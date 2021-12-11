@@ -176,7 +176,7 @@ let circle_shape = Circle::new();
 let bounding_box = circle_shape.bounding_box();
 ```
 
-> **版本差异**: 在 2015 版中, 使用匿名参数来声明 trait方法是可能的 (例如：`fn foo(u8)`)。在 2018 版本中，这已被弃用，再用会导致编译错误。新版本种所有的参数都必须有参数名。
+> **版次差异**: 在 2015 版中, 使用匿名参数来声明 trait方法是可能的 (例如：`fn foo(u8)`)。在 2018 版中，这已被弃用，再用会导致编译错误。新版次中所有的参数都必须有参数名。
 
 #### Attributes on method parameters
 #### 方法参数上的属性

@@ -106,7 +106,7 @@ Rust 将关键字分为三类：
   // error[E0262]: invalid lifetime parameter name: `'static`
   fn invalid_lifetime_parameter<'static>(s: &'static str) -> &'static str { s }
   ```
-* 在 2015 版本中，当 [`dyn`] 用在非 `::` 开头的路径限定的类型前时，它是关键字。
+* 在 2015 版次中，当 [`dyn`] 用在非 `::` 开头的路径限定的类型前时，它是关键字。
   
   从 2018 版开始，`dyn` 被提升为一个严格关键字。
 

@@ -169,8 +169,8 @@
 <h1><a class="header" href="#子类型化和型变" id="子类型化和型变">子类型化和型变</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/subtyping.md">subtyping.md</a><br />
-commit: 3b6fe80c205d2a2b5dc8a276192bbce9eeb9e9cf <br />
-本章译文最后维护日期：2021-03-02</p>
+commit: f26485de1ad88be2cc9ff131a4aee57cea562a95 <br />
+本章译文最后维护日期：2021-12-11</p>
 </blockquote>
 <p>子类型化是隐式的，可以出现在类型检查或类型推断的任何阶段。
 Rust 中的子类型化的适用范围非常有限，仅出现在和生存期(lifetimes)的型变(variance)相关的地方，以及那些和高阶生存期相关的类型型变之间。
@@ -196,8 +196,8 @@ let subtype: &amp;(for&lt;'a&gt; fn(&amp;'a i32) -&gt; &amp;'a i32) = &amp;((|x|
 let supertype: &amp;(fn(&amp;'static i32) -&gt; &amp;'static i32) = subtype;
 
 // 这对于 trait对象也是类似的
-let subtype: &amp;(for&lt;'a&gt; Fn(&amp;'a i32) -&gt; &amp;'a i32) = &amp;|x| x;
-let supertype: &amp;(Fn(&amp;'static i32) -&gt; &amp;'static i32) = subtype;
+let subtype: &amp;(dyn for&lt;'a&gt; Fn(&amp;'a i32) -&gt; &amp;'a i32) = &amp;|x| x;
+let supertype: &amp;(dyn Fn(&amp;'static i32) -&gt; &amp;'static i32) = subtype;
 
 // 我们也可以用一个高阶生存期来代替另一个
 let subtype: &amp;(for&lt;'a, 'b&gt; fn(&amp;'a i32, &amp;'b i32))= &amp;((|x, y| {}) as fn(&amp;_, &amp;_));
