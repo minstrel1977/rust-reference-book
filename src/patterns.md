@@ -2,8 +2,8 @@
 # 模式
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
->commit: df5799c00f751a91585e86ede479c1697dbb34c5 \
->本章译文最后维护日期：2021-09-19
+>commit: b83fcc16b1e1dba152277637991c863d5dc84a25 \
+>本章译文最后维护日期：2021-12-18
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\
@@ -387,8 +387,6 @@ match tuple {
 
 模式 `a..=b` 必须总是有 a &le; b。例如，`10..=0` 这样的区间模式是错误的。
 
-保留 `...`句法只是为了向后兼容。
-
 区间模式只适用于标量类型(scalar type)。可接受的类型有：
 
 * 整型（u8、i8、u16、i16、usize、isize ...）。
@@ -471,6 +469,8 @@ println!("{}", match 0xfacade {
 ```
 
 当区间模式匹配某（非usize 和 非isize）整型类型和字符型(`char`)的整个值域时，此模式是不可反驳型的。例如，`0u8..=255u8` 是不可反驳型的。某类整型的值区间是从该类型的最小值到该类型最大值的闭区间。字符型(`char`)的值的区间就是那些包含所有 Unicode 标量值的区间，即 `'\u{0000}'..='\u{D7FF}'` 和 `'\u{E000}'..='\u{10FFFF}'`。
+
+> **版次差异**：在2021版之前，在闭区间模式里，可以使用 `...` 来表达 `..=` 的语义。
 
 ## Reference patterns
 ## 引用模式

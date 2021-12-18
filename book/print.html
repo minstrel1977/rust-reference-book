@@ -7864,8 +7864,8 @@ commit: 23672971a16c69ea894bef24992b74912cfe5d25 <br />
 <h1><a class="header" href="#模式" id="模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
-commit: df5799c00f751a91585e86ede479c1697dbb34c5 <br />
-本章译文最后维护日期：2021-09-19</p>
+commit: b83fcc16b1e1dba152277637991c863d5dc84a25 <br />
+本章译文最后维护日期：2021-12-18</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -8223,7 +8223,6 @@ match tuple {
 <p>例如：模式 <code>'m'..='p'</code> 只匹配 <code>'m'</code>, <code>'n'</code>, <code>'o'</code> 和 <code>'p'</code> 这4个字符。 <code>1..</code> 可以匹配 9，或者 9001，或者 9007199254740991（如果此值的尺寸合适），但是不能匹配到 0，也不能匹配有符号整数的负值。区间模式中的界值可以是字面量，也可以是指向常量的路径。</p>
 <p><code>a..</code> 这样的半开区间模式不能匹配切片中的内容。</p>
 <p>模式 <code>a..=b</code> 必须总是有 a ≤ b。例如，<code>10..=0</code> 这样的区间模式是错误的。</p>
-<p>保留 <code>...</code>句法只是为了向后兼容。</p>
 <p>区间模式只适用于标量类型(scalar type)。可接受的类型有：</p>
 <ul>
 <li>整型（u8、i8、u16、i16、usize、isize ...）。</li>
@@ -8307,6 +8306,9 @@ println!(&quot;{}&quot;, match 0xfacade {
 <span class="boring">}
 </span></code></pre></pre>
 <p>当区间模式匹配某（非usize 和 非isize）整型类型和字符型(<code>char</code>)的整个值域时，此模式是不可反驳型的。例如，<code>0u8..=255u8</code> 是不可反驳型的。某类整型的值区间是从该类型的最小值到该类型最大值的闭区间。字符型(<code>char</code>)的值的区间就是那些包含所有 Unicode 标量值的区间，即 <code>'\u{0000}'..='\u{D7FF}'</code> 和 <code>'\u{E000}'..='\u{10FFFF}'</code>。</p>
+<blockquote>
+<p><strong>版次差异</strong>：在2021版之前，在闭区间模式里，可以使用 <code>...</code> 来表达 <code>..=</code> 的语义。</p>
+</blockquote>
 <h2><a class="header" href="#reference-patterns" id="reference-patterns">Reference patterns</a></h2>
 <h2><a class="header" href="#引用模式" id="引用模式">引用模式</a></h2>
 <blockquote>
@@ -8632,8 +8634,8 @@ commit: 4a2bdf896cd2df370a91d14cb8ba04e326cd21db <br />
 <h1><a class="header" href="#类型" id="类型">类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types.md">types.md</a><br />
-commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
-本章译文最后维护日期：2020-11-14</p>
+commit: 577d4975abce5440e819c0883457a5d919660489 <br />
+本章译文最后维护日期：2021-12-18</p>
 </blockquote>
 <p>Rust 程序中的每个变量、程序项和值都有一个类型。<em>值</em>的<em>类型</em>定义了该如何解释用于保存它的内存数据，以及定义了可以对该值执行的操作。</p>
 <p>内置的类型以非平凡的方式(in nontrivial ways)紧密地集成到语言中，这种方式是不可能在用户定义的类型中模拟的。用户定义的类型功能有限。</p>
@@ -8641,7 +8643,7 @@ commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
 <ul>
 <li>原生类型(primitive types):
 <ul>
-<li><a href="types/boolean.html">布尔型(Boolean)</a> — <code>true</code> 或 <code>false</code></li>
+<li><a href="types/boolean.html">布尔型(Boolean)</a> — <code>bool</code></li>
 <li><a href="types/numeric.html">数字类(Numeric)</a> — 整型(integer) 和 浮点型(float)</li>
 <li><a href="types/textual.html">文本类(Textual)</a> — 字符型(<code>char</code>) 和 字符串切片(<code>str</code>)</li>
 <li><a href="types/never.html">never类型</a> — <code>!</code> — 没有值的类型</li>
@@ -8757,8 +8759,6 @@ commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
 let a: List&lt;i32&gt; = List::Cons(7, Box::new(List::Cons(13, Box::new(List::Nil))));
 <span class="boring">}
 </span></code></pre></pre>
-<!-- 2020-11-12-->
-<!-- checked -->
 <h1><a class="header" href="#boolean-type" id="boolean-type">Boolean type</a></h1>
 <h1><a class="header" href="#布尔型" id="布尔型">布尔型</a></h1>
 <blockquote>

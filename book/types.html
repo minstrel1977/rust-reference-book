@@ -212,8 +212,8 @@
 <h1><a class="header" href="#类型" id="类型">类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types.md">types.md</a><br />
-commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
-本章译文最后维护日期：2020-11-14</p>
+commit: 577d4975abce5440e819c0883457a5d919660489 <br />
+本章译文最后维护日期：2021-12-18</p>
 </blockquote>
 <p>Rust 程序中的每个变量、程序项和值都有一个类型。<em>值</em>的<em>类型</em>定义了该如何解释用于保存它的内存数据，以及定义了可以对该值执行的操作。</p>
 <p>内置的类型以非平凡的方式(in nontrivial ways)紧密地集成到语言中，这种方式是不可能在用户定义的类型中模拟的。用户定义的类型功能有限。</p>
@@ -221,7 +221,7 @@ commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
 <ul>
 <li>原生类型(primitive types):
 <ul>
-<li><a href="types/boolean.html">布尔型(Boolean)</a> — <code>true</code> 或 <code>false</code></li>
+<li><a href="types/boolean.html">布尔型(Boolean)</a> — <code>bool</code></li>
 <li><a href="types/numeric.html">数字类(Numeric)</a> — 整型(integer) 和 浮点型(float)</li>
 <li><a href="types/textual.html">文本类(Textual)</a> — 字符型(<code>char</code>) 和 字符串切片(<code>str</code>)</li>
 <li><a href="types/never.html">never类型</a> — <code>!</code> — 没有值的类型</li>
@@ -337,8 +337,6 @@ commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 <br />
 let a: List&lt;i32&gt; = List::Cons(7, Box::new(List::Cons(13, Box::new(List::Nil))));
 <span class="boring">}
 </span></code></pre></pre>
-<!-- 2020-11-12-->
-<!-- checked -->
 
                     </main>
 

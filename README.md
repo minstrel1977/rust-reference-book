@@ -10,7 +10,7 @@ what we have for now.
 ## Dependencies
 
 - rustc (the Rust compiler).
-- [mdbook](https://github.com/rust-lang/mdBook) (use `cargo install mdbook` to install it).
+- [mdbook](https://rust-lang.github.io/mdBook/) (use `cargo install mdbook` to install it).
 
 ## Build steps
 

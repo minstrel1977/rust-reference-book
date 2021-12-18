@@ -3,8 +3,8 @@
 # 类型
 
 >[types.md](https://github.com/rust-lang/reference/blob/master/src/types.md)\
->commit: af1cf6d3ca3b7a8c434c142148742aa912e37c34 \
->本章译文最后维护日期：2020-11-14
+>commit: 577d4975abce5440e819c0883457a5d919660489 \
+>本章译文最后维护日期：2021-12-18
 
 Rust 程序中的每个变量、程序项和值都有一个类型。*值*的*类型*定义了该如何解释用于保存它的内存数据，以及定义了可以对该值执行的操作。
 
@@ -13,7 +13,7 @@ Rust 程序中的每个变量、程序项和值都有一个类型。*值*的*类
 内置类型列表：
 
 * 原生类型(primitive types):
-    * [布尔型(Boolean)][Boolean] — `true` 或 `false`
+    * [布尔型(Boolean)][Boolean] — `bool`
     * [数字类(Numeric)][Numeric] — 整型(integer) 和 浮点型(float)
     * [文本类(Textual)][Textual] — 字符型(`char`) 和 字符串切片(`str`)
     * [never类型][Never] — `!` — 没有值的类型
@@ -166,6 +166,3 @@ let a: List<i32> = List::Cons(7, Box::new(List::Cons(13, Box::new(List::Nil))));
 [type boundaries]: trait-bounds.md
 [type parameters]: types/parameters.md
 [unions]: types/union.md
-
-<!-- 2020-11-12-->
-<!-- checked -->
