@@ -113,7 +113,9 @@
     - [内存分配和生存期](memory-allocation-and-lifetime.md)
     - [变量](variables.md)
 
-- [链接(linkage)](linkage.md)
+- [链接](linkage.md)
+
+- [内联汇编](inline-assembly.md)
 
 - [非安全性](unsafety.md)
     - [非安全函数](unsafe-functions.md)

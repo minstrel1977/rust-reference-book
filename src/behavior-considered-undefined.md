@@ -2,8 +2,8 @@
 ## 未定义的行为
 
 >[behavior-considered-undefined.md](https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md)\
->commit: 5524a17a22c94ad21ab28d545c316909ebda0e31 \
->本章译文最后维护日期：2021-4-11
+>commit: 9dc1c167edb3f4ea92415be8703044904e91392f \
+>本章译文最后维护日期：2022-01-02
 
 如果 Rust 代码出现了下面列表中的任何行为，则此代码被认为不正确。这包括非安全(`unsafe`)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。
 
@@ -37,6 +37,7 @@
   * 带有非法值的自定义类型的值非法。在标准库中，这条促成了 [`NonNull<T>`] 和 [`NonZero*`] 的出现。
 
     > **注意**：`rustc` 是使用还未稳定下来的属性 `rustc_layout_scalar_valid_range_*` 来验证这条规则的。
+* 错误的使用内联汇编，具体细节，参见使用内联汇编编写代码时的相关[规则][rules]。
 
 **注意：** 未初始化的内存对于任何具有有限有效值集的类型来说也隐式非法。也就是说，允许读取未初始化内存的情况只发生在联合体(`union`)内部和“对齐填充区(padding)”里（类型的字段/元素之间的间隙）。
 
@@ -62,3 +63,4 @@
 [`NonZero*`]: https://doc.rust-lang.org/core/num/index.html
 [dereference expression]: expressions/operator-expr.md#the-dereference-operator
 [place expression context]: expressions.md#place-expressions-and-value-expressions
+[rules]: inline-assembly.md#rules-for-inline-assembly
