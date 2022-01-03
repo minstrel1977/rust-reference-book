@@ -165,7 +165,527 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#内联汇编" id="内联汇编">内联汇编</a></h1>
+                        <h1><a class="header" href="#inline-assembly" id="inline-assembly">Inline assembly</a></h1>
+<h1><a class="header" href="#内联汇编" id="内联汇编">内联汇编</a></h1>
+<blockquote>
+<p><a href="https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md">behavior-considered-undefined.md</a><br />
+commit: ac5f793204b3c29d983a26e496beb2902983eb21 <br />
+本章译文最后维护日期：2022-01-02</p>
+</blockquote>
+<p>Rust 通过 <a href="https://doc.rust-lang.org/core/arch/macro.asm.html"><code>asm!</code></a> 和 <a href="https://doc.rust-lang.org/core/arch/macro.global_asm.html"><code>global_asm!</code></a> 这两个宏来提供了对内联汇编的支持。
+它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。</p>
+<p>目前对内联汇编的支持在以下目标架构上是稳定的：</p>
+<ul>
+<li>x86 和 x86-64</li>
+<li>ARM</li>
+<li>AArch64</li>
+<li>RISC-V</li>
+</ul>
+<p>如果在不支持的目标架构上使用 <code>asm!</code>，编译器会报错。</p>
+<h2><a class="header" href="#example" id="example">Example</a></h2>
+<h2><a class="header" href="#示例" id="示例">示例</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::arch::asm;
+
+// 使用以为和相加运算来实现 x 乘6的效果
+let mut x: u64 = 4;
+unsafe {
+    asm!(
+        &quot;mov {tmp}, {x}&quot;,
+        &quot;shl {tmp}, 1&quot;,
+        &quot;shl {x}, 2&quot;,
+        &quot;add {x}, {tmp}&quot;,
+        x = inout(reg) x,
+        tmp = out(reg) _,
+    );
+}
+assert_eq!(x, 4 * 6);
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#syntax" id="syntax">Syntax</a></h2>
+<h2><a class="header" href="#句法" id="句法">句法</a></h2>
+<p>下面的 ABNF语法规范指定了通用的内联汇编语法：</p>
+<pre><code class="language-text">format_string := STRING_LITERAL / RAW_STRING_LITERAL
+dir_spec := &quot;in&quot; / &quot;out&quot; / &quot;lateout&quot; / &quot;inout&quot; / &quot;inlateout&quot;
+reg_spec := &lt;register class&gt; / &quot;&lt;explicit register&gt;&quot;
+operand_expr := expr / &quot;_&quot; / expr &quot;=&gt;&quot; expr / expr &quot;=&gt;&quot; &quot;_&quot;
+reg_operand := dir_spec &quot;(&quot; reg_spec &quot;)&quot; operand_expr
+operand := reg_operand
+clobber_abi := &quot;clobber_abi(&quot; &lt;abi&gt; *(&quot;,&quot; &lt;abi&gt;) [&quot;,&quot;] &quot;)&quot;
+option := &quot;pure&quot; / &quot;nomem&quot; / &quot;readonly&quot; / &quot;preserves_flags&quot; / &quot;noreturn&quot; / &quot;nostack&quot; / &quot;att_syntax&quot; / &quot;raw&quot;
+options := &quot;options(&quot; option *(&quot;,&quot; option) [&quot;,&quot;] &quot;)&quot;
+asm := &quot;asm!(&quot; format_string *(&quot;,&quot; format_string) *(&quot;,&quot; [ident &quot;=&quot;] operand) *(&quot;,&quot; clobber_abi) *(&quot;,&quot; options) [&quot;,&quot;] &quot;)&quot;
+global_asm := &quot;global_asm!(&quot; format_string *(&quot;,&quot; format_string) *(&quot;,&quot; [ident &quot;=&quot;] operand) *(&quot;,&quot; options) [&quot;,&quot;] &quot;)&quot;
+</code></pre>
+<h2><a class="header" href="#scope" id="scope">Scope</a></h2>
+<h2><a class="header" href="#作用域" id="作用域">作用域</a></h2>
+<p>内联汇编可以以下面两种方式来使用。</p>
+<p>通过 <code>asm!</code>宏，汇编代码在函数作用域中被发射，且最终被集成到编译器生成的函数的汇编代码中。
+此汇编代码必须遵守 <a href="#rules-for-inline-assembly">严格规则</a>以避免未定义行为。
+注意，在某些情况下，编译器可能选择将汇编代码作为一个独立的函数发射，并生成对它的调用汇编。</p>
+<p>通过 <code>global_asm!</code>宏，汇编代码在全局作用域中被发射。
+这可以用来使用汇编代码编写完整的函数，并且通常提供更多的自由来使用任意寄存器和汇编指令。</p>
+<h2><a class="header" href="#template-string-arguments" id="template-string-arguments">Template string arguments</a></h2>
+<h2><a class="header" href="#模板字符串参数" id="模板字符串参数">模板字符串参数</a></h2>
+<p>汇编器模板使用与<a href="../std/fmt/index.html#syntax">格式字符串</a>相同的语法(即占位符是由一对花括号来标定)。
+相应的参数通过顺序、索引或名称来获取。
+但是不支持隐式的命名参数（<a href="https://github.com/rust-lang/rfcs/pull/2795">RFC #2795</a>引入）。</p>
+<p><code>asm!</code>宏调用可以有一个或多个模板字符串参数；带有多个模板字符串参数的 <code>asm!</code> 的所有字符串参数都会被视为用 <code>\n</code> 连接在了一起的大的字符串。
+预期的用法是每个模板字符串参数对应一行汇编代码。
+所有的模板字符串参数必须放在其他类型的参数之前。</p>
+<p>和格式字符串一样，命名参数必须在位置参数之后出现。
+显式的<a href="#register-operands">寄存器操作</a>必须出现在操作(operand)列表的末尾（译者注：不懂操作列表的，请回头看看上面内联汇编句法中 asm 的参数表达式），如果有命名参数，还要在命名参数之后。</p>
+<p>在模板字符串中，占位符不能使用（带有）显式寄存器的操作。
+所有其他命名操作和位置操作必须在模板字符串中至少出现一次，否则将生成编译器错误。</p>
+<p>确切的汇编代码语法是特定于目标架构的，对于编译器来说是不透明的，当然除了编译器可以将各种操作类型去替换模板字符串以形成能传递给汇编器的汇编代码。</p>
+<p>目前，所有支持的目标架构都遵循 LLVM 内部汇编器使用的汇编代码语法，这通常对应于 GNU汇编器(GAS)。
+x86目标架构上，默认使用 GAS的 <code>.intel_syntax noprefix</code>模式。
+ARM目标架构上，使用 <code>.syntax unified</code>模式。
+这些目标架构对汇编代码做了一些额外的限制：任何汇编器状态（例如，可以使用“.section”更改的当前节）必须在 asm字符串末尾恢复为其原始值。
+不符合 GAS语法的汇编代码将导致特定于汇编器的行为。</p>
+<h2><a class="header" href="#operand-type" id="operand-type">Operand type</a></h2>
+<h2><a class="header" href="#操作类型" id="操作类型">操作类型</a></h2>
+<p>目前支持以下几种操作：</p>
+<ul>
+<li><code>in(&lt;reg&gt;) &lt;expr&gt;</code>
+<ul>
+<li><code>&lt;reg&gt;</code> 可以指向某类寄存器或一个显式的寄存器。
+此已分配的寄存器名会被替换到 asm模板字符串中。</li>
+<li>在这段 asm代码的开头，此已分配的寄存器将包含 <code>&lt;expr&gt;</code> 的值。</li>
+<li>在这段 asm代码的结尾，该寄存器内的值必须恢复如初（除了另有 <code>lateout</code>操作也被分配使用了此寄存器）。</li>
+</ul>
+</li>
+<li><code>out(&lt;reg&gt;) &lt;expr&gt;</code>
+<ul>
+<li><code>&lt;reg&gt;</code> 可以指向某类寄存器或一个显式的寄存器。
+此已分配的寄存器名会被替换到 asm模板字符串中。</li>
+<li>在这段 asm代码的开头，此已分配的寄存器将包含一个未定义的值。</li>
+<li><code>&lt;expr&gt;</code> 必须是一个（可能未被初始化的）位置表达式，在这段 asm代码的结尾，此寄存器的内容会被写到此位置表达式里。</li>
+<li>可以使用下划线(<code>_</code>)替代这个位置表达式，这将导致在这段 asm代码的结尾，此寄存器的内容被丢弃(等效于一个 clobber寄存器（译者注：clobber寄存器是其内容在此 asm代码执行后其内容会被破坏且不用修复的寄存器）)。</li>
+</ul>
+</li>
+<li><code>lateout(&lt;reg&gt;) &lt;expr&gt;</code>
+<ul>
+<li>除了寄存器分配器可以重用分配给 <code>in</code> 的寄存器外，其他的同 <code>out</code>。</li>
+<li>应该只在读取所有输入后才写入此寄存器，否则可能会毁坏真实的输入。</li>
+</ul>
+</li>
+<li><code>inout(&lt;reg&gt;) &lt;expr&gt;</code>
+<ul>
+<li><code>&lt;reg&gt;</code> 可以指向某类寄存器或一个显式的寄存器。
+此已分配的寄存器名会被替换到 asm模板字符串中。</li>
+<li>在这段 asm代码的开头，此已分配的寄存器将包含 <code>&lt;expr&gt;</code> 的值。</li>
+<li><code>&lt;expr&gt;</code> 必须是一个可变的已初始化的位置表达式，在这段 asm代码的结尾，此已分配的寄存器内的内容将会被写入此表达式。</li>
+</ul>
+</li>
+<li><code>inout(&lt;reg&gt;) &lt;in expr&gt; =&gt; &lt;out expr&gt;</code>
+<ul>
+<li>除了从 <code>&lt;in expr&gt;</code> 里取值来初始化此寄存器外，其他的同 <code>inout</code>。</li>
+<li><code>&lt;out expr&gt;</code> 必须是一个（可能未被初始化的）位置表达式，在这段 asm代码的结尾，此寄存器的内容会被写到此位置表达式里。</li>
+<li>可以使用下划线(<code>_</code>)替代这个 <code>&lt;out expr&gt;</code>表达式，这将导致在这段 asm代码的结尾，此寄存器的内容被丢弃(等效于一个 clobber寄存器)。</li>
+<li><code>&lt;in expr&gt;</code> 和 <code>&lt;out expr&gt;</code> 可以有不同的类型。</li>
+</ul>
+</li>
+<li><code>inlateout(&lt;reg&gt;) &lt;expr&gt;</code> / <code>inlateout(&lt;reg&gt;) &lt;in expr&gt; =&gt; &lt;out expr&gt;</code>
+<ul>
+<li>除了寄存器分配器可以重用分配给 <code>in</code> 的寄存器外（如果编译器知道 <code>in</code> 与 <code>inlateout</code> 具有相同的初始值，则可能发生这种情况），其他的同 <code>inout</code>。</li>
+<li>应该只在读取所有输入后才写入此寄存器，否则可能会毁坏真实的输入。</li>
+</ul>
+</li>
+</ul>
+<p>操作表达式从左到右求值，就像函数调用参数一样。
+在 <code>asm!</code>执行后，会按从左到右的顺序写出输出。
+这一点很重要，如果两个输出指向同一个位置：该位置（表达式）将包含最右侧输出的值。</p>
+<p>因为 <code>global_asm!</code> 存在于函数外部，不能使用输入/输出操作。</p>
+<h2><a class="header" href="#register-operands" id="register-operands">Register operands</a></h2>
+<h2><a class="header" href="#寄存器操作" id="寄存器操作">寄存器操作</a></h2>
+<p>输入和输出操作可以被用来指定一个显式寄存器或某一类寄存器（可以被寄存器分配器选择和分配的一类寄存器，每次可以从中选择和分配其中的一个）。
+显式寄存器是被字符串文本（例如 <code>&quot;eax&quot;</code>）指定的，而寄存器类是通过标识符（例如 <code>reg</code>）来指定的。</p>
+<p>请注意，显式寄存器将寄存器别名（例如ARM上的 <code>r14</code> 和 <code>lr</code>）和寄存器的较小视图（例如 <code>eax</code> 和 <code>rax</code>）视为与其基寄存器(base register)等效。
+对两个输入操作或两个输出操作使用相同的显式寄存器会在编译期报错。
+此外，在输入操作或输出操作中发生寄存器重叠（如ARM VFP）也会在编译期报错。</p>
+<p>仅允许以下类型的值作为的内联汇编操作：</p>
+<ul>
+<li>整型 (有符号的和无符号的)</li>
+<li>浮点型数值</li>
+<li>指针 (仅廋指针)</li>
+<li>函数指针</li>
+<li>SIMD向量 (使用 <code>#[repr(simd)]</code> 定义的并且实现了 <code>Copy</code> 的结构体)。
+这包括在 <code>std::arch</code> 中定义的特定于体系架构的向量类型，如 <code>__m128</code> (x86) 或 <code>int8x16_t</code> (ARM)。</li>
+</ul>
+<p>以下是当前支持的寄存器类列表：</p>
+<table><thead><tr><th>体系架构</th><th>寄存器类</th><th>寄存器</th><th>LLVM约束代码</th></tr></thead><tbody>
+<tr><td>x86</td><td><code>reg</code></td><td><code>ax</code>, <code>bx</code>, <code>cx</code>, <code>dx</code>, <code>si</code>, <code>di</code>, <code>bp</code>, <code>r[8-15]</code> (仅 x86-64)</td><td><code>r</code></td></tr>
+<tr><td>x86</td><td><code>reg_abcd</code></td><td><code>ax</code>, <code>bx</code>, <code>cx</code>, <code>dx</code></td><td><code>Q</code></td></tr>
+<tr><td>x86-32</td><td><code>reg_byte</code></td><td><code>al</code>, <code>bl</code>, <code>cl</code>, <code>dl</code>, <code>ah</code>, <code>bh</code>, <code>ch</code>, <code>dh</code></td><td><code>q</code></td></tr>
+<tr><td>x86-64</td><td><code>reg_byte</code>*</td><td><code>al</code>, <code>bl</code>, <code>cl</code>, <code>dl</code>, <code>sil</code>, <code>dil</code>, <code>bpl</code>, <code>r[8-15]b</code></td><td><code>q</code></td></tr>
+<tr><td>x86</td><td><code>xmm_reg</code></td><td><code>xmm[0-7]</code> (x86) <code>xmm[0-15]</code> (x86-64)</td><td><code>x</code></td></tr>
+<tr><td>x86</td><td><code>ymm_reg</code></td><td><code>ymm[0-7]</code> (x86) <code>ymm[0-15]</code> (x86-64)</td><td><code>x</code></td></tr>
+<tr><td>x86</td><td><code>zmm_reg</code></td><td><code>zmm[0-7]</code> (x86) <code>zmm[0-31]</code> (x86-64)</td><td><code>v</code></td></tr>
+<tr><td>x86</td><td><code>kreg</code></td><td><code>k[1-7]</code></td><td><code>Yk</code></td></tr>
+<tr><td>x86</td><td><code>x87_reg</code></td><td><code>st([0-7])</code></td><td>仅 clobbers</td></tr>
+<tr><td>x86</td><td><code>mmx_reg</code></td><td><code>mm[0-7]</code></td><td>仅 clobbers</td></tr>
+<tr><td>AArch64</td><td><code>reg</code></td><td><code>x[0-30]</code></td><td><code>r</code></td></tr>
+<tr><td>AArch64</td><td><code>vreg</code></td><td><code>v[0-31]</code></td><td><code>w</code></td></tr>
+<tr><td>AArch64</td><td><code>vreg_low16</code></td><td><code>v[0-15]</code></td><td><code>x</code></td></tr>
+<tr><td>AArch64</td><td><code>preg</code></td><td><code>p[0-15]</code>, <code>ffr</code></td><td>仅 clobbers</td></tr>
+<tr><td>ARM (ARM/Thumb2)</td><td><code>reg</code></td><td><code>r[0-12]</code>, <code>r14</code></td><td><code>r</code></td></tr>
+<tr><td>ARM (Thumb1)</td><td><code>reg</code></td><td><code>r[0-7]</code></td><td><code>r</code></td></tr>
+<tr><td>ARM</td><td><code>sreg</code></td><td><code>s[0-31]</code></td><td><code>t</code></td></tr>
+<tr><td>ARM</td><td><code>sreg_low16</code></td><td><code>s[0-15]</code></td><td><code>x</code></td></tr>
+<tr><td>ARM</td><td><code>dreg</code></td><td><code>d[0-31]</code></td><td><code>w</code></td></tr>
+<tr><td>ARM</td><td><code>dreg_low16</code></td><td><code>d[0-15]</code></td><td><code>t</code></td></tr>
+<tr><td>ARM</td><td><code>dreg_low8</code></td><td><code>d[0-8]</code></td><td><code>x</code></td></tr>
+<tr><td>ARM</td><td><code>qreg</code></td><td><code>q[0-15]</code></td><td><code>w</code></td></tr>
+<tr><td>ARM</td><td><code>qreg_low8</code></td><td><code>q[0-7]</code></td><td><code>t</code></td></tr>
+<tr><td>ARM</td><td><code>qreg_low4</code></td><td><code>q[0-3]</code></td><td><code>x</code></td></tr>
+<tr><td>RISC-V</td><td><code>reg</code></td><td><code>x1</code>, <code>x[5-7]</code>, <code>x[9-15]</code>, <code>x[16-31]</code> (non-RV32E)</td><td><code>r</code></td></tr>
+<tr><td>RISC-V</td><td><code>freg</code></td><td><code>f[0-31]</code></td><td><code>f</code></td></tr>
+<tr><td>RISC-V</td><td><code>vreg</code></td><td><code>v[0-31]</code></td><td>仅 clobbers</td></tr>
+</tbody></table>
+<blockquote>
+<p><strong>注意</strong>:</p>
+<ul>
+<li>
+<p>在x86上，我们将 <code>reg_byte</code> 与 reg<code>区别对待，因为编译器可以为</code>reg_byte<code>分别分配低位的 'al' 和高位的 'ah'，而</code>reg` 却只能持有整个寄存器。</p>
+</li>
+<li>
+<p>在x86-64上，<code>reg_byte</code>寄存器类中没有高位寄存器（例如没有 <code>ah</code>）。</p>
+</li>
+<li>
+<p>一些寄存器类被标记为 &quot;仅 clobbers&quot;，这意味着它们不能用于输入或输出，只能用于 <code>out(&quot;reg&quot;) _</code> 或 <code>lateout(&quot;reg&quot;) _</code> 形式的 clobbers。</p>
+</li>
+</ul>
+</blockquote>
+<p>每个寄存器类都有可以与之一起使用的值类型的约束。
+这是必要的，因为值被加载到寄存器的方式取决于它的类型。
+例如，在大端机系统上，将 <code>i32x4</code> 和 <code>i8x16</code> 加载到 SIMD寄存器可能会导致不同的寄存器内容，即便这两个值的字节内存表示形式相同。
+特定寄存器类支持的类型的可用性可能取决于当前启用的目标特性。</p>
+<table><thead><tr><th>体系架构</th><th>寄存器类</th><th>目标特性</th><th>允许的类型</th></tr></thead><tbody>
+<tr><td>x86-32</td><td><code>reg</code></td><td>None</td><td><code>i16</code>, <code>i32</code>, <code>f32</code></td></tr>
+<tr><td>x86-64</td><td><code>reg</code></td><td>None</td><td><code>i16</code>, <code>i32</code>, <code>f32</code>, <code>i64</code>, <code>f64</code></td></tr>
+<tr><td>x86</td><td><code>reg_byte</code></td><td>None</td><td><code>i8</code></td></tr>
+<tr><td>x86</td><td><code>xmm_reg</code></td><td><code>sse</code></td><td><code>i32</code>, <code>f32</code>, <code>i64</code>, <code>f64</code>, <br> <code>i8x16</code>, <code>i16x8</code>, <code>i32x4</code>, <code>i64x2</code>, <code>f32x4</code>, <code>f64x2</code></td></tr>
+<tr><td>x86</td><td><code>ymm_reg</code></td><td><code>avx</code></td><td><code>i32</code>, <code>f32</code>, <code>i64</code>, <code>f64</code>, <br> <code>i8x16</code>, <code>i16x8</code>, <code>i32x4</code>, <code>i64x2</code>, <code>f32x4</code>, <code>f64x2</code> <br> <code>i8x32</code>, <code>i16x16</code>, <code>i32x8</code>, <code>i64x4</code>, <code>f32x8</code>, <code>f64x4</code></td></tr>
+<tr><td>x86</td><td><code>zmm_reg</code></td><td><code>avx512f</code></td><td><code>i32</code>, <code>f32</code>, <code>i64</code>, <code>f64</code>, <br> <code>i8x16</code>, <code>i16x8</code>, <code>i32x4</code>, <code>i64x2</code>, <code>f32x4</code>, <code>f64x2</code> <br> <code>i8x32</code>, <code>i16x16</code>, <code>i32x8</code>, <code>i64x4</code>, <code>f32x8</code>, <code>f64x4</code> <br> <code>i8x64</code>, <code>i16x32</code>, <code>i32x16</code>, <code>i64x8</code>, <code>f32x16</code>, <code>f64x8</code></td></tr>
+<tr><td>x86</td><td><code>kreg</code></td><td><code>avx512f</code></td><td><code>i8</code>, <code>i16</code></td></tr>
+<tr><td>x86</td><td><code>kreg</code></td><td><code>avx512bw</code></td><td><code>i32</code>, <code>i64</code></td></tr>
+<tr><td>x86</td><td><code>mmx_reg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
+<tr><td>x86</td><td><code>x87_reg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
+<tr><td>AArch64</td><td><code>reg</code></td><td>None</td><td><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>f32</code>, <code>i64</code>, <code>f64</code></td></tr>
+<tr><td>AArch64</td><td><code>vreg</code></td><td><code>fp</code></td><td><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>f32</code>, <code>i64</code>, <code>f64</code>, <br> <code>i8x8</code>, <code>i16x4</code>, <code>i32x2</code>, <code>i64x1</code>, <code>f32x2</code>, <code>f64x1</code>, <br> <code>i8x16</code>, <code>i16x8</code>, <code>i32x4</code>, <code>i64x2</code>, <code>f32x4</code>, <code>f64x2</code></td></tr>
+<tr><td>AArch64</td><td><code>preg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
+<tr><td>ARM</td><td><code>reg</code></td><td>None</td><td><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>f32</code></td></tr>
+<tr><td>ARM</td><td><code>sreg</code></td><td><code>vfp2</code></td><td><code>i32</code>, <code>f32</code></td></tr>
+<tr><td>ARM</td><td><code>dreg</code></td><td><code>vfp2</code></td><td><code>i64</code>, <code>f64</code>, <code>i8x8</code>, <code>i16x4</code>, <code>i32x2</code>, <code>i64x1</code>, <code>f32x2</code></td></tr>
+<tr><td>ARM</td><td><code>qreg</code></td><td><code>neon</code></td><td><code>i8x16</code>, <code>i16x8</code>, <code>i32x4</code>, <code>i64x2</code>, <code>f32x4</code></td></tr>
+<tr><td>RISC-V32</td><td><code>reg</code></td><td>None</td><td><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>f32</code></td></tr>
+<tr><td>RISC-V64</td><td><code>reg</code></td><td>None</td><td><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>f32</code>, <code>i64</code>, <code>f64</code></td></tr>
+<tr><td>RISC-V</td><td><code>freg</code></td><td><code>f</code></td><td><code>f32</code></td></tr>
+<tr><td>RISC-V</td><td><code>freg</code></td><td><code>d</code></td><td><code>f64</code></td></tr>
+<tr><td>RISC-V</td><td><code>vreg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
+</tbody></table>
+<blockquote>
+<p><strong>注意</strong>: 对于上述表里，指针、函数指针和 <code>isize</code>/<code>usize</code> 被视为等效的整数类型（<code>i16</code>/<code>i32</code>/<code>i64</code> 具体取决于目标架构）。</p>
+</blockquote>
+<p>如果某个值的尺寸小于分配给它的寄存器，则在输入时该寄存器的高位将有一个未定义的输入值，输出时将忽略该寄存器的高位值。
+唯一的例外是 RISC-V 上的 <code>freg</code>寄存器类，其中 <code>f32</code> 值按照 RISC-V 体系架构的要求被以 NaN-boxed的形式表达为 <code>f64</code>。</p>
+<p>当为 <code>inout</code>操作分别指定了输入和输出表达式时，这两个表达式必须具有相同的数据类型。
+唯一的例外是两个操作（所操作的表达式）都是指针或整数时，它们只需要具有相同的类型尺寸。
+存在此约束是因为 LLVM 和 GCC 中的寄存器分配器有时无法让既定的操作(operand)和不同的数据类型进行有效绑定。</p>
+<h2><a class="header" href="#register-names" id="register-names">Register names</a></h2>
+<h2><a class="header" href="#寄存器名称" id="寄存器名称">寄存器名称</a></h2>
+<p>一些寄存器有多个名称。
+编译器会将它们视为与其基寄存器名称相同。
+以下是所有受支持的寄存器别名的列表：</p>
+<table><thead><tr><th>体系架构</th><th>基寄存器</th><th>别名</th></tr></thead><tbody>
+<tr><td>x86</td><td><code>ax</code></td><td><code>eax</code>, <code>rax</code></td></tr>
+<tr><td>x86</td><td><code>bx</code></td><td><code>ebx</code>, <code>rbx</code></td></tr>
+<tr><td>x86</td><td><code>cx</code></td><td><code>ecx</code>, <code>rcx</code></td></tr>
+<tr><td>x86</td><td><code>dx</code></td><td><code>edx</code>, <code>rdx</code></td></tr>
+<tr><td>x86</td><td><code>si</code></td><td><code>esi</code>, <code>rsi</code></td></tr>
+<tr><td>x86</td><td><code>di</code></td><td><code>edi</code>, <code>rdi</code></td></tr>
+<tr><td>x86</td><td><code>bp</code></td><td><code>bpl</code>, <code>ebp</code>, <code>rbp</code></td></tr>
+<tr><td>x86</td><td><code>sp</code></td><td><code>spl</code>, <code>esp</code>, <code>rsp</code></td></tr>
+<tr><td>x86</td><td><code>ip</code></td><td><code>eip</code>, <code>rip</code></td></tr>
+<tr><td>x86</td><td><code>st(0)</code></td><td><code>st</code></td></tr>
+<tr><td>x86</td><td><code>r[8-15]</code></td><td><code>r[8-15]b</code>, <code>r[8-15]w</code>, <code>r[8-15]d</code></td></tr>
+<tr><td>x86</td><td><code>xmm[0-31]</code></td><td><code>ymm[0-31]</code>, <code>zmm[0-31]</code></td></tr>
+<tr><td>AArch64</td><td><code>x[0-30]</code></td><td><code>w[0-30]</code></td></tr>
+<tr><td>AArch64</td><td><code>x29</code></td><td><code>fp</code></td></tr>
+<tr><td>AArch64</td><td><code>x30</code></td><td><code>lr</code></td></tr>
+<tr><td>AArch64</td><td><code>sp</code></td><td><code>wsp</code></td></tr>
+<tr><td>AArch64</td><td><code>xzr</code></td><td><code>wzr</code></td></tr>
+<tr><td>AArch64</td><td><code>v[0-31]</code></td><td><code>b[0-31]</code>, <code>h[0-31]</code>, <code>s[0-31]</code>, <code>d[0-31]</code>, <code>q[0-31]</code></td></tr>
+<tr><td>ARM</td><td><code>r[0-3]</code></td><td><code>a[1-4]</code></td></tr>
+<tr><td>ARM</td><td><code>r[4-9]</code></td><td><code>v[1-6]</code></td></tr>
+<tr><td>ARM</td><td><code>r9</code></td><td><code>rfp</code></td></tr>
+<tr><td>ARM</td><td><code>r10</code></td><td><code>sl</code></td></tr>
+<tr><td>ARM</td><td><code>r11</code></td><td><code>fp</code></td></tr>
+<tr><td>ARM</td><td><code>r12</code></td><td><code>ip</code></td></tr>
+<tr><td>ARM</td><td><code>r13</code></td><td><code>sp</code></td></tr>
+<tr><td>ARM</td><td><code>r14</code></td><td><code>lr</code></td></tr>
+<tr><td>ARM</td><td><code>r15</code></td><td><code>pc</code></td></tr>
+<tr><td>RISC-V</td><td><code>x0</code></td><td><code>zero</code></td></tr>
+<tr><td>RISC-V</td><td><code>x1</code></td><td><code>ra</code></td></tr>
+<tr><td>RISC-V</td><td><code>x2</code></td><td><code>sp</code></td></tr>
+<tr><td>RISC-V</td><td><code>x3</code></td><td><code>gp</code></td></tr>
+<tr><td>RISC-V</td><td><code>x4</code></td><td><code>tp</code></td></tr>
+<tr><td>RISC-V</td><td><code>x[5-7]</code></td><td><code>t[0-2]</code></td></tr>
+<tr><td>RISC-V</td><td><code>x8</code></td><td><code>fp</code>, <code>s0</code></td></tr>
+<tr><td>RISC-V</td><td><code>x9</code></td><td><code>s1</code></td></tr>
+<tr><td>RISC-V</td><td><code>x[10-17]</code></td><td><code>a[0-7]</code></td></tr>
+<tr><td>RISC-V</td><td><code>x[18-27]</code></td><td><code>s[2-11]</code></td></tr>
+<tr><td>RISC-V</td><td><code>x[28-31]</code></td><td><code>t[3-6]</code></td></tr>
+<tr><td>RISC-V</td><td><code>f[0-7]</code></td><td><code>ft[0-7]</code></td></tr>
+<tr><td>RISC-V</td><td><code>f[8-9]</code></td><td><code>fs[0-1]</code></td></tr>
+<tr><td>RISC-V</td><td><code>f[10-17]</code></td><td><code>fa[0-7]</code></td></tr>
+<tr><td>RISC-V</td><td><code>f[18-27]</code></td><td><code>fs[2-11]</code></td></tr>
+<tr><td>RISC-V</td><td><code>f[28-31]</code></td><td><code>ft[8-11]</code></td></tr>
+</tbody></table>
+<p>某些寄存器不能用于输入或输出操作：</p>
+<table><thead><tr><th>体系架构</th><th>不支持的寄存器</th><th>原因</th></tr></thead><tbody>
+<tr><td>All</td><td><code>sp</code></td><td>栈指针必须在 asm代码块末尾恢复为其原始值。</td></tr>
+<tr><td>All</td><td><code>bp</code> (x86), <code>x29</code> (AArch64), <code>x8</code> (RISC-V)</td><td>帧指针不能用作输入或输出。</td></tr>
+<tr><td>ARM</td><td><code>r7</code> or <code>r11</code></td><td>在 ARM 上，帧指针可以是 <code>r7</code> 或 <code>r11</code>，具体取决于目标架构。帧指针不能用作输入或输出。</td></tr>
+<tr><td>All</td><td><code>si</code> (x86-32), <code>bx</code> (x86-64), <code>r6</code> (ARM), <code>x19</code> (AArch64), <code>x9</code> (RISC-V)</td><td>LLVM 在内部将其用作具有复杂栈帧的函数的“基指针”。</td></tr>
+<tr><td>x86</td><td><code>k0</code></td><td>这是一个不能修改的常量零寄存器。</td></tr>
+<tr><td>x86</td><td><code>ip</code></td><td>这是程序计数器，不是真正的寄存器。</td></tr>
+<tr><td>AArch64</td><td><code>xzr</code></td><td>这是一个不能修改的常量零寄存器。</td></tr>
+<tr><td>AArch64</td><td><code>x18</code></td><td>这是一些 AArch64目标架构上的操作系统预留寄存器。</td></tr>
+<tr><td>ARM</td><td><code>pc</code></td><td>这是程序计数器，不是真正的寄存器。</td></tr>
+<tr><td>ARM</td><td><code>r9</code></td><td>这是一些 ARM目标架构上的操作系统预留寄存器。</td></tr>
+<tr><td>RISC-V</td><td><code>x0</code></td><td>这是一个不能修改的常量零寄存器。</td></tr>
+<tr><td>RISC-V</td><td><code>gp</code>, <code>tp</code></td><td>这些寄存器是预留的，不能用作输入或输出。</td></tr>
+</tbody></table>
+<p>帧指针和基指针寄存器(base pointer register)预留供 LLVM 内部使用。而 <code>asm!</code>语句不能显式去指定使用预留寄存器，但在某些情况下，LLVM 将为 <code>reg</code>操作分配其中一个预留寄存器。使用预留寄存器的汇编代码应该小心，因为 <code>reg</code>操作可能在使用相同的寄存器。</p>
+<h2><a class="header" href="#template-modifiers" id="template-modifiers">Template modifiers</a></h2>
+<h2><a class="header" href="#模板修饰符" id="模板修饰符">模板修饰符</a></h2>
+<p>占位符可以通过在大括号中的 <code>:</code> 之后指定的修饰符进行扩充。
+这些修饰符不影响寄存器分配，但会更改插入模板字符串时操作(operand)的格式化方式。
+每个模板占位符只允许一个修饰符。</p>
+<p>支持的修饰符是 LLVM（和 GCC）<a href="http://llvm.org/docs/LangRef.html#asm-template-argument-modifiers">asm模板参数修饰符</a>的子集，但不使用相同的字母代码。</p>
+<table><thead><tr><th>体系架构</th><th>寄存器类</th><th>修饰符</th><th>输出示例</th><th>LLVM修饰符</th></tr></thead><tbody>
+<tr><td>x86-32</td><td><code>reg</code></td><td>None</td><td><code>eax</code></td><td><code>k</code></td></tr>
+<tr><td>x86-64</td><td><code>reg</code></td><td>None</td><td><code>rax</code></td><td><code>q</code></td></tr>
+<tr><td>x86-32</td><td><code>reg_abcd</code></td><td><code>l</code></td><td><code>al</code></td><td><code>b</code></td></tr>
+<tr><td>x86-64</td><td><code>reg</code></td><td><code>l</code></td><td><code>al</code></td><td><code>b</code></td></tr>
+<tr><td>x86</td><td><code>reg_abcd</code></td><td><code>h</code></td><td><code>ah</code></td><td><code>h</code></td></tr>
+<tr><td>x86</td><td><code>reg</code></td><td><code>x</code></td><td><code>ax</code></td><td><code>w</code></td></tr>
+<tr><td>x86</td><td><code>reg</code></td><td><code>e</code></td><td><code>eax</code></td><td><code>k</code></td></tr>
+<tr><td>x86-64</td><td><code>reg</code></td><td><code>r</code></td><td><code>rax</code></td><td><code>q</code></td></tr>
+<tr><td>x86</td><td><code>reg_byte</code></td><td>None</td><td><code>al</code> / <code>ah</code></td><td>None</td></tr>
+<tr><td>x86</td><td><code>xmm_reg</code></td><td>None</td><td><code>xmm0</code></td><td><code>x</code></td></tr>
+<tr><td>x86</td><td><code>ymm_reg</code></td><td>None</td><td><code>ymm0</code></td><td><code>t</code></td></tr>
+<tr><td>x86</td><td><code>zmm_reg</code></td><td>None</td><td><code>zmm0</code></td><td><code>g</code></td></tr>
+<tr><td>x86</td><td><code>*mm_reg</code></td><td><code>x</code></td><td><code>xmm0</code></td><td><code>x</code></td></tr>
+<tr><td>x86</td><td><code>*mm_reg</code></td><td><code>y</code></td><td><code>ymm0</code></td><td><code>t</code></td></tr>
+<tr><td>x86</td><td><code>*mm_reg</code></td><td><code>z</code></td><td><code>zmm0</code></td><td><code>g</code></td></tr>
+<tr><td>x86</td><td><code>kreg</code></td><td>None</td><td><code>k1</code></td><td>None</td></tr>
+<tr><td>AArch64</td><td><code>reg</code></td><td>None</td><td><code>x0</code></td><td><code>x</code></td></tr>
+<tr><td>AArch64</td><td><code>reg</code></td><td><code>w</code></td><td><code>w0</code></td><td><code>w</code></td></tr>
+<tr><td>AArch64</td><td><code>reg</code></td><td><code>x</code></td><td><code>x0</code></td><td><code>x</code></td></tr>
+<tr><td>AArch64</td><td><code>vreg</code></td><td>None</td><td><code>v0</code></td><td>None</td></tr>
+<tr><td>AArch64</td><td><code>vreg</code></td><td><code>v</code></td><td><code>v0</code></td><td>None</td></tr>
+<tr><td>AArch64</td><td><code>vreg</code></td><td><code>b</code></td><td><code>b0</code></td><td><code>b</code></td></tr>
+<tr><td>AArch64</td><td><code>vreg</code></td><td><code>h</code></td><td><code>h0</code></td><td><code>h</code></td></tr>
+<tr><td>AArch64</td><td><code>vreg</code></td><td><code>s</code></td><td><code>s0</code></td><td><code>s</code></td></tr>
+<tr><td>AArch64</td><td><code>vreg</code></td><td><code>d</code></td><td><code>d0</code></td><td><code>d</code></td></tr>
+<tr><td>AArch64</td><td><code>vreg</code></td><td><code>q</code></td><td><code>q0</code></td><td><code>q</code></td></tr>
+<tr><td>ARM</td><td><code>reg</code></td><td>None</td><td><code>r0</code></td><td>None</td></tr>
+<tr><td>ARM</td><td><code>sreg</code></td><td>None</td><td><code>s0</code></td><td>None</td></tr>
+<tr><td>ARM</td><td><code>dreg</code></td><td>None</td><td><code>d0</code></td><td><code>P</code></td></tr>
+<tr><td>ARM</td><td><code>qreg</code></td><td>None</td><td><code>q0</code></td><td><code>q</code></td></tr>
+<tr><td>ARM</td><td><code>qreg</code></td><td><code>e</code> / <code>f</code></td><td><code>d0</code> / <code>d1</code></td><td><code>e</code> / <code>f</code></td></tr>
+<tr><td>RISC-V</td><td><code>reg</code></td><td>None</td><td><code>x1</code></td><td>None</td></tr>
+<tr><td>RISC-V</td><td><code>freg</code></td><td>None</td><td><code>f0</code></td><td>None</td></tr>
+</tbody></table>
+<blockquote>
+<p><strong>注意</strong>:</p>
+<ul>
+<li>对于 ARM架构 <code>e</code> / <code>f</code>: 这将打印出 NEON quad（128位）寄存器的低双字或高双字寄存器名称。</li>
+<li>对于 x86架构: 对于没有修饰符的 <code>reg</code>，Rust 编译器与 GCC 的编译行为不同。
+GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存器宽度。</li>
+<li>对于 x86架构的 <code>xmm_reg</code>: LLVM修饰符 <code>x</code>、<code>t</code> 和 <code>g</code> 目前还未在 LLVM 中真正实现(目前它们仅被 GCC 支持)，但这应该将只是一个小变动。</li>
+</ul>
+</blockquote>
+<p>如前一节开头所述，传递小于寄存器宽度的输入值将导致寄存器的高位包含未定义的值。
+如果内联asm 仅访问寄存器的低位，则这不是问题，这可以通过使用模板修饰符在 asm代码中使用子寄存器名称（例如，使用 <code>ax</code> 替代 <code>rax</code>）来实现。
+由于这是一个容易犯的错误，编译器将建议在适当的情况下使用模板修饰符来给出输入值的类型。
+但如果某个操作的所有引用都已包含了修饰符，则对该操作的警告将会被抑制。</p>
+<h2><a class="header" href="#abi-clobbers" id="abi-clobbers">ABI clobbers</a></h2>
+<p>关键字<code>clobber_abi</code> 可用于将与之对应的一组默认的 clobber寄存器应用于 <code>asm!</code>块内。
+这在调用具有特定调用约定的函数时，会根据需要自动插入必要的 clobber约束：如果调用约定没有在调用过程中完整保持寄存器的值，则会将 <code>lateout(&quot;reg&quot;) _</code> 隐式添加到操作列表中。</p>
+<p><code>clobber_abi</code> 可以指定任意多次。它将为所有指定了调用约定的寄存器集合中的所有单一寄存器都分配一个 clobber寄存器。</p>
+<p>当使用 <code>clobber_abi</code> 时，不允许把通用寄存器类作为输出寄存器类来指定：此时所有输出寄存器必须显式指定。
+有 <code>clobber_abi</code> 时，给输出显式寄存器的打标优先于给寄存器隐式插入 clobber标志：此时只有当该寄存器明确未用作输出时，才会为寄存器插入 clobber标记。
+以下的 ABI 可与 <code>clobber_abi</code> 一起使用：</p>
+<table><thead><tr><th>体系架构</th><th>ABI名称</th><th>Clobbered寄存器</th></tr></thead><tbody>
+<tr><td>x86-32</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code>, <code>&quot;efiapi&quot;</code>, <code>&quot;cdecl&quot;</code>, <code>&quot;stdcall&quot;</code>, <code>&quot;fastcall&quot;</code></td><td><code>ax</code>, <code>cx</code>, <code>dx</code>, <code>xmm[0-7]</code>, <code>mm[0-7]</code>, <code>k[1-7]</code>, <code>st([0-7])</code></td></tr>
+<tr><td>x86-64</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code> (Windows平台), <code>&quot;efiapi&quot;</code>, <code>&quot;win64&quot;</code></td><td><code>ax</code>, <code>cx</code>, <code>dx</code>, <code>r[8-11]</code>, <code>xmm[0-31]</code>, <code>mm[0-7]</code>, <code>k[1-7]</code>, <code>st([0-7])</code></td></tr>
+<tr><td>x86-64</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code> (非Windows平台), <code>&quot;sysv64&quot;</code></td><td><code>ax</code>, <code>cx</code>, <code>dx</code>, <code>si</code>, <code>di</code>, <code>r[8-11]</code>, <code>xmm[0-31]</code>, <code>mm[0-7]</code>, <code>k[1-7]</code>, <code>st([0-7])</code></td></tr>
+<tr><td>AArch64</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code>, <code>&quot;efiapi&quot;</code></td><td><code>x[0-17]</code>, <code>x18</code>*, <code>x30</code>, <code>v[0-31]</code>, <code>p[0-15]</code>, <code>ffr</code></td></tr>
+<tr><td>ARM</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code>, <code>&quot;efiapi&quot;</code>, <code>&quot;aapcs&quot;</code></td><td><code>r[0-3]</code>, <code>r12</code>, <code>r14</code>, <code>s[0-15]</code>, <code>d[0-7]</code>, <code>d[16-31]</code></td></tr>
+<tr><td>RISC-V</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code>, <code>&quot;efiapi&quot;</code></td><td><code>x1</code>, <code>x[5-7]</code>, <code>x[10-17]</code>, <code>x[28-31]</code>, <code>f[0-7]</code>, <code>f[10-17]</code>, <code>f[28-31]</code>, <code>v[0-31]</code></td></tr>
+</tbody></table>
+<blockquote>
+<p>注意：</p>
+<ul>
+<li>在 AArch64架构上，如果 <code>x18</code> 不是目标架构上的预留寄存器，则它仅被包括在 clobber寄存器列表中。</li>
+</ul>
+</blockquote>
+<p>随着体系架构中新的寄存器的加入，在rustc中，每个 ABI 对应的 clobbered寄存器列表也会一并更新：这确保了当 LLVM 开始在其生成的代码中使用这些新寄存器时，<code>asm!</code> 里的 clobber寄存器的正确性也能得到保持。</p>
+<h2><a class="header" href="#options" id="options">Options</a></h2>
+<h2><a class="header" href="#可选项" id="可选项">可选项</a></h2>
+<p>我们使用标志（Flag）技术来进一步影响内联汇编块的行为。
+目前定义了以下可选项（标志）：</p>
+<ul>
+<li><code>pure</code>：此 <code>asm!</code>块没有副作用，其输出仅取决于其直接输入（比如，输入的值本身，而不是它们指向的对象）或从内存读取的值（除非还设置了 <code>nomem</code>可选项）。
+这允许编译器执行此 <code>asm!</code>块的次数少于程序中指定的次数（例如，通过将其从循环中提出来），或者如果 <code>asm!</code>块没有输出的情况下，编译器甚至可能完全消除此段 asm代码。</li>
+<li><code>nomem</code>：此 <code>asm!</code>块不读取或写入任何内存。
+这允许编译器将修改过的全局变量的值缓存在跨当前 <code>asm!</code>块的寄存器中，因为它知道当前 <code>asm!</code>不会读取或写入它们。</li>
+<li><code>readonly</code>：此 <code>asm!</code>块不写入任何内存。
+这允许编译器将未修改的全局变量的值缓存在跨当前 <code>asm!</code>块的寄存器中，因为它知道它们不是由当前 <code>asm!</code>写入的。</li>
+<li><code>preserves_flags</code>：此 <code>asm！</code>块不修改标志寄存器（在后面章节的规则表中有定义）。
+这可以避免编译器在此 <code>asm!</code>块之后重新计算条件标志。</li>
+<li><code>noreturn</code>：此 <code>asm!</code>块没有具体返回值，其返回类型被定义为 <code>!</code>(never)。
+如果执行超过 asm代码的末尾，则为未定义行为。(译者注：asm代码末尾应该有跳转，否则执行程序会顺序执行二进制指令，从而执行超出 asm代码块)
+有 <code>noreturn</code>可选项的 asm块的行为就像一个不返回的函数；需要注意的是，其作用域中的局部变量在被调用之前不会被销毁。</li>
+<li><code>nostack</code>：此 <code>asm！</code>块不会将数据推送到栈上，也不会写入栈的红色区域（red-zone）（有些目标架构会支持red-zone）。
+如果此可选项<em>未</em>使用，则保证栈指针为函数调用会（根据目标ABI）适当对齐。</li>
+<li><code>att_syntax</code>：此可选项仅在 x86架构上有效，并导致汇编器使用 GNU汇编器的 <code>.att_syntax prefix</code>模式。
+寄存器操作在被替换时会自动加上前导<code>%</code>。</li>
+<li><code>raw</code>：这将导致模板字符串被解析为裸汇编字符串，对 <code>{</code> 和 <code>}</code> 也不做特殊处理。
+这在使用 <code>include_str!</code> 从外部文件中包含裸汇编代码时非常有用。</li>
+</ul>
+<p>编译器对可选项执行一些附加检查：</p>
+<ul>
+<li><code>nomem</code> 和 <code>readonly</code> 是互斥的：同时指定这两个选项会导致编译期错误。</li>
+<li><code>pure</code>可选项必须与 <code>nomem</code> 或 <code>readonly</code> 可选项组合使用，否则会导致编译期错误。</li>
+<li>在没有输出或只有丢弃的输出(<code>_</code>)的 asm块上指定 <code>pure</code> 会导致编译期错误。</li>
+<li>在带有输出的 asm块上指定 <code>noreturn</code> 会导致编译期错误。</li>
+</ul>
+<p><code>global_asm!</code> 仅支持 <code>att_syntax</code> 和 <code>raw</code> 可选项。
+其余可选项对于全局作用域类型的内联汇编没有意义。</p>
+<h2><a class="header" href="#rules-for-inline-assembly" id="rules-for-inline-assembly">Rules for inline assembly</a></h2>
+<h2><a class="header" href="#内联汇编规则" id="内联汇编规则">内联汇编规则</a></h2>
+<p>为了避免未定义行为，在使用函数作用域类型的内联汇编（<code>asm!</code>）时必须遵循以下规则：</p>
+<ul>
+<li>任何未指定为输入的寄存器在进入 asm块时都会包含未定义的值。
+<ul>
+<li>内联汇编上下文中的“未定义值”意味着寄存器可以（非确定性地）具有体系架构允许的任何一个可能值。
+值得注意的是，它与 LLVM 的 <code>undef</code> 不同，LLVM 的 <code>undef</code> 每次读取时都会有不同的值（因为在汇编代码中不存在这样的概念）。</li>
+</ul>
+</li>
+<li>任何未指定为输出的寄存器在退出 asm块时必须具有与进入时相同的值，否则为未定义行为。
+<ul>
+<li>这仅适用于可指定为输入或输出的寄存器。
+其他寄存器遵循特定于目标架构的规则。</li>
+<li>请注意，<code>lateout</code> 可以分配给与 <code>in</code> 相同的寄存器，在这种情况下，此规则不适用。
+然而，代码不应该依赖于此，因为它依赖于寄存器分配的结果。</li>
+</ul>
+</li>
+<li>如果在 asm块中执行展开（unwind），则为未定义行为。
+<ul>
+<li>如果汇编代码调用一个函数，然后该函数展开，则这也适用此规则。</li>
+</ul>
+</li>
+<li>汇编代码允许读取和写入的内存位置集与 FFI函数允许读取和写入的内存位置集相同。
+<ul>
+<li>有关确切规则，请参阅不安全代码指南。</li>
+<li>如果设置了 <code>readonly</code>可选项，则只允许内存读取。</li>
+<li>如果设置了 <code>nomem</code>可选项，则不允许对内存进行读取或写入。</li>
+<li>这些规则不适用于 asm代码私有的内存空间，例如 asm块内分配的堆栈空间。</li>
+</ul>
+</li>
+<li>编译器不能假定 asm块中的指令是最终实际执行的指令。
+<ul>
+<li>这实际上意味着编译器必须将 <code>asm!</code> 作为一个黑盒对待，只考虑接口规范，而不考虑 asm块内的指令本身。</li>
+<li>允许通过特定于目标架构的机制来执行运行时代码补丁。</li>
+</ul>
+</li>
+<li>除非设置了 <code>nostack</code>可选项，否则可以允许 asm代码使用栈指针下方的栈空间。
+<ul>
+<li>当进入 asm块后，为保证栈指针为函数调用，此指针会（根据目标ABI）适当对齐。</li>
+<li>你有责任确保不会溢出堆栈（例如，使用堆栈探测以确保命中保护页）。</li>
+<li>根据目标ABI的要求分配堆栈内存时，应调整堆栈指针。</li>
+<li>在离开 asm块之前，必须将堆栈指针还原为其原始值。</li>
+</ul>
+</li>
+<li>如果设置了 <code>noreturn</code>可选项，则如果执行超过 asm块的末尾，则此行为未定义。</li>
+<li>如果设置了 <code>pure</code>可选项，那么如果 <code>asm!</code>代码除了有直接输出外，还有其他副作用，则此行为未定义。
+如果两次执行 <code>asm!</code>代码，它们具有相同输入，但输出不同，此行为也未定义。 
+<ul>
+<li>当与 <code>nomem</code>可选项一起使用时，所谓的“输入”只能是 <code>asm!</code>的直接输入。</li>
+<li>当与 <code>readonly</code>可选项一起使用时，所谓的“输入”包含 <code>asm!</code>的直接输入，还包含允许 <code>asm!</code>块来读取的全部内存。</li>
+</ul>
+</li>
+<li>如果设置了 <code>preserves_flags</code>可选项，则在退出 asm块时必须恢复这些标志寄存器：
+<ul>
+<li>x86
+<ul>
+<li><code>EFLAGS</code> (CF, PF, AF, ZF, SF, OF)中的状态标志寄存器。</li>
+<li>浮点状态字 (全部)。</li>
+<li><code>MXCSR</code> (PE, UE, OE, ZE, DE, IE)中的浮点异常标志寄存器。</li>
+</ul>
+</li>
+<li>ARM
+<ul>
+<li><code>CPSR</code> (N, Z, C, V)中的条件标志寄存器。</li>
+<li><code>CPSR</code> (Q)中的饱和标志寄存器。</li>
+<li><code>CPSR</code> (GE)中的大于或等于标志寄存器。</li>
+<li><code>FPSCR</code> (N, Z, C, V)中的条件标志寄存器。</li>
+<li><code>FPSCR</code> (QC)中的饱和标志寄存器。</li>
+<li><code>FPSCR</code> (IDC, IXC, UFC, OFC, DZC, IOC)中的浮点异常标志寄存器。</li>
+</ul>
+</li>
+<li>AArch64
+<ul>
+<li>条件标志寄存器(<code>NZCV</code>)。</li>
+<li>浮点状态寄存器(<code>FPSR</code>).</li>
+</ul>
+</li>
+<li>RISC-V
+<ul>
+<li><code>fcsr</code> (<code>fflags</code>)中的浮点异常标志寄存器。</li>
+<li>向量扩展状态寄存器(<code>vtype</code>, <code>vl</code>, <code>vcsr</code>).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>在 x86 上，方向标志寄存器（<code>EFLAGS</code> 中的 DF）在进入 asm块时清除，在退出时也必须清除。
+<ul>
+<li>如果在退出 asm块时设置了方向标志，则此行为未定义。</li>
+</ul>
+</li>
+<li>将堆栈指针和非输出寄存器恢复为其原始值的要求仅在退出 <code>asm!</code>块时适用。
+<ul>
+<li>这意味着永不返回的 <code>asm!</code>块（即使未标记为 <code>noreturn</code>）不需要恢复这些寄存器。</li>
+<li>当返回到其他的 <code>asm!</code>块（例如上下文切换）时，这些寄存器必须包含它们在进入当前（你正在<em>退出</em>）的 <code>asm!</code>块的值。
+<ul>
+<li>你不能退出尚未进入的 <code>asm!</code>块。
+你也不能退出已退出的 <code>asm!</code>块（也可以理解为不能未进入而退出）。</li>
+<li>你负责切换任何特定于目标架构的状态（例如线程级的本地存储和堆栈边界）。</li>
+<li>你不能从一个 <code>asm!</code>块中的地址跳转块到另一个 <code>asm!</code>块中的地址，即使在同一个函数或块中也不行。应将两个 <code>asm!</code>块的上下文视为潜在不同，跳转时会进行上下文切换。  你不能假设这些上下文中的任何特定值（例如当前堆栈指针或堆栈指针下的临时值）在两个 <code>asm!</code>块之间保持不变。</li>
+<li>你可以访问的内存位置集是你进入的 <code>asm!</code>块所允许的内存位置和你刚退出的 <code>asm!</code>块所允许的内存位置的交集。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>即使两个 <code>asm!</code>块在源代码中相邻，并且它们之间没有任何其他代码，你仍不能假设它们也将在二进制中的地址连续，不能保证它们之间没有任何其他指令。</li>
+<li>你不能假设 <code>asm!</code>块在输出的二进制文件中只出现一次。
+允许编译器实例化 <code>asm!</code>块的多个副本块，例如当包含它的函数在多个位置内联时。</li>
+<li>在 x86 上，内联汇编不能以指令前缀（如 <code>LOCK</code>）结尾（这些指令前缀被用于编译器生成的指令）。
+<ul>
+<li>由于内联汇编的编译方式，编译器当前还无法检测到此问题，但将来可能会捕获并拒绝此问题。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>：作为一个一般性原则，<code>preserves_flags</code> 包含的标志是在执行函数调用时<em>未</em>保留的标志。</p>
+</blockquote>
 
                     </main>
 
