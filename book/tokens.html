@@ -168,8 +168,8 @@
                         <h1><a class="header" href="#tokens" id="tokens">Tokens</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/tokens.md">tokens.md</a><br />
-commit: d8cce6597b0678c72c83678243e36d5033adc624 <br />
-本章译文最后维护日期：2021-11-27</p>
+commit: be704f3a7e690b10d9ee66d5b29d455df82384a6 <br />
+本章译文最后维护日期：2022-01-08</p>
 </blockquote>
 <p>token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：</p>
 <ul>
@@ -240,7 +240,7 @@ commit: d8cce6597b0678c72c83678243e36d5033adc624 <br />
 <p><code>*</code> 所有数字字面量允许使用 <code>_</code> 作为可视分隔符，比如：<code>1_234.0E+18f64</code></p>
 <h4><a class="header" href="#suffixes" id="suffixes">Suffixes</a></h4>
 <h4><a class="header" href="#后缀" id="后缀">后缀</a></h4>
-<p>后缀是紧跟（无空白符）在字面量主体部分之后的非<a href="identifiers.html">原生标识符</a>(non-raw identifier)。</p>
+<p>后缀是字面量主体部分后面的字符序列（它们之间不能含有空格），其形式与非原生标识符或关键字相同。</p>
 <p>任何带有后缀的字面量（如字符串、整数等）都可以作为有效的 token，并且可以传递给宏而不会产生错误。宏自己决定如何解释这种 token，以及是否该报错。</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
@@ -250,7 +250,7 @@ commit: d8cce6597b0678c72c83678243e36d5033adc624 <br />
 blackhole!(&quot;string&quot;suffix); // OK
 <span class="boring">}
 </span></code></pre></pre>
-<p>但是，最终被解析为 Rust 代码的字面量token 上的后缀是受限制的。对于非数字字面量token，任何后缀都最终将被弃用，而数字字面量token 只接受下表中的后缀。</p>
+<p>但是，最终被解析为 Rust 代码的字面量token 上的后缀是受限制的。对于非数字字面量token，任何后缀都会被编译器拒绝，而数字字面量token 只接受下表中的后缀。</p>
 <table><thead><tr><th>整数</th><th>浮点数</th></tr></thead><tbody>
 <tr><td><code>u8</code>, <code>i8</code>, <code>u16</code>, <code>i16</code>, <code>u32</code>, <code>i32</code>, <code>u64</code>, <code>i64</code>, <code>u128</code>, <code>i128</code>, <code>usize</code>, <code>isize</code></td><td><code>f32</code>, <code>f64</code></td></tr>
 </tbody></table>
@@ -640,6 +640,43 @@ LIFETIME_TOKEN :<br />
 <tr><td><code>[</code> <code>]</code></td><td>方/中括号</td></tr>
 <tr><td><code>(</code> <code>)</code></td><td>圆/小括号</td></tr>
 </tbody></table>
+<h2><a class="header" href="#reserved-prefixes" id="reserved-prefixes">Reserved prefixes</a></h2>
+<h2><a class="header" href="#保留前缀" id="保留前缀">保留前缀</a></h2>
+<blockquote>
+<p><strong><sup>词法 2021+</sup></strong><br />
+RESERVED_TOKEN_DOUBLE_QUOTE : ( IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>b</code> 或 <code>r</code> 或 <code>br</code></em></sub> | <code>_</code> ) <code>&quot;</code><br />
+RESERVED_TOKEN_SINGLE_QUOTE : ( IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>b</code></em></sub> | <code>_</code> ) <code>'</code><br />
+RESERVED_TOKEN_POUND : ( IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>r</code> or <code>br</code></em></sub> | <code>_</code> ) <code>#</code></p>
+</blockquote>
+<p>这种被称为 <em>保留前缀</em> 的词法形式是保留供将来使用的。</p>
+<p>如果输入的源代码在词法上被解释为非原生标识符（或关键字或 <code>_</code>），且紧接着的字符是 <code>#</code>、<code>'</code> 或 <code>&quot;</code> （没有空格），则将其标识为保留前缀。（译者注：例如 prefix#identifier, prefix&quot;string&quot;, prefix'c', 和 prefix#123（其中 prefix可以是任何标识符（但不能是原生标识符））这样词法形式被标识为保留词法，以供将来拓展语法使用）</p>
+<p>请注意，原生标识符、原生字符串字面量和原生字节字符串字面量可能包含 <code>#</code>字符，但不会被解释为包含保留前缀。</p>
+<p>类似地，原生字符串字面量、字节字面量、字节字符串字面量和原生字节字符串字面量中使用的<code>r</code>、<code>b</code> 和 <code>br</code> 前缀也不会解释为保留前缀。</p>
+<blockquote>
+<p><strong>版次差异</strong>：从2021版开始，保留前缀被词法解释器报告为错误（特别是，它们不能再传递给宏了）。</p>
+<p>在2021版之前，保留前缀可以被词法解释器接受并被解释为多个 token（例如，后接 <code>#</code> 的标识符或关键字）。</p>
+<p>在所有的版次中都可以被编译器接受的示例：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>macro_rules! lexes {($($_:tt)*) =&gt; {}}
+lexes!{a #foo}
+lexes!{continue 'foo}
+lexes!{match &quot;...&quot; {}}
+lexes!{r#let#foo}         // 3个 tokens: r#let # foo
+<span class="boring">}
+</span></code></pre></pre>
+<p>在 2021之前的版次中可以被编译器接受，但之后会被拒绝的示例：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>macro_rules! lexes {($($_:tt)*) =&gt; {}}
+lexes!{a#foo}
+lexes!{continue'foo}
+lexes!{match&quot;...&quot; {}}
+<span class="boring">}
+</span></code></pre></pre>
+</blockquote>
 
                     </main>
 

@@ -169,8 +169,8 @@
 <h1><a class="header" href="#标识符" id="标识符">标识符</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/identifiers.md">identifiers.md</a><br />
-commit: 91c95a18e6aa0f5f687bab55a43fa0290afb6f1c <br />
-本章译文最后维护日期：2021-07-24</p>
+commit: 85031eb68b7418e49575efbf6e6c7fdad7f9f532 <br />
+本章译文最后维护日期：2022-01-08</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>词法分析:<sup></strong><br />
@@ -198,8 +198,9 @@ NON_KEYWORD_IDENTIFIER | RAW_IDENTIFIER</p>
 <li>后续字符 := <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Continue%3A%5D&amp;abb=on&amp;g=&amp;i="><code>XID_Continue</code></a></li>
 <li>中间字符 := 空</li>
 </ul>
+<p>还有一个附加约束，即单个下划线字符不是标识符。</p>
 <blockquote>
-<p><strong>注意</strong>: 以下划线开头的标识符通常用于表示有意不会被实际使用的标识符，且会使 <code>rustc</code> 中未被使用的警告静音。</p>
+<p><strong>注意</strong>: 以下划线开头的标识符通常用于表示有意不会被实际使用的标识符，且会使 <code>rustc</code> 对未被使用的警告静音。</p>
 </blockquote>
 <p>如果标识符没有下面<a href="#raw-identifiers">原生标识符</a>章节中描述的 <code>r#</code>前缀，那它不能是<a href="keywords.html#strict-keywords">严格关键字</a>或<a href="keywords.html#reserved-keywords">保留关键字</a>。</p>
 <p>标识符中不允许使用零宽度非连接符（ZWNJ U+200C）和零宽度连接符（ZWJ U+200D）。</p>

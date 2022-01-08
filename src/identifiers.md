@@ -2,8 +2,8 @@
 # 标识符
 
 >[identifiers.md](https://github.com/rust-lang/reference/blob/master/src/identifiers.md)\
->commit: 91c95a18e6aa0f5f687bab55a43fa0290afb6f1c \
->本章译文最后维护日期：2021-07-24
+>commit: 85031eb68b7418e49575efbf6e6c7fdad7f9f532 \
+>本章译文最后维护日期：2022-01-08
 
 > **<sup>词法分析:<sup>**\
 > IDENTIFIER_OR_KEYWORD :\
@@ -33,7 +33,9 @@
 * 后续字符 := [`XID_Continue`]
 * 中间字符 := 空
 
-> **注意**: 以下划线开头的标识符通常用于表示有意不会被实际使用的标识符，且会使 `rustc` 中未被使用的警告静音。
+还有一个附加约束，即单个下划线字符不是标识符。
+
+> **注意**: 以下划线开头的标识符通常用于表示有意不会被实际使用的标识符，且会使 `rustc` 对未被使用的警告静音。
 
 如果标识符没有下面[原生标识符](#raw-identifiers)章节中描述的 `r#`前缀，那它不能是[严格关键字][strict]或[保留关键字][reserved]。
 

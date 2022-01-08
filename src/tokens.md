@@ -1,8 +1,8 @@
 # Tokens
 
 >[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
->commit: d8cce6597b0678c72c83678243e36d5033adc624 \
->本章译文最后维护日期：2021-11-27
+>commit: be704f3a7e690b10d9ee66d5b29d455df82384a6 \
+>本章译文最后维护日期：2022-01-08
 
 
 token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：
@@ -93,7 +93,7 @@ token 是采用非递归方式的正则文法(regular languages)定义的基本�
 #### Suffixes
 #### 后缀
 
-后缀是紧跟（无空白符）在字面量主体部分之后的非[原生标识符][identifier](non-raw identifier)。
+后缀是字面量主体部分后面的字符序列（它们之间不能含有空格），其形式与非原生标识符或关键字相同。
 
 任何带有后缀的字面量（如字符串、整数等）都可以作为有效的 token，并且可以传递给宏而不会产生错误。宏自己决定如何解释这种 token，以及是否该报错。
 
@@ -103,7 +103,7 @@ macro_rules! blackhole { ($tt:tt) => () }
 blackhole!("string"suffix); // OK
 ```
 
-但是，最终被解析为 Rust 代码的字面量token 上的后缀是受限制的。对于非数字字面量token，任何后缀都最终将被弃用，而数字字面量token 只接受下表中的后缀。
+但是，最终被解析为 Rust 代码的字面量token 上的后缀是受限制的。对于非数字字面量token，任何后缀都会被编译器拒绝，而数字字面量token 只接受下表中的后缀。
 
 | 整数 | 浮点数 |
 |---------|----------------|
@@ -580,3 +580,41 @@ let x: f64 = 2.; // 类型 f64
 [use declarations]: items/use-declarations.md
 [use wildcards]: items/use-declarations.md
 [`while let`]: expressions/loop-expr.md#predicate-pattern-loops
+
+## Reserved prefixes
+## 保留前缀
+
+
+> **<sup>词法 2021+</sup>**\
+> RESERVED_TOKEN_DOUBLE_QUOTE : ( IDENTIFIER_OR_KEYWORD <sub>_排除 `b` 或 `r` 或 `br`_</sub> | `_` ) `"`\
+> RESERVED_TOKEN_SINGLE_QUOTE : ( IDENTIFIER_OR_KEYWORD <sub>_排除 `b`_</sub> | `_` ) `'`\
+> RESERVED_TOKEN_POUND : ( IDENTIFIER_OR_KEYWORD <sub>_排除 `r` or `br`_</sub> | `_` ) `#`
+
+这种被称为 _保留前缀_ 的词法形式是保留供将来使用的。
+
+如果输入的源代码在词法上被解释为非原生标识符（或关键字或 `_`），且紧接着的字符是 `#`、`'` 或 `"` （没有空格），则将其标识为保留前缀。（译者注：例如 prefix#identifier, prefix"string", prefix'c', 和 prefix#123（其中 prefix可以是任何标识符（但不能是原生标识符））这样词法形式被标识为保留词法，以供将来拓展语法使用）
+
+请注意，原生标识符、原生字符串字面量和原生字节字符串字面量可能包含 `#`字符，但不会被解释为包含保留前缀。
+
+类似地，原生字符串字面量、字节字面量、字节字符串字面量和原生字节字符串字面量中使用的`r`、`b` 和 `br` 前缀也不会解释为保留前缀。
+
+> **版次差异**：从2021版开始，保留前缀被词法解释器报告为错误（特别是，它们不能再传递给宏了）。
+>
+> 在2021版之前，保留前缀可以被词法解释器接受并被解释为多个 token（例如，后接 `#` 的标识符或关键字）。
+>
+> 在所有的版次中都可以被编译器接受的示例：
+> ```rust
+> macro_rules! lexes {($($_:tt)*) => {}}
+> lexes!{a #foo}
+> lexes!{continue 'foo}
+> lexes!{match "..." {}}
+> lexes!{r#let#foo}         // 3个 tokens: r#let # foo
+> ```
+>
+> 在 2021之前的版次中可以被编译器接受，但之后会被拒绝的示例：
+> ```rust,edition2018
+> macro_rules! lexes {($($_:tt)*) => {}}
+> lexes!{a#foo}
+> lexes!{continue'foo}
+> lexes!{match"..." {}}
+> ```
