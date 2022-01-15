@@ -2,8 +2,8 @@
 # 声明宏
 
 >[macros-by-example.md](https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md)\
->commit: 3a6ddea02244857362ac05d85ec98736b738c0ff \
->本章译文最后维护日期：2021-5-29
+>commit: 94a041ff3680f90c3b032e84944d4ec33dbd1217 \
+>本章译文最后维护日期：2022-01-15
 
 > **<sup>句法</sup>**\
 > _MacroRulesDefinition_ :\
@@ -26,9 +26,7 @@
 > &nbsp;&nbsp; | `{` _MacroMatch_<sup>\*</sup> `}`
 >
 > _MacroMatch_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; [_Token_]<sub>_排除 $ 和 定界符_</sub>\
-> &nbsp;&nbsp; | _MacroMatcher_\
-> &nbsp;&nbsp; | `$` [IDENTIFIER] `:` _MacroFragSpec_\
+> &nbsp;&nbsp; | `$` ( [IDENTIFIER_OR_KEYWORD] <sub>_排除 `crate`_</sub> | [RAW_IDENTIFIER] | `_` ) `:` _MacroFragSpec_\
 > &nbsp;&nbsp; | `$` `(` _MacroMatch_<sup>+</sup> `)` _MacroRepSep_<sup>?</sup> _MacroRepOp_
 >
 > _MacroFragSpec_ :\
@@ -101,11 +99,11 @@ foo!(3);
   * `item`: [_程序项_][_Item_]
   * `block`: [_块表达式_][_BlockExpression_]
   * `stmt`: [_语句_][_Statement_]，注意此选择器不匹配句尾的分号（如果匹配器中提供了分号，会被当做分隔符），但碰到分号是自身的一部分的程序项语句的情况又会匹配。
-  * `pat_param`: [_模式_][_PatternNoTopAlt_]
-  * `pat`: 等同于 `pat_param`
+  * `pat_param`: [顶层无or模式的模式][_PatternNoTopAlt_]
+  * `pat`: 目前至少可以匹配任意[顶层无or模式的模式][_PatternNoTopAlt_]， 具体匹配细节或许更依赖于具体的版次
   * `expr`: [_表达式_][_Expression_]
   * `ty`: [_类型_][_Type_]
-  * `ident`: [标识符或关键字][IDENTIFIER_OR_KEYWORD]
+  * `ident`: [标识符或关键字][IDENTIFIER_OR_KEYWORD]或[裸标识符][RAW_IDENTIFIER]
   * `path`: [_类型表达式_][_TypePath_] 形式的路径
   * `tt`: [_token树_][_TokenTree_]&nbsp;(单个 [token] 或宏匹配定界符 `()`、`[]` 或`{}` 中的标记)
   * `meta`: [_属性_][_Attr_]，属性中的内容
@@ -114,6 +112,12 @@ foo!(3);
   * `literal`: 匹配 `-`<sup>?</sup>[_字面量表达式_][_LiteralExpression_]
 
 因为匹配段类型已在匹配器中指定了，则在转码器中，元变量只简单地用 `$`*名称* 这种形式来指代就行了。元变量最终将被替换为跟它们匹配上的句法元素。元变量关键字 `$crate` 可以用来指代当前的 crate（请参阅后面的[卫生性(hygiene)][Hygiene]章节）。元变量可以被多次转码，也可以完全不转码。
+
+> **版次差异**：从 2021版次开始，段指示符`pat` 匹配顶层的or模式（也就是说，它能接受[全部形态的模式][_Pattern_]）。
+>
+> 在 2021版次之前，它和 `pat_param` 匹配的段是完全一样的（也就是说它至接受[顶层无or模式的模式][_PatternNoTopAlt_]）。
+>
+> 相关版次为 `macro_rules!`定义的有效版次。
 
 ## Repetitions
 ## 重复元
@@ -352,13 +356,16 @@ macro_rules! helper {
 例如，像 `$i:expr [ , ]` 这样的宏匹配器在现今的 Rust 中理论上是可以接受的，因为现在 `[,]` 不可能是合法表达式的一部分，因此解析始终是明确的。但是，由于 `[` 可以开始一个尾随表达式(trailing expressions)，因此 `[` 不是一个可以安全排除在表达式后面出现的字符。如果在接下来的 Rust 版本中接受了 `[,]`，那么这个匹配器就会产生歧义或是错误解析，破坏正常代码。但是，像`$i:expr,` 或 `$i:expr;` 这样的匹配符始终是合法的，因为 `,` 和`;` 是合法的表达式分隔符。目前规范中的规则是：（译者注：下面的规则不是绝对的，因为宏的基础理论还在发展中。）
 
   * `expr` 和 `stmt` 只能后跟一个： `=>`、`,`、`;`。
-  * `pat` 和 `pat_param` 只能后跟一个： `=>`、`,`、`=`、`|`、`if`、`in`。
+  * `pat_param` 只能后跟一个： `=>`、`,`、`=`、`|`、`if` 或 `in`。
+  * `pat` 只能后跟一个： `=>`, `,`, `=`, `if` 或 `in`。
   * `path` 和 `ty` 只能后跟一个： `=>`、`,`、`=`、`|`、`;`、`:`、`>`、`>>`、`[`、`{`、`as`、`where`、块(`block`)型非终结符(block nonterminals)。
   * `vis` 只能后跟一个：`,`、非原生字符串 `priv` 以外的任何标识符和关键字、可以表示类型开始的任何 token、`ident`或`ty`或`path`型非终结符。    
     
     （译者注：可以表示类型开始的 token 有：{`(`, `[`, `!`, `\*`,`&`, `&&`, `?`, 生存期, `>`, `>>`, `::`, 非关键字标识符, `super`,`self`, `Self`, `extern`, `crate`, `$crate`, `_`, `for`, `impl`, `fn`, `unsafe`,`typeof`, `dyn`}。注意这个列表也不一定全。）
   
   * 其它所有的匹配段选择器没有限制。
+
+> **Edition Differences**: 在2021版次之前，`pat` 也可后跟 `|`。
 
 当涉及到重复元时，随集歧义限制适用于所有可能的展开次数，注意需将重复元中的分隔符考虑在内。这意味着：
 
@@ -372,6 +379,7 @@ macro_rules! helper {
 [Hygiene]: #hygiene
 [IDENTIFIER]: identifiers.md
 [IDENTIFIER_OR_KEYWORD]: identifiers.md
+[RAW_IDENTIFIER]: identifiers.md
 [LIFETIME_TOKEN]: tokens.md#lifetimes-and-loop-labels
 [Metavariables]: #metavariables
 [Repetitions]: #repetitions
@@ -382,6 +390,7 @@ macro_rules! helper {
 [_Item_]: items.md
 [_LiteralExpression_]: expressions/literal-expr.md
 [_MetaListIdents_]: attributes.md#meta-item-attribute-syntax
+[_Pattern_]: patterns.md
 [_PatternNoTopAlt_]: patterns.md
 [_Statement_]: statements.md
 [_TokenTree_]: macros.md#macro-invocation

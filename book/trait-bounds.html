@@ -169,8 +169,8 @@
 <h1><a class="header" href="#trait约束和生存期约束" id="trait约束和生存期约束">trait约束和生存期约束</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md">trait-bounds.md</a><br />
-commit: 82d75cf423e4a7824fb36e73ccb18519d6900610 <br />
-本章译文最后维护日期：2021-07-17</p>
+commit: 9e27603773164ce3bb916e003d91b33fdd45f7c7 <br />
+本章译文最后维护日期：2022-01-15</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -259,7 +259,7 @@ fn name_figure&lt;U: Shape&gt;(
 <p><em>ForLifetimes</em> :<br />
    <code>for</code> <a href="items/generics.html"><em>GenericParams</em></a></p>
 </blockquote>
-<p>可以在生存期上再进行<em>更高阶的</em>类型约束。这些高阶约束指定了一个对<em>所有</em>生存期都为真的约束。例如，像 <code>for&lt;'a&gt; &amp;'a T: PartialEq&lt;i32&gt;</code> 这样的约束需要一个如下的实现</p>
+<p>可以在生存期上再进行<em>更高阶的</em>类型约束。这些高阶约束指定了一个对<em>所有</em>生存期都必须保证为真的约束。例如，像 <code>for&lt;'a&gt; &amp;'a T: PartialEq&lt;i32&gt;</code> 这样的约束需要一个如下的实现</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

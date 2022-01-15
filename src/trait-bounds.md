@@ -2,8 +2,8 @@
 # trait约束和生存期约束
 
 >[trait-bounds.md](https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md)\
->commit: 82d75cf423e4a7824fb36e73ccb18519d6900610 \
->本章译文最后维护日期：2021-07-17
+>commit: 9e27603773164ce3bb916e003d91b33fdd45f7c7 \
+>本章译文最后维护日期：2022-01-15
 
 > **<sup>句法</sup>**\
 > _TypeParamBounds_ :\
@@ -97,7 +97,7 @@ fn f<'a, 'b>(x: &'a i32, mut y: &'b i32) where 'a: 'b {
 > _ForLifetimes_ :\
 > &nbsp;&nbsp; `for` [_GenericParams_]
 
-可以在生存期上再进行*更高阶的*类型约束。这些高阶约束指定了一个对*所有*生存期都为真的约束。例如，像 `for<'a> &'a T: PartialEq<i32>` 这样的约束需要一个如下的实现
+可以在生存期上再进行*更高阶的*类型约束。这些高阶约束指定了一个对*所有*生存期都必须保证为真的约束。例如，像 `for<'a> &'a T: PartialEq<i32>` 这样的约束需要一个如下的实现
 
 ```rust
 # struct T;
