@@ -2,8 +2,8 @@
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit: 0b7f340e8963eccac662f97cb679855f043a658f \
->本章译文最后维护日期：2021-07-17
+>commit: 4115c9a3c2bd91f29445999891de4e8d26d60dc8 \
+>本章译文最后维护日期：2022-01-22
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -429,13 +429,16 @@ assert_eq!(values[1], 3);
 
 *赋值表达式*会把某个值移入到一个特定的位置。
 
-*赋值表达式*由一个[可变][mutable] [位置表达式][place expression]（就是*被赋值的位置操作数*）后跟等号（`=`）和[值表达式][value expression]（就是被赋值的值操作数）组成。
+赋值表达式由一个[可变][mutable]的[接收者表达式(assignee expression)][assignee expression]（就是*被赋值的操作数*）后跟一个等号（`=`）和一个[值表达式][value expression]（也就是所要赋的值的操作数）组成。
+在赋值表达式的基本形式中，接收者表达式是一个[位置表达式][place expression]，这个我们之前已讨论过了。
+下文将讨论更一般的解构赋值情况，这种情况的基本规则是等号右边的整个表达式被分解，然后按顺序为左侧的位置表达式对应赋值。
 
-与其他位置操作数不同，赋值位置操作数必须是一个位置表达式。
-试图使用值表达式将导致编译器报错，而不是将其提升转换为临时位置。
+### Basic assignments
+### 基本赋值形式
 
-赋值表达式要先计算它的操作数。
-赋值的值操作数先被求值，然后是赋值的位置操作数。
+执行赋值表达式要首先对它的操作数先行求值。
+这其中，等号右边的值操作数要最先求值，然后是接收者表达式。
+对于解构赋值，接受者表达式的各个子表达式会按从左到右的顺序进行求值。
 
 > **注意**：此表达式与其他表达式的求值顺序不同，此表达式的右操作数在左操作数之前被求值。
 
@@ -450,6 +453,61 @@ let mut x = 0;
 let y = 0;
 x = y;
 ```
+
+### Destructuring assignments
+### 解构赋值形式
+
+解构赋值可以和变量的解构声明形式（应用了解构模式匹配的变量声明形式）相比较，它允许对拥有复杂结构的变量（如元组或结构）进行赋值。
+例如，我们可以交换两个可变变量：
+
+```rust
+let (mut a, mut b) = (0, 1);
+// 使用解构赋值来交换 `a` 和 `b`。
+(b, a) = (a, b);
+```
+
+与使用 `let` 来做解构声明不同，由于存在句法二义性，模式可能不会被允许出现在解构赋值的左侧。
+如果要这样做，你替代的方法就是让模式相关的这批表达式组成[接收者表达式(assignee expression)][assignee expression]放在赋值表达式的左侧使用。
+然后再将接收者表达式脱糖为具体的单个模式匹配，然后依次赋值。
+被脱糖的模式必须是不可反驳的模式：特别是，这意味着只有长度在编译时已知的切片模式，或者全切片模式 `[..]`，才被允许进行解构赋值。
+
+对接收者表达式进行脱糖方法简单明了，下面通过示例进行说明。
+
+```rust
+# struct Struct { x: u32, y: u32 }
+# let (mut a, mut b) = (0, 0);
+(a, b) = (3, 4);
+
+[a, b] = [3, 4];
+
+Struct { x: a, y: b } = Struct { x: 3, y: 4};
+
+// 被脱糖为:
+
+{
+    let (_a, _b) = (3, 4);
+    a = _a;
+    b = _b;
+}
+
+{
+    let [_a, _b] = [3, 4];
+    a = _a;
+    b = _b;
+}
+
+{
+    let Struct { x: _a, y: _b } = Struct { x: 3, y: 4};
+    a = _a;
+    b = _b;
+}
+```
+
+允许在单个表达式中多次使用标识符。
+
+[下划线表达式][_UnderscoreExpression_]和空的[范围表达式][_RangeExpression_]可以用来忽略特定值，以便达到不绑定它们的目的。
+
+注意模式里的默认绑定方式不会对这种脱糖表达式起效。
 
 ## 复合赋值表达式
 ## Compound assignment expressions
@@ -537,6 +595,7 @@ fn example() {
 [logical xor]: ../types/boolean.md#logical-xor
 [mutable]: ../expressions.md#mutability
 [place expression]: ../expressions.md#place-expressions-and-value-expressions
+[assignee expression]: ../expressions.md#place-expressions-and-value-expressions
 [undefined behavior]: ../behavior-considered-undefined.md
 [unit]: ../types/tuple.md
 [value expression]: ../expressions.md#place-expressions-and-value-expressions
@@ -558,3 +617,5 @@ fn example() {
 
 [_Expression_]: ../expressions.md
 [_TypeNoBounds_]: ../types.md#type-expressions
+[_RangeExpression_]: ./range-expr.md
+[_UnderscoreExpression_]: ./underscore-expr.md

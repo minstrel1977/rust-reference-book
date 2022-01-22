@@ -67,6 +67,7 @@
         - [匹配表达式](expressions/match-expr.md)
         - [返回表达式](expressions/return-expr.md)
         - [等待(await)表达式](expressions/await-expr.md)
+        - [下划线表达式](expressions/underscore-expr.md)
 
 - [模式](patterns.md)
 
@@ -89,7 +90,7 @@
         - [trait对象](types/trait-object.md)
         - [实现trait](types/impl-trait.md)
         - [类型参数](types/parameters.md)
-        - [推断型](types/inferred.md)
+        - [可推断类型](types/inferred.md)
     - [动态尺寸类型(DST)](dynamically-sized-types.md)
     - [类型布局 ](type-layout.md)
     - [内部可变性](interior-mutability.md)

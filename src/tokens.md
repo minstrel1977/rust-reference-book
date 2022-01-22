@@ -1,8 +1,8 @@
 # Tokens
 
 >[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
->commit: be704f3a7e690b10d9ee66d5b29d455df82384a6 \
->本章译文最后维护日期：2022-01-08
+>commit: 9b91e9b82500bd782b31883197613983a5372272 \
+>本章译文最后维护日期：2022-01-22
 
 
 token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：
@@ -505,7 +505,7 @@ let x: f64 = 2.; // 类型 f64
 | `>=`   | Ge          | [大于或等于][comparison], [泛型][generics]
 | `<=`   | Le          | [小于或等于][comparison]
 | `@`    | At          | [子模式绑定][Subpattern binding]
-| `_`    | Underscore  | [通配符模式][Wildcard patterns], [自动推断型类型][Inferred types], [常量项][constants]中的非命名程序项, [外部 crate][extern crates], 和 [use声明][use declarations]
+| `_`    | Underscore  | [通配符模式][Wildcard patterns], [自动推断型类型][Inferred types], [常量项][constants]中的非命名程序项, [外部 crate][extern crates], 和 [use声明][use declarations]，和[解构赋值][destructuring assignment]
 | `.`    | Dot         | [字段访问][field], [元组索引][Tuple index]
 | `..`   | DotDot      | [区间][range], [结构体表达式][Struct expressions], [模式][Patterns],[区间模式][rangepat]
 | `...`  | DotDotDot   | [可变参数函数][extern], [区间模式][Range patterns]
@@ -547,6 +547,7 @@ let x: f64 = 2.; // 类型 f64
 [compound]: expressions/operator-expr.md#compound-assignment-expressions
 [constants]: items/constant-items.md
 [dereference]: expressions/operator-expr.md#the-dereference-operator
+[destructuring assignment]: expressions/underscore-expr.md
 [extern crates]: items/extern-crates.md
 [extern]: items/external-blocks.md
 [field]: expressions/field-expr.md

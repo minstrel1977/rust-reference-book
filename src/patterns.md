@@ -2,8 +2,8 @@
 # 模式
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
->commit: b83fcc16b1e1dba152277637991c863d5dc84a25 \
->本章译文最后维护日期：2021-12-18
+>commit: 9884d5eb58aa73ea9efdf5ed1b13110c5a9292d7 \
+>本章译文最后维护日期：2021-01-22
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\
@@ -376,8 +376,7 @@ match tuple {
 > &nbsp;&nbsp; | [BYTE_LITERAL]\
 > &nbsp;&nbsp; | `-`<sup>?</sup> [INTEGER_LITERAL]\
 > &nbsp;&nbsp; | `-`<sup>?</sup> [FLOAT_LITERAL]\
-> &nbsp;&nbsp; | [_PathInExpression_]\
-> &nbsp;&nbsp; | [_QualifiedPathInExpression_]
+> &nbsp;&nbsp; | [_PathPattern_]
 
 区间模式匹配在区间上下边界内界定的值。区间模式可是闭区间或半开区间。如果区间模式的上界和下界均被包含在内则为闭区间模式。半开区间模式为包含下界数值，但不包含上界数值的区间模式。
 
@@ -704,8 +703,7 @@ match v[..] {
 
 > **<sup>句法</sup>**\
 > _PathPattern_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; [_PathInExpression_]\
-> &nbsp;&nbsp; | [_QualifiedPathInExpression_]
+> &nbsp;&nbsp; &nbsp;&nbsp; [_PathExpression_]
 
 *路径模式*是指向(refer to)常量值或指向没有字段的结构体或没有字段的枚举变体的模式。
 
@@ -767,6 +765,7 @@ _or模式_是能匹配两个或多个并列子模式（例如：`A | B | C`）�
 [_MacroInvocation_]: macros.md#macro-invocation
 [_ObsoleteRangePattern_]: #range-patterns
 [_PathInExpression_]: paths.md#paths-in-expressions
+[_PathExpression_]: expressions/path-expr.md
 [_PathPattern_]: #path-patterns
 [_Pattern_]: #patterns
 [_PatternWithoutRange_]: #patterns

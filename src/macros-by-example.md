@@ -2,8 +2,8 @@
 # 声明宏
 
 >[macros-by-example.md](https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md)\
->commit: 94a041ff3680f90c3b032e84944d4ec33dbd1217 \
->本章译文最后维护日期：2022-01-15
+>commit: 1b9b8d8e296d39a26cc2c8e455139f54bf5335ce \
+>本章译文最后维护日期：2022-01-22
 
 > **<sup>句法</sup>**\
 > _MacroRulesDefinition_ :\
@@ -26,6 +26,8 @@
 > &nbsp;&nbsp; | `{` _MacroMatch_<sup>\*</sup> `}`
 >
 > _MacroMatch_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_Token_]<sub>_排除 $ 和[定界符][delimiters]_</sub>\
+> &nbsp;&nbsp; | _MacroMatcher_\
 > &nbsp;&nbsp; | `$` ( [IDENTIFIER_OR_KEYWORD] <sub>_排除 `crate`_</sub> | [RAW_IDENTIFIER] | `_` ) `:` _MacroFragSpec_\
 > &nbsp;&nbsp; | `$` `(` _MacroMatch_<sup>+</sup> `)` _MacroRepSep_<sup>?</sup> _MacroRepOp_
 >
@@ -34,7 +36,7 @@
 > &nbsp;&nbsp; | `meta` | `pat` | `pat_param` | `path` | `stmt` | `tt` | `ty` | `vis`
 >
 > _MacroRepSep_ :\
-> &nbsp;&nbsp; [_Token_]<sub>_排除 定界符 和 重复操作符_</sub>
+> &nbsp;&nbsp; [_Token_]<sub>_排除 [定界符][delimiters] 和 MacroRepOp_</sub>
 >
 > _MacroRepOp_ :\
 > &nbsp;&nbsp; `*` | `+` | `?`
@@ -112,6 +114,8 @@ foo!(3);
   * `literal`: 匹配 `-`<sup>?</sup>[_字面量表达式_][_LiteralExpression_]
 
 因为匹配段类型已在匹配器中指定了，则在转码器中，元变量只简单地用 `$`*名称* 这种形式来指代就行了。元变量最终将被替换为跟它们匹配上的句法元素。元变量关键字 `$crate` 可以用来指代当前的 crate（请参阅后面的[卫生性(hygiene)][Hygiene]章节）。元变量可以被多次转码，也可以完全不转码。
+
+出于向后兼容性的原因，尽管 `_` [也是一个表达式][_UnderscoreExpression_]，`expr`段指示符并不会与单独的下划匹配。但是，`_` 作为子表达式出现时，它却可以与 `expr`段指示符相匹配。
 
 > **版次差异**：从 2021版次开始，段指示符`pat` 匹配顶层的or模式（也就是说，它能接受[全部形态的模式][_Pattern_]）。
 >
@@ -395,8 +399,10 @@ macro_rules! helper {
 [_Statement_]: statements.md
 [_TokenTree_]: macros.md#macro-invocation
 [_Token_]: tokens.md
+[delimiters]: tokens.md#delimiters
 [_TypePath_]: paths.md#paths-in-types
 [_Type_]: types.md#type-expressions
+[_UnderscoreExpression_]: expressions/underscore-expr.md
 [_Visibility_]: visibility-and-privacy.md
 [formal specification]: macro-ambiguity.md
 [token]: tokens.md
