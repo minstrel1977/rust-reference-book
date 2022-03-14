@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>块表达式</title>
+        <title>块表达式 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -195,7 +195,7 @@ commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
 <p>在对块表达式进行求值时，除了程序项声明语句外，每个语句都是按顺序执行的。
 如果给出了块尾的可选的最终操作数(final operand)，则最后会执行它。</p>
 <p>块的类型是最此块的最终操作数(final operand)的类型，但如果省略了最终操作数，则块的类型为 <code>()</code>。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">fn fn_call() {}
@@ -218,7 +218,7 @@ assert_eq!(5, five);
 <blockquote>
 <p><strong>注意</strong>：如果确实有需要，块可以用于强制移动值。
 例如，下面的示例在调用 <code>consume_self</code> 时失败，因为结构体已经在之前的块表达式里被从 <code>s</code> 里移出了。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Struct;
@@ -275,7 +275,7 @@ fn move_by_block_expression() {
 类似地,如果 <code>&lt;expr&gt;?</code> 传播(propagate)一个错误，这个错误也会被 future 在未来的某个时候作为返回结果被传播出去。</p>
 <p>最后，关键字 <code>break</code> 和 <code>continue</code> 不能用于从异步块中跳出分支。
 因此，以下内容是非法的：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>loop {
@@ -292,7 +292,7 @@ fn move_by_block_expression() {
 </blockquote>
 <p>可以在代码块前面加上关键字 <code>unsafe</code> 以允许<a href="../unsafety.html">非安全操作</a>。
 例如：</p>
-<pre><pre class="playground"><code class="language-rust23672971a16c69ea894bef24992b74912cfe5d25 edition2018">
+<pre><pre class="playground"><code class="language-rust23672971a16c69ea894bef24992b74912cfe5d25">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>在以下上下文中，允许在块表达式的左括号之后直接使用[内部属性][inner attributes]：

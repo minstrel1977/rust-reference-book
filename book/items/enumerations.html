@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>枚举</title>
+        <title>枚举 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -196,7 +196,7 @@ commit: d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
 <p><em>枚举</em>，英文为 <em>enumeration</em>，常见其简写形式 <em>enum</em>，它同时定义了一个标称型(nominal)<a href="../types/enum.html">枚举类型</a>和一组<em>构造器</em>，这可用于创建或使用模式来匹配相应枚举类型的值。</p>
 <p>枚举使用关键字 <code>enum</code> 来声明。</p>
 <p><code>enum</code> 程序项的一个示例和它的使用方法：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Animal {
@@ -209,7 +209,7 @@ a = Animal::Cat;
 <span class="boring">}
 </span></code></pre></pre>
 <p>枚举构造器可以带有具名字段或未具名字段：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Animal {
@@ -226,7 +226,7 @@ a = Animal::Cat { name: &quot;Spotty&quot;.to_string(), weight: 2.7 };
 <h2><a class="header" href="#为无字段枚举自定义判别值" id="为无字段枚举自定义判别值">为无字段枚举自定义判别值</a></h2>
 <p>如果枚举的<em>任何</em>变体都没有附加字段，则可以直接设置和访问判别值。</p>
 <p>可以使用操作符 <code>as</code> 通过<a href="../expressions/operator-expr.html#semantics">数值转换</a>将这些枚举类型转换为整型。枚举可以可选地指定每个判别值的具体值，方法是在变体名后面追加 <code>=</code> 和<a href="../const_eval.html#constant-expressions">常量表达式</a>。如果声明中的第一个变体未指定，则将其判别值设置为零。对于其他未指定的判别值，它比照前一个变体的判别值按 1 递增。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Foo {
@@ -241,7 +241,7 @@ assert_eq!(baz_discriminant, 123);
 </span></code></pre></pre>
 <p>尽管编译器被允许在实际的内存布局中使用较小的类型，但在<a href="../type-layout.html#the-default-representation">默认表形(default representation)</a>下，指定的判别值会被解释为一个 <code>isize</code> 值。也可以使用[原语表形(primitive representation)]或<a href="../type-layout.html#the-c-representation"><code>C</code>表形</a>来更改成大小可接受的值。</p>
 <p>同一枚举中，两个变体使用相同的判别值是错误的。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum SharedDiscriminantError {
@@ -257,7 +257,7 @@ enum SharedDiscriminantError2 {
 <span class="boring">}
 </span></code></pre></pre>
 <p>当前一个变体的判别值是当前表形允许的的最大值时，再使用默认判别值就也是错误的。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[repr(u8)]
@@ -277,14 +277,14 @@ enum OverflowingDiscriminantError2 {
 <h2><a class="header" href="#zero-variant-enums" id="zero-variant-enums">Zero-variant Enums</a></h2>
 <h2><a class="header" href="#无变体枚举" id="无变体枚举">无变体枚举</a></h2>
 <p>没有变体的枚举称为<em>零变体枚举/无变体枚举</em>。因为它们没有有效的值，所以不能被实例化。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum ZeroVariants {}
 <span class="boring">}
 </span></code></pre></pre>
 <p>零变体枚举与 <a href="../types/never.html"><em>never类型</em></a>等效，但它不能被强转为其他类型。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">enum ZeroVariants {}
@@ -295,7 +295,7 @@ let y: u32 = x; // 类型不匹配错误
 <h2><a class="header" href="#variant-visibility" id="variant-visibility">Variant visibility</a></h2>
 <h2><a class="header" href="#变体的可见性" id="变体的可见性">变体的可见性</a></h2>
 <p>依照句法规则，枚举变体是允许有自己的[<em>可见性(visibility)</em>][Visibility]限定/注解(annotation)的，但当枚举被（句法分析程序）验证(validate)通过后，可见性注解又被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的程序项使用统一的句法规则进行解析。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! mac_variant {

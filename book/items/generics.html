@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>泛型参数</title>
+        <title>泛型参数 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -169,8 +169,8 @@
 <h1><a class="header" href="#类型参数和生存期参数" id="类型参数和生存期参数">类型参数和生存期参数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/generics.md">generics.md</a><br />
-commit: 979707736cc937200ded3afae52bf8aa7501ebf2 <br />
-本章译文最后维护日期：2021-10-17</p>
+commit: cd3704e9aa4e28f0bc311ab7c23e5dfaf1f3c24d <br />
+本章译文最后维护日期：2022-03-14</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -184,17 +184,19 @@ commit: 979707736cc937200ded3afae52bf8aa7501ebf2 <br />
 <p><em>TypeParam</em> :<br />
    <a href="../identifiers.html">IDENTIFIER</a>( <code>:</code> <a href="../trait-bounds.html"><em>TypeParamBounds</em></a><sup>?</sup> )<sup>?</sup> ( <code>=</code> <a href="../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
 <p><em>ConstParam</em>:<br />
-   <code>const</code> <a href="../identifiers.html">IDENTIFIER</a> <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a></p>
+   <code>const</code> <a href="../identifiers.html">IDENTIFIER</a> <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a> ( <code>=</code> <em><a href="../expressions/block-expr.html">Block</a></em> | <a href="../identifiers.html">IDENTIFIER</a> | -<sup>?</sup><a href="../expressions/literal-expr.html">LITERAL</a> )<sup>?</sup></p>
 </blockquote>
-<p><a href="functions.html">函数</a>、<a href="type-aliases.html">类型别名</a>、<a href="structs.html">结构体</a>、<a href="enumerations.html">枚举</a>、<a href="unions.html">联合体</a>、<a href="traits.html">trait</a> 和<a href="implementations.html">实现</a>可以通过类型参数、常量参数和生存期参数达到<em>参数化</em>配置的的效果。这些参数在尖括号<span class="parenthetical">（<code>&lt;...&gt;</code>）</span>中列出，通常都是紧跟在程序项名称之后和程序项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 <code>impl</code> 之后。泛型参数的申明顺序是生存期参数在最前面，然后是类型参数，最后是常量参数。</p>
+<p><a href="functions.html">函数</a>、<a href="type-aliases.html">类型别名</a>、<a href="structs.html">结构体</a>、<a href="enumerations.html">枚举</a>、<a href="unions.html">联合体</a>、<a href="traits.html">trait</a> 和<a href="implementations.html">实现</a>可以通过类型参数、常量参数和生存期参数达到<em>参数化</em>配置的的效果。这些参数在尖括号<span class="parenthetical">（<code>&lt;...&gt;</code>）</span>中列出，通常都是紧跟在程序项名称之后和程序项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 <code>impl</code> 之后。
+泛型参数的顺序被严格限定为生存期参数必须在前，然后是类型参数和常量参数混合。</p>
 <p>下面给出一些带类型参数、常量参数和生存期参数的程序项的示例：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn foo&lt;'a, T&gt;() {}
 trait A&lt;U&gt; {}
 struct Ref&lt;'a, T&gt; where T: 'a { r: &amp;'a T }
 struct InnerArray&lt;T, const N: usize&gt;([T; N]);
+struct EitherOrderWorks&lt;const N: bool, U&gt;(U);
 <span class="boring">}
 </span></code></pre></pre>
 <p>泛型参数在声明它们的程序项定义的范围内有效。它们不是函数体中声明的程序项，这个在<a href="../statements.html#item-declarations">程序项声明</a>中有讲述。</p>
@@ -212,7 +214,7 @@ struct InnerArray&lt;T, const N: usize&gt;([T; N]);
 <li>作为程序项中任何函数体中使用到的任何类型的参数。</li>
 <li>作为程序项中任何字段类型的一部分使用。</li>
 </ol>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 可以使用常量泛型参数的示例。
@@ -243,7 +245,7 @@ impl&lt;const N: usize&gt; Trait for Foo&lt;N&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 不能使用常量泛型参数的示例
@@ -260,7 +262,7 @@ fn foo&lt;const N: usize&gt;() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>作为进一步的限制，常量只能作为<a href="../types.html">类型</a>或<a href="../expressions/array-expr.html">数组定义中的重复表达式</a>中的独立实参出现。在这种上下文限制下，它们只能以单段<a href="../expressions/path-expr.html">路径表达式</a>的形式使用（例如 <code>N</code> 或以<a href="../expressions/block-expr.html">块</a><code>{N}</code> 的形式出现）。也就是说，它们不能与其他表达式结合使用。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 不能使用常量参数的示例。
@@ -276,7 +278,7 @@ fn bad_function&lt;const N: usize&gt;() -&gt; [u8; {N + 1}] {
 <blockquote>
 <p><strong>注意</strong>：这种句法限制是必要的，用以避免在解析类型内部的表达式时可能会导致无限递归(infinite lookahead)。</p>
 </blockquote>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn double&lt;const N: i32&gt;() {
@@ -299,7 +301,7 @@ fn example() {
 <!-- TODO: Rewrite the paragraph above to be in terms of namespaces, once
     namespaces are introduced, and it is clear which namespace each parameter
     lives in. -->
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>type N = u32;
@@ -311,7 +313,7 @@ fn bar&lt;const N: usize&gt;() -&gt; Foo&lt;{ N }&gt; { todo!() } // ok
 <span class="boring">}
 </span></code></pre></pre>
 <p>与类型参数和生存期参数不同，常量参数可以声明而不必在被它参数化的程序项中使用，但和<a href="implementations.html#generic-implementations">泛型实现</a>关联的实现例外：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// ok
@@ -326,7 +328,7 @@ impl&lt;const N: usize&gt; Unconstrained {}
 <span class="boring">}
 </span></code></pre></pre>
 <p>当处理 trait约束时，在确定是否满足相关约束时，不会考虑常量参数的所有实现的穷尽性。例如，在下面的例子中，即使实现了 <code>bool</code>类型的所有可能的常量值，仍会报错提示 trait约束不满足。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Foo&lt;const B: bool&gt;;
@@ -357,7 +359,7 @@ fn generic&lt;const B: bool&gt;() {
 </blockquote>
 <p><em>where子句</em>提供了另一种方法来为类型参数和生存期参数指定约束(bound)，甚至可以为非类型参数的类型指定约束。</p>
 <p>关键字<code>for</code> 可以用来引入<a href="../trait-bounds.html#higher-ranked-trait-bounds">高阶生存期参数</a>。它只允许在 <a href="#generic-parameters"><em>LifetimeParam</em></a> 参数上使用。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct A&lt;T&gt;

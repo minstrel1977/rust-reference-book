@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>预导入包</title>
+        <title>预导入包 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -169,11 +169,11 @@
 <h1><a class="header" href="#预导入包" id="预导入包">预导入包</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/names/preludes.md">use-declarations.md</a><br />
-commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
-本章译文最后维护日期：2021-07-31</p>
+commit: 0181f237f508a8109d99db76a4a5ab48d6132b93 <br />
+本章译文最后维护日期：2022-03-14</p>
 </blockquote>
 <p><em>预导入包</em>是一组名称的集合，它会自动把这些名称导入到 crate 中的每个模块的作用域中。</p>
-<p>预导入包中的那些名称不是当前模块本身的一部分：它们在<a href="name-resolution.html">名称解析</a>期间被隐式导入。例如，即使像 <a href="../../std/boxed/struct.Box.html"><code>Box</code></a> 这样在每个模块的作用域中到处使用的名称，你也不能通过 <code>self::Box</code> 来引用它，因为它不是当前模块的成员。</p>
+<p>预导入包中的那些名称不是当前模块本身的一部分：它们在<a href="name-resolution.html">名称解析</a>期间被隐式导入。例如，即使像 <a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box</code></a> 这样在每个模块的作用域中到处使用的名称，你也不能通过 <code>self::Box</code> 来引用它，因为它不是当前模块的成员。</p>
 <p>有几个不同的预导入包：</p>
 <ul>
 <li><a href="#standard-library-prelude">标准库预导入包</a></li>
@@ -184,18 +184,29 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 </ul>
 <h2><a class="header" href="#standard-library-prelude" id="standard-library-prelude">Standard library prelude</a></h2>
 <h2><a class="header" href="#标准库预导入包" id="标准库预导入包">标准库预导入包</a></h2>
-<p>标准库预导入包包含了 <a href="../../std/prelude/index.html"><code>std::prelude::v1</code></a>模块中的名称。如果使用<a href="#the-no_std-attribute"><code>no_std</code>属性</a>，那么它将使用<a href="../../core/prelude/index.html"><code>core::prelude::v1</code></a>模块中的名称。</p>
+<p>每个 crate 都有一个标准库预导入包，此包是一个标准库模块。</p>
+<p>具体使用的模块取决于 crate 的版次，以及 <a href="#the-no_std-attribute"><code>no_std</code>属性</a>是否应用于此 crate：</p>
+<table><thead><tr><th>版次</th><th>非 <code>no_std</code> 环境</th><th><code>no_std</code> 环境</th></tr></thead><tbody>
+<tr><td>2015</td><td><a href="https://doc.rust-lang.org/std/prelude/rust_2015/index.html"><code>std::prelude::rust_2015</code></a></td><td><a href="https://doc.rust-lang.org/core/prelude/rust_2015/index.html"><code>core::prelude::rust_2015</code></a></td></tr>
+<tr><td>2018</td><td><a href="https://doc.rust-lang.org/std/prelude/rust_2018/index.html"><code>std::prelude::rust_2018</code></a></td><td><a href="https://doc.rust-lang.org/core/prelude/rust_2018/index.html"><code>core::prelude::rust_2018</code></a></td></tr>
+<tr><td>2021</td><td><a href="https://doc.rust-lang.org/std/prelude/rust_2021/index.html"><code>std::prelude::rust_2021</code></a></td><td><a href="https://doc.rust-lang.org/core/prelude/rust_2021/index.html"><code>core::prelude::rust_2021</code></a></td></tr>
+</tbody></table>
+<blockquote>
+<p><strong>注意</strong>：</p>
+<p><a href="https://doc.rust-lang.org/std/prelude/rust_2015/index.html"><code>std::prelude::rust_2015</code></a> 和 <a href="https://doc.rust-lang.org/std/prelude/rust_2018/index.html"><code>std::prelude::rust_2018</code></a> 与 <a href="https://doc.rust-lang.org/std/prelude/v1/index.html"><code>std::prelude::v1</code></a> 的内容一致。</p>
+<p><a href="https://doc.rust-lang.org/core/prelude/rust_2015/index.html"><code>core::prelude::rust_2015</code></a> and <a href="https://doc.rust-lang.org/core/prelude/rust_2018/index.html"><code>core::prelude::rust_2018</code></a> 与 <a href="https://doc.rust-lang.org/core/prelude/v1/index.html"><code>core::prelude::v1</code></a> 的内容一致。</p>
+</blockquote>
 <h2><a class="header" href="#extern-prelude" id="extern-prelude">Extern prelude</a></h2>
 <h2><a class="header" href="#外部预导入包" id="外部预导入包">外部预导入包</a></h2>
 <p>在根模块中使用 <a href="../items/extern-crates.html"><code>extern crate</code></a> 导入的外部crate 或直接给编译器提供的的外部crate（也就是在 <code>rustc</code>命令下使用 <code>--extern</code>命令行参数选项）会被添加到<em>外部预导入包</em>中。如果使用 <code>extern crate orig_name as new_name</code> 这类别名导入，则符号 <code>new_name</code> 将被添加到此预导入包。</p>
-<p><a href="../../core/index.html"><code>core</code></a> crate 总是会被添加到外部预导入包中。只要 <a href="#the-no_std-attribute"><code>no_std</code>属性</a>没有在 crate根模块中指定，那么<a href="../../std/index.html"><code>std</code></a> crate 就会被添加进来</p>
+<p><a href="https://doc.rust-lang.org/core/index.html"><code>core</code></a> crate 总是会被添加到外部预导入包中。只要 <a href="#the-no_std-attribute"><code>no_std</code>属性</a>没有在 crate根模块中指定，那么<a href="https://doc.rust-lang.org/std/index.html"><code>std</code></a> crate 就会被添加进来</p>
 <blockquote>
 <p><strong>版次差异</strong>：在 2015 版中，在外部预导入包中的 crate 不能通过 <a href="../items/use-declarations.html">use声明</a>来直接引用，因此通常标准做法是用 <code>extern crate</code> 将那它们纳入到当前作用域。</p>
 <p>从 2018 版开始， <a href="../items/use-declarations.html">use声明</a>可以直接引用外部预导入包里的 crate，所以再在代码里使用 <code>extern crate</code> 就会被认为是不规范的。</p>
 </blockquote>
 <blockquote>
-<p><strong>注意</strong>: 随 <code>rustc</code> 一起引入的 crate，如 <a href="../../alloc/index.html"><code>alloc</code></a> 和 <a href="../../test/index.html"><code>test</code></a>，在使用 Cargo 时不会自动被包含在 <code>--extern</code> 命令行参数选项中。即使在 2018 版中，也必须通过外部crate(<code>extern crate</code>)声明来把它们引入到当前作用域内。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<p><strong>注意</strong>: 随 <code>rustc</code> 一起引入的 crate，如 <a href="https://doc.rust-lang.org/alloc/index.html"><code>alloc</code></a> 和 <a href="https://doc.rust-lang.org/test/index.html"><code>test</code></a>，在使用 Cargo 时不会自动被包含在 <code>--extern</code> 命令行参数选项中。即使在 2018 版中，也必须通过外部crate(<code>extern crate</code>)声明来把它们引入到当前作用域内。</p>
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>extern crate alloc;
@@ -209,12 +220,12 @@ use alloc::rc::Rc;
 -->
 <h3><a class="header" href="#the-no_std-attribute" id="the-no_std-attribute">The <code>no_std</code> attribute</a></h3>
 <h3><a class="header" href="#no_std属性" id="no_std属性"><code>no_std</code>属性</a></h3>
-<p>默认情况下，标准库自动包含在 crate根模块中。在 <a href="../../std/index.html"><code>std</code></a> crate 被添加到根模块中的同时，还会隐式生效一个 <a href="../macros-by-example.html#the-macro_use-attribute"><code>macro_use</code>属性</a>，它将所有从 <code>std</code> 中导出的宏放入到<a href="#macro_use-prelude"><code>macro_use</code>预导入包</a>中。默认情况下，<a href="../../core/index.html"><code>core</code></a> 和 <a href="../../std/index.html"><code>std</code></a> 都被添加到<a href="#extern-prelude">外部预导入包</a>中。<a href="#standard-library-prelude">标准库预导入包</a>包含了 <a href="../../std/prelude/index.html"><code>std::prelude::v1</code></a>模块中的所有内容。</p>
-<p>*<code>no_std</code><a href="../attributes.html">属性</a>*可以应用在 crate 级别上，用来防止 <a href="../../std/index.html"><code>std</code></a> crate 被自动添加到相关作用域内。此属性作了如下三件事：</p>
+<p>默认情况下，标准库自动包含在 crate根模块中。在 <a href="https://doc.rust-lang.org/std/index.html"><code>std</code></a> crate 被添加到根模块中的同时，还会隐式生效一个 <a href="../macros-by-example.html#the-macro_use-attribute"><code>macro_use</code>属性</a>，它将所有从 <code>std</code> 中导出的宏放入到<a href="#macro_use-prelude"><code>macro_use</code>预导入包</a>中。默认情况下，<a href="https://doc.rust-lang.org/core/index.html"><code>core</code></a> 和 <a href="https://doc.rust-lang.org/std/index.html"><code>std</code></a> 都被添加到<a href="#extern-prelude">外部预导入包</a>中。</p>
+<p>*<code>no_std</code><a href="../attributes.html">属性</a>*可以应用在 crate 级别上，用来防止 <a href="https://doc.rust-lang.org/std/index.html"><code>std</code></a> crate 被自动添加到相关作用域内。此属性作了如下三件事：</p>
 <ul>
 <li>阻止 <code>std</code> crate 被添加进<a href="#extern-prelude">外部预导入包</a>。</li>
-<li>使用<a href="#standard-library-prelude">标准库预导入包</a>中的 <a href="../../core/prelude/index.html"><code>core::prelude::v1</code></a> 来替代默认情况下导入的 <a href="../../std/prelude/index.html"><code>std::prelude::v1</code></a>。</li>
-<li>使用 <a href="../../core/index.html"><code>core</code></a> crate 替代 <a href="../../std/index.html"><code>std</code></a> crate 来注入到当前 crate 的根模块中，同时把 <code>core</code> crate下的所有宏导入到 <a href="#macro_use-prelude"><code>macro_use</code>预导入包</a>中。</li>
+<li>影响<a href="#standard-library-prelude">标准库预导入包</a>（前面描述过）具体由哪一个模块组成。</li>
+<li>使用 <a href="https://doc.rust-lang.org/core/index.html"><code>core</code></a> crate 替代 <a href="https://doc.rust-lang.org/std/index.html"><code>std</code></a> crate 来注入到当前 crate 的根模块中，同时把 <code>core</code> crate下的所有宏导入到 <a href="#macro_use-prelude"><code>macro_use</code>预导入包</a>中。</li>
 </ul>
 <blockquote>
 <p><strong>注意</strong>：当 crate 的目标平台不支持标准库或者故意不使用标准库的功能时，使用核心预导入包而不是标准预导入包是很有用的。此时没有导入的标准库的那些功能主要是动态内存分配（例如：<code>Box</code>和' <code>Vec</code>）和文件，以及网络功能（例如：<code>std::fs</code> 和 <code>std::io</code>）。</p>

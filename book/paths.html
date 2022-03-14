@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>路径</title>
+        <title>路径 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -169,8 +169,8 @@
 <h1><a class="header" href="#路径" id="路径">路径</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/paths.md">paths.md</a><br />
-commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
-本章译文最后维护日期：2021-06-19</p>
+commit: fb880fb6bd5f094566f2724c164998c071d013db <br />
+本章译文最后维护日期：2022-03-14</p>
 </blockquote>
 <p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，<code>::</code> 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">程序项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用程序项。</p>
 <p>仅由标识符段组成的简单路径(simple paths)的两个示例：</p>
@@ -190,7 +190,7 @@ x::y::z;net
    <a href="identifiers.html">IDENTIFIER</a> | <code>super</code> | <code>self</code> | <code>crate</code> | <code>$crate</code></p>
 </blockquote>
 <p>简单路径可用于<a href="visibility-and-privacy.html">可见性</a>标记、<a href="attributes.html">属性</a>、<a href="macros-by-example.html">宏</a>和 <a href="items/use-declarations.html"><code>use</code></a>程序项中。示例：</p>
-<pre><pre class="playground"><code class="language-rustnet edition2018">
+<pre><pre class="playground"><code class="language-rustnet">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::io::{self, Write};
@@ -225,7 +225,7 @@ mod m {
 </blockquote>
 <p>表达式中的路径允许指定带有泛型参数的路径。它们在各种<a href="expressions.html">表达式</a>和<a href="patterns.html">模式</a>中都有使用。</p>
 <p>token <code>::</code> 必须在泛型参数的左尖括号（<code>&lt;</code>）的前面，以避免和小于号操作符产生混淆。这就是俗称的“涡轮鱼(turbofish)”句法。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>(0..10).collect::&lt;Vec&lt;_&gt;&gt;();net
@@ -246,7 +246,7 @@ Vec::&lt;u8&gt;::with_capacity(1024);
    <em>QualifiedPathType</em> (<code>::</code> <em>TypePathSegment</em>)<sup>+</sup></p>
 </blockquote>
 <p>完全限定性路径可以用来为 <a href="items/implementations.html#trait-implementations">trait实现(trait implementations)</a>消除路径歧义，也可以用来指定<a href="#canonical-paths">规范路径</a>。用在指定具体类型时，它支持使用如下所示的类型句法：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct S;
@@ -301,7 +301,7 @@ type G = std::boxed::Box&lt;dyn std::ops::FnOnce(isize) -&gt; isize&gt;;
 <p><strong>版次差异</strong>: 在2015版中，标识符解析从“create 根模块(crate root)”（2018版中表示为 <code>crate::</code>）开始，“create 根模块(crate root)”中包含了一系列不同的程序项，包括外部crate、默认create（如 <code>std</code> 或 <code>core</code>），以及 crate下的各种顶层程序项（包括 <code>use</code>导入）。</p>
 <p>从 2018 版开始，以 <code>::</code> 开头的路径被解析为<a href="names/preludes.html#extern-prelude">外部预导入包</a>中的一个 crate。也就是说，其后必须跟一个 crate的名称。</p>
 </blockquote>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn foo() {
@@ -318,7 +318,7 @@ mod a {
 }
 mod b {
     pub fn foo() {
-        ::a::foo(); // 调用 `a`'的 foo 函数
+        crate::a::foo(); // 调用 `a`'的 foo 函数
         // 在 Rust 2018 中, `::a` 会被解析为 crate `a`.
     }
 }
@@ -326,7 +326,7 @@ mod b {
 </span></code></pre></pre>
 <h3><a class="header" href="#self" id="self"><code>self</code></a></h3>
 <p><code>self</code> 表示路径是相对于当前模块的路径。<code>self</code> 仅可以用作路径的首段，不能有前置 <code>::</code>。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">fn foo() {}
+<pre><pre class="playground"><code class="language-rust">fn foo() {}
 fn bar() {
     self::foo();
 }
@@ -335,7 +335,7 @@ fn bar() {
 <h3><a class="header" href="#self-1" id="self-1"><code>Self</code></a></h3>
 <p><code>Self</code>（首字母大写）用于指代 <a href="items/traits.html">trait</a> 和<a href="items/implementations.html">实现</a>中的类型。</p>
 <p><code>Self</code> 仅可以用作路径的首段，不能有前置 <code>::</code>。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait T {
@@ -361,7 +361,7 @@ impl T for S {
 </span></code></pre></pre>
 <h3><a class="header" href="#super" id="super"><code>super</code></a></h3>
 <p><code>super</code> 在路径中被解析为父模块。它只能用于路径的前导段，可以置于 <code>self</code> 路径段之后。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">mod a {
+<pre><pre class="playground"><code class="language-rust">mod a {
     pub fn foo() {}
 }
 mod b {
@@ -372,7 +372,7 @@ mod b {
 <span class="boring">fn main() {}
 </span></code></pre></pre>
 <p><code>super</code> 可以在第一个 <code>super</code> 或 <code>self</code> 之后重复多次，以引用祖先模块。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">mod a {
+<pre><pre class="playground"><code class="language-rust">mod a {
     fn foo() {}
 
     mod b {
@@ -388,7 +388,7 @@ mod b {
 </span></code></pre></pre>
 <h3><a class="header" href="#crate" id="crate"><code>crate</code></a></h3>
 <p><code>crate</code> 解析相对于当前 crate 的路径。crate 仅能用作路径的首段，不能有前置 <code>::</code>。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">fn foo() {}
+<pre><pre class="playground"><code class="language-rust">fn foo() {}
 mod a {
     fn bar() {
         crate::foo();
@@ -398,7 +398,7 @@ mod a {
 </span></code></pre></pre>
 <h3><a class="header" href="#crate-1" id="crate-1"><code>$crate</code></a></h3>
 <p>$crate 仅用在<a href="macros-by-example.html">宏转码器(macro transcriber)</a>中，且仅能用作路径首段，不能有前置 <code>::</code>。<code>$crate</code> 将被扩展为从定义宏的 crate 的顶层访问该 crate 中的各程序项的路径，而不用去考虑宏调用发生时所在的现场 crate。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">pub fn increment(x: u32) -&gt; u32 {
+<pre><pre class="playground"><code class="language-rust">pub fn increment(x: u32) -&gt; u32 {
     x + 1
 }
 
@@ -414,26 +414,26 @@ macro_rules! inc {
 <p>尽管实现所定义/实现的程序项有规范路径，但<a href="items/implementations.html">实现</a>作为一个整体，自身没有规范路径。<a href="items/use-declarations.html">use声明</a>也没有规范路径。块表达式中定义的程序项也没有规范路径。在没有规范路径的模块中定义的程序项也没有规范路径。在实现中定义的关联项(associated items)如果它指向没有规范路径的程序项——例如，实现类型(implementing type)、被实现的 trait、类型参数或类型参数上的约束——那它也没有规范路径。</p>
 <p>模块的路径前缀就是该模块的规范路径。对于裸实现(bare implementations)来说，它里面的程序项的路径前缀是：它当前实现的程序项的规范路径，再用<span class="parenthetical">尖括号（<code>&lt;&gt;</code>）</span>括把此路径括起来。对于 <a href="items/implementations.html#trait-implementations">trait实现</a>来说，它内部的程序项的路径前缀是：<em>当前实现的程序项的规范路径后跟一个 <code>as</code>，再后跟 trait 本身的规范路径，然后整个使用<span class="parenthetical">尖括号（<code>&lt;&gt;</code>）</span>括起来。</em></p>
 <p>规范路径只在给定的 crate 中有意义。在 crate 之间没有全局命名空间，所以程序项的规范路径只在其 crate 中可标识。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">// 注释解释了程序项的规范路径
+<pre><pre class="playground"><code class="language-rust">// 注释解释了程序项的规范路径
 
-mod a { // ::a
-    pub struct Struct; // ::a::Struct
+mod a { // crate::a
+    pub struct Struct; // crate::a::Struct
 
-    pub trait Trait { // ::a::Trait
-        fn f(&amp;self); // ::a::Trait::f
+    pub trait Trait { // crate::a::Trait
+        fn f(&amp;self); // crate::a::Trait::f
     }
 
     impl Trait for Struct {
-        fn f(&amp;self) {} // &lt;::a::Struct as ::a::Trait&gt;::f
+        fn f(&amp;self) {} // &lt;crate::a::Struct as crate::a::Trait&gt;::f
     }
 
     impl Struct {  // 译者注：这是一个裸实现
-        fn g(&amp;self) {} // &lt;::a::Struct&gt;::g
+        fn g(&amp;self) {} // &lt;crate::a::Struct&gt;::g
     }
 }
 
-mod without { // ::without
-    fn canonicals() { // ::without::canonicals
+mod without { // crate::without
+    fn canonicals() { // crate::without::canonicals
         struct OtherStruct; // None
 
         trait OtherTrait { // None

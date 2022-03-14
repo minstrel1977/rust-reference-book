@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>区间表达式</title>
+        <title>区间表达式 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -204,7 +204,7 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
 <tr><td><em>RangeToInclusiveExpr</em></td><td><code>..=</code>end</td><td><a href="https://doc.rust-lang.org/std/ops/struct.RangeToInclusive.html">std::ops::RangeToInclusive</a></td><td>x ≤ end</td></tr>
 </tbody></table>
 <p>举例：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>1..2;   // std::ops::Range
@@ -216,7 +216,7 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
 <span class="boring">}
 </span></code></pre></pre>
 <p>下面的表达式是等价的。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = std::ops::Range {start: 0, end: 10};
@@ -226,7 +226,7 @@ assert_eq!(x, y);
 <span class="boring">}
 </span></code></pre></pre>
 <p>区间能在 <code>for</code>循环里使用：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>for i in 1..11 {

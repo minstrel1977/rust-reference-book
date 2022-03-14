@@ -2,8 +2,8 @@
 # 术语表
 
 >[glossary.md](https://github.com/rust-lang/reference/blob/master/src/glossary.md)\
->commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e \
->本章译文最后维护日期：2021-07-31
+>commit: dc064e08f202177dd0e9f14b6a782761df325b93 \
+>本章译文最后维护日期：2022-03-14
 
 ### Abstract syntax tree
 ### 抽象句法树
@@ -328,7 +328,7 @@ A type is uninhabited if it has no constructors and therefore can never be insta
 [structs]: items/structs.md
 [trait objects]: types/trait-object.md
 [traits]: items/traits.md
-[turbofish test]: https://github.com/rust-lang/rust/blob/master/src/test/ui/bastion-of-the-turbofish.rs
+[turbofish test]: https://github.com/rust-lang/rust/blob/1.58.0/src/test/ui/parser/bastion-of-the-turbofish.rs
 [types of crates]: linkage.md
 [types]: types.md
 [undefined-behavior]: behavior-considered-undefined.md

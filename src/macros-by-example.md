@@ -2,8 +2,8 @@
 # 声明宏
 
 >[macros-by-example.md](https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md)\
->commit: 1b9b8d8e296d39a26cc2c8e455139f54bf5335ce \
->本章译文最后维护日期：2022-01-22
+>commit: d33b20749e8873e0afb4326bcb169eb9a6f69127 \
+>本章译文最后维护日期：2022-03-14
 
 > **<sup>句法</sup>**\
 > _MacroRulesDefinition_ :\
@@ -26,7 +26,7 @@
 > &nbsp;&nbsp; | `{` _MacroMatch_<sup>\*</sup> `}`
 >
 > _MacroMatch_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; [_Token_]<sub>_排除 $ 和[定界符][delimiters]_</sub>\
+> &nbsp;&nbsp; &nbsp;&nbsp; [_Token_]<sub>_排除 `$` 和[定界符][delimiters]_</sub>\
 > &nbsp;&nbsp; | _MacroMatcher_\
 > &nbsp;&nbsp; | `$` ( [IDENTIFIER_OR_KEYWORD] <sub>_排除 `crate`_</sub> | [RAW_IDENTIFIER] | `_` ) `:` _MacroFragSpec_\
 > &nbsp;&nbsp; | `$` `(` _MacroMatch_<sup>+</sup> `)` _MacroRepSep_<sup>?</sup> _MacroRepOp_

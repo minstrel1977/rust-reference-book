@@ -2,8 +2,8 @@
 # 代码生成属性
 
 >[codegen.md](https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md)\
->commit: 7cdf88d28428065209e49ee70e28af86fcc64351 \
->本章译文最后维护日期：2021-06-19
+>commit: 2d0058a4951a3fe97b0892993bd3faeabc532123 \
+>本章译文最后维护日期：2022-03-14
 
 下述[属性][attributes]用于控制代码生成。
 
@@ -52,7 +52,7 @@ unsafe fn foo_avx2() {}
 
 每个[目标架构][target architecture]都有一组可以被启用的特性。为不是当前 crate 的编译目标下的CPU架构指定需启用的特性是错误的。
 
-调用一个编译时启用了某特性的函数，但当前程序运行的平台并不支持该特性，那这将导致出现[未定义行为][undefined behavior]。
+调用启用了当前运行代码的平台不支持的特性编译的函数将导致[未定义行为][undefined behavior]，除非此平台明确声明此调用是安全的。
 
 应用了 `target_feature` 的函数不会内联到不支持给定特性的上下文中。`#[inline(always)]` 属性不能与 `target_feature`属性一起使用。
 
@@ -63,7 +63,8 @@ unsafe fn foo_avx2() {}
 
 #### `x86` or `x86_64`
 
-在这两种平台架构下,`#[target_feature]` 只能应用于[非安全(`unsafe`)函数][unsafe function]。
+即便是同为 `x86` 或 `x86_64` 平台，并不是所有平台都支持下述特性，而在未启用特定特性的平台下执行带有此平台的特性的代码会导致未定义行为。
+因此在这类平台下，`#[target_feature]` 只能应用于[非安全(`unsafe`)函数][unsafe function]。
 
 特性     | 隐式启用 | 描述 | 中文描述
 ------------|--------------------|-------------------|-------------------
@@ -120,7 +121,7 @@ unsafe fn foo_avx2() {}
 
 #### `wasm32` or `wasm64`
 
-在这两个平台下，安全函数和[非安全函数][unsafe function]均可使用`#[target_feature]`。
+在这两个平台下，安全函数和[非安全函数][unsafe function]均可启用 `#[target_feature]`特性。不可能经由 `#[target_feature]`特性导致未定义行为，因为尝试使用 Wasm引擎不支持的指令将在加载时就失败，而不会有被以不同于编译器预期的方式来解释编译后的代码的风险。
 
 特性     | 描述
 ------------|-------------------
@@ -133,7 +134,7 @@ unsafe fn foo_avx2() {}
 
 请参阅 [`target_feature`-条件编译选项][`target_feature` conditional compilation option]，了解如何基于编译时的设置来有选择地启用或禁用对某些代码的编译。注意，条件编译选项不受 `target_feature`属性的影响，只是被整个 crate 启用的特性所驱动。
 
-有关 x86 平台上的运行时特性检测，请参阅标准库中的 [`is_x86_feature_detected`]宏。
+请参阅标准库中的 [`is_x86_feature_detected`] 或 [`is_aarch64_feature_detected`] 这两个宏，它们可以用来检测平台上的运行时特性。
 
 > 注意：`rustc` 为每个编译目标和 CPU 启用了一组默认特性。编译时，可以使用命令行参数 [`-C target-cpu`] 选择目标 CPU。可以通过命令行参数 [`-C target-feature`] 来为整个 crate 启用或禁用某些单独的特性。
 
@@ -236,7 +237,8 @@ fn calls_h() {
 [_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
 [`-C target-cpu`]: https://doc.rust-lang.org/rustc/codegen-options/index.html#target-cpu
 [`-C target-feature`]: https://doc.rust-lang.org/rustc/codegen-options/index.html#target-feature
-[`is_x86_feature_detected`]: https://doc.rust-lang.org/std/macro.is_x86_feature_detected.html
+[`is_x86_feature_detected`]: .https://doc.rust-lang.org/std/arch/macro.is_x86_feature_detected.html
+[`is_aarch64_feature_detected`]: https://doc.rust-lang.org/std/arch/macro.is_aarch64_feature_detected.html
 [`target_feature` conditional compilation option]: ../conditional-compilation.md#target_feature
 [attribute]: ../attributes.md
 [attributes]: ../attributes.md

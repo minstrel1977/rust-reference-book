@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>运算符表达式</title>
+        <title>运算符表达式 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -169,8 +169,8 @@
 <h1><a class="header" href="#operator-expressions" id="operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: 4115c9a3c2bd91f29445999891de4e8d26d60dc8 <br />
-本章译文最后维护日期：2022-01-22</p>
+commit: dc064e08f202177dd0e9f14b6a782761df325b93 <br />
+本章译文最后维护日期：2022-03-14</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -213,7 +213,7 @@ commit: 4115c9a3c2bd91f29445999891de4e8d26d60dc8 <br />
 对于可变借用（<code>&amp;mut</code>），在借用到期之前，不能以任何方式访问该位置。<code>&amp;mut</code> 在可变位置表达式上下文中会对其操作数求值。
 如果 <code>&amp;</code> 或 <code>&amp;mut</code> 运算符应用于<a href="../expressions.html#place-expressions-and-value-expressions">值表达式</a>上，则会创建一个<a href="../expressions.html#temporaries">临时值</a>。</p>
 <p>这类操作符不能重载。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>{
@@ -228,7 +228,7 @@ let mut array = [-2, 3, 9];
 <span class="boring">}
 </span></code></pre></pre>
 <p>尽管 <code>&amp;&amp;</code> 是一个单一 token（<a href="#lazy-boolean-operators">惰性与(<code>and</code>)操作符</a>)，但在借用表达式(borrow expressions)上下文中使用时，它是作为两个借用操作符用的：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 意义相同：
@@ -251,7 +251,7 @@ let a = &amp; &amp; &amp; &amp; mut 10;
 <p><code>*</code>（解引用）操作符也是一元前缀操作符。当应用于<a href="../types/pointer.html">指针</a>上时，它表示该指针指向的内存位置。
 如果表达式的类型为 <code>&amp;mut T</code> 或 <code>*mut T</code>，并且该表达式是局部变量、局部变量的（内嵌）字段、或是可变的<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>，则它代表的内存位置可以被赋值。解引用原始指针需要在非安全(<code>unsafe</code>)块才能进行。</p>
 <p>在<a href="../expressions.html#mutability">不可变位置表达式上下文</a>中对非指针类型作 <code>*x</code> 相当于执行 <code>*std::ops::Deref::deref(&amp;x)</code>；同样的，在可变位置表达式上下文中这个动作就相当于执行 <code>*std::ops::DerefMut::deref_mut(&amp;mut x)</code>。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = &amp;7;
@@ -273,7 +273,7 @@ assert_eq!(*y, 11);
 <p>当应用在 <code>Result&lt;T, E&gt;</code> 类型的值上时，它可以传播错误。
 如果值是 <code>Err(e)</code>，那么它实际上将从此操作符所在的函数体或闭包中返回 <code>Err(From::from(e))</code>。
 如果应用到 <code>Ok(x)</code>，那么它将解包此值以求得 <code>x</code>。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::num::ParseIntError;
@@ -291,7 +291,7 @@ println!(&quot;{:?}&quot;, res);
 <p>当应用到 <code>Option&lt;T&gt;</code> 类型的值时，它向调用者传播错误 <code>None</code>。
 如果它应用的值是 <code>None</code>，那么它将返回 <code>None</code>。
 如果应用的值是 <code>Some(x)</code>，那么它将解包此值以求得 <code>x</code>。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn try_option_some() -&gt; Option&lt;u8&gt; {
@@ -326,7 +326,7 @@ assert_eq!(try_option_none(), None);
 </tbody></table>
 <p>* 仅适用于有符号整数类型。</p>
 <p>下面是这些运算符的一些示例：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 6;
@@ -371,7 +371,7 @@ assert_eq!(true, !false);
 <p>** Rust使用由<a href="https://en.wikipedia.org/wiki/Modulo_operation#Variants_of_the_definition">截断除法</a>定义的求宇运算。也就是 <code>余数=被除数%除数</code>，其中余数将与被除数的符号一致。</p>
 <p>*** 有符号整数类型算术右移位，无符号整数类型逻辑右移位。</p>
 <p>下面是使用这些操作符的示例:</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>assert_eq!(3 + 6, 9);
@@ -403,7 +403,7 @@ assert_eq!(-10 &gt;&gt; 2, -3);
 <p>与算术运算符和逻辑运算符不同，重载这些运算符的 trait 通常用于显示/约定如何比较一个类型，并且还很可能会假定使用这些 trait 作为约束条件的函数定义了实际的比较逻辑。
 其实标准库中的许多函数和宏都使用了这个假定（尽管不能确保这些假定的安全性）。
 与上面的算术和逻辑运算符不同，这些运算符会隐式地对它们的操作数执行共享借用，并在<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式上下文</a>中对它们进行求值：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">let a = 1;
@@ -423,7 +423,7 @@ assert_eq!(-10 &gt;&gt; 2, -3);
 <tr><td><code>&lt;=</code></td><td>小于或等于</td><td><code>std::cmp::PartialOrd::le</code></td></tr>
 </tbody></table>
 <p>下面是使用比较运算符的示例：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>assert!(123 == 123);
@@ -446,7 +446,7 @@ assert!(&quot;World&quot; &gt;= &quot;Hello&quot;);
 运算符 <code>||</code> 表示逻辑“或”，运算符 <code>&amp;&amp;</code> 表示逻辑“与”。
 它们与 <code>|</code> 和 <code>&amp;</code> 的不同之处在于，只有在左操作数尚未确定表达式的结果时，才计算右操作数。
 也就是说，<code>||</code> 只在左操作数的计算结果为 <code>false</code> 时才计算其右操作数，而只有在计算结果为 <code>true</code> 时才计算 <code>&amp;&amp;</code> 的操作数。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = false || true; // true
@@ -463,7 +463,7 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <p>类型转换表达式用二元运算符 <code>as</code> 表示。</p>
 <p>执行类型转换(<code>as</code>)表达式将左侧的值显式转换为右侧的类型。</p>
 <p>类型转换(<code>as</code>)表达式的一个例子：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">fn sum(values: &amp;[f64]) -&gt; f64 { 0.0 }
@@ -561,7 +561,7 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 即便是按位转换后是一个有效的指针，但这种从转换中生成的指针可能会受到一些额外的限制。如果不遵循别名规则，那么解引用这样的指针可能是<a href="../behavior-considered-undefined.html">未定义行为</a>。</p>
 </div>
 <p>一个常见的健壮的地址转换算法的示例：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut values: [i32; 2] = [1, 2];
@@ -597,7 +597,7 @@ assert_eq!(values[1], 3);
 <p>对赋值表达的位置表达式求值时会先<a href="../destructors.html">销毁(drop)</a>此位置（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将赋值值<a href="../expressions.html#moved-and-copied-types">复制(copy)或移动(move)</a>到此位置中。</p>
 <p>赋值表达式总是会生成<a href="../types/tuple.html">单元类型值</a>。</p>
 <p>示例：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut x = 0;
@@ -609,7 +609,7 @@ x = y;
 <h3><a class="header" href="#解构赋值形式" id="解构赋值形式">解构赋值形式</a></h3>
 <p>解构赋值可以和变量的解构声明形式（应用了解构模式匹配的变量声明形式）相比较，它允许对拥有复杂结构的变量（如元组或结构）进行赋值。
 例如，我们可以交换两个可变变量：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let (mut a, mut b) = (0, 1);
@@ -622,7 +622,7 @@ x = y;
 然后再将接收者表达式脱糖为具体的单个模式匹配，然后依次赋值。
 被脱糖的模式必须是不可反驳的模式：特别是，这意味着只有长度在编译时已知的切片模式，或者全切片模式 <code>[..]</code>，才被允许进行解构赋值。</p>
 <p>对接收者表达式进行脱糖方法简单明了，下面通过示例进行说明。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Struct { x: u32, y: u32 }
@@ -675,7 +675,7 @@ Struct { x: a, y: b } = Struct { x: 3, y: 4};
 </blockquote>
 <p><em>复合赋值表达式</em>将算术符（以及二进制逻辑操作符）与赋值表达式相结合在一起使用。</p>
 <p>比如：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut x = 5;
@@ -695,7 +695,7 @@ assert!(x == 6);
 <p>此外，这个表达式是调用操作符重载复合赋值trait 的函数的语法糖（见本章前面的表格）。
 被赋值操作数必须是可变的。</p>
 <p>例如，下面 <code>example</code>函数中的两个表达式语句是等价的：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Addable;
@@ -718,7 +718,7 @@ fn example() {
 <p>与赋值表达式一样，复合赋值表达式也总是会生成<a href="../types/tuple.html">单元类型值</a>。</p>
 <div class="warning">
 <p>警告：复合赋值表达式的操作数的求值顺序取决于操作数的类型：对于原生类型，右边操作数将首先被求值，而对于非原生类型，左边操作数将首先被求值。
-建议尽量不要编写依赖于复合赋值表达式中操作数的求值顺序的代码。请参阅<a href="https://github.com/rust-lang/rust/blob/master/src/test/ui/expr/compound-assignment/eval-order.rs">这里的测试</a>以获得使用此依赖项的示例。</p>
+建议尽量不要编写依赖于复合赋值表达式中操作数的求值顺序的代码。请参阅<a href="https://github.com/rust-lang/rust/blob/1.58.0/src/test/ui/expr/compound-assignment/eval-order.rs">这里的测试</a>以获得使用此依赖项的示例。</p>
 </div>
 <div class="footnote-definition" id="译者注"><sup class="footnote-definition-label">1</sup>
 <p>截断，即一个值范围较大的变量A转换为值范围较小的变量B，如果超出范围，则将A减去B的区间长度。例如，128超出了i8类型的范围（-128,127），截断之后的值等于128-256=-128。</p>

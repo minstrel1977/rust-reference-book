@@ -2,8 +2,8 @@
 # 关联程序项/关联项
 
 >[associated-items.md](https://github.com/rust-lang/reference/blob/master/src/items/associated-items.md)\
->commit: 4e138b37b49c49bc875b96b859fbe0caea5a82f3 \
->本章译文最后维护日期：2021-07-17
+>commit: 37e3c15c52b31f3cda9fd359d3bb66a3e69bb5ff \
+>本章译文最后维护日期：2022-03-14
 
 > **<sup>句法</sup>**\
 > _AssociatedItem_ :\
@@ -265,6 +265,36 @@ impl<T> Container for Vec<T> {
 
 *关联常量定义*定义了与类型关联的常量。它的书写方式与[常量项][constant item]相同。
 
+关联常量定义仅在引用时进行[常量求值][constant evaluation]。此外，包含[泛型参数][generic parameters]的关联常量定义在单态化后才进行求值。
+
+```rust,compile_fail
+struct Struct;
+struct GenericStruct<const ID: i32>;
+
+impl Struct {
+    // 定义不会立即执行求值操作
+    const PANIC: () = panic!("compile-time panic");
+}
+
+impl<const ID: i32> GenericStruct<ID> {
+    // 定义不会立即执行求值操作
+    const NON_ZERO: () = if ID == 0 {
+        panic!("contradiction")
+    };
+}
+
+fn main() {
+    // 引用 Struct::PANIC 导致编译错误
+    let _ = Struct::PANIC;
+
+    // 可以编译通过, ID 非 0
+    let _ = GenericStruct::<1>::NON_ZERO;
+
+    // 编译错误，因为使用 ID=0 来求值计算 NON_ZERO  
+    let _ = GenericStruct::<0>::NON_ZERO;
+}
+```
+
 ### Associated Constants Examples
 ### 示例展示关联常量
 
@@ -341,3 +371,4 @@ fn main() {
 [regular function parameters]: functions.md#attributes-on-function-parameters
 [generic parameters]: generics.md
 [where clauses]: generics.md#where-clauses
+[constant evaluation]: ../const_eval.md

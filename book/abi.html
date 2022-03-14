@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>ABI</title>
+        <title>ABI - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -178,7 +178,7 @@ commit:  e773318a837092d7b5276bbeaf9fda06cca61cee <br />
 <h2><a class="header" href="#used属性" id="used属性"><code>used</code>属性</a></h2>
 <p><em><code>used</code>属性</em>只能用在<a href="items/static-items.html">静态(<code>static</code>)项</a>上。此<a href="attributes.html">属性</a>强制编译器将该变量保留在输出对象文件中(.o、.rlib 等，不包括最终的二进制文件)，即使该变量没有被 crate 中的任何其他项使用或引用。注意，链接器(linker)仍有权移除此类变量。</p>
 <p>下面的示例显示了编译器在什么条件下在输出对象文件中保留静态(<code>static</code>)项。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// foo.rs
@@ -226,7 +226,7 @@ $ nm -C foo.o
 <h2><a class="header" href="#link_section属性" id="link_section属性"><code>link_section</code>属性</a></h2>
 <p><code>link_section</code>属性指定了输出对象文件中<a href="items/functions.html">函数</a>或<a href="items/static-items.html">静态项</a>的内容将被放置到的节点位置。它使用 <a href="attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法指定节点名称。</p>
 <!-- no_run: don't link. The format of the section name is platform-specific. -->
-<pre><pre class="playground"><code class="language-rust no_run edition2018">
+<pre><pre class="playground"><code class="language-rust no_run">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[no_mangle]
@@ -237,7 +237,7 @@ pub static VAR1: u32 = 1;
 <h2><a class="header" href="#the-export_name-attribute" id="the-export_name-attribute">The <code>export_name</code> attribute</a></h2>
 <h2><a class="header" href="#export_name属性" id="export_name属性"><code>export_name</code>属性</a></h2>
 <p><em><code>export_name</code>属性</em>指定将在<a href="items/functions.html">函数</a>或<a href="items/static-items.html">静态项</a>上导出的符号的名称。它使用 <a href="attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法指定符号名。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[export_name = &quot;exported_symbol_name&quot;]

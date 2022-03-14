@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>术语表</title>
+        <title>术语表 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -169,8 +169,8 @@
 <h1><a class="header" href="#术语表" id="术语表">术语表</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/glossary.md">glossary.md</a><br />
-commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
-本章译文最后维护日期：2021-07-31</p>
+commit: dc064e08f202177dd0e9f14b6a782761df325b93 <br />
+本章译文最后维护日期：2022-03-14</p>
 </blockquote>
 <h3><a class="header" href="#abstract-syntax-tree" id="abstract-syntax-tree">Abstract syntax tree</a></h3>
 <h3><a class="header" href="#抽象句法树" id="抽象句法树">抽象句法树</a></h3>
@@ -268,7 +268,7 @@ Paths with generic parameters in expressions must prefix the opening brackets wi
 Combined with the angular brackets for generics, this looks like a fish <code>::&lt;&gt;</code>.
 As such, this syntax is colloquially referred to as turbofish syntax.</p>
 <p>例如：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let ok_num = Ok::&lt;_, ()&gt;(5);
@@ -276,9 +276,9 @@ let vec = [1, 2, 3].iter().map(|n| n * 2).collect::&lt;Vec&lt;_&gt;&gt;();
 <span class="boring">}
 </span></code></pre></pre>
 <p>这里必须使用 <code>::</code>前缀，以便在逗号分隔的列表中进行多次比较时消除泛型路径可能的歧义。
-参见 <a href="https://github.com/rust-lang/rust/blob/master/src/test/ui/bastion-of-the-turbofish.rs">the bastion of the turbofish</a> 中因为没有此前缀的而引起歧义的示例。<br />
+参见 <a href="https://github.com/rust-lang/rust/blob/1.58.0/src/test/ui/parser/bastion-of-the-turbofish.rs">the bastion of the turbofish</a> 中因为没有此前缀的而引起歧义的示例。<br />
 This <code>::</code> prefix is required to disambiguate generic paths with multiple comparisons in a comma-separate list.
-See <a href="https://github.com/rust-lang/rust/blob/master/src/test/ui/bastion-of-the-turbofish.rs">the bastion of the turbofish</a> for an example where not having the prefix would be ambiguous.</p>
+See <a href="https://github.com/rust-lang/rust/blob/1.58.0/src/test/ui/parser/bastion-of-the-turbofish.rs">the bastion of the turbofish</a> for an example where not having the prefix would be ambiguous.</p>
 <h3><a class="header" href="#local-type" id="local-type">Local type</a></h3>
 <h3><a class="header" href="#本地类型" id="本地类型">本地类型</a></h3>
 <p>指在当前 crate 中定义的 <code>struct</code>、<code>enum</code>、或 <code>union</code> 。本地类型不会受到类型参数的影响。<code>struct Foo</code> 被认为是本地的，但 <code>Vec&lt;Foo&gt;</code> 不是。<code>LocalType&lt;ForeignType&gt;</code> 是本地的。类型别名不影响本地性。<br />

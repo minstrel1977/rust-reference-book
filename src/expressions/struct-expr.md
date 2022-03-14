@@ -2,8 +2,8 @@
 # 结构体表达式
 
 >[struct-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/struct-expr.md)\
->commit: 37ca438c9ac58448ecf304b735e71644e8127f3d \
->本章译文最后维护日期：2021-07-17
+>commit: e4edc3edbabefd6c0b8aa17ce539d560320d4c93 \
+>本章译文最后维护日期：2022-03-14
 
 
 > **<sup>句法</sup>**\
@@ -19,8 +19,11 @@
 > &nbsp;&nbsp; _StructExprField_ (`,` _StructExprField_)<sup>\*</sup> (`,` _StructBase_ | `,`<sup>?</sup>)
 >
 > _StructExprField_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; [IDENTIFIER]\
-> &nbsp;&nbsp; | ([IDENTIFIER] | [TUPLE_INDEX]) `:` [_Expression_]
+> &nbsp;&nbsp; [_OuterAttribute_] <sup>\*</sup>\
+> &nbsp;&nbsp; (\
+> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [IDENTIFIER]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | ([IDENTIFIER] | [TUPLE_INDEX]) `:` [_Expression_]\
+> &nbsp;&nbsp; )
 >
 > _StructBase_ :\
 > &nbsp;&nbsp; `..` [_Expression_]
@@ -132,6 +135,7 @@ let a = Gamma;  // Gamma的值。
 let b = Gamma{};  // 和`a`的值完全一样。
 ```
 
+[_OuterAttribute_]: ../attributes.md
 [IDENTIFIER]: ../identifiers.md
 [TUPLE_INDEX]: ../tokens.md#tuple-index
 [_Expression_]: ../expressions.md

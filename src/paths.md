@@ -2,8 +2,8 @@
 # 路径
 
 >[paths.md](https://github.com/rust-lang/reference/blob/master/src/paths.md)\
->commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef \
->本章译文最后维护日期：2021-06-19
+>commit: fb880fb6bd5f094566f2724c164998c071d013db \
+>本章译文最后维护日期：2022-03-14
 
 *路径*是一个或多个由命名空间<span class="parenthetical">限定符(`::`)</span>*逻辑*分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，`::` 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的[程序项][item]或[变量][variable]。如果路径包含多个路径段，则总是引用程序项。
 
@@ -167,7 +167,7 @@ mod a {
 }
 mod b {
     pub fn foo() {
-        ::a::foo(); // 调用 `a`'的 foo 函数
+        crate::a::foo(); // 调用 `a`'的 foo 函数
         // 在 Rust 2018 中, `::a` 会被解析为 crate `a`.
     }
 }
@@ -292,24 +292,24 @@ macro_rules! inc {
 ```rust
 // 注释解释了程序项的规范路径
 
-mod a { // ::a
-    pub struct Struct; // ::a::Struct
+mod a { // crate::a
+    pub struct Struct; // crate::a::Struct
 
-    pub trait Trait { // ::a::Trait
-        fn f(&self); // ::a::Trait::f
+    pub trait Trait { // crate::a::Trait
+        fn f(&self); // crate::a::Trait::f
     }
 
     impl Trait for Struct {
-        fn f(&self) {} // <::a::Struct as ::a::Trait>::f
+        fn f(&self) {} // <crate::a::Struct as crate::a::Trait>::f
     }
 
     impl Struct {  // 译者注：这是一个裸实现
-        fn g(&self) {} // <::a::Struct>::g
+        fn g(&self) {} // <crate::a::Struct>::g
     }
 }
 
-mod without { // ::without
-    fn canonicals() { // ::without::canonicals
+mod without { // crate::without
+    fn canonicals() { // crate::without::canonicals
         struct OtherStruct; // None
 
         trait OtherTrait { // None

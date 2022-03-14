@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>结构体表达式</title>
+        <title>结构体表达式 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -169,8 +169,8 @@
 <h1><a class="header" href="#结构体表达式" id="结构体表达式">结构体表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/struct-expr.md">struct-expr.md</a><br />
-commit: 37ca438c9ac58448ecf304b735e71644e8127f3d <br />
-本章译文最后维护日期：2021-07-17</p>
+commit: e4edc3edbabefd6c0b8aa17ce539d560320d4c93 <br />
+本章译文最后维护日期：2022-03-14</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -183,8 +183,11 @@ commit: 37ca438c9ac58448ecf304b735e71644e8127f3d <br />
 <p><em>StructExprFields</em> :<br />
    <em>StructExprField</em> (<code>,</code> <em>StructExprField</em>)<sup>*</sup> (<code>,</code> <em>StructBase</em> | <code>,</code><sup>?</sup>)</p>
 <p><em>StructExprField</em> :<br />
-      <a href="../identifiers.html">IDENTIFIER</a><br />
-   | (<a href="../identifiers.html">IDENTIFIER</a> | <a href="../tokens.html#tuple-index">TUPLE_INDEX</a>) <code>:</code> <a href="../expressions.html"><em>Expression</em></a></p>
+   <a href="../attributes.html"><em>OuterAttribute</em></a> <sup>*</sup><br />
+   (<br />
+         <a href="../identifiers.html">IDENTIFIER</a><br />
+      | (<a href="../identifiers.html">IDENTIFIER</a> | <a href="../tokens.html#tuple-index">TUPLE_INDEX</a>) <code>:</code> <a href="../expressions.html"><em>Expression</em></a><br />
+   )</p>
 <p><em>StructBase</em> :<br />
    <code>..</code> <a href="../expressions.html"><em>Expression</em></a></p>
 <p><em>StructExprTuple</em> :<br />
@@ -196,7 +199,7 @@ commit: 37ca438c9ac58448ecf304b735e71644e8127f3d <br />
 <p><em>结构体表达式</em>用来创建结构体、枚举或联合体的值。它由指向<a href="../items/structs.html">结构体</a>程序项、<a href="../items/enumerations.html">枚举变体</a>、<a href="../items/unions.html">联合体</a>程序项的路径，以及与此程序项的字段对应的值组成。
 结构体表达式有三种形式：结构体(struct)、元组结构体(tuple)和单元结构体(unit)。</p>
 <p>下面是结构体表达式的示例：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Point { x: f64, y: f64 }
@@ -222,7 +225,7 @@ some_fn::&lt;Cookie&gt;(Cookie);
 <code>..</code> 后跟的表达式（此表达式被称为此函数式更新的基(base)）必须与正在构造的新结构体值是同一种结构体类型的。</p>
 <p>整个结构体表达式先为已指定的字段使用已给定的值，然后再从基表达式(base expression)里为剩余未指定的字段移动或复制值。
 与所有结构体表达式一样，此结构体类型的所有字段必须是<a href="../visibility-and-privacy.html">可见的</a>，甚至那些没有显式命名的字段也是如此。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Point3d { x: i32, y: i32, z: i32 }
@@ -236,7 +239,7 @@ drop(y_ref);
 但是，如果结构体表达式在另一个表达式内（例如在<a href="grouped-expr.html">圆括号</a>内），则可以用在这些情况下。</p>
 <p>构造元组结构体时其字段名可以是代表索引的十进制整数数值。
 这中表达方法还可以与基结构体一起使用来填充其余未指定的索引：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Color(u8, u8, u8);
@@ -252,7 +255,7 @@ let c3 = Color{1: 0, ..c2};  // 使用基的字段值来填写结构体的所有
 例如：</p>
 <p>For example:
 For example:</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Point3d { x: i32, y: i32, z: i32 }
@@ -267,7 +270,7 @@ Point3d { x, y: y_value, z };
 <h2><a class="header" href="#元组结构体表达式" id="元组结构体表达式">元组结构体表达式</a></h2>
 <p>用圆括号括起字段的结构体表达式构造出来的结构体为元组结构体。
 虽然为了完整起见，也把它作为一个特定的（结构体）表达式列在这里，但实际上它等价于执行元组结构体构造器的<a href="call-expr.html">调用表达式</a>。例如：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Position(i32, i32, i32);
@@ -281,7 +284,7 @@ let pos = c(8, 6, 7);  // 创建一个 `Position` 值。
 <p>单元结构体表达式只是单元结构体程序项(unit struct item)的路径。
 也是指向此单元结构体的值的隐式常量。
 单元结构体的值也可以用无字段结构体表达式来构造。例如：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Gamma;

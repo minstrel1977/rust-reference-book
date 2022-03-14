@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>函数</title>
+        <title>函数 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -169,8 +169,8 @@
 <h1><a class="header" href="#函数" id="函数">函数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/functions.md">functions.md</a><br />
-commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
-本章译文最后维护日期：2021-07-31</p>
+commit: a14d6359e7ff78530a23a7430a020f47d08867f7 <br />
+本章译文最后维护日期：2022-03-14</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -210,7 +210,7 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 <p><em>函数</em>由一个<a href="../expressions/block-expr.html">块</a>以及一个名称和一组参数组成。除了名称，其他的都是可选的。函数使用关键字 <code>fn</code> 声明。函数可以声明一组<em>输入</em><a href="../variables.html"><em>变量</em></a>作为参数，调用者通过它向函数传递参数，函数完成后，它再将带有<em>输出</em><a href="../types.html#type-expressions"><em>类型</em></a>的结果值返回给调用者。</p>
 <p>当一个<em>函数</em>被引用时，该函数会产生一个相应的零尺寸<a href="../types/function-item.html"><em>函数项类型(function item type)</em></a>的一等(first-class)<em>值</em>，调用该值就相当于直接调用该函数。</p>
 <p>举个简单的定义函数的例子:</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn answer_to_life_the_universe_and_everything() -&gt; i32 {
@@ -221,7 +221,7 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 <h2><a class="header" href="#function-parameters" id="function-parameters">Function parameters</a></h2>
 <h2><a class="header" href="#函数参数" id="函数参数">函数参数</a></h2>
 <p>和 <code>let</code>绑定一样，函数参数是不可反驳型<a href="../patterns.html">模式</a>，所以任何在 let绑定中有效的模式都可以有效应用在函数参数上:</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn first((value, _): (i32, i32)) -&gt; i32 { value }
@@ -244,7 +244,7 @@ return {
 <h2><a class="header" href="#generic-functions" id="generic-functions">Generic functions</a></h2>
 <h2><a class="header" href="#泛型函数" id="泛型函数">泛型函数</a></h2>
 <p><em>泛型函数</em>允许在其签名中出现一个或多个<em>参数化类型(parameterized types)</em>。每个类型参数必须在函数名后面的尖括号封闭逗号分隔的列表中显式声明。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// foo 是建立在 A 和 B 基础上的泛型函数
@@ -254,7 +254,7 @@ fn foo&lt;A, B&gt;(x: A, y: B) {
 </span><span class="boring">}
 </span></code></pre></pre>
 <p>在函数签名上和函数体内部，类型参数的名称可以被用作类型名。可以为类型参数指定 <a href="traits.html">trait</a>约束，以允许对该类型的值调用这些 trait 的方法。这种约束是使用 <code>where</code>句法指定的：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::fmt::Debug;
@@ -263,7 +263,7 @@ fn foo&lt;A, B&gt;(x: A, y: B) {
 </span><span class="boring">}
 </span></code></pre></pre>
 <p>当使用泛型函数时，它的（类型参数的）类型会基于调用的上下文被实例化。例如，这里调用 <code>foo</code> 函数:</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fmt::Debug;
@@ -291,21 +291,21 @@ foo(&amp;[1, 2]);
 unsafe { foo() }
 </code></pre>
 <p>当函数的 <code>FunctionQualifiers</code> 句法规则中的 <code>&quot;extern&quot; Abi?*</code> 选项被省略时，会默认使用 <code>&quot;Rust&quot;</code> 类型的 ABI。例如:</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn foo() {}
 <span class="boring">}
 </span></code></pre></pre>
 <p>等价于：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>extern &quot;Rust&quot; fn foo() {}
 <span class="boring">}
 </span></code></pre></pre>
 <p>使用 <code>&quot;Rust&quot;</code> 之外的 ABI 可以让 Rust 中声明的函数被其他编程语言调用。比如下面声明了一个可以从 C 中调用的函数：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 使用 &quot;C&quot; ABI 声明一个函数
@@ -316,8 +316,8 @@ extern &quot;C&quot; fn new_i32() -&gt; i32 { 0 }
 </span>extern &quot;stdcall&quot; fn new_i32_stdcall() -&gt; i32 { 0 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>与<a href="external-blocks.html">外部块</a>一样，当使用关键字 <code>extern</code> 而省略 <code>&quot;ABI</code> 时，ABI 默认使用的是 <code>&quot;C&quot;</code>。也就是说这个：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<p>与<a href="external-blocks.html">外部块</a>一样，当使用关键字 <code>extern</code> 而省略 <code>&quot;ABI&quot;</code> 时，ABI 默认使用的是 <code>&quot;C&quot;</code>。也就是说这个：</p>
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>extern fn new_i32() -&gt; i32 { 0 }
@@ -325,7 +325,7 @@ let fptr: extern fn() -&gt; i32 = new_i32;
 <span class="boring">}
 </span></code></pre></pre>
 <p>等价于：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>extern &quot;C&quot; fn new_i32() -&gt; i32 { 0 }
@@ -343,7 +343,7 @@ let fptr: extern &quot;C&quot; fn() -&gt; i32 = new_i32;
 <h2><a class="header" href="#async-functions" id="async-functions">Async functions</a></h2>
 <h2><a class="header" href="#异步函数" id="异步函数">异步函数</a></h2>
 <p>函数可以被限定为异步的，这还可以与 <code>unsafe</code> 限定符结合在一起使用：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>async fn regular_example() { }
@@ -352,7 +352,7 @@ async unsafe fn unsafe_example() { }
 </span></code></pre></pre>
 <p>异步函数在调用时不起作用：相反，它们将参数捕获进一个 future。当该函数被轮询(polled)时，该 future 将执行该函数的函数体。</p>
 <p>一个异步函数大致相当于返回一个以 <a href="../expressions/block-expr.html#async-blocks"><code>async move</code>块</a>为代码体的 <a href="../types/impl-trait.html"><code>impl Future</code></a> 的函数：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 源代码
@@ -362,7 +362,7 @@ async fn example(x: &amp;str) -&gt; usize {
 <span class="boring">}
 </span></code></pre></pre>
 <p>大致等价于：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::future::Future;
@@ -384,7 +384,7 @@ fn example&lt;'a&gt;(x: &amp;'a str) -&gt; impl Future&lt;Output = usize&gt; + '
 <h3><a class="header" href="#combining-async-and-unsafe" id="combining-async-and-unsafe">Combining <code>async</code> and <code>unsafe</code></a></h3>
 <h3><a class="header" href="#async-和-unsafe-的联合使用" id="async-和-unsafe-的联合使用"><code>async</code> 和 <code>unsafe</code> 的联合使用</a></h3>
 <p>声明一个既异步又非安全(<code>unsafe</code>)的函数是合法的。调用这样的函数是非安全的，并且（像任何异步函数一样）会返回一个 future。这个 future 只是一个普通的 future，因此“await”它不需要一个 <code>unsafe</code> 的上下文：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 等待这个返回的 future 相当于解引用 `x`。
@@ -410,7 +410,7 @@ async fn safe_example() {
 <h2><a class="header" href="#函数上的属性" id="函数上的属性">函数上的属性</a></h2>
 <p>在函数上允许使用<a href="../attributes.html">外部属性</a>，也允许在<a href="../expressions/block-expr.html">函数体</a>中的 <code>{</code> 后面直接放置<a href="../attributes.html">内部属性</a>。</p>
 <p>下面这个例子显示了一个函数的内部属性。该函数的文档中只会出现单词“Example”。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn documented() {
@@ -425,7 +425,7 @@ async fn safe_example() {
 <h2><a class="header" href="#attributes-on-function-parameters" id="attributes-on-function-parameters">Attributes on function parameters</a></h2>
 <h2><a class="header" href="#函数参数上的属性" id="函数参数上的属性">函数参数上的属性</a></h2>
 <p>函数参数允许使用<a href="../attributes.html">外部属性</a>，允许的<a href="../attributes.html#built-in-attributes-index">内置属性</a>仅限于 <code>cfg</code>、<code>cfg_attr</code>、<code>allow</code>、<code>warn</code>、<code>deny</code> 和 <code>forbid</code>。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn len(

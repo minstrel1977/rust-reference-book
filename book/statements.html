@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>语句</title>
+        <title>语句 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -192,7 +192,7 @@ commit: f5cd2519c0e61a2c640345c2e5cda329008ead3a <br />
 <p><em>程序项声明语句</em>的句法形式与<a href="items/modules.html">模块</a>中的<a href="items.html">程序项声明</a>的句法形式相同。在语句块中声明的程序项会将其作用域限制为包含该语句的块。这类程序项以及在其内声明子项(sub-items)都没有给定的<a href="paths.html#canonical-paths">规范路径</a>。例外的是，只要程序项和 trait（如果有的话）的可见性允许，在（程序项声明语句内定义的和此程序项或 trait 关联的）<a href="items/implementations.html">实现</a>中定义的关联项在外层作用域内仍然是可访问的。除了这些区别外，它与在模块中声明的程序项的意义也是相同的。</p>
 <p>程序项声明语句不会隐式捕获包含它的函数的泛型参数、参数和局部变量。如下，<code>inner</code> 不能访问 <code>outer_var</code>。</p>
 <p><code>outer_var</code>.</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn outer() {
@@ -223,7 +223,7 @@ commit: f5cd2519c0e61a2c640345c2e5cda329008ead3a <br />
 </blockquote>
 <p><em>表达式语句</em>是对<a href="expressions.html">表达式</a>求值并忽略其结果的语句。通常，表达式语句存在的目的是触发对其内部的表达式的求值时的效果。</p>
 <p>仅由<a href="expressions/block-expr.html">块表达式</a>或控制流表达式组成的表达式，如果它们在允许使用语句的上下文中使用时，是可以省略其后面的分号的。这有可能会导致解析歧义，因为它可以被解析为独立语句，也可以被解析为另一个表达式的一部分；下例中的控制流表达式被解析为一个语句。注意 <a href="expressions.html"><em>ExpressionWithBlock</em></a> 形式的表达式用作语句时，其类型必须是单元类型(<code>()</code>)。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">let mut v = vec![1, 2, 3];
@@ -237,7 +237,7 @@ if v.is_empty() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>当省略后面的分号时，结果必须是 <code>()</code> 类型。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// bad: 下面块的类型是i32，而不是 `()` 

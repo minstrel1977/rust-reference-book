@@ -2,8 +2,8 @@
 # 函数
 
 >[functions.md](https://github.com/rust-lang/reference/blob/master/src/items/functions.md)\
->commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e \
->本章译文最后维护日期：2021-07-31
+>commit: a14d6359e7ff78530a23a7430a020f47d08867f7 \
+>本章译文最后维护日期：2022-03-14
 
 > **<sup>句法</sup>**\
 > _Function_ :\
@@ -167,7 +167,7 @@ extern "C" fn new_i32() -> i32 { 0 }
 extern "stdcall" fn new_i32_stdcall() -> i32 { 0 }
 ```
 
-与[外部块][external block]一样，当使用关键字 `extern` 而省略 `"ABI` 时，ABI 默认使用的是 `"C"`。也就是说这个：
+与[外部块][external block]一样，当使用关键字 `extern` 而省略 `"ABI"` 时，ABI 默认使用的是 `"C"`。也就是说这个：
 
 ```rust
 extern fn new_i32() -> i32 { 0 }
@@ -188,7 +188,7 @@ let fptr: extern "C" fn() -> i32 = new_i32;
 ## Const functions
 ## 常量函数
 
-使用关键字 `const` 限定的函数是[常量(const)函数][const functions]，[元组结构体][tuple struct]构造函数和[元组变体][tuple variant]构造函数也是如此。可以在[常量上下文][const context]中调用*常量函数*。
+使用关键字 `const` 限定的函数是[常量(const)函数][const functions]，[元组结构体][tuple struct]构造函数和[元组变体][tuple variant]构造函数也是如此。可以在[常量上下文][const contexts]中调用*常量函数*。
 
 常量函数不允许是 [async](#async-functions)类型的，并且不能使用 [`extern`函数限定符](#extern-function-qualifier)。
 
@@ -314,7 +314,7 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [_Type_]: ../types.md#type-expressions
 [_WhereClause_]: generics.md#where-clauses
 [_OuterAttribute_]: ../attributes.md
-[const context]: ../const_eval.md#const-context
+[const contexts]: ../const_eval.md#const-context
 [const functions]: ../const_eval.md#const-functions
 [tuple struct]: structs.md
 [tuple variant]: enumerations.md

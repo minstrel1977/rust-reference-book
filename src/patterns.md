@@ -2,8 +2,8 @@
 # 模式
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
->commit: 9884d5eb58aa73ea9efdf5ed1b13110c5a9292d7 \
->本章译文最后维护日期：2021-01-22
+>commit: 037fda0f7735ce72f63abef9f821132b9381b429 \
+>本章译文最后维护日期：2022-03-14
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\
@@ -164,7 +164,7 @@ for i in -2..5 {
 
 > **<sup>句法</sup>**\
 > _IdentifierPattern_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; `ref`<sup>?</sup> `mut`<sup>?</sup> [IDENTIFIER] (`@` [_Pattern_] ) <sup>?</sup>
+> &nbsp;&nbsp; &nbsp;&nbsp; `ref`<sup>?</sup> `mut`<sup>?</sup> [IDENTIFIER] (`@` [_PatternNoTopAlt_] ) <sup>?</sup>
 
 标识符模式将它们匹配的值绑定到一个变量上。此标识符在该模式中必须是唯一的。该变量会在作用域中遮蔽任何同名的变量。这种绑定的作用域取决于使用模式的上下文（例如 `let`绑定或匹配臂(`match` arm)[^译注1]）。
 
@@ -768,6 +768,7 @@ _or模式_是能匹配两个或多个并列子模式（例如：`A | B | C`）�
 [_PathExpression_]: expressions/path-expr.md
 [_PathPattern_]: #path-patterns
 [_Pattern_]: #patterns
+[_PatternNoTopAlt_]: #patterns
 [_PatternWithoutRange_]: #patterns
 [_QualifiedPathInExpression_]: paths.md#qualified-paths
 [_RangePattern_]: #range-patterns

@@ -2,8 +2,8 @@
 # 方法调用表达式
 
 >[method-call-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/method-call-expr.md)\
->commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e \
->本章译文最后维护日期：2021-07-31
+>commit: e4964a0a951ec7b468992acac50645b443ee4f1d \
+>本章译文最后维护日期：2022-03-14
 
 > **<sup>句法</sup>**\
 > _MethodCallExpression_ :\
@@ -67,6 +67,8 @@ let log_pi = pi.unwrap_or(1.0).log(2.72);
 如果某步碰到了存在多个可能性方法的情况，比如泛型方法之间或 trait方法之间被认为是相同的，那么它就会导致编译错误。
 这些情况就需要使用[函数调用的消歧句法][disambiguating function call syntax]来为方法调用或函数调用消除歧义。
 
+> **版次差异**：在 2021 版次之前，在查找可用的方法时，如果候选的接受者类型是一个[数组类型][array type]，由标准库提供的 [`IntoIterator`] trait 提供的方法会被忽略。
+
 <div class="warning">
 
 ***警告：*** 对于 [trait对象][trait objects]，如果有一个与 trait方法同名的固有方法，那么当尝试在方法调用表达式(method call expression)中调用该方法时，将编译报错。
@@ -84,9 +86,11 @@ let log_pi = pi.unwrap_or(1.0).log(2.72);
 [_Expression_]: ../expressions.md
 [_PathExprSegment_]: ../paths.md#paths-in-expressions
 [visible]: ../visibility-and-privacy.md
+[array type]: ../types/array.md
 [trait objects]: ../types/trait-object.md
 [disambiguate call]: call-expr.md#disambiguating-function-calls
 [disambiguating function call syntax]: call-expr.md#disambiguating-function-calls
 [dereference]: operator-expr.md#the-dereference-operator
 [methods]: ../items/associated-items.md#methods
 [unsized coercion]: ../type-coercions.md#unsized-coercions
+[`IntoIterator`]: https://doc.rust-lang.org/std/iter/trait.IntoIterator.html

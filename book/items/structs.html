@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>结构体</title>
+        <title>结构体 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -205,7 +205,7 @@ commit: 9d0aa172932ed15ec1b13556e6809b74bc58a02b <br />
 </blockquote>
 <p><em>结构体</em>是一个使用关键字 <code>struct</code> 定义的标称型(nominal)<a href="../types/struct.html">结构体类型</a>。</p>
 <p>结构体(<code>struct</code>)程序项的一个示例和它的使用方法：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Point {x: i32, y: i32}
@@ -214,7 +214,7 @@ let px: i32 = p.x;
 <span class="boring">}
 </span></code></pre></pre>
 <p><em>元组结构体</em>是一个标称型(nominal)<a href="../types/tuple.html">元组类型</a>，也是用关键字 <code>struct</code> 定义的。例如：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Point(i32, i32);
@@ -223,7 +223,7 @@ let px: i32 = match p { Point(x, _) =&gt; x };
 <span class="boring">}
 </span></code></pre></pre>
 <p>*单元结构体(unit-like struct)*是没有任何字段的结构体，它的定义完全不包含字段(fields)列表。这样的结构体隐式定义了其类型的同名常量（值）。例如:</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Cookie;
@@ -231,7 +231,7 @@ let c = [Cookie, Cookie {}, Cookie, Cookie {}];
 <span class="boring">}
 </span></code></pre></pre>
 <p>等价于</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Cookie {}

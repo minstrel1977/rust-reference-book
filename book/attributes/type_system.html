@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>类型系统</title>
+        <title>类型系统 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -178,7 +178,7 @@ commit: d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
 <p><em><code>non_exhaustive</code>属性</em>表示类型或变体将来可能会添加更多字段或变体。它可以应用在<a href="../items/structs.html">结构体(<code>struct</code>)</a>上、<a href="../items/enumerations.html">枚举(<code>enum</code>)</a>上 和 枚举变体上。</p>
 <p><code>non_exhaustive</code>属性使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaWord</em></a>元项属性句法，因此不接受任何输入。</p>
 <p>在当前（<code>non_exhaustive</code>限制的类型的）定义所在的 crate 内，<code>non_exhaustive</code> 没有效果。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[non_exhaustive]

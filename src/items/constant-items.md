@@ -2,8 +2,8 @@
 # 常量项
 
 >[constant-items.md](https://github.com/rust-lang/reference/blob/master/src/items/constant-items.md)\
->commit: 761ad774fcb300f2b506fed7b4dbe753cda88d80 \
->本章译文最后维护日期：2020-1-17
+>commit: e64510b117146453cf859018f921c840050448e9 \
+>本章译文最后维护日期：2022-03-14
 
 > **<sup>句法</sup>**\
 > _ConstantItem_ :\
@@ -61,7 +61,7 @@ fn create_and_drop_zero_with_destructor() {
 ## Unnamed constant
 ## 未命名常量
 
-不同于[关联][associated]常量(associated constant)，[自由][free]常量(free constant)可以使用下划线来命名。例如:
+不同于[关联常量][associated constant]，[自由][free]常量(free constant)可以使用下划线来命名。例如:
 
 ```rust
 const _: () =  { struct _SameNameTwice; };
@@ -85,7 +85,7 @@ m!(const _: () = (););
 
 [^译者备注]: 在程序退出前，析构销毁的只是其中的一份拷贝；这句还有另一层含义是常量在整个程序结束时会调用析构函数。
 
-[associated]: ../glossary.md#associated-item
+[associated constant]: ../items/associated-items.md#associated-constants
 [constant value]: ../const_eval.md#constant-expressions
 [free]: ../glossary.md#free-item
 [static lifetime elision]: ../lifetime-elision.md#static-lifetime-elision

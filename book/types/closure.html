@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>闭包</title>
+        <title>闭包 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -173,7 +173,7 @@ commit: e4833e4076305e4554baf480f7443eb82f09a28c <br />
 本章译文最后维护日期：2021-07-31</p>
 </blockquote>
 <p><a href="../expressions/closure-expr.html">闭包表达式</a>生成的闭包值具有唯一性和无法写出的匿名性。闭包类型近似相当于包含捕获变量的结构体。比如以下闭包示例：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn f&lt;F : FnOnce() -&gt; String&gt; (g: F) {
@@ -214,7 +214,7 @@ impl&lt;'a&gt; FnOnce&lt;()&gt; for Closure&lt;'a&gt; {
 <p>编译器倾向于优先通过不可变借用(immutable borrow)来捕获闭合变量(closed-over variable)，其次是通过唯一不可变借用(unique immutable borrow)（见下文），再其次可变借用(mutable borrow)，最后使用移动语义(move)来捕获。编译器将选择与捕获的变量在闭包体中的使用方式兼容的第一种捕获方式。编译器不会考虑周围的代码，比如所涉及的变量的生存期，或者闭包本身的生存期。</p>
 <p>如果使用了关键字 <code>move</code> ，那么所有捕获都是通过移动(move)语义进行的（当然对于 <code>Copy</code>类型，则是通过拷贝语义进行的），而不管借用是否可用。关键字 <code>move</code> 通常用于允许闭包比其捕获的值活得更久，例如返回闭包或用于生成新线程。</p>
 <p>复合类型（如结构体、元组和枚举）始终是全部捕获的，而不是各个字段分开捕获的。如果真要捕获单个字段，那可能需要先借用该字段到本地局部变量中：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::collections::HashSet;
@@ -238,7 +238,7 @@ impl SetVec {
 <h2><a class="header" href="#unique-immutable-borrows-in-captures" id="unique-immutable-borrows-in-captures">Unique immutable borrows in captures</a></h2>
 <h2><a class="header" href="#捕获中的唯一不可变借用" id="捕获中的唯一不可变借用">捕获中的唯一不可变借用</a></h2>
 <p>捕获方式中有一种被称为<em>唯一不可变借用</em>的特殊类型的借用捕获，这种借用不能在语言的其他任何地方使用，也不能显式地写出。唯一不可变借用发生在修改可变引用的引用对象(referent)时，如下面的示例所示：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut b = false;
@@ -268,7 +268,7 @@ let z = &amp;x;
 <p>注意：<code>move</code>闭包可能仍然实现 <a href="https://doc.rust-lang.org/std/ops/trait.Fn.html"><code>Fn</code></a> 或 <a href="https://doc.rust-lang.org/std/ops/trait.FnMut.html"><code>FnMut</code></a>，即使它们通过移动(move)语义来捕获变量。这是因为闭包类型实现什么样的 trait 是由闭包对捕获的变量值做了什么来决定的，而不是由闭包如何捕获它们来决定的。<sup class="footnote-reference"><a href="#译注1">1</a></sup></p>
 </blockquote>
 <p>*非捕获闭包(Non-capturing closures)*是指不捕获环境中的任何变量的闭包。它们可以通过匹配签名的方式被自动强转成函数指针（例如 <code>fn()</code>）。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let add = |x, y| x + y;
@@ -298,7 +298,7 @@ x = bo(5,7);
 </ul>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
 <p>译者的实验代码：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn f1&lt;F : Fn() -&gt; i32&gt; (g: F) { println!(&quot;{}&quot;, g());}

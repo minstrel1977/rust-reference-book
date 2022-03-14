@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>测试</title>
+        <title>测试 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -190,7 +190,7 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <p>注意：测试模式是通过将 <code>--test</code> 参数选项传递给 <code>rustc</code> 或使用 <code>cargo test</code> 来启用的。</p>
 </blockquote>
 <p>返回 <code>()</code> 的测试只要结束(terminate)且没有触发 panic 就会通过。返回 <code>Result&lt;(), E&gt;</code> 的测试只要它们返回 <code>Ok(())</code> 就算通过。不结束的测试既不（计为）通过也不（计为）失败。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::io;
@@ -208,7 +208,7 @@ fn test_the_thing() -&gt; io::Result&lt;()&gt; {
 <h2><a class="header" href="#ignore属性" id="ignore属性"><code>ignore</code>属性</a></h2>
 <p>被 <code>test</code>属性标注的(annotated with)函数也可以被 <code>ignore</code>属性标注。<em><code>ignore</code>属性</em>告诉测试套件不要将该函数作为测试执行。但在测试模式下，这类函数仍然会被编译。</p>
 <p><code>ignore</code>属性可以选择使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法来说明测试被忽略的原因。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[test]
@@ -225,7 +225,7 @@ fn mytest() {
 <h2><a class="header" href="#should_panic属性" id="should_panic属性"><code>should_panic</code>属性</a></h2>
 <p>被 <code>test</code>属性标注并返回 <code>()</code> 的函数也可以被 <code>should_panic</code>属性标注。<em><code>should_panic</code>属性</em>使测试函数只有在实际发生 panic 时才算通过。</p>
 <p><code>should_panic</code>属性可选输入一条出现在 panic消息中的字符串。如果在 panic消息中找不到该字符串，则测试将失败。可以使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法或带有 <code>expected</code>字段的 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法来传递字符串。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[test]

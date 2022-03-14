@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>trait对象</title>
+        <title>trait对象 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -210,7 +210,7 @@ commit: fd10e7043934711ef96b4dd2009db3e4d0182a33 <br />
 </ul>
 <p>trait对象的目的是允许方法的“延迟绑定(late binding)”。在 trait对象上调用一个方法会导致运行时的虚拟分发(virtual dispatch)：也就是说，一个函数指针从 trait对象的虚函数表(vtable)中被加载进来，并被间接调用。每个虚函数表实体的实际实现可能因对象的不同而不同。</p>
 <p>一个 trait对象的例子：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">trait Printable {
+<pre><pre class="playground"><code class="language-rust">trait Printable {
     fn stringify(&amp;self) -&gt; String;
 }
 

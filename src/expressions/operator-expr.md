@@ -2,8 +2,8 @@
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit: 4115c9a3c2bd91f29445999891de4e8d26d60dc8 \
->本章译文最后维护日期：2022-01-22
+>commit: dc064e08f202177dd0e9f14b6a782761df325b93 \
+>本章译文最后维护日期：2022-03-14
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -600,7 +600,7 @@ fn example() {
 [unit]: ../types/tuple.md
 [value expression]: ../expressions.md#place-expressions-and-value-expressions
 [temporary value]: ../expressions.md#temporaries
-[this test]: https://github.com/rust-lang/rust/blob/master/src/test/ui/expr/compound-assignment/eval-order.rs
+[this test]: https://github.com/rust-lang/rust/blob/1.58.0/src/test/ui/expr/compound-assignment/eval-order.rs
 [float-float]: https://github.com/rust-lang/rust/issues/15536
 [Function pointer]: ../types/function-pointer.md
 [Function item]: ../types/function-item.md

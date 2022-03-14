@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>方法调用表达式</title>
+        <title>方法调用表达式 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -169,8 +169,8 @@
 <h1><a class="header" href="#方法调用表达式" id="方法调用表达式">方法调用表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/method-call-expr.md">method-call-expr.md</a><br />
-commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
-本章译文最后维护日期：2021-07-31</p>
+commit: e4964a0a951ec7b468992acac50645b443ee4f1d <br />
+本章译文最后维护日期：2022-03-14</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -179,7 +179,7 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 </blockquote>
 <p><em>方法调用</em>由一个表达式（<em>接受者(receiver)</em>）后跟一个单点号(<code>.</code>)、一个表达式路径段(path segment)和一个圆括号封闭的的表达式列表组成。
 方法调用被解析为特定 trait 上的关联<a href="../items/associated-items.html#methods">方法</a>时，如果点号左边的表达式有确切的已知的 <code>self</code>类型，则会静态地分发(statically dispatch)给在此类型下查找到的某个同名方法来执行；如果点号左边的表达式是间接的 <a href="../types/trait-object.html">trait对象</a>，则会采用动态分发(dynamically dispatch)的方式。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let pi: Result&lt;f32, _&gt; = &quot;3.14&quot;.parse();
@@ -200,7 +200,7 @@ let log_pi = pi.unwrap_or(1.0).log(2.72);
 <blockquote>
 <p>注意：查找是按顺序进行的，这有时会导致出现不太符合直觉的结果。
 下面的代码将打印 “In trait impl!”，因为首先会查找 <code>&amp;self</code> 上的方法，在找到结构体 <code>Foo</code> 的（接受者类型为）<code>&amp;mut self</code> 的（固有）方法（<code>Foo::bar</code>）之前先找到（接受者类型为 <code>&amp;self</code> 的）trait方法（<code>Bar::bar</code>）。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">struct Foo {}
+<pre><pre class="playground"><code class="language-rust">struct Foo {}
 
 trait Bar {
   fn bar(&amp;self);
@@ -229,6 +229,9 @@ fn main() {
 一旦查找到了一个方法，如果由于这些（可变性、生存期或健全性）原因中的一个（或多个）而不能调用，则会报编译错误。</p>
 <p>如果某步碰到了存在多个可能性方法的情况，比如泛型方法之间或 trait方法之间被认为是相同的，那么它就会导致编译错误。
 这些情况就需要使用<a href="call-expr.html#disambiguating-function-calls">函数调用的消歧句法</a>来为方法调用或函数调用消除歧义。</p>
+<blockquote>
+<p><strong>版次差异</strong>：在 2021 版次之前，在查找可用的方法时，如果候选的接受者类型是一个<a href="../types/array.html">数组类型</a>，由标准库提供的 <a href="https://doc.rust-lang.org/std/iter/trait.IntoIterator.html"><code>IntoIterator</code></a> trait 提供的方法会被忽略。</p>
+</blockquote>
 <div class="warning">
 <p><em><strong>警告：</strong></em> 对于 <a href="../types/trait-object.html">trait对象</a>，如果有一个与 trait方法同名的固有方法，那么当尝试在方法调用表达式(method call expression)中调用该方法时，将编译报错。
 此时，可以使用<a href="call-expr.html#disambiguating-function-calls">消除函数调用歧义的句法</a>来明确调用语义。

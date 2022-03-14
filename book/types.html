@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>类型</title>
+        <title>类型 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -310,7 +310,7 @@ commit: 577d4975abce5440e819c0883457a5d919660489 <br />
    <code>(</code> <a href="types.html#type-expressions"><em>Type</em></a> <code>)</code></p>
 </blockquote>
 <p>在某些情况下，类型组合在一起时可能会产生二义性。此时可以在类型周围使用元括号来避免歧义。例如，<a href="types/pointer.html#shared-references-">引用类型</a>的<a href="trait-bounds.html">类型约束</a>列表中的 <code>+</code>运算符搞不清楚其左值的边界位置在哪里，因此需要使用圆括号来明确其边界。这里需要的消歧文法就是使用 <a href="types.html#type-expressions"><em>TypeNoBounds</em></a> 句法规则替代 <a href="types.html#type-expressions"><em>Type</em></a> 句法规则。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::any::Any;
@@ -326,7 +326,7 @@ commit: 577d4975abce5440e819c0883457a5d919660489 <br />
 <li>递归类型的定义可以跨越模块边界，但不能跨越模块<em>可见性</em>边界或 crate 边界（为了简化模块系统和类型检查）。</li>
 </ul>
 <p><em>递归</em>类型及使用示例：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum List&lt;T&gt; {

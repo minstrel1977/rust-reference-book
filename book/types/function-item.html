@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>函数项类型</title>
+        <title>函数项类型 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -175,7 +175,7 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <p>当被引用函数项、元组结构体的构造函数或枚举变体的构造函数时，会产生它们的*函数项类型(function item type)*的零尺寸的值。这种类型（也就是此值）显式地标识了该函数——标识出的内容包括程序项定义时的名字、类型参数，及其定义时的生存期参数（不是后期绑定的生存期参数，后期绑定的生存期参数只在函数被调用时才被赋与）——所以该值不需要包含一个实际的函数指针，当此函数被调用时也不需要一个间接的寻址操作去查找此函数。</p>
 <p>没有直接引用函数项类型的句法，但是编译器会在错误消息中会显示类似于 <code>fn(u32) -&gt; i32 {fn_name}</code> 这样的“类型”。</p>
 <p>因为函数项类型显式地标识了其函数，所以如果它们所指的程序项不同（包括不同的程序项，或相同的程序项但泛型参数的实际类型不同），则此函数项类型也不同，混合使用它们将导致类型错误：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail E0308 edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail E0308">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn foo&lt;T&gt;() { }
@@ -184,7 +184,7 @@ let x = &amp;mut foo::&lt;i32&gt;;
 <span class="boring">}
 </span></code></pre></pre>
 <p>但确实存在从函数项类型到具有相同签名的函数指针的<a href="../type-coercions.html">自动强转(coercion)</a>，这种自动强转一般发生在使用函数项类型却直接预期函数指针时；另一种发生情况是 <code>if</code>表达式或匹配(<code>match</code>)表达式的不同分支返回使用了具有相同签名却使用了不同函数项类型的情况：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">let want_i32 = false;

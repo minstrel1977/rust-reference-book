@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Rust运行时</title>
+        <title>Rust运行时 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -215,7 +215,7 @@ fn panic(info: &amp;PanicInfo) -&gt; ! {
 <h2><a class="header" href="#the-windows_subsystem-attribute" id="the-windows_subsystem-attribute">The <code>windows_subsystem</code> attribute</a></h2>
 <h2><a class="header" href="#windows_subsystem属性" id="windows_subsystem属性"><code>windows_subsystem</code>属性</a></h2>
 <p>当为一个 Windows 编译目标配置链接属性时，<em><code>windows_subsystem</code>属性</em>可以用来在 crate 级别上配置<a href="https://msdn.microsoft.com/en-us/library/fcc1zstk.aspx">子系统(subsystem)</a>类别。它使用 <a href="attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法用 <code>console</code> 或 <code>windows</code> 两个可行值指定子系统。对于非windows 编译目标和非二进制的 <a href="linkage.html">crate类型</a>，该属性将被忽略。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span>#![windows_subsystem = &quot;windows&quot;]
 <span class="boring">fn main() {

@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>数组</title>
+        <title>数组 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -179,7 +179,7 @@ commit: 2f459e22ec30a94bafafe417da4e95044578df73 <br />
 </blockquote>
 <p>数组是 <code>N</code> 个类型为 <code>T</code> 的元素组成的固定长度(fixed-size)的序列，数组类型写为 <code>[T; N]</code>。长度(size)是一个计算结果为 <a href="numeric.html#machine-dependent-integer-types"><code>usize</code></a> 的<a href="../const_eval.html#constant-expressions">常量表达式</a>。</p>
 <p>示例：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 一个栈分配的数组

@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>内联汇编</title>
+        <title>内联汇编 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -169,8 +169,8 @@
 <h1><a class="header" href="#内联汇编" id="内联汇编">内联汇编</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md">behavior-considered-undefined.md</a><br />
-commit: 153617b13ef52b88ab7671a2bae4776507325f4f <br />
-本章译文最后维护日期：2022-01-08</p>
+commit: 785325fed7d7d54ab143b32355f35df1f5208295 <br />
+本章译文最后维护日期：2022-03-14</p>
 </blockquote>
 <p>Rust 通过 <a href="https://doc.rust-lang.org/core/arch/macro.asm.html"><code>asm!</code></a> 和 <a href="https://doc.rust-lang.org/core/arch/macro.global_asm.html"><code>global_asm!</code></a> 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。</p>
@@ -184,7 +184,7 @@ commit: 153617b13ef52b88ab7671a2bae4776507325f4f <br />
 <p>如果在不支持的目标架构上使用 <code>asm!</code>，编译器会报错。</p>
 <h2><a class="header" href="#example" id="example">Example</a></h2>
 <h2><a class="header" href="#示例" id="示例">示例</a></h2>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::arch::asm;
@@ -243,8 +243,9 @@ global_asm := &quot;global_asm!(&quot; format_string *(&quot;,&quot; format_stri
 <p>目前，所有支持的目标架构都遵循 LLVM 内部汇编器使用的汇编代码语法，这通常对应于 GNU汇编器(GAS)。
 x86目标架构上，默认使用 GAS的 <code>.intel_syntax noprefix</code>模式。
 ARM目标架构上，使用 <code>.syntax unified</code>模式。
-这些目标架构对汇编代码做了一些额外的限制：任何汇编器状态（例如，可以使用“.section”更改的当前节）必须在 asm字符串末尾恢复为其原始值。
-不符合 GAS语法的汇编代码将导致特定于汇编器的行为。</p>
+这些目标架构对汇编代码做了一些额外的限制：任何汇编器状态（例如，可以使用 <code>.section</code> 更改的当前节）必须在 asm字符串末尾恢复为其原始值。
+不符合 GAS语法的汇编代码将导致特定于汇编器的行为。
+对内联汇编使用的指令的进一步的约束在本章后面的<a href="#directives-support">指令支持</a>章节有详细说明。</p>
 <h2><a class="header" href="#operand-type" id="operand-type">Operand type</a></h2>
 <h2><a class="header" href="#操作类型" id="操作类型">操作类型</a></h2>
 <p>目前支持以下几种操作：</p>
@@ -691,6 +692,128 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 <blockquote>
 <p><strong>注意</strong>：作为一个一般性原则，<code>preserves_flags</code> 包含的标志是在执行函数调用时<em>未</em>保留的标志。</p>
 </blockquote>
+<h3><a class="header" href="#directives-support" id="directives-support">Directives Support</a></h3>
+<h3><a class="header" href="#指令支持" id="指令支持">指令支持</a></h3>
+<p>内联汇编支持 GNU AS 和 LLVM 的内部汇编器支持的指令集的一个子集，具体如下所示。
+也有部分指令的效果是特定于汇编器的（可能会导致错误，或者可能会被接受）。</p>
+<p>如果内联汇编包含任何修改后续汇编程序的“有状态(stateful)”指令，则块必须在内联汇编结束之前撤消任何此类指令的执行效果。</p>
+<p>下面这些指令被汇编器确保支持：</p>
+<ul>
+<li><code>.2byte</code></li>
+<li><code>.4byte</code></li>
+<li><code>.8byte</code></li>
+<li><code>.align</code></li>
+<li><code>.ascii</code></li>
+<li><code>.asciz</code></li>
+<li><code>.alt_entry</code></li>
+<li><code>.balign</code></li>
+<li><code>.balignl</code></li>
+<li><code>.balignw</code></li>
+<li><code>.balign</code></li>
+<li><code>.balignl</code></li>
+<li><code>.balignw</code></li>
+<li><code>.bss</code></li>
+<li><code>.byte</code></li>
+<li><code>.comm</code></li>
+<li><code>.data</code></li>
+<li><code>.def</code></li>
+<li><code>.double</code></li>
+<li><code>.endef</code></li>
+<li><code>.equ</code></li>
+<li><code>.equiv</code></li>
+<li><code>.eqv</code></li>
+<li><code>.fill</code></li>
+<li><code>.float</code></li>
+<li><code>.globl</code></li>
+<li><code>.global</code></li>
+<li><code>.lcomm</code></li>
+<li><code>.inst</code></li>
+<li><code>.long</code></li>
+<li><code>.octa</code></li>
+<li><code>.option</code></li>
+<li><code>.private_extern</code></li>
+<li><code>.p2align</code></li>
+<li><code>.pushsection</code></li>
+<li><code>.popsection</code></li>
+<li><code>.quad</code></li>
+<li><code>.scl</code></li>
+<li><code>.section</code></li>
+<li><code>.set</code></li>
+<li><code>.short</code></li>
+<li><code>.size</code></li>
+<li><code>.skip</code></li>
+<li><code>.sleb128</code></li>
+<li><code>.space</code></li>
+<li><code>.string</code></li>
+<li><code>.text</code></li>
+<li><code>.type</code></li>
+<li><code>.uleb128</code></li>
+<li><code>.word</code></li>
+</ul>
+<h4><a class="header" href="#target-specific-directive-support" id="target-specific-directive-support">Target Specific Directive Support</a></h4>
+<h4><a class="header" href="#基于特定目标规范的指令支持" id="基于特定目标规范的指令支持">基于特定目标规范的指令支持</a></h4>
+<h5><a class="header" href="#dwarf-unwinding" id="dwarf-unwinding">Dwarf Unwinding</a></h5>
+<h5><a class="header" href="#dwarf展开" id="dwarf展开">Dwarf展开</a></h5>
+<p>支持 DWARF展开信息的 ELF目标平台支持以下指令：</p>
+<ul>
+<li><code>.cfi_adjust_cfa_offset</code></li>
+<li><code>.cfi_def_cfa</code></li>
+<li><code>.cfi_def_cfa_offset</code></li>
+<li><code>.cfi_def_cfa_register</code></li>
+<li><code>.cfi_endproc</code></li>
+<li><code>.cfi_escape</code></li>
+<li><code>.cfi_lsda</code></li>
+<li><code>.cfi_offset</code></li>
+<li><code>.cfi_personality</code></li>
+<li><code>.cfi_register</code></li>
+<li><code>.cfi_rel_offset</code></li>
+<li><code>.cfi_remember_state</code></li>
+<li><code>.cfi_restore</code></li>
+<li><code>.cfi_restore_state</code></li>
+<li><code>.cfi_return_column</code></li>
+<li><code>.cfi_same_value</code></li>
+<li><code>.cfi_sections</code></li>
+<li><code>.cfi_signal_frame</code></li>
+<li><code>.cfi_startproc</code></li>
+<li><code>.cfi_undefined</code></li>
+<li><code>.cfi_window_save</code></li>
+</ul>
+<h5><a class="header" href="#structured-exception-handling" id="structured-exception-handling">Structured Exception Handling</a></h5>
+<h5><a class="header" href="#结构化异常处理" id="结构化异常处理">结构化异常处理</a></h5>
+<p>在带有结构化异常处理机制的目标平台上，可以确保下面的这些附加指令得到支持：</p>
+<ul>
+<li><code>.seh_endproc</code></li>
+<li><code>.seh_endprologue</code></li>
+<li><code>.seh_proc</code></li>
+<li><code>.seh_pushreg</code></li>
+<li><code>.seh_savereg</code></li>
+<li><code>.seh_setframe</code></li>
+<li><code>.seh_stackalloc</code></li>
+</ul>
+<h5><a class="header" href="#x86-32-bit-and-64-bit" id="x86-32-bit-and-64-bit">x86 (32-bit and 64-bit)</a></h5>
+<h5><a class="header" href="#x86-32位-and-64位" id="x86-32位-and-64位">x86 (32位 and 64位)</a></h5>
+<p>无论是 32位还是 64位 x86目标平台，可以确保下面的这些附加指令得到支持：</p>
+<ul>
+<li><code>.nops</code></li>
+<li><code>.code16</code></li>
+<li><code>.code32</code></li>
+<li><code>.code64</code></li>
+</ul>
+<p>只有在退出汇编块之前将状态重置为默认状态时，才支持使用 <code>.code16</code>、<code>.code32</code> 和 <code>.code64</code> 这些指令。
+默认情况下，32位 x86平台使用 <code>.code32</code>，64位 x86平台使用 <code>.code64</code>。</p>
+<h5><a class="header" href="#arm-32-bit" id="arm-32-bit">ARM (32-bit)</a></h5>
+<h5><a class="header" href="#arm-32位" id="arm-32位">ARM (32位)</a></h5>
+<p>ARM目标平台下，可以确保下面的这些附加指令得到支持：</p>
+<ul>
+<li><code>.even</code></li>
+<li><code>.fnstart</code></li>
+<li><code>.fnend</code></li>
+<li><code>.save</code></li>
+<li><code>.movsp</code></li>
+<li><code>.code</code></li>
+<li><code>.thumb</code></li>
+<li><code>.thumb_func</code></li>
+</ul>
 
                     </main>
 

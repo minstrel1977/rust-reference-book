@@ -2,8 +2,8 @@
 ## 未定义的行为
 
 >[behavior-considered-undefined.md](https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md)\
->commit: 9dc1c167edb3f4ea92415be8703044904e91392f \
->本章译文最后维护日期：2022-01-02
+>commit: 39df836d6b8ec5335beb2626c82420eef468ab14 \
+>本章译文最后维护日期：2022-03-14
 
 如果 Rust 代码出现了下面列表中的任何行为，则此代码被认为不正确。这包括非安全(`unsafe`)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。
 
@@ -20,7 +20,7 @@
 * 破坏[指针别名规则][pointer aliasing rules]。`&mut T` 和 `&T` 遵循 LLVM 的作用域[无别名(noalias)][noalias]模型(scoped noalias model)，除非 `&T` 内部包含 [`UnsafeCell<U>`] 类型。
 * 修改不可变的数据。[常量(`const`)][`const`]项内的所有数据都是不可变的。此外，所有通过共享引用接触到的数据或不可变绑定所拥有的数据都是不可变的，除非该数据包含在 [`UnsafeCell<U>`] 中。
 * 通过编译器内部函数(compiler intrinsics)调用未定义行为。[^译注1]
-* 执行基于当前平台不支持的平台特性编译的代码（参见 [`target_feature`]）。
+* 执行基于当前平台不支持的平台特性编译的代码（参见 [`target_feature`]），*除非*此平台特别申明执行带有此特性的代码安全。
 * 用错误的 ABI约定来调用函数，或使用错误的 ABI展开约定来从某函数里发起展开(unwinding)。  
 * 产生非法值(invalid value)，即使在私有字段和本地变量中也是如此。“产生”值发生在这些时候：把值赋给位置表达式、从位置表达式里读取值、传递值给函数/基本运算(primitive operation)或从函数/基本运算中返回值。
   以下值非法值（相对于它们各自的类型来说）：

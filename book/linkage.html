@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>链接</title>
+        <title>链接 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -240,7 +240,7 @@ commit: 1426474192ecc9c13165c1d4772b26e8445f5734<br />
 </code></pre>
 <p>不支持在到 C运行时的链接类型之间切换的编译目标将忽略这个标志。建议检查生成的二进制文件，以确保在编译成功之后，如预期的那样链接了 C运行时。</p>
 <p>crate 本身也可以检测如何链接 C运行时。例如，MSVC平台上的代码需要根据链接运行时的方式进行差异性的编译（例如选择使用 <code>/MT</code> 或 <code>/MD</code>）。目前可通过 <a href="conditional-compilation.html#target_feature"><code>cfg</code>属性的 <code>target_feature</code>选项</a>导出检测结果：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[cfg(target_feature = &quot;crt-static&quot;)]
@@ -255,7 +255,7 @@ fn foo() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>还请注意，Cargo构建脚本可以通过<a href="https://doc.rust-lang.org/cargo/reference/environment-variables.html#environment-variables-cargo-sets-for-build-scripts">环境变量</a>来检测此特性。在构建脚本中，您可以通过如下代码检测链接类型：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">use std::env;
+<pre><pre class="playground"><code class="language-rust">use std::env;
 
 fn main() {
     let linkage = env::var(&quot;CARGO_CFG_TARGET_FEATURE&quot;).unwrap_or(String::new());

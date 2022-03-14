@@ -2,8 +2,8 @@
 # 预导入包
 
 >[use-declarations.md](https://github.com/rust-lang/reference/blob/master/src/names/preludes.md)\
->commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e \
->本章译文最后维护日期：2021-07-31
+>commit: 0181f237f508a8109d99db76a4a5ab48d6132b93 \
+>本章译文最后维护日期：2022-03-14
 
 *预导入包*是一组名称的集合，它会自动把这些名称导入到 crate 中的每个模块的作用域中。
 
@@ -20,7 +20,22 @@
 ## Standard library prelude
 ## 标准库预导入包
 
-标准库预导入包包含了 [`std::prelude::v1`]模块中的名称。如果使用[`no_std`属性][`no_std` attribute]，那么它将使用[`core::prelude::v1`]模块中的名称。
+每个 crate 都有一个标准库预导入包，此包是一个标准库模块。
+
+具体使用的模块取决于 crate 的版次，以及 [`no_std`属性][`no_std` attribute]是否应用于此 crate：
+
+版次 | 非 `no_std` 环境         | `no_std` 环境
+--------| --------------------------- | ----------------------------
+2015    | [`std::prelude::rust_2015`] | [`core::prelude::rust_2015`]
+2018    | [`std::prelude::rust_2018`] | [`core::prelude::rust_2018`]
+2021    | [`std::prelude::rust_2021`] | [`core::prelude::rust_2021`]
+
+
+> **注意**：
+>
+> [`std::prelude::rust_2015`] 和 [`std::prelude::rust_2018`] 与 [`std::prelude::v1`] 的内容一致。
+>
+> [`core::prelude::rust_2015`] and [`core::prelude::rust_2018`] 与 [`core::prelude::v1`] 的内容一致。
 
 ## Extern prelude
 ## 外部预导入包
@@ -49,12 +64,12 @@
 ### The `no_std` attribute
 ### `no_std`属性
 
-默认情况下，标准库自动包含在 crate根模块中。在 [`std`] crate 被添加到根模块中的同时，还会隐式生效一个 [`macro_use`属性][`macro_use` attribute]，它将所有从 `std` 中导出的宏放入到[`macro_use`预导入包][`macro_use` prelude]中。默认情况下，[`core`] 和 [`std`] 都被添加到[外部预导入包][extern prelude]中。[标准库预导入包][standard library prelude]包含了 [`std::prelude::v1`]模块中的所有内容。
+默认情况下，标准库自动包含在 crate根模块中。在 [`std`] crate 被添加到根模块中的同时，还会隐式生效一个 [`macro_use`属性][`macro_use` attribute]，它将所有从 `std` 中导出的宏放入到[`macro_use`预导入包][`macro_use` prelude]中。默认情况下，[`core`] 和 [`std`] 都被添加到[外部预导入包][extern prelude]中。
 
 *`no_std`[属性][attribute]*可以应用在 crate 级别上，用来防止 [`std`] crate 被自动添加到相关作用域内。此属性作了如下三件事：
 
 * 阻止 `std` crate 被添加进[外部预导入包](#extern-prelude)。
-* 使用[标准库预导入包][standard library prelude]中的 [`core::prelude::v1`] 来替代默认情况下导入的 [`std::prelude::v1`]。
+* 影响[标准库预导入包][standard library prelude]（前面描述过）具体由哪一个模块组成。
 * 使用 [`core`] crate 替代 [`std`] crate 来注入到当前 crate 的根模块中，同时把 `core` crate下的所有宏导入到 [`macro_use`预导入包][`macro_use` prelude]中。
 
 > **注意**：当 crate 的目标平台不支持标准库或者故意不使用标准库的功能时，使用核心预导入包而不是标准预导入包是很有用的。此时没有导入的标准库的那些功能主要是动态内存分配（例如：`Box`和' `Vec`）和文件，以及网络功能（例如：`std::fs` 和 `std::io`）。
@@ -99,18 +114,24 @@
 > **版次差异**: 在 2015版中，`no_implicit_prelude`属性不会影响[`macro_use`预导入包][`macro_use` prelude]，从标准库导出的所有宏仍然包含在 `macro_use`预导入包中。从 2018版开始，它也会禁止 `macro_use`预导入包生效。
 
 
-[`alloc`]: ../../alloc/index.html
-[`Box`]: ../../std/boxed/struct.Box.html
-[`core::prelude::v1`]: ../../core/prelude/index.html
-[`core`]: ../../core/index.html
+[`alloc`]: https://doc.rust-lang.org/alloc/index.html
+[`Box`]: https://doc.rust-lang.org/std/boxed/struct.Box.html
+[`core::prelude::v1`]: https://doc.rust-lang.org/core/prelude/v1/index.html
+[`core::prelude::rust_2015`]: https://doc.rust-lang.org/core/prelude/rust_2015/index.html
+[`core::prelude::rust_2018`]: https://doc.rust-lang.org/core/prelude/rust_2018/index.html
+[`core::prelude::rust_2021`]: https://doc.rust-lang.org/core/prelude/rust_2021/index.html
+[`core`]: https://doc.rust-lang.org/core/index.html
 [`extern crate`]: ../items/extern-crates.md
 [`macro_use` attribute]: ../macros-by-example.md#the-macro_use-attribute
 [`macro_use` prelude]: #macro_use-prelude
 [`no_std` attribute]: #the-no_std-attribute
 [`no_std` attribute]: #the-no_std-attribute
-[`std::prelude::v1`]: ../../std/prelude/index.html
-[`std`]: ../../std/index.html
-[`test`]: ../../test/index.html
+[`std::prelude::v1`]: https://doc.rust-lang.org/std/prelude/v1/index.html
+[`std::prelude::rust_2015`]: https://doc.rust-lang.org/std/prelude/rust_2015/index.html
+[`std::prelude::rust_2018`]: https://doc.rust-lang.org/std/prelude/rust_2018/index.html
+[`std::prelude::rust_2021`]: https://doc.rust-lang.org/std/prelude/rust_2021/index.html
+[`std`]: https://doc.rust-lang.org/std/index.html
+[`test`]: https://doc.rust-lang.org/test/index.html
 [attribute]: ../attributes.md
 [Boolean type]: ../types/boolean.md
 [Built-in attributes]: ../attributes.md#built-in-attributes-index

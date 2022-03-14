@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="zh" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>诊断</title>
+        <title>诊断 - Rust 参考手册 - The Rust Language Reference</title>
         
         
 
@@ -13,7 +13,7 @@
 
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="">
+        <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -127,7 +127,7 @@
                         
                     </div>
 
-                    <h1 class="menu-title"></h1>
+                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -188,7 +188,7 @@ commit: 12a4832c8eec1ad0df3edfb681571821708e0410 <br />
 <blockquote>
 <p>注意：可以通过 <code>rustc -W help</code> 找到所有 <code>rustc</code> 支持的 lint，以及它们的默认设置，也可以在 <a href="https://doc.rust-lang.org/rustc/lints/index.html">rustc book</a> 中找到相关文档。</p>
 </blockquote>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub mod m1 {
@@ -208,7 +208,7 @@ commit: 12a4832c8eec1ad0df3edfb681571821708e0410 <br />
 </span></code></pre></pre>
 <p>Lint属性可以覆盖上一个属性指定的级别，但该级别不能更改禁止性的 Lint。这里的上一个属性是指语法树中更高级别的属性，或者是同一实体上的前一个属性，按从左到右的源代码顺序列出。</p>
 <p>此示例展示了如何使用 <code>allow</code> 和 <code>warn</code> 来打开和关闭一个特定的 lint检查：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[warn(missing_docs)]
@@ -229,7 +229,7 @@ pub mod m2{
 <span class="boring">}
 </span></code></pre></pre>
 <p>此示例展示了如何使用 <code>forbid</code> 来禁止对该 lint 使用 <code>allow</code>：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[forbid(missing_docs)]
@@ -247,7 +247,7 @@ pub mod m3 {
 <h3><a class="header" href="#lint-groups" id="lint-groups">Lint groups</a></h3>
 <h3><a class="header" href="#lint分组" id="lint分组">lint分组</a></h3>
 <p>lint可以被组织成不同命名的组，以便相关lint的等级可以一起调整。使用命名组相当于给出该组中的 lint。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 这允许 &quot;unused&quot;组下的所有lint。
@@ -263,7 +263,7 @@ fn example() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>有一个名为 “warnings” 的特殊组，它包含 “warn”级别的所有 lint。“warnings”组会忽略属性的顺序，并对实体执行所有告警lint 检查。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">unsafe fn an_unsafe_fn() {}
@@ -282,7 +282,7 @@ fn example_err() {
 <p>可以为 <code>allow</code>、<code>warn</code>、<code>deny</code> 或 <code>forbid</code> 这些调整代码检查级别的 lint属性添加/输入基于特定工具的 lint。注意该工具在当前作用域内可用才会起效。</p>
 <p>工具类lint 只有在相关工具处于活动状态时才会做相应的代码模式检查。如果一个 lint级别属性，如 <code>allow</code>，引用了一个不存在的工具类lint，编译器将不会去警告不存在该 lint类，只有使用了该工具（，才会报告该 lint类不存在）。</p>
 <p>在其他方面，这些工具类lint 就跟像常规的 lint 一样：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">// 将 clippy 的整个 `pedantic` lint组设置为告警级别
+<pre><pre class="playground"><code class="language-rust">// 将 clippy 的整个 `pedantic` lint组设置为告警级别
 #![warn(clippy::pedantic)]
 // 使来自 clippy的 `filter_map` lint 的警告静音
 #![allow(clippy::filter_map)]
@@ -317,7 +317,7 @@ fn foo() {
 <p><code>deprecated</code>属性可以应用于任何<a href="../items.html">程序项</a>，<a href="../items/traits.html">trait项</a>，<a href="../items/enumerations.html">枚举变体</a>，<a href="../items/structs.html">结构体字段</a>，<a href="../items/external-blocks.html">外部块项</a>，或<a href="../macros-by-example.html">宏定义</a>。它不能应用于 <a href="../items/implementations.html#trait-implementations">trait实现项</a>。当应用于包含其他程序项的程序项时，如<a href="../items/modules.html">模块</a>或<a href="../items/implementations.html">实现</a>，所有子程序项都继承此 deprecation属性。</p>
 <!-- 注意: 它只被 trait实现(AnnotationKind::Prohibited)拒绝。在这些之外的所有其他位置，它会被静默忽略。应用于元组结构体的字段时，此属性直接也被忽略。-->
 <p>这有个例子：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[deprecated(since = &quot;5.2&quot;, note = &quot;foo was rarely used. Users should instead use bar&quot;)]
@@ -332,7 +332,7 @@ pub fn bar() {}
 <p><em><code>must_use</code>属性</em> 用于在值未被“使用”时发出诊断告警。它可以应用于用户定义的复合类型（<a href="../items/structs.html">结构体(<code>struct</code>)</a>、<a href="../items/enumerations.html">枚举(<code>enum</code>)</a> 和 <a href="../items/unions.html">联合体(<code>union</code>)</a>）、<a href="../items/functions.html">函数</a>和 <a href="../items/traits.html">trait</a>。</p>
 <p><code>must_use</code>属性可以使用<a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法添加一些附加消息，如 <code>#[must_use = &quot;example message&quot;]</code>。该字符串将出现在告警消息里。</p>
 <p>当用户定义的复合类型上使用了此属性，如果有该类型的<a href="../expressions.html">表达式</a>正好是<a href="../statements.html#expression-statements">表达式语句</a>的表达式，那就违反了 <code>unused_must_use</code> 这个 lint。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[must_use]
@@ -349,7 +349,7 @@ MustUse::new();
 <span class="boring">}
 </span></code></pre></pre>
 <p>当函数上使用了此属性，如果此函数被当作<a href="../statements.html#expression-statements">表达式语句</a>的<a href="../expressions.html">表达式</a>的<a href="../expressions/call-expr.html">调用表达式</a>，那就违反了 <code>unused_must_use</code> lint。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[must_use]
@@ -360,7 +360,7 @@ five();
 <span class="boring">}
 </span></code></pre></pre>
 <p>当 [trait声明]中使用了此属性，如果<a href="../statements.html#expression-statements">表达式语句</a>的<a href="../expressions/call-expr.html">调用表达式</a>返回了此 trait 的 <a href="../types/impl-trait.html">trait实现(impl trait)</a> ，则违反了 <code>unused_must_use</code> lint。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[must_use]
@@ -376,7 +376,7 @@ get_critical();
 <span class="boring">}
 </span></code></pre></pre>
 <p>当 trait声明中的一函数上使用了此属性时，如果调用表达式是此 trait 的某个实现中的该函数时，该行为同样违反 <code>unused_must_use</code> lint。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Trait {
@@ -395,7 +395,7 @@ impl Trait for i32 {
 <p>当在 trait实现里的函数上使用 <code>must_use</code>属性时，此属性将被忽略。</p>
 <blockquote>
 <p>注意：包含了此（属性应用的程序项产生的值）的普通空操作(no-op)表达式不会违反该 lint。例如，将此类值包装在没有实现 <a href="../special-types-and-traits.html#drop"><code>Drop</code></a> 的类型中，然后不使用该类型，并成为未使用的<a href="../expressions/block-expr.html">块表达式</a>的最终表达式(final expression)。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[must_use]
@@ -414,7 +414,7 @@ match true {
 </blockquote>
 <blockquote>
 <p>注意：当一个必须使用的值被故意丢弃时，使用带有模式 <code>_</code> 的<a href="../statements.html#let-statements">let语句</a>是惯用的方法。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[must_use]

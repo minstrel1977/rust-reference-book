@@ -1,8 +1,8 @@
 # Tokens
 
 >[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
->commit: 9b91e9b82500bd782b31883197613983a5372272 \
->本章译文最后维护日期：2022-01-22
+>commit: 6fc7f89282f8ce3154a769ce453c90e41e3eb731 \
+>本章译文最后维护日期：2022-03-14
 
 
 token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：
@@ -519,6 +519,7 @@ let x: f64 = 2.; // 类型 f64
 | `#`    | Pound       | [属性][attributes]
 | `$`    | Dollar      | [宏][macros]
 | `?`    | Question    | [问号运算符][question], [非确定性尺寸][sized], [可匹配空的宏匹配器][macros]
+| `~`    | Tilde       | 从 Rust 1.0 开始，波浪号操作符就弃用了，但其 token 可能仍在使用
 
 ## Delimiters
 ## 定界符

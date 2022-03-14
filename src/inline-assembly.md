@@ -2,8 +2,8 @@
 # 内联汇编
 
 >[behavior-considered-undefined.md](https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md)\
->commit: 153617b13ef52b88ab7671a2bae4776507325f4f \
->本章译文最后维护日期：2022-01-08
+>commit: 785325fed7d7d54ab143b32355f35df1f5208295 \
+>本章译文最后维护日期：2022-03-14
 
 Rust 通过 [`asm!`] 和 [`global_asm!`] 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。
@@ -93,8 +93,9 @@ global_asm := "global_asm!(" format_string *("," format_string) *("," [ident "="
 目前，所有支持的目标架构都遵循 LLVM 内部汇编器使用的汇编代码语法，这通常对应于 GNU汇编器(GAS)。
 x86目标架构上，默认使用 GAS的 `.intel_syntax noprefix`模式。
 ARM目标架构上，使用 `.syntax unified`模式。
-这些目标架构对汇编代码做了一些额外的限制：任何汇编器状态（例如，可以使用“.section”更改的当前节）必须在 asm字符串末尾恢复为其原始值。
+这些目标架构对汇编代码做了一些额外的限制：任何汇编器状态（例如，可以使用 `.section` 更改的当前节）必须在 asm字符串末尾恢复为其原始值。
 不符合 GAS语法的汇编代码将导致特定于汇编器的行为。
+对内联汇编使用的指令的进一步的约束在本章后面的[指令支持](#directives-support)章节有详细说明。
 
 [format-syntax]: ../std/fmt/index.html#syntax
 [rfc-2795]: https://github.com/rust-lang/rfcs/pull/2795
@@ -491,3 +492,135 @@ ARM目标架构上，使用 `.syntax unified`模式。
   - 由于内联汇编的编译方式，编译器当前还无法检测到此问题，但将来可能会捕获并拒绝此问题。
 
 > **注意**：作为一个一般性原则，`preserves_flags` 包含的标志是在执行函数调用时*未*保留的标志。
+
+### Directives Support
+### 指令支持
+
+内联汇编支持 GNU AS 和 LLVM 的内部汇编器支持的指令集的一个子集，具体如下所示。
+也有部分指令的效果是特定于汇编器的（可能会导致错误，或者可能会被接受）。
+
+如果内联汇编包含任何修改后续汇编程序的“有状态(stateful)”指令，则块必须在内联汇编结束之前撤消任何此类指令的执行效果。
+
+下面这些指令被汇编器确保支持：
+
+- `.2byte`
+- `.4byte`
+- `.8byte`
+- `.align`
+- `.ascii`
+- `.asciz`
+- `.alt_entry`
+- `.balign`
+- `.balignl`
+- `.balignw`
+- `.balign`
+- `.balignl`
+- `.balignw`
+- `.bss`
+- `.byte`
+- `.comm`
+- `.data`
+- `.def`
+- `.double`
+- `.endef`
+- `.equ`
+- `.equiv`
+- `.eqv`
+- `.fill`
+- `.float`
+- `.globl`
+- `.global`
+- `.lcomm`
+- `.inst`
+- `.long`
+- `.octa`
+- `.option`
+- `.private_extern`
+- `.p2align`
+- `.pushsection`
+- `.popsection`
+- `.quad`
+- `.scl`
+- `.section`
+- `.set`
+- `.short`
+- `.size`
+- `.skip`
+- `.sleb128`
+- `.space`
+- `.string`
+- `.text`
+- `.type`
+- `.uleb128`
+- `.word`
+
+
+#### Target Specific Directive Support
+#### 基于特定目标规范的指令支持
+
+##### Dwarf Unwinding
+##### Dwarf展开
+
+支持 DWARF展开信息的 ELF目标平台支持以下指令：
+
+- `.cfi_adjust_cfa_offset`
+- `.cfi_def_cfa`
+- `.cfi_def_cfa_offset`
+- `.cfi_def_cfa_register`
+- `.cfi_endproc`
+- `.cfi_escape`
+- `.cfi_lsda`
+- `.cfi_offset`
+- `.cfi_personality`
+- `.cfi_register`
+- `.cfi_rel_offset`
+- `.cfi_remember_state`
+- `.cfi_restore`
+- `.cfi_restore_state`
+- `.cfi_return_column`
+- `.cfi_same_value`
+- `.cfi_sections`
+- `.cfi_signal_frame`
+- `.cfi_startproc`
+- `.cfi_undefined`
+- `.cfi_window_save`
+
+##### Structured Exception Handling
+##### 结构化异常处理
+
+在带有结构化异常处理机制的目标平台上，可以确保下面的这些附加指令得到支持：
+
+- `.seh_endproc`
+- `.seh_endprologue`
+- `.seh_proc`
+- `.seh_pushreg`
+- `.seh_savereg`
+- `.seh_setframe`
+- `.seh_stackalloc`
+
+
+##### x86 (32-bit and 64-bit)
+##### x86 (32位 and 64位)
+
+无论是 32位还是 64位 x86目标平台，可以确保下面的这些附加指令得到支持：
+- `.nops`
+- `.code16`
+- `.code32`
+- `.code64`
+
+只有在退出汇编块之前将状态重置为默认状态时，才支持使用 `.code16`、`.code32` 和 `.code64` 这些指令。
+默认情况下，32位 x86平台使用 `.code32`，64位 x86平台使用 `.code64`。
+
+##### ARM (32-bit)
+##### ARM (32位)
+
+ARM目标平台下，可以确保下面的这些附加指令得到支持：
+
+- `.even`
+- `.fnstart`
+- `.fnend`
+- `.save`
+- `.movsp`
+- `.code`
+- `.thumb`
+- `.thumb_func`
