@@ -2,8 +2,8 @@
 # 模式
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
->commit: 037fda0f7735ce72f63abef9f821132b9381b429 \
->本章译文最后维护日期：2022-03-14
+>commit: e06b267eeb7bed90605dd63f6cae585674e0b1f5 \
+>本章译文最后维护日期：2022-04-17
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\
@@ -116,7 +116,7 @@ if let (a, 3) = (1, 2) {           // "(a, 3)" 是可反驳型的, 将不会匹�
 
 > **<sup>句法</sup>**\
 > _LiteralPattern_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; [BOOLEAN_LITERAL]\
+> &nbsp;&nbsp; &nbsp;&nbsp; `true` | `false`\
 > &nbsp;&nbsp; | [CHAR_LITERAL]\
 > &nbsp;&nbsp; | [BYTE_LITERAL]\
 > &nbsp;&nbsp; | [STRING_LITERAL]\
@@ -126,7 +126,6 @@ if let (a, 3) = (1, 2) {           // "(a, 3)" 是可反驳型的, 将不会匹�
 > &nbsp;&nbsp; | `-`<sup>?</sup> [INTEGER_LITERAL]\
 > &nbsp;&nbsp; | `-`<sup>?</sup> [FLOAT_LITERAL]
 
-[BOOLEAN_LITERAL]: tokens.md#boolean-literals
 [CHAR_LITERAL]: tokens.md#character-literals
 [BYTE_LITERAL]: tokens.md#byte-literals
 [STRING_LITERAL]: tokens.md#string-literals

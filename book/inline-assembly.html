@@ -169,8 +169,8 @@
 <h1><a class="header" href="#内联汇编" id="内联汇编">内联汇编</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md">behavior-considered-undefined.md</a><br />
-commit: 785325fed7d7d54ab143b32355f35df1f5208295 <br />
-本章译文最后维护日期：2022-03-14</p>
+commit: 62e75b64721057c705d1441fe265c190dc2b2f2e <br />
+本章译文最后维护日期：2022-04-17</p>
 </blockquote>
 <p>Rust 通过 <a href="https://doc.rust-lang.org/core/arch/macro.asm.html"><code>asm!</code></a> 和 <a href="https://doc.rust-lang.org/core/arch/macro.global_asm.html"><code>global_asm!</code></a> 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。</p>
@@ -376,7 +376,7 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 <tr><td>x86</td><td><code>mmx_reg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
 <tr><td>x86</td><td><code>x87_reg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
 <tr><td>AArch64</td><td><code>reg</code></td><td>None</td><td><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>f32</code>, <code>i64</code>, <code>f64</code></td></tr>
-<tr><td>AArch64</td><td><code>vreg</code></td><td><code>fp</code></td><td><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>f32</code>, <code>i64</code>, <code>f64</code>, <br> <code>i8x8</code>, <code>i16x4</code>, <code>i32x2</code>, <code>i64x1</code>, <code>f32x2</code>, <code>f64x1</code>, <br> <code>i8x16</code>, <code>i16x8</code>, <code>i32x4</code>, <code>i64x2</code>, <code>f32x4</code>, <code>f64x2</code></td></tr>
+<tr><td>AArch64</td><td><code>vreg</code></td><td><code>neon</code></td><td><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>f32</code>, <code>i64</code>, <code>f64</code>, <br> <code>i8x8</code>, <code>i16x4</code>, <code>i32x2</code>, <code>i64x1</code>, <code>f32x2</code>, <code>f64x1</code>, <br> <code>i8x16</code>, <code>i16x8</code>, <code>i32x4</code>, <code>i64x2</code>, <code>f32x4</code>, <code>f64x2</code></td></tr>
 <tr><td>AArch64</td><td><code>preg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
 <tr><td>ARM</td><td><code>reg</code></td><td>None</td><td><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>f32</code></td></tr>
 <tr><td>ARM</td><td><code>sreg</code></td><td><code>vfp2</code></td><td><code>i32</code>, <code>f32</code></td></tr>

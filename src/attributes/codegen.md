@@ -2,8 +2,8 @@
 # 代码生成属性
 
 >[codegen.md](https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md)\
->commit: 2d0058a4951a3fe97b0892993bd3faeabc532123 \
->本章译文最后维护日期：2022-03-14
+>commit: 62e75b64721057c705d1441fe265c190dc2b2f2e \
+>本章译文最后维护日期：2022-04-16
 
 下述[属性][attributes]用于控制代码生成。
 
@@ -68,6 +68,7 @@ unsafe fn foo_avx2() {}
 
 特性     | 隐式启用 | 描述 | 中文描述
 ------------|--------------------|-------------------|-------------------
+`adx`       |          | [ADX] — Multi-Precision Add-Carry Instruction Extensions | 多精度进位指令扩展
 `aes`       | `sse2`   | [AES] — Advanced Encryption Standard | 高级加密标准
 `avx`       | `sse4.2` | [AVX] — Advanced Vector Extensions | 高级矢量扩展指令集
 `avx2`      | `avx`    | [AVX2] — Advanced Vector Extensions 2 | 高级矢量扩展指令集2
@@ -94,6 +95,7 @@ unsafe fn foo_avx2() {}
 
 <!-- 保持各个链接靠近其表格，便于以后的增删改 -->
 
+[ADX]: https://en.wikipedia.org/wiki/Intel_ADX
 [AES]: https://en.wikipedia.org/wiki/AES_instruction_set
 [AVX]: https://en.wikipedia.org/wiki/Advanced_Vector_Extensions
 [AVX2]: https://en.wikipedia.org/wiki/Advanced_Vector_Extensions#AVX2
@@ -118,6 +120,63 @@ unsafe fn foo_avx2() {}
 [`xsavec`]: https://www.felixcloutier.com/x86/xsavec
 [`xsaveopt`]: https://www.felixcloutier.com/x86/xsaveopt
 [`xsaves`]: https://www.felixcloutier.com/x86/xsaves
+
+#### `aarch64`
+
+该平台要求 `#[target_feature]` 仅适用于 [`unsafe`函数][unsafe function]
+
+关于这些特性的更多文档可以在 [developer.arm.com] 上的 [ARM架构参考手册][ARM Architecture Reference Manual]中或 [developer.arm.com] 上的其他地方找到。
+[ARM Architecture Reference Manual]: https://developer.arm.com/documentation/ddi0487/latest
+[developer.arm.com]: https://developer.arm.com
+
+> ***注意***: 如果要使用的话，`paca` 和 `pacg` 这对特性应同时标记为启用或禁用，因为目前 LLVM 将其作为一个特性来实现的。
+
+特性        | 隐式启用 | 特性名称
+---------------|--------------------|-------------------
+`aes`          | `neon`         | FEAT_AES - 高级 <abbr title="Single Instruction Multiple Data">SIMD</abbr> AES 指令
+`bf16`         |                | FEAT_BF16 - BFloat16 指令
+`bti`          |                | FEAT_BTI - 分支目标识别
+`crc`          |                | FEAT_CRC - CRC32 *校验和*指令
+`dit`          |                | FEAT_DIT - 与数据无关的定时指令
+`dotprod`      |                | FEAT_DotProd - Advanced SIMD Int8 dot product instructions
+`dpb`          |                | FEAT_DPB - 数据持久点之后的缓存清理
+`dpb2`         |                | FEAT_DPB2 - 数据深度持久点之后的缓存清理
+`f32mm`        | `sve`          | FEAT_F32MM - SVE单精度 FP矩阵乘法指令
+`f64mm`        | `sve`          | FEAT_F64MM - SSVE双精度 FP矩阵乘法指令
+`fcma`         | `neon`         | FEAT_FCMA - 浮点复数支持
+`fhm`          | `fp16`         | FEAT_FHM - 半精度 FP FMLAL 指令
+`flagm`        |                | FEAT_FlagM - 条件标志操作
+`fp16`         | `neon`         | FEAT_FP16 - 半精度 FP数据处理
+`frintts`      |                | FEAT_FRINTTS - 浮点到整型的辅助转换指令
+`i8mm`         |                | FEAT_I8MM - Int8 的矩阵乘法
+`jsconv`       | `neon`         | FEAT_JSCVT - JavaScript 转换指令
+`lse`          |                | FEAT_LSE - Large System Extension
+`lor`          |                | FEAT_LOR - Limited Ordering Regions extension
+`mte`          |                | FEAT_MTE - 内存标记扩展
+`neon`         |                | FEAT_FP & FEAT_AdvSIMD - 浮点和高级SIMD扩展
+`pan`          |                | FEAT_PAN - Privileged Access-Never extension
+`paca`         |                | FEAT_PAuth - 指针身份验证（地址身份验证）
+`pacg`         |                | FEAT_PAuth - 指针身份验证（通用身份验证）
+`pmuv3`        |                | FEAT_PMUv3 - 性能监视器扩展（v3）
+`rand`         |                | FEAT_RNG - 随机数发生器
+`ras`          |                | FEAT_RAS - 可靠性、可用性和可维护性扩展
+`rcpc`         |                | FEAT_LRCPC - Release consistent Processor Consistent
+`rcpc2`        | `rcpc`         | FEAT_LRCPC2 - 带即时偏移的rcpc
+`rdm`          |                | FEAT_RDM - Rounding Double Multiply accumulate
+`sb`           |                | FEAT_SB - Speculation Barrier
+`sha2`         | `neon`         | FEAT_SHA1 & FEAT_SHA256 - 高级 SIMD SHA 指令
+`sha3`         | `sha2`         | FEAT_SHA512 & FEAT_SHA3 - 高级 SIMD SHA 指令
+`sm4`          | `neon`         | FEAT_SM3 & FEAT_SM4 - 高级 SIMD SM3/4 指令
+`spe`          |                | FEAT_SPE - 统计分析扩展
+`ssbs`         |                | FEAT_SSBS - Speculative Store Bypass Safe
+`sve`          | `fp16`         | FEAT_SVE - 可伸缩向量扩展
+`sve2`         | `sve`          | FEAT_SVE2 - 可伸缩向量扩展2
+`sve2-aes`     | `sve2`, `aes`  | FEAT_SVE_AES - SVE AES 指令
+`sve2-sm4`     | `sve2`, `sm4`  | FEAT_SVE_SM4 - SVE SM4 指令
+`sve2-sha3`    | `sve2`, `sha3` | FEAT_SVE_SHA3 - SVE SHA3 指令
+`sve2-bitperm` | `sve2`         | FEAT_SVE_BitPerm - SVE位置换
+`tme`          |                | FEAT_TME - 事务内存扩展
+`vh`           |                | FEAT_VHE - 虚拟化主机扩展
 
 #### `wasm32` or `wasm64`
 

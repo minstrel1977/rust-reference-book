@@ -2,8 +2,8 @@
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit: dc064e08f202177dd0e9f14b6a782761df325b93 \
->本章译文最后维护日期：2022-03-14
+>commit: 89a81e82d93d7997b20e44781d3162d184f5a5d1 \
+>本章译文最后维护日期：2022-04-17
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -28,9 +28,16 @@
 可以使用命令行参数 `-C debug-assertions` 和 `-C overflow-checks` 设置编译器标志位来更直接地控制这个溢出过程。
 以下情况被认为是溢出：
 
-* 当 `+`、`*` 或 `-` 创建的值大于当前类型可存储的最大值或小于最小值。这包括任何有符号整型的最小值上的一元运算符 `-`。
+* 当 `+`、`*` 或 `-`（二元运算符的减号） 创建的值大于当前类型可存储的最大值或小于最小值。
+* 将 `-`（一元运算符的负号） 应用于任何有符号整型可存储的极负值（如i8的极负值为-128），除非此符号的操作数是一个[字面量表达式][literal expression]（或独立存在于一个或多个[分组表达式][grouped expression]中的字面量表达式）。译者注：-128_i8 和 -(128) 不溢出，`let j: i8 = -（-128_i8）` 溢出。
 * 使用 `/` 或 `%`，其中左操作数是某类有符号整型的最小整数，右操作数是 `-1`。注意，即使由于历史原因禁用了 `-C overflow-checks`选项，这些检查仍会发生。
-* 使用 `<<` 或 `>>`，其中右操作数大于或等于左操作数类型的 bit 数，或右操作数为负数。
+* 使用 `<<` 或 `>>`，其中右操作数大于或等于左操作数类型的二进制位数，或右操作数为负数。
+
+> **注意**: 上面第二点中除非的情况是像 `-128_i8` 或 `let j: i8 = -(128)` 这样的形式永远不会引起 panic，并且预期值也正常为 -128。因为此时，像 `128_i8` 这样，虽然其内部值已经是 -128 了（因为整型字面量会根据整型的类型标记被截断以适用其类型，见[整型字面量][literal expression]中的描述），即便再给其应用了一元运算符`-` 但仍被例外处理为一个极负值。
+> 
+> 二进制补码溢出约定：对那些极负值再取负会使值保持不变。
+>
+> 在 `rustc` 里，这些对极负值取负的表达式也会忽略 `overflowing_literals`这样的 lint检查。
 
 ## 借用操作符/运算符
 ## Borrow operators
@@ -589,6 +596,8 @@ fn example() {
 <!-- 上面这几个链接从原文来替换时需小心 -->
 [copies or moves]: ../expressions.md#moved-and-copied-types
 [dropping]: ../destructors.md
+[grouped expression]: grouped-expr.md
+[literal expression]: literal-expr.md#integer-literal-expressions
 [logical and]: ../types/boolean.md#logical-and
 [logical not]: ../types/boolean.md#logical-not
 [logical or]: ../types/boolean.md#logical-or

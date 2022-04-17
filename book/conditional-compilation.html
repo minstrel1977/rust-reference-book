@@ -169,8 +169,8 @@
 <h1><a class="header" href="#条件编译" id="条件编译">条件编译</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md">conditional-compilation.md</a><br />
-commit: 949726950a4ac5c8674e902dc33c09b48fc7434c <br />
-本章译文最后维护日期：2021-5-6</p>
+commit: 267f8159975451c3b61121156e5ee57d037937c4 <br />
+本章译文最后维护日期：2022-4-16</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -301,6 +301,13 @@ commit: 949726950a4ac5c8674e902dc33c09b48fc7434c <br />
 <p>在进行非优化编译时默认启用。这可以用于在开发中启用额外的代码调试功能，但不能在生产中启用。例如，它控制着标准库的 <a href="https://doc.rust-lang.org/std/macro.debug_assert.html"><code>debug_assert!</code></a>宏（是否可用）。</p>
 <h3><a class="header" href="#proc_macro" id="proc_macro"><code>proc_macro</code></a></h3>
 <p>当须要指定当前 crate 的<a href="linkage.html">编译输出文件类型(crate-type)</a>为 <code>proc_macro</code> 时设置。</p>
+<h3><a class="header" href="#panic" id="panic"><code>panic</code></a></h3>
+<p>根据恐慌策略设置键值选项。请注意，将来可能会添加更多选项值。</p>
+<p>示例选项值：</p>
+<ul>
+<li><code>&quot;abort&quot;</code></li>
+<li><code>&quot;unwind&quot;</code></li>
+</ul>
 <h2><a class="header" href="#forms-of-conditional-compilation" id="forms-of-conditional-compilation">Forms of conditional compilation</a></h2>
 <h2><a class="header" href="#条件编译的形式" id="条件编译的形式">条件编译的形式</a></h2>
 <h3><a class="header" href="#the-cfg-attribute" id="the-cfg-attribute">The <code>cfg</code> attribute</a></h3>
@@ -341,6 +348,13 @@ fn on_32bit_unix() {
 fn needs_not_foo() {
   // ...
 }
+
+// 仅当恐慌策略设置为 unwind 时，目标程序才会包括此函数
+#[cfg(panic = &quot;unwind&quot;)]
+fn when_unwinding() {
+  // ...
+}
+
 <span class="boring">}
 </span></code></pre></pre>
 <p><code>cfg</code>属性允许在任何允许属性的地方上使用。</p>

@@ -169,8 +169,8 @@
 <h1><a class="header" href="#路径" id="路径">路径</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/paths.md">paths.md</a><br />
-commit: fb880fb6bd5f094566f2724c164998c071d013db <br />
-本章译文最后维护日期：2022-03-14</p>
+commit: a0a7e18957047363efb7f3ea30b9f7e5e3d5abe3 <br />
+本章译文最后维护日期：2022-04-17</p>
 </blockquote>
 <p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，<code>::</code> 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">程序项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用程序项。</p>
 <p>仅由标识符段组成的简单路径(simple paths)的两个示例：</p>
@@ -241,7 +241,7 @@ Vec::&lt;u8&gt;::with_capacity(1024);
 <em>QualifiedPathInExpression</em> :<br />
    <em>QualifiedPathType</em> (<code>::</code> <em>PathExprSegment</em>)<sup>+</sup></p>
 <p><em>QualifiedPathType</em> :<br />
-   <code>&lt;</code> <a href="types.html#type-expressions"><em>Type</em></a> (<code>as</code> <em>TypePath</em>)? <code>&gt;</code></p>
+   <code>&lt;</code> <a href="types.html#type-expressions"><em>Type</em></a> (<code>as</code> <em>TypePath</em>)<sup>?</sup> <code>&gt;</code></p>
 <p><em>QualifiedPathInType</em> :<br />
    <em>QualifiedPathType</em> (<code>::</code> <em>TypePathSegment</em>)<sup>+</sup></p>
 </blockquote>

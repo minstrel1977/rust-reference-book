@@ -169,8 +169,8 @@
 <h1><a class="header" href="#operator-expressions" id="operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: dc064e08f202177dd0e9f14b6a782761df325b93 <br />
-本章译文最后维护日期：2022-03-14</p>
+commit: 89a81e82d93d7997b20e44781d3162d184f5a5d1 <br />
+本章译文最后维护日期：2022-04-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -194,10 +194,16 @@ commit: dc064e08f202177dd0e9f14b6a782761df325b93 <br />
 可以使用命令行参数 <code>-C debug-assertions</code> 和 <code>-C overflow-checks</code> 设置编译器标志位来更直接地控制这个溢出过程。
 以下情况被认为是溢出：</p>
 <ul>
-<li>当 <code>+</code>、<code>*</code> 或 <code>-</code> 创建的值大于当前类型可存储的最大值或小于最小值。这包括任何有符号整型的最小值上的一元运算符 <code>-</code>。</li>
+<li>当 <code>+</code>、<code>*</code> 或 <code>-</code>（二元运算符的减号） 创建的值大于当前类型可存储的最大值或小于最小值。</li>
+<li>将 <code>-</code>（一元运算符的负号） 应用于任何有符号整型可存储的极负值（如i8的极负值为-128），除非此符号的操作数是一个<a href="literal-expr.html#integer-literal-expressions">字面量表达式</a>（或独立存在于一个或多个<a href="grouped-expr.html">分组表达式</a>中的字面量表达式）。译者注：-128_i8 和 -(128) 不溢出，<code>let j: i8 = -（-128_i8）</code> 溢出。</li>
 <li>使用 <code>/</code> 或 <code>%</code>，其中左操作数是某类有符号整型的最小整数，右操作数是 <code>-1</code>。注意，即使由于历史原因禁用了 <code>-C overflow-checks</code>选项，这些检查仍会发生。</li>
-<li>使用 <code>&lt;&lt;</code> 或 <code>&gt;&gt;</code>，其中右操作数大于或等于左操作数类型的 bit 数，或右操作数为负数。</li>
+<li>使用 <code>&lt;&lt;</code> 或 <code>&gt;&gt;</code>，其中右操作数大于或等于左操作数类型的二进制位数，或右操作数为负数。</li>
 </ul>
+<blockquote>
+<p><strong>注意</strong>: 上面第二点中除非的情况是像 <code>-128_i8</code> 或 <code>let j: i8 = -(128)</code> 这样的形式永远不会引起 panic，并且预期值也正常为 -128。因为此时，像 <code>128_i8</code> 这样，虽然其内部值已经是 -128 了（因为整型字面量会根据整型的类型标记被截断以适用其类型，见<a href="literal-expr.html#integer-literal-expressions">整型字面量</a>中的描述），即便再给其应用了一元运算符<code>-</code> 但仍被例外处理为一个极负值。</p>
+<p>二进制补码溢出约定：对那些极负值再取负会使值保持不变。</p>
+<p>在 <code>rustc</code> 里，这些对极负值取负的表达式也会忽略 <code>overflowing_literals</code>这样的 lint检查。</p>
+</blockquote>
 <h2><a class="header" href="#借用操作符运算符" id="借用操作符运算符">借用操作符/运算符</a></h2>
 <h2><a class="header" href="#borrow-operators" id="borrow-operators">Borrow operators</a></h2>
 <blockquote>

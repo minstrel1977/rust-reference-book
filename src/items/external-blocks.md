@@ -2,8 +2,8 @@
 # 外部块
 
 >[external-blocks.md](https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md)\
->commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e \
->本章译文最后维护日期：2021-07-31
+>commit: 0fc5e6dbf0f500fabd38653aa87f9d721d59b3b8 \
+>本章译文最后维护日期：2022-04-17
 
 > **<sup>句法</sup>**\
 > _ExternBlock_ :\
@@ -91,7 +91,13 @@ extern "C" {
 - `static` — 表示库类型是静态库。
 - `framework` — 表示库类型是 macOS 框架。这只对 macOS 目标平台有效。
 
-如果指定了 `kind`键，则必须指定 `name`键。
+如果指定了 `kind`键，则必须有 `name`键。
+
+可选的 `modifiers`参数提供了一种为库指定链接修饰符的方法。
+修饰符被指定为以逗号分隔的字符串，每个修饰符的前缀都是 `+` 或 `-`，分别表示修饰符处于启用或禁用状态。
+当前不支持在单个 `link`属性中指定多个 `modifiers`参数，或在同一个 `modifiers`参数中指定多个相同的修饰符。
+
+例如: `#[link(name = "mylib", kind = "static", modifiers = "+whole-archive")`.
 
 当从主机环境导入 symbols 时，`wasm_import_module`键可用于为外部(`extern`)块中的程序项指定 [WebAssembly模块][WebAssembly module]名称。如果未指定 `wasm_import_module`，则默认模块名为 `env`。
 
@@ -114,6 +120,15 @@ extern {
 ```
 
 在空外部块上添加 `link`属性是有效的。可以用这种方式来满足代码中其他地方的外部块的链接需求（包括上游 crate），而不必向每个外部块都添加此属性。
+
+#### Linking modifiers: `whole-archive`
+#### 链接修饰符: `whole-archive`
+
+此修饰符仅与静态(`static`)链接类型兼容。
+使用任何其他链接类型都会引起编译器报错。
+
+`+whole-archive` 意味着静态库会被链接为一个完整的 archive 文件，而不丢弃任何对象文件。
+有关此修饰符的更多实现细节，请参见[rustc文档][documentation for rustc]。
 
 ### The `link_name` attribute
 ### `link_name`属性
@@ -147,3 +162,4 @@ extern {
 [_Visibility_]: ../visibility-and-privacy.md
 [attributes]: ../attributes.md
 [regular function parameters]: functions.md#attributes-on-function-parameters
+[documentation for rustc]: https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-whole-archive

@@ -2,8 +2,8 @@
 # 条件编译
 
 >[conditional-compilation.md](https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md)\
->commit: 949726950a4ac5c8674e902dc33c09b48fc7434c \
->本章译文最后维护日期：2021-5-6
+>commit: 267f8159975451c3b61121156e5ee57d037937c4 \
+>本章译文最后维护日期：2022-4-16
 
 > **<sup>句法</sup>**\
 > _ConfigurationPredicate_ :\
@@ -168,6 +168,16 @@
 
 当须要指定当前 crate 的[编译输出文件类型(crate-type)][crate type]为 `proc_macro` 时设置。
 
+### `panic`
+
+根据恐慌策略设置键值选项。请注意，将来可能会添加更多选项值。
+
+示例选项值：
+
+* `"abort"`
+* `"unwind"`
+
+
 ## Forms of conditional compilation
 ## 条件编译的形式
 
@@ -212,6 +222,13 @@ fn on_32bit_unix() {
 fn needs_not_foo() {
   // ...
 }
+
+// 仅当恐慌策略设置为 unwind 时，目标程序才会包括此函数
+#[cfg(panic = "unwind")]
+fn when_unwinding() {
+  // ...
+}
+
 ```
 
 `cfg`属性允许在任何允许属性的地方上使用。

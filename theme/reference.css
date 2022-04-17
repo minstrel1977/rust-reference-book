@@ -42,7 +42,7 @@ main .warning p::before {
 .coal main .warning p,
 .navy main .warning p,
 .ayu main .warning p {
-    background: #542626
+    background: #542626;
 }
 
 /* Make the links higher contrast on dark themes */

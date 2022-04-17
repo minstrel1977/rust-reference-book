@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2022-03-14</p>
+<p>本书跟随原文截止日期：2022-04-16</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -685,8 +685,8 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <h1><a class="header" href="#tokens" id="tokens">Tokens</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/tokens.md">tokens.md</a><br />
-commit: 6fc7f89282f8ce3154a769ce453c90e41e3eb731 <br />
-本章译文最后维护日期：2022-03-14</p>
+commit: e06b267eeb7bed90605dd63f6cae585674e0b1f5 <br />
+本章译文最后维护日期：2022-04-17</p>
 </blockquote>
 <p>token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：</p>
 <ul>
@@ -700,7 +700,7 @@ commit: 6fc7f89282f8ce3154a769ce453c90e41e3eb731 <br />
 <p>在本文档中，“简单”token 会直接在（相关章节头部的）[字符串表产生式(production)][string table production]表单中给出，并以 <code>monospace</code> 字体显示。（译者注：本译作的原文中，在文法表之外的行文中也会大量出现这种直接使用简单token 来替代相关名词的做法，一般此时如果译者觉得这种 token 需要翻译时，会使用诸如：结构体(<code>struct</code>) 这种形式来翻译。读者需要意识到“struct”是文法里的一个 token，能以其字面形式直接出现在源码里。）</p>
 <h2><a class="header" href="#literals" id="literals">Literals</a></h2>
 <h2><a class="header" href="#字面量" id="字面量">字面量</a></h2>
-<p>字面量是一个由单一 token（而不是由一连串 tokens）组成的表达式，它立即、直接表示它所代表的值，而不是通过名称或其他一些求值/计算规则来引用它。字面量是<a href="const_eval.html#constant-expressions">常量表达式</a>的一种形式，所以它（主要）用在编译时求值。</p>
+<p>字面量是<a href="expressions/literal-expr.html">字面量表达式</a>中使用的各种 token。</p>
 <h3><a class="header" href="#examples" id="examples">Examples</a></h3>
 <h3><a class="header" href="#示例-1" id="示例-1">示例</a></h3>
 <h4><a class="header" href="#characters-and-strings" id="characters-and-strings">Characters and strings</a></h4>
@@ -944,62 +944,55 @@ INTEGER_SUFFIX<sup>?</sup></p>
 <li><em>八进制字面量</em>以字符序列 <code>U+0030</code> <code>U+006F</code>（<code>0o</code>）开头，后跟八进制数字和下划线的任意组合（至少一个数字）。</li>
 <li><em>二进制字面量</em>以字符序列 <code>U+0030</code> <code>U+0062</code>（<code>0b</code>）开头，后跟二进制数字和下划线的任意组合（至少一个数字）。</li>
 </ul>
-<p>与其它字面量一样，整型字面量后面可紧跟一个<em>整型后缀</em>，该后缀强制设定了字面量的数据类型。整型后缀须为如下整型类型之一：<code>u8</code>、<code>i8</code>、<code>u16</code>、<code>i16</code>、<code>u32</code>、<code>i32</code>、<code>u64</code>、<code>i64</code>、<code>u128</code>、<code>i128</code>、<code>usize</code> 或 <code>isize</code>。</p>
-<p><em>无后缀</em>整型字面量的类型通过类型推断确定：</p>
-<ul>
-<li>如果整型类型可以通过程序上下文<em>唯一</em>确定，则无后缀整型字面量的类型即为该类型。</li>
-<li>如果程序上下文对类型约束不足，则默认为 32-bit 有符号整型，即 <code>i32</code>。</li>
-<li>如果程序上下文对类型约束过度，则报静态类型错误。</li>
-</ul>
-<p>各种形式的整型字面量示例：</p>
+<p>与其它字面量一样，整型字面量后面可紧跟一个<em>整型后缀</em>，该后缀强制设定了字面量的数据类型。整型后缀须是<a href="types/numeric.html">原生整型类型</a>中的一个，包括：<code>u8</code>、<code>i8</code>、<code>u16</code>、<code>i16</code>、<code>u32</code>、<code>i32</code>、<code>u64</code>、<code>i64</code>、<code>u128</code>、<code>i128</code>、<code>usize</code> 或 <code>isize</code>。
+参见<a href="expressions/literal-expr.html">字面量表达式</a>以了解这些后缀的功能效果。</p>
+<p>各种形式的整型字面量的示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>123;                               // 类型 i32
-123i32;                            // 类型 i32
-123u32;                            // 类型 u32
-123_u32;                           // 类型 u32
-let a: u64 = 123;                  // 类型 u64
+</span><span class="boring">#![allow(overflowing_literals)]
+</span>123;
+123i32;
+123u32;
+123_u32;
 
-0xff;                              // 类型 i32
-0xff_u8;                           // 类型 u8
+0xff;
+0xff_u8;
+0x01_f32; // 注意这是整数 7986, 不是浮点数 1.0
+0x01_e3;  // 注意这是整数 483, 不是浮点数 1000.0
 
-0o70;                              // 类型 i32
-0o70_i16;                          // 类型 i16
+0o70;
+0o70_i16;
 
-0b1111_1111_1001_0000;             // 类型 i32
-0b1111_1111_1001_0000i64;          // 类型 i64
-0b________1;                       // 类型 i32
+0b1111_1111_1001_0000;
+0b1111_1111_1001_0000i64;
+0b________1;
 
-0usize;                            // 类型 usize
-<span class="boring">}
-</span></code></pre></pre>
-<p>无效整型字面量示例:</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>// 无效后缀
+0usize;
 
-0invalidSuffix;
-
-// 数字进制错误
-
-123AFB43;
-0b0102;
-0o0581;
-
-// 类型溢出
+// 下面这些对它们的类型来说太打了，但仍是有效的 token
 
 128_i8;
 256_u8;
 
-// 二进制、十六进制、八进制的进制前缀后至少需要一个数字
+<span class="boring">}
+</span></code></pre></pre>
+<p>注意对于 <code>-1i8</code> 这样的，其实它被分析为两个 token: <code>-</code> 后跟 <code>1i8</code>。</p>
+<p>无效整型字面量示例:</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 使用了错误的进制数
+
+0b0102;
+0o0581;
+
+// 二进制, 十六进制 和 八进制字面量至少需要有一个数字
 
 0b_;
 0b____;
 <span class="boring">}
 </span></code></pre></pre>
-<p>请注意，Rust 句法将 <code>-1i8</code> 视为<a href="expressions/operator-expr.html#negation-operators">一元取反运算符</a>对整型字面量 <code>1i8</code> 的应用，而不是将它视为单个整型字面量。</p>
 <h4><a class="header" href="#tuple-index" id="tuple-index">Tuple index</a></h4>
 <h4><a class="header" href="#元组索引" id="元组索引">元组索引</a></h4>
 <blockquote>
@@ -1029,13 +1022,13 @@ let horse = example.0b10;  // 错误：没有 `0b10` 字段
 <p><strong><sup>词法</sup></strong><br />
 FLOAT_LITERAL :<br />
       DEC_LITERAL <code>.</code>
-<em>（紧跟着的不能是 <code>.</code>, <code>_</code> 或者<a href="identifiers.html">标识符</a>）</em><br />
+_（紧跟着的不能是 <code>.</code>, <code>_</code> 或者 XID_Start类型的字符)__<br />
    | DEC_LITERAL FLOAT_EXPONENT<br />
    | DEC_LITERAL <code>.</code> DEC_LITERAL FLOAT_EXPONENT<sup>?</sup><br />
    | DEC_LITERAL (<code>.</code> DEC_LITERAL)<sup>?</sup>
 FLOAT_EXPONENT<sup>?</sup> FLOAT_SUFFIX</p>
 <p>FLOAT_EXPONENT :<br />
-   (<code>e</code>|<code>E</code>) (<code>+</code>|<code>-</code>)?
+   (<code>e</code>|<code>E</code>) (<code>+</code>|<code>-</code>)<sup>?</sup>
 (DEC_DIGIT|<code>_</code>)<sup>*</sup> DEC_DIGIT (DEC_DIGIT|<code>_</code>)<sup>*</sup></p>
 <p>FLOAT_SUFFIX :<br />
    <code>f32</code> | <code>f64</code></p>
@@ -1045,49 +1038,108 @@ FLOAT_EXPONENT<sup>?</sup> FLOAT_SUFFIX</p>
 <li><em>十进制字面量</em>后跟句点字符 <code>U+002E</code> (<code>.</code>)。后面可选地跟着另一个十进制数字，还可以再接一个可选的<em>指数</em>。</li>
 <li><em>十进制字面量</em>后跟一个<em>指数</em>。</li>
 </ul>
-<p>如同整型字面量，浮点型字面量也可后跟一个后缀，但在后缀之前，浮点型字面量部分不以 <code>U+002E</code>（<code>.</code>）结尾。后缀强制设定了字面量类型。有两种有效的<em>浮点型后缀</em>：<code>f32</code> 和 <code>f64</code>（32-bit 和 64-bit 浮点类型），它们显式地指定了字面量的类型。</p>
-<ul>
-<li>
-<p>If the program context under-constrains the type, it defaults to <code>f64</code>.</p>
-</li>
-<li>
-<p>If the program context over-constrains the type, it is considered a
-static type error.
-<em>无后缀</em>浮点型字面量的类型通过类型推断确定：</p>
-</li>
-<li>
-<p>如果浮点型类型可以通过程序上下文<em>唯一</em>确定，则无后缀浮点型字面量的类型即为该类型。</p>
-</li>
-<li>
-<p>如果程序上下文对类型约束不足，则默认为 <code>f64</code>。</p>
-</li>
-<li>
-<p>如果程序上下文对类型过度约束，则报静态类型错误。</p>
-</li>
-</ul>
+<p>如同整型字面量，浮点型字面量也可后跟一个后缀，但在后缀之前，浮点型字面量部分不以 <code>U+002E</code>（<code>.</code>）结尾。
+有两种有效的<em>浮点型后缀</em>：<code>f32</code> 和 <code>f64</code> （32-bit 和 64-bit <a href="types/numeric.html#floating-point-types">原生浮点型</a>）。
+参见<a href="expressions/literal-expr.html">字面量表达式</a>以了解这类后缀的功能效果。</p>
 <p>各种形式的浮点型字面量示例：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>123.0f64;        // 类型 f64
-0.1f64;          // 类型 f64
-0.1f32;          // 类型 f32
-12E+99_f64;      // 类型 f64
-5f32;            // 类型 f32
-let x: f64 = 2.; // 类型 f64
+</span>123.0f64;
+0.1f64;
+0.1f32;
+12E+99_f64;
+5f32;
+let x: f64 = 2.;
 <span class="boring">}
 </span></code></pre></pre>
 <p>最后一个例子稍显不同，因为不能对一个以句点结尾的浮点型字面量使用后缀句法，<code>2.f64</code> 会尝试在 <code>2</code> 上调用名为 <code>f64</code> 的方法。</p>
-<p>浮点数的表形(representation)语义在<a href="types/numeric.html">“和平台相关的类型”</a>中有描述。</p>
-<h3><a class="header" href="#boolean-literals" id="boolean-literals">Boolean literals</a></h3>
-<h3><a class="header" href="#布尔型字面量" id="布尔型字面量">布尔型字面量</a></h3>
+<p>请注意，像 <code>-1.0</code> 这样的会被分析为两个 token： <code>-</code> 后跟 <code>1.0</code>。</p>
+<h4><a class="header" href="#number-pseudoliterals" id="number-pseudoliterals">Number pseudoliterals</a></h4>
+<h4><a class="header" href="#伪数字字面量" id="伪数字字面量">伪数字字面量</a></h4>
 <blockquote>
-<p><strong><sup>词法</sup></strong><br />
-BOOLEAN_LITERAL :<br />
-      <code>true</code><br />
-   | <code>false</code></p>
+<p><strong><sup>Lexer</sup></strong><br />
+NUMBER_PSEUDOLITERAL :<br />
+      DEC_LITERAL ( . DEC_LITERAL )<sup>?</sup> FLOAT_EXPONENT<br />
+         ( NUMBER_PSEUDOLITERAL_SUFFIX | INTEGER_SUFFIX )<br />
+   | DEC_LITERAL . DEC_LITERAL<br />
+         ( NUMBER_PSEUDOLITERAL_SUFFIX_NO_E | INTEGER SUFFIX )<br />
+   | DEC_LITERAL NUMBER_PSEUDOLITERAL_SUFFIX_NO_E<br />
+   | ( BIN_LITERAL | OCT_LITERAL | HEX_LITERAL )<br />
+         ( NUMBER_PSEUDOLITERAL_SUFFIX_NO_E | FLOAT_SUFFIX )</p>
+<p>NUMBER_PSEUDOLITERAL_SUFFIX :<br />
+   IDENTIFIER_OR_KEYWORD <sub><em>不能匹配 INTEGER_SUFFIX 或 FLOAT_SUFFIX</em></sub></p>
+<p>NUMBER_PSEUDOLITERAL_SUFFIX_NO_E :<br />
+   NUMBER_PSEUDOLITERAL_SUFFIX <sub><em>不以 <code>e</code> 或者 <code>E</code> 开头</em></sub></p>
 </blockquote>
-<p>布尔类型有两个值，写为：<code>true</code> 和 <code>false</code>。</p>
+<p>数字型的字面量的 token化允许使用上述词法表述中的任意后缀。
+那些值可以生成有效的 token，但却又不是合法的<a href="expressions/literal-expr.html">字面量表达式</a>的情况通常都是错误的，当然宏参数除外。</p>
+<p>这种 token 的示例:</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>0invalidSuffix;
+123AFB43;
+0b010a;
+0xAB_CD_EF_GH;
+2.0f80;
+2e5f80;
+2e5e6;
+2.0e5e6;
+1.3e10u64;
+0b1111_f32;
+<span class="boring">}
+</span></code></pre></pre>
+<h4><a class="header" href="#reserved-forms-similar-to-number-literals" id="reserved-forms-similar-to-number-literals">Reserved forms similar to number literals</a></h4>
+<h4><a class="header" href="#类似于数字字面量的保留形式" id="类似于数字字面量的保留形式">类似于数字字面量的保留形式</a></h4>
+<blockquote>
+<p><strong><sup>Lexer</sup></strong><br />
+RESERVED_NUMBER :<br />
+      BIN_LITERAL [<code>2</code>-<code>9</code>​]<br />
+   | OCT_LITERAL [<code>8</code>-<code>9</code>​]<br />
+   | ( BIN_LITERAL | OCT_LITERAL | HEX_LITERAL ) <code>.</code> <br />
+         <em>(不能直接后跟 <code>.</code>, <code>_</code> 或一个 XID_Start类型的字符)</em><br />
+   | ( BIN_LITERAL | OCT_LITERAL ) <code>e</code><br />
+   | <code>0b</code> <code>_</code><sup>*</sup> <em>end of input or not BIN_DIGIT</em><br />
+   | <code>0o</code> <code>_</code><sup>*</sup> <em>end of input or not OCT_DIGIT</em><br />
+   | <code>0x</code> <code>_</code><sup>*</sup> <em>end of input or not HEX_DIGIT</em><br />
+   | DEC_LITERAL ( . DEC_LITERAL)<sup>?</sup> (<code>e</code>|<code>E</code>) (<code>+</code>|<code>-</code>)<sup>?</sup> <em>end of input or not DEC_DIGIT</em></p>
+</blockquote>
+<p>后面词法形式和数字字面量差不多的<em>保留形式</em>。
+由于这些可能会引起歧义，它们会被 token转化器(tokenizer)拒绝，而不是被解释为单独的 token。</p>
+<ul>
+<li>
+<p>不带后缀的二进制或八进制字面量，不插入空格的后跟一个超出其进制数字字符范围的十进制数字。</p>
+</li>
+<li>
+<p>不带后缀的二进制、八进制或十六进制字面量，不插入空格的后跟一个句点字符（句点后面的内容与浮点数字面量相同）。</p>
+</li>
+<li>
+<p>不带前缀的二进制或八进制字面量，不加空格的后跟字符<code>e</code>。</p>
+</li>
+<li>
+<p>以一个进制数前缀开始的输入，但又不是有效的二进制、八进制或十六进制字面量（因为它没包含数字）。</p>
+</li>
+<li>
+<p>具有浮点型字面量形式且指数中没有数字的输入。</p>
+</li>
+</ul>
+<p>这些保留形式的示例：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>0b0102;  // 这可不是 `0b010` 后跟 `2`
+0o1279;  // 这可不是 `0o127` 后跟 `9`
+0x80.0;  // 这可不是 `0x80` 后跟 `.` and `0`
+0b101e;  // 这不是一个伪字面量，也不是 `0b101` 后跟 `e`
+0b;      // 这不是一个伪字面量，也不是 `0` 后跟  `b`
+0b_;     // 这不是一个伪字面量，也不是 `0` 后跟  `b_`
+2e;      // 这不是一个伪字面量，也不是 `2` 后跟 `e`
+2.0e;    // 这不是一个伪字面量，也不是 `2.0` 后跟 `e`
+2em;     // 这不是一个伪字面量，也不是 `2` 后跟 `em`
+2.0em;   // 这不是一个伪字面量，也不是 `2.0` 后跟 `em`
+<span class="boring">}
+</span></code></pre></pre>
 <h2><a class="header" href="#lifetimes-and-loop-labels" id="lifetimes-and-loop-labels">Lifetimes and loop labels</a></h2>
 <h2><a class="header" href="#生存期和循环标签" id="生存期和循环标签">生存期和循环标签</a></h2>
 <blockquote>
@@ -1646,8 +1698,8 @@ macro_rules! helper {
 <h2><a class="header" href="#过程宏" id="过程宏">过程宏</a></h2>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/procedural-macros.md">procedural-macros.md</a><br />
-commit: a1ef5a09c0281b0f2a65c18670e927ead61eb1b2 <br />
-本章译文最后维护日期：2020-11-6</p>
+commit: 26acee213a30ba01f128981aed4a42bd1d3610ca <br />
+本章译文最后维护日期：2021-04-17</p>
 </blockquote>
 <p><em>过程宏</em>允许在执行函数时创建句法扩展。过程宏有三种形式:</p>
 <ul>
@@ -1809,8 +1861,58 @@ fn invoke4() {}
 // out: attr: &quot;delimiters&quot;
 // out: item: &quot;fn invoke4() {}&quot;
 </code></pre>
-<!-- 2020-11-12-->
-<!-- checked --><h1><a class="header" href="#crate-和源文件" id="crate-和源文件">crate 和源文件</a></h1>
+<h3><a class="header" href="#declarative-macro-tokens-and-procedural-macro-tokens" id="declarative-macro-tokens-and-procedural-macro-tokens">Declarative macro tokens and procedural macro tokens</a></h3>
+<h3><a class="header" href="#声明宏的-token-和过程宏的-token" id="声明宏的-token-和过程宏的-token">声明宏的 token 和过程宏的 token</a></h3>
+<p>在 token （或者更确切地说是 <a href="https://doc.rust-lang.org/proc_macro/enum.TokenTree.html">token树</a>的）层面，声明性宏和过程性宏的使用比较类似，但它们的定义却不相同。</p>
+<p>token树在声明宏<code>macro_rules</code>（对应于 <code>tt</code>类型的匹配器）中被定义为：</p>
+<ul>
+<li>组分界(<code>(...)</code>, <code>{...}</code> 等)</li>
+<li>此语言支持的所有操作符，不论是单字符操作符或多字符操作符(<code>+</code>, <code>+=</code>)。
+<ul>
+<li>注意这里的操作符集合中不包括单引号<code>'</code>。</li>
+</ul>
+</li>
+<li>字面量 (<code>&quot;string&quot;</code>, <code>1</code> 等)
+<ul>
+<li>注意负号(例如 <code>-1</code>)永远不会是字面量token的一部分，它只是另外一个操作符token。</li>
+</ul>
+</li>
+<li>标识符，包括关键字(<code>ident</code>, <code>r#ident</code>, <code>fn</code>)</li>
+<li>生存期(<code>'ident</code>)</li>
+<li><code>macro_rules</code> 中元变量的替代项（metavariable substitutions）（例如： <code>macro_rules! mac { ($my_expr: expr) =&gt; { $my_expr } }</code> 在 <code>mac</code> 扩展之后，其中的 <code>$my_expr</code> 的替换项，此时无论传入的表达式是什么，它都将被视为一个 token树）</li>
+</ul>
+<p>token树在过程宏中被定义为：</p>
+<ul>
+<li>组分界(<code>(...)</code>, <code>{...}</code> 等)</li>
+<li>此语言支持的运算符中使用的所有标点字符(punctuation characters)（包括 <code>+</code>，但不包括 <code>+=</code>），单引号<code>'</code>字符也包括（典型的是在生存期中使用，有关生存期的拆分和合并行为，请参见下文）</li>
+<li>字面量 (<code>&quot;string&quot;</code>, <code>1</code> 等)
+<ul>
+<li>负号(例如 <code>-1</code>)是整型或浮点型字面量的一部分。</li>
+</ul>
+</li>
+<li>标识符，包括关键字(<code>ident</code>, <code>r#ident</code>, <code>fn</code>)</li>
+</ul>
+<p>当 token流从过程宏中传入和传出时，需要考虑这两个定义之间的错配问题。
+请注意，下面的转换可能是惰性的，因此如果没有实际去检测 token流，它们可能不会发生。</p>
+<p>当传入给一个过程宏：</p>
+<ul>
+<li>所有的多字符操作符被拆分为单字符操作符。</li>
+<li>生存期被拆分符号<code>'</code> 和一个标识符。</li>
+<li>所有元变量的替换都会被表示为它们的底层 token流。
+<ul>
+<li>当需要保留解析优先级时，这些 token流可能会被包装进带有隐式分隔符（<a href="https://doc.rust-lang.org/proc_macro/enum.Delimiter.html#variant.None"><code>Delimiter::None</code></a>）的分组（<a href="https://doc.rust-lang.org/proc_macro/struct.Group.html"><code>Group</code></a>）中。</li>
+<li><code>tt</code> 和 <code>ident</code> 类型的元变量的替换项永远不会被包装进这样的分组中，而是会始终表示为它们的底层 token树。</li>
+</ul>
+</li>
+</ul>
+<p>当从一个过程宏中传出时：</p>
+<ul>
+<li>当需要时，单个标点字符(punctuation characters)会被粘结成多字符操作符。</li>
+<li>单引号<code>'</code>和标识符一起被粘结成生存期。</li>
+<li>当需要保留解析优先级时，负值字面量会被转换为两个 token（<code>-</code> 和 一个字面量），可能还会被包装进带有隐式分隔符（<a href="https://doc.rust-lang.org/proc_macro/enum.Delimiter.html#variant.None"><code>Delimiter::None</code></a>）的分组（<a href="https://doc.rust-lang.org/proc_macro/struct.Group.html"><code>group</code></a>）。</li>
+</ul>
+<p>请注意，声明宏和过程性宏都不支持文档注释标记（例如<code>/// Doc</code>），因此它们在传递给宏时总是转换为等效的 <code>#[doc = r&quot;str&quot;]</code>属性的 token流。</p>
+<h1><a class="header" href="#crate-和源文件" id="crate-和源文件">crate 和源文件</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md">crates-and-source-files.md</a><br />
 commit: 8da7c7d3d9bef2a4e71176cfba9e8390af175826 <br />
@@ -1917,8 +2019,8 @@ fn main() {
 <h1><a class="header" href="#条件编译" id="条件编译">条件编译</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md">conditional-compilation.md</a><br />
-commit: 949726950a4ac5c8674e902dc33c09b48fc7434c <br />
-本章译文最后维护日期：2021-5-6</p>
+commit: 267f8159975451c3b61121156e5ee57d037937c4 <br />
+本章译文最后维护日期：2022-4-16</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -2049,6 +2151,13 @@ commit: 949726950a4ac5c8674e902dc33c09b48fc7434c <br />
 <p>在进行非优化编译时默认启用。这可以用于在开发中启用额外的代码调试功能，但不能在生产中启用。例如，它控制着标准库的 <a href="https://doc.rust-lang.org/std/macro.debug_assert.html"><code>debug_assert!</code></a>宏（是否可用）。</p>
 <h3><a class="header" href="#proc_macro" id="proc_macro"><code>proc_macro</code></a></h3>
 <p>当须要指定当前 crate 的<a href="linkage.html">编译输出文件类型(crate-type)</a>为 <code>proc_macro</code> 时设置。</p>
+<h3><a class="header" href="#panic" id="panic"><code>panic</code></a></h3>
+<p>根据恐慌策略设置键值选项。请注意，将来可能会添加更多选项值。</p>
+<p>示例选项值：</p>
+<ul>
+<li><code>&quot;abort&quot;</code></li>
+<li><code>&quot;unwind&quot;</code></li>
+</ul>
 <h2><a class="header" href="#forms-of-conditional-compilation" id="forms-of-conditional-compilation">Forms of conditional compilation</a></h2>
 <h2><a class="header" href="#条件编译的形式" id="条件编译的形式">条件编译的形式</a></h2>
 <h3><a class="header" href="#the-cfg-attribute" id="the-cfg-attribute">The <code>cfg</code> attribute</a></h3>
@@ -2089,6 +2198,13 @@ fn on_32bit_unix() {
 fn needs_not_foo() {
   // ...
 }
+
+// 仅当恐慌策略设置为 unwind 时，目标程序才会包括此函数
+#[cfg(panic = &quot;unwind&quot;)]
+fn when_unwinding() {
+  // ...
+}
+
 <span class="boring">}
 </span></code></pre></pre>
 <p><code>cfg</code>属性允许在任何允许属性的地方上使用。</p>
@@ -3953,8 +4069,8 @@ impl&lt;T, U&gt; GenericTrait&lt;U&gt; for u32 where U: GenericTrait&lt;T&gt; {}
 <h1><a class="header" href="#外部块" id="外部块">外部块</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md">external-blocks.md</a><br />
-commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
-本章译文最后维护日期：2021-07-31</p>
+commit: 0fc5e6dbf0f500fabd38653aa87f9d721d59b3b8 <br />
+本章译文最后维护日期：2022-04-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -4029,7 +4145,11 @@ extern &quot;stdcall&quot; { }
 <li><code>static</code> — 表示库类型是静态库。</li>
 <li><code>framework</code> — 表示库类型是 macOS 框架。这只对 macOS 目标平台有效。</li>
 </ul>
-<p>如果指定了 <code>kind</code>键，则必须指定 <code>name</code>键。</p>
+<p>如果指定了 <code>kind</code>键，则必须有 <code>name</code>键。</p>
+<p>可选的 <code>modifiers</code>参数提供了一种为库指定链接修饰符的方法。
+修饰符被指定为以逗号分隔的字符串，每个修饰符的前缀都是 <code>+</code> 或 <code>-</code>，分别表示修饰符处于启用或禁用状态。
+当前不支持在单个 <code>link</code>属性中指定多个 <code>modifiers</code>参数，或在同一个 <code>modifiers</code>参数中指定多个相同的修饰符。</p>
+<p>例如: <code>#[link(name = &quot;mylib&quot;, kind = &quot;static&quot;, modifiers = &quot;+whole-archive&quot;)</code>.</p>
 <p>当从主机环境导入 symbols 时，<code>wasm_import_module</code>键可用于为外部(<code>extern</code>)块中的程序项指定 <a href="https://webassembly.github.io/spec/core/syntax/modules.html">WebAssembly模块</a>名称。如果未指定 <code>wasm_import_module</code>，则默认模块名为 <code>env</code>。</p>
 <!-- ignore: requires extern linking -->
 <pre><code class="language-rust ignore">#[link(name = &quot;crypto&quot;)]
@@ -4048,6 +4168,12 @@ extern {
 }
 </code></pre>
 <p>在空外部块上添加 <code>link</code>属性是有效的。可以用这种方式来满足代码中其他地方的外部块的链接需求（包括上游 crate），而不必向每个外部块都添加此属性。</p>
+<h4><a class="header" href="#linking-modifiers-whole-archive" id="linking-modifiers-whole-archive">Linking modifiers: <code>whole-archive</code></a></h4>
+<h4><a class="header" href="#链接修饰符-whole-archive" id="链接修饰符-whole-archive">链接修饰符: <code>whole-archive</code></a></h4>
+<p>此修饰符仅与静态(<code>static</code>)链接类型兼容。
+使用任何其他链接类型都会引起编译器报错。</p>
+<p><code>+whole-archive</code> 意味着静态库会被链接为一个完整的 archive 文件，而不丢弃任何对象文件。
+有关此修饰符的更多实现细节，请参见<a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-whole-archive">rustc文档</a>。</p>
 <h3><a class="header" href="#the-link_name-attribute" id="the-link_name-attribute">The <code>link_name</code> attribute</a></h3>
 <h3><a class="header" href="#link_name属性" id="link_name属性"><code>link_name</code>属性</a></h3>
 <p>可以在外部(<code>extern</code>)块内的程序项声明上指定 <code>link_name</code>属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 <a href="items/../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法指定 symbol 的名称。</p>
@@ -5252,8 +5378,8 @@ let _ = five();
 <h1><a class="header" href="#代码生成属性" id="代码生成属性">代码生成属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md">codegen.md</a><br />
-commit: 2d0058a4951a3fe97b0892993bd3faeabc532123 <br />
-本章译文最后维护日期：2022-03-14</p>
+commit: 62e75b64721057c705d1441fe265c190dc2b2f2e <br />
+本章译文最后维护日期：2022-04-16</p>
 </blockquote>
 <p>下述<a href="attributes/../attributes.html">属性</a>用于控制代码生成。</p>
 <h2><a class="header" href="#optimization-hints" id="optimization-hints">Optimization hints</a></h2>
@@ -5302,6 +5428,7 @@ unsafe fn foo_avx2() {}
 <p>即便是同为 <code>x86</code> 或 <code>x86_64</code> 平台，并不是所有平台都支持下述特性，而在未启用特定特性的平台下执行带有此平台的特性的代码会导致未定义行为。
 因此在这类平台下，<code>#[target_feature]</code> 只能应用于<a href="attributes/../unsafe-functions.html">非安全(<code>unsafe</code>)函数</a>。</p>
 <table><thead><tr><th>特性</th><th>隐式启用</th><th>描述</th><th>中文描述</th></tr></thead><tbody>
+<tr><td><code>adx</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/Intel_ADX">ADX</a> — Multi-Precision Add-Carry Instruction Extensions</td><td>多精度进位指令扩展</td></tr>
 <tr><td><code>aes</code></td><td><code>sse2</code></td><td><a href="https://en.wikipedia.org/wiki/AES_instruction_set">AES</a> — Advanced Encryption Standard</td><td>高级加密标准</td></tr>
 <tr><td><code>avx</code></td><td><code>sse4.2</code></td><td><a href="https://en.wikipedia.org/wiki/Advanced_Vector_Extensions">AVX</a> — Advanced Vector Extensions</td><td>高级矢量扩展指令集</td></tr>
 <tr><td><code>avx2</code></td><td><code>avx</code></td><td><a href="https://en.wikipedia.org/wiki/Advanced_Vector_Extensions#AVX2">AVX2</a> — Advanced Vector Extensions 2</td><td>高级矢量扩展指令集2</td></tr>
@@ -5327,6 +5454,60 @@ unsafe fn foo_avx2() {}
 <tr><td><code>xsaves</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/xsaves"><code>xsaves</code></a> — Save processor extended states supervisor</td><td>保存处理器扩展状态监视程序</td></tr>
 </tbody></table>
 <!-- 保持各个链接靠近其表格，便于以后的增删改 -->
+<h4><a class="header" href="#aarch64" id="aarch64"><code>aarch64</code></a></h4>
+<p>该平台要求 <code>#[target_feature]</code> 仅适用于 <a href="attributes/../unsafe-functions.html"><code>unsafe</code>函数</a></p>
+<p>关于这些特性的更多文档可以在 [developer.arm.com] 上的 [ARM架构参考手册][ARM Architecture Reference Manual]中或 [developer.arm.com] 上的其他地方找到。
+[ARM Architecture Reference Manual]: https://developer.arm.com/documentation/ddi0487/latest
+[developer.arm.com]: https://developer.arm.com</p>
+<blockquote>
+<p><em><strong>注意</strong></em>: 如果要使用的话，<code>paca</code> 和 <code>pacg</code> 这对特性应同时标记为启用或禁用，因为目前 LLVM 将其作为一个特性来实现的。</p>
+</blockquote>
+<table><thead><tr><th>特性</th><th>隐式启用</th><th>特性名称</th></tr></thead><tbody>
+<tr><td><code>aes</code></td><td><code>neon</code></td><td>FEAT_AES - 高级 <abbr title="Single Instruction Multiple Data">SIMD</abbr> AES 指令</td></tr>
+<tr><td><code>bf16</code></td><td></td><td>FEAT_BF16 - BFloat16 指令</td></tr>
+<tr><td><code>bti</code></td><td></td><td>FEAT_BTI - 分支目标识别</td></tr>
+<tr><td><code>crc</code></td><td></td><td>FEAT_CRC - CRC32 <em>校验和</em>指令</td></tr>
+<tr><td><code>dit</code></td><td></td><td>FEAT_DIT - 与数据无关的定时指令</td></tr>
+<tr><td><code>dotprod</code></td><td></td><td>FEAT_DotProd - Advanced SIMD Int8 dot product instructions</td></tr>
+<tr><td><code>dpb</code></td><td></td><td>FEAT_DPB - 数据持久点之后的缓存清理</td></tr>
+<tr><td><code>dpb2</code></td><td></td><td>FEAT_DPB2 - 数据深度持久点之后的缓存清理</td></tr>
+<tr><td><code>f32mm</code></td><td><code>sve</code></td><td>FEAT_F32MM - SVE单精度 FP矩阵乘法指令</td></tr>
+<tr><td><code>f64mm</code></td><td><code>sve</code></td><td>FEAT_F64MM - SSVE双精度 FP矩阵乘法指令</td></tr>
+<tr><td><code>fcma</code></td><td><code>neon</code></td><td>FEAT_FCMA - 浮点复数支持</td></tr>
+<tr><td><code>fhm</code></td><td><code>fp16</code></td><td>FEAT_FHM - 半精度 FP FMLAL 指令</td></tr>
+<tr><td><code>flagm</code></td><td></td><td>FEAT_FlagM - 条件标志操作</td></tr>
+<tr><td><code>fp16</code></td><td><code>neon</code></td><td>FEAT_FP16 - 半精度 FP数据处理</td></tr>
+<tr><td><code>frintts</code></td><td></td><td>FEAT_FRINTTS - 浮点到整型的辅助转换指令</td></tr>
+<tr><td><code>i8mm</code></td><td></td><td>FEAT_I8MM - Int8 的矩阵乘法</td></tr>
+<tr><td><code>jsconv</code></td><td><code>neon</code></td><td>FEAT_JSCVT - JavaScript 转换指令</td></tr>
+<tr><td><code>lse</code></td><td></td><td>FEAT_LSE - Large System Extension</td></tr>
+<tr><td><code>lor</code></td><td></td><td>FEAT_LOR - Limited Ordering Regions extension</td></tr>
+<tr><td><code>mte</code></td><td></td><td>FEAT_MTE - 内存标记扩展</td></tr>
+<tr><td><code>neon</code></td><td></td><td>FEAT_FP &amp; FEAT_AdvSIMD - 浮点和高级SIMD扩展</td></tr>
+<tr><td><code>pan</code></td><td></td><td>FEAT_PAN - Privileged Access-Never extension</td></tr>
+<tr><td><code>paca</code></td><td></td><td>FEAT_PAuth - 指针身份验证（地址身份验证）</td></tr>
+<tr><td><code>pacg</code></td><td></td><td>FEAT_PAuth - 指针身份验证（通用身份验证）</td></tr>
+<tr><td><code>pmuv3</code></td><td></td><td>FEAT_PMUv3 - 性能监视器扩展（v3）</td></tr>
+<tr><td><code>rand</code></td><td></td><td>FEAT_RNG - 随机数发生器</td></tr>
+<tr><td><code>ras</code></td><td></td><td>FEAT_RAS - 可靠性、可用性和可维护性扩展</td></tr>
+<tr><td><code>rcpc</code></td><td></td><td>FEAT_LRCPC - Release consistent Processor Consistent</td></tr>
+<tr><td><code>rcpc2</code></td><td><code>rcpc</code></td><td>FEAT_LRCPC2 - 带即时偏移的rcpc</td></tr>
+<tr><td><code>rdm</code></td><td></td><td>FEAT_RDM - Rounding Double Multiply accumulate</td></tr>
+<tr><td><code>sb</code></td><td></td><td>FEAT_SB - Speculation Barrier</td></tr>
+<tr><td><code>sha2</code></td><td><code>neon</code></td><td>FEAT_SHA1 &amp; FEAT_SHA256 - 高级 SIMD SHA 指令</td></tr>
+<tr><td><code>sha3</code></td><td><code>sha2</code></td><td>FEAT_SHA512 &amp; FEAT_SHA3 - 高级 SIMD SHA 指令</td></tr>
+<tr><td><code>sm4</code></td><td><code>neon</code></td><td>FEAT_SM3 &amp; FEAT_SM4 - 高级 SIMD SM3/4 指令</td></tr>
+<tr><td><code>spe</code></td><td></td><td>FEAT_SPE - 统计分析扩展</td></tr>
+<tr><td><code>ssbs</code></td><td></td><td>FEAT_SSBS - Speculative Store Bypass Safe</td></tr>
+<tr><td><code>sve</code></td><td><code>fp16</code></td><td>FEAT_SVE - 可伸缩向量扩展</td></tr>
+<tr><td><code>sve2</code></td><td><code>sve</code></td><td>FEAT_SVE2 - 可伸缩向量扩展2</td></tr>
+<tr><td><code>sve2-aes</code></td><td><code>sve2</code>, <code>aes</code></td><td>FEAT_SVE_AES - SVE AES 指令</td></tr>
+<tr><td><code>sve2-sm4</code></td><td><code>sve2</code>, <code>sm4</code></td><td>FEAT_SVE_SM4 - SVE SM4 指令</td></tr>
+<tr><td><code>sve2-sha3</code></td><td><code>sve2</code>, <code>sha3</code></td><td>FEAT_SVE_SHA3 - SVE SHA3 指令</td></tr>
+<tr><td><code>sve2-bitperm</code></td><td><code>sve2</code></td><td>FEAT_SVE_BitPerm - SVE位置换</td></tr>
+<tr><td><code>tme</code></td><td></td><td>FEAT_TME - 事务内存扩展</td></tr>
+<tr><td><code>vh</code></td><td></td><td>FEAT_VHE - 虚拟化主机扩展</td></tr>
+</tbody></table>
 <h4><a class="header" href="#wasm32-or-wasm64" id="wasm32-or-wasm64"><code>wasm32</code> or <code>wasm64</code></a></h4>
 <p>在这两个平台下，安全函数和<a href="attributes/../unsafe-functions.html">非安全函数</a>均可启用 <code>#[target_feature]</code>特性。不可能经由 <code>#[target_feature]</code>特性导致未定义行为，因为尝试使用 Wasm引擎不支持的指令将在加载时就失败，而不会有被以不同于编译器预期的方式来解释编译后的代码的风险。</p>
 <table><thead><tr><th>特性</th><th>描述</th></tr></thead><tbody>
@@ -5940,8 +6121,8 @@ let b: &amp;[i32];
 <h1><a class="header" href="#字面量表达式" id="字面量表达式">字面量表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/literal-expr.md">literal-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: 9c5c3cb9d160787f31903e61abd2ba4567182b5c <br />
+本章译文最后维护日期：2022-04-16</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -5952,12 +6133,17 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
    | <a href="expressions/../tokens.html#byte-literals">BYTE_LITERAL</a><br />
    | <a href="expressions/../tokens.html#byte-string-literals">BYTE_STRING_LITERAL</a><br />
    | <a href="expressions/../tokens.html#raw-byte-string-literals">RAW_BYTE_STRING_LITERAL</a><br />
-   | <a href="expressions/../tokens.html#integer-literals">INTEGER_LITERAL</a><br />
+   | <a href="expressions/../tokens.html#integer-literals">INTEGER_LITERAL</a><sup class="footnote-reference"><a href="#out-of-range">1</a></sup><br />
    | <a href="expressions/../tokens.html#floating-point-literals">FLOAT_LITERAL</a><br />
-   | <a href="expressions/../tokens.html#boolean-literals">BOOLEAN_LITERAL</a></p>
+   | <code>true</code> | <code>false</code></p>
+<div class="footnote-definition" id="out-of-range"><sup class="footnote-definition-label">1</sup>
+<p>不允许大于或等于 2<sup>128</sup> 的值。</p>
+</div>
 </blockquote>
-<p><em>字面量表达式</em>由<a href="expressions/../tokens.html#literals">字面量</a>里讲过的任一形式组成。
+<p>字面表达式是由单一 token（而不是一组 token）组成的表达式，它立即和直接表示其表达式求值的值，而不是通过名称或其他求值规则来引用它。
 它直接描述一个数字、字符、字符串或布尔值。</p>
+<p>字面量是<a href="expressions/../const_eval.html#constant-expressions">常量表达式</a>的一种形式，所以其求值（主要）在编译期。</p>
+<p>前面描述的每种词法<a href="expressions/../tokens.html#literals">字面量</a>形式都可以组成一个字面量表达式，比如关键字 <code>true</code> 和 <code>false</code> 也可以组成一个字面量表达式。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -5966,7 +6152,156 @@ commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
 5;         // 整型
 <span class="boring">}
 </span></code></pre></pre>
-<!-- 上面这几个链接从原文来替换时需小心 -->
+<h2><a class="header" href="#character-literal-expressions" id="character-literal-expressions">Character literal expressions</a></h2>
+<h2><a class="header" href="#字符字面量表达式" id="字符字面量表达式">字符字面量表达式</a></h2>
+<p>字符字面量表达式由单一一个<a href="expressions/../tokens.html#character-literals">字符字面量</a>token 组成。</p>
+<blockquote>
+<p><strong>注意</strong>: 本节还未编写完成。</p>
+</blockquote>
+<h2><a class="header" href="#string-literal-expressions" id="string-literal-expressions">String literal expressions</a></h2>
+<h2><a class="header" href="#字符串字面量表达式" id="字符串字面量表达式">字符串字面量表达式</a></h2>
+<p>字符串字面量表达式由单一一个<a href="expressions/../tokens.html#string-literals">字符串字面量</a>token 或<a href="expressions/../tokens.html#raw-string-literals">裸字符串字面量</a>token 组成。</p>
+<blockquote>
+<p><strong>注意</strong>: 本节还未编写完成。</p>
+</blockquote>
+<h2><a class="header" href="#byte-literal-expressions" id="byte-literal-expressions">Byte literal expressions</a></h2>
+<h2><a class="header" href="#字节字面量表达式" id="字节字面量表达式">字节字面量表达式</a></h2>
+<p>字节字面量表达式由单一一个<a href="expressions/../tokens.html#byte-literals">字节字面量</a>token 组成。</p>
+<blockquote>
+<p><strong>注意</strong>: 本节还未编写完成。</p>
+</blockquote>
+<h2><a class="header" href="#byte-string-literal-expressions" id="byte-string-literal-expressions">Byte string literal expressions</a></h2>
+<h2><a class="header" href="#字节串字面量表达式" id="字节串字面量表达式">字节串字面量表达式</a></h2>
+<p>字节串字面量表达式由单一一个<a href="expressions/../tokens.html#byte-string-literals">字节串字面量</a>token 或<a href="expressions/../tokens.html#raw-byte-string-literals">裸字节串字面量</a>token 组成。</p>
+<blockquote>
+<p><strong>注意</strong>: 本节还未编写完成。</p>
+</blockquote>
+<h2><a class="header" href="#integer-literal-expressions" id="integer-literal-expressions">Integer literal expressions</a></h2>
+<h2><a class="header" href="#整型字面量表达式" id="整型字面量表达式">整型字面量表达式</a></h2>
+<p>整型字面量表达式由单一一个<a href="expressions/../tokens.html#integer-literals">整型字面量</a>token 组成。</p>
+<p>如果这种 token 带有<a href="expressions/../tokens.html#suffixes">后缀</a>，那这个后缀的名字将是<a href="expressions/../types/numeric.html">原生整型</a>中的一个：<code>u8</code>, <code>i8</code>, <code>u16</code>, <code>i16</code>, <code>u32</code>, <code>i32</code>, <code>u64</code>, <code>i64</code>, <code>u128</code>, <code>i128</code>, <code>usize</code> 或 <code>isize</code>，同时此后缀名也是此表达式的类型。</p>
+<p>如果此 token 没有后缀，此表达式的类型将由下面的类型推断规则来确定:</p>
+<ul>
+<li>
+<p>如果整型可以从周围的程序上下文中<em>唯一地</em>确定，则表达式具有该类型。</p>
+</li>
+<li>
+<p>如果程序上下文对类型的约束比较宽松，则默认为有符号32位整数 <code>i32</code>。</p>
+</li>
+<li>
+<p>如果程序上下文对类型的约束过度，则被认为是一个静态类型错误。</p>
+</li>
+</ul>
+<p>整型字面量表达式的示例：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>123;                               // type i32
+123i32;                            // type i32
+123u32;                            // type u32
+123_u32;                           // type u32
+let a: u64 = 123;                  // type u64
+
+0xff;                              // type i32
+0xff_u8;                           // type u8
+
+0o70;                              // type i32
+0o70_i16;                          // type i16
+
+0b1111_1111_1001_0000;             // type i32
+0b1111_1111_1001_0000i64;          // type i64
+
+0usize;                            // type usize
+<span class="boring">}
+</span></code></pre></pre>
+<p>而表达式的值由 token 的字符串表示形式来确定，规则如下：</p>
+<ul>
+<li>
+<p>通过检查字符串的前两个字符来选择整型的进制数，如下所示：</p>
+<ul>
+<li><code>0b</code> 表示进制数为2</li>
+<li><code>0o</code> 表示进制数为8</li>
+<li><code>0x</code> 表示进制数为16</li>
+<li>其他表示进制数为10。</li>
+</ul>
+</li>
+<li>
+<p>如果进制数不是10，则从字符串中删除前两个字符。</p>
+</li>
+<li>
+<p>将从字符串中删除所有下划线。</p>
+</li>
+<li>
+<p>字符串被转换为 <code>u128</code>类型的值时，比如使用 <a href="https://doc.rust-lang.org/core/primitive.u128.md#method.from_str_radix"><code>u128::from_str_radix</code></a> 时选的进制数标记。
+如果该值不能被表示为 <code>u128</code>，则该表达式将被解析器拒绝。</p>
+</li>
+<li>
+<p><code>u128</code>类型的值通过<a href="expressions/operator-expr.html#numeric-cast">数值转换</a>转换为表达式的类型。</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>: 如果字面量的值不适合表达式的类型，则会对最终强制转换的结果做截断操作。
+<code>rustc</code> 包含一个名为 <code>overflowing_literals</code> 的 <a href="expressions/../attributes/diagnostics.html#lint-check-attributes">lint检查</a>， 默认生效级别为 <code>deny</code>， 这意味着这种情况发生是此表达式会被编译器拒绝。</p>
+</blockquote>
+<blockquote>
+<p><strong>注意</strong>： <code>-1i8</code> 这样的表达式是对 <code>1i8</code> 这个字面量表达式的<a href="expressions/operator-expr.html#negation-operators">取负操作</a>，不是一个单一的整型字面量表达式。
+请参阅<a href="expressions/operator-expr.html#overflow">Overflow</a>，了解有关表示有符号类型的最大负值的说明。</p>
+</blockquote>
+<h2><a class="header" href="#floating-point-literal-expressions" id="floating-point-literal-expressions">Floating-point literal expressions</a></h2>
+<h2><a class="header" href="#浮点型字面量表达式" id="浮点型字面量表达式">浮点型字面量表达式</a></h2>
+<p>浮点型字面量表达式由单一一个<a href="expressions/../tokens.html#floating-point-literals">浮点型字面量</a>token 组成。</p>
+<p>如果这种 token 带有<a href="expressions/../tokens.html#suffixes">后缀</a>，那这个后缀的名字将是<a href="expressions/../types/numeric.html#floating-point-types">原生浮点型</a>中的一个：<code>f32</code> 或 <code>f64</code>，同时此后缀名也是此表达式的类型。</p>
+<p>如果这种 token 没有后缀，此表达式的类型将由下面的类型推断规则来确定:</p>
+<ul>
+<li>
+<p>如果浮点型可以从周围的程序上下文中<em>唯一地</em>确定，则表达式具有该类型。</p>
+</li>
+<li>
+<p>如果程序上下文对类型的约束比较宽松，则默认为 <code>f64</code>。</p>
+</li>
+<li>
+<p>如果程序上下文对类型的约束过度，则被认为是一个静态类型错误。</p>
+</li>
+</ul>
+<p>浮点型字面量表达式的示例：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>123.0f64;        // type f64
+0.1f64;          // type f64
+0.1f32;          // type f32
+12E+99_f64;      // type f64
+5f32;            // type f32
+let x: f64 = 2.; // type f64
+<span class="boring">}
+</span></code></pre></pre>
+<p>而表达式的值由 token 的字符串表示形式来确定，规则如下：</p>
+<ul>
+<li>
+<p>将从字符串中删除所有下划线。</p>
+</li>
+<li>
+<p>字符串被转换为这类表达式类型时，如同直接调用 <a href="https://doc.rust-lang.org/core/primitive.f32.html#method.from_str"><code>f32::from_str</code></a> 或 <a href="https://doc.rust-lang.org/core/primitive.f64.md#method.from_str"><code>f64::from_str</code></a>。</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>: <code>-1.0</code> 这样的表达式是对 <code>1.0</code> 这个字面量表达式的<a href="expressions/operator-expr.html#negation-operators">取负操作</a>，不是一个单一的浮点型字面量表达式。</p>
+</blockquote>
+<blockquote>
+<p><strong>注意</strong>: <code>inf</code> 和 <code>NaN</code> 不是字面量token。
+<a href="https://doc.rust-lang.org/core/primitive.f32.md#associatedconstant.INFINITY"><code>f32::INFINITY</code></a>, <a href="https://doc.rust-lang.org/core/primitive.f64.md#associatedconstant.INFINITY"><code>f64::INFINITY</code></a>, <a href="https://doc.rust-lang.org/core/primitive.f32.md#associatedconstant.NAN"><code>f32::NAN</code></a> 和 <a href="https://doc.rust-lang.org/core/primitive.f64.md#associatedconstant.NAN"><code>f64::NAN</code></a> 这些常量可被用来替代字面量表达式。</p>
+</blockquote>
+<blockquote>
+<p>在 <code>rustc</code> 里，一个足够大的字面量被计算为无穷时将会触发一个叫做 <code>overflowing_literals</code> 的 lint检查。</p>
+</blockquote>
+<h2><a class="header" href="#boolean-literal-expressions" id="boolean-literal-expressions">Boolean literal expressions</a></h2>
+<h2><a class="header" href="#布尔型字面量表达式" id="布尔型字面量表达式">布尔型字面量表达式</a></h2>
+<p>布尔型字面量表达式由关键字 <code>true</code> 或 <code>false</code> 中的一个组成。</p>
+<p>此类表达式的类型是原生<a href="expressions/../types/boolean.html">布尔型</a>，并且它的值为：</p>
+<ul>
+<li>如果关键字是 <code>true</code>，那么值为 true</li>
+<li>如果关键字是 <code>false</code>，那么值为 false</li>
+</ul>
 <h1><a class="header" href="#path-expressions" id="path-expressions">Path expressions</a></h1>
 <h1><a class="header" href="#路径表达式" id="路径表达式">路径表达式</a></h1>
 <blockquote>
@@ -6153,8 +6488,8 @@ fn is_unix_platform() -&gt; bool {
 <h1><a class="header" href="#operator-expressions" id="operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: dc064e08f202177dd0e9f14b6a782761df325b93 <br />
-本章译文最后维护日期：2022-03-14</p>
+commit: 89a81e82d93d7997b20e44781d3162d184f5a5d1 <br />
+本章译文最后维护日期：2022-04-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6178,10 +6513,16 @@ commit: dc064e08f202177dd0e9f14b6a782761df325b93 <br />
 可以使用命令行参数 <code>-C debug-assertions</code> 和 <code>-C overflow-checks</code> 设置编译器标志位来更直接地控制这个溢出过程。
 以下情况被认为是溢出：</p>
 <ul>
-<li>当 <code>+</code>、<code>*</code> 或 <code>-</code> 创建的值大于当前类型可存储的最大值或小于最小值。这包括任何有符号整型的最小值上的一元运算符 <code>-</code>。</li>
+<li>当 <code>+</code>、<code>*</code> 或 <code>-</code>（二元运算符的减号） 创建的值大于当前类型可存储的最大值或小于最小值。</li>
+<li>将 <code>-</code>（一元运算符的负号） 应用于任何有符号整型可存储的极负值（如i8的极负值为-128），除非此符号的操作数是一个<a href="expressions/literal-expr.html#integer-literal-expressions">字面量表达式</a>（或独立存在于一个或多个<a href="expressions/grouped-expr.html">分组表达式</a>中的字面量表达式）。译者注：-128_i8 和 -(128) 不溢出，<code>let j: i8 = -（-128_i8）</code> 溢出。</li>
 <li>使用 <code>/</code> 或 <code>%</code>，其中左操作数是某类有符号整型的最小整数，右操作数是 <code>-1</code>。注意，即使由于历史原因禁用了 <code>-C overflow-checks</code>选项，这些检查仍会发生。</li>
-<li>使用 <code>&lt;&lt;</code> 或 <code>&gt;&gt;</code>，其中右操作数大于或等于左操作数类型的 bit 数，或右操作数为负数。</li>
+<li>使用 <code>&lt;&lt;</code> 或 <code>&gt;&gt;</code>，其中右操作数大于或等于左操作数类型的二进制位数，或右操作数为负数。</li>
 </ul>
+<blockquote>
+<p><strong>注意</strong>: 上面第二点中除非的情况是像 <code>-128_i8</code> 或 <code>let j: i8 = -(128)</code> 这样的形式永远不会引起 panic，并且预期值也正常为 -128。因为此时，像 <code>128_i8</code> 这样，虽然其内部值已经是 -128 了（因为整型字面量会根据整型的类型标记被截断以适用其类型，见<a href="expressions/literal-expr.html#integer-literal-expressions">整型字面量</a>中的描述），即便再给其应用了一元运算符<code>-</code> 但仍被例外处理为一个极负值。</p>
+<p>二进制补码溢出约定：对那些极负值再取负会使值保持不变。</p>
+<p>在 <code>rustc</code> 里，这些对极负值取负的表达式也会忽略 <code>overflowing_literals</code>这样的 lint检查。</p>
+</blockquote>
 <h2><a class="header" href="#借用操作符运算符" id="借用操作符运算符">借用操作符/运算符</a></h2>
 <h2><a class="header" href="#borrow-operators" id="borrow-operators">Borrow operators</a></h2>
 <blockquote>
@@ -8029,8 +8370,8 @@ let mut a = 0;
 <h1><a class="header" href="#模式" id="模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
-commit: 037fda0f7735ce72f63abef9f821132b9381b429 <br />
-本章译文最后维护日期：2022-03-14</p>
+commit: e06b267eeb7bed90605dd63f6cae585674e0b1f5 <br />
+本章译文最后维护日期：2022-04-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -8143,7 +8484,7 @@ if let (a, 3) = (1, 2) {           // &quot;(a, 3)&quot; 是可反驳型的, 将
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>LiteralPattern</em> :<br />
-      <a href="tokens.html#boolean-literals">BOOLEAN_LITERAL</a><br />
+      <code>true</code> | <code>false</code><br />
    | <a href="tokens.html#character-literals">CHAR_LITERAL</a><br />
    | <a href="tokens.html#byte-literals">BYTE_LITERAL</a><br />
    | <a href="tokens.html#string-literals">STRING_LITERAL</a><br />
@@ -10666,30 +11007,30 @@ fn foo() -&gt; i32 {
 <p>TyCtor为类型构造器 type constructor 的简写。</p>
 </div>
 <h1><a class="header" href="#destructors" id="destructors">Destructors</a></h1>
-<h1><a class="header" href="#析构函数" id="析构函数">析构函数</a></h1>
+<h1><a class="header" href="#析构器" id="析构器">析构器</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/destructors.md">destructors.md</a><br />
-commit: 314567f7cdfde14f4f615eac971ec7f25b5e85b3 <br />
-本章译文最后维护日期：2021-07-31</p>
+commit: f1a8b53ad6ad9c09e7b621549683429ce60a22f1 <br />
+本章译文最后维护日期：2022-04-16</p>
 </blockquote>
-<p>当一个<a href="glossary.html#initialized">初始化</a>了的<a href="variables.html">变量</a>或<a href="expressions.html#temporaries">临时变量</a>超出<a href="destructors.html#drop-scopes">作用域</a>时，其<em>析构函数(destructor)<em>将运行，或者说它将被</em>销毁(dropped)</em>。此外，<a href="expressions/operator-expr.html#assignment-expressions">赋值</a>操作也会运行其左操作数的析构函数（如果它已经初始化了）。如果变量只部分初始化了，则只销毁其已初始化的字段。</p>
-<p>类型<code>T</code> 的析构函数由以下内容组成：</p>
+<p>当一个<a href="glossary.html#initialized">初始化</a>了的<a href="variables.html">变量</a>或<a href="expressions.html#temporaries">临时变量</a>超出<a href="destructors.html#drop-scopes">作用域</a>时，其<em>析构器(destructor)<em>将运行，或者说它将被</em>销毁(dropped)</em>。此外，<a href="expressions/operator-expr.html#assignment-expressions">赋值</a>操作也会运行其左操作数的析构器（如果它已经初始化了）。如果变量只部分初始化了，则只销毁其已初始化的字段。</p>
+<p>类型<code>T</code> 的析构器由以下内容组成：</p>
 <ol>
 <li>如果其有约束 <code>T: Drop</code>, 则调用 <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html#tymethod.drop"><code>&lt;T as std::ops::Drop&gt;::drop</code></a></li>
-<li>递归运行其所有字段的析构函数。
+<li>递归运行其所有字段的析构器。
 <ul>
 <li><a href="types/struct.html">结构体(<code>struct</code>)</a>的字段按其声明顺序被销毁。</li>
 <li>活动状态的<a href="types/enum.html">枚举变体</a>的字段按其声明顺序销毁。</li>
 <li><a href="types/tuple.html">元组</a>中的字段按顺序销毁。</li>
 <li><a href="types/array.html">数组</a>或拥有所有权的<a href="types/slice.html">切片</a>的元素的销毁顺序是从第一个元素到最后一个元素。</li>
 <li><a href="types/closure.html">闭包</a>通过移动(move)语义捕获的变量的销毁顺序未明确定义。</li>
-<li><a href="types/trait-object.html">trait对象</a>的销毁会运行其非具名基类(underlying type)的析构函数。</li>
+<li><a href="types/trait-object.html">trait对象</a>的销毁会运行其非具名基类(underlying type)的析构器。</li>
 <li>其他类型不会导致任何进一步的销毁动作发生。</li>
 </ul>
 </li>
 </ol>
-<p>如果析构函数必须手动运行，比如在实现自定义的智能指针时，可以使用标准库函数 <a href="https://doc.rust-lang.org/std/ptr/fn.drop_in_place.html"><code>std::ptr::drop_in_place</code></a>。</p>
-<p>举些（析构函数的）例子：</p>
+<p>如果析构器必须手动运行，比如在实现自定义的智能指针时，可以使用标准库函数 <a href="https://doc.rust-lang.org/std/ptr/fn.drop_in_place.html"><code>std::ptr::drop_in_place</code></a>。</p>
+<p>举些（析构器的）例子：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -10707,7 +11048,7 @@ overwritten = PrintOnDrop(&quot;当作用域结束时执行销毁&quot;);
 let tuple = (PrintOnDrop(&quot;Tuple first&quot;), PrintOnDrop(&quot;Tuple second&quot;));
 
 let moved;
-// 没有析构函数在赋值时运行
+// 没有析构器在赋值时运行
 moved = PrintOnDrop(&quot;Drops when moved&quot;);
 // 这里执行销毁，但随后变量进入未初始化状态
 moved;
@@ -10879,7 +11220,7 @@ match PrintOnDrop(&quot;Matched value in final expression&quot;) {
 </span></code></pre></pre>
 <h3><a class="header" href="#constant-promotion" id="constant-promotion">Constant promotion</a></h3>
 <h3><a class="header" href="#常量提升" id="常量提升">常量提升</a></h3>
-<p>当表达式可以被写入到一个常量中，并被被借用时，就会将此值表达式提升到 <code>'static</code>插槽(<code>'static</code> slot)状态，此时还可以通过此借用的逆操作（解引用）来解出最初写入的表达式，并且也不会改变运行时行为。也就是说，可以在编译时对此提升了的表达式进行求值，这求得的值不具备<a href="interior-mutability.html">内部可变性</a>或不包含<a href="destructors.html">析构函数</a>（这些特性在可能的情况下根据具体的值确定，例如 <code>&amp;None</code> 的类型总是 <code>&amp;'static Option&lt;_&gt;</code>，因为 <code>&amp;None</code> 的值是唯一确定的）。</p>
+<p>当表达式可以被写入到一个常量中，并被被借用时，就会将此值表达式提升到 <code>'static</code>插槽(<code>'static</code> slot)状态，此时还可以通过此借用的逆操作（解引用）来解出最初写入的表达式，并且也不会改变运行时行为。也就是说，可以在编译时对此提升了的表达式进行求值，这求得的值不具备<a href="interior-mutability.html">内部可变性</a>或不包含<a href="destructors.html">析构器</a>（这些特性在可能的情况下根据具体的值确定，例如 <code>&amp;None</code> 的类型总是 <code>&amp;'static Option&lt;_&gt;</code>，因为 <code>&amp;None</code> 的值是唯一确定的）。</p>
 <h3><a class="header" href="#temporary-lifetime-extension" id="temporary-lifetime-extension">Temporary lifetime extension</a></h3>
 <h3><a class="header" href="#临时生存期扩展" id="临时生存期扩展">临时生存期扩展</a></h3>
 <blockquote>
@@ -10950,7 +11291,11 @@ let x = (&amp;temp()).use_temp();  // ERROR
 </span></code></pre></pre>
 <h2><a class="header" href="#not-running-destructors" id="not-running-destructors">Not running destructors</a></h2>
 <h2><a class="header" href="#阻断执行析构操作" id="阻断执行析构操作">阻断执行析构操作</a></h2>
-<p>在 Rust 中，即便类型不是 <code>'static</code>，禁止执行析构操作也是允许的，也是安全的。<a href="https://doc.rust-lang.org/std/mem/struct.ManuallyDrop.html"><code>std::mem::ManuallyDrop</code></a> 提供了一个包装器(wrapper)来防止变量或字段被自动销毁。</p>
+<p><a href="https://doc.rust-lang.org/std/mem/fn.forget.html"><code>std::mem::forget</code></a> 被用来阻断变量的的析构操作，<a href="https://doc.rust-lang.org/std/mem/struct.ManuallyDrop.html"><code>std::mem::ManuallyDrop</code></a> 提供了一个包装器(wrapper)来防止变量或字段被自动销毁。</p>
+<blockquote>
+<p>注意：通过 [<code>std:：mem:：forget</code>] 或其他方式阻止一个变量的析构操作是安全的，即使此变量的类型不是 <code>'static</code>。
+除了本文档定义的能确保析构器正常运行的地方之外，类型的可靠性却依赖于析构器的正常执行，那此类型将不那么保险。</p>
+</blockquote>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
 <p>后文有时也直接简称为作用域。</p>
 </div>
@@ -10960,8 +11305,6 @@ let x = (&amp;temp()).use_temp();  // ERROR
 <div class="footnote-definition" id="译注3"><sup class="footnote-definition-label">3</sup>
 <p>对这句话，这里译者按自己的理解再翻译一遍：一个表达式在位置表达式上使用时会被求值，如果此时没有具名变量和此值绑定，那就会先被保存进一个临时变量里，临时作用域就是伴随这此临时变量而生成。此作用域通常在此表达式所在的语句结束时结束，但如果求出的值被通过借用绑定给具名变量，此作用域会扩展到此具名变量的作用域（后面<a href="destructors.html#temporary-lifetime-extension">生存期扩展</a>会讲到）。如果求出的值通过引用赋给了常量，这个作用域还会被进一步提升到全局作用域，这就是所谓的<a href="destructors.html#constant-promotion">常量提升</a>。</p>
 </div>
-<!-- 2020-11-12-->
-<!-- checked -->
 <h1><a class="header" href="#lifetime-elision" id="lifetime-elision">Lifetime elision</a></h1>
 <h1><a class="header" href="#生存期类型参数省略" id="生存期类型参数省略">生存期(类型参数)省略</a></h1>
 <blockquote>
@@ -11537,8 +11880,8 @@ use alloc::rc::Rc;
 <h1><a class="header" href="#路径" id="路径">路径</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/paths.md">paths.md</a><br />
-commit: fb880fb6bd5f094566f2724c164998c071d013db <br />
-本章译文最后维护日期：2022-03-14</p>
+commit: a0a7e18957047363efb7f3ea30b9f7e5e3d5abe3 <br />
+本章译文最后维护日期：2022-04-17</p>
 </blockquote>
 <p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，<code>::</code> 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">程序项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用程序项。</p>
 <p>仅由标识符段组成的简单路径(simple paths)的两个示例：</p>
@@ -11609,7 +11952,7 @@ Vec::&lt;u8&gt;::with_capacity(1024);
 <em>QualifiedPathInExpression</em> :<br />
    <em>QualifiedPathType</em> (<code>::</code> <em>PathExprSegment</em>)<sup>+</sup></p>
 <p><em>QualifiedPathType</em> :<br />
-   <code>&lt;</code> <a href="types.html#type-expressions"><em>Type</em></a> (<code>as</code> <em>TypePath</em>)? <code>&gt;</code></p>
+   <code>&lt;</code> <a href="types.html#type-expressions"><em>Type</em></a> (<code>as</code> <em>TypePath</em>)<sup>?</sup> <code>&gt;</code></p>
 <p><em>QualifiedPathInType</em> :<br />
    <em>QualifiedPathType</em> (<code>::</code> <em>TypePathSegment</em>)<sup>+</sup></p>
 </blockquote>
@@ -12181,8 +12524,8 @@ fn main() {
 <h1><a class="header" href="#内联汇编" id="内联汇编">内联汇编</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md">behavior-considered-undefined.md</a><br />
-commit: 785325fed7d7d54ab143b32355f35df1f5208295 <br />
-本章译文最后维护日期：2022-03-14</p>
+commit: 62e75b64721057c705d1441fe265c190dc2b2f2e <br />
+本章译文最后维护日期：2022-04-17</p>
 </blockquote>
 <p>Rust 通过 <a href="https://doc.rust-lang.org/core/arch/macro.asm.html"><code>asm!</code></a> 和 <a href="https://doc.rust-lang.org/core/arch/macro.global_asm.html"><code>global_asm!</code></a> 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。</p>
@@ -12388,7 +12731,7 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 <tr><td>x86</td><td><code>mmx_reg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
 <tr><td>x86</td><td><code>x87_reg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
 <tr><td>AArch64</td><td><code>reg</code></td><td>None</td><td><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>f32</code>, <code>i64</code>, <code>f64</code></td></tr>
-<tr><td>AArch64</td><td><code>vreg</code></td><td><code>fp</code></td><td><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>f32</code>, <code>i64</code>, <code>f64</code>, <br> <code>i8x8</code>, <code>i16x4</code>, <code>i32x2</code>, <code>i64x1</code>, <code>f32x2</code>, <code>f64x1</code>, <br> <code>i8x16</code>, <code>i16x8</code>, <code>i32x4</code>, <code>i64x2</code>, <code>f32x4</code>, <code>f64x2</code></td></tr>
+<tr><td>AArch64</td><td><code>vreg</code></td><td><code>neon</code></td><td><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>f32</code>, <code>i64</code>, <code>f64</code>, <br> <code>i8x8</code>, <code>i16x4</code>, <code>i32x2</code>, <code>i64x1</code>, <code>f32x2</code>, <code>f64x1</code>, <br> <code>i8x16</code>, <code>i16x8</code>, <code>i32x4</code>, <code>i64x2</code>, <code>f32x4</code>, <code>f64x2</code></td></tr>
 <tr><td>AArch64</td><td><code>preg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
 <tr><td>ARM</td><td><code>reg</code></td><td>None</td><td><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>f32</code></td></tr>
 <tr><td>ARM</td><td><code>sreg</code></td><td><code>vfp2</code></td><td><code>i32</code>, <code>f32</code></td></tr>

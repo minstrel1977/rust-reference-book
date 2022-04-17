@@ -166,30 +166,30 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#destructors" id="destructors">Destructors</a></h1>
-<h1><a class="header" href="#析构函数" id="析构函数">析构函数</a></h1>
+<h1><a class="header" href="#析构器" id="析构器">析构器</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/destructors.md">destructors.md</a><br />
-commit: 314567f7cdfde14f4f615eac971ec7f25b5e85b3 <br />
-本章译文最后维护日期：2021-07-31</p>
+commit: f1a8b53ad6ad9c09e7b621549683429ce60a22f1 <br />
+本章译文最后维护日期：2022-04-16</p>
 </blockquote>
-<p>当一个<a href="glossary.html#initialized">初始化</a>了的<a href="variables.html">变量</a>或<a href="expressions.html#temporaries">临时变量</a>超出<a href="#drop-scopes">作用域</a>时，其<em>析构函数(destructor)<em>将运行，或者说它将被</em>销毁(dropped)</em>。此外，<a href="expressions/operator-expr.html#assignment-expressions">赋值</a>操作也会运行其左操作数的析构函数（如果它已经初始化了）。如果变量只部分初始化了，则只销毁其已初始化的字段。</p>
-<p>类型<code>T</code> 的析构函数由以下内容组成：</p>
+<p>当一个<a href="glossary.html#initialized">初始化</a>了的<a href="variables.html">变量</a>或<a href="expressions.html#temporaries">临时变量</a>超出<a href="#drop-scopes">作用域</a>时，其<em>析构器(destructor)<em>将运行，或者说它将被</em>销毁(dropped)</em>。此外，<a href="expressions/operator-expr.html#assignment-expressions">赋值</a>操作也会运行其左操作数的析构器（如果它已经初始化了）。如果变量只部分初始化了，则只销毁其已初始化的字段。</p>
+<p>类型<code>T</code> 的析构器由以下内容组成：</p>
 <ol>
 <li>如果其有约束 <code>T: Drop</code>, 则调用 <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html#tymethod.drop"><code>&lt;T as std::ops::Drop&gt;::drop</code></a></li>
-<li>递归运行其所有字段的析构函数。
+<li>递归运行其所有字段的析构器。
 <ul>
 <li><a href="types/struct.html">结构体(<code>struct</code>)</a>的字段按其声明顺序被销毁。</li>
 <li>活动状态的<a href="types/enum.html">枚举变体</a>的字段按其声明顺序销毁。</li>
 <li><a href="types/tuple.html">元组</a>中的字段按顺序销毁。</li>
 <li><a href="types/array.html">数组</a>或拥有所有权的<a href="types/slice.html">切片</a>的元素的销毁顺序是从第一个元素到最后一个元素。</li>
 <li><a href="types/closure.html">闭包</a>通过移动(move)语义捕获的变量的销毁顺序未明确定义。</li>
-<li><a href="types/trait-object.html">trait对象</a>的销毁会运行其非具名基类(underlying type)的析构函数。</li>
+<li><a href="types/trait-object.html">trait对象</a>的销毁会运行其非具名基类(underlying type)的析构器。</li>
 <li>其他类型不会导致任何进一步的销毁动作发生。</li>
 </ul>
 </li>
 </ol>
-<p>如果析构函数必须手动运行，比如在实现自定义的智能指针时，可以使用标准库函数 <a href="https://doc.rust-lang.org/std/ptr/fn.drop_in_place.html"><code>std::ptr::drop_in_place</code></a>。</p>
-<p>举些（析构函数的）例子：</p>
+<p>如果析构器必须手动运行，比如在实现自定义的智能指针时，可以使用标准库函数 <a href="https://doc.rust-lang.org/std/ptr/fn.drop_in_place.html"><code>std::ptr::drop_in_place</code></a>。</p>
+<p>举些（析构器的）例子：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -207,7 +207,7 @@ overwritten = PrintOnDrop(&quot;当作用域结束时执行销毁&quot;);
 let tuple = (PrintOnDrop(&quot;Tuple first&quot;), PrintOnDrop(&quot;Tuple second&quot;));
 
 let moved;
-// 没有析构函数在赋值时运行
+// 没有析构器在赋值时运行
 moved = PrintOnDrop(&quot;Drops when moved&quot;);
 // 这里执行销毁，但随后变量进入未初始化状态
 moved;
@@ -379,7 +379,7 @@ match PrintOnDrop(&quot;Matched value in final expression&quot;) {
 </span></code></pre></pre>
 <h3><a class="header" href="#constant-promotion" id="constant-promotion">Constant promotion</a></h3>
 <h3><a class="header" href="#常量提升" id="常量提升">常量提升</a></h3>
-<p>当表达式可以被写入到一个常量中，并被被借用时，就会将此值表达式提升到 <code>'static</code>插槽(<code>'static</code> slot)状态，此时还可以通过此借用的逆操作（解引用）来解出最初写入的表达式，并且也不会改变运行时行为。也就是说，可以在编译时对此提升了的表达式进行求值，这求得的值不具备<a href="interior-mutability.html">内部可变性</a>或不包含<a href="destructors.html">析构函数</a>（这些特性在可能的情况下根据具体的值确定，例如 <code>&amp;None</code> 的类型总是 <code>&amp;'static Option&lt;_&gt;</code>，因为 <code>&amp;None</code> 的值是唯一确定的）。</p>
+<p>当表达式可以被写入到一个常量中，并被被借用时，就会将此值表达式提升到 <code>'static</code>插槽(<code>'static</code> slot)状态，此时还可以通过此借用的逆操作（解引用）来解出最初写入的表达式，并且也不会改变运行时行为。也就是说，可以在编译时对此提升了的表达式进行求值，这求得的值不具备<a href="interior-mutability.html">内部可变性</a>或不包含<a href="destructors.html">析构器</a>（这些特性在可能的情况下根据具体的值确定，例如 <code>&amp;None</code> 的类型总是 <code>&amp;'static Option&lt;_&gt;</code>，因为 <code>&amp;None</code> 的值是唯一确定的）。</p>
 <h3><a class="header" href="#temporary-lifetime-extension" id="temporary-lifetime-extension">Temporary lifetime extension</a></h3>
 <h3><a class="header" href="#临时生存期扩展" id="临时生存期扩展">临时生存期扩展</a></h3>
 <blockquote>
@@ -450,7 +450,11 @@ let x = (&amp;temp()).use_temp();  // ERROR
 </span></code></pre></pre>
 <h2><a class="header" href="#not-running-destructors" id="not-running-destructors">Not running destructors</a></h2>
 <h2><a class="header" href="#阻断执行析构操作" id="阻断执行析构操作">阻断执行析构操作</a></h2>
-<p>在 Rust 中，即便类型不是 <code>'static</code>，禁止执行析构操作也是允许的，也是安全的。<a href="https://doc.rust-lang.org/std/mem/struct.ManuallyDrop.html"><code>std::mem::ManuallyDrop</code></a> 提供了一个包装器(wrapper)来防止变量或字段被自动销毁。</p>
+<p><a href="https://doc.rust-lang.org/std/mem/fn.forget.html"><code>std::mem::forget</code></a> 被用来阻断变量的的析构操作，<a href="https://doc.rust-lang.org/std/mem/struct.ManuallyDrop.html"><code>std::mem::ManuallyDrop</code></a> 提供了一个包装器(wrapper)来防止变量或字段被自动销毁。</p>
+<blockquote>
+<p>注意：通过 [<code>std:：mem:：forget</code>] 或其他方式阻止一个变量的析构操作是安全的，即使此变量的类型不是 <code>'static</code>。
+除了本文档定义的能确保析构器正常运行的地方之外，类型的可靠性却依赖于析构器的正常执行，那此类型将不那么保险。</p>
+</blockquote>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
 <p>后文有时也直接简称为作用域。</p>
 </div>
@@ -460,8 +464,6 @@ let x = (&amp;temp()).use_temp();  // ERROR
 <div class="footnote-definition" id="译注3"><sup class="footnote-definition-label">3</sup>
 <p>对这句话，这里译者按自己的理解再翻译一遍：一个表达式在位置表达式上使用时会被求值，如果此时没有具名变量和此值绑定，那就会先被保存进一个临时变量里，临时作用域就是伴随这此临时变量而生成。此作用域通常在此表达式所在的语句结束时结束，但如果求出的值被通过借用绑定给具名变量，此作用域会扩展到此具名变量的作用域（后面<a href="#temporary-lifetime-extension">生存期扩展</a>会讲到）。如果求出的值通过引用赋给了常量，这个作用域还会被进一步提升到全局作用域，这就是所谓的<a href="destructors.html#constant-promotion">常量提升</a>。</p>
 </div>
-<!-- 2020-11-12-->
-<!-- checked -->
 
                     </main>
 

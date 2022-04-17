@@ -2,8 +2,8 @@
 # 内联汇编
 
 >[behavior-considered-undefined.md](https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md)\
->commit: 785325fed7d7d54ab143b32355f35df1f5208295 \
->本章译文最后维护日期：2022-03-14
+>commit: 62e75b64721057c705d1441fe265c190dc2b2f2e \
+>本章译文最后维护日期：2022-04-17
 
 Rust 通过 [`asm!`] 和 [`global_asm!`] 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。
@@ -214,7 +214,7 @@ ARM目标架构上，使用 `.syntax unified`模式。
 | x86 | `mmx_reg` | N/A | 仅 clobbers |
 | x86 | `x87_reg` | N/A | 仅 clobbers |
 | AArch64 | `reg` | None | `i8`, `i16`, `i32`, `f32`, `i64`, `f64` |
-| AArch64 | `vreg` | `fp` | `i8`, `i16`, `i32`, `f32`, `i64`, `f64`, <br> `i8x8`, `i16x4`, `i32x2`, `i64x1`, `f32x2`, `f64x1`, <br> `i8x16`, `i16x8`, `i32x4`, `i64x2`, `f32x4`, `f64x2` |
+| AArch64 | `vreg` | `neon` | `i8`, `i16`, `i32`, `f32`, `i64`, `f64`, <br> `i8x8`, `i16x4`, `i32x2`, `i64x1`, `f32x2`, `f64x1`, <br> `i8x16`, `i16x8`, `i32x4`, `i64x2`, `f32x4`, `f64x2` |
 | AArch64 | `preg` | N/A | 仅 clobbers |
 | ARM | `reg` | None | `i8`, `i16`, `i32`, `f32` |
 | ARM | `sreg` | `vfp2` | `i32`, `f32` |

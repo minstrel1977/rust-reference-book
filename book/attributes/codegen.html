@@ -169,8 +169,8 @@
 <h1><a class="header" href="#代码生成属性" id="代码生成属性">代码生成属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md">codegen.md</a><br />
-commit: 2d0058a4951a3fe97b0892993bd3faeabc532123 <br />
-本章译文最后维护日期：2022-03-14</p>
+commit: 62e75b64721057c705d1441fe265c190dc2b2f2e <br />
+本章译文最后维护日期：2022-04-16</p>
 </blockquote>
 <p>下述<a href="../attributes.html">属性</a>用于控制代码生成。</p>
 <h2><a class="header" href="#optimization-hints" id="optimization-hints">Optimization hints</a></h2>
@@ -219,6 +219,7 @@ unsafe fn foo_avx2() {}
 <p>即便是同为 <code>x86</code> 或 <code>x86_64</code> 平台，并不是所有平台都支持下述特性，而在未启用特定特性的平台下执行带有此平台的特性的代码会导致未定义行为。
 因此在这类平台下，<code>#[target_feature]</code> 只能应用于<a href="../unsafe-functions.html">非安全(<code>unsafe</code>)函数</a>。</p>
 <table><thead><tr><th>特性</th><th>隐式启用</th><th>描述</th><th>中文描述</th></tr></thead><tbody>
+<tr><td><code>adx</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/Intel_ADX">ADX</a> — Multi-Precision Add-Carry Instruction Extensions</td><td>多精度进位指令扩展</td></tr>
 <tr><td><code>aes</code></td><td><code>sse2</code></td><td><a href="https://en.wikipedia.org/wiki/AES_instruction_set">AES</a> — Advanced Encryption Standard</td><td>高级加密标准</td></tr>
 <tr><td><code>avx</code></td><td><code>sse4.2</code></td><td><a href="https://en.wikipedia.org/wiki/Advanced_Vector_Extensions">AVX</a> — Advanced Vector Extensions</td><td>高级矢量扩展指令集</td></tr>
 <tr><td><code>avx2</code></td><td><code>avx</code></td><td><a href="https://en.wikipedia.org/wiki/Advanced_Vector_Extensions#AVX2">AVX2</a> — Advanced Vector Extensions 2</td><td>高级矢量扩展指令集2</td></tr>
@@ -244,6 +245,60 @@ unsafe fn foo_avx2() {}
 <tr><td><code>xsaves</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/xsaves"><code>xsaves</code></a> — Save processor extended states supervisor</td><td>保存处理器扩展状态监视程序</td></tr>
 </tbody></table>
 <!-- 保持各个链接靠近其表格，便于以后的增删改 -->
+<h4><a class="header" href="#aarch64" id="aarch64"><code>aarch64</code></a></h4>
+<p>该平台要求 <code>#[target_feature]</code> 仅适用于 <a href="../unsafe-functions.html"><code>unsafe</code>函数</a></p>
+<p>关于这些特性的更多文档可以在 [developer.arm.com] 上的 [ARM架构参考手册][ARM Architecture Reference Manual]中或 [developer.arm.com] 上的其他地方找到。
+[ARM Architecture Reference Manual]: https://developer.arm.com/documentation/ddi0487/latest
+[developer.arm.com]: https://developer.arm.com</p>
+<blockquote>
+<p><em><strong>注意</strong></em>: 如果要使用的话，<code>paca</code> 和 <code>pacg</code> 这对特性应同时标记为启用或禁用，因为目前 LLVM 将其作为一个特性来实现的。</p>
+</blockquote>
+<table><thead><tr><th>特性</th><th>隐式启用</th><th>特性名称</th></tr></thead><tbody>
+<tr><td><code>aes</code></td><td><code>neon</code></td><td>FEAT_AES - 高级 <abbr title="Single Instruction Multiple Data">SIMD</abbr> AES 指令</td></tr>
+<tr><td><code>bf16</code></td><td></td><td>FEAT_BF16 - BFloat16 指令</td></tr>
+<tr><td><code>bti</code></td><td></td><td>FEAT_BTI - 分支目标识别</td></tr>
+<tr><td><code>crc</code></td><td></td><td>FEAT_CRC - CRC32 <em>校验和</em>指令</td></tr>
+<tr><td><code>dit</code></td><td></td><td>FEAT_DIT - 与数据无关的定时指令</td></tr>
+<tr><td><code>dotprod</code></td><td></td><td>FEAT_DotProd - Advanced SIMD Int8 dot product instructions</td></tr>
+<tr><td><code>dpb</code></td><td></td><td>FEAT_DPB - 数据持久点之后的缓存清理</td></tr>
+<tr><td><code>dpb2</code></td><td></td><td>FEAT_DPB2 - 数据深度持久点之后的缓存清理</td></tr>
+<tr><td><code>f32mm</code></td><td><code>sve</code></td><td>FEAT_F32MM - SVE单精度 FP矩阵乘法指令</td></tr>
+<tr><td><code>f64mm</code></td><td><code>sve</code></td><td>FEAT_F64MM - SSVE双精度 FP矩阵乘法指令</td></tr>
+<tr><td><code>fcma</code></td><td><code>neon</code></td><td>FEAT_FCMA - 浮点复数支持</td></tr>
+<tr><td><code>fhm</code></td><td><code>fp16</code></td><td>FEAT_FHM - 半精度 FP FMLAL 指令</td></tr>
+<tr><td><code>flagm</code></td><td></td><td>FEAT_FlagM - 条件标志操作</td></tr>
+<tr><td><code>fp16</code></td><td><code>neon</code></td><td>FEAT_FP16 - 半精度 FP数据处理</td></tr>
+<tr><td><code>frintts</code></td><td></td><td>FEAT_FRINTTS - 浮点到整型的辅助转换指令</td></tr>
+<tr><td><code>i8mm</code></td><td></td><td>FEAT_I8MM - Int8 的矩阵乘法</td></tr>
+<tr><td><code>jsconv</code></td><td><code>neon</code></td><td>FEAT_JSCVT - JavaScript 转换指令</td></tr>
+<tr><td><code>lse</code></td><td></td><td>FEAT_LSE - Large System Extension</td></tr>
+<tr><td><code>lor</code></td><td></td><td>FEAT_LOR - Limited Ordering Regions extension</td></tr>
+<tr><td><code>mte</code></td><td></td><td>FEAT_MTE - 内存标记扩展</td></tr>
+<tr><td><code>neon</code></td><td></td><td>FEAT_FP &amp; FEAT_AdvSIMD - 浮点和高级SIMD扩展</td></tr>
+<tr><td><code>pan</code></td><td></td><td>FEAT_PAN - Privileged Access-Never extension</td></tr>
+<tr><td><code>paca</code></td><td></td><td>FEAT_PAuth - 指针身份验证（地址身份验证）</td></tr>
+<tr><td><code>pacg</code></td><td></td><td>FEAT_PAuth - 指针身份验证（通用身份验证）</td></tr>
+<tr><td><code>pmuv3</code></td><td></td><td>FEAT_PMUv3 - 性能监视器扩展（v3）</td></tr>
+<tr><td><code>rand</code></td><td></td><td>FEAT_RNG - 随机数发生器</td></tr>
+<tr><td><code>ras</code></td><td></td><td>FEAT_RAS - 可靠性、可用性和可维护性扩展</td></tr>
+<tr><td><code>rcpc</code></td><td></td><td>FEAT_LRCPC - Release consistent Processor Consistent</td></tr>
+<tr><td><code>rcpc2</code></td><td><code>rcpc</code></td><td>FEAT_LRCPC2 - 带即时偏移的rcpc</td></tr>
+<tr><td><code>rdm</code></td><td></td><td>FEAT_RDM - Rounding Double Multiply accumulate</td></tr>
+<tr><td><code>sb</code></td><td></td><td>FEAT_SB - Speculation Barrier</td></tr>
+<tr><td><code>sha2</code></td><td><code>neon</code></td><td>FEAT_SHA1 &amp; FEAT_SHA256 - 高级 SIMD SHA 指令</td></tr>
+<tr><td><code>sha3</code></td><td><code>sha2</code></td><td>FEAT_SHA512 &amp; FEAT_SHA3 - 高级 SIMD SHA 指令</td></tr>
+<tr><td><code>sm4</code></td><td><code>neon</code></td><td>FEAT_SM3 &amp; FEAT_SM4 - 高级 SIMD SM3/4 指令</td></tr>
+<tr><td><code>spe</code></td><td></td><td>FEAT_SPE - 统计分析扩展</td></tr>
+<tr><td><code>ssbs</code></td><td></td><td>FEAT_SSBS - Speculative Store Bypass Safe</td></tr>
+<tr><td><code>sve</code></td><td><code>fp16</code></td><td>FEAT_SVE - 可伸缩向量扩展</td></tr>
+<tr><td><code>sve2</code></td><td><code>sve</code></td><td>FEAT_SVE2 - 可伸缩向量扩展2</td></tr>
+<tr><td><code>sve2-aes</code></td><td><code>sve2</code>, <code>aes</code></td><td>FEAT_SVE_AES - SVE AES 指令</td></tr>
+<tr><td><code>sve2-sm4</code></td><td><code>sve2</code>, <code>sm4</code></td><td>FEAT_SVE_SM4 - SVE SM4 指令</td></tr>
+<tr><td><code>sve2-sha3</code></td><td><code>sve2</code>, <code>sha3</code></td><td>FEAT_SVE_SHA3 - SVE SHA3 指令</td></tr>
+<tr><td><code>sve2-bitperm</code></td><td><code>sve2</code></td><td>FEAT_SVE_BitPerm - SVE位置换</td></tr>
+<tr><td><code>tme</code></td><td></td><td>FEAT_TME - 事务内存扩展</td></tr>
+<tr><td><code>vh</code></td><td></td><td>FEAT_VHE - 虚拟化主机扩展</td></tr>
+</tbody></table>
 <h4><a class="header" href="#wasm32-or-wasm64" id="wasm32-or-wasm64"><code>wasm32</code> or <code>wasm64</code></a></h4>
 <p>在这两个平台下，安全函数和<a href="../unsafe-functions.html">非安全函数</a>均可启用 <code>#[target_feature]</code>特性。不可能经由 <code>#[target_feature]</code>特性导致未定义行为，因为尝试使用 Wasm引擎不支持的指令将在加载时就失败，而不会有被以不同于编译器预期的方式来解释编译后的代码的风险。</p>
 <table><thead><tr><th>特性</th><th>描述</th></tr></thead><tbody>

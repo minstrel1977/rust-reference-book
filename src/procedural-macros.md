@@ -2,8 +2,8 @@
 ## 过程宏
 
 >[procedural-macros.md](https://github.com/rust-lang/reference/blob/master/src/procedural-macros.md)\
->commit: a1ef5a09c0281b0f2a65c18670e927ead61eb1b2 \
->本章译文最后维护日期：2020-11-6
+>commit: 26acee213a30ba01f128981aed4a42bd1d3610ca \
+>本章译文最后维护日期：2021-04-17
 
 *过程宏*允许在执行函数时创建句法扩展。过程宏有三种形式:
 
@@ -218,12 +218,54 @@ fn invoke4() {}
 // out: item: "fn invoke4() {}"
 ```
 
+### Declarative macro tokens and procedural macro tokens
+### 声明宏的 token 和过程宏的 token
+
+在 token （或者更确切地说是 [token树][`TokenTree`s]的）层面，声明性宏和过程性宏的使用比较类似，但它们的定义却不相同。
+
+token树在声明宏`macro_rules`（对应于 `tt`类型的匹配器）中被定义为：
+- 组分界(`(...)`, `{...}` 等)
+- 此语言支持的所有操作符，不论是单字符操作符或多字符操作符(`+`, `+=`)。
+    - 注意这里的操作符集合中不包括单引号`'`。
+- 字面量 (`"string"`, `1` 等)
+    - 注意负号(例如 `-1`)永远不会是字面量token的一部分，它只是另外一个操作符token。
+- 标识符，包括关键字(`ident`, `r#ident`, `fn`)
+- 生存期(`'ident`)
+- `macro_rules` 中元变量的替代项（metavariable substitutions）（例如： `macro_rules! mac { ($my_expr: expr) => { $my_expr } }` 在 `mac` 扩展之后，其中的 `$my_expr` 的替换项，此时无论传入的表达式是什么，它都将被视为一个 token树）
+
+token树在过程宏中被定义为：
+- 组分界(`(...)`, `{...}` 等)
+- 此语言支持的运算符中使用的所有标点字符(punctuation characters)（包括 `+`，但不包括 `+=`），单引号`'`字符也包括（典型的是在生存期中使用，有关生存期的拆分和合并行为，请参见下文）
+- 字面量 (`"string"`, `1` 等)
+    - 负号(例如 `-1`)是整型或浮点型字面量的一部分。
+- 标识符，包括关键字(`ident`, `r#ident`, `fn`)
+
+当 token流从过程宏中传入和传出时，需要考虑这两个定义之间的错配问题。
+请注意，下面的转换可能是惰性的，因此如果没有实际去检测 token流，它们可能不会发生。
+
+当传入给一个过程宏：
+- 所有的多字符操作符被拆分为单字符操作符。
+- 生存期被拆分符号`'` 和一个标识符。
+- 所有元变量的替换都会被表示为它们的底层 token流。
+    - 当需要保留解析优先级时，这些 token流可能会被包装进带有隐式分隔符（[`Delimiter::None`]）的分组（[`Group`]）中。
+    - `tt` 和 `ident` 类型的元变量的替换项永远不会被包装进这样的分组中，而是会始终表示为它们的底层 token树。
+
+当从一个过程宏中传出时：
+- 当需要时，单个标点字符(punctuation characters)会被粘结成多字符操作符。
+- 单引号`'`和标识符一起被粘结成生存期。
+- 当需要保留解析优先级时，负值字面量会被转换为两个 token（`-` 和 一个字面量），可能还会被包装进带有隐式分隔符（[`Delimiter::None`]）的分组（[`group`]）。
+
+请注意，声明宏和过程性宏都不支持文档注释标记（例如`/// Doc`），因此它们在传递给宏时总是转换为等效的 `#[doc = r"str"]`属性的 token流。
+
 [Attribute macros]: #attribute-macros
 [Cargo's build scripts]: https://doc.rust-lang.org/cargo/reference/build-scripts.html
 [Derive macros]: #derive-macros
 [Function-like macros]: #function-like-procedural-macros
+[`Delimiter::None`]: https://doc.rust-lang.org/proc_macro/enum.Delimiter.html#variant.None
+[`Group`]: https://doc.rust-lang.org/proc_macro/struct.Group.html
 [`TokenStream`]: https://doc.rust-lang.org/proc_macro/struct.TokenStream.html
 [`TokenStream`s]: https://doc.rust-lang.org/proc_macro/struct.TokenStream.html
+[`TokenTree`s]: https://doc.rust-lang.org/proc_macro/enum.TokenTree.html
 [`compile_error`]: https://doc.rust-lang.org/std/macro.compile_error.html
 [`derive` attribute]: attributes/derive.md
 [`extern` blocks]: items/external-blocks.md
@@ -250,6 +292,3 @@ fn invoke4() {}
 [type expressions]: types.md#type-expressions
 [type]: types.md
 [union]: items/unions.md
-
-<!-- 2020-11-12-->
-<!-- checked -->

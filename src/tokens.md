@@ -1,8 +1,8 @@
 # Tokens
 
 >[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
->commit: 6fc7f89282f8ce3154a769ce453c90e41e3eb731 \
->本章译文最后维护日期：2022-03-14
+>commit: e06b267eeb7bed90605dd63f6cae585674e0b1f5 \
+>本章译文最后维护日期：2022-04-17
 
 
 token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：
@@ -19,7 +19,7 @@ token 是采用非递归方式的正则文法(regular languages)定义的基本�
 ## Literals
 ## 字面量
 
-字面量是一个由单一 token（而不是由一连串 tokens）组成的表达式，它立即、直接表示它所代表的值，而不是通过名称或其他一些求值/计算规则来引用它。字面量是[常量表达式](const_eval.md#constant-expressions)的一种形式，所以它（主要）用在编译时求值。
+字面量是[字面量表达式][literal expressions]中使用的各种 token。
 
 ### Examples
 ### 示例
@@ -310,63 +310,54 @@ b"\\x52"; br"\x52";                  // \x52
 * *八进制字面量*以字符序列 `U+0030` `U+006F`（`0o`）开头，后跟八进制数字和下划线的任意组合（至少一个数字）。
 * *二进制字面量*以字符序列 `U+0030` `U+0062`（`0b`）开头，后跟二进制数字和下划线的任意组合（至少一个数字）。
 
-与其它字面量一样，整型字面量后面可紧跟一个*整型后缀*，该后缀强制设定了字面量的数据类型。整型后缀须为如下整型类型之一：`u8`、`i8`、`u16`、`i16`、`u32`、`i32`、`u64`、`i64`、`u128`、`i128`、`usize` 或 `isize`。
+与其它字面量一样，整型字面量后面可紧跟一个*整型后缀*，该后缀强制设定了字面量的数据类型。整型后缀须是[原生整型类型][numeric types]中的一个，包括：`u8`、`i8`、`u16`、`i16`、`u32`、`i32`、`u64`、`i64`、`u128`、`i128`、`usize` 或 `isize`。
+参见[字面量表达式][literal expressions]以了解这些后缀的功能效果。
 
-*无后缀*整型字面量的类型通过类型推断确定：
-
-* 如果整型类型可以通过程序上下文*唯一*确定，则无后缀整型字面量的类型即为该类型。
-* 如果程序上下文对类型约束不足，则默认为 32-bit 有符号整型，即 `i32`。
-* 如果程序上下文对类型约束过度，则报静态类型错误。
-
-各种形式的整型字面量示例：
+各种形式的整型字面量的示例：
 
 ```rust
-123;                               // 类型 i32
-123i32;                            // 类型 i32
-123u32;                            // 类型 u32
-123_u32;                           // 类型 u32
-let a: u64 = 123;                  // 类型 u64
+# #![allow(overflowing_literals)]
+123;
+123i32;
+123u32;
+123_u32;
 
-0xff;                              // 类型 i32
-0xff_u8;                           // 类型 u8
+0xff;
+0xff_u8;
+0x01_f32; // 注意这是整数 7986, 不是浮点数 1.0
+0x01_e3;  // 注意这是整数 483, 不是浮点数 1000.0
 
-0o70;                              // 类型 i32
-0o70_i16;                          // 类型 i16
+0o70;
+0o70_i16;
 
-0b1111_1111_1001_0000;             // 类型 i32
-0b1111_1111_1001_0000i64;          // 类型 i64
-0b________1;                       // 类型 i32
+0b1111_1111_1001_0000;
+0b1111_1111_1001_0000i64;
+0b________1;
 
-0usize;                            // 类型 usize
-```
+0usize;
 
-无效整型字面量示例:
-
-```rust,compile_fail
-// 无效后缀
-
-0invalidSuffix;
-
-// 数字进制错误
-
-123AFB43;
-0b0102;
-0o0581;
-
-// 类型溢出
+// 下面这些对它们的类型来说太打了，但仍是有效的 token
 
 128_i8;
 256_u8;
 
-// 二进制、十六进制、八进制的进制前缀后至少需要一个数字
+```
+
+注意对于 `-1i8` 这样的，其实它被分析为两个 token: `-` 后跟 `1i8`。
+
+无效整型字面量示例:
+
+```rust,compile_fail
+// 使用了错误的进制数
+
+0b0102;
+0o0581;
+
+// 二进制, 十六进制 和 八进制字面量至少需要有一个数字
 
 0b_;
 0b____;
 ```
-
-请注意，Rust 句法将 `-1i8` 视为[一元取反运算符][unary minus operator]对整型字面量 `1i8` 的应用，而不是将它视为单个整型字面量。
-
-[unary minus operator]: expressions/operator-expr.md#negation-operators
 
 #### Tuple index
 #### 元组索引
@@ -396,14 +387,14 @@ let horse = example.0b10;  // 错误：没有 `0b10` 字段
 > **<sup>词法</sup>**\
 > FLOAT_LITERAL :\
 > &nbsp;&nbsp; &nbsp;&nbsp; DEC_LITERAL `.`
->   _（紧跟着的不能是 `.`, `_` 或者[标识符][identifier]）_\
+>   _（紧跟着的不能是 `.`, `_` 或者 XID_Start类型的字符)__\
 > &nbsp;&nbsp; | DEC_LITERAL FLOAT_EXPONENT\
 > &nbsp;&nbsp; | DEC_LITERAL `.` DEC_LITERAL FLOAT_EXPONENT<sup>?</sup>\
 > &nbsp;&nbsp; | DEC_LITERAL (`.` DEC_LITERAL)<sup>?</sup>
 >                    FLOAT_EXPONENT<sup>?</sup> FLOAT_SUFFIX
 >
 > FLOAT_EXPONENT :\
-> &nbsp;&nbsp; (`e`|`E`) (`+`|`-`)?
+> &nbsp;&nbsp; (`e`|`E`) (`+`|`-`)<sup>?</sup>
 >               (DEC_DIGIT|`_`)<sup>\*</sup> DEC_DIGIT (DEC_DIGIT|`_`)<sup>\*</sup>
 >
 > FLOAT_SUFFIX :\
@@ -414,43 +405,103 @@ let horse = example.0b10;  // 错误：没有 `0b10` 字段
 * *十进制字面量*后跟句点字符 `U+002E` (`.`)。后面可选地跟着另一个十进制数字，还可以再接一个可选的*指数*。
 * *十进制字面量*后跟一个*指数*。
 
-如同整型字面量，浮点型字面量也可后跟一个后缀，但在后缀之前，浮点型字面量部分不以 `U+002E`（`.`）结尾。后缀强制设定了字面量类型。有两种有效的*浮点型后缀*：`f32` 和 `f64`（32-bit 和 64-bit 浮点类型），它们显式地指定了字面量的类型。
-
-
-* If the program context under-constrains the type, it defaults to `f64`.
-
-* If the program context over-constrains the type, it is considered a
-  static type error.
-*无后缀*浮点型字面量的类型通过类型推断确定：
-
-* 如果浮点型类型可以通过程序上下文*唯一*确定，则无后缀浮点型字面量的类型即为该类型。
-* 如果程序上下文对类型约束不足，则默认为 `f64`。
-* 如果程序上下文对类型过度约束，则报静态类型错误。
+如同整型字面量，浮点型字面量也可后跟一个后缀，但在后缀之前，浮点型字面量部分不以 `U+002E`（`.`）结尾。
+有两种有效的*浮点型后缀*：`f32` 和 `f64` （32-bit 和 64-bit [原生浮点型][floating-point types]）。
+参见[字面量表达式][literal expressions]以了解这类后缀的功能效果。
 
 各种形式的浮点型字面量示例：
 
 ```rust
-123.0f64;        // 类型 f64
-0.1f64;          // 类型 f64
-0.1f32;          // 类型 f32
-12E+99_f64;      // 类型 f64
-5f32;            // 类型 f32
-let x: f64 = 2.; // 类型 f64
+123.0f64;
+0.1f64;
+0.1f32;
+12E+99_f64;
+5f32;
+let x: f64 = 2.;
 ```
 
 最后一个例子稍显不同，因为不能对一个以句点结尾的浮点型字面量使用后缀句法，`2.f64` 会尝试在 `2` 上调用名为 `f64` 的方法。
 
-浮点数的表形(representation)语义在[“和平台相关的类型”][machine types]中有描述。
+请注意，像 `-1.0` 这样的会被分析为两个 token： `-` 后跟 `1.0`。
 
-### Boolean literals
-### 布尔型字面量
+#### Number pseudoliterals
+#### 伪数字字面量
 
-> **<sup>词法</sup>**\
-> BOOLEAN_LITERAL :\
-> &nbsp;&nbsp; &nbsp;&nbsp; `true`\
-> &nbsp;&nbsp; | `false`
+> **<sup>Lexer</sup>**\
+> NUMBER_PSEUDOLITERAL :\
+> &nbsp;&nbsp; &nbsp;&nbsp; DEC_LITERAL ( . DEC_LITERAL )<sup>?</sup> FLOAT_EXPONENT\
+> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; ( NUMBER_PSEUDOLITERAL_SUFFIX | INTEGER_SUFFIX )\
+> &nbsp;&nbsp; | DEC_LITERAL . DEC_LITERAL\
+> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; ( NUMBER_PSEUDOLITERAL_SUFFIX_NO_E | INTEGER SUFFIX )\
+> &nbsp;&nbsp; | DEC_LITERAL NUMBER_PSEUDOLITERAL_SUFFIX_NO_E\
+> &nbsp;&nbsp; | ( BIN_LITERAL | OCT_LITERAL | HEX_LITERAL )\
+> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; ( NUMBER_PSEUDOLITERAL_SUFFIX_NO_E | FLOAT_SUFFIX )
+>
+> NUMBER_PSEUDOLITERAL_SUFFIX :\
+> &nbsp;&nbsp; IDENTIFIER_OR_KEYWORD <sub>_不能匹配 INTEGER_SUFFIX 或 FLOAT_SUFFIX_</sub>
+>
+> NUMBER_PSEUDOLITERAL_SUFFIX_NO_E :\
+> &nbsp;&nbsp; NUMBER_PSEUDOLITERAL_SUFFIX <sub>_不以 `e` 或者 `E` 开头_</sub>
 
-布尔类型有两个值，写为：`true` 和 `false`。
+数字型的字面量的 token化允许使用上述词法表述中的任意后缀。
+那些值可以生成有效的 token，但却又不是合法的[字面量表达式][literal expressions]的情况通常都是错误的，当然宏参数除外。
+
+这种 token 的示例:
+```rust,compile_fail
+0invalidSuffix;
+123AFB43;
+0b010a;
+0xAB_CD_EF_GH;
+2.0f80;
+2e5f80;
+2e5e6;
+2.0e5e6;
+1.3e10u64;
+0b1111_f32;
+```
+
+#### Reserved forms similar to number literals
+#### 类似于数字字面量的保留形式
+
+> **<sup>Lexer</sup>**\
+> RESERVED_NUMBER :\
+> &nbsp;&nbsp; &nbsp;&nbsp; BIN_LITERAL \[`2`-`9`&ZeroWidthSpace;]\
+> &nbsp;&nbsp; | OCT_LITERAL \[`8`-`9`&ZeroWidthSpace;]\
+> &nbsp;&nbsp; | ( BIN_LITERAL | OCT_LITERAL | HEX_LITERAL ) `.` \
+> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; _(不能直接后跟 `.`, `_` 或一个 XID_Start类型的字符)_\
+> &nbsp;&nbsp; | ( BIN_LITERAL | OCT_LITERAL ) `e`\
+> &nbsp;&nbsp; | `0b` `_`<sup>\*</sup> _end of input or not BIN_DIGIT_\
+> &nbsp;&nbsp; | `0o` `_`<sup>\*</sup> _end of input or not OCT_DIGIT_\
+> &nbsp;&nbsp; | `0x` `_`<sup>\*</sup> _end of input or not HEX_DIGIT_\
+> &nbsp;&nbsp; | DEC_LITERAL ( . DEC_LITERAL)<sup>?</sup> (`e`|`E`) (`+`|`-`)<sup>?</sup> _end of input or not DEC_DIGIT_
+
+后面词法形式和数字字面量差不多的*保留形式*。
+由于这些可能会引起歧义，它们会被 token转化器(tokenizer)拒绝，而不是被解释为单独的 token。
+
+* 不带后缀的二进制或八进制字面量，不插入空格的后跟一个超出其进制数字字符范围的十进制数字。
+
+* 不带后缀的二进制、八进制或十六进制字面量，不插入空格的后跟一个句点字符（句点后面的内容与浮点数字面量相同）。
+
+* 不带前缀的二进制或八进制字面量，不加空格的后跟字符`e`。
+
+* 以一个进制数前缀开始的输入，但又不是有效的二进制、八进制或十六进制字面量（因为它没包含数字）。
+
+* 具有浮点型字面量形式且指数中没有数字的输入。
+
+这些保留形式的示例：
+
+```rust,compile_fail
+0b0102;  // 这可不是 `0b010` 后跟 `2`
+0o1279;  // 这可不是 `0o127` 后跟 `9`
+0x80.0;  // 这可不是 `0x80` 后跟 `.` and `0`
+0b101e;  // 这不是一个伪字面量，也不是 `0b101` 后跟 `e`
+0b;      // 这不是一个伪字面量，也不是 `0` 后跟  `b`
+0b_;     // 这不是一个伪字面量，也不是 `0` 后跟  `b_`
+2e;      // 这不是一个伪字面量，也不是 `2` 后跟 `e`
+2.0e;    // 这不是一个伪字面量，也不是 `2.0` 后跟 `e`
+2em;     // 这不是一个伪字面量，也不是 `2` 后跟 `em`
+2.0em;   // 这不是一个伪字面量，也不是 `2.0` 后跟 `em`
+```
 
 ## Lifetimes and loop labels
 ## 生存期和循环标签
@@ -464,8 +515,6 @@ let x: f64 = 2.; // 类型 f64
 > &nbsp;&nbsp; &nbsp;&nbsp; `'` [NON_KEYWORD_IDENTIFIER][identifier]
 
 生存期参数和[循环标签][loop labels]使用 LIFETIME_OR_LABEL 类型的 token。（尽管 LIFETIME_OR_LABEL 是 LIFETIME_TOKEN 的子集，但）任何符合 LIFETIME_TOKEN 约定的 token 也都能被上述词法分析规则所接受，比如 LIFETIME_TOKEN 类型的 token 在宏中就可以畅通无阻的使用。
-
-[loop labels]: expressions/loop-expr.md
 
 ## Punctuation
 ## 标点符号
@@ -532,60 +581,8 @@ let x: f64 = 2.; // 类型 f64
 | `[` `]` | 方/中括号    |
 | `(` `)` | 圆/小括号    |
 
-
-[Inferred types]: types/inferred.md
-[Range patterns]: patterns.md#range-patterns
-[Reference patterns]: patterns.md#reference-patterns
-[Subpattern binding]: patterns.md#identifier-patterns
-[Wildcard patterns]: patterns.md#wildcard-pattern
-[arith]: expressions/operator-expr.md#arithmetic-and-logical-binary-operators
-[array types]: types/array.md
-[assignment]: expressions/operator-expr.md#assignment-expressions
-[attributes]: attributes.md
-[borrow]: expressions/operator-expr.md#borrow-operators
-[closures]: expressions/closure-expr.md
-[comparison]: expressions/operator-expr.md#comparison-operators
-[compound]: expressions/operator-expr.md#compound-assignment-expressions
-[constants]: items/constant-items.md
-[dereference]: expressions/operator-expr.md#the-dereference-operator
-[destructuring assignment]: expressions/underscore-expr.md
-[extern crates]: items/extern-crates.md
-[extern]: items/external-blocks.md
-[field]: expressions/field-expr.md
-[function pointer type]: types/function-pointer.md
-[functions]: items/functions.md
-[generics]: items/generics.md
-[identifier]: identifiers.md
-[`if let`]: expressions/if-expr.md#if-let-expressions
-[keywords]: keywords.md
-[lazy-bool]: expressions/operator-expr.md#lazy-boolean-operators
-[machine types]: types/numeric.md
-[macros]: macros-by-example.md
-[match]: expressions/match-expr.md
-[negation]: expressions/operator-expr.md#negation-operators
-[negative impls]: items/implementations.md
-[never type]: types/never.md
-[paths]: paths.md
-[patterns]: patterns.md
-[question]: expressions/operator-expr.md#the-question-mark-operator
-[range]: expressions/range-expr.md
-[rangepat]: patterns.md#range-patterns
-[raw pointers]: types/pointer.md#raw-pointers-const-and-mut
-[references]: types/pointer.md
-[sized]: trait-bounds.md#sized
-[struct expressions]: expressions/struct-expr.md
-[trait bounds]: trait-bounds.md
-[tuple index]: expressions/tuple-expr.md#tuple-indexing-expressions
-[tuple structs]: items/structs.md
-[tuple variants]: items/enumerations.md
-[tuples]: types/tuple.md
-[use declarations]: items/use-declarations.md
-[use wildcards]: items/use-declarations.md
-[`while let`]: expressions/loop-expr.md#predicate-pattern-loops
-
 ## Reserved prefixes
 ## 保留前缀
-
 
 > **<sup>词法 2021+</sup>**\
 > RESERVED_TOKEN_DOUBLE_QUOTE : ( IDENTIFIER_OR_KEYWORD <sub>_排除 `b` 或 `r` 或 `br`_</sub> | `_` ) `"`\
@@ -620,3 +617,57 @@ let x: f64 = 2.; // 类型 f64
 > lexes!{continue'foo}
 > lexes!{match"..." {}}
 > ```
+
+[Inferred types]: types/inferred.md
+[Range patterns]: patterns.md#range-patterns
+[Reference patterns]: patterns.md#reference-patterns
+[Subpattern binding]: patterns.md#identifier-patterns
+[Wildcard patterns]: patterns.md#wildcard-pattern
+[arith]: expressions/operator-expr.md#arithmetic-and-logical-binary-operators
+[array types]: types/array.md
+[assignment]: expressions/operator-expr.md#assignment-expressions
+[attributes]: attributes.md
+[borrow]: expressions/operator-expr.md#borrow-operators
+[closures]: expressions/closure-expr.md
+[comparison]: expressions/operator-expr.md#comparison-operators
+[compound]: expressions/operator-expr.md#compound-assignment-expressions
+[constants]: items/constant-items.md
+[dereference]: expressions/operator-expr.md#the-dereference-operator
+[destructuring assignment]: expressions/underscore-expr.md
+[extern crates]: items/extern-crates.md
+[extern]: items/external-blocks.md
+[field]: expressions/field-expr.md
+[floating-point types]: types/numeric.md#floating-point-types
+[function pointer type]: types/function-pointer.md
+[functions]: items/functions.md
+[generics]: items/generics.md
+[identifier]: identifiers.md
+[`if let`]: expressions/if-expr.md#if-let-expressions
+[keywords]: keywords.md
+[lazy-bool]: expressions/operator-expr.md#lazy-boolean-operators
+[literal expressions]: expressions/literal-expr.md
+[loop labels]: expressions/loop-expr.md
+[macros]: macros-by-example.md
+[match]: expressions/match-expr.md
+[negation]: expressions/operator-expr.md#negation-operators
+[negative impls]: items/implementations.md
+[never type]: types/never.md
+[numeric types]: types/numeric.md
+[paths]: paths.md
+[patterns]: patterns.md
+[question]: expressions/operator-expr.md#the-question-mark-operator
+[range]: expressions/range-expr.md
+[rangepat]: patterns.md#range-patterns
+[raw pointers]: types/pointer.md#raw-pointers-const-and-mut
+[references]: types/pointer.md
+[sized]: trait-bounds.md#sized
+[struct expressions]: expressions/struct-expr.md
+[trait bounds]: trait-bounds.md
+[tuple index]: expressions/tuple-expr.md#tuple-indexing-expressions
+[tuple structs]: items/structs.md
+[tuple variants]: items/enumerations.md
+[tuples]: types/tuple.md
+[unary minus operator]: expressions/operator-expr.md#negation-operators
+[use declarations]: items/use-declarations.md
+[use wildcards]: items/use-declarations.md
+[`while let`]: expressions/loop-expr.md#predicate-pattern-loops

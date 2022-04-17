@@ -2,8 +2,8 @@
 # 路径
 
 >[paths.md](https://github.com/rust-lang/reference/blob/master/src/paths.md)\
->commit: fb880fb6bd5f094566f2724c164998c071d013db \
->本章译文最后维护日期：2022-03-14
+>commit: a0a7e18957047363efb7f3ea30b9f7e5e3d5abe3 \
+>本章译文最后维护日期：2022-04-17
 
 *路径*是一个或多个由命名空间<span class="parenthetical">限定符(`::`)</span>*逻辑*分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，`::` 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的[程序项][item]或[变量][variable]。如果路径包含多个路径段，则总是引用程序项。
 
@@ -87,7 +87,7 @@ Vec::<u8>::with_capacity(1024);
 > &nbsp;&nbsp; _QualifiedPathType_ (`::` _PathExprSegment_)<sup>+</sup>
 >
 > _QualifiedPathType_ :\
-> &nbsp;&nbsp; `<` [_Type_] (`as` _TypePath_)? `>`
+> &nbsp;&nbsp; `<` [_Type_] (`as` _TypePath_)<sup>?</sup> `>`
 >
 > _QualifiedPathInType_ :\
 > &nbsp;&nbsp; _QualifiedPathType_ (`::` _TypePathSegment_)<sup>+</sup>

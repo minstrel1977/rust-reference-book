@@ -1,28 +1,28 @@
 # Destructors
-# 析构函数
+# 析构器
 
 >[destructors.md](https://github.com/rust-lang/reference/blob/master/src/destructors.md)\
->commit: 314567f7cdfde14f4f615eac971ec7f25b5e85b3 \
->本章译文最后维护日期：2021-07-31
+>commit: f1a8b53ad6ad9c09e7b621549683429ce60a22f1 \
+>本章译文最后维护日期：2022-04-16
 
 
-当一个[初始化][initialized]了的[变量][variable]或[临时变量][temporary]超出[作用域](#drop-scopes)时，其*析构函数(destructor)*将运行，或者说它将被*销毁(dropped)*。此外，[赋值][Assignment]操作也会运行其左操作数的析构函数（如果它已经初始化了）。如果变量只部分初始化了，则只销毁其已初始化的字段。
+当一个[初始化][initialized]了的[变量][variable]或[临时变量][temporary]超出[作用域](#drop-scopes)时，其*析构器(destructor)*将运行，或者说它将被*销毁(dropped)*。此外，[赋值][Assignment]操作也会运行其左操作数的析构器（如果它已经初始化了）。如果变量只部分初始化了，则只销毁其已初始化的字段。
 
-类型`T` 的析构函数由以下内容组成：
+类型`T` 的析构器由以下内容组成：
 
 1. 如果其有约束 `T: Drop`, 则调用 [`<T as std::ops::Drop>::drop`]
-2. 递归运行其所有字段的析构函数。
+2. 递归运行其所有字段的析构器。
     * [结构体(`struct`)][struct]的字段按其声明顺序被销毁。
     * 活动状态的[枚举变体][enum variant]的字段按其声明顺序销毁。
     * [元组][tuple]中的字段按顺序销毁。
     * [数组][array]或拥有所有权的[切片][slice]的元素的销毁顺序是从第一个元素到最后一个元素。
     * [闭包][closure]通过移动(move)语义捕获的变量的销毁顺序未明确定义。
-    * [trait对象][Trait objects]的销毁会运行其非具名基类(underlying type)的析构函数。
+    * [trait对象][Trait objects]的销毁会运行其非具名基类(underlying type)的析构器。
     * 其他类型不会导致任何进一步的销毁动作发生。
 
-如果析构函数必须手动运行，比如在实现自定义的智能指针时，可以使用标准库函数 [`std::ptr::drop_in_place`]。
+如果析构器必须手动运行，比如在实现自定义的智能指针时，可以使用标准库函数 [`std::ptr::drop_in_place`]。
 
-举些（析构函数的）例子：
+举些（析构器的）例子：
 
 ```rust
 struct PrintOnDrop(&'static str);
@@ -39,7 +39,7 @@ overwritten = PrintOnDrop("当作用域结束时执行销毁");
 let tuple = (PrintOnDrop("Tuple first"), PrintOnDrop("Tuple second"));
 
 let moved;
-// 没有析构函数在赋值时运行
+// 没有析构器在赋值时运行
 moved = PrintOnDrop("Drops when moved");
 // 这里执行销毁，但随后变量进入未初始化状态
 moved;
@@ -215,7 +215,7 @@ loop {
 ### Constant promotion
 ### 常量提升
 
-当表达式可以被写入到一个常量中，并被被借用时，就会将此值表达式提升到 `'static`插槽(`'static` slot)状态，此时还可以通过此借用的逆操作（解引用）来解出最初写入的表达式，并且也不会改变运行时行为。也就是说，可以在编译时对此提升了的表达式进行求值，这求得的值不具备[内部可变性][interior mutability]或不包含[析构函数][destructors]（这些特性在可能的情况下根据具体的值确定，例如 `&None` 的类型总是 `&'static Option<_>`，因为 `&None` 的值是唯一确定的）。
+当表达式可以被写入到一个常量中，并被被借用时，就会将此值表达式提升到 `'static`插槽(`'static` slot)状态，此时还可以通过此借用的逆操作（解引用）来解出最初写入的表达式，并且也不会改变运行时行为。也就是说，可以在编译时对此提升了的表达式进行求值，这求得的值不具备[内部可变性][interior mutability]或不包含[析构器][destructors]（这些特性在可能的情况下根据具体的值确定，例如 `&None` 的类型总是 `&'static Option<_>`，因为 `&None` 的值是唯一确定的）。
 
 ### Temporary lifetime extension
 ### 临时生存期扩展
@@ -293,7 +293,9 @@ let x = (&temp()).use_temp();  // ERROR
 ## Not running destructors
 ## 阻断执行析构操作
 
-在 Rust 中，即便类型不是 `'static`，禁止执行析构操作也是允许的，也是安全的。[`std::mem::ManuallyDrop`] 提供了一个包装器(wrapper)来防止变量或字段被自动销毁。
+[`std::mem::forget`] 被用来阻断变量的的析构操作，[`std::mem::ManuallyDrop`] 提供了一个包装器(wrapper)来防止变量或字段被自动销毁。
+> 注意：通过 [`std:：mem:：forget`] 或其他方式阻止一个变量的析构操作是安全的，即使此变量的类型不是 `'static`。
+> 除了本文档定义的能确保析构器正常运行的地方之外，类型的可靠性却依赖于析构器的正常执行，那此类型将不那么保险。
 
 [^译注1]: 后文有时也直接简称为作用域。
 
@@ -347,7 +349,5 @@ let x = (&temp()).use_temp();  // ERROR
 
 [`<T as std::ops::Drop>::drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html#tymethod.drop
 [`std::ptr::drop_in_place`]: https://doc.rust-lang.org/std/ptr/fn.drop_in_place.html
+[`std::mem::forget`]: https://doc.rust-lang.org/std/mem/fn.forget.html
 [`std::mem::ManuallyDrop`]: https://doc.rust-lang.org/std/mem/struct.ManuallyDrop.html
-
-<!-- 2020-11-12-->
-<!-- checked -->

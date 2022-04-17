@@ -169,8 +169,8 @@
 <h1><a class="header" href="#外部块" id="外部块">外部块</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md">external-blocks.md</a><br />
-commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
-本章译文最后维护日期：2021-07-31</p>
+commit: 0fc5e6dbf0f500fabd38653aa87f9d721d59b3b8 <br />
+本章译文最后维护日期：2022-04-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -245,7 +245,11 @@ extern &quot;stdcall&quot; { }
 <li><code>static</code> — 表示库类型是静态库。</li>
 <li><code>framework</code> — 表示库类型是 macOS 框架。这只对 macOS 目标平台有效。</li>
 </ul>
-<p>如果指定了 <code>kind</code>键，则必须指定 <code>name</code>键。</p>
+<p>如果指定了 <code>kind</code>键，则必须有 <code>name</code>键。</p>
+<p>可选的 <code>modifiers</code>参数提供了一种为库指定链接修饰符的方法。
+修饰符被指定为以逗号分隔的字符串，每个修饰符的前缀都是 <code>+</code> 或 <code>-</code>，分别表示修饰符处于启用或禁用状态。
+当前不支持在单个 <code>link</code>属性中指定多个 <code>modifiers</code>参数，或在同一个 <code>modifiers</code>参数中指定多个相同的修饰符。</p>
+<p>例如: <code>#[link(name = &quot;mylib&quot;, kind = &quot;static&quot;, modifiers = &quot;+whole-archive&quot;)</code>.</p>
 <p>当从主机环境导入 symbols 时，<code>wasm_import_module</code>键可用于为外部(<code>extern</code>)块中的程序项指定 <a href="https://webassembly.github.io/spec/core/syntax/modules.html">WebAssembly模块</a>名称。如果未指定 <code>wasm_import_module</code>，则默认模块名为 <code>env</code>。</p>
 <!-- ignore: requires extern linking -->
 <pre><code class="language-rust ignore">#[link(name = &quot;crypto&quot;)]
@@ -264,6 +268,12 @@ extern {
 }
 </code></pre>
 <p>在空外部块上添加 <code>link</code>属性是有效的。可以用这种方式来满足代码中其他地方的外部块的链接需求（包括上游 crate），而不必向每个外部块都添加此属性。</p>
+<h4><a class="header" href="#linking-modifiers-whole-archive" id="linking-modifiers-whole-archive">Linking modifiers: <code>whole-archive</code></a></h4>
+<h4><a class="header" href="#链接修饰符-whole-archive" id="链接修饰符-whole-archive">链接修饰符: <code>whole-archive</code></a></h4>
+<p>此修饰符仅与静态(<code>static</code>)链接类型兼容。
+使用任何其他链接类型都会引起编译器报错。</p>
+<p><code>+whole-archive</code> 意味着静态库会被链接为一个完整的 archive 文件，而不丢弃任何对象文件。
+有关此修饰符的更多实现细节，请参见<a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-whole-archive">rustc文档</a>。</p>
 <h3><a class="header" href="#the-link_name-attribute" id="the-link_name-attribute">The <code>link_name</code> attribute</a></h3>
 <h3><a class="header" href="#link_name属性" id="link_name属性"><code>link_name</code>属性</a></h3>
 <p>可以在外部(<code>extern</code>)块内的程序项声明上指定 <code>link_name</code>属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法指定 symbol 的名称。</p>
