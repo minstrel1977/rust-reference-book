@@ -168,8 +168,8 @@
                         <h1><a class="header" href="#crate-和源文件" id="crate-和源文件">crate 和源文件</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md">crates-and-source-files.md</a><br />
-commit: 8da7c7d3d9bef2a4e71176cfba9e8390af175826 <br />
-本章译文最后维护日期：2021-11-27</p>
+commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 <br />
+本章译文最后维护日期：2022-04-29</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -226,16 +226,28 @@ fn main() {
 <!-- 本节是为了让其他资料的链入链接不止于立即失效，一旦其他链接被更新，本节就会删除 -->
 <h2><a class="header" href="#main-functions" id="main-functions">Main Functions</a></h2>
 <h2><a class="header" href="#main函数" id="main函数">main函数</a></h2>
-<p>包含 <code>main</code><a href="items/functions.html">函数</a>的 crate 可以被编译成可执行文件。如果一个 <code>main</code>函数存在，它必须不能有参数，不能对其声明任何 <a href="trait-bounds.html">trait约束或生存期约束</a>，不能有任何 <a href="items/generics.html#where-clauses">where子句</a>，并且它的返回类型必须是以下类型之一:</p>
+<p>包含 <code>main</code><a href="items/functions.html">函数</a>的 crate 可以被编译成可执行文件。如果一个 <code>main</code>函数存在，它必须不能有参数，不能对其声明任何 <a href="trait-bounds.html">trait约束或生存期约束</a>，不能有任何 <a href="items/generics.html#where-clauses">where子句</a>，并且它的返回类型必须实现 <a href="https://doc.rust-lang.org/std/process/trait.Termination.html"><code>Termination</code></a> trait:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {}
+</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust">fn main() -&gt; ! {
+    std::process::exit(0);
+}
+</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust">fn main() -&gt; impl std::process::Termination {
+    std::process::ExitCode::SUCCESS
+}
+</code></pre></pre>
+<blockquote>
+<p><strong>注意</strong>: 标准库中，实现 <a href="https://doc.rust-lang.org/std/process/trait.Termination.html"><code>Termination</code></a> trait 的类型包括：</p>
 <ul>
 <li><code>()</code></li>
-<li><code>Result&lt;(), E&gt; where E: Error</code></li>
+<li><a href="types/never.html"><code>!</code></a></li>
+<li><a href="https://doc.rust-lang.org/std/process/struct.ExitCode.html"><code>ExitCode</code></a></li>
+<li><code>Result&lt;(), E&gt; where E: Debug</code></li>
+<li><code>Result&lt;Infallible, E&gt; where E: Debug</code></li>
 </ul>
-<!-- * `!` -->
-<!-- * Result<!, E> where E: Error` -->
-<blockquote>
-<p>注意: 允许哪些返回类型的实现是由暂未稳定的 <a href="https://doc.rust-lang.org/std/process/trait.Termination.html"><code>Termination</code></a> trait 决定的。</p>
 </blockquote>
+<!-- > * Result<!, E> where E: Debug` -->
 <!-- 如果前面这节需要更新 (从 "必须不能有参数" 开始, 同时需要修改 attributes/testing.md 文件 -->
 <h3><a class="header" href="#the-no_main-attribute" id="the-no_main-attribute">The <code>no_main</code> attribute</a></h3>
 <h3><a class="header" href="#no_main属性" id="no_main属性"><code>no_main</code>属性</a></h3>

@@ -169,8 +169,8 @@
 <h1><a class="header" href="#特殊类型和-trait" id="特殊类型和-trait">特殊类型和 trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/special-types-and-traits.md">special-types-and-traits.md</a><br />
-commit: d3cf0c6645e8049e7403e3e548d51773efd8a623 <br />
-本章译文最后维护日期：2021-11-21</p>
+commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 <br />
+本章译文最后维护日期：2022-04-29</p>
 </blockquote>
 <p><a href="https://doc.rust-lang.org/std/index.html">标准库</a>中的某些类型和 trait 在 Rust 编译器中也直接能用。本章就阐述了这些类型和 trait 的特殊特性。</p>
 <h2><a class="header" href="#boxt" id="boxt"><code>Box&lt;T&gt;</code></a></h2>
@@ -219,6 +219,8 @@ commit: d3cf0c6645e8049e7403e3e548d51773efd8a623 <br />
 <p><a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> trait 表明这种类型的值可以安全地从一个线程发送给另一个线程。</p>
 <h2><a class="header" href="#sync" id="sync"><code>Sync</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> trait 表示在多个线程之间共享这种类型的值是安全的。必须为不可变<a href="items/static-items.html">静态(<code>static</code>)项</a>中使用的所有类型实现此 trait。</p>
+<h2><a class="header" href="#termination" id="termination"><code>Termination</code></a></h2>
+<p><a href="https://doc.rust-lang.org/std/process/trait.Termination.html"><code>Termination</code></a> trait 表示 <a href="crates-and-source-files.html#main-functions">main函数</a>或 <a href="attributes/testing.html#the-test-attribute">test函数</a> 那些可被接受的返回类型。</p>
 <h2><a class="header" href="#auto-traits" id="auto-traits">Auto traits</a></h2>
 <p><a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a>、<a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a>、<a href="https://doc.rust-lang.org/std/marker/trait.Unpin.html"><code>Unpin</code></a>、<a href="https://doc.rust-lang.org/std/panic/trait.UnwindSafe.html"><code>UnwindSafe</code></a> 和 <a href="https://doc.rust-lang.org/std/panic/trait.RefUnwindSafe.html"><code>RefUnwindSafe</code></a> trait 都是<em>自动trait(auto traits)</em>。自动trait 具有特殊的属性。</p>
 <p>对于给定类型，如果没有为其显式实现或否定实现(negative implementation)某自动trait，那么编译器就会根据以下规则去自动此为类型实现该自动trait：</p>

@@ -2,20 +2,20 @@
 # 测试类属性
 
 >[testing.md](https://github.com/rust-lang/reference/blob/master/src/attributes/testing.md)\
->commit: b0e0ad6490d6517c19546b1023948986578fc378 \
->本章译文最后维护日期：2020-11-10
+>commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 \
+>本章译文最后维护日期：2022-04-29
 
 以下[属性][attributes]用于指定函数来执行测试。在“测试(test)”模式下编译 crate 可以构建测试函数以及构建用于执行测试（函数）的测试套件(test harness)。启用测试模式还会启用 [`test`条件编译选项][`test` conditional compilation option]。
 
 ## The `test` attribute
 ## `test`属性
 
-*`test`属性*标记一个用来执行测试的函数。这些函数只在测试模式下编译。测试函数必须是自由函数和单态函数，不能有参数，返回类型必须是以下类型之一：
+*`test`属性*标记一个用来执行测试的函数。这些函数只在测试模式下编译。测试函数必须是自由函数和单态函数，不能有参数，返回类型必须实现 [`Termination`] trait，例如：
 
 * `()`
-* `Result<(), E> where E: Error`
-<!-- * `!` -->
-<!-- * Result<!, E> where E: Error` -->
+* `Result<(), E> where E: Debug`
+* `!`
+<!-- * Result<!, E> where E: Debug` -->
 
 > 注意：允许哪些返回类型是由暂未稳定的 [`Termination`] trait 决定的。
 
@@ -24,6 +24,12 @@
 > 注意：测试模式是通过将 `--test` 参数选项传递给 `rustc` 或使用 `cargo test` 来启用的。
 
 返回 `()` 的测试只要结束(terminate)且没有触发 panic 就会通过。返回 `Result<(), E>` 的测试只要它们返回 `Ok(())` 就算通过。不结束的测试既不（计为）通过也不（计为）失败。
+测试工具调用返回值的 [`report`]方法，并根据表示程序是否成功结束(termination)的返回码 [`ExitCode`] 来判定将本次测试为通过或失败。
+需要特别提醒的是：
+* 只要程序结束且没有 panic，那么返回 `()` 的测试就可以算是通过。
+* 只要返回 `Ok(())`，那么返回结果为 `Result<(), E>`的测试就算通过。
+* 返回 `ExitCode::SUCCESS` 的测试算是通过，返回 `ExitCode::FAILURE` 的测试算是失败。
+* 不结束的测试既不通过也不失败。
 
 ```rust
 # use std::io;
@@ -72,8 +78,7 @@ fn mytest() {
 [_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
 [_MetaNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
 [`Termination`]: https://doc.rust-lang.org/std/process/trait.Termination.html
+[`report`]: https://doc.rust-lang.org/std/process/trait.Termination.html#tymethod.report
 [`test` conditional compilation option]: ../conditional-compilation.md#test
 [attributes]: ../attributes.md
-
-<!-- 2020-11-12-->
-<!-- checked -->
+[`ExitCode`]: https://doc.rust-lang.org/std/process/struct.ExitCode.html

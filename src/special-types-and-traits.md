@@ -2,8 +2,8 @@
 # 特殊类型和 trait
 
 >[special-types-and-traits.md](https://github.com/rust-lang/reference/blob/master/src/special-types-and-traits.md)\
->commit: d3cf0c6645e8049e7403e3e548d51773efd8a623 \
->本章译文最后维护日期：2021-11-21
+>commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 \
+>本章译文最后维护日期：2022-04-29
 
 [标准库][the standard library]中的某些类型和 trait 在 Rust 编译器中也直接能用。本章就阐述了这些类型和 trait 的特殊特性。
 
@@ -78,6 +78,9 @@
 
 [`Sync`] trait 表示在多个线程之间共享这种类型的值是安全的。必须为不可变[静态(`static`)项][`static` items]中使用的所有类型实现此 trait。
 
+## `Termination`
+
+[`Termination`] trait 表示 [main函数][main function]或 [test函数][test functions] 那些可被接受的返回类型。
 ## Auto traits
 
 [`Send`]、[`Sync`]、[`Unpin`]、[`UnwindSafe`] 和 [`RefUnwindSafe`] trait 都是*自动trait(auto traits)*。自动trait 具有特殊的属性。
@@ -124,6 +127,7 @@
 [`std::cmp`]: https://doc.rust-lang.org/std/cmp/index.html
 [`std::marker::PhantomData<T>`]: https://doc.rust-lang.org/std/marker/struct.PhantomData.html
 [`std::ops`]: https://doc.rust-lang.org/std/ops/index.html
+[`Termination`]: https://doc.rust-lang.org/std/process/trait.Termination.html
 [`UnwindSafe`]: https://doc.rust-lang.org/std/panic/trait.UnwindSafe.html
 [`Sync`]: https://doc.rust-lang.org/std/marker/trait.Sync.html
 [`Unpin`]: https://doc.rust-lang.org/std/marker/trait.Unpin.html
@@ -141,11 +145,13 @@
 [implementation items]: items/implementations.md
 [indexing expressions]: expressions/array-expr.md#array-and-slice-indexing-expressions
 [interior mutability]: interior-mutability.md
+[main function]: crates-and-source-files.md#main-functions
 [Methods]: items/associated-items.md#associated-functions-and-methods
 [method resolution]: expressions/method-call-expr.md
 [operators]: expressions/operator-expr.md
 [orphan rules]: items/implementations.md#trait-implementation-coherence
 [`static` items]: items/static-items.md
+[test functions]: attributes/testing.md#the-test-attribute
 [the standard library]: https://doc.rust-lang.org/std/index.html
 [trait object]: types/trait-object.md
 [Tuples]: types/tuple.md

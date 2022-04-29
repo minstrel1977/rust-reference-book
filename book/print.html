@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2022-04-16</p>
+<p>本书跟随原文截止日期：2022-04-29</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -1915,8 +1915,8 @@ fn invoke4() {}
 <h1><a class="header" href="#crate-和源文件" id="crate-和源文件">crate 和源文件</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md">crates-and-source-files.md</a><br />
-commit: 8da7c7d3d9bef2a4e71176cfba9e8390af175826 <br />
-本章译文最后维护日期：2021-11-27</p>
+commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 <br />
+本章译文最后维护日期：2022-04-29</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -1973,16 +1973,28 @@ fn main() {
 <!-- 本节是为了让其他资料的链入链接不止于立即失效，一旦其他链接被更新，本节就会删除 -->
 <h2><a class="header" href="#main-functions" id="main-functions">Main Functions</a></h2>
 <h2><a class="header" href="#main函数" id="main函数">main函数</a></h2>
-<p>包含 <code>main</code><a href="items/functions.html">函数</a>的 crate 可以被编译成可执行文件。如果一个 <code>main</code>函数存在，它必须不能有参数，不能对其声明任何 <a href="trait-bounds.html">trait约束或生存期约束</a>，不能有任何 <a href="items/generics.html#where-clauses">where子句</a>，并且它的返回类型必须是以下类型之一:</p>
+<p>包含 <code>main</code><a href="items/functions.html">函数</a>的 crate 可以被编译成可执行文件。如果一个 <code>main</code>函数存在，它必须不能有参数，不能对其声明任何 <a href="trait-bounds.html">trait约束或生存期约束</a>，不能有任何 <a href="items/generics.html#where-clauses">where子句</a>，并且它的返回类型必须实现 <a href="https://doc.rust-lang.org/std/process/trait.Termination.html"><code>Termination</code></a> trait:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {}
+</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust">fn main() -&gt; ! {
+    std::process::exit(0);
+}
+</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust">fn main() -&gt; impl std::process::Termination {
+    std::process::ExitCode::SUCCESS
+}
+</code></pre></pre>
+<blockquote>
+<p><strong>注意</strong>: 标准库中，实现 <a href="https://doc.rust-lang.org/std/process/trait.Termination.html"><code>Termination</code></a> trait 的类型包括：</p>
 <ul>
 <li><code>()</code></li>
-<li><code>Result&lt;(), E&gt; where E: Error</code></li>
+<li><a href="types/never.html"><code>!</code></a></li>
+<li><a href="https://doc.rust-lang.org/std/process/struct.ExitCode.html"><code>ExitCode</code></a></li>
+<li><code>Result&lt;(), E&gt; where E: Debug</code></li>
+<li><code>Result&lt;Infallible, E&gt; where E: Debug</code></li>
 </ul>
-<!-- * `!` -->
-<!-- * Result<!, E> where E: Error` -->
-<blockquote>
-<p>注意: 允许哪些返回类型的实现是由暂未稳定的 <a href="https://doc.rust-lang.org/std/process/trait.Termination.html"><code>Termination</code></a> trait 决定的。</p>
 </blockquote>
+<!-- > * Result<!, E> where E: Debug` -->
 <!-- 如果前面这节需要更新 (从 "必须不能有参数" 开始, 同时需要修改 attributes/testing.md 文件 -->
 <h3><a class="header" href="#the-no_main-attribute" id="the-no_main-attribute">The <code>no_main</code> attribute</a></h3>
 <h3><a class="header" href="#no_main属性" id="no_main属性"><code>no_main</code>属性</a></h3>
@@ -5002,19 +5014,19 @@ pub fn f() {}
 <h1><a class="header" href="#测试类属性" id="测试类属性">测试类属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/testing.md">testing.md</a><br />
-commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
-本章译文最后维护日期：2020-11-10</p>
+commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 <br />
+本章译文最后维护日期：2022-04-29</p>
 </blockquote>
 <p>以下<a href="attributes/../attributes.html">属性</a>用于指定函数来执行测试。在“测试(test)”模式下编译 crate 可以构建测试函数以及构建用于执行测试（函数）的测试套件(test harness)。启用测试模式还会启用 <a href="attributes/../conditional-compilation.html#test"><code>test</code>条件编译选项</a>。</p>
 <h2><a class="header" href="#the-test-attribute" id="the-test-attribute">The <code>test</code> attribute</a></h2>
 <h2><a class="header" href="#test属性" id="test属性"><code>test</code>属性</a></h2>
-<p><em><code>test</code>属性</em>标记一个用来执行测试的函数。这些函数只在测试模式下编译。测试函数必须是自由函数和单态函数，不能有参数，返回类型必须是以下类型之一：</p>
+<p><em><code>test</code>属性</em>标记一个用来执行测试的函数。这些函数只在测试模式下编译。测试函数必须是自由函数和单态函数，不能有参数，返回类型必须实现 <a href="https://doc.rust-lang.org/std/process/trait.Termination.html"><code>Termination</code></a> trait，例如：</p>
 <ul>
 <li><code>()</code></li>
-<li><code>Result&lt;(), E&gt; where E: Error</code></li>
+<li><code>Result&lt;(), E&gt; where E: Debug</code></li>
+<li><code>!</code></li>
 </ul>
-<!-- * `!` -->
-<!-- * Result<!, E> where E: Error` -->
+<!-- * Result<!, E> where E: Debug` -->
 <blockquote>
 <p>注意：允许哪些返回类型是由暂未稳定的 <a href="https://doc.rust-lang.org/std/process/trait.Termination.html"><code>Termination</code></a> trait 决定的。</p>
 </blockquote>
@@ -5022,7 +5034,15 @@ commit: b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <blockquote>
 <p>注意：测试模式是通过将 <code>--test</code> 参数选项传递给 <code>rustc</code> 或使用 <code>cargo test</code> 来启用的。</p>
 </blockquote>
-<p>返回 <code>()</code> 的测试只要结束(terminate)且没有触发 panic 就会通过。返回 <code>Result&lt;(), E&gt;</code> 的测试只要它们返回 <code>Ok(())</code> 就算通过。不结束的测试既不（计为）通过也不（计为）失败。</p>
+<p>返回 <code>()</code> 的测试只要结束(terminate)且没有触发 panic 就会通过。返回 <code>Result&lt;(), E&gt;</code> 的测试只要它们返回 <code>Ok(())</code> 就算通过。不结束的测试既不（计为）通过也不（计为）失败。
+测试工具调用返回值的 <a href="https://doc.rust-lang.org/std/process/trait.Termination.html#tymethod.report"><code>report</code></a>方法，并根据表示程序是否成功结束(termination)的返回码 <a href="https://doc.rust-lang.org/std/process/struct.ExitCode.html"><code>ExitCode</code></a> 来判定将本次测试为通过或失败。
+需要特别提醒的是：</p>
+<ul>
+<li>只要程序结束且没有 panic，那么返回 <code>()</code> 的测试就可以算是通过。</li>
+<li>只要返回 <code>Ok(())</code>，那么返回结果为 <code>Result&lt;(), E&gt;</code>的测试就算通过。</li>
+<li>返回 <code>ExitCode::SUCCESS</code> 的测试算是通过，返回 <code>ExitCode::FAILURE</code> 的测试算是失败。</li>
+<li>不结束的测试既不通过也不失败。</li>
+</ul>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -5068,8 +5088,6 @@ fn mytest() {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<!-- 2020-11-12-->
-<!-- checked -->
 <h1><a class="header" href="#derive" id="derive">Derive</a></h1>
 <h1><a class="header" href="#派生" id="派生">派生</a></h1>
 <blockquote>
@@ -11501,8 +11519,8 @@ const RESOLVED_STATIC: &amp;dyn Fn(&amp;Foo, &amp;Bar) -&gt; &amp;Baz = &amp;som
 <h1><a class="header" href="#特殊类型和-trait" id="特殊类型和-trait">特殊类型和 trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/special-types-and-traits.md">special-types-and-traits.md</a><br />
-commit: d3cf0c6645e8049e7403e3e548d51773efd8a623 <br />
-本章译文最后维护日期：2021-11-21</p>
+commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 <br />
+本章译文最后维护日期：2022-04-29</p>
 </blockquote>
 <p><a href="https://doc.rust-lang.org/std/index.html">标准库</a>中的某些类型和 trait 在 Rust 编译器中也直接能用。本章就阐述了这些类型和 trait 的特殊特性。</p>
 <h2><a class="header" href="#boxt" id="boxt"><code>Box&lt;T&gt;</code></a></h2>
@@ -11551,6 +11569,8 @@ commit: d3cf0c6645e8049e7403e3e548d51773efd8a623 <br />
 <p><a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> trait 表明这种类型的值可以安全地从一个线程发送给另一个线程。</p>
 <h2><a class="header" href="#sync" id="sync"><code>Sync</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> trait 表示在多个线程之间共享这种类型的值是安全的。必须为不可变<a href="items/static-items.html">静态(<code>static</code>)项</a>中使用的所有类型实现此 trait。</p>
+<h2><a class="header" href="#termination" id="termination"><code>Termination</code></a></h2>
+<p><a href="https://doc.rust-lang.org/std/process/trait.Termination.html"><code>Termination</code></a> trait 表示 <a href="crates-and-source-files.html#main-functions">main函数</a>或 <a href="attributes/testing.html#the-test-attribute">test函数</a> 那些可被接受的返回类型。</p>
 <h2><a class="header" href="#auto-traits" id="auto-traits">Auto traits</a></h2>
 <p><a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a>、<a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a>、<a href="https://doc.rust-lang.org/std/marker/trait.Unpin.html"><code>Unpin</code></a>、<a href="https://doc.rust-lang.org/std/panic/trait.UnwindSafe.html"><code>UnwindSafe</code></a> 和 <a href="https://doc.rust-lang.org/std/panic/trait.RefUnwindSafe.html"><code>RefUnwindSafe</code></a> trait 都是<em>自动trait(auto traits)</em>。自动trait 具有特殊的属性。</p>
 <p>对于给定类型，如果没有为其显式实现或否定实现(negative implementation)某自动trait，那么编译器就会根据以下规则去自动此为类型实现该自动trait：</p>

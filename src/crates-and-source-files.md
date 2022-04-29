@@ -1,8 +1,8 @@
 # crate 和源文件
 
 >[crates-and-source-files.md](https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md)\
->commit: 8da7c7d3d9bef2a4e71176cfba9e8390af175826 \
->本章译文最后维护日期：2021-11-27
+>commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 \
+>本章译文最后维护日期：2022-04-29
 
 > **<sup>句法</sup>**\
 > _Crate_ :\
@@ -70,14 +70,30 @@ fn main() {
 ## Main Functions
 ## main函数
 
-包含 `main`[函数][function]的 crate 可以被编译成可执行文件。如果一个 `main`函数存在，它必须不能有参数，不能对其声明任何 [trait约束或生存期约束][trait or lifetime bounds]，不能有任何 [where子句][where clauses]，并且它的返回类型必须是以下类型之一:
+包含 `main`[函数][function]的 crate 可以被编译成可执行文件。如果一个 `main`函数存在，它必须不能有参数，不能对其声明任何 [trait约束或生存期约束][trait or lifetime bounds]，不能有任何 [where子句][where clauses]，并且它的返回类型必须实现 [`Termination`] trait:
 
-* `()`
-* `Result<(), E> where E: Error`
-<!-- * `!` -->
-<!-- * Result<!, E> where E: Error` -->
+```rust
+fn main() {}
+```
+```rust
+fn main() -> ! {
+    std::process::exit(0);
+}
+```
+```rust
+fn main() -> impl std::process::Termination {
+    std::process::ExitCode::SUCCESS
+}
+```
 
-> 注意: 允许哪些返回类型的实现是由暂未稳定的 [`Termination`] trait 决定的。
+> **注意**: 标准库中，实现 [`Termination`] trait 的类型包括：
+>
+> * `()`
+> * [`!`]
+> * [`ExitCode`]
+> * `Result<(), E> where E: Debug`
+> * `Result<Infallible, E> where E: Debug`
+<!-- > * Result<!, E> where E: Debug` -->
 
 <!-- 如果前面这节需要更新 (从 "必须不能有参数" 开始, 同时需要修改 attributes/testing.md 文件 -->
 
@@ -102,11 +118,13 @@ crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 `_` (U
 [^cratesourcefile]: crate 有点类似于 ECMA-335 CLI 模型中的 *assembly*、SML/NJ 编译管理器中的 *library*、Owens 和 Flatt 模块系统中的 *unit*， 或 Mesa 中的 *configuration*。
 
 [Unicode alphanumeric]: https://doc.rust-lang.org/std/primitive.char.html#method.is_alphanumeric
+[`!`]: types/never.md
 [_InnerAttribute_]: attributes.md
 [_Item_]: items.md
 [_MetaNameValueStr_]: attributes.md#meta-item-attribute-syntax
 [_shebang_]: https://en.wikipedia.org/wiki/Shebang_(Unix)
 [_utf8 byte order mark_]: https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8
+[`ExitCode`]: https://doc.rust-lang.org/std/process/struct.ExitCode.html
 [`Termination`]: https://doc.rust-lang.org/std/process/trait.Termination.html
 [attribute]: attributes.md
 [attributes]: attributes.md
