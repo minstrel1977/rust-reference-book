@@ -2,8 +2,8 @@
 # Use声明
 
 >[use-declarations.md](https://github.com/rust-lang/reference/blob/master/src/items/use-declarations.md)\
->commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef \
->本章译文最后维护日期：2021-06-19
+>commit: 868850de68713cb7e1dc2ac8031d8978d801bddf \
+>本章译文最后维护日期：2022-06-17
 
 > **<sup>句法:</sup>**\
 > _UseDeclaration_ :\
@@ -31,13 +31,15 @@ use声明支持多种便捷方法:
 `use`声明的一个示例：
 
 ```rust
-use std::option::Option::{Some, None};
 use std::collections::hash_map::{self, HashMap};
 
 fn foo<T>(_: T){}
 fn bar(map1: HashMap<String, usize>, map2: hash_map::HashMap<String, usize>){}
 
 fn main() {
+    // use声明也可以存在于函数体内
+    use std::option::Option::{Some, None};
+
     // 等价于 'foo(vec![std::option::Option::Some(1.0f64), std::option::Option::None]);'
     foo(vec![Some(1.0f64), None]);
 

@@ -169,8 +169,8 @@
 <h1><a class="header" href="#子类型化和型变" id="子类型化和型变">子类型化和型变</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/subtyping.md">subtyping.md</a><br />
-commit: f26485de1ad88be2cc9ff131a4aee57cea562a95 <br />
-本章译文最后维护日期：2021-12-11</p>
+commit: db4124306287420c2b9d80a9687c86e2057be716 <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <p>子类型化是隐式的，可以出现在类型检查或类型推断的任何阶段。
 Rust 中的子类型化的适用范围非常有限，仅出现在和生存期(lifetimes)的型变(variance)相关的地方，以及那些和高阶生存期相关的类型型变之间。
@@ -222,23 +222,46 @@ let supertype: &amp;for&lt;'c&gt; fn(&amp;'c i32, &amp;'c i32) = subtype;
 <tr><td><code>[T]</code> 和 <code>[T; n]</code></td><td></td><td>协变的</td></tr>
 <tr><td><code>fn() -&gt; T</code></td><td></td><td>协变的</td></tr>
 <tr><td><code>fn(T) -&gt; ()</code></td><td></td><td>逆变的</td></tr>
-<tr><td><code>fn(T) -&gt; T</code></td><td></td><td>不变的</td></tr>
 <tr><td><code>std::cell::UnsafeCell&lt;T&gt;</code></td><td></td><td>不变的</td></tr>
 <tr><td><code>std::marker::PhantomData&lt;T&gt;</code></td><td></td><td>协变的</td></tr>
 <tr><td><code>dyn Trait&lt;T&gt; + 'a</code></td><td>协变的</td><td>不变的</td></tr>
 </tbody></table>
-<p>结构体(<code>struct</code>)、枚举(<code>enum</code>)、联合体(<code>union</code>)和元组(tuple)类型上的型变关系是通过查看其字段类型的型变关系来决定的。
+<p>结构体(<code>struct</code>)、枚举(<code>enum</code>)和联合体(<code>union</code>)类型上的型变关系是通过查看其字段类型的型变关系来决定的。
 如果参数用在了多处且具有不同型变关系的位置上，则该类型在该参数上是不变的。
-例如，下面示例的结构体在 <code>'a</code> 和 <code>T</code> 上是协变的，在 <code>'b</code> 和 <code>U</code> 上是不变的。</p>
+例如，下面示例的结构体在 <code>'a</code> 和 <code>T</code> 上是协变的，在 <code>'b</code>、<code>'c</code> 和 <code>U</code> 上是不变的。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::cell::UnsafeCell;
-struct Variance&lt;'a, 'b, T, U: 'a&gt; {
+struct Variance&lt;'a, 'b, 'c, T, U: 'a&gt; {
     x: &amp;'a U,               // 这让 `Variance` 在 'a 上是协变的, 也让在 U 上是协变的, 但是后面也使用了 U
     y: *const T,            // 在 T 上是协变的
     z: UnsafeCell&lt;&amp;'b f64&gt;, // 在 'b 上是不变的
     w: *mut U,              // 在 U 上是不变的, 所以让整个结构体在 U 上是不变的
+
+    f: fn(&amp;'c ()) -&gt; &amp;'c () // 无论是协变还是逆变，都会导致此结构体在 'c 上不变。
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>当在结构体(<code>struct</code>)、枚举(<code>enum</code>)和联合体(<code>union</code>)之外使用时，会在每个位置分别检查参数的型变。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">use std::cell::UnsafeCell;
+</span>fn generic_tuple&lt;'short, 'long: 'short&gt;(
+    // 'long 同时应用在一个元组里的协变和不变的位置上
+    x: (&amp;'long u32, UnsafeCell&lt;&amp;'long u32&gt;),
+) {
+    // 由于这些位置的型变是单独计算的，我们可以在协变位置自由地收缩 'long。
+    let _: (&amp;'short u32, UnsafeCell&lt;&amp;'long u32&gt;) = x;
+}
+
+fn takes_fn_ptr&lt;'short, 'middle: 'short&gt;(
+    // 'middle 被用在了一个既是协变又是逆变的位置上。
+    f: fn(&amp;'middle ()) -&gt; &amp;'middle (),
+) {
+    // 由于这些位置的型变是单独计算的，我们可以在协变位置自由地收缩 'middle，并在逆变位置拉伸它。
+    let _: fn(&amp;'static ()) -&gt; &amp;'short () = f;
 }
 <span class="boring">}
 </span></code></pre></pre>

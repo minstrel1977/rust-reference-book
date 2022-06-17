@@ -2,8 +2,8 @@
 # 内联汇编
 
 >[behavior-considered-undefined.md](https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md)\
->commit: 62e75b64721057c705d1441fe265c190dc2b2f2e \
->本章译文最后维护日期：2022-04-17
+>commit: b74825d8f88b685e239ade00f00de68ba4cd63d4 \
+>本章译文最后维护日期：2022-06-17
 
 Rust 通过 [`asm!`] 和 [`global_asm!`] 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。
@@ -48,7 +48,7 @@ assert_eq!(x, 4 * 6);
 ```text
 format_string := STRING_LITERAL / RAW_STRING_LITERAL
 dir_spec := "in" / "out" / "lateout" / "inout" / "inlateout"
-reg_spec := <register class> / "<explicit register>"
+reg_spec := <register class> / "\"" <explicit register> "\""
 operand_expr := expr / "_" / expr "=>" expr / expr "=>" "_"
 reg_operand := dir_spec "(" reg_spec ")" operand_expr
 operand := reg_operand
@@ -169,8 +169,10 @@ ARM目标架构上，使用 `.syntax unified`模式。
 | x86 | `ymm_reg` | `ymm[0-7]` (x86) `ymm[0-15]` (x86-64) | `x` |
 | x86 | `zmm_reg` | `zmm[0-7]` (x86) `zmm[0-31]` (x86-64) | `v` |
 | x86 | `kreg` | `k[1-7]` | `Yk` |
+| x86 | `kreg0` | `k0` | 仅 clobbers |
 | x86 | `x87_reg` | `st([0-7])` | 仅 clobbers |
 | x86 | `mmx_reg` | `mm[0-7]` | 仅 clobbers |
+| x86-64 | `tmm_reg` | `tmm[0-7]` | 仅 clobbers |
 | AArch64 | `reg` | `x[0-30]` | `r` |
 | AArch64 | `vreg` | `v[0-31]` | `w` |
 | AArch64 | `vreg_low16` | `v[0-15]` | `x` |
@@ -194,7 +196,7 @@ ARM目标架构上，使用 `.syntax unified`模式。
 >
 > - 在x86-64上，`reg_byte`寄存器类中没有高位寄存器（例如没有 `ah`）。
 >
-> - 一些寄存器类被标记为 "仅 clobbers"，这意味着它们不能用于输入或输出，只能用于 `out("reg") _` 或 `lateout("reg") _` 形式的 clobbers。
+> - 一些寄存器类被标记为 "仅 clobbers" 意味着此类中的寄存器不能被用于输入或输出，只能用于 `out(<explicit register>) _` 或 `lateout(<explicit register>) _` 这样的表达形式的。
 
 每个寄存器类都有可以与之一起使用的值类型的约束。
 这是必要的，因为值被加载到寄存器的方式取决于它的类型。
@@ -213,6 +215,7 @@ ARM目标架构上，使用 `.syntax unified`模式。
 | x86 | `kreg` | `avx512bw` | `i32`, `i64` |
 | x86 | `mmx_reg` | N/A | 仅 clobbers |
 | x86 | `x87_reg` | N/A | 仅 clobbers |
+| x86 | `tmm_reg` | N/A | 仅 clobbers |
 | AArch64 | `reg` | None | `i8`, `i16`, `i32`, `f32`, `i64`, `f64` |
 | AArch64 | `vreg` | `neon` | `i8`, `i16`, `i32`, `f32`, `i64`, `f64`, <br> `i8x8`, `i16x4`, `i32x2`, `i64x1`, `f32x2`, `f64x1`, <br> `i8x16`, `i16x8`, `i32x4`, `i64x2`, `f32x4`, `f64x2` |
 | AArch64 | `preg` | N/A | 仅 clobbers |
@@ -296,7 +299,6 @@ ARM目标架构上，使用 `.syntax unified`模式。
 | All | `bp` (x86), `x29` (AArch64), `x8` (RISC-V) | 帧指针不能用作输入或输出。|
 | ARM | `r7` or `r11` | 在 ARM 上，帧指针可以是 `r7` 或 `r11`，具体取决于目标架构。帧指针不能用作输入或输出。|
 | All | `si` (x86-32), `bx` (x86-64), `r6` (ARM), `x19` (AArch64), `x9` (RISC-V) | LLVM 在内部将其用作具有复杂栈帧的函数的“基指针”。|
-| x86 | `k0` | 这是一个不能修改的常量零寄存器。|
 | x86 | `ip` | 这是程序计数器，不是真正的寄存器。|
 | AArch64 | `xzr` | 这是一个不能修改的常量零寄存器。 |
 | AArch64 | `x18` | 这是一些 AArch64目标架构上的操作系统预留寄存器。 |
@@ -368,7 +370,7 @@ ARM目标架构上，使用 `.syntax unified`模式。
 ## ABI clobbers
 
 关键字`clobber_abi` 可用于将与之对应的一组默认的 clobber寄存器应用于 `asm!`块内。
-这在调用具有特定调用约定的函数时，会根据需要自动插入必要的 clobber约束：如果调用约定没有在调用过程中完整保持寄存器的值，则会将 `lateout("reg") _` 隐式添加到操作列表中。
+这在调用具有特定调用约定的函数时，会根据需要自动插入必要的 clobber约束：如果调用约定没有在调用过程中完整保持寄存器的值，则会将 `lateout("...") _` 隐式添加到操作列表中 (其中 `...` 要用具体的寄存器名字替换掉)。
 
 `clobber_abi` 可以指定任意多次。它将为所有指定了调用约定的寄存器集合中的所有单一寄存器都分配一个 clobber寄存器。
 
@@ -379,8 +381,8 @@ ARM目标架构上，使用 `.syntax unified`模式。
 | 体系架构 | ABI名称 | Clobbered寄存器 |
 | ------------ | -------- | ------------------- |
 | x86-32 | `"C"`, `"system"`, `"efiapi"`, `"cdecl"`, `"stdcall"`, `"fastcall"` | `ax`, `cx`, `dx`, `xmm[0-7]`, `mm[0-7]`, `k[1-7]`, `st([0-7])` |
-| x86-64 | `"C"`, `"system"` (Windows平台), `"efiapi"`, `"win64"` | `ax`, `cx`, `dx`, `r[8-11]`, `xmm[0-31]`, `mm[0-7]`, `k[1-7]`, `st([0-7])` |
-| x86-64 | `"C"`, `"system"` (非Windows平台), `"sysv64"` | `ax`, `cx`, `dx`, `si`, `di`, `r[8-11]`, `xmm[0-31]`, `mm[0-7]`, `k[1-7]`, `st([0-7])` |
+| x86-64 | `"C"`, `"system"` (Windows平台), `"efiapi"`, `"win64"` | `ax`, `cx`, `dx`, `r[8-11]`, `xmm[0-31]`, `mm[0-7]`, `k[1-7]`, `st([0-7])`, `tmm[0-7]`  |
+| x86-64 | `"C"`, `"system"` (在非Windows平台上), `"sysv64"` | `ax`, `cx`, `dx`, `si`, `di`, `r[8-11]`, `xmm[0-31]`, `mm[0-7]`, `k[1-7]`, `st([0-7])`, `tmm[0-7]`  |
 | AArch64 | `"C"`, `"system"`, `"efiapi"` | `x[0-17]`, `x18`\*, `x30`, `v[0-31]`, `p[0-15]`, `ffr` |
 | ARM | `"C"`, `"system"`, `"efiapi"`, `"aapcs"` | `r[0-3]`, `r12`, `r14`, `s[0-15]`, `d[0-7]`, `d[16-31]` |
 | RISC-V | `"C"`, `"system"`, `"efiapi"` | `x1`, `x[5-7]`, `x[10-17]`, `x[28-31]`, `f[0-7]`, `f[10-17]`, `f[28-31]`, `v[0-31]` |

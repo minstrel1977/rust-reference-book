@@ -169,8 +169,8 @@
 <h1><a class="header" href="#内联汇编" id="内联汇编">内联汇编</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md">behavior-considered-undefined.md</a><br />
-commit: 62e75b64721057c705d1441fe265c190dc2b2f2e <br />
-本章译文最后维护日期：2022-04-17</p>
+commit: b74825d8f88b685e239ade00f00de68ba4cd63d4 <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <p>Rust 通过 <a href="https://doc.rust-lang.org/core/arch/macro.asm.html"><code>asm!</code></a> 和 <a href="https://doc.rust-lang.org/core/arch/macro.global_asm.html"><code>global_asm!</code></a> 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。</p>
@@ -209,7 +209,7 @@ assert_eq!(x, 4 * 6);
 <p>下面的 ABNF语法规范指定了通用的内联汇编语法：</p>
 <pre><code class="language-text">format_string := STRING_LITERAL / RAW_STRING_LITERAL
 dir_spec := &quot;in&quot; / &quot;out&quot; / &quot;lateout&quot; / &quot;inout&quot; / &quot;inlateout&quot;
-reg_spec := &lt;register class&gt; / &quot;&lt;explicit register&gt;&quot;
+reg_spec := &lt;register class&gt; / &quot;\&quot;&quot; &lt;explicit register&gt; &quot;\&quot;&quot;
 operand_expr := expr / &quot;_&quot; / expr &quot;=&gt;&quot; expr / expr &quot;=&gt;&quot; &quot;_&quot;
 reg_operand := dir_spec &quot;(&quot; reg_spec &quot;)&quot; operand_expr
 operand := reg_operand
@@ -326,8 +326,10 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 <tr><td>x86</td><td><code>ymm_reg</code></td><td><code>ymm[0-7]</code> (x86) <code>ymm[0-15]</code> (x86-64)</td><td><code>x</code></td></tr>
 <tr><td>x86</td><td><code>zmm_reg</code></td><td><code>zmm[0-7]</code> (x86) <code>zmm[0-31]</code> (x86-64)</td><td><code>v</code></td></tr>
 <tr><td>x86</td><td><code>kreg</code></td><td><code>k[1-7]</code></td><td><code>Yk</code></td></tr>
+<tr><td>x86</td><td><code>kreg0</code></td><td><code>k0</code></td><td>仅 clobbers</td></tr>
 <tr><td>x86</td><td><code>x87_reg</code></td><td><code>st([0-7])</code></td><td>仅 clobbers</td></tr>
 <tr><td>x86</td><td><code>mmx_reg</code></td><td><code>mm[0-7]</code></td><td>仅 clobbers</td></tr>
+<tr><td>x86-64</td><td><code>tmm_reg</code></td><td><code>tmm[0-7]</code></td><td>仅 clobbers</td></tr>
 <tr><td>AArch64</td><td><code>reg</code></td><td><code>x[0-30]</code></td><td><code>r</code></td></tr>
 <tr><td>AArch64</td><td><code>vreg</code></td><td><code>v[0-31]</code></td><td><code>w</code></td></tr>
 <tr><td>AArch64</td><td><code>vreg_low16</code></td><td><code>v[0-15]</code></td><td><code>x</code></td></tr>
@@ -356,7 +358,7 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 <p>在x86-64上，<code>reg_byte</code>寄存器类中没有高位寄存器（例如没有 <code>ah</code>）。</p>
 </li>
 <li>
-<p>一些寄存器类被标记为 &quot;仅 clobbers&quot;，这意味着它们不能用于输入或输出，只能用于 <code>out(&quot;reg&quot;) _</code> 或 <code>lateout(&quot;reg&quot;) _</code> 形式的 clobbers。</p>
+<p>一些寄存器类被标记为 &quot;仅 clobbers&quot; 意味着此类中的寄存器不能被用于输入或输出，只能用于 <code>out(&lt;explicit register&gt;) _</code> 或 <code>lateout(&lt;explicit register&gt;) _</code> 这样的表达形式的。</p>
 </li>
 </ul>
 </blockquote>
@@ -375,6 +377,7 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 <tr><td>x86</td><td><code>kreg</code></td><td><code>avx512bw</code></td><td><code>i32</code>, <code>i64</code></td></tr>
 <tr><td>x86</td><td><code>mmx_reg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
 <tr><td>x86</td><td><code>x87_reg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
+<tr><td>x86</td><td><code>tmm_reg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
 <tr><td>AArch64</td><td><code>reg</code></td><td>None</td><td><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>f32</code>, <code>i64</code>, <code>f64</code></td></tr>
 <tr><td>AArch64</td><td><code>vreg</code></td><td><code>neon</code></td><td><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>f32</code>, <code>i64</code>, <code>f64</code>, <br> <code>i8x8</code>, <code>i16x4</code>, <code>i32x2</code>, <code>i64x1</code>, <code>f32x2</code>, <code>f64x1</code>, <br> <code>i8x16</code>, <code>i16x8</code>, <code>i32x4</code>, <code>i64x2</code>, <code>f32x4</code>, <code>f64x2</code></td></tr>
 <tr><td>AArch64</td><td><code>preg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
@@ -452,7 +455,6 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 <tr><td>All</td><td><code>bp</code> (x86), <code>x29</code> (AArch64), <code>x8</code> (RISC-V)</td><td>帧指针不能用作输入或输出。</td></tr>
 <tr><td>ARM</td><td><code>r7</code> or <code>r11</code></td><td>在 ARM 上，帧指针可以是 <code>r7</code> 或 <code>r11</code>，具体取决于目标架构。帧指针不能用作输入或输出。</td></tr>
 <tr><td>All</td><td><code>si</code> (x86-32), <code>bx</code> (x86-64), <code>r6</code> (ARM), <code>x19</code> (AArch64), <code>x9</code> (RISC-V)</td><td>LLVM 在内部将其用作具有复杂栈帧的函数的“基指针”。</td></tr>
-<tr><td>x86</td><td><code>k0</code></td><td>这是一个不能修改的常量零寄存器。</td></tr>
 <tr><td>x86</td><td><code>ip</code></td><td>这是程序计数器，不是真正的寄存器。</td></tr>
 <tr><td>AArch64</td><td><code>xzr</code></td><td>这是一个不能修改的常量零寄存器。</td></tr>
 <tr><td>AArch64</td><td><code>x18</code></td><td>这是一些 AArch64目标架构上的操作系统预留寄存器。</td></tr>
@@ -518,15 +520,15 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 但如果某个操作的所有引用都已包含了修饰符，则对该操作的警告将会被抑制。</p>
 <h2><a class="header" href="#abi-clobbers" id="abi-clobbers">ABI clobbers</a></h2>
 <p>关键字<code>clobber_abi</code> 可用于将与之对应的一组默认的 clobber寄存器应用于 <code>asm!</code>块内。
-这在调用具有特定调用约定的函数时，会根据需要自动插入必要的 clobber约束：如果调用约定没有在调用过程中完整保持寄存器的值，则会将 <code>lateout(&quot;reg&quot;) _</code> 隐式添加到操作列表中。</p>
+这在调用具有特定调用约定的函数时，会根据需要自动插入必要的 clobber约束：如果调用约定没有在调用过程中完整保持寄存器的值，则会将 <code>lateout(&quot;...&quot;) _</code> 隐式添加到操作列表中 (其中 <code>...</code> 要用具体的寄存器名字替换掉)。</p>
 <p><code>clobber_abi</code> 可以指定任意多次。它将为所有指定了调用约定的寄存器集合中的所有单一寄存器都分配一个 clobber寄存器。</p>
 <p>当使用 <code>clobber_abi</code> 时，不允许把通用寄存器类作为输出寄存器类来指定：此时所有输出寄存器必须显式指定。
 有 <code>clobber_abi</code> 时，把显式输出寄存器标记为输出寄存器的工作优先于给寄存器隐式插入 clobber标志：此时只有当该寄存器明确未用作输出时，才会为寄存器插入 clobber标记。
 以下的 ABI 可与 <code>clobber_abi</code> 一起使用：</p>
 <table><thead><tr><th>体系架构</th><th>ABI名称</th><th>Clobbered寄存器</th></tr></thead><tbody>
 <tr><td>x86-32</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code>, <code>&quot;efiapi&quot;</code>, <code>&quot;cdecl&quot;</code>, <code>&quot;stdcall&quot;</code>, <code>&quot;fastcall&quot;</code></td><td><code>ax</code>, <code>cx</code>, <code>dx</code>, <code>xmm[0-7]</code>, <code>mm[0-7]</code>, <code>k[1-7]</code>, <code>st([0-7])</code></td></tr>
-<tr><td>x86-64</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code> (Windows平台), <code>&quot;efiapi&quot;</code>, <code>&quot;win64&quot;</code></td><td><code>ax</code>, <code>cx</code>, <code>dx</code>, <code>r[8-11]</code>, <code>xmm[0-31]</code>, <code>mm[0-7]</code>, <code>k[1-7]</code>, <code>st([0-7])</code></td></tr>
-<tr><td>x86-64</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code> (非Windows平台), <code>&quot;sysv64&quot;</code></td><td><code>ax</code>, <code>cx</code>, <code>dx</code>, <code>si</code>, <code>di</code>, <code>r[8-11]</code>, <code>xmm[0-31]</code>, <code>mm[0-7]</code>, <code>k[1-7]</code>, <code>st([0-7])</code></td></tr>
+<tr><td>x86-64</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code> (Windows平台), <code>&quot;efiapi&quot;</code>, <code>&quot;win64&quot;</code></td><td><code>ax</code>, <code>cx</code>, <code>dx</code>, <code>r[8-11]</code>, <code>xmm[0-31]</code>, <code>mm[0-7]</code>, <code>k[1-7]</code>, <code>st([0-7])</code>, <code>tmm[0-7]</code></td></tr>
+<tr><td>x86-64</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code> (在非Windows平台上), <code>&quot;sysv64&quot;</code></td><td><code>ax</code>, <code>cx</code>, <code>dx</code>, <code>si</code>, <code>di</code>, <code>r[8-11]</code>, <code>xmm[0-31]</code>, <code>mm[0-7]</code>, <code>k[1-7]</code>, <code>st([0-7])</code>, <code>tmm[0-7]</code></td></tr>
 <tr><td>AArch64</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code>, <code>&quot;efiapi&quot;</code></td><td><code>x[0-17]</code>, <code>x18</code>*, <code>x30</code>, <code>v[0-31]</code>, <code>p[0-15]</code>, <code>ffr</code></td></tr>
 <tr><td>ARM</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code>, <code>&quot;efiapi&quot;</code>, <code>&quot;aapcs&quot;</code></td><td><code>r[0-3]</code>, <code>r12</code>, <code>r14</code>, <code>s[0-15]</code>, <code>d[0-7]</code>, <code>d[16-31]</code></td></tr>
 <tr><td>RISC-V</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code>, <code>&quot;efiapi&quot;</code></td><td><code>x1</code>, <code>x[5-7]</code>, <code>x[10-17]</code>, <code>x[28-31]</code>, <code>f[0-7]</code>, <code>f[10-17]</code>, <code>f[28-31]</code>, <code>v[0-31]</code></td></tr>

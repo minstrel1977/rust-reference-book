@@ -169,8 +169,8 @@
 <h1><a class="header" href="#函数" id="函数">函数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/functions.md">functions.md</a><br />
-commit: a14d6359e7ff78530a23a7430a020f47d08867f7 <br />
-本章译文最后维护日期：2022-03-14</p>
+commit: dd32a8ea8cc4de83c00d6a01047d181567d04693 <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -207,7 +207,11 @@ commit: a14d6359e7ff78530a23a7430a020f47d08867f7 <br />
 <p>在2015版中，只有类型的函数参数只允许出现在<a href="traits.html">trait项</a>的关联函数中。</p>
 </div>
 </blockquote>
-<p><em>函数</em>由一个<a href="../expressions/block-expr.html">块</a>以及一个名称和一组参数组成。除了名称，其他的都是可选的。函数使用关键字 <code>fn</code> 声明。函数可以声明一组<em>输入</em><a href="../variables.html"><em>变量</em></a>作为参数，调用者通过它向函数传递参数，函数完成后，它再将带有<em>输出</em><a href="../types.html#type-expressions"><em>类型</em></a>的结果值返回给调用者。</p>
+<p><em>函数</em>由一个<a href="../expressions/block-expr.html">块</a>，以及一个名称、一组参数和一个返回类型组成。
+除了名称，其他的都是可选的。
+函数使用关键字 <code>fn</code> 声明。
+函数可以声明一组<em>输入</em><a href="../variables.html"><em>变量</em></a>作为参数，调用者通过它向函数传递参数，函数完成后，它再将带有<em>输出</em><a href="../types.html#type-expressions"><em>类型</em></a>的结果值返回给调用者。
+如果返回类型没有显式声明，则默认返回<a href="../types/tuple.html">单元类型</a>。</p>
 <p>当一个<em>函数</em>被引用时，该函数会产生一个相应的零尺寸<a href="../types/function-item.html"><em>函数项类型(function item type)</em></a>的一等(first-class)<em>值</em>，调用该值就相当于直接调用该函数。</p>
 <p>举个简单的定义函数的例子:</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -339,7 +343,8 @@ let fptr: extern &quot;C&quot; fn() -&gt; i32 = new_i32;
 <h2><a class="header" href="#const-functions" id="const-functions">Const functions</a></h2>
 <h2><a class="header" href="#常量函数" id="常量函数">常量函数</a></h2>
 <p>使用关键字 <code>const</code> 限定的函数是<a href="../const_eval.html#const-functions">常量(const)函数</a>，<a href="structs.html">元组结构体</a>构造函数和<a href="enumerations.html">元组变体</a>构造函数也是如此。可以在<a href="../const_eval.html#const-context">常量上下文</a>中调用<em>常量函数</em>。</p>
-<p>常量函数不允许是 <a href="#async-functions">async</a>类型的，并且不能使用 <a href="#extern-function-qualifier"><code>extern</code>函数限定符</a>。</p>
+<p>常量函数可以使用 <a href="#extern-function-qualifier"><code>extern</code></a>函数修饰符来修饰，但只能使用 <code>&quot;Rust&quot;</code> 和 <code>&quot;C&quot;</code> ABI。</p>
+<p>常量函数不允许是 <a href="#async-functions">async</a>类型的，</p>
 <h2><a class="header" href="#async-functions" id="async-functions">Async functions</a></h2>
 <h2><a class="header" href="#异步函数" id="异步函数">异步函数</a></h2>
 <p>函数可以被限定为异步的，这还可以与 <code>unsafe</code> 限定符结合在一起使用：</p>

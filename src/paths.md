@@ -2,8 +2,8 @@
 # 路径
 
 >[paths.md](https://github.com/rust-lang/reference/blob/master/src/paths.md)\
->commit: a0a7e18957047363efb7f3ea30b9f7e5e3d5abe3 \
->本章译文最后维护日期：2022-04-17
+>commit: f758647f8ece7b93b841b4f3d89138d280a2835c \
+>本章译文最后维护日期：2022-06-17
 
 *路径*是一个或多个由命名空间<span class="parenthetical">限定符(`::`)</span>*逻辑*分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，`::` 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的[程序项][item]或[变量][variable]。如果路径包含多个路径段，则总是引用程序项。
 
@@ -78,6 +78,8 @@ Vec::<u8>::with_capacity(1024);
 泛型参数的顺序被限制为生存期参数，然后是类型参数，然后是常量参数，再后是相应的约束。
 
 常量实参必须用花括号括起来，除非它们是[字面量][literal]或单段路径。
+
+`impl Trait`这类的合成类型参数是隐式的，不能显式指定。
 
 ## Qualified paths
 ## 限定性路径

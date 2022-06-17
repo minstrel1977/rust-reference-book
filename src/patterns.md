@@ -2,8 +2,8 @@
 # 模式
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
->commit: e06b267eeb7bed90605dd63f6cae585674e0b1f5 \
->本章译文最后维护日期：2022-04-17
+>commit: 6ce7804bee418b3a5240047f5ad4f527f83eaa8b \
+>本章译文最后维护日期：2022-06-17
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\
@@ -375,7 +375,7 @@ match tuple {
 > &nbsp;&nbsp; | [BYTE_LITERAL]\
 > &nbsp;&nbsp; | `-`<sup>?</sup> [INTEGER_LITERAL]\
 > &nbsp;&nbsp; | `-`<sup>?</sup> [FLOAT_LITERAL]\
-> &nbsp;&nbsp; | [_PathPattern_]
+> &nbsp;&nbsp; | [_PathExpression_]
 
 区间模式匹配在区间上下边界内界定的值。区间模式可是闭区间或半开区间。如果区间模式的上界和下界均被包含在内则为闭区间模式。半开区间模式为包含下界数值，但不包含上界数值的区间模式。
 

@@ -168,8 +168,8 @@
                         <h1><a class="header" href="#tokens" id="tokens">Tokens</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/tokens.md">tokens.md</a><br />
-commit: e06b267eeb7bed90605dd63f6cae585674e0b1f5 <br />
-本章译文最后维护日期：2022-04-17</p>
+commit: 58e0f34eb1a542786c4d374c0f7a09a52a6aeadf <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <p>token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：</p>
 <ul>
@@ -188,13 +188,13 @@ commit: e06b267eeb7bed90605dd63f6cae585674e0b1f5 <br />
 <h3><a class="header" href="#示例" id="示例">示例</a></h3>
 <h4><a class="header" href="#characters-and-strings" id="characters-and-strings">Characters and strings</a></h4>
 <h4><a class="header" href="#字符和字符串" id="字符和字符串">字符和字符串</a></h4>
-<table><thead><tr><th></th><th>举例</th><th><code>#</code> 号的数量</th><th>字符集</th><th>转义</th></tr></thead><tbody>
+<table><thead><tr><th></th><th>举例</th><th><code>#</code> 号的数量*</th><th>字符集</th><th>转义</th></tr></thead><tbody>
 <tr><td><a href="#character-literals">字符</a></td><td><code>'H'</code></td><td>0</td><td>全部 Unicode</td><td><a href="#quote-escapes">引号</a> &amp; <a href="#ascii-escapes">ASCII</a> &amp; <a href="#unicode-escapes">Unicode</a></td></tr>
 <tr><td><a href="#string-literals">字符串</a></td><td><code>&quot;hello&quot;</code></td><td>0</td><td>全部 Unicode</td><td><a href="#quote-escapes">引号</a> &amp; <a href="#ascii-escapes">ASCII</a> &amp; <a href="#unicode-escapes">Unicode</a></td></tr>
-<tr><td><a href="#raw-string-literals">原生字符串</a></td><td><code>r#&quot;hello&quot;#</code></td><td>0 或更多*</td><td>全部 Unicode</td><td><code>N/A</code></td></tr>
+<tr><td><a href="#raw-string-literals">原生字符串</a></td><td><code>r#&quot;hello&quot;#</code></td><td>&lt;256</td><td>全部 Unicode</td><td><code>N/A</code></td></tr>
 <tr><td><a href="#byte-literals">字节</a></td><td><code>b'H'</code></td><td>0</td><td>全部 ASCII</td><td><a href="#quote-escapes">引号</a> &amp; <a href="#byte-escapes">字节</a></td></tr>
 <tr><td><a href="#byte-string-literals">字节串</a></td><td><code>b&quot;hello&quot;</code></td><td>0</td><td>全部 ASCII</td><td><a href="#quote-escapes">引号</a> &amp; <a href="#byte-escapes">字节</a></td></tr>
-<tr><td><a href="#raw-byte-string-literals">原生字节串</a></td><td><code>br#&quot;hello&quot;#</code></td><td>0 或更多*</td><td>全部 ASCII</td><td><code>N/A</code></td></tr>
+<tr><td><a href="#raw-byte-string-literals">原生字节串</a></td><td><code>br#&quot;hello&quot;#</code></td><td>&lt;256</td><td>全部 ASCII</td><td><code>N/A</code></td></tr>
 </tbody></table>
 <p>* 字面量两侧的 <code>#</code> 数量必须相同。</p>
 <h4><a class="header" href="#ascii-escapes" id="ascii-escapes">ASCII escapes</a></h4>
@@ -287,17 +287,28 @@ STRING_LITERAL :<br />
    <code>\</code> <em>后跟</em> \n</p>
 </blockquote>
 <p><em>字符串字面量</em>是位于两个 <code>U+0022</code> （双引号 <code>&quot;</code>）字符内的任意 Unicode 字符序列。当它是 <code>U+0022</code> 自身时，必须前置<em>转义</em>字符 <code>U+005C</code>（<code>\</code>）。</p>
-<p>字符串字面量允许换行书写。换行可以用换行符（<code>U+000A</code>）表示，也可以用一对回车符换行符（<code>U+000D</code>, <code>U+000A</code>）的字节序列表示。这两种字节序列通常都会被转换为 <code>U+000A</code>，但有例外：当换行符前置一个未转义的字符 <code>U+005C</code>（<code>\</code>）时，会导致字符 <code>U+005C</code>、换行符和下一行开头的所有空白符都被忽略。因此下述示例中，<code>a</code> 和 <code>b</code> 是一样的：</p>
+<p>字符串字面量允许换行书写。
+换行可以用换行符（<code>U+000A</code>）表示，也可以用一对回车符换行符（<code>U+000D</code>, <code>U+000A</code>）的字节序列表示。
+这两种字节序列通常都会被转换为 <code>U+000A</code>，但有例外：当换行符前置一个避免转义的字符 <code>U+005C</code>（<code>\</code>）时，会导致字符 <code>U+005C</code>、换行符和下一行开头的所有空白符都被忽略。因此下述示例中，<code>a</code> 和 <code>b</code> 是一样的：
+这两个字节序列通常都会被转换为 <code>U+000A</code>，但作为一个特殊例外，当一个避免转换的 <code>U+005C</code>（<code>\</code>）出现在换行符之前，则换行符以及紧跟在 <code> </code> (<code>U+0020</code>), <code>\t</code> (<code>U+0009</code>), <code>\n</code> (<code>U+000A</code>) 和 <code>\r</code> (<code>U+0000D</code>)字符之后的所有字符都将被忽略。因此，下面 <code>a</code>、<code>b</code> 和 <code>c</code>是相等的：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let a = &quot;foobar&quot;;
 let b = &quot;foo\
          bar&quot;;
+let c = &quot;foo\
 
-assert_eq!(a,b);
+     bar&quot;;
+
+assert_eq!(a, b);
+assert_eq!(b, c);
 <span class="boring">}
 </span></code></pre></pre>
+<blockquote>
+<p>注意：Rust会跳过额外的换行符（如上面示例中的 <code>c</code>）可能会让人感到困惑和意外。也许将来可能会调整此行为。在做出决定之前，建议避免依赖于此，例如使用续行符来跳过多个换行符。
+更多信息，请参见<a href="https://github.com/rust-lang/reference/pull/1042">this issue</a> 。</p>
+</blockquote>
 <h4><a class="header" href="#character-escapes" id="character-escapes">Character escapes</a></h4>
 <h4><a class="header" href="#字符转义" id="字符转义">字符转义</a></h4>
 <p>不管是字符字面量，还是非原生字符串字面量，Rust 都为其提供了额外的<em>转义</em>功能。转义以一个 <code>U+005C</code>（<code>\</code>）开始，并后跟如下形式之一：</p>
@@ -318,7 +329,7 @@ RAW_STRING_LITERAL :<br />
       <code>&quot;</code> ( ~ <em>IsolatedCR</em> )<sup>* (非贪婪模式)</sup> <code>&quot;</code><br />
    | <code>#</code> RAW_STRING_CONTENT <code>#</code></p>
 </blockquote>
-<p>原生字符串字面量不做任何转义。它以字符 <code>U+0072</code>（<code>r</code>）后跟零个或多个字符 <code>U+0023</code>（<code>#</code>），以及一个字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；中间<em>原生字符串文本主体</em>部分可包含任意的 Unicode 字符序列；再后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。</p>
+<p>原生字符串字面量不做任何转义。它以字符 <code>U+0072</code>（<code>r</code>）后跟小于256个字符 <code>U+0023</code>（<code>#</code>），以及一个字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；中间<em>原生字符串文本主体</em>部分可包含任意的 Unicode 字符序列；再后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。</p>
 <p>所有包含在原生字符串文本主体中的 Unicode 字符都代表他们自身：字符 <code>U+0022</code>（双引号 <code>&quot;</code>）（除非后跟的纯 <code>U+0023</code> (<code>#</code>)字符串与文本主体开始前的对称相等）或字符 <code>U+005C</code>（<code>\</code>）此时都没有特殊含义。</p>
 <p>字符串字面量示例:</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -378,7 +389,7 @@ RAW_BYTE_STRING_LITERAL :<br />
 <p>ASCII :<br />
    <em>任何 ASCII 字符（0x00 到 0x7F）</em></p>
 </blockquote>
-<p>原生字节串字面量不做任何转义。它们以字符 <code>U+0062</code>（<code>b</code>）后跟 <code>U+0072</code>（<code>r</code>），再后跟零个或多个字符 <code>U+0023</code>（<code>#</code>）及字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；之后是<em>原生字节串文本主体</em>，这部分可包含任意的 ASCII 字符序列；后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。原生字节串字面量不能包含任何非 ASCII 字节。</p>
+<p>原生字节串字面量不做任何转义。它们以字符 <code>U+0062</code>（<code>b</code>）后跟 <code>U+0072</code>（<code>r</code>），再后跟小于256个字符 <code>U+0023</code>（<code>#</code>）及字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；之后是<em>原生字节串文本主体</em>，这部分可包含任意的 ASCII 字符序列；后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。原生字节串字面量不能包含任何非 ASCII 字节。</p>
 <p>原生字节串文本主体中的所有字符都代表它们自身的 ASCII 编码，字符 <code>U+0022</code>（双引号 <code>&quot;</code>）（除非后跟的纯 <code>U+0023</code>（<code>#</code>）字符串与文本主体开始前的对称相等）或字符 <code>U+005C</code>（<code>\</code>）此时都没有特殊含义。</p>
 <p>字节串字面量示例：</p>
 <pre><pre class="playground"><code class="language-rust">

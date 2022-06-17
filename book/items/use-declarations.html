@@ -169,8 +169,8 @@
 <h1><a class="header" href="#use声明" id="use声明">Use声明</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/use-declarations.md">use-declarations.md</a><br />
-commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
-本章译文最后维护日期：2021-06-19</p>
+commit: 868850de68713cb7e1dc2ac8031d8978d801bddf <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法:</sup></strong><br />
@@ -191,13 +191,15 @@ commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
 <li>将前面的方法嵌套重复使用，例如 <code>use a::b::{self as ab, c, d::{*, e::f}};</code>。</li>
 </ul>
 <p><code>use</code>声明的一个示例：</p>
-<pre><pre class="playground"><code class="language-rust">use std::option::Option::{Some, None};
-use std::collections::hash_map::{self, HashMap};
+<pre><pre class="playground"><code class="language-rust">use std::collections::hash_map::{self, HashMap};
 
 fn foo&lt;T&gt;(_: T){}
 fn bar(map1: HashMap&lt;String, usize&gt;, map2: hash_map::HashMap&lt;String, usize&gt;){}
 
 fn main() {
+    // use声明也可以存在于函数体内
+    use std::option::Option::{Some, None};
+
     // 等价于 'foo(vec![std::option::Option::Some(1.0f64), std::option::Option::None]);'
     foo(vec![Some(1.0f64), None]);
 

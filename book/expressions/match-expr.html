@@ -169,8 +169,8 @@
 <h1><a class="header" href="#匹配match表达式" id="匹配match表达式">匹配(<code>match</code>)表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/match-expr.md">match-expr.md</a><br />
-commit: 0e7115d32fec1a9f11208e0353457f528e36e0e8 <br />
-本章译文最后维护日期：2021-6-27</p>
+commit: 9b1c9c6be04000a13aa9aa038d3c4c9c162f3061 <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -291,7 +291,7 @@ assert_eq!(i.get(), 2);
 此外，通过在计算匹配守卫的同时持有共享引用，也可以防止匹配守卫内部意外修改检验对象。</p>
 <h2><a class="header" href="#attributes-on-match-arms" id="attributes-on-match-arms">Attributes on match arms</a></h2>
 <h2><a class="header" href="#匹配臂上的属性" id="匹配臂上的属性">匹配臂上的属性</a></h2>
-<p>在匹配臂上允许使用外部属性，但在匹配臂上只有 <a href="../conditional-compilation.html"><code>cfg</code></a>、<a href="../attributes/codegen.html#the-cold-attribute"><code>cold</code></a> 和 <a href="../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>这些属性才有意义。</p>
+<p>在匹配臂上允许使用外部属性，但在匹配臂上只有 <a href="../conditional-compilation.html"><code>cfg</code></a> 和 <a href="../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>这些属性才有意义。</p>
 <p>在允许<a href="../attributes.html">块表达式上的属性</a>存在的那几种表达式上下文中，可以在匹配表达式的左括号后直接使用<a href="block-expr.html#attributes-on-block-expressions">内部属性</a>。</p>
 
                     </main>

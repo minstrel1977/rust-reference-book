@@ -169,8 +169,8 @@
 <h1><a class="header" href="#链接" id="链接">链接</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/linkage.md">linkage.md</a><br />
-commit: 1426474192ecc9c13165c1d4772b26e8445f5734<br />
-本章译文最后维护日期：2021-4-23</p>
+commit: f715f2cc987c54ff8afc51be33379b96e8cc8ab7<br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <blockquote>
 <p>注意：本节更多的是从编译器的角度来描述的，而不是语言。</p>
@@ -179,25 +179,25 @@ commit: 1426474192ecc9c13165c1d4772b26e8445f5734<br />
 <p>在一个编译会话中，编译器可以通过使用命令行参数或内部 <code>crate_type</code>属性来生成多个构件(artifacts)。如果指定了一个或多个命令行参数，则将忽略（源码内部指定的）所有 <code>crate_type</code>属性，以便只构建由命令行指定的构件。</p>
 <ul>
 <li>
-<p><code>--crate-type=bin</code> 或 <code>#[crate_type = &quot;bin&quot;]</code> - 将生成一个可执行文件。这就要求在 crate 中有一个 <code>main</code>函数，它将在程序开始执行时运行。这将链接所有 Rust 和本地依赖，生成一个单独的可分发的二进制文件。此类型为默认的 crate 类型。</p>
+<p><code>--crate-type=bin</code> 或 <code>#![crate_type = &quot;bin&quot;]</code> - 将生成一个可执行文件。这就要求在 crate 中有一个 <code>main</code>函数，它将在程序开始执行时运行。这将链接所有 Rust 和本地依赖，生成一个单独的可分发的二进制文件。此类型为默认的 crate 类型。</p>
 </li>
 <li>
-<p><code>--crate-type=lib</code> 或 <code>#[crate_type = &quot;lib&quot;]</code> - 将生成一个 Rust库(library)。但最终会确切输出/生成什么类型的库在未生成之前还不好清晰确定，因为库有多种表现形式。使用 <code>lib</code> 这个通用选项的目的是生成“编译器推荐”的类型的库。像种指定输出库类型的选项在 rustc 里始终可用，但是每次实际输出的库的类型可能会随着实际情况的不同而不同。其它的输出（库的）类型选项都指定了不同风格的库类型，而 <code>lib</code> 可以看作是那些类型中的某个类型的别名（具体实际的输出的类型是编译器决定的）。</p>
+<p><code>--crate-type=lib</code> 或 <code>#![crate_type = &quot;lib&quot;]</code> - 将生成一个 Rust库(library)。但最终会确切输出/生成什么类型的库在未生成之前还不好清晰确定，因为库有多种表现形式。使用 <code>lib</code> 这个通用选项的目的是生成“编译器推荐”的类型的库。像种指定输出库类型的选项在 rustc 里始终可用，但是每次实际输出的库的类型可能会随着实际情况的不同而不同。其它的输出（库的）类型选项都指定了不同风格的库类型，而 <code>lib</code> 可以看作是那些类型中的某个类型的别名（具体实际的输出的类型是编译器决定的）。</p>
 </li>
 <li>
-<p><code>--crate-type=dylib</code> 或 <code>#[crate_type = &quot;dylib&quot;]</code> - 将生成一个动态 Rust库。这与 <code>lib</code> 选项的输出类型不同，因为这个选项会强制生成动态库。生成的动态库可以用作其他库和/或可执行文件的依赖。这种输出类型将创建依赖于具体平台的库（Linux 上为 <code>*.so</code>，macOS 上为 <code>*.dylib</code>、Windows 上为 <code>*.dll</code>）。</p>
+<p><code>--crate-type=dylib</code> 或 <code>#![crate_type = &quot;dylib&quot;]</code> - 将生成一个动态 Rust库。这与 <code>lib</code> 选项的输出类型不同，因为这个选项会强制生成动态库。生成的动态库可以用作其他库和/或可执行文件的依赖。这种输出类型将创建依赖于具体平台的库（Linux 上为 <code>*.so</code>，macOS 上为 <code>*.dylib</code>、Windows 上为 <code>*.dll</code>）。</p>
 </li>
 <li>
-<p><code>--crate-type=staticlib</code> 或 <code>#[crate_type = &quot;staticlib&quot;]</code> - 将生成一个静态系统库。这个选项与其他选项的库输出的不同之处在于——当前编译器永远不会尝试去链接此 <code>staticlib</code> 输出<sup class="footnote-reference"><a href="#译注1">1</a></sup>。此选项的目的是创建一个包含所有本地 crate 的代码以及所有上游依赖的静态库。此输出类型将在 Linux、macOS 和 Windows(MinGW) 平台上创建 <code>*.a</code> 归档文件(archive)，或者在 Windows(MSVC) 平台上创建 <code>*.lib</code> 库文件。在这些情况下，例如将 Rust代码链接到现有的非 Rust应用程序中，推荐使用这种类型，因为它不会动态依赖于其他 Rust 代码。</p>
+<p><code>--crate-type=staticlib</code> 或 <code>#![crate_type = &quot;staticlib&quot;]</code> - 将生成一个静态系统库。这个选项与其他选项的库输出的不同之处在于——当前编译器永远不会尝试去链接此 <code>staticlib</code> 输出<sup class="footnote-reference"><a href="#译注1">1</a></sup>。此选项的目的是创建一个包含所有本地 crate 的代码以及所有上游依赖的静态库。此输出类型将在 Linux、macOS 和 Windows(MinGW) 平台上创建 <code>*.a</code> 归档文件(archive)，或者在 Windows(MSVC) 平台上创建 <code>*.lib</code> 库文件。在这些情况下，例如将 Rust代码链接到现有的非 Rust应用程序中，推荐使用这种类型，因为它不会动态依赖于其他 Rust 代码。</p>
 </li>
 <li>
-<p><code>--crate-type=cdylib</code> 或 <code>#[crate_type = &quot;cdylib&quot;]</code> - 将生成一个动态系统库。如果编译输出的动态库要被另一种语言加载使用，请使用这种编译选项。这种选项的输出将在 Linux 上创建 <code>*.so</code> 文件，在 macOS 上创建 <code>*.dylib</code> 文件，在 Windows 上创建 <code>*.dll</code> 文件。</p>
+<p><code>--crate-type=cdylib</code> 或 <code>#![crate_type = &quot;cdylib&quot;]</code> - 将生成一个动态系统库。如果编译输出的动态库要被另一种语言加载使用，请使用这种编译选项。这种选项的输出将在 Linux 上创建 <code>*.so</code> 文件，在 macOS 上创建 <code>*.dylib</code> 文件，在 Windows 上创建 <code>*.dll</code> 文件。</p>
 </li>
 <li>
-<p><code>--crate-type=rlib</code> 或 <code>#[crate_type = &quot;rlib&quot;]</code> - 将生成一个“Rust库”。它被用作一个中间构件，可以被认为是一个“静态 Rust库”。与 <code>staticlib</code> 类型的库文件不同，这些 <code>rlib</code> 类型的库文件以后会作为其他 Rust代码文件的上游依赖，未来对那些 Rust代码文件进行编译时，那时的编译器会链并解释此 <code>rlib</code>文件。这本质上意味着（那时的） <code>rustc</code> 将在（此） <code>rlib</code> 文件中查找元数据(metadata)，就像在动态库中查找元数据一样。跟 <code>staticlib</code> 输出类型类似，这种类型的输出常配合用于生成静态链接的可执行文件(statically linked executable)。</p>
+<p><code>--crate-type=rlib</code> 或 <code>#![crate_type = &quot;rlib&quot;]</code> - 将生成一个“Rust库”。它被用作一个中间构件，可以被认为是一个“静态 Rust库”。与 <code>staticlib</code> 类型的库文件不同，这些 <code>rlib</code> 类型的库文件以后会作为其他 Rust代码文件的上游依赖，未来对那些 Rust代码文件进行编译时，那时的编译器会链并解释此 <code>rlib</code>文件。这本质上意味着（那时的） <code>rustc</code> 将在（此） <code>rlib</code> 文件中查找元数据(metadata)，就像在动态库中查找元数据一样。跟 <code>staticlib</code> 输出类型类似，这种类型的输出常配合用于生成静态链接的可执行文件(statically linked executable)。</p>
 </li>
 <li>
-<p><code>--crate-type=proc-macro</code> 或 <code>#[crate_type = &quot;proc-macro&quot;]</code> - 生成的输出类型没有被指定，但是如果通过 <code>-L</code> 提供了路径参数，编译器将把输出构件识别为宏，输出的宏可以被其他 Rust 程序加载使用。使用此 crate 类型编译的 crate 只能导出<a href="procedural-macros.html">过程宏</a>。编译器将自动设置 <code>proc_macro</code><a href="conditional-compilation.html">属性配置选项</a>。编译 crate 的目标平台(target)总是和当前编译器所在平台一致。例如，如果在 <code>x86_64</code> CPU 的 Linux 平台上执行编译，那么目标将是 <code>x86_64-unknown-linux-gnu</code>，即使该 crate 是另一个不同编译目标的 crate 的依赖。</p>
+<p><code>--crate-type=proc-macro</code> 或 <code>#![crate_type = &quot;proc-macro&quot;]</code> - 生成的输出类型没有被指定，但是如果通过 <code>-L</code> 提供了路径参数，编译器将把输出构件识别为宏，输出的宏可以被其他 Rust 程序加载使用。使用此 crate 类型编译的 crate 只能导出<a href="procedural-macros.html">过程宏</a>。编译器将自动设置 <code>proc_macro</code><a href="conditional-compilation.html">属性配置选项</a>。编译 crate 的目标平台(target)总是和当前编译器所在平台一致。例如，如果在 <code>x86_64</code> CPU 的 Linux 平台上执行编译，那么目标将是 <code>x86_64-unknown-linux-gnu</code>，即使该 crate 是另一个不同编译目标的 crate 的依赖。</p>
 </li>
 </ul>
 <p>请注意，这些选项是可堆叠使用的，如果同时使用了多个选项，那么编译器将一次生成所有这些选项关联的的输出类型，而不必反复多次编译。但是，命令行和内部 <code>crate_type</code> 属性配置不能同时起效。如果只使用了不带属性值的 <code>crate_type</code> 属性配置，则将生成所有类型的输出，但如果同时指定了一个或多个 <code>--crate-type</code> 命令行参数，则只生成这些指定的输出。</p>

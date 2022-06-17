@@ -2,8 +2,8 @@
 # 匹配(`match`)表达式
 
 >[match-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/match-expr.md)\
->commit: 0e7115d32fec1a9f11208e0353457f528e36e0e8 \
->本章译文最后维护日期：2021-6-27
+>commit: 9b1c9c6be04000a13aa9aa038d3c4c9c162f3061 \
+>本章译文最后维护日期：2022-06-17
 
 > **<sup>句法</sup>**\
 > _MatchExpression_ :\
@@ -129,7 +129,7 @@ let message = match maybe_digit {
 ## Attributes on match arms
 ## 匹配臂上的属性
 
-在匹配臂上允许使用外部属性，但在匹配臂上只有 [`cfg`]、[`cold`] 和 [lint检查类属性][lint check attributes]这些属性才有意义。
+在匹配臂上允许使用外部属性，但在匹配臂上只有 [`cfg`] 和 [lint检查类属性][lint check attributes]这些属性才有意义。
 
 在允许[块表达式上的属性][Inner attributes]存在的那几种表达式上下文中，可以在匹配表达式的左括号后直接使用[内部属性][attributes on block expressions]。
 
@@ -139,7 +139,6 @@ let message = match maybe_digit {
 [_InnerAttribute_]: ../attributes.md
 [_OuterAttribute_]: ../attributes.md
 [`cfg`]: ../conditional-compilation.md
-[`cold`]: ../attributes/codegen.md#the-cold-attribute
 [lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
 [Range Expression]: range-expr.md
 

@@ -2,8 +2,8 @@
 # 外部块
 
 >[external-blocks.md](https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md)\
->commit: 0fc5e6dbf0f500fabd38653aa87f9d721d59b3b8 \
->本章译文最后维护日期：2022-04-17
+>commit: 1c78b7416d7fa40d740ec80333bd6f4743d000a4 \
+>本章译文最后维护日期：2022-06-17
 
 > **<sup>句法</sup>**\
 > _ExternBlock_ :\
@@ -121,6 +121,23 @@ extern {
 
 在空外部块上添加 `link`属性是有效的。可以用这种方式来满足代码中其他地方的外部块的链接需求（包括上游 crate），而不必向每个外部块都添加此属性。
 
+#### Linking modifiers: `bundle`
+#### 链接修饰符: `bundle`
+
+这个修饰符只在静态链接模式下适用。
+在其他链接模式下会导致编译错误。
+
+当构建 rlib 或 staticlib 时 `+bundle` 意味着本地静态库中的所有对象文件都将添加到 rlib 或 staticlib 归档文件中，然后那些最终的二进制文件再来链接使用这些库文件。
+
+当构建 rlib时，`-bundle` 意味着本机静态库会被“按名称”注册为该 rlib 的依赖项，并且其中的对象文件仅在最终的二进制文件的链接过程中才被包含进来，其中最终的链接过程会执行按该名称的文件搜索来定位那些对象文件。\
+当构建 staticlib时，`-bundle`意味着本机静态库根本不会被包括在归档文件中，一些层次更高或则说是排序更靠后的构建系统会在之后的链接最终二进制文件的过程中才来添加它。
+
+在构建其他目标（如可执行文件或动态库）时，此修饰符无效。
+
+此修饰符的默认形式是 `+bundle`。
+
+有关此修饰符的更多实现细节，请参见[rustc文档中的 `bundle`][`bundle` documentation for rustc]。
+
 #### Linking modifiers: `whole-archive`
 #### 链接修饰符: `whole-archive`
 
@@ -128,7 +145,9 @@ extern {
 使用任何其他链接类型都会引起编译器报错。
 
 `+whole-archive` 意味着静态库会被链接为一个完整的 archive 文件，而不丢弃任何对象文件。
-有关此修饰符的更多实现细节，请参见[rustc文档][documentation for rustc]。
+
+The default for this modifier is `-whole-archive`.
+有关此修饰符的更多实现细节，请参见[rustc文档中的 `whole-archive`][`whole-archive` documentation for rustc]。
 
 ### The `link_name` attribute
 ### `link_name`属性
@@ -162,4 +181,5 @@ extern {
 [_Visibility_]: ../visibility-and-privacy.md
 [attributes]: ../attributes.md
 [regular function parameters]: functions.md#attributes-on-function-parameters
-[documentation for rustc]: https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-whole-archive
+[`bundle` documentation for rustc]: https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-bundle
+[`whole-archive` documentation for rustc]: https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-whole-archive

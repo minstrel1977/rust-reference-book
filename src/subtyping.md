@@ -2,8 +2,8 @@
 # 子类型化和型变
 
 >[subtyping.md](https://github.com/rust-lang/reference/blob/master/src/subtyping.md)\
->commit: f26485de1ad88be2cc9ff131a4aee57cea562a95 \
->本章译文最后维护日期：2021-12-11
+>commit: db4124306287420c2b9d80a9687c86e2057be716 \
+>本章译文最后维护日期：2022-06-17
 
 子类型化是隐式的，可以出现在类型检查或类型推断的任何阶段。
 Rust 中的子类型化的适用范围非常有限，仅出现在和生存期(lifetimes)的型变(variance)相关的地方，以及那些和高阶生存期相关的类型型变之间。
@@ -58,22 +58,44 @@ let supertype: &for<'c> fn(&'c i32, &'c i32) = subtype;
 | `[T]` 和 `[T; n]`             |                   | 协变的         |
 | `fn() -> T`                   |                   | 协变的         |
 | `fn(T) -> ()`                 |                   | 逆变的     |
-| `fn(T) -> T`                  |                   | 不变的         |
 | `std::cell::UnsafeCell<T>`    |                   | 不变的         |
 | `std::marker::PhantomData<T>` |                   | 协变的         |
 | `dyn Trait<T> + 'a`           | 协变的         | 不变的         |
 
-结构体(`struct`)、枚举(`enum`)、联合体(`union`)和元组(tuple)类型上的型变关系是通过查看其字段类型的型变关系来决定的。
+结构体(`struct`)、枚举(`enum`)和联合体(`union`)类型上的型变关系是通过查看其字段类型的型变关系来决定的。
 如果参数用在了多处且具有不同型变关系的位置上，则该类型在该参数上是不变的。
-例如，下面示例的结构体在 `'a` 和 `T` 上是协变的，在 `'b` 和 `U` 上是不变的。
+例如，下面示例的结构体在 `'a` 和 `T` 上是协变的，在 `'b`、`'c` 和 `U` 上是不变的。
 
 ```rust
 use std::cell::UnsafeCell;
-struct Variance<'a, 'b, T, U: 'a> {
+struct Variance<'a, 'b, 'c, T, U: 'a> {
     x: &'a U,               // 这让 `Variance` 在 'a 上是协变的, 也让在 U 上是协变的, 但是后面也使用了 U
     y: *const T,            // 在 T 上是协变的
     z: UnsafeCell<&'b f64>, // 在 'b 上是不变的
     w: *mut U,              // 在 U 上是不变的, 所以让整个结构体在 U 上是不变的
+
+    f: fn(&'c ()) -> &'c () // 无论是协变还是逆变，都会导致此结构体在 'c 上不变。
+}
+```
+
+当在结构体(`struct`)、枚举(`enum`)和联合体(`union`)之外使用时，会在每个位置分别检查参数的型变。
+
+```rust
+# use std::cell::UnsafeCell;
+fn generic_tuple<'short, 'long: 'short>(
+    // 'long 同时应用在一个元组里的协变和不变的位置上
+    x: (&'long u32, UnsafeCell<&'long u32>),
+) {
+    // 由于这些位置的型变是单独计算的，我们可以在协变位置自由地收缩 'long。
+    let _: (&'short u32, UnsafeCell<&'long u32>) = x;
+}
+
+fn takes_fn_ptr<'short, 'middle: 'short>(
+    // 'middle 被用在了一个既是协变又是逆变的位置上。
+    f: fn(&'middle ()) -> &'middle (),
+) {
+    // 由于这些位置的型变是单独计算的，我们可以在协变位置自由地收缩 'middle，并在逆变位置拉伸它。
+    let _: fn(&'static ()) -> &'short () = f;
 }
 ```
 

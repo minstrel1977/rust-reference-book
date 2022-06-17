@@ -169,8 +169,8 @@
 <h1><a class="header" href="#类型布局" id="类型布局">类型布局</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-layout.md">type-layout.md</a><br />
-commit: 0cb7e46722353a5de852d03684b4895516f92a4d <br />
-本章译文最后维护日期：2021-06-27</p>
+commit: c7bbfaf9ab410e1ff27b37d9d098ab3e1f498ebe <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <p>类型的布局描述类型的尺寸(size)、对齐量(alignment)和字段(fields)的<em>相对偏移量(relative offsets)</em>。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。</p>
 <p>每次编译都有可能更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。</p>
@@ -550,10 +550,11 @@ assert_eq!(std::mem::size_of::&lt;Enum16&gt;(), 4);
 </span></code></pre></pre>
 <h3><a class="header" href="#the-alignment-modifiers" id="the-alignment-modifiers">The alignment modifiers</a></h3>
 <h3><a class="header" href="#对齐量的修饰符" id="对齐量的修饰符">对齐量的修饰符</a></h3>
-<p><code>align</code> 和 <code>packed</code> 修饰符可分别用于增大和减小结构体的和联合体的对齐量。<code>packed</code> 也可以改变字段之间的填充。</p>
+<p><code>align</code> 和 <code>packed</code> 修饰符可分别用于增大和减小结构体的和联合体的对齐量。<code>packed</code> 也可以改变字段之间的填充 (虽然它不会改变任何字段内部的填充)。</p>
 <p>对齐量被指定为整型参数，形式为 <code>#[repr(align(x))]</code> 或 <code>#[repr(packed(x))]</code>。对齐量的值必须是从1到2<sup>29</sup>之间的2的次幂数。对于 <code>packed</code>，如果没有给出任何值，如 <code>#[repr(packed)]</code>，则对齐量的值为1。</p>
 <p>对于 <code>align</code>，如果类型指定的对齐量比其不带 <code>align</code>修饰符时的对齐量小，则该指定的对齐量无效。</p>
 <p>对于 <code>packed</code>，如果类型指定的对齐量比其不带 <code>packed</code>修饰符时的对齐量大，则该指定的对齐量和布局无效。为了定位字段，每个字段的对齐量是指定的对齐量和字段的类型的对齐量中较小的那个对齐量。</p>
+<p>字段间的填充保证为每个字段（可能更改）的对齐量填充所需的最小值（但请注意，<code>packed</code> 本身并不能保证字段顺序）。这些规则的一个重要后果是：<code>#[repr(packed(1))]</code>（或<code>#[repr(packed)]</code>) 的类型不会有字段间填充。</p>
 <p><code>align</code> 和 <code>packed</code> 修饰符不能应用于同一类型，且 <code>packed</code> 修饰的类型不能直接或间接地包含另一个 <code>align</code> 修饰的类型。<code>align</code> 和 <code>packed</code> 修饰符只能应用于<a href="#the-default-representation">默认表形</a>和 <a href="#the-c-representation">C表形</a>中。</p>
 <p><code>align</code>修饰符也可以应用在枚举上。如果这样做了，其对枚举对齐量的影响与将此枚举包装在一个新的使用了相同的 <code>align</code>修饰符的结构体中的效果相同。</p>
 <div class="warning">

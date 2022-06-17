@@ -169,8 +169,8 @@
 <h1><a class="header" href="#诊断属性" id="诊断属性">诊断属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/diagnostics.md">diagnostics.md</a><br />
-commit: 12a4832c8eec1ad0df3edfb681571821708e0410 <br />
-本章译文最后维护日期：2021-4-6</p>
+commit: 0e5ff09e12ca7b81452d8064f98fe30bf5f5b05c <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <p>以下<a href="../attributes.html">属性</a>用于在编译期间控制或生成诊断消息。</p>
 <h2><a class="header" href="#lint-check-attributes" id="lint-check-attributes">Lint check attributes</a></h2>
@@ -359,7 +359,7 @@ fn five() -&gt; i32 { 5i32 }
 five();
 <span class="boring">}
 </span></code></pre></pre>
-<p>当 [trait声明]中使用了此属性，如果<a href="../statements.html#expression-statements">表达式语句</a>的<a href="../expressions/call-expr.html">调用表达式</a>返回了此 trait 的 <a href="../types/impl-trait.html">trait实现(impl trait)</a> ，则违反了 <code>unused_must_use</code> lint。</p>
+<p>当在 <a href="../items/traits.html">trait声明</a>中使用了此属性时，如果<a href="../statements.html#expression-statements">表达式语句</a>的<a href="../expressions/call-expr.html">调用表达式</a>返回了此 trait 的 <a href="../types/impl-trait.html">trait实现(impl trait)</a>或 <a href="../types/trait-object.html">trait对象（dyn trait）</a> ，那这种情况也违反 <code>unused_must_use</code> lint。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

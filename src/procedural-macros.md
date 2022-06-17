@@ -2,8 +2,8 @@
 ## 过程宏
 
 >[procedural-macros.md](https://github.com/rust-lang/reference/blob/master/src/procedural-macros.md)\
->commit: 26acee213a30ba01f128981aed4a42bd1d3610ca \
->本章译文最后维护日期：2021-04-17
+>commit: bd51ca17847961a0ea65bfc2326d1b0df99bac5e \
+>本章译文最后维护日期：2021-06-17
 
 *过程宏*允许在执行函数时创建句法扩展。过程宏有三种形式:
 
@@ -34,7 +34,10 @@
 
 此 crate 主要包含了一个 [`TokenStream`] 类型。过程宏其实是在 *token流(token streams)*上操作，而不是在某个或某些 AST 节点上操作，因为这对于编译器和过程宏的编译目标来说，这是一个随着时间推移要稳定得多的接口。*token流*大致相当于 `Vec<TokenTree>`，其中 `TokenTree` 可以大致视为词法 token。例如，`foo` 是标识符(`Ident`)类型的 token，`.` 是一个标点符号(`Punct`)类型的 token，`1.2` 是一个字面量(`Literal`)类型的 token。不同于 `Vec<TokenTree>` 的是 `TokenStream` 的克隆成本很低。
 
-所有类型的 token 都有一个与之关联的 `Span`。`Span` 是一个不透明的值，不能被修改，但可以被制造。`Span` 表示程序内的源代码范围，主要用于错误报告。可以事先（通过函数 `set_span`）配置任何 token 的 `Span`。
+所有类型的 token 都有一个与之关联的 `Span`。
+`Span` 是一个不透明的值，不能被修改，但可以手工创建。
+`Span` 表示程序内的源代码范围，主要用于错误报告。
+虽然不能修改 `Span` 本身，但可以更改与 token *关联*的 `Span`，例如通过其他 token 来获取 `Span`。
 
 ### Procedural macro hygiene
 ### 过程宏的卫生性

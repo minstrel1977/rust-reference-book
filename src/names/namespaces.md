@@ -2,8 +2,8 @@
 # 命名空间
 
 >[use-declarations.md](https://github.com/rust-lang/reference/blob/master/src/names/namespaces.md)\
->commit: 222c426ec1464757e7477ad836d97e427dde886b \
->本章译文最后维护日期：2021-06-19
+>commit: d5618e8e9edcb96a272358e394abcf9fb70659c6 \
+>本章译文最后维护日期：2022-06-17
 
 *命名空间*是已声明的[名称][names]的逻辑分组。根据名称所指的实体类型，名称被分隔到不同的命名空间中。
 名称空间允许一个名称空间中出现的名称与另一个名称空间中的相同，且不会导致冲突。
@@ -48,7 +48,7 @@
     * [属性宏][Attribute macros]
 * 生存期命名空间
     * [泛型生存期参数][Generic lifetime parameters]
-* 标签命名空间[^rustc-lifetime-shadow]
+* 标签命名空间
     * [循环标签][Loop labels]
 
 如何清晰地使用不同命名空间中的同名名称的示例：
@@ -106,8 +106,6 @@ fn example<'Foo>(f: Foo) {
 例如，[`cfg`属性][`cfg` attribute]和[`cfg`宏][`cfg` macro]是宏命名空间中具有相同名称的两个不同实体，但它们仍然可以在各自的上下文中使用。
 
 使用 [`use`导入][`use` import]来对另一个宏进行遮蔽处理仍然是错误的，不管它们的子命名空间是什么
-
-[^rustc-lifetime-shadow]: 目前，在同一个作用域中，标签和生命周期使用相同名称时，`rustc` 会警告出现命名重复，但编译器内部仍然会独立地区别对待它们。这是一个关于该语言可能扩展的未来兼容性警告。具体见[PR #24162](https://github.com/rust-lang/rust/pull/24162)。
 
 [`cfg` attribute]: ../conditional-compilation.md#the-cfg-attribute
 [`cfg` macro]: ../conditional-compilation.md#the-cfg-macro

@@ -2,8 +2,8 @@
 # 类型布局
 
 >[type-layout.md](https://github.com/rust-lang/reference/blob/master/src/type-layout.md)\
->commit: 0cb7e46722353a5de852d03684b4895516f92a4d \
->本章译文最后维护日期：2021-06-27
+>commit: c7bbfaf9ab410e1ff27b37d9d098ab3e1f498ebe \
+>本章译文最后维护日期：2022-06-17
 
 类型的布局描述类型的尺寸(size)、对齐量(alignment)和字段(fields)的*相对偏移量(relative offsets)*。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。
 
@@ -426,13 +426,15 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 ### The alignment modifiers
 ### 对齐量的修饰符
 
-`align` 和 `packed` 修饰符可分别用于增大和减小结构体的和联合体的对齐量。`packed` 也可以改变字段之间的填充。
+`align` 和 `packed` 修饰符可分别用于增大和减小结构体的和联合体的对齐量。`packed` 也可以改变字段之间的填充 (虽然它不会改变任何字段内部的填充)。
 
 对齐量被指定为整型参数，形式为 `#[repr(align(x))]` 或 `#[repr(packed(x))]`。对齐量的值必须是从1到2<sup>29</sup>之间的2的次幂数。对于 `packed`，如果没有给出任何值，如 `#[repr(packed)]`，则对齐量的值为1。
 
 对于 `align`，如果类型指定的对齐量比其不带 `align`修饰符时的对齐量小，则该指定的对齐量无效。
 
 对于 `packed`，如果类型指定的对齐量比其不带 `packed`修饰符时的对齐量大，则该指定的对齐量和布局无效。为了定位字段，每个字段的对齐量是指定的对齐量和字段的类型的对齐量中较小的那个对齐量。
+
+字段间的填充保证为每个字段（可能更改）的对齐量填充所需的最小值（但请注意，`packed` 本身并不能保证字段顺序）。这些规则的一个重要后果是：`#[repr(packed(1))]`（或`#[repr(packed)]`) 的类型不会有字段间填充。
 
 `align` 和 `packed` 修饰符不能应用于同一类型，且 `packed` 修饰的类型不能直接或间接地包含另一个 `align` 修饰的类型。`align` 和 `packed` 修饰符只能应用于[默认表形][default]和 [C表形][`C`]中。
 

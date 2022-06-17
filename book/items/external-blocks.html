@@ -169,8 +169,8 @@
 <h1><a class="header" href="#外部块" id="外部块">外部块</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md">external-blocks.md</a><br />
-commit: 0fc5e6dbf0f500fabd38653aa87f9d721d59b3b8 <br />
-本章译文最后维护日期：2022-04-17</p>
+commit: 1c78b7416d7fa40d740ec80333bd6f4743d000a4 <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -268,12 +268,23 @@ extern {
 }
 </code></pre>
 <p>在空外部块上添加 <code>link</code>属性是有效的。可以用这种方式来满足代码中其他地方的外部块的链接需求（包括上游 crate），而不必向每个外部块都添加此属性。</p>
+<h4><a class="header" href="#linking-modifiers-bundle" id="linking-modifiers-bundle">Linking modifiers: <code>bundle</code></a></h4>
+<h4><a class="header" href="#链接修饰符-bundle" id="链接修饰符-bundle">链接修饰符: <code>bundle</code></a></h4>
+<p>这个修饰符只在静态链接模式下适用。
+在其他链接模式下会导致编译错误。</p>
+<p>当构建 rlib 或 staticlib 时 <code>+bundle</code> 意味着本地静态库中的所有对象文件都将添加到 rlib 或 staticlib 归档文件中，然后那些最终的二进制文件再来链接使用这些库文件。</p>
+<p>当构建 rlib时，<code>-bundle</code> 意味着本机静态库会被“按名称”注册为该 rlib 的依赖项，并且其中的对象文件仅在最终的二进制文件的链接过程中才被包含进来，其中最终的链接过程会执行按该名称的文件搜索来定位那些对象文件。<br />
+当构建 staticlib时，<code>-bundle</code>意味着本机静态库根本不会被包括在归档文件中，一些层次更高或则说是排序更靠后的构建系统会在之后的链接最终二进制文件的过程中才来添加它。</p>
+<p>在构建其他目标（如可执行文件或动态库）时，此修饰符无效。</p>
+<p>此修饰符的默认形式是 <code>+bundle</code>。</p>
+<p>有关此修饰符的更多实现细节，请参见<a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-bundle">rustc文档中的 <code>bundle</code></a>。</p>
 <h4><a class="header" href="#linking-modifiers-whole-archive" id="linking-modifiers-whole-archive">Linking modifiers: <code>whole-archive</code></a></h4>
 <h4><a class="header" href="#链接修饰符-whole-archive" id="链接修饰符-whole-archive">链接修饰符: <code>whole-archive</code></a></h4>
 <p>此修饰符仅与静态(<code>static</code>)链接类型兼容。
 使用任何其他链接类型都会引起编译器报错。</p>
-<p><code>+whole-archive</code> 意味着静态库会被链接为一个完整的 archive 文件，而不丢弃任何对象文件。
-有关此修饰符的更多实现细节，请参见<a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-whole-archive">rustc文档</a>。</p>
+<p><code>+whole-archive</code> 意味着静态库会被链接为一个完整的 archive 文件，而不丢弃任何对象文件。</p>
+<p>The default for this modifier is <code>-whole-archive</code>.
+有关此修饰符的更多实现细节，请参见<a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-whole-archive">rustc文档中的 <code>whole-archive</code></a>。</p>
 <h3><a class="header" href="#the-link_name-attribute" id="the-link_name-attribute">The <code>link_name</code> attribute</a></h3>
 <h3><a class="header" href="#link_name属性" id="link_name属性"><code>link_name</code>属性</a></h3>
 <p>可以在外部(<code>extern</code>)块内的程序项声明上指定 <code>link_name</code>属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法指定 symbol 的名称。</p>

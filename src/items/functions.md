@@ -2,8 +2,8 @@
 # 函数
 
 >[functions.md](https://github.com/rust-lang/reference/blob/master/src/items/functions.md)\
->commit: a14d6359e7ff78530a23a7430a020f47d08867f7 \
->本章译文最后维护日期：2022-03-14
+>commit: dd32a8ea8cc4de83c00d6a01047d181567d04693 \
+>本章译文最后维护日期：2022-06-17
 
 > **<sup>句法</sup>**\
 > _Function_ :\
@@ -46,7 +46,11 @@
 >
 > [^fn-param-2015]: 在2015版中，只有类型的函数参数只允许出现在[trait项][trait item]的关联函数中。
 
-*函数*由一个[块][block]以及一个名称和一组参数组成。除了名称，其他的都是可选的。函数使用关键字 `fn` 声明。函数可以声明一组*输入*[*变量*][variables]作为参数，调用者通过它向函数传递参数，函数完成后，它再将带有*输出*[*类型*][type]的结果值返回给调用者。
+*函数*由一个[块][block]，以及一个名称、一组参数和一个返回类型组成。
+除了名称，其他的都是可选的。
+函数使用关键字 `fn` 声明。
+函数可以声明一组*输入*[*变量*][variables]作为参数，调用者通过它向函数传递参数，函数完成后，它再将带有*输出*[*类型*][type]的结果值返回给调用者。
+如果返回类型没有显式声明，则默认返回[单元类型][unit type]。
 
 当一个*函数*被引用时，该函数会产生一个相应的零尺寸[*函数项类型(function item type)*][*function item type*]的一等(first-class)*值*，调用该值就相当于直接调用该函数。
 
@@ -190,7 +194,9 @@ let fptr: extern "C" fn() -> i32 = new_i32;
 
 使用关键字 `const` 限定的函数是[常量(const)函数][const functions]，[元组结构体][tuple struct]构造函数和[元组变体][tuple variant]构造函数也是如此。可以在[常量上下文][const contexts]中调用*常量函数*。
 
-常量函数不允许是 [async](#async-functions)类型的，并且不能使用 [`extern`函数限定符](#extern-function-qualifier)。
+常量函数可以使用 [`extern`]函数修饰符来修饰，但只能使用 `"Rust"` 和 `"C"` ABI。
+
+常量函数不允许是 [async](#async-functions)类型的，
 
 ## Async functions
 ## 异步函数
@@ -318,11 +324,13 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [const functions]: ../const_eval.md#const-functions
 [tuple struct]: structs.md
 [tuple variant]: enumerations.md
+[`extern`]: #extern-function-qualifier
 [external block]: external-blocks.md
 [path]: ../paths.md
 [block]: ../expressions/block-expr.md
 [variables]: ../variables.md
 [type]: ../types.md#type-expressions
+[unit type]: ../types/tuple.md
 [*function item type*]: ../types/function-item.md
 [Trait]: traits.md
 [attributes]: ../attributes.md

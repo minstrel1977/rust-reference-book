@@ -168,7 +168,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2022-04-29</p>
+<p>本书跟随原文截止日期：2022-06-17</p>
 </blockquote>
 <h1><a class="header" href="#前言" id="前言">前言</a></h1>
 <h2><a class="header" href="#试水版" id="试水版">试水版</a></h2>
@@ -685,8 +685,8 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <h1><a class="header" href="#tokens" id="tokens">Tokens</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/tokens.md">tokens.md</a><br />
-commit: e06b267eeb7bed90605dd63f6cae585674e0b1f5 <br />
-本章译文最后维护日期：2022-04-17</p>
+commit: 58e0f34eb1a542786c4d374c0f7a09a52a6aeadf <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <p>token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：</p>
 <ul>
@@ -705,13 +705,13 @@ commit: e06b267eeb7bed90605dd63f6cae585674e0b1f5 <br />
 <h3><a class="header" href="#示例-1" id="示例-1">示例</a></h3>
 <h4><a class="header" href="#characters-and-strings" id="characters-and-strings">Characters and strings</a></h4>
 <h4><a class="header" href="#字符和字符串" id="字符和字符串">字符和字符串</a></h4>
-<table><thead><tr><th></th><th>举例</th><th><code>#</code> 号的数量</th><th>字符集</th><th>转义</th></tr></thead><tbody>
+<table><thead><tr><th></th><th>举例</th><th><code>#</code> 号的数量*</th><th>字符集</th><th>转义</th></tr></thead><tbody>
 <tr><td><a href="tokens.html#character-literals">字符</a></td><td><code>'H'</code></td><td>0</td><td>全部 Unicode</td><td><a href="tokens.html#quote-escapes">引号</a> &amp; <a href="tokens.html#ascii-escapes">ASCII</a> &amp; <a href="tokens.html#unicode-escapes">Unicode</a></td></tr>
 <tr><td><a href="tokens.html#string-literals">字符串</a></td><td><code>&quot;hello&quot;</code></td><td>0</td><td>全部 Unicode</td><td><a href="tokens.html#quote-escapes">引号</a> &amp; <a href="tokens.html#ascii-escapes">ASCII</a> &amp; <a href="tokens.html#unicode-escapes">Unicode</a></td></tr>
-<tr><td><a href="tokens.html#raw-string-literals">原生字符串</a></td><td><code>r#&quot;hello&quot;#</code></td><td>0 或更多*</td><td>全部 Unicode</td><td><code>N/A</code></td></tr>
+<tr><td><a href="tokens.html#raw-string-literals">原生字符串</a></td><td><code>r#&quot;hello&quot;#</code></td><td>&lt;256</td><td>全部 Unicode</td><td><code>N/A</code></td></tr>
 <tr><td><a href="tokens.html#byte-literals">字节</a></td><td><code>b'H'</code></td><td>0</td><td>全部 ASCII</td><td><a href="tokens.html#quote-escapes">引号</a> &amp; <a href="tokens.html#byte-escapes">字节</a></td></tr>
 <tr><td><a href="tokens.html#byte-string-literals">字节串</a></td><td><code>b&quot;hello&quot;</code></td><td>0</td><td>全部 ASCII</td><td><a href="tokens.html#quote-escapes">引号</a> &amp; <a href="tokens.html#byte-escapes">字节</a></td></tr>
-<tr><td><a href="tokens.html#raw-byte-string-literals">原生字节串</a></td><td><code>br#&quot;hello&quot;#</code></td><td>0 或更多*</td><td>全部 ASCII</td><td><code>N/A</code></td></tr>
+<tr><td><a href="tokens.html#raw-byte-string-literals">原生字节串</a></td><td><code>br#&quot;hello&quot;#</code></td><td>&lt;256</td><td>全部 ASCII</td><td><code>N/A</code></td></tr>
 </tbody></table>
 <p>* 字面量两侧的 <code>#</code> 数量必须相同。</p>
 <h4><a class="header" href="#ascii-escapes" id="ascii-escapes">ASCII escapes</a></h4>
@@ -804,17 +804,28 @@ STRING_LITERAL :<br />
    <code>\</code> <em>后跟</em> \n</p>
 </blockquote>
 <p><em>字符串字面量</em>是位于两个 <code>U+0022</code> （双引号 <code>&quot;</code>）字符内的任意 Unicode 字符序列。当它是 <code>U+0022</code> 自身时，必须前置<em>转义</em>字符 <code>U+005C</code>（<code>\</code>）。</p>
-<p>字符串字面量允许换行书写。换行可以用换行符（<code>U+000A</code>）表示，也可以用一对回车符换行符（<code>U+000D</code>, <code>U+000A</code>）的字节序列表示。这两种字节序列通常都会被转换为 <code>U+000A</code>，但有例外：当换行符前置一个未转义的字符 <code>U+005C</code>（<code>\</code>）时，会导致字符 <code>U+005C</code>、换行符和下一行开头的所有空白符都被忽略。因此下述示例中，<code>a</code> 和 <code>b</code> 是一样的：</p>
+<p>字符串字面量允许换行书写。
+换行可以用换行符（<code>U+000A</code>）表示，也可以用一对回车符换行符（<code>U+000D</code>, <code>U+000A</code>）的字节序列表示。
+这两种字节序列通常都会被转换为 <code>U+000A</code>，但有例外：当换行符前置一个避免转义的字符 <code>U+005C</code>（<code>\</code>）时，会导致字符 <code>U+005C</code>、换行符和下一行开头的所有空白符都被忽略。因此下述示例中，<code>a</code> 和 <code>b</code> 是一样的：
+这两个字节序列通常都会被转换为 <code>U+000A</code>，但作为一个特殊例外，当一个避免转换的 <code>U+005C</code>（<code>\</code>）出现在换行符之前，则换行符以及紧跟在 <code> </code> (<code>U+0020</code>), <code>\t</code> (<code>U+0009</code>), <code>\n</code> (<code>U+000A</code>) 和 <code>\r</code> (<code>U+0000D</code>)字符之后的所有字符都将被忽略。因此，下面 <code>a</code>、<code>b</code> 和 <code>c</code>是相等的：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let a = &quot;foobar&quot;;
 let b = &quot;foo\
          bar&quot;;
+let c = &quot;foo\
 
-assert_eq!(a,b);
+     bar&quot;;
+
+assert_eq!(a, b);
+assert_eq!(b, c);
 <span class="boring">}
 </span></code></pre></pre>
+<blockquote>
+<p>注意：Rust会跳过额外的换行符（如上面示例中的 <code>c</code>）可能会让人感到困惑和意外。也许将来可能会调整此行为。在做出决定之前，建议避免依赖于此，例如使用续行符来跳过多个换行符。
+更多信息，请参见<a href="https://github.com/rust-lang/reference/pull/1042">this issue</a> 。</p>
+</blockquote>
 <h4><a class="header" href="#character-escapes" id="character-escapes">Character escapes</a></h4>
 <h4><a class="header" href="#字符转义" id="字符转义">字符转义</a></h4>
 <p>不管是字符字面量，还是非原生字符串字面量，Rust 都为其提供了额外的<em>转义</em>功能。转义以一个 <code>U+005C</code>（<code>\</code>）开始，并后跟如下形式之一：</p>
@@ -835,7 +846,7 @@ RAW_STRING_LITERAL :<br />
       <code>&quot;</code> ( ~ <em>IsolatedCR</em> )<sup>* (非贪婪模式)</sup> <code>&quot;</code><br />
    | <code>#</code> RAW_STRING_CONTENT <code>#</code></p>
 </blockquote>
-<p>原生字符串字面量不做任何转义。它以字符 <code>U+0072</code>（<code>r</code>）后跟零个或多个字符 <code>U+0023</code>（<code>#</code>），以及一个字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；中间<em>原生字符串文本主体</em>部分可包含任意的 Unicode 字符序列；再后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。</p>
+<p>原生字符串字面量不做任何转义。它以字符 <code>U+0072</code>（<code>r</code>）后跟小于256个字符 <code>U+0023</code>（<code>#</code>），以及一个字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；中间<em>原生字符串文本主体</em>部分可包含任意的 Unicode 字符序列；再后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。</p>
 <p>所有包含在原生字符串文本主体中的 Unicode 字符都代表他们自身：字符 <code>U+0022</code>（双引号 <code>&quot;</code>）（除非后跟的纯 <code>U+0023</code> (<code>#</code>)字符串与文本主体开始前的对称相等）或字符 <code>U+005C</code>（<code>\</code>）此时都没有特殊含义。</p>
 <p>字符串字面量示例:</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -895,7 +906,7 @@ RAW_BYTE_STRING_LITERAL :<br />
 <p>ASCII :<br />
    <em>任何 ASCII 字符（0x00 到 0x7F）</em></p>
 </blockquote>
-<p>原生字节串字面量不做任何转义。它们以字符 <code>U+0062</code>（<code>b</code>）后跟 <code>U+0072</code>（<code>r</code>），再后跟零个或多个字符 <code>U+0023</code>（<code>#</code>）及字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；之后是<em>原生字节串文本主体</em>，这部分可包含任意的 ASCII 字符序列；后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。原生字节串字面量不能包含任何非 ASCII 字节。</p>
+<p>原生字节串字面量不做任何转义。它们以字符 <code>U+0062</code>（<code>b</code>）后跟 <code>U+0072</code>（<code>r</code>），再后跟小于256个字符 <code>U+0023</code>（<code>#</code>）及字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；之后是<em>原生字节串文本主体</em>，这部分可包含任意的 ASCII 字符序列；后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。原生字节串字面量不能包含任何非 ASCII 字节。</p>
 <p>原生字节串文本主体中的所有字符都代表它们自身的 ASCII 编码，字符 <code>U+0022</code>（双引号 <code>&quot;</code>）（除非后跟的纯 <code>U+0023</code>（<code>#</code>）字符串与文本主体开始前的对称相等）或字符 <code>U+005C</code>（<code>\</code>）此时都没有特殊含义。</p>
 <p>字节串字面量示例：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -1337,8 +1348,8 @@ example!();
 <h1><a class="header" href="#声明宏" id="声明宏">声明宏</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md">macros-by-example.md</a><br />
-commit: d33b20749e8873e0afb4326bcb169eb9a6f69127 <br />
-本章译文最后维护日期：2022-03-14</p>
+commit: 8d039bda5d4153ab99c368c4c159fd76471b01b8 <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -1461,6 +1472,50 @@ foo!(3);
 <li>在转码器中，元变量必须与它在匹配器中出现的次数、指示符类型以及其在重复元内的嵌套顺序都完全相同。因此，对于匹配器 <code>$( $i:ident ),*</code>，转码器 <code>=&gt; { $i }</code>, <code>=&gt; { $( $( $i)* )* }</code> 和 <code>=&gt; { $( $i )+ }</code> 都是非法的，但是 <code>=&gt; { $( $i );* }</code> 是正确的，它用分号分隔的标识符列表替换了逗号分隔的标识符列表。</li>
 <li>转码器中的每个重复元必须至少包含一个元变量，以便确定扩展多少次。如果在同一个重复元中出现多个元变量，则它们必须绑定到相同数量的匹配段上，不能有的多，有的少。例如，<code>( $( $i:ident ),* ; $( $j:ident ),* ) =&gt; (( $( ($i,$j) ),* ))</code> 里，绑定到 <code>$j</code> 的匹配段的数量必须与绑定到 <code>$i</code> 上的相同。这意味着用 <code>(a, b, c; d, e, f)</code> 调用这个宏是合法的，并且可扩展到 <code>((a,d), (b,e), (c,f))</code>，但是 <code>(a, b, c; d, e)</code> 是非法的，因为前后绑定的数量不同。此要求适用于嵌套的重复元的每一层。</li>
 </ol>
+<h2><a class="header" href="#dollar-dollar-" id="dollar-dollar-">Dollar-dollar ($$)</a></h2>
+<p><code>$$</code> 将被扩展成单个的 <code>$</code>。</p>
+<p>由于元变量表达式总是在宏扩展期间被执行替换，因此它们不能在存在递归的宏中定义中使用，此时正是 <code>$$</code>表达式发挥作用的时候，即 <code>$$</code> 可被用于解决嵌套宏中的歧义。</p>
+<p>以下示例展示了由于嵌套宏中重复元的歧义而无法编译的的情况：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>macro_rules! foo_error {
+    () =&gt; {
+        macro_rules! bar_error {
+            ( $( $any:tt )* ) =&gt; { $( $any )* };
+            // ^^^^^^^^^^^ error: attempted to repeat an expression containing no syntax variables matched as repeating at this depth
+        }
+    };
+}
+
+foo_error!();
+<span class="boring">}
+</span></code></pre></pre>
+<p>下面通过在重复元把 <code>$$</code> 转义为<code>$</code> 解决了此问题：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>macro_rules! foo_ok {
+    () =&gt; {
+        macro_rules! bar_ok {
+            ( $$( $any:tt )* ) =&gt; { $$( $any )* };
+        }
+    };
+}
+
+foo_ok!();
+<span class="boring">}
+</span></code></pre></pre>
+<p>这种扩展的一个后果是在更深的嵌套层级中使用这种双美元符号声明会导致美元符号的线性增长，从<code>$$</code>，然后<code>$$$</code>，再然后<code>$$$$</code>，依此类推。
+这也需要在全特性下使用，以便可以在每个嵌套层级使用其他元变量指定的元变量名称（This is also necessary to be fully featured so that it is possible to specify names of metavariables using other metavariables at each nesting level）。</p>
+<pre><code class="language-ignore">$foo          =&gt; bar      =&gt; bar    // Evaluate foo at level 1
+$$foo         =&gt; $foo     =&gt; bar    // Evaluate foo at level 2
+$$$foo        =&gt; $bar     =&gt; baz    // Evaluate foo at level 1, and use that as a name at level 2
+$$$$foo       =&gt; $$foo    =&gt; $foo   // Evaluate foo at level 3
+$$$$$foo      =&gt; $$bar    =&gt; $bar   // Evaluate foo at level 1, and use that as a name at level 3
+$$$$$$foo     =&gt; $$$foo   =&gt; $bar   // Evaluate foo at level 2, and use that as a name at level 3
+$$$$$$$foo    =&gt; $$$bar   =&gt; $baz   // Evaluate foo at level 1, use that at level 2, and then use *that* at level 3
+</code></pre>
 <h2><a class="header" href="#scoping-exporting-and-importing" id="scoping-exporting-and-importing">Scoping, Exporting, and Importing</a></h2>
 <h2><a class="header" href="#作用域导出以及导入" id="作用域导出以及导入">作用域、导出以及导入</a></h2>
 <p>由于历史原因，声明宏的作用域并不完全像各种程序项那样工作。宏有两种形式的作用域：文本作用域(textual scope)和基于路径的作用域(path-based scope)。文本作用域基于宏在源文件中（定义和使用所）出现的顺序，或是跨多个源文件出现的顺序，文本作用域是默认的作用域。（后本节面将进一步解释这个。）基于路径的作用域与其他程序项作用域的运行方式相同。宏的作用域、导出和导入主要由其属性控制。</p>
@@ -1698,8 +1753,8 @@ macro_rules! helper {
 <h2><a class="header" href="#过程宏" id="过程宏">过程宏</a></h2>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/procedural-macros.md">procedural-macros.md</a><br />
-commit: 26acee213a30ba01f128981aed4a42bd1d3610ca <br />
-本章译文最后维护日期：2021-04-17</p>
+commit: bd51ca17847961a0ea65bfc2326d1b0df99bac5e <br />
+本章译文最后维护日期：2021-06-17</p>
 </blockquote>
 <p><em>过程宏</em>允许在执行函数时创建句法扩展。过程宏有三种形式:</p>
 <ul>
@@ -1721,7 +1776,10 @@ proc-macro = true
 <h3><a class="header" href="#the-proc_macro-crate" id="the-proc_macro-crate">The <code>proc_macro</code> crate</a></h3>
 <p>过程宏类型的 crate 几乎总是会去链接编译器提供的 <a href="https://doc.rust-lang.org/proc_macro/index.html"><code>proc_macro</code> crate</a>。<code>proc_macro</code> crate 提供了编写过程宏所需的各种类型和工具来让编写更容易。</p>
 <p>此 crate 主要包含了一个 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 类型。过程宏其实是在 *token流(token streams)*上操作，而不是在某个或某些 AST 节点上操作，因为这对于编译器和过程宏的编译目标来说，这是一个随着时间推移要稳定得多的接口。<em>token流</em>大致相当于 <code>Vec&lt;TokenTree&gt;</code>，其中 <code>TokenTree</code> 可以大致视为词法 token。例如，<code>foo</code> 是标识符(<code>Ident</code>)类型的 token，<code>.</code> 是一个标点符号(<code>Punct</code>)类型的 token，<code>1.2</code> 是一个字面量(<code>Literal</code>)类型的 token。不同于 <code>Vec&lt;TokenTree&gt;</code> 的是 <code>TokenStream</code> 的克隆成本很低。</p>
-<p>所有类型的 token 都有一个与之关联的 <code>Span</code>。<code>Span</code> 是一个不透明的值，不能被修改，但可以被制造。<code>Span</code> 表示程序内的源代码范围，主要用于错误报告。可以事先（通过函数 <code>set_span</code>）配置任何 token 的 <code>Span</code>。</p>
+<p>所有类型的 token 都有一个与之关联的 <code>Span</code>。
+<code>Span</code> 是一个不透明的值，不能被修改，但可以手工创建。
+<code>Span</code> 表示程序内的源代码范围，主要用于错误报告。
+虽然不能修改 <code>Span</code> 本身，但可以更改与 token <em>关联</em>的 <code>Span</code>，例如通过其他 token 来获取 <code>Span</code>。</p>
 <h3><a class="header" href="#procedural-macro-hygiene" id="procedural-macro-hygiene">Procedural macro hygiene</a></h3>
 <h3><a class="header" href="#过程宏的卫生性" id="过程宏的卫生性">过程宏的卫生性</a></h3>
 <p>过程宏是<em>非卫生的(unhygienic)</em>。这意味着它的行为就好像它输出的 token流是被简单地内联写入它周围的代码中一样。这意味着它会受到外部程序项的影响，也会影响外部导入。</p>
@@ -2499,8 +2557,8 @@ extern crate hello_world; // 连字符被替换为下划线
 <h1><a class="header" href="#use声明" id="use声明">Use声明</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/use-declarations.md">use-declarations.md</a><br />
-commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
-本章译文最后维护日期：2021-06-19</p>
+commit: 868850de68713cb7e1dc2ac8031d8978d801bddf <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法:</sup></strong><br />
@@ -2521,13 +2579,15 @@ commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
 <li>将前面的方法嵌套重复使用，例如 <code>use a::b::{self as ab, c, d::{*, e::f}};</code>。</li>
 </ul>
 <p><code>use</code>声明的一个示例：</p>
-<pre><pre class="playground"><code class="language-rust">use std::option::Option::{Some, None};
-use std::collections::hash_map::{self, HashMap};
+<pre><pre class="playground"><code class="language-rust">use std::collections::hash_map::{self, HashMap};
 
 fn foo&lt;T&gt;(_: T){}
 fn bar(map1: HashMap&lt;String, usize&gt;, map2: hash_map::HashMap&lt;String, usize&gt;){}
 
 fn main() {
+    // use声明也可以存在于函数体内
+    use std::option::Option::{Some, None};
+
     // 等价于 'foo(vec![std::option::Option::Some(1.0f64), std::option::Option::None]);'
     foo(vec![Some(1.0f64), None]);
 
@@ -2650,8 +2710,8 @@ m!(use std as _;);
 <h1><a class="header" href="#函数" id="函数">函数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/functions.md">functions.md</a><br />
-commit: a14d6359e7ff78530a23a7430a020f47d08867f7 <br />
-本章译文最后维护日期：2022-03-14</p>
+commit: dd32a8ea8cc4de83c00d6a01047d181567d04693 <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -2688,7 +2748,11 @@ commit: a14d6359e7ff78530a23a7430a020f47d08867f7 <br />
 <p>在2015版中，只有类型的函数参数只允许出现在<a href="items/traits.html">trait项</a>的关联函数中。</p>
 </div>
 </blockquote>
-<p><em>函数</em>由一个<a href="items/../expressions/block-expr.html">块</a>以及一个名称和一组参数组成。除了名称，其他的都是可选的。函数使用关键字 <code>fn</code> 声明。函数可以声明一组<em>输入</em><a href="items/../variables.html"><em>变量</em></a>作为参数，调用者通过它向函数传递参数，函数完成后，它再将带有<em>输出</em><a href="items/../types.html#type-expressions"><em>类型</em></a>的结果值返回给调用者。</p>
+<p><em>函数</em>由一个<a href="items/../expressions/block-expr.html">块</a>，以及一个名称、一组参数和一个返回类型组成。
+除了名称，其他的都是可选的。
+函数使用关键字 <code>fn</code> 声明。
+函数可以声明一组<em>输入</em><a href="items/../variables.html"><em>变量</em></a>作为参数，调用者通过它向函数传递参数，函数完成后，它再将带有<em>输出</em><a href="items/../types.html#type-expressions"><em>类型</em></a>的结果值返回给调用者。
+如果返回类型没有显式声明，则默认返回<a href="items/../types/tuple.html">单元类型</a>。</p>
 <p>当一个<em>函数</em>被引用时，该函数会产生一个相应的零尺寸<a href="items/../types/function-item.html"><em>函数项类型(function item type)</em></a>的一等(first-class)<em>值</em>，调用该值就相当于直接调用该函数。</p>
 <p>举个简单的定义函数的例子:</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -2820,7 +2884,8 @@ let fptr: extern &quot;C&quot; fn() -&gt; i32 = new_i32;
 <h2><a class="header" href="#const-functions" id="const-functions">Const functions</a></h2>
 <h2><a class="header" href="#常量函数" id="常量函数">常量函数</a></h2>
 <p>使用关键字 <code>const</code> 限定的函数是<a href="items/../const_eval.html#const-functions">常量(const)函数</a>，<a href="items/structs.html">元组结构体</a>构造函数和<a href="items/enumerations.html">元组变体</a>构造函数也是如此。可以在<a href="items/../const_eval.html#const-context">常量上下文</a>中调用<em>常量函数</em>。</p>
-<p>常量函数不允许是 <a href="items/functions.html#async-functions">async</a>类型的，并且不能使用 <a href="items/functions.html#extern-function-qualifier"><code>extern</code>函数限定符</a>。</p>
+<p>常量函数可以使用 <a href="items/functions.html#extern-function-qualifier"><code>extern</code></a>函数修饰符来修饰，但只能使用 <code>&quot;Rust&quot;</code> 和 <code>&quot;C&quot;</code> ABI。</p>
+<p>常量函数不允许是 <a href="items/functions.html#async-functions">async</a>类型的，</p>
 <h2><a class="header" href="#async-functions" id="async-functions">Async functions</a></h2>
 <h2><a class="header" href="#异步函数" id="异步函数">异步函数</a></h2>
 <p>函数可以被限定为异步的，这还可以与 <code>unsafe</code> 限定符结合在一起使用：</p>
@@ -4081,8 +4146,8 @@ impl&lt;T, U&gt; GenericTrait&lt;U&gt; for u32 where U: GenericTrait&lt;T&gt; {}
 <h1><a class="header" href="#外部块" id="外部块">外部块</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md">external-blocks.md</a><br />
-commit: 0fc5e6dbf0f500fabd38653aa87f9d721d59b3b8 <br />
-本章译文最后维护日期：2022-04-17</p>
+commit: 1c78b7416d7fa40d740ec80333bd6f4743d000a4 <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -4180,12 +4245,23 @@ extern {
 }
 </code></pre>
 <p>在空外部块上添加 <code>link</code>属性是有效的。可以用这种方式来满足代码中其他地方的外部块的链接需求（包括上游 crate），而不必向每个外部块都添加此属性。</p>
+<h4><a class="header" href="#linking-modifiers-bundle" id="linking-modifiers-bundle">Linking modifiers: <code>bundle</code></a></h4>
+<h4><a class="header" href="#链接修饰符-bundle" id="链接修饰符-bundle">链接修饰符: <code>bundle</code></a></h4>
+<p>这个修饰符只在静态链接模式下适用。
+在其他链接模式下会导致编译错误。</p>
+<p>当构建 rlib 或 staticlib 时 <code>+bundle</code> 意味着本地静态库中的所有对象文件都将添加到 rlib 或 staticlib 归档文件中，然后那些最终的二进制文件再来链接使用这些库文件。</p>
+<p>当构建 rlib时，<code>-bundle</code> 意味着本机静态库会被“按名称”注册为该 rlib 的依赖项，并且其中的对象文件仅在最终的二进制文件的链接过程中才被包含进来，其中最终的链接过程会执行按该名称的文件搜索来定位那些对象文件。<br />
+当构建 staticlib时，<code>-bundle</code>意味着本机静态库根本不会被包括在归档文件中，一些层次更高或则说是排序更靠后的构建系统会在之后的链接最终二进制文件的过程中才来添加它。</p>
+<p>在构建其他目标（如可执行文件或动态库）时，此修饰符无效。</p>
+<p>此修饰符的默认形式是 <code>+bundle</code>。</p>
+<p>有关此修饰符的更多实现细节，请参见<a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-bundle">rustc文档中的 <code>bundle</code></a>。</p>
 <h4><a class="header" href="#linking-modifiers-whole-archive" id="linking-modifiers-whole-archive">Linking modifiers: <code>whole-archive</code></a></h4>
 <h4><a class="header" href="#链接修饰符-whole-archive" id="链接修饰符-whole-archive">链接修饰符: <code>whole-archive</code></a></h4>
 <p>此修饰符仅与静态(<code>static</code>)链接类型兼容。
 使用任何其他链接类型都会引起编译器报错。</p>
-<p><code>+whole-archive</code> 意味着静态库会被链接为一个完整的 archive 文件，而不丢弃任何对象文件。
-有关此修饰符的更多实现细节，请参见<a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-whole-archive">rustc文档</a>。</p>
+<p><code>+whole-archive</code> 意味着静态库会被链接为一个完整的 archive 文件，而不丢弃任何对象文件。</p>
+<p>The default for this modifier is <code>-whole-archive</code>.
+有关此修饰符的更多实现细节，请参见<a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-whole-archive">rustc文档中的 <code>whole-archive</code></a>。</p>
 <h3><a class="header" href="#the-link_name-attribute" id="the-link_name-attribute">The <code>link_name</code> attribute</a></h3>
 <h3><a class="header" href="#link_name属性" id="link_name属性"><code>link_name</code>属性</a></h3>
 <p>可以在外部(<code>extern</code>)块内的程序项声明上指定 <code>link_name</code>属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 <a href="items/../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法指定 symbol 的名称。</p>
@@ -5136,8 +5212,8 @@ struct Foo&lt;T&gt; {
 <h1><a class="header" href="#诊断属性" id="诊断属性">诊断属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/diagnostics.md">diagnostics.md</a><br />
-commit: 12a4832c8eec1ad0df3edfb681571821708e0410 <br />
-本章译文最后维护日期：2021-4-6</p>
+commit: 0e5ff09e12ca7b81452d8064f98fe30bf5f5b05c <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <p>以下<a href="attributes/../attributes.html">属性</a>用于在编译期间控制或生成诊断消息。</p>
 <h2><a class="header" href="#lint-check-attributes" id="lint-check-attributes">Lint check attributes</a></h2>
@@ -5326,7 +5402,7 @@ fn five() -&gt; i32 { 5i32 }
 five();
 <span class="boring">}
 </span></code></pre></pre>
-<p>当 [trait声明]中使用了此属性，如果<a href="attributes/../statements.html#expression-statements">表达式语句</a>的<a href="attributes/../expressions/call-expr.html">调用表达式</a>返回了此 trait 的 <a href="attributes/../types/impl-trait.html">trait实现(impl trait)</a> ，则违反了 <code>unused_must_use</code> lint。</p>
+<p>当在 <a href="attributes/../items/traits.html">trait声明</a>中使用了此属性时，如果<a href="attributes/../statements.html#expression-statements">表达式语句</a>的<a href="attributes/../expressions/call-expr.html">调用表达式</a>返回了此 trait 的 <a href="attributes/../types/impl-trait.html">trait实现(impl trait)</a>或 <a href="attributes/../types/trait-object.html">trait对象（dyn trait）</a> ，那这种情况也违反 <code>unused_must_use</code> lint。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -8164,8 +8240,8 @@ if let PAT = ( EXPR || EXPR ) { .. }
 <h1><a class="header" href="#匹配match表达式" id="匹配match表达式">匹配(<code>match</code>)表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/match-expr.md">match-expr.md</a><br />
-commit: 0e7115d32fec1a9f11208e0353457f528e36e0e8 <br />
-本章译文最后维护日期：2021-6-27</p>
+commit: 9b1c9c6be04000a13aa9aa038d3c4c9c162f3061 <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -8286,7 +8362,7 @@ assert_eq!(i.get(), 2);
 此外，通过在计算匹配守卫的同时持有共享引用，也可以防止匹配守卫内部意外修改检验对象。</p>
 <h2><a class="header" href="#attributes-on-match-arms" id="attributes-on-match-arms">Attributes on match arms</a></h2>
 <h2><a class="header" href="#匹配臂上的属性" id="匹配臂上的属性">匹配臂上的属性</a></h2>
-<p>在匹配臂上允许使用外部属性，但在匹配臂上只有 <a href="expressions/../conditional-compilation.html"><code>cfg</code></a>、<a href="expressions/../attributes/codegen.html#the-cold-attribute"><code>cold</code></a> 和 <a href="expressions/../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>这些属性才有意义。</p>
+<p>在匹配臂上允许使用外部属性，但在匹配臂上只有 <a href="expressions/../conditional-compilation.html"><code>cfg</code></a> 和 <a href="expressions/../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>这些属性才有意义。</p>
 <p>在允许<a href="expressions/../attributes.html">块表达式上的属性</a>存在的那几种表达式上下文中，可以在匹配表达式的左括号后直接使用<a href="expressions/block-expr.html#attributes-on-block-expressions">内部属性</a>。</p>
 <h1><a class="header" href="#return-expressions" id="return-expressions"><code>return</code> expressions</a></h1>
 <h1><a class="header" href="#返回return表达式" id="返回return表达式">返回(<code>return</code>)表达式</a></h1>
@@ -8388,8 +8464,8 @@ let mut a = 0;
 <h1><a class="header" href="#模式" id="模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
-commit: e06b267eeb7bed90605dd63f6cae585674e0b1f5 <br />
-本章译文最后维护日期：2022-04-17</p>
+commit: 6ce7804bee418b3a5240047f5ad4f527f83eaa8b <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -8740,7 +8816,7 @@ match tuple {
    | <a href="tokens.html#byte-literals">BYTE_LITERAL</a><br />
    | <code>-</code><sup>?</sup> <a href="tokens.html#integer-literals">INTEGER_LITERAL</a><br />
    | <code>-</code><sup>?</sup> <a href="tokens.html#floating-point-literals">FLOAT_LITERAL</a><br />
-   | <a href="patterns.html#path-patterns"><em>PathPattern</em></a></p>
+   | <a href="expressions/path-expr.html"><em>PathExpression</em></a></p>
 </blockquote>
 <p>区间模式匹配在区间上下边界内界定的值。区间模式可是闭区间或半开区间。如果区间模式的上界和下界均被包含在内则为闭区间模式。半开区间模式为包含下界数值，但不包含上界数值的区间模式。</p>
 <p>例如：模式 <code>'m'..='p'</code> 只匹配 <code>'m'</code>, <code>'n'</code>, <code>'o'</code> 和 <code>'p'</code> 这4个字符。 <code>1..</code> 可以匹配 9，或者 9001，或者 9007199254740991（如果此值的尺寸合适），但是不能匹配到 0，也不能匹配有符号整数的负值。区间模式中的界值可以是字面量，也可以是指向常量的路径。</p>
@@ -10125,8 +10201,8 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 <h1><a class="header" href="#类型布局" id="类型布局">类型布局</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-layout.md">type-layout.md</a><br />
-commit: 0cb7e46722353a5de852d03684b4895516f92a4d <br />
-本章译文最后维护日期：2021-06-27</p>
+commit: c7bbfaf9ab410e1ff27b37d9d098ab3e1f498ebe <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <p>类型的布局描述类型的尺寸(size)、对齐量(alignment)和字段(fields)的<em>相对偏移量(relative offsets)</em>。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。</p>
 <p>每次编译都有可能更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。</p>
@@ -10506,10 +10582,11 @@ assert_eq!(std::mem::size_of::&lt;Enum16&gt;(), 4);
 </span></code></pre></pre>
 <h3><a class="header" href="#the-alignment-modifiers" id="the-alignment-modifiers">The alignment modifiers</a></h3>
 <h3><a class="header" href="#对齐量的修饰符" id="对齐量的修饰符">对齐量的修饰符</a></h3>
-<p><code>align</code> 和 <code>packed</code> 修饰符可分别用于增大和减小结构体的和联合体的对齐量。<code>packed</code> 也可以改变字段之间的填充。</p>
+<p><code>align</code> 和 <code>packed</code> 修饰符可分别用于增大和减小结构体的和联合体的对齐量。<code>packed</code> 也可以改变字段之间的填充 (虽然它不会改变任何字段内部的填充)。</p>
 <p>对齐量被指定为整型参数，形式为 <code>#[repr(align(x))]</code> 或 <code>#[repr(packed(x))]</code>。对齐量的值必须是从1到2<sup>29</sup>之间的2的次幂数。对于 <code>packed</code>，如果没有给出任何值，如 <code>#[repr(packed)]</code>，则对齐量的值为1。</p>
 <p>对于 <code>align</code>，如果类型指定的对齐量比其不带 <code>align</code>修饰符时的对齐量小，则该指定的对齐量无效。</p>
 <p>对于 <code>packed</code>，如果类型指定的对齐量比其不带 <code>packed</code>修饰符时的对齐量大，则该指定的对齐量和布局无效。为了定位字段，每个字段的对齐量是指定的对齐量和字段的类型的对齐量中较小的那个对齐量。</p>
+<p>字段间的填充保证为每个字段（可能更改）的对齐量填充所需的最小值（但请注意，<code>packed</code> 本身并不能保证字段顺序）。这些规则的一个重要后果是：<code>#[repr(packed(1))]</code>（或<code>#[repr(packed)]</code>) 的类型不会有字段间填充。</p>
 <p><code>align</code> 和 <code>packed</code> 修饰符不能应用于同一类型，且 <code>packed</code> 修饰的类型不能直接或间接地包含另一个 <code>align</code> 修饰的类型。<code>align</code> 和 <code>packed</code> 修饰符只能应用于<a href="type-layout.html#the-default-representation">默认表形</a>和 <a href="type-layout.html#the-c-representation">C表形</a>中。</p>
 <p><code>align</code>修饰符也可以应用在枚举上。如果这样做了，其对枚举对齐量的影响与将此枚举包装在一个新的使用了相同的 <code>align</code>修饰符的结构体中的效果相同。</p>
 <div class="warning">
@@ -10552,8 +10629,8 @@ commit: e7dd3618d78928322f53a20e2947e428b12eda2b <br />
 <h1><a class="header" href="#子类型化和型变" id="子类型化和型变">子类型化和型变</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/subtyping.md">subtyping.md</a><br />
-commit: f26485de1ad88be2cc9ff131a4aee57cea562a95 <br />
-本章译文最后维护日期：2021-12-11</p>
+commit: db4124306287420c2b9d80a9687c86e2057be716 <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <p>子类型化是隐式的，可以出现在类型检查或类型推断的任何阶段。
 Rust 中的子类型化的适用范围非常有限，仅出现在和生存期(lifetimes)的型变(variance)相关的地方，以及那些和高阶生存期相关的类型型变之间。
@@ -10605,23 +10682,46 @@ let supertype: &amp;for&lt;'c&gt; fn(&amp;'c i32, &amp;'c i32) = subtype;
 <tr><td><code>[T]</code> 和 <code>[T; n]</code></td><td></td><td>协变的</td></tr>
 <tr><td><code>fn() -&gt; T</code></td><td></td><td>协变的</td></tr>
 <tr><td><code>fn(T) -&gt; ()</code></td><td></td><td>逆变的</td></tr>
-<tr><td><code>fn(T) -&gt; T</code></td><td></td><td>不变的</td></tr>
 <tr><td><code>std::cell::UnsafeCell&lt;T&gt;</code></td><td></td><td>不变的</td></tr>
 <tr><td><code>std::marker::PhantomData&lt;T&gt;</code></td><td></td><td>协变的</td></tr>
 <tr><td><code>dyn Trait&lt;T&gt; + 'a</code></td><td>协变的</td><td>不变的</td></tr>
 </tbody></table>
-<p>结构体(<code>struct</code>)、枚举(<code>enum</code>)、联合体(<code>union</code>)和元组(tuple)类型上的型变关系是通过查看其字段类型的型变关系来决定的。
+<p>结构体(<code>struct</code>)、枚举(<code>enum</code>)和联合体(<code>union</code>)类型上的型变关系是通过查看其字段类型的型变关系来决定的。
 如果参数用在了多处且具有不同型变关系的位置上，则该类型在该参数上是不变的。
-例如，下面示例的结构体在 <code>'a</code> 和 <code>T</code> 上是协变的，在 <code>'b</code> 和 <code>U</code> 上是不变的。</p>
+例如，下面示例的结构体在 <code>'a</code> 和 <code>T</code> 上是协变的，在 <code>'b</code>、<code>'c</code> 和 <code>U</code> 上是不变的。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::cell::UnsafeCell;
-struct Variance&lt;'a, 'b, T, U: 'a&gt; {
+struct Variance&lt;'a, 'b, 'c, T, U: 'a&gt; {
     x: &amp;'a U,               // 这让 `Variance` 在 'a 上是协变的, 也让在 U 上是协变的, 但是后面也使用了 U
     y: *const T,            // 在 T 上是协变的
     z: UnsafeCell&lt;&amp;'b f64&gt;, // 在 'b 上是不变的
     w: *mut U,              // 在 U 上是不变的, 所以让整个结构体在 U 上是不变的
+
+    f: fn(&amp;'c ()) -&gt; &amp;'c () // 无论是协变还是逆变，都会导致此结构体在 'c 上不变。
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>当在结构体(<code>struct</code>)、枚举(<code>enum</code>)和联合体(<code>union</code>)之外使用时，会在每个位置分别检查参数的型变。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">use std::cell::UnsafeCell;
+</span>fn generic_tuple&lt;'short, 'long: 'short&gt;(
+    // 'long 同时应用在一个元组里的协变和不变的位置上
+    x: (&amp;'long u32, UnsafeCell&lt;&amp;'long u32&gt;),
+) {
+    // 由于这些位置的型变是单独计算的，我们可以在协变位置自由地收缩 'long。
+    let _: (&amp;'short u32, UnsafeCell&lt;&amp;'long u32&gt;) = x;
+}
+
+fn takes_fn_ptr&lt;'short, 'middle: 'short&gt;(
+    // 'middle 被用在了一个既是协变又是逆变的位置上。
+    f: fn(&amp;'middle ()) -&gt; &amp;'middle (),
+) {
+    // 由于这些位置的型变是单独计算的，我们可以在协变位置自由地收缩 'middle，并在逆变位置拉伸它。
+    let _: fn(&amp;'static ()) -&gt; &amp;'short () = f;
 }
 <span class="boring">}
 </span></code></pre></pre>
@@ -11675,8 +11775,8 @@ commit: a989af055ff4fd7e1212754490fff72c3f7cc1be
 <h1><a class="header" href="#命名空间" id="命名空间">命名空间</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/names/namespaces.md">use-declarations.md</a><br />
-commit: 222c426ec1464757e7477ad836d97e427dde886b <br />
-本章译文最后维护日期：2021-06-19</p>
+commit: d5618e8e9edcb96a272358e394abcf9fb70659c6 <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <p><em>命名空间</em>是已声明的<a href="names/../names.html">名称</a>的逻辑分组。根据名称所指的实体类型，名称被分隔到不同的命名空间中。
 名称空间允许一个名称空间中出现的名称与另一个名称空间中的相同，且不会导致冲突。</p>
@@ -11730,7 +11830,7 @@ commit: 222c426ec1464757e7477ad836d97e427dde886b <br />
 <li><a href="names/../items/generics.html">泛型生存期参数</a></li>
 </ul>
 </li>
-<li>标签命名空间<sup class="footnote-reference"><a href="#rustc-lifetime-shadow">1</a></sup>
+<li>标签命名空间
 <ul>
 <li><a href="names/../expressions/loop-expr.html#loop-labels">循环标签</a></li>
 </ul>
@@ -11783,9 +11883,6 @@ fn example&lt;'Foo&gt;(f: Foo) {
 这样可以防止一种形式的宏遮挡另一种形式的。</p>
 <p>例如，<a href="names/../conditional-compilation.html#the-cfg-attribute"><code>cfg</code>属性</a>和<a href="names/../conditional-compilation.html#the-cfg-macro"><code>cfg</code>宏</a>是宏命名空间中具有相同名称的两个不同实体，但它们仍然可以在各自的上下文中使用。</p>
 <p>使用 <a href="names/../items/use-declarations.html"><code>use</code>导入</a>来对另一个宏进行遮蔽处理仍然是错误的，不管它们的子命名空间是什么</p>
-<div class="footnote-definition" id="rustc-lifetime-shadow"><sup class="footnote-definition-label">1</sup>
-<p>目前，在同一个作用域中，标签和生命周期使用相同名称时，<code>rustc</code> 会警告出现命名重复，但编译器内部仍然会独立地区别对待它们。这是一个关于该语言可能扩展的未来兼容性警告。具体见<a href="https://github.com/rust-lang/rust/pull/24162">PR #24162</a>。</p>
-</div>
 <h1><a class="header" href="#scopes" id="scopes">Scopes</a></h1>
 <h1><a class="header" href="#作用域" id="作用域">作用域</a></h1>
 <blockquote>
@@ -11900,8 +11997,8 @@ use alloc::rc::Rc;
 <h1><a class="header" href="#路径" id="路径">路径</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/paths.md">paths.md</a><br />
-commit: a0a7e18957047363efb7f3ea30b9f7e5e3d5abe3 <br />
-本章译文最后维护日期：2022-04-17</p>
+commit: f758647f8ece7b93b841b4f3d89138d280a2835c <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，<code>::</code> 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">程序项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用程序项。</p>
 <p>仅由标识符段组成的简单路径(simple paths)的两个示例：</p>
@@ -11965,6 +12062,7 @@ Vec::&lt;u8&gt;::with_capacity(1024);
 </span></code></pre></pre>
 <p>泛型参数的顺序被限制为生存期参数，然后是类型参数，然后是常量参数，再后是相应的约束。</p>
 <p>常量实参必须用花括号括起来，除非它们是<a href="expressions/literal-expr.html">字面量</a>或单段路径。</p>
+<p><code>impl Trait</code>这类的合成类型参数是隐式的，不能显式指定。</p>
 <h2><a class="header" href="#qualified-paths" id="qualified-paths">Qualified paths</a></h2>
 <h2><a class="header" href="#限定性路径" id="限定性路径">限定性路径</a></h2>
 <blockquote>
@@ -12434,8 +12532,8 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 <h1><a class="header" href="#链接" id="链接">链接</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/linkage.md">linkage.md</a><br />
-commit: 1426474192ecc9c13165c1d4772b26e8445f5734<br />
-本章译文最后维护日期：2021-4-23</p>
+commit: f715f2cc987c54ff8afc51be33379b96e8cc8ab7<br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <blockquote>
 <p>注意：本节更多的是从编译器的角度来描述的，而不是语言。</p>
@@ -12444,25 +12542,25 @@ commit: 1426474192ecc9c13165c1d4772b26e8445f5734<br />
 <p>在一个编译会话中，编译器可以通过使用命令行参数或内部 <code>crate_type</code>属性来生成多个构件(artifacts)。如果指定了一个或多个命令行参数，则将忽略（源码内部指定的）所有 <code>crate_type</code>属性，以便只构建由命令行指定的构件。</p>
 <ul>
 <li>
-<p><code>--crate-type=bin</code> 或 <code>#[crate_type = &quot;bin&quot;]</code> - 将生成一个可执行文件。这就要求在 crate 中有一个 <code>main</code>函数，它将在程序开始执行时运行。这将链接所有 Rust 和本地依赖，生成一个单独的可分发的二进制文件。此类型为默认的 crate 类型。</p>
+<p><code>--crate-type=bin</code> 或 <code>#![crate_type = &quot;bin&quot;]</code> - 将生成一个可执行文件。这就要求在 crate 中有一个 <code>main</code>函数，它将在程序开始执行时运行。这将链接所有 Rust 和本地依赖，生成一个单独的可分发的二进制文件。此类型为默认的 crate 类型。</p>
 </li>
 <li>
-<p><code>--crate-type=lib</code> 或 <code>#[crate_type = &quot;lib&quot;]</code> - 将生成一个 Rust库(library)。但最终会确切输出/生成什么类型的库在未生成之前还不好清晰确定，因为库有多种表现形式。使用 <code>lib</code> 这个通用选项的目的是生成“编译器推荐”的类型的库。像种指定输出库类型的选项在 rustc 里始终可用，但是每次实际输出的库的类型可能会随着实际情况的不同而不同。其它的输出（库的）类型选项都指定了不同风格的库类型，而 <code>lib</code> 可以看作是那些类型中的某个类型的别名（具体实际的输出的类型是编译器决定的）。</p>
+<p><code>--crate-type=lib</code> 或 <code>#![crate_type = &quot;lib&quot;]</code> - 将生成一个 Rust库(library)。但最终会确切输出/生成什么类型的库在未生成之前还不好清晰确定，因为库有多种表现形式。使用 <code>lib</code> 这个通用选项的目的是生成“编译器推荐”的类型的库。像种指定输出库类型的选项在 rustc 里始终可用，但是每次实际输出的库的类型可能会随着实际情况的不同而不同。其它的输出（库的）类型选项都指定了不同风格的库类型，而 <code>lib</code> 可以看作是那些类型中的某个类型的别名（具体实际的输出的类型是编译器决定的）。</p>
 </li>
 <li>
-<p><code>--crate-type=dylib</code> 或 <code>#[crate_type = &quot;dylib&quot;]</code> - 将生成一个动态 Rust库。这与 <code>lib</code> 选项的输出类型不同，因为这个选项会强制生成动态库。生成的动态库可以用作其他库和/或可执行文件的依赖。这种输出类型将创建依赖于具体平台的库（Linux 上为 <code>*.so</code>，macOS 上为 <code>*.dylib</code>、Windows 上为 <code>*.dll</code>）。</p>
+<p><code>--crate-type=dylib</code> 或 <code>#![crate_type = &quot;dylib&quot;]</code> - 将生成一个动态 Rust库。这与 <code>lib</code> 选项的输出类型不同，因为这个选项会强制生成动态库。生成的动态库可以用作其他库和/或可执行文件的依赖。这种输出类型将创建依赖于具体平台的库（Linux 上为 <code>*.so</code>，macOS 上为 <code>*.dylib</code>、Windows 上为 <code>*.dll</code>）。</p>
 </li>
 <li>
-<p><code>--crate-type=staticlib</code> 或 <code>#[crate_type = &quot;staticlib&quot;]</code> - 将生成一个静态系统库。这个选项与其他选项的库输出的不同之处在于——当前编译器永远不会尝试去链接此 <code>staticlib</code> 输出<sup class="footnote-reference"><a href="#译注1">1</a></sup>。此选项的目的是创建一个包含所有本地 crate 的代码以及所有上游依赖的静态库。此输出类型将在 Linux、macOS 和 Windows(MinGW) 平台上创建 <code>*.a</code> 归档文件(archive)，或者在 Windows(MSVC) 平台上创建 <code>*.lib</code> 库文件。在这些情况下，例如将 Rust代码链接到现有的非 Rust应用程序中，推荐使用这种类型，因为它不会动态依赖于其他 Rust 代码。</p>
+<p><code>--crate-type=staticlib</code> 或 <code>#![crate_type = &quot;staticlib&quot;]</code> - 将生成一个静态系统库。这个选项与其他选项的库输出的不同之处在于——当前编译器永远不会尝试去链接此 <code>staticlib</code> 输出<sup class="footnote-reference"><a href="#译注1">1</a></sup>。此选项的目的是创建一个包含所有本地 crate 的代码以及所有上游依赖的静态库。此输出类型将在 Linux、macOS 和 Windows(MinGW) 平台上创建 <code>*.a</code> 归档文件(archive)，或者在 Windows(MSVC) 平台上创建 <code>*.lib</code> 库文件。在这些情况下，例如将 Rust代码链接到现有的非 Rust应用程序中，推荐使用这种类型，因为它不会动态依赖于其他 Rust 代码。</p>
 </li>
 <li>
-<p><code>--crate-type=cdylib</code> 或 <code>#[crate_type = &quot;cdylib&quot;]</code> - 将生成一个动态系统库。如果编译输出的动态库要被另一种语言加载使用，请使用这种编译选项。这种选项的输出将在 Linux 上创建 <code>*.so</code> 文件，在 macOS 上创建 <code>*.dylib</code> 文件，在 Windows 上创建 <code>*.dll</code> 文件。</p>
+<p><code>--crate-type=cdylib</code> 或 <code>#![crate_type = &quot;cdylib&quot;]</code> - 将生成一个动态系统库。如果编译输出的动态库要被另一种语言加载使用，请使用这种编译选项。这种选项的输出将在 Linux 上创建 <code>*.so</code> 文件，在 macOS 上创建 <code>*.dylib</code> 文件，在 Windows 上创建 <code>*.dll</code> 文件。</p>
 </li>
 <li>
-<p><code>--crate-type=rlib</code> 或 <code>#[crate_type = &quot;rlib&quot;]</code> - 将生成一个“Rust库”。它被用作一个中间构件，可以被认为是一个“静态 Rust库”。与 <code>staticlib</code> 类型的库文件不同，这些 <code>rlib</code> 类型的库文件以后会作为其他 Rust代码文件的上游依赖，未来对那些 Rust代码文件进行编译时，那时的编译器会链并解释此 <code>rlib</code>文件。这本质上意味着（那时的） <code>rustc</code> 将在（此） <code>rlib</code> 文件中查找元数据(metadata)，就像在动态库中查找元数据一样。跟 <code>staticlib</code> 输出类型类似，这种类型的输出常配合用于生成静态链接的可执行文件(statically linked executable)。</p>
+<p><code>--crate-type=rlib</code> 或 <code>#![crate_type = &quot;rlib&quot;]</code> - 将生成一个“Rust库”。它被用作一个中间构件，可以被认为是一个“静态 Rust库”。与 <code>staticlib</code> 类型的库文件不同，这些 <code>rlib</code> 类型的库文件以后会作为其他 Rust代码文件的上游依赖，未来对那些 Rust代码文件进行编译时，那时的编译器会链并解释此 <code>rlib</code>文件。这本质上意味着（那时的） <code>rustc</code> 将在（此） <code>rlib</code> 文件中查找元数据(metadata)，就像在动态库中查找元数据一样。跟 <code>staticlib</code> 输出类型类似，这种类型的输出常配合用于生成静态链接的可执行文件(statically linked executable)。</p>
 </li>
 <li>
-<p><code>--crate-type=proc-macro</code> 或 <code>#[crate_type = &quot;proc-macro&quot;]</code> - 生成的输出类型没有被指定，但是如果通过 <code>-L</code> 提供了路径参数，编译器将把输出构件识别为宏，输出的宏可以被其他 Rust 程序加载使用。使用此 crate 类型编译的 crate 只能导出<a href="procedural-macros.html">过程宏</a>。编译器将自动设置 <code>proc_macro</code><a href="conditional-compilation.html">属性配置选项</a>。编译 crate 的目标平台(target)总是和当前编译器所在平台一致。例如，如果在 <code>x86_64</code> CPU 的 Linux 平台上执行编译，那么目标将是 <code>x86_64-unknown-linux-gnu</code>，即使该 crate 是另一个不同编译目标的 crate 的依赖。</p>
+<p><code>--crate-type=proc-macro</code> 或 <code>#![crate_type = &quot;proc-macro&quot;]</code> - 生成的输出类型没有被指定，但是如果通过 <code>-L</code> 提供了路径参数，编译器将把输出构件识别为宏，输出的宏可以被其他 Rust 程序加载使用。使用此 crate 类型编译的 crate 只能导出<a href="procedural-macros.html">过程宏</a>。编译器将自动设置 <code>proc_macro</code><a href="conditional-compilation.html">属性配置选项</a>。编译 crate 的目标平台(target)总是和当前编译器所在平台一致。例如，如果在 <code>x86_64</code> CPU 的 Linux 平台上执行编译，那么目标将是 <code>x86_64-unknown-linux-gnu</code>，即使该 crate 是另一个不同编译目标的 crate 的依赖。</p>
 </li>
 </ul>
 <p>请注意，这些选项是可堆叠使用的，如果同时使用了多个选项，那么编译器将一次生成所有这些选项关联的的输出类型，而不必反复多次编译。但是，命令行和内部 <code>crate_type</code> 属性配置不能同时起效。如果只使用了不带属性值的 <code>crate_type</code> 属性配置，则将生成所有类型的输出，但如果同时指定了一个或多个 <code>--crate-type</code> 命令行参数，则只生成这些指定的输出。</p>
@@ -12544,8 +12642,8 @@ fn main() {
 <h1><a class="header" href="#内联汇编" id="内联汇编">内联汇编</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md">behavior-considered-undefined.md</a><br />
-commit: 62e75b64721057c705d1441fe265c190dc2b2f2e <br />
-本章译文最后维护日期：2022-04-17</p>
+commit: b74825d8f88b685e239ade00f00de68ba4cd63d4 <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <p>Rust 通过 <a href="https://doc.rust-lang.org/core/arch/macro.asm.html"><code>asm!</code></a> 和 <a href="https://doc.rust-lang.org/core/arch/macro.global_asm.html"><code>global_asm!</code></a> 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。</p>
@@ -12584,7 +12682,7 @@ assert_eq!(x, 4 * 6);
 <p>下面的 ABNF语法规范指定了通用的内联汇编语法：</p>
 <pre><code class="language-text">format_string := STRING_LITERAL / RAW_STRING_LITERAL
 dir_spec := &quot;in&quot; / &quot;out&quot; / &quot;lateout&quot; / &quot;inout&quot; / &quot;inlateout&quot;
-reg_spec := &lt;register class&gt; / &quot;&lt;explicit register&gt;&quot;
+reg_spec := &lt;register class&gt; / &quot;\&quot;&quot; &lt;explicit register&gt; &quot;\&quot;&quot;
 operand_expr := expr / &quot;_&quot; / expr &quot;=&gt;&quot; expr / expr &quot;=&gt;&quot; &quot;_&quot;
 reg_operand := dir_spec &quot;(&quot; reg_spec &quot;)&quot; operand_expr
 operand := reg_operand
@@ -12701,8 +12799,10 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 <tr><td>x86</td><td><code>ymm_reg</code></td><td><code>ymm[0-7]</code> (x86) <code>ymm[0-15]</code> (x86-64)</td><td><code>x</code></td></tr>
 <tr><td>x86</td><td><code>zmm_reg</code></td><td><code>zmm[0-7]</code> (x86) <code>zmm[0-31]</code> (x86-64)</td><td><code>v</code></td></tr>
 <tr><td>x86</td><td><code>kreg</code></td><td><code>k[1-7]</code></td><td><code>Yk</code></td></tr>
+<tr><td>x86</td><td><code>kreg0</code></td><td><code>k0</code></td><td>仅 clobbers</td></tr>
 <tr><td>x86</td><td><code>x87_reg</code></td><td><code>st([0-7])</code></td><td>仅 clobbers</td></tr>
 <tr><td>x86</td><td><code>mmx_reg</code></td><td><code>mm[0-7]</code></td><td>仅 clobbers</td></tr>
+<tr><td>x86-64</td><td><code>tmm_reg</code></td><td><code>tmm[0-7]</code></td><td>仅 clobbers</td></tr>
 <tr><td>AArch64</td><td><code>reg</code></td><td><code>x[0-30]</code></td><td><code>r</code></td></tr>
 <tr><td>AArch64</td><td><code>vreg</code></td><td><code>v[0-31]</code></td><td><code>w</code></td></tr>
 <tr><td>AArch64</td><td><code>vreg_low16</code></td><td><code>v[0-15]</code></td><td><code>x</code></td></tr>
@@ -12731,7 +12831,7 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 <p>在x86-64上，<code>reg_byte</code>寄存器类中没有高位寄存器（例如没有 <code>ah</code>）。</p>
 </li>
 <li>
-<p>一些寄存器类被标记为 &quot;仅 clobbers&quot;，这意味着它们不能用于输入或输出，只能用于 <code>out(&quot;reg&quot;) _</code> 或 <code>lateout(&quot;reg&quot;) _</code> 形式的 clobbers。</p>
+<p>一些寄存器类被标记为 &quot;仅 clobbers&quot; 意味着此类中的寄存器不能被用于输入或输出，只能用于 <code>out(&lt;explicit register&gt;) _</code> 或 <code>lateout(&lt;explicit register&gt;) _</code> 这样的表达形式的。</p>
 </li>
 </ul>
 </blockquote>
@@ -12750,6 +12850,7 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 <tr><td>x86</td><td><code>kreg</code></td><td><code>avx512bw</code></td><td><code>i32</code>, <code>i64</code></td></tr>
 <tr><td>x86</td><td><code>mmx_reg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
 <tr><td>x86</td><td><code>x87_reg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
+<tr><td>x86</td><td><code>tmm_reg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
 <tr><td>AArch64</td><td><code>reg</code></td><td>None</td><td><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>f32</code>, <code>i64</code>, <code>f64</code></td></tr>
 <tr><td>AArch64</td><td><code>vreg</code></td><td><code>neon</code></td><td><code>i8</code>, <code>i16</code>, <code>i32</code>, <code>f32</code>, <code>i64</code>, <code>f64</code>, <br> <code>i8x8</code>, <code>i16x4</code>, <code>i32x2</code>, <code>i64x1</code>, <code>f32x2</code>, <code>f64x1</code>, <br> <code>i8x16</code>, <code>i16x8</code>, <code>i32x4</code>, <code>i64x2</code>, <code>f32x4</code>, <code>f64x2</code></td></tr>
 <tr><td>AArch64</td><td><code>preg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
@@ -12827,7 +12928,6 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 <tr><td>All</td><td><code>bp</code> (x86), <code>x29</code> (AArch64), <code>x8</code> (RISC-V)</td><td>帧指针不能用作输入或输出。</td></tr>
 <tr><td>ARM</td><td><code>r7</code> or <code>r11</code></td><td>在 ARM 上，帧指针可以是 <code>r7</code> 或 <code>r11</code>，具体取决于目标架构。帧指针不能用作输入或输出。</td></tr>
 <tr><td>All</td><td><code>si</code> (x86-32), <code>bx</code> (x86-64), <code>r6</code> (ARM), <code>x19</code> (AArch64), <code>x9</code> (RISC-V)</td><td>LLVM 在内部将其用作具有复杂栈帧的函数的“基指针”。</td></tr>
-<tr><td>x86</td><td><code>k0</code></td><td>这是一个不能修改的常量零寄存器。</td></tr>
 <tr><td>x86</td><td><code>ip</code></td><td>这是程序计数器，不是真正的寄存器。</td></tr>
 <tr><td>AArch64</td><td><code>xzr</code></td><td>这是一个不能修改的常量零寄存器。</td></tr>
 <tr><td>AArch64</td><td><code>x18</code></td><td>这是一些 AArch64目标架构上的操作系统预留寄存器。</td></tr>
@@ -12893,15 +12993,15 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 但如果某个操作的所有引用都已包含了修饰符，则对该操作的警告将会被抑制。</p>
 <h2><a class="header" href="#abi-clobbers" id="abi-clobbers">ABI clobbers</a></h2>
 <p>关键字<code>clobber_abi</code> 可用于将与之对应的一组默认的 clobber寄存器应用于 <code>asm!</code>块内。
-这在调用具有特定调用约定的函数时，会根据需要自动插入必要的 clobber约束：如果调用约定没有在调用过程中完整保持寄存器的值，则会将 <code>lateout(&quot;reg&quot;) _</code> 隐式添加到操作列表中。</p>
+这在调用具有特定调用约定的函数时，会根据需要自动插入必要的 clobber约束：如果调用约定没有在调用过程中完整保持寄存器的值，则会将 <code>lateout(&quot;...&quot;) _</code> 隐式添加到操作列表中 (其中 <code>...</code> 要用具体的寄存器名字替换掉)。</p>
 <p><code>clobber_abi</code> 可以指定任意多次。它将为所有指定了调用约定的寄存器集合中的所有单一寄存器都分配一个 clobber寄存器。</p>
 <p>当使用 <code>clobber_abi</code> 时，不允许把通用寄存器类作为输出寄存器类来指定：此时所有输出寄存器必须显式指定。
 有 <code>clobber_abi</code> 时，把显式输出寄存器标记为输出寄存器的工作优先于给寄存器隐式插入 clobber标志：此时只有当该寄存器明确未用作输出时，才会为寄存器插入 clobber标记。
 以下的 ABI 可与 <code>clobber_abi</code> 一起使用：</p>
 <table><thead><tr><th>体系架构</th><th>ABI名称</th><th>Clobbered寄存器</th></tr></thead><tbody>
 <tr><td>x86-32</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code>, <code>&quot;efiapi&quot;</code>, <code>&quot;cdecl&quot;</code>, <code>&quot;stdcall&quot;</code>, <code>&quot;fastcall&quot;</code></td><td><code>ax</code>, <code>cx</code>, <code>dx</code>, <code>xmm[0-7]</code>, <code>mm[0-7]</code>, <code>k[1-7]</code>, <code>st([0-7])</code></td></tr>
-<tr><td>x86-64</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code> (Windows平台), <code>&quot;efiapi&quot;</code>, <code>&quot;win64&quot;</code></td><td><code>ax</code>, <code>cx</code>, <code>dx</code>, <code>r[8-11]</code>, <code>xmm[0-31]</code>, <code>mm[0-7]</code>, <code>k[1-7]</code>, <code>st([0-7])</code></td></tr>
-<tr><td>x86-64</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code> (非Windows平台), <code>&quot;sysv64&quot;</code></td><td><code>ax</code>, <code>cx</code>, <code>dx</code>, <code>si</code>, <code>di</code>, <code>r[8-11]</code>, <code>xmm[0-31]</code>, <code>mm[0-7]</code>, <code>k[1-7]</code>, <code>st([0-7])</code></td></tr>
+<tr><td>x86-64</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code> (Windows平台), <code>&quot;efiapi&quot;</code>, <code>&quot;win64&quot;</code></td><td><code>ax</code>, <code>cx</code>, <code>dx</code>, <code>r[8-11]</code>, <code>xmm[0-31]</code>, <code>mm[0-7]</code>, <code>k[1-7]</code>, <code>st([0-7])</code>, <code>tmm[0-7]</code></td></tr>
+<tr><td>x86-64</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code> (在非Windows平台上), <code>&quot;sysv64&quot;</code></td><td><code>ax</code>, <code>cx</code>, <code>dx</code>, <code>si</code>, <code>di</code>, <code>r[8-11]</code>, <code>xmm[0-31]</code>, <code>mm[0-7]</code>, <code>k[1-7]</code>, <code>st([0-7])</code>, <code>tmm[0-7]</code></td></tr>
 <tr><td>AArch64</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code>, <code>&quot;efiapi&quot;</code></td><td><code>x[0-17]</code>, <code>x18</code>*, <code>x30</code>, <code>v[0-31]</code>, <code>p[0-15]</code>, <code>ffr</code></td></tr>
 <tr><td>ARM</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code>, <code>&quot;efiapi&quot;</code>, <code>&quot;aapcs&quot;</code></td><td><code>r[0-3]</code>, <code>r12</code>, <code>r14</code>, <code>s[0-15]</code>, <code>d[0-7]</code>, <code>d[16-31]</code></td></tr>
 <tr><td>RISC-V</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code>, <code>&quot;efiapi&quot;</code></td><td><code>x1</code>, <code>x[5-7]</code>, <code>x[10-17]</code>, <code>x[28-31]</code>, <code>f[0-7]</code>, <code>f[10-17]</code>, <code>f[28-31]</code>, <code>v[0-31]</code></td></tr>
@@ -13328,8 +13428,8 @@ commit: a7473287cc6e2fb972165dc5a7ffd26dad1fc907 <br />
 <h1><a class="header" href="#常量求值" id="常量求值">常量求值</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/const_eval.md">const_eval.md</a><br />
-commit:  806370f1b4112bf7b4e71297ce998877b70534dd <br />
-本章译文最后维护日期：2022-03-14</p>
+commit:  fd9d74ca0059097f6b6be585cba637fce277b4ab <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <p>常量求值是在编译过程中计算[表达式][<a href="expressions.html">expressions</a>]结果的过程。（不是所有表达式都可以在编译时求值，也就是说）只有全部表达式的某个子集可以在编译时求值。</p>
 <h2><a class="header" href="#constant-expressions" id="constant-expressions">Constant expressions</a></h2>

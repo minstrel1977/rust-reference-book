@@ -169,8 +169,8 @@
 <h2><a class="header" href="#过程宏" id="过程宏">过程宏</a></h2>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/procedural-macros.md">procedural-macros.md</a><br />
-commit: 26acee213a30ba01f128981aed4a42bd1d3610ca <br />
-本章译文最后维护日期：2021-04-17</p>
+commit: bd51ca17847961a0ea65bfc2326d1b0df99bac5e <br />
+本章译文最后维护日期：2021-06-17</p>
 </blockquote>
 <p><em>过程宏</em>允许在执行函数时创建句法扩展。过程宏有三种形式:</p>
 <ul>
@@ -192,7 +192,10 @@ proc-macro = true
 <h3><a class="header" href="#the-proc_macro-crate" id="the-proc_macro-crate">The <code>proc_macro</code> crate</a></h3>
 <p>过程宏类型的 crate 几乎总是会去链接编译器提供的 <a href="https://doc.rust-lang.org/proc_macro/index.html"><code>proc_macro</code> crate</a>。<code>proc_macro</code> crate 提供了编写过程宏所需的各种类型和工具来让编写更容易。</p>
 <p>此 crate 主要包含了一个 <a href="https://doc.rust-lang.org/proc_macro/struct.TokenStream.html"><code>TokenStream</code></a> 类型。过程宏其实是在 *token流(token streams)*上操作，而不是在某个或某些 AST 节点上操作，因为这对于编译器和过程宏的编译目标来说，这是一个随着时间推移要稳定得多的接口。<em>token流</em>大致相当于 <code>Vec&lt;TokenTree&gt;</code>，其中 <code>TokenTree</code> 可以大致视为词法 token。例如，<code>foo</code> 是标识符(<code>Ident</code>)类型的 token，<code>.</code> 是一个标点符号(<code>Punct</code>)类型的 token，<code>1.2</code> 是一个字面量(<code>Literal</code>)类型的 token。不同于 <code>Vec&lt;TokenTree&gt;</code> 的是 <code>TokenStream</code> 的克隆成本很低。</p>
-<p>所有类型的 token 都有一个与之关联的 <code>Span</code>。<code>Span</code> 是一个不透明的值，不能被修改，但可以被制造。<code>Span</code> 表示程序内的源代码范围，主要用于错误报告。可以事先（通过函数 <code>set_span</code>）配置任何 token 的 <code>Span</code>。</p>
+<p>所有类型的 token 都有一个与之关联的 <code>Span</code>。
+<code>Span</code> 是一个不透明的值，不能被修改，但可以手工创建。
+<code>Span</code> 表示程序内的源代码范围，主要用于错误报告。
+虽然不能修改 <code>Span</code> 本身，但可以更改与 token <em>关联</em>的 <code>Span</code>，例如通过其他 token 来获取 <code>Span</code>。</p>
 <h3><a class="header" href="#procedural-macro-hygiene" id="procedural-macro-hygiene">Procedural macro hygiene</a></h3>
 <h3><a class="header" href="#过程宏的卫生性" id="过程宏的卫生性">过程宏的卫生性</a></h3>
 <p>过程宏是<em>非卫生的(unhygienic)</em>。这意味着它的行为就好像它输出的 token流是被简单地内联写入它周围的代码中一样。这意味着它会受到外部程序项的影响，也会影响外部导入。</p>

@@ -169,8 +169,8 @@
 <h1><a class="header" href="#模式" id="模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
-commit: e06b267eeb7bed90605dd63f6cae585674e0b1f5 <br />
-本章译文最后维护日期：2022-04-17</p>
+commit: 6ce7804bee418b3a5240047f5ad4f527f83eaa8b <br />
+本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -521,7 +521,7 @@ match tuple {
    | <a href="tokens.html#byte-literals">BYTE_LITERAL</a><br />
    | <code>-</code><sup>?</sup> <a href="tokens.html#integer-literals">INTEGER_LITERAL</a><br />
    | <code>-</code><sup>?</sup> <a href="tokens.html#floating-point-literals">FLOAT_LITERAL</a><br />
-   | <a href="#path-patterns"><em>PathPattern</em></a></p>
+   | <a href="expressions/path-expr.html"><em>PathExpression</em></a></p>
 </blockquote>
 <p>区间模式匹配在区间上下边界内界定的值。区间模式可是闭区间或半开区间。如果区间模式的上界和下界均被包含在内则为闭区间模式。半开区间模式为包含下界数值，但不包含上界数值的区间模式。</p>
 <p>例如：模式 <code>'m'..='p'</code> 只匹配 <code>'m'</code>, <code>'n'</code>, <code>'o'</code> 和 <code>'p'</code> 这4个字符。 <code>1..</code> 可以匹配 9，或者 9001，或者 9007199254740991（如果此值的尺寸合适），但是不能匹配到 0，也不能匹配有符号整数的负值。区间模式中的界值可以是字面量，也可以是指向常量的路径。</p>

@@ -2,8 +2,8 @@
 # 诊断属性
 
 >[diagnostics.md](https://github.com/rust-lang/reference/blob/master/src/attributes/diagnostics.md)\
->commit: 12a4832c8eec1ad0df3edfb681571821708e0410 \
->本章译文最后维护日期：2021-4-6
+>commit: 0e5ff09e12ca7b81452d8064f98fe30bf5f5b05c \
+>本章译文最后维护日期：2022-06-17
 
 以下[属性][attributes]用于在编译期间控制或生成诊断消息。
 
@@ -198,7 +198,7 @@ fn five() -> i32 { 5i32 }
 five();
 ```
 
-当 [trait声明]中使用了此属性，如果[表达式语句][expression statement]的[调用表达式][call expression]返回了此 trait 的 [trait实现(impl trait)][impl trait] ，则违反了 `unused_must_use` lint。
+当在 [trait声明][trait declaration]中使用了此属性时，如果[表达式语句][expression statement]的[调用表达式][call expression]返回了此 trait 的 [trait实现(impl trait)][impl trait]或 [trait对象（dyn trait）][dyn trait] ，那这种情况也违反 `unused_must_use` lint。
 
 ```rust
 #[must_use]
@@ -265,6 +265,7 @@ impl Trait for i32 {
 [attributes]: ../attributes.md
 [block expression]: ../expressions/block-expr.md
 [call expression]: ../expressions/call-expr.md
+[dyn trait]: ../types/trait-object.md
 [enum variant]: ../items/enumerations.md
 [enum]: ../items/enumerations.md
 [expression statement]: ../statements.md#expression-statements
