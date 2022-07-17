@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>trait - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,7 +146,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#trait" id="trait">Trait</a></h1>
+                        <h1 id="trait"><a class="header" href="#trait">Trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/traits.md">traits.md</a><br />
 commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
@@ -191,8 +172,7 @@ commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
 <p>所有 trait 都定义了一个隐式类型参数 <code>Self</code> ，它指向“实现此接口的类型”。trait 还可能包含额外的类型参数。这些类型参数，包括 <code>Self</code> 在内，都可能会<a href="generics.html">跟正常类型参数一样</a>受到其他 trait 的约束。</p>
 <p>trait 需要具体的类型去实现，具体的实现方法是通过该类型的各种独立实现(implementations)来完成的。</p>
 <p>trait函数可以通过使用分号代替函数体来省略函数体。这表明此 trait的实现必须去定义实现该函数。如果 trait函数定义了一个函数体，那么这个定义就会作为任何不覆盖它的实现的默认函数实现。类似地，关联常量可以省略等号和表达式，以指示相应的实现必须定义该常量值。关联类型不能定义类型，只能在实现中指定类型。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 有定义和没有定义的相关联trait项的例子
 trait Example {
@@ -205,14 +185,13 @@ trait Example {
 <span class="boring">}
 </span></code></pre></pre>
 <p>Trait函数不能是 <a href="functions.html#async-functions"><code>async</code></a> 或 <a href="functions.html#const-functions"><code>const</code></a> 类型的。</p>
-<h2><a class="header" href="#trait-bounds" id="trait-bounds">Trait bounds</a></h2>
-<h2><a class="header" href="#trait约束" id="trait约束">trait约束</a></h2>
+<h2 id="trait-bounds"><a class="header" href="#trait-bounds">Trait bounds</a></h2>
+<h2 id="trait约束"><a class="header" href="#trait约束">trait约束</a></h2>
 <p>泛型程序项可以使用 trait 作为其类型参数的<a href="../trait-bounds.html">约束</a>。</p>
-<h2><a class="header" href="#generic-traits" id="generic-traits">Generic Traits</a></h2>
-<h2><a class="header" href="#泛型trait" id="泛型trait">泛型trait</a></h2>
+<h2 id="generic-traits"><a class="header" href="#generic-traits">Generic Traits</a></h2>
+<h2 id="泛型trait"><a class="header" href="#泛型trait">泛型trait</a></h2>
 <p>可以为 trait 指定类型参数来使该 trait 成为泛型trait/泛型类型。这些类型参数出现在 trait 名称之后，使用与<a href="functions.html#generic-functions">泛型函数</a>相同的句法。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Seq&lt;T&gt; {
     fn len(&amp;self) -&gt; u32;
@@ -221,8 +200,8 @@ trait Example {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#object-safety" id="object-safety">Object Safety</a></h2>
-<h2><a class="header" href="#对象安全条款" id="对象安全条款">对象安全条款</a></h2>
+<h2 id="object-safety"><a class="header" href="#object-safety">Object Safety</a></h2>
+<h2 id="对象安全条款"><a class="header" href="#对象安全条款">对象安全条款</a></h2>
 <p>对象安全的 trait 可以是 <a href="../types/trait-object.html">trait对象</a>的底层 trait。如果 trait 符合以下限定条件（在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md">RFC 255</a> 中定义），则认为它是<em>对象安全的(object safe)</em>：</p>
 <ul>
 <li>所有的超类trait<a href="#supertraits">supertraits</a> 也必须也是对象安全的。</li>
@@ -255,8 +234,7 @@ trait Example {
 </ul>
 </li>
 </ul>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::rc::Rc;
 </span><span class="boring">use std::sync::Arc;
@@ -277,8 +255,7 @@ trait TraitMethods {
 </span><span class="boring">let t: Box&lt;dyn TraitMethods&gt; = Box::new(S);
 </span><span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 此 trait 是对象安全的，但不能在 trait对象上分发(dispatch)使用这些方法。
 trait NonDispatchable {
@@ -302,8 +279,7 @@ obj.param(S);  // 错误: 不能调用带有 Self 类型的参数的方法
 obj.typed(1);  // 错误: 不能调用带有泛型类型参数的方法
 <span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::rc::Rc;
 </span>// 非对象安全的 trait
@@ -323,8 +299,7 @@ impl NotObjectSafe for S {
 let obj: Box&lt;dyn NotObjectSafe&gt; = Box::new(S); // 错误
 <span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Self: Sized trait 非对象安全的。
 trait TraitWithSize where Self: Sized {}
@@ -334,8 +309,7 @@ impl TraitWithSize for S {}
 let obj: Box&lt;dyn TraitWithSize&gt; = Box::new(S); // 错误
 <span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 如果有 `Self` 这样的泛型参数，那 trait 就是非对象安全的
 trait Super&lt;A&gt; {}
@@ -347,30 +321,27 @@ impl WithSelf for S {}
 let obj: Box&lt;dyn WithSelf&gt; = Box::new(S); // 错误: 不能使用 `Self` 作为类型参数
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#supertraits" id="supertraits">Supertraits</a></h2>
-<h2><a class="header" href="#超类trait" id="超类trait">超类trait</a></h2>
+<h2 id="supertraits"><a class="header" href="#supertraits">Supertraits</a></h2>
+<h2 id="超类trait"><a class="header" href="#超类trait">超类trait</a></h2>
 <p><strong>超类trait</strong> 是类型为了实现某特定 trait 而需要一并实现的 trait。此外，在任何地方，如果<a href="generics.html">泛型</a>或 <a href="../types/trait-object.html">trait对象</a>被某个 trait约束，那这个泛型或 trait对象就可以访问这个<em>超类trait</em> 的关联程序项。</p>
 <p>超类trait 是通过 trait 的 <code>Self</code>类型上的 trait约束来声明的，并且通过这种声明 trait约束的方式来传递这种超类trait 关系。一个 trait 不能是它自己的超类trait。</p>
 <p>有超类trait 的 trait 称其为其超类trait 的<strong>子trait(subtrait)</strong>。</p>
 <p>下面是一个声明 <code>Shape</code> 是 <code>Circle</code> 的超类trait 的例子。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Shape { fn area(&amp;self) -&gt; f64; }
 trait Circle : Shape { fn radius(&amp;self) -&gt; f64; }
 <span class="boring">}
 </span></code></pre></pre>
 <p>下面是同一个示例，除了改成使用 <a href="generics.html#where-clauses">where子句</a>来等效实现。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Shape { fn area(&amp;self) -&gt; f64; }
 trait Circle where Self: Shape { fn radius(&amp;self) -&gt; f64; }
 <span class="boring">}
 </span></code></pre></pre>
 <p>下面例子通过 <code>Shape</code> 的 <code>area</code> 函数为 <code>radius</code> 提供了一个默认实现：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">trait Shape { fn area(&amp;self) -&gt; f64; }
 </span>trait Circle where Self: Shape {
@@ -382,8 +353,7 @@ trait Circle where Self: Shape { fn radius(&amp;self) -&gt; f64; }
 <span class="boring">}
 </span></code></pre></pre>
 <p>下一个示例调用了一个泛型参数的超类trait 上的方法。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">trait Shape { fn area(&amp;self) -&gt; f64; }
 </span><span class="boring">trait Circle : Shape { fn radius(&amp;self) -&gt; f64; }
@@ -395,8 +365,7 @@ trait Circle where Self: Shape { fn radius(&amp;self) -&gt; f64; }
 <span class="boring">}
 </span></code></pre></pre>
 <p>类似地，这里是一个在 trait对象上调用超类trait 的方法的例子。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">trait Shape { fn area(&amp;self) -&gt; f64; }
 </span><span class="boring">trait Circle : Shape { fn radius(&amp;self) -&gt; f64; }
@@ -408,17 +377,16 @@ trait Circle where Self: Shape { fn radius(&amp;self) -&gt; f64; }
 let nonsense = circle.radius() * circle.area();
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#unsafe-traits" id="unsafe-traits">Unsafe traits</a></h2>
-<h2><a class="header" href="#非安全trait" id="非安全trait">非安全trait</a></h2>
+<h2 id="unsafe-traits"><a class="header" href="#unsafe-traits">Unsafe traits</a></h2>
+<h2 id="非安全trait"><a class="header" href="#非安全trait">非安全trait</a></h2>
 <p>以关键字 <code>unsafe</code> 开头的 trait程序项表示<em>实现</em>该 trait 可能是<a href="../unsafety.html">非安全</a>的。使用正确实现的非安全trait 是安全的。<a href="implementations.html#trait-implementations">trait实现</a>也必须以关键字 <code>unsafe</code> 开头。</p>
 <p><a href="../special-types-and-traits.html#sync"><code>Sync</code></a> 和 <a href="../special-types-and-traits.html#send"><code>Send</code></a> 是典型的非安全trait。</p>
-<h2><a class="header" href="#parameter-patterns" id="parameter-patterns">Parameter patterns</a></h2>
-<h2><a class="header" href="#参数模式" id="参数模式">参数模式</a></h2>
+<h2 id="parameter-patterns"><a class="header" href="#parameter-patterns">Parameter patterns</a></h2>
+<h2 id="参数模式"><a class="header" href="#参数模式">参数模式</a></h2>
 <p>（trait 中）没有代码体的函数声明或方法声明（的参数模式）只允许使用<a href="../identifiers.html">标识符/IDENTIFIER</a>模式 或 <code>_</code> <a href="../patterns.html#wildcard-pattern">通配符</a>模式。当前 <code>mut</code> <a href="../identifiers.html">IDENTIFIER</a> 还是允许的，但已被弃用，未来将成为一个硬编码错误(hard error)。</p>
 <!-- https://github.com/rust-lang/rust/issues/35203 -->
 <p>在 2015 版中，trait 的函数或方法的参数模式是可选的：</p>
-<pre><pre class="playground"><code class="language-rust edition2015">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2015"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 2015版
 trait T {
@@ -435,8 +403,7 @@ trait T {
 <li><code>&amp;&amp;</code> <a href="../identifiers.html">IDENTIFIER</a></li>
 </ul>
 <p>（跟普通函数一样，）从 2018 版开始，（trait 中）函数或方法的参数模式不再是可选的。同时，也跟普通函数一样，（trait 中）函数或方法只要有代码体，其参数模式可以是任何不可反驳型模式。但如果没有代码体，上面列出的限制仍然有效。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait T {
     fn f1((a, b): (i32, i32)) {}
@@ -444,10 +411,10 @@ trait T {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#item-visibility" id="item-visibility">Item visibility</a></h2>
-<h2><a class="header" href="#程序项的可见性" id="程序项的可见性">程序项的可见性</a></h2>
+<h2 id="item-visibility"><a class="header" href="#item-visibility">Item visibility</a></h2>
+<h2 id="程序项的可见性"><a class="header" href="#程序项的可见性">程序项的可见性</a></h2>
 <p>依照句法规定，trait程序项在语法上允许使用 <a href="../visibility-and-privacy.html"><em>Visibility</em></a>句法的注释，但是当 trait 被（句法法分析程序）验证(validate)后，该可见性注释又被弃用。因此，在源码解析层面，可以在使用程序项的不同上下文中使用统一的语法对这些程序项进行解析。例如，空的 <code>vis</code> 宏匹配段选择器可以用于 trait程序项，而在其他允许使用非空可见性的情况下，也可使用这同一套宏规则。</p>
-<pre><pre class="playground"><code class="language-rust">macro_rules! create_method {
+<pre><pre class="playground"><code class="language-rust edition2021">macro_rules! create_method {
     ($vis:vis $name:ident) =&gt; {
         $vis fn $name(&amp;self) {}
     };
@@ -481,17 +448,13 @@ fn main() {
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../items/static-items.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../items/implementations.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -499,49 +462,35 @@ fn main() {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../items/static-items.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../items/implementations.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

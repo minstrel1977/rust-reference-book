@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>枚举 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#enumerations" id="enumerations">Enumerations</a></h1>
-<h1><a class="header" href="#枚举" id="枚举">枚举</a></h1>
+                        <h1 id="enumerations"><a class="header" href="#enumerations">Enumerations</a></h1>
+<h1 id="枚举"><a class="header" href="#枚举">枚举</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/enumerations.md">enumerations.md</a><br />
 commit: d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
@@ -196,8 +177,7 @@ commit: d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
 <p><em>枚举</em>，英文为 <em>enumeration</em>，常见其简写形式 <em>enum</em>，它同时定义了一个标称型(nominal)<a href="../types/enum.html">枚举类型</a>和一组<em>构造器</em>，这可用于创建或使用模式来匹配相应枚举类型的值。</p>
 <p>枚举使用关键字 <code>enum</code> 来声明。</p>
 <p><code>enum</code> 程序项的一个示例和它的使用方法：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Animal {
     Dog,
@@ -209,8 +189,7 @@ a = Animal::Cat;
 <span class="boring">}
 </span></code></pre></pre>
 <p>枚举构造器可以带有具名字段或未具名字段：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Animal {
     Dog(String, f64),
@@ -222,12 +201,11 @@ a = Animal::Cat { name: &quot;Spotty&quot;.to_string(), weight: 2.7 };
 <span class="boring">}
 </span></code></pre></pre>
 <p>在这个例子中，<code>Cat</code> 是一个<em>类结构体枚举变体(struct-like enum variant)</em>，而 <code>Dog</code> 则被简单地称为枚举变体。每个枚举实例都有一个<em>判别值/判别式(discriminant)</em>，它是一个与此枚举实例关联的整数，用来确定它持有哪个变体。可以通过 <a href="https://doc.rust-lang.org/std/mem/fn.discriminant.html"><code>mem::discriminant</code></a> 函数来获得对这个判别值的不透明引用。</p>
-<h2><a class="header" href="#custom-discriminant-values-for-fieldless-enumerations" id="custom-discriminant-values-for-fieldless-enumerations">Custom Discriminant Values for Fieldless Enumerations</a></h2>
-<h2><a class="header" href="#为无字段枚举自定义判别值" id="为无字段枚举自定义判别值">为无字段枚举自定义判别值</a></h2>
+<h2 id="custom-discriminant-values-for-fieldless-enumerations"><a class="header" href="#custom-discriminant-values-for-fieldless-enumerations">Custom Discriminant Values for Fieldless Enumerations</a></h2>
+<h2 id="为无字段枚举自定义判别值"><a class="header" href="#为无字段枚举自定义判别值">为无字段枚举自定义判别值</a></h2>
 <p>如果枚举的<em>任何</em>变体都没有附加字段，则可以直接设置和访问判别值。</p>
 <p>可以使用操作符 <code>as</code> 通过<a href="../expressions/operator-expr.html#semantics">数值转换</a>将这些枚举类型转换为整型。枚举可以可选地指定每个判别值的具体值，方法是在变体名后面追加 <code>=</code> 和<a href="../const_eval.html#constant-expressions">常量表达式</a>。如果声明中的第一个变体未指定，则将其判别值设置为零。对于其他未指定的判别值，它比照前一个变体的判别值按 1 递增。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Foo {
     Bar,            // 0
@@ -241,8 +219,7 @@ assert_eq!(baz_discriminant, 123);
 </span></code></pre></pre>
 <p>尽管编译器被允许在实际的内存布局中使用较小的类型，但在<a href="../type-layout.html#the-default-representation">默认表形(default representation)</a>下，指定的判别值会被解释为一个 <code>isize</code> 值。也可以使用[原语表形(primitive representation)]或<a href="../type-layout.html#the-c-representation"><code>C</code>表形</a>来更改成大小可接受的值。</p>
 <p>同一枚举中，两个变体使用相同的判别值是错误的。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum SharedDiscriminantError {
     SharedA = 1,
@@ -257,8 +234,7 @@ enum SharedDiscriminantError2 {
 <span class="boring">}
 </span></code></pre></pre>
 <p>当前一个变体的判别值是当前表形允许的的最大值时，再使用默认判别值就也是错误的。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[repr(u8)]
 enum OverflowingDiscriminantError {
@@ -274,29 +250,26 @@ enum OverflowingDiscriminantError2 {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#zero-variant-enums" id="zero-variant-enums">Zero-variant Enums</a></h2>
-<h2><a class="header" href="#无变体枚举" id="无变体枚举">无变体枚举</a></h2>
+<h2 id="zero-variant-enums"><a class="header" href="#zero-variant-enums">Zero-variant Enums</a></h2>
+<h2 id="无变体枚举"><a class="header" href="#无变体枚举">无变体枚举</a></h2>
 <p>没有变体的枚举称为<em>零变体枚举/无变体枚举</em>。因为它们没有有效的值，所以不能被实例化。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum ZeroVariants {}
 <span class="boring">}
 </span></code></pre></pre>
 <p>零变体枚举与 <a href="../types/never.html"><em>never类型</em></a>等效，但它不能被强转为其他类型。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">enum ZeroVariants {}
 </span>let x: ZeroVariants = panic!();
 let y: u32 = x; // 类型不匹配错误
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#variant-visibility" id="variant-visibility">Variant visibility</a></h2>
-<h2><a class="header" href="#变体的可见性" id="变体的可见性">变体的可见性</a></h2>
+<h2 id="variant-visibility"><a class="header" href="#variant-visibility">Variant visibility</a></h2>
+<h2 id="变体的可见性"><a class="header" href="#变体的可见性">变体的可见性</a></h2>
 <p>依照句法规则，枚举变体是允许有自己的[<em>可见性(visibility)</em>][Visibility]限定/注解(annotation)的，但当枚举被（句法分析程序）验证(validate)通过后，可见性注解又被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的程序项使用统一的句法规则进行解析。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! mac_variant {
     ($vis:vis $name:ident) =&gt; {
@@ -327,17 +300,13 @@ enum E {
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../items/structs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../items/unions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -345,49 +314,35 @@ enum E {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../items/structs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../items/unions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

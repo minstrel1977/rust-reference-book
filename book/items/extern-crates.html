@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>外部crate - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#extern-crate-declarations" id="extern-crate-declarations">Extern crate declarations</a></h1>
-<h1><a class="header" href="#外部crate声明" id="外部crate声明">外部crate声明</a></h1>
+                        <h1 id="extern-crate-declarations"><a class="header" href="#extern-crate-declarations">Extern crate declarations</a></h1>
+<h1 id="外部crate声明"><a class="header" href="#外部crate声明">外部crate声明</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/extern-crates.md">extern-crates.md</a><br />
 commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
@@ -198,16 +179,16 @@ extern crate std as ruststd; // 使用其他名字去链接 'std'
 <pre><code class="language-rust ignore">// 导入 Cargo 包 hello-world
 extern crate hello_world; // 连字符被替换为下划线
 </code></pre>
-<h2><a class="header" href="#extern-prelude" id="extern-prelude">Extern Prelude</a></h2>
-<h2><a class="header" href="#外部预导入包" id="外部预导入包">外部预导入包</a></h2>
+<h2 id="extern-prelude"><a class="header" href="#extern-prelude">Extern Prelude</a></h2>
+<h2 id="外部预导入包"><a class="header" href="#外部预导入包">外部预导入包</a></h2>
 <p>本节内容已经移入<a href="../names/preludes.html#extern-prelude">预导入包 — 外部预导入包</a>中了。</p>
 <!-- 本节是为了让其他资料的链入链接不止于立即失效，一旦其他链接被更新，本节就会删除 -->
-<h2><a class="header" href="#underscore-imports" id="underscore-imports">Underscore Imports</a></h2>
-<h2><a class="header" href="#下划线导入" id="下划线导入">下划线导入</a></h2>
+<h2 id="underscore-imports"><a class="header" href="#underscore-imports">Underscore Imports</a></h2>
+<h2 id="下划线导入"><a class="header" href="#下划线导入">下划线导入</a></h2>
 <p>外部的 crate依赖可以通过使用带有下划线形如 <code>extern crate foo as _</code> 的形式来声明，而无需将其名称绑定到当前作用域内。这种声明方式对于只需要 crate 被链接进来，但 crate 从不会被当前代码引用的情况可能很有用，并且还可以避免未使用的 lint 提醒。</p>
 <p>下划线导入不会影响 <a href="../macros-by-example.html#the-macro_use-attribute"><code>macro_use</code>属性</a>的正常使用，<code>macro_use</code>属性仍会将各种宏名正常导入到 <a href="../names/preludes.html#macro_use-prelude"><code>macro_use</code>预导入包</a>中。</p>
-<h2><a class="header" href="#the-no_link-attribute" id="the-no_link-attribute">The <code>no_link</code> attribute</a></h2>
-<h2><a class="header" href="#no_link属性" id="no_link属性"><code>no_link</code>属性</a></h2>
+<h2 id="the-no_link-attribute"><a class="header" href="#the-no_link-attribute">The <code>no_link</code> attribute</a></h2>
+<h2 id="no_link属性"><a class="header" href="#no_link属性"><code>no_link</code>属性</a></h2>
 <p>可以在外部项(<code>extern crate</code> item)上指定使用 <em><code>no_link</code>属性</em>，以防止此 crate 被链接到编译输出中。这通常用于加载一个 crate 而只访问它的宏。</p>
 <div class="footnote-definition" id="soname"><sup class="footnote-definition-label">1</sup>
 <p>译者注：这里的 <code>soname</code> 是 linux系统里的动态库文件的 soname。</p>
@@ -229,17 +210,13 @@ extern crate hello_world; // 连字符被替换为下划线
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../items/modules.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../items/use-declarations.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -247,49 +224,35 @@ extern crate hello_world; // 连字符被替换为下划线
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../items/modules.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../items/use-declarations.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

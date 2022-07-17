@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>内联汇编 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="favicon.svg">
-        
-        
         <link rel="shortcut icon" href="favicon.png">
-        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#inline-assembly" id="inline-assembly">Inline assembly</a></h1>
-<h1><a class="header" href="#内联汇编" id="内联汇编">内联汇编</a></h1>
+                        <h1 id="inline-assembly"><a class="header" href="#inline-assembly">Inline assembly</a></h1>
+<h1 id="内联汇编"><a class="header" href="#内联汇编">内联汇编</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md">behavior-considered-undefined.md</a><br />
 commit: b74825d8f88b685e239ade00f00de68ba4cd63d4 <br />
@@ -182,10 +163,9 @@ commit: b74825d8f88b685e239ade00f00de68ba4cd63d4 <br />
 <li>RISC-V</li>
 </ul>
 <p>如果在不支持的目标架构上使用 <code>asm!</code>，编译器会报错。</p>
-<h2><a class="header" href="#example" id="example">Example</a></h2>
-<h2><a class="header" href="#示例" id="示例">示例</a></h2>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<h2 id="example"><a class="header" href="#example">Example</a></h2>
+<h2 id="示例"><a class="header" href="#示例">示例</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::arch::asm;
 
@@ -204,8 +184,8 @@ unsafe {
 assert_eq!(x, 4 * 6);
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#syntax" id="syntax">Syntax</a></h2>
-<h2><a class="header" href="#句法" id="句法">句法</a></h2>
+<h2 id="syntax"><a class="header" href="#syntax">Syntax</a></h2>
+<h2 id="句法"><a class="header" href="#句法">句法</a></h2>
 <p>下面的 ABNF语法规范指定了通用的内联汇编语法：</p>
 <pre><code class="language-text">format_string := STRING_LITERAL / RAW_STRING_LITERAL
 dir_spec := &quot;in&quot; / &quot;out&quot; / &quot;lateout&quot; / &quot;inout&quot; / &quot;inlateout&quot;
@@ -219,16 +199,16 @@ options := &quot;options(&quot; option *(&quot;,&quot; option) [&quot;,&quot;] &
 asm := &quot;asm!(&quot; format_string *(&quot;,&quot; format_string) *(&quot;,&quot; [ident &quot;=&quot;] operand) *(&quot;,&quot; clobber_abi) *(&quot;,&quot; options) [&quot;,&quot;] &quot;)&quot;
 global_asm := &quot;global_asm!(&quot; format_string *(&quot;,&quot; format_string) *(&quot;,&quot; [ident &quot;=&quot;] operand) *(&quot;,&quot; options) [&quot;,&quot;] &quot;)&quot;
 </code></pre>
-<h2><a class="header" href="#scope" id="scope">Scope</a></h2>
-<h2><a class="header" href="#作用域" id="作用域">作用域</a></h2>
+<h2 id="scope"><a class="header" href="#scope">Scope</a></h2>
+<h2 id="作用域"><a class="header" href="#作用域">作用域</a></h2>
 <p>内联汇编可以以下面两种方式来使用。</p>
 <p>通过 <code>asm!</code>宏，汇编代码在函数作用域中被发射，且最终被集成到编译器生成的函数的汇编代码中。
 此汇编代码必须遵守 <a href="#rules-for-inline-assembly">严格规则</a>以避免未定义行为。
 注意，在某些情况下，编译器可能选择将汇编代码作为一个独立的函数发射，并生成对它的调用汇编。</p>
 <p>通过 <code>global_asm!</code>宏，汇编代码在全局作用域中被发射。
 这可以用来使用汇编代码编写完整的函数，并且通常提供更多的自由来使用任意寄存器和汇编指令。</p>
-<h2><a class="header" href="#template-string-arguments" id="template-string-arguments">Template string arguments</a></h2>
-<h2><a class="header" href="#模板字符串参数" id="模板字符串参数">模板字符串参数</a></h2>
+<h2 id="template-string-arguments"><a class="header" href="#template-string-arguments">Template string arguments</a></h2>
+<h2 id="模板字符串参数"><a class="header" href="#模板字符串参数">模板字符串参数</a></h2>
 <p>汇编器模板使用与<a href="../std/fmt/index.html#syntax">格式字符串</a>相同的语法(即占位符是由一对花括号来标定)。
 相应的参数通过顺序、索引或名称来获取。
 但是不支持隐式的命名参数（<a href="https://github.com/rust-lang/rfcs/pull/2795">RFC #2795</a>引入）。</p>
@@ -246,8 +226,8 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 这些目标架构对汇编代码做了一些额外的限制：任何汇编器状态（例如，可以使用 <code>.section</code> 更改的当前节）必须在 asm字符串末尾恢复为其原始值。
 不符合 GAS语法的汇编代码将导致特定于汇编器的行为。
 对内联汇编使用的指令的进一步的约束在本章后面的<a href="#directives-support">指令支持</a>章节有详细说明。</p>
-<h2><a class="header" href="#operand-type" id="operand-type">Operand type</a></h2>
-<h2><a class="header" href="#操作类型" id="操作类型">操作类型</a></h2>
+<h2 id="operand-type"><a class="header" href="#operand-type">Operand type</a></h2>
+<h2 id="操作类型"><a class="header" href="#操作类型">操作类型</a></h2>
 <p>目前支持以下几种操作：</p>
 <ul>
 <li><code>in(&lt;reg&gt;) &lt;expr&gt;</code>
@@ -300,8 +280,8 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 在 <code>asm!</code>执行后，会按从左到右的顺序写出输出。
 这一点很重要，如果两个输出指向同一个位置：该位置（表达式）将包含最右侧输出的值。</p>
 <p>因为 <code>global_asm!</code> 存在于函数外部，不能使用输入/输出操作。</p>
-<h2><a class="header" href="#register-operands" id="register-operands">Register operands</a></h2>
-<h2><a class="header" href="#寄存器操作" id="寄存器操作">寄存器操作</a></h2>
+<h2 id="register-operands"><a class="header" href="#register-operands">Register operands</a></h2>
+<h2 id="寄存器操作"><a class="header" href="#寄存器操作">寄存器操作</a></h2>
 <p>输入和输出操作可以被用来指定一个显式寄存器或某一类寄存器（可以被寄存器分配器选择和分配的一类寄存器，每次可以从中选择和分配其中的一个）。
 显式寄存器是被字符串文本（例如 <code>&quot;eax&quot;</code>）指定的，而寄存器类是通过标识符（例如 <code>reg</code>）来指定的。</p>
 <p>请注意，显式寄存器将寄存器别名（例如ARM上的 <code>r14</code> 和 <code>lr</code>）和寄存器的较小视图（例如 <code>eax</code> 和 <code>rax</code>）视为与其基寄存器(base register)等效。
@@ -317,7 +297,7 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 这包括在 <code>std::arch</code> 中定义的特定于体系架构的向量类型，如 <code>__m128</code> (x86) 或 <code>int8x16_t</code> (ARM)。</li>
 </ul>
 <p>以下是当前支持的寄存器类列表：</p>
-<table><thead><tr><th>体系架构</th><th>寄存器类</th><th>寄存器</th><th>LLVM约束代码</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>体系架构</th><th>寄存器类</th><th>寄存器</th><th>LLVM约束代码</th></tr></thead><tbody>
 <tr><td>x86</td><td><code>reg</code></td><td><code>ax</code>, <code>bx</code>, <code>cx</code>, <code>dx</code>, <code>si</code>, <code>di</code>, <code>bp</code>, <code>r[8-15]</code> (仅 x86-64)</td><td><code>r</code></td></tr>
 <tr><td>x86</td><td><code>reg_abcd</code></td><td><code>ax</code>, <code>bx</code>, <code>cx</code>, <code>dx</code></td><td><code>Q</code></td></tr>
 <tr><td>x86-32</td><td><code>reg_byte</code></td><td><code>al</code>, <code>bl</code>, <code>cl</code>, <code>dl</code>, <code>ah</code>, <code>bh</code>, <code>ch</code>, <code>dh</code></td><td><code>q</code></td></tr>
@@ -348,6 +328,7 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 <tr><td>RISC-V</td><td><code>freg</code></td><td><code>f[0-31]</code></td><td><code>f</code></td></tr>
 <tr><td>RISC-V</td><td><code>vreg</code></td><td><code>v[0-31]</code></td><td>仅 clobbers</td></tr>
 </tbody></table>
+</div>
 <blockquote>
 <p><strong>注意</strong>:</p>
 <ul>
@@ -366,7 +347,7 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 这是必要的，因为值被加载到寄存器的方式取决于它的类型。
 例如，在大端机系统上，将 <code>i32x4</code> 和 <code>i8x16</code> 加载到 SIMD寄存器可能会导致不同的寄存器内容，即便这两个值的字节内存表示形式相同。
 特定寄存器类支持的类型的可用性可能取决于当前启用的目标特性。</p>
-<table><thead><tr><th>体系架构</th><th>寄存器类</th><th>目标特性</th><th>允许的类型</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>体系架构</th><th>寄存器类</th><th>目标特性</th><th>允许的类型</th></tr></thead><tbody>
 <tr><td>x86-32</td><td><code>reg</code></td><td>None</td><td><code>i16</code>, <code>i32</code>, <code>f32</code></td></tr>
 <tr><td>x86-64</td><td><code>reg</code></td><td>None</td><td><code>i16</code>, <code>i32</code>, <code>f32</code>, <code>i64</code>, <code>f64</code></td></tr>
 <tr><td>x86</td><td><code>reg_byte</code></td><td>None</td><td><code>i8</code></td></tr>
@@ -391,6 +372,7 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 <tr><td>RISC-V</td><td><code>freg</code></td><td><code>d</code></td><td><code>f64</code></td></tr>
 <tr><td>RISC-V</td><td><code>vreg</code></td><td>N/A</td><td>仅 clobbers</td></tr>
 </tbody></table>
+</div>
 <blockquote>
 <p><strong>注意</strong>: 对于上述表里，指针、函数指针和 <code>isize</code>/<code>usize</code> 被视为等效的整数类型（<code>i16</code>/<code>i32</code>/<code>i64</code> 具体取决于目标架构）。</p>
 </blockquote>
@@ -399,12 +381,12 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 <p>当为 <code>inout</code>操作分别指定了输入和输出表达式时，这两个表达式必须具有相同的数据类型。
 唯一的例外是两个操作（所操作的表达式）都是指针或整数时，它们只需要具有相同的类型尺寸。
 存在此约束是因为 LLVM 和 GCC 中的寄存器分配器有时无法让既定的操作(operand)和不同的数据类型进行有效绑定。</p>
-<h2><a class="header" href="#register-names" id="register-names">Register names</a></h2>
-<h2><a class="header" href="#寄存器名称" id="寄存器名称">寄存器名称</a></h2>
+<h2 id="register-names"><a class="header" href="#register-names">Register names</a></h2>
+<h2 id="寄存器名称"><a class="header" href="#寄存器名称">寄存器名称</a></h2>
 <p>一些寄存器有多个名称。
 编译器会将它们视为与其基寄存器名称相同。
 以下是所有受支持的寄存器别名的列表：</p>
-<table><thead><tr><th>体系架构</th><th>基寄存器</th><th>别名</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>体系架构</th><th>基寄存器</th><th>别名</th></tr></thead><tbody>
 <tr><td>x86</td><td><code>ax</code></td><td><code>eax</code>, <code>rax</code></td></tr>
 <tr><td>x86</td><td><code>bx</code></td><td><code>ebx</code>, <code>rbx</code></td></tr>
 <tr><td>x86</td><td><code>cx</code></td><td><code>ecx</code>, <code>rcx</code></td></tr>
@@ -449,8 +431,9 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 <tr><td>RISC-V</td><td><code>f[18-27]</code></td><td><code>fs[2-11]</code></td></tr>
 <tr><td>RISC-V</td><td><code>f[28-31]</code></td><td><code>ft[8-11]</code></td></tr>
 </tbody></table>
+</div>
 <p>某些寄存器不能用于输入或输出操作：</p>
-<table><thead><tr><th>体系架构</th><th>不支持的寄存器</th><th>原因</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>体系架构</th><th>不支持的寄存器</th><th>原因</th></tr></thead><tbody>
 <tr><td>All</td><td><code>sp</code></td><td>栈指针必须在 asm代码块末尾恢复为其原始值。</td></tr>
 <tr><td>All</td><td><code>bp</code> (x86), <code>x29</code> (AArch64), <code>x8</code> (RISC-V)</td><td>帧指针不能用作输入或输出。</td></tr>
 <tr><td>ARM</td><td><code>r7</code> or <code>r11</code></td><td>在 ARM 上，帧指针可以是 <code>r7</code> 或 <code>r11</code>，具体取决于目标架构。帧指针不能用作输入或输出。</td></tr>
@@ -463,14 +446,15 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 <tr><td>RISC-V</td><td><code>x0</code></td><td>这是一个不能修改的常量零寄存器。</td></tr>
 <tr><td>RISC-V</td><td><code>gp</code>, <code>tp</code></td><td>这些寄存器是预留的，不能用作输入或输出。</td></tr>
 </tbody></table>
+</div>
 <p>帧指针和基指针寄存器(base pointer register)预留供 LLVM 内部使用。而 <code>asm!</code>语句不能显式去指定使用预留寄存器，但在某些情况下，LLVM 将为 <code>reg</code>操作分配其中一个预留寄存器。使用预留寄存器的汇编代码应该小心，因为 <code>reg</code>操作可能在使用相同的寄存器。</p>
-<h2><a class="header" href="#template-modifiers" id="template-modifiers">Template modifiers</a></h2>
-<h2><a class="header" href="#模板修饰符" id="模板修饰符">模板修饰符</a></h2>
+<h2 id="template-modifiers"><a class="header" href="#template-modifiers">Template modifiers</a></h2>
+<h2 id="模板修饰符"><a class="header" href="#模板修饰符">模板修饰符</a></h2>
 <p>占位符可以通过在大括号中的 <code>:</code> 之后指定的修饰符进行扩充。
 这些修饰符不影响寄存器分配，但会更改插入模板字符串时操作(operand)的格式化方式。
 每个模板占位符只允许一个修饰符。</p>
 <p>支持的修饰符是 LLVM（和 GCC）<a href="http://llvm.org/docs/LangRef.html#asm-template-argument-modifiers">asm模板参数修饰符</a>的子集，但不使用相同的字母代码。</p>
-<table><thead><tr><th>体系架构</th><th>寄存器类</th><th>修饰符</th><th>输出示例</th><th>LLVM修饰符</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>体系架构</th><th>寄存器类</th><th>修饰符</th><th>输出示例</th><th>LLVM修饰符</th></tr></thead><tbody>
 <tr><td>x86-32</td><td><code>reg</code></td><td>None</td><td><code>eax</code></td><td><code>k</code></td></tr>
 <tr><td>x86-64</td><td><code>reg</code></td><td>None</td><td><code>rax</code></td><td><code>q</code></td></tr>
 <tr><td>x86-32</td><td><code>reg_abcd</code></td><td><code>l</code></td><td><code>al</code></td><td><code>b</code></td></tr>
@@ -505,6 +489,7 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 <tr><td>RISC-V</td><td><code>reg</code></td><td>None</td><td><code>x1</code></td><td>None</td></tr>
 <tr><td>RISC-V</td><td><code>freg</code></td><td>None</td><td><code>f0</code></td><td>None</td></tr>
 </tbody></table>
+</div>
 <blockquote>
 <p><strong>注意</strong>:</p>
 <ul>
@@ -518,14 +503,14 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 如果内联asm 仅访问寄存器的低位，则这不是问题，这可以通过使用模板修饰符在 asm代码中使用子寄存器名称（例如，使用 <code>ax</code> 替代 <code>rax</code>）来实现。
 由于这是一个容易犯的错误，编译器将建议在适当的情况下使用模板修饰符来给出输入值的类型。
 但如果某个操作的所有引用都已包含了修饰符，则对该操作的警告将会被抑制。</p>
-<h2><a class="header" href="#abi-clobbers" id="abi-clobbers">ABI clobbers</a></h2>
+<h2 id="abi-clobbers"><a class="header" href="#abi-clobbers">ABI clobbers</a></h2>
 <p>关键字<code>clobber_abi</code> 可用于将与之对应的一组默认的 clobber寄存器应用于 <code>asm!</code>块内。
 这在调用具有特定调用约定的函数时，会根据需要自动插入必要的 clobber约束：如果调用约定没有在调用过程中完整保持寄存器的值，则会将 <code>lateout(&quot;...&quot;) _</code> 隐式添加到操作列表中 (其中 <code>...</code> 要用具体的寄存器名字替换掉)。</p>
 <p><code>clobber_abi</code> 可以指定任意多次。它将为所有指定了调用约定的寄存器集合中的所有单一寄存器都分配一个 clobber寄存器。</p>
 <p>当使用 <code>clobber_abi</code> 时，不允许把通用寄存器类作为输出寄存器类来指定：此时所有输出寄存器必须显式指定。
 有 <code>clobber_abi</code> 时，把显式输出寄存器标记为输出寄存器的工作优先于给寄存器隐式插入 clobber标志：此时只有当该寄存器明确未用作输出时，才会为寄存器插入 clobber标记。
 以下的 ABI 可与 <code>clobber_abi</code> 一起使用：</p>
-<table><thead><tr><th>体系架构</th><th>ABI名称</th><th>Clobbered寄存器</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>体系架构</th><th>ABI名称</th><th>Clobbered寄存器</th></tr></thead><tbody>
 <tr><td>x86-32</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code>, <code>&quot;efiapi&quot;</code>, <code>&quot;cdecl&quot;</code>, <code>&quot;stdcall&quot;</code>, <code>&quot;fastcall&quot;</code></td><td><code>ax</code>, <code>cx</code>, <code>dx</code>, <code>xmm[0-7]</code>, <code>mm[0-7]</code>, <code>k[1-7]</code>, <code>st([0-7])</code></td></tr>
 <tr><td>x86-64</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code> (Windows平台), <code>&quot;efiapi&quot;</code>, <code>&quot;win64&quot;</code></td><td><code>ax</code>, <code>cx</code>, <code>dx</code>, <code>r[8-11]</code>, <code>xmm[0-31]</code>, <code>mm[0-7]</code>, <code>k[1-7]</code>, <code>st([0-7])</code>, <code>tmm[0-7]</code></td></tr>
 <tr><td>x86-64</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code> (在非Windows平台上), <code>&quot;sysv64&quot;</code></td><td><code>ax</code>, <code>cx</code>, <code>dx</code>, <code>si</code>, <code>di</code>, <code>r[8-11]</code>, <code>xmm[0-31]</code>, <code>mm[0-7]</code>, <code>k[1-7]</code>, <code>st([0-7])</code>, <code>tmm[0-7]</code></td></tr>
@@ -533,6 +518,7 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 <tr><td>ARM</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code>, <code>&quot;efiapi&quot;</code>, <code>&quot;aapcs&quot;</code></td><td><code>r[0-3]</code>, <code>r12</code>, <code>r14</code>, <code>s[0-15]</code>, <code>d[0-7]</code>, <code>d[16-31]</code></td></tr>
 <tr><td>RISC-V</td><td><code>&quot;C&quot;</code>, <code>&quot;system&quot;</code>, <code>&quot;efiapi&quot;</code></td><td><code>x1</code>, <code>x[5-7]</code>, <code>x[10-17]</code>, <code>x[28-31]</code>, <code>f[0-7]</code>, <code>f[10-17]</code>, <code>f[28-31]</code>, <code>v[0-31]</code></td></tr>
 </tbody></table>
+</div>
 <blockquote>
 <p>注意：</p>
 <ul>
@@ -540,8 +526,8 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 </ul>
 </blockquote>
 <p>随着体系架构中新的寄存器的加入，在rustc中，每个 ABI 对应的 clobbered寄存器列表也会一并更新：这确保了当 LLVM 开始在其生成的代码中使用这些新寄存器时，<code>asm!</code> 里的 clobber寄存器的正确性也能得到保持。</p>
-<h2><a class="header" href="#options" id="options">Options</a></h2>
-<h2><a class="header" href="#可选项" id="可选项">可选项</a></h2>
+<h2 id="options"><a class="header" href="#options">Options</a></h2>
+<h2 id="可选项"><a class="header" href="#可选项">可选项</a></h2>
 <p>我们使用标志（Flag）技术来进一步影响内联汇编块的行为。
 目前定义了以下可选项（标志）：</p>
 <ul>
@@ -572,8 +558,8 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 </ul>
 <p><code>global_asm!</code> 仅支持 <code>att_syntax</code> 和 <code>raw</code> 可选项。
 其余可选项对于全局作用域类型的内联汇编没有意义。</p>
-<h2><a class="header" href="#rules-for-inline-assembly" id="rules-for-inline-assembly">Rules for inline assembly</a></h2>
-<h2><a class="header" href="#内联汇编规则" id="内联汇编规则">内联汇编规则</a></h2>
+<h2 id="rules-for-inline-assembly"><a class="header" href="#rules-for-inline-assembly">Rules for inline assembly</a></h2>
+<h2 id="内联汇编规则"><a class="header" href="#内联汇编规则">内联汇编规则</a></h2>
 <p>为了避免未定义行为，在使用函数作用域类型的内联汇编（<code>asm!</code>）时必须遵循以下规则：</p>
 <ul>
 <li>任何未指定为输入的寄存器在进入 asm块时都会包含未定义的值。
@@ -694,8 +680,8 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 <blockquote>
 <p><strong>注意</strong>：作为一个一般性原则，<code>preserves_flags</code> 包含的标志是在执行函数调用时<em>未</em>保留的标志。</p>
 </blockquote>
-<h3><a class="header" href="#directives-support" id="directives-support">Directives Support</a></h3>
-<h3><a class="header" href="#指令支持" id="指令支持">指令支持</a></h3>
+<h3 id="directives-support"><a class="header" href="#directives-support">Directives Support</a></h3>
+<h3 id="指令支持"><a class="header" href="#指令支持">指令支持</a></h3>
 <p>内联汇编支持 GNU AS 和 LLVM 的内部汇编器支持的指令集的一个子集，具体如下所示。
 也有部分指令的效果是特定于汇编器的（可能会导致错误，或者可能会被接受）。</p>
 <p>如果内联汇编包含任何修改后续汇编程序的“有状态(stateful)”指令，则块必须在内联汇编结束之前撤消任何此类指令的执行效果。</p>
@@ -752,10 +738,10 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 <li><code>.uleb128</code></li>
 <li><code>.word</code></li>
 </ul>
-<h4><a class="header" href="#target-specific-directive-support" id="target-specific-directive-support">Target Specific Directive Support</a></h4>
-<h4><a class="header" href="#基于特定目标规范的指令支持" id="基于特定目标规范的指令支持">基于特定目标规范的指令支持</a></h4>
-<h5><a class="header" href="#dwarf-unwinding" id="dwarf-unwinding">Dwarf Unwinding</a></h5>
-<h5><a class="header" href="#dwarf展开" id="dwarf展开">Dwarf展开</a></h5>
+<h4 id="target-specific-directive-support"><a class="header" href="#target-specific-directive-support">Target Specific Directive Support</a></h4>
+<h4 id="基于特定目标规范的指令支持"><a class="header" href="#基于特定目标规范的指令支持">基于特定目标规范的指令支持</a></h4>
+<h5 id="dwarf-unwinding"><a class="header" href="#dwarf-unwinding">Dwarf Unwinding</a></h5>
+<h5 id="dwarf展开"><a class="header" href="#dwarf展开">Dwarf展开</a></h5>
 <p>支持 DWARF展开信息的 ELF目标平台支持以下指令：</p>
 <ul>
 <li><code>.cfi_adjust_cfa_offset</code></li>
@@ -780,8 +766,8 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 <li><code>.cfi_undefined</code></li>
 <li><code>.cfi_window_save</code></li>
 </ul>
-<h5><a class="header" href="#structured-exception-handling" id="structured-exception-handling">Structured Exception Handling</a></h5>
-<h5><a class="header" href="#结构化异常处理" id="结构化异常处理">结构化异常处理</a></h5>
+<h5 id="structured-exception-handling"><a class="header" href="#structured-exception-handling">Structured Exception Handling</a></h5>
+<h5 id="结构化异常处理"><a class="header" href="#结构化异常处理">结构化异常处理</a></h5>
 <p>在带有结构化异常处理机制的目标平台上，可以确保下面的这些附加指令得到支持：</p>
 <ul>
 <li><code>.seh_endproc</code></li>
@@ -792,8 +778,8 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 <li><code>.seh_setframe</code></li>
 <li><code>.seh_stackalloc</code></li>
 </ul>
-<h5><a class="header" href="#x86-32-bit-and-64-bit" id="x86-32-bit-and-64-bit">x86 (32-bit and 64-bit)</a></h5>
-<h5><a class="header" href="#x86-32位-and-64位" id="x86-32位-and-64位">x86 (32位 and 64位)</a></h5>
+<h5 id="x86-32-bit-and-64-bit"><a class="header" href="#x86-32-bit-and-64-bit">x86 (32-bit and 64-bit)</a></h5>
+<h5 id="x86-32位-and-64位"><a class="header" href="#x86-32位-and-64位">x86 (32位 and 64位)</a></h5>
 <p>无论是 32位还是 64位 x86目标平台，可以确保下面的这些附加指令得到支持：</p>
 <ul>
 <li><code>.nops</code></li>
@@ -803,8 +789,8 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 </ul>
 <p>只有在退出汇编块之前将状态重置为默认状态时，才支持使用 <code>.code16</code>、<code>.code32</code> 和 <code>.code64</code> 这些指令。
 默认情况下，32位 x86平台使用 <code>.code32</code>，64位 x86平台使用 <code>.code64</code>。</p>
-<h5><a class="header" href="#arm-32-bit" id="arm-32-bit">ARM (32-bit)</a></h5>
-<h5><a class="header" href="#arm-32位" id="arm-32位">ARM (32位)</a></h5>
+<h5 id="arm-32-bit"><a class="header" href="#arm-32-bit">ARM (32-bit)</a></h5>
+<h5 id="arm-32位"><a class="header" href="#arm-32位">ARM (32位)</a></h5>
 <p>ARM目标平台下，可以确保下面的这些附加指令得到支持：</p>
 <ul>
 <li><code>.even</code></li>
@@ -821,17 +807,13 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="linkage.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="unsafety.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -839,49 +821,35 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="linkage.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="unsafety.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

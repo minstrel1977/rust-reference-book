@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>介绍 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="favicon.svg">
-        
-        
         <link rel="shortcut icon" href="favicon.png">
-        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
-<h1><a class="header" href="#介绍" id="介绍">介绍</a></h1>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<h1 id="介绍"><a class="header" href="#介绍">介绍</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/introduction.md">introduction.md</a><br />
 commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
@@ -181,31 +162,31 @@ commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
 <div class="warning">
 <p>警告：此书尚未完成，记录 Rust 的所有内容需要花些时间。有关本书未记录的内容，请查阅 <a href="https://github.com/rust-lang/reference/issues">GitHub issues</a>。</p>
 </div>
-<h2><a class="header" href="#rust-releases" id="rust-releases">Rust releases</a></h2>
-<h2><a class="header" href="#rust-发行版" id="rust-发行版">Rust 发行版</a></h2>
+<h2 id="rust-releases"><a class="header" href="#rust-releases">Rust releases</a></h2>
+<h2 id="rust-发行版"><a class="header" href="#rust-发行版">Rust 发行版</a></h2>
 <p>Rust 每六周发布一种新的版本。
 该语言的第一个稳定版本是 Rust 1.0.0，然后是 Rust 1.1.0，以此类推。
 相应的工具（<code>rustc</code>、’<code>cargo</code>，等）和文档(<a href="https://doc.rust-lang.org/std/index.html">标准库</a>、本书，等等)与语言版本一起发布。</p>
 <p>本书的最新版本，与最新的 Rust 版本相匹配，它总是在 <a href="https://doc.rust-lang.org/reference/">https://doc.rust-lang.org/reference/</a> 等你。</p>
 <p>通过在此链接的“reference”路径段之前添加相应的 Rust版本号，可以找到以往的版本。
 比如，Rust 1.49.0版在 <a href="https://doc.rust-lang.org/1.49.0/reference/">https://doc.rust-lang.org/1.49.0/reference/</a> 下。</p>
-<h2><a class="header" href="#what-the-reference-is-not" id="what-the-reference-is-not">What <em>The Reference</em> is Not</a></h2>
-<h2><a class="header" href="#参考手册-并非" id="参考手册-并非"><em>参考手册</em> 并非——</a></h2>
+<h2 id="what-the-reference-is-not"><a class="header" href="#what-the-reference-is-not">What <em>The Reference</em> is Not</a></h2>
+<h2 id="参考手册-并非"><a class="header" href="#参考手册-并非"><em>参考手册</em> 并非——</a></h2>
 <p>这本书不是对这门语言的入门介绍。本书假设您熟悉该语言。若您需要学习该语言的基础知识，请阅读 <a href="https://doc.rust-lang.org/book/index.html">Rust程序设计语言</a>。</p>
 <p>这本书也不作为 Rust 语言发行版中包含的<a href="https://doc.rust-lang.org/std/index.html">标准库</a>的参考资料。Rust 的库文档是从其源代码文件中提取的文档属性。此外，有许多可能被可能认为是语言自带特性(features)的特性其实都是 Rust 的标准库的特性，所以您要寻找的特性可能在那里，而不是在这里。</p>
 <p>类似地，本书通常不能作为记录 rustc 或者 Cargo 细节的工具书。rustc 有自己专门的书 <a href="https://doc.rust-lang.org/rustc/index.html">rustc book</a>，Cargo 也有一本书 <a href="https://doc.rust-lang.org/cargo/index.html">cargo book</a>，该书中包含了 Cargo 的[参考手册] <a href="https://doc.rust-lang.org/cargo/reference/index.html">cargo reference</a>。本书也涉及了少量和它们的相关知识，比如<a href="linkage.html">链接</a>的章节，介绍了 rustc 是如何工作的。</p>
 <p>本书仅作为稳定版 Rust 的参考资料存在，关于尚在开发中的非稳定特性，请参阅 <a href="https://doc.rust-lang.org/nightly/unstable-book/">Unstable Book</a>。</p>
 <p>Rust编译器（包括 <code>rustc</code>）将执行编译优化，但本参考手册不指导这些编译器的优化工作，所以只能把编译后的程序看作一个黑盒子。如果想侦测它的优化方式，只能通过运行它、给它提供输入并观察它的输出来推断。所有的编译器优化结果和程序的运行效果都必须和本参考手册所说的保持一致。</p>
 <p>最后，本书并非 Rust 语言规范。它可能包含特定于 <code>rustc</code> 的细节，这不应该被当作 Rust 语言的规范。我们打算以后出版这样一本书，但在那之前，本手册是最接近的东西。</p>
-<h2><a class="header" href="#how-to-use-this-book" id="how-to-use-this-book">How to Use This Book</a></h2>
-<h2><a class="header" href="#如何使用此书" id="如何使用此书">如何使用此书</a></h2>
+<h2 id="how-to-use-this-book"><a class="header" href="#how-to-use-this-book">How to Use This Book</a></h2>
+<h2 id="如何使用此书"><a class="header" href="#如何使用此书">如何使用此书</a></h2>
 <p>本书不会假定您是按顺序阅读本书。本书的每一章一般都可以独立阅读，但会交叉链接到其他章节，以了解它们所相关的内容，但不会进行讨论。</p>
 <p>阅读本书有两种主要方式。</p>
 <p>第一是寻找特定问题的答案。如果您知道回答问题的章节，您可以直接从目录跳入该章节进行阅读。否则，您可以按 <code>s</code> 键或单击顶部栏上的放大镜来搜索与问题相关的关键字（译者注：目前本翻译版还不支持这种搜索功能）。例如，假设您想知道在 <code>let</code>语句中创建的临时值何时被销毁；同时，假设您还不知道<a href="expressions.html">表达式</a>那一章中定义了<a href="expressions.html#temporaries">临时对象的生存期</a>，那么可以搜索 “temporary let” ，第一个搜索结果将带您去阅读该部分。</p>
 <p>第二是提高您对此语言某一方面的认知。在这种情况下，只需浏览目录，直到看到您想了解的内容，然后点开阅读。阅读中如果某个链接看起来很有帮助，那就点击并阅读该部分内容。</p>
 <p>也就是说，本书没有错误的阅读方式。您觉得怎样读对您最有帮助就怎样读。</p>
-<h3><a class="header" href="#conventions" id="conventions">Conventions</a></h3>
-<h3><a class="header" href="#约定" id="约定">约定</a></h3>
+<h3 id="conventions"><a class="header" href="#conventions">Conventions</a></h3>
+<h3 id="约定"><a class="header" href="#约定">约定</a></h3>
 <p>像所有技术书籍一样，在如何展示信息方面，本书有一些约定。这些约定记录如下。</p>
 <ul>
 <li>
@@ -233,7 +214,7 @@ commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
 <li>
 <p>文本中内联的代码片段在 <code>&lt;code&gt;</code> 标签里。</p>
 <p>较长的代码示例放在突出显示句法(syntax)的框中，该框的右上角有用于复制、执行和显示隐藏行的控件</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">// 这是隐藏行。
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">// 这是隐藏行。
 </span>fn main() {
     println!(&quot;这是一段示例代码。&quot;);
 }
@@ -251,8 +232,8 @@ commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
 <p>查阅<a href="notation.html">表义符(notation)</a>以获取更多细节。</p>
 </li>
 </ul>
-<h2><a class="header" href="#contributing" id="contributing">Contributing</a></h2>
-<h2><a class="header" href="#贡献力量" id="贡献力量">贡献力量</a></h2>
+<h2 id="contributing"><a class="header" href="#contributing">Contributing</a></h2>
+<h2 id="贡献力量"><a class="header" href="#贡献力量">贡献力量</a></h2>
 <p>我们欢迎各种形式的贡献。</p>
 <p>您可以通过开启议题或向 <a href="https://github.com/rust-lang/reference/">Rust 参考手册仓库</a>发送 PR 来为本书做出贡献。如果这本书没有回答您的问题，并且您认为它的答案应该在本书的范围内，请不要犹豫，<a href="https://github.com/rust-lang/reference/issues">提交议题</a>或在 <a href="https://rust-lang.zulipchat.com/#narrow/stream/237824-t-lang.2Fdoc">Zulip</a> 的 <code>t-lang/doc</code> 流频道上询问。知道人们最喜欢用这本书来做什么将有助于引导我们的注意力来让这些部分变得更好。我们也希望此手册尽可能地规范，所以如果你看到任何错误或非规范的地方，但没有明确指出，也请[提交议题]。</p>
 
@@ -260,17 +241,13 @@ commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="翻译说明.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="notation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -278,49 +255,35 @@ commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="翻译说明.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="notation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

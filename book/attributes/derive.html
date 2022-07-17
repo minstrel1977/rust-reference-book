@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>派生 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#derive" id="derive">Derive</a></h1>
-<h1><a class="header" href="#派生" id="派生">派生</a></h1>
+                        <h1 id="derive"><a class="header" href="#derive">Derive</a></h1>
+<h1 id="派生"><a class="header" href="#派生">派生</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/derive.md">derive.md</a><br />
 commit: a52543267554541a95088b79f46a8bd36f487603 <br />
@@ -174,8 +155,7 @@ commit: a52543267554541a95088b79f46a8bd36f487603 <br />
 </blockquote>
 <p><em><code>derive</code>属性</em>允许为数据结构自动生成新的<a href="../items.html">程序项</a>。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListPaths</em></a>元项属性句法（为程序项）指定一系列要实现的 trait 或指定要执行的<a href="../procedural-macros.html#derive-macros">派生宏</a>的路径。</p>
 <p>例如，下面的派生属性将为结构体 <code>Foo</code> 创建一个实现 <a href="https://doc.rust-lang.org/std/cmp/trait.PartialEq.html"><code>PartialEq</code></a> trait 和 <a href="https://doc.rust-lang.org/std/clone/trait.Clone.html"><code>Clone</code></a> trait 的<a href="../items/implementations.html">实现(<code>impl</code> item)</a>，类型参数 <code>T</code> 将被派生出的实现(<code>impl</code>)加上 <code>PartialEq</code> 或<sup class="footnote-reference"><a href="#or-and">1</a></sup> <code>Clone</code> 约束：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[derive(PartialEq, Clone)]
 struct Foo&lt;T&gt; {
@@ -185,8 +165,7 @@ struct Foo&lt;T&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <p>上面代码为 <code>PartialEq</code> 生成的实现(<code>impl</code>)等价于</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Foo&lt;T&gt; { a: i32, b: T }
 </span>impl&lt;T: PartialEq&gt; PartialEq for Foo&lt;T&gt; {
@@ -201,8 +180,8 @@ struct Foo&lt;T&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <p>可以通过<a href="../procedural-macros.html#derive-macros">过程宏</a>为自定义的 trait 实现自动派生(<code>derive</code>)功能。</p>
-<h2><a class="header" href="#the-automatically_derived-attribute" id="the-automatically_derived-attribute">The <code>automatically_derived</code> attribute</a></h2>
-<h2><a class="header" href="#automatically_derived属性" id="automatically_derived属性"><code>automatically_derived</code>属性</a></h2>
+<h2 id="the-automatically_derived-attribute"><a class="header" href="#the-automatically_derived-attribute">The <code>automatically_derived</code> attribute</a></h2>
+<h2 id="automatically_derived属性"><a class="header" href="#automatically_derived属性"><code>automatically_derived</code>属性</a></h2>
 <p><em><code>automatically_derived</code>属性</em>会被自动添加到由 <code>derive</code>属性为一些内置trait 自动派生的<a href="../items/implementations.html">实现</a>中。它对派生出的实现没有直接影响，但是工具和诊断lint 可以使用它来检测这些自动派生的实现。</p>
 <div class="footnote-definition" id="or-and"><sup class="footnote-definition-label">1</sup>
 <p>原文后半句是：&quot;and the type parameter <code>T</code> will be given the <code>PartialEq</code> or <code>Clone</code> constraints for the appropriate <code>impl</code>:&quot;，这里译者也搞不清楚为什么 <code>PartialEq</code> 和 <code>Clone</code> 之间用了&quot;or&quot;，而不是&quot;and&quot;？这里译者就先采用直译。</p>
@@ -214,17 +193,13 @@ struct Foo&lt;T&gt; {
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../attributes/testing.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../attributes/diagnostics.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -232,49 +207,35 @@ struct Foo&lt;T&gt; {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../attributes/testing.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../attributes/diagnostics.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

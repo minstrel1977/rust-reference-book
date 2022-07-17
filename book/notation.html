@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>表义符 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="favicon.svg">
-        
-        
         <link rel="shortcut icon" href="favicon.png">
-        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,17 +146,17 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#notation" id="notation">Notation</a></h1>
-<h1><a class="header" href="#表义符符号" id="表义符符号">表义符/符号</a></h1>
+                        <h1 id="notation"><a class="header" href="#notation">Notation</a></h1>
+<h1 id="表义符符号"><a class="header" href="#表义符符号">表义符/符号</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/notation.md">notation.md</a><br />
 commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 本章译文最后维护日期：2020-11-7</p>
 </blockquote>
-<h2><a class="header" href="#grammar" id="grammar">Grammar</a></h2>
-<h2><a class="header" href="#文法语法" id="文法语法">文法/语法</a></h2>
+<h2 id="grammar"><a class="header" href="#grammar">Grammar</a></h2>
+<h2 id="文法语法"><a class="header" href="#文法语法">文法/语法</a></h2>
 <p>下表中的各种表义符会在本书中标有 <em>词法</em> 和 <em>句法</em> 的文法片段中用到：</p>
-<table><thead><tr><th>表义符</th><th>示例</th><th>释义</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>表义符</th><th>示例</th><th>释义</th></tr></thead><tbody>
 <tr><td>CAPITAL</td><td>KW_IF, INTEGER_LITERAL</td><td>由词法分析生成的单一 token</td></tr>
 <tr><td><em>ItalicCamelCase</em></td><td><em>LetStatement</em>, <em>Item</em></td><td>句法产生式(syntactical production)</td></tr>
 <tr><td><code>string</code></td><td><code>x</code>, <code>while</code>, <code>*</code></td><td>确切的字面字符(串)</td></tr>
@@ -191,8 +172,9 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 <tr><td>~<code>string</code></td><td>~<code>\n</code>, ~<code>*/</code></td><td>此字符序列外的任意字符(序列)</td></tr>
 <tr><td>( )</td><td>(<code>,</code> <em>Parameter</em>)<sup>?</sup></td><td>程序项分组</td></tr>
 </tbody></table>
-<h2><a class="header" href="#string-table-productions" id="string-table-productions">String table productions</a></h2>
-<h2><a class="header" href="#字符串表产生式" id="字符串表产生式">字符串表产生式</a></h2>
+</div>
+<h2 id="string-table-productions"><a class="header" href="#string-table-productions">String table productions</a></h2>
+<h2 id="字符串表产生式"><a class="header" href="#字符串表产生式">字符串表产生式</a></h2>
 <p>文法中的一些规则 — 比如<a href="expressions/operator-expr.html#borrow-operators">一元运算符</a>，<a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">二元运算符</a>和<a href="keywords.html">关键字</a> — 会以简化形式：作为可打印字符串的列表形式（在本书的相关章节的头部的各种产生式定义/句法规则里）给出。这些规则构成了关于 <a href="tokens.html">token</a>规则的规则子集，并且它们被假定为源码编译时的词法分析阶段的结果被再次输入给解析器，然后由一个<abbr title="确定性有限自动机(Deterministic Finite Automaton)">DFA</abbr>驱动，对此字符串表里的所有条目(string table entries)进行析取(disjunction)操作（来进行句法分析）。</p>
 <p>本书还约定，当文法表中出现如 <code>monospace</code> 这样的字符串时，它代表对这些产生式中的单一 token 成员的隐式引用。查阅 <a href="tokens.html">tokens</a> 以获取更多信息。</p>
 <!-- 2020-11-12-->
@@ -201,17 +183,13 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="lexical-structure.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -219,49 +197,35 @@ commit: dd1b9c331eb14ea7047ed6f2b12aaadab51b41d6 <br />
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="lexical-structure.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

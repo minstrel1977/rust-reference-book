@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>函数 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#functions" id="functions">Functions</a></h1>
-<h1><a class="header" href="#函数" id="函数">函数</a></h1>
+                        <h1 id="functions"><a class="header" href="#functions">Functions</a></h1>
+<h1 id="函数"><a class="header" href="#函数">函数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/functions.md">functions.md</a><br />
 commit: dd32a8ea8cc4de83c00d6a01047d181567d04693 <br />
@@ -214,27 +195,25 @@ commit: dd32a8ea8cc4de83c00d6a01047d181567d04693 <br />
 如果返回类型没有显式声明，则默认返回<a href="../types/tuple.html">单元类型</a>。</p>
 <p>当一个<em>函数</em>被引用时，该函数会产生一个相应的零尺寸<a href="../types/function-item.html"><em>函数项类型(function item type)</em></a>的一等(first-class)<em>值</em>，调用该值就相当于直接调用该函数。</p>
 <p>举个简单的定义函数的例子:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn answer_to_life_the_universe_and_everything() -&gt; i32 {
     return 42;
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#function-parameters" id="function-parameters">Function parameters</a></h2>
-<h2><a class="header" href="#函数参数" id="函数参数">函数参数</a></h2>
+<h2 id="function-parameters"><a class="header" href="#function-parameters">Function parameters</a></h2>
+<h2 id="函数参数"><a class="header" href="#函数参数">函数参数</a></h2>
 <p>和 <code>let</code>绑定一样，函数参数是不可反驳型<a href="../patterns.html">模式</a>，所以任何在 let绑定中有效的模式都可以有效应用在函数参数上:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn first((value, _): (i32, i32)) -&gt; i32 { value }
 <span class="boring">}
 </span></code></pre></pre>
 <p>如果第一个参数是一个<em>SelfParam</em>类型的参数，这表明该函数是一个<a href="associated-items.html#methods">方法</a>。带 self参数的函数只能在 <a href="traits.html">trait</a> 或<a href="implementations.html">实现</a>中作为<a href="associated-items.html#associated-functions-and-methods">关联函数</a>出现。</p>
 <p>带有 <code>...</code>token 的参数表示此函数是一个<a href="external-blocks.html#variadic-functions">可变参数函数</a>，<code>...</code> 只能作为<a href="external-blocks.html">外部块</a>里的函数的最后一个参数使用。可变参数可以有一个可选标识符，例如 <code>args: ...</code>。</p>
-<h2><a class="header" href="#function-body" id="function-body">Function body</a></h2>
-<h2><a class="header" href="#函数体" id="函数体">函数体</a></h2>
+<h2 id="function-body"><a class="header" href="#function-body">Function body</a></h2>
+<h2 id="函数体"><a class="header" href="#函数体">函数体</a></h2>
 <p>函数的块在概念上被包装进在一个块中，该块绑定该函数的参数模式，然后返回(<code>return</code>)该函数的块的值。这意味着如果轮到块的*尾部表达式(tail expression)*被求值计算了，该块将结束，求得的值将被返回给调用者。通常，程序执行时如果流碰到函数体中的显式返回表达式(return expression)，就会截断那个隐式的最终表达式的执行。</p>
 <p>例如，上面例子里函数的行为就像下面被改写的这样:</p>
 <!-- ignore: example expansion -->
@@ -245,11 +224,10 @@ return {
 };
 </code></pre>
 <p>没有主体块的函数以分号结束。这种形式只能出现在 <a href="traits.html">trait</a> 或<a href="external-blocks.html">外部块</a>中。</p>
-<h2><a class="header" href="#generic-functions" id="generic-functions">Generic functions</a></h2>
-<h2><a class="header" href="#泛型函数" id="泛型函数">泛型函数</a></h2>
+<h2 id="generic-functions"><a class="header" href="#generic-functions">Generic functions</a></h2>
+<h2 id="泛型函数"><a class="header" href="#泛型函数">泛型函数</a></h2>
 <p><em>泛型函数</em>允许在其签名中出现一个或多个<em>参数化类型(parameterized types)</em>。每个类型参数必须在函数名后面的尖括号封闭逗号分隔的列表中显式声明。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// foo 是建立在 A 和 B 基础上的泛型函数
 
@@ -258,8 +236,7 @@ fn foo&lt;A, B&gt;(x: A, y: B) {
 </span><span class="boring">}
 </span></code></pre></pre>
 <p>在函数签名上和函数体内部，类型参数的名称可以被用作类型名。可以为类型参数指定 <a href="traits.html">trait</a>约束，以允许对该类型的值调用这些 trait 的方法。这种约束是使用 <code>where</code>句法指定的：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::fmt::Debug;
 </span>fn foo&lt;T&gt;(x: T) where T: Debug {
@@ -267,8 +244,7 @@ fn foo&lt;A, B&gt;(x: A, y: B) {
 </span><span class="boring">}
 </span></code></pre></pre>
 <p>当使用泛型函数时，它的（类型参数的）类型会基于调用的上下文被实例化。例如，这里调用 <code>foo</code> 函数:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fmt::Debug;
 
@@ -281,8 +257,8 @@ foo(&amp;[1, 2]);
 </span></code></pre></pre>
 <p>将用 <code>i32</code> 实例化类型参数 <code>T</code>。</p>
 <p>类型参数也可以在函数名之后的末段<a href="../paths.html">路径</a>组件(trailing path component，即 <code>::&lt;type&gt;</code>)中显式地提供。如果没有足够的上下文来确定类型参数，那么这可能是必要的。例如：<code>mem::size_of::&lt;u32&gt;() == 4</code>。</p>
-<h2><a class="header" href="#extern-function-qualifier" id="extern-function-qualifier">Extern function qualifier</a></h2>
-<h2><a class="header" href="#外部函数限定符" id="外部函数限定符">外部函数限定符</a></h2>
+<h2 id="extern-function-qualifier"><a class="header" href="#extern-function-qualifier">Extern function qualifier</a></h2>
+<h2 id="外部函数限定符"><a class="header" href="#外部函数限定符">外部函数限定符</a></h2>
 <p>外部函数限定符(<code>extern</code>)可以提供那些能通过特定 ABI 才能调用的函数的<em>定义</em>：</p>
 <!-- ignore: fake ABI -->
 <pre><code class="language-rust ignore">extern &quot;ABI&quot; fn foo() { /* ... */ }
@@ -295,22 +271,19 @@ foo(&amp;[1, 2]);
 unsafe { foo() }
 </code></pre>
 <p>当函数的 <code>FunctionQualifiers</code> 句法规则中的 <code>&quot;extern&quot; Abi?*</code> 选项被省略时，会默认使用 <code>&quot;Rust&quot;</code> 类型的 ABI。例如:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn foo() {}
 <span class="boring">}
 </span></code></pre></pre>
 <p>等价于：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>extern &quot;Rust&quot; fn foo() {}
 <span class="boring">}
 </span></code></pre></pre>
 <p>使用 <code>&quot;Rust&quot;</code> 之外的 ABI 可以让 Rust 中声明的函数被其他编程语言调用。比如下面声明了一个可以从 C 中调用的函数：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 使用 &quot;C&quot; ABI 声明一个函数
 extern &quot;C&quot; fn new_i32() -&gt; i32 { 0 }
@@ -321,16 +294,14 @@ extern &quot;C&quot; fn new_i32() -&gt; i32 { 0 }
 <span class="boring">}
 </span></code></pre></pre>
 <p>与<a href="external-blocks.html">外部块</a>一样，当使用关键字 <code>extern</code> 而省略 <code>&quot;ABI&quot;</code> 时，ABI 默认使用的是 <code>&quot;C&quot;</code>。也就是说这个：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>extern fn new_i32() -&gt; i32 { 0 }
 let fptr: extern fn() -&gt; i32 = new_i32;
 <span class="boring">}
 </span></code></pre></pre>
 <p>等价于：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>extern &quot;C&quot; fn new_i32() -&gt; i32 { 0 }
 let fptr: extern &quot;C&quot; fn() -&gt; i32 = new_i32;
@@ -340,16 +311,15 @@ let fptr: extern &quot;C&quot; fn() -&gt; i32 = new_i32;
 <blockquote>
 <p><strong>注意</strong>: <code>rustc</code> 背后的 LLVM 是通过执行一个非法指令来实现中止进程的功能的。</p>
 </blockquote>
-<h2><a class="header" href="#const-functions" id="const-functions">Const functions</a></h2>
-<h2><a class="header" href="#常量函数" id="常量函数">常量函数</a></h2>
+<h2 id="const-functions"><a class="header" href="#const-functions">Const functions</a></h2>
+<h2 id="常量函数"><a class="header" href="#常量函数">常量函数</a></h2>
 <p>使用关键字 <code>const</code> 限定的函数是<a href="../const_eval.html#const-functions">常量(const)函数</a>，<a href="structs.html">元组结构体</a>构造函数和<a href="enumerations.html">元组变体</a>构造函数也是如此。可以在<a href="../const_eval.html#const-context">常量上下文</a>中调用<em>常量函数</em>。</p>
 <p>常量函数可以使用 <a href="#extern-function-qualifier"><code>extern</code></a>函数修饰符来修饰，但只能使用 <code>&quot;Rust&quot;</code> 和 <code>&quot;C&quot;</code> ABI。</p>
 <p>常量函数不允许是 <a href="#async-functions">async</a>类型的，</p>
-<h2><a class="header" href="#async-functions" id="async-functions">Async functions</a></h2>
-<h2><a class="header" href="#异步函数" id="异步函数">异步函数</a></h2>
+<h2 id="async-functions"><a class="header" href="#async-functions">Async functions</a></h2>
+<h2 id="异步函数"><a class="header" href="#异步函数">异步函数</a></h2>
 <p>函数可以被限定为异步的，这还可以与 <code>unsafe</code> 限定符结合在一起使用：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>async fn regular_example() { }
 async unsafe fn unsafe_example() { }
@@ -357,8 +327,7 @@ async unsafe fn unsafe_example() { }
 </span></code></pre></pre>
 <p>异步函数在调用时不起作用：相反，它们将参数捕获进一个 future。当该函数被轮询(polled)时，该 future 将执行该函数的函数体。</p>
 <p>一个异步函数大致相当于返回一个以 <a href="../expressions/block-expr.html#async-blocks"><code>async move</code>块</a>为代码体的 <a href="../types/impl-trait.html"><code>impl Future</code></a> 的函数：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 源代码
 async fn example(x: &amp;str) -&gt; usize {
@@ -367,8 +336,7 @@ async fn example(x: &amp;str) -&gt; usize {
 <span class="boring">}
 </span></code></pre></pre>
 <p>大致等价于：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::future::Future;
 </span>// 脱糖后的
@@ -386,11 +354,10 @@ fn example&lt;'a&gt;(x: &amp;'a str) -&gt; impl Future&lt;Output = usize&gt; + '
 <blockquote>
 <p><strong>版次差异</strong>: 异步函数只能从 Rust 2018 版才开始可用。</p>
 </blockquote>
-<h3><a class="header" href="#combining-async-and-unsafe" id="combining-async-and-unsafe">Combining <code>async</code> and <code>unsafe</code></a></h3>
-<h3><a class="header" href="#async-和-unsafe-的联合使用" id="async-和-unsafe-的联合使用"><code>async</code> 和 <code>unsafe</code> 的联合使用</a></h3>
+<h3 id="combining-async-and-unsafe"><a class="header" href="#combining-async-and-unsafe">Combining <code>async</code> and <code>unsafe</code></a></h3>
+<h3 id="async-和-unsafe-的联合使用"><a class="header" href="#async-和-unsafe-的联合使用"><code>async</code> 和 <code>unsafe</code> 的联合使用</a></h3>
 <p>声明一个既异步又非安全(<code>unsafe</code>)的函数是合法的。调用这样的函数是非安全的，并且（像任何异步函数一样）会返回一个 future。这个 future 只是一个普通的 future，因此“await”它不需要一个 <code>unsafe</code> 的上下文：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 等待这个返回的 future 相当于解引用 `x`。
 //
@@ -411,12 +378,11 @@ async fn safe_example() {
 </span></code></pre></pre>
 <p>请注意，此行为是对返回 <code>impl Future</code> 的函数进行脱糖处理的结果——在本例中，我们脱糖处理生成的函数是一个非安全(<code>unsafe</code>)函数，这个非安全(<code>unsafe</code>)函数返回值与原始定义的函数的返回值仍保持一致。</p>
 <p>非安全限定在异步函数上的使用方式与它在其他函数上的使用方式完全相同：只是它表示该函数会要求它的调用者提供一些额外的义务/条件来确保该函数的健全性(soundness)。与任何其他非安全函数一样，这些条件可能会超出初始调用本身——例如，在上面的代码片段中， 函数 <code>unsafe_example</code> 将指针 <code>x</code> 作为参数，然后（在执行 await 时）解引用了对该指针的引用。这意味着在 future 完成执行之前，<code>x</code> 必须是有效的，调用者有责任确保这一点。</p>
-<h2><a class="header" href="#attributes-on-functions" id="attributes-on-functions">Attributes on functions</a></h2>
-<h2><a class="header" href="#函数上的属性" id="函数上的属性">函数上的属性</a></h2>
+<h2 id="attributes-on-functions"><a class="header" href="#attributes-on-functions">Attributes on functions</a></h2>
+<h2 id="函数上的属性"><a class="header" href="#函数上的属性">函数上的属性</a></h2>
 <p>在函数上允许使用<a href="../attributes.html">外部属性</a>，也允许在<a href="../expressions/block-expr.html">函数体</a>中的 <code>{</code> 后面直接放置<a href="../attributes.html">内部属性</a>。</p>
 <p>下面这个例子显示了一个函数的内部属性。该函数的文档中只会出现单词“Example”。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn documented() {
     #![doc = &quot;Example&quot;]
@@ -427,11 +393,10 @@ async fn safe_example() {
 <p>注意：除了 lint检查类属性，函数上一般惯用的还是外部属性。</p>
 </blockquote>
 <p>在函数上有意义的属性是 <a href="../conditional-compilation.html#the-cfg-attribute"><code>cfg</code></a>、<a href="../conditional-compilation.html#the-cfg_attr-attribute"><code>cfg_attr</code></a>、<a href="../attributes/diagnostics.html#the-deprecated-attribute"><code>deprecated</code></a>、<a href="https://doc.rust-lang.org/rustdoc/the-doc-attribute.html"><code>doc</code></a>、<a href="../abi.html#the-export_name-attribute"><code>export_name</code></a>、<a href="../abi.html#the-link_section-attribute"><code>link_section</code></a>、<a href="../abi.html#the-no_mangle-attribute"><code>no_mangle</code></a>、<a href="../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>、<a href="../attributes/diagnostics.html#the-must_use-attribute"><code>must_use</code></a>、<a href="../procedural-macros.html">过程宏属性</a>、<a href="../attributes/testing.html">测试类属性</a>和<a href="../attributes/codegen.html#optimization-hints">优化提示类属性</a>。函数也可以接受属性宏。</p>
-<h2><a class="header" href="#attributes-on-function-parameters" id="attributes-on-function-parameters">Attributes on function parameters</a></h2>
-<h2><a class="header" href="#函数参数上的属性" id="函数参数上的属性">函数参数上的属性</a></h2>
+<h2 id="attributes-on-function-parameters"><a class="header" href="#attributes-on-function-parameters">Attributes on function parameters</a></h2>
+<h2 id="函数参数上的属性"><a class="header" href="#函数参数上的属性">函数参数上的属性</a></h2>
 <p>函数参数允许使用<a href="../attributes.html">外部属性</a>，允许的<a href="../attributes.html#built-in-attributes-index">内置属性</a>仅限于 <code>cfg</code>、<code>cfg_attr</code>、<code>allow</code>、<code>warn</code>、<code>deny</code> 和 <code>forbid</code>。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn len(
     #[cfg(windows)] slice: &amp;[u16],
@@ -453,17 +418,13 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../items/use-declarations.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../items/type-aliases.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -471,49 +432,35 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../items/use-declarations.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../items/type-aliases.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

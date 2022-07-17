@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>use声明 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#use-declarations" id="use-declarations">Use declarations</a></h1>
-<h1><a class="header" href="#use声明" id="use声明">Use声明</a></h1>
+                        <h1 id="use-declarations"><a class="header" href="#use-declarations">Use declarations</a></h1>
+<h1 id="use声明"><a class="header" href="#use声明">Use声明</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/use-declarations.md">use-declarations.md</a><br />
 commit: 868850de68713cb7e1dc2ac8031d8978d801bddf <br />
@@ -191,7 +172,7 @@ commit: 868850de68713cb7e1dc2ac8031d8978d801bddf <br />
 <li>将前面的方法嵌套重复使用，例如 <code>use a::b::{self as ab, c, d::{*, e::f}};</code>。</li>
 </ul>
 <p><code>use</code>声明的一个示例：</p>
-<pre><pre class="playground"><code class="language-rust">use std::collections::hash_map::{self, HashMap};
+<pre><pre class="playground"><code class="language-rust edition2021">use std::collections::hash_map::{self, HashMap};
 
 fn foo&lt;T&gt;(_: T){}
 fn bar(map1: HashMap&lt;String, usize&gt;, map2: hash_map::HashMap&lt;String, usize&gt;){}
@@ -209,11 +190,11 @@ fn main() {
     bar(map1, map2);
 }
 </code></pre></pre>
-<h2><a class="header" href="#use-visibility" id="use-visibility"><code>use</code> Visibility</a></h2>
-<h2><a class="header" href="#use可见性" id="use可见性"><code>use</code>可见性</a></h2>
+<h2 id="use-visibility"><a class="header" href="#use-visibility"><code>use</code> Visibility</a></h2>
+<h2 id="use可见性"><a class="header" href="#use可见性"><code>use</code>可见性</a></h2>
 <p>与其他程序项一样，默认情况下，<code>use</code>声明对包含它的模块来说是私有的。同样的，如果使用关键字 <code>pub</code> 进行限定，<code>use</code>声明也可以是公有的。<code>use</code>声明可用于*重导出(re-expor)*名称。因此，公有的 <code>use</code>声明可以将某些公有名称重定向到不同的目标定义中：甚至是位于不同模块内具有私有可见性的规范路径定义中。如果这样的重定向序列形成一个循环或不能明确地解析，则会导致编译期错误。</p>
 <p>重导出的一个示例：</p>
-<pre><pre class="playground"><code class="language-rust">mod quux {
+<pre><pre class="playground"><code class="language-rust edition2021">mod quux {
     pub use self::foo::{bar, baz};
     pub mod foo {
         pub fn bar() {}
@@ -227,14 +208,14 @@ fn main() {
 }
 </code></pre></pre>
 <p>在本例中，模块 <code>quux</code> 重导出了在模块 <code>foo</code> 中定义的两个公共名称。</p>
-<h2><a class="header" href="#use-paths" id="use-paths"><code>use</code> Paths</a></h2>
-<h2><a class="header" href="#use路径" id="use路径"><code>use</code>路径</a></h2>
+<h2 id="use-paths"><a class="header" href="#use-paths"><code>use</code> Paths</a></h2>
+<h2 id="use路径"><a class="header" href="#use路径"><code>use</code>路径</a></h2>
 <blockquote>
 <p><strong>注意</strong>：本章节内容还不完整。</p>
 </blockquote>
 <p>一些正常和不正常的使用 <code>use</code>程序项的例子：</p>
 <!-- 注意: 这个例子在 2015 版或 2018 版都能正常工作。 -->
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused_imports)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused_imports)]
 </span>use std::path::{self, Path, PathBuf};  // good: std 是一个 crate 名称
 use crate::foo::baz::foobaz;    // good: foo 在当前 crate 的第一层
 
@@ -274,7 +255,7 @@ use ::foo::baz::foobaz;
 </span></code></pre></pre>
 <p>2015 版不允许用 use声明来引用<a href="../names/preludes.html#extern-prelude">外部预导入包</a>里的 crate。因此，在2015 版中仍然需要使用 <a href="extern-crates.html"><code>extern crate</code></a>声明，以便在 use声明中去引用外部 crate。从 2018 版开始，use声明可以像 <code>extern crate</code> 一样指定外部 crate 依赖关系。</p>
 <p>在 2018 版中，如果本地程序项与外部的 crate 名称相同，那么使用该 crate 名称需要一个前导的 <code>::</code> 来明确地选择该 crate 名称。这种做法是为了与未来可能发生的更改保持兼容。<!-- uniform_paths future-proofing --></p>
-<pre><pre class="playground"><code class="language-rust">// use std::fs; // 错误, 这样有歧义.
+<pre><pre class="playground"><code class="language-rust edition2021">// use std::fs; // 错误, 这样有歧义.
 use ::std::fs;  // 从`std` crate 里导入, 不是下面这个 mod.
 use self::std::fs as self_fs;  // 从下面这个 mod 导入.
 
@@ -284,11 +265,11 @@ mod std {
 <span class="boring">fn main() {}
 </span></code></pre></pre>
 </blockquote>
-<h2><a class="header" href="#underscore-imports" id="underscore-imports">Underscore Imports</a></h2>
-<h2><a class="header" href="#下划线导入" id="下划线导入">下划线导入</a></h2>
+<h2 id="underscore-imports"><a class="header" href="#underscore-imports">Underscore Imports</a></h2>
+<h2 id="下划线导入"><a class="header" href="#下划线导入">下划线导入</a></h2>
 <p>通过使用形如为 <code>use path as _</code> 的带下划线的 use声明，可以在不绑定名称的情况下导入程序项。这对于导入一个 trait 特别有用，这样就可以在不导入 trait 的 symbol 的情况下使用这个 trait 的方法，例如，如果 trait 的 symbol 可能与另一个 symbol 冲突。再一个例子是链接外部的 crate 而不导入其名称。</p>
 <p>使用星号全局导入(Asterisk glob imports,即 <code>::*</code>)句法将以 <code>_</code> 的形式导入能匹配到的所有程序项，但这些程序项在当前作用域中将处于不可命名的状态。</p>
-<pre><pre class="playground"><code class="language-rust">mod foo {
+<pre><pre class="playground"><code class="language-rust edition2021">mod foo {
     pub trait Zoo {
         fn zoo(&amp;self) {}
     }
@@ -305,8 +286,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>在宏扩展之后会创建一些惟一的、不可命名的 symbols，这样宏就可以安全地扩展出(emit)对 <code>_</code> 导入的多个引用。例如，下面代码不应该产生错误:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! m {
     ($item: item) =&gt; { $item $item }
@@ -323,17 +303,13 @@ m!(use std as _;);
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../items/extern-crates.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../items/functions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -341,49 +317,35 @@ m!(use std as _;);
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../items/extern-crates.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../items/functions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>外部块 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#external-blocks" id="external-blocks">External blocks</a></h1>
-<h1><a class="header" href="#外部块" id="外部块">外部块</a></h1>
+                        <h1 id="external-blocks"><a class="header" href="#external-blocks">External blocks</a></h1>
+<h1 id="外部块"><a class="header" href="#外部块">外部块</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md">external-blocks.md</a><br />
 commit: 1c78b7416d7fa40d740ec80333bd6f4743d000a4 <br />
@@ -188,19 +169,18 @@ commit: 1c78b7416d7fa40d740ec80333bd6f4743d000a4 <br />
 <p>外部块提供未在当前 crate 中<em>定义</em>的程序项的<em>声明</em>，外部块是 Rust 外部函数接口的基础。这其实是某种意义上的不受安全检查的导入入口。</p>
 <p>外部块里允许存在两种形式的程序项<em>声明</em>：<a href="functions.html">函数</a>和<a href="static-items.html">静态项</a>。只有在非安全(<code>unsafe</code>)上下文中才能调用在外部块中声明的函数或访问在外部块中声明的静态项。</p>
 <p>在句法上，关键字 <code>unsafe</code> 允许出现在关键字 <code>extern</code> 之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 <code>unsafe</code> 从 token流中移除之前利用此句法来使用此关键字。</p>
-<h2><a class="header" href="#functions" id="functions">Functions</a></h2>
-<h2><a class="header" href="#函数" id="函数">函数</a></h2>
+<h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
+<h2 id="函数"><a class="header" href="#函数">函数</a></h2>
 <p>外部块中的函数与其他 Rust函数的声明方式相同，但这里的函数不能有函数体，取而代之的是直接以分号结尾。外部块中的函数的参数不允许使用模式，只能使用<a href="../identifiers.html">标识符(IDENTIFIER)</a> 或 <code>_</code> 。函数限定符（<code>const</code>、<code>async</code>、<code>unsafe</code> 和 <code>extern</code>）也不允许在这里使用。</p>
 <p>外部块中的函数可以被 Rust 代码调用，就跟调用在 Rust 中定义的函数一样。Rust 编译器会自动在 Rust ABI 和外部 ABI 之间进行转换。</p>
 <p>在外部块中声明的函数隐式为非安全(<code>unsafe</code>)的。当强转为函数指针时，外部块中声明的函数的类型就为 <code>unsafe extern &quot;abi&quot; for&lt;'l1, ..., 'lm&gt; fn(A1, ..., An) -&gt; R</code>，其中 <code>'l1</code>，…<code>'lm</code> 是其生存期参数，<code>A1</code>，…，<code>An</code> 是该声明的参数的类型，<code>R</code> 是该声明的返回类型。</p>
-<h2><a class="header" href="#statics" id="statics">Statics</a></h2>
-<h2><a class="header" href="#静态项" id="静态项">静态项</a></h2>
+<h2 id="statics"><a class="header" href="#statics">Statics</a></h2>
+<h2 id="静态项"><a class="header" href="#静态项">静态项</a></h2>
 <p><a href="static-items.html">静态项</a>在外部块内部与在外部块之外的声明方式相同，只是在外部块内部声明的静态项没有对应的初始化表达式。访问外部块中声明的静态项是 <code>unsafe</code> 的，不管它是否可变，因为没有任何保证来确保静态项的内存位模式(bit pattern)对声明它的类型是有效的，因为初始化这些静态项的可能是其他的任意外部代码（例如 C）。</p>
 <p>就像外部块之外的<a href="static-items.html">静态项</a>，外部静态项可以是不可变的，也可以是可变的。在执行任何 Rust 代码之前，不可变外部静态项<em>必须</em>被初始化。也就是说，对于外部静态项，仅在 Rust 代码读取它之前对它进行初始化是不够的。</p>
-<h2><a class="header" href="#abi" id="abi">ABI</a></h2>
+<h2 id="abi"><a class="header" href="#abi">ABI</a></h2>
 <p>不指定 ABI 字符串的默认情况下，外部块会假定使用指定平台上的标准 C ABI 约定来调用当前的库。其他的 ABI 约定可以使用字符串 <code>abi</code> 来指定，具体如下所示：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 到 Windows API 的接口。（译者注：指定使用 stdcall调用约定去调用 Windows API）
 extern &quot;stdcall&quot; { }
@@ -222,11 +202,10 @@ extern &quot;stdcall&quot; { }
 <li><code>extern &quot;fastcall&quot;</code> -- <code>fastcall</code> ABI——对应于 MSVC 的<code>__fastcall</code> 和 GCC 以及 clang 的 <code>__attribute__((fastcall))</code>。</li>
 <li><code>extern &quot;vectorcall&quot;</code> -- <code>vectorcall</code> ABI ——对应于 MSVC 的 <code>__vectorcall</code> 和 clang 的 <code>__attribute__((vectorcall))</code>。</li>
 </ul>
-<h2><a class="header" href="#variadic-functions" id="variadic-functions">Variadic functions</a></h2>
-<h2><a class="header" href="#可变参数函数" id="可变参数函数">可变参数函数</a></h2>
+<h2 id="variadic-functions"><a class="header" href="#variadic-functions">Variadic functions</a></h2>
+<h2 id="可变参数函数"><a class="header" href="#可变参数函数">可变参数函数</a></h2>
 <p>可以在外部块内的函数的参数列表中的一个或多个具名参数后通过引入 <code>...</code> 来让该函数成为可变参数函数。注意可变参数<code>...</code> 前至少有一个具名参数，并且只能位于参数列表的最后。可变参数可以通过标识符来指定：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>extern &quot;C&quot; {
     fn foo(x: i32, ...);
@@ -234,11 +213,11 @@ extern &quot;stdcall&quot; { }
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#attributes-on-extern-blocks" id="attributes-on-extern-blocks">Attributes on extern blocks</a></h2>
-<h2><a class="header" href="#外部块上的属性" id="外部块上的属性">外部块上的属性</a></h2>
+<h2 id="attributes-on-extern-blocks"><a class="header" href="#attributes-on-extern-blocks">Attributes on extern blocks</a></h2>
+<h2 id="外部块上的属性"><a class="header" href="#外部块上的属性">外部块上的属性</a></h2>
 <p>下面列出的<a href="../attributes.html">属性</a>可以控制外部块的行为。</p>
-<h3><a class="header" href="#the-link-attribute" id="the-link-attribute">The <code>link</code> attribute</a></h3>
-<h3><a class="header" href="#link属性" id="link属性"><code>link</code>属性</a></h3>
+<h3 id="the-link-attribute"><a class="header" href="#the-link-attribute">The <code>link</code> attribute</a></h3>
+<h3 id="link属性"><a class="header" href="#link属性"><code>link</code>属性</a></h3>
 <p><em><code>link</code>属性</em>为外部(<code>extern</code>)块中的程序项指定编译器应该链接的本地库的名称。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法指定其输入参数。<code>name</code>键指定要链接的本地库的名称。<code>kind</code>键是一个可选值，它指定具有以下可选值的库类型：</p>
 <ul>
 <li><code>dylib</code> — 表示库类型是动态库。如果没有指定 <code>kind</code>，这是默认值。</li>
@@ -268,8 +247,8 @@ extern {
 }
 </code></pre>
 <p>在空外部块上添加 <code>link</code>属性是有效的。可以用这种方式来满足代码中其他地方的外部块的链接需求（包括上游 crate），而不必向每个外部块都添加此属性。</p>
-<h4><a class="header" href="#linking-modifiers-bundle" id="linking-modifiers-bundle">Linking modifiers: <code>bundle</code></a></h4>
-<h4><a class="header" href="#链接修饰符-bundle" id="链接修饰符-bundle">链接修饰符: <code>bundle</code></a></h4>
+<h4 id="linking-modifiers-bundle"><a class="header" href="#linking-modifiers-bundle">Linking modifiers: <code>bundle</code></a></h4>
+<h4 id="链接修饰符-bundle"><a class="header" href="#链接修饰符-bundle">链接修饰符: <code>bundle</code></a></h4>
 <p>这个修饰符只在静态链接模式下适用。
 在其他链接模式下会导致编译错误。</p>
 <p>当构建 rlib 或 staticlib 时 <code>+bundle</code> 意味着本地静态库中的所有对象文件都将添加到 rlib 或 staticlib 归档文件中，然后那些最终的二进制文件再来链接使用这些库文件。</p>
@@ -278,18 +257,17 @@ extern {
 <p>在构建其他目标（如可执行文件或动态库）时，此修饰符无效。</p>
 <p>此修饰符的默认形式是 <code>+bundle</code>。</p>
 <p>有关此修饰符的更多实现细节，请参见<a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-bundle">rustc文档中的 <code>bundle</code></a>。</p>
-<h4><a class="header" href="#linking-modifiers-whole-archive" id="linking-modifiers-whole-archive">Linking modifiers: <code>whole-archive</code></a></h4>
-<h4><a class="header" href="#链接修饰符-whole-archive" id="链接修饰符-whole-archive">链接修饰符: <code>whole-archive</code></a></h4>
+<h4 id="linking-modifiers-whole-archive"><a class="header" href="#linking-modifiers-whole-archive">Linking modifiers: <code>whole-archive</code></a></h4>
+<h4 id="链接修饰符-whole-archive"><a class="header" href="#链接修饰符-whole-archive">链接修饰符: <code>whole-archive</code></a></h4>
 <p>此修饰符仅与静态(<code>static</code>)链接类型兼容。
 使用任何其他链接类型都会引起编译器报错。</p>
 <p><code>+whole-archive</code> 意味着静态库会被链接为一个完整的 archive 文件，而不丢弃任何对象文件。</p>
 <p>The default for this modifier is <code>-whole-archive</code>.
 有关此修饰符的更多实现细节，请参见<a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-whole-archive">rustc文档中的 <code>whole-archive</code></a>。</p>
-<h3><a class="header" href="#the-link_name-attribute" id="the-link_name-attribute">The <code>link_name</code> attribute</a></h3>
-<h3><a class="header" href="#link_name属性" id="link_name属性"><code>link_name</code>属性</a></h3>
+<h3 id="the-link_name-attribute"><a class="header" href="#the-link_name-attribute">The <code>link_name</code> attribute</a></h3>
+<h3 id="link_name属性"><a class="header" href="#link_name属性"><code>link_name</code>属性</a></h3>
 <p>可以在外部(<code>extern</code>)块内的程序项声明上指定 <code>link_name</code>属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法指定 symbol 的名称。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>extern {
     #[link_name = &quot;actual_symbol_name&quot;]
@@ -297,25 +275,21 @@ extern {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#attributes-on-function-parameters" id="attributes-on-function-parameters">Attributes on function parameters</a></h3>
-<h3><a class="header" href="#函数参数上的属性" id="函数参数上的属性">函数参数上的属性</a></h3>
+<h3 id="attributes-on-function-parameters"><a class="header" href="#attributes-on-function-parameters">Attributes on function parameters</a></h3>
+<h3 id="函数参数上的属性"><a class="header" href="#函数参数上的属性">函数参数上的属性</a></h3>
 <p>外部函数参数上的属性遵循与<a href="functions.html#attributes-on-function-parameters">常规函数参数</a>相同的规则和限制。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../items/implementations.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../items/generics.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -323,49 +297,35 @@ extern {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../items/implementations.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../items/generics.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>表达式 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="favicon.svg">
-        
-        
         <link rel="shortcut icon" href="favicon.png">
-        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#expressions" id="expressions">Expressions</a></h1>
-<h1><a class="header" href="#表达式" id="表达式">表达式</a></h1>
+                        <h1 id="expressions"><a class="header" href="#expressions">Expressions</a></h1>
+<h1 id="表达式"><a class="header" href="#表达式">表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions.md">expressions.md</a><br />
 commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
@@ -224,10 +205,10 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 <blockquote>
 <p><strong>注意</strong>：我们给表达式的操作数做了（如上）命名，以便于我们去讨论它们，但这些名称并没有最终稳定下来，以后可能还会更改。</p>
 </blockquote>
-<h2><a class="header" href="#expression-precedence" id="expression-precedence">Expression precedence</a></h2>
-<h2><a class="header" href="#表达式的优先级" id="表达式的优先级">表达式的优先级</a></h2>
+<h2 id="expression-precedence"><a class="header" href="#expression-precedence">Expression precedence</a></h2>
+<h2 id="表达式的优先级"><a class="header" href="#表达式的优先级">表达式的优先级</a></h2>
 <p>Rust 运算符和表达式的优先级顺序如下，从强到弱。具有相同优先级的二元运算符按其结合(associativity)顺序做了分组。</p>
-<table><thead><tr><th>运算符/表达式</th><th>结合性</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>运算符/表达式</th><th>结合性</th></tr></thead><tbody>
 <tr><td>Paths（路径）</td><td></td></tr>
 <tr><td>Method calls（方法调用）</td><td></td></tr>
 <tr><td>Field expressions （字段表达式）</td><td>从左向右</td></tr>
@@ -248,8 +229,9 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 <tr><td><code>=</code> <code>+=</code> <code>-=</code> <code>*=</code> <code>/=</code> <code>%=</code> <br> <code>&amp;=</code> <code>|=</code> <code>^=</code> <code>&lt;&lt;=</code> <code>&gt;&gt;=</code></td><td>从右向左</td></tr>
 <tr><td><code>return</code> <code>break</code> closures（返回、中断、闭包）</td><td></td></tr>
 </tbody></table>
-<h2><a class="header" href="#evaluation-order-of-operands" id="evaluation-order-of-operands">Evaluation order of operands</a></h2>
-<h2><a class="header" href="#操作数的求值顺序" id="操作数的求值顺序">操作数的求值顺序</a></h2>
+</div>
+<h2 id="evaluation-order-of-operands"><a class="header" href="#evaluation-order-of-operands">Evaluation order of operands</a></h2>
+<h2 id="操作数的求值顺序"><a class="header" href="#操作数的求值顺序">操作数的求值顺序</a></h2>
 <p>下面的表达式列表都以相同的方式计算它们的操作数，具体列表后面也有详述。其他表达式要么不接受操作数，要么按照各自约定（后续章节会有讲述）的条件进行求值。</p>
 <ul>
 <li>解引用表达式(Dereference expression)</li>
@@ -277,8 +259,7 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 <p><strong>注意</strong>：子表达式是一个表达式的操作数时，此子表达式内部的求值顺序是由根据前面的章节规定的优先级来确定的。</p>
 </blockquote>
 <p>例如，下面两个 <code>next</code>方法的调用总是以相同的顺序调用：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">// 使用 vec 代替 array 来避免引用，因为在编写本例时，拥有内部元素的所有权的数组迭代器还没有稳定下来。
 </span>let mut one_two = vec![1, 2].into_iter();
@@ -291,8 +272,8 @@ assert_eq!(
 <blockquote>
 <p><strong>注意</strong>：由于表达式是递归执行的，那这些表达式也会从最内层到最外层逐层求值，忽略兄弟表达式，直到没有（未求值的）内部子表达式为止。</p>
 </blockquote>
-<h2><a class="header" href="#place-expressions-and-value-expressions" id="place-expressions-and-value-expressions">Place Expressions and Value Expressions</a></h2>
-<h2><a class="header" href="#位置表达式和值表达式" id="位置表达式和值表达式">位置表达式和值表达式</a></h2>
+<h2 id="place-expressions-and-value-expressions"><a class="header" href="#place-expressions-and-value-expressions">Place Expressions and Value Expressions</a></h2>
+<h2 id="位置表达式和值表达式"><a class="header" href="#位置表达式和值表达式">位置表达式和值表达式</a></h2>
 <p>表达式分为两大类：位置表达式和值表达式。跟在每个表达式中一样，操作数可以出现在位置上下文，也可出现在值上下文中。表达式的求值既依赖于它自己的类别，也依赖于它所在的上下文。</p>
 <p><em>位置表达式</em>是表示内存位置的表达式。语言中表现为指向<strong>局部变量、<a href="items/static-items.html">静态变量</a>、<a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>(<code>*expr</code>)、<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">数组索引</a>表达式(<code>expr[expr]</code>)、<a href="expressions/field-expr.html">字段</a>引用(<code>expr.f</code>)、圆括号括起来的位置表达式</strong>的<a href="expressions/path-expr.html">路径</a>。所有其他形式的表达式都是值表达式。</p>
 <p><em>值表达式</em>是代表实际值的表达式。</p>
@@ -310,8 +291,8 @@ assert_eq!(
 <blockquote>
 <p>注意：历史上，位置表达式被称为 <em>左值/lvalues</em>，值表达式被称为 <em>右值/rvalues</em>。</p>
 </blockquote>
-<h3><a class="header" href="#moved-and-copied-types" id="moved-and-copied-types">Moved and copied types</a></h3>
-<h3><a class="header" href="#移动语义类型和复制语义类型" id="移动语义类型和复制语义类型">移动语义类型和复制语义类型</a></h3>
+<h3 id="moved-and-copied-types"><a class="header" href="#moved-and-copied-types">Moved and copied types</a></h3>
+<h3 id="移动语义类型和复制语义类型"><a class="header" href="#移动语义类型和复制语义类型">移动语义类型和复制语义类型</a></h3>
 <p>当位置表达式在值表达式上下文中被求值时，或在模式中被值绑定时，这表示此值会*保存进(held in)*当前表达式代表的内存地址。如果该值的类型实现了 <a href="special-types-and-traits.html#copy"><code>Copy</code></a>，那么该值将被从原来的位置复制一份过来。如果该值的类型没有实现 <a href="special-types-and-traits.html#copy"><code>Copy</code></a>，但实现了 <a href="special-types-and-traits.html#sized"><code>Sized</code></a>，那么就有可能把该值从原来的位置移动(move)过来。从位置表达式里移出值对位置表达式也有要求，只有如下的位置表达式才可能把值从其中移出(move out)：</p>
 <ul>
 <li>当前未被借用的<a href="variables.html">变量</a>。</li>
@@ -321,8 +302,8 @@ assert_eq!(
 </ul>
 <p>当把值从一个位置表达式里移出到一个局部变量中后，此（表达式代表的）地址将被去初始化(deinitialized)，并且该地址在重新初始化之前无法被再次读取。<br />
 除以上列出的情况外，任何在值表达式上下文中使用位置表达式都是错误的。</p>
-<h3><a class="header" href="#mutability" id="mutability">Mutability</a></h3>
-<h3><a class="header" href="#可变性" id="可变性">可变性</a></h3>
+<h3 id="mutability"><a class="header" href="#mutability">Mutability</a></h3>
+<h3 id="可变性"><a class="header" href="#可变性">可变性</a></h3>
 <p>如果一个位置表达式将会被<a href="expressions/operator-expr.html#assignment-expressions">赋值</a>、可变<a href="expressions/operator-expr.html#borrow-operators">借出</a>、<a href="#implicit-borrows">隐式可变借出</a>或被绑定到包含 <code>ref mut</code> 模式上，则该位置表达式必须是<em>可变的(mutable)</em>。我们称这类位置表达式为<em>可变位置表达式</em>。与之相对，其他位置表达式称为<em>不可变位置表达式</em>。</p>
 <p>下面的表达式可以是可变位置表达式上下文：</p>
 <ul>
@@ -335,14 +316,13 @@ assert_eq!(
 <li>对实现 <code>DerefMut</code> 的类型的解引用，那对这里解出的表达式求值就需要在一个可变位置表达式上下文中进行。</li>
 <li>对实现 <code>IndexMut</code> 的类型做<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">索引</a>，那对此检索出的表达式求值就需要在一个可变位置表达式上下文进行。注意对索引(index)本身的求值不用。</li>
 </ul>
-<h3><a class="header" href="#temporaries" id="temporaries">Temporaries</a></h3>
-<h3><a class="header" href="#临时位置临时变量" id="临时位置临时变量">临时位置/临时变量</a></h3>
+<h3 id="temporaries"><a class="header" href="#temporaries">Temporaries</a></h3>
+<h3 id="临时位置临时变量"><a class="header" href="#临时位置临时变量">临时位置/临时变量</a></h3>
 <p>在大多数位置表达式上下文中使用值表达式时，会创建一个临时的未命名内存位置，并将该位置初始为该值，然后这个表达式的求值结果就为该内存位置。此过程也有例外，就是把此临时表达式<a href="destructors.html#constant-promotion">提升</a>为一个静态项(<code>static</code>)。（译者注：这种情况下表达式将直接在编译时就求值了，求值的结果会根据编译器要求重新选择地址存储）。临时位置/临时变量的<a href="destructors.html#drop-scopes">存续作用域(drop scope)</a>通常在包含它的最内层语句的结尾处。</p>
-<h3><a class="header" href="#implicit-borrows" id="implicit-borrows">Implicit Borrows</a></h3>
-<h3><a class="header" href="#隐式借用" id="隐式借用">隐式借用</a></h3>
+<h3 id="implicit-borrows"><a class="header" href="#implicit-borrows">Implicit Borrows</a></h3>
+<h3 id="隐式借用"><a class="header" href="#隐式借用">隐式借用</a></h3>
 <p>某些特定的表达式可以通过隐式借用一个表达式来将其视为位置表达式。例如，可以直接比较两个非固定尺寸的<a href="types/slice.html">切片</a>是否相等，因为 <code>==</code> 操作符隐式借用了它自身的操作数：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">let c = [1, 2, 3];
 </span><span class="boring">let d = vec![1, 2, 3];
@@ -366,11 +346,11 @@ let b: &amp;[i32];
 <li><a href="expressions/operator-expr.html#comparison-operators">比较运算</a>的操作数。</li>
 <li><a href="expressions/operator-expr.html#compound-assignment-expressions">复合赋值(compound assignment)</a>的左操作数。</li>
 </ul>
-<h2><a class="header" href="#overloading-traits" id="overloading-traits">Overloading Traits</a></h2>
-<h2><a class="header" href="#重载trait" id="重载trait">重载trait</a></h2>
+<h2 id="overloading-traits"><a class="header" href="#overloading-traits">Overloading Traits</a></h2>
+<h2 id="重载trait"><a class="header" href="#重载trait">重载trait</a></h2>
 <p>本书后续章节的许多操作符和表达式都可以通过使用 <code>std::ops</code> 或 <code>std::cmp</code> 中的 trait 被其他类型重载。这些 trait 也存在于同名的 <code>core::ops</code> 和 <code>core::cmp</code> 中。</p>
-<h2><a class="header" href="#expression-attributes" id="expression-attributes">Expression Attributes</a></h2>
-<h2><a class="header" href="#表达式属性" id="表达式属性">表达式属性</a></h2>
+<h2 id="expression-attributes"><a class="header" href="#expression-attributes">Expression Attributes</a></h2>
+<h2 id="表达式属性"><a class="header" href="#表达式属性">表达式属性</a></h2>
 <p>只有在少数特定情况下，才允许在表达式之前使用<a href="attributes.html">外部属性</a>：</p>
 <ul>
 <li>在被当作<a href="statements.html">语句</a>用的表达式之前。</li>
@@ -395,17 +375,13 @@ let b: &amp;[i32];
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="statements.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="expressions/literal-expr.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -413,49 +389,35 @@ let b: &amp;[i32];
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="statements.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="expressions/literal-expr.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

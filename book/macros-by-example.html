@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>声明宏 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="favicon.svg">
-        
-        
         <link rel="shortcut icon" href="favicon.png">
-        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#macros-by-example" id="macros-by-example">Macros By Example</a></h1>
-<h1><a class="header" href="#声明宏" id="声明宏">声明宏</a></h1>
+                        <h1 id="macros-by-example"><a class="header" href="#macros-by-example">Macros By Example</a></h1>
+<h1 id="声明宏"><a class="header" href="#声明宏">声明宏</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md">macros-by-example.md</a><br />
 commit: 8d039bda5d4153ab99c368c4c159fd76471b01b8 <br />
@@ -205,11 +186,10 @@ commit: 8d039bda5d4153ab99c368c4c159fd76471b01b8 <br />
 </blockquote>
 <p><code>macro_rules</code> 允许用户以声明性的(declarative)方式定义句法扩展。我们称这种扩展形式为“声明宏（macros by example）”或简称“宏”。</p>
 <p>每个声明宏都有一个名称和一条或多条<em>规则</em>。每条规则都有两部分：一个<em>匹配器(matcher)</em>，描述它匹配的句法；一个<em>转码器(transcriber)</em>，描述成功匹配后将执行的替代调用句法。匹配器和转码器都必须由定界符(delimiter)包围。宏可以扩展为表达式、语句、程序项（包括 trait、impl 和外来程序项）、类型或模式。</p>
-<h2><a class="header" href="#transcribing" id="transcribing">Transcribing</a></h2>
-<h2><a class="header" href="#转码" id="转码">转码</a></h2>
+<h2 id="transcribing"><a class="header" href="#transcribing">Transcribing</a></h2>
+<h2 id="转码"><a class="header" href="#转码">转码</a></h2>
 <p>当宏被调用时，宏扩展器(macro expander)按名称查找宏调用，并依次尝试此宏中的每条宏规则。宏会根据第一个成功的匹配进行转码；如果当前转码结果导致错误，不会再尝试进行后续匹配。在匹配时，不会执行预判；如果编译器不能明确地确定如何一个 token 一个 token 地解析宏调用，则会报错。在下面的示例中，编译器不会越过标识符，去提前查看后跟的 token 是 <code>)</code>，尽管这能帮助它明确地解析调用：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! ambiguity {
     ($($i:ident)* $j:ident) =&gt; { };
@@ -220,8 +200,7 @@ ambiguity!(error); // 错误: 局部歧义(local ambiguity)
 </span></code></pre></pre>
 <p>在匹配器和转码器中，token <code>$</code> 用于从宏引擎中调用特殊行为（下文<a href="#metavariables">元变量</a>和<a href="#repetitions">重复元</a>中有详述）。不属于此类调用的 token 将按字面意义进行匹配和转码，除了一个例外。这个例外是匹配器的外层定界符将匹配任何一对定界符。因此，比如匹配器 <code>(())</code> 将匹配 <code>{()}</code>，而 <code>{{}}</code> 不行。字符 <code>$</code> 不能按字面意义匹配或转码。</p>
 <p>当将当前匹配的匹配段转发给另一个声明宏时，第二个宏中的匹配器看到的将是此匹配段类型的不透明抽象句法树(opaque AST)。第二个宏不能使用字面量token 来匹配匹配器中的这个匹配段，唯一可看到/使用的就是此匹配段类型一样的匹配段选择器(fragment specifier)。但匹配段类型 <code>ident</code>、<code>lifetime</code>、和 <code>tt</code> 是几个例外，它们<em>可以</em>通过字面量token 进行匹配。下面示例展示了这一限制：（译者注：匹配段选择器和匹配段，以及宏中各部件的定义可以凑合着看看译者未能翻译完成的<a href="macro-ambiguity.html">宏定义规范</a>）</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! foo {
     ($l:expr) =&gt; { bar!($l); }
@@ -236,8 +215,7 @@ foo!(3);
 <span class="boring">}
 </span></code></pre></pre>
 <p>以下示例展示了 <code>tt</code> 类型的匹配段在成功匹配（转码）一次之后生成的 tokens 如何能够再次直接匹配：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 成功编译
 macro_rules! foo {
@@ -251,8 +229,8 @@ macro_rules! bar {
 foo!(3);
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#metavariables" id="metavariables">Metavariables</a></h2>
-<h2><a class="header" href="#元变量" id="元变量">元变量</a></h2>
+<h2 id="metavariables"><a class="header" href="#metavariables">Metavariables</a></h2>
+<h2 id="元变量"><a class="header" href="#元变量">元变量</a></h2>
 <p>在匹配器中，<code>$</code><em>名称</em><code>:</code><em>匹配段选择器</em> 这种句法格式匹配符合指定句法类型的 Rust 句法段，并将其绑定到元变量 <code>$</code><em>名称</em> 上。有效的匹配段选择器包括：</p>
 <ul>
 <li><code>item</code>: <a href="items.html"><em>程序项</em></a></li>
@@ -277,8 +255,8 @@ foo!(3);
 <p>在 2021版次之前，它和 <code>pat_param</code> 匹配的段是完全一样的（也就是说它至接受<a href="patterns.html">顶层无or模式的模式</a>）。</p>
 <p>相关版次为 <code>macro_rules!</code>定义的有效版次。</p>
 </blockquote>
-<h2><a class="header" href="#repetitions" id="repetitions">Repetitions</a></h2>
-<h2><a class="header" href="#重复元" id="重复元">重复元</a></h2>
+<h2 id="repetitions"><a class="header" href="#repetitions">Repetitions</a></h2>
+<h2 id="重复元"><a class="header" href="#重复元">重复元</a></h2>
 <p>在匹配器和转码器中，重复元被表示为：将需要重复的 token 放在 <code>$(</code>…<code>)</code> 内，然后后跟一个重复运算符(repetition operator)，这两者之间可以放置一个可选的分隔符(separator token)。分隔符可以是除定界符或重复运算符之外的任何 token，其中分号(<code>;</code>)和逗号(<code>,</code>)最常见。例如： <code>$( $i:ident ),*</code> 表示用逗号分隔的任何数量的标识符。嵌套的重复元是合法的。</p>
 <p>重复运算符为：</p>
 <ul>
@@ -293,12 +271,11 @@ foo!(3);
 <li>在转码器中，元变量必须与它在匹配器中出现的次数、指示符类型以及其在重复元内的嵌套顺序都完全相同。因此，对于匹配器 <code>$( $i:ident ),*</code>，转码器 <code>=&gt; { $i }</code>, <code>=&gt; { $( $( $i)* )* }</code> 和 <code>=&gt; { $( $i )+ }</code> 都是非法的，但是 <code>=&gt; { $( $i );* }</code> 是正确的，它用分号分隔的标识符列表替换了逗号分隔的标识符列表。</li>
 <li>转码器中的每个重复元必须至少包含一个元变量，以便确定扩展多少次。如果在同一个重复元中出现多个元变量，则它们必须绑定到相同数量的匹配段上，不能有的多，有的少。例如，<code>( $( $i:ident ),* ; $( $j:ident ),* ) =&gt; (( $( ($i,$j) ),* ))</code> 里，绑定到 <code>$j</code> 的匹配段的数量必须与绑定到 <code>$i</code> 上的相同。这意味着用 <code>(a, b, c; d, e, f)</code> 调用这个宏是合法的，并且可扩展到 <code>((a,d), (b,e), (c,f))</code>，但是 <code>(a, b, c; d, e)</code> 是非法的，因为前后绑定的数量不同。此要求适用于嵌套的重复元的每一层。</li>
 </ol>
-<h2><a class="header" href="#dollar-dollar-" id="dollar-dollar-">Dollar-dollar ($$)</a></h2>
+<h2 id="dollar-dollar-"><a class="header" href="#dollar-dollar-">Dollar-dollar ($$)</a></h2>
 <p><code>$$</code> 将被扩展成单个的 <code>$</code>。</p>
 <p>由于元变量表达式总是在宏扩展期间被执行替换，因此它们不能在存在递归的宏中定义中使用，此时正是 <code>$$</code>表达式发挥作用的时候，即 <code>$$</code> 可被用于解决嵌套宏中的歧义。</p>
 <p>以下示例展示了由于嵌套宏中重复元的歧义而无法编译的的情况：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! foo_error {
     () =&gt; {
@@ -313,8 +290,7 @@ foo_error!();
 <span class="boring">}
 </span></code></pre></pre>
 <p>下面通过在重复元把 <code>$$</code> 转义为<code>$</code> 解决了此问题：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! foo_ok {
     () =&gt; {
@@ -337,8 +313,8 @@ $$$$$foo      =&gt; $$bar    =&gt; $bar   // Evaluate foo at level 1, and use th
 $$$$$$foo     =&gt; $$$foo   =&gt; $bar   // Evaluate foo at level 2, and use that as a name at level 3
 $$$$$$$foo    =&gt; $$$bar   =&gt; $baz   // Evaluate foo at level 1, use that at level 2, and then use *that* at level 3
 </code></pre>
-<h2><a class="header" href="#scoping-exporting-and-importing" id="scoping-exporting-and-importing">Scoping, Exporting, and Importing</a></h2>
-<h2><a class="header" href="#作用域导出以及导入" id="作用域导出以及导入">作用域、导出以及导入</a></h2>
+<h2 id="scoping-exporting-and-importing"><a class="header" href="#scoping-exporting-and-importing">Scoping, Exporting, and Importing</a></h2>
+<h2 id="作用域导出以及导入"><a class="header" href="#作用域导出以及导入">作用域、导出以及导入</a></h2>
 <p>由于历史原因，声明宏的作用域并不完全像各种程序项那样工作。宏有两种形式的作用域：文本作用域(textual scope)和基于路径的作用域(path-based scope)。文本作用域基于宏在源文件中（定义和使用所）出现的顺序，或是跨多个源文件出现的顺序，文本作用域是默认的作用域。（后本节面将进一步解释这个。）基于路径的作用域与其他程序项作用域的运行方式相同。宏的作用域、导出和导入主要由其属性控制。</p>
 <p>当声明宏被非限定标识符(unqualified identifier)（非多段路径段组成的限定性路径）调用时，会首先在文本作用域中查找。如果文本作用域中没有任何结果，则继续在基于路径的作用域中查找。如果宏的名称由路径限定，则只在基于路径的作用域中查找。</p>
 <!-- ignore: requires external crates -->
@@ -351,8 +327,8 @@ macro_rules! lazy_static { // 文本定义.
 lazy_static!{lazy} // 首先通过文本作用域来查找我们的宏.
 self::lazy_static!{} // 忽略文本作用域查找，直接使用基于路径的查找方式找到一个导入的宏.
 </code></pre>
-<h3><a class="header" href="#textual-scope" id="textual-scope">Textual Scope</a></h3>
-<h3><a class="header" href="#文本作用域" id="文本作用域">文本作用域</a></h3>
+<h3 id="textual-scope"><a class="header" href="#textual-scope">Textual Scope</a></h3>
+<h3 id="文本作用域"><a class="header" href="#文本作用域">文本作用域</a></h3>
 <p>文本作用域很大程度上取决于宏本身在源文件中的出现顺序，其工作方式与用 <code>let</code>语句声明的局部变量的作用域类似，只不过它可以直接位于模块下。当使用 <code>macro_rules!</code> 定义宏时，宏在定义之后进入其作用域（请注意，这不影响宏在定义中递归调用自己，因为宏调用的入口还是在定义之后的某次调用点上，此点开始的宏名称递归查找一定有效），在封闭它的作用域（通常是模块）结束时离开。文本作用域可以覆盖/进入子模块，甚至跨越多个文件：</p>
 <!-- ignore: requires external modules -->
 <pre><code class="language-rust ignore">//// src/lib.rs
@@ -374,8 +350,7 @@ mod has_macro {
 m!{} // OK: m 在上层模块文件 src/lib.rs 中声明后使用
 </code></pre>
 <p>多次定义宏并不报错；除非超出作用域，否则最近的宏声明将屏蔽前一个。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! m {
     (1) =&gt; {};
@@ -402,8 +377,7 @@ m!(1);
 <span class="boring">}
 </span></code></pre></pre>
 <p>宏也可以在函数内部声明和使用，其工作方式类似：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn foo() {
     // m!(); // 报错: m 未在作用域内.
@@ -417,11 +391,10 @@ m!(1);
 // m!(); // Error: m 未在作用域内.
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#the-macro_use-attribute" id="the-macro_use-attribute">The <code>macro_use</code> attribute</a></h3>
-<h3><a class="header" href="#macro_use属性" id="macro_use属性"><code>macro_use</code>属性</a></h3>
+<h3 id="the-macro_use-attribute"><a class="header" href="#the-macro_use-attribute">The <code>macro_use</code> attribute</a></h3>
+<h3 id="macro_use属性"><a class="header" href="#macro_use属性"><code>macro_use</code>属性</a></h3>
 <p><em><code>macro_use</code>属性</em>有两种用途。首先，它可以通过作用于模块的方式让模块内的宏的作用域在模块关闭时不结束：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[macro_use]
 mod inner {
@@ -442,11 +415,10 @@ lazy_static!{}
 // self::lazy_static!{} // 报错: lazy_static 没在 `self` 中定义
 </code></pre>
 <p>要用 <code>#[macro_use]</code> 导入宏必须先使用 <code>#[macro_export]</code> 导出，下文会有讲解。</p>
-<h3><a class="header" href="#path-based-scope" id="path-based-scope">Path-Based Scope</a></h3>
-<h3><a class="header" href="#基于路径的作用域" id="基于路径的作用域">基于路径的作用域</a></h3>
+<h3 id="path-based-scope"><a class="header" href="#path-based-scope">Path-Based Scope</a></h3>
+<h3 id="基于路径的作用域"><a class="header" href="#基于路径的作用域">基于路径的作用域</a></h3>
 <p>默认情况下，宏没有基于路径的作用域。但是如果该宏带有 <code>#[macro_export]</code> 属性，则相当于它在当前 crate 的根作用域的顶部被声明，它通常可以这样引用：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>self::m!();
 m!(); // OK: 基于路径的查找发现 m 在当前模块中有声明.
@@ -465,8 +437,8 @@ mod mac {
 <span class="boring">}
 </span></code></pre></pre>
 <p>标有 <code>#[macro_export]</code> 的宏始终是 <code>pub</code> 的，以便可以通过路径或前面所述的 <code>#[macro_use]</code> 方式让其他 crate 来引用。</p>
-<h2><a class="header" href="#hygiene" id="hygiene">Hygiene</a></h2>
-<h2><a class="header" href="#卫生性" id="卫生性">卫生性</a></h2>
+<h2 id="hygiene"><a class="header" href="#hygiene">Hygiene</a></h2>
+<h2 id="卫生性"><a class="header" href="#卫生性">卫生性</a></h2>
 <p>默认情况下，宏中引用的所有标识符都按原样展开，并在宏的调用位置上去查找。如果宏引用的程序项或宏不在调用位置的作用域内，则这可能会导致问题。为了解决这个问题，可以替代在路径的开头使用元变量 <code>$crate</code>，强制在定义宏的 crate 中进行查找。</p>
 <!-- ignore: requires external crates -->
 <pre><code class="language-rust ignore">//// 在 `helper_macro` crate 中.
@@ -490,8 +462,7 @@ fn unit() {
 }
 </code></pre>
 <p>请注意，由于 <code>$crate</code> 指的是当前的（<code>$crate</code> 源码出现的）crate，因此在引用非宏程序项时，它必须与全限定模块路径一起使用：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub mod inner {
     #[macro_export]
@@ -504,8 +475,7 @@ fn unit() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>此外，尽管 <code>$crate</code> 允许宏在扩展时引用其自身 crate 中的程序项，但它的使用对可见性没有影响（，或者说它的使用仍受可见性条件的约束）。引用的程序项或宏必须仍然在调用位置处可见。在下面的示例中，任何试图从此 crate 外部调用 <code>call_foo!()</code> 的行为都将失败，因为 <code>foo()</code> 不是公有的。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[macro_export]
 macro_rules! call_foo {
@@ -520,8 +490,7 @@ fn foo() {}
 <p><strong>版本&amp;版次差异</strong>：在 Rust 1.30 之前，<code>$crate</code> 和 <code>local_inner_macros</code>（后面会讲）不受支持。从该版本开始，它们与基于路径的宏导入（前面讲过）一起被添加进来，用以确保不需要在当前 crate 已经使用导入了某导出宏的情况下再额外手动导入此导出宏下面用到的辅助宏。如果要让 Rust 的早期版本编写的 crate 要使用辅助宏，需要修改为使用 <code>$crate</code> 或 <code>local_inner_macros</code>，以便与基于路径的导入一起工作。</p>
 </blockquote>
 <p>当一个宏被导出时，可以在 <code>#[macro_export]</code> 属性里添加 <code>local_inner_macros</code> 属性值，用以自动为该属性修饰的宏内包含的所有宏调用自动添加 <code>$crate::</code> 前缀。这主要是作为一个工具来迁移那些在引入 <code>$crate</code> 之前的版本编写的 Rust 代码，以便它们能与 Rust 2018 版中基于路径的宏导入一起工作。在使用新版本编写的代码中不鼓励使用它。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[macro_export(local_inner_macros)]
 macro_rules! helped {
@@ -534,8 +503,8 @@ macro_rules! helper {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#follow-set-ambiguity-restrictions" id="follow-set-ambiguity-restrictions">Follow-set Ambiguity Restrictions</a></h2>
-<h2><a class="header" href="#随集歧义限制译者注该节还需要继续校对打磨主要难点还是因为附录的宏定义规范译者还没有能全部搞懂" id="随集歧义限制译者注该节还需要继续校对打磨主要难点还是因为附录的宏定义规范译者还没有能全部搞懂">随集歧义限制（译者注：该节还需要继续校对打磨，主要难点还是因为附录的宏定义规范译者还没有能全部搞懂）</a></h2>
+<h2 id="follow-set-ambiguity-restrictions"><a class="header" href="#follow-set-ambiguity-restrictions">Follow-set Ambiguity Restrictions</a></h2>
+<h2 id="随集歧义限制译者注该节还需要继续校对打磨主要难点还是因为附录的宏定义规范译者还没有能全部搞懂"><a class="header" href="#随集歧义限制译者注该节还需要继续校对打磨主要难点还是因为附录的宏定义规范译者还没有能全部搞懂">随集歧义限制（译者注：该节还需要继续校对打磨，主要难点还是因为附录的宏定义规范译者还没有能全部搞懂）</a></h2>
 <p>宏系统使用的解析器相当强大，但是为了防止其在 Rust 的当前或未来版本中出现二义性解析，因此对它做出了限制。特别地，在消除二义性展开的基本规则之外又增加了一条：元变量匹配的非终结符(nonterminal)必须后跟一个已经确定为可以用来安全分隔匹配段的分隔符。</p>
 <p>例如，像 <code>$i:expr [ , ]</code> 这样的宏匹配器在现今的 Rust 中理论上是可以接受的，因为现在 <code>[,]</code> 不可能是合法表达式的一部分，因此解析始终是明确的。但是，由于 <code>[</code> 可以开始一个尾随表达式(trailing expressions)，因此 <code>[</code> 不是一个可以安全排除在表达式后面出现的字符。如果在接下来的 Rust 版本中接受了 <code>[,]</code>，那么这个匹配器就会产生歧义或是错误解析，破坏正常代码。但是，像<code>$i:expr,</code> 或 <code>$i:expr;</code> 这样的匹配符始终是合法的，因为 <code>,</code> 和<code>;</code> 是合法的表达式分隔符。目前规范中的规则是：（译者注：下面的规则不是绝对的，因为宏的基础理论还在发展中。）</p>
 <ul>
@@ -575,17 +544,13 @@ macro_rules! helper {
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="macros.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="procedural-macros.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -593,49 +558,35 @@ macro_rules! helper {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="macros.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="procedural-macros.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

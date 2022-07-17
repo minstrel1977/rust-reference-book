@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>结构体表达式 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#struct-expressions" id="struct-expressions">Struct expressions</a></h1>
-<h1><a class="header" href="#结构体表达式" id="结构体表达式">结构体表达式</a></h1>
+                        <h1 id="struct-expressions"><a class="header" href="#struct-expressions">Struct expressions</a></h1>
+<h1 id="结构体表达式"><a class="header" href="#结构体表达式">结构体表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/struct-expr.md">struct-expr.md</a><br />
 commit: e4edc3edbabefd6c0b8aa17ce539d560320d4c93 <br />
@@ -199,8 +180,7 @@ commit: e4edc3edbabefd6c0b8aa17ce539d560320d4c93 <br />
 <p><em>结构体表达式</em>用来创建结构体、枚举或联合体的值。它由指向<a href="../items/structs.html">结构体</a>程序项、<a href="../items/enumerations.html">枚举变体</a>、<a href="../items/unions.html">联合体</a>程序项的路径，以及与此程序项的字段对应的值组成。
 结构体表达式有三种形式：结构体(struct)、元组结构体(tuple)和单元结构体(unit)。</p>
 <p>下面是结构体表达式的示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Point { x: f64, y: f64 }
 </span><span class="boring">struct NothingInMe { }
@@ -215,18 +195,17 @@ let u = game::User {name: &quot;Joe&quot;, age: 35, score: 100_000};
 some_fn::&lt;Cookie&gt;(Cookie);
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#field-struct-expression" id="field-struct-expression">Field struct expression</a></h2>
-<h2><a class="header" href="#结构体表达式的字段设置" id="结构体表达式的字段设置">结构体表达式的字段设置</a></h2>
+<h2 id="field-struct-expression"><a class="header" href="#field-struct-expression">Field struct expression</a></h2>
+<h2 id="结构体表达式的字段设置"><a class="header" href="#结构体表达式的字段设置">结构体表达式的字段设置</a></h2>
 <p>用花括号把字段括起来的结构体表达式允许以任意顺序指定每个字段的值。字段名与值之间用冒号分隔。</p>
 <p><a href="../items/unions.html">联合体</a>类型的值只能使用此句法创建，并且只能指定一个字段。</p>
-<h2><a class="header" href="#functional-update-syntax" id="functional-update-syntax">Functional update syntax</a></h2>
-<h2><a class="header" href="#函数式更新句法" id="函数式更新句法">函数式更新句法</a></h2>
+<h2 id="functional-update-syntax"><a class="header" href="#functional-update-syntax">Functional update syntax</a></h2>
+<h2 id="函数式更新句法"><a class="header" href="#函数式更新句法">函数式更新句法</a></h2>
 <p>构造结构体类型的值的结构体表达式可以以 <code>..</code> 后跟一个表达式的句法结尾，这种句法表示这是一种函数式更新(functional update)。
 <code>..</code> 后跟的表达式（此表达式被称为此函数式更新的基(base)）必须与正在构造的新结构体值是同一种结构体类型的。</p>
 <p>整个结构体表达式先为已指定的字段使用已给定的值，然后再从基表达式(base expression)里为剩余未指定的字段移动或复制值。
 与所有结构体表达式一样，此结构体类型的所有字段必须是<a href="../visibility-and-privacy.html">可见的</a>，甚至那些没有显式命名的字段也是如此。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Point3d { x: i32, y: i32, z: i32 }
 </span>let mut base = Point3d {x: 1, y: 2, z: 3};
@@ -239,8 +218,7 @@ drop(y_ref);
 但是，如果结构体表达式在另一个表达式内（例如在<a href="grouped-expr.html">圆括号</a>内），则可以用在这些情况下。</p>
 <p>构造元组结构体时其字段名可以是代表索引的十进制整数数值。
 这中表达方法还可以与基结构体一起使用来填充其余未指定的索引：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Color(u8, u8, u8);
 let c1 = Color(0, 0, 0);  // 创建元组结构体的典型方法。
@@ -248,15 +226,14 @@ let c2 = Color{0: 255, 1: 127, 2: 0};  // 按索引来指定字段。
 let c3 = Color{1: 0, ..c2};  // 使用基的字段值来填写结构体的所有其他字段。
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#struct-field-init-shorthand" id="struct-field-init-shorthand">Struct field init shorthand</a></h3>
-<h3><a class="header" href="#初始化结构体字段的快捷方法" id="初始化结构体字段的快捷方法">初始化结构体字段的快捷方法</a></h3>
+<h3 id="struct-field-init-shorthand"><a class="header" href="#struct-field-init-shorthand">Struct field init shorthand</a></h3>
+<h3 id="初始化结构体字段的快捷方法"><a class="header" href="#初始化结构体字段的快捷方法">初始化结构体字段的快捷方法</a></h3>
 <p>当使用字段的名字（注意不是位置索引数字）初始化某数据结构（结构体、枚举、联合体）时，允许将 <code>fieldname: fieldname</code> 写成 <code>fieldname</code> 这样的简化形式。
 这种句法让代码更少重复，更加紧凑。
 例如：</p>
 <p>For example:
 For example:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Point3d { x: i32, y: i32, z: i32 }
 </span><span class="boring">let x = 0;
@@ -266,12 +243,11 @@ For example:</p>
 Point3d { x, y: y_value, z };
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#tuple-struct-expression" id="tuple-struct-expression">Tuple struct expression</a></h2>
-<h2><a class="header" href="#元组结构体表达式" id="元组结构体表达式">元组结构体表达式</a></h2>
+<h2 id="tuple-struct-expression"><a class="header" href="#tuple-struct-expression">Tuple struct expression</a></h2>
+<h2 id="元组结构体表达式"><a class="header" href="#元组结构体表达式">元组结构体表达式</a></h2>
 <p>用圆括号括起字段的结构体表达式构造出来的结构体为元组结构体。
 虽然为了完整起见，也把它作为一个特定的（结构体）表达式列在这里，但实际上它等价于执行元组结构体构造器的<a href="call-expr.html">调用表达式</a>。例如：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Position(i32, i32, i32);
 Position(0, 0, 0);  // 创建元组结构体的典型方法。
@@ -279,13 +255,12 @@ let c = Position;  // `c` 是一个接收3个参数的函数。
 let pos = c(8, 6, 7);  // 创建一个 `Position` 值。
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#unit-struct-expression" id="unit-struct-expression">Unit struct expression</a></h2>
-<h2><a class="header" href="#单元结构体表达式" id="单元结构体表达式">单元结构体表达式</a></h2>
+<h2 id="unit-struct-expression"><a class="header" href="#unit-struct-expression">Unit struct expression</a></h2>
+<h2 id="单元结构体表达式"><a class="header" href="#单元结构体表达式">单元结构体表达式</a></h2>
 <p>单元结构体表达式只是单元结构体程序项(unit struct item)的路径。
 也是指向此单元结构体的值的隐式常量。
 单元结构体的值也可以用无字段结构体表达式来构造。例如：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Gamma;
 let a = Gamma;  // Gamma的值。
@@ -297,17 +272,13 @@ let b = Gamma{};  // 和`a`的值完全一样。
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../expressions/tuple-expr.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../expressions/call-expr.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -315,49 +286,35 @@ let b = Gamma{};  // 和`a`的值完全一样。
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../expressions/tuple-expr.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../expressions/call-expr.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

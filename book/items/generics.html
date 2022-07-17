@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>泛型参数 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#type-and-lifetime-parameters" id="type-and-lifetime-parameters">Type and Lifetime Parameters</a></h1>
-<h1><a class="header" href="#类型参数和生存期参数" id="类型参数和生存期参数">类型参数和生存期参数</a></h1>
+                        <h1 id="type-and-lifetime-parameters"><a class="header" href="#type-and-lifetime-parameters">Type and Lifetime Parameters</a></h1>
+<h1 id="类型参数和生存期参数"><a class="header" href="#类型参数和生存期参数">类型参数和生存期参数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/generics.md">generics.md</a><br />
 commit: cd3704e9aa4e28f0bc311ab7c23e5dfaf1f3c24d <br />
@@ -189,8 +170,7 @@ commit: cd3704e9aa4e28f0bc311ab7c23e5dfaf1f3c24d <br />
 <p><a href="functions.html">函数</a>、<a href="type-aliases.html">类型别名</a>、<a href="structs.html">结构体</a>、<a href="enumerations.html">枚举</a>、<a href="unions.html">联合体</a>、<a href="traits.html">trait</a> 和<a href="implementations.html">实现</a>可以通过类型参数、常量参数和生存期参数达到<em>参数化</em>配置的的效果。这些参数在尖括号<span class="parenthetical">（<code>&lt;...&gt;</code>）</span>中列出，通常都是紧跟在程序项名称之后和程序项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 <code>impl</code> 之后。
 泛型参数的顺序被严格限定为生存期参数必须在前，然后是类型参数和常量参数混合。</p>
 <p>下面给出一些带类型参数、常量参数和生存期参数的程序项的示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn foo&lt;'a, T&gt;() {}
 trait A&lt;U&gt; {}
@@ -201,8 +181,8 @@ struct EitherOrderWorks&lt;const N: bool, U&gt;(U);
 </span></code></pre></pre>
 <p>泛型参数在声明它们的程序项定义的范围内有效。它们不是函数体中声明的程序项，这个在<a href="../statements.html#item-declarations">程序项声明</a>中有讲述。</p>
 <p><a href="../types/pointer.html#shared-references-">引用</a>、<a href="../types/pointer.html#raw-pointers-const-and-mut">裸指针</a>、<a href="../types/array.html">数组</a>、<a href="../types/array.html">切片</a>、<a href="../types/tuple.html">元组</a>和<a href="../types/function-pointer.html">函数指针</a>也有生存期参数或类型参数，但这些程序项不能使用路径句法去引用。</p>
-<h3><a class="header" href="#const-generics" id="const-generics">Const generics</a></h3>
-<h3><a class="header" href="#常量泛型" id="常量泛型">常量泛型</a></h3>
+<h3 id="const-generics"><a class="header" href="#const-generics">Const generics</a></h3>
+<h3 id="常量泛型"><a class="header" href="#常量泛型">常量泛型</a></h3>
 <p><em>常量泛型参数</em>允许程序项在常量值上泛型化。const标识符为常量参数引入了一个名称，并且该程序项的所有实例必须用给定类型的值去实例化该参数。</p>
 <!-- TODO: update above to say "introduces a name in the [value namespace]" once namespaces are added. -->
 <p>常量参数类型值允许为：<code>u8</code>, <code>u16</code>, <code>u32</code>, <code>u64</code>, <code>u128</code>, <code>usize</code>, <code>i8</code>, <code>i16</code>, <code>i32</code>, <code>i64</code>, <code>i128</code>, <code>isize</code>, <code>char</code> 和 <code>bool</code> 这些类型。</p>
@@ -214,8 +194,7 @@ struct EitherOrderWorks&lt;const N: bool, U&gt;(U);
 <li>作为程序项中任何函数体中使用到的任何类型的参数。</li>
 <li>作为程序项中任何字段类型的一部分使用。</li>
 </ol>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 可以使用常量泛型参数的示例。
 
@@ -245,8 +224,7 @@ impl&lt;const N: usize&gt; Trait for Foo&lt;N&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 不能使用常量泛型参数的示例
 fn foo&lt;const N: usize&gt;() {
@@ -262,8 +240,7 @@ fn foo&lt;const N: usize&gt;() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>作为进一步的限制，常量只能作为<a href="../types.html">类型</a>或<a href="../expressions/array-expr.html">数组定义中的重复表达式</a>中的独立实参出现。在这种上下文限制下，它们只能以单段<a href="../expressions/path-expr.html">路径表达式</a>的形式使用（例如 <code>N</code> 或以<a href="../expressions/block-expr.html">块</a><code>{N}</code> 的形式出现）。也就是说，它们不能与其他表达式结合使用。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 不能使用常量参数的示例。
 
@@ -278,8 +255,7 @@ fn bad_function&lt;const N: usize&gt;() -&gt; [u8; {N + 1}] {
 <blockquote>
 <p><strong>注意</strong>：这种句法限制是必要的，用以避免在解析类型内部的表达式时可能会导致无限递归(infinite lookahead)。</p>
 </blockquote>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn double&lt;const N: i32&gt;() {
     println!(&quot;doubled: {}&quot;, N * 2);
@@ -301,8 +277,7 @@ fn example() {
 <!-- TODO: Rewrite the paragraph above to be in terms of namespaces, once
     namespaces are introduced, and it is clear which namespace each parameter
     lives in. -->
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>type N = u32;
 struct Foo&lt;const N: usize&gt;;
@@ -313,8 +288,7 @@ fn bar&lt;const N: usize&gt;() -&gt; Foo&lt;{ N }&gt; { todo!() } // ok
 <span class="boring">}
 </span></code></pre></pre>
 <p>与类型参数和生存期参数不同，常量参数可以声明而不必在被它参数化的程序项中使用，但和<a href="implementations.html#generic-implementations">泛型实现</a>关联的实现例外：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// ok
 struct Foo&lt;const N: usize&gt;;
@@ -328,8 +302,7 @@ impl&lt;const N: usize&gt; Unconstrained {}
 <span class="boring">}
 </span></code></pre></pre>
 <p>当处理 trait约束时，在确定是否满足相关约束时，不会考虑常量参数的所有实现的穷尽性。例如，在下面的例子中，即使实现了 <code>bool</code>类型的所有可能的常量值，仍会报错提示 trait约束不满足。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Foo&lt;const B: bool&gt;;
 trait Bar {}
@@ -343,8 +316,8 @@ fn generic&lt;const B: bool&gt;() {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#where-clauses" id="where-clauses">Where clauses</a></h2>
-<h2><a class="header" href="#where子句" id="where子句">where子句</a></h2>
+<h2 id="where-clauses"><a class="header" href="#where-clauses">Where clauses</a></h2>
+<h2 id="where子句"><a class="header" href="#where子句">where子句</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>WhereClause</em> :<br />
@@ -359,8 +332,7 @@ fn generic&lt;const B: bool&gt;() {
 </blockquote>
 <p><em>where子句</em>提供了另一种方法来为类型参数和生存期参数指定约束(bound)，甚至可以为非类型参数的类型指定约束。</p>
 <p>关键字<code>for</code> 可以用来引入<a href="../trait-bounds.html#higher-ranked-trait-bounds">高阶生存期参数</a>。它只允许在 <a href="#generic-parameters"><em>LifetimeParam</em></a> 参数上使用。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct A&lt;T&gt;
 where
@@ -373,8 +345,8 @@ where
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#attributes" id="attributes">Attributes</a></h2>
-<h2><a class="header" href="#属性" id="属性">属性</a></h2>
+<h2 id="attributes"><a class="header" href="#attributes">Attributes</a></h2>
+<h2 id="属性"><a class="header" href="#属性">属性</a></h2>
 <p>泛型生存期参数和泛型类型参数允许<a href="../attributes.html">属性</a>，但在目前这个位置还没有任何任何有意义的内置属性，但用户可能可以通过自定义的派生属性来设置一些有意义的属性。</p>
 <p>下面示例演示如何使用自定义派生属性修改泛型参数的含义。</p>
 <!-- ignore: requires proc macro derive -->
@@ -389,17 +361,13 @@ struct Foo&lt;#[my_flexible_clone(unbounded)] H&gt; {
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../items/external-blocks.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../items/associated-items.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -407,49 +375,35 @@ struct Foo&lt;#[my_flexible_clone(unbounded)] H&gt; {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../items/external-blocks.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../items/associated-items.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

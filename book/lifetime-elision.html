@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>生存期省略 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="favicon.svg">
-        
-        
         <link rel="shortcut icon" href="favicon.png">
-        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,16 +146,16 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#lifetime-elision" id="lifetime-elision">Lifetime elision</a></h1>
-<h1><a class="header" href="#生存期类型参数省略" id="生存期类型参数省略">生存期(类型参数)省略</a></h1>
+                        <h1 id="lifetime-elision"><a class="header" href="#lifetime-elision">Lifetime elision</a></h1>
+<h1 id="生存期类型参数省略"><a class="header" href="#生存期类型参数省略">生存期(类型参数)省略</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/lifetime-elision.md">lifetime-elision.md</a><br />
 commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 本章译文最后维护日期：2021-07-31</p>
 </blockquote>
 <p>Rust 拥有一套允许在多种位置省略生存期的规则，但前提是编译器在这些位置上能推断出合理的默认生存期。</p>
-<h2><a class="header" href="#lifetime-elision-in-functions" id="lifetime-elision-in-functions">Lifetime elision in functions</a></h2>
-<h2><a class="header" href="#函数上的生存期类型参数省略" id="函数上的生存期类型参数省略">函数上的生存期(类型参数)省略</a></h2>
+<h2 id="lifetime-elision-in-functions"><a class="header" href="#lifetime-elision-in-functions">Lifetime elision in functions</a></h2>
+<h2 id="函数上的生存期类型参数省略"><a class="header" href="#函数上的生存期类型参数省略">函数上的生存期(类型参数)省略</a></h2>
 <p>为了使常用模式使用起来更方便，可以在<a href="types/function-item.html">函数项</a>、<a href="types/function-pointer.html">函数指针</a>和<a href="types/closure.html">闭包trait</a><sup class="footnote-reference"><a href="#译注1">1</a></sup>的签名中<em>省略</em>生存期类型参数。以下规则用于推断出被省略的生存期类型参数。省略不能被推断出的生存期类型参数是错误的。占位符形式的生存期，<code>'_</code>，也可以用这一套规则来推断出。对于路径中的生存期，首选使用 <code>'_</code>。trait对象的生存期类型参数遵循不同的规则，具体<a href="#default-trait-object-lifetimes">这里</a>讨论。</p>
 <ul>
 <li>参数中省略的每个生存期类型参数都会（被推断）成为一个独立的生存期类型参数。</li>
@@ -185,8 +166,7 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 <li>如果接受者(receiver)类型为 <code>&amp;Self</code> 或 <code>&amp;mut Self</code>，那么对 <code>Self</code> 的引用的生存期会被作为所有省略的输出生存期类型参数。</li>
 </ul>
 <p>示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">trait T {}
 </span><span class="boring">trait ToCStr {}
@@ -222,8 +202,7 @@ type FunTrait1 = dyn Fn(&amp;str) -&gt; &amp;str;                // 省略
 type FunTrait2 = dyn for&lt;'a&gt; Fn(&amp;'a str) -&gt; &amp;'a str;  // 未省略
 <span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 下面的示例展示了不允许省略生存期类型参数的情况。
 
@@ -236,8 +215,8 @@ fn frob(s: &amp;str, t: &amp;str) -&gt; &amp;str;                    // 非法
 <span class="boring">}
 </span><span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#default-trait-object-lifetimes" id="default-trait-object-lifetimes">Default trait object lifetimes</a></h2>
-<h2><a class="header" href="#默认的-trait对象的生存期" id="默认的-trait对象的生存期">默认的 trait对象的生存期</a></h2>
+<h2 id="default-trait-object-lifetimes"><a class="header" href="#default-trait-object-lifetimes">Default trait object lifetimes</a></h2>
+<h2 id="默认的-trait对象的生存期"><a class="header" href="#默认的-trait对象的生存期">默认的 trait对象的生存期</a></h2>
 <p>假定存在于（代表） <a href="types/trait-object.html">trait对象</a>（的那个胖指针）上的生存期(assumed lifetime)类型参数称为此 trait对象的<em>默认对象生存期约束(default object lifetime bound)</em>。这些在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0599-default-object-bound.md">RFC 599</a> 中定义，在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/1156-adjust-default-object-bounds.md">RFC 1156</a> 中修定增补。</p>
 <p>当 trait对象的生存期约束被完全省略时，会使用默认对象生存期约束来替代上面定义的生存期类型参数省略规则。但如果使用 <code>'_</code> 作为生存期约束，则该约束仍遵循上面通常的省略规则。</p>
 <p>如果将 trait对象用作泛型类型的类型参数，则首先使用此容器泛型来尝试为此 trait对象推断一个约束（来替代那个假定的生存期）。</p>
@@ -251,8 +230,7 @@ fn frob(s: &amp;str, t: &amp;str) -&gt; &amp;str;                    // 非法
 <li>如果 <code>'static</code> 被用做原 trait声明的任一一个生存期约束，则此 trait对象使用 <code>'static</code> 作为默认约束。</li>
 <li>如果原 trait声明没有生存期约束，那么此 trait对象的生存期会在表达式中根据上下文被推断出来，在表达式之外直接用 <code>'static</code>。</li>
 </ul>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 对下面的 trait 来说，...
 trait Foo { }
@@ -274,8 +252,7 @@ type T5&lt;'a&gt; = std::cell::Ref&lt;'a, dyn Foo&gt;;
 type T6&lt;'a&gt; = std::cell::Ref&lt;'a, dyn Foo + 'a&gt;;
 <span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 这是一个反面示例：
 <span class="boring">trait Foo { }
@@ -290,8 +267,7 @@ type T7&lt;'a, 'b&gt; = TwoBounds&lt;'a, 'b, dyn Foo&gt;;
 <span class="boring">}
 </span></code></pre></pre>
 <p>注意，像 <code>&amp;'a Box&lt;dyn Foo&gt;</code> 这样多层包装的，只需要看最内层包装 <code>dyn Foo</code> 的那层，所以扩展后仍然为 <code>&amp;'a Box&lt;dyn Foo + 'static&gt;</code></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 对下面的 trait 来说，...
 trait Bar&lt;'a&gt;: 'a { }
@@ -305,11 +281,10 @@ impl&lt;'a&gt; dyn Bar&lt;'a&gt; {}
 impl&lt;'a&gt; dyn Bar&lt;'a&gt; + 'a {}
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#static-lifetime-elision" id="static-lifetime-elision"><code>'static</code> lifetime elision</a></h2>
-<h2><a class="header" href="#静态static生存期省略" id="静态static生存期省略">静态(<code>'static</code>)生存期省略</a></h2>
+<h2 id="static-lifetime-elision"><a class="header" href="#static-lifetime-elision"><code>'static</code> lifetime elision</a></h2>
+<h2 id="静态static生存期省略"><a class="header" href="#静态static生存期省略">静态(<code>'static</code>)生存期省略</a></h2>
 <p>除非指定了显式的生存期，引用类型的<a href="items/constant-items.html">常量项</a>声明和<a href="items/static-items.html">静态项</a>声明都具有<em>隐式的</em>静态(<code>'static</code>)生存期。因此，有 <code>'static</code>生存期的常量项声明在编写时可以略去其生存期。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// STRING: &amp;'static str
 const STRING: &amp;str = &quot;bitstring&quot;;
@@ -327,8 +302,7 @@ const BITS_N_STRINGS: BitsNStrings&lt;'_&gt; = BitsNStrings {
 <span class="boring">}
 </span></code></pre></pre>
 <p>注意，如果静态项(<code>static</code>)或常量项(<code>const</code>)包含对函数或闭包的引用，而这些函数或闭包本身也包含引用，此时编译器将首先尝试使用标准的省略规则来推断生存期类型参数。如果它不能通过通常的生存期省略规则来推断出生存期类型参数，那么它将报错。举个例子：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Foo;
 </span><span class="boring">struct Bar;
@@ -341,8 +315,7 @@ const RESOLVED_SINGLE: fn(&amp;str) -&gt; &amp;str = |x| x;
 const RESOLVED_MULTIPLE: &amp;dyn Fn(&amp;Foo, &amp;Bar, &amp;Baz) -&gt; usize = &amp;somefunc;
 <span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Foo;
 </span><span class="boring">struct Bar;
@@ -362,17 +335,13 @@ const RESOLVED_STATIC: &amp;dyn Fn(&amp;Foo, &amp;Bar) -&gt; &amp;Baz = &amp;som
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="destructors.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="special-types-and-traits.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -380,49 +349,35 @@ const RESOLVED_STATIC: &amp;dyn Fn(&amp;Foo, &amp;Bar) -&gt; &amp;Baz = &amp;som
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="destructors.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="special-types-and-traits.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

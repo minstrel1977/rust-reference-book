@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>条件编译 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="favicon.svg">
-        
-        
         <link rel="shortcut icon" href="favicon.png">
-        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#conditional-compilation" id="conditional-compilation">Conditional compilation</a></h1>
-<h1><a class="header" href="#条件编译" id="条件编译">条件编译</a></h1>
+                        <h1 id="conditional-compilation"><a class="header" href="#conditional-compilation">Conditional compilation</a></h1>
+<h1 id="条件编译"><a class="header" href="#条件编译">条件编译</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md">conditional-compilation.md</a><br />
 commit: 267f8159975451c3b61121156e5ee57d037937c4 <br />
@@ -203,8 +184,8 @@ commit: 267f8159975451c3b61121156e5ee57d037937c4 <br />
 <p><strong>注意</strong>: <code>=</code> 周围的空白符将被忽略。<code>foo=&quot;bar&quot;</code> 和 <code>foo = &quot;bar&quot;</code> 是等价的配置选项。</p>
 </blockquote>
 <p>键在键值对配置选项列表中不是唯一的。例如，<code>feature = &quot;std&quot;</code> and <code>feature = &quot;serde&quot;</code> 可以同时设置。</p>
-<h2><a class="header" href="#set-configuration-options" id="set-configuration-options">Set Configuration Options</a></h2>
-<h2><a class="header" href="#设置配置选项" id="设置配置选项">设置配置选项</a></h2>
+<h2 id="set-configuration-options"><a class="header" href="#set-configuration-options">Set Configuration Options</a></h2>
+<h2 id="设置配置选项"><a class="header" href="#设置配置选项">设置配置选项</a></h2>
 <p>设置哪些配置选项是在 crate 编译期时就静态确定的。一些选项属于<em>编译器设置集(compiler-set)</em>，这部分选项是编译器根据相关编译数据设置的。其他选项属于<em>任意设置集(arbitrarily-set)</em>，这部分设置必须从代码之外传参给编译器来自主设置。无法在正在编译的 crate 的源代码中设置编译配置选项。</p>
 <blockquote>
 <p><strong>注意</strong>: 对于 <code>rustc</code>，任意配置集的配置选项要使用命令行参数 <a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#--cfg-configure-the-compilation-environment"><code>--cfg</code></a> 来设置。</p>
@@ -215,7 +196,7 @@ commit: 267f8159975451c3b61121156e5ee57d037937c4 <br />
 <div class="warning">
 <p>警告：任意配置集的配置选项可能与编译器设置集的配置选项设置相同的值。例如，在编译一个 Windows 目标时，可以执行命令行 <code>rustc --cfg &quot;unix&quot; program.rs</code>，这样就同时设置了 <code>unix</code> 和 <code>windows</code> 配置选项。但实际上这样做是不明智的。</p>
 </div>
-<h3><a class="header" href="#target_arch" id="target_arch"><code>target_arch</code></a></h3>
+<h3 id="target_arch"><a class="header" href="#target_arch"><code>target_arch</code></a></h3>
 <p>键值对选项，用于一次性设置编译目标的 CPU 架构。该值类似于平台的目标三元组(target triple)<sup class="footnote-reference"><a href="#target-triple">1</a></sup>中的第一个元素，但也不完全相同。</p>
 <p>示例值：</p>
 <ul>
@@ -227,7 +208,7 @@ commit: 267f8159975451c3b61121156e5ee57d037937c4 <br />
 <li><code>&quot;arm&quot;</code></li>
 <li><code>&quot;aarch64&quot;</code></li>
 </ul>
-<h3><a class="header" href="#target_feature" id="target_feature"><code>target_feature</code></a></h3>
+<h3 id="target_feature"><a class="header" href="#target_feature"><code>target_feature</code></a></h3>
 <p>键值对选项，用于设置当前编译目标的可用平台特性。</p>
 <p>示例值：</p>
 <ul>
@@ -240,7 +221,7 @@ commit: 267f8159975451c3b61121156e5ee57d037937c4 <br />
 <li><code>&quot;sse4.1&quot;</code></li>
 </ul>
 <p>有关可用特性的更多细节，请参见 <a href="attributes/codegen.html#the-target_feature-attribute"><code>target_feature</code>属性</a>。此外，编译器还为 <code>target_feature</code>选项提供了一个额外的 <code>crt-static</code>特性，它表示需要链接一个可用的<a href="linkage.html#static-and-dynamic-c-runtimes">静态C运行时</a>。</p>
-<h3><a class="header" href="#target_os" id="target_os"><code>target_os</code></a></h3>
+<h3 id="target_os"><a class="header" href="#target_os"><code>target_os</code></a></h3>
 <p>键值对选项，用于一次性设置编译目标的操作系统类型。该值类似于平台目标三元组中的第二和第三个元素。</p>
 <p>示例值：</p>
 <ul>
@@ -254,7 +235,7 @@ commit: 267f8159975451c3b61121156e5ee57d037937c4 <br />
 <li><code>&quot;openbsd&quot;</code></li>
 <li><code>&quot;netbsd&quot;</code></li>
 </ul>
-<h3><a class="header" href="#target_family" id="target_family"><code>target_family</code></a></h3>
+<h3 id="target_family"><a class="header" href="#target_family"><code>target_family</code></a></h3>
 <p>键值对选项提供了对具体目标平台更通用化的描述，比如编译目标操作系统或架构。可以设置任意数量的键值对。
 最多设置一次，用于设置编译目标的操作系统类别。</p>
 <p>示例值：</p>
@@ -263,10 +244,10 @@ commit: 267f8159975451c3b61121156e5ee57d037937c4 <br />
 <li><code>&quot;windows&quot;</code></li>
 <li><code>&quot;wasm&quot;</code></li>
 </ul>
-<h3><a class="header" href="#unix-and-windows" id="unix-and-windows"><code>unix</code> and <code>windows</code></a></h3>
-<h3><a class="header" href="#unix-和-windows" id="unix-和-windows"><code>unix</code> 和 <code>windows</code></a></h3>
+<h3 id="unix-and-windows"><a class="header" href="#unix-and-windows"><code>unix</code> and <code>windows</code></a></h3>
+<h3 id="unix-和-windows"><a class="header" href="#unix-和-windows"><code>unix</code> 和 <code>windows</code></a></h3>
 <p>如果设置了 <code>target_family = &quot;unix&quot;</code> 则谓词 <code>unix</code> 为真；如果设置了 <code>target_family = &quot;windows&quot;</code> 则谓词 <code>windows</code> 为真。</p>
-<h3><a class="header" href="#target_env" id="target_env"><code>target_env</code></a></h3>
+<h3 id="target_env"><a class="header" href="#target_env"><code>target_env</code></a></h3>
 <p>键值对选项，用来进一步消除编译目标平台信息与所用 ABI 或 <code>libc</code> 相关的歧义。由于历史原因，仅当实际需要消除歧义时，才将此值定义为非空字符串。因此，例如在许多 GNU 平台上，此值将为空。该值类似于平台目标三元组的第四个元素，但也有区别。一个区别是在嵌入式 ABI 上，比如在目标为嵌入式系统时，<code>gnueabihf</code> 会简单地将 <code>target_env</code> 定义为 <code>&quot;gnu&quot;</code>。</p>
 <p>示例值：</p>
 <ul>
@@ -276,9 +257,9 @@ commit: 267f8159975451c3b61121156e5ee57d037937c4 <br />
 <li><code>&quot;musl&quot;</code></li>
 <li><code>&quot;sgx&quot;</code></li>
 </ul>
-<h3><a class="header" href="#target_endian" id="target_endian"><code>target_endian</code></a></h3>
+<h3 id="target_endian"><a class="header" href="#target_endian"><code>target_endian</code></a></h3>
 <p>键值对选项，根据编译目标的 CPU 的字节序(endianness)属性一次性设置值为 “little” 或 “big”。</p>
-<h3><a class="header" href="#target_pointer_width" id="target_pointer_width"><code>target_pointer_width</code></a></h3>
+<h3 id="target_pointer_width"><a class="header" href="#target_pointer_width"><code>target_pointer_width</code></a></h3>
 <p>键值对选项，用于一次性设置编译目标的指针位宽(pointer width in bits)。</p>
 <p>示例值：</p>
 <ul>
@@ -286,7 +267,7 @@ commit: 267f8159975451c3b61121156e5ee57d037937c4 <br />
 <li><code>&quot;32&quot;</code></li>
 <li><code>&quot;64&quot;</code></li>
 </ul>
-<h3><a class="header" href="#target_vendor" id="target_vendor"><code>target_vendor</code></a></h3>
+<h3 id="target_vendor"><a class="header" href="#target_vendor"><code>target_vendor</code></a></h3>
 <p>键值对选项，用于一次性设置编译目标的供应商。</p>
 <p>示例值：</p>
 <ul>
@@ -295,23 +276,23 @@ commit: 267f8159975451c3b61121156e5ee57d037937c4 <br />
 <li><code>&quot;pc&quot;</code></li>
 <li><code>&quot;unknown&quot;</code></li>
 </ul>
-<h3><a class="header" href="#test" id="test"><code>test</code></a></h3>
+<h3 id="test"><a class="header" href="#test"><code>test</code></a></h3>
 <p>在编译测试套件时启用。通过在 <code>rustc</code> 里使用 <a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#--test-build-a-test-harness"><code>--test</code></a> 命令行参数来完成此启用。请参阅<a href="attributes/testing.html">测试</a>章节来获取更多和测试支持相关的信息。</p>
-<h3><a class="header" href="#debug_assertions" id="debug_assertions"><code>debug_assertions</code></a></h3>
+<h3 id="debug_assertions"><a class="header" href="#debug_assertions"><code>debug_assertions</code></a></h3>
 <p>在进行非优化编译时默认启用。这可以用于在开发中启用额外的代码调试功能，但不能在生产中启用。例如，它控制着标准库的 <a href="https://doc.rust-lang.org/std/macro.debug_assert.html"><code>debug_assert!</code></a>宏（是否可用）。</p>
-<h3><a class="header" href="#proc_macro" id="proc_macro"><code>proc_macro</code></a></h3>
+<h3 id="proc_macro"><a class="header" href="#proc_macro"><code>proc_macro</code></a></h3>
 <p>当须要指定当前 crate 的<a href="linkage.html">编译输出文件类型(crate-type)</a>为 <code>proc_macro</code> 时设置。</p>
-<h3><a class="header" href="#panic" id="panic"><code>panic</code></a></h3>
+<h3 id="panic"><a class="header" href="#panic"><code>panic</code></a></h3>
 <p>根据恐慌策略设置键值选项。请注意，将来可能会添加更多选项值。</p>
 <p>示例选项值：</p>
 <ul>
 <li><code>&quot;abort&quot;</code></li>
 <li><code>&quot;unwind&quot;</code></li>
 </ul>
-<h2><a class="header" href="#forms-of-conditional-compilation" id="forms-of-conditional-compilation">Forms of conditional compilation</a></h2>
-<h2><a class="header" href="#条件编译的形式" id="条件编译的形式">条件编译的形式</a></h2>
-<h3><a class="header" href="#the-cfg-attribute" id="the-cfg-attribute">The <code>cfg</code> attribute</a></h3>
-<h3><a class="header" href="#cfg属性" id="cfg属性"><code>cfg</code>属性</a></h3>
+<h2 id="forms-of-conditional-compilation"><a class="header" href="#forms-of-conditional-compilation">Forms of conditional compilation</a></h2>
+<h2 id="条件编译的形式"><a class="header" href="#条件编译的形式">条件编译的形式</a></h2>
+<h3 id="the-cfg-attribute"><a class="header" href="#the-cfg-attribute">The <code>cfg</code> attribute</a></h3>
+<h3 id="cfg属性"><a class="header" href="#cfg属性"><code>cfg</code>属性</a></h3>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>CfgAttrAttribute</em> :<br />
@@ -322,8 +303,7 @@ commit: 267f8159975451c3b61121156e5ee57d037937c4 <br />
 <p>它被写成 <code>cfg</code> 后跟一个 <code>(</code>，再跟一个配置谓词，最后是一个 <code>)</code>。</p>
 <p>如果谓词为真，则重写该部分代码，使其上没有 <code>cfg</code> 属性。如果谓词为假，则从源代码中删除该内容。</p>
 <p>在函数上的一些例子:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 该函数只会在编译目标为 macOS 时才会包含在构建中
 #[cfg(target_os = &quot;macos&quot;)]
@@ -358,8 +338,8 @@ fn when_unwinding() {
 <span class="boring">}
 </span></code></pre></pre>
 <p><code>cfg</code>属性允许在任何允许属性的地方上使用。</p>
-<h3><a class="header" href="#the-cfg_attr-attribute" id="the-cfg_attr-attribute">The <code>cfg_attr</code> attribute</a></h3>
-<h3><a class="header" href="#cfg_attr属性" id="cfg_attr属性"><code>cfg_attr</code>属性</a></h3>
+<h3 id="the-cfg_attr-attribute"><a class="header" href="#the-cfg_attr-attribute">The <code>cfg_attr</code> attribute</a></h3>
+<h3 id="cfg_attr属性"><a class="header" href="#cfg_attr属性"><code>cfg_attr</code>属性</a></h3>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>CfgAttrAttribute</em> :<br />
@@ -391,12 +371,11 @@ fn bewitched() {}
 <code>#[cfg_attr(all(target_os = &quot;linux&quot;, feature =&quot;multithreaded&quot;), some_other_attribute)]</code>.</p>
 </blockquote>
 <p><code>cfg_attr</code> 属性允许在任何允许属性的地方上使用。</p>
-<h3><a class="header" href="#the-cfg-macro" id="the-cfg-macro">The <code>cfg</code> macro</a></h3>
-<h3><a class="header" href="#cfg宏" id="cfg宏"><code>cfg</code>宏</a></h3>
+<h3 id="the-cfg-macro"><a class="header" href="#the-cfg-macro">The <code>cfg</code> macro</a></h3>
+<h3 id="cfg宏"><a class="header" href="#cfg宏"><code>cfg</code>宏</a></h3>
 <p>内置的 <code>cfg</code>宏接受单个配置谓词，当谓词为真时计算为 <code>true</code> 字面量，当谓词为假时计算为 <code>false</code> 字面量。</p>
 <p>例如：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let machine_kind = if cfg!(unix) {
   &quot;unix&quot;
@@ -422,17 +401,13 @@ Rust 官方对一些平台提供了默认的目标三元组，我们可以通过
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="crates-and-source-files.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="items.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -440,49 +415,35 @@ Rust 官方对一些平台提供了默认的目标三元组，我们可以通过
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="crates-and-source-files.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="items.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

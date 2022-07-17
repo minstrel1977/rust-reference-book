@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>链接 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="favicon.svg">
-        
-        
         <link rel="shortcut icon" href="favicon.png">
-        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#linkage" id="linkage">Linkage</a></h1>
-<h1><a class="header" href="#链接" id="链接">链接</a></h1>
+                        <h1 id="linkage"><a class="header" href="#linkage">Linkage</a></h1>
+<h1 id="链接"><a class="header" href="#链接">链接</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/linkage.md">linkage.md</a><br />
 commit: f715f2cc987c54ff8afc51be33379b96e8cc8ab7<br />
@@ -222,8 +203,8 @@ commit: f715f2cc987c54ff8afc51be33379b96e8cc8ab7<br />
 </li>
 </ol>
 <p>通常，<code>--crate-type=bin</code> 或 <code>--crate-type=lib</code> 应该足以满足所有的编译需求，只有在需要对 crate 的输出类型进行更细粒度的控制时，才需要使用其他选项。</p>
-<h2><a class="header" href="#static-and-dynamic-c-runtimes" id="static-and-dynamic-c-runtimes">Static and dynamic C runtimes</a></h2>
-<h2><a class="header" href="#静态c运行时和动态c运行时" id="静态c运行时和动态c运行时">静态C运行时和动态C运行时</a></h2>
+<h2 id="static-and-dynamic-c-runtimes"><a class="header" href="#static-and-dynamic-c-runtimes">Static and dynamic C runtimes</a></h2>
+<h2 id="静态c运行时和动态c运行时"><a class="header" href="#静态c运行时和动态c运行时">静态C运行时和动态C运行时</a></h2>
 <p>一般来说，标准库会同时尽力支持编译目标的静态链接型C运行时和动态链接型C运行时。例如，目标 <code>x86_64-pc-windows-msvc</code> 和 <code>x86_64-unknown-linux-musl</code> 通常都带有C运行时，用户可以按自己的偏好去选择静态链接或动态链接到此运行时。编译器中所有的编译目标都有一个链接到 C运行时的默认模式。默认情况下，常见的编译目标都默认是选择动态链接的，但也存在默认情况下是静态链接的情况，例如：</p>
 <ul>
 <li><code>arm-unknown-linux-musleabi</code></li>
@@ -240,8 +221,7 @@ commit: f715f2cc987c54ff8afc51be33379b96e8cc8ab7<br />
 </code></pre>
 <p>不支持在到 C运行时的链接类型之间切换的编译目标将忽略这个标志。建议检查生成的二进制文件，以确保在编译成功之后，如预期的那样链接了 C运行时。</p>
 <p>crate 本身也可以检测如何链接 C运行时。例如，MSVC平台上的代码需要根据链接运行时的方式进行差异性的编译（例如选择使用 <code>/MT</code> 或 <code>/MD</code>）。目前可通过 <a href="conditional-compilation.html#target_feature"><code>cfg</code>属性的 <code>target_feature</code>选项</a>导出检测结果：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[cfg(target_feature = &quot;crt-static&quot;)]
 fn foo() {
@@ -255,7 +235,7 @@ fn foo() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>还请注意，Cargo构建脚本可以通过<a href="https://doc.rust-lang.org/cargo/reference/environment-variables.html#environment-variables-cargo-sets-for-build-scripts">环境变量</a>来检测此特性。在构建脚本中，您可以通过如下代码检测链接类型：</p>
-<pre><pre class="playground"><code class="language-rust">use std::env;
+<pre><pre class="playground"><code class="language-rust edition2021">use std::env;
 
 fn main() {
     let linkage = env::var(&quot;CARGO_CFG_TARGET_FEATURE&quot;).unwrap_or(String::new());
@@ -280,17 +260,13 @@ fn main() {
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="variables.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="inline-assembly.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -298,49 +274,35 @@ fn main() {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="variables.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="inline-assembly.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

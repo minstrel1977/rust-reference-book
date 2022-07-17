@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>数字型 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,36 +146,38 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#numeric-types" id="numeric-types">Numeric types</a></h1>
-<h1><a class="header" href="#数字型" id="数字型">数字型</a></h1>
+                        <h1 id="numeric-types"><a class="header" href="#numeric-types">Numeric types</a></h1>
+<h1 id="数字型"><a class="header" href="#数字型">数字型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/mumeric.md">mumeric.md</a><br />
 commit: 73ca198fb3ab52283d67d5fe28c541ee1d169f48 <br />
 本章译文最后维护日期：2020-11-14</p>
 </blockquote>
-<h2><a class="header" href="#integer-types" id="integer-types">Integer types</a></h2>
-<h2><a class="header" href="#整型整数类型" id="整型整数类型">整型/整数类型</a></h2>
+<h2 id="integer-types"><a class="header" href="#integer-types">Integer types</a></h2>
+<h2 id="整型整数类型"><a class="header" href="#整型整数类型">整型/整数类型</a></h2>
 <p>无符号整数类型：</p>
-<table><thead><tr><th>类型</th><th>最小值</th><th>最大值</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>类型</th><th>最小值</th><th>最大值</th></tr></thead><tbody>
 <tr><td><code>u8</code></td><td>0</td><td>2<sup>8</sup>-1</td></tr>
 <tr><td><code>u16</code></td><td>0</td><td>2<sup>16</sup>-1</td></tr>
 <tr><td><code>u32</code></td><td>0</td><td>2<sup>32</sup>-1</td></tr>
 <tr><td><code>u64</code></td><td>0</td><td>2<sup>64</sup>-1</td></tr>
 <tr><td><code>u128</code></td><td>0</td><td>2<sup>128</sup>-1</td></tr>
 </tbody></table>
+</div>
 <p>有符号二进制补码整型包括：</p>
-<table><thead><tr><th>类型</th><th>最小值</th><th>最大值</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>类型</th><th>最小值</th><th>最大值</th></tr></thead><tbody>
 <tr><td><code>i8</code></td><td>-(2<sup>7</sup>)</td><td>2<sup>7</sup>-1</td></tr>
 <tr><td><code>i16</code></td><td>-(2<sup>15</sup>)</td><td>2<sup>15</sup>-1</td></tr>
 <tr><td><code>i32</code></td><td>-(2<sup>31</sup>)</td><td>2<sup>31</sup>-1</td></tr>
 <tr><td><code>i64</code></td><td>-(2<sup>63</sup>)</td><td>2<sup>63</sup>-1</td></tr>
 <tr><td><code>i128</code></td><td>-(2<sup>127</sup>)</td><td>2<sup>127</sup>-1</td></tr>
 </tbody></table>
-<h2><a class="header" href="#floating-point-types" id="floating-point-types">Floating-point types</a></h2>
-<h2><a class="header" href="#浮点型" id="浮点型">浮点型</a></h2>
+</div>
+<h2 id="floating-point-types"><a class="header" href="#floating-point-types">Floating-point types</a></h2>
+<h2 id="浮点型"><a class="header" href="#浮点型">浮点型</a></h2>
 <p>Rust 对应 IEEE 754-2008 的“binary32”和“binary64”浮点类型分别是 <code>f32</code> 和 <code>f64</code>。</p>
-<h2><a class="header" href="#machine-dependent-integer-types" id="machine-dependent-integer-types">Machine-dependent integer types</a></h2>
-<h2><a class="header" href="#和计算平台相关的整型" id="和计算平台相关的整型">和计算平台相关的整型</a></h2>
+<h2 id="machine-dependent-integer-types"><a class="header" href="#machine-dependent-integer-types">Machine-dependent integer types</a></h2>
+<h2 id="和计算平台相关的整型"><a class="header" href="#和计算平台相关的整型">和计算平台相关的整型</a></h2>
 <p><code>usize</code>类型是一种无符号整型，其宽度与平台的指针类型的宽度相同。它可以表示进程中的每个内存地址。</p>
 <p><code>isize</code>类型是一种有符号整型，其宽度与平台的指针类型的宽度相同。（Rust 规定）对象的尺寸和数组的长度的理论上限是 <code>isize</code> 的最大值。这确保了 <code>isize</code> 可以用来计算指向对象或数组内部的指针之间的差异，并且可以寻址对象中的每个字节以及末尾之后的那个字节。</p>
 <p><code>usize</code> 和 <code>isize</code> 的宽度至少是 16-bits。</p>
@@ -208,17 +191,13 @@ commit: 73ca198fb3ab52283d67d5fe28c541ee1d169f48 <br />
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../types/boolean.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../types/textual.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -226,49 +205,35 @@ commit: 73ca198fb3ab52283d67d5fe28c541ee1d169f48 <br />
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../types/boolean.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../types/textual.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

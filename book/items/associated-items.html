@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>关联程序项 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#associated-items" id="associated-items">Associated Items</a></h1>
-<h1><a class="header" href="#关联程序项关联项" id="关联程序项关联项">关联程序项/关联项</a></h1>
+                        <h1 id="associated-items"><a class="header" href="#associated-items">Associated Items</a></h1>
+<h1 id="关联程序项关联项"><a class="header" href="#关联程序项关联项">关联程序项/关联项</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/associated-items.md">associated-items.md</a><br />
 commit: 37e3c15c52b31f3cda9fd359d3bb66a3e69bb5ff <br />
@@ -184,14 +165,14 @@ commit: 37e3c15c52b31f3cda9fd359d3bb66a3e69bb5ff <br />
 <p>当关联程序项与被关联程序项在逻辑上相关时，关联程序项就非常有用。例如，<code>Option</code> 上的 <code>is_some</code> 方法内在逻辑定义上就与 Option枚举类型相关，所以它应该和 Option 关联在一起。</p>
 <p>每个关联程序项都有两种形式：（包含实际实现的）定义和（为定义声明签名的）声明。<sup class="footnote-reference"><a href="#译者备注1">1</a></sup></p>
 <p>正是这些声明构成了 trait 的契约(contract)以及其泛型参数中的可用内容。</p>
-<h2><a class="header" href="#associated-functions-and-methods" id="associated-functions-and-methods">Associated functions and methods</a></h2>
-<h2><a class="header" href="#关联函数和方法" id="关联函数和方法">关联函数和方法</a></h2>
+<h2 id="associated-functions-and-methods"><a class="header" href="#associated-functions-and-methods">Associated functions and methods</a></h2>
+<h2 id="关联函数和方法"><a class="header" href="#关联函数和方法">关联函数和方法</a></h2>
 <p><em>关联函数</em>是与一个类型相关联的<a href="functions.html">函数</a>。</p>
 <p><em>关联函数声明</em>为<em>关联函数定义</em>声明签名。它的书写格式和函数项一样，除了函数体被替换为 <code>;</code>。</p>
 <p>标识符是关联函数的名称。关联函数的泛型参数、参数列表、返回类型 和 where子句必须与它们在<em>关联函数声明</em>中声明的格式一致。</p>
 <p><em>关联函数定义</em>定义与另一个类型相关联的函数。它的编写方式与<a href="../types/function-item.html">函数项</a>相同。</p>
 <p>常见的关联函数的一个例子是 <code>new</code>函数，它返回此关联函数所关联的类型的值。</p>
-<pre><pre class="playground"><code class="language-rust">struct Struct {
+<pre><pre class="playground"><code class="language-rust edition2021">struct Struct {
     field: i32
 }
 
@@ -208,8 +189,7 @@ fn main () {
 }
 </code></pre></pre>
 <p>当关联函数在 trait 上声明时，此函数也可以通过一个指向 trait，再后跟函数名的<a href="../paths.html">路径</a>来调用。当发生这种情况时，可以用 trait 的实际路径和关联函数的标识符按 <code>&lt;_ as Trait&gt;::function_name</code> 这样的形式来组织实际的调用路径。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Num {
     fn from_i32(n: i32) -&gt; Self;
@@ -226,8 +206,8 @@ let _: f64 = &lt;f64 as Num&gt;::from_i32(42);
 let _: f64 = f64::from_i32(42);
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#methods" id="methods">Methods</a></h3>
-<h3><a class="header" href="#方法" id="方法">方法</a></h3>
+<h3 id="methods"><a class="header" href="#methods">Methods</a></h3>
+<h3 id="方法"><a class="header" href="#方法">方法</a></h3>
 <p>如果关联函数的参数列表中的第一个参数名为 <code>self</code><sup class="footnote-reference"><a href="#译者备注2">2</a></sup>，则此关联函数被称为<em>方法</em>，方法可以使用<a href="../expressions/method-call-expr.html">方法调用操作符</a>(<code>.</code>)来调用，例如 <code>x.foo()</code>，也可以使用常用的函数调用形式进行调用。</p>
 <p>如果名为 <code>self</code> 的参数的类型被指定了，它就通过以下文法（其中 <code>'lt</code> 表示生存期参数）来把此指定的参数限制解析成此文法中的一个类型：</p>
 <pre><code class="language-text">P = &amp;'lt S | &amp;'lt mut S | Box&lt;S&gt; | Rc&lt;S&gt; | Arc&lt;S&gt; | Pin&lt;P&gt;
@@ -240,8 +220,7 @@ The <code>Self</code> terminal in this grammar denotes a type resolving to the i
 译者在此先邀请读者中的高手帮忙翻译清楚。感谢感谢。另外译者还是要啰嗦以下译者对这句话背后知识的理解，希望有人能指出其中的错误，以让译者有机会进步：<br />
 首先终结符(terminal)就是不能再更细分的词法单元，可以理解它是一个 token，这里它代表 self（即方法接受者）的类型的基础类型。上面句法中的 P 代表一个产生式，它内部定义的规则是并联的，就是自动机在应用这个产生式时碰到任意符合条件的输入就直接进入终态。S 代表有限自动机从 S 这里开始读取 self 的类型。这里 S 是 Self 和 P 的并联，应该表示是：如果 self 的类型直接是 Self，那就直接进入终态，即返回 Self，即方法接收者的直接类型就是结果类型；如果 self 的类型是 P 中的任一种，就返回那一种，比如 self 的类型是一个 box指针，那么就返回 <code>Box&lt;S&gt;</code>。</p>
 </blockquote>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::rc::Rc;
 </span><span class="boring">use std::sync::Arc;
@@ -267,17 +246,17 @@ impl Example {
 <span class="boring">}
 </span></code></pre></pre>
 <p>（方法的首参）可以在不指定类型的情况下使用简写句法，具体对比如下：</p>
-<table><thead><tr><th>简写模式</th><th>等效项</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>简写模式</th><th>等效项</th></tr></thead><tbody>
 <tr><td><code>self</code></td><td><code>self: Self</code></td></tr>
 <tr><td><code>&amp;'lifetime self</code></td><td><code>self: &amp;'lifetime Self</code></td></tr>
 <tr><td><code>&amp;'lifetime mut self</code></td><td><code>self: &amp;'lifetime mut Self</code></td></tr>
 </tbody></table>
+</div>
 <blockquote>
 <p><strong>注意</strong>: （方法的）生存期也能，其实也经常是使用这种方式来省略。</p>
 </blockquote>
 <p>如果 <code>self</code> 参数以 <code>mut</code> 为前缀，它就变成了一个可变的变量，类似于使用 <code>mut</code> <a href="../patterns.html#identifier-patterns">标识符模式</a>的常规参数。例如：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Changer: Sized {
     fn change(mut self) {}
@@ -286,8 +265,7 @@ impl Example {
 <span class="boring">}
 </span></code></pre></pre>
 <p>以下是一个关于 trait 的方法的例子，现给定如下内容：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">type Surface = i32;
 </span><span class="boring">type BoundingBox = i32;
@@ -298,8 +276,7 @@ impl Example {
 <span class="boring">}
 </span></code></pre></pre>
 <p>这里定义了一个带有两个方法的 trait。当此 trait 被引入当前作用域内后，所有此 trait 的<a href="implementations.html">实现</a>的值都可以调用此 trait 的 <code>draw</code> 和 <code>bounding_box</code> 方法。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">type Surface = i32;
 </span><span class="boring">type BoundingBox = i32;
@@ -329,11 +306,11 @@ let bounding_box = circle_shape.bounding_box();
 <blockquote>
 <p><strong>版次差异</strong>: 在 2015 版中, 使用匿名参数来声明 trait方法是可能的 (例如：<code>fn foo(u8)</code>)。在 2018 版中，这已被弃用，再用会导致编译错误。新版次中所有的参数都必须有参数名。</p>
 </blockquote>
-<h4><a class="header" href="#attributes-on-method-parameters" id="attributes-on-method-parameters">Attributes on method parameters</a></h4>
-<h4><a class="header" href="#方法参数上的属性" id="方法参数上的属性">方法参数上的属性</a></h4>
+<h4 id="attributes-on-method-parameters"><a class="header" href="#attributes-on-method-parameters">Attributes on method parameters</a></h4>
+<h4 id="方法参数上的属性"><a class="header" href="#方法参数上的属性">方法参数上的属性</a></h4>
 <p>方法参数上的属性遵循与<a href="functions.html#attributes-on-function-parameters">常规函数参数</a>上相同的规则和限制。</p>
-<h2><a class="header" href="#associated-types" id="associated-types">Associated Types</a></h2>
-<h2><a class="header" href="#关联类型" id="关联类型">关联类型</a></h2>
+<h2 id="associated-types"><a class="header" href="#associated-types">Associated Types</a></h2>
+<h2 id="关联类型"><a class="header" href="#关联类型">关联类型</a></h2>
 <p><em>关联类型</em>是与另一个类型关联的<a href="type-aliases.html">类型别名(type aliases)</a> 。关联类型不能在<a href="implementations.html#inherent-implementations">固有实现</a>中定义，也不能在 trait 中给它们一个默认实现。</p>
 <p><em>关联类型声明</em>为<em>关联类型定义</em>声明签名。书写形式为：先是 <code>type</code>，然后是一个<a href="../identifiers.html">标识符</a>，最后是一个可选的 trait约束列表。</p>
 <p>这里的标识符是声明的类型的别名名称；其可选的 trait约束必须由此类型别名的实现(implementations)来履行实现。
@@ -341,7 +318,7 @@ let bounding_box = circle_shape.bounding_box();
 <p><em>关联类型定义</em>在另一个类型上定义了一个类型别名。书写形式为：先是 <code>type</code>，然后是一个[标识符]，然后再是一个 <code>=</code>，最后是一个<a href="../types.html#type-expressions">类型</a>。</p>
 <p>如果类型 <code>Item</code> 上有一个来自 trait <code>Trait</code>的关联类型 <code>Assoc</code>，则表达式 <code>&lt;Item as Trait&gt;::Assoc</code> 也是一个类型，具体就是<em>关联类型定义</em>中指定的类型的一个别名。此外，如果 <code>Item</code> 是类型参数，则 <code>Item::Assoc</code> 也可以在类型参数中使用。</p>
 <p>关联类型不能包括<a href="generics.html">泛型参数</a>或 <a href="generics.html#where-clauses">where子句</a>。</p>
-<pre><pre class="playground"><code class="language-rust">trait AssociatedType {
+<pre><pre class="playground"><code class="language-rust edition2021">trait AssociatedType {
     // 关联类型声明
     type Assoc;
 }
@@ -366,11 +343,10 @@ fn main() {
     let _other_struct: OtherStruct = &lt;Struct as AssociatedType&gt;::Assoc::new();
 }
 </code></pre></pre>
-<h3><a class="header" href="#associated-types-container-example" id="associated-types-container-example">Associated Types Container Example</a></h3>
-<h3><a class="header" href="#示例展示容器内的关联类型" id="示例展示容器内的关联类型">示例展示容器内的关联类型</a></h3>
+<h3 id="associated-types-container-example"><a class="header" href="#associated-types-container-example">Associated Types Container Example</a></h3>
+<h3 id="示例展示容器内的关联类型"><a class="header" href="#示例展示容器内的关联类型">示例展示容器内的关联类型</a></h3>
 <p>下面给出一个 <code>Container</code> trait 示例。请注意，该类型可用在方法签名内：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Container {
     type E;
@@ -380,8 +356,7 @@ fn main() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>为了能让实现类型来实现此 trait，实现类型不仅必须为每个方法提供实现，而且必须指定类型 <code>E</code>。下面是一个为标准库类型 <code>Vec</code> 实现了此 <code>Container</code> 的实现：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">trait Container {
 </span><span class="boring">    type E;
@@ -395,14 +370,14 @@ fn main() {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#associated-constants" id="associated-constants">Associated Constants</a></h2>
-<h2><a class="header" href="#关联常量" id="关联常量">关联常量</a></h2>
+<h2 id="associated-constants"><a class="header" href="#associated-constants">Associated Constants</a></h2>
+<h2 id="关联常量"><a class="header" href="#关联常量">关联常量</a></h2>
 <p><em>关联常量</em>是与具体类型关联的<a href="constant-items.html">常量</a>。</p>
 <p><em>关联常量声明</em>为<em>关联常量定义</em>声明签名。书写形式为：先是 <code>const</code> 开头，然后是标识符，然后是 <code>:</code>，然后是一个类型，最后是一个 <code>;</code>。</p>
 <p>这里标识符是（外部引用）路径中使用的常量的名称；类型是（此关联常量的）定义必须实现的类型。</p>
 <p><em>关联常量定义</em>定义了与类型关联的常量。它的书写方式与<a href="constant-items.html">常量项</a>相同。</p>
 <p>关联常量定义仅在引用时进行<a href="../const_eval.html">常量求值</a>。此外，包含<a href="generics.html">泛型参数</a>的关联常量定义在单态化后才进行求值。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">struct Struct;
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021">struct Struct;
 struct GenericStruct&lt;const ID: i32&gt;;
 
 impl Struct {
@@ -428,10 +403,10 @@ fn main() {
     let _ = GenericStruct::&lt;0&gt;::NON_ZERO;
 }
 </code></pre></pre>
-<h3><a class="header" href="#associated-constants-examples" id="associated-constants-examples">Associated Constants Examples</a></h3>
-<h3><a class="header" href="#示例展示关联常量" id="示例展示关联常量">示例展示关联常量</a></h3>
+<h3 id="associated-constants-examples"><a class="header" href="#associated-constants-examples">Associated Constants Examples</a></h3>
+<h3 id="示例展示关联常量"><a class="header" href="#示例展示关联常量">示例展示关联常量</a></h3>
 <p>基本示例：</p>
-<pre><pre class="playground"><code class="language-rust">trait ConstantId {
+<pre><pre class="playground"><code class="language-rust edition2021">trait ConstantId {
     const ID: i32;
 }
 
@@ -446,7 +421,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>使用默认值：</p>
-<pre><pre class="playground"><code class="language-rust">trait ConstantIdDefault {
+<pre><pre class="playground"><code class="language-rust edition2021">trait ConstantIdDefault {
     const ID: i32 = 1;
 }
 
@@ -478,17 +453,13 @@ fn main() {
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../items/generics.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../attributes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -496,49 +467,35 @@ fn main() {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../items/generics.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../attributes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

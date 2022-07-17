@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>属性 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="favicon.svg">
-        
-        
         <link rel="shortcut icon" href="favicon.png">
-        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -194,8 +175,8 @@
     }
 })();
 </script>
-<h1><a class="header" href="#attributes" id="attributes">Attributes</a></h1>
-<h1><a class="header" href="#属性" id="属性">属性</a></h1>
+<h1 id="attributes"><a class="header" href="#attributes">Attributes</a></h1>
+<h1 id="属性"><a class="header" href="#属性">属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes.md">attributes.md</a><br />
 commit: efb2c1cab0302a985030a94adafae9e630a7894d <br />
@@ -235,8 +216,7 @@ commit: efb2c1cab0302a985030a94adafae9e630a7894d <br />
 <li><a href="items/functions.html">函数</a>、<a href="expressions/closure-expr.html">闭包</a>和<a href="types/function-pointer.html">函数指针</a>的参数可接受外部属性。这包括函数指针和<a href="items/external-blocks.html#variadic-functions">外部块</a>中用 <code>...</code> 表示的可变参数上的属性。</li>
 </ul>
 <p>属性的一些例子：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 应用于当前模块或 crate 的一般性元数据。
 #![crate_type = &quot;lib&quot;]
@@ -267,8 +247,8 @@ fn some_unused_variables() {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#meta-item-attribute-syntax" id="meta-item-attribute-syntax">Meta Item Attribute Syntax</a></h2>
-<h2><a class="header" href="#元项元程序项属性句法" id="元项元程序项属性句法">元项/元程序项属性句法</a></h2>
+<h2 id="meta-item-attribute-syntax"><a class="header" href="#meta-item-attribute-syntax">Meta Item Attribute Syntax</a></h2>
+<h2 id="元项元程序项属性句法"><a class="header" href="#元项元程序项属性句法">元项/元程序项属性句法</a></h2>
 <p>“元项(meta item)”是遵循 <em>Attr</em> 产生式（见本章头部）的句法，Rust 的大多数<a href="#built-in-attributes-index">内置属性(built-in attributes)</a>都使用了此句法。它有以下文法格式：</p>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -284,14 +264,14 @@ fn some_unused_variables() {
 </blockquote>
 <p>元项中的表达式必须能宏展开为字面量表达式，且字面量表达式不得包含整型或浮点型后缀。现在，非字面量表达式的表达式可以在语法上被接受（并且可以传递给过程宏）了，但在解析后却被丢弃。</p>
 <p>请注意，如果该属性出现在另一个宏中，它将在该外部宏展开之后再展开。例如，下面的代码将首先展开为名为 <code>Serialize</code> 的过程宏，在第一次展开时，它必须保留 <code>include_str!</code>调用，以便将来再次展开：</p>
-<pre><code class="language-rustignore">#[derive(Serialize)]
+<pre><code class="language-rust ignore">#[derive(Serialize)]
 struct Foo {
     #[doc = include_str!(&quot;x.md&quot;)]
     x: u32
 }
 </code></pre>
 <p>此外，对与某个程序项来说，如果它的属性中用到了宏，那这个宏仅在所有其他相关属性都展开生效之后才展开：</p>
-<pre><code class="language-rustignore">#[macro_attr1] // 展开排序为第一
+<pre><code class="language-rust ignore">#[macro_attr1] // 展开排序为第一
 #[doc = mac!()] // `mac!` 展开排序为第四
 #[macro_attr2] // 展开排序为第二
 #[derive(MacroDerive1, MacroDerive2)] // 展开排序为第三
@@ -312,24 +292,24 @@ fn foo() {}
    <a href="identifiers.html">IDENTIFIER</a> <code>(</code> ( <em>MetaNameValueStr</em> (<code>,</code> <em>MetaNameValueStr</em>)* <code>,</code><sup>?</sup> )<sup>?</sup> <code>)</code></p>
 </blockquote>
 <p>元项句法的一些例子是：</p>
-<table><thead><tr><th>形式</th><th>示例</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>形式</th><th>示例</th></tr></thead><tbody>
 <tr><td><em>MetaWord</em></td><td><code>no_std</code></td></tr>
 <tr><td><em>MetaNameValueStr</em></td><td><code>doc = &quot;example&quot;</code></td></tr>
 <tr><td><em>MetaListPaths</em></td><td><code>allow(unused, clippy::inline_always)</code></td></tr>
 <tr><td><em>MetaListIdents</em></td><td><code>macro_use(foo, bar)</code></td></tr>
 <tr><td><em>MetaListNameValueStr</em></td><td><code>link(name = &quot;CoreFoundation&quot;, kind = &quot;framework&quot;)</code></td></tr>
 </tbody></table>
-<h2><a class="header" href="#active-and-inert-attributes" id="active-and-inert-attributes">Active and inert attributes</a></h2>
-<h2><a class="header" href="#活跃属性和惰性属性" id="活跃属性和惰性属性">活跃属性和惰性属性</a></h2>
+</div>
+<h2 id="active-and-inert-attributes"><a class="header" href="#active-and-inert-attributes">Active and inert attributes</a></h2>
+<h2 id="活跃属性和惰性属性"><a class="header" href="#活跃属性和惰性属性">活跃属性和惰性属性</a></h2>
 <p>属性要么是活跃的，要么是惰性的。在属性处理过程中，<em>活跃属性</em>将自己从它们所在的对象上移除，而<em>惰性属性</em>依然保持原位置不变。</p>
 <p><a href="conditional-compilation.html#the-cfg-attribute"><code>cfg</code></a> 和 <a href="conditional-compilation.html#the-cfg_attr-attribute"><code>cfg_attr</code></a> 属性是活跃的。<a href="attributes/testing.html#the-test-attribute"><code>test</code></a>属性在为测试所做的编译形式中是惰性的，在其他编译形式中是活跃的。<a href="procedural-macros.html#attribute-macros">宏属性</a>是活跃的。所有其他属性都是惰性的。</p>
-<h2><a class="header" href="#tool-attributes" id="tool-attributes">Tool attributes</a></h2>
-<h2><a class="header" href="#外部工具属性" id="外部工具属性">外部工具属性</a></h2>
+<h2 id="tool-attributes"><a class="header" href="#tool-attributes">Tool attributes</a></h2>
+<h2 id="外部工具属性"><a class="header" href="#外部工具属性">外部工具属性</a></h2>
 <p>编译器可能允许和具体外部工具相关联的属性，但这些工具在编译和检查过程中必须存在并驻留在编译器提供的<a href="names/preludes.html#tool-prelude">工具类预导入包</a>下对应的命名空间中（才能让这些属性生效）。这种属性的（命名空间）路径的第一段是工具的名称，后跟一个或多个工具自己解释的附加段。</p>
 <p>当工具在编译期不可用时，该工具的属性将被静默接受而不提示警告。当工具可用时，该工具负责处理和解释这些属性。</p>
 <p>如果使用了 <a href="names/preludes.html#the-no_implicit_prelude-attribute"><code>no_implicit_prelude</code></a>属性，则外部工具属性不可用。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 告诉rustfmt工具不要格式化以下元素。
 #[rustfmt::skip]
@@ -344,8 +324,8 @@ pub fn f() {}
 <blockquote>
 <p>注意: <code>rustc</code> 目前能识别的工具是 “clippy” 和 “rustfmt”。</p>
 </blockquote>
-<h2><a class="header" href="#built-in-attributes-index" id="built-in-attributes-index">Built-in attributes index</a></h2>
-<h2><a class="header" href="#内置属性的索引表" id="内置属性的索引表">内置属性的索引表</a></h2>
+<h2 id="built-in-attributes-index"><a class="header" href="#built-in-attributes-index">Built-in attributes index</a></h2>
+<h2 id="内置属性的索引表"><a class="header" href="#内置属性的索引表">内置属性的索引表</a></h2>
 <p>下面是所有内置属性的索引表：</p>
 <ul>
 <li>条件编译(Conditional compilation)
@@ -452,17 +432,13 @@ pub fn f() {}
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="items/associated-items.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="attributes/testing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -470,49 +446,35 @@ pub fn f() {}
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="items/associated-items.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="attributes/testing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

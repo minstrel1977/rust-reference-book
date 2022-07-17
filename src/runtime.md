@@ -2,8 +2,8 @@
 # Rust运行时
 
 >[abi.md.md](https://github.com/rust-lang/reference/blob/master/src/abi.md)\
->commit:  f8e76ee9368f498f7f044c719de68c7d95da9972 \
->本章译文最后维护日期：2020-11-3
+>commit:  32fc50e5d211a6a02f874d7e6ae29b4a344f3bdb \
+>本章译文最后维护日期：2022-07-17
 
 本节介绍 Rust运行时的某些方面的特性。
 
@@ -59,6 +59,10 @@ fn panic(info: &PanicInfo) -> ! {
 ## `windows_subsystem`属性
 
 当为一个 Windows 编译目标配置链接属性时，*`windows_subsystem`属性*可以用来在 crate 级别上配置[子系统(subsystem)][subsystem]类别。它使用 [_MetaNameValueStr_]元项属性句法用 `console` 或 `windows` 两个可行值指定子系统。对于非windows 编译目标和非二进制的 [crate类型][crate types]，该属性将被忽略。
+
+其中，默认指定为 `console`子系统。如果控制台进程是从现有控制台运行的，那么它将连接到该控制台，否则将创建一个新的控制台窗口。
+
+`console`子系统通常由不希望在启动时显示控制台窗口的 GUI应用程序使用。它将独立于任何现有控制台运行。
 
 ```rust
 #![windows_subsystem = "windows"]

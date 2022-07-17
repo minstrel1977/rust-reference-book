@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>不被认为是非安全的行为 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="favicon.svg">
-        
-        
         <link rel="shortcut icon" href="favicon.png">
-        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,26 +146,26 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2><a class="header" href="#behavior-not-considered-unsafe" id="behavior-not-considered-unsafe">Behavior not considered <code>unsafe</code></a></h2>
-<h2><a class="header" href="#不被认为是非安全的行为" id="不被认为是非安全的行为">不被认为是非安全的行为</a></h2>
+                        <h2 id="behavior-not-considered-unsafe"><a class="header" href="#behavior-not-considered-unsafe">Behavior not considered <code>unsafe</code></a></h2>
+<h2 id="不被认为是非安全的行为"><a class="header" href="#不被认为是非安全的行为">不被认为是非安全的行为</a></h2>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/behavior-not-considered-unsafe.md">behavior-not-considered-unsafe.md</a><br />
 commit: a7473287cc6e2fb972165dc5a7ffd26dad1fc907 <br />
 本章译文最后维护日期：2021-1-16</p>
 </blockquote>
 <p>虽然程序员可能（应该）发现下列行为是不良的、意外的或错误的，但 Rust 编译器并不认为这些行为是<em>非安全的(unsafe)</em>。</p>
-<h5><a class="header" href="#死锁deadlocks" id="死锁deadlocks">死锁(Deadlocks)</a></h5>
-<h5><a class="header" href="#内存和其他资源的泄漏leaks-of-memory-and-other-resources" id="内存和其他资源的泄漏leaks-of-memory-and-other-resources">内存和其他资源的泄漏(Leaks of memory and other resources)</a></h5>
-<h5><a class="header" href="#退出而不调用析构函数exiting-without-calling-destructors" id="退出而不调用析构函数exiting-without-calling-destructors">退出而不调用析构函数(Exiting without calling destructors)</a></h5>
-<h5><a class="header" href="#通过指针泄漏暴露随机基地址exposing-randomized-base-addresses-through-pointer-leaks" id="通过指针泄漏暴露随机基地址exposing-randomized-base-addresses-through-pointer-leaks">通过指针泄漏暴露随机基地址(Exposing randomized base addresses through pointer leaks)</a></h5>
-<h5><a class="header" href="#整数溢出integer-overflow" id="整数溢出integer-overflow">整数溢出(Integer overflow)</a></h5>
+<h5 id="死锁deadlocks"><a class="header" href="#死锁deadlocks">死锁(Deadlocks)</a></h5>
+<h5 id="内存和其他资源的泄漏leaks-of-memory-and-other-resources"><a class="header" href="#内存和其他资源的泄漏leaks-of-memory-and-other-resources">内存和其他资源的泄漏(Leaks of memory and other resources)</a></h5>
+<h5 id="退出而不调用析构函数exiting-without-calling-destructors"><a class="header" href="#退出而不调用析构函数exiting-without-calling-destructors">退出而不调用析构函数(Exiting without calling destructors)</a></h5>
+<h5 id="通过指针泄漏暴露随机基地址exposing-randomized-base-addresses-through-pointer-leaks"><a class="header" href="#通过指针泄漏暴露随机基地址exposing-randomized-base-addresses-through-pointer-leaks">通过指针泄漏暴露随机基地址(Exposing randomized base addresses through pointer leaks)</a></h5>
+<h5 id="整数溢出integer-overflow"><a class="header" href="#整数溢出integer-overflow">整数溢出(Integer overflow)</a></h5>
 <p>如果程序包含算术溢出(arithmetic overflow)，则说明程序员犯了错误。在下面的讨论中，我们将区分算术溢出和包装算法(wrapping arithmetic)。前者是错误的，而后者是有意为之的。</p>
 <p>当程序员启用了 <code>debug_assert!</code> 断言（例如，通过启用非优化的构建方式），相应的实现就必须插进来以便在溢出时触发 <code>panic</code>。而其他类型的构建形式有可能也在溢出时触发 <code>panics</code>，也有可能仅仅隐式包装一下溢出值，对溢出过程做静音处理。也就是说具体怎么对待溢出由插进来的编译实现决定。</p>
 <p>在隐式包装溢出的情况下，（编译器实现的包装算法）实现必须通过使用二进制补码溢出(two's complement overflow)约定来提供定义良好的（即使仍然被认为是错误的）溢出包装结果。</p>
 <p>整型提供了一些固有方法(inherent methods)，允许程序员显式地执行包装算法。例如，<code>i32::wrapping_add</code> 提供了使用二进制补码溢出约定算法的加法，即包装类加法(wrapping addition)。</p>
 <p>标准库还提供了一个 <code>Wrapping&lt;T&gt;</code> 的新类型，该类型确保 <code>T</code> 的所有标准算术操作都具有包装语义。</p>
 <p>请参阅 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0560-integer-overflow.md">RFC 560</a> 以了解错误条件、基本原理以及有关整数溢出的更多详细信息。</p>
-<h5><a class="header" href="#逻辑错误logic-errors" id="逻辑错误logic-errors">逻辑错误(Logic errors)</a></h5>
+<h5 id="逻辑错误logic-errors"><a class="header" href="#逻辑错误logic-errors">逻辑错误(Logic errors)</a></h5>
 <p>安全代码可能会被添加一些既不能在编译时也不能在运行时检查到的逻辑限制。如果程序打破了这样的限制，其表现可能是未指定的(unspecified)，但不会导致未定义行为(undefined behavior)。这些表现可能包括 panics、错误的结果、程序中止(aborts)和程序无法终止(non-termination)。并且这些表现在运行期、构建期或各种构建期之间的的具体表现也可能有所不同。</p>
 <p>例如，同时实现 <code>Hash</code> 和 <code>Eq</code> 就要求被认为相等的值具有相等的散列。另一个例子是像 <code>BinaryHeap</code>、<code>BTreeMap</code>、<code>BTreeSet</code>、<code>HashMap</code> 和 <code>HashSet</code> 这样的数据结构，它们描述了在数据结构中修改键的约束。违反这些约束并不被认为是非安全的，但程序（在逻辑上却）被认为是错误的，其行为是不可预测的。</p>
 <!-- 2021-1-16-->
@@ -194,17 +175,13 @@ commit: a7473287cc6e2fb972165dc5a7ffd26dad1fc907 <br />
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="behavior-considered-undefined.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="const_eval.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -212,49 +189,35 @@ commit: a7473287cc6e2fb972165dc5a7ffd26dad1fc907 <br />
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="behavior-considered-undefined.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="const_eval.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

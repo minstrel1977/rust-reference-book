@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>语句 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="favicon.svg">
-        
-        
         <link rel="shortcut icon" href="favicon.png">
-        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#statements" id="statements">Statements</a></h1>
-<h1><a class="header" href="#语句" id="语句">语句</a></h1>
+                        <h1 id="statements"><a class="header" href="#statements">Statements</a></h1>
+<h1 id="语句"><a class="header" href="#语句">语句</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/statements.md">statements.md</a><br />
 commit: f5cd2519c0e61a2c640345c2e5cda329008ead3a <br />
@@ -183,17 +164,16 @@ commit: f5cd2519c0e61a2c640345c2e5cda329008ead3a <br />
 </blockquote>
 <p><em>语句</em>是<a href="expressions/block-expr.html">块(block)</a><sup class="footnote-reference"><a href="#译者注">1</a></sup>的一个组件，反过来，块又是其外层<a href="expressions.html">表达式</a>或<a href="items/functions.html">函数</a>的组件。</p>
 <p>Rust 有两种语句：<a href="#declaration-statements">声明语句(declaration statements)</a>和<a href="#expression-statements">表达式语句(expression statements)</a>。</p>
-<h2><a class="header" href="#declaration-statements" id="declaration-statements">Declaration statements</a></h2>
-<h2><a class="header" href="#声明语句" id="声明语句">声明语句</a></h2>
+<h2 id="declaration-statements"><a class="header" href="#declaration-statements">Declaration statements</a></h2>
+<h2 id="声明语句"><a class="header" href="#声明语句">声明语句</a></h2>
 <p><em>声明语句</em>是在它自己封闭的语句块的内部引入一个或多个<em>名称</em>的语句。声明的名称可以表示新变量或新的<a href="items.html">程序项</a>。</p>
 <p>这两种声明语句就是程序项声明语句和 let声明语句。</p>
-<h3><a class="header" href="#item-declarations" id="item-declarations">Item declarations</a></h3>
-<h3><a class="header" href="#程序项声明语句" id="程序项声明语句">程序项声明语句</a></h3>
+<h3 id="item-declarations"><a class="header" href="#item-declarations">Item declarations</a></h3>
+<h3 id="程序项声明语句"><a class="header" href="#程序项声明语句">程序项声明语句</a></h3>
 <p><em>程序项声明语句</em>的句法形式与<a href="items/modules.html">模块</a>中的<a href="items.html">程序项声明</a>的句法形式相同。在语句块中声明的程序项会将其作用域限制为包含该语句的块。这类程序项以及在其内声明子项(sub-items)都没有给定的<a href="paths.html#canonical-paths">规范路径</a>。例外的是，只要程序项和 trait（如果有的话）的可见性允许，在（程序项声明语句内定义的和此程序项或 trait 关联的）<a href="items/implementations.html">实现</a>中定义的关联项在外层作用域内仍然是可访问的。除了这些区别外，它与在模块中声明的程序项的意义也是相同的。</p>
 <p>程序项声明语句不会隐式捕获包含它的函数的泛型参数、参数和局部变量。如下，<code>inner</code> 不能访问 <code>outer_var</code>。</p>
 <p><code>outer_var</code>.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn outer() {
   let outer_var = true;
@@ -204,8 +184,8 @@ commit: f5cd2519c0e61a2c640345c2e5cda329008ead3a <br />
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#let-statements" id="let-statements"><code>let</code> statements</a></h3>
-<h3><a class="header" href="#let语句" id="let语句"><code>let</code>语句</a></h3>
+<h3 id="let-statements"><a class="header" href="#let-statements"><code>let</code> statements</a></h3>
+<h3 id="let语句"><a class="header" href="#let语句"><code>let</code>语句</a></h3>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>LetStatement</em> :<br />
@@ -213,8 +193,8 @@ commit: f5cd2519c0e61a2c640345c2e5cda329008ead3a <br />
 ( <code>:</code> <a href="types.html"><em>Type</em></a> )<sup>?</sup> (<code>=</code> <a href="expressions.html"><em>Expression</em></a> )<sup>?</sup> <code>;</code></p>
 </blockquote>
 <p><em><code>let</code>语句</em>通过一个不可反驳型<a href="patterns.html">模式</a>引入了一组新的<a href="variables.html">变量</a>，变量由该模式给定。模式后面有一个可选的类型标注(annotation)，再后面是一个可选的初始化表达式。当没有给出类型标注时，编译器将自行推断类型，如果没有足够的信息来执行有限次的类型推断，则将触发编译器报错。由变量声明引入的任何变量从声明点到封闭块作用域的结束都是可见的，除非它们被另一个变量声明遮蔽。</p>
-<h2><a class="header" href="#expression-statements" id="expression-statements">Expression statements</a></h2>
-<h2><a class="header" href="#表达式语句" id="表达式语句">表达式语句</a></h2>
+<h2 id="expression-statements"><a class="header" href="#expression-statements">Expression statements</a></h2>
+<h2 id="表达式语句"><a class="header" href="#表达式语句">表达式语句</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ExpressionStatement</em> :<br />
@@ -223,8 +203,7 @@ commit: f5cd2519c0e61a2c640345c2e5cda329008ead3a <br />
 </blockquote>
 <p><em>表达式语句</em>是对<a href="expressions.html">表达式</a>求值并忽略其结果的语句。通常，表达式语句存在的目的是触发对其内部的表达式的求值时的效果。</p>
 <p>仅由<a href="expressions/block-expr.html">块表达式</a>或控制流表达式组成的表达式，如果它们在允许使用语句的上下文中使用时，是可以省略其后面的分号的。这有可能会导致解析歧义，因为它可以被解析为独立语句，也可以被解析为另一个表达式的一部分；下例中的控制流表达式被解析为一个语句。注意 <a href="expressions.html"><em>ExpressionWithBlock</em></a> 形式的表达式用作语句时，其类型必须是单元类型(<code>()</code>)。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">let mut v = vec![1, 2, 3];
 </span>v.pop();          // 忽略从 pop 返回的元素
@@ -237,8 +216,7 @@ if v.is_empty() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>当省略后面的分号时，结果必须是 <code>()</code> 类型。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// bad: 下面块的类型是i32，而不是 `()` 
 // Error: 预期表达式语句的返回值是 `()` 
@@ -254,8 +232,8 @@ if true {
 };
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#attributes-on-statements" id="attributes-on-statements">Attributes on Statements</a></h2>
-<h2><a class="header" href="#语句上的属性" id="语句上的属性">语句上的属性</a></h2>
+<h2 id="attributes-on-statements"><a class="header" href="#attributes-on-statements">Attributes on Statements</a></h2>
+<h2 id="语句上的属性"><a class="header" href="#语句上的属性">语句上的属性</a></h2>
 <p>语句可以有<a href="attributes.html">外部属性</a>。在语句中有意义的属性是 <a href="conditional-compilation.html"><code>cfg</code></a> 和 <a href="attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>。</p>
 <div class="footnote-definition" id="译者注"><sup class="footnote-definition-label">1</sup>
 <p>本书原文还有 <code>block of code</code> 的写法，这种有些类似于我们口语中说的那种任意的代码段的“代码块”。原文中 <code>block of code</code> 的典型情况是非安全(<code>unsafe</code>)块。</p>
@@ -265,17 +243,13 @@ if true {
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="statements-and-expressions.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="expressions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -283,49 +257,35 @@ if true {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="statements-and-expressions.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="expressions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

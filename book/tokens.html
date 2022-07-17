@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>token - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="favicon.svg">
-        
-        
         <link rel="shortcut icon" href="favicon.png">
-        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,7 +146,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#tokens" id="tokens">Tokens</a></h1>
+                        <h1 id="tokens"><a class="header" href="#tokens">Tokens</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/tokens.md">tokens.md</a><br />
 commit: 58e0f34eb1a542786c4d374c0f7a09a52a6aeadf <br />
@@ -181,14 +162,14 @@ commit: 58e0f34eb1a542786c4d374c0f7a09a52a6aeadf <br />
 <li><a href="#delimiters">分隔符</a></li>
 </ul>
 <p>在本文档中，“简单”token 会直接在（相关章节头部的）[字符串表产生式(production)][string table production]表单中给出，并以 <code>monospace</code> 字体显示。（译者注：本译作的原文中，在文法表之外的行文中也会大量出现这种直接使用简单token 来替代相关名词的做法，一般此时如果译者觉得这种 token 需要翻译时，会使用诸如：结构体(<code>struct</code>) 这种形式来翻译。读者需要意识到“struct”是文法里的一个 token，能以其字面形式直接出现在源码里。）</p>
-<h2><a class="header" href="#literals" id="literals">Literals</a></h2>
-<h2><a class="header" href="#字面量" id="字面量">字面量</a></h2>
+<h2 id="literals"><a class="header" href="#literals">Literals</a></h2>
+<h2 id="字面量"><a class="header" href="#字面量">字面量</a></h2>
 <p>字面量是<a href="expressions/literal-expr.html">字面量表达式</a>中使用的各种 token。</p>
-<h3><a class="header" href="#examples" id="examples">Examples</a></h3>
-<h3><a class="header" href="#示例" id="示例">示例</a></h3>
-<h4><a class="header" href="#characters-and-strings" id="characters-and-strings">Characters and strings</a></h4>
-<h4><a class="header" href="#字符和字符串" id="字符和字符串">字符和字符串</a></h4>
-<table><thead><tr><th></th><th>举例</th><th><code>#</code> 号的数量*</th><th>字符集</th><th>转义</th></tr></thead><tbody>
+<h3 id="examples"><a class="header" href="#examples">Examples</a></h3>
+<h3 id="示例"><a class="header" href="#示例">示例</a></h3>
+<h4 id="characters-and-strings"><a class="header" href="#characters-and-strings">Characters and strings</a></h4>
+<h4 id="字符和字符串"><a class="header" href="#字符和字符串">字符和字符串</a></h4>
+<div class="table-wrapper"><table><thead><tr><th></th><th>举例</th><th><code>#</code> 号的数量*</th><th>字符集</th><th>转义</th></tr></thead><tbody>
 <tr><td><a href="#character-literals">字符</a></td><td><code>'H'</code></td><td>0</td><td>全部 Unicode</td><td><a href="#quote-escapes">引号</a> &amp; <a href="#ascii-escapes">ASCII</a> &amp; <a href="#unicode-escapes">Unicode</a></td></tr>
 <tr><td><a href="#string-literals">字符串</a></td><td><code>&quot;hello&quot;</code></td><td>0</td><td>全部 Unicode</td><td><a href="#quote-escapes">引号</a> &amp; <a href="#ascii-escapes">ASCII</a> &amp; <a href="#unicode-escapes">Unicode</a></td></tr>
 <tr><td><a href="#raw-string-literals">原生字符串</a></td><td><code>r#&quot;hello&quot;#</code></td><td>&lt;256</td><td>全部 Unicode</td><td><code>N/A</code></td></tr>
@@ -196,10 +177,11 @@ commit: 58e0f34eb1a542786c4d374c0f7a09a52a6aeadf <br />
 <tr><td><a href="#byte-string-literals">字节串</a></td><td><code>b&quot;hello&quot;</code></td><td>0</td><td>全部 ASCII</td><td><a href="#quote-escapes">引号</a> &amp; <a href="#byte-escapes">字节</a></td></tr>
 <tr><td><a href="#raw-byte-string-literals">原生字节串</a></td><td><code>br#&quot;hello&quot;#</code></td><td>&lt;256</td><td>全部 ASCII</td><td><code>N/A</code></td></tr>
 </tbody></table>
+</div>
 <p>* 字面量两侧的 <code>#</code> 数量必须相同。</p>
-<h4><a class="header" href="#ascii-escapes" id="ascii-escapes">ASCII escapes</a></h4>
-<h4><a class="header" href="#ascii-转义" id="ascii-转义">ASCII 转义</a></h4>
-<table><thead><tr><th></th><th>名称</th></tr></thead><tbody>
+<h4 id="ascii-escapes"><a class="header" href="#ascii-escapes">ASCII escapes</a></h4>
+<h4 id="ascii-转义"><a class="header" href="#ascii-转义">ASCII 转义</a></h4>
+<div class="table-wrapper"><table><thead><tr><th></th><th>名称</th></tr></thead><tbody>
 <tr><td><code>\x41</code></td><td>7-bit 字符编码（2位数字，最大值为 <code>0x7F</code>）</td></tr>
 <tr><td><code>\n</code></td><td>换行符</td></tr>
 <tr><td><code>\r</code></td><td>回车符</td></tr>
@@ -207,9 +189,10 @@ commit: 58e0f34eb1a542786c4d374c0f7a09a52a6aeadf <br />
 <tr><td><code>\\</code></td><td>反斜线</td></tr>
 <tr><td><code>\0</code></td><td>Null</td></tr>
 </tbody></table>
-<h4><a class="header" href="#byte-escapes" id="byte-escapes">Byte escapes</a></h4>
-<h4><a class="header" href="#字节转义" id="字节转义">字节转义</a></h4>
-<table><thead><tr><th></th><th>名称</th></tr></thead><tbody>
+</div>
+<h4 id="byte-escapes"><a class="header" href="#byte-escapes">Byte escapes</a></h4>
+<h4 id="字节转义"><a class="header" href="#字节转义">字节转义</a></h4>
+<div class="table-wrapper"><table><thead><tr><th></th><th>名称</th></tr></thead><tbody>
 <tr><td><code>\x7F</code></td><td>8-bit 字符编码（2位数字）</td></tr>
 <tr><td><code>\n</code></td><td>换行符</td></tr>
 <tr><td><code>\r</code></td><td>回车符</td></tr>
@@ -217,33 +200,36 @@ commit: 58e0f34eb1a542786c4d374c0f7a09a52a6aeadf <br />
 <tr><td><code>\\</code></td><td>反斜线</td></tr>
 <tr><td><code>\0</code></td><td>Null</td></tr>
 </tbody></table>
-<h4><a class="header" href="#unicode-escapes" id="unicode-escapes">Unicode escapes</a></h4>
-<h4><a class="header" href="#unicode-转义" id="unicode-转义">unicode 转义</a></h4>
-<table><thead><tr><th></th><th>名称</th></tr></thead><tbody>
+</div>
+<h4 id="unicode-escapes"><a class="header" href="#unicode-escapes">Unicode escapes</a></h4>
+<h4 id="unicode-转义"><a class="header" href="#unicode-转义">unicode 转义</a></h4>
+<div class="table-wrapper"><table><thead><tr><th></th><th>名称</th></tr></thead><tbody>
 <tr><td><code>\u{7FFF}</code></td><td>24-bit Unicode 字符编码（最多6个数字）</td></tr>
 </tbody></table>
-<h4><a class="header" href="#quote-escapes" id="quote-escapes">Quote escapes</a></h4>
-<h4><a class="header" href="#引号转义" id="引号转义">引号转义</a></h4>
-<table><thead><tr><th></th><th>Name</th></tr></thead><tbody>
+</div>
+<h4 id="quote-escapes"><a class="header" href="#quote-escapes">Quote escapes</a></h4>
+<h4 id="引号转义"><a class="header" href="#引号转义">引号转义</a></h4>
+<div class="table-wrapper"><table><thead><tr><th></th><th>Name</th></tr></thead><tbody>
 <tr><td><code>\'</code></td><td>单引号</td></tr>
 <tr><td><code>\&quot;</code></td><td>双引号</td></tr>
 </tbody></table>
-<h4><a class="header" href="#numbers" id="numbers">Numbers</a></h4>
-<h4><a class="header" href="#数字" id="数字">数字</a></h4>
-<table><thead><tr><th><a href="#%E6%95%B0%E5%AD%97%E5%AD%97%E9%9D%A2%E9%87%8F">数字字面量</a><code>*</code></th><th>示例</th><th>指数</th><th>后缀</th></tr></thead><tbody>
+</div>
+<h4 id="numbers"><a class="header" href="#numbers">Numbers</a></h4>
+<h4 id="数字"><a class="header" href="#数字">数字</a></h4>
+<div class="table-wrapper"><table><thead><tr><th><a href="#%E6%95%B0%E5%AD%97%E5%AD%97%E9%9D%A2%E9%87%8F">数字字面量</a><code>*</code></th><th>示例</th><th>指数</th><th>后缀</th></tr></thead><tbody>
 <tr><td>十进制整数</td><td><code>98_222</code></td><td><code>N/A</code></td><td>整数后缀</td></tr>
 <tr><td>十六进制整数</td><td><code>0xff</code></td><td><code>N/A</code></td><td>整数后缀</td></tr>
 <tr><td>八进制整数</td><td><code>0o77</code></td><td><code>N/A</code></td><td>整数后缀</td></tr>
 <tr><td>二进制整数</td><td><code>0b1111_0000</code></td><td><code>N/A</code></td><td>整数后缀</td></tr>
 <tr><td>浮点数</td><td><code>123.0E+77</code></td><td><code>Optional</code></td><td>浮点数后缀</td></tr>
 </tbody></table>
+</div>
 <p><code>*</code> 所有数字字面量允许使用 <code>_</code> 作为可视分隔符，比如：<code>1_234.0E+18f64</code></p>
-<h4><a class="header" href="#suffixes" id="suffixes">Suffixes</a></h4>
-<h4><a class="header" href="#后缀" id="后缀">后缀</a></h4>
+<h4 id="suffixes"><a class="header" href="#suffixes">Suffixes</a></h4>
+<h4 id="后缀"><a class="header" href="#后缀">后缀</a></h4>
 <p>后缀是字面量主体部分后面的字符序列（它们之间不能含有空格），其形式与非原生标识符或关键字相同。</p>
 <p>任何带有后缀的字面量（如字符串、整数等）都可以作为有效的 token，并且可以传递给宏而不会产生错误。宏自己决定如何解释这种 token，以及是否该报错。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! blackhole { ($tt:tt) =&gt; () }
 
@@ -251,13 +237,14 @@ blackhole!(&quot;string&quot;suffix); // OK
 <span class="boring">}
 </span></code></pre></pre>
 <p>但是，最终被解析为 Rust 代码的字面量token 上的后缀是受限制的。对于非数字字面量token，任何后缀都会被编译器拒绝，而数字字面量token 只接受下表中的后缀。</p>
-<table><thead><tr><th>整数</th><th>浮点数</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>整数</th><th>浮点数</th></tr></thead><tbody>
 <tr><td><code>u8</code>, <code>i8</code>, <code>u16</code>, <code>i16</code>, <code>u32</code>, <code>i32</code>, <code>u64</code>, <code>i64</code>, <code>u128</code>, <code>i128</code>, <code>usize</code>, <code>isize</code></td><td><code>f32</code>, <code>f64</code></td></tr>
 </tbody></table>
-<h3><a class="header" href="#character-and-string-literals" id="character-and-string-literals">Character and string literals</a></h3>
-<h3><a class="header" href="#字符和字符串字面量" id="字符和字符串字面量">字符和字符串字面量</a></h3>
-<h4><a class="header" href="#character-literals" id="character-literals">Character literals</a></h4>
-<h4><a class="header" href="#字符字面量" id="字符字面量">字符字面量</a></h4>
+</div>
+<h3 id="character-and-string-literals"><a class="header" href="#character-and-string-literals">Character and string literals</a></h3>
+<h3 id="字符和字符串字面量"><a class="header" href="#字符和字符串字面量">字符和字符串字面量</a></h3>
+<h4 id="character-literals"><a class="header" href="#character-literals">Character literals</a></h4>
+<h4 id="字符字面量"><a class="header" href="#字符字面量">字符字面量</a></h4>
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
 CHAR_LITERAL :<br />
@@ -271,8 +258,8 @@ CHAR_LITERAL :<br />
    <code>\u{</code> ( HEX_DIGIT <code>_</code><sup>*</sup> )<sup>1..6</sup> <code>}</code></p>
 </blockquote>
 <p><em>字符字面量</em>是位于两个 <code>U+0027</code>（单引号 <code>'</code>）字符内的单个 Unicode 字符。当它是 <code>U+0027</code> 自身时，必须前置<em>转义</em>字符 <code>U+005C</code>（<code>\</code>）。</p>
-<h4><a class="header" href="#string-literals" id="string-literals">String literals</a></h4>
-<h4><a class="header" href="#字符串字面量" id="字符串字面量">字符串字面量</a></h4>
+<h4 id="string-literals"><a class="header" href="#string-literals">String literals</a></h4>
+<h4 id="字符串字面量"><a class="header" href="#字符串字面量">字符串字面量</a></h4>
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
 STRING_LITERAL :<br />
@@ -291,8 +278,7 @@ STRING_LITERAL :<br />
 换行可以用换行符（<code>U+000A</code>）表示，也可以用一对回车符换行符（<code>U+000D</code>, <code>U+000A</code>）的字节序列表示。
 这两种字节序列通常都会被转换为 <code>U+000A</code>，但有例外：当换行符前置一个避免转义的字符 <code>U+005C</code>（<code>\</code>）时，会导致字符 <code>U+005C</code>、换行符和下一行开头的所有空白符都被忽略。因此下述示例中，<code>a</code> 和 <code>b</code> 是一样的：
 这两个字节序列通常都会被转换为 <code>U+000A</code>，但作为一个特殊例外，当一个避免转换的 <code>U+005C</code>（<code>\</code>）出现在换行符之前，则换行符以及紧跟在 <code> </code> (<code>U+0020</code>), <code>\t</code> (<code>U+0009</code>), <code>\n</code> (<code>U+000A</code>) 和 <code>\r</code> (<code>U+0000D</code>)字符之后的所有字符都将被忽略。因此，下面 <code>a</code>、<code>b</code> 和 <code>c</code>是相等的：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let a = &quot;foobar&quot;;
 let b = &quot;foo\
@@ -309,8 +295,8 @@ assert_eq!(b, c);
 <p>注意：Rust会跳过额外的换行符（如上面示例中的 <code>c</code>）可能会让人感到困惑和意外。也许将来可能会调整此行为。在做出决定之前，建议避免依赖于此，例如使用续行符来跳过多个换行符。
 更多信息，请参见<a href="https://github.com/rust-lang/reference/pull/1042">this issue</a> 。</p>
 </blockquote>
-<h4><a class="header" href="#character-escapes" id="character-escapes">Character escapes</a></h4>
-<h4><a class="header" href="#字符转义" id="字符转义">字符转义</a></h4>
+<h4 id="character-escapes"><a class="header" href="#character-escapes">Character escapes</a></h4>
+<h4 id="字符转义"><a class="header" href="#字符转义">字符转义</a></h4>
 <p>不管是字符字面量，还是非原生字符串字面量，Rust 都为其提供了额外的<em>转义</em>功能。转义以一个 <code>U+005C</code>（<code>\</code>）开始，并后跟如下形式之一：</p>
 <ul>
 <li><em>7-bit 码点转义</em>以 <code>U+0078</code>（<code>x</code>）开头，后面紧跟两个<em>十六进制数字</em>，其最大值为 <code>0x7F</code>。它表示 ASCII 字符，其码值就等于字面提供的十六进制值。不允许使用更大的值，因为不能确定其是 Unicode 码点还是字节值(byte values)。</li>
@@ -319,8 +305,8 @@ assert_eq!(b, c);
 <li><em>null转义</em> 是字符 <code>U+0030</code>（<code>0</code>），表示 Unicode 码点 <code>U+0000</code>（NUL）。</li>
 <li><em>反斜线转义</em> 是字符 <code>U+005C</code>（<code>\</code>），反斜线必须通过转义才能表示其自身。</li>
 </ul>
-<h4><a class="header" href="#raw-string-literals" id="raw-string-literals">Raw string literals</a></h4>
-<h4><a class="header" href="#原生字符串字面量" id="原生字符串字面量">原生字符串字面量</a></h4>
+<h4 id="raw-string-literals"><a class="header" href="#raw-string-literals">Raw string literals</a></h4>
+<h4 id="原生字符串字面量"><a class="header" href="#原生字符串字面量">原生字符串字面量</a></h4>
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
 RAW_STRING_LITERAL :<br />
@@ -332,8 +318,7 @@ RAW_STRING_LITERAL :<br />
 <p>原生字符串字面量不做任何转义。它以字符 <code>U+0072</code>（<code>r</code>）后跟小于256个字符 <code>U+0023</code>（<code>#</code>），以及一个字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；中间<em>原生字符串文本主体</em>部分可包含任意的 Unicode 字符序列；再后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。</p>
 <p>所有包含在原生字符串文本主体中的 Unicode 字符都代表他们自身：字符 <code>U+0022</code>（双引号 <code>&quot;</code>）（除非后跟的纯 <code>U+0023</code> (<code>#</code>)字符串与文本主体开始前的对称相等）或字符 <code>U+005C</code>（<code>\</code>）此时都没有特殊含义。</p>
 <p>字符串字面量示例:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>&quot;foo&quot;; r&quot;foo&quot;;                     // foo
 &quot;\&quot;foo\&quot;&quot;; r#&quot;&quot;foo&quot;&quot;#;             // &quot;foo&quot;
@@ -345,10 +330,10 @@ r##&quot;foo #&quot;# bar&quot;##;                // foo #&quot;# bar
 &quot;\\x52&quot;; r&quot;\x52&quot;;                  // \x52
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#byte-and-byte-string-literals" id="byte-and-byte-string-literals">Byte and byte string literals</a></h3>
-<h3><a class="header" href="#字节和字节串字面量" id="字节和字节串字面量">字节和字节串字面量</a></h3>
-<h4><a class="header" href="#byte-literals" id="byte-literals">Byte literals</a></h4>
-<h4><a class="header" href="#字节字面量" id="字节字面量">字节字面量</a></h4>
+<h3 id="byte-and-byte-string-literals"><a class="header" href="#byte-and-byte-string-literals">Byte and byte string literals</a></h3>
+<h3 id="字节和字节串字面量"><a class="header" href="#字节和字节串字面量">字节和字节串字面量</a></h3>
+<h4 id="byte-literals"><a class="header" href="#byte-literals">Byte literals</a></h4>
+<h4 id="字节字面量"><a class="header" href="#字节字面量">字节字面量</a></h4>
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
 BYTE_LITERAL :<br />
@@ -360,8 +345,8 @@ BYTE_LITERAL :<br />
    | <code>\n</code> | <code>\r</code> | <code>\t</code> | <code>\\</code> | <code>\0</code> | <code>\'</code> | <code>\&quot;</code></p>
 </blockquote>
 <p><em>字节字面量</em>是单个 ASCII 字符（码值在 <code>U+0000</code> 到 <code>U+007F</code> 区间内）或一个<em>转义字节</em>作为字节字面量的真实主体跟在表示形式意义的字符 <code>U+0062</code>（<code>b</code>）和字符 <code>U+0027</code>（单引号 <code>'</code>）组合之后，然后再后接字符 <code>U+0027</code>。如果字符 <code>U+0027</code> 本身要出现在字面量中，它必须经由前置字符 <code>U+005C</code>（<code>\</code>）<em>转义</em>。字节字面量等价于一个 <code>u8</code> 8-bit 无符号整型<em>数字字面量</em>。</p>
-<h4><a class="header" href="#byte-string-literals" id="byte-string-literals">Byte string literals</a></h4>
-<h4><a class="header" href="#字节串字面量" id="字节串字面量">字节串字面量</a></h4>
+<h4 id="byte-string-literals"><a class="header" href="#byte-string-literals">Byte string literals</a></h4>
+<h4 id="字节串字面量"><a class="header" href="#字节串字面量">字节串字面量</a></h4>
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
 BYTE_STRING_LITERAL :<br />
@@ -377,8 +362,8 @@ BYTE_STRING_LITERAL :<br />
 <li><em>null转义</em>是字符 <code>U+0030</code>（<code>0</code>），表示字节值 <code>0x00</code> （ASCII NUL）。</li>
 <li><em>反斜线转义</em>是字符 <code>U+005C</code>（<code>\</code>），必须被转义以表示其 ASCII 编码 <code>0x5C</code>。</li>
 </ul>
-<h4><a class="header" href="#raw-byte-string-literals" id="raw-byte-string-literals">Raw byte string literals</a></h4>
-<h4><a class="header" href="#原生字节串字面量" id="原生字节串字面量">原生字节串字面量</a></h4>
+<h4 id="raw-byte-string-literals"><a class="header" href="#raw-byte-string-literals">Raw byte string literals</a></h4>
+<h4 id="原生字节串字面量"><a class="header" href="#原生字节串字面量">原生字节串字面量</a></h4>
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
 RAW_BYTE_STRING_LITERAL :<br />
@@ -392,8 +377,7 @@ RAW_BYTE_STRING_LITERAL :<br />
 <p>原生字节串字面量不做任何转义。它们以字符 <code>U+0062</code>（<code>b</code>）后跟 <code>U+0072</code>（<code>r</code>），再后跟小于256个字符 <code>U+0023</code>（<code>#</code>）及字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；之后是<em>原生字节串文本主体</em>，这部分可包含任意的 ASCII 字符序列；后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。原生字节串字面量不能包含任何非 ASCII 字节。</p>
 <p>原生字节串文本主体中的所有字符都代表它们自身的 ASCII 编码，字符 <code>U+0022</code>（双引号 <code>&quot;</code>）（除非后跟的纯 <code>U+0023</code>（<code>#</code>）字符串与文本主体开始前的对称相等）或字符 <code>U+005C</code>（<code>\</code>）此时都没有特殊含义。</p>
 <p>字节串字面量示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>b&quot;foo&quot;; br&quot;foo&quot;;                     // foo
 b&quot;\&quot;foo\&quot;&quot;; br#&quot;&quot;foo&quot;&quot;#;             // &quot;foo&quot;
@@ -405,11 +389,11 @@ b&quot;\x52&quot;; b&quot;R&quot;; br&quot;R&quot;;                // R
 b&quot;\\x52&quot;; br&quot;\x52&quot;;                  // \x52
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#number-literals" id="number-literals">Number literals</a></h3>
-<h3><a class="header" href="#数字字面量" id="数字字面量">数字字面量</a></h3>
+<h3 id="number-literals"><a class="header" href="#number-literals">Number literals</a></h3>
+<h3 id="数字字面量"><a class="header" href="#数字字面量">数字字面量</a></h3>
 <p><em>数字字面量</em>可以是<em>整型字面量</em>，也可以是<em>浮点型字面量</em>，识别这两种字面量的文法是混合在一起的。</p>
-<h4><a class="header" href="#integer-literals" id="integer-literals">Integer literals</a></h4>
-<h4><a class="header" href="#整型字面量" id="整型字面量">整型字面量</a></h4>
+<h4 id="integer-literals"><a class="header" href="#integer-literals">Integer literals</a></h4>
+<h4 id="整型字面量"><a class="header" href="#整型字面量">整型字面量</a></h4>
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
 INTEGER_LITERAL :<br />
@@ -441,8 +425,7 @@ INTEGER_SUFFIX<sup>?</sup></p>
 <p>与其它字面量一样，整型字面量后面可紧跟一个<em>整型后缀</em>，该后缀强制设定了字面量的数据类型。整型后缀须是<a href="types/numeric.html">原生整型类型</a>中的一个，包括：<code>u8</code>、<code>i8</code>、<code>u16</code>、<code>i16</code>、<code>u32</code>、<code>i32</code>、<code>u64</code>、<code>i64</code>、<code>u128</code>、<code>i128</code>、<code>usize</code> 或 <code>isize</code>。
 参见<a href="expressions/literal-expr.html">字面量表达式</a>以了解这些后缀的功能效果。</p>
 <p>各种形式的整型字面量的示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">#![allow(overflowing_literals)]
 </span>123;
@@ -473,8 +456,7 @@ INTEGER_SUFFIX<sup>?</sup></p>
 </span></code></pre></pre>
 <p>注意对于 <code>-1i8</code> 这样的，其实它被分析为两个 token: <code>-</code> 后跟 <code>1i8</code>。</p>
 <p>无效整型字面量示例:</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 使用了错误的进制数
 
@@ -487,8 +469,8 @@ INTEGER_SUFFIX<sup>?</sup></p>
 0b____;
 <span class="boring">}
 </span></code></pre></pre>
-<h4><a class="header" href="#tuple-index" id="tuple-index">Tuple index</a></h4>
-<h4><a class="header" href="#元组索引" id="元组索引">元组索引</a></h4>
+<h4 id="tuple-index"><a class="header" href="#tuple-index">Tuple index</a></h4>
+<h4 id="元组索引"><a class="header" href="#元组索引">元组索引</a></h4>
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
 TUPLE_INDEX: <br />
@@ -496,8 +478,7 @@ TUPLE_INDEX: <br />
 </blockquote>
 <p>元组索引用于引用<a href="types/tuple.html">元组</a>、<a href="items/structs.html">元组结构体</a>和<a href="items/enumerations.html">元组变体</a>的字段。</p>
 <p>元组索引直接与字面量token 进行比较。元组索引以 <code>0</code> 开始，每个后续索引的值以十进制的 <code>1</code> 递增。因此，元组索引只能匹配十进制值，并且该值不能用 <code>0</code> 做前缀字符。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let example = (&quot;dog&quot;, &quot;cat&quot;, &quot;horse&quot;);
 let dog = example.0;
@@ -510,8 +491,8 @@ let horse = example.0b10;  // 错误：没有 `0b10` 字段
 <blockquote>
 <p><strong>注意</strong>: 元组索引可能包含一个 <code>INTEGER_SUFFIX</code> ，但是这不是有效的，可能会在将来的版本中被删除。更多信息请参见<a href="https://github.com/rust-lang/rust/issues/60210">https://github.com/rust-lang/rust/issues/60210</a>。</p>
 </blockquote>
-<h4><a class="header" href="#floating-point-literals" id="floating-point-literals">Floating-point literals</a></h4>
-<h4><a class="header" href="#浮点型字面量" id="浮点型字面量">浮点型字面量</a></h4>
+<h4 id="floating-point-literals"><a class="header" href="#floating-point-literals">Floating-point literals</a></h4>
+<h4 id="浮点型字面量"><a class="header" href="#浮点型字面量">浮点型字面量</a></h4>
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
 FLOAT_LITERAL :<br />
@@ -536,8 +517,7 @@ FLOAT_EXPONENT<sup>?</sup> FLOAT_SUFFIX</p>
 有两种有效的<em>浮点型后缀</em>：<code>f32</code> 和 <code>f64</code> （32-bit 和 64-bit <a href="types/numeric.html#floating-point-types">原生浮点型</a>）。
 参见<a href="expressions/literal-expr.html">字面量表达式</a>以了解这类后缀的功能效果。</p>
 <p>各种形式的浮点型字面量示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>123.0f64;
 0.1f64;
@@ -549,8 +529,8 @@ let x: f64 = 2.;
 </span></code></pre></pre>
 <p>最后一个例子稍显不同，因为不能对一个以句点结尾的浮点型字面量使用后缀句法，<code>2.f64</code> 会尝试在 <code>2</code> 上调用名为 <code>f64</code> 的方法。</p>
 <p>请注意，像 <code>-1.0</code> 这样的会被分析为两个 token： <code>-</code> 后跟 <code>1.0</code>。</p>
-<h4><a class="header" href="#number-pseudoliterals" id="number-pseudoliterals">Number pseudoliterals</a></h4>
-<h4><a class="header" href="#伪数字字面量" id="伪数字字面量">伪数字字面量</a></h4>
+<h4 id="number-pseudoliterals"><a class="header" href="#number-pseudoliterals">Number pseudoliterals</a></h4>
+<h4 id="伪数字字面量"><a class="header" href="#伪数字字面量">伪数字字面量</a></h4>
 <blockquote>
 <p><strong><sup>Lexer</sup></strong><br />
 NUMBER_PSEUDOLITERAL :<br />
@@ -569,8 +549,7 @@ NUMBER_PSEUDOLITERAL :<br />
 <p>数字型的字面量的 token化允许使用上述词法表述中的任意后缀。
 那些值可以生成有效的 token，但却又不是合法的<a href="expressions/literal-expr.html">字面量表达式</a>的情况通常都是错误的，当然宏参数除外。</p>
 <p>这种 token 的示例:</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>0invalidSuffix;
 123AFB43;
@@ -584,8 +563,8 @@ NUMBER_PSEUDOLITERAL :<br />
 0b1111_f32;
 <span class="boring">}
 </span></code></pre></pre>
-<h4><a class="header" href="#reserved-forms-similar-to-number-literals" id="reserved-forms-similar-to-number-literals">Reserved forms similar to number literals</a></h4>
-<h4><a class="header" href="#类似于数字字面量的保留形式" id="类似于数字字面量的保留形式">类似于数字字面量的保留形式</a></h4>
+<h4 id="reserved-forms-similar-to-number-literals"><a class="header" href="#reserved-forms-similar-to-number-literals">Reserved forms similar to number literals</a></h4>
+<h4 id="类似于数字字面量的保留形式"><a class="header" href="#类似于数字字面量的保留形式">类似于数字字面量的保留形式</a></h4>
 <blockquote>
 <p><strong><sup>Lexer</sup></strong><br />
 RESERVED_NUMBER :<br />
@@ -619,8 +598,7 @@ RESERVED_NUMBER :<br />
 </li>
 </ul>
 <p>这些保留形式的示例：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>0b0102;  // 这可不是 `0b010` 后跟 `2`
 0o1279;  // 这可不是 `0o127` 后跟 `9`
@@ -634,8 +612,8 @@ RESERVED_NUMBER :<br />
 2.0em;   // 这不是一个伪字面量，也不是 `2.0` 后跟 `em`
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#lifetimes-and-loop-labels" id="lifetimes-and-loop-labels">Lifetimes and loop labels</a></h2>
-<h2><a class="header" href="#生存期和循环标签" id="生存期和循环标签">生存期和循环标签</a></h2>
+<h2 id="lifetimes-and-loop-labels"><a class="header" href="#lifetimes-and-loop-labels">Lifetimes and loop labels</a></h2>
+<h2 id="生存期和循环标签"><a class="header" href="#生存期和循环标签">生存期和循环标签</a></h2>
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
 LIFETIME_TOKEN :<br />
@@ -645,10 +623,10 @@ LIFETIME_TOKEN :<br />
       <code>'</code> <a href="identifiers.html">NON_KEYWORD_IDENTIFIER</a></p>
 </blockquote>
 <p>生存期参数和<a href="expressions/loop-expr.html">循环标签</a>使用 LIFETIME_OR_LABEL 类型的 token。（尽管 LIFETIME_OR_LABEL 是 LIFETIME_TOKEN 的子集，但）任何符合 LIFETIME_TOKEN 约定的 token 也都能被上述词法分析规则所接受，比如 LIFETIME_TOKEN 类型的 token 在宏中就可以畅通无阻的使用。</p>
-<h2><a class="header" href="#punctuation" id="punctuation">Punctuation</a></h2>
-<h2><a class="header" href="#标点符号" id="标点符号">标点符号</a></h2>
+<h2 id="punctuation"><a class="header" href="#punctuation">Punctuation</a></h2>
+<h2 id="标点符号"><a class="header" href="#标点符号">标点符号</a></h2>
 <p>为了完整起见，这里列出了（Rust 里）所有的标点符号的 symbol token。它们各自的用法和含义在链接页面中都有定义。</p>
-<table><thead><tr><th>符号</th><th>名称</th><th>使用方法</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>符号</th><th>名称</th><th>使用方法</th></tr></thead><tbody>
 <tr><td><code>+</code></td><td>Plus</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">算术加法</a>, <a href="trait-bounds.html">trait约束</a>, <a href="macros-by-example.html">可匹配空的宏匹配器</a>(Macro Kleene Matcher)</td></tr>
 <tr><td><code>-</code></td><td>Minus</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">算术减法</a>, <a href="expressions/operator-expr.html#negation-operators">取反</a></td></tr>
 <tr><td><code>*</code></td><td>Star</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">算术乘法</a>, <a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>, <a href="types/pointer.html#raw-pointers-const-and-mut">裸指针</a>, <a href="macros-by-example.html">可匹配空的宏匹配器</a>, <a href="items/use-declarations.html">use 通配符</a></td></tr>
@@ -696,16 +674,18 @@ LIFETIME_TOKEN :<br />
 <tr><td><code>?</code></td><td>Question</td><td><a href="expressions/operator-expr.html#the-question-mark-operator">问号运算符</a>, <a href="trait-bounds.html#sized">非确定性尺寸</a>, <a href="macros-by-example.html">可匹配空的宏匹配器</a></td></tr>
 <tr><td><code>~</code></td><td>Tilde</td><td>从 Rust 1.0 开始，波浪号操作符就弃用了，但其 token 可能仍在使用</td></tr>
 </tbody></table>
-<h2><a class="header" href="#delimiters" id="delimiters">Delimiters</a></h2>
-<h2><a class="header" href="#定界符" id="定界符">定界符</a></h2>
+</div>
+<h2 id="delimiters"><a class="header" href="#delimiters">Delimiters</a></h2>
+<h2 id="定界符"><a class="header" href="#定界符">定界符</a></h2>
 <p>括号用于文法的各个部分，左括号必须始终与右括号配对。括号以及其内的 token 在<a href="macros-by-example.html">宏</a>中被称作“token树(token trees)”。括号有三种类型：</p>
-<table><thead><tr><th>括号</th><th>类型</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>括号</th><th>类型</th></tr></thead><tbody>
 <tr><td><code>{</code> <code>}</code></td><td>花/大括号</td></tr>
 <tr><td><code>[</code> <code>]</code></td><td>方/中括号</td></tr>
 <tr><td><code>(</code> <code>)</code></td><td>圆/小括号</td></tr>
 </tbody></table>
-<h2><a class="header" href="#reserved-prefixes" id="reserved-prefixes">Reserved prefixes</a></h2>
-<h2><a class="header" href="#保留前缀" id="保留前缀">保留前缀</a></h2>
+</div>
+<h2 id="reserved-prefixes"><a class="header" href="#reserved-prefixes">Reserved prefixes</a></h2>
+<h2 id="保留前缀"><a class="header" href="#保留前缀">保留前缀</a></h2>
 <blockquote>
 <p><strong><sup>词法 2021+</sup></strong><br />
 RESERVED_TOKEN_DOUBLE_QUOTE : ( IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>b</code> 或 <code>r</code> 或 <code>br</code></em></sub> | <code>_</code> ) <code>&quot;</code><br />
@@ -720,8 +700,7 @@ RESERVED_TOKEN_POUND : ( IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>r</code> or
 <p><strong>版次差异</strong>：从2021版开始，保留前缀被词法解释器报告为错误（特别是，它们不能再传递给宏了）。</p>
 <p>在2021版之前，保留前缀可以被词法解释器接受并被解释为多个 token（例如，后接 <code>#</code> 的标识符或关键字）。</p>
 <p>在所有的版次中都可以被编译器接受的示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! lexes {($($_:tt)*) =&gt; {}}
 lexes!{a #foo}
@@ -731,8 +710,7 @@ lexes!{r#let#foo}         // 3个 tokens: r#let # foo
 <span class="boring">}
 </span></code></pre></pre>
 <p>在 2021之前的版次中可以被编译器接受，但之后会被拒绝的示例：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! lexes {($($_:tt)*) =&gt; {}}
 lexes!{a#foo}
@@ -746,17 +724,13 @@ lexes!{match&quot;...&quot; {}}
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="whitespace.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="macros.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -764,49 +738,35 @@ lexes!{match&quot;...&quot; {}}
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="whitespace.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="macros.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

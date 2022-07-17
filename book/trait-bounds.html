@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>trait约束及其生存期约束 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="favicon.svg">
-        
-        
         <link rel="shortcut icon" href="favicon.png">
-        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#trait-and-lifetime-bounds" id="trait-and-lifetime-bounds">Trait and lifetime bounds</a></h1>
-<h1><a class="header" href="#trait约束和生存期约束" id="trait约束和生存期约束">trait约束和生存期约束</a></h1>
+                        <h1 id="trait-and-lifetime-bounds"><a class="header" href="#trait-and-lifetime-bounds">Trait and lifetime bounds</a></h1>
+<h1 id="trait约束和生存期约束"><a class="header" href="#trait约束和生存期约束">trait约束和生存期约束</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md">trait-bounds.md</a><br />
 commit: 9e27603773164ce3bb916e003d91b33fdd45f7c7 <br />
@@ -202,8 +183,7 @@ commit: 9e27603773164ce3bb916e003d91b33fdd45f7c7 <br />
 <li><code>Trait</code> 上的关联类型可以被使用。</li>
 <li>带有 <code>T: Trait</code>约束的泛型函数或类型可以在使用 <code>T</code> 的地方替换使用 <code>Ty</code>。</li>
 </ul>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">type Surface = i32;
 </span>trait Shape {
@@ -234,16 +214,15 @@ fn name_figure&lt;U: Shape&gt;(
 <span class="boring">}
 </span></code></pre></pre>
 <p>trait 和生存期约束也被用来命名 <a href="types/trait-object.html">trait对象</a>。</p>
-<h2><a class="header" href="#sized" id="sized"><code>?Sized</code></a></h2>
+<h2 id="sized"><a class="header" href="#sized"><code>?Sized</code></a></h2>
 <p><code>?</code> 仅用于放宽<a href="types/parameters.html">类型参数</a>或<a href="items/associated-items.html#associated-types">关联类型</a> 上的<a href="special-types-and-traits.html#sized"><code>Sized</code></a> trait。
 目前 <code>?Sized</code> 还不能用作其他类型的约束。</p>
-<h2><a class="header" href="#lifetime-bounds" id="lifetime-bounds">Lifetime bounds</a></h2>
-<h2><a class="header" href="#生存期约束" id="生存期约束">生存期约束</a></h2>
+<h2 id="lifetime-bounds"><a class="header" href="#lifetime-bounds">Lifetime bounds</a></h2>
+<h2 id="生存期约束"><a class="header" href="#生存期约束">生存期约束</a></h2>
 <p>生存期约束可以应用于类型或其他生存期。
 约束 <code>'a: 'b</code> 通常被读做 <em><code>'a</code> 比 <code>'b</code> 存活的时间久</em>。
 <code>'a: 'b</code> 意味着 <code>'a</code> 持续的时间至少和 <code>'b</code> 一样长，所以只要 <code>&amp;'b ()</code> 有效，则 <code>&amp;'a ()</code> 就有效。<sup class="footnote-reference"><a href="#译注1">1</a></sup></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn f&lt;'a, 'b&gt;(x: &amp;'a i32, mut y: &amp;'b i32) where 'a: 'b {
     y = x;                      // 因为 'a: 'b，所以&amp;'a i32 是 &amp;'b i32 的子类型
@@ -253,15 +232,14 @@ fn name_figure&lt;U: Shape&gt;(
 </span></code></pre></pre>
 <p><code>T: 'a</code> 意味着 <code>T</code> 的所有生存期参数都比 <code>'a</code> 存活得时间长。
 例如，如果 <code>'a</code> 是一个任意的(unconstrained)生存期参数，那么 <code>i32: 'static</code> 和 <code>&amp;'static str: 'a</code> 都合法，但 <code>Vec&lt;&amp;'a ()&gt;: 'static</code> 不合法。</p>
-<h2><a class="header" href="#higher-ranked-trait-bounds" id="higher-ranked-trait-bounds">Higher-ranked trait bounds</a></h2>
-<h2><a class="header" href="#高阶trait约束" id="高阶trait约束">高阶trait约束</a></h2>
+<h2 id="higher-ranked-trait-bounds"><a class="header" href="#higher-ranked-trait-bounds">Higher-ranked trait bounds</a></h2>
+<h2 id="高阶trait约束"><a class="header" href="#高阶trait约束">高阶trait约束</a></h2>
 <blockquote>
 <p><em>ForLifetimes</em> :<br />
    <code>for</code> <a href="items/generics.html"><em>GenericParams</em></a></p>
 </blockquote>
 <p>可以在生存期上再进行<em>更高阶的</em>类型约束。这些高阶约束指定了一个对<em>所有</em>生存期都必须保证为真的约束。例如，像 <code>for&lt;'a&gt; &amp;'a T: PartialEq&lt;i32&gt;</code> 这样的约束需要一个如下的实现</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct T;
 </span>impl&lt;'a&gt; PartialEq&lt;i32&gt; for &amp;'a T {
@@ -272,8 +250,7 @@ fn name_figure&lt;U: Shape&gt;(
 </span></code></pre></pre>
 <p>这样就可以拿任意生存期的 <code>&amp;'a T</code> 和 <code>i32</code> 做比较啦。</p>
 <p>下面这类场景只能使用高阶trait约束，因为引用的生命周期比函数的生命周期参数短：<sup class="footnote-reference"><a href="#译注3">2</a></sup></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn call_on_ref_zero&lt;F&gt;(f: F) where for&lt;'a&gt; F: Fn(&amp;'a i32) { 
     let zero = 0;
@@ -282,8 +259,7 @@ fn name_figure&lt;U: Shape&gt;(
 </span></code></pre></pre>
 <blockquote>
 <p>译者注：译者下面举例代码可以和上面原文的代码对比着看。下面代码中，因为 <code>F</code> 没约束 <code>'a</code>，导致参数 <code>f</code> 引用了未经扩展生存期的 <code>zero</code></p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn call_on_ref_zero&lt;'a, F&gt;(f: F) where F: Fn(&amp;'a i32) {
    let zero = 0;
@@ -293,8 +269,7 @@ fn name_figure&lt;U: Shape&gt;(
 </span></code></pre></pre>
 </blockquote>
 <p>高阶生存期也可以在 trait 前面指定：唯一的区别是生存期参数的作用域，像下面这样 <code>'a</code> 的作用域只扩展到后面跟的 trait 的末尾，而不是整个约束<sup class="footnote-reference"><a href="#译注4">3</a></sup>。下面这个函数和上一个等价。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn call_on_ref_zero&lt;F&gt;(f: F) where F: for&lt;'a&gt; Fn(&amp;'a i32) {
     let zero = 0;
@@ -319,17 +294,13 @@ fn name_figure&lt;U: Shape&gt;(
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="subtyping.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="type-coercions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -337,49 +308,35 @@ fn name_figure&lt;U: Shape&gt;(
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="subtyping.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="type-coercions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>实现 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#implementations" id="implementations">Implementations</a></h1>
-<h1><a class="header" href="#实现" id="实现">实现</a></h1>
+                        <h1 id="implementations"><a class="header" href="#implementations">Implementations</a></h1>
+<h1 id="实现"><a class="header" href="#实现">实现</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/implementations.md">implementations.md</a><br />
 commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
@@ -196,14 +177,14 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 <li>固有实现(inherent implementations)</li>
 <li><a href="traits.html">trait</a>实现(trait implementations)</li>
 </ul>
-<h2><a class="header" href="#inherent-implementations" id="inherent-implementations">Inherent Implementations</a></h2>
-<h2><a class="header" href="#固有实现" id="固有实现">固有实现</a></h2>
+<h2 id="inherent-implementations"><a class="header" href="#inherent-implementations">Inherent Implementations</a></h2>
+<h2 id="固有实现"><a class="header" href="#固有实现">固有实现</a></h2>
 <p>固有实现被定义为一段由关键字 <code>impl</code>，泛型类型声明，指向标称类型(nominal type)的路径，一个 where子句和一对花括号括起来的一组*类型关联项(associable items)*组成的序列。</p>
 <p>（这里）<em>标称类型</em>也被称作<em>实现类型(implementing type)</em>；<em>类型关联项(associable items)<em>可理解为实现类型的各种</em>关联程序项(associated items)</em>。</p>
 <p>固有实现将其包含的程序项与其的实现类型关联起来。固有实现可以包含<a href="associated-items.html#associated-functions-and-methods">关联函数</a>（包括<a href="associated-items.html#methods">方法</a>）和<a href="associated-items.html#associated-constants">关联常量</a>。固有实现不能包含关联类型别名。</p>
 <p>关联程序项的<a href="../paths.html">路径</a>是其实现类型的所有（形式的）路径中的任一种，然后再拼接上这个关联程序项的标识符来作为整个路径的末段路径组件(final path component)。</p>
 <p>类型可以有多个固有实现。但作为原始类型定义的实现类型必须与这些固有实现处在同一个 crate 里。</p>
-<pre><pre class="playground"><code class="language-rust">pub mod color {
+<pre><pre class="playground"><code class="language-rust edition2021">pub mod color {
     // 译者添加的注释：这个结构体是 Color 的原始类型，是一个标称类型，也是后面两个实现的实现类型
     pub struct Color(pub u8, pub u8, pub u8);
     // 译者添加的注释：这个实现是 Color 的固有实现
@@ -239,16 +220,15 @@ fn main() {
     // values::Color::red();
 }
 </code></pre></pre>
-<h2><a class="header" href="#trait-implementations" id="trait-implementations">Trait Implementations</a></h2>
-<h2><a class="header" href="#trait实现" id="trait实现">trait实现</a></h2>
+<h2 id="trait-implementations"><a class="header" href="#trait-implementations">Trait Implementations</a></h2>
+<h2 id="trait实现"><a class="header" href="#trait实现">trait实现</a></h2>
 <p><em>trait实现</em>的定义与固有实现类似，只是在可选的泛型类型声明后须跟一个 <a href="traits.html">trait</a>关键字，再后跟关键字 <code>for</code>，之后再跟一个指向某个标称类型的路径。</p>
 <!-- 为理解这个，你必须回去查看一下上一节的内容 :( -->
 <p>这里讨论的 trait 也被称为<em>被实现trait(implemented trait)</em>。实现类型去实现该被实现trait。</p>
 <p>trait实现必须去定义被实现trait 声明里的所有非默认关联程序项，可以重新定义被实现trait 定义的默认关联程序项，但不能定义任何其他程序项。</p>
 <p>关联程序项的完整路径为 <code>&lt;</code> 后跟实现类型的路径，再后跟 <code>as</code>，然后是指向 trait 的路径，再后跟 <code>&gt;</code>，这整体作为一个路径组件，然后再后接关联程序项自己的路径组件。</p>
 <p><a href="traits.html#unsafe-traits">非安全(unsafe) trait</a> 需要 trait实现以关键字 <code>unsafe</code> 开头。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">#[derive(Copy, Clone)]
 </span><span class="boring">struct Point {x: f64, y: f64};
@@ -281,12 +261,12 @@ impl Shape for Circle {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#trait-implementation-coherence" id="trait-implementation-coherence">Trait Implementation Coherence</a></h3>
-<h3><a class="header" href="#trait实现的一致性" id="trait实现的一致性">trait实现的一致性</a></h3>
+<h3 id="trait-implementation-coherence"><a class="header" href="#trait-implementation-coherence">Trait Implementation Coherence</a></h3>
+<h3 id="trait实现的一致性"><a class="header" href="#trait实现的一致性">trait实现的一致性</a></h3>
 <p>一个 trait实现如果未通过孤儿规则(orphan rules)检查或有 trait实现重叠(implementations overlap)发生，则认为 trait实现不一致(incoherent)。</p>
 <p>当两个实现各自的 <em>trait接口</em>集之间存在非空交集时即为这两个 trait实现 重叠了，（这种常情况下）这两个 trait实现可以用相同的类型来实例化。<!-- 这可能是错的？来源：对于输入类型参数，没有两个实现可以用相同的类型集实例化。 --></p>
-<h4><a class="header" href="#orphan-rules" id="orphan-rules">Orphan rules</a></h4>
-<h4><a class="header" href="#孤儿规则" id="孤儿规则">孤儿规则</a></h4>
+<h4 id="orphan-rules"><a class="header" href="#orphan-rules">Orphan rules</a></h4>
+<h4 id="孤儿规则"><a class="header" href="#孤儿规则">孤儿规则</a></h4>
 <p>给定 <code>impl&lt;P1..=Pn&gt; Trait&lt;T1..=Tn&gt; for T0</code>，只有以下至少一种情况为真时，此 <code>impl</code> 才能成立：</p>
 <ul>
 <li>
@@ -302,11 +282,10 @@ impl Shape for Circle {
 </li>
 </ul>
 <p>这里只有<em>无覆盖</em>类型参数的外观被限制（译者注：为方便理解“无覆盖类型参数”，译者提醒读者把它想象成上面译者举例中的 <code>T</code>）。注意，理解“无覆盖类型参数”时需要注意：为了保持一致性，<a href="../glossary.html#fundamental-type-constructors">基本类型</a>虽然外观形式特殊，但仍不认为是有覆盖的，比如 <code>Box&lt;T&gt;</code> 中的 <code>T</code> 就不认为是有覆盖的，<code>Box&lt;LocalType&gt;</code> 这样的就被认为是本地的。</p>
-<h2><a class="header" href="#generic-implementations" id="generic-implementations">Generic Implementations</a></h2>
-<h2><a class="header" href="#泛型实现" id="泛型实现">泛型实现</a></h2>
+<h2 id="generic-implementations"><a class="header" href="#generic-implementations">Generic Implementations</a></h2>
+<h2 id="泛型实现"><a class="header" href="#泛型实现">泛型实现</a></h2>
 <p>实现可以带有<a href="generics.html">泛型参数</a>，这些参数可用在此实现中的其他地方。实现里的泛型参数直接写在关键字 <code>impl</code> 之后。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">trait Seq&lt;T&gt; { fn dummy(&amp;self, _: T) { } }
 </span>impl&lt;T&gt; Seq&lt;T&gt; for Vec&lt;T&gt; {
@@ -325,8 +304,7 @@ impl Seq&lt;bool&gt; for u32 {
 </ul>
 <p>类型和常量参数必须能在相应实现里体现出约束逻辑。如果关联类型中有生存期参数在使用，则该生存期的约束意义也必须在实现中体现。</p>
 <p>约束必须被传递实现的例子：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">trait Trait{}
 </span><span class="boring">trait GenericTrait&lt;T&gt; {}
@@ -351,8 +329,7 @@ impl&lt;T, U&gt; GenericStruct&lt;U&gt; where (U, isize): HasAssocType&lt;Ty = T
 <span class="boring">}
 </span></code></pre></pre>
 <p>约束未能被传递实现的例子：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 下面的都是错误的，因为它们的类型或常量参数没能被传递和实现约束
 
@@ -375,16 +352,14 @@ impl&lt;T, U&gt; GenericTrait&lt;U&gt; for u32 where U: GenericTrait&lt;T&gt; {}
 <span class="boring">}
 </span></code></pre></pre>
 <p>允许的非约束生存期参数的示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Struct;
 </span>impl&lt;'a&gt; Struct {}
 <span class="boring">}
 </span></code></pre></pre>
 <p>不允许的非约束生存期参数的示例：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Struct;
 </span><span class="boring">trait HasAssocType { type Ty; }
@@ -393,25 +368,21 @@ impl&lt;T, U&gt; GenericTrait&lt;U&gt; for u32 where U: GenericTrait&lt;T&gt; {}
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#attributes-on-implementations" id="attributes-on-implementations">Attributes on Implementations</a></h2>
-<h2><a class="header" href="#实现上的属性" id="实现上的属性">实现上的属性</a></h2>
+<h2 id="attributes-on-implementations"><a class="header" href="#attributes-on-implementations">Attributes on Implementations</a></h2>
+<h2 id="实现上的属性"><a class="header" href="#实现上的属性">实现上的属性</a></h2>
 <p>实现可以在关键字 <code>impl</code> 之前引入外部<a href="../attributes.html">属性</a>，在包含了各种关联程序项的代码体内引入内部<a href="../attributes.html">属性</a>。内部属性必须位于任何关联程序项之前。这里有意义的属性有 <a href="../conditional-compilation.html"><code>cfg</code></a>、<a href="../attributes/diagnostics.html#the-deprecated-attribute"><code>deprecated</code></a>、<a href="https://doc.rust-lang.org/rustdoc/the-doc-attribute.html"><code>doc</code></a> 和 <a href="../attributes/diagnostics.html#lint-check-attributes">lint检查类属性</a>。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../items/traits.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../items/external-blocks.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -419,49 +390,35 @@ impl&lt;T, U&gt; GenericTrait&lt;U&gt; for u32 where U: GenericTrait&lt;T&gt; {}
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../items/traits.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../items/external-blocks.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

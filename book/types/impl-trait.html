@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>实现trait - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,7 +146,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#impl-trait" id="impl-trait">Impl trait</a></h1>
+                        <h1 id="impl-trait"><a class="header" href="#impl-trait">Impl trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/impl-object.md">impl-object.md</a><br />
 commit: 94085bbf726d53f3c7ace1ce122c82ab7b691d39 <br />
@@ -178,8 +159,7 @@ commit: 94085bbf726d53f3c7ace1ce122c82ab7b691d39 <br />
 </blockquote>
 <p><code>impl Trait</code> 提供了指定实现某trait 的具体的但匿名的类型的方法。
 它可以出现在两种位置上：参数位置（在这里它可以充当函数的匿名类型参数）和返回位置（在这里它可以充当抽象返回类型）。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Trait {}
 <span class="boring">impl Trait for () {}
@@ -193,8 +173,8 @@ fn bar() -&gt; impl Trait {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#anonymous-type-parameters" id="anonymous-type-parameters">Anonymous type parameters</a></h2>
-<h2><a class="header" href="#匿名类型参数" id="匿名类型参数">匿名类型参数</a></h2>
+<h2 id="anonymous-type-parameters"><a class="header" href="#anonymous-type-parameters">Anonymous type parameters</a></h2>
+<h2 id="匿名类型参数"><a class="header" href="#匿名类型参数">匿名类型参数</a></h2>
 <blockquote>
 <p>注意：匿名类型参数通常被称为“参数位置上的 trait约束(impl Trait in argument position)”。
 (术语“参数”在这里更正式和正确，但 “impl Trait in argument position” 是在开发该特性时就使用的措辞，所以它仍保留在部分实现中。)</p>
@@ -220,8 +200,8 @@ fn foo(arg: impl Trait) {
 如果 <code>impl Trait</code> 是<em>任意</em>函数参数的类型，则调用者在调用该函数时不能提供任何泛型参数。这同样适用于返回类型或任何常量泛型的泛型参数。</p>
 <p>因此，这样将函数签名从一个变更为另一个，对函数的调用者来说仍可能是一种破坏性的变更。</p>
 </blockquote>
-<h2><a class="header" href="#abstract-return-types" id="abstract-return-types">Abstract return types</a></h2>
-<h2><a class="header" href="#抽象返回类型" id="抽象返回类型">抽象返回类型</a></h2>
+<h2 id="abstract-return-types"><a class="header" href="#abstract-return-types">Abstract return types</a></h2>
+<h2 id="抽象返回类型"><a class="header" href="#抽象返回类型">抽象返回类型</a></h2>
 <blockquote>
 <p>注意： 这通常被称为“返回位置上的 Trait约束”(impl Trait in return position)。</p>
 </blockquote>
@@ -232,8 +212,7 @@ fn foo(arg: impl Trait) {
 这对于<a href="closure.html">闭包</a>和迭代器特别有用。
 例如，闭包具有唯一的、不可写的类型。
 以前，从函数返回闭包的唯一方法是使用<a href="trait-object.html">trait对象</a>：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn returns_closure() -&gt; Box&lt;dyn Fn(i32) -&gt; i32&gt; {
     Box::new(|x| x + 1)
@@ -244,8 +223,7 @@ fn foo(arg: impl Trait) {
 并且者无法完全指定闭包的类型，只能使用 <code>Fn</code> trait。
 这意味着此时 trait对象是必要的。
 但是，使用 <code>impl Trait</code>，可以像如下这样来更简单地编写代码：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {
     |x| x + 1
@@ -254,8 +232,8 @@ fn foo(arg: impl Trait) {
 </span></code></pre></pre>
 <p>这也避免了对 trait对象进行装箱的缺陷。</p>
 <p>类似地，在迭代器的使用坏境中，如果将此步操作前的所有迭代器操作合并到一个执行链中，迭代器里的具体类型可能变得非常复杂。此时返回 <code>impl Iterator</code> 意味着一个函数只需将 <code>Iterator</code> trait 作为其返回类型的约束来公开，而不须显式指定链内所有其他涉及的迭代器类型。</p>
-<h3><a class="header" href="#differences-between-generics-and-impl-trait-in-return-position" id="differences-between-generics-and-impl-trait-in-return-position">Differences between generics and <code>impl Trait</code> in return position</a></h3>
-<h3><a class="header" href="#泛型与-impl-trait-在返回位置上的差异" id="泛型与-impl-trait-在返回位置上的差异">泛型与 <code>impl Trait</code> 在返回位置上的差异</a></h3>
+<h3 id="differences-between-generics-and-impl-trait-in-return-position"><a class="header" href="#differences-between-generics-and-impl-trait-in-return-position">Differences between generics and <code>impl Trait</code> in return position</a></h3>
+<h3 id="泛型与-impl-trait-在返回位置上的差异"><a class="header" href="#泛型与-impl-trait-在返回位置上的差异">泛型与 <code>impl Trait</code> 在返回位置上的差异</a></h3>
 <p>在参数位置，<code>impl Trait</code> 在语义上与泛型类型参数非常相似。
 然而，两者在返回位置上存在显著差异。
 与泛型类型参数不同，使用 <code>impl Trait</code> 时，函数选择返回类型，调用者不能选择返回类型。</p>
@@ -268,8 +246,8 @@ fn foo(arg: impl Trait) {
 </code></pre>
 <p>不允许调用者指定返回类型。
 相反，函数自身选择返回类型，但只承诺返回类型将实现 <code>Trait</code>。</p>
-<h2><a class="header" href="#limitations" id="limitations">Limitations</a></h2>
-<h2><a class="header" href="#限制" id="限制">限制</a></h2>
+<h2 id="limitations"><a class="header" href="#limitations">Limitations</a></h2>
+<h2 id="限制"><a class="header" href="#限制">限制</a></h2>
 <p><code>impl Trait</code> 只能作为自由函数或固有函数的参数或返回类型出现。
 它不能出现在 trait实现中，也不能出现在 let绑定的类型或出现在类型别名中。</p>
 
@@ -277,17 +255,13 @@ fn foo(arg: impl Trait) {
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../types/trait-object.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../types/parameters.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -295,49 +269,35 @@ fn foo(arg: impl Trait) {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../types/trait-object.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../types/parameters.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

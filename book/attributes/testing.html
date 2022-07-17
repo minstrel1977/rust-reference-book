@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>测试 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,16 +146,16 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#testing-attributes" id="testing-attributes">Testing attributes</a></h1>
-<h1><a class="header" href="#测试类属性" id="测试类属性">测试类属性</a></h1>
+                        <h1 id="testing-attributes"><a class="header" href="#testing-attributes">Testing attributes</a></h1>
+<h1 id="测试类属性"><a class="header" href="#测试类属性">测试类属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/testing.md">testing.md</a><br />
 commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 <br />
 本章译文最后维护日期：2022-04-29</p>
 </blockquote>
 <p>以下<a href="../attributes.html">属性</a>用于指定函数来执行测试。在“测试(test)”模式下编译 crate 可以构建测试函数以及构建用于执行测试（函数）的测试套件(test harness)。启用测试模式还会启用 <a href="../conditional-compilation.html#test"><code>test</code>条件编译选项</a>。</p>
-<h2><a class="header" href="#the-test-attribute" id="the-test-attribute">The <code>test</code> attribute</a></h2>
-<h2><a class="header" href="#test属性" id="test属性"><code>test</code>属性</a></h2>
+<h2 id="the-test-attribute"><a class="header" href="#the-test-attribute">The <code>test</code> attribute</a></h2>
+<h2 id="test属性"><a class="header" href="#test属性"><code>test</code>属性</a></h2>
 <p><em><code>test</code>属性</em>标记一个用来执行测试的函数。这些函数只在测试模式下编译。测试函数必须是自由函数和单态函数，不能有参数，返回类型必须实现 <a href="https://doc.rust-lang.org/std/process/trait.Termination.html"><code>Termination</code></a> trait，例如：</p>
 <ul>
 <li><code>()</code></li>
@@ -198,8 +179,7 @@ commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 <br />
 <li>返回 <code>ExitCode::SUCCESS</code> 的测试算是通过，返回 <code>ExitCode::FAILURE</code> 的测试算是失败。</li>
 <li>不结束的测试既不通过也不失败。</li>
 </ul>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::io;
 </span><span class="boring">fn setup_the_thing() -&gt; io::Result&lt;i32&gt; { Ok(1) }
@@ -212,12 +192,11 @@ fn test_the_thing() -&gt; io::Result&lt;()&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#the-ignore-attribute" id="the-ignore-attribute">The <code>ignore</code> attribute</a></h2>
-<h2><a class="header" href="#ignore属性" id="ignore属性"><code>ignore</code>属性</a></h2>
+<h2 id="the-ignore-attribute"><a class="header" href="#the-ignore-attribute">The <code>ignore</code> attribute</a></h2>
+<h2 id="ignore属性"><a class="header" href="#ignore属性"><code>ignore</code>属性</a></h2>
 <p>被 <code>test</code>属性标注的(annotated with)函数也可以被 <code>ignore</code>属性标注。<em><code>ignore</code>属性</em>告诉测试套件不要将该函数作为测试执行。但在测试模式下，这类函数仍然会被编译。</p>
 <p><code>ignore</code>属性可以选择使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法来说明测试被忽略的原因。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[test]
 #[ignore = &quot;not yet implemented&quot;]
@@ -229,12 +208,11 @@ fn mytest() {
 <blockquote>
 <p><strong>注意</strong>：<code>rustc</code> 的测试套件支持使用 <code>--include-ignored</code> 参数选项来强制运行那些被忽略测试的函数。</p>
 </blockquote>
-<h2><a class="header" href="#the-should_panic-attribute" id="the-should_panic-attribute">The <code>should_panic</code> attribute</a></h2>
-<h2><a class="header" href="#should_panic属性" id="should_panic属性"><code>should_panic</code>属性</a></h2>
+<h2 id="the-should_panic-attribute"><a class="header" href="#the-should_panic-attribute">The <code>should_panic</code> attribute</a></h2>
+<h2 id="should_panic属性"><a class="header" href="#should_panic属性"><code>should_panic</code>属性</a></h2>
 <p>被 <code>test</code>属性标注并返回 <code>()</code> 的函数也可以被 <code>should_panic</code>属性标注。<em><code>should_panic</code>属性</em>使测试函数只有在实际发生 panic 时才算通过。</p>
 <p><code>should_panic</code>属性可选输入一条出现在 panic消息中的字符串。如果在 panic消息中找不到该字符串，则测试将失败。可以使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法或带有 <code>expected</code>字段的 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法来传递字符串。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[test]
 #[should_panic(expected = &quot;值未匹配上&quot;)]
@@ -248,17 +226,13 @@ fn mytest() {
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../attributes.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../attributes/derive.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -266,49 +240,35 @@ fn mytest() {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../attributes.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../attributes/derive.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

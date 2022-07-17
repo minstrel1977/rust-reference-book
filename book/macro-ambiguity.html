@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>宏定义规范 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="favicon.svg">
-        
-        
         <link rel="shortcut icon" href="favicon.png">
-        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,16 +146,16 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#appendixmacro-follow-set-ambiguity-formal-specification" id="appendixmacro-follow-set-ambiguity-formal-specification">Appendix：Macro Follow-Set Ambiguity Formal Specification</a></h1>
-<h1><a class="header" href="#附录关于宏随集的二义性的形式化规范" id="附录关于宏随集的二义性的形式化规范">附录：关于宏随集的二义性的形式化规范</a></h1>
+                        <h1 id="appendixmacro-follow-set-ambiguity-formal-specification"><a class="header" href="#appendixmacro-follow-set-ambiguity-formal-specification">Appendix：Macro Follow-Set Ambiguity Formal Specification</a></h1>
+<h1 id="附录关于宏随集的二义性的形式化规范"><a class="header" href="#附录关于宏随集的二义性的形式化规范">附录：关于宏随集的二义性的形式化规范</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macro-ambiguity.md">macro-ambiguity.md</a><br />
 commit:  6ee9fc95ac3b7df8a01079e13280a283a7a24612 <br />
 本章译文最后维护日期：2021-07-11</p>
 </blockquote>
 <p>本文介绍了下述<a href="macros-by-example.html">声明宏</a>规则的正式规范。它们最初是在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0550-macro-future-proofing.md">RFC 550</a> 中指定的（本文的大部分内容都是从其中复制过来的），并在后续的 RFC 中进行了进一步的展开论述。</p>
-<h2><a class="header" href="#definitions--conventions" id="definitions--conventions">Definitions &amp; Conventions</a></h2>
-<h2><a class="header" href="#定义和约定" id="定义和约定">定义和约定</a></h2>
+<h2 id="definitions--conventions"><a class="header" href="#definitions--conventions">Definitions &amp; Conventions</a></h2>
+<h2 id="定义和约定"><a class="header" href="#定义和约定">定义和约定</a></h2>
 <ul>
 <li><code>macro</code>：宏，源代码中任何可调用的类似 <code>foo!(...)</code> 的东西。</li>
 <li><code>MBE</code>：macro-by-example，声明宏，由 <code>macro_rules</code> 定义的宏。</li>
@@ -196,8 +177,7 @@ commit:  6ee9fc95ac3b7df8a01079e13280a283a7a24612 <br />
 <li><code>language</code>：与上下文无关的语言。</li>
 </ul>
 <p>示例：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! i_am_an_mbe {
     (start $foo:expr $($i:ident),* end) =&gt; ($foo)
@@ -217,8 +197,8 @@ commit:  6ee9fc95ac3b7df8a01079e13280a283a7a24612 <br />
 <p>请注意，匹配器仅仅是一个 token树。如前所述，“简单NT”是一个元变量类型的 NT；因此，这是一个非重复元。例如，<code>$foo:ty</code> 是一个简单NT，而 <code>$($foo:ty)+</code> 是一个复杂NT。</p>
 <p>还请注意，在这种形式体系的上下文中，术语“token”通常<em>包括</em>简单NT。</p>
 <p>最后，读者要记住，根据这种形式体系的定义，简单NT 不会匹配空匹配段，因此也没有 token 会匹配 Rust句法的空匹配段。（因此，能够匹配空匹配段的 NT <em>唯有</em>复杂NT。）但这还不是全部事实，因为 <code>vis</code> 匹配器可以匹配空匹配段。因此，为了达到这种形式体系自洽统一的目的，我们将把 <code>$v:vis</code> 看作是 <code>$($v:vis)?</code>，来让匹配器匹配一个空匹配段。</p>
-<h3><a class="header" href="#the-matcher-invariants" id="the-matcher-invariants">The Matcher Invariants</a></h3>
-<h3><a class="header" href="#匹配器的不变式" id="匹配器的不变式">匹配器的不变式</a></h3>
+<h3 id="the-matcher-invariants"><a class="header" href="#the-matcher-invariants">The Matcher Invariants</a></h3>
+<h3 id="匹配器的不变式"><a class="header" href="#匹配器的不变式">匹配器的不变式</a></h3>
 <p>为了有效，匹配器必须满足以下三个不变式。注意其中 FIRST 和 FOLLOW 的定义将在后面进行描述。</p>
 <ol>
 <li>对于匹配器 <code>M</code> 中的任意两个连续的 token树序列（即 <code>M = ... tt uu ...</code>），并且 <code>uu ...</code> 非空，必有 FOLLOW(<code>... tt</code>) ∪ {ε} ⊇ FIRST(<code>uu ...</code>)。</li>
@@ -233,8 +213,8 @@ The second invariant says that a separated complex NT must use a separator token
 The third invariant says that when we have a complex NT that can match two or more copies of the same thing with no separation in between, it must be permissible for them to be placed next to each other as per the first invariant. This invariant also requires they be nonempty, which eliminates a possible ambiguity.</p>
 <p><strong>注意：由于历史疏忽和对行为的严重依赖，第三个不变式目前没有被执行。目前还没有决定下一步该怎么做。不遵循这个不变式的宏可能会在未来的 Rust版本中失效。参见<a href="https://github.com/rust-lang/rust/issues/56575">跟踪问题</a></strong>
 <strong>NOTE：The third invariant is currently unenforced due to historical oversight and significant reliance on the behaviour. It is currently undecided what to do about this going forward. Macros that do not respect the behaviour may become invalid in a future edition of Rust. See the <a href="https://github.com/rust-lang/rust/issues/56575">tracking issue</a>.</strong></p>
-<h3><a class="header" href="#first-and-follow-informally" id="first-and-follow-informally">FIRST and FOLLOW, informally</a></h3>
-<h3><a class="header" href="#非正式的-first集合和-follow集合定义" id="非正式的-first集合和-follow集合定义">非正式的 FIRST集合和 FOLLOW集合定义</a></h3>
+<h3 id="first-and-follow-informally"><a class="header" href="#first-and-follow-informally">FIRST and FOLLOW, informally</a></h3>
+<h3 id="非正式的-first集合和-follow集合定义"><a class="header" href="#非正式的-first集合和-follow集合定义">非正式的 FIRST集合和 FOLLOW集合定义</a></h3>
 <p>给定匹配器 M 映射到三个集合：FIRST(M)，LAST(M) 和 FOLLOW(M)。
 A given matcher M maps to three sets：FIRST(M), LAST(M) and FOLLOW(M).</p>
 <p>这三个集合中的每一个都是由一组 token 组成的。FIRST(M) 和 LAST(M) 也可能包含一个可区分的非token元素 ε (&quot;epsilon&quot;)，这表示 M 可以匹配空匹配段。（但是 FOLLOW(M) 始终只是一组 token。）
@@ -265,10 +245,10 @@ In other words：t ∈ FOLLOW(M) if and only if there exists (potentially empty)
 We use the shorthand ANYTOKEN to denote the set of all tokens (including simple NTs). For example, if any token is legal after a matcher M, then FOLLOW(M) = ANYTOKEN.</p>
 <p>（为了加深对上述非正式定义描述的理解，读者在阅读正式定义之前，可以先在这里读一遍后面 [关于 FIRST 和 LAST 的示例](#examples-of FIRST -and- LAST)。）
 (To review one's understanding of the above informal descriptions, the reader at this point may want to jump ahead to the <a href="#examples-of-first-and-last">examples of FIRST/LAST</a> before reading their formal definitions.)</p>
-<h3><a class="header" href="#first-last" id="first-last">FIRST, LAST</a></h3>
+<h3 id="first-last"><a class="header" href="#first-last">FIRST, LAST</a></h3>
 <p>下面是对 FIRST 和 LAST 的正式归纳定义(formal inductive definitions)。</p>
 <p>“A∪B”表示集合并集，“A∩B”表示集合交集，“A\B”表示集合差集（即存在于A中，且不存在于B中的所有元素的集合）。</p>
-<h4><a class="header" href="#first" id="first">FIRST</a></h4>
+<h4 id="first"><a class="header" href="#first">FIRST</a></h4>
 <p>FIRST(M) 是通过对序列 M 及其第一个 token树(如果有的话)的结构进行案例分析来定义的:
 FIRST(M) is defined by case analysis on the sequence M and the structure of its first token-tree (if any):</p>
 <ul>
@@ -298,7 +278,7 @@ FIRST(M) is defined by case analysis on the sequence M and the structure of its 
 <p>复杂NT 的定义值得商榷。SEP_SET(M) 定义了分隔符可能是 M 的第一个有效token的可能性，当定义了分隔符且重复匹配段可能为空时，就会发生这种情况。ALPHA_SET(M)定义了复杂NT可能为空的可能性，这意味着 M 的第一个有效token集合是后继token树序列 <code>α</code> 。当使用了操作符 <code>*</code> 或 <code>?</code> 时，这种情况下可能没有重复元。理论上，如果 <code>+</code> 与一个可能为空的重复匹配段一起使用，也会出现这种情况，但是第三个不变式禁止这样做。
 The definition for complex NTs deserves some justification. SEP_SET(M) defines the possibility that the separator could be a valid first token for M, which happens when there is a separator defined and the repeated fragment could be empty. ALPHA_SET(M) defines the possibility that the complex NT could be empty, meaning that M's valid first tokens are those of the following token-tree sequences <code>α</code>. This occurs when either <code>*</code> or <code>?</code> is used, in which case there could be zero repetitions. In theory, this could also occur if <code>+</code> was used with a potentially-empty repeating fragment, but this is forbidden by the third invariant.</p>
 <p>From there, clearly FIRST(M) can include any token from SEP_SET(M) or ALPHA_SET(M), and if the complex NT match is nonempty, then any token starting FIRST(<code>tt ...</code>) could work too. The last piece to consider is ε. SEP_SET(M) and FIRST(<code>tt ...</code>) \ {ε} cannot contain ε, but ALPHA_SET(M) could. Hence, this definition allows M to accept ε if and only if ε ∈ ALPHA_SET(M) does. This is correct because for M to accept ε in the complex NT case, both the complex NT and α must accept it. If OP = <code>+</code>, meaning that the complex NT cannot be empty, then by definition ε ∉ ALPHA_SET(M). Otherwise, the complex NT can accept zero repetitions, and then ALPHA_SET(M) = FOLLOW(<code>α</code>). So this definition is correct with respect to \varepsilon as well.</p>
-<h4><a class="header" href="#last" id="last">LAST</a></h4>
+<h4 id="last"><a class="header" href="#last">LAST</a></h4>
 <p>LAST(M), defined by case analysis on M itself (a sequence of token-trees):</p>
 <ul>
 <li>
@@ -355,8 +335,8 @@ LAST(<code>uu ...</code>).</p>
 </ul>
 </li>
 </ul>
-<h3><a class="header" href="#examples-of-first-and-last" id="examples-of-first-and-last">Examples of FIRST and LAST</a></h3>
-<h3><a class="header" href="#关于-first-和-last-的示例" id="关于-first-和-last-的示例">关于 FIRST 和 LAST 的示例</a></h3>
+<h3 id="examples-of-first-and-last"><a class="header" href="#examples-of-first-and-last">Examples of FIRST and LAST</a></h3>
+<h3 id="关于-first-和-last-的示例"><a class="header" href="#关于-first-和-last-的示例">关于 FIRST 和 LAST 的示例</a></h3>
 <p>下面是一些关于 FIRST 和 LAST 的例子。（请特别注意，特殊元素 ε 是如何根据输入匹配段之间的相互作用来引入和消除的。）
 Below are some examples of FIRST and LAST. (Note in particular how the special ε element is introduced and eliminated based on the interaction between the pieces of the input.)</p>
 <p>我们的第一个例子以树状结构呈现，以详细说明匹配器的分析是如何组成的。（一些较简单的子树已被删除。）
@@ -399,7 +379,7 @@ FIRST：                      { $d:ident, h, ;,  f }
 <li>LAST(<code>$( $d:ident $e:expr );* $(h)* $( f ;)+</code>) = { <code>;</code> }</li>
 <li>LAST(<code>$( $d:ident $e:expr );* $(h)* $( f ;)+ g</code>) = { <code>g</code> }</li>
 </ul>
-<h3><a class="header" href="#followm" id="followm">FOLLOW(M)</a></h3>
+<h3 id="followm"><a class="header" href="#followm">FOLLOW(M)</a></h3>
 <p>Finally, the definition for FOLLOW(M) is built up as follows. pat, expr, etc.
 represent simple nonterminals with the given fragment specifier.</p>
 <ul>
@@ -437,7 +417,7 @@ always remember to update the appendix when new ones are added.</p>
 <li>FOLLOW(<code>$( $d:ident $e:expr )* $(;)*</code>) = FOLLOW(<code>$e:expr</code>) ∩ ANYTOKEN = FOLLOW(<code>$e:expr</code>)</li>
 <li>FOLLOW(<code>$( $d:ident $e:expr )* $(;)* $( f |)+</code>) = ANYTOKEN</li>
 </ul>
-<h3><a class="header" href="#examples-of-valid-and-invalid-matchers" id="examples-of-valid-and-invalid-matchers">Examples of valid and invalid matchers</a></h3>
+<h3 id="examples-of-valid-and-invalid-matchers"><a class="header" href="#examples-of-valid-and-invalid-matchers">Examples of valid and invalid matchers</a></h3>
 <p>With the above specification in hand, we can present arguments for
 why particular matchers are legal and others are not.</p>
 <ul>
@@ -471,17 +451,13 @@ why particular matchers are legal and others are not.</p>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="appendices.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="influences.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -489,49 +465,35 @@ why particular matchers are legal and others are not.</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="appendices.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="influences.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>运算符表达式 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#操作符运算符表达式" id="操作符运算符表达式">操作符/运算符表达式</a></h1>
-<h1><a class="header" href="#operator-expressions" id="operator-expressions">Operator expressions</a></h1>
+                        <h1 id="操作符运算符表达式"><a class="header" href="#操作符运算符表达式">操作符/运算符表达式</a></h1>
+<h1 id="operator-expressions"><a class="header" href="#operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
 commit: 89a81e82d93d7997b20e44781d3162d184f5a5d1 <br />
@@ -188,8 +169,8 @@ commit: 89a81e82d93d7997b20e44781d3162d184f5a5d1 <br />
 </blockquote>
 <p>操作符是 Rust 语言为其内建类型定义的。
 本文后面的许多操作符都可以使用 <code>std::ops</code> 或 <code>std::cmp</code> 中的 trait 进行重载。</p>
-<h2><a class="header" href="#溢出" id="溢出">溢出</a></h2>
-<h2><a class="header" href="#overflow" id="overflow">Overflow</a></h2>
+<h2 id="溢出"><a class="header" href="#溢出">溢出</a></h2>
+<h2 id="overflow"><a class="header" href="#overflow">Overflow</a></h2>
 <p>在 debug模式下编译整数运算时，如果发生溢出，会触发 panic。
 可以使用命令行参数 <code>-C debug-assertions</code> 和 <code>-C overflow-checks</code> 设置编译器标志位来更直接地控制这个溢出过程。
 以下情况被认为是溢出：</p>
@@ -204,8 +185,8 @@ commit: 89a81e82d93d7997b20e44781d3162d184f5a5d1 <br />
 <p>二进制补码溢出约定：对那些极负值再取负会使值保持不变。</p>
 <p>在 <code>rustc</code> 里，这些对极负值取负的表达式也会忽略 <code>overflowing_literals</code>这样的 lint检查。</p>
 </blockquote>
-<h2><a class="header" href="#借用操作符运算符" id="借用操作符运算符">借用操作符/运算符</a></h2>
-<h2><a class="header" href="#borrow-operators" id="borrow-operators">Borrow operators</a></h2>
+<h2 id="借用操作符运算符"><a class="header" href="#借用操作符运算符">借用操作符/运算符</a></h2>
+<h2 id="borrow-operators"><a class="header" href="#borrow-operators">Borrow operators</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>BorrowExpression</em> :<br />
@@ -219,8 +200,7 @@ commit: 89a81e82d93d7997b20e44781d3162d184f5a5d1 <br />
 对于可变借用（<code>&amp;mut</code>），在借用到期之前，不能以任何方式访问该位置。<code>&amp;mut</code> 在可变位置表达式上下文中会对其操作数求值。
 如果 <code>&amp;</code> 或 <code>&amp;mut</code> 运算符应用于<a href="../expressions.html#place-expressions-and-value-expressions">值表达式</a>上，则会创建一个<a href="../expressions.html#temporaries">临时值</a>。</p>
 <p>这类操作符不能重载。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>{
     // 将创建一个存值为7的临时位置，该该临时位置在此作用域内持续存在
@@ -234,8 +214,7 @@ let mut array = [-2, 3, 9];
 <span class="boring">}
 </span></code></pre></pre>
 <p>尽管 <code>&amp;&amp;</code> 是一个单一 token（<a href="#lazy-boolean-operators">惰性与(<code>and</code>)操作符</a>)，但在借用表达式(borrow expressions)上下文中使用时，它是作为两个借用操作符用的：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 意义相同：
 let a = &amp;&amp;  10;
@@ -247,8 +226,8 @@ let a = &amp;&amp; &amp;&amp; mut 10;
 let a = &amp; &amp; &amp; &amp; mut 10;
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#解引用操作符" id="解引用操作符">解引用操作符</a></h2>
-<h2><a class="header" href="#the-dereference-operator" id="the-dereference-operator">The dereference operator</a></h2>
+<h2 id="解引用操作符"><a class="header" href="#解引用操作符">解引用操作符</a></h2>
+<h2 id="the-dereference-operator"><a class="header" href="#the-dereference-operator">The dereference operator</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>DereferenceExpression</em> :<br />
@@ -257,8 +236,7 @@ let a = &amp; &amp; &amp; &amp; mut 10;
 <p><code>*</code>（解引用）操作符也是一元前缀操作符。当应用于<a href="../types/pointer.html">指针</a>上时，它表示该指针指向的内存位置。
 如果表达式的类型为 <code>&amp;mut T</code> 或 <code>*mut T</code>，并且该表达式是局部变量、局部变量的（内嵌）字段、或是可变的<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>，则它代表的内存位置可以被赋值。解引用原始指针需要在非安全(<code>unsafe</code>)块才能进行。</p>
 <p>在<a href="../expressions.html#mutability">不可变位置表达式上下文</a>中对非指针类型作 <code>*x</code> 相当于执行 <code>*std::ops::Deref::deref(&amp;x)</code>；同样的，在可变位置表达式上下文中这个动作就相当于执行 <code>*std::ops::DerefMut::deref_mut(&amp;mut x)</code>。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = &amp;7;
 assert_eq!(*x, 7);
@@ -267,8 +245,8 @@ let y = &amp;mut 9;
 assert_eq!(*y, 11);
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#问号操作符" id="问号操作符">问号操作符</a></h2>
-<h2><a class="header" href="#the-question-mark-operator" id="the-question-mark-operator">The question mark operator</a></h2>
+<h2 id="问号操作符"><a class="header" href="#问号操作符">问号操作符</a></h2>
+<h2 id="the-question-mark-operator"><a class="header" href="#the-question-mark-operator">The question mark operator</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ErrorPropagationExpression</em> :<br />
@@ -279,8 +257,7 @@ assert_eq!(*y, 11);
 <p>当应用在 <code>Result&lt;T, E&gt;</code> 类型的值上时，它可以传播错误。
 如果值是 <code>Err(e)</code>，那么它实际上将从此操作符所在的函数体或闭包中返回 <code>Err(From::from(e))</code>。
 如果应用到 <code>Ok(x)</code>，那么它将解包此值以求得 <code>x</code>。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::num::ParseIntError;
 </span>fn try_to_parse() -&gt; Result&lt;i32, ParseIntError&gt; {
@@ -297,8 +274,7 @@ println!(&quot;{:?}&quot;, res);
 <p>当应用到 <code>Option&lt;T&gt;</code> 类型的值时，它向调用者传播错误 <code>None</code>。
 如果它应用的值是 <code>None</code>，那么它将返回 <code>None</code>。
 如果应用的值是 <code>Some(x)</code>，那么它将解包此值以求得 <code>x</code>。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn try_option_some() -&gt; Option&lt;u8&gt; {
     let val = Some(1)?;
@@ -314,8 +290,8 @@ assert_eq!(try_option_none(), None);
 <span class="boring">}
 </span></code></pre></pre>
 <p>操作符 <code>?</code> 不能被重载。</p>
-<h2><a class="header" href="#取反运算符" id="取反运算符">取反运算符</a></h2>
-<h2><a class="header" href="#negation-operators" id="negation-operators">Negation operators</a></h2>
+<h2 id="取反运算符"><a class="header" href="#取反运算符">取反运算符</a></h2>
+<h2 id="negation-operators"><a class="header" href="#negation-operators">Negation operators</a></h2>
 <blockquote>
 <p><strong><sup>语法</sup></strong><br />
 <em>NegationExpression</em> :<br />
@@ -326,14 +302,14 @@ assert_eq!(try_option_none(), None);
 下表总结了它们用在基本类型上的表现，同时指出其他类型要重载这些操作符需要实现的 trait。
 记住，有符号整数总是用二进制补码形式表示。
 所有这些运算符的操作数都在<a href="../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中被求值，所以这些操作数的值会被移走或复制。</p>
-<table><thead><tr><th>符号</th><th>整数</th><th><code>bool</code></th><th>浮点数</th><th>用于重载的 trait</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>符号</th><th>整数</th><th><code>bool</code></th><th>浮点数</th><th>用于重载的 trait</th></tr></thead><tbody>
 <tr><td><code>-</code></td><td>符号取反*</td><td></td><td>符号取反</td><td><code>std::ops::Neg</code></td></tr>
 <tr><td><code>!</code></td><td>按位取反</td><td><a href="../types/boolean.html#logical-not">逻辑非</a></td><td></td><td><code>std::ops::Not</code></td></tr>
 </tbody></table>
+</div>
 <p>* 仅适用于有符号整数类型。</p>
 <p>下面是这些运算符的一些示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 6;
 assert_eq!(-x, -6);
@@ -341,8 +317,8 @@ assert_eq!(!x, -7);
 assert_eq!(true, !false);
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#算术和逻辑二元运算符" id="算术和逻辑二元运算符">算术和逻辑二元运算符</a></h2>
-<h2><a class="header" href="#arithmetic-and-logical-binary-operators" id="arithmetic-and-logical-binary-operators">Arithmetic and Logical Binary Operators</a></h2>
+<h2 id="算术和逻辑二元运算符"><a class="header" href="#算术和逻辑二元运算符">算术和逻辑二元运算符</a></h2>
+<h2 id="arithmetic-and-logical-binary-operators"><a class="header" href="#arithmetic-and-logical-binary-operators">Arithmetic and Logical Binary Operators</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ArithmeticOrLogicalExpression</em> :<br />
@@ -361,7 +337,7 @@ assert_eq!(true, !false);
 下表总结了算术和逻辑二元运算符在原生类型(primitive type)上的行为，同时指出其他类型要重载这些操作符需要实现的 trait。
 记住，有符号整数总是用二进制补码形式表示。
 所有这些运算符的操作数都在<a href="../expressions.html#place-expressions-and-value-expressions">值表达式上下文</a>中求值，因此这些操作数的值会被移走或复制。</p>
-<table><thead><tr><th>符号</th><th>整数</th><th><code>bool</code></th><th>浮点数</th><th>用于重载此运算符的 trait</th><th>用于重载此运算符的复合赋值(Compound Assignment) Trait</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>符号</th><th>整数</th><th><code>bool</code></th><th>浮点数</th><th>用于重载此运算符的 trait</th><th>用于重载此运算符的复合赋值(Compound Assignment) Trait</th></tr></thead><tbody>
 <tr><td><code>+</code></td><td>加法</td><td></td><td>加法</td><td><code>std::ops::Add</code></td><td><code>std::ops::AddAssign</code></td></tr>
 <tr><td><code>-</code></td><td>减法</td><td></td><td>减法</td><td><code>std::ops::Sub</code></td><td><code>std::ops::SubAssign</code></td></tr>
 <tr><td><code>*</code></td><td>乘法</td><td></td><td>乘法</td><td><code>std::ops::Mul</code></td><td><code>std::ops::MulAssign</code></td></tr>
@@ -373,12 +349,12 @@ assert_eq!(true, !false);
 <tr><td><code>&lt;&lt;</code></td><td>左移位</td><td></td><td></td><td><code>std::ops::Shl</code></td><td><code>std::ops::ShlAssign</code></td></tr>
 <tr><td><code>&gt;&gt;</code></td><td>右移位***</td><td></td><td></td><td><code>std::ops::Shr</code></td><td><code>std::ops::ShrAssign</code></td></tr>
 </tbody></table>
+</div>
 <p>* 整数除法趋零取整。</p>
 <p>** Rust使用由<a href="https://en.wikipedia.org/wiki/Modulo_operation#Variants_of_the_definition">截断除法</a>定义的求宇运算。也就是 <code>余数=被除数%除数</code>，其中余数将与被除数的符号一致。</p>
 <p>*** 有符号整数类型算术右移位，无符号整数类型逻辑右移位。</p>
 <p>下面是使用这些操作符的示例:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>assert_eq!(3 + 6, 9);
 assert_eq!(5.5 - 1.25, 4.25);
@@ -392,8 +368,8 @@ assert_eq!(13 &lt;&lt; 3, 104);
 assert_eq!(-10 &gt;&gt; 2, -3);
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#比较运算符" id="比较运算符">比较运算符</a></h2>
-<h2><a class="header" href="#comparison-operators" id="comparison-operators">Comparison Operators</a></h2>
+<h2 id="比较运算符"><a class="header" href="#比较运算符">比较运算符</a></h2>
+<h2 id="comparison-operators"><a class="header" href="#comparison-operators">Comparison Operators</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ComparisonExpression</em> :<br />
@@ -409,8 +385,7 @@ assert_eq!(-10 &gt;&gt; 2, -3);
 <p>与算术运算符和逻辑运算符不同，重载这些运算符的 trait 通常用于显示/约定如何比较一个类型，并且还很可能会假定使用这些 trait 作为约束条件的函数定义了实际的比较逻辑。
 其实标准库中的许多函数和宏都使用了这个假定（尽管不能确保这些假定的安全性）。
 与上面的算术和逻辑运算符不同，这些运算符会隐式地对它们的操作数执行共享借用，并在<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式上下文</a>中对它们进行求值：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">let a = 1;
 </span><span class="boring">let b = 1;
@@ -420,7 +395,7 @@ assert_eq!(-10 &gt;&gt; 2, -3);
 <span class="boring">}
 </span></code></pre></pre>
 <p>这意味着不需要将值从操作数移出(moved out of)。</p>
-<table><thead><tr><th>符号</th><th>含义</th><th>须重载方法</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>符号</th><th>含义</th><th>须重载方法</th></tr></thead><tbody>
 <tr><td><code>==</code></td><td>等于</td><td><code>std::cmp::PartialEq::eq</code></td></tr>
 <tr><td><code>!=</code></td><td>不等于</td><td><code>std::cmp::PartialEq::ne</code></td></tr>
 <tr><td><code>&gt;</code></td><td>大于</td><td><code>std::cmp::PartialOrd::gt</code></td></tr>
@@ -428,9 +403,9 @@ assert_eq!(-10 &gt;&gt; 2, -3);
 <tr><td><code>&gt;=</code></td><td>大于或等于</td><td><code>std::cmp::PartialOrd::ge</code></td></tr>
 <tr><td><code>&lt;=</code></td><td>小于或等于</td><td><code>std::cmp::PartialOrd::le</code></td></tr>
 </tbody></table>
+</div>
 <p>下面是使用比较运算符的示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>assert!(123 == 123);
 assert!(23 != -12);
@@ -440,8 +415,8 @@ assert!('A' &lt;= 'B');
 assert!(&quot;World&quot; &gt;= &quot;Hello&quot;);
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#短路布尔运算符" id="短路布尔运算符">短路布尔运算符</a></h2>
-<h2><a class="header" href="#lazy-boolean-operators" id="lazy-boolean-operators">Lazy boolean operators</a></h2>
+<h2 id="短路布尔运算符"><a class="header" href="#短路布尔运算符">短路布尔运算符</a></h2>
+<h2 id="lazy-boolean-operators"><a class="header" href="#lazy-boolean-operators">Lazy boolean operators</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>LazyBooleanExpression</em> :<br />
@@ -452,15 +427,14 @@ assert!(&quot;World&quot; &gt;= &quot;Hello&quot;);
 运算符 <code>||</code> 表示逻辑“或”，运算符 <code>&amp;&amp;</code> 表示逻辑“与”。
 它们与 <code>|</code> 和 <code>&amp;</code> 的不同之处在于，只有在左操作数尚未确定表达式的结果时，才计算右操作数。
 也就是说，<code>||</code> 只在左操作数的计算结果为 <code>false</code> 时才计算其右操作数，而只有在计算结果为 <code>true</code> 时才计算 <code>&amp;&amp;</code> 的操作数。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = false || true; // true
 let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#类型转换表达式" id="类型转换表达式">类型转换表达式</a></h2>
-<h2><a class="header" href="#type-cast-expressions" id="type-cast-expressions">Type cast expressions</a></h2>
+<h2 id="类型转换表达式"><a class="header" href="#类型转换表达式">类型转换表达式</a></h2>
+<h2 id="type-cast-expressions"><a class="header" href="#type-cast-expressions">Type cast expressions</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>TypeCastExpression</em> :<br />
@@ -469,8 +443,7 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <p>类型转换表达式用二元运算符 <code>as</code> 表示。</p>
 <p>执行类型转换(<code>as</code>)表达式将左侧的值显式转换为右侧的类型。</p>
 <p>类型转换(<code>as</code>)表达式的一个例子：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">fn sum(values: &amp;[f64]) -&gt; f64 { 0.0 }
 </span><span class="boring">fn len(values: &amp;[f64]) -&gt; i32 { 0 }
@@ -484,7 +457,7 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <p><code>as</code> 可用于显式执行<a href="../type-coercions.html">自动强转(coercions)</a>，以及下列形式的强制转换。
 任何不符合强转规则或不在下表中的转换都会导致编译器报错。
 下表中 <code>*T</code> 代表 <code>*const T</code> 或 <code>*mut T</code>。<code>m</code> 引用类型中代表可选的 <code>mut</code> 或指针类型中的 <code>mut</code> 或 <code>const</code>。</p>
-<table><thead><tr><th><code>e</code> 的类型</th><th><code>U</code></th><th>通过 <code>e as U</code> 执行转换</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th><code>e</code> 的类型</th><th><code>U</code></th><th>通过 <code>e as U</code> 执行转换</th></tr></thead><tbody>
 <tr><td>整型或浮点型</td><td>整型或浮点型</td><td>数字转换</td></tr>
 <tr><td>类C(C-like)枚举</td><td>整型</td><td>枚举转换</td></tr>
 <tr><td><code>bool</code> 或 <code>char</code></td><td>整型</td><td>原生类型到整型的转换</td></tr>
@@ -501,13 +474,14 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <tr><td><a href="../types/function-pointer.html">函数指针</a></td><td>整型</td><td>函数指针到地址的转换</td></tr>
 <tr><td>闭包 ***</td><td>函数指针</td><td>闭包到函数指针的转换</td></tr>
 </tbody></table>
+</div>
 <p>* 或者 <code>T</code>和<code>V</code> 也可以都是兼容的 unsized 类型，例如，两个都是切片，或者都是同一种 trait对象。</p>
 <p>** 仅当 <code>m₁</code> 是 <code>mut</code> 或 <code>m₂</code> 是 <code>const</code>时， 可变(<code>mut</code>)引用到 <code>const</code>指针才会被允许。</p>
 <p>*** 仅适用于不捕获（遮蔽(close over)）任何环境变量的闭包。</p>
-<h3><a class="header" href="#语义" id="语义">语义</a></h3>
-<h3><a class="header" href="#semantics" id="semantics">Semantics</a></h3>
-<h4><a class="header" href="#数字转换" id="数字转换">数字转换</a></h4>
-<h4><a class="header" href="#numeric-cast" id="numeric-cast">Numeric cast</a></h4>
+<h3 id="语义"><a class="header" href="#语义">语义</a></h3>
+<h3 id="semantics"><a class="header" href="#semantics">Semantics</a></h3>
+<h4 id="数字转换"><a class="header" href="#数字转换">数字转换</a></h4>
+<h4 id="numeric-cast"><a class="header" href="#numeric-cast">Numeric cast</a></h4>
 <ul>
 <li>在两个尺寸(size)相同的整型数值（例如 i32 -&gt; u32）之间进行转换是一个空操作(no-op) （Rust 使用2的补码表示定长整数的负值）</li>
 <li>从一个较大尺寸的整型转换为较小尺寸的整型（例如 u32 -&gt; u8）将会采用截断(truncate)算法 <sup class="footnote-reference"><a href="#译者注">1</a></sup></li>
@@ -542,24 +516,24 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 </ul>
 <p>** 如果硬件本身不支持这种舍入模式和溢出行为，那么这些 f64 到 f32 的转换可能会比预期的要慢。</p>
 <p>*** 按照 IEEE 754-2008§4.3.1 的定义：选择最接近的浮点数，如果恰好在两个浮点数中间，则优先选择最低有效位为偶数的那个。</p>
-<h4><a class="header" href="#enum-cast" id="enum-cast">Enum cast</a></h4>
-<h4><a class="header" href="#枚举转换" id="枚举转换">枚举转换</a></h4>
+<h4 id="enum-cast"><a class="header" href="#enum-cast">Enum cast</a></h4>
+<h4 id="枚举转换"><a class="header" href="#枚举转换">枚举转换</a></h4>
 <p>可将枚举类型转换为其判别值，然后在必要时可以使用数字类型转换。</p>
-<h4><a class="header" href="#primitive-to-integer-cast" id="primitive-to-integer-cast">Primitive to integer cast</a></h4>
-<h4><a class="header" href="#原生类型到整型" id="原生类型到整型">原生类型到整型</a></h4>
+<h4 id="primitive-to-integer-cast"><a class="header" href="#primitive-to-integer-cast">Primitive to integer cast</a></h4>
+<h4 id="原生类型到整型"><a class="header" href="#原生类型到整型">原生类型到整型</a></h4>
 <ul>
 <li><code>false</code> 转换为 <code>0</code>，<code>true</code> 转换为 <code>1</code>。</li>
 <li><code>char</code> 转换为字符码点，然后在必要时可以使用数字类型转换。</li>
 </ul>
-<h4><a class="header" href="#u8-to-char-cast" id="u8-to-char-cast"><code>u8</code> to <code>char</code> cast</a></h4>
-<h4><a class="header" href="#u8-到-char" id="u8-到-char"><code>u8</code> 到 <code>char</code></a></h4>
+<h4 id="u8-to-char-cast"><a class="header" href="#u8-to-char-cast"><code>u8</code> to <code>char</code> cast</a></h4>
+<h4 id="u8-到-char"><a class="header" href="#u8-到-char"><code>u8</code> 到 <code>char</code></a></h4>
 <p>把为 <code>char</code> 的字符代码点的 <code>u8</code> 值转换为 <code>char</code></p>
-<h4><a class="header" href="#pointer-to-address-cast" id="pointer-to-address-cast">Pointer to address cast</a></h4>
-<h4><a class="header" href="#指针到地址" id="指针到地址">指针到地址</a></h4>
+<h4 id="pointer-to-address-cast"><a class="header" href="#pointer-to-address-cast">Pointer to address cast</a></h4>
+<h4 id="指针到地址"><a class="header" href="#指针到地址">指针到地址</a></h4>
 <p>把原始指针转换为整数将产生此指针指向的内存的机器地址。
 如果被转换出的整数类型尺寸小于指针类型的位宽，地址可能会被截断；可以使用类型 <code>usize</code> 来避免这种情况。</p>
-<h4><a class="header" href="#address-to-pointer-cast" id="address-to-pointer-cast">Address to pointer cast</a></h4>
-<h4><a class="header" href="#地址到指针" id="地址到指针">地址到指针</a></h4>
+<h4 id="address-to-pointer-cast"><a class="header" href="#address-to-pointer-cast">Address to pointer cast</a></h4>
+<h4 id="地址到指针"><a class="header" href="#地址到指针">地址到指针</a></h4>
 <p>从整数转换为原始指针会将整数解释为内存地址，并生成一个引用该内存地址的指针。</p>
 <div class="warning">
 <p>警告：
@@ -567,8 +541,7 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 即便是按位转换后是一个有效的指针，但这种从转换中生成的指针可能会受到一些额外的限制。如果不遵循别名规则，那么解引用这样的指针可能是<a href="../behavior-considered-undefined.html">未定义行为</a>。</p>
 </div>
 <p>一个常见的健壮的地址转换算法的示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut values: [i32; 2] = [1, 2];
 let p1: *mut i32 = values.as_mut_ptr();
@@ -581,8 +554,8 @@ unsafe {
 assert_eq!(values[1], 3);
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#赋值表达式" id="赋值表达式">赋值表达式</a></h2>
-<h2><a class="header" href="#assignment-expressions" id="assignment-expressions">Assignment expressions</a></h2>
+<h2 id="赋值表达式"><a class="header" href="#赋值表达式">赋值表达式</a></h2>
+<h2 id="assignment-expressions"><a class="header" href="#assignment-expressions">Assignment expressions</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>AssignmentExpression</em> :<br />
@@ -592,8 +565,8 @@ assert_eq!(values[1], 3);
 <p>赋值表达式由一个<a href="../expressions.html#mutability">可变</a>的<a href="../expressions.html#place-expressions-and-value-expressions">接收者表达式(assignee expression)</a>（就是<em>被赋值的操作数</em>）后跟一个等号（<code>=</code>）和一个<a href="../expressions.html#place-expressions-and-value-expressions">值表达式</a>（也就是所要赋的值的操作数）组成。
 在赋值表达式的基本形式中，接收者表达式是一个<a href="../expressions.html#place-expressions-and-value-expressions">位置表达式</a>，这个我们之前已讨论过了。
 下文将讨论更一般的解构赋值情况，这种情况的基本规则是等号右边的整个表达式被分解，然后按顺序为左侧的位置表达式对应赋值。</p>
-<h3><a class="header" href="#basic-assignments" id="basic-assignments">Basic assignments</a></h3>
-<h3><a class="header" href="#基本赋值形式" id="基本赋值形式">基本赋值形式</a></h3>
+<h3 id="basic-assignments"><a class="header" href="#basic-assignments">Basic assignments</a></h3>
+<h3 id="基本赋值形式"><a class="header" href="#基本赋值形式">基本赋值形式</a></h3>
 <p>执行赋值表达式要首先对它的操作数先行求值。
 这其中，等号右边的值操作数要最先求值，然后是接收者表达式。
 对于解构赋值，接受者表达式的各个子表达式会按从左到右的顺序进行求值。</p>
@@ -603,20 +576,18 @@ assert_eq!(values[1], 3);
 <p>对赋值表达的位置表达式求值时会先<a href="../destructors.html">销毁(drop)</a>此位置（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将赋值值<a href="../expressions.html#moved-and-copied-types">复制(copy)或移动(move)</a>到此位置中。</p>
 <p>赋值表达式总是会生成<a href="../types/tuple.html">单元类型值</a>。</p>
 <p>示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut x = 0;
 let y = 0;
 x = y;
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#destructuring-assignments" id="destructuring-assignments">Destructuring assignments</a></h3>
-<h3><a class="header" href="#解构赋值形式" id="解构赋值形式">解构赋值形式</a></h3>
+<h3 id="destructuring-assignments"><a class="header" href="#destructuring-assignments">Destructuring assignments</a></h3>
+<h3 id="解构赋值形式"><a class="header" href="#解构赋值形式">解构赋值形式</a></h3>
 <p>解构赋值可以和变量的解构声明形式（应用了解构模式匹配的变量声明形式）相比较，它允许对拥有复杂结构的变量（如元组或结构）进行赋值。
 例如，我们可以交换两个可变变量：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let (mut a, mut b) = (0, 1);
 // 使用解构赋值来交换 `a` 和 `b`。
@@ -628,8 +599,7 @@ x = y;
 然后再将接收者表达式脱糖为具体的单个模式匹配，然后依次赋值。
 被脱糖的模式必须是不可反驳的模式：特别是，这意味着只有长度在编译时已知的切片模式，或者全切片模式 <code>[..]</code>，才被允许进行解构赋值。</p>
 <p>对接收者表达式进行脱糖方法简单明了，下面通过示例进行说明。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Struct { x: u32, y: u32 }
 </span><span class="boring">let (mut a, mut b) = (0, 0);
@@ -663,8 +633,8 @@ Struct { x: a, y: b } = Struct { x: 3, y: 4};
 <p>允许在单个表达式中多次使用标识符。</p>
 <p><a href="./underscore-expr.html">下划线表达式</a>和空的<a href="./range-expr.html">范围表达式</a>可以用来忽略特定值，以便达到不绑定它们的目的。</p>
 <p>注意模式里的默认绑定方式不会对这种脱糖表达式起效。</p>
-<h2><a class="header" href="#复合赋值表达式" id="复合赋值表达式">复合赋值表达式</a></h2>
-<h2><a class="header" href="#compound-assignment-expressions" id="compound-assignment-expressions">Compound assignment expressions</a></h2>
+<h2 id="复合赋值表达式"><a class="header" href="#复合赋值表达式">复合赋值表达式</a></h2>
+<h2 id="compound-assignment-expressions"><a class="header" href="#compound-assignment-expressions">Compound assignment expressions</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>CompoundAssignmentExpression</em> :<br />
@@ -681,8 +651,7 @@ Struct { x: a, y: b } = Struct { x: 3, y: 4};
 </blockquote>
 <p><em>复合赋值表达式</em>将算术符（以及二进制逻辑操作符）与赋值表达式相结合在一起使用。</p>
 <p>比如：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut x = 5;
 x += 1;
@@ -701,8 +670,7 @@ assert!(x == 6);
 <p>此外，这个表达式是调用操作符重载复合赋值trait 的函数的语法糖（见本章前面的表格）。
 被赋值操作数必须是可变的。</p>
 <p>例如，下面 <code>example</code>函数中的两个表达式语句是等价的：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Addable;
 </span><span class="boring">use std::ops::AddAssign;
@@ -735,17 +703,13 @@ fn example() {
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../expressions/block-expr.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../expressions/grouped-expr.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -753,49 +717,35 @@ fn example() {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../expressions/block-expr.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../expressions/grouped-expr.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

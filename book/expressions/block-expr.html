@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>块表达式 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#block-expressions" id="block-expressions">Block expressions</a></h1>
-<h1><a class="header" href="#块表达式" id="块表达式">块表达式</a></h1>
+                        <h1 id="block-expressions"><a class="header" href="#block-expressions">Block expressions</a></h1>
+<h1 id="块表达式"><a class="header" href="#块表达式">块表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/block-expr.md">block-expr.md</a><br />
 commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
@@ -195,8 +176,7 @@ commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef <br />
 <p>在对块表达式进行求值时，除了程序项声明语句外，每个语句都是按顺序执行的。
 如果给出了块尾的可选的最终操作数(final operand)，则最后会执行它。</p>
 <p>块的类型是最此块的最终操作数(final operand)的类型，但如果省略了最终操作数，则块的类型为 <code>()</code>。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">fn fn_call() {}
 </span>let _: () = {
@@ -218,8 +198,7 @@ assert_eq!(5, five);
 <blockquote>
 <p><strong>注意</strong>：如果确实有需要，块可以用于强制移动值。
 例如，下面的示例在调用 <code>consume_self</code> 时失败，因为结构体已经在之前的块表达式里被从 <code>s</code> 里移出了。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Struct;
 
@@ -240,8 +219,8 @@ fn move_by_block_expression() {
 <span class="boring">}
 </span></code></pre></pre>
 </blockquote>
-<h2><a class="header" href="#async-blocks" id="async-blocks"><code>async</code> blocks</a></h2>
-<h2><a class="header" href="#async块" id="async块"><code>async</code>块</a></h2>
+<h2 id="async-blocks"><a class="header" href="#async-blocks"><code>async</code> blocks</a></h2>
+<h2 id="async块"><a class="header" href="#async块"><code>async</code>块</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>AsyncBlockExpression</em> :<br />
@@ -258,25 +237,24 @@ fn move_by_block_expression() {
 <blockquote>
 <p><strong>版次差异</strong>: 异步块从 Rust 2018 版才开始可用。</p>
 </blockquote>
-<h3><a class="header" href="#capture-modes" id="capture-modes">Capture modes</a></h3>
-<h3><a class="header" href="#捕获方式" id="捕获方式">捕获方式</a></h3>
+<h3 id="capture-modes"><a class="header" href="#capture-modes">Capture modes</a></h3>
+<h3 id="捕获方式"><a class="header" href="#捕获方式">捕获方式</a></h3>
 <p>异步块使用与闭包相同的<a href="../types/closure.html#capture-modes">捕获方式</a>从其环境中捕获变量。
 跟闭包一样，当编写 <code>async { .. }</code> 时，每个变量的捕获方式将从该块里的内容中推断出来。
 而 <code>async move { .. }</code> 类型的异步块将把所有需要捕获的变量使用移动语义移入(move)到相应的结果 future 中。</p>
-<h3><a class="header" href="#async-context" id="async-context">Async context</a></h3>
-<h3><a class="header" href="#异步上下文" id="异步上下文">异步上下文</a></h3>
+<h3 id="async-context"><a class="header" href="#async-context">Async context</a></h3>
+<h3 id="异步上下文"><a class="header" href="#异步上下文">异步上下文</a></h3>
 <p>因为异步块构造了一个 future，所以它们定义了一个<strong>async上下文</strong>，这个上下文可以相应地包含 <a href="await-expr.html"><code>await</code>表达式</a>。
 异步上下文是由异步块和异步函数的函数体建立的，它们的语义是依照异步块定义的。</p>
-<h3><a class="header" href="#control-flow-operators" id="control-flow-operators">Control-flow operators</a></h3>
-<h3><a class="header" href="#控制流操作符" id="控制流操作符">控制流操作符</a></h3>
+<h3 id="control-flow-operators"><a class="header" href="#control-flow-operators">Control-flow operators</a></h3>
+<h3 id="控制流操作符"><a class="header" href="#控制流操作符">控制流操作符</a></h3>
 <p>异步块的作用类似于函数边界，或者更类似于闭包。
 因此 <code>?</code>操作符和 返回(<code>return</code>)表达式也都能影响 future 的输出，且不会影响封闭它的函数或其他上下文。
 也就是说，future 的输出跟闭包将其中的 <code>return &lt;expr&gt;</code> 的表达式 <code>&lt;expr&gt;</code> 的计算结果作为未来的输出的做法是一样的。
 类似地,如果 <code>&lt;expr&gt;?</code> 传播(propagate)一个错误，这个错误也会被 future 在未来的某个时候作为返回结果被传播出去。</p>
 <p>最后，关键字 <code>break</code> 和 <code>continue</code> 不能用于从异步块中跳出分支。
 因此，以下内容是非法的：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>loop {
     async move {
@@ -285,15 +263,14 @@ fn move_by_block_expression() {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#unsafe-blocks" id="unsafe-blocks"><code>unsafe</code> blocks</a></h2>
-<h2><a class="header" href="#非安全unsafe块" id="非安全unsafe块">非安全(<code>unsafe</code>)块</a></h2>
+<h2 id="unsafe-blocks"><a class="header" href="#unsafe-blocks"><code>unsafe</code> blocks</a></h2>
+<h2 id="非安全unsafe块"><a class="header" href="#非安全unsafe块">非安全(<code>unsafe</code>)块</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong>\23672971a16c69ea894bef24992b74912cfe5d25e` 的信息_</p>
 </blockquote>
 <p>可以在代码块前面加上关键字 <code>unsafe</code> 以允许<a href="../unsafety.html">非安全操作</a>。
 例如：</p>
-<pre><pre class="playground"><code class="language-rust23672971a16c69ea894bef24992b74912cfe5d25">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust23672971a16c69ea894bef24992b74912cfe5d25 edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>在以下上下文中，允许在块表达式的左括号之后直接使用[内部属性][inner attributes]：
 
@@ -320,17 +297,13 @@ fn is_unix_platform() -&gt; bool {
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../expressions/path-expr.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../expressions/operator-expr.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -338,49 +311,35 @@ fn is_unix_platform() -&gt; bool {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../expressions/path-expr.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../expressions/operator-expr.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

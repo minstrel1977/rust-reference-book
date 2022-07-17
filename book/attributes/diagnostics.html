@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>诊断 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,16 +146,16 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#diagnostic-attributes" id="diagnostic-attributes">Diagnostic attributes</a></h1>
-<h1><a class="header" href="#诊断属性" id="诊断属性">诊断属性</a></h1>
+                        <h1 id="diagnostic-attributes"><a class="header" href="#diagnostic-attributes">Diagnostic attributes</a></h1>
+<h1 id="诊断属性"><a class="header" href="#诊断属性">诊断属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/diagnostics.md">diagnostics.md</a><br />
 commit: 0e5ff09e12ca7b81452d8064f98fe30bf5f5b05c <br />
 本章译文最后维护日期：2022-06-17</p>
 </blockquote>
 <p>以下<a href="../attributes.html">属性</a>用于在编译期间控制或生成诊断消息。</p>
-<h2><a class="header" href="#lint-check-attributes" id="lint-check-attributes">Lint check attributes</a></h2>
-<h2><a class="header" href="#lint检查类属性" id="lint检查类属性">lint检查类属性</a></h2>
+<h2 id="lint-check-attributes"><a class="header" href="#lint-check-attributes">Lint check attributes</a></h2>
+<h2 id="lint检查类属性"><a class="header" href="#lint检查类属性">lint检查类属性</a></h2>
 <p>（译者注：lint在原文里有时当名词用，有时当动词用，本文统一翻译成名词，意思就是一种被命名的 lint检查模式）</p>
 <p>lint检查(lint check)系统命名了一些潜在的不良编码模式，（这些被命名的 lint检查就是一个一个的lint，）例如编写了不可能执行到的代码，就被命名为 unreachable-code lint，编写未提供文档的代码就被命名为 missing_docs lint。<code>allow</code>、<code>warn</code>、<code>deny</code> 和 <code>forbid</code> 这些能调整代码检查级别的属性被称为 lint级别属性，它们使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListPaths</em></a>元项属性句法来指定接受此级别的各种 lint。代码实体应用了这些带了具体 lint 列表的 lint级别属性，编译器或相关代码检查工具就可以结合这两层属性对这段代码执行相应的代码检查和检查报告。</p>
 <p>对任何名为 <code>C</code> 的 lint 来说：</p>
@@ -188,8 +169,7 @@ commit: 0e5ff09e12ca7b81452d8064f98fe30bf5f5b05c <br />
 <blockquote>
 <p>注意：可以通过 <code>rustc -W help</code> 找到所有 <code>rustc</code> 支持的 lint，以及它们的默认设置，也可以在 <a href="https://doc.rust-lang.org/rustc/lints/index.html">rustc book</a> 中找到相关文档。</p>
 </blockquote>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub mod m1 {
     // 这里忽略未提供文档的编码行为
@@ -208,8 +188,7 @@ commit: 0e5ff09e12ca7b81452d8064f98fe30bf5f5b05c <br />
 </span></code></pre></pre>
 <p>Lint属性可以覆盖上一个属性指定的级别，但该级别不能更改禁止性的 Lint。这里的上一个属性是指语法树中更高级别的属性，或者是同一实体上的前一个属性，按从左到右的源代码顺序列出。</p>
 <p>此示例展示了如何使用 <code>allow</code> 和 <code>warn</code> 来打开和关闭一个特定的 lint检查：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[warn(missing_docs)]
 pub mod m2{
@@ -229,8 +208,7 @@ pub mod m2{
 <span class="boring">}
 </span></code></pre></pre>
 <p>此示例展示了如何使用 <code>forbid</code> 来禁止对该 lint 使用 <code>allow</code>：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[forbid(missing_docs)]
 pub mod m3 {
@@ -244,11 +222,10 @@ pub mod m3 {
 <blockquote>
 <p>注意：<code>rustc</code>允许在<a href="https://doc.rust-lang.org/rustc/lints/levels.html#via-compiler-flag">命令行</a>上设置 lint级别，也支持在<a href="https://doc.rust-lang.org/rustc/lints/levels.html#capping-lints">setting caps</a>中设置 lint报告中的caps。</p>
 </blockquote>
-<h3><a class="header" href="#lint-groups" id="lint-groups">Lint groups</a></h3>
-<h3><a class="header" href="#lint分组" id="lint分组">lint分组</a></h3>
+<h3 id="lint-groups"><a class="header" href="#lint-groups">Lint groups</a></h3>
+<h3 id="lint分组"><a class="header" href="#lint分组">lint分组</a></h3>
 <p>lint可以被组织成不同命名的组，以便相关lint的等级可以一起调整。使用命名组相当于给出该组中的 lint。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 这允许 &quot;unused&quot;组下的所有lint。
 #[allow(unused)]
@@ -263,8 +240,7 @@ fn example() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>有一个名为 “warnings” 的特殊组，它包含 “warn”级别的所有 lint。“warnings”组会忽略属性的顺序，并对实体执行所有告警lint 检查。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">unsafe fn an_unsafe_fn() {}
 </span>// 这里的两个属性的前后顺序无所谓
@@ -277,12 +253,12 @@ fn example_err() {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#tool-lint-attributes" id="tool-lint-attributes">Tool lint attributes</a></h3>
-<h3><a class="header" href="#工具类lint属性" id="工具类lint属性">工具类lint属性</a></h3>
+<h3 id="tool-lint-attributes"><a class="header" href="#tool-lint-attributes">Tool lint attributes</a></h3>
+<h3 id="工具类lint属性"><a class="header" href="#工具类lint属性">工具类lint属性</a></h3>
 <p>可以为 <code>allow</code>、<code>warn</code>、<code>deny</code> 或 <code>forbid</code> 这些调整代码检查级别的 lint属性添加/输入基于特定工具的 lint。注意该工具在当前作用域内可用才会起效。</p>
 <p>工具类lint 只有在相关工具处于活动状态时才会做相应的代码模式检查。如果一个 lint级别属性，如 <code>allow</code>，引用了一个不存在的工具类lint，编译器将不会去警告不存在该 lint类，只有使用了该工具（，才会报告该 lint类不存在）。</p>
 <p>在其他方面，这些工具类lint 就跟像常规的 lint 一样：</p>
-<pre><pre class="playground"><code class="language-rust">// 将 clippy 的整个 `pedantic` lint组设置为告警级别
+<pre><pre class="playground"><code class="language-rust edition2021">// 将 clippy 的整个 `pedantic` lint组设置为告警级别
 #![warn(clippy::pedantic)]
 // 使来自 clippy的 `filter_map` lint 的警告静音
 #![allow(clippy::filter_map)]
@@ -300,8 +276,8 @@ fn foo() {
 <blockquote>
 <p>注意：<code>rustc</code> 当前识别的工具类lint 有 &quot;<a href="https://github.com/rust-lang/rust-clippy">clippy</a>&quot; 和 &quot;<a href="https://doc.rust-lang.org/rustdoc/lints.html">rustdoc</a>&quot;。</p>
 </blockquote>
-<h2><a class="header" href="#the-deprecated-attribute" id="the-deprecated-attribute">The <code>deprecated</code> attribute</a></h2>
-<h2><a class="header" href="#deprecated属性" id="deprecated属性"><code>deprecated</code>属性</a></h2>
+<h2 id="the-deprecated-attribute"><a class="header" href="#the-deprecated-attribute">The <code>deprecated</code> attribute</a></h2>
+<h2 id="deprecated属性"><a class="header" href="#deprecated属性"><code>deprecated</code>属性</a></h2>
 <p><em><code>deprecated</code>属性</em>将程序项标记为已弃用。<code>rustc</code> 将对被 <code>#[deprecated]</code> 限定的程序项的行为发出警告。<code>rustdoc</code> 将特别展示已弃用的程序项，包括展示 <code>since</code> 版本和 <code>note</code> 提示（如果可用）。</p>
 <p><code>deprecated</code>属性有几种形式：</p>
 <ul>
@@ -317,8 +293,7 @@ fn foo() {
 <p><code>deprecated</code>属性可以应用于任何<a href="../items.html">程序项</a>，<a href="../items/traits.html">trait项</a>，<a href="../items/enumerations.html">枚举变体</a>，<a href="../items/structs.html">结构体字段</a>，<a href="../items/external-blocks.html">外部块项</a>，或<a href="../macros-by-example.html">宏定义</a>。它不能应用于 <a href="../items/implementations.html#trait-implementations">trait实现项</a>。当应用于包含其他程序项的程序项时，如<a href="../items/modules.html">模块</a>或<a href="../items/implementations.html">实现</a>，所有子程序项都继承此 deprecation属性。</p>
 <!-- 注意: 它只被 trait实现(AnnotationKind::Prohibited)拒绝。在这些之外的所有其他位置，它会被静默忽略。应用于元组结构体的字段时，此属性直接也被忽略。-->
 <p>这有个例子：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[deprecated(since = &quot;5.2&quot;, note = &quot;foo was rarely used. Users should instead use bar&quot;)]
 pub fn foo() {}
@@ -327,13 +302,12 @@ pub fn bar() {}
 <span class="boring">}
 </span></code></pre></pre>
 <p><a href="https://github.com/rust-lang/rfcs/blob/master/text/1270-deprecation.md">RFC</a> 内有动机说明和更多细节。</p>
-<h2><a class="header" href="#the-must_use-attribute" id="the-must_use-attribute">The <code>must_use</code> attribute</a></h2>
-<h2><a class="header" href="#must_use属性" id="must_use属性"><code>must_use</code>属性</a></h2>
+<h2 id="the-must_use-attribute"><a class="header" href="#the-must_use-attribute">The <code>must_use</code> attribute</a></h2>
+<h2 id="must_use属性"><a class="header" href="#must_use属性"><code>must_use</code>属性</a></h2>
 <p><em><code>must_use</code>属性</em> 用于在值未被“使用”时发出诊断告警。它可以应用于用户定义的复合类型（<a href="../items/structs.html">结构体(<code>struct</code>)</a>、<a href="../items/enumerations.html">枚举(<code>enum</code>)</a> 和 <a href="../items/unions.html">联合体(<code>union</code>)</a>）、<a href="../items/functions.html">函数</a>和 <a href="../items/traits.html">trait</a>。</p>
 <p><code>must_use</code>属性可以使用<a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法添加一些附加消息，如 <code>#[must_use = &quot;example message&quot;]</code>。该字符串将出现在告警消息里。</p>
 <p>当用户定义的复合类型上使用了此属性，如果有该类型的<a href="../expressions.html">表达式</a>正好是<a href="../statements.html#expression-statements">表达式语句</a>的表达式，那就违反了 <code>unused_must_use</code> 这个 lint。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[must_use]
 struct MustUse {
@@ -349,8 +323,7 @@ MustUse::new();
 <span class="boring">}
 </span></code></pre></pre>
 <p>当函数上使用了此属性，如果此函数被当作<a href="../statements.html#expression-statements">表达式语句</a>的<a href="../expressions.html">表达式</a>的<a href="../expressions/call-expr.html">调用表达式</a>，那就违反了 <code>unused_must_use</code> lint。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[must_use]
 fn five() -&gt; i32 { 5i32 }
@@ -360,8 +333,7 @@ five();
 <span class="boring">}
 </span></code></pre></pre>
 <p>当在 <a href="../items/traits.html">trait声明</a>中使用了此属性时，如果<a href="../statements.html#expression-statements">表达式语句</a>的<a href="../expressions/call-expr.html">调用表达式</a>返回了此 trait 的 <a href="../types/impl-trait.html">trait实现(impl trait)</a>或 <a href="../types/trait-object.html">trait对象（dyn trait）</a> ，那这种情况也违反 <code>unused_must_use</code> lint。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[must_use]
 trait Critical {}
@@ -376,8 +348,7 @@ get_critical();
 <span class="boring">}
 </span></code></pre></pre>
 <p>当 trait声明中的一函数上使用了此属性时，如果调用表达式是此 trait 的某个实现中的该函数时，该行为同样违反 <code>unused_must_use</code> lint。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Trait {
     #[must_use]
@@ -395,8 +366,7 @@ impl Trait for i32 {
 <p>当在 trait实现里的函数上使用 <code>must_use</code>属性时，此属性将被忽略。</p>
 <blockquote>
 <p>注意：包含了此（属性应用的程序项产生的值）的普通空操作(no-op)表达式不会违反该 lint。例如，将此类值包装在没有实现 <a href="../special-types-and-traits.html#drop"><code>Drop</code></a> 的类型中，然后不使用该类型，并成为未使用的<a href="../expressions/block-expr.html">块表达式</a>的最终表达式(final expression)。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[must_use]
 fn five() -&gt; i32 { 5i32 }
@@ -414,8 +384,7 @@ match true {
 </blockquote>
 <blockquote>
 <p>注意：当一个必须使用的值被故意丢弃时，使用带有模式 <code>_</code> 的<a href="../statements.html#let-statements">let语句</a>是惯用的方法。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[must_use]
 fn five() -&gt; i32 { 5i32 }
@@ -430,17 +399,13 @@ let _ = five();
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../attributes/derive.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../attributes/codegen.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -448,49 +413,35 @@ let _ = five();
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../attributes/derive.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../attributes/codegen.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>模式 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="favicon.svg">
-        
-        
         <link rel="shortcut icon" href="favicon.png">
-        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#patterns" id="patterns">Patterns</a></h1>
-<h1><a class="header" href="#模式" id="模式">模式</a></h1>
+                        <h1 id="patterns"><a class="header" href="#patterns">Patterns</a></h1>
+<h1 id="模式"><a class="header" href="#模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
 commit: 6ce7804bee418b3a5240047f5ad4f527f83eaa8b <br />
@@ -201,8 +182,7 @@ commit: 6ce7804bee418b3a5240047f5ad4f527f83eaa8b <br />
 <li>将对 <code>name</code>字段的引用绑定到给定变量 <code>person_name</code> 上。</li>
 <li>忽略 <code>person</code> 的其余字段。其余字段可以有任何值，并且不会绑定到任何变量上。</li>
 </ul>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Car;
 </span><span class="boring">struct Computer;
@@ -239,11 +219,10 @@ commit: 6ce7804bee418b3a5240047f5ad4f527f83eaa8b <br />
 <li><a href="expressions/loop-expr.html#predicate-pattern-loops"><code>while let</code>表达式</a></li>
 <li><a href="expressions/loop-expr.html#iterator-loops"><code>for</code>表达式</a></li>
 </ul>
-<h2><a class="header" href="#destructuring" id="destructuring">Destructuring</a></h2>
-<h2><a class="header" href="#解构" id="解构">解构</a></h2>
+<h2 id="destructuring"><a class="header" href="#destructuring">Destructuring</a></h2>
+<h2 id="解构"><a class="header" href="#解构">解构</a></h2>
 <p>模式可用于<em>解构</em><a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/enumerations.html">枚举(<code>enum</code>)</a>和<a href="types/tuple.html">元组</a>。解构将一个值分解成它的组件组成，使用的句法与创建此类值时的几乎相同。在<a href="glossary.html#scrutinee">检验对象</a>表达式的类型为结构体(<code>struct</code>)、枚举(<code>enum</code>)或元组(<code>tuple</code>)的模式中，占位符(<code>_</code>) 代表<em>一个</em>数据字段，而通配符 <code>..</code> 代表特定变量/变体(variant)的<em>所有</em>剩余字段。当使用字段的名称（而不是字段序号）来解构数据结构时，允许将 <code>fieldname</code> 当作 <code>fieldname: fieldname</code> 的简写形式书写。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">enum Message {
 </span><span class="boring">    Quit,
@@ -263,11 +242,10 @@ commit: 6ce7804bee418b3a5240047f5ad4f527f83eaa8b <br />
 };
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#refutability" id="refutability">Refutability</a></h2>
-<h2><a class="header" href="#可反驳性" id="可反驳性">可反驳性</a></h2>
+<h2 id="refutability"><a class="header" href="#refutability">Refutability</a></h2>
+<h2 id="可反驳性"><a class="header" href="#可反驳性">可反驳性</a></h2>
 <p>当一个模式有可能与它所匹配的值不匹配时，我们就说它是<em>可反驳型的(refutable)</em>。也就是说，*不可反驳型(irrefutable)*模式总是能与它们所匹配的值匹配成功。例如：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let (x, y) = (1, 2);               // &quot;(x, y)&quot; 是一个不可反驳型模式
 
@@ -278,8 +256,8 @@ if let (a, 3) = (1, 2) {           // &quot;(a, 3)&quot; 是可反驳型的, 将
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#literal-patterns" id="literal-patterns">Literal patterns</a></h2>
-<h2><a class="header" href="#字面量模式" id="字面量模式">字面量模式</a></h2>
+<h2 id="literal-patterns"><a class="header" href="#literal-patterns">Literal patterns</a></h2>
+<h2 id="字面量模式"><a class="header" href="#字面量模式">字面量模式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>LiteralPattern</em> :<br />
@@ -299,8 +277,7 @@ if let (a, 3) = (1, 2) {           // &quot;(a, 3)&quot; 是可反驳型的, 将
 </div>
 <p>字面量模式总是可以反驳型的。</p>
 <p>示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>for i in -2..5 {
     match i {
@@ -312,8 +289,8 @@ if let (a, 3) = (1, 2) {           // &quot;(a, 3)&quot; 是可反驳型的, 将
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#identifier-patterns" id="identifier-patterns">Identifier patterns</a></h2>
-<h2><a class="header" href="#标识符模式" id="标识符模式">标识符模式</a></h2>
+<h2 id="identifier-patterns"><a class="header" href="#identifier-patterns">Identifier patterns</a></h2>
+<h2 id="标识符模式"><a class="header" href="#标识符模式">标识符模式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>IdentifierPattern</em> :<br />
@@ -321,8 +298,7 @@ if let (a, 3) = (1, 2) {           // &quot;(a, 3)&quot; 是可反驳型的, 将
 </blockquote>
 <p>标识符模式将它们匹配的值绑定到一个变量上。此标识符在该模式中必须是唯一的。该变量会在作用域中遮蔽任何同名的变量。这种绑定的作用域取决于使用模式的上下文（例如 <code>let</code>绑定或匹配臂(<code>match</code> arm)<sup class="footnote-reference"><a href="#译注1">1</a></sup>）。</p>
 <p>标识符模式只能包含一个标识符（也可能前带一个 <code>mut</code>），能匹配任何值，并将其绑定到该标识符上。最常见的标识符模式应用场景就是用在变量声明上和用在函数（包括闭包）的参数上。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut variable = 10;
 fn sum(x: i32, y: i32) -&gt; i32 {
@@ -331,8 +307,7 @@ fn sum(x: i32, y: i32) -&gt; i32 {
 </span><span class="boring">}
 </span></code></pre></pre>
 <p>要将模式匹配到的值绑定到变量上，也可使用句法 <code>variable @ subpattern</code>。例如，下面示例中将值 2 绑定到 <code>e</code> 上（不是整个区间(range)：这里的区间是一个区间子模式(range subpattern)）。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 2;
 
@@ -343,8 +318,7 @@ match x {
 <span class="boring">}
 </span></code></pre></pre>
 <p>默认情况下，标识符模式里变量会和匹配到的值的一个拷贝副本绑定，或匹配值自身移动过来和变量完成绑定，具体是使用拷贝语义还是移动语义取决于匹配到的值是否实现了 <a href="special-types-and-traits.html#copy"><code>Copy</code></a>。也可以通过使用关键字 <code>ref</code> 将变量和值的引用绑定，或者使用 <code>ref mut</code> 将变量和值的可变引用绑定。示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">let a = Some(10);
 </span>match a {
@@ -359,8 +333,7 @@ match a {
 <span class="boring">}
 </span></code></pre></pre>
 <p>在第一个匹配表达式中，值被拷贝（或移动）（到变量 <code>value</code> 上）。在第二个匹配中，对相同内存位置的引用被绑定到变量上。之所以需要这种句法，是因为在解构子模式(destructuring subpatterns)里，操作符 <code>&amp;</code> 不能应用在值的字段上。例如，以下内容无效：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Person {
 </span><span class="boring">   name: String,
@@ -371,8 +344,7 @@ match a {
 <span class="boring">}
 </span></code></pre></pre>
 <p>要使其有效，请按如下方式编写代码：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Person {
 </span><span class="boring">   name: String,
@@ -385,11 +357,10 @@ match a {
 <p>这里，<code>ref</code> 不是被匹配的一部分。这里它唯一的目的就是使变量和匹配值的引用绑定起来，而不是潜在地拷贝或移动匹配到的内容。</p>
 <p><a href="#path-patterns">路径模式(Path pattern)</a>优先于标识符模式。如果给某个标识符指定了 <code>ref</code> 或 <code>ref mut</code>，同时该标识符又遮蔽了某个常量，这会导致错误。</p>
 <p>如果 <code>@</code>子模式是不可反驳型的或未指定子模式，则标识符模式是不可反驳型的。</p>
-<h3><a class="header" href="#binding-modes" id="binding-modes">Binding modes</a></h3>
-<h3><a class="header" href="#绑定方式" id="绑定方式">绑定方式</a></h3>
+<h3 id="binding-modes"><a class="header" href="#binding-modes">Binding modes</a></h3>
+<h3 id="绑定方式"><a class="header" href="#绑定方式">绑定方式</a></h3>
 <p>基于人类工程学的考虑，为了让引用和匹配值的绑定更容易一些，模式会自动选择不同的<em>绑定方式</em>。当引用值与非引用模式匹配时，这将自动地被视为 <code>ref</code> 或 <code>ref mut</code> 绑定方式。示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x: &amp;Option&lt;i32&gt; = &amp;Some(3);
 if let Some(y) = x {
@@ -402,8 +373,7 @@ if let Some(y) = x {
 <p>移动语义的绑定方式和引用语义的绑定方式可以在同一个模式中混合使用，这样做会导致绑定对象的部分被移走，并且之后无法再使用该对象。这只适用于类型无法拷贝的情况下。</p>
 <p>下面的示例中，<code>name</code> 被移出了 <code>person</code>，因此如果再试图把 <code>person</code> 作为一个整体使用，或再次使用 <code>person.name</code>，将会因为*部分移出(partial move)*的问题而报错。</p>
 <p>示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Person {
 </span><span class="boring">   name: String,
@@ -414,8 +384,8 @@ if let Some(y) = x {
 let Person { name, ref age } = person;
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#wildcard-pattern" id="wildcard-pattern">Wildcard pattern</a></h2>
-<h2><a class="header" href="#通配符模式" id="通配符模式">通配符模式</a></h2>
+<h2 id="wildcard-pattern"><a class="header" href="#wildcard-pattern">Wildcard pattern</a></h2>
+<h2 id="通配符模式"><a class="header" href="#通配符模式">通配符模式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>WildcardPattern</em> :<br />
@@ -423,8 +393,7 @@ let Person { name, ref age } = person;
 </blockquote>
 <p><em>通配符模式</em>（下划线符号）能与任何值匹配。常用它来忽略那些无关紧要的值。在其他模式中使用该模式时，它匹配单个数据字段（与和匹配所有其余字段的 <code>..</code> 相对）。与标识符模式不同，它不会复制、移动或借用它匹配的值。</p>
 <p>示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">let x = 20;
 </span>let (a, _) = (10, x);   // x 一定会被 _ 匹配上
@@ -452,8 +421,8 @@ let real_part = |a: f64, _: f64| { a };
 <span class="boring">}
 </span></code></pre></pre>
 <p>通配符模式总是不可反驳型的。</p>
-<h2><a class="header" href="#rest-patterns" id="rest-patterns">Rest patterns</a></h2>
-<h2><a class="header" href="#剩余模式" id="剩余模式">剩余模式</a></h2>
+<h2 id="rest-patterns"><a class="header" href="#rest-patterns">Rest patterns</a></h2>
+<h2 id="剩余模式"><a class="header" href="#剩余模式">剩余模式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>RestPattern</em> :<br />
@@ -462,8 +431,7 @@ let real_part = |a: f64, _: f64| { a };
 <p><em>剩余模式</em>（<code>..</code> token）充当匹配长度可变的模式(variable-length pattern)，它匹配之前之后没有匹配的零个或多个元素。它只能在<a href="#tuple-patterns">元组</a>模式、<a href="#tuple-struct-patterns">元组结构体</a>模式和<a href="#slice-patterns">切片</a>模式中使用，并且只能作为这些模式中的一个元素出现一次。当作为<a href="#identifier-patterns">标识符模式</a>的子模式时，它也可出现在<a href="#slice-patterns">切片模式</a>里。</p>
 <p>剩余模式总是不可反驳型的。</p>
 <p>示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">let words = vec![&quot;a&quot;, &quot;b&quot;, &quot;c&quot;];
 </span><span class="boring">let slice = &amp;words[..];
@@ -502,8 +470,8 @@ match tuple {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#range-patterns" id="range-patterns">Range patterns</a></h2>
-<h2><a class="header" href="#区间模式" id="区间模式">区间模式</a></h2>
+<h2 id="range-patterns"><a class="header" href="#range-patterns">Range patterns</a></h2>
+<h2 id="区间模式"><a class="header" href="#区间模式">区间模式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>RangePattern</em> :<br />
@@ -534,8 +502,7 @@ match tuple {
 <li>浮点类型（f32 和 f64）。这已被弃用，在未来版本的 Rust 中将不可用（参见 <a href="https://github.com/rust-lang/rust/issues/41620">issue #41620</a>）。</li>
 </ul>
 <p>示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">let c = 'f';
 </span>let valid_variable = match c {
@@ -613,8 +580,8 @@ println!(&quot;{}&quot;, match 0xfacade {
 <blockquote>
 <p><strong>版次差异</strong>：在2021版之前，在闭区间模式里，可以使用 <code>...</code> 来表达 <code>..=</code> 的语义。</p>
 </blockquote>
-<h2><a class="header" href="#reference-patterns" id="reference-patterns">Reference patterns</a></h2>
-<h2><a class="header" href="#引用模式" id="引用模式">引用模式</a></h2>
+<h2 id="reference-patterns"><a class="header" href="#reference-patterns">Reference patterns</a></h2>
+<h2 id="引用模式"><a class="header" href="#引用模式">引用模式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ReferencePattern</em> :<br />
@@ -622,8 +589,7 @@ println!(&quot;{}&quot;, match 0xfacade {
 </blockquote>
 <p>引用模式对当前匹配的指针做解引用，从而能借用它们：</p>
 <p>例如，下面 <code>x: &amp;i32</code> 上的两个匹配是等效的：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let int_reference = &amp;3;
 
@@ -645,8 +611,8 @@ match a {
 </blockquote>
 <p>引用模式中添加关键字 <code>mut</code> 可对可变引用做解引用。引用模式中的可变性标记必须与作为匹配对象的那个引用的可变性匹配。</p>
 <p>引用模式总是不可反驳型的。</p>
-<h2><a class="header" href="#struct-patterns" id="struct-patterns">Struct patterns</a></h2>
-<h2><a class="header" href="#结构体模式" id="结构体模式">结构体模式</a></h2>
+<h2 id="struct-patterns"><a class="header" href="#struct-patterns">Struct patterns</a></h2>
+<h2 id="结构体模式"><a class="header" href="#结构体模式">结构体模式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>StructPattern</em> :<br />
@@ -671,8 +637,7 @@ match a {
 </blockquote>
 <p>结构体模式匹配与子模式定义的所有条件匹配的结构体值。它也被用来<a href="#destructuring">解构</a>结构体。</p>
 <p>在结构体模式中，结构体字段需通过名称、索引（对于元组结构体来说）来指代，或者通过使用 <code>..</code> 来忽略：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Point {
 </span><span class="boring">    x: u32,
@@ -702,8 +667,7 @@ match a {
 <span class="boring">}
 </span></code></pre></pre>
 <p>如果没使用 <code>..</code>，需要提供所有字段的详尽匹配：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Struct {
 </span><span class="boring">   a: i32,
@@ -722,8 +686,7 @@ match a {
 <span class="boring">}
 </span></code></pre></pre>
 <p><em><code>ref</code> 和/或 <code>mut</code> IDENTIFIER</em> 这样的句法格式能匹配任意值，并将其绑定到与给定字段同名的变量上。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Struct {
 </span><span class="boring">   a: i32,
@@ -736,8 +699,8 @@ match a {
 <span class="boring">}
 </span></code></pre></pre>
 <p>当一个结构体模式的子模式是可反驳型的，那这个结构体模式就是可反驳型的。</p>
-<h2><a class="header" href="#tuple-struct-patterns" id="tuple-struct-patterns">Tuple struct patterns</a></h2>
-<h2><a class="header" href="#元组结构体模式" id="元组结构体模式">元组结构体模式</a></h2>
+<h2 id="tuple-struct-patterns"><a class="header" href="#tuple-struct-patterns">Tuple struct patterns</a></h2>
+<h2 id="元组结构体模式"><a class="header" href="#元组结构体模式">元组结构体模式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>TupleStructPattern</em> :<br />
@@ -747,8 +710,8 @@ match a {
 </blockquote>
 <p>元组结构体模式匹配元组结构体值和枚举值，这些值将与该模式的子模式定义的所有条件进行匹配。它还被用于<a href="#destructuring">解构</a>元组结构体值或枚举值。</p>
 <p>当元组结构体模式的一个子模式是可反驳型的，则该元组结构体模式就是可反驳型的。</p>
-<h2><a class="header" href="#tuple-patterns" id="tuple-patterns">Tuple patterns</a></h2>
-<h2><a class="header" href="#元组模式" id="元组模式">元组模式</a></h2>
+<h2 id="tuple-patterns"><a class="header" href="#tuple-patterns">Tuple patterns</a></h2>
+<h2 id="元组模式"><a class="header" href="#元组模式">元组模式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>TuplePattern</em> :<br />
@@ -762,8 +725,7 @@ match a {
 <p>内部只带有一个<a href="#rest-patterns">剩余模式</a>(<em>RestPattern</em>)的元组句法形式 <code>(..)</code> 是一种内部不需要逗号分割的特殊匹配形式，它可以匹配任意长度的元组。</p>
 <p>当元组模式的一个子模式是可反驳型的，那该元组模式就是可反驳型的。</p>
 <p>使用元组模式的示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let pair = (10, &quot;ten&quot;);
 let (a, b) = pair;
@@ -772,16 +734,15 @@ assert_eq!(a, 10);
 assert_eq!(b, &quot;ten&quot;);
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#grouped-patterns" id="grouped-patterns">Grouped patterns</a></h2>
-<h2><a class="header" href="#分组模式" id="分组模式">分组模式</a></h2>
+<h2 id="grouped-patterns"><a class="header" href="#grouped-patterns">Grouped patterns</a></h2>
+<h2 id="分组模式"><a class="header" href="#分组模式">分组模式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>GroupedPattern</em> :<br />
    <code>(</code> <a href="#patterns"><em>Pattern</em></a> <code>)</code></p>
 </blockquote>
 <p>将模式括在圆括号内可用来显式控制复合模式的优先级。例如，像 <code>&amp;0..=5</code> 这样的引用模式和区间模式相邻就会引起歧义，这时可以用圆括号来消除歧义。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let int_reference = &amp;3;
 match int_reference {
@@ -790,8 +751,8 @@ match int_reference {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#slice-patterns" id="slice-patterns">Slice patterns</a></h2>
-<h2><a class="header" href="#切片模式" id="切片模式">切片模式</a></h2>
+<h2 id="slice-patterns"><a class="header" href="#slice-patterns">Slice patterns</a></h2>
+<h2 id="切片模式"><a class="header" href="#切片模式">切片模式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>SlicePattern</em> :<br />
@@ -800,8 +761,7 @@ match int_reference {
    <a href="#patterns"><em>Pattern</em></a> (<code>,</code> <a href="#patterns"><em>Pattern</em></a>)<sup>*</sup> <code>,</code><sup>?</sup></p>
 </blockquote>
 <p>切片模式可以匹配固定长度的数组和动态长度的切片。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 固定长度
 let arr = [1, 2, 3];
@@ -811,8 +771,7 @@ match arr {
 };
 <span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 动态长度
 let v = vec![1, 2, 3];
@@ -826,8 +785,8 @@ match v[..] {
 <p>在匹配数组时，只要每个元素是不可反驳型的，切片模式就是不可反驳型的。当匹配切片时，只有单个 <code>..</code> <a href="#rest-patterns">剩余模式</a>或带有 <code>..</code>（剩余模式）作为子模式的<a href="#identifier-patterns">标识符模式</a>的情况才是不可反驳型的。</p>
 <p>对于匹配切片内的数值，像 <code>a..</code> 这样的半开区间模式必须使用使用圆括号包裹起来，即 <code>(a..)</code> 这样，这样是显式提醒它是用来匹配切片内一个单独的值的。
 在 Rust 的未来的版本中有可能会提供不用圆括号包裹的区间匹配模式作为替代选项。</p>
-<h2><a class="header" href="#path-patterns" id="path-patterns">Path patterns</a></h2>
-<h2><a class="header" href="#路径模式" id="路径模式">路径模式</a></h2>
+<h2 id="path-patterns"><a class="header" href="#path-patterns">Path patterns</a></h2>
+<h2 id="路径模式"><a class="header" href="#路径模式">路径模式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>PathPattern</em> :<br />
@@ -844,11 +803,11 @@ match v[..] {
 <p>限定路径模式只能指向关联常量。</p>
 <p>常量不能是联合体类型。结构体常量和枚举常量必须带有 <code>#[derive(PartialEq, Eq)]</code> 属性（不只是实现）。</p>
 <p>当路径模式指向结构体或枚举变体(枚举只有一个变体)或类型为不可反驳型的常量时，该路径模式是不可反驳型的。当路径模式指向的是可反驳型常量或带有多个变体的枚举时，该路径模式是可反驳型的。</p>
-<h2><a class="header" href="#or-patterns" id="or-patterns">Or-patterns</a></h2>
-<h2><a class="header" href="#or模式" id="or模式">or模式</a></h2>
+<h2 id="or-patterns"><a class="header" href="#or-patterns">Or-patterns</a></h2>
+<h2 id="or模式"><a class="header" href="#or模式">or模式</a></h2>
 <p>_or模式_是能匹配两个或多个并列子模式（例如：<code>A | B | C</code>）中的一个的模式。此模式可以任意嵌套。除了 <code>let</code>绑定和函数参数（包括闭包参数）中的模式（此时句法上使用 _PatternNoTopAlt_产生式），or模式在句法上允许在任何其他模式出现的地方出现（这些模式句法上使用 _Pattern_产生式）。</p>
-<h3><a class="header" href="#static-semantics" id="static-semantics">Static semantics</a></h3>
-<h3><a class="header" href="#静态语义" id="静态语义">静态语义</a></h3>
+<h3 id="static-semantics"><a class="header" href="#static-semantics">Static semantics</a></h3>
+<h3 id="静态语义"><a class="header" href="#静态语义">静态语义</a></h3>
 <ol>
 <li>
 <p>假定在某个代码深度上给定任意模式 <code>p</code> 和 <code>q</code>，现假定它们组成模式 <code>p | q</code>，则以下情况会导致这种组成的非法：</p>
@@ -867,13 +826,13 @@ match v[..] {
 </li>
 </ol>
 <p>注意这里的*“构造器”*这个用词，我们并没有特定提到它是元组结构模式，因为它本意是指任何能够生成类型的模式。这包括枚举变量、元组结构、具有命名字段的结构、数组、元组和切片。</p>
-<h3><a class="header" href="#dynamic-semantics" id="dynamic-semantics">Dynamic semantics</a></h3>
-<h3><a class="header" href="#动态语义" id="动态语义">动态语义</a></h3>
+<h3 id="dynamic-semantics"><a class="header" href="#dynamic-semantics">Dynamic semantics</a></h3>
+<h3 id="动态语义"><a class="header" href="#动态语义">动态语义</a></h3>
 <ol>
 <li>检查对象表达式(scrutinee expression) <code>e_s</code> 与深度为 <code>d</code> 的模式 <code>c(p | q, ..rest)</code>（这里<code>c</code>是某种构造器，<code>p</code> 和 <code>q</code> 是任意的模式，<code>rest</code> 是 <code>c</code>构造器的任意的可选因子）进行匹配的动态语义与此表达式与 <code>c(p, ..rest) | c(q, ..rest)</code> 进行匹配的语法定义相同。</li>
 </ol>
-<h3><a class="header" href="#precedence-with-other-undelimited-patterns" id="precedence-with-other-undelimited-patterns">Precedence with other undelimited patterns</a></h3>
-<h3><a class="header" href="#无分解符模式的优先级" id="无分解符模式的优先级">无分解符模式的优先级</a></h3>
+<h3 id="precedence-with-other-undelimited-patterns"><a class="header" href="#precedence-with-other-undelimited-patterns">Precedence with other undelimited patterns</a></h3>
+<h3 id="无分解符模式的优先级"><a class="header" href="#无分解符模式的优先级">无分解符模式的优先级</a></h3>
 <p>如本章其他部分所示，有几种类型的模式在语法上没有定义分界符，它们包括标识符模式、引用模式和 or模式。它们组合在一起时，or模式的优先级总是最低的。这允许我们为将来可能的类型特性保留语法空间，同时也可以减少歧义。例如，<code>x @ A(..) | B(..)</code> 将导致一个错误，即 <code>x</code> 不是在所有模式中都存在绑定关系； <code>&amp;A(x) | B(x)</code>将导致不同子模式中的 <code>x</code> 之的类型不匹配。</p>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
 <p>请仔细参研<a href="expressions/match-expr.html">匹配表达式</a>中的 MatchExpression产生式，搞清楚匹配臂(MatchArm)的位置。</p>
@@ -886,17 +845,13 @@ match v[..] {
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="expressions/underscore-expr.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="type-system.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -904,49 +859,35 @@ match v[..] {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="expressions/underscore-expr.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="type-system.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

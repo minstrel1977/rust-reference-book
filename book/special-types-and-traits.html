@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>特殊类型和 trait - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="favicon.svg">
-        
-        
         <link rel="shortcut icon" href="favicon.png">
-        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,39 +146,39 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#special-types-and-traits" id="special-types-and-traits">Special types and traits</a></h1>
-<h1><a class="header" href="#特殊类型和-trait" id="特殊类型和-trait">特殊类型和 trait</a></h1>
+                        <h1 id="special-types-and-traits"><a class="header" href="#special-types-and-traits">Special types and traits</a></h1>
+<h1 id="特殊类型和-trait"><a class="header" href="#特殊类型和-trait">特殊类型和 trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/special-types-and-traits.md">special-types-and-traits.md</a><br />
 commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 <br />
 本章译文最后维护日期：2022-04-29</p>
 </blockquote>
 <p><a href="https://doc.rust-lang.org/std/index.html">标准库</a>中的某些类型和 trait 在 Rust 编译器中也直接能用。本章就阐述了这些类型和 trait 的特殊特性。</p>
-<h2><a class="header" href="#boxt" id="boxt"><code>Box&lt;T&gt;</code></a></h2>
+<h2 id="boxt"><a class="header" href="#boxt"><code>Box&lt;T&gt;</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box&lt;T&gt;</code></a> 有一些特殊的特性，Rust 目前还不允许用户定义类型时使用。</p>
 <ul>
 <li><code>Box&lt;T&gt;</code> 的[解引用操作符]会产生一个可从中移出值的内存位置<sup class="footnote-reference"><a href="#译注1">1</a></sup>。这（种特殊性）意味着应用在 <code>Box&lt;T&gt;</code> 上的 <code>*</code>运算符和 <code>Box&lt;T&gt;</code> 的析构函数都是语言内置的。</li>
 <li><a href="items/associated-items.html#associated-functions-and-methods">方法</a>可以使用 <code>Box&lt;Self&gt;</code> 作为接受者。</li>
 <li><code>Box&lt;T&gt;</code> 可以绕过<a href="items/implementations.html#trait-implementation-coherence">孤儿规则(orphan rules)</a>，与 <code>T</code> 在同一 crate 中实现同一 trait，其他泛型类型无法绕过。</li>
 </ul>
-<h2><a class="header" href="#rct" id="rct"><code>Rc&lt;T&gt;</code></a></h2>
+<h2 id="rct"><a class="header" href="#rct"><code>Rc&lt;T&gt;</code></a></h2>
 <p><a href="items/associated-items.html#associated-functions-and-methods">方法</a>可以使用 <a href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc&lt;Self&gt;</code></a> 作为接受者。</p>
-<h2><a class="header" href="#arct" id="arct"><code>Arc&lt;T&gt;</code></a></h2>
+<h2 id="arct"><a class="header" href="#arct"><code>Arc&lt;T&gt;</code></a></h2>
 <p><a href="items/associated-items.html#associated-functions-and-methods">方法</a>可以使用 <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc&lt;Self&gt;</code></a> 作为接受者。</p>
-<h2><a class="header" href="#pinp" id="pinp"><code>Pin&lt;P&gt;</code></a></h2>
+<h2 id="pinp"><a class="header" href="#pinp"><code>Pin&lt;P&gt;</code></a></h2>
 <p><a href="items/associated-items.html#associated-functions-and-methods">方法</a>可以使用 <a href="https://doc.rust-lang.org/std/pin/struct.Pin.html"><code>Pin&lt;P&gt;</code></a> 作为接受者。</p>
-<h2><a class="header" href="#unsafecellt" id="unsafecellt"><code>UnsafeCell&lt;T&gt;</code></a></h2>
+<h2 id="unsafecellt"><a class="header" href="#unsafecellt"><code>UnsafeCell&lt;T&gt;</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>std::cell::UnsafeCell&lt;T&gt;</code></a> 用于<a href="interior-mutability.html">内部可变性</a>。它确保编译器不会对此类类型执行不正确的优化。它还能确保具有内部可变类型的<a href="items/static-items.html">静态(<code>static</code>)项</a>不会被放在标记为只读的内存中。</p>
-<h2><a class="header" href="#phantomdatat" id="phantomdatat"><code>PhantomData&lt;T&gt;</code></a></h2>
+<h2 id="phantomdatat"><a class="header" href="#phantomdatat"><code>PhantomData&lt;T&gt;</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/marker/struct.PhantomData.html"><code>std::marker::PhantomData&lt;T&gt;</code></a> 是一个零尺寸零的、最小对齐量的、被认为拥有(own) <code>T</code> 的类型，这个类型存在目的是应用在确定<a href="subtyping.html#variance">型变</a>关系、<a href="https://doc.rust-lang.org/nomicon/dropck.html">销毁检查</a>和<a href="#auto-traits">自动trait</a> 中的。</p>
-<h2><a class="header" href="#operator-traits" id="operator-traits">Operator Traits</a></h2>
-<h2><a class="header" href="#运算符操作符trait" id="运算符操作符trait">运算符/操作符trait</a></h2>
+<h2 id="operator-traits"><a class="header" href="#operator-traits">Operator Traits</a></h2>
+<h2 id="运算符操作符trait"><a class="header" href="#运算符操作符trait">运算符/操作符trait</a></h2>
 <p><a href="https://doc.rust-lang.org/std/ops/index.html"><code>std::ops</code></a> 和 <a href="https://doc.rust-lang.org/std/cmp/index.html"><code>std::cmp</code></a> 中的 trait 看用于重载 Rust 的<a href="expressions/operator-expr.html">运算符/操作符</a>、<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">索引表达式</a>和<a href="expressions/call-expr.html">调用表达式</a>。</p>
-<h2><a class="header" href="#deref-and-derefmut" id="deref-and-derefmut"><code>Deref</code> and <code>DerefMut</code></a></h2>
+<h2 id="deref-and-derefmut"><a class="header" href="#deref-and-derefmut"><code>Deref</code> and <code>DerefMut</code></a></h2>
 <p>除了重载一元 <code>*</code>运算符外，<a href="https://doc.rust-lang.org/std/ops/trait.Deref.html"><code>Deref</code></a> 和 <a href="https://doc.rust-lang.org/std/ops/trait.DerefMut.html"><code>DerefMut</code></a> 也用于<a href="expressions/method-call-expr.html">方法解析(method resolution)</a>和<a href="type-coercions.html#coercion-types">利用 <code>Deref</code> 达成自动强转</a>。</p>
-<h2><a class="header" href="#drop" id="drop"><code>Drop</code></a></h2>
+<h2 id="drop"><a class="header" href="#drop"><code>Drop</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> trait 提供了一个<a href="destructors.html">析构函数</a>，每当要销毁此类型的值时就会运行它。</p>
-<h2><a class="header" href="#copy" id="copy"><code>Copy</code></a></h2>
+<h2 id="copy"><a class="header" href="#copy"><code>Copy</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/marker/trait.Copy.html"><code>Copy</code></a> trait 改变实现它的类型的语义。其类型实现了 <code>Copy</code> 的值在赋值时将被复制而不是移动。</p>
 <p>只能为未实现 <code>Drop</code> trait 且字段都是 <code>Copy</code> 的类型实现 <code>Copy</code>。<sup class="footnote-reference"><a href="#译注2">2</a></sup><br />
 对于枚举，这意味着所有变体的所有字段都必须是 <code>Copy</code> 的。<br />
@@ -209,19 +190,19 @@ commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 <br />
 <li>[函数项][function item]</li>
 <li>不捕获环境变量或只捕获 <code>Copy</code>类型变量的<a href="types/closure.html">闭包</a></li>
 </ul>
-<h2><a class="header" href="#clone" id="clone"><code>Clone</code></a></h2>
+<h2 id="clone"><a class="header" href="#clone"><code>Clone</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/clone/trait.Clone.html"><code>Clone</code></a> trait 是 <code>Copy</code> 的超类trait，所以它也需要编译器生成实现。它被编译器实现给了以下类型：</p>
 <ul>
 <li>实现了内置的 <code>Copy</code> trait 的类型（见上面）</li>
 <li>由 <code>Clone</code> 类型的元素组成的<a href="types/tuple.html">元组</a></li>
 </ul>
-<h2><a class="header" href="#send" id="send"><code>Send</code></a></h2>
+<h2 id="send"><a class="header" href="#send"><code>Send</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> trait 表明这种类型的值可以安全地从一个线程发送给另一个线程。</p>
-<h2><a class="header" href="#sync" id="sync"><code>Sync</code></a></h2>
+<h2 id="sync"><a class="header" href="#sync"><code>Sync</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> trait 表示在多个线程之间共享这种类型的值是安全的。必须为不可变<a href="items/static-items.html">静态(<code>static</code>)项</a>中使用的所有类型实现此 trait。</p>
-<h2><a class="header" href="#termination" id="termination"><code>Termination</code></a></h2>
+<h2 id="termination"><a class="header" href="#termination"><code>Termination</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/process/trait.Termination.html"><code>Termination</code></a> trait 表示 <a href="crates-and-source-files.html#main-functions">main函数</a>或 <a href="attributes/testing.html#the-test-attribute">test函数</a> 那些可被接受的返回类型。</p>
-<h2><a class="header" href="#auto-traits" id="auto-traits">Auto traits</a></h2>
+<h2 id="auto-traits"><a class="header" href="#auto-traits">Auto traits</a></h2>
 <p><a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a>、<a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a>、<a href="https://doc.rust-lang.org/std/marker/trait.Unpin.html"><code>Unpin</code></a>、<a href="https://doc.rust-lang.org/std/panic/trait.UnwindSafe.html"><code>UnwindSafe</code></a> 和 <a href="https://doc.rust-lang.org/std/panic/trait.RefUnwindSafe.html"><code>RefUnwindSafe</code></a> trait 都是<em>自动trait(auto traits)</em>。自动trait 具有特殊的属性。</p>
 <p>对于给定类型，如果没有为其显式实现或否定实现(negative implementation)某自动trait，那么编译器就会根据以下规则去自动此为类型实现该自动trait：</p>
 <ul>
@@ -233,7 +214,7 @@ commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 <br />
 <p>对于泛型类型（上面的这些内置类型也算是建立在 <code>T</code> 上的泛型），如果泛型实现在当前已够用，则编译器不会再为其实现其他的自动trait，除非它们不满足必需的 trait约束。例如，标准库在 <code>T</code> 是 <code>Sync</code> 的地方都为 <code>&amp;T</code> 实现了 <code>Send</code>；这意味着如果 <code>T</code> 是 <code>Send</code>，而不是 <code>Sync</code>，编译器就不会为 <code>&amp;T</code> 自动实现 <code>Send</code>。</p>
 <p>自动trait 也可以有否定实现，在标准库文档中表示为 <code>impl !AutoTrait for T</code>，它覆盖了自动实现。例如，<code>*mut T</code> 有一个关于 <code>Send</code> 的否定实现，所以 <code>*mut T</code> 不是 <code>Send</code> 的，即使 <code>T</code> 是。目前还没有稳下来的方法来指定其他类型的否定实现；目前否定实现只能在标准库里可以稳定使用。<sup class="footnote-reference"><a href="#译注3">3</a></sup></p>
 <p>自动trait 可以作为额外的约束添加到任何 <a href="types/trait-object.html">trait对象</a>上，尽管通常我们见到的 trait对象的类型名上一般只显示一个 trait。例如，<code>Box&lt;dyn Debug + Send + UnwindSafe&gt;</code> 就是一个有效的类型。</p>
-<h2><a class="header" href="#sized" id="sized"><code>Sized</code></a></h2>
+<h2 id="sized"><a class="header" href="#sized"><code>Sized</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/marker/trait.Sized.html"><code>Sized</code></a> trait表明这种类型的尺寸在编译时是已知的；也就是说，它不是一个<a href="dynamically-sized-types.html">动态尺寸类型</a>。
 <a href="types/parameters.html">类型参数</a>和<a href="items/associated-items.html#associated-types">关联类型</a>默认是 <code>Sized</code> 的。
 <code>Sized</code> 总是由编译器自动实现，而不是由<a href="items/implementations.html">实现(implementation items)</a>主动实现的。
@@ -252,17 +233,13 @@ commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 <br />
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="lifetime-elision.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="names.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -270,49 +247,35 @@ commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 <br />
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="lifetime-elision.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="names.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>

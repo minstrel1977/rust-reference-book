@@ -4,25 +4,17 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>循环表达式 - Rust 参考手册 - The Rust Language Reference</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="rust reference 中文, Rust 参考手册">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
@@ -30,9 +22,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -40,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/reference.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -103,8 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -120,11 +106,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
@@ -133,18 +117,16 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -152,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -165,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#loops" id="loops">Loops</a></h1>
-<h1><a class="header" href="#循环" id="循环">循环</a></h1>
+                        <h1 id="loops"><a class="header" href="#loops">Loops</a></h1>
+<h1 id="循环"><a class="header" href="#循环">循环</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/loop-expr.md">loop-expr.md</a><br />
 commit: 91b36e4ca98dbb8a465a74fc3766d8643c84a25d <br />
@@ -191,8 +172,8 @@ commit: 91b36e4ca98dbb8a465a74fc3766d8643c84a25d <br />
 </ul>
 <p>所有四种类型的循环都支持 <a href="#break-expressions"><code>break</code>表达式</a>、<a href="#continue-expressions"><code>continue</code>表达式</a>和<a href="#loop-labels">循环标签(label)</a>。
 只有 <code>loop</code>循环支持对循环体<a href="#break-and-loop-values">非平凡求值(evaluation to non-trivial values)</a><sup class="footnote-reference"><a href="#译注1">1</a></sup>。</p>
-<h2><a class="header" href="#infinite-loops" id="infinite-loops">Infinite loops</a></h2>
-<h2><a class="header" href="#无限循环" id="无限循环">无限循环</a></h2>
+<h2 id="infinite-loops"><a class="header" href="#infinite-loops">Infinite loops</a></h2>
+<h2 id="无限循环"><a class="header" href="#无限循环">无限循环</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>InfiniteLoopExpression</em> :<br />
@@ -201,8 +182,8 @@ commit: 91b36e4ca98dbb8a465a74fc3766d8643c84a25d <br />
 <p><code>loop</code>表达式会不断地重复地执行它代码体内的代码：<code>loop { println!(&quot;I live.&quot;); }</code>。</p>
 <p>没有包含关联的 <code>break</code>表达式的 <code>loop</code>表达式是发散的，并且具有类型 <a href="../types/never.html"><code>!</code></a>。
 包含相应 <code>break</code>表达式的 <code>loop</code>表达式可以结束循环，并且此表达式的类型必须与 <code>break</code>表达式的类型兼容。</p>
-<h2><a class="header" href="#predicate-loops" id="predicate-loops">Predicate loops</a></h2>
-<h2><a class="header" href="#谓词循环" id="谓词循环">谓词循环</a></h2>
+<h2 id="predicate-loops"><a class="header" href="#predicate-loops">Predicate loops</a></h2>
+<h2 id="谓词循环"><a class="header" href="#谓词循环">谓词循环</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>PredicateLoopExpression</em> :<br />
@@ -211,8 +192,7 @@ commit: 91b36e4ca98dbb8a465a74fc3766d8643c84a25d <br />
 <p><code>while</code>循环从对<a href="../types/boolean.html">布尔型</a>的循环条件操作数求值开始。
 如果循环条件操作数的求值结果为 <code>true</code>，则执行循环体块，然后控制流返回到循环条件操作数。如果循环条件操作数的求值结果为 <code>false</code>，则 <code>while</code>表达式完成。</p>
 <p>举个例子：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut i = 0;
 
@@ -222,8 +202,8 @@ while i &lt; 10 {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#predicate-pattern-loops" id="predicate-pattern-loops">Predicate pattern loops</a></h2>
-<h2><a class="header" href="#谓词模式循环" id="谓词模式循环">谓词模式循环</a></h2>
+<h2 id="predicate-pattern-loops"><a class="header" href="#predicate-pattern-loops">Predicate pattern loops</a></h2>
+<h2 id="谓词模式循环"><a class="header" href="#谓词模式循环">谓词模式循环</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <a href="#predicate-pattern-loops"><em>PredicatePatternLoopExpression</em></a> :<br />
@@ -232,8 +212,7 @@ while i &lt; 10 {
 </blockquote>
 <p><code>while let</code>循环在语义上类似于 <code>while</code>循环，但它用 <code>let</code>关键字后紧跟着一个模式、一个 <code>=</code>、一个<a href="../glossary.html#scrutinee">检验对象(scrutinee)</a>表达式和一个块表达式，来替代原来的条件表达式。
 如果检验对象表达式的值与模式匹配，则执行循环体块，然后控制流再返回到模式匹配语句。如果不匹配，则 <code>while</code>表达式执行完成。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut x = vec![1, 2, 3];
 
@@ -265,8 +244,7 @@ while let _ = 5 {
 </code></pre>
 <p>可以使用操作符 <code>|</code> 指定多个模式。
 这与匹配(<code>match</code>)表达式中的 <code>|</code> 具有相同的语义：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut vals = vec![2, 3, 1, 2, 2];
 while let Some(v @ 1) | Some(v @ 2) = vals.pop() {
@@ -276,8 +254,8 @@ while let Some(v @ 1) | Some(v @ 2) = vals.pop() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>与 <a href="if-expr.html#if-let-expressions"><code>if let</code>表达式</a>的情况一样，检验表达式不能是一个<a href="operator-expr.html#lazy-boolean-operators">懒惰布尔运算符表达式</a>。</p>
-<h2><a class="header" href="#iterator-loops" id="iterator-loops">Iterator loops</a></h2>
-<h2><a class="header" href="#迭代器循环" id="迭代器循环">迭代器循环</a></h2>
+<h2 id="iterator-loops"><a class="header" href="#iterator-loops">Iterator loops</a></h2>
+<h2 id="迭代器循环"><a class="header" href="#迭代器循环">迭代器循环</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>IteratorLoopExpression</em> :<br />
@@ -288,8 +266,7 @@ while let Some(v @ 1) | Some(v @ 2) = vals.pop() {
 如果迭代器生成一个值，该值将与此 <code>for</code>表达式提供的不可反驳型模式进行匹配，执行循环体，然后控制流返回到 <code>for</code>循环的头部。
 如果迭代器为空了，则 <code>for</code>表达式执行完成。</p>
 <p><code>for</code>循环遍历数组内容的示例：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v = &amp;[&quot;apples&quot;, &quot;cake&quot;, &quot;coffee&quot;];
 
@@ -299,8 +276,7 @@ for text in v {
 <span class="boring">}
 </span></code></pre></pre>
 <p><code>for</code>循环遍历一个整数序列的例子：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut sum = 0;
 for n in 1..11 {
@@ -338,8 +314,8 @@ assert_eq!(sum, 55);
 <p><strong>注意</strong>：上面代码里使用外层 <code>matche</code> 来确保 <code>iter_expr</code> 中的任何<a href="../expressions.html#temporaries">临时值</a>在循环结束前不会被销毁。
 <code>next</code> 先声明后赋值是因为这样能让编译器更准确地推断出类型。</p>
 </blockquote>
-<h2><a class="header" href="#loop-labels" id="loop-labels">Loop labels</a></h2>
-<h2><a class="header" href="#循环标签" id="循环标签">循环标签</a></h2>
+<h2 id="loop-labels"><a class="header" href="#loop-labels">Loop labels</a></h2>
+<h2 id="循环标签"><a class="header" href="#循环标签">循环标签</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>LoopLabel</em> :<br />
@@ -349,16 +325,15 @@ assert_eq!(sum, 55);
 这类标签被标记为循环表达式之前的生存期（标签），如 <code>'foo: loop { break 'foo; }</code>、<code>'bar: while false {}</code>、<code>'humbug: for _ in 0..0 {}</code>。
 如果循环存在标签，则嵌套在该循环中的带此标签的 <code>break</code>表达式和 <code>continue</code>表达式可以退出此标签标记的循环层或将控制流返回至此标签标记的循环层的头部。
 具体请参见后面的 <a href="#break-expressions">break表达式</a>和 <a href="#continue-expressions">continue表达式</a>。</p>
-<h2><a class="header" href="#break-expressions" id="break-expressions"><code>break</code> expressions</a></h2>
-<h2><a class="header" href="#break表达式" id="break表达式"><code>break</code>表达式</a></h2>
+<h2 id="break-expressions"><a class="header" href="#break-expressions"><code>break</code> expressions</a></h2>
+<h2 id="break表达式"><a class="header" href="#break表达式"><code>break</code>表达式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>BreakExpression</em> :<br />
    <code>break</code> <a href="../tokens.html#lifetimes-and-loop-labels">LIFETIME_OR_LABEL</a><sup>?</sup> <a href="../expressions.html"><em>Expression</em></a><sup>?</sup></p>
 </blockquote>
 <p>当遇到 <code>break</code> 时，相关的循环体的执行将立即结束，例如：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut last = 0;
 for x in 1..100 {
@@ -372,8 +347,7 @@ assert_eq!(last, 12);
 </span></code></pre></pre>
 <p><code>break</code>表达式通常与包含 <code>break</code>表达式的最内层 <code>loop</code>、<code>for</code>或 <code>while</code>循环相关联，但是可以使用<a href="#loop-labels">循环标签</a>来指定受影响的循环层（此循环层必须是封闭该 break表达式的循环之一）。
 例如：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>'outer: loop {
     while true {
@@ -383,8 +357,8 @@ assert_eq!(last, 12);
 <span class="boring">}
 </span></code></pre></pre>
 <p><code>break</code>表达式只允许在循环体内使用，它有 <code>break</code>、<code>break 'label</code> 或（<a href="#break-and-loop-values">参见后面</a>）<code>break EXPR</code> 或 <code>break 'label EXPR</code> 这四种形式。</p>
-<h2><a class="header" href="#continue-expressions" id="continue-expressions"><code>continue</code> expressions</a></h2>
-<h2><a class="header" href="#continue表达式" id="continue表达式"><code>continue</code>表达式</a></h2>
+<h2 id="continue-expressions"><a class="header" href="#continue-expressions"><code>continue</code> expressions</a></h2>
+<h2 id="continue表达式"><a class="header" href="#continue表达式"><code>continue</code>表达式</a></h2>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>ContinueExpression</em> :<br />
@@ -395,12 +369,11 @@ assert_eq!(last, 12);
 在 <code>for</code>循环的情况下，循环头是控制循环的调用表达式。</p>
 <p>与 <code>break</code> 一样，<code>continue</code> 通常与最内层的循环相关联，但可以使用 <code>continue 'label</code> 来指定受影响的循环层。
 <code>continue</code>表达式只允许在循环体内部使用。</p>
-<h2><a class="header" href="#break-and-loop-values" id="break-and-loop-values"><code>break</code> and loop values</a></h2>
-<h2><a class="header" href="#break和loop返回值" id="break和loop返回值"><code>break</code>和<code>loop</code>返回值</a></h2>
+<h2 id="break-and-loop-values"><a class="header" href="#break-and-loop-values"><code>break</code> and loop values</a></h2>
+<h2 id="break和loop返回值"><a class="header" href="#break和loop返回值"><code>break</code>和<code>loop</code>返回值</a></h2>
 <p>当使用 <code>loop</code>循环时，可以使用 <code>break</code>表达式从循环中返回一个值，通过形如 <code>break EXPR</code> 或 <code>break 'label EXPR</code> 来返回，其中 <code>EXPR</code> 是一个表达式，它的结果被从 <code>loop</code>循环中返回。
 例如：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let (mut a, mut b) = (1, 1);
 let result = loop {
@@ -426,17 +399,13 @@ assert_eq!(result, 13);
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../expressions/closure-expr.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../expressions/range-expr.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -444,49 +413,35 @@ assert_eq!(result, 13);
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../expressions/closure-expr.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../expressions/range-expr.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>
