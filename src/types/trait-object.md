@@ -2,8 +2,8 @@
 # trait对象
 
 >[trait-object.md](https://github.com/rust-lang/reference/blob/master/src/types/trait-object.md)\
->commit: fd10e7043934711ef96b4dd2009db3e4d0182a33 \
->本章译文最后维护日期：2021-12-11
+>commit: 364066f09c801acd45c656a345301f8cdb1e5870 \
+>本章译文最后维护日期：2022-08-21
 
 > **<sup>句法</sup>**\
 > _TraitObjectType_ :\
@@ -20,7 +20,6 @@ trait对象被写为关键字 `dyn` 后跟一组 trait约束，这些 trait约�
 
 例如，给定一个trait `Trait`，下面所有的形式都是 trait对象：
 
-* `Trait`
 * `dyn Trait`
 * `dyn Trait + Send`
 * `dyn Trait + Send + Sync`

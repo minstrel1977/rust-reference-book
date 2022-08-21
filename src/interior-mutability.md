@@ -2,8 +2,8 @@
 # 内部可变性
 
 >[interior-mutability.md](https://github.com/rust-lang/reference/blob/master/src/interior-mutability.md)\
->commit: e7dd3618d78928322f53a20e2947e428b12eda2b \
->本章译文最后维护日期：2020-11-15
+>commit: ece3e184c0beeadba97c78eed9005533c3874e43 \
+>本章译文最后维护日期：2022-08-21
 
 有时一个类型需要在存在多个别名时进行更改。在 Rust 中，这是通过一种叫做*内部可变性*的模式实现的。如果一个类型的内部状态可以通过对它的[共享引用][shared reference]来进行更改，那么就说这个类型就具有内部可变性。这违背了共享引用所指向的值不能被更改的通常[要求][ub]。
 
@@ -18,6 +18,3 @@
 [`std::cell::UnsafeCell<T>`]: https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html
 [`std::cell::RefCell<T>`]: https://doc.rust-lang.org/std/cell/struct.RefCell.html
 [`std::sync::atomic`]: https://doc.rust-lang.org/std/sync/atomic/index.html
-
-<!-- 2020-11-12-->
-<!-- checked -->

@@ -2,8 +2,8 @@
 # 联合体
 
 >[unions.md](https://github.com/rust-lang/reference/blob/master/src/items/unions.md)\
->commit: 7c6e0c00aaa043c89e0d9f07e78999268e8ac054 \
->本章译文最后维护日期：2021-2-10
+>commit: 969e45e09c68a167ecf456901f490cd6a21a70a2 \
+>本章译文最后维护日期：2022-08-21
 
 > **<sup>句法</sup>**\
 > _Union_ :\
@@ -21,6 +21,14 @@ union MyUnion {
 ```
 
 联合体的关键特性是联合体的所有字段共享同一段存储。因此，对联合体的一个字段的写操作会覆盖其他字段，而联合体的尺寸由其尺寸最大的字段的尺寸所决定。
+
+联合体字段类型仅限于以下类型子集：
+- `Copy` 类型
+- 引用 (任意 `T` 上的 `&T` 和 `&mut T`)
+- `ManuallyDrop<T>` (任意 `T`)
+- 仅包含了以上被允许的联合体字段类型的元组或数组
+
+这个限制专门用来确保联合体的字段永远不需要销毁操作。与结构体和枚举一样，可以对联合体使用 `impl Drop` 来手动定义被销毁时发生的操作。
 
 ## Initialization of a union
 ## 联合体的初始化
@@ -58,26 +66,9 @@ unsafe {
 }
 ```
 
-对实现了 [`Copy`] trait 或 [`ManuallyDrop`][ManuallyDrop] trait 的联合体字段的写操作不需要事先的析构读操作，也因此这些写操作不必放在非安全(`unsafe`)块中。[^译者备注]
-
-```rust
-# use std::mem::ManuallyDrop;
-union MyUnion { f1: u32, f2: ManuallyDrop<String> }
-let mut u = MyUnion { f1: 1 };
-
-// 这些都不是必须要放在 `unsafe` 里的
-u.f1 = 2;
-u.f2 = ManuallyDrop::new(String::from("example"));
-```
-
 通常，那些用到联合体的程序代码会先在非安全的联合体字段访问操作上提供一层安全包装，然后再使用。
 
-## Unions and `Drop`
-## 联合体和 `Drop`
-
-当一个联合体被销毁时，它无法知道需要销毁它的哪些字段。因此，所有联合体的字段都必须实现 `Copy` trait 或被包装进 [`ManuallyDrop<_>`]。这确保了联合体在超出作用域时不需要销毁任何内容。
-
-与结构体和枚举一样，联合体也可以通过 `impl Drop` 手动定义被销毁时的具体动作。
+相反，对联合体字段的写入操作是安全的，因为它们只是覆盖任意数据，不会导致未定义行为。（请注意，联合体字段类型不会关联到 drop操作，因此联合字段的写入永远不会隐式销毁任何内容。）
 
 ## Pattern matching on unions
 ## 联合体上的模式匹配

@@ -2,8 +2,8 @@
 # 名称
 
 >[keywords.md](https://github.com/rust-lang/reference/blob/master/src/names.md)\
->commit: a989af055ff4fd7e1212754490fff72c3f7cc1be
->本章译文最后维护日期：2020-1-25
+>commit: 4aff5bed5eb04411174a7bd7e86975d3eb7b62d5
+>本章译文最后维护日期：2022-08-21
 
 *实体(entity)*是一种语言结构，在源程序中可以以某种方式被引用，通常是通过[路径(path)][paths]。实体包括[类型][types]、[程序项][items]、[泛型参数][generic parameters]、[变量绑定][variable bindings]、[循环标签][loop labels]、[生存期][lifetimes]、[字段][fields]、[属性][attributes]和各种[lints]。\
 

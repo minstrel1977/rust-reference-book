@@ -2,8 +2,8 @@
 # 函数
 
 >[functions.md](https://github.com/rust-lang/reference/blob/master/src/items/functions.md)\
->commit: dd32a8ea8cc4de83c00d6a01047d181567d04693 \
->本章译文最后维护日期：2022-06-17
+>commit: ece3e184c0beeadba97c78eed9005533c3874e43 \
+>本章译文最后维护日期：2022-08-21
 
 > **<sup>句法</sup>**\
 > _Function_ :\
@@ -160,7 +160,7 @@ fn foo() {}
 extern "Rust" fn foo() {}
 ```
 
-使用 `"Rust"` 之外的 ABI 可以让 Rust 中声明的函数被其他编程语言调用。比如下面声明了一个可以从 C 中调用的函数：
+使用 `"Rust"` 之外的 ABI 可以让在 Rust 中声明的函数被其他编程语言调用。比如下面声明了一个可以从 C 中调用的函数：
 
 ```rust
 // 使用 "C" ABI 声明一个函数

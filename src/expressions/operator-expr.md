@@ -2,8 +2,8 @@
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit: 89a81e82d93d7997b20e44781d3162d184f5a5d1 \
->本章译文最后维护日期：2022-04-17
+>commit: 5c4a7a617c596b78593cabdf72e522ac2b8d1fba \
+>本章译文最后维护日期：2022-08-21
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -80,6 +80,50 @@ let a = &&&&  mut 10;
 let a = && && mut 10;
 let a = & & & & mut 10;
 ```
+
+### 裸地址操作符
+### Raw address-of operators
+
+与借用操作符相关的是操作符的*裸地址操作符*，这些操作符不是一级语法，但可以通过宏 [`ptr::addr_of!(expr)`][addr_of] 和 [`ptr::addr_of_mut!(expr)`][addr_of_mut] 暴露出来。
+此表达式`expr`是在位置上下文中求值的。
+`ptr::addr_of!(expr)` 会在给定的位置上创建一个 `*const T`类型的常量裸指针，而` ptr::addr_of_mut!(expr)` 会创建 `*mut T`类型的可变裸指针。
+
+每当位置表达式的计算结果没有正确对齐或没能存储对其类型来说是有效的值时，或者每当创建引用引入了不正确的别名假设时，必须使用裸地址操作符，不能借用操作符。
+在这些情况下，使用借用操作符将通过创建无效引用而导致[未定义的行为][undefined behavior]，但仍可以使用裸地址操作符来构造出裸指针。
+
+下面示例通过 `packed`结构创建了指向没有地址对齐的裸指针：
+
+```rust
+use std::ptr;
+
+#[repr(packed)]
+struct Packed {
+    f1: u8,
+    f2: u16,
+}
+
+let packed = Packed { f1: 1, f2: 2 };
+// `&packed.f2` 会创建一个未对齐的引用，这种引用是一种未定义行为！
+let raw_f2 = ptr::addr_of!(packed.f2);
+assert_eq!(unsafe { raw_f2.read_unaligned() }, 2);
+```
+
+以下是创建不包含有效值的指向某个位置的裸指针的示例：
+
+```rust
+use std::{ptr, mem::MaybeUninit};
+
+struct Demo {
+    field: bool,
+}
+
+let mut uninit = MaybeUninit::<Demo>::uninit();
+// `&uninit.as_mut().field` 会创建一个对未初始化为 `bool` 的引用，因此这也是一个未定义行为！
+let f1_ptr = unsafe { ptr::addr_of_mut!((*uninit.as_mut_ptr()).field) };
+unsafe { f1_ptr.write(true); }
+let init = unsafe { uninit.assume_init() };
+```
+
 
 ## 解引用操作符
 ## The dereference operator
@@ -613,6 +657,10 @@ fn example() {
 [float-float]: https://github.com/rust-lang/rust/issues/15536
 [Function pointer]: ../types/function-pointer.md
 [Function item]: ../types/function-item.md
+[undefined behavior]: ../behavior-considered-undefined.md
+[addr_of]: https://doc.rust-lang.org/std/ptr/macro.addr_of.html
+[addr_of_mut]: https://doc.rust-lang.org/std/ptr/macro.addr_of_mut.html
+
 [_BorrowExpression_]: #borrow-operators
 [_DereferenceExpression_]: #the-dereference-operator
 [_ErrorPropagationExpression_]: #the-question-mark-operator

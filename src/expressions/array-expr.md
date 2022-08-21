@@ -2,8 +2,8 @@
 # 数组和数组索引表达式
 
 >[array-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/array-expr.md)\
->commit: 9dd6a1f1194946e0d5eb2c76525cbbfc187a6f6a \
->本章译文最后维护日期：2021-07-31
+>commit: 15049771545fb6cebec0753fe72d761ede2d0e57 \
+>本章译文最后维护日期：2022-08-20
 
 ## Array expressions
 ## 数组表达式
@@ -34,13 +34,6 @@
 当 `[a; b]` 形式的重复值操作数 `a` 是一个常量项时，其将被计算求值数组长度操作数 `b` 次。
 如果数组长度操作数 `b` 为 0，则常量项根本不会被求值。
 对于非常量项的表达式，只计算求值一次，然后将结果复制数组长度操作数 `b` 次。
-
-<div class="warning">
-
-警告：当数组长度操作数为 0 时，而重复值操作数是一个非常量项的情况下，目前在 `rustc` 中存在一个 bug，即值 `a` 会被求值，但不会被销毁而导致的内存泄漏。参见 [issue#74836](https://github.com/rust-lang/rust/issues/74836)。
-
-</div>
-
 
 ```rust
 [1, 2, 3, 4];

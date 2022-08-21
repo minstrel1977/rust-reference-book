@@ -2,12 +2,11 @@
 # 子类型化和型变
 
 >[subtyping.md](https://github.com/rust-lang/reference/blob/master/src/subtyping.md)\
->commit: db4124306287420c2b9d80a9687c86e2057be716 \
->本章译文最后维护日期：2022-06-17
+>commit: 36a66c0ccf9f8a5b941b0df9923ece80d8714c83 \
+>本章译文最后维护日期：2022-08-21
 
 子类型化是隐式的，可以出现在类型检查或类型推断的任何阶段。
-Rust 中的子类型化的适用范围非常有限，仅出现在和生存期(lifetimes)的型变(variance)相关的地方，以及那些和高阶生存期相关的类型型变之间。
-如果我们擦除了类型的生存期，那么唯一的子类型化就只是类型相等(type equality)了。
+子类型化仅限于两种情况：引入生存期(lifetimes)带来的类型型变(variance)，以及引入高阶生存期带来的类型型变之间。如果我们从类型中擦除了生存期，那么子类型化只能是类型相等(type equality)了。
 
 考虑下面的例子：字符串字面量总是拥有 `'static`生存期。不过，我们还是可以把 `s` 赋值给 `t`：
 

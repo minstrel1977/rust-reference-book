@@ -2,8 +2,8 @@
 # 模式
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
->commit: 6ce7804bee418b3a5240047f5ad4f527f83eaa8b \
->本章译文最后维护日期：2022-06-17
+>commit: 4aff5bed5eb04411174a7bd7e86975d3eb7b62d5 \
+>本章译文最后维护日期：2022-08-21
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\

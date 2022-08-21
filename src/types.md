@@ -3,8 +3,8 @@
 # 类型
 
 >[types.md](https://github.com/rust-lang/reference/blob/master/src/types.md)\
->commit: 577d4975abce5440e819c0883457a5d919660489 \
->本章译文最后维护日期：2021-12-18
+>commit: b5596cb97e4c94237b54639579ad1853d64fe930 \
+>本章译文最后维护日期：2022-08-21
 
 Rust 程序中的每个变量、程序项和值都有一个类型。*值*的*类型*定义了该如何解释用于保存它的内存数据，以及定义了可以对该值执行的操作。
 

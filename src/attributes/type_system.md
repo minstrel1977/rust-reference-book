@@ -2,8 +2,8 @@
 # 类型系统属性
 
 >[type_system.md](https://github.com/rust-lang/reference/blob/master/src/attributes/type_system.md)\
->commit: d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 \
->本章译文最后维护日期：2021-02-21
+>commit: bce9bb30bae071776a22ccdb09af1a78bb3aeb63 \
+>本章译文最后维护日期：2022-08-20
 
 以下[属性][attributes]用于改变类型的使用方式。
 
@@ -119,6 +119,14 @@ match message {
   Message::Reaction(type) => { },
   Message::Quit => { },
 }
+```
+
+也不允许对外部 crate 的非穷尽类型做强转（case）操作。
+```rust, ignore
+use othercrate::NonExhaustiveEnum;
+
+// 不能对非本地crate里的非穷尽枚举类型做cast
+let _ = NonExhaustiveEnum::default() as u8;
 ```
 
 非穷尽类型最好放在下游 crate 里。

@@ -2,8 +2,8 @@
 # 声明宏
 
 >[macros-by-example.md](https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md)\
->commit: 8d039bda5d4153ab99c368c4c159fd76471b01b8 \
->本章译文最后维护日期：2022-06-17
+>commit: 314d63a53825a9d51830bdef2fc6f9643f91e038 \
+>本章译文最后维护日期：2022-08-21
 
 > **<sup>句法</sup>**\
 > _MacroRulesDefinition_ :\
@@ -142,54 +142,6 @@ foo!(3);
 
 1.  在转码器中，元变量必须与它在匹配器中出现的次数、指示符类型以及其在重复元内的嵌套顺序都完全相同。因此，对于匹配器 `$( $i:ident ),*`，转码器 `=> { $i }`, `=> { $( $( $i)* )* }` 和 `=> { $( $i )+ }` 都是非法的，但是 `=> { $( $i );* }` 是正确的，它用分号分隔的标识符列表替换了逗号分隔的标识符列表。
 2.  转码器中的每个重复元必须至少包含一个元变量，以便确定扩展多少次。如果在同一个重复元中出现多个元变量，则它们必须绑定到相同数量的匹配段上，不能有的多，有的少。例如，`( $( $i:ident ),* ; $( $j:ident ),* ) => (( $( ($i,$j) ),* ))` 里，绑定到 `$j` 的匹配段的数量必须与绑定到 `$i` 上的相同。这意味着用 `(a, b, c; d, e, f)` 调用这个宏是合法的，并且可扩展到 `((a,d), (b,e), (c,f))`，但是 `(a, b, c; d, e)` 是非法的，因为前后绑定的数量不同。此要求适用于嵌套的重复元的每一层。
-
-## Dollar-dollar ($$)
-
-`$$` 将被扩展成单个的 `$`。
-
-由于元变量表达式总是在宏扩展期间被执行替换，因此它们不能在存在递归的宏中定义中使用，此时正是 `$$`表达式发挥作用的时候，即 `$$` 可被用于解决嵌套宏中的歧义。
-
-以下示例展示了由于嵌套宏中重复元的歧义而无法编译的的情况：
-
-```rust,compile_fail
-macro_rules! foo_error {
-    () => {
-        macro_rules! bar_error {
-            ( $( $any:tt )* ) => { $( $any )* };
-            // ^^^^^^^^^^^ error: attempted to repeat an expression containing no syntax variables matched as repeating at this depth
-        }
-    };
-}
-
-foo_error!();
-```
-
-下面通过在重复元把 `$$` 转义为`$` 解决了此问题：
-
-```rust
-macro_rules! foo_ok {
-    () => {
-        macro_rules! bar_ok {
-            ( $$( $any:tt )* ) => { $$( $any )* };
-        }
-    };
-}
-
-foo_ok!();
-```
-
-这种扩展的一个后果是在更深的嵌套层级中使用这种双美元符号声明会导致美元符号的线性增长，从`$$`，然后`$$$`，再然后`$$$$`，依此类推。
-这也需要在全特性下使用，以便可以在每个嵌套层级使用其他元变量指定的元变量名称（This is also necessary to be fully featured so that it is possible to specify names of metavariables using other metavariables at each nesting level）。
-
-```ignore
-$foo          => bar      => bar    // Evaluate foo at level 1
-$$foo         => $foo     => bar    // Evaluate foo at level 2
-$$$foo        => $bar     => baz    // Evaluate foo at level 1, and use that as a name at level 2
-$$$$foo       => $$foo    => $foo   // Evaluate foo at level 3
-$$$$$foo      => $$bar    => $bar   // Evaluate foo at level 1, and use that as a name at level 3
-$$$$$$foo     => $$$foo   => $bar   // Evaluate foo at level 2, and use that as a name at level 3
-$$$$$$$foo    => $$$bar   => $baz   // Evaluate foo at level 1, use that at level 2, and then use *that* at level 3
-```
 
 ## Scoping, Exporting, and Importing
 ## 作用域、导出以及导入

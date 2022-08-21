@@ -2,8 +2,8 @@
 # 类型自动强转
 
 >[type-coercions.md](https://github.com/rust-lang/reference/blob/master/src/type-coercions.md)\
->commit: ae773c1a19d6ebe3922b9739b5dbf8b762fd327c \
->本章译文最后维护日期：2021-07-17
+>commit: 8aa82fcffa5173e0198ccf942b1435ad43c7dd9f \
+>本章译文最后维护日期：2022-08-21
 
 **类型自动强转**是改变值的类型的隐式操作。它们在特定的位置自动发生，但实际自动强转的类型也受到很多限制。
 

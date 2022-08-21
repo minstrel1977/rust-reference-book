@@ -2,8 +2,8 @@
 # 外部块
 
 >[external-blocks.md](https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md)\
->commit: 1c78b7416d7fa40d740ec80333bd6f4743d000a4 \
->本章译文最后维护日期：2022-06-17
+>commit: 1efe76d2f4fd3ba5cf320c81777cbad80e691633 \
+>本章译文最后维护日期：2022-08-21
 
 > **<sup>句法</sup>**\
 > _ExternBlock_ :\
@@ -127,7 +127,7 @@ extern {
 这个修饰符只在静态链接模式下适用。
 在其他链接模式下会导致编译错误。
 
-当构建 rlib 或 staticlib 时 `+bundle` 意味着本地静态库中的所有对象文件都将添加到 rlib 或 staticlib 归档文件中，然后那些最终的二进制文件再来链接使用这些库文件。
+在构建 rlib 或 staticlib 时，`+bundle` 意味着本地静态库将被打包到 rlib 或者 staticlib类型的归档文件中，之后最终的二进制文件在在链接时，将从此处来检索。
 
 当构建 rlib时，`-bundle` 意味着本机静态库会被“按名称”注册为该 rlib 的依赖项，并且其中的对象文件仅在最终的二进制文件的链接过程中才被包含进来，其中最终的链接过程会执行按该名称的文件搜索来定位那些对象文件。\
 当构建 staticlib时，`-bundle`意味着本机静态库根本不会被包括在归档文件中，一些层次更高或则说是排序更靠后的构建系统会在之后的链接最终二进制文件的过程中才来添加它。

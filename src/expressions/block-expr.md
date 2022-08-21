@@ -2,8 +2,8 @@
 # 块表达式
 
 >[block-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/block-expr.md)\
->commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef \
->本章译文最后维护日期：2021-6-19
+>commit: 4aff5bed5eb04411174a7bd7e86975d3eb7b62d5 \
+>本章译文最后维护日期：2022-08-20
 
 > **<sup>句法</sup>**\
 > _BlockExpression_ :\

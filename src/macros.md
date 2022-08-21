@@ -2,15 +2,15 @@
 # 宏
 
 >[macros.md](https://github.com/rust-lang/reference/blob/master/src/macros.md)\
->commit: 012bfafbd995c54a86ebb542bbde5874710cba19 \
->本章译文最后维护日期：2021-06-19
+>commit: 93f9325701a4c8beba06cb439c1fa88b26893844 \
+>本章译文最后维护日期：2022-08-21
 
 可以使用称被为宏的自定义句法形式来扩展 Rust 的功能和句法。宏需要被命名，并通过一致的句法去调用：`some_extension!(...)`。
 
 定义新宏有两种方式：
 
 * [声明宏(Macros by Example)][Macros by Example]以更高级别的声明性的方式定义了一套新句法规则。
-* [过程宏(Procedural Macros)][Procedural Macros]使用操作输入标记符的函数来定义类函数宏、自定义派生和自定义属性。
+* [过程宏(Procedural Macros)][Procedural Macros]使用操作输入的token的函数来定义类函数宏、自定义派生和自定义属性。
 
 ## Macro Invocation
 ## 宏调用
@@ -32,7 +32,7 @@
 > &nbsp;&nbsp; | [_SimplePath_] `!` `[` _TokenTree_<sup>\*</sup> `]` `;`\
 > &nbsp;&nbsp; | [_SimplePath_] `!` `{` _TokenTree_<sup>\*</sup> `}`
 
-宏调用是在编译时扩展宏，并用扩展结果替换该调用。可以在下述情况里调用宏：
+宏调用是在编译时来扩展宏的，并用扩展结果替换该调用。可以在下述情况里调用宏：
 
 * [表达式][Expressions]和[语句][statements]
 * [模式][Patterns]

@@ -2,8 +2,8 @@
 # `if`和 `if let`表达式
 
 >[if-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/if-expr.md)\
->commit: ac4ff0f3d5f980798b2463777d07e6060554c8c3 \
->本章译文最后维护日期：2021-06-27
+>commit: db6fc4e9d4737af84ca2e5137df3dcf3485e5e54 \
+>本章译文最后维护日期：2022-08-20
 
 ## `if` expressions
 ## `if`表达式

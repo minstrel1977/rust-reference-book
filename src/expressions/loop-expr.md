@@ -2,8 +2,8 @@
 # 循环
 
 >[loop-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/loop-expr.md)\
->commit: 91b36e4ca98dbb8a465a74fc3766d8643c84a25d \
->本章译文最后维护日期：2021-07-31
+>commit: db6fc4e9d4737af84ca2e5137df3dcf3485e5e54 \
+>本章译文最后维护日期：2022-08-20
 
 > **<sup>句法</sup>**\
 > _LoopExpression_ :\

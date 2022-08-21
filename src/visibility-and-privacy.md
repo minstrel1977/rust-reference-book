@@ -2,8 +2,8 @@
 # 可见性与隐私权
 
 >[visibility-and-privacy.md](https://github.com/rust-lang/reference/blob/master/src/visibility-and-privacy.md)\
->commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef \
->本章译文最后维护日期：2021-06-19
+>commit: ece3e184c0beeadba97c78eed9005533c3874e43 \
+>本章译文最后维护日期：2022-08-21
 
 > **<sup>句法<sup>**\
 > _Visibility_ :\

@@ -2,10 +2,10 @@
 # 指针类型
 
 >[pointer.md](https://github.com/rust-lang/reference/blob/master/src/types/pointer.md)\
->commit: 4664361ba2f7bcc568f6bef4d119b53971fdf8ad \
->本章译文最后维护日期：2021-4-6
+>commit: ece3e184c0beeadba97c78eed9005533c3874e43 \
+>本章译文最后维护日期：2022-08-21
 
-Rust 中所有的指针都是显式的头等(first-class)值。
+Rust 中所有的指针都是显式的一等(first-class)值。
 它们可以被移动或复制，存储到其他数据结构中，或从函数中返回。
 
 ## References (`&` and `&mut`)
@@ -43,7 +43,7 @@ Rust 中所有的指针都是显式的头等(first-class)值。
 裸指针写为 `*const T` 或 `*mut T`，例如，`*const i32` 表示指向 32-bit 有符号整数的裸指针。
 拷贝或销毁(dropping )裸指针对任何其他值的生命周期(lifecycle)都没有影响。对
 裸指针的解引用是[非安全(`unsafe`)操作][`unsafe` operation]，可以通过重新借用裸指针（`&*` 或 `&mut *`）将其转换为引用。
-在 Rust 代码中通常不鼓励使用裸指针；它们的存在是为了提升与外部代码的互操作性，以及编写对性能要求很高的函数或很底层的函数。
+通常不鼓励使用裸指针；它们的存在是为了提升与外部代码的互操作性，以及编写对性能要求很高的函数或很底层的函数。
 
 在比较裸指针时，比较的是它们的地址，而不是它们指向的数据。
 当比较裸指针和[动态尺寸类型][dynamically sized types]时，还会比较它们指针上的附加/元数据。

@@ -2,8 +2,8 @@
 # 表达式
 
 >[expressions.md](https://github.com/rust-lang/reference/blob/master/src/expressions.md)\
->commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e \
->本章译文最后维护日期：2021-07-31
+>commit: 4aff5bed5eb04411174a7bd7e86975d3eb7b62d5 \
+>本章译文最后维护日期：2022-08-21
 
 > **<sup>句法</sup>**\
 > _Expression_ :\
@@ -31,6 +31,7 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_BreakExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_RangeExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_ReturnExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_UnderscoreExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_MacroInvocation_]\
 > &nbsp;&nbsp; )
 >
@@ -46,7 +47,7 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_MatchExpression_]\
 > &nbsp;&nbsp; )
 
-一个表达式可能有两个角色：它总是能产生[^译者注1]一个*值*；它还有可能表达出*效果(effects)*（也被称为“副作用(side effects)”）。表达式 _求值/计算为(evaluates to)_ 值，并在 _求值(evaluation)_ 期间表达出效果。 \
+一个表达式能扮演两个角色：它总是能产生一个*值*；它还有可能表达出*效果(effects)*（也被称为“副作用(side effects)”）。表达式 _求值/计算为(evaluates to)_ 值，并在 _求值(evaluation)_ 期间表达出效果。 \
 许多表达式包含子表达式，此子表达式也被称为此表达式的*操作数*。每种表达式都表达了以下几点含义：
 
 * 在对表达式求值时是否对操作数求值
@@ -131,6 +132,7 @@ assert_eq!(
 ## 位置表达式和值表达式
 
 表达式分为两大类：位置表达式和值表达式。跟在每个表达式中一样，操作数可以出现在位置上下文，也可出现在值上下文中。表达式的求值既依赖于它自己的类别，也依赖于它所在的上下文。
+表达式分为两大类别：位置表达式和值表达式；还有第三个小类表达式，称为 assignee表达式。在每类表达式中，操作数可以出现在位置上下文中，也可以出现在值上下文中。表达式的求值既取决于其自身的类别，也取决于其处于的上下文。
 
 *位置表达式*是表示内存位置的表达式。语言中表现为指向**局部变量、[静态变量][static variables]、[解引用][deref](`*expr`)、[数组索引][array indexing]表达式(`expr[expr]`)、[字段][field]引用(`expr.f`)、圆括号括起来的位置表达式**的[路径][paths]。所有其他形式的表达式都是值表达式。
 
@@ -138,8 +140,8 @@ assert_eq!(
 
 下面的上下文是*位置表达式*上下文：
 
-* [赋值][assign]或[复合赋值][compound assignment]表达式的左操作数。
-* 一元运算符[借用][borrow]或[解引用][deref]的操作数。
+* [复合赋值][compound assignment]表达式的左操作数。
+* 一元运算符[借用][borrow]、[address-of][addr-of] 或[解引用][deref]的操作数。
 * 字段表达式的操作数。
 * 数组索引表达式的被索引操作数。
 * 任何[隐式借用][implicit borrow]的操作数。
@@ -148,6 +150,18 @@ assert_eq!(
 * 结构体表达式里的[函数式更新(functional update)][functional update]的基(base)。
 
 > 注意：历史上，位置表达式被称为 *左值/lvalues*，值表达式被称为 *右值/rvalues*。
+
+*assignee表达式*是出现在[赋值][assign]表达式的左操作数中的表达式。确切地说，assignee表达式是：
+
+- 位置表达式。
+- [下划线][_UnderscoreExpression_].
+- 出现在 assignee表达式里的[元组][_TupleExpression_]。
+- 出现在 assignee表达式里的[切片][_ArrayExpression_]。
+- 出现在 assignee表达式里的[元组结构体][_StructExpression_] 。
+- 出现在 assignee表达式（字段名可选）里的[结构体][_StructExpression_] 。
+- [单元结构体][_StructExpression_].
+
+assignee表达式允许使用任意层次的圆括号嵌套。
 
 ### Moved and copied types
 ### 移动语义类型和复制语义类型
@@ -172,10 +186,10 @@ assert_eq!(
 * 当前未被借出的可变[变量][variables]。
 * [可变静态(`static`)项][Mutable `static` items]。
 * [临时值][Temporary values]。
-* [字段][field]：在可变位置表达式上下文中，可以对此子表达式求值。
+* [字段][field]：在可变位置表达式上下文中，会对子表达式求值。
 * 对 `*mut T` 指针的[解引用][deref]。
-* 对类型为 `&mut T` 的变量或变量的字段的解引用。注意：这条是下一条规则的必要条件的例外情况。[^译者注2]
-* 对实现 `DerefMut` 的类型的解引用，那对这里解出的表达式求值就需要在一个可变位置表达式上下文中进行。
+* 对类型为 `&mut T` 的变量或变量的字段的解引用。注意：这条是下一条规则的必要条件的例外情况。
+* 对实现 `DerefMut` 的类型的解引用：这就要求在可变位置表达式上下文中来处理这个被解出的值。
 * 对实现 `IndexMut` 的类型做[索引][array indexing]，那对此检索出的表达式求值就需要在一个可变位置表达式上下文进行。注意对索引(index)本身的求值不用。
 
 ### Temporaries
@@ -231,10 +245,6 @@ let b: &[i32];
 * [区间(Range)][_RangeExpression_]表达式。
 * 二元运算符表达式（[_ArithmeticOrLogicalExpression_]、[_ComparisonExpression_]、[_LazyBooleanExpression_]、[_TypeCastExpression_]、[_AssignmentExpression_]、[_CompoundAssignmentExpression_]）。
 
-[^译者注1]: 通俗理解“求值”，可以理解为：一方面可以从表达式求出值，另一方面可以为表达式赋值。
-
-[^译者注2]: 译者暂时还未用代码测试这种例外情况。
-
 [block expressions]:    expressions/block-expr.md
 [call expressions]:     expressions/call-expr.md
 [field]:                expressions/field-expr.md
@@ -252,6 +262,7 @@ let b: &[i32];
 
 [assign]:               expressions/operator-expr.md#assignment-expressions
 [borrow]:               expressions/operator-expr.md#borrow-operators
+[addr-of]:              expressions/operator-expr.md#raw-address-of-operators
 [comparison]:           expressions/operator-expr.md#comparison-operators
 [compound assignment]:  expressions/operator-expr.md#compound-assignment-expressions
 [deref]:                expressions/operator-expr.md#the-dereference-operator
@@ -308,4 +319,5 @@ let b: &[i32];
 [_TupleExpression_]:              expressions/tuple-expr.md
 [_TupleIndexingExpression_]:      expressions/tuple-expr.md#tuple-indexing-expressions
 [_TypeCastExpression_]:           expressions/operator-expr.md#type-cast-expressions
+[_UnderscoreExpression_]:         expressions/underscore-expr.md
 [_UnsafeBlockExpression_]:        expressions/block-expr.md#unsafe-blocks
