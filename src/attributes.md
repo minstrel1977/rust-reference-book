@@ -3,8 +3,8 @@
 # 属性
 
 >[attributes.md](https://github.com/rust-lang/reference/blob/master/src/attributes.md)\
->commit: efb2c1cab0302a985030a94adafae9e630a7894d \
->本章译文最后维护日期：2021-5-29
+>commit: d6cd338e3a9c0c7f33c8f0e65105dca6c1911bc5 \
+>本章译文最后维护日期：2022-10-22
 
 > **<sup>句法</sup>**\
 > _InnerAttribute_ :\
@@ -201,6 +201,7 @@ pub fn f() {}
 - ABI、链接(linking)、符号(symbol)、和 FFI
   - [`link`] — 指定要与外部(`extern`)块链接的本地库。
   - [`link_name`] — 指定外部(`extern`)块中的函数或静态项的符号(symbol)名。
+  - [`link_ordinal`] — 指定外部(`extern`)块中函数或静态符号的序号。
   - [`no_link`] — 防止链接外部crate。
   - [`repr`] — 控制类型的布局。
   - [`crate_type`] — 指定 crate 的类别(库、可执行文件等)。
@@ -263,6 +264,7 @@ pub fn f() {}
 [`ignore`]: attributes/testing.md#the-ignore-attribute
 [`inline`]: attributes/codegen.md#the-inline-attribute
 [`link_name`]: items/external-blocks.md#the-link_name-attribute
+[`link_ordinal`]: items/external-blocks.md#the-link_ordinal-attribute
 [`link_section`]: abi.md#the-link_section-attribute
 [`link`]: items/external-blocks.md#the-link-attribute
 [`macro_export`]: macros-by-example.md#path-based-scope

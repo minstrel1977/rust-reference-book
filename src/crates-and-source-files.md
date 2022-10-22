@@ -1,8 +1,8 @@
 # crate 和源文件
 
 >[crates-and-source-files.md](https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md)\
->commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 \
->本章译文最后维护日期：2022-04-29
+>commit: c126440392be42d9dd3906478111cc7b52473d89 \
+>本章译文最后维护日期：2022-10-22
 
 > **<sup>句法</sup>**\
 > _Crate_ :\
@@ -90,10 +90,9 @@ fn main() -> impl std::process::Termination {
 >
 > * `()`
 > * [`!`]
+> * [`Infallible`]
 > * [`ExitCode`]
-> * `Result<(), E> where E: Debug`
-> * `Result<Infallible, E> where E: Debug`
-<!-- > * Result<!, E> where E: Debug` -->
+> * `Result<T, E> where T: Termination, E: Debug`
 
 <!-- 如果前面这节需要更新 (从 "必须不能有参数" 开始, 同时需要修改 attributes/testing.md 文件 -->
 
@@ -125,6 +124,7 @@ crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 `_` (U
 [_shebang_]: https://en.wikipedia.org/wiki/Shebang_(Unix)
 [_utf8 byte order mark_]: https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8
 [`ExitCode`]: https://doc.rust-lang.org/std/process/struct.ExitCode.html
+[`Infallible`]: https://doc.rust-lang.org/std/convert/enum.Infallible.html
 [`Termination`]: https://doc.rust-lang.org/std/process/trait.Termination.html
 [attribute]: attributes.md
 [attributes]: attributes.md

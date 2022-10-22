@@ -2,8 +2,8 @@
 # 圆括号表达式(分组表达式)
 
 >[grouped-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/grouped-expr.md)\
->commit: 37ca438c9ac58448ecf304b735e71644e8127f3d \
->本章译文最后维护日期：2021-07-17
+>commit: 7c5b80d96da3ba16848d6aba6a99aa06efe0bc31 \
+>本章译文最后维护日期：2022-10-22
 
 
 > **<sup>句法</sup>**\
@@ -25,8 +25,8 @@
 圆括号表达式的一个例子：
 
 ```rust
-let x: i32 = 2 + 3 * 4;
-let y: i32 = (2 + 3) * 4;
+let x: i32 = 2 + 3 * 4; // 没有圆括号
+let y: i32 = (2 + 3) * 4; // 有圆括号
 assert_eq!(x, 14);
 assert_eq!(y, 20);
 ```

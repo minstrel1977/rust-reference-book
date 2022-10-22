@@ -2,8 +2,8 @@
 # 测试类属性
 
 >[testing.md](https://github.com/rust-lang/reference/blob/master/src/attributes/testing.md)\
->commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 \
->本章译文最后维护日期：2022-04-29
+>commit: c126440392be42d9dd3906478111cc7b52473d89 \
+>本章译文最后维护日期：2022-10-22
 
 以下[属性][attributes]用于指定函数来执行测试。在“测试(test)”模式下编译 crate 可以构建测试函数以及构建用于执行测试（函数）的测试套件(test harness)。启用测试模式还会启用 [`test`条件编译选项][`test` conditional compilation option]。
 
@@ -13,11 +13,8 @@
 *`test`属性*标记一个用来执行测试的函数。这些函数只在测试模式下编译。测试函数必须是自由函数和单态函数，不能有参数，返回类型必须实现 [`Termination`] trait，例如：
 
 * `()`
-* `Result<(), E> where E: Debug`
+* `Result<T, E> where T: Termination, E: Debug`
 * `!`
-<!-- * Result<!, E> where E: Debug` -->
-
-> 注意：允许哪些返回类型是由暂未稳定的 [`Termination`] trait 决定的。
 
 <!-- 如果前面这节需要更新(从 "不能有参数" 开始, 同时需要修改 crates-and-source-files.md 文件 -->
 

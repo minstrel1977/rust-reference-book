@@ -2,8 +2,8 @@
 # 条件编译
 
 >[conditional-compilation.md](https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md)\
->commit: 267f8159975451c3b61121156e5ee57d037937c4 \
->本章译文最后维护日期：2022-4-16
+>commit: 2325d952d11ff817ce50c0c1a96b81517f566c51 \
+>本章译文最后维护日期：2022-10-22
 
 > **<sup>句法</sup>**\
 > _ConfigurationPredicate_ :\
@@ -155,6 +155,22 @@
 * `"fortanix"`
 * `"pc"`
 * `"unknown"`
+
+### `target_has_atomic`
+
+该键值对选项用以设置目标平台上的每个原子操作的位宽，这些原子操作包括原子加载、原子存储、原子比较和原子交换。
+当cfg存在时，[`core::sync::atomic`] 下所有的稳定版的API 类型都可用来指定相关的原子位宽。
+
+[`core::sync::atomic`]: https://doc.rust-lang.org/core/sync/atomic/index.html
+
+可能的值有：
+
+* `"8"`
+* `"16"`
+* `"32"`
+* `"64"`
+* `"128"`
+* `"ptr"`
 
 ### `test`
 

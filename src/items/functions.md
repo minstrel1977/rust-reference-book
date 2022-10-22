@@ -2,8 +2,8 @@
 # 函数
 
 >[functions.md](https://github.com/rust-lang/reference/blob/master/src/items/functions.md)\
->commit: ece3e184c0beeadba97c78eed9005533c3874e43 \
->本章译文最后维护日期：2022-08-21
+>commit: 9e6a8c029e142810b0f1dd7421c8aacab399aec6 \
+>本章译文最后维护日期：2022-10-22
 
 > **<sup>句法</sup>**\
 > _Function_ :\
@@ -64,7 +64,7 @@ fn answer_to_life_the_universe_and_everything() -> i32 {
 ## Function parameters
 ## 函数参数
 
-和 `let`绑定一样，函数参数是不可反驳型[模式][patterns]，所以任何在 let绑定中有效的模式都可以有效应用在函数参数上:
+函数参数是不可反驳型[模式][patterns]，所以任何在 else-less形式（译者注：此种形式就是那种不关心条件为false的情况）的 `let`绑定中有效的模式都可以有效应用在函数参数上:
 
 ```rust
 fn first((value, _): (i32, i32)) -> i32 { value }

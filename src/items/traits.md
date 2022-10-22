@@ -1,8 +1,8 @@
 # Trait
 
 >[traits.md](https://github.com/rust-lang/reference/blob/master/src/items/traits.md)\
->commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef \
->本章译文最后维护日期：2021-06-19
+>commit: 1ef107a457a2d2945887fc026a28ee557710918b \
+>本章译文最后维护日期：2022-10-22
 
 > **<sup>句法</sup>**\
 > _Trait_ :\
@@ -65,6 +65,7 @@ trait Seq<T> {
 * 所有的超类trait[supertraits] 也必须也是对象安全的。
 * 超类trait 中不能有 `Sized`。也就是说不能有 `Self: Sized`约束。
 * 它必须没有任何关联常量。
+* 它必须没有任何带泛型的关联类型。
 * 所有关联函数必须可以从 trait对象调度分派，或者是显式不可调度分派：
     * 可调度分派函数要求：
         * 不能有类型参数（尽管生存期参数可以有）

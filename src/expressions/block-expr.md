@@ -2,8 +2,8 @@
 # 块表达式
 
 >[block-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/block-expr.md)\
->commit: 4aff5bed5eb04411174a7bd7e86975d3eb7b62d5 \
->本章译文最后维护日期：2022-08-20
+>commit: 575d859aa0f97f66a587b47c47bf03243765fd5a \
+>本章译文最后维护日期：2022-10-22
 
 > **<sup>句法</sup>**\
 > _BlockExpression_ :\
@@ -109,9 +109,9 @@ assert_eq!(5, five);
 ### Control-flow operators
 ### 控制流操作符
 
-异步块的作用类似于函数边界，或者更类似于闭包。
-因此 `?`操作符和 返回(`return`)表达式也都能影响 future 的输出，且不会影响封闭它的函数或其他上下文。
-也就是说，future 的输出跟闭包将其中的 `return <expr>` 的表达式 `<expr>` 的计算结果作为未来的输出的做法是一样的。
+异步块的作用类似于函数的边界符来界定函数，或者更类似于闭包。
+因此 `?`操作符和 返回(`return`)表达式也都能影响 future 的输出，且都不会影响封闭它的函数或其他上下文。
+也就是说，`return <expr>` 在异步块中跟其在 future 的输出是一样的，都是将 `<expr>` 的计算结果返回。
 类似地,如果 `<expr>?` 传播(propagate)一个错误，这个错误也会被 future 在未来的某个时候作为返回结果被传播出去。
 
 最后，关键字 `break` 和 `continue` 不能用于从异步块中跳出分支。
@@ -120,7 +120,7 @@ assert_eq!(5, five);
 ```rust,compile_fail
 loop {
     async move {
-        break; // 这将打破循环。
+        break; // 错误[E0267]: `break` inside of an `async` block
     }
 }
 ```
@@ -128,12 +128,33 @@ loop {
 ## `unsafe` blocks
 ## 非安全(`unsafe`)块
 
-> **<sup>句法</sup>**\23672971a16c69ea894bef24992b74912cfe5d25e` 的信息_
+> **<sup>句法</sup>**
+> _UnsafeBlockExpression_ :\
+> &nbsp;&nbsp; `unsafe` _BlockExpression_
+
+_参见 [`unsafe`块](../unsafe-blocks.md) 以察看更多相关信息_
 
 可以在代码块前面加上关键字 `unsafe` 以允许[非安全操作][unsafe operations]。
 例如：
 
-```rust23672971a16c69ea894bef24992b74912cfe5d25
+```rust
+unsafe {
+    let b = [13u8, 17u8];
+    let a = &b[0] as *const u8;
+    assert_eq!(*a, 13);
+    assert_eq!(*a.offset(1), 17);
+}
+
+# unsafe fn an_unsafe_fn() -> i32 { 10 }
+let a = unsafe { an_unsafe_fn() };
+```
+
+## Labelled block expressions
+## 带标签的块表达式
+
+带标签的块表达式的相关文档记录在[循环和其他可中断表达式][Loops and other breakable expressions]的相关章节中。
+## Attributes on block expressions
+
 在以下上下文中，允许在块表达式的左括号之后直接使用[内部属性][inner attributes]：
 
 * [函数][function]和[方法][method]的代码体。
@@ -180,3 +201,4 @@ fn is_unix_platform() -> bool {
 [tuple expressions]: tuple-expr.md
 [unsafe operations]: ../unsafety.md
 [value expressions]: ../expressions.md#place-expressions-and-value-expressions
+[Loops and other breakable expressions]: loop-expr.md#labelled-block-expressions

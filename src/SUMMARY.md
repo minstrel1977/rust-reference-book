@@ -119,8 +119,7 @@
 - [内联汇编](inline-assembly.md)
 
 - [非安全性](unsafety.md)
-    - [非安全函数](unsafe-functions.md)
-    - [非安全代码块](unsafe-blocks.md)
+    - [T关键字`unsafe`](unsafe-keyword.md)
     - [未定义行为](behavior-considered-undefined.md)
     - [不被认为是非安全的行为](behavior-not-considered-unsafe.md)
 

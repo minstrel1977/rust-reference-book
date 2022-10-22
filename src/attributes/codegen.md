@@ -2,8 +2,8 @@
 # 代码生成属性
 
 >[codegen.md](https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md)\
->commit: 62e75b64721057c705d1441fe265c190dc2b2f2e \
->本章译文最后维护日期：2022-04-16
+>commit: f24b8d4ca7aeb5340db673c7364b19e056b4de48 \
+>本章译文最后维护日期：2022-10-22
 
 下述[属性][attributes]用于控制代码生成。
 
@@ -305,7 +305,7 @@ fn calls_h() {
 [target architecture]: ../conditional-compilation.md#target_arch
 [trait]: ../items/traits.md
 [undefined behavior]: ../behavior-considered-undefined.md
-[unsafe function]: ../unsafe-functions.md
+[unsafe function]: ../unsafe-keyword.md
 [rust-abi]: ../items/external-blocks.md#abi
 [`core::intrinsics::caller_location`]: https://doc.rust-lang.org/core/intrinsics/fn.caller_location.html
 [`core::panic::Location::caller`]: https://doc.rust-lang.org/core/panic/struct.Location.html#method.caller

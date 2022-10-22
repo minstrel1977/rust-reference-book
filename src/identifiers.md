@@ -2,8 +2,8 @@
 # 标识符
 
 >[identifiers.md](https://github.com/rust-lang/reference/blob/master/src/identifiers.md)\
->commit: 85031eb68b7418e49575efbf6e6c7fdad7f9f532 \
->本章译文最后维护日期：2022-01-08
+>commit: 1f9de62e04e6c79922ab78062407a658f4c3fa6a \
+>本章译文最后维护日期：2022-10-22
 
 > **<sup>词法分析:<sup>**\
 > IDENTIFIER_OR_KEYWORD :\
@@ -18,7 +18,7 @@
 > NON_KEYWORD_IDENTIFIER | RAW_IDENTIFIER
 
 <!-- When updating the version, update the UAX links, too. -->
-标识符遵循 [Unicode标准附录31][UAX31] 中针对 Unicode 13.0版的规范，后面所述内容在此版本中均有备述。
+标识符遵循 [Unicode标准附录31][UAX31] 中针对 Unicode 15.0版的规范，后面所述内容在此版本中均有备述。
 这里举一些标识符的示例：
 
 * `foo`
@@ -73,5 +73,5 @@
 [proc-macro]: procedural-macros.md
 [reserved]: keywords.md#reserved-keywords
 [strict]: keywords.md#strict-keywords
-[UAX15]: https://www.unicode.org/reports/tr15/tr15-50.html
-[UAX31]: https://www.unicode.org/reports/tr31/tr31-33.html
+[UAX15]: https://www.unicode.org/reports/tr15/tr15-53.html
+[UAX31]: https://www.unicode.org/reports/tr31/tr31-37.html

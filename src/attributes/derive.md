@@ -2,8 +2,8 @@
 # 派生
 
 >[derive.md](https://github.com/rust-lang/reference/blob/master/src/attributes/derive.md)\
->commit: a52543267554541a95088b79f46a8bd36f487603 \
->本章译文最后维护日期：2020-11-10
+>commit: ea7ba21c879c5cf58d7a2dffcf74f93a6c0933c4 \
+>本章译文最后维护日期：2022-10-22
 
 *`derive`属性*允许为数据结构自动生成新的[程序项][items]。它使用 [_MetaListPaths_]元项属性句法（为程序项）指定一系列要实现的 trait 或指定要执行的[派生宏][derive macros]的路径。
 
@@ -24,10 +24,6 @@ struct Foo<T> {
 impl<T: PartialEq> PartialEq for Foo<T> {
     fn eq(&self, other: &Foo<T>) -> bool {
         self.a == other.a && self.b == other.b
-    }
-
-    fn ne(&self, other: &Foo<T>) -> bool {
-        self.a != other.a || self.b != other.b
     }
 }
 ```

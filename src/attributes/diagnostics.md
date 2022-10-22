@@ -2,8 +2,8 @@
 # 诊断属性
 
 >[diagnostics.md](https://github.com/rust-lang/reference/blob/master/src/attributes/diagnostics.md)\
->commit: 0e5ff09e12ca7b81452d8064f98fe30bf5f5b05c \
->本章译文最后维护日期：2022-06-17
+>commit: 328e227ea01617f3d42cb8fe981031bd08863e72 \
+>本章译文最后维护日期：2022-10-22
 
 以下[属性][attributes]用于在编译期间控制或生成诊断消息。
 
@@ -155,7 +155,7 @@ fn foo() {
 这有个例子：
 
 ```rust
-#[deprecated(since = "5.2", note = "foo was rarely used. Users should instead use bar")]
+#[deprecated(since = "5.2.0", note = "foo was rarely used. Users should instead use bar")]
 pub fn foo() {}
 
 pub fn bar() {}

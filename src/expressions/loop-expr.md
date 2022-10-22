@@ -1,9 +1,9 @@
-# Loops
-# 循环
+# Loops and other breakable expressions
+# 循环和其他可中断表达式
 
 >[loop-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/loop-expr.md)\
->commit: db6fc4e9d4737af84ca2e5137df3dcf3485e5e54 \
->本章译文最后维护日期：2022-08-20
+>commit: 575d859aa0f97f66a587b47c47bf03243765fd5a \
+>本章译文最后维护日期：2022-10-22
 
 > **<sup>句法</sup>**\
 > _LoopExpression_ :\
@@ -12,6 +12,7 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_PredicateLoopExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_PredicatePatternLoopExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_IteratorLoopExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_LabelBlockExpression_]\
 > &nbsp;&nbsp; )
 
 [_LoopLabel_]: #loop-labels
@@ -19,16 +20,19 @@
 [_PredicateLoopExpression_]: #predicate-loops
 [_PredicatePatternLoopExpression_]: #predicate-pattern-loops
 [_IteratorLoopExpression_]: #iterator-loops
+[_LabelBlockExpression_]: #labelled-block-expressions
 
-Rust支持四种循环表达式：
+Rust支持五种循环表达式：
 
 *   [`loop`表达式](#infinite-loops)表示一个无限循环。
 *   [`while`表达式](#predicate-loops)不断循环，直到谓词为假。
 *   [`while let`表达式](#predicate-pattern-loops)循环测试给定模式。
 *   [`for`表达式](#iterator-loops)从迭代器中循环取值，直到迭代器为空。
+*   [带标签的块表达式](#labelled-block-expressions) 的循环一旦启动，将一直循环，但可以通过使用 `break` 来提前退出循环。
 
-所有四种类型的循环都支持 [`break`表达式](#break-expressions)、[`continue`表达式](#continue-expressions)和[循环标签(label)](#loop-labels)。
-只有 `loop`循环支持对循环体[非平凡求值(evaluation to non-trivial values)](#break-and-loop-values)[^译注1]。
+所有五种类型的循环都支持 [`break`表达式](#break-expressions)和[循环标签(label)](#loop-labels).
+除了带标签的块表达式都支持 [`continue`表达式](#continue-expressions)。
+只有 `loop`循环和带标签的块表达式支持[非平凡求值(evaluation to non-trivial values)](#break-and-loop-values)[^译注1]。
 
 ## Infinite loops
 ## 无限循环
@@ -201,6 +205,18 @@ assert_eq!(sum, 55);
 如果循环存在标签，则嵌套在该循环中的带此标签的 `break`表达式和 `continue`表达式可以退出此标签标记的循环层或将控制流返回至此标签标记的循环层的头部。
 具体请参见后面的 [break表达式](#break-expressions)和 [continue表达式](#continue-expressions)。
 
+循环标签遵循局部变量的卫生性和遮蔽规则。例如，下面代码将打印 "outer loop"：
+
+```rust
+'a: loop {
+    'a: loop {
+        break 'a;
+    }
+    print!("outer loop");
+    break 'a;
+}
+```
+
 ## `break` expressions
 ## `break`表达式
 
@@ -233,6 +249,17 @@ assert_eq!(last, 12);
 ```
 
 `break`表达式只允许在循环体内使用，它有 `break`、`break 'label` 或（[参见后面](#break-and-loop-values)）`break EXPR` 或 `break 'label EXPR` 这四种形式。
+
+## Labelled block expressions
+## 带标签的块表达式
+
+> **<sup>句法</sup>**\
+> _LabelBlockExpression_ :\
+> &nbsp;&nbsp; [_BlockExpression_]
+
+带标签的块表达式同普通的块表达式完全相同，只是它允许在块中使用 `break`表达式。
+与其他循环不同，标签表达式中的 `break`表达式*必须*带有一个标签（即标签不是可选的）。
+与其他循环不同，带标签的块表达式*必须*以标签开头。
 
 ## `continue` expressions
 ## `continue`表达式

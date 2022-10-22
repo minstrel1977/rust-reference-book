@@ -2,8 +2,8 @@
 # 外部块
 
 >[external-blocks.md](https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md)\
->commit: 1efe76d2f4fd3ba5cf320c81777cbad80e691633 \
->本章译文最后维护日期：2022-08-21
+>commit: 300ac4bdb40b91945a8e774f534a2902564d41ec \
+>本章译文最后维护日期：2022-10-22
 
 > **<sup>句法</sup>**\
 > _ExternBlock_ :\
@@ -87,9 +87,10 @@ extern "C" {
 
 *`link`属性*为外部(`extern`)块中的程序项指定编译器应该链接的本地库的名称。它使用 [_MetaListNameValueStr_]元项属性句法指定其输入参数。`name`键指定要链接的本地库的名称。`kind`键是一个可选值，它指定具有以下可选值的库类型：
 
-- `dylib` — 表示库类型是动态库。如果没有指定 `kind`，这是默认值。
-- `static` — 表示库类型是静态库。
-- `framework` — 表示库类型是 macOS 框架。这只对 macOS 目标平台有效。
+- `dylib` — 表示要链接的库类型是动态库。如果没有指定 `kind`，这是默认值。
+- `static` — 表示要链接的库类型是静态库。
+- `framework` — 表示要链接的库类型是 macOS 框架。这只对 macOS 目标平台有效。
+- `raw-dylib` — 表示要链接的库类型是动态库，但具体要链接到哪个动态库，链接器会使用本次编译出的库作为导入库来定位识别链接，（相关详细信息，请参阅下面的[`dylib` vs `rawdylib`][`dylib` versus `raw-dylib`]）。此属性仅对 Windows目标平台有效。
 
 如果指定了 `kind`键，则必须有 `name`键。
 
@@ -146,13 +147,23 @@ extern {
 
 `+whole-archive` 意味着静态库会被链接为一个完整的 archive 文件，而不丢弃任何对象文件。
 
-The default for this modifier is `-whole-archive`.
+此修饰符的默认配置是 `-whole-archive`。
+
 有关此修饰符的更多实现细节，请参见[rustc文档中的 `whole-archive`][`whole-archive` documentation for rustc]。
+
+#### `dylib` versus `raw-dylib`
+#### `dylib` vs `raw-dylib`
+
+在 Windows 上，链接动态库需要先向链接器提供一个导入库：这是一个特殊的静态库，它声明了此动态库导出的所有符号，这样链接器就知道它们必须在运行时动态加载。
+
+指定 `kind = "dylib"` 将指示 Rust编译器根据 `name`键链接导入库。然后，链接器将使用其正常的库解析逻辑来查找导入库。或者，使用 `kind = "raw-dylib"` 来指示编译器在编译期间生成一个导入库，并将其提供给链接器。
+
+`raw-dylib` 仅在 Windows 上受支持，并且还不支持在 32位x86(`target_arch="x86"`)上使用。编译目标平台为非Windows平台或目标平台为x86时，此设置将导致编译器错误。
 
 ### The `link_name` attribute
 ### `link_name`属性
 
-可以在外部(`extern`)块内的程序项声明上指定 `link_name`属性，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 [_MetaNameValueStr_]元项属性句法指定 symbol 的名称。
+可以在外部(`extern`)块内的程序项声明上指定 *`link_name`属性*，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 [_MetaNameValueStr_]元项属性句法指定 symbol 的名称。
 
 ```rust
 extern {
@@ -160,6 +171,32 @@ extern {
     fn name_in_rust();
 }
 ```
+此属性和 `link_ordinal`属性同时使用会导致编译器报错。
+
+### The `link_ordinal` attribute
+### `link_ordinal`属性
+
+*`link_ordinal`属性*可以应用于外部(`extern`)块内的各种声明上，用以给当前编译生成的链接导入库在链接时要使用的数字序号。Windows 上的动态库导出的每个符号都有的唯一编号，当加载库时可以使用相应序号查找对应的符号，而不必按名称查找。
+
+<div class="warning">
+
+警告：`link_ordinal` 只能在此符号的序号已稳定了的情况下使用：如果在包含某符号的二进制文件构建时，此符号对应的序号未明确设置，则此构建将自动为其分配一个序号，并且在后续的库构建时此序号可能会在二进制文件生成之间还会发生变化。
+
+</div>
+
+<!-- ignore: Only works on x86 Windows -->
+```rust,ignore
+#[link(name = "exporter", kind = "raw-dylib")]
+extern "stdcall" {
+    #[link_ordinal(15)]
+    fn imported_function_stdcall(i: i32);
+}
+```
+
+此属性仅用于 `raw-dylib`链接类型。
+使用任何其他类型都会导致编译器报错。
+
+此属性和 `link_name`属性同时使用会导致编译器报错。
 
 ### Attributes on function parameters
 ### 函数参数上的属性
@@ -183,3 +220,4 @@ extern {
 [regular function parameters]: functions.md#attributes-on-function-parameters
 [`bundle` documentation for rustc]: https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-bundle
 [`whole-archive` documentation for rustc]: https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-whole-archive
+[`dylib` versus `raw-dylib`]: #dylib-versus-raw-dylib

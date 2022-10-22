@@ -2,8 +2,8 @@
 # 内联汇编
 
 >[behavior-considered-undefined.md](https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md)\
->commit: b74825d8f88b685e239ade00f00de68ba4cd63d4 \
->本章译文最后维护日期：2022-06-17
+>commit: b00444a90f2fb381b4e3bdc66c19b47cfc4b5450 \
+>本章译文最后维护日期：2022-10-22
 
 Rust 通过 [`asm!`] 和 [`global_asm!`] 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。
@@ -132,12 +132,17 @@ ARM目标架构上，使用 `.syntax unified`模式。
 * `inlateout(<reg>) <expr>` / `inlateout(<reg>) <in expr> => <out expr>`
   - 除了寄存器分配器可以重用分配给 `in` 的寄存器外（如果编译器知道 `in` 与 `inlateout` 具有相同的初始值，则可能发生这种情况），其他的同 `inout`。
   - 应该只在读取所有输入后才写入此寄存器，否则可能会毁坏真实的输入。
+* `sym <path>`
+  - `<path>` 必须指向一个 `fn`程序项 或 `static`程序项。
+  - 引用该程序项的混淆符号名（mangled symbol）称被替换为 asm模板字符串。
+  - 替换的字符串不包含任何修饰符（例如GOT、PLT、重定位等）。
+  - `<path>`允许指向`#[thread_local]`静态项，在这种情况下，asm代码可以将符号与重定位（例如`@plt`、`@TPOFF`）结合起来，来从线程内的本地变量中读取数据。
 
 操作表达式从左到右求值，就像函数调用参数一样。
 在 `asm!`执行后，会按从左到右的顺序写出输出。
 这一点很重要，如果两个输出指向同一个位置：该位置（表达式）将包含最右侧输出的值。
 
-因为 `global_asm!` 存在于函数外部，不能使用输入/输出操作。
+因为 `global_asm!` 存在于函数外部，它只能使用 `sym`操作。
 
 ## Register operands
 ## 寄存器操作

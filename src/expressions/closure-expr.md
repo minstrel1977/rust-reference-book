@@ -2,8 +2,8 @@
 # 闭包表达式
 
 >[closure-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/closure-expr.md)\
->commit: d23f9da8469617e6c81121d9fd123443df70595d \
->本章译文最后维护日期：2021-5-6
+>commit: 04ce4c4e508797abb7534053c1e8420ce5873c27 \
+>本章译文最后维护日期：2022-10-22
 
 > **<sup>句法</sup>**\
 > _ClosureExpression_ :\
