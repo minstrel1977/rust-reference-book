@@ -1,13 +1,13 @@
 # Dynamically Sized Types
-# 动态尺寸类型
+# 动态内存宽度类型
 
 >[dynamically-sized-types.md](https://github.com/rust-lang/reference/blob/master/src/dynamically-sized-types.md)\
 >commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e \
 >本章译文最后维护日期：2021-07-31
 
-大多数的类型都有一个在编译时就已知的固定尺寸，并实现了 trait [`Sized`][sized]。只有在运行时才知道尺寸的类型称为*动态尺寸类型(dynamically sized type)*（*DST*），或者非正式地称为非固定尺寸类型(unsized type)。[切片][Slices]和 [trait对象][trait objects]是 <abbr title="dynamically sized types">DSTs</abbr> 的两个例子。此类类型只能在某些情况下使用:
+大多数的类型都有一个在编译时就已知的固定内存宽度，并实现了 trait [`Sized`][sized]。只有在运行时才知道内存宽度的类型称为*动态内存宽度类型(dynamically sized type)*（*DST*），或者非正式地称为非固定内存宽度类型(unsized type)。[切片][Slices]和 [trait对象][trait objects]是 <abbr title="dynamically sized types">DSTs</abbr> 的两个例子。此类类型只能在某些情况下使用:
 
-* 指向 <abbr title="dynamically sized types">DST</abbr> 的[指针类型][Pointer types]的尺寸是固定的(sized)，但是是指向固定尺寸类型的指针的尺寸的两倍
+* 指向 <abbr title="dynamically sized types">DST</abbr> 的[指针类型][Pointer types]的内存宽度是固定的(sized)，但是是指向固定内存宽度类型的指针的内存宽度的两倍
     * 指向切片的指针也存储了切片的元素的数量。
     * 指向 trait对象的指针也存储了一个指向虚函数表(vtable)的指针地址
 * <abbr title="dynamically sized types">DST</abbr> 可以作为类型实参( type arguments)来传给有 `?Sized`约束的泛型参数。

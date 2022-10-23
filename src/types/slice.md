@@ -9,7 +9,7 @@
 > _SliceType_ :\
 > &nbsp;&nbsp; `[` [_Type_] `]`
 
-切片是一种[动态尺寸类型(dynamically sized type)][dynamically sized type]，它代表类型为 `T` 的元素组成的数据序列的一个“视图(view)”。切片类型写为 `[T]`。
+切片是一种[动态内存宽度类型(dynamically sized type)][dynamically sized type]，它代表类型为 `T` 的元素组成的数据序列的一个“视图(view)”。切片类型写为 `[T]`。
 
 切片类型通常都是通过指针类型来使用，例如：
 

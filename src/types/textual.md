@@ -11,7 +11,7 @@
 
 `str`类型的值的表示方法与 `[u8]` 相同，它是一个 8-bit 无符号字节类型的切片。但是，Rust 标准库对 `str` 做了额外的假定：`str` 上的方法会假定并确保其中的数据是有效的 UTF-8。调用 `str` 的方法来处理非UTF-8 缓冲区上的数据可能或早或晚地出现[未定义行为][Undefined Behavior]。
 
-由于 `str` 是一个[动态尺寸类型][dynamically sized type]，所以它只能通过指针类型实例化，比如 `&str`。
+由于 `str` 是一个[动态内存宽度类型][dynamically sized type]，所以它只能通过指针类型实例化，比如 `&str`。
 
 [Unicode scalar value]: http://www.unicode.org/glossary/#unicode_scalar_value
 [Undefined Behavior]: ../behavior-considered-undefined.md

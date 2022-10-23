@@ -33,7 +33,7 @@
 
 ## `PhantomData<T>`
 
-[`std::marker::PhantomData<T>`] 是一个零尺寸零的、最小对齐量的、被认为拥有(own) `T` 的类型，这个类型存在目的是应用在确定[型变][variance]关系、[销毁检查][drop check]和[自动trait](#auto-traits) 中的。
+[`std::marker::PhantomData<T>`] 是一个零内存宽度零的、最小对齐量的、被认为拥有(own) `T` 的类型，这个类型存在目的是应用在确定[型变][variance]关系、[销毁检查][drop check]和[自动trait](#auto-traits) 中的。
 
 ## Operator Traits
 ## 运算符/操作符trait
@@ -100,7 +100,7 @@
 
 ## `Sized`
 
-[`Sized`] trait表明这种类型的尺寸在编译时是已知的；也就是说，它不是一个[动态尺寸类型][dynamically sized type]。
+[`Sized`] trait表明这种类型的内存宽度在编译时是已知的；也就是说，它不是一个[动态内存宽度类型][dynamically sized type]。
 [类型参数][Type parameters]和[关联类型][associated types]默认是 `Sized` 的。
 `Sized` 总是由编译器自动实现，而不是由[实现(implementation items)][implementation items]主动实现的。
 这些隐式的 `Sized`约束可以通过指定 `?Sized`约束来放宽约束。

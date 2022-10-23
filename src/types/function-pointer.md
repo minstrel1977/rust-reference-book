@@ -2,8 +2,8 @@
 # 函数指针类型
 
 >[function-pointer.md](https://github.com/rust-lang/reference/blob/master/src/types/function-pointer.md)\
->commit: 33784fadb81c16918c7e6d207f8c838232c159b0 \
->本章译文最后维护日期：2021-5-29
+>commit: f24b8d4ca7aeb5340db673c7364b19e056b4de48 \
+>本章译文最后维护日期：2022-10-23
 
 > **<sup>句法</sup>**\
 > _BareFunctionType_ :\
@@ -63,8 +63,5 @@ x = bo(5,7);
 [closures]: closure.md
 [extern function]: ../items/functions.md#extern-function-qualifier
 [function items]: function-item.md
-[unsafe function]: ../unsafe-functions.md
+[unsafe function]: ../unsafe-keyword.md
 [regular function parameters]: ../items/functions.md#attributes-on-function-parameters
-
-<!-- 2021-1-17-->
-<!-- checked -->

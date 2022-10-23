@@ -15,7 +15,7 @@ let b: bool = true;
 
 该类型是此[语言的预导入包][language prelude]的一部分，使用[名称][name] `bool` 来表示。
 
-布尔型的对象[尺寸和对齐量][size and alignment]均为1。false 的位模式为 `0x00`， true 的位模式为 `0x01`。其他的任何其他位模式的布尔型的象都是[未定义的行为][undefined behavior]。
+布尔型的对象[内存宽度和对齐量][size and alignment]均为1。false 的位模式为 `0x00`， true 的位模式为 `0x01`。其他的任何其他位模式的布尔型的象都是[未定义的行为][undefined behavior]。
 
 布尔型是多种[表达式][expressions]的操作数的类型:
 

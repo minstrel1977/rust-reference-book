@@ -35,7 +35,7 @@
 * 排除解引用裸指针的[解引用操作][dereference operator]。8425f5bad3ac40e807e3f75f13b989944da28b62
   * 指针到地址的强制转换，
   * 函数指针到地址的强制转换，和
-  * 到 trait对象的非固定尺寸类型强换(unsizing casts)。
+  * 到 trait对象的非固定内存宽度类型强换(unsizing casts)。
 * 调用[常量函数][const functions]和常量方法。
 * [loop], [while] 和 [`while let`] 表达式。
 * [if], [`if let`] 和 [匹配(match)] 表达式。

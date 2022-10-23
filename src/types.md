@@ -95,7 +95,7 @@ type T<'a> = &'a (dyn Any + Send);
 标称类型(nominal types) &mdash; [结构体(`struct`)][structs]、[枚举(`enum`)][enumerations]和[联合体(`union`)][unions] &mdash; 可以是递归的。也就是说，每个枚举(`enum`)变体或结构体(`struct`)或联合体(`union`)的字段可以直接或间接地指向此枚举(`enum`)或结构体(`struct`)类型本身。这种递归有一些限制：
 
 * 递归类型必须在递归中包含一个标称类型（不能仅是[类型别名][type aliases]或其他结构化的类型，如[数组][arrays]或[元组][tuples]）。因此不允许使用 `type Rec = &'static [Rec]`。
-* 递归类型的尺寸必须是有限的；也就是说，类型的递归字段必须是[指针类型][pointer types]。
+* 递归类型的内存宽度必须是有限的；也就是说，类型的递归字段必须是[指针类型][pointer types]。
 
 *递归*类型及使用示例：
 

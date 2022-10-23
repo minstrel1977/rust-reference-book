@@ -67,9 +67,9 @@ A crate is the unit of compilation and linking. There are different [types of cr
 Dispatch is the mechanism to determine which specific version of code is actually run when it involves polymorphism. Two major forms of dispatch are static dispatch and dynamic dispatch. While Rust favors static dispatch, it also supports dynamic dispatch through a mechanism called ‘trait objects’.
 
 ### Dynamically sized type
-### 动态尺寸类型
+### 动态内存宽度类型
 
-动态尺寸类型(DST)是一种没有静态已知尺寸或对齐量的类型。\
+动态内存宽度类型(DST)是一种没有静态已知内存宽度或对齐量的类型。\
 A dynamically sized type (DST) is a type without a statically known size or alignment.
 
 ### Entity
@@ -228,12 +228,12 @@ A [*scope*] is the region of source text where a named [entity](#entity) may be 
 A scrutinee is the expression that is matched on in `match` expressions and similar pattern matching constructs. For example, in `match x { A => 1, B => 2 }`, the expression `x` is the scrutinee.
 
 ### Size
-### 类型尺寸/尺寸
+### 类型内存宽度/内存宽度
 
-值的尺寸有两个定义。\
+值的内存宽度有两个定义。\
 第一个是必须分配多少内存来存储这个值。\
 第二个是它是在具有该项类型的数组中连续元素之间的字节偏移量。\
-它是对齐量的整数倍数，包括零倍。尺寸会根据编译器版本(进行新的优化时)和目标平台(类似于 `usize` 在不同平台上的变化)而变化。\
+它是对齐量的整数倍数，包括零倍。内存宽度会根据编译器版本(进行新的优化时)和目标平台(类似于 `usize` 在不同平台上的变化)而变化。\
 查看[更多][alignment].
 The size of a value has two definitions.\
 The first is that it is how much memory must be allocated to store that value.\
@@ -243,7 +243,7 @@ It is a multiple of the alignment, including zero. The size can change depending
 ### Slice
 ### 切片
 
-切片是一段连续的内存序列上的具有动态尺寸视图功能的类型，写为 `[T]`。\
+切片是一段连续的内存序列上的具有动态内存宽度视图功能的类型，写为 `[T]`。\
 它经常以借用的形式出现，可变借用和共享借用都有可能。共享借用切片类型是 `&[T]`，可变借用切片类型是 `&mut [T]`，其中 `T` 表示元素类型。\
 A slice is dynamically-sized view into a contiguous sequence, written as `[T]`.\
 It is often seen in its borrowed forms, either mutable or shared. The shared slice type is `&[T]`, while the mutable slice type is `&mut [T]`, where `T` represents the element type.

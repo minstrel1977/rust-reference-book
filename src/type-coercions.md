@@ -40,7 +40,7 @@
   }
   ```
 
-  对于方法调用，接受者（`self`参数）只能使用[非固定尺寸类型自动强转(unsized coercion)](#unsized-coercions)。
+  对于方法调用，接受者（`self`参数）只能使用[非固定内存宽度类型自动强转(unsized coercion)](#unsized-coercions)。
 
 * 实例化结构体、联合体或枚举变体的字段。
 
@@ -130,7 +130,7 @@
     - `*mut T`
     - `Box<T>`
 
-    并且 `U` 能够通过[非固定尺寸类型自动强转](#unsized-coercions)得到。
+    并且 `U` 能够通过[非固定内存宽度类型自动强转](#unsized-coercions)得到。
 
     <!--将来，coerce_inner 会被递归扩展到元组和结构体上。此外从子trait 到父类trait 的自动强转也会被加进来，更多细节请参见 [RFC 401] 。-->
 
@@ -141,9 +141,9 @@
 * `!` 到任意 `T`
 
 ### Unsized Coercions
-### 非固定尺寸类型自动强转
+### 非固定内存宽度类型自动强转
 
-下列自动强转被称为非固定尺寸类型自动强转(`unsized coercions`)，因为它们与将固定尺寸类型(sized types)转换为非固定尺寸类型(unsized types)有关，并且在一些其他自动强转不允许的情况（也就是上面罗列的情况之外的情况）下允许使用。也就是说它们可以发生在任何自动强转发生的地方。
+下列自动强转被称为非固定内存宽度类型自动强转(`unsized coercions`)，因为它们与将固定内存宽度类型(sized types)转换为非固定内存宽度类型(unsized types)有关，并且在一些其他自动强转不允许的情况（也就是上面罗列的情况之外的情况）下允许使用。也就是说它们可以发生在任何自动强转发生的地方。
 
 [`Unsize`] 和 [`CoerceUnsized`] 这两个 trait 被用来协助这种转换的发生，并公开给标准库来使用。以下自动强转方式是内置的，并且，如果 `T` 可以用其中任一方式自动强转成 `U`，那么就会为 `T` 提供一个 `Unsize<U>` 的内置实现：
 
@@ -158,9 +158,9 @@
     * 如果这最后一个字段是类型 `Bar<T>`，那么 `Bar<T>` 实现了 `Unsized<Bar<U>>`。
     * `T` 不是任何其他字段的类型的一部分。
 
-此外，当 `T` 实现了 `Unsize<U>` 或 `CoerceUnsized<Foo<U>>` 时，类型 `Foo<T>` 可以实现 `CoerceUnsized<Foo<U>>`。这就允许 `Foo<T>` 提供一个到 `Foo<U>` 的非固定尺寸类型自动强转。
+此外，当 `T` 实现了 `Unsize<U>` 或 `CoerceUnsized<Foo<U>>` 时，类型 `Foo<T>` 可以实现 `CoerceUnsized<Foo<U>>`。这就允许 `Foo<T>` 提供一个到 `Foo<U>` 的非固定内存宽度类型自动强转。
 
-> 注：虽然非固定尺寸类型自动强转的定义及其实现已经稳定下来，但 [`Unsize`] 和 [`CoerceUnsized`] 这两个 trait 本身还没稳定下来，因此还不能直接用于稳定版的 Rust。
+> 注：虽然非固定内存宽度类型自动强转的定义及其实现已经稳定下来，但 [`Unsize`] 和 [`CoerceUnsized`] 这两个 trait 本身还没稳定下来，因此还不能直接用于稳定版的 Rust。
 
 ## Least upper bound coercions
 ## 最小上界自动强转

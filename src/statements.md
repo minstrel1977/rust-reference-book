@@ -2,8 +2,8 @@
 # 语句
 
 >[statements.md](https://github.com/rust-lang/reference/blob/master/src/statements.md)\
->commit: f5cd2519c0e61a2c640345c2e5cda329008ead3a \
->本章译文最后维护日期：2021-06-19
+>commit: e076c6ed0caa11c33842dc0d22961947c8bf236a \
+>本章译文最后维护日期：2022-10-23
 
 > **<sup>句法</sup>**\
 > _Statement_ :\
@@ -48,10 +48,33 @@ fn outer() {
 > **<sup>句法</sup>**\
 > _LetStatement_ :\
 > &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup> `let` [_PatternNoTopAlt_]
->     ( `:` [_Type_] )<sup>?</sup> (`=` [_Expression_] )<sup>?</sup> `;`
+>     ( `:` [_Type_] )<sup>?</sup> (`=` [_Expression_] [†](#let-else-restriction)
+>     ( `else` [_BlockExpression_]) <sup>?</sup> ) <sup>?</sup> `;`
+>
+> <span id="let-else-restriction">† 当指定了 `else`块时，
+> _Expression_ 不能是 [_LazyBooleanExpression_]，也不能以 `}` 结尾。</span>
 
 *`let`语句*通过一个不可反驳型[模式][pattern]引入了一组新的[变量][variables]，变量由该模式给定。模式后面有一个可选的类型标注(annotation)，再后面是一个可选的初始化表达式。当没有给出类型标注时，编译器将自行推断类型，如果没有足够的信息来执行有限次的类型推断，则将触发编译器报错。由变量声明引入的任何变量从声明点到封闭块作用域的结束都是可见的，除非它们被另一个变量声明遮蔽。
 
+*`let`语句*使用[模式][pattern]引入了一组新的[变量][variables]。
+模式后面有一个可选的类型标注(annotation)，之后表达式要么直接结束，要么是一个初始化表达式附加一个可选的 `else`块。
+当没有给出类型标注时，编译器将自行推断类型，如果没有足够的信息来执行有限次的类型推断，则将触发报错。
+由变量声明引入的任何变量从声明点到封闭块作用域的结束都是可见的，除非它们被另一个变量声明遮蔽。
+
+如果没有 `else`块存在，那此模式一定是不可反驳的。
+如果有 `else`块存在，那此模式可以是可反驳的。
+如果模式没有被匹配上（这种情况需要模式是可反驳的），`else`块会被执行。
+`else`块的返回必须是发散的（就是被求值为[!][never type]）。
+
+```rust
+let (mut v, w) = (vec![1, 2, 3], 42); // 绑定可以是 mut 或 const
+let Some(t) = v.pop() else { // 可反驳模式需要一个 else块
+    panic!(); // else块的返回必须时发散的
+};
+let [u, v] = [v[0], v[1]] else { // 此模式时不可反驳的，所以这里的 else块会被编译器当作冗余给 lint 掉。
+    panic!();
+};
+```
 ## Expression statements
 ## 表达式语句
 
@@ -104,6 +127,7 @@ if true {
 [function]: items/functions.md
 [item]: items.md
 [module]: items/modules.md
+[never type]: types/never.md
 [canonical path]: paths.md#canonical-paths
 [implementations]: items/implementations.md
 [variables]: variables.md
@@ -111,9 +135,11 @@ if true {
 [`cfg`]: conditional-compilation.md
 [the lint check attributes]: attributes/diagnostics.md#lint-check-attributes
 [pattern]: patterns.md
+[_BlockExpression_]: expressions/block-expr.md
 [_ExpressionStatement_]: #expression-statements
 [_Expression_]: expressions.md
 [_Item_]: items.md
+[_LazyBooleanExpression_]: expressions/operator-expr.md#lazy-boolean-operators
 [_LetStatement_]: #let-statements
 [_MacroInvocationSemi_]: macros.md#macro-invocation
 [_OuterAttribute_]: attributes.md
