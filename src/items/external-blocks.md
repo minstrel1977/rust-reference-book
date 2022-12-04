@@ -2,8 +2,8 @@
 # 外部块
 
 >[external-blocks.md](https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md)\
->commit: 300ac4bdb40b91945a8e774f534a2902564d41ec \
->本章译文最后维护日期：2022-10-22
+>commit: 0ec6d52723c74542437d03092307cf2bf315629c \
+>本章译文最后维护日期：2022-12-04
 
 > **<sup>句法</sup>**\
 > _ExternBlock_ :\
@@ -142,7 +142,7 @@ extern {
 #### Linking modifiers: `whole-archive`
 #### 链接修饰符: `whole-archive`
 
-此修饰符仅与静态(`static`)链接类型兼容。
+此修饰符仅兼容静态(`static`)链接类型。
 使用任何其他链接类型都会引起编译器报错。
 
 `+whole-archive` 意味着静态库会被链接为一个完整的 archive 文件，而不丢弃任何对象文件。
@@ -150,6 +150,19 @@ extern {
 此修饰符的默认配置是 `-whole-archive`。
 
 有关此修饰符的更多实现细节，请参见[rustc文档中的 `whole-archive`][`whole-archive` documentation for rustc]。
+
+### Linking modifiers: `verbatim`
+### 链接修饰符: `verbatim`
+
+此修饰符兼容任何链接类型。
+
+`+verbatim` 意味着 rustc 本身不会在库名称中添加任何目标平台指定的库前缀或后缀（如 `lib` 或 `.a`），并且会尽力向链接器请求相同的内容。
+
+`-verbatim` 意味着 rustc 在将库名称传递给链接器之前，将在库名称中添加特定于目标平台的前缀和后缀，或者不会阻止链接器隐式添加它。
+
+此修饰符的默认值为 `-verbatim`。
+
+关于这个修饰符的更多实现细节可以在 rustc 的[`verbatim`文档][`verbatim` documentation for rustc] 中找到。
 
 #### `dylib` versus `raw-dylib`
 #### `dylib` vs `raw-dylib`
@@ -220,4 +233,5 @@ extern "stdcall" {
 [regular function parameters]: functions.md#attributes-on-function-parameters
 [`bundle` documentation for rustc]: https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-bundle
 [`whole-archive` documentation for rustc]: https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-whole-archive
+[`verbatim` documentation for rustc]: https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-verbatim
 [`dylib` versus `raw-dylib`]: #dylib-versus-raw-dylib

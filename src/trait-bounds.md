@@ -2,8 +2,8 @@
 # trait约束和生存期约束
 
 >[trait-bounds.md](https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md)\
->commit: 9e27603773164ce3bb916e003d91b33fdd45f7c7 \
->本章译文最后维护日期：2022-01-15
+>commit: 4e0edd1428d3bdf680198a52e83ac400a1ba7c04 \
+>本章译文最后维护日期：2022-12-04
 
 > **<sup>句法</sup>**\
 > _TypeParamBounds_ :\

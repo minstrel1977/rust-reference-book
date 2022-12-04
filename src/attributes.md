@@ -3,8 +3,8 @@
 # 属性
 
 >[attributes.md](https://github.com/rust-lang/reference/blob/master/src/attributes.md)\
->commit: d6cd338e3a9c0c7f33c8f0e65105dca6c1911bc5 \
->本章译文最后维护日期：2022-10-22
+>commit: 6a5431b863f61b86dcac70ee2ab377152f40f66e \
+>本章译文最后维护日期：2022-12-04
 
 > **<sup>句法</sup>**\
 > _InnerAttribute_ :\
@@ -217,6 +217,7 @@ pub fn f() {}
   - [`no_builtins`] — 禁用某些内置函数。
   - [`target_feature`] — 配置特定于平台的代码生成。
   - [`track_caller`] - 将父调用位置传递给 `std::panic::Location::caller()`。
+  - [`instruction_set`] - 指定用于生成函数代码的指令集S
 - 文档(Documentation)
   - `doc` — 指定文档。更多信息见 [The Rustdoc Book]。[Doc注释][Doc comments]会被转换为 `doc`属性。
 - 预导入包(Preludes)
@@ -263,6 +264,7 @@ pub fn f() {}
 [`global_allocator`]: runtime.md#the-global_allocator-attribute
 [`ignore`]: attributes/testing.md#the-ignore-attribute
 [`inline`]: attributes/codegen.md#the-inline-attribute
+[`instruction_set`]: attributes/codegen.md#the-instruction_set-attribute
 [`link_name`]: items/external-blocks.md#the-link_name-attribute
 [`link_ordinal`]: items/external-blocks.md#the-link_ordinal-attribute
 [`link_section`]: abi.md#the-link_section-attribute

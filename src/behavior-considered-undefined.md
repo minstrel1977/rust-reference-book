@@ -2,8 +2,8 @@
 ## 未定义的行为
 
 >[behavior-considered-undefined.md](https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md)\
->commit: 88b6a426410aedd747c42fe26e34c84ab7629e3f \
->本章译文最后维护日期：2022-08-21
+>commit: 2af818d235b6c39cb76a099b859a84438e3409f2 \
+>本章译文最后维护日期：2022-12-04
 
 如果 Rust 代码出现了下面列表中的任何行为，则此代码被认为不正确。这包括非安全(`unsafe`)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。
 
@@ -17,7 +17,12 @@
 
 * 数据竞争。
 * 在[悬垂][dangling]或未对齐的裸指针上执行[解引用操作][dereference expression] (`*expr`)，甚至[位置表达式][place expression context](e.g. `addr_of!(&*expr)`)上也不安全。
-* 破坏[指针别名规则][pointer aliasing rules]。`&mut T` 和 `&T` 遵循 LLVM 的作用域[无别名(noalias)][noalias]模型(scoped noalias model)，除非 `&T` 内部包含 [`UnsafeCell<U>`] 类型。
+* 破坏[指针别名规则][pointer aliasing rules]。`Box<T>`、`&mut T` 和 `&T` 遵循 LLVM 的作用域[无别名(noalias)][noalias]模型(scoped noalias model)，除非 `&T` 包含一个 [`UnsafeCell<U>`] 类型。活动的引用和 box类型的智能指针不可为悬垂[dangling]状态。活动持续时间并未明确指定，但存在一些限制条件：
+  * 对于引用来说，活动持续时间由借用检查器指定的句法生存期上限来限制；它不能存活得比那个生存期*更长*。
+  * 每次将引用或 box类型的智能指针传递给函数或从函数返回时，它都被视为是活动的。
+  * 当引用（注意不是 box类型的智能指针！）传递给函数时，它存活的至少与该函数调用一样长，这次同样排除了 `&T` 包含了 [`UnsafeCell<U>`] 的情况。
+
+  当这些类型的值（`Box<T>`、`&mut T` 和 `&T` 类型的值）被传递给复合类型的（内嵌）成员字段时，所有的这些规则都适用，但注意传递给间接寻址的指针不适用。
 * 修改不可变的数据。[常量(`const`)][`const`]项内的所有数据都是不可变的。此外，所有通过共享引用接触到的数据或不可变绑定所拥有的数据都是不可变的，除非该数据包含在 [`UnsafeCell<U>`] 中。
 * 通过编译器内部函数(compiler intrinsics)调用未定义行为。[^译注1]
 * 执行基于当前平台不支持的平台特性编译的代码（参见 [`target_feature`]），*除非*此平台特别申明执行带有此特性的代码安全。

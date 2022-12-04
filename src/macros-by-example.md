@@ -2,8 +2,8 @@
 # 声明宏
 
 >[macros-by-example.md](https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md)\
->commit: 314d63a53825a9d51830bdef2fc6f9643f91e038 \
->本章译文最后维护日期：2022-08-21
+>commit: 04f289ad17a9b86f9cde026d046072a5b3827486 \
+>本章译文最后维护日期：2022-12-04
 
 > **<sup>句法</sup>**\
 > _MacroRulesDefinition_ :\
@@ -62,6 +62,10 @@ ambiguity!(error); // 错误: 局部歧义(local ambiguity)
 ```
 
 在匹配器和转码器中，token `$` 用于从宏引擎中调用特殊行为（下文[元变量][Metavariables]和[重复元][Repetitions]中有详述）。不属于此类调用的 token 将按字面意义进行匹配和转码，除了一个例外。这个例外是匹配器的外层定界符将匹配任何一对定界符。因此，比如匹配器 `(())` 将匹配 `{()}`，而 `{{}}` 不行。字符 `$` 不能按字面意义匹配或转码。
+
+
+### Forwarding a matched fragment
+### 转发匹配段
 
 当将当前匹配的匹配段转发给另一个声明宏时，第二个宏中的匹配器看到的将是此匹配段类型的不透明抽象句法树(opaque AST)。第二个宏不能使用字面量token 来匹配匹配器中的这个匹配段，唯一可看到/使用的就是此匹配段类型一样的匹配段选择器(fragment specifier)。但匹配段类型 `ident`、`lifetime`、和 `tt` 是几个例外，它们*可以*通过字面量token 进行匹配。下面示例展示了这一限制：（译者注：匹配段选择器和匹配段，以及宏中各部件的定义可以凑合着看看译者未能翻译完成的[宏定义规范](macro-ambiguity.md)）
 

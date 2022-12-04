@@ -1,8 +1,8 @@
 # Tokens
 
 >[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
->commit: da28385057ca850ba7019f956589aa0807ade571 \
->本章译文最后维护日期：2022-10-22
+>commit: 018b14be9ded4e5890813dcf1209961298b0873e \
+>本章译文最后维护日期：2022-12-04
 
 
 token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：
@@ -80,13 +80,13 @@ token 是采用非递归方式的正则文法(regular languages)定义的基本�
 #### Numbers
 #### 数字
 
-| [数字字面量](#数字字面量)`*` | 示例 | 指数 | 后缀 |
-|----------------------------------------|---------|----------------|----------|
-| 十进制整数 | `98_222` | `N/A` | 整数后缀 |
-| 十六进制整数 | `0xff` | `N/A` | 整数后缀 |
-| 八进制整数 | `0o77` | `N/A` | 整数后缀 |
-| 二进制整数 | `0b1111_0000` | `N/A` | 整数后缀 |
-| 浮点数 | `123.0E+77` | `Optional` | 浮点数后缀 |
+| [数字字面量](#数字字面量)`*` | 示例 | 指数 |
+|----------------------------------------|---------|----------------|
+| 十进制整数 | `98_222` | `N/A` |
+| 十六进制整数 | `0xff` | `N/A` |
+| 八进制整数 | `0o77` | `N/A` |
+| 二进制整数 | `0b1111_0000` | `N/A` |
+| 浮点数 | `123.0E+77` | `Optional` |
 
 `*` 所有数字字面量允许使用 `_` 作为可视分隔符，比如：`1_234.0E+18f64`
 
@@ -95,15 +95,26 @@ token 是采用非递归方式的正则文法(regular languages)定义的基本�
 
 后缀是字面量主体部分后面的字符序列（它们之间不能含有空格），其形式与非原生标识符或关键字相同。
 
-任何带有后缀的字面量（如字符串、整数等）都可以作为有效的 token，并且可以传递给宏而不会产生错误。宏自己决定如何解释这种 token，以及是否该报错。
+> **<sup>词法</sup>**\
+> SUFFIX : IDENTIFIER_OR_KEYWORD\
+> SUFFIX_NO_E : SUFFIX <sub>_not beginning with `e` or `E`_</sub>
+
+任何带有后缀的字面量（如字符串、整型等）都可以作为有效的 token。
+
+带有后缀的字面量token 可以传递给宏而不会产生错误。
+宏自己决定如何解释这种 token，以及是否该报错。
+特别是，声明宏的 `literal`段指示符匹配带有任意后缀的字面量token。
 
 ```rust
 macro_rules! blackhole { ($tt:tt) => () }
+macro_rules! blackhole_lit { ($l:literal) => () }
 
 blackhole!("string"suffix); // OK
+blackhole_lit!(1suffix); // OK
 ```
 
-但是，最终被解析为 Rust 代码的字面量token 上的后缀是受限制的。对于非数字字面量token，任何后缀都会被编译器拒绝，而数字字面量token 只接受下表中的后缀。
+但是，那些被解析为字面量表达式或模式的字面量token 的后缀是受限的。
+非数字文字标记上的任何后缀都将被拒绝，数字文字标记仅接受以下列表中的后缀。
 
 | 整数 | 浮点数 |
 |---------|----------------|
@@ -116,7 +127,7 @@ blackhole!("string"suffix); // OK
 
 > **<sup>词法</sup>**\
 > CHAR_LITERAL :\
-> &nbsp;&nbsp; `'` ( ~\[`'` `\` \\n \\r \\t] | QUOTE_ESCAPE | ASCII_ESCAPE | UNICODE_ESCAPE ) `'`
+> &nbsp;&nbsp; `'` ( ~\[`'` `\` \\n \\r \\t] | QUOTE_ESCAPE | ASCII_ESCAPE | UNICODE_ESCAPE ) `'` SUFFIX<sup>?</sup>
 >
 > QUOTE_ESCAPE :\
 > &nbsp;&nbsp; `\'` | `\"`
@@ -141,7 +152,7 @@ blackhole!("string"suffix); // OK
 > &nbsp;&nbsp; &nbsp;&nbsp; | ASCII_ESCAPE\
 > &nbsp;&nbsp; &nbsp;&nbsp; | UNICODE_ESCAPE\
 > &nbsp;&nbsp; &nbsp;&nbsp; | STRING_CONTINUE\
-> &nbsp;&nbsp; )<sup>\*</sup> `"`
+> &nbsp;&nbsp; )<sup>\*</sup> `"` SUFFIX<sup>?</sup>
 >
 > STRING_CONTINUE :\
 > &nbsp;&nbsp; `\` _后跟_ \\n
@@ -185,7 +196,7 @@ assert_eq!(b, c);
 
 > **<sup>词法</sup>**\
 > RAW_STRING_LITERAL :\
-> &nbsp;&nbsp; `r` RAW_STRING_CONTENT
+> &nbsp;&nbsp; `r` RAW_STRING_CONTENT SUFFIX<sup>?</sup>
 >
 > RAW_STRING_CONTENT :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `"` ( ~ _IsolatedCR_ )<sup>* (非贪婪模式)</sup> `"`\
@@ -216,7 +227,7 @@ r##"foo #"# bar"##;                // foo #"# bar
 
 > **<sup>词法</sup>**\
 > BYTE_LITERAL :\
-> &nbsp;&nbsp; `b'` ( ASCII_FOR_CHAR | BYTE_ESCAPE )  `'`
+> &nbsp;&nbsp; `b'` ( ASCII_FOR_CHAR | BYTE_ESCAPE )  `'` SUFFIX<sup>?</sup>
 >
 > ASCII_FOR_CHAR :\
 > &nbsp;&nbsp; _任何 ASCII 字符 （0x00 到 0x7F）, 排除_ `'`, `\`, \\n, \\r 或者 \\t
@@ -232,7 +243,7 @@ r##"foo #"# bar"##;                // foo #"# bar
 
 > **<sup>词法</sup>**\
 > BYTE_STRING_LITERAL :\
-> &nbsp;&nbsp; `b"` ( ASCII_FOR_STRING | BYTE_ESCAPE | STRING_CONTINUE )<sup>\*</sup> `"`
+> &nbsp;&nbsp; `b"` ( ASCII_FOR_STRING | BYTE_ESCAPE | STRING_CONTINUE )<sup>\*</sup> `"` SUFFIX<sup>?</sup>
 >
 > ASCII_FOR_STRING :\
 > &nbsp;&nbsp; _任何 ASCII 字符(码值位于 0x00 到 0x7F 之间), 排除_ `"`, `\` _和 IsolatedCR_
@@ -251,7 +262,7 @@ r##"foo #"# bar"##;                // foo #"# bar
 
 > **<sup>词法</sup>**\
 > RAW_BYTE_STRING_LITERAL :\
-> &nbsp;&nbsp; `br` RAW_BYTE_STRING_CONTENT
+> &nbsp;&nbsp; `br` RAW_BYTE_STRING_CONTENT SUFFIX<sup>?</sup>
 >
 > RAW_BYTE_STRING_CONTENT :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `"` ASCII<sup>* (非贪婪模式)</sup> `"`\
@@ -288,7 +299,7 @@ b"\\x52"; br"\x52";                  // \x52
 > **<sup>词法</sup>**\
 > INTEGER_LITERAL :\
 > &nbsp;&nbsp; ( DEC_LITERAL | BIN_LITERAL | OCT_LITERAL | HEX_LITERAL )
->              INTEGER_SUFFIX<sup>?</sup>
+>              SUFFIX_NO_E<sup>?</sup>
 >
 > DEC_LITERAL :\
 > &nbsp;&nbsp; DEC_DIGIT (DEC_DIGIT|`_`)<sup>\*</sup>
@@ -309,10 +320,6 @@ b"\\x52"; br"\x52";                  // \x52
 > DEC_DIGIT : \[`0`-`9`]
 >
 > HEX_DIGIT : \[`0`-`9` `a`-`f` `A`-`F`]
->
-> INTEGER_SUFFIX :\
-> &nbsp;&nbsp; &nbsp;&nbsp; `u8` | `u16` | `u32` | `u64` | `u128` | `usize`\
-> &nbsp;&nbsp; | `i8` | `i16` | `i32` | `i64` | `i128` | `isize`
 
 *整型字面量*具备下述 4 种形式之一：
 
@@ -321,10 +328,11 @@ b"\\x52"; br"\x52";                  // \x52
 * *八进制字面量*以字符序列 `U+0030` `U+006F`（`0o`）开头，后跟八进制数字和下划线的任意组合（至少一个数字）。
 * *二进制字面量*以字符序列 `U+0030` `U+0062`（`0b`）开头，后跟二进制数字和下划线的任意组合（至少一个数字）。
 
-与其它字面量一样，整型字面量后面可紧跟一个*整型后缀*，该后缀强制设定了字面量的数据类型。整型后缀须是[原生整型类型][numeric types]中的一个，包括：`u8`、`i8`、`u16`、`i16`、`u32`、`i32`、`u64`、`i64`、`u128`、`i128`、`usize` 或 `isize`。
+与其它字面量一样，整型字面量后面可紧跟（没有空格）一个上述的后缀。
+后缀不能以 `e` 或 `E` 开头，因为这将被解析为浮点字面量的指数。
 参见[字面量表达式][literal expressions]以了解这些后缀的功能效果。
 
-各种形式的整型字面量的示例：
+被正确解析为整型字面量的示例：
 
 ```rust
 # #![allow(overflowing_literals)]
@@ -347,27 +355,27 @@ b"\\x52"; br"\x52";                  // \x52
 
 0usize;
 
-// 下面这些对它们的类型来说太打了，但仍是有效的 token
-
+// 下面这些对它们的类型来说太大了，但仍被认为是字面量表达式
 128_i8;
 256_u8;
+
+// 这是一个整型字面量，但被解析器接受为浮点型字面量表达式
+5f32;
 
 ```
 
 注意对于 `-1i8` 这样的，其实它被分析为两个 token: `-` 后跟 `1i8`。
 
-无效整型字面量示例:
+不被承认为合法字面量表达式的整型字面量：
 
-```rust,compile_fail
-// 使用了错误的进制数
-
-0b0102;
-0o0581;
-
-// 二进制, 十六进制 和 八进制字面量至少需要有一个数字
-
-0b_;
-0b____;
+```rust
+# #[cfg(FALSE)] {
+0invalidSuffix;
+123AFB43;
+0b010a;
+0xAB_CD_EF_GH;
+0b1111_f32;
+# }
 ```
 
 #### Tuple index
@@ -390,7 +398,8 @@ let cat = example.01;  // 错误：没有 `01` 字段
 let horse = example.0b10;  // 错误：没有 `0b10` 字段
 ```
 
-> **注意**: 元组索引可能包含一个 `INTEGER_SUFFIX` ，但是这不是有效的，可能会在将来的版本中被删除。更多信息请参见<https://github.com/rust-lang/rust/issues/60210>。
+> **注意**: 元组的索引可能包含一些特定的后缀，但是这不是被故意设计为有效的，可能会在将来的版本中被移除。
+> 更多信息请参见<https://github.com/rust-lang/rust/issues/60210>。
 
 #### Floating-point literals
 #### 浮点型字面量
@@ -399,17 +408,13 @@ let horse = example.0b10;  // 错误：没有 `0b10` 字段
 > FLOAT_LITERAL :\
 > &nbsp;&nbsp; &nbsp;&nbsp; DEC_LITERAL `.`
 >   _（紧跟着的不能是 `.`, `_` 或者 XID_Start类型的字符)__\
-> &nbsp;&nbsp; | DEC_LITERAL FLOAT_EXPONENT\
-> &nbsp;&nbsp; | DEC_LITERAL `.` DEC_LITERAL FLOAT_EXPONENT<sup>?</sup>\
-> &nbsp;&nbsp; | DEC_LITERAL (`.` DEC_LITERAL)<sup>?</sup>
->                    FLOAT_EXPONENT<sup>?</sup> FLOAT_SUFFIX
+> &nbsp;&nbsp; | DEC_LITERAL `.` DEC_LITERAL SUFFIX_NO_E<sup>?</sup>\
+> &nbsp;&nbsp; | DEC_LITERAL (`.` DEC_LITERAL)<sup>?</sup> FLOAT_EXPONENT SUFFIX<sup>?</sup>\
 >
 > FLOAT_EXPONENT :\
 > &nbsp;&nbsp; (`e`|`E`) (`+`|`-`)<sup>?</sup>
 >               (DEC_DIGIT|`_`)<sup>\*</sup> DEC_DIGIT (DEC_DIGIT|`_`)<sup>\*</sup>
 >
-> FLOAT_SUFFIX :\
-> &nbsp;&nbsp; `f32` | `f64`
 
 *浮点型字面量*有如下两种形式：
 
@@ -417,7 +422,7 @@ let horse = example.0b10;  // 错误：没有 `0b10` 字段
 * *十进制字面量*后跟一个*指数*。
 
 如同整型字面量，浮点型字面量也可后跟一个后缀，但在后缀之前，浮点型字面量部分不以 `U+002E`（`.`）结尾。
-有两种有效的*浮点型后缀*：`f32` 和 `f64` （32-bit 和 64-bit [原生浮点型][floating-point types]）。
+如果字面量不包含指数，则后缀不能以 `e`或 `E` 开头。
 参见[字面量表达式][literal expressions]以了解这类后缀的功能效果。
 
 各种形式的浮点型字面量示例：
@@ -427,7 +432,6 @@ let horse = example.0b10;  // 错误：没有 `0b10` 字段
 0.1f64;
 0.1f32;
 12E+99_f64;
-5f32;
 let x: f64 = 2.;
 ```
 
@@ -435,40 +439,16 @@ let x: f64 = 2.;
 
 请注意，像 `-1.0` 这样的会被分析为两个 token： `-` 后跟 `1.0`。
 
-#### Number pseudoliterals
-#### 伪数字字面量
+不被认为是合法的字面量表达式的浮点型字面量的示例：
 
-> **<sup>Lexer</sup>**\
-> NUMBER_PSEUDOLITERAL :\
-> &nbsp;&nbsp; &nbsp;&nbsp; DEC_LITERAL ( . DEC_LITERAL )<sup>?</sup> FLOAT_EXPONENT\
-> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; ( NUMBER_PSEUDOLITERAL_SUFFIX | INTEGER_SUFFIX )\
-> &nbsp;&nbsp; | DEC_LITERAL . DEC_LITERAL\
-> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; ( NUMBER_PSEUDOLITERAL_SUFFIX_NO_E | INTEGER SUFFIX )\
-> &nbsp;&nbsp; | DEC_LITERAL NUMBER_PSEUDOLITERAL_SUFFIX_NO_E\
-> &nbsp;&nbsp; | ( BIN_LITERAL | OCT_LITERAL | HEX_LITERAL )\
-> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; ( NUMBER_PSEUDOLITERAL_SUFFIX_NO_E | FLOAT_SUFFIX )
->
-> NUMBER_PSEUDOLITERAL_SUFFIX :\
-> &nbsp;&nbsp; IDENTIFIER_OR_KEYWORD <sub>_不能匹配 INTEGER_SUFFIX 或 FLOAT_SUFFIX_</sub>
->
-> NUMBER_PSEUDOLITERAL_SUFFIX_NO_E :\
-> &nbsp;&nbsp; NUMBER_PSEUDOLITERAL_SUFFIX <sub>_不以 `e` 或者 `E` 开头_</sub>
-
-数字型的字面量的 token化允许使用上述词法表述中的任意后缀。
-那些值可以生成有效的 token，但却又不是合法的[字面量表达式][literal expressions]的情况通常都是错误的，当然宏参数除外。
-
-这种 token 的示例:
-```rust,compile_fail
-0invalidSuffix;
-123AFB43;
-0b010a;
-0xAB_CD_EF_GH;
+```rust
+# #[cfg(FALSE)] {
 2.0f80;
 2e5f80;
 2e5e6;
 2.0e5e6;
 1.3e10u64;
-0b1111_f32;
+# }
 ```
 
 #### Reserved forms similar to number literals
@@ -480,7 +460,7 @@ let x: f64 = 2.;
 > &nbsp;&nbsp; | OCT_LITERAL \[`8`-`9`&ZeroWidthSpace;]\
 > &nbsp;&nbsp; | ( BIN_LITERAL | OCT_LITERAL | HEX_LITERAL ) `.` \
 > &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; _(不能直接后跟 `.`, `_` 或一个 XID_Start类型的字符)_\
-> &nbsp;&nbsp; | ( BIN_LITERAL | OCT_LITERAL ) `e`\
+> &nbsp;&nbsp; | ( BIN_LITERAL | OCT_LITERAL ) (`e`|`E`)\
 > &nbsp;&nbsp; | `0b` `_`<sup>\*</sup> _end of input or not BIN_DIGIT_\
 > &nbsp;&nbsp; | `0o` `_`<sup>\*</sup> _end of input or not OCT_DIGIT_\
 > &nbsp;&nbsp; | `0x` `_`<sup>\*</sup> _end of input or not HEX_DIGIT_\
@@ -493,7 +473,7 @@ let x: f64 = 2.;
 
 * 不带后缀的二进制、八进制或十六进制字面量，不插入空格的后跟一个句点字符（句点后面的内容与浮点数字面量相同）。
 
-* 不带前缀的二进制或八进制字面量，不加空格的后跟字符`e`。
+* 不带前缀的二进制或八进制字面量，不加空格的后跟字符`e`或`E`。
 
 * 以一个进制数前缀开始的输入，但又不是有效的二进制、八进制或十六进制字面量（因为它没包含数字）。
 
@@ -505,13 +485,13 @@ let x: f64 = 2.;
 0b0102;  // 这可不是 `0b010` 后跟 `2`
 0o1279;  // 这可不是 `0o127` 后跟 `9`
 0x80.0;  // 这可不是 `0x80` 后跟 `.` and `0`
-0b101e;  // 这不是一个伪字面量，也不是 `0b101` 后跟 `e`
-0b;      // 这不是一个伪字面量，也不是 `0` 后跟  `b`
-0b_;     // 这不是一个伪字面量，也不是 `0` 后跟  `b_`
-2e;      // 这不是一个伪字面量，也不是 `2` 后跟 `e`
-2.0e;    // 这不是一个伪字面量，也不是 `2.0` 后跟 `e`
-2em;     // 这不是一个伪字面量，也不是 `2` 后跟 `em`
-2.0em;   // 这不是一个伪字面量，也不是 `2.0` 后跟 `em`
+0b101e;  // 这不是一个带后缀的字面量，也不是 `0b101` 后跟 `e`
+0b;      // 这不是一个整型字面量，也不是 `0` 后跟  `b`
+0b_;     // 这不是一个整型字面量，也不是 `0` 后跟  `b_`
+2e;      // 这不是一个浮点型字面量，也不是 `2` 后跟 `e`
+2.0e;    // 这不是一个浮点型字面量，也不是 `2.0` 后跟 `e`
+2em;     // 这不是一个带后缀的字面量，也不是 `2` 后跟 `em`
+2.0em;   // 这不是一个带后缀的字面量，也不是 `2.0` 后跟 `em`
 ```
 
 ## Lifetimes and loop labels

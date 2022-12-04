@@ -2,8 +2,8 @@
 # 字面量表达式
 
 >[literal-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/literal-expr.md)\
->commit: 9c5c3cb9d160787f31903e61abd2ba4567182b5c \
->本章译文最后维护日期：2022-04-16
+>commit: ccde77edcb4d4607f212bfd9fa65a913defb5055 \
+>本章译文最后维护日期：2022-12-04
 
 > **<sup>句法</sup>**\
 > _LiteralExpression_ :\
@@ -13,11 +13,9 @@
 > &nbsp;&nbsp; | [BYTE_LITERAL]\
 > &nbsp;&nbsp; | [BYTE_STRING_LITERAL]\
 > &nbsp;&nbsp; | [RAW_BYTE_STRING_LITERAL]\
-> &nbsp;&nbsp; | [INTEGER_LITERAL][^out-of-range]\
+> &nbsp;&nbsp; | [INTEGER_LITERAL]\
 > &nbsp;&nbsp; | [FLOAT_LITERAL]\
-> &nbsp;&nbsp; | `true` | `false`
->
-> [^out-of-range]: 不允许大于或等于 2<sup>128</sup> 的值。
+> &nbsp;&nbsp; | `true` | `false`>
 
 字面表达式是由单一 token（而不是一组 token）组成的表达式，它立即和直接表示其表达式求值的值，而不是通过名称或其他求值规则来引用它。
 它直接描述一个数字、字符、字符串或布尔值。
@@ -64,7 +62,7 @@
 
 整型字面量表达式由单一一个[整型字面量][INTEGER_LITERAL]token 组成。
 
-如果这种 token 带有[后缀][suffix]，那这个后缀的名字将是[原生整型][numeric types]中的一个：`u8`, `i8`, `u16`, `i16`, `u32`, `i32`, `u64`, `i64`, `u128`, `i128`, `usize` 或 `isize`，同时此后缀名也是此表达式的类型。
+如果这种 token 带有[后缀][suffix]，那这个后缀的名字必须是[原生整型][numeric types]中的一个：`u8`, `i8`, `u16`, `i16`, `u32`, `i32`, `u64`, `i64`, `u128`, `i128`, `usize` 或 `isize`，同时此后缀名也是此表达式的类型。
 
 如果此 token 没有后缀，此表达式的类型将由下面的类型推断规则来确定:
 
@@ -106,10 +104,12 @@ let a: u64 = 123;                  // type u64
 
 * 如果进制数不是10，则从字符串中删除前两个字符。
 
-* 将从字符串中删除所有下划线。
+* 字符串的后缀都会被删除。
+
+* 字符串里的下划线都会被删除。
 
 * 字符串被转换为 `u128`类型的值时，比如使用 [`u128::from_str_radix`] 时选的进制数标记。
-如果该值不能被表示为 `u128`，则该表达式将被解析器拒绝。
+如果该值不能被表示为 `u128`，将在编译时报错。
 
 * `u128`类型的值通过[数值转换][numeric cast]转换为表达式的类型。
 
@@ -122,9 +122,11 @@ let a: u64 = 123;                  // type u64
 
 ## 浮点型字面量表达式
 
-浮点型字面量表达式由单一一个[浮点型字面量][FLOAT_LITERAL]token 组成。
+浮点型字面量表达式由下面两种形式：[浮点型字面量][FLOAT_LITERAL]token 组成。
+ * 由单一的[浮点型字面量][FLOAT_LITERAL]token 组成
+ * 由单一的没有后缀和基数指示符的[整型字面量][INTEGER_LITERAL]token 组成
 
-如果这种 token 带有[后缀][suffix]，那这个后缀的名字将是[原生浮点型][floating-point types]中的一个：`f32` 或 `f64`，同时此后缀名也是此表达式的类型。
+如果这种 token 带有[后缀][suffix]，那这个后缀的名字必须是[原生浮点型][floating-point types]中的一个：`f32` 或 `f64`，同时此后缀名也是此表达式的类型。
 
 如果这种 token 没有后缀，此表达式的类型将由下面的类型推断规则来确定:
 
@@ -147,7 +149,9 @@ let x: f64 = 2.; // type f64
 
 而表达式的值由 token 的字符串表示形式来确定，规则如下：
 
-* 将从字符串中删除所有下划线。
+* 字符串的后缀都会被删除。
+
+* 字符串中的下划线都会被删除。
 
 * 字符串被转换为这类表达式类型时，如同直接调用 [`f32::from_str`] 或 [`f64::from_str`]。
 

@@ -2,8 +2,8 @@
 # 类型参数和生存期参数
 
 >[generics.md](https://github.com/rust-lang/reference/blob/master/src/items/generics.md)\
->commit: cd3704e9aa4e28f0bc311ab7c23e5dfaf1f3c24d \
->本章译文最后维护日期：2022-03-14
+>commit: 8a86959fe961c09f201f1116bcbacf759e0604d4 \
+>本章译文最后维护日期：2022-12-04
 
 > **<sup>句法</sup>**\
 > _GenericParams_ :\

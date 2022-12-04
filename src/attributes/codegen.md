@@ -2,8 +2,8 @@
 # 代码生成属性
 
 >[codegen.md](https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md)\
->commit: f24b8d4ca7aeb5340db673c7364b19e056b4de48 \
->本章译文最后维护日期：2022-10-22
+>commit: 6a5431b863f61b86dcac70ee2ab377152f40f66e \
+>本章译文最后维护日期：2022-12-04
 
 下述[属性][attributes]用于控制代码生成。
 
@@ -310,3 +310,25 @@ fn calls_h() {
 [`core::intrinsics::caller_location`]: https://doc.rust-lang.org/core/intrinsics/fn.caller_location.html
 [`core::panic::Location::caller`]: https://doc.rust-lang.org/core/panic/struct.Location.html#method.caller
 [`Location`]: https://doc.rust-lang.org/core/panic/struct.Location.html
+
+
+## The `instruction_set` attribute
+## `instruction_set`属性
+
+*`instruction_set`属性*可应用于函数，用以实现目标架构支持的特定指令集的代码生成。它使用 [_MetaListPath_]句法，其中的 _SimplePath_ 是由架构和指令集组成的路径。这样可用为单个程序生成目标架构所支持的多个指令集的代码。
+
+以下两个值在 `ARMv4` 和 `ARMv5te` 目标架构下可用：
+
+* `arm::a32` - Uses ARM code.
+* `arm::t32` - Uses Thumb code.
+
+<!-- ignore: arm-only -->
+```rust,ignore
+#[instruction_set(arm::a32)]
+fn foo_arm_code() {}
+
+#[instruction_set(arm::t32)]
+fn bar_thumb_code() {}
+```
+
+[_MetaListPath_]: ../attributes.md#meta-item-attribute-syntax

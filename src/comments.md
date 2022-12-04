@@ -2,12 +2,12 @@
 # 注释
 
 >[comments.md](https://github.com/rust-lang/reference/blob/master/src/comments.md)\
->commit: ece3e184c0beeadba97c78eed9005533c3874e43 \
->本章译文最后维护日期：2022-08-21
+>commit: 219e33667d63dfa2069c6296d75d56e34fa5b8f8 \
+>本章译文最后维护日期：2022-12-04
 
 > **<sup>词法分析</sup>**\
 > LINE_COMMENT :(译者注：行注释)\
-> &nbsp;&nbsp; &nbsp;&nbsp; `/*` (~\[`*` `!`] | `**` | _BlockCommentOrDoc_)
+> &nbsp;&nbsp; &nbsp;&nbsp; `/*` (~\[`*` `!` `\n`] | `**` | _BlockCommentOrDoc_)
 > &nbsp;&nbsp; | `//`
 >
 > BLOCK_COMMENT :(译者注：块注释)\
