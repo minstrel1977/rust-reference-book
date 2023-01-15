@@ -153,8 +153,8 @@
 <h1 id="类型布局"><a class="header" href="#类型布局">类型布局</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-layout.md">type-layout.md</a><br />
-commit: d2acc38e9475837d64602df1ff78fce46d69d3b6 <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: f8ac109624aad26711824fc9e9e0780a1c52f34a <br />
+本章译文最后维护日期：2023-01-15</p>
 </blockquote>
 <p>类型的布局描述类型的内存宽度(size)、对齐量(alignment)和字段(fields)的<em>相对偏移量(relative offsets)</em>。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。</p>
 <p>每次编译都有可能更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。</p>
@@ -356,12 +356,12 @@ assert_eq!(std::mem::size_of::&lt;SizeRoundedUp&gt;(), 12);  // 首先来自于b
 </span></code></pre></pre>
 <h4 id="reprc-field-less-enums"><a class="header" href="#reprc-field-less-enums"><code>#[repr(C)]</code> Field-less Enums</a></h4>
 <h4 id="reprc无字段枚举"><a class="header" href="#reprc无字段枚举"><code>#[repr(C)]</code>无字段枚举</a></h4>
-<p>对于<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举(field-less enums)</a>，<code>C</code>表形的内存宽度和对齐量与目标平台的 C ABI 的默认枚举内存宽度和对齐量相同。</p>
+<p>对于<a href="items/enumerations.html#field-less-enum">无字段枚举(field-less enums)</a>，<code>C</code>表形的内存宽度和对齐量与目标平台的 C ABI 的默认枚举内存宽度和对齐量相同。</p>
 <blockquote>
 <p>注意：C中的枚举的表形是由枚举的相应实现定义的，所以在 Rust 中，给无字段枚举应用 C表形得到的表型很可能是一个“最佳猜测”。特别是，当使用某些特定命令行参数来编译特定的 C代码时，这可能是不正确的。</p>
 </blockquote>
 <div class="warning">
-<p>警告：C语言中的枚举与 Rust 中的那些应用了 <code>#[repr(C)]</code>表型的<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举</a>之间有着重要的区别。C语言中的枚举主要是 <code>typedef</code> 加上一些具名常量；换句话说，C枚举(<code>enum</code>)类型的对象可以包含任何整数值。例如，C枚举通常被用做标志位。相比之下，Rust的<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举</a>只能合法地<sup class="footnote-reference"><a href="#译注2">2</a></sup>保存判别式的值，其他的都是<a href="behavior-considered-undefined.html">未定义行为</a>。因此，在 FFI 中使用无字段枚举来建模 C语言中的枚举(<code>enum</code>)通常是错误的。</p>
+<p>警告：C语言中的枚举与 Rust 中的那些应用了 <code>#[repr(C)]</code>表型的<a href="items/enumerations.html#field-less-enum">无字段枚举</a>之间有着重要的区别。C语言中的枚举主要是 <code>typedef</code> 加上一些具名常量；换句话说，C枚举(<code>enum</code>)类型的对象可以包含任何整数值。例如，C枚举通常被用做标志位。相比之下，Rust的<a href="items/enumerations.html#field-less-enum">无字段枚举</a>只能合法地<sup class="footnote-reference"><a href="#译注2">2</a></sup>保存判别式的值，其他的都是<a href="behavior-considered-undefined.html">未定义行为</a>。因此，在 FFI 中使用无字段枚举来建模 C语言中的枚举(<code>enum</code>)通常是错误的。</p>
 </div>
 <h4 id="reprc-enums-with-fields"><a class="header" href="#reprc-enums-with-fields"><code>#[repr(C)]</code> Enums With Fields</a></h4>
 <h4 id="reprc带字段枚举"><a class="header" href="#reprc带字段枚举"><code>#[repr(C)]</code>带字段枚举</a></h4>
@@ -431,7 +431,7 @@ struct MyDFields;
 <p>原语表形只能应用于枚举，此时枚举有没有字段会给原语表形带来不同的表现。给<a href="items/enumerations.html#zero-variant-enums">零变体枚举</a>应用原始表形是错误的。将两个原语表形组合在一起也是错误的</p>
 <h4 id="primitive-representation-of-field-less-enums"><a class="header" href="#primitive-representation-of-field-less-enums">Primitive Representation of Field-less Enums</a></h4>
 <h4 id="无字段枚举的原语表形"><a class="header" href="#无字段枚举的原语表形">无字段枚举的原语表形</a></h4>
-<p>对于<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举</a>，原语表形将其内存宽度和对齐量设置成与给定表形同名的原生类型的表形的值。例如，一个 <code>u8</code>表形的无字段枚举只能有0和255之间的判别值。</p>
+<p>对于<a href="items/enumerations.html#field-less-enum">无字段枚举</a>，原语表形将其内存宽度和对齐量设置成与给定表形同名的原生类型的表形的值。例如，一个 <code>u8</code>表形的无字段枚举只能有0和255之间的判别值。</p>
 <h4 id="primitive-representation-of-enums-with-fields"><a class="header" href="#primitive-representation-of-enums-with-fields">Primitive Representation of Enums With Fields</a></h4>
 <h4 id="带字段枚举的原语表形"><a class="header" href="#带字段枚举的原语表形">带字段枚举的原语表形</a></h4>
 <p>带字段枚举的原语表形是一个 <code>repr(C)</code>表形的联合体，此联合体的每个字段对应一个和原枚举变体对应的 <code>repr(C)</code>表形的结构体。这些结构体的第一个字段是原枚举的变体移除了它们所有的字段组成的原语表形版的无字段枚举（“the tag”），那这些结构体的其余字段是原变体移走的字段。</p>
@@ -563,8 +563,6 @@ assert_eq!(std::mem::size_of::&lt;Enum16&gt;(), 4);
 <div class="footnote-definition" id="译注2"><sup class="footnote-definition-label">2</sup>
 <p>这里合法的意思是变体的判别值受 <code>repr(u8)</code> 这样的表形属性约束，像这个例子中，变体的判别值就只能位于 0~255 之间。 </p>
 </div>
-<!-- 2020-12-17-->
-<!-- checked -->
 
                     </main>
 

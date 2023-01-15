@@ -2,8 +2,8 @@
 # 常量求值
 
 >[const_eval.md](https://github.com/rust-lang/reference/blob/master/src/const_eval.md)\
->commit:  4aff5bed5eb04411174a7bd7e86975d3eb7b62d5 \
->本章译文最后维护日期：2022-08-21
+>commit:  3d4745b3480bfe80cd4320aeaf8b84394ae49fe0 \
+>本章译文最后维护日期：2023-01-15
 
 常量求值是在编译过程中计算[表达式][[expressions]]结果的过程。（不是所有表达式都可以在编译时求值，也就是说）只有全部表达式的某个子集可以在编译时求值。
 
@@ -91,7 +91,7 @@
 [Const parameters]:     items/generics.md
 [dereference operator]: expressions/operator-expr.md#the-dereference-operator
 [destructors]:          destructors.md
-[enum discriminants]:   items/enumerations.md#custom-discriminant-values-for-fieldless-enumerations
+[enum discriminants]:   items/enumerations.md#discriminants
 [expression statements]: statements.md#expression-statements
 [expressions]:          expressions.md
 [field]:                expressions/field-expr.md

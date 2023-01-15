@@ -153,8 +153,8 @@
 <h1 id="特殊类型和-trait"><a class="header" href="#特殊类型和-trait">特殊类型和 trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/special-types-and-traits.md">special-types-and-traits.md</a><br />
-commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 <br />
-本章译文最后维护日期：2022-04-29</p>
+commit: 50a597cc56af8d9d93e7071a4099480648eb9672 <br />
+本章译文最后维护日期：2023-01-15</p>
 </blockquote>
 <p><a href="https://doc.rust-lang.org/std/index.html">标准库</a>中的某些类型和 trait 在 Rust 编译器中也直接能用。本章就阐述了这些类型和 trait 的特殊特性。</p>
 <h2 id="boxt"><a class="header" href="#boxt"><code>Box&lt;T&gt;</code></a></h2>
@@ -219,7 +219,7 @@ commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 <br />
 <p>自动trait 可以作为额外的约束添加到任何 <a href="types/trait-object.html">trait对象</a>上，尽管通常我们见到的 trait对象的类型名上一般只显示一个 trait。例如，<code>Box&lt;dyn Debug + Send + UnwindSafe&gt;</code> 就是一个有效的类型。</p>
 <h2 id="sized"><a class="header" href="#sized"><code>Sized</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/marker/trait.Sized.html"><code>Sized</code></a> trait表明这种类型的内存宽度在编译时是已知的；也就是说，它不是一个<a href="dynamically-sized-types.html">动态内存宽度类型</a>。
-<a href="types/parameters.html">类型参数</a>和<a href="items/associated-items.html#associated-types">关联类型</a>默认是 <code>Sized</code> 的。
+<a href="types/parameters.html">类型参数</a> （除了 trait 中的<code>Self</code>）和<a href="items/associated-items.html#associated-types">关联类型</a>默认是 <code>Sized</code> 的。
 <code>Sized</code> 总是由编译器自动实现，而不是由<a href="items/implementations.html">实现(implementation items)</a>主动实现的。
 这些隐式的 <code>Sized</code>约束可以通过指定 <code>?Sized</code>约束来放宽约束。</p>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>

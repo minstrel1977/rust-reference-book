@@ -2,8 +2,8 @@
 # 析构器
 
 >[destructors.md](https://github.com/rust-lang/reference/blob/master/src/destructors.md)\
->commit: 3c9516b800901a0bc323df0ebb6e34adf2d2f5e8 \
->本章译文最后维护日期：2022-10-22
+>commit: ca43062e348236d8ad10590d655897cb5e8585e9 \
+>本章译文最后维护日期：2023-01-15
 
 
 当一个[初始化][initialized]了的[变量][variable]或[临时变量][temporary]超出[作用域](#drop-scopes)时，其*析构器(destructor)*将运行，或者说它将被*销毁(dropped)*。此外，[赋值][Assignment]操作也会运行其左操作数的析构器（如果它已经初始化了）。如果变量只部分初始化了，则只销毁其已初始化的字段。
@@ -230,7 +230,7 @@ let x = &mut 0;
 println!("{}", x);
 ```
 
-如果一个借用、解引用、字段或元组索引表达式有一个扩展的临时作用域，那么它们的操作数也会跟着扩展。如果索引表达式有扩展的临时作用域，那么被它索引的表达式也会一并扩展作用域。
+如果一个[借用][borrow expression]、[解引用][dereference expression]、[字段][field expression]或[元组索引表达式][tuple indexing expression]有一个扩展的临时作用域，那么它们的操作数也会跟着扩展。如果[索引表达式][indexing expression]有扩展的临时作用域，那么被它索引的表达式也会一并扩展作用域。
 
 #### Extending based on patterns
 #### 基于模式的作用域扩展
@@ -335,8 +335,12 @@ let x = (&temp()).use_temp();  // ERROR
 [block expression]: expressions/block-expr.md
 [borrow expression]: expressions/operator-expr.md#borrow-operators
 [cast expression]: expressions/operator-expr.md#type-cast-expressions
+[dereference expression]: expressions/operator-expr.md#the-dereference-operator
+[field expression]: expressions/field-expr.md
+[indexing expression]: expressions/array-expr.md#array-and-slice-indexing-expressions
 [struct expression]: expressions/struct-expr.md
 [tuple expression]: expressions/tuple-expr.md#tuple-expressions
+[tuple indexing expression]: expressions/tuple-expr.md#tuple-indexing-expressions
 
 [`for`]: expressions/loop-expr.md#iterator-loops
 [`if let`]: expressions/if-expr.md#if-let-expressions

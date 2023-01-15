@@ -2,8 +2,8 @@
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit: 5c4a7a617c596b78593cabdf72e522ac2b8d1fba \
->本章译文最后维护日期：2022-08-21
+>commit: c351aa715c5540bc48c4c40328a052482961068e \
+>本章译文最后维护日期：2023-01-15
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -372,7 +372,7 @@ fn average(values: &[f64]) -> f64 {
 | `e` 的类型          | `U`                   | 通过 `e as U` 执行转换      |
 |-----------------------|-----------------------|----------------------------------|
 | 整型或浮点型           | 整型或浮点型           | 数字转换                     |
-| 类C(C-like)枚举        | 整型          | 枚举转换                        |
+| 枚举                  | 整型          | 枚举转换                        |
 | `bool` 或 `char`      | 整型          | 原生类型到整型的转换        |
 | `u8`                  | `char`                | `u8` 到 `char` 的转换              |
 | `*T`                  | `*V` where `V: Sized` \* | 指针到指针的转换       |
@@ -425,7 +425,11 @@ fn average(values: &[f64]) -> f64 {
 #### Enum cast
 #### 枚举转换
 
-可将枚举类型转换为其判别值，然后在必要时可以使用数字类型转换。
+可将枚举类型转换为其判别值，在必要时，后继可以再继续使用数字类型转换。
+枚举转换仅限于以下枚举类型：
+
+* [单元体枚举][Unit-only enums]
+* 无[显式指定判别式][explicit discriminants]的[无字段枚举][Field-less enums]，或显式指定了判别式的单元体枚举
 
 #### Primitive to integer cast
 #### 原生类型到整型
@@ -640,6 +644,8 @@ fn example() {
 <!-- 上面这几个链接从原文来替换时需小心 -->
 [copies or moves]: ../expressions.md#moved-and-copied-types
 [dropping]: ../destructors.md
+[explicit discriminants]: ../items/enumerations.md#explicit-discriminants
+[field-less enums]: ../items/enumerations.md#field-less-enum
 [grouped expression]: grouped-expr.md
 [literal expression]: literal-expr.md#integer-literal-expressions
 [logical and]: ../types/boolean.md#logical-and
@@ -651,6 +657,7 @@ fn example() {
 [assignee expression]: ../expressions.md#place-expressions-and-value-expressions
 [undefined behavior]: ../behavior-considered-undefined.md
 [unit]: ../types/tuple.md
+[Unit-only enums]: ../items/enumerations.md#unit-only-enum
 [value expression]: ../expressions.md#place-expressions-and-value-expressions
 [temporary value]: ../expressions.md#temporaries
 [this test]: https://github.com/rust-lang/rust/blob/1.58.0/src/test/ui/expr/compound-assignment/eval-order.rs

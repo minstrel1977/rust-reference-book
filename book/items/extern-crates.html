@@ -153,8 +153,8 @@
 <h1 id="外部crate声明"><a class="header" href="#外部crate声明">外部crate声明</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/extern-crates.md">extern-crates.md</a><br />
-commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
-本章译文最后维护日期：2021-07-31</p>
+commit: 8ca80a14d359cc21b0e9c10dde7d45fe1fcb9af8 <br />
+本章译文最后维护日期：2022-12-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法:<sup></strong><br />
@@ -166,7 +166,7 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
    <code>as</code> ( <a href="../identifiers.html">IDENTIFIER</a> | <code>_</code> )</p>
 </blockquote>
 <p><em>外部crate(<code>extern crate</code>)声明</em>指定了对外部 crate 的依赖关系。（这种声明让）外部的 crate 作为外部crate(<code>extern crate</code>)声明中提供的<a href="../identifiers.html">标识符</a>被绑定到当前声明的作用域中。此外，如果 <code>extern crate</code> 出现在 crate的根模块中，那么此 crate名称也会被添加到<a href="../names/preludes.html#extern-prelude">外部预导入包</a>中，以便使其自动出现在所有模块的作用域中。<code>as</code>子句可用于将导入的 crate 绑定到不同的名称上。</p>
-<p>外部crate 在编译时被解析为一个特定的 <code>soname</code><sup class="footnote-reference"><a href="#soname">1</a></sup>， 并且一个到此 <code>soname</code> 的运行时链接会传递给链接器，以便在运行时加载此 <code>soname</code>。<code>soname</code> 在编译时解析，方法是扫描编译器的库文件路径，匹配外部crate 的 <code>crateid</code>。因为<code>crateid</code> 是在编译时通过可选的 <code>crateid</code>属性声明的，所以如果外部 crate 没有提供 <code>crateid</code>， 则默认拿该外部crate 的 <code>name</code>属性值来和外部crate(<code>extern crate</code>)声明中的[标识符]绑定。</p>
+<p>外部crate 在编译时被解析为一个特定的 <code>soname</code><sup class="footnote-reference"><a href="#soname">1</a></sup>， 并且一个到此 <code>soname</code> 的运行时链接会传递给链接器，以便在运行时加载此 <code>soname</code>。<code>soname</code> 在编译时解析，方法是扫描编译器的库文件路径，匹配外部crate 的 <code>crate_name</code>。因为<code>crate_name</code> 是在编译时通过可选的 <code>crate_name</code>属性声明的，所以如果外部 crate 没有提供 <code>crate_name</code>， 则默认拿该外部crate 的 <code>name</code>属性值来和外部crate(<code>extern crate</code>)声明中的[标识符]绑定。</p>
 <p>导入 <code>self</code> crate 会创建到当前 crate 的绑定。在这种情况下，必须使用 <code>as</code>子句指定要绑定到的名称。</p>
 <p>三种外部crate(<code>extern crate</code>)声明的示例:</p>
 <!-- ignore: requires external crates -->

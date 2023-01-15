@@ -2,8 +2,8 @@
 # 枚举
 
 >[enumerations.md](https://github.com/rust-lang/reference/blob/master/src/items/enumerations.md)\
->commit: d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 \
->本章译文最后维护日期：2021-2-21
+>commit: 4f32346c1ace326fe3d699f20bbd7a77680e830c \
+>本章译文最后维护日期：2023-01-15
 
 > **<sup>句法</sup>**\
 > _Enumeration_ :\
@@ -13,13 +13,10 @@
 >    [_WhereClause_]<sup>?</sup>
 >    `{` _EnumItems_<sup>?</sup> `}`
 >
-> _EnumItems_ :\
-> &nbsp;&nbsp; _EnumItem_ ( `,` _EnumItem_ )<sup>\*</sup> `,`<sup>?</sup>
->
 > _EnumItem_ :\
 > &nbsp;&nbsp; _OuterAttribute_<sup>\*</sup> [_Visibility_]<sup>?</sup>\
-> &nbsp;&nbsp; [IDENTIFIER]&nbsp;( _EnumItemTuple_ | _EnumItemStruct_
->                                | _EnumItemDiscriminant_ )<sup>?</sup>
+> &nbsp;&nbsp; [IDENTIFIER]&nbsp;( _EnumItemTuple_ | _EnumItemStruct_ )<sup>?</sup>
+>                                _EnumItemDiscriminant_<sup>?</sup>
 >
 > _EnumItemTuple_ :\
 > &nbsp;&nbsp; `(` [_TupleFields_]<sup>?</sup> `)`
@@ -58,14 +55,63 @@ let mut a: Animal = Animal::Dog("Cocoa".to_string(), 37.2);
 a = Animal::Cat { name: "Spotty".to_string(), weight: 2.7 };
 ```
 
-在这个例子中，`Cat` 是一个*类结构体枚举变体(struct-like enum variant)*，而 `Dog` 则被简单地称为枚举变体。每个枚举实例都有一个*判别值/判别式(discriminant)*，它是一个与此枚举实例关联的整数，用来确定它持有哪个变体。可以通过 [`mem::discriminant`] 函数来获得对这个判别值的不透明引用。
+在这个例子中，`Cat` 是一个*类结构体枚举变体(struct-like enum variant)*，而 `Dog` 则被简单地称为枚举变体。
+变体都不带字段的枚举被称为*<span id="field-less-enum">无字段枚举</span>*。比如下面这个就是无字段枚举：
 
-## Custom Discriminant Values for Fieldless Enumerations
-## 为无字段枚举自定义判别值
+```rust
+enum Fieldless {
+    Tuple(),
+    Struct{},
+    Unit,
+}
+```
 
-如果枚举的*任何*变体都没有附加字段，则可以直接设置和访问判别值。
+如果无字段枚举枚举的变体全是单元体变体，这类枚举也被称为*<span id="unit-only-enum">单元体枚举</span>*。比如：
 
-可以使用操作符 `as` 通过[数值转换][numeric cast]将这些枚举类型转换为整型。枚举可以可选地指定每个判别值的具体值，方法是在变体名后面追加 `=` 和[常量表达式][constant expression]。如果声明中的第一个变体未指定，则将其判别值设置为零。对于其他未指定的判别值，它比照前一个变体的判别值按 1 递增。
+```rust
+enum Enum {
+    Foo = 3,
+    Bar = 2,
+    Baz = 1,
+}
+```
+
+<span id="custom-discriminant-values-for-fieldless-enumerations"></span>
+## Discriminants
+## 判别值
+
+每个枚举实例都有一个判别值：一个逻辑上与其关联的整数，用于确定它持有的是哪个变体。
+
+在[默认表型][default representation]下，判别值被解释为一个 `isize` 的值。然而，编译器允许在其实际内存布局中使用内存尺寸更小的类型（或其他区分变体的方法）。
+### Assigning discriminant values
+### 指定判别值的值
+
+#### Explicit discriminants
+#### 显式判别值
+
+在两种情况下，变体的判别值可以通过在变量名称后面加上 `=` 和[常量表达式][constant expression]来显式设置：
+
+1. 如果枚举变体全是"[单元体][unit-only]".
+
+
+2. 如果使用了[原语表型][primitive representation]。例如：
+
+   ```rust
+   #[repr(u8)]
+   enum Enum {
+       Unit = 3,
+       Tuple(u16),
+       Struct {
+           a: u8,
+           b: u16,
+       } = 1,
+   }
+   ```
+
+#### Implicit discriminants
+#### 隐式判别值
+
+如果未指定变体的判别值，则将其的判别值设置为比当前声明中前一个变体的判别值加一。如果声明中第一个变体的判别值未指定，则将其设置为零。
 
 ```rust
 enum Foo {
@@ -77,8 +123,6 @@ enum Foo {
 let baz_discriminant = Foo::Baz as u32;
 assert_eq!(baz_discriminant, 123);
 ```
-
-尽管编译器被允许在实际的内存布局中使用较小的类型，但在[默认表形(default representation)][default representation]下，指定的判别值会被解释为一个 `isize` 值。也可以使用[原语表形(primitive representation)]或[`C`表形][`C` representation]来更改成大小可接受的值。
 
 同一枚举中，两个变体使用相同的判别值是错误的。
 
@@ -111,8 +155,87 @@ enum OverflowingDiscriminantError2 {
     MaxPlusOne         // 应该是256，但枚举溢出了。
 }
 ```
+### Accessing discriminant
+### 读取判别值
+#### Via `mem::discriminant`
+#### 通过 `mem::discriminant`
 
-## Zero-variant Enums
+[`mem::discriminant`] 返回对枚举值的判别值(可用于比较)的不透明引用。但它不能用于获得判别式的值。
+
+#### 转换
+
+如果枚举是[单元体枚举][unit-only]（没有元组和结构体变体），则可以使用[数字类型转换][numeric cast]直接访问其判别值；例如。：
+
+```rust
+enum Enum {
+    Foo,
+    Bar,
+    Baz,
+}
+
+assert_eq!(0, Enum::Foo as isize);
+assert_eq!(1, Enum::Bar as isize);
+assert_eq!(2, Enum::Baz as isize);
+```
+
+如果没有显式判别值，或者只有单元体变体是显式指定的，则[无字段枚举][Field-less enums]也可以转换。
+
+```rust
+enum Fieldless {
+    Tuple(),
+    Struct{},
+    Unit,
+}
+
+assert_eq!(0, Fieldless::Tuple() as isize);
+assert_eq!(1, Fieldless::Struct{} as isize);
+assert_eq!(2, Fieldless::Unit as isize);
+
+#[repr(u8)]
+enum FieldlessWithDiscrimants {
+    First = 10,
+    Tuple(),
+    Second = 20,
+    Struct{},
+    Unit,
+}
+
+assert_eq!(10, FieldlessWithDiscrimants::First as u8);
+assert_eq!(11, FieldlessWithDiscrimants::Tuple() as u8);
+assert_eq!(20, FieldlessWithDiscrimants::Second as u8);
+assert_eq!(21, FieldlessWithDiscrimants::Struct{} as u8);
+assert_eq!(22, FieldlessWithDiscrimants::Unit as u8);
+```
+
+#### Pointer casting
+#### 指针转换
+
+如果枚举指定应用了[原语表型][primitive representation]，则可以通过 unsafe指针转换访问判别值：
+
+```rust
+#[repr(u8)]
+enum Enum {
+    Unit,
+    Tuple(bool),
+    Struct{a: bool},
+}
+
+impl Enum {
+    fn discriminant(&self) -> u8 {
+        unsafe { *(self as *const Self as *const u8) }
+    }
+}
+
+let unit_like = Enum::Unit;
+let tuple_like = Enum::Tuple(true);
+let struct_like = Enum::Struct{a: false};
+
+assert_eq!(0, unit_like.discriminant());
+assert_eq!(1, tuple_like.discriminant());
+assert_eq!(2, struct_like.discriminant());
+```
+
+## Zero-variant enums
 ## 无变体枚举
 
 没有变体的枚举称为*零变体枚举/无变体枚举*。因为它们没有有效的值，所以不能被实例化。
@@ -169,8 +292,10 @@ enum E {
 [enumerated type]: ../types/enum.md
 [`mem::discriminant`]: https://doc.rust-lang.org/std/mem/fn.discriminant.html
 [never type]: ../types/never.md
+[unit-only]: #unit-only-enum
 [numeric cast]: ../expressions/operator-expr.md#semantics
 [constant expression]: ../const_eval.md#constant-expressions
 [default representation]: ../type-layout.md#the-default-representation
 [primitive representation]: ../type-layout.md#primitive-representations
 [`C` representation]: ../type-layout.md#the-c-representation
+[Field-less enums]: #field-less-enum

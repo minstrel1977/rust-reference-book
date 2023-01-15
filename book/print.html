@@ -148,7 +148,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2022-10-22</p>
+<p>本书跟随原文截止日期：2023-01-15</p>
 </blockquote>
 <h1 id="前言"><a class="header" href="#前言">前言</a></h1>
 <h2 id="试水版"><a class="header" href="#试水版">试水版</a></h2>
@@ -531,13 +531,13 @@ NON_KEYWORD_IDENTIFIER | RAW_IDENTIFIER</p>
 <h1 id="注释"><a class="header" href="#注释">注释</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/comments.md">comments.md</a><br />
-commit: ece3e184c0beeadba97c78eed9005533c3874e43 <br />
-本章译文最后维护日期：2022-08-21</p>
+commit: 219e33667d63dfa2069c6296d75d56e34fa5b8f8 <br />
+本章译文最后维护日期：2022-12-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>词法分析</sup></strong><br />
 LINE_COMMENT :(译者注：行注释)<br />
-      <code>/*</code> (~[<code>*</code> <code>!</code>] | <code>**</code> | <em>BlockCommentOrDoc</em>)
+      <code>/*</code> (~[<code>*</code> <code>!</code> <code>\n</code>] | <code>**</code> | <em>BlockCommentOrDoc</em>)
    | <code>//</code></p>
 <p>BLOCK_COMMENT :(译者注：块注释)<br />
       <code>/*</code> (~[<code>*</code> <code>!</code>] | <code>**</code> | <em>BlockCommentOrDoc</em>)
@@ -663,8 +663,8 @@ commit: 716e04f203c10387bd66aa3bcf1663e75ce208cf <br />
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tokens"><a class="header" href="#tokens">Tokens</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/tokens.md">tokens.md</a><br />
-commit: da28385057ca850ba7019f956589aa0807ade571 <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: 018b14be9ded4e5890813dcf1209961298b0873e <br />
+本章译文最后维护日期：2022-12-04</p>
 </blockquote>
 <p>token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：</p>
 <ul>
@@ -730,27 +730,38 @@ commit: da28385057ca850ba7019f956589aa0807ade571 <br />
 </div>
 <h4 id="numbers"><a class="header" href="#numbers">Numbers</a></h4>
 <h4 id="数字"><a class="header" href="#数字">数字</a></h4>
-<div class="table-wrapper"><table><thead><tr><th><a href="tokens.html#%E6%95%B0%E5%AD%97%E5%AD%97%E9%9D%A2%E9%87%8F">数字字面量</a><code>*</code></th><th>示例</th><th>指数</th><th>后缀</th></tr></thead><tbody>
-<tr><td>十进制整数</td><td><code>98_222</code></td><td><code>N/A</code></td><td>整数后缀</td></tr>
-<tr><td>十六进制整数</td><td><code>0xff</code></td><td><code>N/A</code></td><td>整数后缀</td></tr>
-<tr><td>八进制整数</td><td><code>0o77</code></td><td><code>N/A</code></td><td>整数后缀</td></tr>
-<tr><td>二进制整数</td><td><code>0b1111_0000</code></td><td><code>N/A</code></td><td>整数后缀</td></tr>
-<tr><td>浮点数</td><td><code>123.0E+77</code></td><td><code>Optional</code></td><td>浮点数后缀</td></tr>
+<div class="table-wrapper"><table><thead><tr><th><a href="tokens.html#%E6%95%B0%E5%AD%97%E5%AD%97%E9%9D%A2%E9%87%8F">数字字面量</a><code>*</code></th><th>示例</th><th>指数</th></tr></thead><tbody>
+<tr><td>十进制整数</td><td><code>98_222</code></td><td><code>N/A</code></td></tr>
+<tr><td>十六进制整数</td><td><code>0xff</code></td><td><code>N/A</code></td></tr>
+<tr><td>八进制整数</td><td><code>0o77</code></td><td><code>N/A</code></td></tr>
+<tr><td>二进制整数</td><td><code>0b1111_0000</code></td><td><code>N/A</code></td></tr>
+<tr><td>浮点数</td><td><code>123.0E+77</code></td><td><code>Optional</code></td></tr>
 </tbody></table>
 </div>
 <p><code>*</code> 所有数字字面量允许使用 <code>_</code> 作为可视分隔符，比如：<code>1_234.0E+18f64</code></p>
 <h4 id="suffixes"><a class="header" href="#suffixes">Suffixes</a></h4>
 <h4 id="后缀"><a class="header" href="#后缀">后缀</a></h4>
 <p>后缀是字面量主体部分后面的字符序列（它们之间不能含有空格），其形式与非原生标识符或关键字相同。</p>
-<p>任何带有后缀的字面量（如字符串、整数等）都可以作为有效的 token，并且可以传递给宏而不会产生错误。宏自己决定如何解释这种 token，以及是否该报错。</p>
+<blockquote>
+<p><strong><sup>词法</sup></strong><br />
+SUFFIX : IDENTIFIER_OR_KEYWORD<br />
+SUFFIX_NO_E : SUFFIX <sub><em>not beginning with <code>e</code> or <code>E</code></em></sub></p>
+</blockquote>
+<p>任何带有后缀的字面量（如字符串、整型等）都可以作为有效的 token。</p>
+<p>带有后缀的字面量token 可以传递给宏而不会产生错误。
+宏自己决定如何解释这种 token，以及是否该报错。
+特别是，声明宏的 <code>literal</code>段指示符匹配带有任意后缀的字面量token。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! blackhole { ($tt:tt) =&gt; () }
+macro_rules! blackhole_lit { ($l:literal) =&gt; () }
 
 blackhole!(&quot;string&quot;suffix); // OK
+blackhole_lit!(1suffix); // OK
 <span class="boring">}
 </span></code></pre></pre>
-<p>但是，最终被解析为 Rust 代码的字面量token 上的后缀是受限制的。对于非数字字面量token，任何后缀都会被编译器拒绝，而数字字面量token 只接受下表中的后缀。</p>
+<p>但是，那些被解析为字面量表达式或模式的字面量token 的后缀是受限的。
+非数字文字标记上的任何后缀都将被拒绝，数字文字标记仅接受以下列表中的后缀。</p>
 <div class="table-wrapper"><table><thead><tr><th>整数</th><th>浮点数</th></tr></thead><tbody>
 <tr><td><code>u8</code>, <code>i8</code>, <code>u16</code>, <code>i16</code>, <code>u32</code>, <code>i32</code>, <code>u64</code>, <code>i64</code>, <code>u128</code>, <code>i128</code>, <code>usize</code>, <code>isize</code></td><td><code>f32</code>, <code>f64</code></td></tr>
 </tbody></table>
@@ -762,7 +773,7 @@ blackhole!(&quot;string&quot;suffix); // OK
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
 CHAR_LITERAL :<br />
-   <code>'</code> ( ~[<code>'</code> <code>\</code> \n \r \t] | QUOTE_ESCAPE | ASCII_ESCAPE | UNICODE_ESCAPE ) <code>'</code></p>
+   <code>'</code> ( ~[<code>'</code> <code>\</code> \n \r \t] | QUOTE_ESCAPE | ASCII_ESCAPE | UNICODE_ESCAPE ) <code>'</code> SUFFIX<sup>?</sup></p>
 <p>QUOTE_ESCAPE :<br />
    <code>\'</code> | <code>\&quot;</code></p>
 <p>ASCII_ESCAPE :<br />
@@ -783,7 +794,7 @@ STRING_LITERAL :<br />
       | ASCII_ESCAPE<br />
       | UNICODE_ESCAPE<br />
       | STRING_CONTINUE<br />
-   )<sup>*</sup> <code>&quot;</code></p>
+   )<sup>*</sup> <code>&quot;</code> SUFFIX<sup>?</sup></p>
 <p>STRING_CONTINUE :<br />
    <code>\</code> <em>后跟</em> \n</p>
 </blockquote>
@@ -824,7 +835,7 @@ assert_eq!(b, c);
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
 RAW_STRING_LITERAL :<br />
-   <code>r</code> RAW_STRING_CONTENT</p>
+   <code>r</code> RAW_STRING_CONTENT SUFFIX<sup>?</sup></p>
 <p>RAW_STRING_CONTENT :<br />
       <code>&quot;</code> ( ~ <em>IsolatedCR</em> )<sup>* (非贪婪模式)</sup> <code>&quot;</code><br />
    | <code>#</code> RAW_STRING_CONTENT <code>#</code></p>
@@ -851,7 +862,7 @@ r##&quot;foo #&quot;# bar&quot;##;                // foo #&quot;# bar
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
 BYTE_LITERAL :<br />
-   <code>b'</code> ( ASCII_FOR_CHAR | BYTE_ESCAPE )  <code>'</code></p>
+   <code>b'</code> ( ASCII_FOR_CHAR | BYTE_ESCAPE )  <code>'</code> SUFFIX<sup>?</sup></p>
 <p>ASCII_FOR_CHAR :<br />
    <em>任何 ASCII 字符 （0x00 到 0x7F）, 排除</em> <code>'</code>, <code>\</code>, \n, \r 或者 \t</p>
 <p>BYTE_ESCAPE :<br />
@@ -864,7 +875,7 @@ BYTE_LITERAL :<br />
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
 BYTE_STRING_LITERAL :<br />
-   <code>b&quot;</code> ( ASCII_FOR_STRING | BYTE_ESCAPE | STRING_CONTINUE )<sup>*</sup> <code>&quot;</code></p>
+   <code>b&quot;</code> ( ASCII_FOR_STRING | BYTE_ESCAPE | STRING_CONTINUE )<sup>*</sup> <code>&quot;</code> SUFFIX<sup>?</sup></p>
 <p>ASCII_FOR_STRING :<br />
    <em>任何 ASCII 字符(码值位于 0x00 到 0x7F 之间), 排除</em> <code>&quot;</code>, <code>\</code> <em>和 IsolatedCR</em></p>
 </blockquote>
@@ -881,7 +892,7 @@ BYTE_STRING_LITERAL :<br />
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
 RAW_BYTE_STRING_LITERAL :<br />
-   <code>br</code> RAW_BYTE_STRING_CONTENT</p>
+   <code>br</code> RAW_BYTE_STRING_CONTENT SUFFIX<sup>?</sup></p>
 <p>RAW_BYTE_STRING_CONTENT :<br />
       <code>&quot;</code> ASCII<sup>* (非贪婪模式)</sup> <code>&quot;</code><br />
    | <code>#</code> RAW_BYTE_STRING_CONTENT <code>#</code></p>
@@ -912,7 +923,7 @@ b&quot;\\x52&quot;; br&quot;\x52&quot;;                  // \x52
 <p><strong><sup>词法</sup></strong><br />
 INTEGER_LITERAL :<br />
    ( DEC_LITERAL | BIN_LITERAL | OCT_LITERAL | HEX_LITERAL )
-INTEGER_SUFFIX<sup>?</sup></p>
+SUFFIX_NO_E<sup>?</sup></p>
 <p>DEC_LITERAL :<br />
    DEC_DIGIT (DEC_DIGIT|<code>_</code>)<sup>*</sup></p>
 <p>BIN_LITERAL :<br />
@@ -925,9 +936,6 @@ INTEGER_SUFFIX<sup>?</sup></p>
 <p>OCT_DIGIT : [<code>0</code>-<code>7</code>]</p>
 <p>DEC_DIGIT : [<code>0</code>-<code>9</code>]</p>
 <p>HEX_DIGIT : [<code>0</code>-<code>9</code> <code>a</code>-<code>f</code> <code>A</code>-<code>F</code>]</p>
-<p>INTEGER_SUFFIX :<br />
-      <code>u8</code> | <code>u16</code> | <code>u32</code> | <code>u64</code> | <code>u128</code> | <code>usize</code><br />
-   | <code>i8</code> | <code>i16</code> | <code>i32</code> | <code>i64</code> | <code>i128</code> | <code>isize</code></p>
 </blockquote>
 <p><em>整型字面量</em>具备下述 4 种形式之一：</p>
 <ul>
@@ -936,9 +944,10 @@ INTEGER_SUFFIX<sup>?</sup></p>
 <li><em>八进制字面量</em>以字符序列 <code>U+0030</code> <code>U+006F</code>（<code>0o</code>）开头，后跟八进制数字和下划线的任意组合（至少一个数字）。</li>
 <li><em>二进制字面量</em>以字符序列 <code>U+0030</code> <code>U+0062</code>（<code>0b</code>）开头，后跟二进制数字和下划线的任意组合（至少一个数字）。</li>
 </ul>
-<p>与其它字面量一样，整型字面量后面可紧跟一个<em>整型后缀</em>，该后缀强制设定了字面量的数据类型。整型后缀须是<a href="types/numeric.html">原生整型类型</a>中的一个，包括：<code>u8</code>、<code>i8</code>、<code>u16</code>、<code>i16</code>、<code>u32</code>、<code>i32</code>、<code>u64</code>、<code>i64</code>、<code>u128</code>、<code>i128</code>、<code>usize</code> 或 <code>isize</code>。
+<p>与其它字面量一样，整型字面量后面可紧跟（没有空格）一个上述的后缀。
+后缀不能以 <code>e</code> 或 <code>E</code> 开头，因为这将被解析为浮点字面量的指数。
 参见<a href="expressions/literal-expr.html">字面量表达式</a>以了解这些后缀的功能效果。</p>
-<p>各种形式的整型字面量的示例：</p>
+<p>被正确解析为整型字面量的示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">#![allow(overflowing_literals)]
@@ -961,27 +970,27 @@ INTEGER_SUFFIX<sup>?</sup></p>
 
 0usize;
 
-// 下面这些对它们的类型来说太打了，但仍是有效的 token
-
+// 下面这些对它们的类型来说太大了，但仍被认为是字面量表达式
 128_i8;
 256_u8;
+
+// 这是一个整型字面量，但被解析器接受为浮点型字面量表达式
+5f32;
 
 <span class="boring">}
 </span></code></pre></pre>
 <p>注意对于 <code>-1i8</code> 这样的，其实它被分析为两个 token: <code>-</code> 后跟 <code>1i8</code>。</p>
-<p>无效整型字面量示例:</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
+<p>不被承认为合法字面量表达式的整型字面量：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// 使用了错误的进制数
-
-0b0102;
-0o0581;
-
-// 二进制, 十六进制 和 八进制字面量至少需要有一个数字
-
-0b_;
-0b____;
+</span><span class="boring">#[cfg(FALSE)] {
+</span>0invalidSuffix;
+123AFB43;
+0b010a;
+0xAB_CD_EF_GH;
+0b1111_f32;
 <span class="boring">}
+</span><span class="boring">}
 </span></code></pre></pre>
 <h4 id="tuple-index"><a class="header" href="#tuple-index">Tuple index</a></h4>
 <h4 id="元组索引"><a class="header" href="#元组索引">元组索引</a></h4>
@@ -1003,7 +1012,8 @@ let horse = example.0b10;  // 错误：没有 `0b10` 字段
 <span class="boring">}
 </span></code></pre></pre>
 <blockquote>
-<p><strong>注意</strong>: 元组索引可能包含一个 <code>INTEGER_SUFFIX</code> ，但是这不是有效的，可能会在将来的版本中被删除。更多信息请参见<a href="https://github.com/rust-lang/rust/issues/60210">https://github.com/rust-lang/rust/issues/60210</a>。</p>
+<p><strong>注意</strong>: 元组的索引可能包含一些特定的后缀，但是这不是被故意设计为有效的，可能会在将来的版本中被移除。
+更多信息请参见<a href="https://github.com/rust-lang/rust/issues/60210">https://github.com/rust-lang/rust/issues/60210</a>。</p>
 </blockquote>
 <h4 id="floating-point-literals"><a class="header" href="#floating-point-literals">Floating-point literals</a></h4>
 <h4 id="浮点型字面量"><a class="header" href="#浮点型字面量">浮点型字面量</a></h4>
@@ -1012,15 +1022,11 @@ let horse = example.0b10;  // 错误：没有 `0b10` 字段
 FLOAT_LITERAL :<br />
       DEC_LITERAL <code>.</code>
 _（紧跟着的不能是 <code>.</code>, <code>_</code> 或者 XID_Start类型的字符)__<br />
-   | DEC_LITERAL FLOAT_EXPONENT<br />
-   | DEC_LITERAL <code>.</code> DEC_LITERAL FLOAT_EXPONENT<sup>?</sup><br />
-   | DEC_LITERAL (<code>.</code> DEC_LITERAL)<sup>?</sup>
-FLOAT_EXPONENT<sup>?</sup> FLOAT_SUFFIX</p>
+   | DEC_LITERAL <code>.</code> DEC_LITERAL SUFFIX_NO_E<sup>?</sup><br />
+   | DEC_LITERAL (<code>.</code> DEC_LITERAL)<sup>?</sup> FLOAT_EXPONENT SUFFIX<sup>?</sup></p>
 <p>FLOAT_EXPONENT :<br />
    (<code>e</code>|<code>E</code>) (<code>+</code>|<code>-</code>)<sup>?</sup>
 (DEC_DIGIT|<code>_</code>)<sup>*</sup> DEC_DIGIT (DEC_DIGIT|<code>_</code>)<sup>*</sup></p>
-<p>FLOAT_SUFFIX :<br />
-   <code>f32</code> | <code>f64</code></p>
 </blockquote>
 <p><em>浮点型字面量</em>有如下两种形式：</p>
 <ul>
@@ -1028,7 +1034,7 @@ FLOAT_EXPONENT<sup>?</sup> FLOAT_SUFFIX</p>
 <li><em>十进制字面量</em>后跟一个<em>指数</em>。</li>
 </ul>
 <p>如同整型字面量，浮点型字面量也可后跟一个后缀，但在后缀之前，浮点型字面量部分不以 <code>U+002E</code>（<code>.</code>）结尾。
-有两种有效的<em>浮点型后缀</em>：<code>f32</code> 和 <code>f64</code> （32-bit 和 64-bit <a href="types/numeric.html#floating-point-types">原生浮点型</a>）。
+如果字面量不包含指数，则后缀不能以 <code>e</code>或 <code>E</code> 开头。
 参见<a href="expressions/literal-expr.html">字面量表达式</a>以了解这类后缀的功能效果。</p>
 <p>各种形式的浮点型字面量示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
@@ -1037,45 +1043,22 @@ FLOAT_EXPONENT<sup>?</sup> FLOAT_SUFFIX</p>
 0.1f64;
 0.1f32;
 12E+99_f64;
-5f32;
 let x: f64 = 2.;
 <span class="boring">}
 </span></code></pre></pre>
 <p>最后一个例子稍显不同，因为不能对一个以句点结尾的浮点型字面量使用后缀句法，<code>2.f64</code> 会尝试在 <code>2</code> 上调用名为 <code>f64</code> 的方法。</p>
 <p>请注意，像 <code>-1.0</code> 这样的会被分析为两个 token： <code>-</code> 后跟 <code>1.0</code>。</p>
-<h4 id="number-pseudoliterals"><a class="header" href="#number-pseudoliterals">Number pseudoliterals</a></h4>
-<h4 id="伪数字字面量"><a class="header" href="#伪数字字面量">伪数字字面量</a></h4>
-<blockquote>
-<p><strong><sup>Lexer</sup></strong><br />
-NUMBER_PSEUDOLITERAL :<br />
-      DEC_LITERAL ( . DEC_LITERAL )<sup>?</sup> FLOAT_EXPONENT<br />
-         ( NUMBER_PSEUDOLITERAL_SUFFIX | INTEGER_SUFFIX )<br />
-   | DEC_LITERAL . DEC_LITERAL<br />
-         ( NUMBER_PSEUDOLITERAL_SUFFIX_NO_E | INTEGER SUFFIX )<br />
-   | DEC_LITERAL NUMBER_PSEUDOLITERAL_SUFFIX_NO_E<br />
-   | ( BIN_LITERAL | OCT_LITERAL | HEX_LITERAL )<br />
-         ( NUMBER_PSEUDOLITERAL_SUFFIX_NO_E | FLOAT_SUFFIX )</p>
-<p>NUMBER_PSEUDOLITERAL_SUFFIX :<br />
-   IDENTIFIER_OR_KEYWORD <sub><em>不能匹配 INTEGER_SUFFIX 或 FLOAT_SUFFIX</em></sub></p>
-<p>NUMBER_PSEUDOLITERAL_SUFFIX_NO_E :<br />
-   NUMBER_PSEUDOLITERAL_SUFFIX <sub><em>不以 <code>e</code> 或者 <code>E</code> 开头</em></sub></p>
-</blockquote>
-<p>数字型的字面量的 token化允许使用上述词法表述中的任意后缀。
-那些值可以生成有效的 token，但却又不是合法的<a href="expressions/literal-expr.html">字面量表达式</a>的情况通常都是错误的，当然宏参数除外。</p>
-<p>这种 token 的示例:</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
+<p>不被认为是合法的字面量表达式的浮点型字面量的示例：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>0invalidSuffix;
-123AFB43;
-0b010a;
-0xAB_CD_EF_GH;
-2.0f80;
+</span><span class="boring">#[cfg(FALSE)] {
+</span>2.0f80;
 2e5f80;
 2e5e6;
 2.0e5e6;
 1.3e10u64;
-0b1111_f32;
 <span class="boring">}
+</span><span class="boring">}
 </span></code></pre></pre>
 <h4 id="reserved-forms-similar-to-number-literals"><a class="header" href="#reserved-forms-similar-to-number-literals">Reserved forms similar to number literals</a></h4>
 <h4 id="类似于数字字面量的保留形式"><a class="header" href="#类似于数字字面量的保留形式">类似于数字字面量的保留形式</a></h4>
@@ -1086,7 +1069,7 @@ RESERVED_NUMBER :<br />
    | OCT_LITERAL [<code>8</code>-<code>9</code>​]<br />
    | ( BIN_LITERAL | OCT_LITERAL | HEX_LITERAL ) <code>.</code> <br />
          <em>(不能直接后跟 <code>.</code>, <code>_</code> 或一个 XID_Start类型的字符)</em><br />
-   | ( BIN_LITERAL | OCT_LITERAL ) <code>e</code><br />
+   | ( BIN_LITERAL | OCT_LITERAL ) (<code>e</code>|<code>E</code>)<br />
    | <code>0b</code> <code>_</code><sup>*</sup> <em>end of input or not BIN_DIGIT</em><br />
    | <code>0o</code> <code>_</code><sup>*</sup> <em>end of input or not OCT_DIGIT</em><br />
    | <code>0x</code> <code>_</code><sup>*</sup> <em>end of input or not HEX_DIGIT</em><br />
@@ -1102,7 +1085,7 @@ RESERVED_NUMBER :<br />
 <p>不带后缀的二进制、八进制或十六进制字面量，不插入空格的后跟一个句点字符（句点后面的内容与浮点数字面量相同）。</p>
 </li>
 <li>
-<p>不带前缀的二进制或八进制字面量，不加空格的后跟字符<code>e</code>。</p>
+<p>不带前缀的二进制或八进制字面量，不加空格的后跟字符<code>e</code>或<code>E</code>。</p>
 </li>
 <li>
 <p>以一个进制数前缀开始的输入，但又不是有效的二进制、八进制或十六进制字面量（因为它没包含数字）。</p>
@@ -1117,13 +1100,13 @@ RESERVED_NUMBER :<br />
 </span>0b0102;  // 这可不是 `0b010` 后跟 `2`
 0o1279;  // 这可不是 `0o127` 后跟 `9`
 0x80.0;  // 这可不是 `0x80` 后跟 `.` and `0`
-0b101e;  // 这不是一个伪字面量，也不是 `0b101` 后跟 `e`
-0b;      // 这不是一个伪字面量，也不是 `0` 后跟  `b`
-0b_;     // 这不是一个伪字面量，也不是 `0` 后跟  `b_`
-2e;      // 这不是一个伪字面量，也不是 `2` 后跟 `e`
-2.0e;    // 这不是一个伪字面量，也不是 `2.0` 后跟 `e`
-2em;     // 这不是一个伪字面量，也不是 `2` 后跟 `em`
-2.0em;   // 这不是一个伪字面量，也不是 `2.0` 后跟 `em`
+0b101e;  // 这不是一个带后缀的字面量，也不是 `0b101` 后跟 `e`
+0b;      // 这不是一个整型字面量，也不是 `0` 后跟  `b`
+0b_;     // 这不是一个整型字面量，也不是 `0` 后跟  `b_`
+2e;      // 这不是一个浮点型字面量，也不是 `2` 后跟 `e`
+2.0e;    // 这不是一个浮点型字面量，也不是 `2.0` 后跟 `e`
+2em;     // 这不是一个带后缀的字面量，也不是 `2` 后跟 `em`
+2.0em;   // 这不是一个带后缀的字面量，也不是 `2.0` 后跟 `em`
 <span class="boring">}
 </span></code></pre></pre>
 <h2 id="lifetimes-and-loop-labels"><a class="header" href="#lifetimes-and-loop-labels">Lifetimes and loop labels</a></h2>
@@ -1322,8 +1305,8 @@ example!();
 <h1 id="声明宏"><a class="header" href="#声明宏">声明宏</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md">macros-by-example.md</a><br />
-commit: 314d63a53825a9d51830bdef2fc6f9643f91e038 <br />
-本章译文最后维护日期：2022-08-21</p>
+commit: 04f289ad17a9b86f9cde026d046072a5b3827486 <br />
+本章译文最后维护日期：2022-12-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -1371,6 +1354,8 @@ ambiguity!(error); // 错误: 局部歧义(local ambiguity)
 <span class="boring">}
 </span></code></pre></pre>
 <p>在匹配器和转码器中，token <code>$</code> 用于从宏引擎中调用特殊行为（下文<a href="macros-by-example.html#metavariables">元变量</a>和<a href="macros-by-example.html#repetitions">重复元</a>中有详述）。不属于此类调用的 token 将按字面意义进行匹配和转码，除了一个例外。这个例外是匹配器的外层定界符将匹配任何一对定界符。因此，比如匹配器 <code>(())</code> 将匹配 <code>{()}</code>，而 <code>{{}}</code> 不行。字符 <code>$</code> 不能按字面意义匹配或转码。</p>
+<h3 id="forwarding-a-matched-fragment"><a class="header" href="#forwarding-a-matched-fragment">Forwarding a matched fragment</a></h3>
+<h3 id="转发匹配段"><a class="header" href="#转发匹配段">转发匹配段</a></h3>
 <p>当将当前匹配的匹配段转发给另一个声明宏时，第二个宏中的匹配器看到的将是此匹配段类型的不透明抽象句法树(opaque AST)。第二个宏不能使用字面量token 来匹配匹配器中的这个匹配段，唯一可看到/使用的就是此匹配段类型一样的匹配段选择器(fragment specifier)。但匹配段类型 <code>ident</code>、<code>lifetime</code>、和 <code>tt</code> 是几个例外，它们<em>可以</em>通过字面量token 进行匹配。下面示例展示了这一限制：（译者注：匹配段选择器和匹配段，以及宏中各部件的定义可以凑合着看看译者未能翻译完成的<a href="macro-ambiguity.html">宏定义规范</a>）</p>
 <pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -2427,8 +2412,8 @@ mod thread { // 译者注：有模块要内联进来的内联模块
 <h1 id="外部crate声明"><a class="header" href="#外部crate声明">外部crate声明</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/extern-crates.md">extern-crates.md</a><br />
-commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
-本章译文最后维护日期：2021-07-31</p>
+commit: 8ca80a14d359cc21b0e9c10dde7d45fe1fcb9af8 <br />
+本章译文最后维护日期：2022-12-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法:<sup></strong><br />
@@ -2440,7 +2425,7 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
    <code>as</code> ( <a href="items/../identifiers.html">IDENTIFIER</a> | <code>_</code> )</p>
 </blockquote>
 <p><em>外部crate(<code>extern crate</code>)声明</em>指定了对外部 crate 的依赖关系。（这种声明让）外部的 crate 作为外部crate(<code>extern crate</code>)声明中提供的<a href="items/../identifiers.html">标识符</a>被绑定到当前声明的作用域中。此外，如果 <code>extern crate</code> 出现在 crate的根模块中，那么此 crate名称也会被添加到<a href="items/../names/preludes.html#extern-prelude">外部预导入包</a>中，以便使其自动出现在所有模块的作用域中。<code>as</code>子句可用于将导入的 crate 绑定到不同的名称上。</p>
-<p>外部crate 在编译时被解析为一个特定的 <code>soname</code><sup class="footnote-reference"><a href="#soname">1</a></sup>， 并且一个到此 <code>soname</code> 的运行时链接会传递给链接器，以便在运行时加载此 <code>soname</code>。<code>soname</code> 在编译时解析，方法是扫描编译器的库文件路径，匹配外部crate 的 <code>crateid</code>。因为<code>crateid</code> 是在编译时通过可选的 <code>crateid</code>属性声明的，所以如果外部 crate 没有提供 <code>crateid</code>， 则默认拿该外部crate 的 <code>name</code>属性值来和外部crate(<code>extern crate</code>)声明中的[标识符]绑定。</p>
+<p>外部crate 在编译时被解析为一个特定的 <code>soname</code><sup class="footnote-reference"><a href="#soname">1</a></sup>， 并且一个到此 <code>soname</code> 的运行时链接会传递给链接器，以便在运行时加载此 <code>soname</code>。<code>soname</code> 在编译时解析，方法是扫描编译器的库文件路径，匹配外部crate 的 <code>crate_name</code>。因为<code>crate_name</code> 是在编译时通过可选的 <code>crate_name</code>属性声明的，所以如果外部 crate 没有提供 <code>crate_name</code>， 则默认拿该外部crate 的 <code>name</code>属性值来和外部crate(<code>extern crate</code>)声明中的[标识符]绑定。</p>
 <p>导入 <code>self</code> crate 会创建到当前 crate 的绑定。在这种情况下，必须使用 <code>as</code>子句指定要绑定到的名称。</p>
 <p>三种外部crate(<code>extern crate</code>)声明的示例:</p>
 <!-- ignore: requires external crates -->
@@ -3016,8 +3001,8 @@ let c = [Cookie, Cookie {}, Cookie, Cookie {}];
 <h1 id="枚举"><a class="header" href="#枚举">枚举</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/enumerations.md">enumerations.md</a><br />
-commit: d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
-本章译文最后维护日期：2021-2-21</p>
+commit: 4f32346c1ace326fe3d699f20bbd7a77680e830c <br />
+本章译文最后维护日期：2023-01-15</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -3027,12 +3012,10 @@ commit: d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
 <a href="items/generics.html"><em>GenericParams</em></a><sup>?</sup>
 <a href="items/generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup>
 <code>{</code> <em>EnumItems</em><sup>?</sup> <code>}</code></p>
-<p><em>EnumItems</em> :<br />
-   <em>EnumItem</em> ( <code>,</code> <em>EnumItem</em> )<sup>*</sup> <code>,</code><sup>?</sup></p>
 <p><em>EnumItem</em> :<br />
    <em>OuterAttribute</em><sup>*</sup> <a href="items/../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup><br />
-   <a href="items/../identifiers.html">IDENTIFIER</a> ( <em>EnumItemTuple</em> | <em>EnumItemStruct</em>
-| <em>EnumItemDiscriminant</em> )<sup>?</sup></p>
+   <a href="items/../identifiers.html">IDENTIFIER</a> ( <em>EnumItemTuple</em> | <em>EnumItemStruct</em> )<sup>?</sup>
+<em>EnumItemDiscriminant</em><sup>?</sup></p>
 <p><em>EnumItemTuple</em> :<br />
    <code>(</code> <a href="items/structs.html"><em>TupleFields</em></a><sup>?</sup> <code>)</code></p>
 <p><em>EnumItemStruct</em> :<br />
@@ -3066,11 +3049,61 @@ let mut a: Animal = Animal::Dog(&quot;Cocoa&quot;.to_string(), 37.2);
 a = Animal::Cat { name: &quot;Spotty&quot;.to_string(), weight: 2.7 };
 <span class="boring">}
 </span></code></pre></pre>
-<p>在这个例子中，<code>Cat</code> 是一个<em>类结构体枚举变体(struct-like enum variant)</em>，而 <code>Dog</code> 则被简单地称为枚举变体。每个枚举实例都有一个<em>判别值/判别式(discriminant)</em>，它是一个与此枚举实例关联的整数，用来确定它持有哪个变体。可以通过 <a href="https://doc.rust-lang.org/std/mem/fn.discriminant.html"><code>mem::discriminant</code></a> 函数来获得对这个判别值的不透明引用。</p>
-<h2 id="custom-discriminant-values-for-fieldless-enumerations"><a class="header" href="#custom-discriminant-values-for-fieldless-enumerations">Custom Discriminant Values for Fieldless Enumerations</a></h2>
-<h2 id="为无字段枚举自定义判别值"><a class="header" href="#为无字段枚举自定义判别值">为无字段枚举自定义判别值</a></h2>
-<p>如果枚举的<em>任何</em>变体都没有附加字段，则可以直接设置和访问判别值。</p>
-<p>可以使用操作符 <code>as</code> 通过<a href="items/../expressions/operator-expr.html#semantics">数值转换</a>将这些枚举类型转换为整型。枚举可以可选地指定每个判别值的具体值，方法是在变体名后面追加 <code>=</code> 和<a href="items/../const_eval.html#constant-expressions">常量表达式</a>。如果声明中的第一个变体未指定，则将其判别值设置为零。对于其他未指定的判别值，它比照前一个变体的判别值按 1 递增。</p>
+<p>在这个例子中，<code>Cat</code> 是一个<em>类结构体枚举变体(struct-like enum variant)</em>，而 <code>Dog</code> 则被简单地称为枚举变体。
+变体都不带字段的枚举被称为*<span id="field-less-enum">无字段枚举</span>*。比如下面这个就是无字段枚举：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum Fieldless {
+    Tuple(),
+    Struct{},
+    Unit,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>如果无字段枚举枚举的变体全是单元体变体，这类枚举也被称为*<span id="unit-only-enum">单元体枚举</span>*。比如：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum Enum {
+    Foo = 3,
+    Bar = 2,
+    Baz = 1,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><span id="custom-discriminant-values-for-fieldless-enumerations"></span></p>
+<h2 id="discriminants"><a class="header" href="#discriminants">Discriminants</a></h2>
+<h2 id="判别值"><a class="header" href="#判别值">判别值</a></h2>
+<p>每个枚举实例都有一个判别值：一个逻辑上与其关联的整数，用于确定它持有的是哪个变体。</p>
+<p>在<a href="items/../type-layout.html#the-default-representation">默认表型</a>下，判别值被解释为一个 <code>isize</code> 的值。然而，编译器允许在其实际内存布局中使用内存尺寸更小的类型（或其他区分变体的方法）。</p>
+<h3 id="assigning-discriminant-values"><a class="header" href="#assigning-discriminant-values">Assigning discriminant values</a></h3>
+<h3 id="指定判别值的值"><a class="header" href="#指定判别值的值">指定判别值的值</a></h3>
+<h4 id="explicit-discriminants"><a class="header" href="#explicit-discriminants">Explicit discriminants</a></h4>
+<h4 id="显式判别值"><a class="header" href="#显式判别值">显式判别值</a></h4>
+<p>在两种情况下，变体的判别值可以通过在变量名称后面加上 <code>=</code> 和<a href="items/../const_eval.html#constant-expressions">常量表达式</a>来显式设置：</p>
+<ol>
+<li>
+<p>如果枚举变体全是&quot;<a href="items/enumerations.html#unit-only-enum">单元体</a>&quot;.</p>
+</li>
+<li>
+<p>如果使用了<a href="items/../type-layout.html#primitive-representations">原语表型</a>。例如：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[repr(u8)]
+enum Enum {
+    Unit = 3,
+    Tuple(u16),
+    Struct {
+        a: u8,
+        b: u16,
+    } = 1,
+}
+<span class="boring">}
+</span></code></pre></pre>
+</li>
+</ol>
+<h4 id="implicit-discriminants"><a class="header" href="#implicit-discriminants">Implicit discriminants</a></h4>
+<h4 id="隐式判别值"><a class="header" href="#隐式判别值">隐式判别值</a></h4>
+<p>如果未指定变体的判别值，则将其的判别值设置为比当前声明中前一个变体的判别值加一。如果声明中第一个变体的判别值未指定，则将其设置为零。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Foo {
@@ -3083,7 +3116,6 @@ let baz_discriminant = Foo::Baz as u32;
 assert_eq!(baz_discriminant, 123);
 <span class="boring">}
 </span></code></pre></pre>
-<p>尽管编译器被允许在实际的内存布局中使用较小的类型，但在<a href="items/../type-layout.html#the-default-representation">默认表形(default representation)</a>下，指定的判别值会被解释为一个 <code>isize</code> 值。也可以使用[原语表形(primitive representation)]或<a href="items/../type-layout.html#the-c-representation"><code>C</code>表形</a>来更改成大小可接受的值。</p>
 <p>同一枚举中，两个变体使用相同的判别值是错误的。</p>
 <pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3116,7 +3148,83 @@ enum OverflowingDiscriminantError2 {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2 id="zero-variant-enums"><a class="header" href="#zero-variant-enums">Zero-variant Enums</a></h2>
+<h3 id="accessing-discriminant"><a class="header" href="#accessing-discriminant">Accessing discriminant</a></h3>
+<h3 id="读取判别值"><a class="header" href="#读取判别值">读取判别值</a></h3>
+<h4 id="via-memdiscriminant"><a class="header" href="#via-memdiscriminant">Via <code>mem::discriminant</code></a></h4>
+<h4 id="通过-memdiscriminant"><a class="header" href="#通过-memdiscriminant">通过 <code>mem::discriminant</code></a></h4>
+<p><a href="https://doc.rust-lang.org/std/mem/fn.discriminant.html"><code>mem::discriminant</code></a> 返回对枚举值的判别值(可用于比较)的不透明引用。但它不能用于获得判别式的值。</p>
+<h4 id="转换"><a class="header" href="#转换">转换</a></h4>
+<p>如果枚举是<a href="items/enumerations.html#unit-only-enum">单元体枚举</a>（没有元组和结构体变体），则可以使用<a href="items/../expressions/operator-expr.html#semantics">数字类型转换</a>直接访问其判别值；例如。：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum Enum {
+    Foo,
+    Bar,
+    Baz,
+}
+
+assert_eq!(0, Enum::Foo as isize);
+assert_eq!(1, Enum::Bar as isize);
+assert_eq!(2, Enum::Baz as isize);
+<span class="boring">}
+</span></code></pre></pre>
+<p>如果没有显式判别值，或者只有单元体变体是显式指定的，则<a href="items/enumerations.html#field-less-enum">无字段枚举</a>也可以转换。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum Fieldless {
+    Tuple(),
+    Struct{},
+    Unit,
+}
+
+assert_eq!(0, Fieldless::Tuple() as isize);
+assert_eq!(1, Fieldless::Struct{} as isize);
+assert_eq!(2, Fieldless::Unit as isize);
+
+#[repr(u8)]
+enum FieldlessWithDiscrimants {
+    First = 10,
+    Tuple(),
+    Second = 20,
+    Struct{},
+    Unit,
+}
+
+assert_eq!(10, FieldlessWithDiscrimants::First as u8);
+assert_eq!(11, FieldlessWithDiscrimants::Tuple() as u8);
+assert_eq!(20, FieldlessWithDiscrimants::Second as u8);
+assert_eq!(21, FieldlessWithDiscrimants::Struct{} as u8);
+assert_eq!(22, FieldlessWithDiscrimants::Unit as u8);
+<span class="boring">}
+</span></code></pre></pre>
+<h4 id="pointer-casting"><a class="header" href="#pointer-casting">Pointer casting</a></h4>
+<h4 id="指针转换"><a class="header" href="#指针转换">指针转换</a></h4>
+<p>如果枚举指定应用了<a href="items/../type-layout.html#primitive-representations">原语表型</a>，则可以通过 unsafe指针转换访问判别值：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[repr(u8)]
+enum Enum {
+    Unit,
+    Tuple(bool),
+    Struct{a: bool},
+}
+
+impl Enum {
+    fn discriminant(&amp;self) -&gt; u8 {
+        unsafe { *(self as *const Self as *const u8) }
+    }
+}
+
+let unit_like = Enum::Unit;
+let tuple_like = Enum::Tuple(true);
+let struct_like = Enum::Struct{a: false};
+
+assert_eq!(0, unit_like.discriminant());
+assert_eq!(1, tuple_like.discriminant());
+assert_eq!(2, struct_like.discriminant());
+<span class="boring">}
+</span></code></pre></pre>
+<h2 id="zero-variant-enums"><a class="header" href="#zero-variant-enums">Zero-variant enums</a></h2>
 <h2 id="无变体枚举"><a class="header" href="#无变体枚举">无变体枚举</a></h2>
 <p>没有变体的枚举称为<em>零变体枚举/无变体枚举</em>。因为它们没有有效的值，所以不能被实例化。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
@@ -4007,8 +4115,8 @@ impl&lt;T, U&gt; GenericTrait&lt;U&gt; for u32 where U: GenericTrait&lt;T&gt; {}
 <h1 id="外部块"><a class="header" href="#外部块">外部块</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md">external-blocks.md</a><br />
-commit: 300ac4bdb40b91945a8e774f534a2902564d41ec <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: 0ec6d52723c74542437d03092307cf2bf315629c <br />
+本章译文最后维护日期：2022-12-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -4117,11 +4225,18 @@ extern {
 <p>有关此修饰符的更多实现细节，请参见<a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-bundle">rustc文档中的 <code>bundle</code></a>。</p>
 <h4 id="linking-modifiers-whole-archive"><a class="header" href="#linking-modifiers-whole-archive">Linking modifiers: <code>whole-archive</code></a></h4>
 <h4 id="链接修饰符-whole-archive"><a class="header" href="#链接修饰符-whole-archive">链接修饰符: <code>whole-archive</code></a></h4>
-<p>此修饰符仅与静态(<code>static</code>)链接类型兼容。
+<p>此修饰符仅兼容静态(<code>static</code>)链接类型。
 使用任何其他链接类型都会引起编译器报错。</p>
 <p><code>+whole-archive</code> 意味着静态库会被链接为一个完整的 archive 文件，而不丢弃任何对象文件。</p>
 <p>此修饰符的默认配置是 <code>-whole-archive</code>。</p>
 <p>有关此修饰符的更多实现细节，请参见<a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-whole-archive">rustc文档中的 <code>whole-archive</code></a>。</p>
+<h3 id="linking-modifiers-verbatim"><a class="header" href="#linking-modifiers-verbatim">Linking modifiers: <code>verbatim</code></a></h3>
+<h3 id="链接修饰符-verbatim"><a class="header" href="#链接修饰符-verbatim">链接修饰符: <code>verbatim</code></a></h3>
+<p>此修饰符兼容任何链接类型。</p>
+<p><code>+verbatim</code> 意味着 rustc 本身不会在库名称中添加任何目标平台指定的库前缀或后缀（如 <code>lib</code> 或 <code>.a</code>），并且会尽力向链接器请求相同的内容。</p>
+<p><code>-verbatim</code> 意味着 rustc 在将库名称传递给链接器之前，将在库名称中添加特定于目标平台的前缀和后缀，或者不会阻止链接器隐式添加它。</p>
+<p>此修饰符的默认值为 <code>-verbatim</code>。</p>
+<p>关于这个修饰符的更多实现细节可以在 rustc 的<a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-verbatim"><code>verbatim</code>文档</a> 中找到。</p>
 <h4 id="dylib-versus-raw-dylib"><a class="header" href="#dylib-versus-raw-dylib"><code>dylib</code> versus <code>raw-dylib</code></a></h4>
 <h4 id="dylib-vs-raw-dylib"><a class="header" href="#dylib-vs-raw-dylib"><code>dylib</code> vs <code>raw-dylib</code></a></h4>
 <p>在 Windows 上，链接动态库需要先向链接器提供一个导入库：这是一个特殊的静态库，它声明了此动态库导出的所有符号，这样链接器就知道它们必须在运行时动态加载。</p>
@@ -4162,8 +4277,8 @@ extern &quot;stdcall&quot; {
 <h1 id="类型参数和生存期参数"><a class="header" href="#类型参数和生存期参数">类型参数和生存期参数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/generics.md">generics.md</a><br />
-commit: cd3704e9aa4e28f0bc311ab7c23e5dfaf1f3c24d <br />
-本章译文最后维护日期：2022-03-14</p>
+commit: 8a86959fe961c09f201f1116bcbacf759e0604d4 <br />
+本章译文最后维护日期：2022-12-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -4805,8 +4920,8 @@ fn main() {
 <h1 id="属性-1"><a class="header" href="#属性-1">属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes.md">attributes.md</a><br />
-commit: d6cd338e3a9c0c7f33c8f0e65105dca6c1911bc5 <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: 6a5431b863f61b86dcac70ee2ab377152f40f66e <br />
+本章译文最后维护日期：2022-12-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -5012,6 +5127,7 @@ pub fn f() {}
 <li><a href="attributes/codegen.html#the-no_builtins-attribute"><code>no_builtins</code></a> — 禁用某些内置函数。</li>
 <li><a href="attributes/codegen.html#the-target_feature-attribute"><code>target_feature</code></a> — 配置特定于平台的代码生成。</li>
 <li><a href="attributes/codegen.html#the-track_caller-attribute"><code>track_caller</code></a> - 将父调用位置传递给 <code>std::panic::Location::caller()</code>。</li>
+<li><a href="attributes/codegen.html#the-instruction_set-attribute"><code>instruction_set</code></a> - 指定用于生成函数代码的指令集S</li>
 </ul>
 </li>
 <li>文档(Documentation)
@@ -5415,8 +5531,8 @@ let _ = five();
 <h1 id="代码生成属性"><a class="header" href="#代码生成属性">代码生成属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md">codegen.md</a><br />
-commit: f24b8d4ca7aeb5340db673c7364b19e056b4de48 <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: 6a5431b863f61b86dcac70ee2ab377152f40f66e <br />
+本章译文最后维护日期：2022-12-04</p>
 </blockquote>
 <p>下述<a href="attributes/../attributes.html">属性</a>用于控制代码生成。</p>
 <h2 id="optimization-hints"><a class="header" href="#optimization-hints">Optimization hints</a></h2>
@@ -5651,6 +5767,21 @@ fn calls_h() {
 <div class="footnote-definition" id="译者注3"><sup class="footnote-definition-label">3</sup>
 <p>因为 trait对象的值不能直接使用，只能自动强转为指针引用，那这里的调用就无法观察到真实的调用位置。</p>
 </div>
+<h2 id="the-instruction_set-attribute"><a class="header" href="#the-instruction_set-attribute">The <code>instruction_set</code> attribute</a></h2>
+<h2 id="instruction_set属性"><a class="header" href="#instruction_set属性"><code>instruction_set</code>属性</a></h2>
+<p><em><code>instruction_set</code>属性</em>可应用于函数，用以实现目标架构支持的特定指令集的代码生成。它使用 <a href="attributes/../attributes.html#meta-item-attribute-syntax"><em>MetaListPath</em></a>句法，其中的 <em>SimplePath</em> 是由架构和指令集组成的路径。这样可用为单个程序生成目标架构所支持的多个指令集的代码。</p>
+<p>以下两个值在 <code>ARMv4</code> 和 <code>ARMv5te</code> 目标架构下可用：</p>
+<ul>
+<li><code>arm::a32</code> - Uses ARM code.</li>
+<li><code>arm::t32</code> - Uses Thumb code.</li>
+</ul>
+<!-- ignore: arm-only -->
+<pre><code class="language-rust ignore">#[instruction_set(arm::a32)]
+fn foo_arm_code() {}
+
+#[instruction_set(arm::t32)]
+fn bar_thumb_code() {}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="limits"><a class="header" href="#limits">Limits</a></h1>
 <h1 id="极值设置"><a class="header" href="#极值设置">极值设置</a></h1>
 <blockquote>
@@ -6196,8 +6327,8 @@ let b: &amp;[i32];
 <h1 id="字面量表达式"><a class="header" href="#字面量表达式">字面量表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/literal-expr.md">literal-expr.md</a><br />
-commit: 9c5c3cb9d160787f31903e61abd2ba4567182b5c <br />
-本章译文最后维护日期：2022-04-16</p>
+commit: ccde77edcb4d4607f212bfd9fa65a913defb5055 <br />
+本章译文最后维护日期：2022-12-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6208,12 +6339,9 @@ commit: 9c5c3cb9d160787f31903e61abd2ba4567182b5c <br />
    | <a href="expressions/../tokens.html#byte-literals">BYTE_LITERAL</a><br />
    | <a href="expressions/../tokens.html#byte-string-literals">BYTE_STRING_LITERAL</a><br />
    | <a href="expressions/../tokens.html#raw-byte-string-literals">RAW_BYTE_STRING_LITERAL</a><br />
-   | <a href="expressions/../tokens.html#integer-literals">INTEGER_LITERAL</a><sup class="footnote-reference"><a href="#out-of-range">1</a></sup><br />
+   | <a href="expressions/../tokens.html#integer-literals">INTEGER_LITERAL</a><br />
    | <a href="expressions/../tokens.html#floating-point-literals">FLOAT_LITERAL</a><br />
-   | <code>true</code> | <code>false</code></p>
-<div class="footnote-definition" id="out-of-range"><sup class="footnote-definition-label">1</sup>
-<p>不允许大于或等于 2<sup>128</sup> 的值。</p>
-</div>
+   | <code>true</code> | <code>false</code>&gt;</p>
 </blockquote>
 <p>字面表达式是由单一 token（而不是一组 token）组成的表达式，它立即和直接表示其表达式求值的值，而不是通过名称或其他求值规则来引用它。
 它直接描述一个数字、字符、字符串或布尔值。</p>
@@ -6253,7 +6381,7 @@ commit: 9c5c3cb9d160787f31903e61abd2ba4567182b5c <br />
 <h2 id="integer-literal-expressions"><a class="header" href="#integer-literal-expressions">Integer literal expressions</a></h2>
 <h2 id="整型字面量表达式"><a class="header" href="#整型字面量表达式">整型字面量表达式</a></h2>
 <p>整型字面量表达式由单一一个<a href="expressions/../tokens.html#integer-literals">整型字面量</a>token 组成。</p>
-<p>如果这种 token 带有<a href="expressions/../tokens.html#suffixes">后缀</a>，那这个后缀的名字将是<a href="expressions/../types/numeric.html">原生整型</a>中的一个：<code>u8</code>, <code>i8</code>, <code>u16</code>, <code>i16</code>, <code>u32</code>, <code>i32</code>, <code>u64</code>, <code>i64</code>, <code>u128</code>, <code>i128</code>, <code>usize</code> 或 <code>isize</code>，同时此后缀名也是此表达式的类型。</p>
+<p>如果这种 token 带有<a href="expressions/../tokens.html#suffixes">后缀</a>，那这个后缀的名字必须是<a href="expressions/../types/numeric.html">原生整型</a>中的一个：<code>u8</code>, <code>i8</code>, <code>u16</code>, <code>i16</code>, <code>u32</code>, <code>i32</code>, <code>u64</code>, <code>i64</code>, <code>u128</code>, <code>i128</code>, <code>usize</code> 或 <code>isize</code>，同时此后缀名也是此表达式的类型。</p>
 <p>如果此 token 没有后缀，此表达式的类型将由下面的类型推断规则来确定:</p>
 <ul>
 <li>
@@ -6302,11 +6430,14 @@ let a: u64 = 123;                  // type u64
 <p>如果进制数不是10，则从字符串中删除前两个字符。</p>
 </li>
 <li>
-<p>将从字符串中删除所有下划线。</p>
+<p>字符串的后缀都会被删除。</p>
+</li>
+<li>
+<p>字符串里的下划线都会被删除。</p>
 </li>
 <li>
 <p>字符串被转换为 <code>u128</code>类型的值时，比如使用 <a href="https://doc.rust-lang.org/core/primitive.u128.md#method.from_str_radix"><code>u128::from_str_radix</code></a> 时选的进制数标记。
-如果该值不能被表示为 <code>u128</code>，则该表达式将被解析器拒绝。</p>
+如果该值不能被表示为 <code>u128</code>，将在编译时报错。</p>
 </li>
 <li>
 <p><code>u128</code>类型的值通过<a href="expressions/operator-expr.html#numeric-cast">数值转换</a>转换为表达式的类型。</p>
@@ -6322,8 +6453,12 @@ let a: u64 = 123;                  // type u64
 </blockquote>
 <h2 id="floating-point-literal-expressions"><a class="header" href="#floating-point-literal-expressions">Floating-point literal expressions</a></h2>
 <h2 id="浮点型字面量表达式"><a class="header" href="#浮点型字面量表达式">浮点型字面量表达式</a></h2>
-<p>浮点型字面量表达式由单一一个<a href="expressions/../tokens.html#floating-point-literals">浮点型字面量</a>token 组成。</p>
-<p>如果这种 token 带有<a href="expressions/../tokens.html#suffixes">后缀</a>，那这个后缀的名字将是<a href="expressions/../types/numeric.html#floating-point-types">原生浮点型</a>中的一个：<code>f32</code> 或 <code>f64</code>，同时此后缀名也是此表达式的类型。</p>
+<p>浮点型字面量表达式由下面两种形式：<a href="expressions/../tokens.html#floating-point-literals">浮点型字面量</a>token 组成。</p>
+<ul>
+<li>由单一的<a href="expressions/../tokens.html#floating-point-literals">浮点型字面量</a>token 组成</li>
+<li>由单一的没有后缀和基数指示符的<a href="expressions/../tokens.html#integer-literals">整型字面量</a>token 组成</li>
+</ul>
+<p>如果这种 token 带有<a href="expressions/../tokens.html#suffixes">后缀</a>，那这个后缀的名字必须是<a href="expressions/../types/numeric.html#floating-point-types">原生浮点型</a>中的一个：<code>f32</code> 或 <code>f64</code>，同时此后缀名也是此表达式的类型。</p>
 <p>如果这种 token 没有后缀，此表达式的类型将由下面的类型推断规则来确定:</p>
 <ul>
 <li>
@@ -6350,7 +6485,10 @@ let x: f64 = 2.; // type f64
 <p>而表达式的值由 token 的字符串表示形式来确定，规则如下：</p>
 <ul>
 <li>
-<p>将从字符串中删除所有下划线。</p>
+<p>字符串的后缀都会被删除。</p>
+</li>
+<li>
+<p>字符串中的下划线都会被删除。</p>
 </li>
 <li>
 <p>字符串被转换为这类表达式类型时，如同直接调用 <a href="https://doc.rust-lang.org/core/primitive.f32.html#method.from_str"><code>f32::from_str</code></a> 或 <a href="https://doc.rust-lang.org/core/primitive.f64.md#method.from_str"><code>f64::from_str</code></a>。</p>
@@ -6572,8 +6710,8 @@ fn move_by_block_expression() {
 <h1 id="operator-expressions"><a class="header" href="#operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: 5c4a7a617c596b78593cabdf72e522ac2b8d1fba <br />
-本章译文最后维护日期：2022-08-21</p>
+commit: c351aa715c5540bc48c4c40328a052482961068e <br />
+本章译文最后维护日期：2023-01-15</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6921,7 +7059,7 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 下表中 <code>*T</code> 代表 <code>*const T</code> 或 <code>*mut T</code>。<code>m</code> 引用类型中代表可选的 <code>mut</code> 或指针类型中的 <code>mut</code> 或 <code>const</code>。</p>
 <div class="table-wrapper"><table><thead><tr><th><code>e</code> 的类型</th><th><code>U</code></th><th>通过 <code>e as U</code> 执行转换</th></tr></thead><tbody>
 <tr><td>整型或浮点型</td><td>整型或浮点型</td><td>数字转换</td></tr>
-<tr><td>类C(C-like)枚举</td><td>整型</td><td>枚举转换</td></tr>
+<tr><td>枚举</td><td>整型</td><td>枚举转换</td></tr>
 <tr><td><code>bool</code> 或 <code>char</code></td><td>整型</td><td>原生类型到整型的转换</td></tr>
 <tr><td><code>u8</code></td><td><code>char</code></td><td><code>u8</code> 到 <code>char</code> 的转换</td></tr>
 <tr><td><code>*T</code></td><td><code>*V</code> where <code>V: Sized</code> *</td><td>指针到指针的转换</td></tr>
@@ -6980,7 +7118,12 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <p>*** 按照 IEEE 754-2008§4.3.1 的定义：选择最接近的浮点数，如果恰好在两个浮点数中间，则优先选择最低有效位为偶数的那个。</p>
 <h4 id="enum-cast"><a class="header" href="#enum-cast">Enum cast</a></h4>
 <h4 id="枚举转换"><a class="header" href="#枚举转换">枚举转换</a></h4>
-<p>可将枚举类型转换为其判别值，然后在必要时可以使用数字类型转换。</p>
+<p>可将枚举类型转换为其判别值，在必要时，后继可以再继续使用数字类型转换。
+枚举转换仅限于以下枚举类型：</p>
+<ul>
+<li><a href="expressions/../items/enumerations.html#unit-only-enum">单元体枚举</a></li>
+<li>无<a href="expressions/../items/enumerations.html#explicit-discriminants">显式指定判别式</a>的<a href="expressions/../items/enumerations.html#field-less-enum">无字段枚举</a>，或显式指定了判别式的单元体枚举</li>
+</ul>
 <h4 id="primitive-to-integer-cast"><a class="header" href="#primitive-to-integer-cast">Primitive to integer cast</a></h4>
 <h4 id="原生类型到整型"><a class="header" href="#原生类型到整型">原生类型到整型</a></h4>
 <ul>
@@ -7641,8 +7784,8 @@ fn main() {
 <h1 id="字段访问表达式"><a class="header" href="#字段访问表达式">字段访问表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/field-expr.md">field-expr.md</a><br />
-commit: 23672971a16c69ea894bef24992b74912cfe5d25 <br />
-本章译文最后维护日期：2021-4-5</p>
+commit: 08b97f94ccd3c2c835aae402664340894587e39d <br />
+本章译文最后维护日期：2023-01-15</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -8475,8 +8618,8 @@ let mut a = 0;
 <h1 id="模式"><a class="header" href="#模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
-commit: 7b1240b2451be16ccfc9bd695e6ebb95f80b11c6 <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: 6c8431ff420371d78f3a6ed29018dc28d116f257 <br />
+本章译文最后维护日期：2022-12-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -8499,7 +8642,8 @@ commit: 7b1240b2451be16ccfc9bd695e6ebb95f80b11c6 <br />
    | <a href="patterns.html#path-patterns"><em>PathPattern</em></a><br />
    | <a href="macros.html#macro-invocation"><em>MacroInvocation</em></a></p>
 </blockquote>
-<p>模式基于给定数据结构去匹配值，并可选地将变量和这些结构中匹配到的值绑定起来。模式也用在变量声明上和函数（包括闭包）的参数上。</p>
+<p>模式基于给定数据结构去匹配值，并可选地将变量和这些结构中匹配到的值绑定起来。
+模式也用在变量声明上和函数（包括闭包）的参数上。</p>
 <p>下面示例中的模式完成四件事：</p>
 <ul>
 <li>测试 <code>person</code> 是否在其 <code>car</code>字段中填充了内容。</li>
@@ -8546,7 +8690,9 @@ commit: 7b1240b2451be16ccfc9bd695e6ebb95f80b11c6 <br />
 </ul>
 <h2 id="destructuring"><a class="header" href="#destructuring">Destructuring</a></h2>
 <h2 id="解构"><a class="header" href="#解构">解构</a></h2>
-<p>模式可用于<em>解构</em><a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/enumerations.html">枚举(<code>enum</code>)</a>和<a href="types/tuple.html">元组</a>。解构将一个值分解成它的组件组成，使用的句法与创建此类值时的几乎相同。在<a href="glossary.html#scrutinee">检验对象</a>表达式的类型为结构体(<code>struct</code>)、枚举(<code>enum</code>)或元组(<code>tuple</code>)的模式中，占位符(<code>_</code>) 代表<em>一个</em>数据字段，而通配符 <code>..</code> 代表特定变量/变体(variant)的<em>所有</em>剩余字段。当使用字段的名称（而不是字段序号）来解构数据结构时，允许将 <code>fieldname</code> 当作 <code>fieldname: fieldname</code> 的简写形式书写。</p>
+<p>模式可用于<em>解构</em><a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/enumerations.html">枚举(<code>enum</code>)</a>和<a href="types/tuple.html">元组</a>。
+解构将一个值分解成它的组件组成，使用的句法与创建此类值时的几乎相同。
+在<a href="glossary.html#scrutinee">检验对象</a>表达式的类型为结构体(<code>struct</code>)、枚举(<code>enum</code>)或元组(<code>tuple</code>)的模式中，占位符(<code>_</code>) 代表<em>一个</em>数据字段，而通配符 <code>..</code> 代表特定变量/变体(variant)的<em>所有</em>剩余字段。当使用字段的名称（而不是字段序号）来解构数据结构时，允许将 <code>fieldname</code> 当作 <code>fieldname: fieldname</code> 的简写形式书写。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">enum Message {
@@ -8569,7 +8715,8 @@ commit: 7b1240b2451be16ccfc9bd695e6ebb95f80b11c6 <br />
 </span></code></pre></pre>
 <h2 id="refutability"><a class="header" href="#refutability">Refutability</a></h2>
 <h2 id="可反驳性"><a class="header" href="#可反驳性">可反驳性</a></h2>
-<p>当一个模式有可能与它所匹配的值不匹配时，我们就说它是<em>可反驳型的(refutable)</em>。也就是说，*不可反驳型(irrefutable)*模式总是能与它们所匹配的值匹配成功。例如：</p>
+<p>当一个模式有可能与它所匹配的值不匹配时，我们就说它是<em>可反驳型的(refutable)</em>。
+也就是说，*不可反驳型(irrefutable)*模式总是能与它们所匹配的值匹配成功。例如：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let (x, y) = (1, 2);               // &quot;(x, y)&quot; 是一个不可反驳型模式
@@ -8596,7 +8743,8 @@ if let (a, 3) = (1, 2) {           // &quot;(a, 3)&quot; 是可反驳型的, 将
    | <code>-</code><sup>?</sup> <a href="tokens.html#integer-literals">INTEGER_LITERAL</a><br />
    | <code>-</code><sup>?</sup> <a href="tokens.html#floating-point-literals">FLOAT_LITERAL</a></p>
 </blockquote>
-<p><em>字面量模式</em>匹配的值与字面量所创建的值完全相同。由于负数不是<a href="expressions/literal-expr.html">字面量</a>，（特设定）字面量模式也接受字面量前的可选负号，它的作用类似于否定运算符。</p>
+<p><em>字面量模式</em>匹配的值与字面量所创建的值完全相同。
+由于负数不是<a href="expressions/literal-expr.html">字面量</a>，（特设定）字面量模式也接受字面量前的可选负号，它的作用类似于否定运算符。</p>
 <div class="warning">
 <p>浮点字面量目前还可以使用，但是由于它们在数值比较时带来的复杂性，在将来的 Rust 版本中，它们将被禁止用于字面量模式(参见 <a href="https://github.com/rust-lang/rust/issues/41620">issue #41620</a>)。</p>
 </div>
@@ -8621,8 +8769,12 @@ if let (a, 3) = (1, 2) {           // &quot;(a, 3)&quot; 是可反驳型的, 将
 <em>IdentifierPattern</em> :<br />
       <code>ref</code><sup>?</sup> <code>mut</code><sup>?</sup> <a href="identifiers.html">IDENTIFIER</a> (<code>@</code> <a href="patterns.html#patterns"><em>PatternNoTopAlt</em></a> ) <sup>?</sup></p>
 </blockquote>
-<p>标识符模式将它们匹配的值绑定到一个变量上。此标识符在该模式中必须是唯一的。该变量会在作用域中遮蔽任何同名的变量。这种绑定的作用域取决于使用模式的上下文（例如 <code>let</code>绑定或匹配臂(<code>match</code> arm)<sup class="footnote-reference"><a href="#译注1">1</a></sup>）。</p>
-<p>标识符模式只能包含一个标识符（也可能前带一个 <code>mut</code>），能匹配任何值，并将其绑定到该标识符上。最常见的标识符模式应用场景就是用在变量声明上和用在函数（包括闭包）的参数上。</p>
+<p>标识符模式将它们匹配的值绑定到一个变量上。
+此标识符在该模式中必须是唯一的。
+该变量会在作用域中遮蔽任何同名的变量。
+这种绑定的作用域取决于使用模式的上下文（例如 <code>let</code>绑定或匹配臂(<code>match</code> arm)<sup class="footnote-reference"><a href="#译注1">1</a></sup>）。</p>
+<p>标识符模式只能包含一个标识符（也可能前带一个 <code>mut</code>），能匹配任何值，并将其绑定到该标识符上。
+最常见的标识符模式应用场景就是用在变量声明上和用在函数（包括闭包）的参数上。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut variable = 10;
@@ -8631,7 +8783,8 @@ fn sum(x: i32, y: i32) -&gt; i32 {
 </span><span class="boring">}
 </span><span class="boring">}
 </span></code></pre></pre>
-<p>要将模式匹配到的值绑定到变量上，也可使用句法 <code>variable @ subpattern</code>。例如，下面示例中将值 2 绑定到 <code>e</code> 上（不是整个区间(range)：这里的区间是一个区间子模式(range subpattern)）。</p>
+<p>要将模式匹配到的值绑定到变量上，也可使用句法 <code>variable @ subpattern</code>。
+例如，下面示例中将值 2 绑定到 <code>e</code> 上（不是整个区间(range)：这里的区间是一个区间子模式(range subpattern)）。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 2;
@@ -8642,7 +8795,8 @@ match x {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>默认情况下，标识符模式里变量会和匹配到的值的一个拷贝副本绑定，或匹配值自身移动过来和变量完成绑定，具体是使用拷贝语义还是移动语义取决于匹配到的值是否实现了 <a href="special-types-and-traits.html#copy"><code>Copy</code></a>。也可以通过使用关键字 <code>ref</code> 将变量和值的引用绑定，或者使用 <code>ref mut</code> 将变量和值的可变引用绑定。示例：</p>
+<p>默认情况下，标识符模式里变量会和匹配到的值的一个拷贝副本绑定，或匹配值自身移动过来和变量完成绑定，具体是使用拷贝语义还是移动语义取决于匹配到的值是否实现了 <a href="special-types-and-traits.html#copy"><code>Copy</code></a>。
+也可以通过使用关键字 <code>ref</code> 将变量和值的引用绑定，或者使用 <code>ref mut</code> 将变量和值的可变引用绑定。示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">let a = Some(10);
@@ -8657,7 +8811,10 @@ match a {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>在第一个匹配表达式中，值被拷贝（或移动）（到变量 <code>value</code> 上）。在第二个匹配中，对相同内存位置的引用被绑定到变量上。之所以需要这种句法，是因为在解构子模式(destructuring subpatterns)里，操作符 <code>&amp;</code> 不能应用在值的字段上。例如，以下内容无效：</p>
+<p>在第一个匹配表达式中，值被拷贝（或移动）（到变量 <code>value</code> 上）。
+在第二个匹配中，对相同内存位置的引用被绑定到变量上。
+之所以需要这种句法，是因为在解构子模式(destructuring subpatterns)里，操作符 <code>&amp;</code> 不能应用在值的字段上。
+例如，以下内容无效：</p>
 <pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Person {
@@ -8679,12 +8836,16 @@ match a {
 </span>if let Person { name: ref person_name, age: 18..=150 } = value { }
 <span class="boring">}
 </span></code></pre></pre>
-<p>这里，<code>ref</code> 不是被匹配的一部分。这里它唯一的目的就是使变量和匹配值的引用绑定起来，而不是潜在地拷贝或移动匹配到的内容。</p>
-<p><a href="patterns.html#path-patterns">路径模式(Path pattern)</a>优先于标识符模式。如果给某个标识符指定了 <code>ref</code> 或 <code>ref mut</code>，同时该标识符又遮蔽了某个常量，这会导致错误。</p>
+<p>这里，<code>ref</code> 不是被匹配的一部分。
+这里它唯一的目的就是使变量和匹配值的引用绑定起来，而不是潜在地拷贝或移动匹配到的内容。</p>
+<p><a href="patterns.html#path-patterns">路径模式(Path pattern)</a>优先于标识符模式。
+如果给某个标识符指定了 <code>ref</code> 或 <code>ref mut</code>，同时该标识符又遮蔽了某个常量，这会导致错误。</p>
 <p>如果 <code>@</code>子模式是不可反驳型的或未指定子模式，则标识符模式是不可反驳型的。</p>
 <h3 id="binding-modes"><a class="header" href="#binding-modes">Binding modes</a></h3>
 <h3 id="绑定方式"><a class="header" href="#绑定方式">绑定方式</a></h3>
-<p>基于人类工程学的考虑，为了让引用和匹配值的绑定更容易一些，模式会自动选择不同的<em>绑定方式</em>。当引用值与非引用模式匹配时，这将自动地被视为 <code>ref</code> 或 <code>ref mut</code> 绑定方式。示例：</p>
+<p>基于人类工程学的考虑，为了让引用和匹配值的绑定更容易一些，模式会自动选择不同的<em>绑定方式</em>。
+当引用值与非引用模式匹配时，这将自动地被视为 <code>ref</code> 或 <code>ref mut</code> 绑定方式。
+示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x: &amp;Option&lt;i32&gt; = &amp;Some(3);
@@ -8694,8 +8855,14 @@ if let Some(y) = x {
 <span class="boring">}
 </span></code></pre></pre>
 <p>*非引用模式(Non-reference patterns)*包括<strong>除</strong>上面这种绑定模式和后面会讲到的<a href="patterns.html#wildcard-pattern">通配符模式</a>（<code>_</code>）、匹配引用类型的<a href="patterns.html#path-patterns">常量(<code>const</code>)模式</a>和<a href="patterns.html#reference-patterns">引用模式</a>这些模式以外的所有模式。</p>
-<p>如果绑定模式(binding pattern)中没有显式地包含 <code>ref</code>、<code>ref mut</code>、<code>mut</code>，那么它将使用<em>默认绑定方式</em>来确定如何绑定变量。默认绑定方式以使用移动语义的“移动(move)”方式开始。当匹配一个模式时，编译器对模式从外到内逐层匹配。每次非引用模式和引用匹配上了时，引用都会自动解引用出最后的值，并更新默认绑定方式，再进行最终的匹配。此时引用会将默认绑定方式设置为 <code>ref</code> 方式。可变引用会将模式设置为 <code>ref mut</code> 方式，除非绑定方式已经是 <code>ref</code> 了（在这种情况下它仍然是 <code>ref</code> 方式）。如果自动解引用解出的值仍然是引用，则会重复解引用。<sup class="footnote-reference"><a href="#译注2">2</a></sup></p>
-<p>移动语义的绑定方式和引用语义的绑定方式可以在同一个模式中混合使用，这样做会导致绑定对象的部分被移走，并且之后无法再使用该对象。这只适用于类型无法拷贝的情况下。</p>
+<p>如果绑定模式(binding pattern)中没有显式地包含 <code>ref</code>、<code>ref mut</code>、<code>mut</code>，那么它将使用<em>默认绑定方式</em>来确定如何绑定变量。
+默认绑定方式以使用移动语义的“移动(move)”方式开始。
+当匹配一个模式时，编译器对模式从外到内逐层匹配。每次非引用模式和引用匹配上了时，引用都会自动解引用出最后的值，并更新默认绑定方式，再进行最终的匹配。
+此时引用会将默认绑定方式设置为 <code>ref</code> 方式。
+可变引用会将模式设置为 <code>ref mut</code> 方式，除非绑定方式已经是 <code>ref</code> 了（在这种情况下它仍然是 <code>ref</code> 方式）。
+如果自动解引用解出的值仍然是引用，则会重复解引用。<sup class="footnote-reference"><a href="#译注2">2</a></sup></p>
+<p>移动语义的绑定方式和引用语义的绑定方式可以在同一个模式中混合使用，这样做会导致绑定对象的部分被移走，并且之后无法再使用该对象。
+这只适用于类型无法拷贝的情况下。</p>
 <p>下面的示例中，<code>name</code> 被移出了 <code>person</code>，因此如果再试图把 <code>person</code> 作为一个整体使用，或再次使用 <code>person.name</code>，将会因为*部分移出(partial move)*的问题而报错。</p>
 <p>示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
@@ -8716,7 +8883,10 @@ let Person { name, ref age } = person;
 <em>WildcardPattern</em> :<br />
    <code>_</code></p>
 </blockquote>
-<p><em>通配符模式</em>（下划线符号）能与任何值匹配。常用它来忽略那些无关紧要的值。在其他模式中使用该模式时，它匹配单个数据字段（与和匹配所有其余字段的 <code>..</code> 相对）。与标识符模式不同，它不会复制、移动或借用它匹配的值。</p>
+<p><em>通配符模式</em>（下划线符号）能与任何值匹配。
+常用它来忽略那些无关紧要的值。
+在其他模式中使用该模式时，它匹配单个数据字段（与和匹配所有其余字段的 <code>..</code> 相对）。
+与标识符模式不同，它不会复制、移动或借用它匹配的值。</p>
 <p>示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -8753,7 +8923,9 @@ let real_part = |a: f64, _: f64| { a };
 <em>RestPattern</em> :<br />
    <code>..</code></p>
 </blockquote>
-<p><em>剩余模式</em>（<code>..</code> token）充当匹配长度可变的模式(variable-length pattern)，它匹配之前之后没有匹配的零个或多个元素。它只能在<a href="patterns.html#tuple-patterns">元组</a>模式、<a href="patterns.html#tuple-struct-patterns">元组结构体</a>模式和<a href="patterns.html#slice-patterns">切片</a>模式中使用，并且只能作为这些模式中的一个元素出现一次。当作为<a href="patterns.html#identifier-patterns">标识符模式</a>的子模式时，它也可出现在<a href="patterns.html#slice-patterns">切片模式</a>里。</p>
+<p><em>剩余模式</em>（<code>..</code> token）充当匹配长度可变的模式(variable-length pattern)，它匹配之前之后没有匹配的零个或多个元素。
+它只能在<a href="patterns.html#tuple-patterns">元组</a>模式、<a href="patterns.html#tuple-struct-patterns">元组结构体</a>模式和<a href="patterns.html#slice-patterns">切片</a>模式中使用，并且只能作为这些模式中的一个元素出现一次。
+当作为<a href="patterns.html#identifier-patterns">标识符模式</a>的子模式时，它也可出现在<a href="patterns.html#slice-patterns">切片模式</a>里。</p>
 <p>剩余模式总是不可反驳型的。</p>
 <p>示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
@@ -8806,7 +8978,8 @@ match tuple {
 <p><em>InclusiveRangePattern</em> :<br />
       <em>RangePatternBound</em> <code>..=</code> <em>RangePatternBound</em></p>
 <p><em>HalfOpenRangePattern</em> :<br />
-   | <em>RangePatternBound</em> <code>..</code></p>
+   |   <em>RangePatternBound</em> <code>..</code>
+   | <code>..=</code> <em>RangePatternBound</em></p>
 <p><em>ObsoleteRangePattern</em> :(译者注：废弃的区间模式句法/产生式) \ 
    <em>RangePatternBound</em> <code>...</code> <em>RangePatternBound</em></p>
 <p><em>RangePatternBound</em> :<br />
@@ -8816,16 +8989,40 @@ match tuple {
    | <code>-</code><sup>?</sup> <a href="tokens.html#floating-point-literals">FLOAT_LITERAL</a><br />
    | <a href="expressions/path-expr.html"><em>PathExpression</em></a></p>
 </blockquote>
-<p>区间模式匹配在区间上下边界内界定的值。区间模式可是闭区间或半开区间。如果区间模式的上界和下界均被包含在内则为闭区间模式。半开区间模式为包含下界数值，但不包含上界数值的区间模式。</p>
-<p>例如：模式 <code>'m'..='p'</code> 只匹配 <code>'m'</code>, <code>'n'</code>, <code>'o'</code> 和 <code>'p'</code> 这4个字符。 <code>1..</code> 可以匹配 9，或者 9001，或者 9007199254740991（如果此值的内存宽度合适），但是不能匹配到 0，也不能匹配有符号整数的负值。区间模式中的界值可以是字面量，也可以是指向常量的路径。</p>
-<p><code>a..</code> 这样的半开区间模式不能匹配切片中的内容。</p>
-<p>模式 <code>a..=b</code> 必须总是有 a ≤ b。例如，<code>10..=0</code> 这样的区间模式是错误的。</p>
-<p>区间模式只适用于标量类型(scalar type)。可接受的类型有：</p>
+<p><em>区间模式</em>匹配在区间上下边界内界定的标量值。
+区间模式的左侧的界限为其<em>下限</em>。
+区间模式的右侧的界限为其<em>上限</em>。
+区间模式可是闭区间或半开区间。</p>
+<p>如果区间模式的上限和下限均被包含在内，则此区间模式为闭区间模式。
+闭区间模式是全包含区间模式（Inclusive range patterns）。</p>
+<p>*全包含区间模式（Inclusive range patterns）*匹配其两个边界之间的所有值，包括两个边界。
+它被写为其下限后跟 <code>..=</code>，再后跟其上限。
+它的类型是其上下限的统一兼容形式。</p>
+<p>例如：模式 <code>'m'..='p'</code> 只匹配 <code>'m'</code>, <code>'n'</code>, <code>'o'</code> 和 <code>'p'</code> 这4个字符。 </p>
+<p>下限不能比上限大。
+因此在 <code>a..=b</code> 里，必须总是有 a ≤ b。
+比如，<code>10..=0</code> 这样的区间模式是错误的。</p>
+<p>如果区间模式只有上限或下限，则它们是<em>半开</em>的。
+它们的类型与其上限或下限相同。</p>
+<p>只有下限的半开区间写为其下限后跟 <code>..</code> 。
+这些区间模式将匹配大于或等于下限的任何值。
+比如<code>1..</code> 可以匹配 9，或者 9001，或者 9007199254740991（如果此值的内存宽度合适），但是不能匹配到 0，也不能匹配有符号整数的负值。
+区间模式中的界值可以是字面量，也可以是指向常量的路径。</p>
+<p>只有上限的半开区间写为<code>..=</code>后跟其上限。
+这些区间模式将匹配小于或等于上限的任何值。
+比如，<code>..=10</code> 将匹配10、1、0；对于有符号整型，除这些外，还包括所有的负值。</p>
+<p>半开放范围模式不能用作<a href="patterns.html#slice-patterns">切片模式</a>中的子模式的顶层模式。</p>
+<p>界值的合法形式如下：</p>
 <ul>
-<li>整型（u8、i8、u16、i16、usize、isize ...）。</li>
-<li>字符型（char）。</li>
-<li>浮点类型（f32 和 f64）。这已被弃用，在未来版本的 Rust 中将不可用（参见 <a href="https://github.com/rust-lang/rust/issues/41620">issue #41620</a>）。</li>
+<li>字面量中的字符、字节、整形或浮点字面量。</li>
+<li><code>-</code> 后跟一个整型或浮点型字面量。</li>
+<li><a href="expressions/path-expr.html">路径</a></li>
 </ul>
+<p>如果界值被书写为路径形式，则在宏解析之后，路径必须解析为一个 <code>char</code>、整型或浮点型的常量项。</p>
+<p>界值的类型和值取决于它的写入方式。
+如果界值是<a href="expressions/path-expr.html">路径</a>形式，则模式必须能以此路径解析到的此路径所代表的那个<a href="items/constant-items.html">常量</a>的类型和值。
+如果界值是一个字面量，则界值具有相应的<a href="expressions/literal-expr.html">字面量表达式</a>的类型和值。
+如果字面量前面有一个 <code>-</code> 字符，则界值的类型与相应的<a href="expressions/literal-expr.html">字面量表达式</a>的类型相同，且值为相应字面量表达式的值的<a href="expressions/operator-expr.html#negation-operators">相反数</a> 。</p>
 <p>示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -8901,9 +9098,15 @@ println!(&quot;{}&quot;, match 0xfacade {
 });
 <span class="boring">}
 </span></code></pre></pre>
-<p>当区间模式匹配某（非usize 和 非isize）整型类型和字符型(<code>char</code>)的整个值域时，此模式是不可反驳型的。例如，<code>0u8..=255u8</code> 是不可反驳型的。某类整型的值区间是从该类型的最小值到该类型最大值的闭区间。字符型(<code>char</code>)的值的区间就是那些包含所有 Unicode 标量值的区间，即 <code>'\u{0000}'..='\u{D7FF}'</code> 和 <code>'\u{E000}'..='\u{10FFFF}'</code>。</p>
+<p>当区间模式匹配某固定位宽的整型类型和字符型(<code>char</code>)的整个值域时，此模式是不可反驳型的。例如，<code>0u8..=255u8</code> 是不可反驳型的。某类整型的值区间是从该类型的最小值到该类型最大值的闭区间。字符型(<code>char</code>)的值的区间就是那些包含所有 Unicode 标量值的区间，即 <code>'\u{0000}'..='\u{D7FF}'</code> 和 <code>'\u{E000}'..='\u{10FFFF}'</code>。</p>
+<p>浮点区间模式已弃用，可能会在未来的 Rust 版本中移除。
+参见 <a href="https://github.com/rust-lang/rust/issues/41620">issue #41620</a> 以了解更多信息。。</p>
 <blockquote>
 <p><strong>版次差异</strong>：在2021版之前，在闭区间模式里，可以使用 <code>...</code> 来表达 <code>..=</code> 的语义。</p>
+</blockquote>
+<blockquote>
+<p><strong>注意</strong>: 尽管区间模式使用与<a href="expressions/range-expr.html">区间表达式</a>相同的句法，但没有上下限均不包含的区间模式。
+也就是说，<code>x .. y</code> 和 <code>.. x</code> 都不是有效的区间模式。</p>
 </blockquote>
 <h2 id="reference-patterns"><a class="header" href="#reference-patterns">Reference patterns</a></h2>
 <h2 id="引用模式"><a class="header" href="#引用模式">引用模式</a></h2>
@@ -8934,7 +9137,8 @@ match a {
 }
 </code></pre>
 </blockquote>
-<p>引用模式中添加关键字 <code>mut</code> 可对可变引用做解引用。引用模式中的可变性标记必须与作为匹配对象的那个引用的可变性匹配。</p>
+<p>引用模式中添加关键字 <code>mut</code> 可对可变引用做解引用。
+引用模式中的可变性标记必须与作为匹配对象的那个引用的可变性匹配。</p>
 <p>引用模式总是不可反驳型的。</p>
 <h2 id="struct-patterns"><a class="header" href="#struct-patterns">Struct patterns</a></h2>
 <h2 id="结构体模式"><a class="header" href="#结构体模式">结构体模式</a></h2>
@@ -9033,7 +9237,8 @@ match a {
 <p><em>TupleStructItems</em> :<br />
    <a href="patterns.html#patterns"><em>Pattern</em></a> ( <code>,</code> <a href="patterns.html#patterns"><em>Pattern</em></a> )<sup>*</sup> <code>,</code><sup>?</sup></p>
 </blockquote>
-<p>元组结构体模式匹配元组结构体值和枚举值，这些值将与该模式的子模式定义的所有条件进行匹配。它还被用于<a href="patterns.html#destructuring">解构</a>元组结构体值或枚举值。</p>
+<p>元组结构体模式匹配元组结构体值和枚举值，这些值将与该模式的子模式定义的所有条件进行匹配。
+它还被用于<a href="patterns.html#destructuring">解构</a>元组结构体值或枚举值。</p>
 <p>当元组结构体模式的一个子模式是可反驳型的，则该元组结构体模式就是可反驳型的。</p>
 <h2 id="tuple-patterns"><a class="header" href="#tuple-patterns">Tuple patterns</a></h2>
 <h2 id="元组模式"><a class="header" href="#元组模式">元组模式</a></h2>
@@ -9125,11 +9330,15 @@ match v[..] {
 <li>关联常量</li>
 </ul>
 <p>限定路径模式只能指向关联常量。</p>
-<p>常量不能是联合体类型。结构体常量和枚举常量必须带有 <code>#[derive(PartialEq, Eq)]</code> 属性（不只是实现）。</p>
-<p>当路径模式指向结构体或枚举变体(枚举只有一个变体)或类型为不可反驳型的常量时，该路径模式是不可反驳型的。当路径模式指向的是可反驳型常量或带有多个变体的枚举时，该路径模式是可反驳型的。</p>
+<p>常量不能是联合体类型。
+结构体常量和枚举常量必须带有 <code>#[derive(PartialEq, Eq)]</code> 属性（不只是实现）。</p>
+<p>当路径模式指向结构体或枚举变体(枚举只有一个变体)或类型为不可反驳型的常量时，该路径模式是不可反驳型的。
+当路径模式指向的是可反驳型常量或带有多个变体的枚举时，该路径模式是可反驳型的。</p>
 <h2 id="or-patterns"><a class="header" href="#or-patterns">Or-patterns</a></h2>
 <h2 id="or模式"><a class="header" href="#or模式">or模式</a></h2>
-<p>_or模式_是能匹配两个或多个并列子模式（例如：<code>A | B | C</code>）中的一个的模式。此模式可以任意嵌套。除了 <code>let</code>绑定和函数参数（包括闭包参数）中的模式（此时句法上使用 _PatternNoTopAlt_产生式），or模式在句法上允许在任何其他模式出现的地方出现（这些模式句法上使用 _Pattern_产生式）。</p>
+<p>_or模式_是能匹配两个或多个并列子模式（例如：<code>A | B | C</code>）中的一个的模式。
+此模式可以任意嵌套。
+除了 <code>let</code>绑定和函数参数（包括闭包参数）中的模式（此时句法上使用 _PatternNoTopAlt_产生式），or模式在句法上允许在任何其他模式出现的地方出现（这些模式句法上使用 _Pattern_产生式）。</p>
 <h3 id="static-semantics"><a class="header" href="#static-semantics">Static semantics</a></h3>
 <h3 id="静态语义"><a class="header" href="#静态语义">静态语义</a></h3>
 <ol>
@@ -10172,8 +10381,8 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 <h1 id="类型布局"><a class="header" href="#类型布局">类型布局</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-layout.md">type-layout.md</a><br />
-commit: d2acc38e9475837d64602df1ff78fce46d69d3b6 <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: f8ac109624aad26711824fc9e9e0780a1c52f34a <br />
+本章译文最后维护日期：2023-01-15</p>
 </blockquote>
 <p>类型的布局描述类型的内存宽度(size)、对齐量(alignment)和字段(fields)的<em>相对偏移量(relative offsets)</em>。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。</p>
 <p>每次编译都有可能更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。</p>
@@ -10375,12 +10584,12 @@ assert_eq!(std::mem::size_of::&lt;SizeRoundedUp&gt;(), 12);  // 首先来自于b
 </span></code></pre></pre>
 <h4 id="reprc-field-less-enums"><a class="header" href="#reprc-field-less-enums"><code>#[repr(C)]</code> Field-less Enums</a></h4>
 <h4 id="reprc无字段枚举"><a class="header" href="#reprc无字段枚举"><code>#[repr(C)]</code>无字段枚举</a></h4>
-<p>对于<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举(field-less enums)</a>，<code>C</code>表形的内存宽度和对齐量与目标平台的 C ABI 的默认枚举内存宽度和对齐量相同。</p>
+<p>对于<a href="items/enumerations.html#field-less-enum">无字段枚举(field-less enums)</a>，<code>C</code>表形的内存宽度和对齐量与目标平台的 C ABI 的默认枚举内存宽度和对齐量相同。</p>
 <blockquote>
 <p>注意：C中的枚举的表形是由枚举的相应实现定义的，所以在 Rust 中，给无字段枚举应用 C表形得到的表型很可能是一个“最佳猜测”。特别是，当使用某些特定命令行参数来编译特定的 C代码时，这可能是不正确的。</p>
 </blockquote>
 <div class="warning">
-<p>警告：C语言中的枚举与 Rust 中的那些应用了 <code>#[repr(C)]</code>表型的<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举</a>之间有着重要的区别。C语言中的枚举主要是 <code>typedef</code> 加上一些具名常量；换句话说，C枚举(<code>enum</code>)类型的对象可以包含任何整数值。例如，C枚举通常被用做标志位。相比之下，Rust的<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举</a>只能合法地<sup class="footnote-reference"><a href="#译注2">2</a></sup>保存判别式的值，其他的都是<a href="behavior-considered-undefined.html">未定义行为</a>。因此，在 FFI 中使用无字段枚举来建模 C语言中的枚举(<code>enum</code>)通常是错误的。</p>
+<p>警告：C语言中的枚举与 Rust 中的那些应用了 <code>#[repr(C)]</code>表型的<a href="items/enumerations.html#field-less-enum">无字段枚举</a>之间有着重要的区别。C语言中的枚举主要是 <code>typedef</code> 加上一些具名常量；换句话说，C枚举(<code>enum</code>)类型的对象可以包含任何整数值。例如，C枚举通常被用做标志位。相比之下，Rust的<a href="items/enumerations.html#field-less-enum">无字段枚举</a>只能合法地<sup class="footnote-reference"><a href="#译注2">2</a></sup>保存判别式的值，其他的都是<a href="behavior-considered-undefined.html">未定义行为</a>。因此，在 FFI 中使用无字段枚举来建模 C语言中的枚举(<code>enum</code>)通常是错误的。</p>
 </div>
 <h4 id="reprc-enums-with-fields"><a class="header" href="#reprc-enums-with-fields"><code>#[repr(C)]</code> Enums With Fields</a></h4>
 <h4 id="reprc带字段枚举"><a class="header" href="#reprc带字段枚举"><code>#[repr(C)]</code>带字段枚举</a></h4>
@@ -10450,7 +10659,7 @@ struct MyDFields;
 <p>原语表形只能应用于枚举，此时枚举有没有字段会给原语表形带来不同的表现。给<a href="items/enumerations.html#zero-variant-enums">零变体枚举</a>应用原始表形是错误的。将两个原语表形组合在一起也是错误的</p>
 <h4 id="primitive-representation-of-field-less-enums"><a class="header" href="#primitive-representation-of-field-less-enums">Primitive Representation of Field-less Enums</a></h4>
 <h4 id="无字段枚举的原语表形"><a class="header" href="#无字段枚举的原语表形">无字段枚举的原语表形</a></h4>
-<p>对于<a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">无字段枚举</a>，原语表形将其内存宽度和对齐量设置成与给定表形同名的原生类型的表形的值。例如，一个 <code>u8</code>表形的无字段枚举只能有0和255之间的判别值。</p>
+<p>对于<a href="items/enumerations.html#field-less-enum">无字段枚举</a>，原语表形将其内存宽度和对齐量设置成与给定表形同名的原生类型的表形的值。例如，一个 <code>u8</code>表形的无字段枚举只能有0和255之间的判别值。</p>
 <h4 id="primitive-representation-of-enums-with-fields"><a class="header" href="#primitive-representation-of-enums-with-fields">Primitive Representation of Enums With Fields</a></h4>
 <h4 id="带字段枚举的原语表形"><a class="header" href="#带字段枚举的原语表形">带字段枚举的原语表形</a></h4>
 <p>带字段枚举的原语表形是一个 <code>repr(C)</code>表形的联合体，此联合体的每个字段对应一个和原枚举变体对应的 <code>repr(C)</code>表形的结构体。这些结构体的第一个字段是原枚举的变体移除了它们所有的字段组成的原语表形版的无字段枚举（“the tag”），那这些结构体的其余字段是原变体移走的字段。</p>
@@ -10582,8 +10791,6 @@ assert_eq!(std::mem::size_of::&lt;Enum16&gt;(), 4);
 <div class="footnote-definition" id="译注2"><sup class="footnote-definition-label">2</sup>
 <p>这里合法的意思是变体的判别值受 <code>repr(u8)</code> 这样的表形属性约束，像这个例子中，变体的判别值就只能位于 0~255 之间。 </p>
 </div>
-<!-- 2020-12-17-->
-<!-- checked -->
 <div style="break-before: page; page-break-before: always;"></div><h1 id="interior-mutability"><a class="header" href="#interior-mutability">Interior Mutability</a></h1>
 <h1 id="内部可变性"><a class="header" href="#内部可变性">内部可变性</a></h1>
 <blockquote>
@@ -10697,8 +10904,8 @@ fn takes_fn_ptr&lt;'short, 'middle: 'short&gt;(
 <h1 id="trait约束和生存期约束"><a class="header" href="#trait约束和生存期约束">trait约束和生存期约束</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md">trait-bounds.md</a><br />
-commit: 9e27603773164ce3bb916e003d91b33fdd45f7c7 <br />
-本章译文最后维护日期：2022-01-15</p>
+commit: 4e0edd1428d3bdf680198a52e83ac400a1ba7c04 <br />
+本章译文最后维护日期：2022-12-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -11087,8 +11294,8 @@ fn foo() -&gt; i32 {
 <h1 id="析构器"><a class="header" href="#析构器">析构器</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/destructors.md">destructors.md</a><br />
-commit: 3c9516b800901a0bc323df0ebb6e34adf2d2f5e8 <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: ca43062e348236d8ad10590d655897cb5e8585e9 <br />
+本章译文最后维护日期：2023-01-15</p>
 </blockquote>
 <p>当一个<a href="glossary.html#initialized">初始化</a>了的<a href="variables.html">变量</a>或<a href="expressions.html#temporaries">临时变量</a>超出<a href="destructors.html#drop-scopes">作用域</a>时，其<em>析构器(destructor)<em>将运行，或者说它将被</em>销毁(dropped)</em>。此外，<a href="expressions/operator-expr.html#assignment-expressions">赋值</a>操作也会运行其左操作数的析构器（如果它已经初始化了）。如果变量只部分初始化了，则只销毁其已初始化的字段。</p>
 <p>类型<code>T</code> 的析构器由以下内容组成：</p>
@@ -11306,7 +11513,7 @@ match PrintOnDrop(&quot;Matched value in final expression&quot;) {
 println!(&quot;{}&quot;, x);
 <span class="boring">}
 </span></code></pre></pre>
-<p>如果一个借用、解引用、字段或元组索引表达式有一个扩展的临时作用域，那么它们的操作数也会跟着扩展。如果索引表达式有扩展的临时作用域，那么被它索引的表达式也会一并扩展作用域。</p>
+<p>如果一个<a href="expressions/operator-expr.html#borrow-operators">借用</a>、<a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>、<a href="expressions/field-expr.html">字段</a>或<a href="expressions/tuple-expr.html#tuple-indexing-expressions">元组索引表达式</a>有一个扩展的临时作用域，那么它们的操作数也会跟着扩展。如果<a href="expressions/array-expr.html#array-and-slice-indexing-expressions">索引表达式</a>有扩展的临时作用域，那么被它索引的表达式也会一并扩展作用域。</p>
 <h4 id="extending-based-on-patterns"><a class="header" href="#extending-based-on-patterns">Extending based on patterns</a></h4>
 <h4 id="基于模式的作用域扩展"><a class="header" href="#基于模式的作用域扩展">基于模式的作用域扩展</a></h4>
 <p>能扩展临时作用域的*扩展性模式(extending pattern)*是下面任一：</p>
@@ -11562,8 +11769,8 @@ const RESOLVED_STATIC: &amp;dyn Fn(&amp;Foo, &amp;Bar) -&gt; &amp;Baz = &amp;som
 <h1 id="特殊类型和-trait"><a class="header" href="#特殊类型和-trait">特殊类型和 trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/special-types-and-traits.md">special-types-and-traits.md</a><br />
-commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 <br />
-本章译文最后维护日期：2022-04-29</p>
+commit: 50a597cc56af8d9d93e7071a4099480648eb9672 <br />
+本章译文最后维护日期：2023-01-15</p>
 </blockquote>
 <p><a href="https://doc.rust-lang.org/std/index.html">标准库</a>中的某些类型和 trait 在 Rust 编译器中也直接能用。本章就阐述了这些类型和 trait 的特殊特性。</p>
 <h2 id="boxt"><a class="header" href="#boxt"><code>Box&lt;T&gt;</code></a></h2>
@@ -11628,7 +11835,7 @@ commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 <br />
 <p>自动trait 可以作为额外的约束添加到任何 <a href="types/trait-object.html">trait对象</a>上，尽管通常我们见到的 trait对象的类型名上一般只显示一个 trait。例如，<code>Box&lt;dyn Debug + Send + UnwindSafe&gt;</code> 就是一个有效的类型。</p>
 <h2 id="sized-1"><a class="header" href="#sized-1"><code>Sized</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/marker/trait.Sized.html"><code>Sized</code></a> trait表明这种类型的内存宽度在编译时是已知的；也就是说，它不是一个<a href="dynamically-sized-types.html">动态内存宽度类型</a>。
-<a href="types/parameters.html">类型参数</a>和<a href="items/associated-items.html#associated-types">关联类型</a>默认是 <code>Sized</code> 的。
+<a href="types/parameters.html">类型参数</a> （除了 trait 中的<code>Self</code>）和<a href="items/associated-items.html#associated-types">关联类型</a>默认是 <code>Sized</code> 的。
 <code>Sized</code> 总是由编译器自动实现，而不是由<a href="items/implementations.html">实现(implementation items)</a>主动实现的。
 这些隐式的 <code>Sized</code>约束可以通过指定 <code>?Sized</code>约束来放宽约束。</p>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
@@ -13302,8 +13509,8 @@ By writing <code>unsafe impl</code>, the programmer states that they have taken 
 <h2 id="未定义的行为"><a class="header" href="#未定义的行为">未定义的行为</a></h2>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md">behavior-considered-undefined.md</a><br />
-commit: 88b6a426410aedd747c42fe26e34c84ab7629e3f <br />
-本章译文最后维护日期：2022-08-21</p>
+commit: 2af818d235b6c39cb76a099b859a84438e3409f2 <br />
+本章译文最后维护日期：2022-12-04</p>
 </blockquote>
 <p>如果 Rust 代码出现了下面列表中的任何行为，则此代码被认为不正确。这包括非安全(<code>unsafe</code>)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。</p>
 <p>在编写非安全代码时，确保任何与非安全代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何使用非安全代码的安全客户端(safe client)，如果当前条件满足了此非安全代码对于安全条件的要求，那此此非安全代码对于此安全客户端就是<em>健壮的(sound)</em>；如果非安全(<code>unsafe</code>)代码可以被安全代码滥用以致出现未定义行为，那么此非安全(<code>unsafe</code>)代码对这些安全代码来说就是<em>不健壮的(unsound)</em>。</p>
@@ -13311,15 +13518,36 @@ commit: 88b6a426410aedd747c42fe26e34c84ab7629e3f <br />
 <p><em><strong>警告：</strong></em> 下面的列表并非详尽无遗地罗列了 Rust 中的未定义行为。而且对于在非安全代码中什么是明确不允许的，目前 Rust 还没有正式的语义模型，因此将来可能会有更多的行为被认为是不安全的。下面的列表仅仅是我们当前确定知晓的未定义行为。在编写非安全代码之前，请阅读 <a href="https://doc.rust-lang.org/nomicon/index.html">Rustonomicon</a>。</p>
 </div>
 <ul>
-<li>数据竞争。</li>
-<li>在<a href="behavior-considered-undefined.html#dangling-pointers">悬垂</a>或未对齐的裸指针上执行<a href="expressions/operator-expr.html#the-dereference-operator">解引用操作</a> (<code>*expr</code>)，甚至<a href="expressions.html#place-expressions-and-value-expressions">位置表达式</a>(e.g. <code>addr_of!(&amp;*expr)</code>)上也不安全。</li>
-<li>破坏<a href="http://llvm.org/docs/LangRef.html#pointer-aliasing-rules">指针别名规则</a>。<code>&amp;mut T</code> 和 <code>&amp;T</code> 遵循 LLVM 的作用域<a href="http://llvm.org/docs/LangRef.html#noalias">无别名(noalias)</a>模型(scoped noalias model)，除非 <code>&amp;T</code> 内部包含 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 类型。</li>
-<li>修改不可变的数据。<a href="items/constant-items.html">常量(<code>const</code>)</a>项内的所有数据都是不可变的。此外，所有通过共享引用接触到的数据或不可变绑定所拥有的数据都是不可变的，除非该数据包含在 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 中。</li>
-<li>通过编译器内部函数(compiler intrinsics)调用未定义行为。<sup class="footnote-reference"><a href="#译注1">1</a></sup></li>
-<li>执行基于当前平台不支持的平台特性编译的代码（参见 <a href="attributes/codegen.html#the-target_feature-attribute"><code>target_feature</code></a>），<em>除非</em>此平台特别申明执行带有此特性的代码安全。</li>
-<li>用错误的 ABI约定来调用函数，或使用错误的 ABI展开约定来从某函数里发起展开(unwinding)。</li>
-<li>产生非法值(invalid value)，即使在私有字段和本地变量中也是如此。“产生”值发生在这些时候：把值赋给位置表达式、从位置表达式里读取值、传递值给函数/基本运算(primitive operation)或从函数/基本运算中返回值。
-以下值非法值（相对于它们各自的类型来说）：
+<li>
+<p>数据竞争。</p>
+</li>
+<li>
+<p>在<a href="behavior-considered-undefined.html#dangling-pointers">悬垂</a>或未对齐的裸指针上执行<a href="expressions/operator-expr.html#the-dereference-operator">解引用操作</a> (<code>*expr</code>)，甚至<a href="expressions.html#place-expressions-and-value-expressions">位置表达式</a>(e.g. <code>addr_of!(&amp;*expr)</code>)上也不安全。</p>
+</li>
+<li>
+<p>破坏<a href="http://llvm.org/docs/LangRef.html#pointer-aliasing-rules">指针别名规则</a>。<code>Box&lt;T&gt;</code>、<code>&amp;mut T</code> 和 <code>&amp;T</code> 遵循 LLVM 的作用域<a href="http://llvm.org/docs/LangRef.html#noalias">无别名(noalias)</a>模型(scoped noalias model)，除非 <code>&amp;T</code> 包含一个 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 类型。活动的引用和 box类型的智能指针不可为悬垂<a href="behavior-considered-undefined.html#dangling-pointers">dangling</a>状态。活动持续时间并未明确指定，但存在一些限制条件：</p>
+<ul>
+<li>对于引用来说，活动持续时间由借用检查器指定的句法生存期上限来限制；它不能存活得比那个生存期<em>更长</em>。</li>
+<li>每次将引用或 box类型的智能指针传递给函数或从函数返回时，它都被视为是活动的。</li>
+<li>当引用（注意不是 box类型的智能指针！）传递给函数时，它存活的至少与该函数调用一样长，这次同样排除了 <code>&amp;T</code> 包含了 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 的情况。</li>
+</ul>
+<p>当这些类型的值（<code>Box&lt;T&gt;</code>、<code>&amp;mut T</code> 和 <code>&amp;T</code> 类型的值）被传递给复合类型的（内嵌）成员字段时，所有的这些规则都适用，但注意传递给间接寻址的指针不适用。</p>
+</li>
+<li>
+<p>修改不可变的数据。<a href="items/constant-items.html">常量(<code>const</code>)</a>项内的所有数据都是不可变的。此外，所有通过共享引用接触到的数据或不可变绑定所拥有的数据都是不可变的，除非该数据包含在 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 中。</p>
+</li>
+<li>
+<p>通过编译器内部函数(compiler intrinsics)调用未定义行为。<sup class="footnote-reference"><a href="#译注1">1</a></sup></p>
+</li>
+<li>
+<p>执行基于当前平台不支持的平台特性编译的代码（参见 <a href="attributes/codegen.html#the-target_feature-attribute"><code>target_feature</code></a>），<em>除非</em>此平台特别申明执行带有此特性的代码安全。</p>
+</li>
+<li>
+<p>用错误的 ABI约定来调用函数，或使用错误的 ABI展开约定来从某函数里发起展开(unwinding)。</p>
+</li>
+<li>
+<p>产生非法值(invalid value)，即使在私有字段和本地变量中也是如此。“产生”值发生在这些时候：把值赋给位置表达式、从位置表达式里读取值、传递值给函数/基本运算(primitive operation)或从函数/基本运算中返回值。
+以下值非法值（相对于它们各自的类型来说）：</p>
 <ul>
 <li>
 <p>布尔型<a href="types/boolean.html"><code>bool</code></a>中除 <code>false</code> (<code>0</code>) 或 <code>true</code> (<code>1</code>) 之外的值。</p>
@@ -13357,7 +13585,9 @@ commit: 88b6a426410aedd747c42fe26e34c84ab7629e3f <br />
 </li>
 </ul>
 </li>
-<li>错误的使用内联汇编，具体细节，参见使用内联汇编编写代码时的相关<a href="inline-assembly.html#rules-for-inline-assembly">规则</a>。</li>
+<li>
+<p>错误的使用内联汇编，具体细节，参见使用内联汇编编写代码时的相关<a href="inline-assembly.html#rules-for-inline-assembly">规则</a>。</p>
+</li>
 </ul>
 <p><strong>注意：</strong> 未初始化的内存对于任何具有有限有效值集的类型来说也隐式非法。也就是说，允许读取未初始化内存的情况只发生在联合体(<code>union</code>)内部和“对齐填充区(padding)”里（类型的字段/元素之间的间隙）。</p>
 <blockquote>
@@ -13396,8 +13626,8 @@ commit: a7473287cc6e2fb972165dc5a7ffd26dad1fc907 <br />
 <h1 id="常量求值"><a class="header" href="#常量求值">常量求值</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/const_eval.md">const_eval.md</a><br />
-commit:  4aff5bed5eb04411174a7bd7e86975d3eb7b62d5 <br />
-本章译文最后维护日期：2022-08-21</p>
+commit:  3d4745b3480bfe80cd4320aeaf8b84394ae49fe0 <br />
+本章译文最后维护日期：2023-01-15</p>
 </blockquote>
 <p>常量求值是在编译过程中计算[表达式][<a href="expressions.html">expressions</a>]结果的过程。（不是所有表达式都可以在编译时求值，也就是说）只有全部表达式的某个子集可以在编译时求值。</p>
 <h2 id="constant-expressions"><a class="header" href="#constant-expressions">Constant expressions</a></h2>
@@ -13447,7 +13677,7 @@ commit:  4aff5bed5eb04411174a7bd7e86975d3eb7b62d5 <br />
 <ul>
 <li><a href="items/constant-items.html">常量项</a></li>
 <li><a href="items/static-items.html">静态项</a></li>
-<li><a href="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations">枚举判别值</a></li>
+<li><a href="items/enumerations.html#discriminants">枚举判别值</a></li>
 </ul>
 </li>
 <li><a href="items/generics.html#const-generics">常量型泛型实参</a></li>

@@ -153,8 +153,8 @@
 <h1 id="operator-expressions"><a class="header" href="#operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: 5c4a7a617c596b78593cabdf72e522ac2b8d1fba <br />
-本章译文最后维护日期：2022-08-21</p>
+commit: c351aa715c5540bc48c4c40328a052482961068e <br />
+本章译文最后维护日期：2023-01-15</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -502,7 +502,7 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 下表中 <code>*T</code> 代表 <code>*const T</code> 或 <code>*mut T</code>。<code>m</code> 引用类型中代表可选的 <code>mut</code> 或指针类型中的 <code>mut</code> 或 <code>const</code>。</p>
 <div class="table-wrapper"><table><thead><tr><th><code>e</code> 的类型</th><th><code>U</code></th><th>通过 <code>e as U</code> 执行转换</th></tr></thead><tbody>
 <tr><td>整型或浮点型</td><td>整型或浮点型</td><td>数字转换</td></tr>
-<tr><td>类C(C-like)枚举</td><td>整型</td><td>枚举转换</td></tr>
+<tr><td>枚举</td><td>整型</td><td>枚举转换</td></tr>
 <tr><td><code>bool</code> 或 <code>char</code></td><td>整型</td><td>原生类型到整型的转换</td></tr>
 <tr><td><code>u8</code></td><td><code>char</code></td><td><code>u8</code> 到 <code>char</code> 的转换</td></tr>
 <tr><td><code>*T</code></td><td><code>*V</code> where <code>V: Sized</code> *</td><td>指针到指针的转换</td></tr>
@@ -561,7 +561,12 @@ let y = false &amp;&amp; panic!(); // false, 不会计算 `panic!()`
 <p>*** 按照 IEEE 754-2008§4.3.1 的定义：选择最接近的浮点数，如果恰好在两个浮点数中间，则优先选择最低有效位为偶数的那个。</p>
 <h4 id="enum-cast"><a class="header" href="#enum-cast">Enum cast</a></h4>
 <h4 id="枚举转换"><a class="header" href="#枚举转换">枚举转换</a></h4>
-<p>可将枚举类型转换为其判别值，然后在必要时可以使用数字类型转换。</p>
+<p>可将枚举类型转换为其判别值，在必要时，后继可以再继续使用数字类型转换。
+枚举转换仅限于以下枚举类型：</p>
+<ul>
+<li><a href="../items/enumerations.html#unit-only-enum">单元体枚举</a></li>
+<li>无<a href="../items/enumerations.html#explicit-discriminants">显式指定判别式</a>的<a href="../items/enumerations.html#field-less-enum">无字段枚举</a>，或显式指定了判别式的单元体枚举</li>
+</ul>
 <h4 id="primitive-to-integer-cast"><a class="header" href="#primitive-to-integer-cast">Primitive to integer cast</a></h4>
 <h4 id="原生类型到整型"><a class="header" href="#原生类型到整型">原生类型到整型</a></h4>
 <ul>

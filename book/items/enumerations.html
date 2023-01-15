@@ -153,8 +153,8 @@
 <h1 id="枚举"><a class="header" href="#枚举">枚举</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/enumerations.md">enumerations.md</a><br />
-commit: d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
-本章译文最后维护日期：2021-2-21</p>
+commit: 4f32346c1ace326fe3d699f20bbd7a77680e830c <br />
+本章译文最后维护日期：2023-01-15</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -164,12 +164,10 @@ commit: d8cbe4eedb77bae3db9eff87b1238e7e23f6ae92 <br />
 <a href="generics.html"><em>GenericParams</em></a><sup>?</sup>
 <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup>
 <code>{</code> <em>EnumItems</em><sup>?</sup> <code>}</code></p>
-<p><em>EnumItems</em> :<br />
-   <em>EnumItem</em> ( <code>,</code> <em>EnumItem</em> )<sup>*</sup> <code>,</code><sup>?</sup></p>
 <p><em>EnumItem</em> :<br />
    <em>OuterAttribute</em><sup>*</sup> <a href="../visibility-and-privacy.html"><em>Visibility</em></a><sup>?</sup><br />
-   <a href="../identifiers.html">IDENTIFIER</a> ( <em>EnumItemTuple</em> | <em>EnumItemStruct</em>
-| <em>EnumItemDiscriminant</em> )<sup>?</sup></p>
+   <a href="../identifiers.html">IDENTIFIER</a> ( <em>EnumItemTuple</em> | <em>EnumItemStruct</em> )<sup>?</sup>
+<em>EnumItemDiscriminant</em><sup>?</sup></p>
 <p><em>EnumItemTuple</em> :<br />
    <code>(</code> <a href="structs.html"><em>TupleFields</em></a><sup>?</sup> <code>)</code></p>
 <p><em>EnumItemStruct</em> :<br />
@@ -203,11 +201,61 @@ let mut a: Animal = Animal::Dog(&quot;Cocoa&quot;.to_string(), 37.2);
 a = Animal::Cat { name: &quot;Spotty&quot;.to_string(), weight: 2.7 };
 <span class="boring">}
 </span></code></pre></pre>
-<p>在这个例子中，<code>Cat</code> 是一个<em>类结构体枚举变体(struct-like enum variant)</em>，而 <code>Dog</code> 则被简单地称为枚举变体。每个枚举实例都有一个<em>判别值/判别式(discriminant)</em>，它是一个与此枚举实例关联的整数，用来确定它持有哪个变体。可以通过 <a href="https://doc.rust-lang.org/std/mem/fn.discriminant.html"><code>mem::discriminant</code></a> 函数来获得对这个判别值的不透明引用。</p>
-<h2 id="custom-discriminant-values-for-fieldless-enumerations"><a class="header" href="#custom-discriminant-values-for-fieldless-enumerations">Custom Discriminant Values for Fieldless Enumerations</a></h2>
-<h2 id="为无字段枚举自定义判别值"><a class="header" href="#为无字段枚举自定义判别值">为无字段枚举自定义判别值</a></h2>
-<p>如果枚举的<em>任何</em>变体都没有附加字段，则可以直接设置和访问判别值。</p>
-<p>可以使用操作符 <code>as</code> 通过<a href="../expressions/operator-expr.html#semantics">数值转换</a>将这些枚举类型转换为整型。枚举可以可选地指定每个判别值的具体值，方法是在变体名后面追加 <code>=</code> 和<a href="../const_eval.html#constant-expressions">常量表达式</a>。如果声明中的第一个变体未指定，则将其判别值设置为零。对于其他未指定的判别值，它比照前一个变体的判别值按 1 递增。</p>
+<p>在这个例子中，<code>Cat</code> 是一个<em>类结构体枚举变体(struct-like enum variant)</em>，而 <code>Dog</code> 则被简单地称为枚举变体。
+变体都不带字段的枚举被称为*<span id="field-less-enum">无字段枚举</span>*。比如下面这个就是无字段枚举：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum Fieldless {
+    Tuple(),
+    Struct{},
+    Unit,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>如果无字段枚举枚举的变体全是单元体变体，这类枚举也被称为*<span id="unit-only-enum">单元体枚举</span>*。比如：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum Enum {
+    Foo = 3,
+    Bar = 2,
+    Baz = 1,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><span id="custom-discriminant-values-for-fieldless-enumerations"></span></p>
+<h2 id="discriminants"><a class="header" href="#discriminants">Discriminants</a></h2>
+<h2 id="判别值"><a class="header" href="#判别值">判别值</a></h2>
+<p>每个枚举实例都有一个判别值：一个逻辑上与其关联的整数，用于确定它持有的是哪个变体。</p>
+<p>在<a href="../type-layout.html#the-default-representation">默认表型</a>下，判别值被解释为一个 <code>isize</code> 的值。然而，编译器允许在其实际内存布局中使用内存尺寸更小的类型（或其他区分变体的方法）。</p>
+<h3 id="assigning-discriminant-values"><a class="header" href="#assigning-discriminant-values">Assigning discriminant values</a></h3>
+<h3 id="指定判别值的值"><a class="header" href="#指定判别值的值">指定判别值的值</a></h3>
+<h4 id="explicit-discriminants"><a class="header" href="#explicit-discriminants">Explicit discriminants</a></h4>
+<h4 id="显式判别值"><a class="header" href="#显式判别值">显式判别值</a></h4>
+<p>在两种情况下，变体的判别值可以通过在变量名称后面加上 <code>=</code> 和<a href="../const_eval.html#constant-expressions">常量表达式</a>来显式设置：</p>
+<ol>
+<li>
+<p>如果枚举变体全是&quot;<a href="#unit-only-enum">单元体</a>&quot;.</p>
+</li>
+<li>
+<p>如果使用了<a href="../type-layout.html#primitive-representations">原语表型</a>。例如：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[repr(u8)]
+enum Enum {
+    Unit = 3,
+    Tuple(u16),
+    Struct {
+        a: u8,
+        b: u16,
+    } = 1,
+}
+<span class="boring">}
+</span></code></pre></pre>
+</li>
+</ol>
+<h4 id="implicit-discriminants"><a class="header" href="#implicit-discriminants">Implicit discriminants</a></h4>
+<h4 id="隐式判别值"><a class="header" href="#隐式判别值">隐式判别值</a></h4>
+<p>如果未指定变体的判别值，则将其的判别值设置为比当前声明中前一个变体的判别值加一。如果声明中第一个变体的判别值未指定，则将其设置为零。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Foo {
@@ -220,7 +268,6 @@ let baz_discriminant = Foo::Baz as u32;
 assert_eq!(baz_discriminant, 123);
 <span class="boring">}
 </span></code></pre></pre>
-<p>尽管编译器被允许在实际的内存布局中使用较小的类型，但在<a href="../type-layout.html#the-default-representation">默认表形(default representation)</a>下，指定的判别值会被解释为一个 <code>isize</code> 值。也可以使用[原语表形(primitive representation)]或<a href="../type-layout.html#the-c-representation"><code>C</code>表形</a>来更改成大小可接受的值。</p>
 <p>同一枚举中，两个变体使用相同的判别值是错误的。</p>
 <pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -253,7 +300,83 @@ enum OverflowingDiscriminantError2 {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2 id="zero-variant-enums"><a class="header" href="#zero-variant-enums">Zero-variant Enums</a></h2>
+<h3 id="accessing-discriminant"><a class="header" href="#accessing-discriminant">Accessing discriminant</a></h3>
+<h3 id="读取判别值"><a class="header" href="#读取判别值">读取判别值</a></h3>
+<h4 id="via-memdiscriminant"><a class="header" href="#via-memdiscriminant">Via <code>mem::discriminant</code></a></h4>
+<h4 id="通过-memdiscriminant"><a class="header" href="#通过-memdiscriminant">通过 <code>mem::discriminant</code></a></h4>
+<p><a href="https://doc.rust-lang.org/std/mem/fn.discriminant.html"><code>mem::discriminant</code></a> 返回对枚举值的判别值(可用于比较)的不透明引用。但它不能用于获得判别式的值。</p>
+<h4 id="转换"><a class="header" href="#转换">转换</a></h4>
+<p>如果枚举是<a href="#unit-only-enum">单元体枚举</a>（没有元组和结构体变体），则可以使用<a href="../expressions/operator-expr.html#semantics">数字类型转换</a>直接访问其判别值；例如。：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum Enum {
+    Foo,
+    Bar,
+    Baz,
+}
+
+assert_eq!(0, Enum::Foo as isize);
+assert_eq!(1, Enum::Bar as isize);
+assert_eq!(2, Enum::Baz as isize);
+<span class="boring">}
+</span></code></pre></pre>
+<p>如果没有显式判别值，或者只有单元体变体是显式指定的，则<a href="#field-less-enum">无字段枚举</a>也可以转换。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum Fieldless {
+    Tuple(),
+    Struct{},
+    Unit,
+}
+
+assert_eq!(0, Fieldless::Tuple() as isize);
+assert_eq!(1, Fieldless::Struct{} as isize);
+assert_eq!(2, Fieldless::Unit as isize);
+
+#[repr(u8)]
+enum FieldlessWithDiscrimants {
+    First = 10,
+    Tuple(),
+    Second = 20,
+    Struct{},
+    Unit,
+}
+
+assert_eq!(10, FieldlessWithDiscrimants::First as u8);
+assert_eq!(11, FieldlessWithDiscrimants::Tuple() as u8);
+assert_eq!(20, FieldlessWithDiscrimants::Second as u8);
+assert_eq!(21, FieldlessWithDiscrimants::Struct{} as u8);
+assert_eq!(22, FieldlessWithDiscrimants::Unit as u8);
+<span class="boring">}
+</span></code></pre></pre>
+<h4 id="pointer-casting"><a class="header" href="#pointer-casting">Pointer casting</a></h4>
+<h4 id="指针转换"><a class="header" href="#指针转换">指针转换</a></h4>
+<p>如果枚举指定应用了<a href="../type-layout.html#primitive-representations">原语表型</a>，则可以通过 unsafe指针转换访问判别值：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[repr(u8)]
+enum Enum {
+    Unit,
+    Tuple(bool),
+    Struct{a: bool},
+}
+
+impl Enum {
+    fn discriminant(&amp;self) -&gt; u8 {
+        unsafe { *(self as *const Self as *const u8) }
+    }
+}
+
+let unit_like = Enum::Unit;
+let tuple_like = Enum::Tuple(true);
+let struct_like = Enum::Struct{a: false};
+
+assert_eq!(0, unit_like.discriminant());
+assert_eq!(1, tuple_like.discriminant());
+assert_eq!(2, struct_like.discriminant());
+<span class="boring">}
+</span></code></pre></pre>
+<h2 id="zero-variant-enums"><a class="header" href="#zero-variant-enums">Zero-variant enums</a></h2>
 <h2 id="无变体枚举"><a class="header" href="#无变体枚举">无变体枚举</a></h2>
 <p>没有变体的枚举称为<em>零变体枚举/无变体枚举</em>。因为它们没有有效的值，所以不能被实例化。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]

@@ -153,8 +153,8 @@
 <h1 id="外部块"><a class="header" href="#外部块">外部块</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md">external-blocks.md</a><br />
-commit: 300ac4bdb40b91945a8e774f534a2902564d41ec <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: 0ec6d52723c74542437d03092307cf2bf315629c <br />
+本章译文最后维护日期：2022-12-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -263,11 +263,18 @@ extern {
 <p>有关此修饰符的更多实现细节，请参见<a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-bundle">rustc文档中的 <code>bundle</code></a>。</p>
 <h4 id="linking-modifiers-whole-archive"><a class="header" href="#linking-modifiers-whole-archive">Linking modifiers: <code>whole-archive</code></a></h4>
 <h4 id="链接修饰符-whole-archive"><a class="header" href="#链接修饰符-whole-archive">链接修饰符: <code>whole-archive</code></a></h4>
-<p>此修饰符仅与静态(<code>static</code>)链接类型兼容。
+<p>此修饰符仅兼容静态(<code>static</code>)链接类型。
 使用任何其他链接类型都会引起编译器报错。</p>
 <p><code>+whole-archive</code> 意味着静态库会被链接为一个完整的 archive 文件，而不丢弃任何对象文件。</p>
 <p>此修饰符的默认配置是 <code>-whole-archive</code>。</p>
 <p>有关此修饰符的更多实现细节，请参见<a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-whole-archive">rustc文档中的 <code>whole-archive</code></a>。</p>
+<h3 id="linking-modifiers-verbatim"><a class="header" href="#linking-modifiers-verbatim">Linking modifiers: <code>verbatim</code></a></h3>
+<h3 id="链接修饰符-verbatim"><a class="header" href="#链接修饰符-verbatim">链接修饰符: <code>verbatim</code></a></h3>
+<p>此修饰符兼容任何链接类型。</p>
+<p><code>+verbatim</code> 意味着 rustc 本身不会在库名称中添加任何目标平台指定的库前缀或后缀（如 <code>lib</code> 或 <code>.a</code>），并且会尽力向链接器请求相同的内容。</p>
+<p><code>-verbatim</code> 意味着 rustc 在将库名称传递给链接器之前，将在库名称中添加特定于目标平台的前缀和后缀，或者不会阻止链接器隐式添加它。</p>
+<p>此修饰符的默认值为 <code>-verbatim</code>。</p>
+<p>关于这个修饰符的更多实现细节可以在 rustc 的<a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-verbatim"><code>verbatim</code>文档</a> 中找到。</p>
 <h4 id="dylib-versus-raw-dylib"><a class="header" href="#dylib-versus-raw-dylib"><code>dylib</code> versus <code>raw-dylib</code></a></h4>
 <h4 id="dylib-vs-raw-dylib"><a class="header" href="#dylib-vs-raw-dylib"><code>dylib</code> vs <code>raw-dylib</code></a></h4>
 <p>在 Windows 上，链接动态库需要先向链接器提供一个导入库：这是一个特殊的静态库，它声明了此动态库导出的所有符号，这样链接器就知道它们必须在运行时动态加载。</p>

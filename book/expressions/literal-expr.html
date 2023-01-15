@@ -153,8 +153,8 @@
 <h1 id="字面量表达式"><a class="header" href="#字面量表达式">字面量表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/literal-expr.md">literal-expr.md</a><br />
-commit: 9c5c3cb9d160787f31903e61abd2ba4567182b5c <br />
-本章译文最后维护日期：2022-04-16</p>
+commit: ccde77edcb4d4607f212bfd9fa65a913defb5055 <br />
+本章译文最后维护日期：2022-12-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -165,12 +165,9 @@ commit: 9c5c3cb9d160787f31903e61abd2ba4567182b5c <br />
    | <a href="../tokens.html#byte-literals">BYTE_LITERAL</a><br />
    | <a href="../tokens.html#byte-string-literals">BYTE_STRING_LITERAL</a><br />
    | <a href="../tokens.html#raw-byte-string-literals">RAW_BYTE_STRING_LITERAL</a><br />
-   | <a href="../tokens.html#integer-literals">INTEGER_LITERAL</a><sup class="footnote-reference"><a href="#out-of-range">1</a></sup><br />
+   | <a href="../tokens.html#integer-literals">INTEGER_LITERAL</a><br />
    | <a href="../tokens.html#floating-point-literals">FLOAT_LITERAL</a><br />
-   | <code>true</code> | <code>false</code></p>
-<div class="footnote-definition" id="out-of-range"><sup class="footnote-definition-label">1</sup>
-<p>不允许大于或等于 2<sup>128</sup> 的值。</p>
-</div>
+   | <code>true</code> | <code>false</code>&gt;</p>
 </blockquote>
 <p>字面表达式是由单一 token（而不是一组 token）组成的表达式，它立即和直接表示其表达式求值的值，而不是通过名称或其他求值规则来引用它。
 它直接描述一个数字、字符、字符串或布尔值。</p>
@@ -210,7 +207,7 @@ commit: 9c5c3cb9d160787f31903e61abd2ba4567182b5c <br />
 <h2 id="integer-literal-expressions"><a class="header" href="#integer-literal-expressions">Integer literal expressions</a></h2>
 <h2 id="整型字面量表达式"><a class="header" href="#整型字面量表达式">整型字面量表达式</a></h2>
 <p>整型字面量表达式由单一一个<a href="../tokens.html#integer-literals">整型字面量</a>token 组成。</p>
-<p>如果这种 token 带有<a href="../tokens.html#suffixes">后缀</a>，那这个后缀的名字将是<a href="../types/numeric.html">原生整型</a>中的一个：<code>u8</code>, <code>i8</code>, <code>u16</code>, <code>i16</code>, <code>u32</code>, <code>i32</code>, <code>u64</code>, <code>i64</code>, <code>u128</code>, <code>i128</code>, <code>usize</code> 或 <code>isize</code>，同时此后缀名也是此表达式的类型。</p>
+<p>如果这种 token 带有<a href="../tokens.html#suffixes">后缀</a>，那这个后缀的名字必须是<a href="../types/numeric.html">原生整型</a>中的一个：<code>u8</code>, <code>i8</code>, <code>u16</code>, <code>i16</code>, <code>u32</code>, <code>i32</code>, <code>u64</code>, <code>i64</code>, <code>u128</code>, <code>i128</code>, <code>usize</code> 或 <code>isize</code>，同时此后缀名也是此表达式的类型。</p>
 <p>如果此 token 没有后缀，此表达式的类型将由下面的类型推断规则来确定:</p>
 <ul>
 <li>
@@ -259,11 +256,14 @@ let a: u64 = 123;                  // type u64
 <p>如果进制数不是10，则从字符串中删除前两个字符。</p>
 </li>
 <li>
-<p>将从字符串中删除所有下划线。</p>
+<p>字符串的后缀都会被删除。</p>
+</li>
+<li>
+<p>字符串里的下划线都会被删除。</p>
 </li>
 <li>
 <p>字符串被转换为 <code>u128</code>类型的值时，比如使用 <a href="https://doc.rust-lang.org/core/primitive.u128.md#method.from_str_radix"><code>u128::from_str_radix</code></a> 时选的进制数标记。
-如果该值不能被表示为 <code>u128</code>，则该表达式将被解析器拒绝。</p>
+如果该值不能被表示为 <code>u128</code>，将在编译时报错。</p>
 </li>
 <li>
 <p><code>u128</code>类型的值通过<a href="operator-expr.html#numeric-cast">数值转换</a>转换为表达式的类型。</p>
@@ -279,8 +279,12 @@ let a: u64 = 123;                  // type u64
 </blockquote>
 <h2 id="floating-point-literal-expressions"><a class="header" href="#floating-point-literal-expressions">Floating-point literal expressions</a></h2>
 <h2 id="浮点型字面量表达式"><a class="header" href="#浮点型字面量表达式">浮点型字面量表达式</a></h2>
-<p>浮点型字面量表达式由单一一个<a href="../tokens.html#floating-point-literals">浮点型字面量</a>token 组成。</p>
-<p>如果这种 token 带有<a href="../tokens.html#suffixes">后缀</a>，那这个后缀的名字将是<a href="../types/numeric.html#floating-point-types">原生浮点型</a>中的一个：<code>f32</code> 或 <code>f64</code>，同时此后缀名也是此表达式的类型。</p>
+<p>浮点型字面量表达式由下面两种形式：<a href="../tokens.html#floating-point-literals">浮点型字面量</a>token 组成。</p>
+<ul>
+<li>由单一的<a href="../tokens.html#floating-point-literals">浮点型字面量</a>token 组成</li>
+<li>由单一的没有后缀和基数指示符的<a href="../tokens.html#integer-literals">整型字面量</a>token 组成</li>
+</ul>
+<p>如果这种 token 带有<a href="../tokens.html#suffixes">后缀</a>，那这个后缀的名字必须是<a href="../types/numeric.html#floating-point-types">原生浮点型</a>中的一个：<code>f32</code> 或 <code>f64</code>，同时此后缀名也是此表达式的类型。</p>
 <p>如果这种 token 没有后缀，此表达式的类型将由下面的类型推断规则来确定:</p>
 <ul>
 <li>
@@ -307,7 +311,10 @@ let x: f64 = 2.; // type f64
 <p>而表达式的值由 token 的字符串表示形式来确定，规则如下：</p>
 <ul>
 <li>
-<p>将从字符串中删除所有下划线。</p>
+<p>字符串的后缀都会被删除。</p>
+</li>
+<li>
+<p>字符串中的下划线都会被删除。</p>
 </li>
 <li>
 <p>字符串被转换为这类表达式类型时，如同直接调用 <a href="https://doc.rust-lang.org/core/primitive.f32.html#method.from_str"><code>f32::from_str</code></a> 或 <a href="https://doc.rust-lang.org/core/primitive.f64.md#method.from_str"><code>f64::from_str</code></a>。</p>

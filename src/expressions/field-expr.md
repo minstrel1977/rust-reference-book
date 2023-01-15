@@ -2,8 +2,8 @@
 # 字段访问表达式
 
 >[field-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/field-expr.md)\
->commit: 23672971a16c69ea894bef24992b74912cfe5d25 \
->本章译文最后维护日期：2021-4-5
+>commit: 08b97f94ccd3c2c835aae402664340894587e39d \
+>本章译文最后维护日期：2023-01-15
 
 > **<sup>句法</sup>**\
 > _FieldExpression_ :\

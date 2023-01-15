@@ -2,8 +2,8 @@
 # 类型布局
 
 >[type-layout.md](https://github.com/rust-lang/reference/blob/master/src/type-layout.md)\
->commit: d2acc38e9475837d64602df1ff78fce46d69d3b6 \
->本章译文最后维护日期：2022-10-22
+>commit: f8ac109624aad26711824fc9e9e0780a1c52f34a \
+>本章译文最后维护日期：2023-01-15
 
 类型的布局描述类型的内存宽度(size)、对齐量(alignment)和字段(fields)的*相对偏移量(relative offsets)*。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。
 
@@ -482,7 +482,7 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 [`Sized`]: https://doc.rust-lang.org/std/marker/trait.Sized.html
 [`Copy`]: https://doc.rust-lang.org/std/marker/trait.Copy.html
 [dynamically sized types]: dynamically-sized-types.md
-[field-less enums]: items/enumerations.md#custom-discriminant-values-for-fieldless-enumerations
+[field-less enums]: items/enumerations.md#field-less-enum
 [enumerations]: items/enumerations.md
 [zero-variant enums]: items/enumerations.md#zero-variant-enums
 [undefined behavior]: behavior-considered-undefined.md
@@ -495,6 +495,3 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 [structs]: items/structs.md
 [`transparent`]: #the-transparent-representation
 [`Layout`]: https://doc.rust-lang.org/std/alloc/struct.Layout.html
-
-<!-- 2020-12-17-->
-<!-- checked -->

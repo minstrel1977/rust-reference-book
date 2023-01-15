@@ -2,8 +2,8 @@
 # 特殊类型和 trait
 
 >[special-types-and-traits.md](https://github.com/rust-lang/reference/blob/master/src/special-types-and-traits.md)\
->commit: e172ea58445cb8aeb99ba7fc6983af8200f50294 \
->本章译文最后维护日期：2022-04-29
+>commit: 50a597cc56af8d9d93e7071a4099480648eb9672 \
+>本章译文最后维护日期：2023-01-15
 
 [标准库][the standard library]中的某些类型和 trait 在 Rust 编译器中也直接能用。本章就阐述了这些类型和 trait 的特殊特性。
 
@@ -101,7 +101,7 @@
 ## `Sized`
 
 [`Sized`] trait表明这种类型的内存宽度在编译时是已知的；也就是说，它不是一个[动态内存宽度类型][dynamically sized type]。
-[类型参数][Type parameters]和[关联类型][associated types]默认是 `Sized` 的。
+[类型参数][Type parameters] （除了 trait 中的`Self`）和[关联类型][associated types]默认是 `Sized` 的。
 `Sized` 总是由编译器自动实现，而不是由[实现(implementation items)][implementation items]主动实现的。
 这些隐式的 `Sized`约束可以通过指定 `?Sized`约束来放宽约束。
 

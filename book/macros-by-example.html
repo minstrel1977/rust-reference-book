@@ -153,8 +153,8 @@
 <h1 id="声明宏"><a class="header" href="#声明宏">声明宏</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md">macros-by-example.md</a><br />
-commit: 314d63a53825a9d51830bdef2fc6f9643f91e038 <br />
-本章译文最后维护日期：2022-08-21</p>
+commit: 04f289ad17a9b86f9cde026d046072a5b3827486 <br />
+本章译文最后维护日期：2022-12-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -202,6 +202,8 @@ ambiguity!(error); // 错误: 局部歧义(local ambiguity)
 <span class="boring">}
 </span></code></pre></pre>
 <p>在匹配器和转码器中，token <code>$</code> 用于从宏引擎中调用特殊行为（下文<a href="#metavariables">元变量</a>和<a href="#repetitions">重复元</a>中有详述）。不属于此类调用的 token 将按字面意义进行匹配和转码，除了一个例外。这个例外是匹配器的外层定界符将匹配任何一对定界符。因此，比如匹配器 <code>(())</code> 将匹配 <code>{()}</code>，而 <code>{{}}</code> 不行。字符 <code>$</code> 不能按字面意义匹配或转码。</p>
+<h3 id="forwarding-a-matched-fragment"><a class="header" href="#forwarding-a-matched-fragment">Forwarding a matched fragment</a></h3>
+<h3 id="转发匹配段"><a class="header" href="#转发匹配段">转发匹配段</a></h3>
 <p>当将当前匹配的匹配段转发给另一个声明宏时，第二个宏中的匹配器看到的将是此匹配段类型的不透明抽象句法树(opaque AST)。第二个宏不能使用字面量token 来匹配匹配器中的这个匹配段，唯一可看到/使用的就是此匹配段类型一样的匹配段选择器(fragment specifier)。但匹配段类型 <code>ident</code>、<code>lifetime</code>、和 <code>tt</code> 是几个例外，它们<em>可以</em>通过字面量token 进行匹配。下面示例展示了这一限制：（译者注：匹配段选择器和匹配段，以及宏中各部件的定义可以凑合着看看译者未能翻译完成的<a href="macro-ambiguity.html">宏定义规范</a>）</p>
 <pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

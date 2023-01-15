@@ -153,8 +153,8 @@
 <h2 id="未定义的行为"><a class="header" href="#未定义的行为">未定义的行为</a></h2>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md">behavior-considered-undefined.md</a><br />
-commit: 88b6a426410aedd747c42fe26e34c84ab7629e3f <br />
-本章译文最后维护日期：2022-08-21</p>
+commit: 2af818d235b6c39cb76a099b859a84438e3409f2 <br />
+本章译文最后维护日期：2022-12-04</p>
 </blockquote>
 <p>如果 Rust 代码出现了下面列表中的任何行为，则此代码被认为不正确。这包括非安全(<code>unsafe</code>)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。</p>
 <p>在编写非安全代码时，确保任何与非安全代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何使用非安全代码的安全客户端(safe client)，如果当前条件满足了此非安全代码对于安全条件的要求，那此此非安全代码对于此安全客户端就是<em>健壮的(sound)</em>；如果非安全(<code>unsafe</code>)代码可以被安全代码滥用以致出现未定义行为，那么此非安全(<code>unsafe</code>)代码对这些安全代码来说就是<em>不健壮的(unsound)</em>。</p>
@@ -162,15 +162,36 @@ commit: 88b6a426410aedd747c42fe26e34c84ab7629e3f <br />
 <p><em><strong>警告：</strong></em> 下面的列表并非详尽无遗地罗列了 Rust 中的未定义行为。而且对于在非安全代码中什么是明确不允许的，目前 Rust 还没有正式的语义模型，因此将来可能会有更多的行为被认为是不安全的。下面的列表仅仅是我们当前确定知晓的未定义行为。在编写非安全代码之前，请阅读 <a href="https://doc.rust-lang.org/nomicon/index.html">Rustonomicon</a>。</p>
 </div>
 <ul>
-<li>数据竞争。</li>
-<li>在<a href="#dangling-pointers">悬垂</a>或未对齐的裸指针上执行<a href="expressions/operator-expr.html#the-dereference-operator">解引用操作</a> (<code>*expr</code>)，甚至<a href="expressions.html#place-expressions-and-value-expressions">位置表达式</a>(e.g. <code>addr_of!(&amp;*expr)</code>)上也不安全。</li>
-<li>破坏<a href="http://llvm.org/docs/LangRef.html#pointer-aliasing-rules">指针别名规则</a>。<code>&amp;mut T</code> 和 <code>&amp;T</code> 遵循 LLVM 的作用域<a href="http://llvm.org/docs/LangRef.html#noalias">无别名(noalias)</a>模型(scoped noalias model)，除非 <code>&amp;T</code> 内部包含 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 类型。</li>
-<li>修改不可变的数据。<a href="items/constant-items.html">常量(<code>const</code>)</a>项内的所有数据都是不可变的。此外，所有通过共享引用接触到的数据或不可变绑定所拥有的数据都是不可变的，除非该数据包含在 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 中。</li>
-<li>通过编译器内部函数(compiler intrinsics)调用未定义行为。<sup class="footnote-reference"><a href="#译注1">1</a></sup></li>
-<li>执行基于当前平台不支持的平台特性编译的代码（参见 <a href="attributes/codegen.html#the-target_feature-attribute"><code>target_feature</code></a>），<em>除非</em>此平台特别申明执行带有此特性的代码安全。</li>
-<li>用错误的 ABI约定来调用函数，或使用错误的 ABI展开约定来从某函数里发起展开(unwinding)。</li>
-<li>产生非法值(invalid value)，即使在私有字段和本地变量中也是如此。“产生”值发生在这些时候：把值赋给位置表达式、从位置表达式里读取值、传递值给函数/基本运算(primitive operation)或从函数/基本运算中返回值。
-以下值非法值（相对于它们各自的类型来说）：
+<li>
+<p>数据竞争。</p>
+</li>
+<li>
+<p>在<a href="#dangling-pointers">悬垂</a>或未对齐的裸指针上执行<a href="expressions/operator-expr.html#the-dereference-operator">解引用操作</a> (<code>*expr</code>)，甚至<a href="expressions.html#place-expressions-and-value-expressions">位置表达式</a>(e.g. <code>addr_of!(&amp;*expr)</code>)上也不安全。</p>
+</li>
+<li>
+<p>破坏<a href="http://llvm.org/docs/LangRef.html#pointer-aliasing-rules">指针别名规则</a>。<code>Box&lt;T&gt;</code>、<code>&amp;mut T</code> 和 <code>&amp;T</code> 遵循 LLVM 的作用域<a href="http://llvm.org/docs/LangRef.html#noalias">无别名(noalias)</a>模型(scoped noalias model)，除非 <code>&amp;T</code> 包含一个 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 类型。活动的引用和 box类型的智能指针不可为悬垂<a href="#dangling-pointers">dangling</a>状态。活动持续时间并未明确指定，但存在一些限制条件：</p>
+<ul>
+<li>对于引用来说，活动持续时间由借用检查器指定的句法生存期上限来限制；它不能存活得比那个生存期<em>更长</em>。</li>
+<li>每次将引用或 box类型的智能指针传递给函数或从函数返回时，它都被视为是活动的。</li>
+<li>当引用（注意不是 box类型的智能指针！）传递给函数时，它存活的至少与该函数调用一样长，这次同样排除了 <code>&amp;T</code> 包含了 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 的情况。</li>
+</ul>
+<p>当这些类型的值（<code>Box&lt;T&gt;</code>、<code>&amp;mut T</code> 和 <code>&amp;T</code> 类型的值）被传递给复合类型的（内嵌）成员字段时，所有的这些规则都适用，但注意传递给间接寻址的指针不适用。</p>
+</li>
+<li>
+<p>修改不可变的数据。<a href="items/constant-items.html">常量(<code>const</code>)</a>项内的所有数据都是不可变的。此外，所有通过共享引用接触到的数据或不可变绑定所拥有的数据都是不可变的，除非该数据包含在 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 中。</p>
+</li>
+<li>
+<p>通过编译器内部函数(compiler intrinsics)调用未定义行为。<sup class="footnote-reference"><a href="#译注1">1</a></sup></p>
+</li>
+<li>
+<p>执行基于当前平台不支持的平台特性编译的代码（参见 <a href="attributes/codegen.html#the-target_feature-attribute"><code>target_feature</code></a>），<em>除非</em>此平台特别申明执行带有此特性的代码安全。</p>
+</li>
+<li>
+<p>用错误的 ABI约定来调用函数，或使用错误的 ABI展开约定来从某函数里发起展开(unwinding)。</p>
+</li>
+<li>
+<p>产生非法值(invalid value)，即使在私有字段和本地变量中也是如此。“产生”值发生在这些时候：把值赋给位置表达式、从位置表达式里读取值、传递值给函数/基本运算(primitive operation)或从函数/基本运算中返回值。
+以下值非法值（相对于它们各自的类型来说）：</p>
 <ul>
 <li>
 <p>布尔型<a href="types/boolean.html"><code>bool</code></a>中除 <code>false</code> (<code>0</code>) 或 <code>true</code> (<code>1</code>) 之外的值。</p>
@@ -208,7 +229,9 @@ commit: 88b6a426410aedd747c42fe26e34c84ab7629e3f <br />
 </li>
 </ul>
 </li>
-<li>错误的使用内联汇编，具体细节，参见使用内联汇编编写代码时的相关<a href="inline-assembly.html#rules-for-inline-assembly">规则</a>。</li>
+<li>
+<p>错误的使用内联汇编，具体细节，参见使用内联汇编编写代码时的相关<a href="inline-assembly.html#rules-for-inline-assembly">规则</a>。</p>
+</li>
 </ul>
 <p><strong>注意：</strong> 未初始化的内存对于任何具有有限有效值集的类型来说也隐式非法。也就是说，允许读取未初始化内存的情况只发生在联合体(<code>union</code>)内部和“对齐填充区(padding)”里（类型的字段/元素之间的间隙）。</p>
 <blockquote>
