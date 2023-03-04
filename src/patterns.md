@@ -2,8 +2,8 @@
 # 模式
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
->commit: 6c8431ff420371d78f3a6ed29018dc28d116f257 \
->本章译文最后维护日期：2022-12-04
+>commit: e844f9509b3b293af94fe39e3813565cceada86e \
+>本章译文最后维护日期：2023-03-04
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\
@@ -386,16 +386,19 @@ match tuple {
 
 > **<sup>句法</sup>**\
 > _RangePattern_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; _InclusiveRangePattern_\
-> &nbsp;&nbsp; | _HalfOpenRangePattern_\
+> &nbsp;&nbsp; &nbsp;&nbsp; _RangeInclusivePattern_\
+> &nbsp;&nbsp; | _RangeFromPattern_\
+> &nbsp;&nbsp; | _RangeToInclusivePattern_\
 > &nbsp;&nbsp; | _ObsoleteRangePattern_
 >
-> _InclusiveRangePattern_ :\
+> _RangeInclusivePattern_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _RangePatternBound_ `..=` _RangePatternBound_
 >
-> _HalfOpenRangePattern_ :\
-> &nbsp;&nbsp; |&nbsp;&nbsp; _RangePatternBound_ `..`
-> &nbsp;&nbsp; | `..=` _RangePatternBound_
+> _RangeFromPattern_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _RangePatternBound_ `..`
+>
+> _RangeToInclusivePattern_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `..=` _RangePatternBound_
 >
 > _ObsoleteRangePattern_ :(译者注：废弃的区间模式句法/产生式) \ 
 > &nbsp;&nbsp; _RangePatternBound_ `...` _RangePatternBound_
@@ -408,16 +411,14 @@ match tuple {
 > &nbsp;&nbsp; | [_PathExpression_]
 
 *区间模式*匹配在区间上下边界内界定的标量值。
-区间模式的左侧的界限为其*下限*。
-区间模式的右侧的界限为其*上限*。
+它们包括一个*符号*（`..`、`..=`或`...`中的一个）和一侧或两侧的绑定。
+区间模式符号左侧的界限称为*下限*。
+区间模式符号右侧的界限称为*上限*。
 区间模式可是闭区间或半开区间。
 
-如果区间模式的上限和下限均被包含在内，则此区间模式为闭区间模式。
-闭区间模式是全包含区间模式（Inclusive range patterns）。
-
-*全包含区间模式（Inclusive range patterns）*匹配其两个边界之间的所有值，包括两个边界。
-它被写为其下限后跟 `..=`，再后跟其上限。
-它的类型是其上下限的统一兼容形式。
+同时带有下限和上限的区间模式将匹配其两个边界之间的所有值（包括两个边界）。
+它被写为其下限，后跟`..=`，最后是其上限。
+区间模式的类型是其上下限的共同类型。
 
 例如：模式 `'m'..='p'` 只匹配 `'m'`, `'n'`, `'o'` 和 `'p'` 这4个字符。 
 
@@ -428,16 +429,15 @@ match tuple {
 如果区间模式只有上限或下限，则它们是*半开*的。
 它们的类型与其上限或下限相同。
 
-只有下限的半开区间写为其下限后跟 `..` 。
-这些区间模式将匹配大于或等于下限的任何值。
+只有下限的区间模式将匹配大于或等于下限的任何值。
+它被写为其下限，后跟`..`，并且具本模式有与其下限相同的类型。
 比如`1..` 可以匹配 9，或者 9001，或者 9007199254740991（如果此值的内存宽度合适），但是不能匹配到 0，也不能匹配有符号整数的负值。
-区间模式中的界值可以是字面量，也可以是指向常量的路径。
 
-只有上限的半开区间写为`..=`后跟其上限。
-这些区间模式将匹配小于或等于上限的任何值。
+只有上限的区间模式将匹配小于或等于上限的任何值。
+它被写为`..=`后跟上限，并且本模式具有与其上限相同的类型。
 比如，`..=10` 将匹配10、1、0；对于有符号整型，除这些外，还包括所有的负值。
 
-半开放范围模式不能用作[切片模式](#slice-patterns)中的子模式的顶层模式。
+只带有一个边界值的区间模式不能用作[切片模式](#slice-patterns)中的子模式的顶层模式。
 
 界值的合法形式如下：
 
@@ -532,7 +532,7 @@ println!("{}", match 0xfacade {
 浮点区间模式已弃用，可能会在未来的 Rust 版本中移除。
 参见 [issue #41620](https://github.com/rust-lang/rust/issues/41620) 以了解更多信息。。
 
-> **版次差异**：在2021版之前，在闭区间模式里，可以使用 `...` 来表达 `..=` 的语义。
+> **版次差异**：在2021版之前，在带有上下限的区间模式里，可以使用 `...` 来表达 `..=` 的语义。
 
 > **注意**: 尽管区间模式使用与[区间表达式][range expressions]相同的句法，但没有上下限均不包含的区间模式。
 > 也就是说，`x .. y` 和 `.. x` 都不是有效的区间模式。
@@ -762,8 +762,8 @@ match v[..] {
 
 在匹配数组时，只要每个元素是不可反驳型的，切片模式就是不可反驳型的。当匹配切片时，只有单个 `..` [剩余模式](#rest-patterns)或带有 `..`（剩余模式）作为子模式的[标识符模式](#identifier-patterns)的情况才是不可反驳型的。
 
-
-对于匹配切片内的数值，像 `a..` 这样的半开区间模式必须使用使用圆括号包裹起来，即 `(a..)` 这样，这样是显式提醒它是用来匹配切片内一个单独的值的。
+在一个切片中，没有下限和上限的区间模式必须用括号括起来，如`(a..)`中所示，以明确其目的是与单个切片元素匹配。
+带有下限和上限的区间模式，如 `a..=b` 不需要用括号括起来。
 
 ## Path patterns
 ## 路径模式

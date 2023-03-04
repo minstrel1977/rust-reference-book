@@ -153,8 +153,8 @@
 <h1 id="模式"><a class="header" href="#模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
-commit: 6c8431ff420371d78f3a6ed29018dc28d116f257 <br />
-本章译文最后维护日期：2022-12-04</p>
+commit: e844f9509b3b293af94fe39e3813565cceada86e <br />
+本章译文最后维护日期：2023-03-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -507,14 +507,16 @@ match tuple {
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>RangePattern</em> :<br />
-      <em>InclusiveRangePattern</em><br />
-   | <em>HalfOpenRangePattern</em><br />
+      <em>RangeInclusivePattern</em><br />
+   | <em>RangeFromPattern</em><br />
+   | <em>RangeToInclusivePattern</em><br />
    | <em>ObsoleteRangePattern</em></p>
-<p><em>InclusiveRangePattern</em> :<br />
+<p><em>RangeInclusivePattern</em> :<br />
       <em>RangePatternBound</em> <code>..=</code> <em>RangePatternBound</em></p>
-<p><em>HalfOpenRangePattern</em> :<br />
-   |   <em>RangePatternBound</em> <code>..</code>
-   | <code>..=</code> <em>RangePatternBound</em></p>
+<p><em>RangeFromPattern</em> :<br />
+      <em>RangePatternBound</em> <code>..</code></p>
+<p><em>RangeToInclusivePattern</em> :<br />
+      <code>..=</code> <em>RangePatternBound</em></p>
 <p><em>ObsoleteRangePattern</em> :(译者注：废弃的区间模式句法/产生式) \ 
    <em>RangePatternBound</em> <code>...</code> <em>RangePatternBound</em></p>
 <p><em>RangePatternBound</em> :<br />
@@ -525,28 +527,26 @@ match tuple {
    | <a href="expressions/path-expr.html"><em>PathExpression</em></a></p>
 </blockquote>
 <p><em>区间模式</em>匹配在区间上下边界内界定的标量值。
-区间模式的左侧的界限为其<em>下限</em>。
-区间模式的右侧的界限为其<em>上限</em>。
+它们包括一个<em>符号</em>（<code>..</code>、<code>..=</code>或<code>...</code>中的一个）和一侧或两侧的绑定。
+区间模式符号左侧的界限称为<em>下限</em>。
+区间模式符号右侧的界限称为<em>上限</em>。
 区间模式可是闭区间或半开区间。</p>
-<p>如果区间模式的上限和下限均被包含在内，则此区间模式为闭区间模式。
-闭区间模式是全包含区间模式（Inclusive range patterns）。</p>
-<p>*全包含区间模式（Inclusive range patterns）*匹配其两个边界之间的所有值，包括两个边界。
-它被写为其下限后跟 <code>..=</code>，再后跟其上限。
-它的类型是其上下限的统一兼容形式。</p>
+<p>同时带有下限和上限的区间模式将匹配其两个边界之间的所有值（包括两个边界）。
+它被写为其下限，后跟<code>..=</code>，最后是其上限。
+区间模式的类型是其上下限的共同类型。</p>
 <p>例如：模式 <code>'m'..='p'</code> 只匹配 <code>'m'</code>, <code>'n'</code>, <code>'o'</code> 和 <code>'p'</code> 这4个字符。 </p>
 <p>下限不能比上限大。
 因此在 <code>a..=b</code> 里，必须总是有 a ≤ b。
 比如，<code>10..=0</code> 这样的区间模式是错误的。</p>
 <p>如果区间模式只有上限或下限，则它们是<em>半开</em>的。
 它们的类型与其上限或下限相同。</p>
-<p>只有下限的半开区间写为其下限后跟 <code>..</code> 。
-这些区间模式将匹配大于或等于下限的任何值。
-比如<code>1..</code> 可以匹配 9，或者 9001，或者 9007199254740991（如果此值的内存宽度合适），但是不能匹配到 0，也不能匹配有符号整数的负值。
-区间模式中的界值可以是字面量，也可以是指向常量的路径。</p>
-<p>只有上限的半开区间写为<code>..=</code>后跟其上限。
-这些区间模式将匹配小于或等于上限的任何值。
+<p>只有下限的区间模式将匹配大于或等于下限的任何值。
+它被写为其下限，后跟<code>..</code>，并且具本模式有与其下限相同的类型。
+比如<code>1..</code> 可以匹配 9，或者 9001，或者 9007199254740991（如果此值的内存宽度合适），但是不能匹配到 0，也不能匹配有符号整数的负值。</p>
+<p>只有上限的区间模式将匹配小于或等于上限的任何值。
+它被写为<code>..=</code>后跟上限，并且本模式具有与其上限相同的类型。
 比如，<code>..=10</code> 将匹配10、1、0；对于有符号整型，除这些外，还包括所有的负值。</p>
-<p>半开放范围模式不能用作<a href="#slice-patterns">切片模式</a>中的子模式的顶层模式。</p>
+<p>只带有一个边界值的区间模式不能用作<a href="#slice-patterns">切片模式</a>中的子模式的顶层模式。</p>
 <p>界值的合法形式如下：</p>
 <ul>
 <li>字面量中的字符、字节、整形或浮点字面量。</li>
@@ -637,7 +637,7 @@ println!(&quot;{}&quot;, match 0xfacade {
 <p>浮点区间模式已弃用，可能会在未来的 Rust 版本中移除。
 参见 <a href="https://github.com/rust-lang/rust/issues/41620">issue #41620</a> 以了解更多信息。。</p>
 <blockquote>
-<p><strong>版次差异</strong>：在2021版之前，在闭区间模式里，可以使用 <code>...</code> 来表达 <code>..=</code> 的语义。</p>
+<p><strong>版次差异</strong>：在2021版之前，在带有上下限的区间模式里，可以使用 <code>...</code> 来表达 <code>..=</code> 的语义。</p>
 </blockquote>
 <blockquote>
 <p><strong>注意</strong>: 尽管区间模式使用与<a href="expressions/range-expr.html">区间表达式</a>相同的句法，但没有上下限均不包含的区间模式。
@@ -848,7 +848,8 @@ match v[..] {
 <span class="boring">}
 </span></code></pre></pre>
 <p>在匹配数组时，只要每个元素是不可反驳型的，切片模式就是不可反驳型的。当匹配切片时，只有单个 <code>..</code> <a href="#rest-patterns">剩余模式</a>或带有 <code>..</code>（剩余模式）作为子模式的<a href="#identifier-patterns">标识符模式</a>的情况才是不可反驳型的。</p>
-<p>对于匹配切片内的数值，像 <code>a..</code> 这样的半开区间模式必须使用使用圆括号包裹起来，即 <code>(a..)</code> 这样，这样是显式提醒它是用来匹配切片内一个单独的值的。</p>
+<p>在一个切片中，没有下限和上限的区间模式必须用括号括起来，如<code>(a..)</code>中所示，以明确其目的是与单个切片元素匹配。
+带有下限和上限的区间模式，如 <code>a..=b</code> 不需要用括号括起来。</p>
 <h2 id="path-patterns"><a class="header" href="#path-patterns">Path patterns</a></h2>
 <h2 id="路径模式"><a class="header" href="#路径模式">路径模式</a></h2>
 <blockquote>

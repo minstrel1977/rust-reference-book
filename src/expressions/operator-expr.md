@@ -2,8 +2,8 @@
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit: c351aa715c5540bc48c4c40328a052482961068e \
->本章译文最后维护日期：2023-01-15
+>commit: 87895584c98fa4e784e243301854fc3060323ce5 \
+>本章译文最后维护日期：2023-03-04
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\

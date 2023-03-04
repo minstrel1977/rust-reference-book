@@ -153,8 +153,8 @@
 <h1 id="外部块"><a class="header" href="#外部块">外部块</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md">external-blocks.md</a><br />
-commit: 0ec6d52723c74542437d03092307cf2bf315629c <br />
-本章译文最后维护日期：2022-12-04</p>
+commit: a9afb04b47a84a6753e4dc657348c324c876102c <br />
+本章译文最后维护日期：2023-03-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -204,6 +204,7 @@ extern &quot;stdcall&quot; { }
 <li><code>extern &quot;aapcs&quot;</code> --通过 FFI 调用 ARM 接口所使用的默认调用约定</li>
 <li><code>extern &quot;fastcall&quot;</code> -- <code>fastcall</code> ABI——对应于 MSVC 的<code>__fastcall</code> 和 GCC 以及 clang 的 <code>__attribute__((fastcall))</code>。</li>
 <li><code>extern &quot;vectorcall&quot;</code> -- <code>vectorcall</code> ABI ——对应于 MSVC 的 <code>__vectorcall</code> 和 clang 的 <code>__attribute__((vectorcall))</code>。</li>
+<li><code>extern &quot;efiapi&quot;</code> -- 调用 <a href="https://uefi.org/specifications">UEFI</a> 函数所使用的 ABI。</li>
 </ul>
 <h2 id="variadic-functions"><a class="header" href="#variadic-functions">Variadic functions</a></h2>
 <h2 id="可变参数函数"><a class="header" href="#可变参数函数">可变参数函数</a></h2>

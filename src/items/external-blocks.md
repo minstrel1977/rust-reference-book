@@ -2,8 +2,8 @@
 # 外部块
 
 >[external-blocks.md](https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md)\
->commit: 0ec6d52723c74542437d03092307cf2bf315629c \
->本章译文最后维护日期：2022-12-04
+>commit: a9afb04b47a84a6753e4dc657348c324c876102c \
+>本章译文最后维护日期：2023-03-04
 
 > **<sup>句法</sup>**\
 > _ExternBlock_ :\
@@ -64,6 +64,7 @@ extern "stdcall" { }
 * `extern "aapcs"` --通过 FFI 调用 ARM 接口所使用的默认调用约定
 * `extern "fastcall"` -- `fastcall` ABI——对应于 MSVC 的`__fastcall` 和 GCC 以及 clang 的 `__attribute__((fastcall))`。
 * `extern "vectorcall"` -- `vectorcall` ABI ——对应于 MSVC 的 `__vectorcall` 和 clang 的 `__attribute__((vectorcall))`。
+* `extern "efiapi"` -- 调用 [UEFI] 函数所使用的 ABI。
 
 ## Variadic functions
 ## 可变参数函数
@@ -217,6 +218,7 @@ extern "stdcall" {
 外部函数参数上的属性遵循与[常规函数参数][regular function parameters]相同的规则和限制。
 
 [IDENTIFIER]: ../identifiers.md
+[UEFI]: https://uefi.org/specifications
 [WebAssembly module]: https://webassembly.github.io/spec/core/syntax/modules.html
 [functions]: functions.md
 [statics]: static-items.md

@@ -148,7 +148,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2023-01-15</p>
+<p>本书跟随原文截止日期：2023-03-04</p>
 </blockquote>
 <h1 id="前言"><a class="header" href="#前言">前言</a></h1>
 <h2 id="试水版"><a class="header" href="#试水版">试水版</a></h2>
@@ -4115,8 +4115,8 @@ impl&lt;T, U&gt; GenericTrait&lt;U&gt; for u32 where U: GenericTrait&lt;T&gt; {}
 <h1 id="外部块"><a class="header" href="#外部块">外部块</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md">external-blocks.md</a><br />
-commit: 0ec6d52723c74542437d03092307cf2bf315629c <br />
-本章译文最后维护日期：2022-12-04</p>
+commit: a9afb04b47a84a6753e4dc657348c324c876102c <br />
+本章译文最后维护日期：2023-03-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -4166,6 +4166,7 @@ extern &quot;stdcall&quot; { }
 <li><code>extern &quot;aapcs&quot;</code> --通过 FFI 调用 ARM 接口所使用的默认调用约定</li>
 <li><code>extern &quot;fastcall&quot;</code> -- <code>fastcall</code> ABI——对应于 MSVC 的<code>__fastcall</code> 和 GCC 以及 clang 的 <code>__attribute__((fastcall))</code>。</li>
 <li><code>extern &quot;vectorcall&quot;</code> -- <code>vectorcall</code> ABI ——对应于 MSVC 的 <code>__vectorcall</code> 和 clang 的 <code>__attribute__((vectorcall))</code>。</li>
+<li><code>extern &quot;efiapi&quot;</code> -- 调用 <a href="https://uefi.org/specifications">UEFI</a> 函数所使用的 ABI。</li>
 </ul>
 <h2 id="variadic-functions"><a class="header" href="#variadic-functions">Variadic functions</a></h2>
 <h2 id="可变参数函数"><a class="header" href="#可变参数函数">可变参数函数</a></h2>
@@ -5531,8 +5532,8 @@ let _ = five();
 <h1 id="代码生成属性"><a class="header" href="#代码生成属性">代码生成属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md">codegen.md</a><br />
-commit: 6a5431b863f61b86dcac70ee2ab377152f40f66e <br />
-本章译文最后维护日期：2022-12-04</p>
+commit: a6190a8041fa734f22e42fcba91612d761526157 <br />
+本章译文最后维护日期：2023-03-04</p>
 </blockquote>
 <p>下述<a href="attributes/../attributes.html">属性</a>用于控制代码生成。</p>
 <h2 id="optimization-hints"><a class="header" href="#optimization-hints">Optimization hints</a></h2>
@@ -5586,6 +5587,7 @@ unsafe fn foo_avx2() {}
 <tr><td><code>avx2</code></td><td><code>avx</code></td><td><a href="https://en.wikipedia.org/wiki/Advanced_Vector_Extensions#AVX2">AVX2</a> — Advanced Vector Extensions 2</td><td>高级矢量扩展指令集2</td></tr>
 <tr><td><code>bmi1</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets">BMI1</a> — Bit Manipulation Instruction Sets</td><td>位操作指令集</td></tr>
 <tr><td><code>bmi2</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#BMI2">BMI2</a> — Bit Manipulation Instruction Sets 2</td><td>位操作指令集2</td></tr>
+<tr><td><code>cmpxchg16b</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/cmpxchg8b:cmpxchg16b"><code>cmpxchg16b</code></a> - Compares and exchange 16 bytes (128 bits) of data atomically</td><td>原子地比较和交换16字节（128位）的数据</td></tr>
 <tr><td><code>fma</code></td><td><code>avx</code></td><td><a href="https://en.wikipedia.org/wiki/FMA_instruction_set">FMA3</a> — Three-operand fused multiply-add</td><td>三操作乘加指令</td></tr>
 <tr><td><code>fxsr</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/fxsave"><code>fxsave</code></a> and <a href="https://www.felixcloutier.com/x86/fxrstor"><code>fxrstor</code></a> — Save and restore x87 FPU, MMX Technology, and SSE State</td><td>保存/恢复 x87 FPU、MMX技术，SSE状态</td></tr>
 <tr><td><code>lzcnt</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/lzcnt"><code>lzcnt</code></a> — Leading zeros count</td><td>前导零计数</td></tr>
@@ -6710,8 +6712,8 @@ fn move_by_block_expression() {
 <h1 id="operator-expressions"><a class="header" href="#operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: c351aa715c5540bc48c4c40328a052482961068e <br />
-本章译文最后维护日期：2023-01-15</p>
+commit: 87895584c98fa4e784e243301854fc3060323ce5 <br />
+本章译文最后维护日期：2023-03-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -8251,8 +8253,8 @@ assert_eq!(x, y);
 <h1 id="if和-if-let表达式"><a class="header" href="#if和-if-let表达式"><code>if</code>和 <code>if let</code>表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/if-expr.md">if-expr.md</a><br />
-commit: db6fc4e9d4737af84ca2e5137df3dcf3485e5e54 <br />
-本章译文最后维护日期：2022-08-20</p>
+commit: 894afd4f72fdb8682c094d2023f3ec3c6c464824 <br />
+本章译文最后维护日期：2023-03-04</p>
 </blockquote>
 <h2 id="if-expressions"><a class="header" href="#if-expressions"><code>if</code> expressions</a></h2>
 <h2 id="if表达式"><a class="header" href="#if表达式"><code>if</code>表达式</a></h2>
@@ -8618,8 +8620,8 @@ let mut a = 0;
 <h1 id="模式"><a class="header" href="#模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
-commit: 6c8431ff420371d78f3a6ed29018dc28d116f257 <br />
-本章译文最后维护日期：2022-12-04</p>
+commit: e844f9509b3b293af94fe39e3813565cceada86e <br />
+本章译文最后维护日期：2023-03-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -8972,14 +8974,16 @@ match tuple {
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>RangePattern</em> :<br />
-      <em>InclusiveRangePattern</em><br />
-   | <em>HalfOpenRangePattern</em><br />
+      <em>RangeInclusivePattern</em><br />
+   | <em>RangeFromPattern</em><br />
+   | <em>RangeToInclusivePattern</em><br />
    | <em>ObsoleteRangePattern</em></p>
-<p><em>InclusiveRangePattern</em> :<br />
+<p><em>RangeInclusivePattern</em> :<br />
       <em>RangePatternBound</em> <code>..=</code> <em>RangePatternBound</em></p>
-<p><em>HalfOpenRangePattern</em> :<br />
-   |   <em>RangePatternBound</em> <code>..</code>
-   | <code>..=</code> <em>RangePatternBound</em></p>
+<p><em>RangeFromPattern</em> :<br />
+      <em>RangePatternBound</em> <code>..</code></p>
+<p><em>RangeToInclusivePattern</em> :<br />
+      <code>..=</code> <em>RangePatternBound</em></p>
 <p><em>ObsoleteRangePattern</em> :(译者注：废弃的区间模式句法/产生式) \ 
    <em>RangePatternBound</em> <code>...</code> <em>RangePatternBound</em></p>
 <p><em>RangePatternBound</em> :<br />
@@ -8990,28 +8994,26 @@ match tuple {
    | <a href="expressions/path-expr.html"><em>PathExpression</em></a></p>
 </blockquote>
 <p><em>区间模式</em>匹配在区间上下边界内界定的标量值。
-区间模式的左侧的界限为其<em>下限</em>。
-区间模式的右侧的界限为其<em>上限</em>。
+它们包括一个<em>符号</em>（<code>..</code>、<code>..=</code>或<code>...</code>中的一个）和一侧或两侧的绑定。
+区间模式符号左侧的界限称为<em>下限</em>。
+区间模式符号右侧的界限称为<em>上限</em>。
 区间模式可是闭区间或半开区间。</p>
-<p>如果区间模式的上限和下限均被包含在内，则此区间模式为闭区间模式。
-闭区间模式是全包含区间模式（Inclusive range patterns）。</p>
-<p>*全包含区间模式（Inclusive range patterns）*匹配其两个边界之间的所有值，包括两个边界。
-它被写为其下限后跟 <code>..=</code>，再后跟其上限。
-它的类型是其上下限的统一兼容形式。</p>
+<p>同时带有下限和上限的区间模式将匹配其两个边界之间的所有值（包括两个边界）。
+它被写为其下限，后跟<code>..=</code>，最后是其上限。
+区间模式的类型是其上下限的共同类型。</p>
 <p>例如：模式 <code>'m'..='p'</code> 只匹配 <code>'m'</code>, <code>'n'</code>, <code>'o'</code> 和 <code>'p'</code> 这4个字符。 </p>
 <p>下限不能比上限大。
 因此在 <code>a..=b</code> 里，必须总是有 a ≤ b。
 比如，<code>10..=0</code> 这样的区间模式是错误的。</p>
 <p>如果区间模式只有上限或下限，则它们是<em>半开</em>的。
 它们的类型与其上限或下限相同。</p>
-<p>只有下限的半开区间写为其下限后跟 <code>..</code> 。
-这些区间模式将匹配大于或等于下限的任何值。
-比如<code>1..</code> 可以匹配 9，或者 9001，或者 9007199254740991（如果此值的内存宽度合适），但是不能匹配到 0，也不能匹配有符号整数的负值。
-区间模式中的界值可以是字面量，也可以是指向常量的路径。</p>
-<p>只有上限的半开区间写为<code>..=</code>后跟其上限。
-这些区间模式将匹配小于或等于上限的任何值。
+<p>只有下限的区间模式将匹配大于或等于下限的任何值。
+它被写为其下限，后跟<code>..</code>，并且具本模式有与其下限相同的类型。
+比如<code>1..</code> 可以匹配 9，或者 9001，或者 9007199254740991（如果此值的内存宽度合适），但是不能匹配到 0，也不能匹配有符号整数的负值。</p>
+<p>只有上限的区间模式将匹配小于或等于上限的任何值。
+它被写为<code>..=</code>后跟上限，并且本模式具有与其上限相同的类型。
 比如，<code>..=10</code> 将匹配10、1、0；对于有符号整型，除这些外，还包括所有的负值。</p>
-<p>半开放范围模式不能用作<a href="patterns.html#slice-patterns">切片模式</a>中的子模式的顶层模式。</p>
+<p>只带有一个边界值的区间模式不能用作<a href="patterns.html#slice-patterns">切片模式</a>中的子模式的顶层模式。</p>
 <p>界值的合法形式如下：</p>
 <ul>
 <li>字面量中的字符、字节、整形或浮点字面量。</li>
@@ -9102,7 +9104,7 @@ println!(&quot;{}&quot;, match 0xfacade {
 <p>浮点区间模式已弃用，可能会在未来的 Rust 版本中移除。
 参见 <a href="https://github.com/rust-lang/rust/issues/41620">issue #41620</a> 以了解更多信息。。</p>
 <blockquote>
-<p><strong>版次差异</strong>：在2021版之前，在闭区间模式里，可以使用 <code>...</code> 来表达 <code>..=</code> 的语义。</p>
+<p><strong>版次差异</strong>：在2021版之前，在带有上下限的区间模式里，可以使用 <code>...</code> 来表达 <code>..=</code> 的语义。</p>
 </blockquote>
 <blockquote>
 <p><strong>注意</strong>: 尽管区间模式使用与<a href="expressions/range-expr.html">区间表达式</a>相同的句法，但没有上下限均不包含的区间模式。
@@ -9313,7 +9315,8 @@ match v[..] {
 <span class="boring">}
 </span></code></pre></pre>
 <p>在匹配数组时，只要每个元素是不可反驳型的，切片模式就是不可反驳型的。当匹配切片时，只有单个 <code>..</code> <a href="patterns.html#rest-patterns">剩余模式</a>或带有 <code>..</code>（剩余模式）作为子模式的<a href="patterns.html#identifier-patterns">标识符模式</a>的情况才是不可反驳型的。</p>
-<p>对于匹配切片内的数值，像 <code>a..</code> 这样的半开区间模式必须使用使用圆括号包裹起来，即 <code>(a..)</code> 这样，这样是显式提醒它是用来匹配切片内一个单独的值的。</p>
+<p>在一个切片中，没有下限和上限的区间模式必须用括号括起来，如<code>(a..)</code>中所示，以明确其目的是与单个切片元素匹配。
+带有下限和上限的区间模式，如 <code>a..=b</code> 不需要用括号括起来。</p>
 <h2 id="path-patterns"><a class="header" href="#path-patterns">Path patterns</a></h2>
 <h2 id="路径模式"><a class="header" href="#路径模式">路径模式</a></h2>
 <blockquote>
@@ -10904,8 +10907,8 @@ fn takes_fn_ptr&lt;'short, 'middle: 'short&gt;(
 <h1 id="trait约束和生存期约束"><a class="header" href="#trait约束和生存期约束">trait约束和生存期约束</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md">trait-bounds.md</a><br />
-commit: 4e0edd1428d3bdf680198a52e83ac400a1ba7c04 <br />
-本章译文最后维护日期：2022-12-04</p>
+commit: fd6e375b892e018ea79783ea824ca97f2ef1a563 <br />
+本章译文最后维护日期：2023-03-04</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -10927,7 +10930,7 @@ commit: 4e0edd1428d3bdf680198a52e83ac400a1ba7c04 <br />
 </blockquote>
 <p><a href="items/traits.html#trait-bounds">trait</a>约束和生存期约束为<a href="items/generics.html">泛型程序项</a>提供了一种方法来限制将哪些类型和生存期可被用作它们的参数。通过 <a href="items/generics.html#where-clauses">where子句</a>可以为任何泛型提供约束。对于某些常见的情况，也可以使用如下简写形式：</p>
 <ul>
-<li>跟在<a href="items/generics.html">泛型参数</a>声明之后的约束：<code>fn f&lt;A: Copy&gt;() {}</code> 与 <code>fn f&lt;A&gt; where A: Copy () {}</code> 效果等价。</li>
+<li>跟在<a href="items/generics.html">泛型参数</a>声明之后的约束：<code>fn f&lt;A: Copy&gt;() {}</code> 与 <code>fn f&lt;A&gt;() where A: Copy  {}</code> 效果等价。</li>
 <li>在 trait声明中作为指定<a href="items/traits.html#supertraits">超类trait(supertraits)</a> 约束时：<code>trait Circle : Shape {}</code> 等同于 <code>trait Circle where Self : Shape {}</code>。</li>
 <li>在 trait声明中作为指定关联类型上的约束时：<code>trait A { type B: Copy; }</code> 等同于 <code>trait A where Self::B: Copy { type B; }</code>。</li>
 </ul>
@@ -11294,8 +11297,8 @@ fn foo() -&gt; i32 {
 <h1 id="析构器"><a class="header" href="#析构器">析构器</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/destructors.md">destructors.md</a><br />
-commit: ca43062e348236d8ad10590d655897cb5e8585e9 <br />
-本章译文最后维护日期：2023-01-15</p>
+commit: 27dc03f2cdca30cf810fd3169c33d3f47b488d96 <br />
+本章译文最后维护日期：2023-03-04</p>
 </blockquote>
 <p>当一个<a href="glossary.html#initialized">初始化</a>了的<a href="variables.html">变量</a>或<a href="expressions.html#temporaries">临时变量</a>超出<a href="destructors.html#drop-scopes">作用域</a>时，其<em>析构器(destructor)<em>将运行，或者说它将被</em>销毁(dropped)</em>。此外，<a href="expressions/operator-expr.html#assignment-expressions">赋值</a>操作也会运行其左操作数的析构器（如果它已经初始化了）。如果变量只部分初始化了，则只销毁其已初始化的字段。</p>
 <p>类型<code>T</code> 的析构器由以下内容组成：</p>
@@ -11427,7 +11430,7 @@ let declared_last = PrintOnDrop(&quot;在外层作用域内最先销毁&quot;);
 <li><a href="expressions/if-expr.html#if-expressions"><code>if</code></a>表达式、<a href="expressions/loop-expr.html#predicate-loops"><code>while</code></a>表达式 或 <a href="expressions/loop-expr.html#infinite-loops"><code>loop</code></a>表达式这三种表达式的代码体。</li>
 <li><code>if</code>表达式的 <code>else</code>块。</li>
 <li><code>if</code>表达式的条件表达式，<code>while</code>表达式的条件表达式，或匹配表达式中的匹配(<code>match</code>)守卫。</li>
-<li>匹配臂上的表达式。</li>
+<li>匹配臂上的主体表达式。</li>
 <li><a href="expressions/operator-expr.html#lazy-boolean-operators">惰性求值的布尔表达式</a>的第二操作数。</li>
 </ul>
 <blockquote>
@@ -12673,8 +12676,8 @@ commit: 79fcc6e4453919977b8b3bdf5aee71146c89217d <br />
 <h1 id="链接"><a class="header" href="#链接">链接</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/linkage.md">linkage.md</a><br />
-commit: f715f2cc987c54ff8afc51be33379b96e8cc8ab7<br />
-本章译文最后维护日期：2022-06-17</p>
+commit: 99ed3f87f0c9f1bdb232878d9e360042e43bef4e<br />
+本章译文最后维护日期：2023-03-04</p>
 </blockquote>
 <blockquote>
 <p>注意：本节更多的是从编译器的角度来描述的，而不是语言。</p>
@@ -12704,7 +12707,7 @@ commit: f715f2cc987c54ff8afc51be33379b96e8cc8ab7<br />
 <p><code>--crate-type=proc-macro</code> 或 <code>#![crate_type = &quot;proc-macro&quot;]</code> - 生成的输出类型没有被指定，但是如果通过 <code>-L</code> 提供了路径参数，编译器将把输出构件识别为宏，输出的宏可以被其他 Rust 程序加载使用。使用此 crate 类型编译的 crate 只能导出<a href="procedural-macros.html">过程宏</a>。编译器将自动设置 <code>proc_macro</code><a href="conditional-compilation.html">属性配置选项</a>。编译 crate 的目标平台(target)总是和当前编译器所在平台一致。例如，如果在 <code>x86_64</code> CPU 的 Linux 平台上执行编译，那么目标将是 <code>x86_64-unknown-linux-gnu</code>，即使该 crate 是另一个不同编译目标的 crate 的依赖。</p>
 </li>
 </ul>
-<p>请注意，这些选项是可堆叠使用的，如果同时使用了多个选项，那么编译器将一次生成所有这些选项关联的的输出类型，而不必反复多次编译。但是，命令行和内部 <code>crate_type</code> 属性配置不能同时起效。如果只使用了不带属性值的 <code>crate_type</code> 属性配置，则将生成所有类型的输出，但如果同时指定了一个或多个 <code>--crate-type</code> 命令行参数，则只生成这些指定的输出。</p>
+<p>请注意，这些选项是可堆叠使用的，如果同时使用了多个选项，那么编译器将生成所有这些选项关联的的输出类型，而不必反复多次编译。但是，命令行和内部 <code>crate_type</code> 属性配置不能同时起效。如果只使用了不带属性值的 <code>crate_type</code> 属性配置，则将生成所有类型的输出，但如果同时指定了一个或多个 <code>--crate-type</code> 命令行参数，则只生成这些指定的输出。</p>
 <p>对于所有这些不同类型的输出，如果 crate A 依赖于 crate B，那么整个系统中很可能有多种不同形式的 B，但是，编译器只会查找 <code>rlib</code> 类型的和动态库类型的。有了依赖库的这两个选项，编译器在某些时候还是必须在这两种类型之间做出选择。考虑到这一点，编译器在决定使用哪种依赖关系类型时将遵循以下规则：</p>
 <ol>
 <li>
@@ -13509,8 +13512,8 @@ By writing <code>unsafe impl</code>, the programmer states that they have taken 
 <h2 id="未定义的行为"><a class="header" href="#未定义的行为">未定义的行为</a></h2>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md">behavior-considered-undefined.md</a><br />
-commit: 2af818d235b6c39cb76a099b859a84438e3409f2 <br />
-本章译文最后维护日期：2022-12-04</p>
+commit: 8d49ecf542b8f63a30ce4e879757a5c163946bc6 <br />
+本章译文最后维护日期：2023-03-04</p>
 </blockquote>
 <p>如果 Rust 代码出现了下面列表中的任何行为，则此代码被认为不正确。这包括非安全(<code>unsafe</code>)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。</p>
 <p>在编写非安全代码时，确保任何与非安全代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何使用非安全代码的安全客户端(safe client)，如果当前条件满足了此非安全代码对于安全条件的要求，那此此非安全代码对于此安全客户端就是<em>健壮的(sound)</em>；如果非安全(<code>unsafe</code>)代码可以被安全代码滥用以致出现未定义行为，那么此非安全(<code>unsafe</code>)代码对这些安全代码来说就是<em>不健壮的(unsound)</em>。</p>

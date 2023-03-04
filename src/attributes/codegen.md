@@ -2,8 +2,8 @@
 # 代码生成属性
 
 >[codegen.md](https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md)\
->commit: 6a5431b863f61b86dcac70ee2ab377152f40f66e \
->本章译文最后维护日期：2022-12-04
+>commit: a6190a8041fa734f22e42fcba91612d761526157 \
+>本章译文最后维护日期：2023-03-04
 
 下述[属性][attributes]用于控制代码生成。
 
@@ -74,6 +74,7 @@ unsafe fn foo_avx2() {}
 `avx2`      | `avx`    | [AVX2] — Advanced Vector Extensions 2 | 高级矢量扩展指令集2
 `bmi1`      |          | [BMI1] — Bit Manipulation Instruction Sets | 位操作指令集
 `bmi2`      |          | [BMI2] — Bit Manipulation Instruction Sets 2 | 位操作指令集2
+`cmpxchg16b`|          | [`cmpxchg16b`] - Compares and exchange 16 bytes (128 bits) of data atomically | 原子地比较和交换16字节（128位）的数据
 `fma`       | `avx`    | [FMA3] — Three-operand fused multiply-add | 三操作乘加指令
 `fxsr`      |          | [`fxsave`] and [`fxrstor`] — Save and restore x87 FPU, MMX Technology, and SSE State | 保存/恢复 x87 FPU、MMX技术，SSE状态
 `lzcnt`     |          | [`lzcnt`] — Leading zeros count  | 前导零计数
@@ -101,6 +102,7 @@ unsafe fn foo_avx2() {}
 [AVX2]: https://en.wikipedia.org/wiki/Advanced_Vector_Extensions#AVX2
 [BMI1]: https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets
 [BMI2]: https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#BMI2
+[`cmpxchg16b`]: https://www.felixcloutier.com/x86/cmpxchg8b:cmpxchg16b
 [FMA3]: https://en.wikipedia.org/wiki/FMA_instruction_set
 [`fxsave`]: https://www.felixcloutier.com/x86/fxsave
 [`fxrstor`]: https://www.felixcloutier.com/x86/fxrstor

@@ -2,8 +2,8 @@
 # 析构器
 
 >[destructors.md](https://github.com/rust-lang/reference/blob/master/src/destructors.md)\
->commit: ca43062e348236d8ad10590d655897cb5e8585e9 \
->本章译文最后维护日期：2023-01-15
+>commit: 27dc03f2cdca30cf810fd3169c33d3f47b488d96 \
+>本章译文最后维护日期：2023-03-04
 
 
 当一个[初始化][initialized]了的[变量][variable]或[临时变量][temporary]超出[作用域](#drop-scopes)时，其*析构器(destructor)*将运行，或者说它将被*销毁(dropped)*。此外，[赋值][Assignment]操作也会运行其左操作数的析构器（如果它已经初始化了）。如果变量只部分初始化了，则只销毁其已初始化的字段。
@@ -140,7 +140,7 @@ let declared_last = PrintOnDrop("在外层作用域内最先销毁");
 * [`if`]表达式、[`while`]表达式 或 [`loop`]表达式这三种表达式的代码体。
 * `if`表达式的 `else`块。
 * `if`表达式的条件表达式，`while`表达式的条件表达式，或匹配表达式中的匹配(`match`)守卫。
-* 匹配臂上的表达式。
+* 匹配臂上的主体表达式。
 * [惰性求值的布尔表达式][lazy boolean expression]的第二操作数。
 
 > **注意**：

@@ -2,8 +2,8 @@
 # trait约束和生存期约束
 
 >[trait-bounds.md](https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md)\
->commit: 4e0edd1428d3bdf680198a52e83ac400a1ba7c04 \
->本章译文最后维护日期：2022-12-04
+>commit: fd6e375b892e018ea79783ea824ca97f2ef1a563 \
+>本章译文最后维护日期：2023-03-04
 
 > **<sup>句法</sup>**\
 > _TypeParamBounds_ :\
@@ -28,7 +28,7 @@
 
 [trait][Trait]约束和生存期约束为[泛型程序项][generic]提供了一种方法来限制将哪些类型和生存期可被用作它们的参数。通过 [where子句][where clause]可以为任何泛型提供约束。对于某些常见的情况，也可以使用如下简写形式：
 
-* 跟在[泛型参数][generic]声明之后的约束：`fn f<A: Copy>() {}` 与 `fn f<A> where A: Copy () {}` 效果等价。
+* 跟在[泛型参数][generic]声明之后的约束：`fn f<A: Copy>() {}` 与 `fn f<A>() where A: Copy  {}` 效果等价。
 * 在 trait声明中作为指定[超类trait(supertraits)][supertraits] 约束时：`trait Circle : Shape {}` 等同于 `trait Circle where Self : Shape {}`。
 * 在 trait声明中作为指定关联类型上的约束时：`trait A { type B: Copy; }` 等同于 `trait A where Self::B: Copy { type B; }`。
 
