@@ -148,7 +148,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2023-03-04</p>
+<p>本书跟随原文截止日期：2023-05-03</p>
 </blockquote>
 <h1 id="前言"><a class="header" href="#前言">前言</a></h1>
 <h2 id="试水版"><a class="header" href="#试水版">试水版</a></h2>
@@ -3273,8 +3273,8 @@ enum E {
 <h1 id="联合体"><a class="header" href="#联合体">联合体</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/unions.md">unions.md</a><br />
-commit: 969e45e09c68a167ecf456901f490cd6a21a70a2 <br />
-本章译文最后维护日期：2022-08-21</p>
+commit: 945a2bdba17280214f0559eb87078c84dacbbdc0 <br />
+本章译文最后维护日期：2023-05-03</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -3322,8 +3322,15 @@ union MyUnion {
 </span></code></pre></pre>
 <h2 id="reading-and-writing-union-fields"><a class="header" href="#reading-and-writing-union-fields">Reading and writing union fields</a></h2>
 <h2 id="读写联合体字段"><a class="header" href="#读写联合体字段">读写联合体字段</a></h2>
-<p>联合体没有“活跃字段(active field)”的概念。相反，每次访问联合体只是用访问所指定的字段的类型解释此联合体的存储。读取联合体的字段就是以当前读取字段的类型来解读此联合体的存储位。字段（间）可以有非零的偏移量存在（使用 <a href="items/../type-layout.html#reprc-unions">C表型</a>的除外）；在这种情况下，读取将从字段的相对偏移量的 bit 开始。程序员有责任确保此数据在当前字段类型下有效。否则会导致<a href="items/../behavior-considered-undefined.html">未定义行为(undefined behavior)</a>。例如，在 <a href="items/../types/boolean.html"><code>bool</code>类型</a>的字段下读取到数值 <code>3</code> 是未定义行为。实际上，对一个 <a href="items/../type-layout.html#reprc-unions">C表型</a>的联合体进行写操作，然后再从中读取，就好比从用于写入的类型到用于读取的类型的 <a href="https://doc.rust-lang.org/std/mem/fn.transmute.html"><code>transmute</code></a> 操作。</p>
-<p>因此，所有的联合体字段的读取必须放在非安全(<code>unsafe</code>)块里：</p>
+<p>联合体没有“活跃成员字段(active field)”的概念。
+相反，每次访问联合体只是将此联合体的存储解释为此访问的字段类型。
+读取联合体的字段就是以当前读取字段的类型来解读此联合体的存储位。
+字段可以有一个非零的偏移量存在（使用 <a href="items/../type-layout.html#reprc-unions">C表型</a>的除外）；在这种情况下，读取将从字段的相对偏移量的 bit 开始。
+程序员有责任确保此数据在当前字段类型下有效。
+否则会导致<a href="items/../behavior-considered-undefined.html">未定义行为(undefined behavior)</a>。
+例如，在 <a href="items/../types/boolean.html"><code>bool</code>类型</a>的字段下读取到数值 <code>3</code> 是未定义行为。
+实际上，对一个 <a href="items/../type-layout.html#reprc-unions">C表型</a>的联合体进行写操作，然后再从中读取，就好比从用于写入的类型到用于读取的类型的 <a href="https://doc.rust-lang.org/std/mem/fn.transmute.html"><code>transmute</code></a> 操作。</p>
+<p>因此，所有的联合体字段的读取必须放在 <code>unsafe</code>块里：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">union MyUnion { f1: u32, f2: f32 }
@@ -3411,8 +3418,8 @@ fn test() {
 <h1 id="常量项"><a class="header" href="#常量项">常量项</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/constant-items.md">constant-items.md</a><br />
-commit: e64510b117146453cf859018f921c840050448e9 <br />
-本章译文最后维护日期：2022-03-14</p>
+commit: 021889f26215721860a153e692909eda7cfd7a6e <br />
+本章译文最后维护日期：2023-05-03</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -3486,6 +3493,20 @@ m!(const _: () = (););
 // 这会展开出：
 // const _: () = ();
 // const _: () = ();
+<span class="boring">}
+</span></code></pre></pre>
+<h2 id="evaluation"><a class="header" href="#evaluation">Evaluation</a></h2>
+<h2 id="求值"><a class="header" href="#求值">求值</a></h2>
+<p><a href="items/../glossary.html#free-item">自由</a>常量总是在编译时进行计算，以消除 panics。即使在未使用的函数中也会发生这种情况：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Compile-time panic
+const PANIC: () = std::unimplemented!();
+
+fn unused_generic_function&lt;T&gt;() {
+    // A failing compile-time assertion
+    const _: () = assert!(usize::BITS == 0);
+}
 <span class="boring">}
 </span></code></pre></pre>
 <div class="footnote-definition" id="译者备注"><sup class="footnote-definition-label">1</sup>
@@ -5284,8 +5305,8 @@ struct Foo&lt;T&gt; {
 <h1 id="诊断属性"><a class="header" href="#诊断属性">诊断属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/diagnostics.md">diagnostics.md</a><br />
-commit: 328e227ea01617f3d42cb8fe981031bd08863e72 <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: fc61be0f7e7bf5bc69c73458ec4314ba4f16a673 <br />
+本章译文最后维护日期：2023-05-03</p>
 </blockquote>
 <p>以下<a href="attributes/../attributes.html">属性</a>用于在编译期间控制或生成诊断消息。</p>
 <h2 id="lint-check-attributes"><a class="header" href="#lint-check-attributes">Lint check attributes</a></h2>
@@ -5325,7 +5346,7 @@ commit: 328e227ea01617f3d42cb8fe981031bd08863e72 <br />
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[warn(missing_docs)]
-pub mod m2{
+pub mod m2 {
     #[allow(missing_docs)]
     pub mod nested {
         // 这里忽略未提供文档的编码行为
@@ -5532,8 +5553,8 @@ let _ = five();
 <h1 id="代码生成属性"><a class="header" href="#代码生成属性">代码生成属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md">codegen.md</a><br />
-commit: a6190a8041fa734f22e42fcba91612d761526157 <br />
-本章译文最后维护日期：2023-03-04</p>
+commit: f37b1c11fc549ba2ce7792691b4a235e02e88c5b <br />
+本章译文最后维护日期：2023-05-03</p>
 </blockquote>
 <p>下述<a href="attributes/../attributes.html">属性</a>用于控制代码生成。</p>
 <h2 id="optimization-hints"><a class="header" href="#optimization-hints">Optimization hints</a></h2>
@@ -5591,6 +5612,7 @@ unsafe fn foo_avx2() {}
 <tr><td><code>fma</code></td><td><code>avx</code></td><td><a href="https://en.wikipedia.org/wiki/FMA_instruction_set">FMA3</a> — Three-operand fused multiply-add</td><td>三操作乘加指令</td></tr>
 <tr><td><code>fxsr</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/fxsave"><code>fxsave</code></a> and <a href="https://www.felixcloutier.com/x86/fxrstor"><code>fxrstor</code></a> — Save and restore x87 FPU, MMX Technology, and SSE State</td><td>保存/恢复 x87 FPU、MMX技术，SSE状态</td></tr>
 <tr><td><code>lzcnt</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/lzcnt"><code>lzcnt</code></a> — Leading zeros count</td><td>前导零计数</td></tr>
+<tr><td><code>movbe</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/movbe"><code>movbe</code></a> - Move data after swapping bytes</td><td>交换字节后移动数据</td></tr>
 <tr><td><code>pclmulqdq</code></td><td><code>sse2</code></td><td><a href="https://www.felixcloutier.com/x86/pclmulqdq"><code>pclmulqdq</code></a> — Packed carry-less multiplication quadword</td><td>压缩的四字（16字节）无进位乘法，主用于加解密处理</td></tr>
 <tr><td><code>popcnt</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/popcnt"><code>popcnt</code></a> — Count of bits set to 1</td><td>位1计数，即统计有多少个“为1的位”</td></tr>
 <tr><td><code>rdrand</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/RdRand"><code>rdrand</code></a> — Read random number</td><td>从芯片上的硬件随机数生成器中获取随机数</td></tr>
@@ -7506,8 +7528,8 @@ assert_eq!(point.1, 0.0);
 <h1 id="结构体表达式"><a class="header" href="#结构体表达式">结构体表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/struct-expr.md">struct-expr.md</a><br />
-commit: 4aff5bed5eb04411174a7bd7e86975d3eb7b62d5 <br />
-本章译文最后维护日期：2022-08-21</p>
+commit: 6e6e8b42196d200eaa6b7fe9dad812dc9268985f <br />
+本章译文最后维护日期：2023-05-03</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -7911,8 +7933,8 @@ ten_times(move |j| println!(&quot;{}, {}&quot;, word, j));
 <h1 id="循环和其他可中断表达式"><a class="header" href="#循环和其他可中断表达式">循环和其他可中断表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/loop-expr.md">loop-expr.md</a><br />
-commit: 575d859aa0f97f66a587b47c47bf03243765fd5a <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: aa9c70bda63b3ab73b15746609831dafb96f56ff <br />
+本章译文最后维护日期：2023-05-03</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -8141,8 +8163,28 @@ assert_eq!(last, 12);
    <a href="expressions/block-expr.html"><em>BlockExpression</em></a></p>
 </blockquote>
 <p>带标签的块表达式同普通的块表达式完全相同，只是它允许在块中使用 <code>break</code>表达式。
-与其他循环不同，标签表达式中的 <code>break</code>表达式<em>必须</em>带有一个标签（即标签不是可选的）。
-与其他循环不同，带标签的块表达式<em>必须</em>以标签开头。</p>
+跟循环不同，标签表达式中的 <code>break</code>表达式<em>必须</em>带有一个标签（即标签不是可选的）。
+同时，带标签的块表达式<em>必须</em>以标签开头。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">fn do_thing() {}
+</span><span class="boring">fn condition_not_met() -&gt; bool { true }
+</span><span class="boring">fn do_next_thing() {}
+</span><span class="boring">fn do_last_thing() {}
+</span>let result = 'block: {
+    do_thing();
+    if condition_not_met() {
+        break 'block 1;
+    }
+    do_next_thing();
+    if condition_not_met() {
+        break 'block 2;
+    }
+    do_last_thing();
+    3
+};
+<span class="boring">}
+</span></code></pre></pre>
 <h2 id="continue-expressions"><a class="header" href="#continue-expressions"><code>continue</code> expressions</a></h2>
 <h2 id="continue表达式"><a class="header" href="#continue表达式"><code>continue</code>表达式</a></h2>
 <blockquote>
@@ -11928,8 +11970,8 @@ commit: 4aff5bed5eb04411174a7bd7e86975d3eb7b62d5
 <h1 id="命名空间"><a class="header" href="#命名空间">命名空间</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/names/namespaces.md">use-declarations.md</a><br />
-commit: 4aff5bed5eb04411174a7bd7e86975d3eb7b62d5 <br />
-本章译文最后维护日期：2022-08-21</p>
+commit: aa9c70bda63b3ab73b15746609831dafb96f56ff <br />
+本章译文最后维护日期：2023-05-03</p>
 </blockquote>
 <p><em>命名空间</em>是已声明的<a href="names/../names.html">名称</a>的逻辑分组。根据名称所指的实体类型，名称被分隔到不同的命名空间中。
 名称空间允许一个名称空间中出现的名称与另一个名称空间中的相同，且不会导致冲突。</p>
@@ -11986,6 +12028,7 @@ commit: 4aff5bed5eb04411174a7bd7e86975d3eb7b62d5 <br />
 <li>标签命名空间
 <ul>
 <li><a href="names/../expressions/loop-expr.html#loop-labels">循环标签</a></li>
+<li><a href="names/../expressions/loop-expr.html#labelled-block-expressions">块标签</a></li>
 </ul>
 </li>
 </ul>
@@ -12785,8 +12828,8 @@ fn main() {
 <h1 id="内联汇编"><a class="header" href="#内联汇编">内联汇编</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md">behavior-considered-undefined.md</a><br />
-commit: b00444a90f2fb381b4e3bdc66c19b47cfc4b5450 <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: aba56b9dd7b7e9e7a146fa98a8b70474b43759a5 <br />
+本章译文最后维护日期：2023-05-03</p>
 </blockquote>
 <p>Rust 通过 <a href="https://doc.rust-lang.org/core/arch/macro.asm.html"><code>asm!</code></a> 和 <a href="https://doc.rust-lang.org/core/arch/macro.global_asm.html"><code>global_asm!</code></a> 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。</p>
@@ -12826,13 +12869,13 @@ assert_eq!(x, 4 * 6);
 dir_spec := &quot;in&quot; / &quot;out&quot; / &quot;lateout&quot; / &quot;inout&quot; / &quot;inlateout&quot;
 reg_spec := &lt;register class&gt; / &quot;\&quot;&quot; &lt;explicit register&gt; &quot;\&quot;&quot;
 operand_expr := expr / &quot;_&quot; / expr &quot;=&gt;&quot; expr / expr &quot;=&gt;&quot; &quot;_&quot;
-reg_operand := dir_spec &quot;(&quot; reg_spec &quot;)&quot; operand_expr
-operand := reg_operand
+reg_operand := [ident &quot;=&quot;] dir_spec &quot;(&quot; reg_spec &quot;)&quot; operand_expr
 clobber_abi := &quot;clobber_abi(&quot; &lt;abi&gt; *(&quot;,&quot; &lt;abi&gt;) [&quot;,&quot;] &quot;)&quot;
 option := &quot;pure&quot; / &quot;nomem&quot; / &quot;readonly&quot; / &quot;preserves_flags&quot; / &quot;noreturn&quot; / &quot;nostack&quot; / &quot;att_syntax&quot; / &quot;raw&quot;
 options := &quot;options(&quot; option *(&quot;,&quot; option) [&quot;,&quot;] &quot;)&quot;
-asm := &quot;asm!(&quot; format_string *(&quot;,&quot; format_string) *(&quot;,&quot; [ident &quot;=&quot;] operand) *(&quot;,&quot; clobber_abi) *(&quot;,&quot; options) [&quot;,&quot;] &quot;)&quot;
-global_asm := &quot;global_asm!(&quot; format_string *(&quot;,&quot; format_string) *(&quot;,&quot; [ident &quot;=&quot;] operand) *(&quot;,&quot; options) [&quot;,&quot;] &quot;)&quot;
+operand := reg_operand / clobber_abi / options
+asm := &quot;asm!(&quot; format_string *(&quot;,&quot; format_string) *(&quot;,&quot; operand) [&quot;,&quot;] &quot;)&quot;
+global_asm := &quot;global_asm!(&quot; format_string *(&quot;,&quot; format_string) *(&quot;,&quot; operand) [&quot;,&quot;] &quot;)&quot;
 </code></pre>
 <h2 id="scope"><a class="header" href="#scope">Scope</a></h2>
 <h2 id="作用域-1"><a class="header" href="#作用域-1">作用域</a></h2>
@@ -12879,7 +12922,7 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 此已分配的寄存器名会被替换到 asm模板字符串中。</li>
 <li>在这段 asm代码的开头，此已分配的寄存器将包含一个未定义的值。</li>
 <li><code>&lt;expr&gt;</code> 必须是一个（可能未被初始化的）位置表达式，在这段 asm代码的结尾，此寄存器的内容会被写到此位置表达式里。</li>
-<li>可以使用下划线(<code>_</code>)替代这个位置表达式，这将导致在这段 asm代码的结尾，此寄存器的内容被丢弃(等效于一个 clobber寄存器（译者注：clobber寄存器是其内容在此 asm代码执行后其内容会被破坏且不用修复的寄存器）)。</li>
+<li>可以使用下划线(<code>_</code>)替代这个位置表达式，这将导致在这段 asm代码的结尾，此寄存器的内容被丢弃(等效于一个 clobber寄存器（译者注：clobber寄存器相当于内存屏障，该屏障使得该条指令之前的内存访问操作不会移到这条指令后面，该条指令之后的内存访问操作也不会移到这条指令前面，从而防止编译时编译器优化造成的指令顺序重排。碰到 clobber寄存器，编译器会将所有寄存器中缓存的值下刷到内存，之后再重新读取内存中的值并缓存到寄存器中）)。</li>
 </ul>
 </li>
 <li><code>lateout(&lt;reg&gt;) &lt;expr&gt;</code>
@@ -13323,23 +13366,36 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 <blockquote>
 <p><strong>注意</strong>：作为一个一般性原则，<code>preserves_flags</code> 包含的标志是在执行函数调用时<em>未</em>保留的标志。</p>
 </blockquote>
+<h3 id="correctness-and-validity"><a class="header" href="#correctness-and-validity">Correctness and Validity</a></h3>
+<h3 id="正确性和有效性"><a class="header" href="#正确性和有效性">正确性和有效性</a></h3>
+<p>除了前面的所有规则外，<code>asm!</code> 的字符串参数（在计算完所有其他参数后，执行格式化并转换其操作数）必须最终转换成为（对于目标体系结构而言）语法正确且语义有效的汇编代码。
+其中，格式化规则允许编译器生成具有正确语法的汇编代码。
+有关操作数的规则允许将 Rust操作数有效转换为<code>asm!</code>，以及从 <code>asm!</code> 转换出。
+为使最终汇编代码既正确又有效，遵守这些规则是必要的，但还不够。例如：</p>
+<ul>
+<li>格式化后，参数可能被放置在语法不正确的位置</li>
+<li>一条指令可能被正确写入，但该操作数在给定的体系结构上却是无效的</li>
+<li>对应体系结构未支持的指令可以汇编成不确定的代码</li>
+<li>一组指令，每一条都正确有效，如果连续放置，仍有可能会导致未定义的行为</li>
+</ul>
+<p>因此，这些规则是 <em>非穷尽</em> 的。编译器不需要检查初始字符串的正确性和有效性，也不需要检查生成的最终汇编代码。
+汇编器可以检查这些代码的正确性和有效性，但不需要这样做。
+使用 <code>asm!</code> 时，键入错误就足以使程序变得不健壮。完全排除这类错误太难了，汇编规则那是包含在数千页的体系结构参考手册中的呀。
+程序员应该谨慎行事，调用这种 <code>unsafe</code> 的功能需要承担不违反编译器或体系结构规则的责任。</p>
 <h3 id="directives-support"><a class="header" href="#directives-support">Directives Support</a></h3>
-<h3 id="指令支持"><a class="header" href="#指令支持">指令支持</a></h3>
-<p>内联汇编支持 GNU AS 和 LLVM 的内部汇编器支持的指令集的一个子集，具体如下所示。
-也有部分指令的效果是特定于汇编器的（可能会导致错误，或者可能会被接受）。</p>
-<p>如果内联汇编包含任何修改后续汇编程序的“有状态(stateful)”指令，则块必须在内联汇编结束之前撤消任何此类指令的执行效果。</p>
-<p>下面这些指令被汇编器确保支持：</p>
+<h3 id="伪指令支持"><a class="header" href="#伪指令支持">伪指令支持</a></h3>
+<p>内联汇编支持 GNU AS 和 LLVM 的内部汇编器支持的伪指令集的一个子集，具体如下所示。
+也有部分伪指令的效果是特定于汇编器的（可能会导致错误，或者可能会被接受）。</p>
+<p>如果内联汇编包含任何修改后续汇编程序的“有状态(stateful)”伪指令，则块必须在内联汇编结束之前撤消任何此类伪指令的执行效果。</p>
+<p>下面这些伪指令被汇编器确保支持：</p>
 <ul>
 <li><code>.2byte</code></li>
 <li><code>.4byte</code></li>
 <li><code>.8byte</code></li>
 <li><code>.align</code></li>
+<li><code>.alt_entry</code></li>
 <li><code>.ascii</code></li>
 <li><code>.asciz</code></li>
-<li><code>.alt_entry</code></li>
-<li><code>.balign</code></li>
-<li><code>.balignl</code></li>
-<li><code>.balignw</code></li>
 <li><code>.balign</code></li>
 <li><code>.balignl</code></li>
 <li><code>.balignw</code></li>
@@ -13355,17 +13411,17 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 <li><code>.eqv</code></li>
 <li><code>.fill</code></li>
 <li><code>.float</code></li>
-<li><code>.globl</code></li>
 <li><code>.global</code></li>
-<li><code>.lcomm</code></li>
+<li><code>.globl</code></li>
 <li><code>.inst</code></li>
+<li><code>.lcomm</code></li>
 <li><code>.long</code></li>
 <li><code>.octa</code></li>
 <li><code>.option</code></li>
-<li><code>.private_extern</code></li>
 <li><code>.p2align</code></li>
-<li><code>.pushsection</code></li>
 <li><code>.popsection</code></li>
+<li><code>.private_extern</code></li>
+<li><code>.pushsection</code></li>
 <li><code>.quad</code></li>
 <li><code>.scl</code></li>
 <li><code>.section</code></li>

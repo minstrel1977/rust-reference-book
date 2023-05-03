@@ -2,8 +2,8 @@
 # 常量项
 
 >[constant-items.md](https://github.com/rust-lang/reference/blob/master/src/items/constant-items.md)\
->commit: e64510b117146453cf859018f921c840050448e9 \
->本章译文最后维护日期：2022-03-14
+>commit: 021889f26215721860a153e692909eda7cfd7a6e \
+>本章译文最后维护日期：2023-05-03
 
 > **<sup>句法</sup>**\
 > _ConstantItem_ :\
@@ -83,8 +83,24 @@ m!(const _: () = (););
 // const _: () = ();
 ```
 
+## Evaluation
+## 求值
+
+[自由][free]常量总是在编译时进行计算，以消除 panics。即使在未使用的函数中也会发生这种情况：
+
+```rust,compile_fail
+// Compile-time panic
+const PANIC: () = std::unimplemented!();
+
+fn unused_generic_function<T>() {
+    // A failing compile-time assertion
+    const _: () = assert!(usize::BITS == 0);
+}
+```
+
 [^译者备注]: 在程序退出前，析构销毁的只是其中的一份拷贝；这句还有另一层含义是常量在整个程序结束时会调用析构函数。
 
+[const_eval]: ../const_eval.md
 [associated constant]: ../items/associated-items.md#associated-constants
 [constant value]: ../const_eval.md#constant-expressions
 [free]: ../glossary.md#free-item

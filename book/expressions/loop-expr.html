@@ -153,8 +153,8 @@
 <h1 id="循环和其他可中断表达式"><a class="header" href="#循环和其他可中断表达式">循环和其他可中断表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/loop-expr.md">loop-expr.md</a><br />
-commit: 575d859aa0f97f66a587b47c47bf03243765fd5a <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: aa9c70bda63b3ab73b15746609831dafb96f56ff <br />
+本章译文最后维护日期：2023-05-03</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -383,8 +383,28 @@ assert_eq!(last, 12);
    <a href="block-expr.html"><em>BlockExpression</em></a></p>
 </blockquote>
 <p>带标签的块表达式同普通的块表达式完全相同，只是它允许在块中使用 <code>break</code>表达式。
-与其他循环不同，标签表达式中的 <code>break</code>表达式<em>必须</em>带有一个标签（即标签不是可选的）。
-与其他循环不同，带标签的块表达式<em>必须</em>以标签开头。</p>
+跟循环不同，标签表达式中的 <code>break</code>表达式<em>必须</em>带有一个标签（即标签不是可选的）。
+同时，带标签的块表达式<em>必须</em>以标签开头。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">fn do_thing() {}
+</span><span class="boring">fn condition_not_met() -&gt; bool { true }
+</span><span class="boring">fn do_next_thing() {}
+</span><span class="boring">fn do_last_thing() {}
+</span>let result = 'block: {
+    do_thing();
+    if condition_not_met() {
+        break 'block 1;
+    }
+    do_next_thing();
+    if condition_not_met() {
+        break 'block 2;
+    }
+    do_last_thing();
+    3
+};
+<span class="boring">}
+</span></code></pre></pre>
 <h2 id="continue-expressions"><a class="header" href="#continue-expressions"><code>continue</code> expressions</a></h2>
 <h2 id="continue表达式"><a class="header" href="#continue表达式"><code>continue</code>表达式</a></h2>
 <blockquote>

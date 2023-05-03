@@ -153,8 +153,8 @@
 <h1 id="内联汇编"><a class="header" href="#内联汇编">内联汇编</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md">behavior-considered-undefined.md</a><br />
-commit: b00444a90f2fb381b4e3bdc66c19b47cfc4b5450 <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: aba56b9dd7b7e9e7a146fa98a8b70474b43759a5 <br />
+本章译文最后维护日期：2023-05-03</p>
 </blockquote>
 <p>Rust 通过 <a href="https://doc.rust-lang.org/core/arch/macro.asm.html"><code>asm!</code></a> 和 <a href="https://doc.rust-lang.org/core/arch/macro.global_asm.html"><code>global_asm!</code></a> 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。</p>
@@ -194,13 +194,13 @@ assert_eq!(x, 4 * 6);
 dir_spec := &quot;in&quot; / &quot;out&quot; / &quot;lateout&quot; / &quot;inout&quot; / &quot;inlateout&quot;
 reg_spec := &lt;register class&gt; / &quot;\&quot;&quot; &lt;explicit register&gt; &quot;\&quot;&quot;
 operand_expr := expr / &quot;_&quot; / expr &quot;=&gt;&quot; expr / expr &quot;=&gt;&quot; &quot;_&quot;
-reg_operand := dir_spec &quot;(&quot; reg_spec &quot;)&quot; operand_expr
-operand := reg_operand
+reg_operand := [ident &quot;=&quot;] dir_spec &quot;(&quot; reg_spec &quot;)&quot; operand_expr
 clobber_abi := &quot;clobber_abi(&quot; &lt;abi&gt; *(&quot;,&quot; &lt;abi&gt;) [&quot;,&quot;] &quot;)&quot;
 option := &quot;pure&quot; / &quot;nomem&quot; / &quot;readonly&quot; / &quot;preserves_flags&quot; / &quot;noreturn&quot; / &quot;nostack&quot; / &quot;att_syntax&quot; / &quot;raw&quot;
 options := &quot;options(&quot; option *(&quot;,&quot; option) [&quot;,&quot;] &quot;)&quot;
-asm := &quot;asm!(&quot; format_string *(&quot;,&quot; format_string) *(&quot;,&quot; [ident &quot;=&quot;] operand) *(&quot;,&quot; clobber_abi) *(&quot;,&quot; options) [&quot;,&quot;] &quot;)&quot;
-global_asm := &quot;global_asm!(&quot; format_string *(&quot;,&quot; format_string) *(&quot;,&quot; [ident &quot;=&quot;] operand) *(&quot;,&quot; options) [&quot;,&quot;] &quot;)&quot;
+operand := reg_operand / clobber_abi / options
+asm := &quot;asm!(&quot; format_string *(&quot;,&quot; format_string) *(&quot;,&quot; operand) [&quot;,&quot;] &quot;)&quot;
+global_asm := &quot;global_asm!(&quot; format_string *(&quot;,&quot; format_string) *(&quot;,&quot; operand) [&quot;,&quot;] &quot;)&quot;
 </code></pre>
 <h2 id="scope"><a class="header" href="#scope">Scope</a></h2>
 <h2 id="作用域"><a class="header" href="#作用域">作用域</a></h2>
@@ -247,7 +247,7 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 此已分配的寄存器名会被替换到 asm模板字符串中。</li>
 <li>在这段 asm代码的开头，此已分配的寄存器将包含一个未定义的值。</li>
 <li><code>&lt;expr&gt;</code> 必须是一个（可能未被初始化的）位置表达式，在这段 asm代码的结尾，此寄存器的内容会被写到此位置表达式里。</li>
-<li>可以使用下划线(<code>_</code>)替代这个位置表达式，这将导致在这段 asm代码的结尾，此寄存器的内容被丢弃(等效于一个 clobber寄存器（译者注：clobber寄存器是其内容在此 asm代码执行后其内容会被破坏且不用修复的寄存器）)。</li>
+<li>可以使用下划线(<code>_</code>)替代这个位置表达式，这将导致在这段 asm代码的结尾，此寄存器的内容被丢弃(等效于一个 clobber寄存器（译者注：clobber寄存器相当于内存屏障，该屏障使得该条指令之前的内存访问操作不会移到这条指令后面，该条指令之后的内存访问操作也不会移到这条指令前面，从而防止编译时编译器优化造成的指令顺序重排。碰到 clobber寄存器，编译器会将所有寄存器中缓存的值下刷到内存，之后再重新读取内存中的值并缓存到寄存器中）)。</li>
 </ul>
 </li>
 <li><code>lateout(&lt;reg&gt;) &lt;expr&gt;</code>
@@ -691,23 +691,36 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 <blockquote>
 <p><strong>注意</strong>：作为一个一般性原则，<code>preserves_flags</code> 包含的标志是在执行函数调用时<em>未</em>保留的标志。</p>
 </blockquote>
+<h3 id="correctness-and-validity"><a class="header" href="#correctness-and-validity">Correctness and Validity</a></h3>
+<h3 id="正确性和有效性"><a class="header" href="#正确性和有效性">正确性和有效性</a></h3>
+<p>除了前面的所有规则外，<code>asm!</code> 的字符串参数（在计算完所有其他参数后，执行格式化并转换其操作数）必须最终转换成为（对于目标体系结构而言）语法正确且语义有效的汇编代码。
+其中，格式化规则允许编译器生成具有正确语法的汇编代码。
+有关操作数的规则允许将 Rust操作数有效转换为<code>asm!</code>，以及从 <code>asm!</code> 转换出。
+为使最终汇编代码既正确又有效，遵守这些规则是必要的，但还不够。例如：</p>
+<ul>
+<li>格式化后，参数可能被放置在语法不正确的位置</li>
+<li>一条指令可能被正确写入，但该操作数在给定的体系结构上却是无效的</li>
+<li>对应体系结构未支持的指令可以汇编成不确定的代码</li>
+<li>一组指令，每一条都正确有效，如果连续放置，仍有可能会导致未定义的行为</li>
+</ul>
+<p>因此，这些规则是 <em>非穷尽</em> 的。编译器不需要检查初始字符串的正确性和有效性，也不需要检查生成的最终汇编代码。
+汇编器可以检查这些代码的正确性和有效性，但不需要这样做。
+使用 <code>asm!</code> 时，键入错误就足以使程序变得不健壮。完全排除这类错误太难了，汇编规则那是包含在数千页的体系结构参考手册中的呀。
+程序员应该谨慎行事，调用这种 <code>unsafe</code> 的功能需要承担不违反编译器或体系结构规则的责任。</p>
 <h3 id="directives-support"><a class="header" href="#directives-support">Directives Support</a></h3>
-<h3 id="指令支持"><a class="header" href="#指令支持">指令支持</a></h3>
-<p>内联汇编支持 GNU AS 和 LLVM 的内部汇编器支持的指令集的一个子集，具体如下所示。
-也有部分指令的效果是特定于汇编器的（可能会导致错误，或者可能会被接受）。</p>
-<p>如果内联汇编包含任何修改后续汇编程序的“有状态(stateful)”指令，则块必须在内联汇编结束之前撤消任何此类指令的执行效果。</p>
-<p>下面这些指令被汇编器确保支持：</p>
+<h3 id="伪指令支持"><a class="header" href="#伪指令支持">伪指令支持</a></h3>
+<p>内联汇编支持 GNU AS 和 LLVM 的内部汇编器支持的伪指令集的一个子集，具体如下所示。
+也有部分伪指令的效果是特定于汇编器的（可能会导致错误，或者可能会被接受）。</p>
+<p>如果内联汇编包含任何修改后续汇编程序的“有状态(stateful)”伪指令，则块必须在内联汇编结束之前撤消任何此类伪指令的执行效果。</p>
+<p>下面这些伪指令被汇编器确保支持：</p>
 <ul>
 <li><code>.2byte</code></li>
 <li><code>.4byte</code></li>
 <li><code>.8byte</code></li>
 <li><code>.align</code></li>
+<li><code>.alt_entry</code></li>
 <li><code>.ascii</code></li>
 <li><code>.asciz</code></li>
-<li><code>.alt_entry</code></li>
-<li><code>.balign</code></li>
-<li><code>.balignl</code></li>
-<li><code>.balignw</code></li>
 <li><code>.balign</code></li>
 <li><code>.balignl</code></li>
 <li><code>.balignw</code></li>
@@ -723,17 +736,17 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 <li><code>.eqv</code></li>
 <li><code>.fill</code></li>
 <li><code>.float</code></li>
-<li><code>.globl</code></li>
 <li><code>.global</code></li>
-<li><code>.lcomm</code></li>
+<li><code>.globl</code></li>
 <li><code>.inst</code></li>
+<li><code>.lcomm</code></li>
 <li><code>.long</code></li>
 <li><code>.octa</code></li>
 <li><code>.option</code></li>
-<li><code>.private_extern</code></li>
 <li><code>.p2align</code></li>
-<li><code>.pushsection</code></li>
 <li><code>.popsection</code></li>
+<li><code>.private_extern</code></li>
+<li><code>.pushsection</code></li>
 <li><code>.quad</code></li>
 <li><code>.scl</code></li>
 <li><code>.section</code></li>

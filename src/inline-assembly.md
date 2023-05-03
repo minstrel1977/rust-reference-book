@@ -2,8 +2,8 @@
 # 内联汇编
 
 >[behavior-considered-undefined.md](https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md)\
->commit: b00444a90f2fb381b4e3bdc66c19b47cfc4b5450 \
->本章译文最后维护日期：2022-10-22
+>commit: aba56b9dd7b7e9e7a146fa98a8b70474b43759a5 \
+>本章译文最后维护日期：2023-05-03
 
 Rust 通过 [`asm!`] 和 [`global_asm!`] 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。
@@ -50,13 +50,13 @@ format_string := STRING_LITERAL / RAW_STRING_LITERAL
 dir_spec := "in" / "out" / "lateout" / "inout" / "inlateout"
 reg_spec := <register class> / "\"" <explicit register> "\""
 operand_expr := expr / "_" / expr "=>" expr / expr "=>" "_"
-reg_operand := dir_spec "(" reg_spec ")" operand_expr
-operand := reg_operand
+reg_operand := [ident "="] dir_spec "(" reg_spec ")" operand_expr
 clobber_abi := "clobber_abi(" <abi> *("," <abi>) [","] ")"
 option := "pure" / "nomem" / "readonly" / "preserves_flags" / "noreturn" / "nostack" / "att_syntax" / "raw"
 options := "options(" option *("," option) [","] ")"
-asm := "asm!(" format_string *("," format_string) *("," [ident "="] operand) *("," clobber_abi) *("," options) [","] ")"
-global_asm := "global_asm!(" format_string *("," format_string) *("," [ident "="] operand) *("," options) [","] ")"
+operand := reg_operand / clobber_abi / options
+asm := "asm!(" format_string *("," format_string) *("," operand) [","] ")"
+global_asm := "global_asm!(" format_string *("," format_string) *("," operand) [","] ")"
 ```
 
 ## Scope
@@ -115,7 +115,7 @@ ARM目标架构上，使用 `.syntax unified`模式。
     此已分配的寄存器名会被替换到 asm模板字符串中。
   - 在这段 asm代码的开头，此已分配的寄存器将包含一个未定义的值。
   - `<expr>` 必须是一个（可能未被初始化的）位置表达式，在这段 asm代码的结尾，此寄存器的内容会被写到此位置表达式里。
-  - 可以使用下划线(`_`)替代这个位置表达式，这将导致在这段 asm代码的结尾，此寄存器的内容被丢弃(等效于一个 clobber寄存器（译者注：clobber寄存器是其内容在此 asm代码执行后其内容会被破坏且不用修复的寄存器）)。
+  - 可以使用下划线(`_`)替代这个位置表达式，这将导致在这段 asm代码的结尾，此寄存器的内容被丢弃(等效于一个 clobber寄存器（译者注：clobber寄存器相当于内存屏障，该屏障使得该条指令之前的内存访问操作不会移到这条指令后面，该条指令之后的内存访问操作也不会移到这条指令前面，从而防止编译时编译器优化造成的指令顺序重排。碰到 clobber寄存器，编译器会将所有寄存器中缓存的值下刷到内存，之后再重新读取内存中的值并缓存到寄存器中）)。
 * `lateout(<reg>) <expr>`
   - 除了寄存器分配器可以重用分配给 `in` 的寄存器外，其他的同 `out`。
   - 应该只在读取所有输入后才写入此寄存器，否则可能会毁坏真实的输入。
@@ -499,27 +499,41 @@ ARM目标架构上，使用 `.syntax unified`模式。
   - 由于内联汇编的编译方式，编译器当前还无法检测到此问题，但将来可能会捕获并拒绝此问题。
 
 > **注意**：作为一个一般性原则，`preserves_flags` 包含的标志是在执行函数调用时*未*保留的标志。
+### Correctness and Validity
+### 正确性和有效性
+
+除了前面的所有规则外，`asm!` 的字符串参数（在计算完所有其他参数后，执行格式化并转换其操作数）必须最终转换成为（对于目标体系结构而言）语法正确且语义有效的汇编代码。
+其中，格式化规则允许编译器生成具有正确语法的汇编代码。
+有关操作数的规则允许将 Rust操作数有效转换为`asm!`，以及从 `asm!` 转换出。
+为使最终汇编代码既正确又有效，遵守这些规则是必要的，但还不够。例如：
+
+- 格式化后，参数可能被放置在语法不正确的位置
+- 一条指令可能被正确写入，但该操作数在给定的体系结构上却是无效的
+- 对应体系结构未支持的指令可以汇编成不确定的代码
+- 一组指令，每一条都正确有效，如果连续放置，仍有可能会导致未定义的行为
+
+因此，这些规则是 _非穷尽_ 的。编译器不需要检查初始字符串的正确性和有效性，也不需要检查生成的最终汇编代码。
+汇编器可以检查这些代码的正确性和有效性，但不需要这样做。
+使用 `asm!` 时，键入错误就足以使程序变得不健壮。完全排除这类错误太难了，汇编规则那是包含在数千页的体系结构参考手册中的呀。
+程序员应该谨慎行事，调用这种 `unsafe` 的功能需要承担不违反编译器或体系结构规则的责任。
 
 ### Directives Support
-### 指令支持
+### 伪指令支持
 
-内联汇编支持 GNU AS 和 LLVM 的内部汇编器支持的指令集的一个子集，具体如下所示。
-也有部分指令的效果是特定于汇编器的（可能会导致错误，或者可能会被接受）。
+内联汇编支持 GNU AS 和 LLVM 的内部汇编器支持的伪指令集的一个子集，具体如下所示。
+也有部分伪指令的效果是特定于汇编器的（可能会导致错误，或者可能会被接受）。
 
-如果内联汇编包含任何修改后续汇编程序的“有状态(stateful)”指令，则块必须在内联汇编结束之前撤消任何此类指令的执行效果。
+如果内联汇编包含任何修改后续汇编程序的“有状态(stateful)”伪指令，则块必须在内联汇编结束之前撤消任何此类伪指令的执行效果。
 
-下面这些指令被汇编器确保支持：
+下面这些伪指令被汇编器确保支持：
 
 - `.2byte`
 - `.4byte`
 - `.8byte`
 - `.align`
+- `.alt_entry`
 - `.ascii`
 - `.asciz`
-- `.alt_entry`
-- `.balign`
-- `.balignl`
-- `.balignw`
 - `.balign`
 - `.balignl`
 - `.balignw`
@@ -535,17 +549,17 @@ ARM目标架构上，使用 `.syntax unified`模式。
 - `.eqv`
 - `.fill`
 - `.float`
-- `.globl`
 - `.global`
-- `.lcomm`
+- `.globl`
 - `.inst`
+- `.lcomm`
 - `.long`
 - `.octa`
 - `.option`
-- `.private_extern`
 - `.p2align`
-- `.pushsection`
 - `.popsection`
+- `.private_extern`
+- `.pushsection`
 - `.quad`
 - `.scl`
 - `.section`

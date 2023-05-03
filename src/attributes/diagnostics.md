@@ -2,8 +2,8 @@
 # 诊断属性
 
 >[diagnostics.md](https://github.com/rust-lang/reference/blob/master/src/attributes/diagnostics.md)\
->commit: 328e227ea01617f3d42cb8fe981031bd08863e72 \
->本章译文最后维护日期：2022-10-22
+>commit: fc61be0f7e7bf5bc69c73458ec4314ba4f16a673 \
+>本章译文最后维护日期：2023-05-03
 
 以下[属性][attributes]用于在编译期间控制或生成诊断消息。
 
@@ -44,7 +44,7 @@ Lint属性可以覆盖上一个属性指定的级别，但该级别不能更改�
 
 ```rust
 #[warn(missing_docs)]
-pub mod m2{
+pub mod m2 {
     #[allow(missing_docs)]
     pub mod nested {
         // 这里忽略未提供文档的编码行为

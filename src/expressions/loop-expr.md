@@ -2,8 +2,8 @@
 # 循环和其他可中断表达式
 
 >[loop-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/loop-expr.md)\
->commit: 575d859aa0f97f66a587b47c47bf03243765fd5a \
->本章译文最后维护日期：2022-10-22
+>commit: aa9c70bda63b3ab73b15746609831dafb96f56ff \
+>本章译文最后维护日期：2023-05-03
 
 > **<sup>句法</sup>**\
 > _LoopExpression_ :\
@@ -258,8 +258,27 @@ assert_eq!(last, 12);
 > &nbsp;&nbsp; [_BlockExpression_]
 
 带标签的块表达式同普通的块表达式完全相同，只是它允许在块中使用 `break`表达式。
-与其他循环不同，标签表达式中的 `break`表达式*必须*带有一个标签（即标签不是可选的）。
-与其他循环不同，带标签的块表达式*必须*以标签开头。
+跟循环不同，标签表达式中的 `break`表达式*必须*带有一个标签（即标签不是可选的）。
+同时，带标签的块表达式*必须*以标签开头。
+
+```rust
+# fn do_thing() {}
+# fn condition_not_met() -> bool { true }
+# fn do_next_thing() {}
+# fn do_last_thing() {}
+let result = 'block: {
+    do_thing();
+    if condition_not_met() {
+        break 'block 1;
+    }
+    do_next_thing();
+    if condition_not_met() {
+        break 'block 2;
+    }
+    do_last_thing();
+    3
+};
+```
 
 ## `continue` expressions
 ## `continue`表达式

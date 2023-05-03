@@ -2,8 +2,8 @@
 # 代码生成属性
 
 >[codegen.md](https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md)\
->commit: a6190a8041fa734f22e42fcba91612d761526157 \
->本章译文最后维护日期：2023-03-04
+>commit: f37b1c11fc549ba2ce7792691b4a235e02e88c5b \
+>本章译文最后维护日期：2023-05-03
 
 下述[属性][attributes]用于控制代码生成。
 
@@ -78,6 +78,7 @@ unsafe fn foo_avx2() {}
 `fma`       | `avx`    | [FMA3] — Three-operand fused multiply-add | 三操作乘加指令
 `fxsr`      |          | [`fxsave`] and [`fxrstor`] — Save and restore x87 FPU, MMX Technology, and SSE State | 保存/恢复 x87 FPU、MMX技术，SSE状态
 `lzcnt`     |          | [`lzcnt`] — Leading zeros count  | 前导零计数
+`movbe`     |          | [`movbe`] - Move data after swapping bytes | 交换字节后移动数据
 `pclmulqdq` | `sse2`   | [`pclmulqdq`] — Packed carry-less multiplication quadword | 压缩的四字（16字节）无进位乘法，主用于加解密处理
 `popcnt`    |          | [`popcnt`] — Count of bits set to 1 | 位1计数，即统计有多少个“为1的位”
 `rdrand`    |          | [`rdrand`] — Read random number | 从芯片上的硬件随机数生成器中获取随机数
@@ -107,6 +108,7 @@ unsafe fn foo_avx2() {}
 [`fxsave`]: https://www.felixcloutier.com/x86/fxsave
 [`fxrstor`]: https://www.felixcloutier.com/x86/fxrstor
 [`lzcnt`]: https://www.felixcloutier.com/x86/lzcnt
+[`movbe`]: https://www.felixcloutier.com/x86/movbe
 [`pclmulqdq`]: https://www.felixcloutier.com/x86/pclmulqdq
 [`popcnt`]: https://www.felixcloutier.com/x86/popcnt
 [`rdrand`]: https://en.wikipedia.org/wiki/RdRand

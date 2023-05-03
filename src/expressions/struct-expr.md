@@ -2,8 +2,8 @@
 # 结构体表达式
 
 >[struct-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/struct-expr.md)\
->commit: 4aff5bed5eb04411174a7bd7e86975d3eb7b62d5 \
->本章译文最后维护日期：2022-08-21
+>commit: 6e6e8b42196d200eaa6b7fe9dad812dc9268985f \
+>本章译文最后维护日期：2023-05-03
 
 
 > **<sup>句法</sup>**\

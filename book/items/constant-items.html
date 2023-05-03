@@ -153,8 +153,8 @@
 <h1 id="常量项"><a class="header" href="#常量项">常量项</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/constant-items.md">constant-items.md</a><br />
-commit: e64510b117146453cf859018f921c840050448e9 <br />
-本章译文最后维护日期：2022-03-14</p>
+commit: 021889f26215721860a153e692909eda7cfd7a6e <br />
+本章译文最后维护日期：2023-05-03</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -228,6 +228,20 @@ m!(const _: () = (););
 // 这会展开出：
 // const _: () = ();
 // const _: () = ();
+<span class="boring">}
+</span></code></pre></pre>
+<h2 id="evaluation"><a class="header" href="#evaluation">Evaluation</a></h2>
+<h2 id="求值"><a class="header" href="#求值">求值</a></h2>
+<p><a href="../glossary.html#free-item">自由</a>常量总是在编译时进行计算，以消除 panics。即使在未使用的函数中也会发生这种情况：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Compile-time panic
+const PANIC: () = std::unimplemented!();
+
+fn unused_generic_function&lt;T&gt;() {
+    // A failing compile-time assertion
+    const _: () = assert!(usize::BITS == 0);
+}
 <span class="boring">}
 </span></code></pre></pre>
 <div class="footnote-definition" id="译者备注"><sup class="footnote-definition-label">1</sup>

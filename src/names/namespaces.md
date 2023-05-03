@@ -2,8 +2,8 @@
 # 命名空间
 
 >[use-declarations.md](https://github.com/rust-lang/reference/blob/master/src/names/namespaces.md)\
->commit: 4aff5bed5eb04411174a7bd7e86975d3eb7b62d5 \
->本章译文最后维护日期：2022-08-21
+>commit: aa9c70bda63b3ab73b15746609831dafb96f56ff \
+>本章译文最后维护日期：2023-05-03
 
 *命名空间*是已声明的[名称][names]的逻辑分组。根据名称所指的实体类型，名称被分隔到不同的命名空间中。
 名称空间允许一个名称空间中出现的名称与另一个名称空间中的相同，且不会导致冲突。
@@ -50,6 +50,7 @@
     * [泛型生存期参数][Generic lifetime parameters]
 * 标签命名空间
     * [循环标签][Loop labels]
+    * [块标签][Block labels]
 
 如何清晰地使用不同命名空间中的同名名称的示例：
 
@@ -124,6 +125,7 @@ fn example<'Foo>(f: Foo) {
 [Attribute macros]: ../procedural-macros.md#attribute-macros
 [attributes]: ../attributes.md
 [bang-style macros]: ../macros.md
+[Block labels]: ../expressions/loop-expr.md#labelled-block-expressions
 [boolean]: ../types/boolean.md
 [Built-in attributes]: ../attributes.md#built-in-attributes-index
 [closure parameters]: ../expressions/closure-expr.md
