@@ -2,8 +2,8 @@
 # 关键字
 
 >[keywords.md](https://github.com/rust-lang/reference/blob/master/src/keywords.md)\
->commit: 6eb3e87af2c7743d6c7c783154cc380c4b0ea270
->本章译文最后维护日期：2021-04-23
+>commit: 089f6e12c2d557b02caf545604db93e20a2c99b3
+>本章译文最后维护日期：2023-05-12
 
 Rust 将关键字分为三类：
 
@@ -111,6 +111,7 @@ Rust 将关键字分为三类：
   从 2018 版开始，`dyn` 被提升为一个严格关键字。
 
 > **<sup>词法分析</sup>**\
+> KW_MACRO_RULES    : `macro_rules`\
 > KW_UNION          : `union`\
 > KW_STATICLIFETIME : `'static`
 >

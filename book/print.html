@@ -148,7 +148,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2023-05-03</p>
+<p>本书跟随原文截止日期：2023-05-12</p>
 </blockquote>
 <h1 id="前言"><a class="header" href="#前言">前言</a></h1>
 <h2 id="试水版"><a class="header" href="#试水版">试水版</a></h2>
@@ -355,8 +355,8 @@ commit: a2405b970b7c8222a483b82213adcb17d646c75d <br />
 <h1 id="关键字"><a class="header" href="#关键字">关键字</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/keywords.md">keywords.md</a><br />
-commit: 6eb3e87af2c7743d6c7c783154cc380c4b0ea270
-本章译文最后维护日期：2021-04-23</p>
+commit: 089f6e12c2d557b02caf545604db93e20a2c99b3
+本章译文最后维护日期：2023-05-12</p>
 </blockquote>
 <p>Rust 将关键字分为三类：</p>
 <ul>
@@ -468,6 +468,7 @@ fn invalid_lifetime_parameter&lt;'static&gt;(s: &amp;'static str) -&gt; &amp;'st
 </ul>
 <blockquote>
 <p><strong><sup>词法分析</sup></strong><br />
+KW_MACRO_RULES    : <code>macro_rules</code><br />
 KW_UNION          : <code>union</code><br />
 KW_STATICLIFETIME : <code>'static</code></p>
 <p><strong><sup>词法分析 2015</sup></strong><br />
@@ -1305,8 +1306,8 @@ example!();
 <h1 id="声明宏"><a class="header" href="#声明宏">声明宏</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md">macros-by-example.md</a><br />
-commit: 04f289ad17a9b86f9cde026d046072a5b3827486 <br />
-本章译文最后维护日期：2022-12-04</p>
+commit: 042cd782ccdd25c266ff5baaead64e814f13a6dd <br />
+本章译文最后维护日期：2023-05-12</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -1658,8 +1659,8 @@ macro_rules! helper {
 <h2 id="过程宏"><a class="header" href="#过程宏">过程宏</a></h2>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/procedural-macros.md">procedural-macros.md</a><br />
-commit: bd51ca17847961a0ea65bfc2326d1b0df99bac5e <br />
-本章译文最后维护日期：2021-06-17</p>
+commit: 0e4662dd8cc5a76abd1b5ad54a2599f1bf45b75c <br />
+本章译文最后维护日期：2022-05-12</p>
 </blockquote>
 <p><em>过程宏</em>允许在执行函数时创建句法扩展。过程宏有三种形式:</p>
 <ul>
@@ -1804,7 +1805,7 @@ use my_macro::show_streams;
 #[show_streams]
 fn invoke1() {}
 // out: attr: &quot;&quot;
-// out: item: &quot;fn invoke1() { }&quot;
+// out: item: &quot;fn invoke1() {}&quot;
 
 // 示例: 带输入参数的属性
 #[show_streams(bar)]
@@ -5553,8 +5554,8 @@ let _ = five();
 <h1 id="代码生成属性"><a class="header" href="#代码生成属性">代码生成属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md">codegen.md</a><br />
-commit: f37b1c11fc549ba2ce7792691b4a235e02e88c5b <br />
-本章译文最后维护日期：2023-05-03</p>
+commit: 689ef0581aaffcd3e68e805e98413183993d216a <br />
+本章译文最后维护日期：2023-05-12</p>
 </blockquote>
 <p>下述<a href="attributes/../attributes.html">属性</a>用于控制代码生成。</p>
 <h2 id="optimization-hints"><a class="header" href="#optimization-hints">Optimization hints</a></h2>
@@ -5609,6 +5610,7 @@ unsafe fn foo_avx2() {}
 <tr><td><code>bmi1</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets">BMI1</a> — Bit Manipulation Instruction Sets</td><td>位操作指令集</td></tr>
 <tr><td><code>bmi2</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#BMI2">BMI2</a> — Bit Manipulation Instruction Sets 2</td><td>位操作指令集2</td></tr>
 <tr><td><code>cmpxchg16b</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/cmpxchg8b:cmpxchg16b"><code>cmpxchg16b</code></a> - Compares and exchange 16 bytes (128 bits) of data atomically</td><td>原子地比较和交换16字节（128位）的数据</td></tr>
+<tr><td><code>f16c</code></td><td><code>avx</code></td><td><a href="https://en.wikipedia.org/wiki/F16C">F16C</a> — 16-bit floating point conversion instructions</td><td>16位浮点转换指令</td></tr>
 <tr><td><code>fma</code></td><td><code>avx</code></td><td><a href="https://en.wikipedia.org/wiki/FMA_instruction_set">FMA3</a> — Three-operand fused multiply-add</td><td>三操作乘加指令</td></tr>
 <tr><td><code>fxsr</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/fxsave"><code>fxsave</code></a> and <a href="https://www.felixcloutier.com/x86/fxrstor"><code>fxrstor</code></a> — Save and restore x87 FPU, MMX Technology, and SSE State</td><td>保存/恢复 x87 FPU、MMX技术，SSE状态</td></tr>
 <tr><td><code>lzcnt</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/lzcnt"><code>lzcnt</code></a> — Leading zeros count</td><td>前导零计数</td></tr>
@@ -12828,8 +12830,8 @@ fn main() {
 <h1 id="内联汇编"><a class="header" href="#内联汇编">内联汇编</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md">behavior-considered-undefined.md</a><br />
-commit: aba56b9dd7b7e9e7a146fa98a8b70474b43759a5 <br />
-本章译文最后维护日期：2023-05-03</p>
+commit: ae66749a418acb52e44a11b5f19807d166110073 <br />
+本章译文最后维护日期：2023-05-12</p>
 </blockquote>
 <p>Rust 通过 <a href="https://doc.rust-lang.org/core/arch/macro.asm.html"><code>asm!</code></a> 和 <a href="https://doc.rust-lang.org/core/arch/macro.global_asm.html"><code>global_asm!</code></a> 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。</p>
@@ -12845,6 +12847,7 @@ commit: aba56b9dd7b7e9e7a146fa98a8b70474b43759a5 <br />
 <h2 id="示例-6"><a class="header" href="#示例-6">示例</a></h2>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
+</span><span class="boring">#[cfg(target_arch = &quot;x86_64&quot;)] {
 </span>use std::arch::asm;
 
 // 使用以为和相加运算来实现 x 乘6的效果
@@ -12861,6 +12864,7 @@ unsafe {
 }
 assert_eq!(x, 4 * 6);
 <span class="boring">}
+</span><span class="boring">}
 </span></code></pre></pre>
 <h2 id="syntax"><a class="header" href="#syntax">Syntax</a></h2>
 <h2 id="句法"><a class="header" href="#句法">句法</a></h2>
@@ -12922,7 +12926,7 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 此已分配的寄存器名会被替换到 asm模板字符串中。</li>
 <li>在这段 asm代码的开头，此已分配的寄存器将包含一个未定义的值。</li>
 <li><code>&lt;expr&gt;</code> 必须是一个（可能未被初始化的）位置表达式，在这段 asm代码的结尾，此寄存器的内容会被写到此位置表达式里。</li>
-<li>可以使用下划线(<code>_</code>)替代这个位置表达式，这将导致在这段 asm代码的结尾，此寄存器的内容被丢弃(等效于一个 clobber寄存器（译者注：clobber寄存器相当于内存屏障，该屏障使得该条指令之前的内存访问操作不会移到这条指令后面，该条指令之后的内存访问操作也不会移到这条指令前面，从而防止编译时编译器优化造成的指令顺序重排。碰到 clobber寄存器，编译器会将所有寄存器中缓存的值下刷到内存，之后再重新读取内存中的值并缓存到寄存器中）)。</li>
+<li>可以使用下划线(<code>_</code>)替代这个位置表达式，这将导致在这段 asm代码的结尾，此寄存器的内容被丢弃(等效于一个 clobber寄存器（译者注：clobber寄存器会被该asm语句中的汇编代码隐性修改，也因此，编译器在为输入操作数和输出操作数挑选寄存器时，就不会使用这类寄存器，这样就避免了发生数据覆盖等逻辑错误)。</li>
 </ul>
 </li>
 <li><code>lateout(&lt;reg&gt;) &lt;expr&gt;</code>

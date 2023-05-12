@@ -153,8 +153,8 @@
 <h2 id="过程宏"><a class="header" href="#过程宏">过程宏</a></h2>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/procedural-macros.md">procedural-macros.md</a><br />
-commit: bd51ca17847961a0ea65bfc2326d1b0df99bac5e <br />
-本章译文最后维护日期：2021-06-17</p>
+commit: 0e4662dd8cc5a76abd1b5ad54a2599f1bf45b75c <br />
+本章译文最后维护日期：2022-05-12</p>
 </blockquote>
 <p><em>过程宏</em>允许在执行函数时创建句法扩展。过程宏有三种形式:</p>
 <ul>
@@ -299,7 +299,7 @@ use my_macro::show_streams;
 #[show_streams]
 fn invoke1() {}
 // out: attr: &quot;&quot;
-// out: item: &quot;fn invoke1() { }&quot;
+// out: item: &quot;fn invoke1() {}&quot;
 
 // 示例: 带输入参数的属性
 #[show_streams(bar)]

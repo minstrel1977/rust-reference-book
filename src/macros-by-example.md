@@ -2,8 +2,8 @@
 # 声明宏
 
 >[macros-by-example.md](https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md)\
->commit: 04f289ad17a9b86f9cde026d046072a5b3827486 \
->本章译文最后维护日期：2022-12-04
+>commit: 042cd782ccdd25c266ff5baaead64e814f13a6dd \
+>本章译文最后维护日期：2023-05-12
 
 > **<sup>句法</sup>**\
 > _MacroRulesDefinition_ :\

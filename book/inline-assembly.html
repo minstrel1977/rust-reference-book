@@ -153,8 +153,8 @@
 <h1 id="内联汇编"><a class="header" href="#内联汇编">内联汇编</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md">behavior-considered-undefined.md</a><br />
-commit: aba56b9dd7b7e9e7a146fa98a8b70474b43759a5 <br />
-本章译文最后维护日期：2023-05-03</p>
+commit: ae66749a418acb52e44a11b5f19807d166110073 <br />
+本章译文最后维护日期：2023-05-12</p>
 </blockquote>
 <p>Rust 通过 <a href="https://doc.rust-lang.org/core/arch/macro.asm.html"><code>asm!</code></a> 和 <a href="https://doc.rust-lang.org/core/arch/macro.global_asm.html"><code>global_asm!</code></a> 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。</p>
@@ -170,6 +170,7 @@ commit: aba56b9dd7b7e9e7a146fa98a8b70474b43759a5 <br />
 <h2 id="示例"><a class="header" href="#示例">示例</a></h2>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
+</span><span class="boring">#[cfg(target_arch = &quot;x86_64&quot;)] {
 </span>use std::arch::asm;
 
 // 使用以为和相加运算来实现 x 乘6的效果
@@ -186,6 +187,7 @@ unsafe {
 }
 assert_eq!(x, 4 * 6);
 <span class="boring">}
+</span><span class="boring">}
 </span></code></pre></pre>
 <h2 id="syntax"><a class="header" href="#syntax">Syntax</a></h2>
 <h2 id="句法"><a class="header" href="#句法">句法</a></h2>
@@ -247,7 +249,7 @@ ARM目标架构上，使用 <code>.syntax unified</code>模式。
 此已分配的寄存器名会被替换到 asm模板字符串中。</li>
 <li>在这段 asm代码的开头，此已分配的寄存器将包含一个未定义的值。</li>
 <li><code>&lt;expr&gt;</code> 必须是一个（可能未被初始化的）位置表达式，在这段 asm代码的结尾，此寄存器的内容会被写到此位置表达式里。</li>
-<li>可以使用下划线(<code>_</code>)替代这个位置表达式，这将导致在这段 asm代码的结尾，此寄存器的内容被丢弃(等效于一个 clobber寄存器（译者注：clobber寄存器相当于内存屏障，该屏障使得该条指令之前的内存访问操作不会移到这条指令后面，该条指令之后的内存访问操作也不会移到这条指令前面，从而防止编译时编译器优化造成的指令顺序重排。碰到 clobber寄存器，编译器会将所有寄存器中缓存的值下刷到内存，之后再重新读取内存中的值并缓存到寄存器中）)。</li>
+<li>可以使用下划线(<code>_</code>)替代这个位置表达式，这将导致在这段 asm代码的结尾，此寄存器的内容被丢弃(等效于一个 clobber寄存器（译者注：clobber寄存器会被该asm语句中的汇编代码隐性修改，也因此，编译器在为输入操作数和输出操作数挑选寄存器时，就不会使用这类寄存器，这样就避免了发生数据覆盖等逻辑错误)。</li>
 </ul>
 </li>
 <li><code>lateout(&lt;reg&gt;) &lt;expr&gt;</code>

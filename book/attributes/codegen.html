@@ -153,8 +153,8 @@
 <h1 id="代码生成属性"><a class="header" href="#代码生成属性">代码生成属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md">codegen.md</a><br />
-commit: f37b1c11fc549ba2ce7792691b4a235e02e88c5b <br />
-本章译文最后维护日期：2023-05-03</p>
+commit: 689ef0581aaffcd3e68e805e98413183993d216a <br />
+本章译文最后维护日期：2023-05-12</p>
 </blockquote>
 <p>下述<a href="../attributes.html">属性</a>用于控制代码生成。</p>
 <h2 id="optimization-hints"><a class="header" href="#optimization-hints">Optimization hints</a></h2>
@@ -209,6 +209,7 @@ unsafe fn foo_avx2() {}
 <tr><td><code>bmi1</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets">BMI1</a> — Bit Manipulation Instruction Sets</td><td>位操作指令集</td></tr>
 <tr><td><code>bmi2</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#BMI2">BMI2</a> — Bit Manipulation Instruction Sets 2</td><td>位操作指令集2</td></tr>
 <tr><td><code>cmpxchg16b</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/cmpxchg8b:cmpxchg16b"><code>cmpxchg16b</code></a> - Compares and exchange 16 bytes (128 bits) of data atomically</td><td>原子地比较和交换16字节（128位）的数据</td></tr>
+<tr><td><code>f16c</code></td><td><code>avx</code></td><td><a href="https://en.wikipedia.org/wiki/F16C">F16C</a> — 16-bit floating point conversion instructions</td><td>16位浮点转换指令</td></tr>
 <tr><td><code>fma</code></td><td><code>avx</code></td><td><a href="https://en.wikipedia.org/wiki/FMA_instruction_set">FMA3</a> — Three-operand fused multiply-add</td><td>三操作乘加指令</td></tr>
 <tr><td><code>fxsr</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/fxsave"><code>fxsave</code></a> and <a href="https://www.felixcloutier.com/x86/fxrstor"><code>fxrstor</code></a> — Save and restore x87 FPU, MMX Technology, and SSE State</td><td>保存/恢复 x87 FPU、MMX技术，SSE状态</td></tr>
 <tr><td><code>lzcnt</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/lzcnt"><code>lzcnt</code></a> — Leading zeros count</td><td>前导零计数</td></tr>
