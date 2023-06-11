@@ -2,8 +2,8 @@
 # 调用表达式
 
 >[call-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/call-expr.md)\
->commit: 31dc83fe187a87af2b162801d50f4bed171fecdb \
->本章译文最后维护日期：2021-4-5
+>commit: 9b4969786f828fbe0bf818547ef6549f029899a9 \
+>本章译文最后维护日期：2023-06-11
 
 > **<sup>句法</sup>**\
 > _CallExpression_ :\
@@ -53,7 +53,7 @@ trait Pretty {
 }
 
 trait Ugly {
-  fn print(&self);
+    fn print(&self);
 }
 
 struct Foo;

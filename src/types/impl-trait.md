@@ -1,8 +1,8 @@
 # Impl trait
 
 >[impl-object.md](https://github.com/rust-lang/reference/blob/master/src/types/impl-object.md)\
->commit: 94085bbf726d53f3c7ace1ce122c82ab7b691d39 \
->本章译文最后维护日期：2020-5-29
+>commit: 3f5f3b2428275fa0202ec8f289f7e03d3ebaf832 \
+>本章译文最后维护日期：2023-06-11
 
 > **<sup>句法</sup>**\
 > _ImplTraitType_ : `impl` [_TypeParamBounds_]
@@ -35,15 +35,15 @@ fn bar() -> impl Trait {
 
 例如，下面两种形式几乎等价：
 
-```rust,ignore
+```rust
 trait Trait {}
 
 // 泛型类型参数
-fn foo<T: Trait>(arg: T) {
+fn with_generic_type<T: Trait>(arg: T) {
 }
 
 // 参数位置上的trait
-fn foo(arg: impl Trait) {
+fn with_impl_trait(arg: impl Trait) {
 }
 ```
 
@@ -99,14 +99,22 @@ fn returns_closure() -> impl Fn(i32) -> i32 {
 与泛型类型参数不同，使用 `impl Trait` 时，函数选择返回类型，调用者不能选择返回类型。
 
 泛型函数：
-```rust,ignore
+```rust
+# trait Trait {}
 fn foo<T: Trait>() -> T {
+    // ...
+# panic!()
+}
 ```
 允许调用者来指定返回类型`T`，然后函数返回该类型。
 
 `impl Trait` 函数：
-```rust,ignore
+```rust
+# trait Trait {}
+# impl Trait for () {}
 fn foo() -> impl Trait {
+    // ...
+}
 ```
 不允许调用者指定返回类型。
 相反，函数自身选择返回类型，但只承诺返回类型将实现 `Trait`。

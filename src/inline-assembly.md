@@ -2,8 +2,8 @@
 # 内联汇编
 
 >[behavior-considered-undefined.md](https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md)\
->commit: ae66749a418acb52e44a11b5f19807d166110073 \
->本章译文最后维护日期：2023-05-12
+>commit: b36de24dd92755f008f78ac1d3b2706b0fa25729 \
+>本章译文最后维护日期：2023-06-11
 
 Rust 通过 [`asm!`] 和 [`global_asm!`] 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。
@@ -16,6 +16,7 @@ Rust 通过 [`asm!`] 和 [`global_asm!`] 这两个宏来提供了对内联汇编
 - ARM
 - AArch64
 - RISC-V
+- LoongArch
 
 如果在不支持的目标架构上使用 `asm!`，编译器会报错。
 
@@ -197,6 +198,8 @@ ARM目标架构上，使用 `.syntax unified`模式。
 | RISC-V | `reg` | `x1`, `x[5-7]`, `x[9-15]`, `x[16-31]` (non-RV32E) | `r` |
 | RISC-V | `freg` | `f[0-31]` | `f` |
 | RISC-V | `vreg` | `v[0-31]` | 仅 clobbers |
+| LoongArch | `reg` | `$r1`, `$r[4-20]`, `$r[23,30]` | `r` |
+| LoongArch | `freg` | `$f[0-31]` | `f` |
 
 > **注意**:
 > - 在x86上，我们将 `reg_byte` 与 reg` 区别对待，因为编译器可以为 `reg_byte` 分别分配低位的 'al' 和高位的 'ah'，而 `reg` 却只能持有整个寄存器。
@@ -235,6 +238,8 @@ ARM目标架构上，使用 `.syntax unified`模式。
 | RISC-V | `freg` | `f` | `f32` |
 | RISC-V | `freg` | `d` | `f64` |
 | RISC-V | `vreg` | N/A | 仅 clobbers |
+| LoongArch64 | `reg` | None | `i8`, `i16`, `i32`, `i64`, `f32`, `f64` |
+| LoongArch64 | `freg` | None | `f32`, `f64` |
 
 > **注意**: 对于上述表里，指针、函数指针和 `isize`/`usize` 被视为等效的整数类型（`i16`/`i32`/`i64` 具体取决于目标架构）。
 
@@ -297,15 +302,27 @@ ARM目标架构上，使用 `.syntax unified`模式。
 | RISC-V | `f[10-17]` | `fa[0-7]` |
 | RISC-V | `f[18-27]` | `fs[2-11]` |
 | RISC-V | `f[28-31]` | `ft[8-11]` |
+| LoongArch | `$r0` | `$zero` |
+| LoongArch | `$r1` | `$ra` |
+| LoongArch | `$r2` | `$tp` |
+| LoongArch | `$r3` | `$sp` |
+| LoongArch | `$r[4-11]` | `$a[0-7]` |
+| LoongArch | `$r[12-20]` | `$t[0-8]` |
+| LoongArch | `$r21` | |
+| LoongArch | `$r22` | `$fp`, `$s9` |
+| LoongArch | `$r[23-31]` | `$s[0-8]` |
+| LoongArch | `$f[0-7]` | `$fa[0-7]` |
+| LoongArch | `$f[8-23]` | `$ft[0-15]` |
+| LoongArch | `$f[24-31]` | `$fs[0-7]` |
 
 某些寄存器不能用于输入或输出操作：
 
 | 体系架构 | 不支持的寄存器 | 原因 |
 | ------------ | -------------------- | ------ |
 | All | `sp` | 栈指针必须在 asm代码块末尾恢复为其原始值。|
-| All | `bp` (x86), `x29` (AArch64), `x8` (RISC-V) | 帧指针不能用作输入或输出。|
+| All | `bp` (x86), `x29` (AArch64), `x8` (RISC-V), `$fp` (LoongArch) | 帧指针不能用作输入或输出。|
 | ARM | `r7` or `r11` | 在 ARM 上，帧指针可以是 `r7` 或 `r11`，具体取决于目标架构。帧指针不能用作输入或输出。|
-| All | `si` (x86-32), `bx` (x86-64), `r6` (ARM), `x19` (AArch64), `x9` (RISC-V) | LLVM 在内部将其用作具有复杂栈帧的函数的“基指针”。|
+| All | `si` (x86-32), `bx` (x86-64), `r6` (ARM), `x19` (AArch64), `x9` (RISC-V), `$s8` (LoongArch) | LLVM 在内部将其用作具有复杂栈帧的函数的“基指针”。|
 | x86 | `ip` | 这是程序计数器，不是真正的寄存器。|
 | AArch64 | `xzr` | 这是一个不能修改的常量零寄存器。 |
 | AArch64 | `x18` | 这是一些 AArch64目标架构上的操作系统预留寄存器。 |
@@ -313,6 +330,9 @@ ARM目标架构上，使用 `.syntax unified`模式。
 | ARM | `r9` | 这是一些 ARM目标架构上的操作系统预留寄存器。|
 | RISC-V | `x0` | 这是一个不能修改的常量零寄存器。 |
 | RISC-V | `gp`, `tp` | 这些寄存器是预留的，不能用作输入或输出。|
+| LoongArch | `$r0` or `$zero` | 这是一个不能修改的常量零寄存器。 |
+| LoongArch | `$r2` or `$tp` | 这是为TLS保留的。 |
+| LoongArch | `$r21` | 这是 ABI 所保留的。 |
 
 帧指针和基指针寄存器(base pointer register)预留供 LLVM 内部使用。而 `asm!`语句不能显式去指定使用预留寄存器，但在某些情况下，LLVM 将为 `reg`操作分配其中一个预留寄存器。使用预留寄存器的汇编代码应该小心，因为 `reg`操作可能在使用相同的寄存器。
 
@@ -360,6 +380,8 @@ ARM目标架构上，使用 `.syntax unified`模式。
 | ARM | `qreg` | `e` / `f` | `d0` / `d1` | `e` / `f` |
 | RISC-V | `reg` | None | `x1` | None |
 | RISC-V | `freg` | None | `f0` | None |
+| LoongArch | `reg` | None | `$r1` | None |
+| LoongArch | `freg` | None | `$f0` | None |
 
 > **注意**:
 > - 对于 ARM架构 `e` / `f`: 这将打印出 NEON quad（128位）寄存器的低双字或高双字寄存器名称。
@@ -393,6 +415,7 @@ ARM目标架构上，使用 `.syntax unified`模式。
 | AArch64 | `"C"`, `"system"`, `"efiapi"` | `x[0-17]`, `x18`\*, `x30`, `v[0-31]`, `p[0-15]`, `ffr` |
 | ARM | `"C"`, `"system"`, `"efiapi"`, `"aapcs"` | `r[0-3]`, `r12`, `r14`, `s[0-15]`, `d[0-7]`, `d[16-31]` |
 | RISC-V | `"C"`, `"system"`, `"efiapi"` | `x1`, `x[5-7]`, `x[10-17]`, `x[28-31]`, `f[0-7]`, `f[10-17]`, `f[28-31]`, `v[0-31]` |
+| LoongArch | `"C"`, `"system"`, `"efiapi"` | `$r1`, `$r[4-20]`, `$f[0-23]` |
 
 > 注意：
 > - 在 AArch64架构上，如果 `x18` 不是目标架构上的预留寄存器，则它仅被包括在 clobber寄存器列表中。
@@ -481,7 +504,9 @@ ARM目标架构上，使用 `.syntax unified`模式。
     - 浮点状态寄存器(`FPSR`).
   - RISC-V
     - `fcsr` (`fflags`)中的浮点异常标志寄存器。
-    - 向量扩展状态寄存器(`vtype`, `vl`, `vcsr`).
+    - 向量扩展状态寄存器(`vtype`, `vl`, `vcsr`)。
+  - LoongArch
+    - `$fcc[0-7]` 中的浮点条件标志寄存器。
 - 在 x86 上，方向标志寄存器（`EFLAGS` 中的 DF）在进入 asm块时清除，在退出时也必须清除。
   - 如果在退出 asm块时设置了方向标志，则此行为未定义。
 - 在 x86 上，x87浮点寄存器栈必须保持不变，除非所有的 `st([0-7])`寄存器都被用 `out("st(0)") _, out("st(1)") _, ...`标记标记为 clobber寄存器。

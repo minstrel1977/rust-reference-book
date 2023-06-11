@@ -2,8 +2,8 @@
 # 外部块
 
 >[external-blocks.md](https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md)\
->commit: a9afb04b47a84a6753e4dc657348c324c876102c \
->本章译文最后维护日期：2023-03-04
+>commit: f0bb14c9bacca5d305e0488c43273ebe22fe928e \
+>本章译文最后维护日期：2023-06-11
 
 > **<sup>句法</sup>**\
 > _ExternBlock_ :\
@@ -172,7 +172,24 @@ extern {
 
 指定 `kind = "dylib"` 将指示 Rust编译器根据 `name`键链接导入库。然后，链接器将使用其正常的库解析逻辑来查找导入库。或者，使用 `kind = "raw-dylib"` 来指示编译器在编译期间生成一个导入库，并将其提供给链接器。
 
-`raw-dylib` 仅在 Windows 上受支持，并且还不支持在 32位x86(`target_arch="x86"`)上使用。编译目标平台为非Windows平台或目标平台为x86时，此设置将导致编译器错误。
+`raw dylib` 仅在 Windows 上受支持。在针对其他平台时使用它将导致编译器错误。
+
+#### The `import_name_type` key
+#### `import_name_type`键
+
+在 x86 Windows上，函数的名称是“被修饰过的”（比如被添加了特定的前缀和/或后缀），以指示其支持的调用约定。例如，名为 `fn1` 且没有参数的 `stdcall`调用约定函数将被修饰为`_fn1@0`。然而，[PE格式][PE Format]也允许名称没有前缀或不加修饰。此外，MSVC和GNU工具链对相同的调用约定使用不同的装饰，这意味着，默认情况下，一些 Win32函数不能通过 GNU工具链使用 `raw-dylib`链接类型进行调用。
+
+为了照顾到这些差异，在使用 `raw-dylib`链接类型时，你可以通过指定 `import_name_type`键使用下面的（某一）值来更改这些函数在生成的库文件中的命名方式：
+
+* `decorated`：函数名称将使用 MSVC工具链格式进行完全修饰。
+* `noprefix`：函数名称将使用 MSVC工具链格式进行修饰，但跳过前导的 `?`、`@` 或者可选地 `_`。
+* `undecorated`：函数名称将不会被修饰。
+
+如果未指定 `import_name_type`键，则函数名称将使用目标工具链的格式进行完全修饰。
+
+变量从不会被修饰，因此 `import_name_type`键对它们在生成的库文件的命名方式没有影响。
+
+`import_name_type`键仅在x86 Windows上受支持。在针对其他平台时使用它将导致编译器错误。
 
 ### The `link_name` attribute
 ### `link_name`属性
@@ -237,3 +254,4 @@ extern "stdcall" {
 [`whole-archive` documentation for rustc]: https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-whole-archive
 [`verbatim` documentation for rustc]: https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-verbatim
 [`dylib` versus `raw-dylib`]: #dylib-versus-raw-dylib
+[PE Format]: https://learn.microsoft.com/windows/win32/debug/pe-format#import-name-type

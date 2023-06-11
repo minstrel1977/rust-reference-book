@@ -45,6 +45,7 @@
     - [代码生成](attributes/codegen.md)
     - [极限值设置](attributes/limits.md)
     - [类型系统](attributes/type_system.md)
+    - [调试器](attributes/debugger.md)
 
 - [语句和表达式](statements-and-expressions.md)
     - [语句](statements.md)

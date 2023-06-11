@@ -3,8 +3,8 @@
 # 属性
 
 >[attributes.md](https://github.com/rust-lang/reference/blob/master/src/attributes.md)\
->commit: 6a5431b863f61b86dcac70ee2ab377152f40f66e \
->本章译文最后维护日期：2022-12-04
+>commit: 39a0be6dc8210e0f127638ac5cc6820b8ce534df \
+>本章译文最后维护日期：2023-06-11
 
 > **<sup>句法</sup>**\
 > _InnerAttribute_ :\
@@ -236,6 +236,8 @@ pub fn f() {}
   - `feature` — 用于启用非稳定的或实验性的编译器特性。参见 [The Unstable Book] 了解在 `rustc` 中实现的特性。
 - 类型系统(Type System)
   - [`non_exhaustive`] — 表明一个类型将来会添加更多的字段/变体。
+- 调试器
+  - [`debugger_visualizer`] — 嵌入一个文件，该文件指定类型的调试器输出。
 
 [Doc comments]: comments.md#doc-comments
 [ECMA-334]: https://www.ecma-international.org/publications/standards/Ecma-334.htm
@@ -256,6 +258,7 @@ pub fn f() {}
 [`cold`]: attributes/codegen.md#the-cold-attribute
 [`crate_name`]: crates-and-source-files.md#the-crate_name-attribute
 [`crate_type`]: linkage.md
+[`debugger_visualizer`]: attributes/debugger.md#the-debugger_visualizer-attribute
 [`deny`]: attributes/diagnostics.md#lint-check-attributes
 [`deprecated`]: attributes/diagnostics.md#the-deprecated-attribute
 [`derive`]: attributes/derive.md
