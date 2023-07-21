@@ -153,8 +153,8 @@
 <h1 id="operator-expressions"><a class="header" href="#operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: 87895584c98fa4e784e243301854fc3060323ce5 <br />
-本章译文最后维护日期：2023-03-04</p>
+commit: 67f41530c5e972c319c9c524d8875f3a9f70c6f3 <br />
+本章译文最后维护日期：2023-07-21</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -384,8 +384,8 @@ assert_eq!(true, !false);
 <tr><td><code>+</code></td><td>加法</td><td></td><td>加法</td><td><code>std::ops::Add</code></td><td><code>std::ops::AddAssign</code></td></tr>
 <tr><td><code>-</code></td><td>减法</td><td></td><td>减法</td><td><code>std::ops::Sub</code></td><td><code>std::ops::SubAssign</code></td></tr>
 <tr><td><code>*</code></td><td>乘法</td><td></td><td>乘法</td><td><code>std::ops::Mul</code></td><td><code>std::ops::MulAssign</code></td></tr>
-<tr><td><code>/</code></td><td>除法*</td><td></td><td>取余</td><td><code>std::ops::Div</code></td><td><code>std::ops::DivAssign</code></td></tr>
-<tr><td><code>%</code></td><td>取余**</td><td></td><td>Remainder</td><td><code>std::ops::Rem</code></td><td><code>std::ops::RemAssign</code></td></tr>
+<tr><td><code>/</code></td><td>除法*†</td><td></td><td>取余</td><td><code>std::ops::Div</code></td><td><code>std::ops::DivAssign</code></td></tr>
+<tr><td><code>%</code></td><td>取余**†</td><td></td><td>Remainder</td><td><code>std::ops::Rem</code></td><td><code>std::ops::RemAssign</code></td></tr>
 <tr><td><code>&amp;</code></td><td>按位与</td><td><a href="../types/boolean.html#logical-and">逻辑与</a></td><td></td><td><code>std::ops::BitAnd</code></td><td><code>std::ops::BitAndAssign</code></td></tr>
 <tr><td><code>|</code></td><td>按位或</td><td><a href="../types/boolean.html#logical-or">逻辑或</a></td><td></td><td><code>std::ops::BitOr</code></td><td><code>std::ops::BitOrAssign</code></td></tr>
 <tr><td><code>^</code></td><td>按位异或</td><td><a href="../types/boolean.html#logical-xor">逻辑异或</a></td><td></td><td><code>std::ops::BitXor</code></td><td><code>std::ops::BitXorAssign</code></td></tr>
@@ -396,6 +396,7 @@ assert_eq!(true, !false);
 <p>* 整数除法趋零取整。</p>
 <p>** Rust使用由<a href="https://en.wikipedia.org/wiki/Modulo_operation#Variants_of_the_definition">截断除法</a>定义的求宇运算。也就是 <code>余数=被除数%除数</code>，其中余数将与被除数的符号一致。</p>
 <p>*** 有符号整数类型算术右移位，无符号整数类型逻辑右移位。</p>
+<p>† 对整型来说，除0会导致panic。</p>
 <p>下面是使用这些操作符的示例:</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

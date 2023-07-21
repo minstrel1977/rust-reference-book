@@ -2,8 +2,8 @@
 # 路径
 
 >[paths.md](https://github.com/rust-lang/reference/blob/master/src/paths.md)\
->commit: f758647f8ece7b93b841b4f3d89138d280a2835c \
->本章译文最后维护日期：2022-06-17
+>commit: 2e85a35becb63873b2dba06bbbc717cce7ad55d2 \
+>本章译文最后维护日期：2023-07-21
 
 *路径*是一个或多个由命名空间<span class="parenthetical">限定符(`::`)</span>*逻辑*分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，`::` 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的[程序项][item]或[变量][variable]。如果路径包含多个路径段，则总是引用程序项。
 
@@ -105,14 +105,24 @@ trait T1 {
     fn f() { println!("T1 f"); }
 }
 impl T1 for S {}
-trait T2 {net
+trait T2 {
     fn f() { println!("T2 f"); }
-}net
+}
+impl T2 for S {}
+S::f();  // 调用固有实现
+<S as T1>::f();  // 调用T1的 trait函数
+<S as T2>::f();  // 调用T2的 trait函数
+```
+
+### Paths in types
+### 类型中的路径
+
+> **<sup>句法</sup>**\
 > _TypePath_ :\
 > &nbsp;&nbsp; `::`<sup>?</sup> _TypePathSegment_ (`::` _TypePathSegment_)<sup>\*</sup>
 >
 > _TypePathSegment_ :\
-> &nbsp;&nbsp; _PathIdentSegment_ `::`<sup>?</sup> ([_GenericArgs_] | _TypePathFn_)<sup>?</sup>
+> &nbsp;&nbsp; _PathIdentSegment_ (`::`<sup>?</sup> ([_GenericArgs_] | _TypePathFn_))<sup>?</sup>
 >
 > _TypePathFn_ :\
 > `(` _TypePathFnInputs_<sup>?</sup> `)` (`->` [_Type_])<sup>?</sup>
@@ -133,7 +143,7 @@ trait T2 {net
 # struct S;
 impl ops::Index<ops::Range<usize>> for S { /*...*/ }
 fn i<'a>() -> impl Iterator<Item = ops::Example<'a>> {
-    // ...net
+    // ...
 #    const EXAMPLE: Vec<ops::Example<'static>> = Vec::new();
 #    EXAMPLE.into_iter()
 }

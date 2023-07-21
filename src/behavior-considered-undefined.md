@@ -2,8 +2,8 @@
 ## 未定义的行为
 
 >[behavior-considered-undefined.md](https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md)\
->commit: 8d49ecf542b8f63a30ce4e879757a5c163946bc6 \
->本章译文最后维护日期：2023-03-04
+>commit: e94fb3d5ba9a06c118e2428b8e6f738a157fb642 \
+>本章译文最后维护日期：2023-07-21
 
 如果 Rust 代码出现了下面列表中的任何行为，则此代码被认为不正确。这包括非安全(`unsafe`)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。
 
@@ -43,6 +43,8 @@
 
     > **注意**：`rustc` 是使用还未稳定下来的属性 `rustc_layout_scalar_valid_range_*` 来验证这条规则的。
 * 错误的使用内联汇编，具体细节，参见使用内联汇编编写代码时的相关[规则][rules]。
+* **在[常量上下文](const_eval.md#const-context)中**: 将指向某些以分配对象的指针（引用、原始指针或函数指针）转换或以其他方式重新解释为非指针类型（如整数）。
+“重新解释”是指在不进行强制转换的情况下以整数类型加载指针值，例如通过执行原始指针强制转换或使用联合体（union）。
 
 **注意：** 未初始化的内存对于任何具有有限有效值集的类型来说也隐式非法。也就是说，允许读取未初始化内存的情况只发生在联合体(`union`)内部和“对齐填充区(padding)”里（类型的字段/元素之间的间隙）。
 

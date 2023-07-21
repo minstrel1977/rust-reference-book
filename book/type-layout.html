@@ -153,8 +153,8 @@
 <h1 id="类型布局"><a class="header" href="#类型布局">类型布局</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-layout.md">type-layout.md</a><br />
-commit: f8ac109624aad26711824fc9e9e0780a1c52f34a <br />
-本章译文最后维护日期：2023-01-15</p>
+commit: 2dc423d6937754e07e42345156021d3ef8ff956b <br />
+本章译文最后维护日期：2023-07-21</p>
 </blockquote>
 <p>类型的布局描述类型的内存宽度(size)、对齐量(alignment)和字段(fields)的<em>相对偏移量(relative offsets)</em>。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。</p>
 <p>每次编译都有可能更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。</p>
@@ -544,9 +544,29 @@ assert_eq!(std::mem::size_of::&lt;Enum16&gt;(), 4);
 <p>字段间的填充保证为每个字段（可能更改）的对齐量填充所需的最小值（但请注意，<code>packed</code> 本身并不能保证字段顺序）。这些规则的一个重要后果是：<code>#[repr(packed(1))]</code>（或<code>#[repr(packed)]</code>) 的类型不会有字段间填充。</p>
 <p><code>align</code> 和 <code>packed</code> 修饰符不能应用于同一类型，且 <code>packed</code> 修饰的类型不能直接或间接地包含另一个 <code>align</code> 修饰的类型。<code>align</code> 和 <code>packed</code> 修饰符只能应用于<a href="#the-default-representation">默认表形</a>和 <a href="#the-c-representation">C表形</a>中。</p>
 <p><code>align</code>修饰符也可以应用在枚举上。如果这样做了，其对枚举对齐量的影响与将此枚举包装在一个新的使用了相同的 <code>align</code>修饰符的结构体中的效果相同。</p>
-<div class="warning">
-<p>***警告：***解引用一个未对齐的指针是<a href="behavior-considered-undefined.html">未定义行为</a>，但可以<a href="https://github.com/rust-lang/rust/issues/27060">安全地创建指向 <code>packed</code>修饰的字段的未对齐指针</a>。就像在安全(safe) Rust 中所有创建未定义行为的方法一样，这是一个 bug。</p>
-</div>
+<blockquote>
+<p>注意：不能引用未对齐的成员字段，因为这是一种<a href="behavior-considered-undefined.html">未定义行为</a>。
+当成员字段由于特定对齐修饰符而未能对齐时，请考虑以下做法来使用引用和解引用：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[repr(packed)]
+struct Packed {
+    f1: u8,
+    f2: u16,
+}
+let mut e = Packed { f1: 1, f2: 2 };
+// 不要建对字段的引用，而是将值复制到局部变量中。
+let x = e.f2;
+// 或者在类似 `println!` 的情况下使用大括号将其值先做一次复制，再引用。
+println!(&quot;{}&quot;, {e.f2});
+// 或者，如果你真需要用指针，请使用那些不要求对齐的方法进行读取和写入，而不是直接对指针做解引用。
+let ptr: *const u16 = std::ptr::addr_of!(e.f2);
+let value = unsafe { ptr.read_unaligned() };
+let mut_ptr: *mut u16 = std::ptr::addr_of_mut!(e.f2);
+unsafe { mut_ptr.write_unaligned(3) }
+<span class="boring">}
+</span></code></pre></pre>
+</blockquote>
 <h3 id="the-transparent-representation"><a class="header" href="#the-transparent-representation">The <code>transparent</code> Representation</a></h3>
 <h3 id="透明transparent表形"><a class="header" href="#透明transparent表形">透明(<code>transparent</code>)表形</a></h3>
 <p>透明(<code>transparent</code>)表型只能在只有一个字段的<a href="items/structs.html">结构体(<code>struct</code>)</a>上或只有一个变体的<a href="items/enumerations.html">枚举(<code>enum</code>)</a>上使用，这里只有一个字段/变体的意思是：</p>

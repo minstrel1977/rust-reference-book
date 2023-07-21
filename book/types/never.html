@@ -153,22 +153,29 @@
 <h1 id="never类型"><a class="header" href="#never类型">never类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/never.md">never.md</a><br />
-commit: 91486df597a9e8060f9c67587359e9f168dea7ef <br />
-本章译文最后维护日期：2020-11-14</p>
+commit: 6eacdb0d8551dcdb9e9782e4abad60ec17ddb214 <br />
+本章译文最后维护日期：2023-07-21</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>NeverType</em> : <code>!</code></p>
 </blockquote>
 <p>never类型(<code>!</code>)是一个没有值的类型，表示永远不会完成计算的结果。<code>!</code> 的类型表达式可以强转为任何其他类型。</p>
-<!-- ignore: unstable -->
-<pre><code class="language-rust ignore">let x: ! = panic!();
-// 可以强转为任何类型
-let y: u32 = x;
-</code></pre>
-<p><strong>注意：</strong> never类型原本预计在1.41中稳定下来，但由于最后一分钟检测到一些意想不到的回归，该类型的稳定进程临时暂停。目前 <code>!</code>类型只能出现在函数返回类型中。有关详细信息，请参阅<a href="https://github.com/rust-lang/rust/issues/35121">议题跟踪</a>。</p>
-<!-- 2020-11-12-->
-<!-- checked -->
+<p>类型<code>!</code> 目前<strong>只能</strong>出现在函数返回类型中，这表明它是一个从不真正返回的发散函数。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn foo() -&gt; ! {
+    panic!(&quot;This call never returns.&quot;);
+}
+<span class="boring">}
+</span></code></pre></pre>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>extern &quot;C&quot; {
+    pub fn no_return_extern_func() -&gt; !;
+}
+<span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 

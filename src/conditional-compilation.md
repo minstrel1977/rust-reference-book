@@ -2,8 +2,8 @@
 # 条件编译
 
 >[conditional-compilation.md](https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md)\
->commit: 2325d952d11ff817ce50c0c1a96b81517f566c51 \
->本章译文最后维护日期：2022-10-22
+>commit: 3319e0e1de1b33819456c912bf80ec5bfc7c90ef \
+>本章译文最后维护日期：2023-07-21
 
 > **<sup>句法</sup>**\
 > _ConfigurationPredicate_ :\
@@ -210,7 +210,9 @@
 
 它被写成 `cfg` 后跟一个 `(`，再跟一个配置谓词，最后是一个 `)`。
 
-如果谓词为真，则重写该部分代码，使其上没有 `cfg` 属性。如果谓词为假，则从源代码中删除该内容。
+如果谓词为真，则重写该部分代码，使其上没有 `cfg`属性。如果谓词为假，则直接从源代码中删除该该部分代码。
+
+当一个应用在 crate级别的 `cfg` 有一个假谓词时，行为略有不同：`cfg` 之前的任何 crate属性都会保留，`cfg`之后的任何 crate属性都会删除。这样我们即使是已经使用 `#![cfg(...)]` 移除了整个 crate，仍允许使用 `#![no_std]` 和 `#![no_core]` 这样的 crate属性来避免链接 `std`/`core`。
 
 在函数上的一些例子:
 

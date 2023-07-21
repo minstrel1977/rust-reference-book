@@ -2,8 +2,8 @@
 # 类型布局
 
 >[type-layout.md](https://github.com/rust-lang/reference/blob/master/src/type-layout.md)\
->commit: f8ac109624aad26711824fc9e9e0780a1c52f34a \
->本章译文最后维护日期：2023-01-15
+>commit: 2dc423d6937754e07e42345156021d3ef8ff956b \
+>本章译文最后维护日期：2023-07-21
 
 类型的布局描述类型的内存宽度(size)、对齐量(alignment)和字段(fields)的*相对偏移量(relative offsets)*。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。
 
@@ -451,11 +451,26 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 
 `align`修饰符也可以应用在枚举上。如果这样做了，其对枚举对齐量的影响与将此枚举包装在一个新的使用了相同的 `align`修饰符的结构体中的效果相同。
 
-<div class="warning">
-
-***警告：***解引用一个未对齐的指针是[未定义行为][undefined behavior]，但可以[安全地创建指向 `packed`修饰的字段的未对齐指针][27060]。就像在安全(safe) Rust 中所有创建未定义行为的方法一样，这是一个 bug。
-
-</div>
+> 注意：不能引用未对齐的成员字段，因为这是一种[未定义行为][undefined behavior]。
+> 当成员字段由于特定对齐修饰符而未能对齐时，请考虑以下做法来使用引用和解引用：
+>
+> ```rust
+> #[repr(packed)]
+> struct Packed {
+>     f1: u8,
+>     f2: u16,
+> }
+> let mut e = Packed { f1: 1, f2: 2 };
+> // 不要建对字段的引用，而是将值复制到局部变量中。
+> let x = e.f2;
+> // 或者在类似 `println!` 的情况下使用大括号将其值先做一次复制，再引用。
+> println!("{}", {e.f2});
+> // 或者，如果你真需要用指针，请使用那些不要求对齐的方法进行读取和写入，而不是直接对指针做解引用。
+> let ptr: *const u16 = std::ptr::addr_of!(e.f2);
+> let value = unsafe { ptr.read_unaligned() };
+> let mut_ptr: *mut u16 = std::ptr::addr_of_mut!(e.f2);
+> unsafe { mut_ptr.write_unaligned(3) }
+> ```
 
 ### The `transparent` Representation
 ### 透明(`transparent`)表形
@@ -486,7 +501,6 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 [enumerations]: items/enumerations.md
 [zero-variant enums]: items/enumerations.md#zero-variant-enums
 [undefined behavior]: behavior-considered-undefined.md
-[27060]: https://github.com/rust-lang/rust/issues/27060
 [55149]: https://github.com/rust-lang/rust/issues/55149
 [`PhantomData<T>`]: special-types-and-traits.md#phantomdatat
 [Default]: #the-default-representation

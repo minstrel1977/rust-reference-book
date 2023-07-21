@@ -2,8 +2,8 @@
 # 析构器
 
 >[destructors.md](https://github.com/rust-lang/reference/blob/master/src/destructors.md)\
->commit: 27dc03f2cdca30cf810fd3169c33d3f47b488d96 \
->本章译文最后维护日期：2023-03-04
+>commit: 193aa552751505d2a6816a22505865df366097ce \
+>本章译文最后维护日期：2023-07-21
 
 
 当一个[初始化][initialized]了的[变量][variable]或[临时变量][temporary]超出[作用域](#drop-scopes)时，其*析构器(destructor)*将运行，或者说它将被*销毁(dropped)*。此外，[赋值][Assignment]操作也会运行其左操作数的析构器（如果它已经初始化了）。如果变量只部分初始化了，则只销毁其已初始化的字段。

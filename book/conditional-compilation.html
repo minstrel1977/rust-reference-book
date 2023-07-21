@@ -153,8 +153,8 @@
 <h1 id="条件编译"><a class="header" href="#条件编译">条件编译</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md">conditional-compilation.md</a><br />
-commit: 2325d952d11ff817ce50c0c1a96b81517f566c51 <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: 3319e0e1de1b33819456c912bf80ec5bfc7c90ef <br />
+本章译文最后维护日期：2023-07-21</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -316,7 +316,8 @@ commit: 2325d952d11ff817ce50c0c1a96b81517f566c51 <br />
 <!-- 这里可以用“激活属性”来称呼吗？should we say they're active attributes here? -->
 <p><code>cfg</code><a href="attributes.html">属性</a>根据配置谓词有条件地包括它所附加的东西。</p>
 <p>它被写成 <code>cfg</code> 后跟一个 <code>(</code>，再跟一个配置谓词，最后是一个 <code>)</code>。</p>
-<p>如果谓词为真，则重写该部分代码，使其上没有 <code>cfg</code> 属性。如果谓词为假，则从源代码中删除该内容。</p>
+<p>如果谓词为真，则重写该部分代码，使其上没有 <code>cfg</code>属性。如果谓词为假，则直接从源代码中删除该该部分代码。</p>
+<p>当一个应用在 crate级别的 <code>cfg</code> 有一个假谓词时，行为略有不同：<code>cfg</code> 之前的任何 crate属性都会保留，<code>cfg</code>之后的任何 crate属性都会删除。这样我们即使是已经使用 <code>#![cfg(...)]</code> 移除了整个 crate，仍允许使用 <code>#![no_std]</code> 和 <code>#![no_core]</code> 这样的 crate属性来避免链接 <code>std</code>/<code>core</code>。</p>
 <p>在函数上的一些例子:</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

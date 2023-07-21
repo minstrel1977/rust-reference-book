@@ -153,8 +153,8 @@
 <h1 id="路径"><a class="header" href="#路径">路径</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/paths.md">paths.md</a><br />
-commit: f758647f8ece7b93b841b4f3d89138d280a2835c <br />
-本章译文最后维护日期：2022-06-17</p>
+commit: 2e85a35becb63873b2dba06bbbc717cce7ad55d2 <br />
+本章译文最后维护日期：2023-07-21</p>
 </blockquote>
 <p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，<code>::</code> 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">程序项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用程序项。</p>
 <p>仅由标识符段组成的简单路径(simple paths)的两个示例：</p>
@@ -239,27 +239,33 @@ trait T1 {
     fn f() { println!(&quot;T1 f&quot;); }
 }
 impl T1 for S {}
-trait T2 {net
+trait T2 {
     fn f() { println!(&quot;T2 f&quot;); }
-}net
-&gt; _TypePath_ :\
-&gt; &amp;nbsp;&amp;nbsp; `::`&lt;sup&gt;?&lt;/sup&gt; _TypePathSegment_ (`::` _TypePathSegment_)&lt;sup&gt;\*&lt;/sup&gt;
-&gt;
-&gt; _TypePathSegment_ :\
-&gt; &amp;nbsp;&amp;nbsp; _PathIdentSegment_ `::`&lt;sup&gt;?&lt;/sup&gt; ([_GenericArgs_] | _TypePathFn_)&lt;sup&gt;?&lt;/sup&gt;
-&gt;
-&gt; _TypePathFn_ :\
-&gt; `(` _TypePathFnInputs_&lt;sup&gt;?&lt;/sup&gt; `)` (`-&gt;` [_Type_])&lt;sup&gt;?&lt;/sup&gt;
-&gt;
-&gt; _TypePathFnInputs_ :\
-&gt; [_Type_] (`,` [_Type_])&lt;sup&gt;\*&lt;/sup&gt; `,`&lt;sup&gt;?&lt;/sup&gt;
-
-类型路径用于类型定义、trait约束(trait bound)、类型参数约束，以及限定性路径。
-
-尽管在泛型参数之前允许使用 token `::`，但它不是必需的，因为在类型路径中不存在像 _PathInExpression_ 句法中那样的歧义。
-
-```rust
-<span class="boring">mod ops {
+}
+impl T2 for S {}
+S::f();  // 调用固有实现
+&lt;S as T1&gt;::f();  // 调用T1的 trait函数
+&lt;S as T2&gt;::f();  // 调用T2的 trait函数
+<span class="boring">}
+</span></code></pre></pre>
+<h3 id="paths-in-types"><a class="header" href="#paths-in-types">Paths in types</a></h3>
+<h3 id="类型中的路径"><a class="header" href="#类型中的路径">类型中的路径</a></h3>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>TypePath</em> :<br />
+   <code>::</code><sup>?</sup> <em>TypePathSegment</em> (<code>::</code> <em>TypePathSegment</em>)<sup>*</sup></p>
+<p><em>TypePathSegment</em> :<br />
+   <em>PathIdentSegment</em> (<code>::</code><sup>?</sup> (<a href="#paths-in-expressions"><em>GenericArgs</em></a> | <em>TypePathFn</em>))<sup>?</sup></p>
+<p><em>TypePathFn</em> :<br />
+<code>(</code> <em>TypePathFnInputs</em><sup>?</sup> <code>)</code> (<code>-&gt;</code> <a href="types.html#type-expressions"><em>Type</em></a>)<sup>?</sup></p>
+<p><em>TypePathFnInputs</em> :<br />
+<a href="types.html#type-expressions"><em>Type</em></a> (<code>,</code> <a href="types.html#type-expressions"><em>Type</em></a>)<sup>*</sup> <code>,</code><sup>?</sup></p>
+</blockquote>
+<p>类型路径用于类型定义、trait约束(trait bound)、类型参数约束，以及限定性路径。</p>
+<p>尽管在泛型参数之前允许使用 token <code>::</code>，但它不是必需的，因为在类型路径中不存在像 <em>PathInExpression</em> 句法中那样的歧义。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">mod ops {
 </span><span class="boring">    pub struct Range&lt;T&gt; {f1: T}
 </span><span class="boring">    pub trait Index&lt;T&gt; {}
 </span><span class="boring">    pub struct Example&lt;'a&gt; {f1: &amp;'a i32}
@@ -267,7 +273,7 @@ trait T2 {net
 </span><span class="boring">struct S;
 </span>impl ops::Index&lt;ops::Range&lt;usize&gt;&gt; for S { /*...*/ }
 fn i&lt;'a&gt;() -&gt; impl Iterator&lt;Item = ops::Example&lt;'a&gt;&gt; {
-    // ...net
+    // ...
 <span class="boring">   const EXAMPLE: Vec&lt;ops::Example&lt;'static&gt;&gt; = Vec::new();
 </span><span class="boring">   EXAMPLE.into_iter()
 </span>}

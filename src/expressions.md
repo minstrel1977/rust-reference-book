@@ -2,8 +2,8 @@
 # 表达式
 
 >[expressions.md](https://github.com/rust-lang/reference/blob/master/src/expressions.md)\
->commit: 45c47cd38654388910a8a92f5435570355ea2762 \
->本章译文最后维护日期：2022-10-22
+>commit: 1da2af1481643266e4ffb8b66f2f7def5f1d9776 \
+>本章译文最后维护日期：2023-07-21
 
 > **<sup>句法</sup>**\
 > _Expression_ :\

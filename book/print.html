@@ -1992,8 +1992,8 @@ fn main() {
 <h1 id="条件编译"><a class="header" href="#条件编译">条件编译</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md">conditional-compilation.md</a><br />
-commit: 2325d952d11ff817ce50c0c1a96b81517f566c51 <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: 3319e0e1de1b33819456c912bf80ec5bfc7c90ef <br />
+本章译文最后维护日期：2023-07-21</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -2155,7 +2155,8 @@ commit: 2325d952d11ff817ce50c0c1a96b81517f566c51 <br />
 <!-- 这里可以用“激活属性”来称呼吗？should we say they're active attributes here? -->
 <p><code>cfg</code><a href="attributes.html">属性</a>根据配置谓词有条件地包括它所附加的东西。</p>
 <p>它被写成 <code>cfg</code> 后跟一个 <code>(</code>，再跟一个配置谓词，最后是一个 <code>)</code>。</p>
-<p>如果谓词为真，则重写该部分代码，使其上没有 <code>cfg</code> 属性。如果谓词为假，则从源代码中删除该内容。</p>
+<p>如果谓词为真，则重写该部分代码，使其上没有 <code>cfg</code>属性。如果谓词为假，则直接从源代码中删除该该部分代码。</p>
+<p>当一个应用在 crate级别的 <code>cfg</code> 有一个假谓词时，行为略有不同：<code>cfg</code> 之前的任何 crate属性都会保留，<code>cfg</code>之后的任何 crate属性都会删除。这样我们即使是已经使用 <code>#![cfg(...)]</code> 移除了整个 crate，仍允许使用 <code>#![no_std]</code> 和 <code>#![no_core]</code> 这样的 crate属性来避免链接 <code>std</code>/<code>core</code>。</p>
 <p>在函数上的一些例子:</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6243,8 +6244,8 @@ if true {
 <h1 id="表达式"><a class="header" href="#表达式">表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions.md">expressions.md</a><br />
-commit: 45c47cd38654388910a8a92f5435570355ea2762 <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: 1da2af1481643266e4ffb8b66f2f7def5f1d9776 <br />
+本章译文最后维护日期：2023-07-21</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6872,8 +6873,8 @@ fn move_by_block_expression() {
 <h1 id="operator-expressions"><a class="header" href="#operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: 87895584c98fa4e784e243301854fc3060323ce5 <br />
-本章译文最后维护日期：2023-03-04</p>
+commit: 67f41530c5e972c319c9c524d8875f3a9f70c6f3 <br />
+本章译文最后维护日期：2023-07-21</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -7103,8 +7104,8 @@ assert_eq!(true, !false);
 <tr><td><code>+</code></td><td>加法</td><td></td><td>加法</td><td><code>std::ops::Add</code></td><td><code>std::ops::AddAssign</code></td></tr>
 <tr><td><code>-</code></td><td>减法</td><td></td><td>减法</td><td><code>std::ops::Sub</code></td><td><code>std::ops::SubAssign</code></td></tr>
 <tr><td><code>*</code></td><td>乘法</td><td></td><td>乘法</td><td><code>std::ops::Mul</code></td><td><code>std::ops::MulAssign</code></td></tr>
-<tr><td><code>/</code></td><td>除法*</td><td></td><td>取余</td><td><code>std::ops::Div</code></td><td><code>std::ops::DivAssign</code></td></tr>
-<tr><td><code>%</code></td><td>取余**</td><td></td><td>Remainder</td><td><code>std::ops::Rem</code></td><td><code>std::ops::RemAssign</code></td></tr>
+<tr><td><code>/</code></td><td>除法*†</td><td></td><td>取余</td><td><code>std::ops::Div</code></td><td><code>std::ops::DivAssign</code></td></tr>
+<tr><td><code>%</code></td><td>取余**†</td><td></td><td>Remainder</td><td><code>std::ops::Rem</code></td><td><code>std::ops::RemAssign</code></td></tr>
 <tr><td><code>&amp;</code></td><td>按位与</td><td><a href="expressions/../types/boolean.html#logical-and">逻辑与</a></td><td></td><td><code>std::ops::BitAnd</code></td><td><code>std::ops::BitAndAssign</code></td></tr>
 <tr><td><code>|</code></td><td>按位或</td><td><a href="expressions/../types/boolean.html#logical-or">逻辑或</a></td><td></td><td><code>std::ops::BitOr</code></td><td><code>std::ops::BitOrAssign</code></td></tr>
 <tr><td><code>^</code></td><td>按位异或</td><td><a href="expressions/../types/boolean.html#logical-xor">逻辑异或</a></td><td></td><td><code>std::ops::BitXor</code></td><td><code>std::ops::BitXorAssign</code></td></tr>
@@ -7115,6 +7116,7 @@ assert_eq!(true, !false);
 <p>* 整数除法趋零取整。</p>
 <p>** Rust使用由<a href="https://en.wikipedia.org/wiki/Modulo_operation#Variants_of_the_definition">截断除法</a>定义的求宇运算。也就是 <code>余数=被除数%除数</code>，其中余数将与被除数的符号一致。</p>
 <p>*** 有符号整数类型算术右移位，无符号整数类型逻辑右移位。</p>
+<p>† 对整型来说，除0会导致panic。</p>
 <p>下面是使用这些操作符的示例:</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -9864,12 +9866,12 @@ commit: 73ca198fb3ab52283d67d5fe28c541ee1d169f48 <br />
 <h1 id="文本类类型"><a class="header" href="#文本类类型">文本类类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/textual.md">textual.md</a><br />
-commit: 9af5071f876111a09ba54a86655679de83eb464c <br />
-本章译文最后维护日期：2020-11-14</p>
+commit: 0e2eee4d7e9e8dac35c9782e7ed4155f54bf10af <br />
+本章译文最后维护日期：2023-07-21</p>
 </blockquote>
 <p>类型 <code>char</code> 和 <code>str</code> 用于保存文本数据。</p>
 <p>字符型(<code>char</code>)的值是 <a href="http://www.unicode.org/glossary/#unicode_scalar_value">Unicode 标量(scalar)值</a>（即不是代理项(surrogate)的代码点），可以表示为 0x0000~0xD7FF 或 0xE000~0x10FFFF 范围内的 32-bit 无符号字符。创建超出此范围的字符直接触发<a href="types/../behavior-considered-undefined.html">未定义行为(Undefined Behavior)</a>。一个 <code>[char]</code> 实际上是长度为1的 UCS-4 / UTF-32 字符串。</p>
-<p><code>str</code>类型的值的表示方法与 <code>[u8]</code> 相同，它是一个 8-bit 无符号字节类型的切片。但是，Rust 标准库对 <code>str</code> 做了额外的假定：<code>str</code> 上的方法会假定并确保其中的数据是有效的 UTF-8。调用 <code>str</code> 的方法来处理非UTF-8 缓冲区上的数据可能或早或晚地出现<a href="types/../behavior-considered-undefined.html">未定义行为</a>。</p>
+<p><code>str</code>类型的值的表示方法与 <code>[u8]</code> 相同，也一个 8-bit 无符号字节类型的切片。但是，Rust 标准库对 <code>str</code> 做了额外的假定：<code>str</code> 上的方法会假定并确保其中的数据是有效的 UTF-8。调用 <code>str</code> 的方法来处理非UTF-8 缓冲区上的数据可能或早或晚地出现<a href="types/../behavior-considered-undefined.html">未定义行为</a>。</p>
 <p>由于 <code>str</code> 是一个<a href="types/../dynamically-sized-types.html">动态内存宽度类型</a>，所以它只能通过指针类型实例化，比如 <code>&amp;str</code>。</p>
 <!-- 2020-11-12-->
 <!-- checked -->
@@ -9877,22 +9879,29 @@ commit: 9af5071f876111a09ba54a86655679de83eb464c <br />
 <h1 id="never类型"><a class="header" href="#never类型">never类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/never.md">never.md</a><br />
-commit: 91486df597a9e8060f9c67587359e9f168dea7ef <br />
-本章译文最后维护日期：2020-11-14</p>
+commit: 6eacdb0d8551dcdb9e9782e4abad60ec17ddb214 <br />
+本章译文最后维护日期：2023-07-21</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>NeverType</em> : <code>!</code></p>
 </blockquote>
 <p>never类型(<code>!</code>)是一个没有值的类型，表示永远不会完成计算的结果。<code>!</code> 的类型表达式可以强转为任何其他类型。</p>
-<!-- ignore: unstable -->
-<pre><code class="language-rust ignore">let x: ! = panic!();
-// 可以强转为任何类型
-let y: u32 = x;
-</code></pre>
-<p><strong>注意：</strong> never类型原本预计在1.41中稳定下来，但由于最后一分钟检测到一些意想不到的回归，该类型的稳定进程临时暂停。目前 <code>!</code>类型只能出现在函数返回类型中。有关详细信息，请参阅<a href="https://github.com/rust-lang/rust/issues/35121">议题跟踪</a>。</p>
-<!-- 2020-11-12-->
-<!-- checked -->
+<p>类型<code>!</code> 目前<strong>只能</strong>出现在函数返回类型中，这表明它是一个从不真正返回的发散函数。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn foo() -&gt; ! {
+    panic!(&quot;This call never returns.&quot;);
+}
+<span class="boring">}
+</span></code></pre></pre>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>extern &quot;C&quot; {
+    pub fn no_return_extern_func() -&gt; !;
+}
+<span class="boring">}
+</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tuple-types"><a class="header" href="#tuple-types">Tuple types</a></h1>
 <h1 id="元组类型"><a class="header" href="#元组类型">元组类型</a></h1>
 <blockquote>
@@ -10581,8 +10590,8 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 <h1 id="类型布局"><a class="header" href="#类型布局">类型布局</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-layout.md">type-layout.md</a><br />
-commit: f8ac109624aad26711824fc9e9e0780a1c52f34a <br />
-本章译文最后维护日期：2023-01-15</p>
+commit: 2dc423d6937754e07e42345156021d3ef8ff956b <br />
+本章译文最后维护日期：2023-07-21</p>
 </blockquote>
 <p>类型的布局描述类型的内存宽度(size)、对齐量(alignment)和字段(fields)的<em>相对偏移量(relative offsets)</em>。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。</p>
 <p>每次编译都有可能更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。</p>
@@ -10972,9 +10981,29 @@ assert_eq!(std::mem::size_of::&lt;Enum16&gt;(), 4);
 <p>字段间的填充保证为每个字段（可能更改）的对齐量填充所需的最小值（但请注意，<code>packed</code> 本身并不能保证字段顺序）。这些规则的一个重要后果是：<code>#[repr(packed(1))]</code>（或<code>#[repr(packed)]</code>) 的类型不会有字段间填充。</p>
 <p><code>align</code> 和 <code>packed</code> 修饰符不能应用于同一类型，且 <code>packed</code> 修饰的类型不能直接或间接地包含另一个 <code>align</code> 修饰的类型。<code>align</code> 和 <code>packed</code> 修饰符只能应用于<a href="type-layout.html#the-default-representation">默认表形</a>和 <a href="type-layout.html#the-c-representation">C表形</a>中。</p>
 <p><code>align</code>修饰符也可以应用在枚举上。如果这样做了，其对枚举对齐量的影响与将此枚举包装在一个新的使用了相同的 <code>align</code>修饰符的结构体中的效果相同。</p>
-<div class="warning">
-<p>***警告：***解引用一个未对齐的指针是<a href="behavior-considered-undefined.html">未定义行为</a>，但可以<a href="https://github.com/rust-lang/rust/issues/27060">安全地创建指向 <code>packed</code>修饰的字段的未对齐指针</a>。就像在安全(safe) Rust 中所有创建未定义行为的方法一样，这是一个 bug。</p>
-</div>
+<blockquote>
+<p>注意：不能引用未对齐的成员字段，因为这是一种<a href="behavior-considered-undefined.html">未定义行为</a>。
+当成员字段由于特定对齐修饰符而未能对齐时，请考虑以下做法来使用引用和解引用：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[repr(packed)]
+struct Packed {
+    f1: u8,
+    f2: u16,
+}
+let mut e = Packed { f1: 1, f2: 2 };
+// 不要建对字段的引用，而是将值复制到局部变量中。
+let x = e.f2;
+// 或者在类似 `println!` 的情况下使用大括号将其值先做一次复制，再引用。
+println!(&quot;{}&quot;, {e.f2});
+// 或者，如果你真需要用指针，请使用那些不要求对齐的方法进行读取和写入，而不是直接对指针做解引用。
+let ptr: *const u16 = std::ptr::addr_of!(e.f2);
+let value = unsafe { ptr.read_unaligned() };
+let mut_ptr: *mut u16 = std::ptr::addr_of_mut!(e.f2);
+unsafe { mut_ptr.write_unaligned(3) }
+<span class="boring">}
+</span></code></pre></pre>
+</blockquote>
 <h3 id="the-transparent-representation"><a class="header" href="#the-transparent-representation">The <code>transparent</code> Representation</a></h3>
 <h3 id="透明transparent表形"><a class="header" href="#透明transparent表形">透明(<code>transparent</code>)表形</a></h3>
 <p>透明(<code>transparent</code>)表型只能在只有一个字段的<a href="items/structs.html">结构体(<code>struct</code>)</a>上或只有一个变体的<a href="items/enumerations.html">枚举(<code>enum</code>)</a>上使用，这里只有一个字段/变体的意思是：</p>
@@ -11494,8 +11523,8 @@ fn foo() -&gt; i32 {
 <h1 id="析构器"><a class="header" href="#析构器">析构器</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/destructors.md">destructors.md</a><br />
-commit: 27dc03f2cdca30cf810fd3169c33d3f47b488d96 <br />
-本章译文最后维护日期：2023-03-04</p>
+commit: 193aa552751505d2a6816a22505865df366097ce <br />
+本章译文最后维护日期：2023-07-21</p>
 </blockquote>
 <p>当一个<a href="glossary.html#initialized">初始化</a>了的<a href="variables.html">变量</a>或<a href="expressions.html#temporaries">临时变量</a>超出<a href="destructors.html#drop-scopes">作用域</a>时，其<em>析构器(destructor)<em>将运行，或者说它将被</em>销毁(dropped)</em>。此外，<a href="expressions/operator-expr.html#assignment-expressions">赋值</a>操作也会运行其左操作数的析构器（如果它已经初始化了）。如果变量只部分初始化了，则只销毁其已初始化的字段。</p>
 <p>类型<code>T</code> 的析构器由以下内容组成：</p>
@@ -12347,8 +12376,8 @@ use alloc::rc::Rc;
 <h1 id="路径"><a class="header" href="#路径">路径</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/paths.md">paths.md</a><br />
-commit: f758647f8ece7b93b841b4f3d89138d280a2835c <br />
-本章译文最后维护日期：2022-06-17</p>
+commit: 2e85a35becb63873b2dba06bbbc717cce7ad55d2 <br />
+本章译文最后维护日期：2023-07-21</p>
 </blockquote>
 <p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，<code>::</code> 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">程序项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用程序项。</p>
 <p>仅由标识符段组成的简单路径(simple paths)的两个示例：</p>
@@ -12433,27 +12462,33 @@ trait T1 {
     fn f() { println!(&quot;T1 f&quot;); }
 }
 impl T1 for S {}
-trait T2 {net
+trait T2 {
     fn f() { println!(&quot;T2 f&quot;); }
-}net
-&gt; _TypePath_ :\
-&gt; &amp;nbsp;&amp;nbsp; `::`&lt;sup&gt;?&lt;/sup&gt; _TypePathSegment_ (`::` _TypePathSegment_)&lt;sup&gt;\*&lt;/sup&gt;
-&gt;
-&gt; _TypePathSegment_ :\
-&gt; &amp;nbsp;&amp;nbsp; _PathIdentSegment_ `::`&lt;sup&gt;?&lt;/sup&gt; ([_GenericArgs_] | _TypePathFn_)&lt;sup&gt;?&lt;/sup&gt;
-&gt;
-&gt; _TypePathFn_ :\
-&gt; `(` _TypePathFnInputs_&lt;sup&gt;?&lt;/sup&gt; `)` (`-&gt;` [_Type_])&lt;sup&gt;?&lt;/sup&gt;
-&gt;
-&gt; _TypePathFnInputs_ :\
-&gt; [_Type_] (`,` [_Type_])&lt;sup&gt;\*&lt;/sup&gt; `,`&lt;sup&gt;?&lt;/sup&gt;
-
-类型路径用于类型定义、trait约束(trait bound)、类型参数约束，以及限定性路径。
-
-尽管在泛型参数之前允许使用 token `::`，但它不是必需的，因为在类型路径中不存在像 _PathInExpression_ 句法中那样的歧义。
-
-```rust
-<span class="boring">mod ops {
+}
+impl T2 for S {}
+S::f();  // 调用固有实现
+&lt;S as T1&gt;::f();  // 调用T1的 trait函数
+&lt;S as T2&gt;::f();  // 调用T2的 trait函数
+<span class="boring">}
+</span></code></pre></pre>
+<h3 id="paths-in-types"><a class="header" href="#paths-in-types">Paths in types</a></h3>
+<h3 id="类型中的路径"><a class="header" href="#类型中的路径">类型中的路径</a></h3>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>TypePath</em> :<br />
+   <code>::</code><sup>?</sup> <em>TypePathSegment</em> (<code>::</code> <em>TypePathSegment</em>)<sup>*</sup></p>
+<p><em>TypePathSegment</em> :<br />
+   <em>PathIdentSegment</em> (<code>::</code><sup>?</sup> (<a href="paths.html#paths-in-expressions"><em>GenericArgs</em></a> | <em>TypePathFn</em>))<sup>?</sup></p>
+<p><em>TypePathFn</em> :<br />
+<code>(</code> <em>TypePathFnInputs</em><sup>?</sup> <code>)</code> (<code>-&gt;</code> <a href="types.html#type-expressions"><em>Type</em></a>)<sup>?</sup></p>
+<p><em>TypePathFnInputs</em> :<br />
+<a href="types.html#type-expressions"><em>Type</em></a> (<code>,</code> <a href="types.html#type-expressions"><em>Type</em></a>)<sup>*</sup> <code>,</code><sup>?</sup></p>
+</blockquote>
+<p>类型路径用于类型定义、trait约束(trait bound)、类型参数约束，以及限定性路径。</p>
+<p>尽管在泛型参数之前允许使用 token <code>::</code>，但它不是必需的，因为在类型路径中不存在像 <em>PathInExpression</em> 句法中那样的歧义。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">mod ops {
 </span><span class="boring">    pub struct Range&lt;T&gt; {f1: T}
 </span><span class="boring">    pub trait Index&lt;T&gt; {}
 </span><span class="boring">    pub struct Example&lt;'a&gt; {f1: &amp;'a i32}
@@ -12461,7 +12496,7 @@ trait T2 {net
 </span><span class="boring">struct S;
 </span>impl ops::Index&lt;ops::Range&lt;usize&gt;&gt; for S { /*...*/ }
 fn i&lt;'a&gt;() -&gt; impl Iterator&lt;Item = ops::Example&lt;'a&gt;&gt; {
-    // ...net
+    // ...
 <span class="boring">   const EXAMPLE: Vec&lt;ops::Example&lt;'static&gt;&gt; = Vec::new();
 </span><span class="boring">   EXAMPLE.into_iter()
 </span>}
@@ -13707,11 +13742,11 @@ commit:  b0e0ad6490d6517c19546b1023948986578fc378 <br />
 <h1 id="unsafe关键字"><a class="header" href="#unsafe关键字"><code>unsafe</code>关键字</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/unsafe-keyword.md">unsafe-keyword.md</a><br />
-commit:  d1e4ea12affb7f0b5abf733d5150bc62905a9c94 <br />
-本章译文最后维护日期：2022-10-22</p>
+commit:  451a8e4542cb6500a7aca9de5902075e6c8ec188 <br />
+本章译文最后维护日期：2023-07-21</p>
 </blockquote>
 <p><code>unsafe</code>关键字可以出现在几个不同的上下文中：
-unsafe函数(<code>unsafe fn</code>)、unsafe块(<code>unsafe {}</code>)、unsafe traits(<code>unsafe trait</code>)，以及 unsafe实现(<code>unsafe impl</code>)。
+unsafe函数(<code>unsafe fn</code>)、unsafe块(<code>unsafe {}</code>)、unsafe traits(<code>unsafe trait</code>)，以及 unsafe实现(<code>unsafe impl</code>)中。
 根据它的使用位置以及是否启用了 <code>unsafe_op_in_unsafe_fn</code> lint，它扮演着几种不同的角色：</p>
 <ul>
 <li>它用于标记<em>定义</em>额外安全条款要求（<code>unsafe fn</code>、<code>unsafe trait</code>）的代码</li>
@@ -13730,9 +13765,9 @@ unsafe函数应随附文档列明这些额外安全条款要求。</p>
 <p>一块代码可以以 <code>unsafe</code>关键字为前缀，以允许调用 <code>unsafe</code>函数或解引用裸指针。
 默认情况下，unsafe函数的主体也被视为 unsafe块；这可以通过启用 <a href="https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#unsafe-op-in-unsafe-fn"><code>unsafe_op_in_unsafe_fn</code></a> lint来改变这个默认。</p>
 <p>通过将操作放入一个 unsafe块中，程序员声明确认他们已经注意到了满足该块中所有操作的额外安全条款要求。</p>
-<p>unsafe块是 unsafe函数的逻辑对偶：
-如果 unsafe函数定义了调用方必须履行的条款，则 unsafe块声明了所有相关的条款都已（被程序员）履行。
-解除安全条款要求的举证义务的方式有多种方式；例如，可以使用推迟到运行时检查或数据结构不变式(invariant)来保证某些属性绝对正确，或者让 unsafe块可位于 <code>unsafe fn</code> 内，并使用其自身的举证义务来履行其被调用方的举证义务。</p>
+<p>unsafe块是 unsafe函数的逻辑对偶：</p>
+<p>在 unsafe函数定义调用方必须秉承的证明义务(proof obligation)的情况下，unsafe块则声明在本块内调用的函数或操作的所有相关的证明义务都已解除(编译器认为相关的证明义务已经被程序员完成)。</p>
+<p>履行举证义务有多种方式；例如，可以有运行时检查或通过结构化的不变式(invariant)来保证特定属性肯定为真，或者让 unsafe块放在 <code>unsafe fn</code> 内，这样，块就可以使用该函数的证明义务来解除(编译器对)从块内产生的（让程序员）履行证明义务的要求。</p>
 <p>unsafe块用于包装外部库、直接使用硬件或实现当前语言中不直接存在的特性(features)。
 例如，Rust 提供了在语言中实现内存安全并发所需的语言特性，但背后的事实是：标准库中线程和消息传递功能都是通过使用了 unsafe块来实现的。</p>
 <p>Rust的类型系统是动态安全需求的保守近似实现，所以在某些情况下，使用安全代码会带来较大的性能开销。
@@ -13744,17 +13779,15 @@ unsafe函数应随附文档列明这些额外安全条款要求。</p>
 unsafe trait 应随附解释这些额外安全条款要求的文档。</p>
 <p>这种 trait 必须以 <code>unsafe</code>关键字为前缀，并且只能由 <code>unsafe impl</code>块来实现。</p>
 <h2 id="unsafe-trait-implementations-unsafe-impl"><a class="header" href="#unsafe-trait-implementations-unsafe-impl">Unsafe trait implementations (<code>unsafe impl</code>)</a></h2>
-<p>When implementing an unsafe trait, the implementation needs to be prefixed with the <code>unsafe</code> keyword.
-By writing <code>unsafe impl</code>, the programmer states that they have taken care of satisfying the extra safety conditions required by the trait.
-当实现一个 unsafe trait 时，实现需要以 <code>unsafe</code>关键字作为前缀。
-通过书写 <code>unsafe impl</code>，程序员表示他们已经注意到满足了此trait 所需的额外安全条款要求。</p>
-<p>unsafe trait实现是 unsafe trait 的逻辑对偶：unsafe trait 定义了实现必须维护的举证义务，unsafe trait实现声明了所有相关的举证义务都已履行。</p>
+<p>当实现一个 unsafe trait 时，实现需要以 <code>unsafe</code>关键字作为前缀。
+通过书写 <code>unsafe impl</code>，程序员表示他们已经注意到并满足了此trait 所需的额外安全条款要求。</p>
+<p>unsafe trait实现是 unsafe trait 的逻辑对偶：在 unsafe trait 里定义了要实现本 trait 的实现必须秉承的证明义务，unsafe实现则申明了所有相关的证明义务（程序员）都已完成了（，编译器可以不用管这里的证明义务了）。</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="behavior-considered-undefined"><a class="header" href="#behavior-considered-undefined">Behavior considered undefined</a></h2>
 <h2 id="未定义的行为"><a class="header" href="#未定义的行为">未定义的行为</a></h2>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md">behavior-considered-undefined.md</a><br />
-commit: 8d49ecf542b8f63a30ce4e879757a5c163946bc6 <br />
-本章译文最后维护日期：2023-03-04</p>
+commit: e94fb3d5ba9a06c118e2428b8e6f738a157fb642 <br />
+本章译文最后维护日期：2023-07-21</p>
 </blockquote>
 <p>如果 Rust 代码出现了下面列表中的任何行为，则此代码被认为不正确。这包括非安全(<code>unsafe</code>)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。</p>
 <p>在编写非安全代码时，确保任何与非安全代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何使用非安全代码的安全客户端(safe client)，如果当前条件满足了此非安全代码对于安全条件的要求，那此此非安全代码对于此安全客户端就是<em>健壮的(sound)</em>；如果非安全(<code>unsafe</code>)代码可以被安全代码滥用以致出现未定义行为，那么此非安全(<code>unsafe</code>)代码对这些安全代码来说就是<em>不健壮的(unsound)</em>。</p>
@@ -13831,6 +13864,10 @@ commit: 8d49ecf542b8f63a30ce4e879757a5c163946bc6 <br />
 </li>
 <li>
 <p>错误的使用内联汇编，具体细节，参见使用内联汇编编写代码时的相关<a href="inline-assembly.html#rules-for-inline-assembly">规则</a>。</p>
+</li>
+<li>
+<p><strong>在<a href="const_eval.html#const-context">常量上下文</a>中</strong>: 将指向某些以分配对象的指针（引用、原始指针或函数指针）转换或以其他方式重新解释为非指针类型（如整数）。
+“重新解释”是指在不进行强制转换的情况下以整数类型加载指针值，例如通过执行原始指针强制转换或使用联合体（union）。</p>
 </li>
 </ul>
 <p><strong>注意：</strong> 未初始化的内存对于任何具有有限有效值集的类型来说也隐式非法。也就是说，允许读取未初始化内存的情况只发生在联合体(<code>union</code>)内部和“对齐填充区(padding)”里（类型的字段/元素之间的间隙）。</p>

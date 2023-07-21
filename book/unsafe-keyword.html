@@ -153,11 +153,11 @@
 <h1 id="unsafe关键字"><a class="header" href="#unsafe关键字"><code>unsafe</code>关键字</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/unsafe-keyword.md">unsafe-keyword.md</a><br />
-commit:  d1e4ea12affb7f0b5abf733d5150bc62905a9c94 <br />
-本章译文最后维护日期：2022-10-22</p>
+commit:  451a8e4542cb6500a7aca9de5902075e6c8ec188 <br />
+本章译文最后维护日期：2023-07-21</p>
 </blockquote>
 <p><code>unsafe</code>关键字可以出现在几个不同的上下文中：
-unsafe函数(<code>unsafe fn</code>)、unsafe块(<code>unsafe {}</code>)、unsafe traits(<code>unsafe trait</code>)，以及 unsafe实现(<code>unsafe impl</code>)。
+unsafe函数(<code>unsafe fn</code>)、unsafe块(<code>unsafe {}</code>)、unsafe traits(<code>unsafe trait</code>)，以及 unsafe实现(<code>unsafe impl</code>)中。
 根据它的使用位置以及是否启用了 <code>unsafe_op_in_unsafe_fn</code> lint，它扮演着几种不同的角色：</p>
 <ul>
 <li>它用于标记<em>定义</em>额外安全条款要求（<code>unsafe fn</code>、<code>unsafe trait</code>）的代码</li>
@@ -176,9 +176,9 @@ unsafe函数应随附文档列明这些额外安全条款要求。</p>
 <p>一块代码可以以 <code>unsafe</code>关键字为前缀，以允许调用 <code>unsafe</code>函数或解引用裸指针。
 默认情况下，unsafe函数的主体也被视为 unsafe块；这可以通过启用 <a href="https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#unsafe-op-in-unsafe-fn"><code>unsafe_op_in_unsafe_fn</code></a> lint来改变这个默认。</p>
 <p>通过将操作放入一个 unsafe块中，程序员声明确认他们已经注意到了满足该块中所有操作的额外安全条款要求。</p>
-<p>unsafe块是 unsafe函数的逻辑对偶：
-如果 unsafe函数定义了调用方必须履行的条款，则 unsafe块声明了所有相关的条款都已（被程序员）履行。
-解除安全条款要求的举证义务的方式有多种方式；例如，可以使用推迟到运行时检查或数据结构不变式(invariant)来保证某些属性绝对正确，或者让 unsafe块可位于 <code>unsafe fn</code> 内，并使用其自身的举证义务来履行其被调用方的举证义务。</p>
+<p>unsafe块是 unsafe函数的逻辑对偶：</p>
+<p>在 unsafe函数定义调用方必须秉承的证明义务(proof obligation)的情况下，unsafe块则声明在本块内调用的函数或操作的所有相关的证明义务都已解除(编译器认为相关的证明义务已经被程序员完成)。</p>
+<p>履行举证义务有多种方式；例如，可以有运行时检查或通过结构化的不变式(invariant)来保证特定属性肯定为真，或者让 unsafe块放在 <code>unsafe fn</code> 内，这样，块就可以使用该函数的证明义务来解除(编译器对)从块内产生的（让程序员）履行证明义务的要求。</p>
 <p>unsafe块用于包装外部库、直接使用硬件或实现当前语言中不直接存在的特性(features)。
 例如，Rust 提供了在语言中实现内存安全并发所需的语言特性，但背后的事实是：标准库中线程和消息传递功能都是通过使用了 unsafe块来实现的。</p>
 <p>Rust的类型系统是动态安全需求的保守近似实现，所以在某些情况下，使用安全代码会带来较大的性能开销。
@@ -190,11 +190,9 @@ unsafe函数应随附文档列明这些额外安全条款要求。</p>
 unsafe trait 应随附解释这些额外安全条款要求的文档。</p>
 <p>这种 trait 必须以 <code>unsafe</code>关键字为前缀，并且只能由 <code>unsafe impl</code>块来实现。</p>
 <h2 id="unsafe-trait-implementations-unsafe-impl"><a class="header" href="#unsafe-trait-implementations-unsafe-impl">Unsafe trait implementations (<code>unsafe impl</code>)</a></h2>
-<p>When implementing an unsafe trait, the implementation needs to be prefixed with the <code>unsafe</code> keyword.
-By writing <code>unsafe impl</code>, the programmer states that they have taken care of satisfying the extra safety conditions required by the trait.
-当实现一个 unsafe trait 时，实现需要以 <code>unsafe</code>关键字作为前缀。
-通过书写 <code>unsafe impl</code>，程序员表示他们已经注意到满足了此trait 所需的额外安全条款要求。</p>
-<p>unsafe trait实现是 unsafe trait 的逻辑对偶：unsafe trait 定义了实现必须维护的举证义务，unsafe trait实现声明了所有相关的举证义务都已履行。</p>
+<p>当实现一个 unsafe trait 时，实现需要以 <code>unsafe</code>关键字作为前缀。
+通过书写 <code>unsafe impl</code>，程序员表示他们已经注意到并满足了此trait 所需的额外安全条款要求。</p>
+<p>unsafe trait实现是 unsafe trait 的逻辑对偶：在 unsafe trait 里定义了要实现本 trait 的实现必须秉承的证明义务，unsafe实现则申明了所有相关的证明义务（程序员）都已完成了（，编译器可以不用管这里的证明义务了）。</p>
 
                     </main>
 
