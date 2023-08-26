@@ -153,8 +153,8 @@
 <h1 id="trait约束和生存期约束"><a class="header" href="#trait约束和生存期约束">trait约束和生存期约束</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md">trait-bounds.md</a><br />
-commit: fd6e375b892e018ea79783ea824ca97f2ef1a563 <br />
-本章译文最后维护日期：2023-03-04</p>
+commit: f24f128949905108723bec0dc129266d04a2c544 <br />
+本章译文最后维护日期：2023-08-26</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -223,8 +223,8 @@ fn name_figure&lt;U: Shape&gt;(
 <h2 id="lifetime-bounds"><a class="header" href="#lifetime-bounds">Lifetime bounds</a></h2>
 <h2 id="生存期约束"><a class="header" href="#生存期约束">生存期约束</a></h2>
 <p>生存期约束可以应用于类型或其他生存期。
-约束 <code>'a: 'b</code> 通常被读做 <em><code>'a</code> 比 <code>'b</code> 存活的时间久</em>。
-<code>'a: 'b</code> 意味着 <code>'a</code> 持续的时间至少和 <code>'b</code> 一样长，所以只要 <code>&amp;'b ()</code> 有效，则 <code>&amp;'a ()</code> 就有效。<sup class="footnote-reference"><a href="#译注1">1</a></sup></p>
+约束 <code>'a: 'b</code> 通常被读做 <em><code>'a</code> 比 <code>'b</code> 存活的时间久(outlives)</em>。
+<code>'a: 'b</code> 意味着 <code>'a</code> 持续的时间至少和 <code>'b</code> 一样长，所以只要 <code>&amp;'a ()</code> 有效，则 <code>&amp;'b ()</code> 必定有效。<sup class="footnote-reference"><a href="#译注1">1</a></sup></p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn f&lt;'a, 'b&gt;(x: &amp;'a i32, mut y: &amp;'b i32) where 'a: 'b {
@@ -280,8 +280,74 @@ fn name_figure&lt;U: Shape&gt;(
 }
 <span class="boring">}
 </span></code></pre></pre>
+<h2 id="implied-bounds"><a class="header" href="#implied-bounds">Implied bounds</a></h2>
+<h2 id="隐式约束"><a class="header" href="#隐式约束">隐式约束</a></h2>
+<p>生存期约束有效需要以类型定义格式合法(well-formed)为前提，有时甚至需要一些编译器推断。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn requires_t_outlives_a&lt;'a, T&gt;(x: &amp;'a T) {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>类型参数<code>T</code> 需要比类型<code>&amp;'a T</code> 的<code>'a</code>生存时间长才能形成格式合法(well-formed)。
+之所以推断出这一点，是因为函数签名包含类型<code>&amp;'a T</code>，该类型仅在 <code>T: 'a</code> 成立时才有效。</p>
+<p>Rust 会为函数的所有参数和输出添加隐式约束。在 <code>requires_t_outlives_a</code>内部，即使没有明确指定，也可以假定 <code>T: 'a</code> 得到了保持：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn requires_t_outlives_a_not_implied&lt;'a, T: 'a&gt;() {}
+
+fn requires_t_outlives_a&lt;'a, T&gt;(x: &amp;'a T) {
+    // 这能够编译是因为 `T: 'a` 是由引用类型 `&amp;'a T` 隐式约束的。
+    requires_t_outlives_a_not_implied::&lt;'a, T&gt;();
+}
+<span class="boring">}
+</span></code></pre></pre>
+<pre><pre class="playground"><code class="language-rust compile_fail E0309 edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">fn requires_t_outlives_a_not_implied&lt;'a, T: 'a&gt;() {}
+</span>fn not_implied&lt;'a, T&gt;() {
+    // 这里报错是因为函数签名并没有 `T: 'a` 的隐式约束。
+    requires_t_outlives_a_not_implied::&lt;'a, T&gt;();
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>只有生存期约束是隐式约束，特征约束仍然必须显式添加。
+因此，以下示例会导致错误：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail E0277 edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::fmt::Debug;
+struct IsDebug&lt;T: Debug&gt;(T);
+// error[E0277]: `T` 没有实现 `Debug`
+fn doesnt_specify_t_debug&lt;T&gt;(x: IsDebug&lt;T&gt;) {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>还推断出任何类型的类型定义和impl块的生存期界限：
+在类型定义和类型的 impl块中，生存期约束的推断逻辑仍会被编译器执行：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Struct&lt;'a, T&gt; {
+    // 这里要求 `T: 'a`， 这点是编译器推断出的
+    field: &amp;'a T,
+}
+
+enum Enum&lt;'a, T&gt; {
+    // 这里要求 `T: 'a`， 这点是编译器推断出的
+    //
+    // 注意，即便是只使用 `Enum::OtherVariant`，仍需要保持 `T: 'a`
+    SomeVariant(&amp;'a T),
+    OtherVariant,
+}
+
+trait Trait&lt;'a, T: 'a&gt; {}
+
+// 这里会报错是因为任何类型的 impl头中都没有隐含 T: 'a` 的逻辑
+//     impl&lt;'a, T&gt; Trait&lt;'a, T&gt; for () {}
+
+// 这里能通过编译是因为 self类型 `&amp;'a T` 中隐含了 `T: 'a`的逻辑
+impl&lt;'a, T&gt; Trait&lt;'a, T&gt; for &amp;'a T {}
+<span class="boring">}
+</span></code></pre></pre>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
-<p>译者理解：理解这种关系时，可以把生存期 <code>'a</code> 和 <code>'b</code> 理解成去引用对象时需传入的参数，给定 <code>'a: 'b</code> 和类型 <code>T</code>，如果 <code>'b T</code>有效，那此时再传入 <code>'a</code> 就去引用 <code>T</code> 必定有效。</p>
+<p>译者理解：理解这种关系时，可以把生存期 <code>'a</code> 和 <code>'b</code> 理解成去引用对象时需传入的参数，给定 <code>'a: 'b</code> 和类型 <code>T</code>，如果 <code>'a T</code>有效，那此时再传入 <code>'b</code> 就去引用 <code>T</code> 必定有效。</p>
 </div>
 <div class="footnote-definition" id="译注2"><sup class="footnote-definition-label">4</sup>
 <p>译者理解：高阶 trait约束就是对带生存期的类型重新进行约束。像这句中的例子就是对 <code>&amp;'a T</code> 加上了 <code>PartialEq&lt;i32&gt;</code> 的约束，其中 <code>for&lt;'a&gt;</code> 可以理解为：对于 <code>'a</code> 的所有可能选择。更多信息请参见：https://doc.rust-lang.org/std/cmp/trait.PartialEq.html 和 https://doc.rust-lang.org/nightly/nomicon/hrtb.html</p>

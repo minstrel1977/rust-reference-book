@@ -2,8 +2,8 @@
 ## 未定义的行为
 
 >[behavior-considered-undefined.md](https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md)\
->commit: e94fb3d5ba9a06c118e2428b8e6f738a157fb642 \
->本章译文最后维护日期：2023-07-21
+>commit: f12eaec52214b20287687924e7ef469f5d82c2a8 \
+>本章译文最后维护日期：2023-08-26
 
 如果 Rust 代码出现了下面列表中的任何行为，则此代码被认为不正确。这包括非安全(`unsafe`)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。
 
@@ -23,7 +23,13 @@
   * 当引用（注意不是 box类型的智能指针！）传递给函数时，它存活的至少与该函数调用一样长，这次同样排除了 `&T` 包含了 [`UnsafeCell<U>`] 的情况。
 
   当这些类型的值（`Box<T>`、`&mut T` 和 `&T` 类型的值）被传递给复合类型的（内嵌）成员字段时，所有的这些规则都适用，但注意传递给间接寻址的指针不适用。
-* 修改不可变的数据。[常量(`const`)][`const`]项内的所有数据都是不可变的。此外，所有通过共享引用接触到的数据或不可变绑定所拥有的数据都是不可变的，除非该数据包含在 [`UnsafeCell<U>`] 中。
+* 修改不可变的字节数据。[常量(`const`)][`const`]项内的所有字节都是不可变的。
+  不可变变量所拥有的字节数据是不可变的，除非这些字节是 [`UnsafeCell<U>`] 的一部分。
+  
+  此外，共享引用[指向][pointed to]的字节数据是不可变的，包括通过其他引用（共享的和可变的）和 `Box`方式传递过来的；这里传递过来的（也就是传递性）包括那些存储在复合类型成员字段中的各种引用。
+
+  修改是指与相关字节位上超过0字节的任何写入（即使该写入不会更改内存内容）。
+  
 * 通过编译器内部函数(compiler intrinsics)调用未定义行为。[^译注1]
 * 执行基于当前平台不支持的平台特性编译的代码（参见 [`target_feature`]），*除非*此平台特别申明执行带有此特性的代码安全。
 * 用错误的 ABI约定来调用函数，或使用错误的 ABI展开约定来从某函数里发起展开(unwinding)。  
@@ -50,10 +56,16 @@
 
 > **注意**：未定义行为影响整个程序。例如，在 C 中调用一个 C函数已经出现了未定义行为，这意味着包含此调用的整个程序都包含了未定义行为。如果 Rust 再通过 FFI 来调用这段 C程序/代码，那这段 Rust 代码也包含了未定义行为。反之亦然。因此 Rust 中的未定义行为会对任何其他通过 FFI 过来调用的代码造成不利影响。
 
+### Pointed-to bytes
+### 指向字节数据
+
+指针或引用“指向”的字节数据是由指针值和指针对象类型的尺寸（使用`size_of_val`）来确定的。
+
 ### Dangling pointers
 ### 悬垂指针
+[dangling]: #dangling-pointers
 
-如果引用/指针为空或者它指向的所有字节不是同一次内存分配(live allocation)的一部分（因此，它们都必须是*某些*内存分配的一部分），那么它就是“悬垂”的。它指向的字节跨度(span)由指针本身和指针所指对象的类型的内存宽度决定（此内存宽度可使用 `size_of_val` 检测）。
+如果引用/指针为空，或者它[指向][points to]的所有字节都不是同一个实时分配(live allocation，也因此它们都必须是*某次*分配)的一部分，那么它就是“悬垂(dangling)”的。
 
 如果类型的内存宽度为0，则该指针必定 要么指向某个初始化内存的内部（包括刚好指向分配的最后一个字节之后），要么直接从非零整型字面量来构造而来。
 
@@ -73,3 +85,5 @@
 [dereference expression]: expressions/operator-expr.md#the-dereference-operator
 [place expression context]: expressions.md#place-expressions-and-value-expressions
 [rules]: inline-assembly.md#rules-for-inline-assembly
+[points to]: #pointed-to-bytes
+[pointed to]: #pointed-to-bytes

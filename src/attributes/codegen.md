@@ -2,8 +2,8 @@
 # 代码生成属性
 
 >[codegen.md](https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md)\
->commit: 689ef0581aaffcd3e68e805e98413183993d216a \
->本章译文最后维护日期：2023-05-12
+>commit: 2a8068eacabba6284545172875bf2dc640c1ed5b \
+>本章译文最后维护日期：2023-08-26
 
 下述[属性][attributes]用于控制代码生成。
 
@@ -321,12 +321,20 @@ fn calls_h() {
 ## The `instruction_set` attribute
 ## `instruction_set`属性
 
-*`instruction_set`属性*可应用于函数，用以实现目标架构支持的特定指令集的代码生成。它使用 [_MetaListPath_]句法，其中的 _SimplePath_ 是由架构和指令集组成的路径。这样可用为单个程序生成目标架构所支持的多个指令集的代码。
+*`instruction_set`[属性][attribute]* 可以应用于函数，用以控制将为哪个指令集生成函数。
+这允许在单个程序中混合使用多个它支持的 CPU架构指令集。
+它使用 [_MetaListPath_]语法，以及由体系结构系列名称和指令集名称组成的路径。
 
-以下两个值在 `ARMv4` 和 `ARMv5te` 目标架构下可用：
+[_MetaListPath_]: ../attributes.md#meta-item-attribute-syntax
 
-* `arm::a32` - Uses ARM code.
-* `arm::t32` - Uses Thumb code.
+在不支持的 `instruction_set`属性的目标架构上使用该属性会报编译错误。
+
+### On ARM
+
+在 `ARMv4T` 和 `ARMv5te` 架构下， 支持使用:
+
+* `arm::a32` - 生成 A32 "ARM" 指令风格的函数。
+* `arm::t32` - 生成 T32 "Thumb" 指令风格的函数
 
 <!-- ignore: arm-only -->
 ```rust,ignore
@@ -337,4 +345,7 @@ fn foo_arm_code() {}
 fn bar_thumb_code() {}
 ```
 
-[_MetaListPath_]: ../attributes.md#meta-item-attribute-syntax
+使用 `instruction_set`属性会带来以下副作用：
+
+*如果将函数的地址作为函数指针，则地址的低位将根据指令集设置为 0（arm）或 1（thumb）。
+*函数中的任何内联程汇编指令都必须使用指定的指令集，而不是目标默认值。

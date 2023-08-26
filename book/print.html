@@ -148,7 +148,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2023-05-12</p>
+<p>本书跟随原文截止日期：2023-08-26</p>
 </blockquote>
 <h1 id="前言"><a class="header" href="#前言">前言</a></h1>
 <h2 id="试水版"><a class="header" href="#试水版">试水版</a></h2>
@@ -1992,8 +1992,8 @@ fn main() {
 <h1 id="条件编译"><a class="header" href="#条件编译">条件编译</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md">conditional-compilation.md</a><br />
-commit: 3319e0e1de1b33819456c912bf80ec5bfc7c90ef <br />
-本章译文最后维护日期：2023-07-21</p>
+commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
+本章译文最后维护日期：2023-08-26</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -2076,6 +2076,7 @@ commit: 3319e0e1de1b33819456c912bf80ec5bfc7c90ef <br />
 <li><code>&quot;dragonfly&quot;</code></li>
 <li><code>&quot;openbsd&quot;</code></li>
 <li><code>&quot;netbsd&quot;</code></li>
+<li><code>&quot;none&quot;</code> (主要用于嵌入式目标架构)</li>
 </ul>
 <h3 id="target_family"><a class="header" href="#target_family"><code>target_family</code></a></h3>
 <p>键值对选项提供了对具体目标平台更通用化的描述，比如编译目标操作系统或架构。可以设置任意数量的键值对。
@@ -4139,7 +4140,7 @@ impl&lt;T, U&gt; GenericTrait&lt;U&gt; for u32 where U: GenericTrait&lt;T&gt; {}
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md">external-blocks.md</a><br />
 commit: f0bb14c9bacca5d305e0488c43273ebe22fe928e <br />
-本章译文最后维护日期：2023-06-11</p>
+本章译文最后维护日期：2023-08-26</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -4189,6 +4190,7 @@ extern &quot;stdcall&quot; { }
 <li><code>extern &quot;aapcs&quot;</code> --通过 FFI 调用 ARM 接口所使用的默认调用约定</li>
 <li><code>extern &quot;fastcall&quot;</code> -- <code>fastcall</code> ABI——对应于 MSVC 的<code>__fastcall</code> 和 GCC 以及 clang 的 <code>__attribute__((fastcall))</code>。</li>
 <li><code>extern &quot;vectorcall&quot;</code> -- <code>vectorcall</code> ABI ——对应于 MSVC 的 <code>__vectorcall</code> 和 clang 的 <code>__attribute__((vectorcall))</code>。</li>
+<li><code>extern &quot;thiscall&quot;</code> -- MSVC 下调用 C++ 成员函数的默认约定 -- 对应与 MSVC 下的<code>__thiscall</code>，以及 GCC 和 clang 的<code>__attribute__((thiscall))</code> 调用约定</li>
 <li><code>extern &quot;efiapi&quot;</code> -- 调用 <a href="https://uefi.org/specifications">UEFI</a> 函数所使用的 ABI。</li>
 </ul>
 <h2 id="variadic-functions"><a class="header" href="#variadic-functions">Variadic functions</a></h2>
@@ -5572,8 +5574,8 @@ let _ = five();
 <h1 id="代码生成属性"><a class="header" href="#代码生成属性">代码生成属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md">codegen.md</a><br />
-commit: 689ef0581aaffcd3e68e805e98413183993d216a <br />
-本章译文最后维护日期：2023-05-12</p>
+commit: 2a8068eacabba6284545172875bf2dc640c1ed5b <br />
+本章译文最后维护日期：2023-08-26</p>
 </blockquote>
 <p>下述<a href="attributes/../attributes.html">属性</a>用于控制代码生成。</p>
 <h2 id="optimization-hints"><a class="header" href="#optimization-hints">Optimization hints</a></h2>
@@ -5813,11 +5815,15 @@ fn calls_h() {
 </div>
 <h2 id="the-instruction_set-attribute"><a class="header" href="#the-instruction_set-attribute">The <code>instruction_set</code> attribute</a></h2>
 <h2 id="instruction_set属性"><a class="header" href="#instruction_set属性"><code>instruction_set</code>属性</a></h2>
-<p><em><code>instruction_set</code>属性</em>可应用于函数，用以实现目标架构支持的特定指令集的代码生成。它使用 <a href="attributes/../attributes.html#meta-item-attribute-syntax"><em>MetaListPath</em></a>句法，其中的 <em>SimplePath</em> 是由架构和指令集组成的路径。这样可用为单个程序生成目标架构所支持的多个指令集的代码。</p>
-<p>以下两个值在 <code>ARMv4</code> 和 <code>ARMv5te</code> 目标架构下可用：</p>
+<p><em><code>instruction_set</code><a href="attributes/../attributes.html">属性</a></em> 可以应用于函数，用以控制将为哪个指令集生成函数。
+这允许在单个程序中混合使用多个它支持的 CPU架构指令集。
+它使用 <a href="attributes/../attributes.html#meta-item-attribute-syntax"><em>MetaListPath</em></a>语法，以及由体系结构系列名称和指令集名称组成的路径。</p>
+<p>在不支持的 <code>instruction_set</code>属性的目标架构上使用该属性会报编译错误。</p>
+<h3 id="on-arm"><a class="header" href="#on-arm">On ARM</a></h3>
+<p>在 <code>ARMv4T</code> 和 <code>ARMv5te</code> 架构下， 支持使用:</p>
 <ul>
-<li><code>arm::a32</code> - Uses ARM code.</li>
-<li><code>arm::t32</code> - Uses Thumb code.</li>
+<li><code>arm::a32</code> - 生成 A32 &quot;ARM&quot; 指令风格的函数。</li>
+<li><code>arm::t32</code> - 生成 T32 &quot;Thumb&quot; 指令风格的函数</li>
 </ul>
 <!-- ignore: arm-only -->
 <pre><code class="language-rust ignore">#[instruction_set(arm::a32)]
@@ -5826,6 +5832,9 @@ fn foo_arm_code() {}
 #[instruction_set(arm::t32)]
 fn bar_thumb_code() {}
 </code></pre>
+<p>使用 <code>instruction_set</code>属性会带来以下副作用：</p>
+<p>*如果将函数的地址作为函数指针，则地址的低位将根据指令集设置为 0（arm）或 1（thumb）。
+*函数中的任何内联程汇编指令都必须使用指定的指令集，而不是目标默认值。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="limits"><a class="header" href="#limits">Limits</a></h1>
 <h1 id="极值设置"><a class="header" href="#极值设置">极值设置</a></h1>
 <blockquote>
@@ -9038,7 +9047,7 @@ if let Some(y) = x {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>*非引用模式(Non-reference patterns)*包括<strong>除</strong>上面这种绑定模式和后面会讲到的<a href="patterns.html#wildcard-pattern">通配符模式</a>（<code>_</code>）、匹配引用类型的<a href="patterns.html#path-patterns">常量(<code>const</code>)模式</a>和<a href="patterns.html#reference-patterns">引用模式</a>这些模式以外的所有模式。</p>
+<p>*非引用模式(Non-reference patterns)*包括<strong>除</strong>上面这种单独的标识符绑定模式和后面会讲到的<a href="patterns.html#wildcard-pattern">通配符模式</a>（<code>_</code>）、匹配引用类型的<a href="patterns.html#path-patterns">常量(<code>const</code>)模式</a>和<a href="patterns.html#reference-patterns">引用模式</a>这些模式以外的所有模式。</p>
 <p>如果绑定模式(binding pattern)中没有显式地包含 <code>ref</code>、<code>ref mut</code>、<code>mut</code>，那么它将使用<em>默认绑定方式</em>来确定如何绑定变量。
 默认绑定方式以使用移动语义的“移动(move)”方式开始。
 当匹配一个模式时，编译器对模式从外到内逐层匹配。每次非引用模式和引用匹配上了时，引用都会自动解引用出最后的值，并更新默认绑定方式，再进行最终的匹配。
@@ -11133,8 +11142,8 @@ fn takes_fn_ptr&lt;'short, 'middle: 'short&gt;(
 <h1 id="trait约束和生存期约束"><a class="header" href="#trait约束和生存期约束">trait约束和生存期约束</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md">trait-bounds.md</a><br />
-commit: fd6e375b892e018ea79783ea824ca97f2ef1a563 <br />
-本章译文最后维护日期：2023-03-04</p>
+commit: f24f128949905108723bec0dc129266d04a2c544 <br />
+本章译文最后维护日期：2023-08-26</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -11203,8 +11212,8 @@ fn name_figure&lt;U: Shape&gt;(
 <h2 id="lifetime-bounds"><a class="header" href="#lifetime-bounds">Lifetime bounds</a></h2>
 <h2 id="生存期约束"><a class="header" href="#生存期约束">生存期约束</a></h2>
 <p>生存期约束可以应用于类型或其他生存期。
-约束 <code>'a: 'b</code> 通常被读做 <em><code>'a</code> 比 <code>'b</code> 存活的时间久</em>。
-<code>'a: 'b</code> 意味着 <code>'a</code> 持续的时间至少和 <code>'b</code> 一样长，所以只要 <code>&amp;'b ()</code> 有效，则 <code>&amp;'a ()</code> 就有效。<sup class="footnote-reference"><a href="#译注1">1</a></sup></p>
+约束 <code>'a: 'b</code> 通常被读做 <em><code>'a</code> 比 <code>'b</code> 存活的时间久(outlives)</em>。
+<code>'a: 'b</code> 意味着 <code>'a</code> 持续的时间至少和 <code>'b</code> 一样长，所以只要 <code>&amp;'a ()</code> 有效，则 <code>&amp;'b ()</code> 必定有效。<sup class="footnote-reference"><a href="#译注1">1</a></sup></p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn f&lt;'a, 'b&gt;(x: &amp;'a i32, mut y: &amp;'b i32) where 'a: 'b {
@@ -11260,8 +11269,74 @@ fn name_figure&lt;U: Shape&gt;(
 }
 <span class="boring">}
 </span></code></pre></pre>
+<h2 id="implied-bounds"><a class="header" href="#implied-bounds">Implied bounds</a></h2>
+<h2 id="隐式约束"><a class="header" href="#隐式约束">隐式约束</a></h2>
+<p>生存期约束有效需要以类型定义格式合法(well-formed)为前提，有时甚至需要一些编译器推断。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn requires_t_outlives_a&lt;'a, T&gt;(x: &amp;'a T) {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>类型参数<code>T</code> 需要比类型<code>&amp;'a T</code> 的<code>'a</code>生存时间长才能形成格式合法(well-formed)。
+之所以推断出这一点，是因为函数签名包含类型<code>&amp;'a T</code>，该类型仅在 <code>T: 'a</code> 成立时才有效。</p>
+<p>Rust 会为函数的所有参数和输出添加隐式约束。在 <code>requires_t_outlives_a</code>内部，即使没有明确指定，也可以假定 <code>T: 'a</code> 得到了保持：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn requires_t_outlives_a_not_implied&lt;'a, T: 'a&gt;() {}
+
+fn requires_t_outlives_a&lt;'a, T&gt;(x: &amp;'a T) {
+    // 这能够编译是因为 `T: 'a` 是由引用类型 `&amp;'a T` 隐式约束的。
+    requires_t_outlives_a_not_implied::&lt;'a, T&gt;();
+}
+<span class="boring">}
+</span></code></pre></pre>
+<pre><pre class="playground"><code class="language-rust compile_fail E0309 edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">fn requires_t_outlives_a_not_implied&lt;'a, T: 'a&gt;() {}
+</span>fn not_implied&lt;'a, T&gt;() {
+    // 这里报错是因为函数签名并没有 `T: 'a` 的隐式约束。
+    requires_t_outlives_a_not_implied::&lt;'a, T&gt;();
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>只有生存期约束是隐式约束，特征约束仍然必须显式添加。
+因此，以下示例会导致错误：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail E0277 edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::fmt::Debug;
+struct IsDebug&lt;T: Debug&gt;(T);
+// error[E0277]: `T` 没有实现 `Debug`
+fn doesnt_specify_t_debug&lt;T&gt;(x: IsDebug&lt;T&gt;) {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>还推断出任何类型的类型定义和impl块的生存期界限：
+在类型定义和类型的 impl块中，生存期约束的推断逻辑仍会被编译器执行：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Struct&lt;'a, T&gt; {
+    // 这里要求 `T: 'a`， 这点是编译器推断出的
+    field: &amp;'a T,
+}
+
+enum Enum&lt;'a, T&gt; {
+    // 这里要求 `T: 'a`， 这点是编译器推断出的
+    //
+    // 注意，即便是只使用 `Enum::OtherVariant`，仍需要保持 `T: 'a`
+    SomeVariant(&amp;'a T),
+    OtherVariant,
+}
+
+trait Trait&lt;'a, T: 'a&gt; {}
+
+// 这里会报错是因为任何类型的 impl头中都没有隐含 T: 'a` 的逻辑
+//     impl&lt;'a, T&gt; Trait&lt;'a, T&gt; for () {}
+
+// 这里能通过编译是因为 self类型 `&amp;'a T` 中隐含了 `T: 'a`的逻辑
+impl&lt;'a, T&gt; Trait&lt;'a, T&gt; for &amp;'a T {}
+<span class="boring">}
+</span></code></pre></pre>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
-<p>译者理解：理解这种关系时，可以把生存期 <code>'a</code> 和 <code>'b</code> 理解成去引用对象时需传入的参数，给定 <code>'a: 'b</code> 和类型 <code>T</code>，如果 <code>'b T</code>有效，那此时再传入 <code>'a</code> 就去引用 <code>T</code> 必定有效。</p>
+<p>译者理解：理解这种关系时，可以把生存期 <code>'a</code> 和 <code>'b</code> 理解成去引用对象时需传入的参数，给定 <code>'a: 'b</code> 和类型 <code>T</code>，如果 <code>'a T</code>有效，那此时再传入 <code>'b</code> 就去引用 <code>T</code> 必定有效。</p>
 </div>
 <div class="footnote-definition" id="译注2"><sup class="footnote-definition-label">4</sup>
 <p>译者理解：高阶 trait约束就是对带生存期的类型重新进行约束。像这句中的例子就是对 <code>&amp;'a T</code> 加上了 <code>PartialEq&lt;i32&gt;</code> 的约束，其中 <code>for&lt;'a&gt;</code> 可以理解为：对于 <code>'a</code> 的所有可能选择。更多信息请参见：https://doc.rust-lang.org/std/cmp/trait.PartialEq.html 和 https://doc.rust-lang.org/nightly/nomicon/hrtb.html</p>
@@ -13786,8 +13861,8 @@ unsafe trait 应随附解释这些额外安全条款要求的文档。</p>
 <h2 id="未定义的行为"><a class="header" href="#未定义的行为">未定义的行为</a></h2>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md">behavior-considered-undefined.md</a><br />
-commit: e94fb3d5ba9a06c118e2428b8e6f738a157fb642 <br />
-本章译文最后维护日期：2023-07-21</p>
+commit: f12eaec52214b20287687924e7ef469f5d82c2a8 <br />
+本章译文最后维护日期：2023-08-26</p>
 </blockquote>
 <p>如果 Rust 代码出现了下面列表中的任何行为，则此代码被认为不正确。这包括非安全(<code>unsafe</code>)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。</p>
 <p>在编写非安全代码时，确保任何与非安全代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何使用非安全代码的安全客户端(safe client)，如果当前条件满足了此非安全代码对于安全条件的要求，那此此非安全代码对于此安全客户端就是<em>健壮的(sound)</em>；如果非安全(<code>unsafe</code>)代码可以被安全代码滥用以致出现未定义行为，那么此非安全(<code>unsafe</code>)代码对这些安全代码来说就是<em>不健壮的(unsound)</em>。</p>
@@ -13811,7 +13886,10 @@ commit: e94fb3d5ba9a06c118e2428b8e6f738a157fb642 <br />
 <p>当这些类型的值（<code>Box&lt;T&gt;</code>、<code>&amp;mut T</code> 和 <code>&amp;T</code> 类型的值）被传递给复合类型的（内嵌）成员字段时，所有的这些规则都适用，但注意传递给间接寻址的指针不适用。</p>
 </li>
 <li>
-<p>修改不可变的数据。<a href="items/constant-items.html">常量(<code>const</code>)</a>项内的所有数据都是不可变的。此外，所有通过共享引用接触到的数据或不可变绑定所拥有的数据都是不可变的，除非该数据包含在 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 中。</p>
+<p>修改不可变的字节数据。<a href="items/constant-items.html">常量(<code>const</code>)</a>项内的所有字节都是不可变的。
+不可变变量所拥有的字节数据是不可变的，除非这些字节是 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 的一部分。</p>
+<p>此外，共享引用<a href="behavior-considered-undefined.html#pointed-to-bytes">指向</a>的字节数据是不可变的，包括通过其他引用（共享的和可变的）和 <code>Box</code>方式传递过来的；这里传递过来的（也就是传递性）包括那些存储在复合类型成员字段中的各种引用。</p>
+<p>修改是指与相关字节位上超过0字节的任何写入（即使该写入不会更改内存内容）。</p>
 </li>
 <li>
 <p>通过编译器内部函数(compiler intrinsics)调用未定义行为。<sup class="footnote-reference"><a href="#译注1">1</a></sup></p>
@@ -13874,9 +13952,12 @@ commit: e94fb3d5ba9a06c118e2428b8e6f738a157fb642 <br />
 <blockquote>
 <p><strong>注意</strong>：未定义行为影响整个程序。例如，在 C 中调用一个 C函数已经出现了未定义行为，这意味着包含此调用的整个程序都包含了未定义行为。如果 Rust 再通过 FFI 来调用这段 C程序/代码，那这段 Rust 代码也包含了未定义行为。反之亦然。因此 Rust 中的未定义行为会对任何其他通过 FFI 过来调用的代码造成不利影响。</p>
 </blockquote>
+<h3 id="pointed-to-bytes"><a class="header" href="#pointed-to-bytes">Pointed-to bytes</a></h3>
+<h3 id="指向字节数据"><a class="header" href="#指向字节数据">指向字节数据</a></h3>
+<p>指针或引用“指向”的字节数据是由指针值和指针对象类型的尺寸（使用<code>size_of_val</code>）来确定的。</p>
 <h3 id="dangling-pointers"><a class="header" href="#dangling-pointers">Dangling pointers</a></h3>
 <h3 id="悬垂指针"><a class="header" href="#悬垂指针">悬垂指针</a></h3>
-<p>如果引用/指针为空或者它指向的所有字节不是同一次内存分配(live allocation)的一部分（因此，它们都必须是<em>某些</em>内存分配的一部分），那么它就是“悬垂”的。它指向的字节跨度(span)由指针本身和指针所指对象的类型的内存宽度决定（此内存宽度可使用 <code>size_of_val</code> 检测）。</p>
+<p>如果引用/指针为空，或者它<a href="behavior-considered-undefined.html#pointed-to-bytes">指向</a>的所有字节都不是同一个实时分配(live allocation，也因此它们都必须是<em>某次</em>分配)的一部分，那么它就是“悬垂(dangling)”的。</p>
 <p>如果类型的内存宽度为0，则该指针必定 要么指向某个初始化内存的内部（包括刚好指向分配的最后一个字节之后），要么直接从非零整型字面量来构造而来。</p>
 <p>请注意，动态内存宽度类型（如切片和字符串）指向其底层的整个数据范围，因此他们的代表长度的元数据永远不要太大，这一点很重要。特别需要注意的是 Rust里，值的动态内存宽度（由<code>size_of_val</code> 来确定）不能超过 <code>isize::MAX</code>。</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="behavior-not-considered-unsafe"><a class="header" href="#behavior-not-considered-unsafe">Behavior not considered <code>unsafe</code></a></h2>

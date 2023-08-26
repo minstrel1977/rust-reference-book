@@ -3,7 +3,7 @@
 
 >[external-blocks.md](https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md)\
 >commit: f0bb14c9bacca5d305e0488c43273ebe22fe928e \
->本章译文最后维护日期：2023-06-11
+>本章译文最后维护日期：2023-08-26
 
 > **<sup>句法</sup>**\
 > _ExternBlock_ :\
@@ -64,6 +64,7 @@ extern "stdcall" { }
 * `extern "aapcs"` --通过 FFI 调用 ARM 接口所使用的默认调用约定
 * `extern "fastcall"` -- `fastcall` ABI——对应于 MSVC 的`__fastcall` 和 GCC 以及 clang 的 `__attribute__((fastcall))`。
 * `extern "vectorcall"` -- `vectorcall` ABI ——对应于 MSVC 的 `__vectorcall` 和 clang 的 `__attribute__((vectorcall))`。
+* `extern "thiscall"` -- MSVC 下调用 C++ 成员函数的默认约定 -- 对应与 MSVC 下的`__thiscall`，以及 GCC 和 clang 的`__attribute__((thiscall))` 调用约定
 * `extern "efiapi"` -- 调用 [UEFI] 函数所使用的 ABI。
 
 ## Variadic functions

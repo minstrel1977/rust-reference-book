@@ -153,8 +153,8 @@
 <h2 id="未定义的行为"><a class="header" href="#未定义的行为">未定义的行为</a></h2>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md">behavior-considered-undefined.md</a><br />
-commit: e94fb3d5ba9a06c118e2428b8e6f738a157fb642 <br />
-本章译文最后维护日期：2023-07-21</p>
+commit: f12eaec52214b20287687924e7ef469f5d82c2a8 <br />
+本章译文最后维护日期：2023-08-26</p>
 </blockquote>
 <p>如果 Rust 代码出现了下面列表中的任何行为，则此代码被认为不正确。这包括非安全(<code>unsafe</code>)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。</p>
 <p>在编写非安全代码时，确保任何与非安全代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何使用非安全代码的安全客户端(safe client)，如果当前条件满足了此非安全代码对于安全条件的要求，那此此非安全代码对于此安全客户端就是<em>健壮的(sound)</em>；如果非安全(<code>unsafe</code>)代码可以被安全代码滥用以致出现未定义行为，那么此非安全(<code>unsafe</code>)代码对这些安全代码来说就是<em>不健壮的(unsound)</em>。</p>
@@ -178,7 +178,10 @@ commit: e94fb3d5ba9a06c118e2428b8e6f738a157fb642 <br />
 <p>当这些类型的值（<code>Box&lt;T&gt;</code>、<code>&amp;mut T</code> 和 <code>&amp;T</code> 类型的值）被传递给复合类型的（内嵌）成员字段时，所有的这些规则都适用，但注意传递给间接寻址的指针不适用。</p>
 </li>
 <li>
-<p>修改不可变的数据。<a href="items/constant-items.html">常量(<code>const</code>)</a>项内的所有数据都是不可变的。此外，所有通过共享引用接触到的数据或不可变绑定所拥有的数据都是不可变的，除非该数据包含在 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 中。</p>
+<p>修改不可变的字节数据。<a href="items/constant-items.html">常量(<code>const</code>)</a>项内的所有字节都是不可变的。
+不可变变量所拥有的字节数据是不可变的，除非这些字节是 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 的一部分。</p>
+<p>此外，共享引用<a href="#pointed-to-bytes">指向</a>的字节数据是不可变的，包括通过其他引用（共享的和可变的）和 <code>Box</code>方式传递过来的；这里传递过来的（也就是传递性）包括那些存储在复合类型成员字段中的各种引用。</p>
+<p>修改是指与相关字节位上超过0字节的任何写入（即使该写入不会更改内存内容）。</p>
 </li>
 <li>
 <p>通过编译器内部函数(compiler intrinsics)调用未定义行为。<sup class="footnote-reference"><a href="#译注1">1</a></sup></p>
@@ -241,9 +244,12 @@ commit: e94fb3d5ba9a06c118e2428b8e6f738a157fb642 <br />
 <blockquote>
 <p><strong>注意</strong>：未定义行为影响整个程序。例如，在 C 中调用一个 C函数已经出现了未定义行为，这意味着包含此调用的整个程序都包含了未定义行为。如果 Rust 再通过 FFI 来调用这段 C程序/代码，那这段 Rust 代码也包含了未定义行为。反之亦然。因此 Rust 中的未定义行为会对任何其他通过 FFI 过来调用的代码造成不利影响。</p>
 </blockquote>
+<h3 id="pointed-to-bytes"><a class="header" href="#pointed-to-bytes">Pointed-to bytes</a></h3>
+<h3 id="指向字节数据"><a class="header" href="#指向字节数据">指向字节数据</a></h3>
+<p>指针或引用“指向”的字节数据是由指针值和指针对象类型的尺寸（使用<code>size_of_val</code>）来确定的。</p>
 <h3 id="dangling-pointers"><a class="header" href="#dangling-pointers">Dangling pointers</a></h3>
 <h3 id="悬垂指针"><a class="header" href="#悬垂指针">悬垂指针</a></h3>
-<p>如果引用/指针为空或者它指向的所有字节不是同一次内存分配(live allocation)的一部分（因此，它们都必须是<em>某些</em>内存分配的一部分），那么它就是“悬垂”的。它指向的字节跨度(span)由指针本身和指针所指对象的类型的内存宽度决定（此内存宽度可使用 <code>size_of_val</code> 检测）。</p>
+<p>如果引用/指针为空，或者它<a href="#pointed-to-bytes">指向</a>的所有字节都不是同一个实时分配(live allocation，也因此它们都必须是<em>某次</em>分配)的一部分，那么它就是“悬垂(dangling)”的。</p>
 <p>如果类型的内存宽度为0，则该指针必定 要么指向某个初始化内存的内部（包括刚好指向分配的最后一个字节之后），要么直接从非零整型字面量来构造而来。</p>
 <p>请注意，动态内存宽度类型（如切片和字符串）指向其底层的整个数据范围，因此他们的代表长度的元数据永远不要太大，这一点很重要。特别需要注意的是 Rust里，值的动态内存宽度（由<code>size_of_val</code> 来确定）不能超过 <code>isize::MAX</code>。</p>
 

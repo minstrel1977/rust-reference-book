@@ -154,7 +154,7 @@
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md">external-blocks.md</a><br />
 commit: f0bb14c9bacca5d305e0488c43273ebe22fe928e <br />
-本章译文最后维护日期：2023-06-11</p>
+本章译文最后维护日期：2023-08-26</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -204,6 +204,7 @@ extern &quot;stdcall&quot; { }
 <li><code>extern &quot;aapcs&quot;</code> --通过 FFI 调用 ARM 接口所使用的默认调用约定</li>
 <li><code>extern &quot;fastcall&quot;</code> -- <code>fastcall</code> ABI——对应于 MSVC 的<code>__fastcall</code> 和 GCC 以及 clang 的 <code>__attribute__((fastcall))</code>。</li>
 <li><code>extern &quot;vectorcall&quot;</code> -- <code>vectorcall</code> ABI ——对应于 MSVC 的 <code>__vectorcall</code> 和 clang 的 <code>__attribute__((vectorcall))</code>。</li>
+<li><code>extern &quot;thiscall&quot;</code> -- MSVC 下调用 C++ 成员函数的默认约定 -- 对应与 MSVC 下的<code>__thiscall</code>，以及 GCC 和 clang 的<code>__attribute__((thiscall))</code> 调用约定</li>
 <li><code>extern &quot;efiapi&quot;</code> -- 调用 <a href="https://uefi.org/specifications">UEFI</a> 函数所使用的 ABI。</li>
 </ul>
 <h2 id="variadic-functions"><a class="header" href="#variadic-functions">Variadic functions</a></h2>

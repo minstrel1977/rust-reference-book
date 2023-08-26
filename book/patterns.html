@@ -389,7 +389,7 @@ if let Some(y) = x {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>*非引用模式(Non-reference patterns)*包括<strong>除</strong>上面这种绑定模式和后面会讲到的<a href="#wildcard-pattern">通配符模式</a>（<code>_</code>）、匹配引用类型的<a href="#path-patterns">常量(<code>const</code>)模式</a>和<a href="#reference-patterns">引用模式</a>这些模式以外的所有模式。</p>
+<p>*非引用模式(Non-reference patterns)*包括<strong>除</strong>上面这种单独的标识符绑定模式和后面会讲到的<a href="#wildcard-pattern">通配符模式</a>（<code>_</code>）、匹配引用类型的<a href="#path-patterns">常量(<code>const</code>)模式</a>和<a href="#reference-patterns">引用模式</a>这些模式以外的所有模式。</p>
 <p>如果绑定模式(binding pattern)中没有显式地包含 <code>ref</code>、<code>ref mut</code>、<code>mut</code>，那么它将使用<em>默认绑定方式</em>来确定如何绑定变量。
 默认绑定方式以使用移动语义的“移动(move)”方式开始。
 当匹配一个模式时，编译器对模式从外到内逐层匹配。每次非引用模式和引用匹配上了时，引用都会自动解引用出最后的值，并更新默认绑定方式，再进行最终的匹配。

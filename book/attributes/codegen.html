@@ -153,8 +153,8 @@
 <h1 id="代码生成属性"><a class="header" href="#代码生成属性">代码生成属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md">codegen.md</a><br />
-commit: 689ef0581aaffcd3e68e805e98413183993d216a <br />
-本章译文最后维护日期：2023-05-12</p>
+commit: 2a8068eacabba6284545172875bf2dc640c1ed5b <br />
+本章译文最后维护日期：2023-08-26</p>
 </blockquote>
 <p>下述<a href="../attributes.html">属性</a>用于控制代码生成。</p>
 <h2 id="optimization-hints"><a class="header" href="#optimization-hints">Optimization hints</a></h2>
@@ -394,11 +394,15 @@ fn calls_h() {
 </div>
 <h2 id="the-instruction_set-attribute"><a class="header" href="#the-instruction_set-attribute">The <code>instruction_set</code> attribute</a></h2>
 <h2 id="instruction_set属性"><a class="header" href="#instruction_set属性"><code>instruction_set</code>属性</a></h2>
-<p><em><code>instruction_set</code>属性</em>可应用于函数，用以实现目标架构支持的特定指令集的代码生成。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListPath</em></a>句法，其中的 <em>SimplePath</em> 是由架构和指令集组成的路径。这样可用为单个程序生成目标架构所支持的多个指令集的代码。</p>
-<p>以下两个值在 <code>ARMv4</code> 和 <code>ARMv5te</code> 目标架构下可用：</p>
+<p><em><code>instruction_set</code><a href="../attributes.html">属性</a></em> 可以应用于函数，用以控制将为哪个指令集生成函数。
+这允许在单个程序中混合使用多个它支持的 CPU架构指令集。
+它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListPath</em></a>语法，以及由体系结构系列名称和指令集名称组成的路径。</p>
+<p>在不支持的 <code>instruction_set</code>属性的目标架构上使用该属性会报编译错误。</p>
+<h3 id="on-arm"><a class="header" href="#on-arm">On ARM</a></h3>
+<p>在 <code>ARMv4T</code> 和 <code>ARMv5te</code> 架构下， 支持使用:</p>
 <ul>
-<li><code>arm::a32</code> - Uses ARM code.</li>
-<li><code>arm::t32</code> - Uses Thumb code.</li>
+<li><code>arm::a32</code> - 生成 A32 &quot;ARM&quot; 指令风格的函数。</li>
+<li><code>arm::t32</code> - 生成 T32 &quot;Thumb&quot; 指令风格的函数</li>
 </ul>
 <!-- ignore: arm-only -->
 <pre><code class="language-rust ignore">#[instruction_set(arm::a32)]
@@ -407,6 +411,9 @@ fn foo_arm_code() {}
 #[instruction_set(arm::t32)]
 fn bar_thumb_code() {}
 </code></pre>
+<p>使用 <code>instruction_set</code>属性会带来以下副作用：</p>
+<p>*如果将函数的地址作为函数指针，则地址的低位将根据指令集设置为 0（arm）或 1（thumb）。
+*函数中的任何内联程汇编指令都必须使用指定的指令集，而不是目标默认值。</p>
 
                     </main>
 

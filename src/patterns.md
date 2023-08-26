@@ -260,7 +260,7 @@ if let Some(y) = x {
 }
 ```
 
-*非引用模式(Non-reference patterns)*包括**除**上面这种绑定模式和后面会讲到的[通配符模式](#wildcard-pattern)（`_`）、匹配引用类型的[常量(`const`)模式](#path-patterns)和[引用模式](#reference-patterns)这些模式以外的所有模式。
+*非引用模式(Non-reference patterns)*包括**除**上面这种单独的标识符绑定模式和后面会讲到的[通配符模式](#wildcard-pattern)（`_`）、匹配引用类型的[常量(`const`)模式](#path-patterns)和[引用模式](#reference-patterns)这些模式以外的所有模式。
 
 如果绑定模式(binding pattern)中没有显式地包含 `ref`、`ref mut`、`mut`，那么它将使用*默认绑定方式*来确定如何绑定变量。
 默认绑定方式以使用移动语义的“移动(move)”方式开始。

@@ -2,8 +2,8 @@
 # 条件编译
 
 >[conditional-compilation.md](https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md)\
->commit: 3319e0e1de1b33819456c912bf80ec5bfc7c90ef \
->本章译文最后维护日期：2023-07-21
+>commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c \
+>本章译文最后维护日期：2023-08-26
 
 > **<sup>句法</sup>**\
 > _ConfigurationPredicate_ :\
@@ -102,6 +102,7 @@
 * `"dragonfly"`
 * `"openbsd"`
 * `"netbsd"`
+* `"none"` (主要用于嵌入式目标架构)
 
 ### `target_family`
 

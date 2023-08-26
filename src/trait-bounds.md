@@ -2,8 +2,8 @@
 # trait约束和生存期约束
 
 >[trait-bounds.md](https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md)\
->commit: fd6e375b892e018ea79783ea824ca97f2ef1a563 \
->本章译文最后维护日期：2023-03-04
+>commit: f24f128949905108723bec0dc129266d04a2c544 \
+>本章译文最后维护日期：2023-08-26
 
 > **<sup>句法</sup>**\
 > _TypeParamBounds_ :\
@@ -78,8 +78,8 @@ trait 和生存期约束也被用来命名 [trait对象][trait objects]。
 ## 生存期约束
 
 生存期约束可以应用于类型或其他生存期。
-约束 `'a: 'b` 通常被读做 *`'a` 比 `'b` 存活的时间久*。
-`'a: 'b` 意味着 `'a` 持续的时间至少和 `'b` 一样长，所以只要 `&'b ()` 有效，则 `&'a ()` 就有效。[^译注1]
+约束 `'a: 'b` 通常被读做 *`'a` 比 `'b` 存活的时间久(outlives)*。
+`'a: 'b` 意味着 `'a` 持续的时间至少和 `'b` 一样长，所以只要 `&'a ()` 有效，则 `&'b ()` 必定有效。[^译注1]
 
 ```rust
 fn f<'a, 'b>(x: &'a i32, mut y: &'b i32) where 'a: 'b {
@@ -134,7 +134,75 @@ fn call_on_ref_zero<F>(f: F) where F: for<'a> Fn(&'a i32) {
 }
 ```
 
-[^译注1]: 译者理解：理解这种关系时，可以把生存期 `'a` 和 `'b` 理解成去引用对象时需传入的参数，给定 `'a: 'b` 和类型 `T`，如果 `'b T`有效，那此时再传入 `'a` 就去引用 `T` 必定有效。
+
+## Implied bounds
+## 隐式约束
+
+生存期约束有效需要以类型定义格式合法(well-formed)为前提，有时甚至需要一些编译器推断。
+
+```rust
+fn requires_t_outlives_a<'a, T>(x: &'a T) {}
+```
+类型参数`T` 需要比类型`&'a T` 的`'a`生存时间长才能形成格式合法(well-formed)。
+之所以推断出这一点，是因为函数签名包含类型`&'a T`，该类型仅在 `T: 'a` 成立时才有效。
+
+Rust 会为函数的所有参数和输出添加隐式约束。在 `requires_t_outlives_a`内部，即使没有明确指定，也可以假定 `T: 'a` 得到了保持：
+
+```rust
+fn requires_t_outlives_a_not_implied<'a, T: 'a>() {}
+
+fn requires_t_outlives_a<'a, T>(x: &'a T) {
+    // 这能够编译是因为 `T: 'a` 是由引用类型 `&'a T` 隐式约束的。
+    requires_t_outlives_a_not_implied::<'a, T>();
+}
+```
+
+```rust,compile_fail,E0309
+# fn requires_t_outlives_a_not_implied<'a, T: 'a>() {}
+fn not_implied<'a, T>() {
+    // 这里报错是因为函数签名并没有 `T: 'a` 的隐式约束。
+    requires_t_outlives_a_not_implied::<'a, T>();
+}
+```
+
+只有生存期约束是隐式约束，特征约束仍然必须显式添加。
+因此，以下示例会导致错误：
+
+```rust,compile_fail,E0277
+use std::fmt::Debug;
+struct IsDebug<T: Debug>(T);
+// error[E0277]: `T` 没有实现 `Debug`
+fn doesnt_specify_t_debug<T>(x: IsDebug<T>) {}
+```
+
+还推断出任何类型的类型定义和impl块的生存期界限：
+在类型定义和类型的 impl块中，生存期约束的推断逻辑仍会被编译器执行：
+
+```rust
+struct Struct<'a, T> {
+    // 这里要求 `T: 'a`， 这点是编译器推断出的
+    field: &'a T,
+}
+
+enum Enum<'a, T> {
+    // 这里要求 `T: 'a`， 这点是编译器推断出的
+    //
+    // 注意，即便是只使用 `Enum::OtherVariant`，仍需要保持 `T: 'a`
+    SomeVariant(&'a T),
+    OtherVariant,
+}
+
+trait Trait<'a, T: 'a> {}
+
+// 这里会报错是因为任何类型的 impl头中都没有隐含 T: 'a` 的逻辑
+//     impl<'a, T> Trait<'a, T> for () {}
+
+// 这里能通过编译是因为 self类型 `&'a T` 中隐含了 `T: 'a`的逻辑
+impl<'a, T> Trait<'a, T> for &'a T {}
+```
+
+
+[^译注1]: 译者理解：理解这种关系时，可以把生存期 `'a` 和 `'b` 理解成去引用对象时需传入的参数，给定 `'a: 'b` 和类型 `T`，如果 `'a T`有效，那此时再传入 `'b` 就去引用 `T` 必定有效。
 
 [^译注2]: 译者理解：高阶 trait约束就是对带生存期的类型重新进行约束。像这句中的例子就是对 `&'a T` 加上了 `PartialEq<i32>` 的约束，其中 `for<'a>` 可以理解为：对于 `'a` 的所有可能选择。更多信息请参见：https://doc.rust-lang.org/std/cmp/trait.PartialEq.html 和 https://doc.rust-lang.org/nightly/nomicon/hrtb.html
 
