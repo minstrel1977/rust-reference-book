@@ -153,8 +153,8 @@
 <h1 id="布尔型"><a class="header" href="#布尔型">布尔型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/boolean.md">boolean.md</a><br />
-commit: 1804726424c5cbc97f3d9d4adf6236980e2ff7a1 <br />
-本章译文最后维护日期：2021-2-10</p>
+commit: d3a66eb69892b25794b2d82a1249ec01d8ead9f1 <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -235,6 +235,9 @@ commit: 1804726424c5cbc97f3d9d4adf6236980e2ff7a1 <br />
 <li><code>a &lt; b</code> 等同于 <code>!(a &gt;= b)</code></li>
 <li><code>a &lt;= b</code> 等同于 <code>a == b | a &lt; b</code></li>
 </ul>
+<h2 id="bit-validity"><a class="header" href="#bit-validity">Bit validity</a></h2>
+<h2 id="位有效性"><a class="header" href="#位有效性">位有效性</a></h2>
+<p>Rust会保证 <code>bool</code>类型的单个字节被初始化（换句话说，<code>transmute::&lt;bool, u8&gt;(...)</code> 总是健全(sound)的——但由于一些位模式是无效的 <code>bool</code>，因此相反的操作并不总是健全的）。</p>
 
                     </main>
 

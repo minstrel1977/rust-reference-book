@@ -153,8 +153,8 @@
 <h1 id="类型布局"><a class="header" href="#类型布局">类型布局</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-layout.md">type-layout.md</a><br />
-commit: 2dc423d6937754e07e42345156021d3ef8ff956b <br />
-本章译文最后维护日期：2023-07-21</p>
+commit: 9f9e7a70ff8abe88d37b9a349480b5838d2bc3e5 <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <p>类型的布局描述类型的内存宽度(size)、对齐量(alignment)和字段(fields)的<em>相对偏移量(relative offsets)</em>。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。</p>
 <p>每次编译都有可能更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。</p>
@@ -203,7 +203,7 @@ commit: 2dc423d6937754e07e42345156021d3ef8ff956b <br />
 <p>字符串切片是一种 UTF-8 表型(representation)的字符序列，它们与 <code>[u8]</code>类型的切片拥有相同的类型布局。</p>
 <h2 id="tuple-layout"><a class="header" href="#tuple-layout">Tuple Layout</a></h2>
 <h2 id="元组的布局"><a class="header" href="#元组的布局">元组的布局</a></h2>
-<p>元组根据<a href="#the-default-representation">默认表形(representation)</a>来布局内存存储格式。</p>
+<p>元组根据<a href="#the-rust-representation"><code>Rust</code>表形(representation)</a>来布局内存存储格式。</p>
 <p>一个例外情况是单元结构体(unit tuple)(<code>()</code>)类型，它被保证为内存宽度为 0，对齐量为 1。</p>
 <h2 id="trait-object-layout"><a class="header" href="#trait-object-layout">Trait Object Layout</a></h2>
 <h2 id="trait对象的布局"><a class="header" href="#trait对象的布局">trait对象的布局</a></h2>
@@ -218,7 +218,7 @@ commit: 2dc423d6937754e07e42345156021d3ef8ff956b <br />
 <h2 id="表形表示形式"><a class="header" href="#表形表示形式">表形/表示形式</a></h2>
 <p>所有用户定义的复合类型（结构体(<code>struct</code>)、枚举(<code>enum</code>)和联合体(<code>union</code>)）都有一个*表形(representation)*属性，该属性用于指定该类型的布局。类型的可能表形有：</p>
 <ul>
-<li><a href="#the-default-representation">默认(default)表形</a></li>
+<li><a href="#the-rust-representation"><code>Rust</code></a> (默认)</li>
 <li><a href="#the-c-representation"><code>C</code>表形</a></li>
 <li><a href="#primitive-representations">原语表形(primitive representation)</a></li>
 <li><a href="#the-transparent-representation">透明表形(<code>transparent</code>)</a></li>
@@ -258,9 +258,9 @@ struct AlignedStruct {
 <p>注意：由于表形是程序项的属性，因此表形不依赖于泛型参数。具有相同名称的任何两种类型都具有相同的表形。例如，<code>Foo&lt;Bar&gt;</code> 和 <code>Foo&lt;Baz&gt;</code> 都有相同的表形。</p>
 </blockquote>
 <p>类型的表形可以更改字段之间的填充，但不会更改字段本身的布局。例如一个使用 <code>C</code>表形的结构体，如果它包含一个默认表形的字段 <code>Inner</code>，那么它不会改变 <code>Inner</code> 的布局。</p>
-<h3 id="the-default-representation"><a class="header" href="#the-default-representation">The Default Representation</a></h3>
-<h3 id="默认表形"><a class="header" href="#默认表形">默认表形</a></h3>
-<p>没有 <code>repr</code>属性的标称(nominal)类型具有默认表形。非正式地的情况下，也称这种表形为 <code>rust</code>表形。</p>
+<h3 id="the-rust-representation"><a class="header" href="#the-rust-representation"><a id="the-default-representation"></a> The <code>Rust</code> Representation</a></h3>
+<h3 id="rust表型"><a class="header" href="#rust表型"><a id="the-default-representation"></a> <code>Rust</code>表型</a></h3>
+<p><code>Rust</code>表型是没有 <code>repr</code>属性修饰的标称类型的默认表型。使用 <code>repr</code>属性显式指定此表型，Rust编译器会保证与完全省略该属性相同。</p>
 <p>此表形所提供的唯一数据布局保证是健全性(soundness)所需的数据布局形式。
 这些形式包括：</p>
 <ol>
@@ -542,7 +542,7 @@ assert_eq!(std::mem::size_of::&lt;Enum16&gt;(), 4);
 <p>对于 <code>align</code>，如果类型指定的对齐量比其不带 <code>align</code>修饰符时的对齐量小，则该指定的对齐量无效。</p>
 <p>对于 <code>packed</code>，如果类型指定的对齐量比其不带 <code>packed</code>修饰符时的对齐量大，则该指定的对齐量和布局无效。为了定位字段，每个字段的对齐量是指定的对齐量和字段的类型的对齐量中较小的那个对齐量。</p>
 <p>字段间的填充保证为每个字段（可能更改）的对齐量填充所需的最小值（但请注意，<code>packed</code> 本身并不能保证字段顺序）。这些规则的一个重要后果是：<code>#[repr(packed(1))]</code>（或<code>#[repr(packed)]</code>) 的类型不会有字段间填充。</p>
-<p><code>align</code> 和 <code>packed</code> 修饰符不能应用于同一类型，且 <code>packed</code> 修饰的类型不能直接或间接地包含另一个 <code>align</code> 修饰的类型。<code>align</code> 和 <code>packed</code> 修饰符只能应用于<a href="#the-default-representation">默认表形</a>和 <a href="#the-c-representation">C表形</a>中。</p>
+<p><code>align</code> 和 <code>packed</code> 修饰符不能应用于同一类型，且 <code>packed</code> 修饰的类型不能直接或间接地包含另一个 <code>align</code> 修饰的类型。<code>align</code> 和 <code>packed</code> 修饰符只能应用于<a href="#the-rust-representation"><code>Rust</code></a>表形和 <a href="#the-c-representation"><code>C</code></a>表形中。</p>
 <p><code>align</code>修饰符也可以应用在枚举上。如果这样做了，其对枚举对齐量的影响与将此枚举包装在一个新的使用了相同的 <code>align</code>修饰符的结构体中的效果相同。</p>
 <blockquote>
 <p>注意：不能引用未对齐的成员字段，因为这是一种<a href="behavior-considered-undefined.html">未定义行为</a>。

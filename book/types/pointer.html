@@ -153,8 +153,8 @@
 <h1 id="指针类型"><a class="header" href="#指针类型">指针类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/pointer.md">pointer.md</a><br />
-commit: a7cdac33ca7356ad49d5c2b5e2c5010889b33eee <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: 13b5af85c57df0898f808651f5126c7fe7568349 <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <p>Rust 中所有的指针都是显式的一等(first-class)值。
 它们可以被移动或复制，存储到其他数据结构中，或从函数中返回。</p>
@@ -187,15 +187,24 @@ commit: a7cdac33ca7356ad49d5c2b5e2c5010889b33eee <br />
 </blockquote>
 <p>裸指针是没有安全性或可用性(liveness)保证的指针。
 裸指针写为 <code>*const T</code> 或 <code>*mut T</code>，例如，<code>*const i32</code> 表示指向 32-bit 有符号整数的裸指针。
-拷贝或销毁(dropping )裸指针对任何其他值的生命周期(lifecycle)都没有影响。对
-裸指针的解引用是<a href="../unsafety.html">非安全(<code>unsafe</code>)操作</a>，可以通过重新借用裸指针（<code>&amp;*</code> 或 <code>&amp;mut *</code>）将其转换为引用。
-通常不鼓励使用裸指针；它们的存在是为了提升与外部代码的互操作性，以及编写对性能要求很高的函数或很底层的函数。</p>
+拷贝或销毁(dropping )裸指针对任何其他值的生命周期(lifecycle)都没有影响。对裸指针的解引用是<a href="../unsafety.html">非安全(<code>unsafe</code>)操作</a>，可以通过重新借用裸指针（<code>&amp;*</code> 或 <code>&amp;mut *</code>）将其转换为引用。
+通常不鼓励使用裸指针；
+它们的存在是为了提升与外部代码的互操作性，以及编写对性能要求很高的函数或很底层的函数。</p>
 <p>在比较裸指针时，比较的是它们的地址，而不是它们指向的数据。
 当比较裸指针和<a href="../dynamically-sized-types.html">动态内存宽度类型</a>时，还会比较它们指针上的附加/元数据。</p>
 <p>可以直接使用 <a href="../../core/ptr/macro.addr_of.html"><code>core::ptr::addr_of!</code></a> 创建 <code>*const</code> 类型的裸指针，通过 <a href="../../core/ptr/macro.addr_of_mut.html"><code>core::ptr::addr_of_mut!</code></a> 创建 <code>*mut</code> 类型的裸指针。</p>
 <h2 id="smart-pointers"><a class="header" href="#smart-pointers">Smart Pointers</a></h2>
 <h2 id="智能指针"><a class="header" href="#智能指针">智能指针</a></h2>
 <p>标准库包含了一些额外的“智能指针”类型，它们提供了在引用和裸指针这类低级指针之外的更多的功能。</p>
+<h2 id="bit-validity"><a class="header" href="#bit-validity">Bit validity</a></h2>
+<h2 id="位有效性"><a class="header" href="#位有效性">位有效性</a></h2>
+<p>Despite pointers and references being similar to <code>usize</code>s in the machine code emitted on most platforms,
+the semantics of transmuting a reference or pointer type to a non-pointer type is currently undecided.
+Thus, it may not be valid to transmute a pointer or reference type, <code>P</code>, to a <code>[u8; size_of::&lt;P&gt;()]</code>.
+尽管指针和引用类似于在大多数平台上发出的机器码中的 <code>usize</code>，将引用或指针类型转换为非指针类型的语义目前尚未确定。
+因此，将指针或引用类型 <code>P</code> 转换为 <code>[u8; size_of::&lt;P&gt;()]</code> 可能是无效的。</p>
+<p>对于瘦裸指针（比如对于<code>P = *const T</code> 或 <code>P = *mut T</code>，其中 <code>T: Sized</code>），逆向转换（从整数或整数数组强转为 <code>P</code>）总是有效的。
+然而，通过这种转换产生的指针可能不能被解引用（即使 <code>T</code> 的尺寸为零也不行）。</p>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
 <p>译者理解这里是指 <code>&amp;mut type</code> 如果被借出，就成了 <code>&amp;&amp;mut type</code>，这样就又成了不可变借用了。</p>
 </div>

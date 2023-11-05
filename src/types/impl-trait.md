@@ -1,8 +1,8 @@
 # Impl trait
 
 >[impl-object.md](https://github.com/rust-lang/reference/blob/master/src/types/impl-object.md)\
->commit: 3f5f3b2428275fa0202ec8f289f7e03d3ebaf832 \
->本章译文最后维护日期：2023-06-11
+>commit: d82c9ac4054136efa6e9cc908ca3c589ed862d5a \
+>本章译文最后维护日期：2023-11-05
 
 > **<sup>句法</sup>**\
 > _ImplTraitType_ : `impl` [_TypeParamBounds_]
@@ -91,6 +91,13 @@ fn returns_closure() -> impl Fn(i32) -> i32 {
 
 类似地，在迭代器的使用坏境中，如果将此步操作前的所有迭代器操作合并到一个执行链中，迭代器里的具体类型可能变得非常复杂。此时返回 `impl Iterator` 意味着一个函数只需将 `Iterator` trait 作为其返回类型的约束来公开，而不须显式指定链内所有其他涉及的迭代器类型。
 
+## Return-position `impl Trait` in traits and trait implementations
+## trait 和 trait实现 的返回位置上的`impl Trait`
+
+trait中的函数也可以使用 `impl Trait` 作为匿名关联类型的句法。
+
+trait中关联函数的返回类型中的每个 `impl Trait` 都被脱糖为匿名关联类型。出现在实现中的函数签名中的返回类型用于确定关联类型的确定类型。
+
 ### Differences between generics and `impl Trait` in return position
 ### 泛型与 `impl Trait` 在返回位置上的差异
 
@@ -122,8 +129,8 @@ fn foo() -> impl Trait {
 ## Limitations
 ## 限制
 
-`impl Trait` 只能作为自由函数或固有函数的参数或返回类型出现。
-它不能出现在 trait实现中，也不能出现在 let绑定的类型或出现在类型别名中。
+`impl Trait` 只能作为 非`extern`函数的参数类型或返回类型出现。
+它不能 `let`绑定、成员字段的类型，也不能出现在类型别名中。
 
 [closures]: closure.md
 [_GenericArgs_]: ../paths.md#paths-in-expressions

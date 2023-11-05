@@ -3,8 +3,8 @@
 # 属性
 
 >[attributes.md](https://github.com/rust-lang/reference/blob/master/src/attributes.md)\
->commit: 39a0be6dc8210e0f127638ac5cc6820b8ce534df \
->本章译文最后维护日期：2023-06-11
+>commit: 9d351cc1d87816c0550bbf7627baf37bbc33ff27 \
+>本章译文最后维护日期：2023-11-05
 
 > **<sup>句法</sup>**\
 > _InnerAttribute_ :\
@@ -240,8 +240,8 @@ pub fn f() {}
   - [`debugger_visualizer`] — 嵌入一个文件，该文件指定类型的调试器输出。
 
 [Doc comments]: comments.md#doc-comments
-[ECMA-334]: https://www.ecma-international.org/publications/standards/Ecma-334.htm
-[ECMA-335]: https://www.ecma-international.org/publications/standards/Ecma-335.htm
+[ECMA-334]: https://www.ecma-international.org/publications-and-standards/standards/ecma-334/
+[ECMA-335]: https://www.ecma-international.org/publications-and-standards/standards/ecma-335/
 [Expression Attributes]: expressions.md#expression-attributes
 [IDENTIFIER]: identifiers.md
 [RAW_STRING_LITERAL]: tokens.md#raw-string-literals

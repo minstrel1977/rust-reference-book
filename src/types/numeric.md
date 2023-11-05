@@ -2,8 +2,8 @@
 # 数字型
 
 >[mumeric.md](https://github.com/rust-lang/reference/blob/master/src/types/mumeric.md)\
->commit: 73ca198fb3ab52283d67d5fe28c541ee1d169f48 \
->本章译文最后维护日期：2020-11-14
+>commit: 80ec1463a515858cbb49ac4c9f601a75992893b2 \
+>本章译文最后维护日期：2023-11-05
 
 ## Integer types
 ## 整型/整数类型
@@ -45,5 +45,8 @@ Rust 对应 IEEE 754-2008 的“binary32”和“binary64”浮点类型分别�
 
 > **注意**：许多 Rust 代码可能会假设指针、`usize` 和 `isize` 是 32-bit 或 64-bit 的。因此，16-bit 指针的支持是有限的，这部分支持可能需要来自库的明确关注和确认。
 
-<!-- 2020-11-12-->
-<!-- checked -->
+## Bit validity
+## 位有效性
+
+对于每种数字类型 `T`，`T` 的位有效性等同于 `[u8; size_of::<T>()]` 的位有效性。未初始化的字节不是有效的 `u8`。
+

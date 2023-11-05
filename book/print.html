@@ -148,7 +148,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2023-08-26</p>
+<p>本书跟随原文截止日期：2023-11-05</p>
 </blockquote>
 <h1 id="前言"><a class="header" href="#前言">前言</a></h1>
 <h2 id="试水版"><a class="header" href="#试水版">试水版</a></h2>
@@ -3615,8 +3615,8 @@ unsafe fn bump_levels_unsafe2() -&gt; u32 {
 <div style="break-before: page; page-break-before: always;"></div><h1 id="trait"><a class="header" href="#trait">Trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/traits.md">traits.md</a><br />
-commit: 1ef107a457a2d2945887fc026a28ee557710918b <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: d82c9ac4054136efa6e9cc908ca3c589ed862d5a <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -3650,7 +3650,7 @@ trait Example {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>Trait函数不能是 <a href="items/functions.html#async-functions"><code>async</code></a> 或 <a href="items/functions.html#const-functions"><code>const</code></a> 类型的。</p>
+<p>Trait函数不能是 <a href="items/functions.html#const-functions"><code>const</code></a>类型的。</p>
 <h2 id="trait-bounds"><a class="header" href="#trait-bounds">Trait bounds</a></h2>
 <h2 id="trait约束"><a class="header" href="#trait约束">trait约束</a></h2>
 <p>泛型程序项可以使用 trait 作为其类型参数的<a href="items/../trait-bounds.html">约束</a>。</p>
@@ -3914,8 +3914,8 @@ fn main() {
 <h1 id="实现"><a class="header" href="#实现">实现</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/implementations.md">implementations.md</a><br />
-commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
-本章译文最后维护日期：2021-07-31</p>
+commit: b5ae8364e361152059760576b60f180f5ed2276d <br />
+本章译文最后维护日期：2021-11-05</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -4958,8 +4958,8 @@ fn main() {
 <h1 id="属性-1"><a class="header" href="#属性-1">属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes.md">attributes.md</a><br />
-commit: 39a0be6dc8210e0f127638ac5cc6820b8ce534df <br />
-本章译文最后维护日期：2023-06-11</p>
+commit: 9d351cc1d87816c0550bbf7627baf37bbc33ff27 <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -4973,7 +4973,7 @@ commit: 39a0be6dc8210e0f127638ac5cc6820b8ce534df <br />
       <a href="macros.html"><em>DelimTokenTree</em></a><br />
    | <code>=</code> <a href="expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><em>属性</em>是一种通用的、格式自由的元数据(free-form metadatum)，这种元数据会（被编译器/解释器）依据名称、约定、语言和编译器版本进行解释。（Rust 语言中的）属性是根据 <a href="https://www.ecma-international.org/publications/standards/Ecma-335.htm">ECMA-335</a> 标准中的属性规范进行建模的，其语法来自 <a href="https://www.ecma-international.org/publications/standards/Ecma-334.htm">ECMA-334</a> (C#）。</p>
+<p><em>属性</em>是一种通用的、格式自由的元数据(free-form metadatum)，这种元数据会（被编译器/解释器）依据名称、约定、语言和编译器版本进行解释。（Rust 语言中的）属性是根据 <a href="https://www.ecma-international.org/publications-and-standards/standards/ecma-335/">ECMA-335</a> 标准中的属性规范进行建模的，其语法来自 <a href="https://www.ecma-international.org/publications-and-standards/standards/ecma-334/">ECMA-334</a> (C#）。</p>
 <p>*内部属性(Inner attributes)*以 <code>#!</code> 开头的方式编写，应用于它在其中声明的程序项。*外部属性(Outer attributes)*以不后跟感叹号的(<code>!</code>)的 <code>#</code> 开头的方式编写，应用于属性后面的内容。</p>
 <p>属性由指向属性的路径和路径后跟的可选的带定界符的 token树(delimited token tree)（其解释由属性定义）组成。除了宏属性之外，其他属性的输入也允许使用等号(<code>=</code>)后跟表达式的格式。更多细节请参见下面的<a href="attributes.html#meta-item-attribute-syntax">元项属性句法(meta item syntax)</a>。</p>
 <p>属性可以分为以下几类：</p>
@@ -5574,8 +5574,8 @@ let _ = five();
 <h1 id="代码生成属性"><a class="header" href="#代码生成属性">代码生成属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md">codegen.md</a><br />
-commit: 2a8068eacabba6284545172875bf2dc640c1ed5b <br />
-本章译文最后维护日期：2023-08-26</p>
+commit: 5d015ebbb987bee30a358fd86d28613ad04d9213 <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <p>下述<a href="attributes/../attributes.html">属性</a>用于控制代码生成。</p>
 <h2 id="optimization-hints"><a class="header" href="#optimization-hints">Optimization hints</a></h2>
@@ -5605,7 +5605,7 @@ commit: 2a8068eacabba6284545172875bf2dc640c1ed5b <br />
 <p><em><code>no_builtins</code><a href="attributes/../attributes.html">属性</a></em> 可以应用在 crate 级别，用以禁用对假定存在的库函数调用的某些代码模式优化。<sup class="footnote-reference"><a href="#译者注2">2</a></sup></p>
 <h2 id="the-target_feature-attribute"><a class="header" href="#the-target_feature-attribute">The <code>target_feature</code> attribute</a></h2>
 <h2 id="target_feature属性"><a class="header" href="#target_feature属性"><code>target_feature</code>属性</a></h2>
-<p><em><code>target_feature</code>[属性]</em> 可应用于函数上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 <a href="attributes/../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 <code>enable</code>键，其对应值是一个逗号分隔的由平台特性名字组成的符串。</p>
+<p><em><code>target_feature</code>[属性]</em> 可应用于函数上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 <a href="attributes/../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法格式来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 <code>enable</code>键，其对应值是一个逗号分隔的由平台特性名字组成的符串。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">#[cfg(target_feature = &quot;avx2&quot;)]
@@ -5653,7 +5653,7 @@ unsafe fn foo_avx2() {}
 </tbody></table>
 </div><!-- 保持各个链接靠近其表格，便于以后的增删改 -->
 <h4 id="aarch64"><a class="header" href="#aarch64"><code>aarch64</code></a></h4>
-<p>该平台要求 <code>#[target_feature]</code> 仅适用于 <a href="attributes/../unsafe-keyword.html"><code>unsafe</code>函数</a></p>
+<p>该目标平台要求 <code>#[target_feature]</code>属性仅适用于 <a href="attributes/../unsafe-keyword.html"><code>unsafe</code>函数</a></p>
 <p>关于这些特性的更多文档可以在 [developer.arm.com] 上的 [ARM架构参考手册][ARM Architecture Reference Manual]中或 [developer.arm.com] 上的其他地方找到。
 [ARM Architecture Reference Manual]: https://developer.arm.com/documentation/ddi0487/latest
 [developer.arm.com]: https://developer.arm.com</p>
@@ -5707,6 +5707,33 @@ unsafe fn foo_avx2() {}
 <tr><td><code>vh</code></td><td></td><td>FEAT_VHE - 虚拟化主机扩展</td></tr>
 </tbody></table>
 </div>
+<h4 id="riscv32-or-riscv64"><a class="header" href="#riscv32-or-riscv64"><code>riscv32</code> or <code>riscv64</code></a></h4>
+<p>此类目标平台要求 <code>#[target_feature]</code>属性只能应用在 <a href="attributes/../unsafe-keyword.html"><code>unsafe</code> 函数</a>上。</p>
+<p>有关这些功能的进一步文档可以在其各自的规范中找到。可以在 <a href="https://github.com/riscv/riscv-isa-manual">RISC-V ISA手册</a>或 <a href="https://github.com/riscv">RISC-V GitHub账户</a>上的手册中参阅相关规范细节。</p>
+<div class="table-wrapper"><table><thead><tr><th>特性</th><th>隐式启用</th><th>描述</th></tr></thead><tbody>
+<tr><td><code>a</code></td><td></td><td><a href="https://github.com/riscv/riscv-isa-manual/blob/de46343a245c6ee1f7b1a40c92fe1a86bd4f4978/src/a-st-ext.adoc">A</a> — 原子指令</td></tr>
+<tr><td><code>c</code></td><td></td><td><a href="https://github.com/riscv/riscv-isa-manual/blob/de46343a245c6ee1f7b1a40c92fe1a86bd4f4978/src/c-st-ext.adoc">C</a> — 压缩指令</td></tr>
+<tr><td><code>m</code></td><td></td><td><a href="https://github.com/riscv/riscv-isa-manual/blob/de46343a245c6ee1f7b1a40c92fe1a86bd4f4978/src/m-st-ext.adoc">M</a> — 整数乘除法指令</td></tr>
+<tr><td><code>zb</code></td><td><code>zba</code>, <code>zbc</code>, <code>zbs</code></td><td><a href="https://github.com/riscv/riscv-bitmanip">Zb</a> — 位操作指令</td></tr>
+<tr><td><code>zba</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zba.adoc">Zba</a> — 地址生成指令</td></tr>
+<tr><td><code>zbb</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbb.adoc">Zbb</a> — 基本位操作</td></tr>
+<tr><td><code>zbc</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbc.adoc">Zbc</a> — 无进位乘法指令</td></tr>
+<tr><td><code>zbkb</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbkb.adoc">Zbkb</a> — 加密算法下的位操作指令</td></tr>
+<tr><td><code>zbkc</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbc.adoc">Zbkc</a> — 加密算法下的无进位乘法指令</td></tr>
+<tr><td><code>zbkx</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbkx.adoc">Zbkx</a> — 交叉排列</td></tr>
+<tr><td><code>zbs</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbs.adoc">Zbs</a> — 单比特指令</td></tr>
+<tr><td><code>zk</code></td><td><code>zkn</code>, <code>zkr</code>, <code>zks</code>, <code>zkt</code>, <code>zbkb</code>, <code>zbkc</code>, <code>zkbx</code></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zk.adoc">Zk</a> — 标量加密</td></tr>
+<tr><td><code>zkn</code></td><td><code>zknd</code>, <code>zkne</code>, <code>zknh</code>, <code>zbkb</code>, <code>zbkc</code>, <code>zkbx</code></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkn.adoc">Zkn</a> — NIST算法套件扩展</td></tr>
+<tr><td><code>zknd</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zknd.adoc">Zknd</a> — NIST算法套件: AES解密</td></tr>
+<tr><td><code>zkne</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkne.adoc">Zkne</a> — NIST算法套件: AES加密</td></tr>
+<tr><td><code>zknh</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zknh.adoc">Zknh</a> — NIST算法套件: 哈希函数指令</td></tr>
+<tr><td><code>zkr</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkr.adoc">Zkr</a> — 熵源扩展</td></tr>
+<tr><td><code>zks</code></td><td><code>zksed</code>, <code>zksh</code>, <code>zbkb</code>, <code>zbkc</code>, <code>zkbx</code></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zks.adoc">Zks</a> — ShangMi算法套件</td></tr>
+<tr><td><code>zksed</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zksed.adoc">Zksed</a> — ShangMi算法套件: SM4分组密码指令</td></tr>
+<tr><td><code>zksh</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zksh.adoc">Zksh</a> — ShangMi算法套件: SM3哈希函数指令</td></tr>
+<tr><td><code>zkt</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkr.adoc">Zkt</a> — Data Independent Execution Latency Subset</td></tr>
+</tbody></table>
+</div><!-- Keep links near each table to make it easier to move and update. -->
 <h4 id="wasm32-or-wasm64"><a class="header" href="#wasm32-or-wasm64"><code>wasm32</code> or <code>wasm64</code></a></h4>
 <p>在这两个平台下，安全函数和<a href="attributes/../unsafe-keyword.html">非安全函数</a>均可启用 <code>#[target_feature]</code>特性。不可能经由 <code>#[target_feature]</code>特性导致未定义行为，因为尝试使用 Wasm引擎不支持的指令将在加载时就失败，而不会有被以不同于编译器预期的方式来解释编译后的代码的风险。</p>
 <div class="table-wrapper"><table><thead><tr><th>特性</th><th>描述</th></tr></thead><tbody>
@@ -6882,8 +6909,8 @@ fn move_by_block_expression() {
 <h1 id="operator-expressions"><a class="header" href="#operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: 67f41530c5e972c319c9c524d8875f3a9f70c6f3 <br />
-本章译文最后维护日期：2023-07-21</p>
+commit: ad09bb0675a22cd453cfdec58da24e4c407d15a8 <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -7332,6 +7359,9 @@ unsafe {
 assert_eq!(values[1], 3);
 <span class="boring">}
 </span></code></pre></pre>
+<h4 id="slice-dst-pointer-to-pointer-cast"><a class="header" href="#slice-dst-pointer-to-pointer-cast">Slice DST pointer to pointer cast</a></h4>
+<h4 id="dst切片指针到指针的强制转换"><a class="header" href="#dst切片指针到指针的强制转换">DST切片指针到指针的强制转换</a></h4>
+<p>对于像 <code>[T]</code> 和 <code>[U]</code> 这样的切片类型，裸指针类型 <code>*const [T]</code>、<code>*mut [T]</code>、<code>*const [U]</code> 和 <code>*mut [U]</code> 会记录切片中的元素数量。这些裸指针类型之间的强制转换也会保留元素的数量。请注意，这种类型的强制转换<em>不</em>一定会保留指针的引用对象的尺寸（例如，将 <code>*const [u16]</code> 强制转换为 <code>*const [u8]</code> 将导致后者只能引用原始大小一半的对象）。这同样适用于 <code>str</code> 和任何尾部字段为不定尺寸（unsized）的切片类型的复合类型，如结构体 <code>Foo(i32, [u8])</code> 或 <code>(u64, Foo)</code>。</p>
 <h2 id="赋值表达式"><a class="header" href="#赋值表达式">赋值表达式</a></h2>
 <h2 id="assignment-expressions"><a class="header" href="#assignment-expressions">Assignment expressions</a></h2>
 <blockquote>
@@ -9749,8 +9779,8 @@ let a: List&lt;i32&gt; = List::Cons(7, Box::new(List::Cons(13, Box::new(List::Ni
 <h1 id="布尔型"><a class="header" href="#布尔型">布尔型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/boolean.md">boolean.md</a><br />
-commit: 1804726424c5cbc97f3d9d4adf6236980e2ff7a1 <br />
-本章译文最后维护日期：2021-2-10</p>
+commit: d3a66eb69892b25794b2d82a1249ec01d8ead9f1 <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -9831,12 +9861,15 @@ commit: 1804726424c5cbc97f3d9d4adf6236980e2ff7a1 <br />
 <li><code>a &lt; b</code> 等同于 <code>!(a &gt;= b)</code></li>
 <li><code>a &lt;= b</code> 等同于 <code>a == b | a &lt; b</code></li>
 </ul>
+<h2 id="bit-validity"><a class="header" href="#bit-validity">Bit validity</a></h2>
+<h2 id="位有效性"><a class="header" href="#位有效性">位有效性</a></h2>
+<p>Rust会保证 <code>bool</code>类型的单个字节被初始化（换句话说，<code>transmute::&lt;bool, u8&gt;(...)</code> 总是健全(sound)的——但由于一些位模式是无效的 <code>bool</code>，因此相反的操作并不总是健全的）。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="numeric-types"><a class="header" href="#numeric-types">Numeric types</a></h1>
 <h1 id="数字型"><a class="header" href="#数字型">数字型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/mumeric.md">mumeric.md</a><br />
-commit: 73ca198fb3ab52283d67d5fe28c541ee1d169f48 <br />
-本章译文最后维护日期：2020-11-14</p>
+commit: 80ec1463a515858cbb49ac4c9f601a75992893b2 <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <h2 id="integer-types"><a class="header" href="#integer-types">Integer types</a></h2>
 <h2 id="整型整数类型"><a class="header" href="#整型整数类型">整型/整数类型</a></h2>
@@ -9869,21 +9902,24 @@ commit: 73ca198fb3ab52283d67d5fe28c541ee1d169f48 <br />
 <blockquote>
 <p><strong>注意</strong>：许多 Rust 代码可能会假设指针、<code>usize</code> 和 <code>isize</code> 是 32-bit 或 64-bit 的。因此，16-bit 指针的支持是有限的，这部分支持可能需要来自库的明确关注和确认。</p>
 </blockquote>
-<!-- 2020-11-12-->
-<!-- checked -->
+<h2 id="bit-validity-1"><a class="header" href="#bit-validity-1">Bit validity</a></h2>
+<h2 id="位有效性-1"><a class="header" href="#位有效性-1">位有效性</a></h2>
+<p>对于每种数字类型 <code>T</code>，<code>T</code> 的位有效性等同于 <code>[u8; size_of::&lt;T&gt;()]</code> 的位有效性。未初始化的字节不是有效的 <code>u8</code>。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="textual-types"><a class="header" href="#textual-types">Textual types</a></h1>
 <h1 id="文本类类型"><a class="header" href="#文本类类型">文本类类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/textual.md">textual.md</a><br />
-commit: 0e2eee4d7e9e8dac35c9782e7ed4155f54bf10af <br />
-本章译文最后维护日期：2023-07-21</p>
+commit: 192178f936f0057932e117183f774f0e2cce832c <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <p>类型 <code>char</code> 和 <code>str</code> 用于保存文本数据。</p>
 <p>字符型(<code>char</code>)的值是 <a href="http://www.unicode.org/glossary/#unicode_scalar_value">Unicode 标量(scalar)值</a>（即不是代理项(surrogate)的代码点），可以表示为 0x0000~0xD7FF 或 0xE000~0x10FFFF 范围内的 32-bit 无符号字符。创建超出此范围的字符直接触发<a href="types/../behavior-considered-undefined.html">未定义行为(Undefined Behavior)</a>。一个 <code>[char]</code> 实际上是长度为1的 UCS-4 / UTF-32 字符串。</p>
 <p><code>str</code>类型的值的表示方法与 <code>[u8]</code> 相同，也一个 8-bit 无符号字节类型的切片。但是，Rust 标准库对 <code>str</code> 做了额外的假定：<code>str</code> 上的方法会假定并确保其中的数据是有效的 UTF-8。调用 <code>str</code> 的方法来处理非UTF-8 缓冲区上的数据可能或早或晚地出现<a href="types/../behavior-considered-undefined.html">未定义行为</a>。</p>
 <p>由于 <code>str</code> 是一个<a href="types/../dynamically-sized-types.html">动态内存宽度类型</a>，所以它只能通过指针类型实例化，比如 <code>&amp;str</code>。</p>
-<!-- 2020-11-12-->
-<!-- checked -->
+<h2 id="layout-and-bit-validity"><a class="header" href="#layout-and-bit-validity">Layout and bit validity</a></h2>
+<h2 id="内存布局和位有效性"><a class="header" href="#内存布局和位有效性">内存布局和位有效性</a></h2>
+<p><code>char</code> 在所有平台上都保证具有与 <code>u32</code> 相同的尺寸和对齐方式。</p>
+<p><code>char</code> 的每个字节都保证会被初始化（换句话说，<code>transmute::&lt;char, [u8; size_of::&lt;char&gt;()]&gt;(...)</code> 总是正确的——但由于某些位模式是无效的 <code>char</code>，因此相反的操作并不总是正确的）。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="never-type"><a class="header" href="#never-type">Never type</a></h1>
 <h1 id="never类型"><a class="header" href="#never类型">never类型</a></h1>
 <blockquote>
@@ -10238,8 +10274,8 @@ f2(move || { t });
 <h1 id="指针类型"><a class="header" href="#指针类型">指针类型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/pointer.md">pointer.md</a><br />
-commit: a7cdac33ca7356ad49d5c2b5e2c5010889b33eee <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: 13b5af85c57df0898f808651f5126c7fe7568349 <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <p>Rust 中所有的指针都是显式的一等(first-class)值。
 它们可以被移动或复制，存储到其他数据结构中，或从函数中返回。</p>
@@ -10272,15 +10308,24 @@ commit: a7cdac33ca7356ad49d5c2b5e2c5010889b33eee <br />
 </blockquote>
 <p>裸指针是没有安全性或可用性(liveness)保证的指针。
 裸指针写为 <code>*const T</code> 或 <code>*mut T</code>，例如，<code>*const i32</code> 表示指向 32-bit 有符号整数的裸指针。
-拷贝或销毁(dropping )裸指针对任何其他值的生命周期(lifecycle)都没有影响。对
-裸指针的解引用是<a href="types/../unsafety.html">非安全(<code>unsafe</code>)操作</a>，可以通过重新借用裸指针（<code>&amp;*</code> 或 <code>&amp;mut *</code>）将其转换为引用。
-通常不鼓励使用裸指针；它们的存在是为了提升与外部代码的互操作性，以及编写对性能要求很高的函数或很底层的函数。</p>
+拷贝或销毁(dropping )裸指针对任何其他值的生命周期(lifecycle)都没有影响。对裸指针的解引用是<a href="types/../unsafety.html">非安全(<code>unsafe</code>)操作</a>，可以通过重新借用裸指针（<code>&amp;*</code> 或 <code>&amp;mut *</code>）将其转换为引用。
+通常不鼓励使用裸指针；
+它们的存在是为了提升与外部代码的互操作性，以及编写对性能要求很高的函数或很底层的函数。</p>
 <p>在比较裸指针时，比较的是它们的地址，而不是它们指向的数据。
 当比较裸指针和<a href="types/../dynamically-sized-types.html">动态内存宽度类型</a>时，还会比较它们指针上的附加/元数据。</p>
 <p>可以直接使用 <a href="types/../../core/ptr/macro.addr_of.html"><code>core::ptr::addr_of!</code></a> 创建 <code>*const</code> 类型的裸指针，通过 <a href="types/../../core/ptr/macro.addr_of_mut.html"><code>core::ptr::addr_of_mut!</code></a> 创建 <code>*mut</code> 类型的裸指针。</p>
 <h2 id="smart-pointers"><a class="header" href="#smart-pointers">Smart Pointers</a></h2>
 <h2 id="智能指针"><a class="header" href="#智能指针">智能指针</a></h2>
 <p>标准库包含了一些额外的“智能指针”类型，它们提供了在引用和裸指针这类低级指针之外的更多的功能。</p>
+<h2 id="bit-validity-2"><a class="header" href="#bit-validity-2">Bit validity</a></h2>
+<h2 id="位有效性-2"><a class="header" href="#位有效性-2">位有效性</a></h2>
+<p>Despite pointers and references being similar to <code>usize</code>s in the machine code emitted on most platforms,
+the semantics of transmuting a reference or pointer type to a non-pointer type is currently undecided.
+Thus, it may not be valid to transmute a pointer or reference type, <code>P</code>, to a <code>[u8; size_of::&lt;P&gt;()]</code>.
+尽管指针和引用类似于在大多数平台上发出的机器码中的 <code>usize</code>，将引用或指针类型转换为非指针类型的语义目前尚未确定。
+因此，将指针或引用类型 <code>P</code> 转换为 <code>[u8; size_of::&lt;P&gt;()]</code> 可能是无效的。</p>
+<p>对于瘦裸指针（比如对于<code>P = *const T</code> 或 <code>P = *mut T</code>，其中 <code>T: Sized</code>），逆向转换（从整数或整数数组强转为 <code>P</code>）总是有效的。
+然而，通过这种转换产生的指针可能不能被解引用（即使 <code>T</code> 的尺寸为零也不行）。</p>
 <div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
 <p>译者理解这里是指 <code>&amp;mut type</code> 如果被借出，就成了 <code>&amp;&amp;mut type</code>，这样就又成了不可变借用了。</p>
 </div>
@@ -10404,8 +10449,8 @@ fn main() {
 <div style="break-before: page; page-break-before: always;"></div><h1 id="impl-trait"><a class="header" href="#impl-trait">Impl trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/impl-object.md">impl-object.md</a><br />
-commit: 3f5f3b2428275fa0202ec8f289f7e03d3ebaf832 <br />
-本章译文最后维护日期：2023-06-11</p>
+commit: d82c9ac4054136efa6e9cc908ca3c589ed862d5a <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -10490,6 +10535,10 @@ fn with_impl_trait(arg: impl Trait) {
 </span></code></pre></pre>
 <p>这也避免了对 trait对象进行装箱的缺陷。</p>
 <p>类似地，在迭代器的使用坏境中，如果将此步操作前的所有迭代器操作合并到一个执行链中，迭代器里的具体类型可能变得非常复杂。此时返回 <code>impl Iterator</code> 意味着一个函数只需将 <code>Iterator</code> trait 作为其返回类型的约束来公开，而不须显式指定链内所有其他涉及的迭代器类型。</p>
+<h2 id="return-position-impl-trait-in-traits-and-trait-implementations"><a class="header" href="#return-position-impl-trait-in-traits-and-trait-implementations">Return-position <code>impl Trait</code> in traits and trait implementations</a></h2>
+<h2 id="trait-和-trait实现-的返回位置上的impl-trait"><a class="header" href="#trait-和-trait实现-的返回位置上的impl-trait">trait 和 trait实现 的返回位置上的<code>impl Trait</code></a></h2>
+<p>trait中的函数也可以使用 <code>impl Trait</code> 作为匿名关联类型的句法。</p>
+<p>trait中关联函数的返回类型中的每个 <code>impl Trait</code> 都被脱糖为匿名关联类型。出现在实现中的函数签名中的返回类型用于确定关联类型的确定类型。</p>
 <h3 id="differences-between-generics-and-impl-trait-in-return-position"><a class="header" href="#differences-between-generics-and-impl-trait-in-return-position">Differences between generics and <code>impl Trait</code> in return position</a></h3>
 <h3 id="泛型与-impl-trait-在返回位置上的差异"><a class="header" href="#泛型与-impl-trait-在返回位置上的差异">泛型与 <code>impl Trait</code> 在返回位置上的差异</a></h3>
 <p>在参数位置，<code>impl Trait</code> 在语义上与泛型类型参数非常相似。
@@ -10520,8 +10569,8 @@ fn with_impl_trait(arg: impl Trait) {
 相反，函数自身选择返回类型，但只承诺返回类型将实现 <code>Trait</code>。</p>
 <h2 id="limitations-1"><a class="header" href="#limitations-1">Limitations</a></h2>
 <h2 id="限制-1"><a class="header" href="#限制-1">限制</a></h2>
-<p><code>impl Trait</code> 只能作为自由函数或固有函数的参数或返回类型出现。
-它不能出现在 trait实现中，也不能出现在 let绑定的类型或出现在类型别名中。</p>
+<p><code>impl Trait</code> 只能作为 非<code>extern</code>函数的参数类型或返回类型出现。
+它不能 <code>let</code>绑定、成员字段的类型，也不能出现在类型别名中。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="type-parameters"><a class="header" href="#type-parameters">Type parameters</a></h1>
 <h1 id="类型参数"><a class="header" href="#类型参数">类型参数</a></h1>
 <blockquote>
@@ -10599,8 +10648,8 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 <h1 id="类型布局"><a class="header" href="#类型布局">类型布局</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-layout.md">type-layout.md</a><br />
-commit: 2dc423d6937754e07e42345156021d3ef8ff956b <br />
-本章译文最后维护日期：2023-07-21</p>
+commit: 9f9e7a70ff8abe88d37b9a349480b5838d2bc3e5 <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <p>类型的布局描述类型的内存宽度(size)、对齐量(alignment)和字段(fields)的<em>相对偏移量(relative offsets)</em>。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。</p>
 <p>每次编译都有可能更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。</p>
@@ -10649,7 +10698,7 @@ commit: 2dc423d6937754e07e42345156021d3ef8ff956b <br />
 <p>字符串切片是一种 UTF-8 表型(representation)的字符序列，它们与 <code>[u8]</code>类型的切片拥有相同的类型布局。</p>
 <h2 id="tuple-layout"><a class="header" href="#tuple-layout">Tuple Layout</a></h2>
 <h2 id="元组的布局"><a class="header" href="#元组的布局">元组的布局</a></h2>
-<p>元组根据<a href="type-layout.html#the-default-representation">默认表形(representation)</a>来布局内存存储格式。</p>
+<p>元组根据<a href="type-layout.html#the-rust-representation"><code>Rust</code>表形(representation)</a>来布局内存存储格式。</p>
 <p>一个例外情况是单元结构体(unit tuple)(<code>()</code>)类型，它被保证为内存宽度为 0，对齐量为 1。</p>
 <h2 id="trait-object-layout"><a class="header" href="#trait-object-layout">Trait Object Layout</a></h2>
 <h2 id="trait对象的布局"><a class="header" href="#trait对象的布局">trait对象的布局</a></h2>
@@ -10664,7 +10713,7 @@ commit: 2dc423d6937754e07e42345156021d3ef8ff956b <br />
 <h2 id="表形表示形式"><a class="header" href="#表形表示形式">表形/表示形式</a></h2>
 <p>所有用户定义的复合类型（结构体(<code>struct</code>)、枚举(<code>enum</code>)和联合体(<code>union</code>)）都有一个*表形(representation)*属性，该属性用于指定该类型的布局。类型的可能表形有：</p>
 <ul>
-<li><a href="type-layout.html#the-default-representation">默认(default)表形</a></li>
+<li><a href="type-layout.html#the-rust-representation"><code>Rust</code></a> (默认)</li>
 <li><a href="type-layout.html#the-c-representation"><code>C</code>表形</a></li>
 <li><a href="type-layout.html#primitive-representations">原语表形(primitive representation)</a></li>
 <li><a href="type-layout.html#the-transparent-representation">透明表形(<code>transparent</code>)</a></li>
@@ -10704,9 +10753,9 @@ struct AlignedStruct {
 <p>注意：由于表形是程序项的属性，因此表形不依赖于泛型参数。具有相同名称的任何两种类型都具有相同的表形。例如，<code>Foo&lt;Bar&gt;</code> 和 <code>Foo&lt;Baz&gt;</code> 都有相同的表形。</p>
 </blockquote>
 <p>类型的表形可以更改字段之间的填充，但不会更改字段本身的布局。例如一个使用 <code>C</code>表形的结构体，如果它包含一个默认表形的字段 <code>Inner</code>，那么它不会改变 <code>Inner</code> 的布局。</p>
-<h3 id="the-default-representation"><a class="header" href="#the-default-representation">The Default Representation</a></h3>
-<h3 id="默认表形"><a class="header" href="#默认表形">默认表形</a></h3>
-<p>没有 <code>repr</code>属性的标称(nominal)类型具有默认表形。非正式地的情况下，也称这种表形为 <code>rust</code>表形。</p>
+<h3 id="the-rust-representation"><a class="header" href="#the-rust-representation"><a id="the-default-representation"></a> The <code>Rust</code> Representation</a></h3>
+<h3 id="rust表型"><a class="header" href="#rust表型"><a id="the-default-representation"></a> <code>Rust</code>表型</a></h3>
+<p><code>Rust</code>表型是没有 <code>repr</code>属性修饰的标称类型的默认表型。使用 <code>repr</code>属性显式指定此表型，Rust编译器会保证与完全省略该属性相同。</p>
 <p>此表形所提供的唯一数据布局保证是健全性(soundness)所需的数据布局形式。
 这些形式包括：</p>
 <ol>
@@ -10988,7 +11037,7 @@ assert_eq!(std::mem::size_of::&lt;Enum16&gt;(), 4);
 <p>对于 <code>align</code>，如果类型指定的对齐量比其不带 <code>align</code>修饰符时的对齐量小，则该指定的对齐量无效。</p>
 <p>对于 <code>packed</code>，如果类型指定的对齐量比其不带 <code>packed</code>修饰符时的对齐量大，则该指定的对齐量和布局无效。为了定位字段，每个字段的对齐量是指定的对齐量和字段的类型的对齐量中较小的那个对齐量。</p>
 <p>字段间的填充保证为每个字段（可能更改）的对齐量填充所需的最小值（但请注意，<code>packed</code> 本身并不能保证字段顺序）。这些规则的一个重要后果是：<code>#[repr(packed(1))]</code>（或<code>#[repr(packed)]</code>) 的类型不会有字段间填充。</p>
-<p><code>align</code> 和 <code>packed</code> 修饰符不能应用于同一类型，且 <code>packed</code> 修饰的类型不能直接或间接地包含另一个 <code>align</code> 修饰的类型。<code>align</code> 和 <code>packed</code> 修饰符只能应用于<a href="type-layout.html#the-default-representation">默认表形</a>和 <a href="type-layout.html#the-c-representation">C表形</a>中。</p>
+<p><code>align</code> 和 <code>packed</code> 修饰符不能应用于同一类型，且 <code>packed</code> 修饰的类型不能直接或间接地包含另一个 <code>align</code> 修饰的类型。<code>align</code> 和 <code>packed</code> 修饰符只能应用于<a href="type-layout.html#the-rust-representation"><code>Rust</code></a>表形和 <a href="type-layout.html#the-c-representation"><code>C</code></a>表形中。</p>
 <p><code>align</code>修饰符也可以应用在枚举上。如果这样做了，其对枚举对齐量的影响与将此枚举包装在一个新的使用了相同的 <code>align</code>修饰符的结构体中的效果相同。</p>
 <blockquote>
 <p>注意：不能引用未对齐的成员字段，因为这是一种<a href="behavior-considered-undefined.html">未定义行为</a>。
@@ -11598,8 +11647,8 @@ fn foo() -&gt; i32 {
 <h1 id="析构器"><a class="header" href="#析构器">析构器</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/destructors.md">destructors.md</a><br />
-commit: 193aa552751505d2a6816a22505865df366097ce <br />
-本章译文最后维护日期：2023-07-21</p>
+commit: https://doc.rust-lang.org/ <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <p>当一个<a href="glossary.html#initialized">初始化</a>了的<a href="variables.html">变量</a>或<a href="expressions.html#temporaries">临时变量</a>超出<a href="destructors.html#drop-scopes">作用域</a>时，其<em>析构器(destructor)<em>将运行，或者说它将被</em>销毁(dropped)</em>。此外，<a href="expressions/operator-expr.html#assignment-expressions">赋值</a>操作也会运行其左操作数的析构器（如果它已经初始化了）。如果变量只部分初始化了，则只销毁其已初始化的字段。</p>
 <p>类型<code>T</code> 的析构器由以下内容组成：</p>
@@ -11736,7 +11785,8 @@ let declared_last = PrintOnDrop(&quot;在外层作用域内最先销毁&quot;);
 </ul>
 <blockquote>
 <p><strong>注意</strong>：</p>
-<p>在函数体的最终表达式(final expression)中创建的临时变量会在任何具名变量销毁<em>之后</em>销毁，因为这里没有更小的封闭它的临时作用域。</p>
+<p>在函数体的最终表达式(final expression)中创建的临时变量会在任何具名变量销毁<em>之后</em>销毁。
+此时整个函数的销毁作用域就是它的销毁作用域，因为这里没有更小的封闭它的临时作用域。</p>
 <p>匹配(<code>match</code>)表达式的<a href="glossary.html#scrutinee">检验对象</a>本身不是一个临时作用域（，但它内部可以包含临时作用域），因此可以在销毁匹配(<code>match</code>)表达式的作用域之后再来销毁检验对象表达式中的临时作用域。例如，<code>match 1 { ref mut z =&gt; z };</code> 中的 <code>1</code> 所在的临时变量一直存活到此语句结束。</p>
 </blockquote>
 <p>一些示例：</p>
@@ -13093,8 +13143,8 @@ fn main() {
 <h1 id="内联汇编"><a class="header" href="#内联汇编">内联汇编</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md">behavior-considered-undefined.md</a><br />
-commit: b36de24dd92755f008f78ac1d3b2706b0fa25729 <br />
-本章译文最后维护日期：2023-06-11</p>
+commit: c7690f13fc5b2a18effdb39d77bae2bb1038b0dc <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <p>Rust 通过 <a href="https://doc.rust-lang.org/core/arch/macro.asm.html"><code>asm!</code></a> 和 <a href="https://doc.rust-lang.org/core/arch/macro.global_asm.html"><code>global_asm!</code></a> 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。</p>
@@ -13508,11 +13558,14 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 目前定义了以下可选项（标志）：</p>
 <ul>
 <li><code>pure</code>：此 <code>asm!</code>块没有副作用，其输出仅取决于其直接输入（比如，输入的值本身，而不是它们指向的对象）或从内存读取的值（除非还设置了 <code>nomem</code>可选项）。
-这允许编译器执行此 <code>asm!</code>块的次数少于程序中指定的次数（例如，通过将其从循环中提出来），或者如果 <code>asm!</code>块没有输出的情况下，编译器甚至可能完全消除此段 asm代码。</li>
+这允许编译器执行此 <code>asm!</code>块的次数少于程序中指定的次数（例如，通过将其从循环中提出来），或者如果 <code>asm!</code>块没有输出的情况下，编译器甚至可能完全消除此段 asm代码。
+<code>pure</code>可选项必须与 <code>nomem</code> 或 <code>readonly</code> 可选项组合使用，否则会导致编译期错误。</li>
 <li><code>nomem</code>：此 <code>asm!</code>块不读取或写入任何内存。
-这允许编译器将修改过的全局变量的值缓存在跨当前 <code>asm!</code>块的寄存器中，因为它知道当前 <code>asm!</code>不会读取或写入它们。</li>
+这允许编译器将修改过的全局变量的值缓存在跨当前 <code>asm!</code>块的寄存器中，因为它知道当前 <code>asm!</code>不会读取或写入它们。
+编译器还假定此 <code>asm!</code>块不执行与其他线程的任何类型的同步，例如通过 fence。</li>
 <li><code>readonly</code>：此 <code>asm!</code>块不写入任何内存。
-这允许编译器将未修改的全局变量的值缓存在跨当前 <code>asm!</code>块的寄存器中，因为它知道它们不是由当前 <code>asm!</code>写入的。</li>
+这允许编译器将未修改的全局变量的值缓存在跨当前 <code>asm!</code>块的寄存器中，因为它知道它们不是由当前 <code>asm!</code>写入的。
+编译器还假定此 <code>asm!</code>块不执行与其他线程的任何类型的同步，例如通过 fence。</li>
 <li><code>preserves_flags</code>：此 <code>asm！</code>块不修改标志寄存器（在后面章节的规则表中有定义）。
 这可以避免编译器在此 <code>asm!</code>块之后重新计算条件标志。</li>
 <li><code>noreturn</code>：此 <code>asm!</code>块没有具体返回值，其返回类型被定义为 <code>!</code>(never)。
@@ -13528,7 +13581,6 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 <p>编译器对可选项执行一些附加检查：</p>
 <ul>
 <li><code>nomem</code> 和 <code>readonly</code> 是互斥的：同时指定这两个选项会导致编译期错误。</li>
-<li><code>pure</code>可选项必须与 <code>nomem</code> 或 <code>readonly</code> 可选项组合使用，否则会导致编译期错误。</li>
 <li>在没有输出或只有丢弃的输出(<code>_</code>)的 asm块上指定 <code>pure</code> 会导致编译期错误。</li>
 <li>在带有输出的 asm块上指定 <code>noreturn</code> 会导致编译期错误。</li>
 </ul>
@@ -13861,20 +13913,25 @@ unsafe trait 应随附解释这些额外安全条款要求的文档。</p>
 <h2 id="未定义的行为"><a class="header" href="#未定义的行为">未定义的行为</a></h2>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md">behavior-considered-undefined.md</a><br />
-commit: f12eaec52214b20287687924e7ef469f5d82c2a8 <br />
-本章译文最后维护日期：2023-08-26</p>
+commit: 142b2ed77d33f37a9973772bd95e6144ed9dce43 <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <p>如果 Rust 代码出现了下面列表中的任何行为，则此代码被认为不正确。这包括非安全(<code>unsafe</code>)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。</p>
 <p>在编写非安全代码时，确保任何与非安全代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何使用非安全代码的安全客户端(safe client)，如果当前条件满足了此非安全代码对于安全条件的要求，那此此非安全代码对于此安全客户端就是<em>健壮的(sound)</em>；如果非安全(<code>unsafe</code>)代码可以被安全代码滥用以致出现未定义行为，那么此非安全(<code>unsafe</code>)代码对这些安全代码来说就是<em>不健壮的(unsound)</em>。</p>
 <div class="warning">
-<p><em><strong>警告：</strong></em> 下面的列表并非详尽无遗地罗列了 Rust 中的未定义行为。而且对于在非安全代码中什么是明确不允许的，目前 Rust 还没有正式的语义模型，因此将来可能会有更多的行为被认为是不安全的。下面的列表仅仅是我们当前确定知晓的未定义行为。在编写非安全代码之前，请阅读 <a href="https://doc.rust-lang.org/nomicon/index.html">Rustonomicon</a>。</p>
+***警告：*** 下面的列表并非详尽无遗地罗列了 Rust 中的未定义行为; 以后还有可能增添或删减。
+对于在非安全代码中什么是允许的和什么是不允许的内容，目前 Rust 还没有正式的语义模型，因此可能会有更多的行为被承认为是不安全的。同时我们还保留着在将来重新定义该列表中的某些行为的权利。换言之，这个列表并没有说在未来的所有 Rust版本中，这里的任何东西都*肯定*是未定义行为（但我们也可能会在未来对这些列表项做出这样的承诺）。
+<p>在编写非安全代码之前，请阅读 <a href="https://doc.rust-lang.org/nomicon/index.html">Rustonomicon</a>。</p>
 </div>
 <ul>
 <li>
 <p>数据竞争。</p>
 </li>
 <li>
-<p>在<a href="behavior-considered-undefined.html#dangling-pointers">悬垂</a>或未对齐的裸指针上执行<a href="expressions/operator-expr.html#the-dereference-operator">解引用操作</a> (<code>*expr</code>)，甚至<a href="expressions.html#place-expressions-and-value-expressions">位置表达式</a>(e.g. <code>addr_of!(&amp;*expr)</code>)上也不安全。</p>
+<p>存取基于<a href="behavior-considered-undefined.html#dangling-pointers">悬垂</a>或[未对齐的指针][based on a misaligned pointer]上的地址。</p>
+</li>
+<li>
+<p>违反<a href="https://doc.rust-lang.org/std/primitive.pointer.html#method.offset">界内指针算术偏移</a>要求的地址映射操作。</p>
 </li>
 <li>
 <p>破坏<a href="http://llvm.org/docs/LangRef.html#pointer-aliasing-rules">指针别名规则</a>。<code>Box&lt;T&gt;</code>、<code>&amp;mut T</code> 和 <code>&amp;T</code> 遵循 LLVM 的作用域<a href="http://llvm.org/docs/LangRef.html#noalias">无别名(noalias)</a>模型(scoped noalias model)，除非 <code>&amp;T</code> 包含一个 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 类型。活动的引用和 box类型的智能指针不可为悬垂<a href="behavior-considered-undefined.html#dangling-pointers">dangling</a>状态。活动持续时间并未明确指定，但存在一些限制条件：</p>
@@ -13955,6 +14012,12 @@ commit: f12eaec52214b20287687924e7ef469f5d82c2a8 <br />
 <h3 id="pointed-to-bytes"><a class="header" href="#pointed-to-bytes">Pointed-to bytes</a></h3>
 <h3 id="指向字节数据"><a class="header" href="#指向字节数据">指向字节数据</a></h3>
 <p>指针或引用“指向”的字节数据是由指针值和指针对象类型的尺寸（使用<code>size_of_val</code>）来确定的。</p>
+<h3 id="places-based-on-misaligned-pointers"><a class="header" href="#places-based-on-misaligned-pointers">Places based on misaligned pointers</a></h3>
+<h3 id="基于未对齐指针的地址based-on-a-misaligned-pointer-places-based-on-misaligned-pointers"><a class="header" href="#基于未对齐指针的地址based-on-a-misaligned-pointer-places-based-on-misaligned-pointers">基于未对齐指针的地址[based on a misaligned pointer]: #places-based-on-misaligned-pointers</a></h3>
+<p>如果地址计算过程中的最后一个<code>*</code>操作是在未按其类型对齐的指针上执行的，则称地址“基于未对齐的指针”。（如果位置表达式中没有<code>*</code>操作，则是访问局部变量的成员字段，rustc将确保正确对齐。如果有多个<code>*</code>，则每个 <code>*</code>操作都会导致指针从内存中被解引用出来，并且每个<code>*</code>操作都受对齐约束。请注意，由于自动解引用的存在，在 Rust语法中可以省略一些 <code>*</code>操作；我们在这里考虑的是全展开形式的位置表达式。）</p>
+<p>例如，如果 <code>ptr</code> 的类型为 <code>*const S</code>，其中 <code>S</code> 的对齐方式为 8，则 <code>ptr</code> 必须是 8位对齐的，否则 <code>(*ptr).f</code> 就是“基于未对齐的指针”。
+即使字段 <code>f</code> 的类型是 <code>u8</code>（诸如此类对齐量为1的类型），这个要求也是必须的。换句话说，对齐要求是源于被解引用的指针的类型，而不是正在访问的字段的类型。</p>
+<p>请注意，只有在加载或存储到基于未对齐指针的地址时才会导致未定义行为。在基于未对齐指针执行 <code>addr_of</code>/<code>addr_of_mut！</code> 是允许的。在一个地址上执行 <code>&amp;</code>/<code>&amp;mut</code>操作需要此地址按变量的字段类型进行对齐（否则程序将“产生非法值”），这通常是一个比基于对齐指针的限制更少的要求。如果字段类型可能比包含它的类型（例如 <code>repr(packed</code>修饰的变量的字段）更需要对齐，则将导致编译器报错。这意味着基于对齐的指针总是足以确保在其上出现的新引用总是对齐的，虽然这并不总是必要的。</p>
 <h3 id="dangling-pointers"><a class="header" href="#dangling-pointers">Dangling pointers</a></h3>
 <h3 id="悬垂指针"><a class="header" href="#悬垂指针">悬垂指针</a></h3>
 <p>如果引用/指针为空，或者它<a href="behavior-considered-undefined.html#pointed-to-bytes">指向</a>的所有字节都不是同一个实时分配(live allocation，也因此它们都必须是<em>某次</em>分配)的一部分，那么它就是“悬垂(dangling)”的。</p>

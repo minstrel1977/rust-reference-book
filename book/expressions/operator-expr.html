@@ -153,8 +153,8 @@
 <h1 id="operator-expressions"><a class="header" href="#operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: 67f41530c5e972c319c9c524d8875f3a9f70c6f3 <br />
-本章译文最后维护日期：2023-07-21</p>
+commit: ad09bb0675a22cd453cfdec58da24e4c407d15a8 <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -603,6 +603,9 @@ unsafe {
 assert_eq!(values[1], 3);
 <span class="boring">}
 </span></code></pre></pre>
+<h4 id="slice-dst-pointer-to-pointer-cast"><a class="header" href="#slice-dst-pointer-to-pointer-cast">Slice DST pointer to pointer cast</a></h4>
+<h4 id="dst切片指针到指针的强制转换"><a class="header" href="#dst切片指针到指针的强制转换">DST切片指针到指针的强制转换</a></h4>
+<p>对于像 <code>[T]</code> 和 <code>[U]</code> 这样的切片类型，裸指针类型 <code>*const [T]</code>、<code>*mut [T]</code>、<code>*const [U]</code> 和 <code>*mut [U]</code> 会记录切片中的元素数量。这些裸指针类型之间的强制转换也会保留元素的数量。请注意，这种类型的强制转换<em>不</em>一定会保留指针的引用对象的尺寸（例如，将 <code>*const [u16]</code> 强制转换为 <code>*const [u8]</code> 将导致后者只能引用原始大小一半的对象）。这同样适用于 <code>str</code> 和任何尾部字段为不定尺寸（unsized）的切片类型的复合类型，如结构体 <code>Foo(i32, [u8])</code> 或 <code>(u64, Foo)</code>。</p>
 <h2 id="赋值表达式"><a class="header" href="#赋值表达式">赋值表达式</a></h2>
 <h2 id="assignment-expressions"><a class="header" href="#assignment-expressions">Assignment expressions</a></h2>
 <blockquote>

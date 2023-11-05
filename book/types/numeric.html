@@ -153,8 +153,8 @@
 <h1 id="数字型"><a class="header" href="#数字型">数字型</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/mumeric.md">mumeric.md</a><br />
-commit: 73ca198fb3ab52283d67d5fe28c541ee1d169f48 <br />
-本章译文最后维护日期：2020-11-14</p>
+commit: 80ec1463a515858cbb49ac4c9f601a75992893b2 <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <h2 id="integer-types"><a class="header" href="#integer-types">Integer types</a></h2>
 <h2 id="整型整数类型"><a class="header" href="#整型整数类型">整型/整数类型</a></h2>
@@ -187,8 +187,9 @@ commit: 73ca198fb3ab52283d67d5fe28c541ee1d169f48 <br />
 <blockquote>
 <p><strong>注意</strong>：许多 Rust 代码可能会假设指针、<code>usize</code> 和 <code>isize</code> 是 32-bit 或 64-bit 的。因此，16-bit 指针的支持是有限的，这部分支持可能需要来自库的明确关注和确认。</p>
 </blockquote>
-<!-- 2020-11-12-->
-<!-- checked -->
+<h2 id="bit-validity"><a class="header" href="#bit-validity">Bit validity</a></h2>
+<h2 id="位有效性"><a class="header" href="#位有效性">位有效性</a></h2>
+<p>对于每种数字类型 <code>T</code>，<code>T</code> 的位有效性等同于 <code>[u8; size_of::&lt;T&gt;()]</code> 的位有效性。未初始化的字节不是有效的 <code>u8</code>。</p>
 
                     </main>
 

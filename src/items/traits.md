@@ -1,8 +1,8 @@
 # Trait
 
 >[traits.md](https://github.com/rust-lang/reference/blob/master/src/items/traits.md)\
->commit: 1ef107a457a2d2945887fc026a28ee557710918b \
->本章译文最后维护日期：2022-10-22
+>commit: d82c9ac4054136efa6e9cc908ca3c589ed862d5a \
+>本章译文最后维护日期：2023-11-05
 
 > **<sup>句法</sup>**\
 > _Trait_ :\
@@ -37,7 +37,7 @@ trait Example {
 }
 ```
 
-Trait函数不能是 [`async`] 或 [`const`] 类型的。
+Trait函数不能是 [`const`]类型的。
 
 ## Trait bounds
 ## trait约束

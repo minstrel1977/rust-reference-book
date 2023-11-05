@@ -153,20 +153,25 @@
 <h2 id="未定义的行为"><a class="header" href="#未定义的行为">未定义的行为</a></h2>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md">behavior-considered-undefined.md</a><br />
-commit: f12eaec52214b20287687924e7ef469f5d82c2a8 <br />
-本章译文最后维护日期：2023-08-26</p>
+commit: 142b2ed77d33f37a9973772bd95e6144ed9dce43 <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <p>如果 Rust 代码出现了下面列表中的任何行为，则此代码被认为不正确。这包括非安全(<code>unsafe</code>)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。</p>
 <p>在编写非安全代码时，确保任何与非安全代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何使用非安全代码的安全客户端(safe client)，如果当前条件满足了此非安全代码对于安全条件的要求，那此此非安全代码对于此安全客户端就是<em>健壮的(sound)</em>；如果非安全(<code>unsafe</code>)代码可以被安全代码滥用以致出现未定义行为，那么此非安全(<code>unsafe</code>)代码对这些安全代码来说就是<em>不健壮的(unsound)</em>。</p>
 <div class="warning">
-<p><em><strong>警告：</strong></em> 下面的列表并非详尽无遗地罗列了 Rust 中的未定义行为。而且对于在非安全代码中什么是明确不允许的，目前 Rust 还没有正式的语义模型，因此将来可能会有更多的行为被认为是不安全的。下面的列表仅仅是我们当前确定知晓的未定义行为。在编写非安全代码之前，请阅读 <a href="https://doc.rust-lang.org/nomicon/index.html">Rustonomicon</a>。</p>
+***警告：*** 下面的列表并非详尽无遗地罗列了 Rust 中的未定义行为; 以后还有可能增添或删减。
+对于在非安全代码中什么是允许的和什么是不允许的内容，目前 Rust 还没有正式的语义模型，因此可能会有更多的行为被承认为是不安全的。同时我们还保留着在将来重新定义该列表中的某些行为的权利。换言之，这个列表并没有说在未来的所有 Rust版本中，这里的任何东西都*肯定*是未定义行为（但我们也可能会在未来对这些列表项做出这样的承诺）。
+<p>在编写非安全代码之前，请阅读 <a href="https://doc.rust-lang.org/nomicon/index.html">Rustonomicon</a>。</p>
 </div>
 <ul>
 <li>
 <p>数据竞争。</p>
 </li>
 <li>
-<p>在<a href="#dangling-pointers">悬垂</a>或未对齐的裸指针上执行<a href="expressions/operator-expr.html#the-dereference-operator">解引用操作</a> (<code>*expr</code>)，甚至<a href="expressions.html#place-expressions-and-value-expressions">位置表达式</a>(e.g. <code>addr_of!(&amp;*expr)</code>)上也不安全。</p>
+<p>存取基于<a href="#dangling-pointers">悬垂</a>或[未对齐的指针][based on a misaligned pointer]上的地址。</p>
+</li>
+<li>
+<p>违反<a href="https://doc.rust-lang.org/std/primitive.pointer.html#method.offset">界内指针算术偏移</a>要求的地址映射操作。</p>
 </li>
 <li>
 <p>破坏<a href="http://llvm.org/docs/LangRef.html#pointer-aliasing-rules">指针别名规则</a>。<code>Box&lt;T&gt;</code>、<code>&amp;mut T</code> 和 <code>&amp;T</code> 遵循 LLVM 的作用域<a href="http://llvm.org/docs/LangRef.html#noalias">无别名(noalias)</a>模型(scoped noalias model)，除非 <code>&amp;T</code> 包含一个 <a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell&lt;U&gt;</code></a> 类型。活动的引用和 box类型的智能指针不可为悬垂<a href="#dangling-pointers">dangling</a>状态。活动持续时间并未明确指定，但存在一些限制条件：</p>
@@ -247,6 +252,12 @@ commit: f12eaec52214b20287687924e7ef469f5d82c2a8 <br />
 <h3 id="pointed-to-bytes"><a class="header" href="#pointed-to-bytes">Pointed-to bytes</a></h3>
 <h3 id="指向字节数据"><a class="header" href="#指向字节数据">指向字节数据</a></h3>
 <p>指针或引用“指向”的字节数据是由指针值和指针对象类型的尺寸（使用<code>size_of_val</code>）来确定的。</p>
+<h3 id="places-based-on-misaligned-pointers"><a class="header" href="#places-based-on-misaligned-pointers">Places based on misaligned pointers</a></h3>
+<h3 id="基于未对齐指针的地址based-on-a-misaligned-pointer-places-based-on-misaligned-pointers"><a class="header" href="#基于未对齐指针的地址based-on-a-misaligned-pointer-places-based-on-misaligned-pointers">基于未对齐指针的地址[based on a misaligned pointer]: #places-based-on-misaligned-pointers</a></h3>
+<p>如果地址计算过程中的最后一个<code>*</code>操作是在未按其类型对齐的指针上执行的，则称地址“基于未对齐的指针”。（如果位置表达式中没有<code>*</code>操作，则是访问局部变量的成员字段，rustc将确保正确对齐。如果有多个<code>*</code>，则每个 <code>*</code>操作都会导致指针从内存中被解引用出来，并且每个<code>*</code>操作都受对齐约束。请注意，由于自动解引用的存在，在 Rust语法中可以省略一些 <code>*</code>操作；我们在这里考虑的是全展开形式的位置表达式。）</p>
+<p>例如，如果 <code>ptr</code> 的类型为 <code>*const S</code>，其中 <code>S</code> 的对齐方式为 8，则 <code>ptr</code> 必须是 8位对齐的，否则 <code>(*ptr).f</code> 就是“基于未对齐的指针”。
+即使字段 <code>f</code> 的类型是 <code>u8</code>（诸如此类对齐量为1的类型），这个要求也是必须的。换句话说，对齐要求是源于被解引用的指针的类型，而不是正在访问的字段的类型。</p>
+<p>请注意，只有在加载或存储到基于未对齐指针的地址时才会导致未定义行为。在基于未对齐指针执行 <code>addr_of</code>/<code>addr_of_mut！</code> 是允许的。在一个地址上执行 <code>&amp;</code>/<code>&amp;mut</code>操作需要此地址按变量的字段类型进行对齐（否则程序将“产生非法值”），这通常是一个比基于对齐指针的限制更少的要求。如果字段类型可能比包含它的类型（例如 <code>repr(packed</code>修饰的变量的字段）更需要对齐，则将导致编译器报错。这意味着基于对齐的指针总是足以确保在其上出现的新引用总是对齐的，虽然这并不总是必要的。</p>
 <h3 id="dangling-pointers"><a class="header" href="#dangling-pointers">Dangling pointers</a></h3>
 <h3 id="悬垂指针"><a class="header" href="#悬垂指针">悬垂指针</a></h3>
 <p>如果引用/指针为空，或者它<a href="#pointed-to-bytes">指向</a>的所有字节都不是同一个实时分配(live allocation，也因此它们都必须是<em>某次</em>分配)的一部分，那么它就是“悬垂(dangling)”的。</p>

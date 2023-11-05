@@ -2,8 +2,8 @@
 # 类型布局
 
 >[type-layout.md](https://github.com/rust-lang/reference/blob/master/src/type-layout.md)\
->commit: 2dc423d6937754e07e42345156021d3ef8ff956b \
->本章译文最后维护日期：2023-07-21
+>commit: 9f9e7a70ff8abe88d37b9a349480b5838d2bc3e5 \
+>本章译文最后维护日期：2023-11-05
 
 类型的布局描述类型的内存宽度(size)、对齐量(alignment)和字段(fields)的*相对偏移量(relative offsets)*。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。
 
@@ -72,7 +72,7 @@
 ## Tuple Layout
 ## 元组的布局
 
-元组根据[默认表形(representation)][Default]来布局内存存储格式。
+元组根据[`Rust`表形(representation)][`Rust`]来布局内存存储格式。
 
 一个例外情况是单元结构体(unit tuple)(`()`)类型，它被保证为内存宽度为 0，对齐量为 1。
 
@@ -93,7 +93,7 @@ trait对象的布局与 trait对象的值相同。
 
 所有用户定义的复合类型（结构体(`struct`)、枚举(`enum`)和联合体(`union`)）都有一个*表形(representation)*属性，该属性用于指定该类型的布局。类型的可能表形有：
 
-- [默认(default)表形][Default]
+- [`Rust`] (默认)
 - [`C`表形][`C`]
 - [原语表形(primitive representation)][primitive representations]
 - [透明表形(`transparent`)][`transparent`]
@@ -133,10 +133,10 @@ struct AlignedStruct {
 
 类型的表形可以更改字段之间的填充，但不会更改字段本身的布局。例如一个使用 `C`表形的结构体，如果它包含一个默认表形的字段 `Inner`，那么它不会改变 `Inner` 的布局。
 
-### The Default Representation
-### 默认表形
+### <a id="the-default-representation"></a> The `Rust` Representation
+### <a id="the-default-representation"></a> `Rust`表型
 
-没有 `repr`属性的标称(nominal)类型具有默认表形。非正式地的情况下，也称这种表形为 `rust`表形。
+`Rust`表型是没有 `repr`属性修饰的标称类型的默认表型。使用 `repr`属性显式指定此表型，Rust编译器会保证与完全省略该属性相同。
 
 此表形所提供的唯一数据布局保证是健全性(soundness)所需的数据布局形式。
 这些形式包括：
@@ -447,7 +447,7 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 
 字段间的填充保证为每个字段（可能更改）的对齐量填充所需的最小值（但请注意，`packed` 本身并不能保证字段顺序）。这些规则的一个重要后果是：`#[repr(packed(1))]`（或`#[repr(packed)]`) 的类型不会有字段间填充。
 
-`align` 和 `packed` 修饰符不能应用于同一类型，且 `packed` 修饰的类型不能直接或间接地包含另一个 `align` 修饰的类型。`align` 和 `packed` 修饰符只能应用于[默认表形][default]和 [C表形][`C`]中。
+`align` 和 `packed` 修饰符不能应用于同一类型，且 `packed` 修饰的类型不能直接或间接地包含另一个 `align` 修饰的类型。`align` 和 `packed` 修饰符只能应用于[`Rust`]表形和 [`C`]表形中。
 
 `align`修饰符也可以应用在枚举上。如果这样做了，其对枚举对齐量的影响与将此枚举包装在一个新的使用了相同的 `align`修饰符的结构体中的效果相同。
 
@@ -503,7 +503,7 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 [undefined behavior]: behavior-considered-undefined.md
 [55149]: https://github.com/rust-lang/rust/issues/55149
 [`PhantomData<T>`]: special-types-and-traits.md#phantomdatat
-[Default]: #the-default-representation
+[`Rust`]: #the-rust-representation
 [`C`]: #the-c-representation
 [primitive representations]: #primitive-representations
 [structs]: items/structs.md

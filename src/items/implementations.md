@@ -2,8 +2,8 @@
 # 实现
 
 >[implementations.md](https://github.com/rust-lang/reference/blob/master/src/items/implementations.md)\
->commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e \
->本章译文最后维护日期：2021-07-31
+>commit: b5ae8364e361152059760576b60f180f5ed2276d \
+>本章译文最后维护日期：2021-11-05
 
 > **<sup>句法</sup>**\
 > _Implementation_ :\

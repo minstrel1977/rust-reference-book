@@ -2,8 +2,8 @@
 # 布尔型
 
 >[boolean.md](https://github.com/rust-lang/reference/blob/master/src/types/boolean.md)\
->commit: 1804726424c5cbc97f3d9d4adf6236980e2ff7a1 \
->本章译文最后维护日期：2021-2-10
+>commit: d3a66eb69892b25794b2d82a1249ec01d8ead9f1 \
+>本章译文最后维护日期：2023-11-05
 
 ```rust
 let b: bool = true;
@@ -92,6 +92,11 @@ let b: bool = true;
 * `a >= b` 等同于 `a == b | a > b`
 * `a < b` 等同于 `!(a >= b)`
 * `a <= b` 等同于 `a == b | a < b`
+
+## Bit validity
+## 位有效性
+
+Rust会保证 `bool`类型的单个字节被初始化（换句话说，`transmute::<bool, u8>(...)` 总是健全(sound)的——但由于一些位模式是无效的 `bool`，因此相反的操作并不总是健全的）。
 
 [boolean logic]: https://en.wikipedia.org/wiki/Boolean_algebra
 [enumerated type]: enum.md

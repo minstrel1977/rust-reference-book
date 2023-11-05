@@ -2,21 +2,23 @@
 ## 未定义的行为
 
 >[behavior-considered-undefined.md](https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md)\
->commit: f12eaec52214b20287687924e7ef469f5d82c2a8 \
->本章译文最后维护日期：2023-08-26
+>commit: 142b2ed77d33f37a9973772bd95e6144ed9dce43 \
+>本章译文最后维护日期：2023-11-05
 
 如果 Rust 代码出现了下面列表中的任何行为，则此代码被认为不正确。这包括非安全(`unsafe`)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。
 
 在编写非安全代码时，确保任何与非安全代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何使用非安全代码的安全客户端(safe client)，如果当前条件满足了此非安全代码对于安全条件的要求，那此此非安全代码对于此安全客户端就是*健壮的(sound)*；如果非安全(`unsafe`)代码可以被安全代码滥用以致出现未定义行为，那么此非安全(`unsafe`)代码对这些安全代码来说就是*不健壮的(unsound)*。
 
 <div class="warning">
+***警告：*** 下面的列表并非详尽无遗地罗列了 Rust 中的未定义行为; 以后还有可能增添或删减。
+对于在非安全代码中什么是允许的和什么是不允许的内容，目前 Rust 还没有正式的语义模型，因此可能会有更多的行为被承认为是不安全的。同时我们还保留着在将来重新定义该列表中的某些行为的权利。换言之，这个列表并没有说在未来的所有 Rust版本中，这里的任何东西都*肯定*是未定义行为（但我们也可能会在未来对这些列表项做出这样的承诺）。
 
-***警告：*** 下面的列表并非详尽无遗地罗列了 Rust 中的未定义行为。而且对于在非安全代码中什么是明确不允许的，目前 Rust 还没有正式的语义模型，因此将来可能会有更多的行为被认为是不安全的。下面的列表仅仅是我们当前确定知晓的未定义行为。在编写非安全代码之前，请阅读 [Rustonomicon]。
-
+在编写非安全代码之前，请阅读 [Rustonomicon]。
 </div>
 
 * 数据竞争。
-* 在[悬垂][dangling]或未对齐的裸指针上执行[解引用操作][dereference expression] (`*expr`)，甚至[位置表达式][place expression context](e.g. `addr_of!(&*expr)`)上也不安全。
+* 存取基于[悬垂][dangling]或[未对齐的指针][based on a misaligned pointer]上的地址。
+* 违反[界内指针算术偏移][offset]要求的地址映射操作。  
 * 破坏[指针别名规则][pointer aliasing rules]。`Box<T>`、`&mut T` 和 `&T` 遵循 LLVM 的作用域[无别名(noalias)][noalias]模型(scoped noalias model)，除非 `&T` 包含一个 [`UnsafeCell<U>`] 类型。活动的引用和 box类型的智能指针不可为悬垂[dangling]状态。活动持续时间并未明确指定，但存在一些限制条件：
   * 对于引用来说，活动持续时间由借用检查器指定的句法生存期上限来限制；它不能存活得比那个生存期*更长*。
   * 每次将引用或 box类型的智能指针传递给函数或从函数返回时，它都被视为是活动的。
@@ -61,6 +63,16 @@
 
 指针或引用“指向”的字节数据是由指针值和指针对象类型的尺寸（使用`size_of_val`）来确定的。
 
+### Places based on misaligned pointers
+### 基于未对齐指针的地址[based on a misaligned pointer]: #places-based-on-misaligned-pointers
+
+如果地址计算过程中的最后一个`*`操作是在未按其类型对齐的指针上执行的，则称地址“基于未对齐的指针”。（如果位置表达式中没有`*`操作，则是访问局部变量的成员字段，rustc将确保正确对齐。如果有多个`*`，则每个 `*`操作都会导致指针从内存中被解引用出来，并且每个`*`操作都受对齐约束。请注意，由于自动解引用的存在，在 Rust语法中可以省略一些 `*`操作；我们在这里考虑的是全展开形式的位置表达式。）
+
+例如，如果 `ptr` 的类型为 `*const S`，其中 `S` 的对齐方式为 8，则 `ptr` 必须是 8位对齐的，否则 `(*ptr).f` 就是“基于未对齐的指针”。
+即使字段 `f` 的类型是 `u8`（诸如此类对齐量为1的类型），这个要求也是必须的。换句话说，对齐要求是源于被解引用的指针的类型，而不是正在访问的字段的类型。
+
+请注意，只有在加载或存储到基于未对齐指针的地址时才会导致未定义行为。在基于未对齐指针执行 `addr_of`/`addr_of_mut！` 是允许的。在一个地址上执行 `&`/`&mut`操作需要此地址按变量的字段类型进行对齐（否则程序将“产生非法值”），这通常是一个比基于对齐指针的限制更少的要求。如果字段类型可能比包含它的类型（例如 `repr(packed`修饰的变量的字段）更需要对齐，则将导致编译器报错。这意味着基于对齐的指针总是足以确保在其上出现的新引用总是对齐的，虽然这并不总是必要的。
+
 ### Dangling pointers
 ### 悬垂指针
 [dangling]: #dangling-pointers
@@ -82,8 +94,11 @@
 [Rustonomicon]: https://doc.rust-lang.org/nomicon/index.html
 [`NonNull<T>`]: https://doc.rust-lang.org/core/ptr/struct.NonNull.html
 [`NonZero*`]: https://doc.rust-lang.org/core/num/index.html
-[dereference expression]: expressions/operator-expr.md#the-dereference-operator
 [place expression context]: expressions.md#place-expressions-and-value-expressions
 [rules]: inline-assembly.md#rules-for-inline-assembly
 [points to]: #pointed-to-bytes
 [pointed to]: #pointed-to-bytes
+[offset]: https://doc.rust-lang.org/std/primitive.pointer.html#method.offset
+[project-field]: expressions/field-expr.md
+[project-tuple]: expressions/tuple-expr.md#tuple-indexing-expressions
+[project-slice]: expressions/array-expr.md#array-and-slice-indexing-expressions

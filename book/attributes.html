@@ -182,8 +182,8 @@
 <h1 id="属性"><a class="header" href="#属性">属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes.md">attributes.md</a><br />
-commit: 39a0be6dc8210e0f127638ac5cc6820b8ce534df <br />
-本章译文最后维护日期：2023-06-11</p>
+commit: 9d351cc1d87816c0550bbf7627baf37bbc33ff27 <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -197,7 +197,7 @@ commit: 39a0be6dc8210e0f127638ac5cc6820b8ce534df <br />
       <a href="macros.html"><em>DelimTokenTree</em></a><br />
    | <code>=</code> <a href="expressions.html"><em>Expression</em></a></p>
 </blockquote>
-<p><em>属性</em>是一种通用的、格式自由的元数据(free-form metadatum)，这种元数据会（被编译器/解释器）依据名称、约定、语言和编译器版本进行解释。（Rust 语言中的）属性是根据 <a href="https://www.ecma-international.org/publications/standards/Ecma-335.htm">ECMA-335</a> 标准中的属性规范进行建模的，其语法来自 <a href="https://www.ecma-international.org/publications/standards/Ecma-334.htm">ECMA-334</a> (C#）。</p>
+<p><em>属性</em>是一种通用的、格式自由的元数据(free-form metadatum)，这种元数据会（被编译器/解释器）依据名称、约定、语言和编译器版本进行解释。（Rust 语言中的）属性是根据 <a href="https://www.ecma-international.org/publications-and-standards/standards/ecma-335/">ECMA-335</a> 标准中的属性规范进行建模的，其语法来自 <a href="https://www.ecma-international.org/publications-and-standards/standards/ecma-334/">ECMA-334</a> (C#）。</p>
 <p>*内部属性(Inner attributes)*以 <code>#!</code> 开头的方式编写，应用于它在其中声明的程序项。*外部属性(Outer attributes)*以不后跟感叹号的(<code>!</code>)的 <code>#</code> 开头的方式编写，应用于属性后面的内容。</p>
 <p>属性由指向属性的路径和路径后跟的可选的带定界符的 token树(delimited token tree)（其解释由属性定义）组成。除了宏属性之外，其他属性的输入也允许使用等号(<code>=</code>)后跟表达式的格式。更多细节请参见下面的<a href="#meta-item-attribute-syntax">元项属性句法(meta item syntax)</a>。</p>
 <p>属性可以分为以下几类：</p>

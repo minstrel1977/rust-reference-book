@@ -2,8 +2,8 @@
 # 析构器
 
 >[destructors.md](https://github.com/rust-lang/reference/blob/master/src/destructors.md)\
->commit: 193aa552751505d2a6816a22505865df366097ce \
->本章译文最后维护日期：2023-07-21
+>commit: https://doc.rust-lang.org/ \
+>本章译文最后维护日期：2023-11-05
 
 
 当一个[初始化][initialized]了的[变量][variable]或[临时变量][temporary]超出[作用域](#drop-scopes)时，其*析构器(destructor)*将运行，或者说它将被*销毁(dropped)*。此外，[赋值][Assignment]操作也会运行其左操作数的析构器（如果它已经初始化了）。如果变量只部分初始化了，则只销毁其已初始化的字段。
@@ -145,7 +145,8 @@ let declared_last = PrintOnDrop("在外层作用域内最先销毁");
 
 > **注意**：
 > 
-> 在函数体的最终表达式(final expression)中创建的临时变量会在任何具名变量销毁*之后*销毁，因为这里没有更小的封闭它的临时作用域。
+> 在函数体的最终表达式(final expression)中创建的临时变量会在任何具名变量销毁*之后*销毁。
+> 此时整个函数的销毁作用域就是它的销毁作用域，因为这里没有更小的封闭它的临时作用域。
 >
 > 匹配(`match`)表达式的[检验对象][scrutinee]本身不是一个临时作用域（，但它内部可以包含临时作用域），因此可以在销毁匹配(`match`)表达式的作用域之后再来销毁检验对象表达式中的临时作用域。例如，`match 1 { ref mut z => z };` 中的 `1` 所在的临时变量一直存活到此语句结束。
 

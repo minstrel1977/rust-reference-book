@@ -153,8 +153,8 @@
 <h1 id="代码生成属性"><a class="header" href="#代码生成属性">代码生成属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md">codegen.md</a><br />
-commit: 2a8068eacabba6284545172875bf2dc640c1ed5b <br />
-本章译文最后维护日期：2023-08-26</p>
+commit: 5d015ebbb987bee30a358fd86d28613ad04d9213 <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <p>下述<a href="../attributes.html">属性</a>用于控制代码生成。</p>
 <h2 id="optimization-hints"><a class="header" href="#optimization-hints">Optimization hints</a></h2>
@@ -184,7 +184,7 @@ commit: 2a8068eacabba6284545172875bf2dc640c1ed5b <br />
 <p><em><code>no_builtins</code><a href="../attributes.html">属性</a></em> 可以应用在 crate 级别，用以禁用对假定存在的库函数调用的某些代码模式优化。<sup class="footnote-reference"><a href="#译者注2">2</a></sup></p>
 <h2 id="the-target_feature-attribute"><a class="header" href="#the-target_feature-attribute">The <code>target_feature</code> attribute</a></h2>
 <h2 id="target_feature属性"><a class="header" href="#target_feature属性"><code>target_feature</code>属性</a></h2>
-<p><em><code>target_feature</code>[属性]</em> 可应用于函数上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 <code>enable</code>键，其对应值是一个逗号分隔的由平台特性名字组成的符串。</p>
+<p><em><code>target_feature</code>[属性]</em> 可应用于函数上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法格式来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 <code>enable</code>键，其对应值是一个逗号分隔的由平台特性名字组成的符串。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">#[cfg(target_feature = &quot;avx2&quot;)]
@@ -232,7 +232,7 @@ unsafe fn foo_avx2() {}
 </tbody></table>
 </div><!-- 保持各个链接靠近其表格，便于以后的增删改 -->
 <h4 id="aarch64"><a class="header" href="#aarch64"><code>aarch64</code></a></h4>
-<p>该平台要求 <code>#[target_feature]</code> 仅适用于 <a href="../unsafe-keyword.html"><code>unsafe</code>函数</a></p>
+<p>该目标平台要求 <code>#[target_feature]</code>属性仅适用于 <a href="../unsafe-keyword.html"><code>unsafe</code>函数</a></p>
 <p>关于这些特性的更多文档可以在 [developer.arm.com] 上的 [ARM架构参考手册][ARM Architecture Reference Manual]中或 [developer.arm.com] 上的其他地方找到。
 [ARM Architecture Reference Manual]: https://developer.arm.com/documentation/ddi0487/latest
 [developer.arm.com]: https://developer.arm.com</p>
@@ -286,6 +286,33 @@ unsafe fn foo_avx2() {}
 <tr><td><code>vh</code></td><td></td><td>FEAT_VHE - 虚拟化主机扩展</td></tr>
 </tbody></table>
 </div>
+<h4 id="riscv32-or-riscv64"><a class="header" href="#riscv32-or-riscv64"><code>riscv32</code> or <code>riscv64</code></a></h4>
+<p>此类目标平台要求 <code>#[target_feature]</code>属性只能应用在 <a href="../unsafe-keyword.html"><code>unsafe</code> 函数</a>上。</p>
+<p>有关这些功能的进一步文档可以在其各自的规范中找到。可以在 <a href="https://github.com/riscv/riscv-isa-manual">RISC-V ISA手册</a>或 <a href="https://github.com/riscv">RISC-V GitHub账户</a>上的手册中参阅相关规范细节。</p>
+<div class="table-wrapper"><table><thead><tr><th>特性</th><th>隐式启用</th><th>描述</th></tr></thead><tbody>
+<tr><td><code>a</code></td><td></td><td><a href="https://github.com/riscv/riscv-isa-manual/blob/de46343a245c6ee1f7b1a40c92fe1a86bd4f4978/src/a-st-ext.adoc">A</a> — 原子指令</td></tr>
+<tr><td><code>c</code></td><td></td><td><a href="https://github.com/riscv/riscv-isa-manual/blob/de46343a245c6ee1f7b1a40c92fe1a86bd4f4978/src/c-st-ext.adoc">C</a> — 压缩指令</td></tr>
+<tr><td><code>m</code></td><td></td><td><a href="https://github.com/riscv/riscv-isa-manual/blob/de46343a245c6ee1f7b1a40c92fe1a86bd4f4978/src/m-st-ext.adoc">M</a> — 整数乘除法指令</td></tr>
+<tr><td><code>zb</code></td><td><code>zba</code>, <code>zbc</code>, <code>zbs</code></td><td><a href="https://github.com/riscv/riscv-bitmanip">Zb</a> — 位操作指令</td></tr>
+<tr><td><code>zba</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zba.adoc">Zba</a> — 地址生成指令</td></tr>
+<tr><td><code>zbb</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbb.adoc">Zbb</a> — 基本位操作</td></tr>
+<tr><td><code>zbc</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbc.adoc">Zbc</a> — 无进位乘法指令</td></tr>
+<tr><td><code>zbkb</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbkb.adoc">Zbkb</a> — 加密算法下的位操作指令</td></tr>
+<tr><td><code>zbkc</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbc.adoc">Zbkc</a> — 加密算法下的无进位乘法指令</td></tr>
+<tr><td><code>zbkx</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbkx.adoc">Zbkx</a> — 交叉排列</td></tr>
+<tr><td><code>zbs</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbs.adoc">Zbs</a> — 单比特指令</td></tr>
+<tr><td><code>zk</code></td><td><code>zkn</code>, <code>zkr</code>, <code>zks</code>, <code>zkt</code>, <code>zbkb</code>, <code>zbkc</code>, <code>zkbx</code></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zk.adoc">Zk</a> — 标量加密</td></tr>
+<tr><td><code>zkn</code></td><td><code>zknd</code>, <code>zkne</code>, <code>zknh</code>, <code>zbkb</code>, <code>zbkc</code>, <code>zkbx</code></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkn.adoc">Zkn</a> — NIST算法套件扩展</td></tr>
+<tr><td><code>zknd</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zknd.adoc">Zknd</a> — NIST算法套件: AES解密</td></tr>
+<tr><td><code>zkne</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkne.adoc">Zkne</a> — NIST算法套件: AES加密</td></tr>
+<tr><td><code>zknh</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zknh.adoc">Zknh</a> — NIST算法套件: 哈希函数指令</td></tr>
+<tr><td><code>zkr</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkr.adoc">Zkr</a> — 熵源扩展</td></tr>
+<tr><td><code>zks</code></td><td><code>zksed</code>, <code>zksh</code>, <code>zbkb</code>, <code>zbkc</code>, <code>zkbx</code></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zks.adoc">Zks</a> — ShangMi算法套件</td></tr>
+<tr><td><code>zksed</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zksed.adoc">Zksed</a> — ShangMi算法套件: SM4分组密码指令</td></tr>
+<tr><td><code>zksh</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zksh.adoc">Zksh</a> — ShangMi算法套件: SM3哈希函数指令</td></tr>
+<tr><td><code>zkt</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkr.adoc">Zkt</a> — Data Independent Execution Latency Subset</td></tr>
+</tbody></table>
+</div><!-- Keep links near each table to make it easier to move and update. -->
 <h4 id="wasm32-or-wasm64"><a class="header" href="#wasm32-or-wasm64"><code>wasm32</code> or <code>wasm64</code></a></h4>
 <p>在这两个平台下，安全函数和<a href="../unsafe-keyword.html">非安全函数</a>均可启用 <code>#[target_feature]</code>特性。不可能经由 <code>#[target_feature]</code>特性导致未定义行为，因为尝试使用 Wasm引擎不支持的指令将在加载时就失败，而不会有被以不同于编译器预期的方式来解释编译后的代码的风险。</p>
 <div class="table-wrapper"><table><thead><tr><th>特性</th><th>描述</th></tr></thead><tbody>

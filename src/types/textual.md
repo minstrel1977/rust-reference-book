@@ -2,8 +2,8 @@
 # 文本类类型
 
 >[textual.md](https://github.com/rust-lang/reference/blob/master/src/types/textual.md)\
->commit: 0e2eee4d7e9e8dac35c9782e7ed4155f54bf10af \
->本章译文最后维护日期：2023-07-21
+>commit: 192178f936f0057932e117183f774f0e2cce832c \
+>本章译文最后维护日期：2023-11-05
 
 类型 `char` 和 `str` 用于保存文本数据。
 
@@ -13,9 +13,13 @@
 
 由于 `str` 是一个[动态内存宽度类型][dynamically sized type]，所以它只能通过指针类型实例化，比如 `&str`。
 
+## Layout and bit validity
+## 内存布局和位有效性
+
+`char` 在所有平台上都保证具有与 `u32` 相同的尺寸和对齐方式。
+
+`char` 的每个字节都保证会被初始化（换句话说，`transmute::<char, [u8; size_of::<char>()]>(...)` 总是正确的——但由于某些位模式是无效的 `char`，因此相反的操作并不总是正确的）。
+
 [Unicode scalar value]: http://www.unicode.org/glossary/#unicode_scalar_value
 [Undefined Behavior]: ../behavior-considered-undefined.md
 [dynamically sized type]: ../dynamically-sized-types.md
-
-<!-- 2020-11-12-->
-<!-- checked -->

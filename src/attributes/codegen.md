@@ -2,8 +2,8 @@
 # 代码生成属性
 
 >[codegen.md](https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md)\
->commit: 2a8068eacabba6284545172875bf2dc640c1ed5b \
->本章译文最后维护日期：2023-08-26
+>commit: 5d015ebbb987bee30a358fd86d28613ad04d9213 \
+>本章译文最后维护日期：2023-11-05
 
 下述[属性][attributes]用于控制代码生成。
 
@@ -42,7 +42,7 @@
 ## The `target_feature` attribute
 ## `target_feature`属性
 
-*`target_feature`[属性]* 可应用于函数上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 [_MetaListNameValueStr_]元项属性句法来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 `enable`键，其对应值是一个逗号分隔的由平台特性名字组成的符串。
+*`target_feature`[属性]* 可应用于函数上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 [_MetaListNameValueStr_]元项属性句法格式来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 `enable`键，其对应值是一个逗号分隔的由平台特性名字组成的符串。
 
 ```rust
 # #[cfg(target_feature = "avx2")]
@@ -129,7 +129,7 @@ unsafe fn foo_avx2() {}
 
 #### `aarch64`
 
-该平台要求 `#[target_feature]` 仅适用于 [`unsafe`函数][unsafe function]
+该目标平台要求 `#[target_feature]`属性仅适用于 [`unsafe`函数][unsafe function]
 
 关于这些特性的更多文档可以在 [developer.arm.com] 上的 [ARM架构参考手册][ARM Architecture Reference Manual]中或 [developer.arm.com] 上的其他地方找到。
 [ARM Architecture Reference Manual]: https://developer.arm.com/documentation/ddi0487/latest
@@ -183,6 +183,63 @@ unsafe fn foo_avx2() {}
 `sve2-bitperm` | `sve2`         | FEAT_SVE_BitPerm - SVE位置换
 `tme`          |                | FEAT_TME - 事务内存扩展
 `vh`           |                | FEAT_VHE - 虚拟化主机扩展
+
+#### `riscv32` or `riscv64`
+
+此类目标平台要求 `#[target_feature]`属性只能应用在 [`unsafe` 函数][unsafe function]上。
+
+有关这些功能的进一步文档可以在其各自的规范中找到。可以在 [RISC-V ISA手册][RISC-V ISA Manual]或 [RISC-V GitHub账户][RISC-V GitHub Account]上的手册中参阅相关规范细节。
+
+[RISC-V ISA Manual]: https://github.com/riscv/riscv-isa-manual
+[RISC-V GitHub Account]: https://github.com/riscv
+
+特性     | 隐式启用  | 描述
+------------|---------------------|-------------------
+`a`         |                     | [A][rv-a] — 原子指令
+`c`         |                     | [C][rv-c] — 压缩指令
+`m`         |                     | [M][rv-m] — 整数乘除法指令
+`zb`        | `zba`, `zbc`, `zbs` | [Zb][rv-zb] — 位操作指令
+`zba`       |                     | [Zba][rv-zb-zba] — 地址生成指令
+`zbb`       |                     | [Zbb][rv-zb-zbb] — 基本位操作
+`zbc`       |                     | [Zbc][rv-zb-zbc] — 无进位乘法指令
+`zbkb`      |                     | [Zbkb][rv-zb-zbkb] — 加密算法下的位操作指令
+`zbkc`      |                     | [Zbkc][rv-zb-zbc] — 加密算法下的无进位乘法指令
+`zbkx`      |                     | [Zbkx][rv-zb-zbkx] — 交叉排列 
+`zbs`       |                     | [Zbs][rv-zb-zbs] — 单比特指令
+`zk`        | `zkn`, `zkr`, `zks`, `zkt`, `zbkb`, `zbkc`, `zkbx` | [Zk][rv-zk] — 标量加密
+`zkn`       | `zknd`, `zkne`, `zknh`, `zbkb`, `zbkc`, `zkbx`     | [Zkn][rv-zkn] — NIST算法套件扩展
+`zknd`      |                                                    | [Zknd][rv-zknd] — NIST算法套件: AES解密
+`zkne`      |                                                    | [Zkne][rv-zkne] — NIST算法套件: AES加密
+`zknh`      |                                                    | [Zknh][rv-zknh] — NIST算法套件: 哈希函数指令
+`zkr`       |                                                    | [Zkr][rv-zkr] — 熵源扩展
+`zks`       | `zksed`, `zksh`, `zbkb`, `zbkc`, `zkbx`            | [Zks][rv-zks] — ShangMi算法套件
+`zksed`     |                                                    | [Zksed][rv-zksed] — ShangMi算法套件: SM4分组密码指令
+`zksh`      |                                                    | [Zksh][rv-zksh] — ShangMi算法套件: SM3哈希函数指令
+`zkt`       |                                                    | [Zkt][rv-zkt] — Data Independent Execution Latency Subset
+
+<!-- Keep links near each table to make it easier to move and update. -->
+
+[rv-a]: https://github.com/riscv/riscv-isa-manual/blob/de46343a245c6ee1f7b1a40c92fe1a86bd4f4978/src/a-st-ext.adoc
+[rv-c]: https://github.com/riscv/riscv-isa-manual/blob/de46343a245c6ee1f7b1a40c92fe1a86bd4f4978/src/c-st-ext.adoc
+[rv-m]: https://github.com/riscv/riscv-isa-manual/blob/de46343a245c6ee1f7b1a40c92fe1a86bd4f4978/src/m-st-ext.adoc
+[rv-zb]: https://github.com/riscv/riscv-bitmanip
+[rv-zb-zba]: https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zba.adoc
+[rv-zb-zbb]: https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbb.adoc
+[rv-zb-zbc]: https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbc.adoc
+[rv-zb-zbkb]: https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbkb.adoc
+[rv-zb-zbkc]: https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbkc.adoc
+[rv-zb-zbkx]: https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbkx.adoc
+[rv-zb-zbs]: https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbs.adoc
+[rv-zk]: https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zk.adoc
+[rv-zkn]: https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkn.adoc
+[rv-zkne]: https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkne.adoc
+[rv-zknd]: https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zknd.adoc
+[rv-zknh]: https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zknh.adoc
+[rv-zkr]: https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkr.adoc
+[rv-zks]: https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zks.adoc
+[rv-zksed]: https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zksed.adoc
+[rv-zksh]: https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zksh.adoc
+[rv-zkt]: https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkr.adoc
 
 #### `wasm32` or `wasm64`
 

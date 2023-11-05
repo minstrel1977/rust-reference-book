@@ -152,8 +152,8 @@
                         <h1 id="impl-trait"><a class="header" href="#impl-trait">Impl trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/types/impl-object.md">impl-object.md</a><br />
-commit: 3f5f3b2428275fa0202ec8f289f7e03d3ebaf832 <br />
-本章译文最后维护日期：2023-06-11</p>
+commit: d82c9ac4054136efa6e9cc908ca3c589ed862d5a <br />
+本章译文最后维护日期：2023-11-05</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -238,6 +238,10 @@ fn with_impl_trait(arg: impl Trait) {
 </span></code></pre></pre>
 <p>这也避免了对 trait对象进行装箱的缺陷。</p>
 <p>类似地，在迭代器的使用坏境中，如果将此步操作前的所有迭代器操作合并到一个执行链中，迭代器里的具体类型可能变得非常复杂。此时返回 <code>impl Iterator</code> 意味着一个函数只需将 <code>Iterator</code> trait 作为其返回类型的约束来公开，而不须显式指定链内所有其他涉及的迭代器类型。</p>
+<h2 id="return-position-impl-trait-in-traits-and-trait-implementations"><a class="header" href="#return-position-impl-trait-in-traits-and-trait-implementations">Return-position <code>impl Trait</code> in traits and trait implementations</a></h2>
+<h2 id="trait-和-trait实现-的返回位置上的impl-trait"><a class="header" href="#trait-和-trait实现-的返回位置上的impl-trait">trait 和 trait实现 的返回位置上的<code>impl Trait</code></a></h2>
+<p>trait中的函数也可以使用 <code>impl Trait</code> 作为匿名关联类型的句法。</p>
+<p>trait中关联函数的返回类型中的每个 <code>impl Trait</code> 都被脱糖为匿名关联类型。出现在实现中的函数签名中的返回类型用于确定关联类型的确定类型。</p>
 <h3 id="differences-between-generics-and-impl-trait-in-return-position"><a class="header" href="#differences-between-generics-and-impl-trait-in-return-position">Differences between generics and <code>impl Trait</code> in return position</a></h3>
 <h3 id="泛型与-impl-trait-在返回位置上的差异"><a class="header" href="#泛型与-impl-trait-在返回位置上的差异">泛型与 <code>impl Trait</code> 在返回位置上的差异</a></h3>
 <p>在参数位置，<code>impl Trait</code> 在语义上与泛型类型参数非常相似。
@@ -268,8 +272,8 @@ fn with_impl_trait(arg: impl Trait) {
 相反，函数自身选择返回类型，但只承诺返回类型将实现 <code>Trait</code>。</p>
 <h2 id="limitations"><a class="header" href="#limitations">Limitations</a></h2>
 <h2 id="限制"><a class="header" href="#限制">限制</a></h2>
-<p><code>impl Trait</code> 只能作为自由函数或固有函数的参数或返回类型出现。
-它不能出现在 trait实现中，也不能出现在 let绑定的类型或出现在类型别名中。</p>
+<p><code>impl Trait</code> 只能作为 非<code>extern</code>函数的参数类型或返回类型出现。
+它不能 <code>let</code>绑定、成员字段的类型，也不能出现在类型别名中。</p>
 
                     </main>
 
