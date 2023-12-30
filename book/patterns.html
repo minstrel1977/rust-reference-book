@@ -153,8 +153,8 @@
 <h1 id="模式"><a class="header" href="#模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
-commit: e844f9509b3b293af94fe39e3813565cceada86e <br />
-本章译文最后维护日期：2023-03-04</p>
+commit: ae1eb71d5ab43a30163c9625823dea8ec332f6c0 <br />
+本章译文最后维护日期：2023-12-30</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -275,6 +275,8 @@ if let (a, 3) = (1, 2) {           // &quot;(a, 3)&quot; 是可反驳型的, 将
    | <a href="tokens.html#raw-string-literals">RAW_STRING_LITERAL</a><br />
    | <a href="tokens.html#byte-string-literals">BYTE_STRING_LITERAL</a><br />
    | <a href="tokens.html#raw-byte-string-literals">RAW_BYTE_STRING_LITERAL</a><br />
+   | <a href="tokens.html#c-string-literals">C_STRING_LITERAL</a><br />
+   | <a href="tokens.html#raw-c-string-literals">RAW_C_STRING_LITERAL</a><br />
    | <code>-</code><sup>?</sup> <a href="tokens.html#integer-literals">INTEGER_LITERAL</a><br />
    | <code>-</code><sup>?</sup> <a href="tokens.html#floating-point-literals">FLOAT_LITERAL</a></p>
 </blockquote>
@@ -282,6 +284,9 @@ if let (a, 3) = (1, 2) {           // &quot;(a, 3)&quot; 是可反驳型的, 将
 由于负数不是<a href="expressions/literal-expr.html">字面量</a>，（特设定）字面量模式也接受字面量前的可选负号，它的作用类似于否定运算符。</p>
 <div class="warning">
 <p>浮点字面量目前还可以使用，但是由于它们在数值比较时带来的复杂性，在将来的 Rust 版本中，它们将被禁止用于字面量模式(参见 <a href="https://github.com/rust-lang/rust/issues/41620">issue #41620</a>)。</p>
+</div>
+<div class="warning">
+<p>字面量模式接受 C语言风格的字符串字面量和原始C语言风格的字符串字面量，但 <code>&amp;CStr</code> 没实现结构相等（<code>#[derive(Eq, PartialEq)]</code>），因此 <code>&amp;CStr</code>上的任何此类 <code>match</code> 都将被类型错误所拒绝。</p>
 </div>
 <p>字面量模式总是可以反驳型的。</p>
 <p>示例：</p>

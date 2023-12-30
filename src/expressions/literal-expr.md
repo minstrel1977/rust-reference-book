@@ -2,8 +2,8 @@
 # 字面量表达式
 
 >[literal-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/literal-expr.md)\
->commit: ccde77edcb4d4607f212bfd9fa65a913defb5055 \
->本章译文最后维护日期：2022-12-04
+>commit: ae1eb71d5ab43a30163c9625823dea8ec332f6c0 \
+>本章译文最后维护日期：2023-12-30
 
 > **<sup>句法</sup>**\
 > _LiteralExpression_ :\
@@ -13,6 +13,8 @@
 > &nbsp;&nbsp; | [BYTE_LITERAL]\
 > &nbsp;&nbsp; | [BYTE_STRING_LITERAL]\
 > &nbsp;&nbsp; | [RAW_BYTE_STRING_LITERAL]\
+> &nbsp;&nbsp; | [C_STRING_LITERAL]\
+> &nbsp;&nbsp; | [RAW_C_STRING_LITERAL]\
 > &nbsp;&nbsp; | [INTEGER_LITERAL]\
 > &nbsp;&nbsp; | [FLOAT_LITERAL]\
 > &nbsp;&nbsp; | `true` | `false`>
@@ -39,7 +41,7 @@
 ## String literal expressions
 ## 字符串字面量表达式
 
-字符串字面量表达式由单一一个[字符串字面量][STRING_LITERAL]token 或[裸字符串字面量][RAW_STRING_LITERAL]token 组成。
+字符串字面量表达式由单一一个[字符串字面量][STRING_LITERAL]token 或[原生字符串字面量][RAW_STRING_LITERAL]token 组成。
 
 > **注意**: 本节还未编写完成。
 
@@ -53,7 +55,14 @@
 ## Byte string literal expressions
 ## 字节串字面量表达式
 
-字节串字面量表达式由单一一个[字节串字面量][BYTE_STRING_LITERAL]token 或[裸字节串字面量][RAW_BYTE_STRING_LITERAL]token 组成。
+字节串字面量表达式由单一一个[字节串字面量][BYTE_STRING_LITERAL]token 或[原生字节串字面量][RAW_BYTE_STRING_LITERAL]token 组成。
+
+> **注意**: 本节还未编写完成。
+
+## C string literal expressions
+## C语言风格的字符串字面量表达式
+
+C语言风格的字符串字面量表达式由单一一个[C语言风格的字符串字面量][C_STRING_LITERAL] 或 [原生C语言风格的字符串字面量][RAW_C_STRING_LITERAL] token 组成。
 
 > **注意**: 本节还未编写完成。
 
@@ -194,5 +203,7 @@ let x: f64 = 2.; // type f64
 [BYTE_LITERAL]: ../tokens.md#byte-literals
 [BYTE_STRING_LITERAL]: ../tokens.md#byte-string-literals
 [RAW_BYTE_STRING_LITERAL]: ../tokens.md#raw-byte-string-literals
+[C_STRING_LITERAL]: ../tokens.md#c-string-literals
+[RAW_C_STRING_LITERAL]: ../tokens.md#raw-c-string-literals
 [INTEGER_LITERAL]: ../tokens.md#integer-literals
 [FLOAT_LITERAL]: ../tokens.md#floating-point-literals

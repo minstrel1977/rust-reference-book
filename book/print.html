@@ -148,7 +148,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2023-11-05</p>
+<p>本书跟随原文截止日期：2023-12-30</p>
 </blockquote>
 <h1 id="前言"><a class="header" href="#前言">前言</a></h1>
 <h2 id="试水版"><a class="header" href="#试水版">试水版</a></h2>
@@ -664,8 +664,8 @@ commit: 716e04f203c10387bd66aa3bcf1663e75ce208cf <br />
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tokens"><a class="header" href="#tokens">Tokens</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/tokens.md">tokens.md</a><br />
-commit: 018b14be9ded4e5890813dcf1209961298b0873e <br />
-本章译文最后维护日期：2022-12-04</p>
+commit: ad9a69cc1879796e2ce24ec29080c03df53f4549 <br />
+本章译文最后维护日期：2023-12-30</p>
 </blockquote>
 <p>token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：</p>
 <ul>
@@ -684,16 +684,20 @@ commit: 018b14be9ded4e5890813dcf1209961298b0873e <br />
 <h3 id="示例-1"><a class="header" href="#示例-1">示例</a></h3>
 <h4 id="characters-and-strings"><a class="header" href="#characters-and-strings">Characters and strings</a></h4>
 <h4 id="字符和字符串"><a class="header" href="#字符和字符串">字符和字符串</a></h4>
-<div class="table-wrapper"><table><thead><tr><th></th><th>举例</th><th><code>#</code> 号的数量*</th><th>字符集</th><th>转义</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th></th><th>举例</th><th><code>#</code> 号的数量<sup class="footnote-reference"><a href="#nsets">1</a></sup></th><th>字符集</th><th>转义</th></tr></thead><tbody>
 <tr><td><a href="tokens.html#character-literals">字符</a></td><td><code>'H'</code></td><td>0</td><td>全部 Unicode</td><td><a href="tokens.html#quote-escapes">引号</a> &amp; <a href="tokens.html#ascii-escapes">ASCII</a> &amp; <a href="tokens.html#unicode-escapes">Unicode</a></td></tr>
 <tr><td><a href="tokens.html#string-literals">字符串</a></td><td><code>&quot;hello&quot;</code></td><td>0</td><td>全部 Unicode</td><td><a href="tokens.html#quote-escapes">引号</a> &amp; <a href="tokens.html#ascii-escapes">ASCII</a> &amp; <a href="tokens.html#unicode-escapes">Unicode</a></td></tr>
 <tr><td><a href="tokens.html#raw-string-literals">原生字符串</a></td><td><code>r#&quot;hello&quot;#</code></td><td>&lt;256</td><td>全部 Unicode</td><td><code>N/A</code></td></tr>
 <tr><td><a href="tokens.html#byte-literals">字节</a></td><td><code>b'H'</code></td><td>0</td><td>全部 ASCII</td><td><a href="tokens.html#quote-escapes">引号</a> &amp; <a href="tokens.html#byte-escapes">字节</a></td></tr>
 <tr><td><a href="tokens.html#byte-string-literals">字节串</a></td><td><code>b&quot;hello&quot;</code></td><td>0</td><td>全部 ASCII</td><td><a href="tokens.html#quote-escapes">引号</a> &amp; <a href="tokens.html#byte-escapes">字节</a></td></tr>
 <tr><td><a href="tokens.html#raw-byte-string-literals">原生字节串</a></td><td><code>br#&quot;hello&quot;#</code></td><td>&lt;256</td><td>全部 ASCII</td><td><code>N/A</code></td></tr>
+<tr><td><a href="tokens.html#c-string-literals">C语言风格的字符串</a></td><td><code>c&quot;hello&quot;</code></td><td>0</td><td>全部 Unicode</td><td><a href="tokens.html#quote-escapes">Quote</a> &amp; <a href="tokens.html#byte-escapes">Byte</a> &amp; <a href="tokens.html#unicode-escapes">Unicode</a></td></tr>
+<tr><td><a href="tokens.html#raw-c-string-literals">原生C语言风格的字符串</a></td><td><code>cr#&quot;hello&quot;#</code></td><td>&lt;256</td><td>全部 Unicode</td><td><code>N/A</code></td></tr>
 </tbody></table>
 </div>
-<p>* 字面量两侧的 <code>#</code> 数量必须相同。</p>
+<div class="footnote-definition" id="nsets"><sup class="footnote-definition-label">1</sup>
+<p>字面量两侧的 <code>#</code> 数量必须相同。</p>
+</div>
 <h4 id="ascii-escapes"><a class="header" href="#ascii-escapes">ASCII escapes</a></h4>
 <h4 id="ascii-转义"><a class="header" href="#ascii-转义">ASCII 转义</a></h4>
 <div class="table-wrapper"><table><thead><tr><th></th><th>名称</th></tr></thead><tbody>
@@ -731,7 +735,7 @@ commit: 018b14be9ded4e5890813dcf1209961298b0873e <br />
 </div>
 <h4 id="numbers"><a class="header" href="#numbers">Numbers</a></h4>
 <h4 id="数字"><a class="header" href="#数字">数字</a></h4>
-<div class="table-wrapper"><table><thead><tr><th><a href="tokens.html#%E6%95%B0%E5%AD%97%E5%AD%97%E9%9D%A2%E9%87%8F">数字字面量</a><code>*</code></th><th>示例</th><th>指数</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th><a href="tokens.html#%E6%95%B0%E5%AD%97%E5%AD%97%E9%9D%A2%E9%87%8F">数字字面量</a><sup class="footnote-reference"><a href="#nl">2</a></sup></th><th>示例</th><th>指数</th></tr></thead><tbody>
 <tr><td>十进制整数</td><td><code>98_222</code></td><td><code>N/A</code></td></tr>
 <tr><td>十六进制整数</td><td><code>0xff</code></td><td><code>N/A</code></td></tr>
 <tr><td>八进制整数</td><td><code>0o77</code></td><td><code>N/A</code></td></tr>
@@ -739,7 +743,9 @@ commit: 018b14be9ded4e5890813dcf1209961298b0873e <br />
 <tr><td>浮点数</td><td><code>123.0E+77</code></td><td><code>Optional</code></td></tr>
 </tbody></table>
 </div>
-<p><code>*</code> 所有数字字面量允许使用 <code>_</code> 作为可视分隔符，比如：<code>1_234.0E+18f64</code></p>
+<div class="footnote-definition" id="nl"><sup class="footnote-definition-label">2</sup>
+<p>所有数字字面量允许使用 <code>_</code> 作为可视分隔符，比如：<code>1_234.0E+18f64</code></p>
+</div>
 <h4 id="suffixes"><a class="header" href="#suffixes">Suffixes</a></h4>
 <h4 id="后缀"><a class="header" href="#后缀">后缀</a></h4>
 <p>后缀是字面量主体部分后面的字符序列（它们之间不能含有空格），其形式与非原生标识符或关键字相同。</p>
@@ -913,6 +919,72 @@ br##&quot;foo #&quot;# bar&quot;##;                 // foo #&quot;# bar
 
 b&quot;\x52&quot;; b&quot;R&quot;; br&quot;R&quot;;                // R
 b&quot;\\x52&quot;; br&quot;\x52&quot;;                  // \x52
+<span class="boring">}
+</span></code></pre></pre>
+<h3 id="c-string-and-raw-c-string-literals"><a class="header" href="#c-string-and-raw-c-string-literals">C string and raw C string literals</a></h3>
+<h3 id="c语言风格的字符串字面量和原生c语言风格的字符串字面量"><a class="header" href="#c语言风格的字符串字面量和原生c语言风格的字符串字面量">C语言风格的字符串字面量和原生C语言风格的字符串字面量</a></h3>
+<h4 id="c-string-literals"><a class="header" href="#c-string-literals">C string literals</a></h4>
+<h4 id="c语言风格的字符串字面量"><a class="header" href="#c语言风格的字符串字面量">C语言风格的字符串字面量</a></h4>
+<blockquote>
+<p><strong><sup>Lexer</sup></strong><br />
+C_STRING_LITERAL :<br />
+   <code>c&quot;</code> (<br />
+      ~[<code>&quot;</code> <code>\</code> <em>IsolatedCR</em>]<br />
+      | BYTE_ESCAPE<br />
+      | UNICODE_ESCAPE<br />
+      | STRING_CONTINUE<br />
+   )<sup>*</sup> <code>&quot;</code> SUFFIX<sup>?</sup></p>
+</blockquote>
+<p><em>C语言风格的字符串字面量_是通过前面是字符<code>U+0063</code> (<code>c</code>) 和 <code>U+0022</code>（双引号），后面是字符<code>U+0022</code> 转义过的 Unicode字符序列。如果字面量中存在字符<code>U+0022</code>，则其前面必须用<code>U+005C</code> (<code>\</code>)字符进行转义。
+或者，C语言风格的字符串字面量可以是下面定义的_原生C语言风格的字符串字面量</em>。C语言风格的字符串字面量的类型为<a href="../core/ffi/struct.CStr.html"><code>&amp;core::ffi::CStr</code></a>。</p>
+<p>C语言风格的字符串由字节<code>0x00</code>隐式终止，因此C语言风格的字符串字面量<code>c&quot;&quot;</code>等同于从字节字符串文字<code>b&quot;\x00&quot;</code>来手动构造一个<code>&amp;CStr</code>。除了隐式终止符之外，C语言风格的字符串中不允许再使用字节<code>0x00</code>。</p>
+<p>一些额外的转义符在非原生C语言风格的字符串字面量中可用。转义以<code>U+005C</code> (<code>\</code>)开头，并后继以下形式之一：</p>
+<ul>
+<li>一个_字节转义符_以<code>U+0078</code> (<code>x</code>)开头，后面正好跟两个_十六进制数字_。它表示等于所提供的十六进制值的字节序。</li>
+<li>一个_24位码点转义符_以 <code>U+0075</code> (<code>u</code>) 开头，后面最多有六个由大括号<code>U+007B</code> (<code>{</code>)和<code>U+007D</code> (<code>}</code>)包围的_十六进制数字_。它表示由这些十六进制数值通过的UTF-8编码的Unicode码点值。</li>
+<li>_空白转义符_是字符<code>U+006E</code> (<code>n</code>)、<code>U+0072</code> (<code>r</code>) 或 <code>U+0074</code> (<code>t</code>) 之一，分别表示字节<code>0x0A</code> (ASCII LF)、<code>0x0D</code> (ASCII CR) 或 <code>0x09</code> (ASCII HT)。</li>
+<li>_反斜杠转义符_就是字符<code>U+005C</code> (<code>\</code>)，必须对其进行转义才能表示其ASCII编码的<code>0x5C</code>。</li>
+</ul>
+<p>token 里允许出现转义序列<code>\0</code>、<code>\x00</code> 和 <code>\u{0000}</code>，但最终将被视为无效而拒绝，因为除了作为隐式终止符，C语言风格的字符串可能不包含字节<code>0x00</code>。
+C语言风格的字符串本身表示没有定义编码类型的字节序，但 C语言风格的字符串字面量又可能包含<code>U+007F</code>以上的 Unicode字符。这种情况下这些字符将被替换为该字符的UTF-8表示形式的字节。</p>
+<p>以下 C语言风格的字符串字面量表达形式等效：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>c&quot;æ&quot;;        // 小写的拉丁字符 AE (U+00E6)
+c&quot;\u{00E6}&quot;;
+c&quot;\xC3\xA6&quot;;
+<span class="boring">}
+</span></code></pre></pre>
+<blockquote>
+<p><strong>版次差异</strong>: 2021版或更高版本中可以使用 C语言风格的字符串字面量。在更低的版次中，<code>c&quot;&quot;</code>token 会被词法解析器解析为 <code>c &quot;&quot;</code>。</p>
+</blockquote>
+<h4 id="raw-c-string-literals"><a class="header" href="#raw-c-string-literals">Raw C string literals</a></h4>
+<h4 id="原生c语言风格的字符串字面量"><a class="header" href="#原生c语言风格的字符串字面量">原生C语言风格的字符串字面量</a></h4>
+<blockquote>
+<p><strong><sup>Lexer</sup></strong><br />
+RAW_C_STRING_LITERAL :<br />
+   <code>cr</code> RAW_C_STRING_CONTENT SUFFIX<sup>?</sup></p>
+<p>RAW_C_STRING_CONTENT :<br />
+      <code>&quot;</code> ( ~ <em>IsolatedCR</em> )<sup>* (non-greedy)</sup> <code>&quot;</code><br />
+   | <code>#</code> RAW_C_STRING_CONTENT <code>#</code></p>
+</blockquote>
+<p>原生C语言风格的字符串字面量不处理任何转义。它们以字符<code>U+0063</code> (<code>c</code>)开头，然后跟<code>U+0072</code> (<code>r</code>)，然后再跟少于256个的字符<code>U+0023</code> (<code>#</code>)和一个 <code>U+0022</code>（双引号）字符（记作开头引号）。_原生C语言风格的字符串本体_可以包含任何 Unicode字符序列，本体后仅以另一个<code>U+0022</code>（双引号）字符结尾，之后再跟在开头引号之前的相同数量的 <code>U+0023</code> (<code>#</code>)字符。</p>
+<p>原生C语言风格的字符串本体中包含的所有字符都以UTF-8编码形式表示。字符<code>U+0022</code>（双引号）（后面跟有至少与用于开始原生C语言风格的字符串字面量的数量相同的 <code>U+0023</code> (<code>#</code>)字符时除外）或 <code>U+005C</code> (<code>\</code>) 没有任何特殊含义。</p>
+<blockquote>
+<p><strong>版次差异</strong>: 2021版或更高版次可以使用原生C语言风格的字符串字面量。在更低的版次中，<code>cr&quot;&quot;</code>token 会被词法解析器解析为<code>cr &quot;&quot;</code> ，<code>cr#&quot;&quot;#</code> 被解析为 <code>cr #&quot;&quot;#</code>（这是不符合语法的）。</p>
+</blockquote>
+<h4 id="examples-for-c-string-and-raw-c-string-literals"><a class="header" href="#examples-for-c-string-and-raw-c-string-literals">Examples for C string and raw C string literals</a></h4>
+<h4 id="c语言风格的字符串字面量和原生c语言风格的字符串字面量的示例"><a class="header" href="#c语言风格的字符串字面量和原生c语言风格的字符串字面量的示例">C语言风格的字符串字面量和原生C语言风格的字符串字面量的示例</a></h4>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>c&quot;foo&quot;; cr&quot;foo&quot;;                     // foo
+c&quot;\&quot;foo\&quot;&quot;; cr#&quot;&quot;foo&quot;&quot;#;             // &quot;foo&quot;
+
+c&quot;foo #\&quot;# bar&quot;;
+cr##&quot;foo #&quot;# bar&quot;##;                 // foo #&quot;# bar
+
+c&quot;\x52&quot;; c&quot;R&quot;; cr&quot;R&quot;;                // R
+c&quot;\\x52&quot;; cr&quot;\x52&quot;;                  // \x52
 <span class="boring">}
 </span></code></pre></pre>
 <h3 id="number-literals"><a class="header" href="#number-literals">Number literals</a></h3>
@@ -1186,14 +1258,14 @@ LIFETIME_TOKEN :<br />
 <h2 id="保留前缀"><a class="header" href="#保留前缀">保留前缀</a></h2>
 <blockquote>
 <p><strong><sup>词法 2021+</sup></strong><br />
-RESERVED_TOKEN_DOUBLE_QUOTE : ( IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>b</code> 或 <code>r</code> 或 <code>br</code></em></sub> | <code>_</code> ) <code>&quot;</code><br />
+RESERVED_TOKEN_DOUBLE_QUOTE : ( IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>b</code> 或 <code>c</code> 或 <code>r</code> 或 <code>br</code> 或 <code>cr</code></em></sub> | <code>_</code> ) <code>&quot;</code><br />
 RESERVED_TOKEN_SINGLE_QUOTE : ( IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>b</code></em></sub> | <code>_</code> ) <code>'</code><br />
-RESERVED_TOKEN_POUND : ( IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>r</code> or <code>br</code></em></sub> | <code>_</code> ) <code>#</code></p>
+RESERVED_TOKEN_POUND : ( IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>r</code> 或 <code>br</code> 或 <code>cr</code></em></sub> | <code>_</code> ) <code>#</code></p>
 </blockquote>
 <p>这种被称为 <em>保留前缀</em> 的词法形式是保留供将来使用的。</p>
 <p>如果输入的源代码在词法上被解释为非原生标识符（或关键字或 <code>_</code>），且紧接着的字符是 <code>#</code>、<code>'</code> 或 <code>&quot;</code> （没有空格），则将其标识为保留前缀。（译者注：例如 prefix#identifier, prefix&quot;string&quot;, prefix'c', 和 prefix#123（其中 prefix可以是任何标识符（但不能是原生标识符））这样词法形式被标识为保留词法，以供将来拓展语法使用）</p>
 <p>请注意，原生标识符、原生字符串字面量和原生字节字符串字面量可能包含 <code>#</code>字符，但不会被解释为包含保留前缀。</p>
-<p>类似地，原生字符串字面量、字节字面量、字节字符串字面量和原生字节字符串字面量中使用的<code>r</code>、<code>b</code> 和 <code>br</code> 前缀也不会解释为保留前缀。</p>
+<p>类似地，原生字符串字面量、字节字面量、字节字符串字面量、原生字节字符串字面量、C语言风格的字符串字面量和原生C语言风格的字符串字面量中使用的<code>r</code>、<code>b</code>、 <code>br</code>、 <code>c</code> 和 <code>cr</code> 前缀也不会解释为保留前缀。</p>
 <blockquote>
 <p><strong>版次差异</strong>：从2021版开始，保留前缀被词法解释器报告为错误（特别是，它们不能再传递给宏了）。</p>
 <p>在2021版之前，保留前缀可以被词法解释器接受并被解释为多个 token（例如，后接 <code>#</code> 的标识符或关键字）。</p>
@@ -3615,8 +3687,8 @@ unsafe fn bump_levels_unsafe2() -&gt; u32 {
 <div style="break-before: page; page-break-before: always;"></div><h1 id="trait"><a class="header" href="#trait">Trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/traits.md">traits.md</a><br />
-commit: d82c9ac4054136efa6e9cc908ca3c589ed862d5a <br />
-本章译文最后维护日期：2023-11-05</p>
+commit: 46ed38d89d162b9bb5f7be2390c17d9ef3f0a985 <br />
+本章译文最后维护日期：2023-12-30</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -3676,9 +3748,9 @@ trait Example {
 <li>它必须没有任何带泛型的关联类型。</li>
 <li>所有关联函数必须可以从 trait对象调度分派，或者是显式不可调度分派：
 <ul>
-<li>可调度分派函数要求：
+<li>可调度分派函数必须：
 <ul>
-<li>不能有类型参数（尽管生存期参数可以有）</li>
+<li>不能有类型参数（尽管生存期参数可以有）。</li>
 <li>作为方法时，<code>Self</code> 只能出现在<a href="items/associated-items.html#methods">方法</a>的接受者(receiver)的类型里，其它地方不能使用 <code>Self</code>。</li>
 <li>方法的接受者的类型必须是以下类型之一：
 <ul>
@@ -3688,6 +3760,12 @@ trait Example {
 <li><a href="items/../special-types-and-traits.html#rct"><code>Rc&lt;Self&gt;</code></a></li>
 <li><a href="items/../special-types-and-traits.html#arct"><code>Arc&lt;Self&gt;</code></a></li>
 <li><a href="items/../special-types-and-traits.html#pinp"><code>Pin&lt;P&gt;</code></a> 当 <code>P</code> 是上面类型中的一种</li>
+</ul>
+</li>
+<li>没有不透明的返回类型；也就是说，
+<ul>
+<li>不能是一个 <code>async fn</code> (这是一个隐形的 <code>Future</code>类型)。</li>
+<li>不能是一个返回位置的 <code>impl Trait</code>类型 (<code>fn example(&amp;self) -&gt; impl Trait</code>)。</li>
 </ul>
 </li>
 <li>没有 <code>where Self: Sized</code>约束（即接受者的类型 <code>Self</code>(例如：<code>self</code>) 不能有 <code>Sized</code>约束）。</li>
@@ -6526,8 +6604,8 @@ let b: &amp;[i32];
 <h1 id="字面量表达式"><a class="header" href="#字面量表达式">字面量表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/literal-expr.md">literal-expr.md</a><br />
-commit: ccde77edcb4d4607f212bfd9fa65a913defb5055 <br />
-本章译文最后维护日期：2022-12-04</p>
+commit: ae1eb71d5ab43a30163c9625823dea8ec332f6c0 <br />
+本章译文最后维护日期：2023-12-30</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6538,6 +6616,8 @@ commit: ccde77edcb4d4607f212bfd9fa65a913defb5055 <br />
    | <a href="expressions/../tokens.html#byte-literals">BYTE_LITERAL</a><br />
    | <a href="expressions/../tokens.html#byte-string-literals">BYTE_STRING_LITERAL</a><br />
    | <a href="expressions/../tokens.html#raw-byte-string-literals">RAW_BYTE_STRING_LITERAL</a><br />
+   | <a href="expressions/../tokens.html#c-string-literals">C_STRING_LITERAL</a><br />
+   | <a href="expressions/../tokens.html#raw-c-string-literals">RAW_C_STRING_LITERAL</a><br />
    | <a href="expressions/../tokens.html#integer-literals">INTEGER_LITERAL</a><br />
    | <a href="expressions/../tokens.html#floating-point-literals">FLOAT_LITERAL</a><br />
    | <code>true</code> | <code>false</code>&gt;</p>
@@ -6561,7 +6641,7 @@ commit: ccde77edcb4d4607f212bfd9fa65a913defb5055 <br />
 </blockquote>
 <h2 id="string-literal-expressions"><a class="header" href="#string-literal-expressions">String literal expressions</a></h2>
 <h2 id="字符串字面量表达式"><a class="header" href="#字符串字面量表达式">字符串字面量表达式</a></h2>
-<p>字符串字面量表达式由单一一个<a href="expressions/../tokens.html#string-literals">字符串字面量</a>token 或<a href="expressions/../tokens.html#raw-string-literals">裸字符串字面量</a>token 组成。</p>
+<p>字符串字面量表达式由单一一个<a href="expressions/../tokens.html#string-literals">字符串字面量</a>token 或<a href="expressions/../tokens.html#raw-string-literals">原生字符串字面量</a>token 组成。</p>
 <blockquote>
 <p><strong>注意</strong>: 本节还未编写完成。</p>
 </blockquote>
@@ -6573,7 +6653,13 @@ commit: ccde77edcb4d4607f212bfd9fa65a913defb5055 <br />
 </blockquote>
 <h2 id="byte-string-literal-expressions"><a class="header" href="#byte-string-literal-expressions">Byte string literal expressions</a></h2>
 <h2 id="字节串字面量表达式"><a class="header" href="#字节串字面量表达式">字节串字面量表达式</a></h2>
-<p>字节串字面量表达式由单一一个<a href="expressions/../tokens.html#byte-string-literals">字节串字面量</a>token 或<a href="expressions/../tokens.html#raw-byte-string-literals">裸字节串字面量</a>token 组成。</p>
+<p>字节串字面量表达式由单一一个<a href="expressions/../tokens.html#byte-string-literals">字节串字面量</a>token 或<a href="expressions/../tokens.html#raw-byte-string-literals">原生字节串字面量</a>token 组成。</p>
+<blockquote>
+<p><strong>注意</strong>: 本节还未编写完成。</p>
+</blockquote>
+<h2 id="c-string-literal-expressions"><a class="header" href="#c-string-literal-expressions">C string literal expressions</a></h2>
+<h2 id="c语言风格的字符串字面量表达式"><a class="header" href="#c语言风格的字符串字面量表达式">C语言风格的字符串字面量表达式</a></h2>
+<p>C语言风格的字符串字面量表达式由单一一个<a href="expressions/../tokens.html#c-string-literals">C语言风格的字符串字面量</a> 或 <a href="expressions/../tokens.html#raw-c-string-literals">原生C语言风格的字符串字面量</a> token 组成。</p>
 <blockquote>
 <p><strong>注意</strong>: 本节还未编写完成。</p>
 </blockquote>
@@ -8819,8 +8905,8 @@ zh |</p>
 <h1 id="_表达式"><a class="header" href="#_表达式"><code>_</code>表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">underscore-expr.md</a><br />
-commit: 4115c9a3c2bd91f29445999891de4e8d26d60dc8 <br />
-本章译文最后维护日期：2022-01-22</p>
+commit: 7f1e24a45764646504c79176094346eb1925f100 <br />
+本章译文最后维护日期：2022-12-30</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -8829,6 +8915,7 @@ commit: 4115c9a3c2bd91f29445999891de4e8d26d60dc8 <br />
 </blockquote>
 <p>下划线表达式（使用符号 <code>_</code> 来表示）通常在解构赋值中的充当占位符。
 它们只能出现在赋值表达式的左侧。</p>
+<p>请注意，这与<a href="expressions/../patterns.html#wildcard-pattern">通配符模式</a>是不同的。</p>
 <p>一个 <code>_</code>表达式的一个示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -8841,8 +8928,8 @@ let mut a = 0;
 <h1 id="模式"><a class="header" href="#模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
-commit: e844f9509b3b293af94fe39e3813565cceada86e <br />
-本章译文最后维护日期：2023-03-04</p>
+commit: ae1eb71d5ab43a30163c9625823dea8ec332f6c0 <br />
+本章译文最后维护日期：2023-12-30</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -8963,6 +9050,8 @@ if let (a, 3) = (1, 2) {           // &quot;(a, 3)&quot; 是可反驳型的, 将
    | <a href="tokens.html#raw-string-literals">RAW_STRING_LITERAL</a><br />
    | <a href="tokens.html#byte-string-literals">BYTE_STRING_LITERAL</a><br />
    | <a href="tokens.html#raw-byte-string-literals">RAW_BYTE_STRING_LITERAL</a><br />
+   | <a href="tokens.html#c-string-literals">C_STRING_LITERAL</a><br />
+   | <a href="tokens.html#raw-c-string-literals">RAW_C_STRING_LITERAL</a><br />
    | <code>-</code><sup>?</sup> <a href="tokens.html#integer-literals">INTEGER_LITERAL</a><br />
    | <code>-</code><sup>?</sup> <a href="tokens.html#floating-point-literals">FLOAT_LITERAL</a></p>
 </blockquote>
@@ -8970,6 +9059,9 @@ if let (a, 3) = (1, 2) {           // &quot;(a, 3)&quot; 是可反驳型的, 将
 由于负数不是<a href="expressions/literal-expr.html">字面量</a>，（特设定）字面量模式也接受字面量前的可选负号，它的作用类似于否定运算符。</p>
 <div class="warning">
 <p>浮点字面量目前还可以使用，但是由于它们在数值比较时带来的复杂性，在将来的 Rust 版本中，它们将被禁止用于字面量模式(参见 <a href="https://github.com/rust-lang/rust/issues/41620">issue #41620</a>)。</p>
+</div>
+<div class="warning">
+<p>字面量模式接受 C语言风格的字符串字面量和原始C语言风格的字符串字面量，但 <code>&amp;CStr</code> 没实现结构相等（<code>#[derive(Eq, PartialEq)]</code>），因此 <code>&amp;CStr</code>上的任何此类 <code>match</code> 都将被类型错误所拒绝。</p>
 </div>
 <p>字面量模式总是可以反驳型的。</p>
 <p>示例：</p>
@@ -10648,8 +10740,8 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 <h1 id="类型布局"><a class="header" href="#类型布局">类型布局</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-layout.md">type-layout.md</a><br />
-commit: 9f9e7a70ff8abe88d37b9a349480b5838d2bc3e5 <br />
-本章译文最后维护日期：2023-11-05</p>
+commit: a28f858b55d537143e03c79fd301de7125b56d63 <br />
+本章译文最后维护日期：2023-12-30</p>
 </blockquote>
 <p>类型的布局描述类型的内存宽度(size)、对齐量(alignment)和字段(fields)的<em>相对偏移量(relative offsets)</em>。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。</p>
 <p>每次编译都有可能更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。</p>
@@ -11032,7 +11124,8 @@ assert_eq!(std::mem::size_of::&lt;Enum16&gt;(), 4);
 </span></code></pre></pre>
 <h3 id="the-alignment-modifiers"><a class="header" href="#the-alignment-modifiers">The alignment modifiers</a></h3>
 <h3 id="对齐量的修饰符"><a class="header" href="#对齐量的修饰符">对齐量的修饰符</a></h3>
-<p><code>align</code> 和 <code>packed</code> 修饰符可分别用于增大和减小结构体的和联合体的对齐量。<code>packed</code> 也可以改变字段之间的填充 (虽然它不会改变任何字段内部的填充)。</p>
+<p><code>align</code> 和 <code>packed</code> 修饰符可分别用于增大和减小结构体的和联合体的对齐量。<code>packed</code> 也可以改变字段之间的填充 (虽然它不会改变任何字段内部的填充)。
+<code>align</code> 和 <code>packed</code> 本身并不提供关于结构布局或枚举变体布局中成员字段顺序的保证，尽管它们可以与提供这种保证的表型（如 <code>C</code>）组合使用。</p>
 <p>对齐量被指定为整型参数，形式为 <code>#[repr(align(x))]</code> 或 <code>#[repr(packed(x))]</code>。对齐量的值必须是从1到2<sup>29</sup>之间的2的次幂数。对于 <code>packed</code>，如果没有给出任何值，如 <code>#[repr(packed)]</code>，则对齐量的值为1。</p>
 <p>对于 <code>align</code>，如果类型指定的对齐量比其不带 <code>align</code>修饰符时的对齐量小，则该指定的对齐量无效。</p>
 <p>对于 <code>packed</code>，如果类型指定的对齐量比其不带 <code>packed</code>修饰符时的对齐量大，则该指定的对齐量和布局无效。为了定位字段，每个字段的对齐量是指定的对齐量和字段的类型的对齐量中较小的那个对齐量。</p>
@@ -11400,8 +11493,8 @@ impl&lt;'a, T&gt; Trait&lt;'a, T&gt; for &amp;'a T {}
 <h1 id="类型自动强转"><a class="header" href="#类型自动强转">类型自动强转</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-coercions.md">type-coercions.md</a><br />
-commit: 8aa82fcffa5173e0198ccf942b1435ad43c7dd9f <br />
-本章译文最后维护日期：2022-08-21</p>
+commit: 1b00b703825387edc02ddd2030d478cb5d78fa9f <br />
+本章译文最后维护日期：2023-12-30</p>
 </blockquote>
 <p><strong>类型自动强转</strong>是改变值的类型的隐式操作。它们在特定的位置自动发生，但实际自动强转的类型也受到很多限制。</p>
 <p>任何允许自动强转的转换都可以由<a href="expressions/operator-expr.html#type-cast-expressions">类型强制转换操作符</a> <code>as</code> 来显式执行。</p>
@@ -11432,7 +11525,7 @@ fn main() {
     bar(&amp;mut 42);
 }
 </code></pre></pre>
-<p>对于方法调用，接受者（<code>self</code>参数）只能使用<a href="type-coercions.html#unsized-coercions">非固定内存宽度类型自动强转(unsized coercion)</a>。</p>
+<p>对于方法调用，接受者（<code>self</code>参数）的类型的强转方式不同，有关详细信息，请参阅[方法调用表达式][method-call expressions]的文档。</p>
 </li>
 <li>
 <p>实例化结构体、联合体或枚举变体的字段。</p>
@@ -12501,8 +12594,8 @@ use alloc::rc::Rc;
 <h1 id="路径"><a class="header" href="#路径">路径</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/paths.md">paths.md</a><br />
-commit: 2e85a35becb63873b2dba06bbbc717cce7ad55d2 <br />
-本章译文最后维护日期：2023-07-21</p>
+commit: e8ddd3cd6bfac1bb58a6890fd217eb031d620773 <br />
+本章译文最后维护日期：2023-12-30</p>
 </blockquote>
 <p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，<code>::</code> 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">程序项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用程序项。</p>
 <p>仅由标识符段组成的简单路径(simple paths)的两个示例：</p>
@@ -12661,9 +12754,16 @@ mod b {
 </span></code></pre></pre>
 <h3 id="self"><a class="header" href="#self"><code>self</code></a></h3>
 <p><code>self</code> 表示路径是相对于当前模块的路径。<code>self</code> 仅可以用作路径的首段，不能有前置 <code>::</code>。</p>
+<p>在方法体中，由 <code>self</code>段组成的路径被解析为此方法的 self参数。</p>
 <pre><pre class="playground"><code class="language-rust edition2021">fn foo() {}
 fn bar() {
     self::foo();
+}
+struct S(bool);
+impl S {
+  fn baz(self) {
+        self.0;
+    }
 }
 <span class="boring">fn main() {}
 </span></code></pre></pre>

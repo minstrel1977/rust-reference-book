@@ -2,8 +2,8 @@
 # 模式
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
->commit: e844f9509b3b293af94fe39e3813565cceada86e \
->本章译文最后维护日期：2023-03-04
+>commit: ae1eb71d5ab43a30163c9625823dea8ec332f6c0 \
+>本章译文最后维护日期：2023-12-30
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\
@@ -127,6 +127,8 @@ if let (a, 3) = (1, 2) {           // "(a, 3)" 是可反驳型的, 将不会匹�
 > &nbsp;&nbsp; | [RAW_STRING_LITERAL]\
 > &nbsp;&nbsp; | [BYTE_STRING_LITERAL]\
 > &nbsp;&nbsp; | [RAW_BYTE_STRING_LITERAL]\
+> &nbsp;&nbsp; | [C_STRING_LITERAL]\
+> &nbsp;&nbsp; | [RAW_C_STRING_LITERAL]\
 > &nbsp;&nbsp; | `-`<sup>?</sup> [INTEGER_LITERAL]\
 > &nbsp;&nbsp; | `-`<sup>?</sup> [FLOAT_LITERAL]
 
@@ -136,6 +138,8 @@ if let (a, 3) = (1, 2) {           // "(a, 3)" 是可反驳型的, 将不会匹�
 [RAW_STRING_LITERAL]: tokens.md#raw-string-literals
 [BYTE_STRING_LITERAL]: tokens.md#byte-string-literals
 [RAW_BYTE_STRING_LITERAL]: tokens.md#raw-byte-string-literals
+[C_STRING_LITERAL]: tokens.md#c-string-literals
+[RAW_C_STRING_LITERAL]: tokens.md#raw-c-string-literals
 [INTEGER_LITERAL]: tokens.md#integer-literals
 [FLOAT_LITERAL]: tokens.md#floating-point-literals
 
@@ -145,6 +149,12 @@ if let (a, 3) = (1, 2) {           // "(a, 3)" 是可反驳型的, 将不会匹�
 <div class="warning">
 
 浮点字面量目前还可以使用，但是由于它们在数值比较时带来的复杂性，在将来的 Rust 版本中，它们将被禁止用于字面量模式(参见 [issue #41620](https://github.com/rust-lang/rust/issues/41620))。
+
+</div>
+
+<div class="warning">
+
+字面量模式接受 C语言风格的字符串字面量和原始C语言风格的字符串字面量，但 `&CStr` 没实现结构相等（`#[derive(Eq, PartialEq)]`），因此 `&CStr`上的任何此类 `match` 都将被类型错误所拒绝。
 
 </div>
 

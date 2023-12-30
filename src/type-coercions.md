@@ -2,8 +2,8 @@
 # 类型自动强转
 
 >[type-coercions.md](https://github.com/rust-lang/reference/blob/master/src/type-coercions.md)\
->commit: 8aa82fcffa5173e0198ccf942b1435ad43c7dd9f \
->本章译文最后维护日期：2022-08-21
+>commit: 1b00b703825387edc02ddd2030d478cb5d78fa9f \
+>本章译文最后维护日期：2023-12-30
 
 **类型自动强转**是改变值的类型的隐式操作。它们在特定的位置自动发生，但实际自动强转的类型也受到很多限制。
 
@@ -40,7 +40,7 @@
   }
   ```
 
-  对于方法调用，接受者（`self`参数）只能使用[非固定内存宽度类型自动强转(unsized coercion)](#unsized-coercions)。
+  对于方法调用，接受者（`self`参数）的类型的强转方式不同，有关详细信息，请参阅[方法调用表达式][method-call expressions]的文档。
 
 * 实例化结构体、联合体或枚举变体的字段。
 

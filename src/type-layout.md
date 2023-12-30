@@ -2,8 +2,8 @@
 # 类型布局
 
 >[type-layout.md](https://github.com/rust-lang/reference/blob/master/src/type-layout.md)\
->commit: 9f9e7a70ff8abe88d37b9a349480b5838d2bc3e5 \
->本章译文最后维护日期：2023-11-05
+>commit: a28f858b55d537143e03c79fd301de7125b56d63 \
+>本章译文最后维护日期：2023-12-30
 
 类型的布局描述类型的内存宽度(size)、对齐量(alignment)和字段(fields)的*相对偏移量(relative offsets)*。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。
 
@@ -438,6 +438,7 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 ### 对齐量的修饰符
 
 `align` 和 `packed` 修饰符可分别用于增大和减小结构体的和联合体的对齐量。`packed` 也可以改变字段之间的填充 (虽然它不会改变任何字段内部的填充)。
+`align` 和 `packed` 本身并不提供关于结构布局或枚举变体布局中成员字段顺序的保证，尽管它们可以与提供这种保证的表型（如 `C`）组合使用。
 
 对齐量被指定为整型参数，形式为 `#[repr(align(x))]` 或 `#[repr(packed(x))]`。对齐量的值必须是从1到2<sup>29</sup>之间的2的次幂数。对于 `packed`，如果没有给出任何值，如 `#[repr(packed)]`，则对齐量的值为1。
 

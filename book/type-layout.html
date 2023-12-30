@@ -153,8 +153,8 @@
 <h1 id="类型布局"><a class="header" href="#类型布局">类型布局</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-layout.md">type-layout.md</a><br />
-commit: 9f9e7a70ff8abe88d37b9a349480b5838d2bc3e5 <br />
-本章译文最后维护日期：2023-11-05</p>
+commit: a28f858b55d537143e03c79fd301de7125b56d63 <br />
+本章译文最后维护日期：2023-12-30</p>
 </blockquote>
 <p>类型的布局描述类型的内存宽度(size)、对齐量(alignment)和字段(fields)的<em>相对偏移量(relative offsets)</em>。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。</p>
 <p>每次编译都有可能更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。</p>
@@ -537,7 +537,8 @@ assert_eq!(std::mem::size_of::&lt;Enum16&gt;(), 4);
 </span></code></pre></pre>
 <h3 id="the-alignment-modifiers"><a class="header" href="#the-alignment-modifiers">The alignment modifiers</a></h3>
 <h3 id="对齐量的修饰符"><a class="header" href="#对齐量的修饰符">对齐量的修饰符</a></h3>
-<p><code>align</code> 和 <code>packed</code> 修饰符可分别用于增大和减小结构体的和联合体的对齐量。<code>packed</code> 也可以改变字段之间的填充 (虽然它不会改变任何字段内部的填充)。</p>
+<p><code>align</code> 和 <code>packed</code> 修饰符可分别用于增大和减小结构体的和联合体的对齐量。<code>packed</code> 也可以改变字段之间的填充 (虽然它不会改变任何字段内部的填充)。
+<code>align</code> 和 <code>packed</code> 本身并不提供关于结构布局或枚举变体布局中成员字段顺序的保证，尽管它们可以与提供这种保证的表型（如 <code>C</code>）组合使用。</p>
 <p>对齐量被指定为整型参数，形式为 <code>#[repr(align(x))]</code> 或 <code>#[repr(packed(x))]</code>。对齐量的值必须是从1到2<sup>29</sup>之间的2的次幂数。对于 <code>packed</code>，如果没有给出任何值，如 <code>#[repr(packed)]</code>，则对齐量的值为1。</p>
 <p>对于 <code>align</code>，如果类型指定的对齐量比其不带 <code>align</code>修饰符时的对齐量小，则该指定的对齐量无效。</p>
 <p>对于 <code>packed</code>，如果类型指定的对齐量比其不带 <code>packed</code>修饰符时的对齐量大，则该指定的对齐量和布局无效。为了定位字段，每个字段的对齐量是指定的对齐量和字段的类型的对齐量中较小的那个对齐量。</p>

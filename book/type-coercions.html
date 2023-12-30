@@ -153,8 +153,8 @@
 <h1 id="类型自动强转"><a class="header" href="#类型自动强转">类型自动强转</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-coercions.md">type-coercions.md</a><br />
-commit: 8aa82fcffa5173e0198ccf942b1435ad43c7dd9f <br />
-本章译文最后维护日期：2022-08-21</p>
+commit: 1b00b703825387edc02ddd2030d478cb5d78fa9f <br />
+本章译文最后维护日期：2023-12-30</p>
 </blockquote>
 <p><strong>类型自动强转</strong>是改变值的类型的隐式操作。它们在特定的位置自动发生，但实际自动强转的类型也受到很多限制。</p>
 <p>任何允许自动强转的转换都可以由<a href="expressions/operator-expr.html#type-cast-expressions">类型强制转换操作符</a> <code>as</code> 来显式执行。</p>
@@ -185,7 +185,7 @@ fn main() {
     bar(&amp;mut 42);
 }
 </code></pre></pre>
-<p>对于方法调用，接受者（<code>self</code>参数）只能使用<a href="#unsized-coercions">非固定内存宽度类型自动强转(unsized coercion)</a>。</p>
+<p>对于方法调用，接受者（<code>self</code>参数）的类型的强转方式不同，有关详细信息，请参阅[方法调用表达式][method-call expressions]的文档。</p>
 </li>
 <li>
 <p>实例化结构体、联合体或枚举变体的字段。</p>

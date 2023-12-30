@@ -1,8 +1,8 @@
 # Trait
 
 >[traits.md](https://github.com/rust-lang/reference/blob/master/src/items/traits.md)\
->commit: d82c9ac4054136efa6e9cc908ca3c589ed862d5a \
->本章译文最后维护日期：2023-11-05
+>commit: 46ed38d89d162b9bb5f7be2390c17d9ef3f0a985 \
+>本章译文最后维护日期：2023-12-30
 
 > **<sup>句法</sup>**\
 > _Trait_ :\
@@ -67,8 +67,8 @@ trait Seq<T> {
 * 它必须没有任何关联常量。
 * 它必须没有任何带泛型的关联类型。
 * 所有关联函数必须可以从 trait对象调度分派，或者是显式不可调度分派：
-    * 可调度分派函数要求：
-        * 不能有类型参数（尽管生存期参数可以有）
+    * 可调度分派函数必须：
+        * 不能有类型参数（尽管生存期参数可以有）。
         * 作为方法时，`Self` 只能出现在[方法][method]的接受者(receiver)的类型里，其它地方不能使用 `Self`。
         * 方法的接受者的类型必须是以下类型之一：
             * `&Self` (例如：`&self`)
@@ -77,6 +77,9 @@ trait Seq<T> {
             * [`Rc<Self>`]
             * [`Arc<Self>`]
             * [`Pin<P>`] 当 `P` 是上面类型中的一种
+        * 没有不透明的返回类型；也就是说，
+            * 不能是一个 `async fn` (这是一个隐形的 `Future`类型)。
+            * 不能是一个返回位置的 `impl Trait`类型 (`fn example(&self) -> impl Trait`)。
         * 没有 `where Self: Sized`约束（即接受者的类型 `Self`(例如：`self`) 不能有 `Sized`约束）。
     * 显式不可调度分派函数要求：
         * 有 `where Self: Sized`约束（即接受者的类型 `Self`(例如：`self`) 有 `Sized`约束）。

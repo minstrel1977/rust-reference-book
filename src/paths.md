@@ -2,8 +2,8 @@
 # 路径
 
 >[paths.md](https://github.com/rust-lang/reference/blob/master/src/paths.md)\
->commit: 2e85a35becb63873b2dba06bbbc717cce7ad55d2 \
->本章译文最后维护日期：2023-07-21
+>commit: e8ddd3cd6bfac1bb58a6890fd217eb031d620773 \
+>本章译文最后维护日期：2023-12-30
 
 *路径*是一个或多个由命名空间<span class="parenthetical">限定符(`::`)</span>*逻辑*分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，`::` 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的[程序项][item]或[变量][variable]。如果路径包含多个路径段，则总是引用程序项。
 
@@ -190,10 +190,18 @@ mod b {
 
 `self` 表示路径是相对于当前模块的路径。`self` 仅可以用作路径的首段，不能有前置 `::`。
 
+在方法体中，由 `self`段组成的路径被解析为此方法的 self参数。
+
 ```rust
 fn foo() {}
 fn bar() {
     self::foo();
+}
+struct S(bool);
+impl S {
+  fn baz(self) {
+        self.0;
+    }
 }
 # fn main() {}
 ```

@@ -153,8 +153,8 @@
 <h1 id="路径"><a class="header" href="#路径">路径</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/paths.md">paths.md</a><br />
-commit: 2e85a35becb63873b2dba06bbbc717cce7ad55d2 <br />
-本章译文最后维护日期：2023-07-21</p>
+commit: e8ddd3cd6bfac1bb58a6890fd217eb031d620773 <br />
+本章译文最后维护日期：2023-12-30</p>
 </blockquote>
 <p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，<code>::</code> 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">程序项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用程序项。</p>
 <p>仅由标识符段组成的简单路径(simple paths)的两个示例：</p>
@@ -313,9 +313,16 @@ mod b {
 </span></code></pre></pre>
 <h3 id="self"><a class="header" href="#self"><code>self</code></a></h3>
 <p><code>self</code> 表示路径是相对于当前模块的路径。<code>self</code> 仅可以用作路径的首段，不能有前置 <code>::</code>。</p>
+<p>在方法体中，由 <code>self</code>段组成的路径被解析为此方法的 self参数。</p>
 <pre><pre class="playground"><code class="language-rust edition2021">fn foo() {}
 fn bar() {
     self::foo();
+}
+struct S(bool);
+impl S {
+  fn baz(self) {
+        self.0;
+    }
 }
 <span class="boring">fn main() {}
 </span></code></pre></pre>

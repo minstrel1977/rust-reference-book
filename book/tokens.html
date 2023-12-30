@@ -152,8 +152,8 @@
                         <h1 id="tokens"><a class="header" href="#tokens">Tokens</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/tokens.md">tokens.md</a><br />
-commit: 018b14be9ded4e5890813dcf1209961298b0873e <br />
-本章译文最后维护日期：2022-12-04</p>
+commit: ad9a69cc1879796e2ce24ec29080c03df53f4549 <br />
+本章译文最后维护日期：2023-12-30</p>
 </blockquote>
 <p>token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：</p>
 <ul>
@@ -172,16 +172,20 @@ commit: 018b14be9ded4e5890813dcf1209961298b0873e <br />
 <h3 id="示例"><a class="header" href="#示例">示例</a></h3>
 <h4 id="characters-and-strings"><a class="header" href="#characters-and-strings">Characters and strings</a></h4>
 <h4 id="字符和字符串"><a class="header" href="#字符和字符串">字符和字符串</a></h4>
-<div class="table-wrapper"><table><thead><tr><th></th><th>举例</th><th><code>#</code> 号的数量*</th><th>字符集</th><th>转义</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th></th><th>举例</th><th><code>#</code> 号的数量<sup class="footnote-reference"><a href="#nsets">1</a></sup></th><th>字符集</th><th>转义</th></tr></thead><tbody>
 <tr><td><a href="#character-literals">字符</a></td><td><code>'H'</code></td><td>0</td><td>全部 Unicode</td><td><a href="#quote-escapes">引号</a> &amp; <a href="#ascii-escapes">ASCII</a> &amp; <a href="#unicode-escapes">Unicode</a></td></tr>
 <tr><td><a href="#string-literals">字符串</a></td><td><code>&quot;hello&quot;</code></td><td>0</td><td>全部 Unicode</td><td><a href="#quote-escapes">引号</a> &amp; <a href="#ascii-escapes">ASCII</a> &amp; <a href="#unicode-escapes">Unicode</a></td></tr>
 <tr><td><a href="#raw-string-literals">原生字符串</a></td><td><code>r#&quot;hello&quot;#</code></td><td>&lt;256</td><td>全部 Unicode</td><td><code>N/A</code></td></tr>
 <tr><td><a href="#byte-literals">字节</a></td><td><code>b'H'</code></td><td>0</td><td>全部 ASCII</td><td><a href="#quote-escapes">引号</a> &amp; <a href="#byte-escapes">字节</a></td></tr>
 <tr><td><a href="#byte-string-literals">字节串</a></td><td><code>b&quot;hello&quot;</code></td><td>0</td><td>全部 ASCII</td><td><a href="#quote-escapes">引号</a> &amp; <a href="#byte-escapes">字节</a></td></tr>
 <tr><td><a href="#raw-byte-string-literals">原生字节串</a></td><td><code>br#&quot;hello&quot;#</code></td><td>&lt;256</td><td>全部 ASCII</td><td><code>N/A</code></td></tr>
+<tr><td><a href="#c-string-literals">C语言风格的字符串</a></td><td><code>c&quot;hello&quot;</code></td><td>0</td><td>全部 Unicode</td><td><a href="#quote-escapes">Quote</a> &amp; <a href="#byte-escapes">Byte</a> &amp; <a href="#unicode-escapes">Unicode</a></td></tr>
+<tr><td><a href="#raw-c-string-literals">原生C语言风格的字符串</a></td><td><code>cr#&quot;hello&quot;#</code></td><td>&lt;256</td><td>全部 Unicode</td><td><code>N/A</code></td></tr>
 </tbody></table>
 </div>
-<p>* 字面量两侧的 <code>#</code> 数量必须相同。</p>
+<div class="footnote-definition" id="nsets"><sup class="footnote-definition-label">1</sup>
+<p>字面量两侧的 <code>#</code> 数量必须相同。</p>
+</div>
 <h4 id="ascii-escapes"><a class="header" href="#ascii-escapes">ASCII escapes</a></h4>
 <h4 id="ascii-转义"><a class="header" href="#ascii-转义">ASCII 转义</a></h4>
 <div class="table-wrapper"><table><thead><tr><th></th><th>名称</th></tr></thead><tbody>
@@ -219,7 +223,7 @@ commit: 018b14be9ded4e5890813dcf1209961298b0873e <br />
 </div>
 <h4 id="numbers"><a class="header" href="#numbers">Numbers</a></h4>
 <h4 id="数字"><a class="header" href="#数字">数字</a></h4>
-<div class="table-wrapper"><table><thead><tr><th><a href="#%E6%95%B0%E5%AD%97%E5%AD%97%E9%9D%A2%E9%87%8F">数字字面量</a><code>*</code></th><th>示例</th><th>指数</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th><a href="#%E6%95%B0%E5%AD%97%E5%AD%97%E9%9D%A2%E9%87%8F">数字字面量</a><sup class="footnote-reference"><a href="#nl">2</a></sup></th><th>示例</th><th>指数</th></tr></thead><tbody>
 <tr><td>十进制整数</td><td><code>98_222</code></td><td><code>N/A</code></td></tr>
 <tr><td>十六进制整数</td><td><code>0xff</code></td><td><code>N/A</code></td></tr>
 <tr><td>八进制整数</td><td><code>0o77</code></td><td><code>N/A</code></td></tr>
@@ -227,7 +231,9 @@ commit: 018b14be9ded4e5890813dcf1209961298b0873e <br />
 <tr><td>浮点数</td><td><code>123.0E+77</code></td><td><code>Optional</code></td></tr>
 </tbody></table>
 </div>
-<p><code>*</code> 所有数字字面量允许使用 <code>_</code> 作为可视分隔符，比如：<code>1_234.0E+18f64</code></p>
+<div class="footnote-definition" id="nl"><sup class="footnote-definition-label">2</sup>
+<p>所有数字字面量允许使用 <code>_</code> 作为可视分隔符，比如：<code>1_234.0E+18f64</code></p>
+</div>
 <h4 id="suffixes"><a class="header" href="#suffixes">Suffixes</a></h4>
 <h4 id="后缀"><a class="header" href="#后缀">后缀</a></h4>
 <p>后缀是字面量主体部分后面的字符序列（它们之间不能含有空格），其形式与非原生标识符或关键字相同。</p>
@@ -401,6 +407,72 @@ br##&quot;foo #&quot;# bar&quot;##;                 // foo #&quot;# bar
 
 b&quot;\x52&quot;; b&quot;R&quot;; br&quot;R&quot;;                // R
 b&quot;\\x52&quot;; br&quot;\x52&quot;;                  // \x52
+<span class="boring">}
+</span></code></pre></pre>
+<h3 id="c-string-and-raw-c-string-literals"><a class="header" href="#c-string-and-raw-c-string-literals">C string and raw C string literals</a></h3>
+<h3 id="c语言风格的字符串字面量和原生c语言风格的字符串字面量"><a class="header" href="#c语言风格的字符串字面量和原生c语言风格的字符串字面量">C语言风格的字符串字面量和原生C语言风格的字符串字面量</a></h3>
+<h4 id="c-string-literals"><a class="header" href="#c-string-literals">C string literals</a></h4>
+<h4 id="c语言风格的字符串字面量"><a class="header" href="#c语言风格的字符串字面量">C语言风格的字符串字面量</a></h4>
+<blockquote>
+<p><strong><sup>Lexer</sup></strong><br />
+C_STRING_LITERAL :<br />
+   <code>c&quot;</code> (<br />
+      ~[<code>&quot;</code> <code>\</code> <em>IsolatedCR</em>]<br />
+      | BYTE_ESCAPE<br />
+      | UNICODE_ESCAPE<br />
+      | STRING_CONTINUE<br />
+   )<sup>*</sup> <code>&quot;</code> SUFFIX<sup>?</sup></p>
+</blockquote>
+<p><em>C语言风格的字符串字面量_是通过前面是字符<code>U+0063</code> (<code>c</code>) 和 <code>U+0022</code>（双引号），后面是字符<code>U+0022</code> 转义过的 Unicode字符序列。如果字面量中存在字符<code>U+0022</code>，则其前面必须用<code>U+005C</code> (<code>\</code>)字符进行转义。
+或者，C语言风格的字符串字面量可以是下面定义的_原生C语言风格的字符串字面量</em>。C语言风格的字符串字面量的类型为<a href="../core/ffi/struct.CStr.html"><code>&amp;core::ffi::CStr</code></a>。</p>
+<p>C语言风格的字符串由字节<code>0x00</code>隐式终止，因此C语言风格的字符串字面量<code>c&quot;&quot;</code>等同于从字节字符串文字<code>b&quot;\x00&quot;</code>来手动构造一个<code>&amp;CStr</code>。除了隐式终止符之外，C语言风格的字符串中不允许再使用字节<code>0x00</code>。</p>
+<p>一些额外的转义符在非原生C语言风格的字符串字面量中可用。转义以<code>U+005C</code> (<code>\</code>)开头，并后继以下形式之一：</p>
+<ul>
+<li>一个_字节转义符_以<code>U+0078</code> (<code>x</code>)开头，后面正好跟两个_十六进制数字_。它表示等于所提供的十六进制值的字节序。</li>
+<li>一个_24位码点转义符_以 <code>U+0075</code> (<code>u</code>) 开头，后面最多有六个由大括号<code>U+007B</code> (<code>{</code>)和<code>U+007D</code> (<code>}</code>)包围的_十六进制数字_。它表示由这些十六进制数值通过的UTF-8编码的Unicode码点值。</li>
+<li>_空白转义符_是字符<code>U+006E</code> (<code>n</code>)、<code>U+0072</code> (<code>r</code>) 或 <code>U+0074</code> (<code>t</code>) 之一，分别表示字节<code>0x0A</code> (ASCII LF)、<code>0x0D</code> (ASCII CR) 或 <code>0x09</code> (ASCII HT)。</li>
+<li>_反斜杠转义符_就是字符<code>U+005C</code> (<code>\</code>)，必须对其进行转义才能表示其ASCII编码的<code>0x5C</code>。</li>
+</ul>
+<p>token 里允许出现转义序列<code>\0</code>、<code>\x00</code> 和 <code>\u{0000}</code>，但最终将被视为无效而拒绝，因为除了作为隐式终止符，C语言风格的字符串可能不包含字节<code>0x00</code>。
+C语言风格的字符串本身表示没有定义编码类型的字节序，但 C语言风格的字符串字面量又可能包含<code>U+007F</code>以上的 Unicode字符。这种情况下这些字符将被替换为该字符的UTF-8表示形式的字节。</p>
+<p>以下 C语言风格的字符串字面量表达形式等效：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>c&quot;æ&quot;;        // 小写的拉丁字符 AE (U+00E6)
+c&quot;\u{00E6}&quot;;
+c&quot;\xC3\xA6&quot;;
+<span class="boring">}
+</span></code></pre></pre>
+<blockquote>
+<p><strong>版次差异</strong>: 2021版或更高版本中可以使用 C语言风格的字符串字面量。在更低的版次中，<code>c&quot;&quot;</code>token 会被词法解析器解析为 <code>c &quot;&quot;</code>。</p>
+</blockquote>
+<h4 id="raw-c-string-literals"><a class="header" href="#raw-c-string-literals">Raw C string literals</a></h4>
+<h4 id="原生c语言风格的字符串字面量"><a class="header" href="#原生c语言风格的字符串字面量">原生C语言风格的字符串字面量</a></h4>
+<blockquote>
+<p><strong><sup>Lexer</sup></strong><br />
+RAW_C_STRING_LITERAL :<br />
+   <code>cr</code> RAW_C_STRING_CONTENT SUFFIX<sup>?</sup></p>
+<p>RAW_C_STRING_CONTENT :<br />
+      <code>&quot;</code> ( ~ <em>IsolatedCR</em> )<sup>* (non-greedy)</sup> <code>&quot;</code><br />
+   | <code>#</code> RAW_C_STRING_CONTENT <code>#</code></p>
+</blockquote>
+<p>原生C语言风格的字符串字面量不处理任何转义。它们以字符<code>U+0063</code> (<code>c</code>)开头，然后跟<code>U+0072</code> (<code>r</code>)，然后再跟少于256个的字符<code>U+0023</code> (<code>#</code>)和一个 <code>U+0022</code>（双引号）字符（记作开头引号）。_原生C语言风格的字符串本体_可以包含任何 Unicode字符序列，本体后仅以另一个<code>U+0022</code>（双引号）字符结尾，之后再跟在开头引号之前的相同数量的 <code>U+0023</code> (<code>#</code>)字符。</p>
+<p>原生C语言风格的字符串本体中包含的所有字符都以UTF-8编码形式表示。字符<code>U+0022</code>（双引号）（后面跟有至少与用于开始原生C语言风格的字符串字面量的数量相同的 <code>U+0023</code> (<code>#</code>)字符时除外）或 <code>U+005C</code> (<code>\</code>) 没有任何特殊含义。</p>
+<blockquote>
+<p><strong>版次差异</strong>: 2021版或更高版次可以使用原生C语言风格的字符串字面量。在更低的版次中，<code>cr&quot;&quot;</code>token 会被词法解析器解析为<code>cr &quot;&quot;</code> ，<code>cr#&quot;&quot;#</code> 被解析为 <code>cr #&quot;&quot;#</code>（这是不符合语法的）。</p>
+</blockquote>
+<h4 id="examples-for-c-string-and-raw-c-string-literals"><a class="header" href="#examples-for-c-string-and-raw-c-string-literals">Examples for C string and raw C string literals</a></h4>
+<h4 id="c语言风格的字符串字面量和原生c语言风格的字符串字面量的示例"><a class="header" href="#c语言风格的字符串字面量和原生c语言风格的字符串字面量的示例">C语言风格的字符串字面量和原生C语言风格的字符串字面量的示例</a></h4>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>c&quot;foo&quot;; cr&quot;foo&quot;;                     // foo
+c&quot;\&quot;foo\&quot;&quot;; cr#&quot;&quot;foo&quot;&quot;#;             // &quot;foo&quot;
+
+c&quot;foo #\&quot;# bar&quot;;
+cr##&quot;foo #&quot;# bar&quot;##;                 // foo #&quot;# bar
+
+c&quot;\x52&quot;; c&quot;R&quot;; cr&quot;R&quot;;                // R
+c&quot;\\x52&quot;; cr&quot;\x52&quot;;                  // \x52
 <span class="boring">}
 </span></code></pre></pre>
 <h3 id="number-literals"><a class="header" href="#number-literals">Number literals</a></h3>
@@ -674,14 +746,14 @@ LIFETIME_TOKEN :<br />
 <h2 id="保留前缀"><a class="header" href="#保留前缀">保留前缀</a></h2>
 <blockquote>
 <p><strong><sup>词法 2021+</sup></strong><br />
-RESERVED_TOKEN_DOUBLE_QUOTE : ( IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>b</code> 或 <code>r</code> 或 <code>br</code></em></sub> | <code>_</code> ) <code>&quot;</code><br />
+RESERVED_TOKEN_DOUBLE_QUOTE : ( IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>b</code> 或 <code>c</code> 或 <code>r</code> 或 <code>br</code> 或 <code>cr</code></em></sub> | <code>_</code> ) <code>&quot;</code><br />
 RESERVED_TOKEN_SINGLE_QUOTE : ( IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>b</code></em></sub> | <code>_</code> ) <code>'</code><br />
-RESERVED_TOKEN_POUND : ( IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>r</code> or <code>br</code></em></sub> | <code>_</code> ) <code>#</code></p>
+RESERVED_TOKEN_POUND : ( IDENTIFIER_OR_KEYWORD <sub><em>排除 <code>r</code> 或 <code>br</code> 或 <code>cr</code></em></sub> | <code>_</code> ) <code>#</code></p>
 </blockquote>
 <p>这种被称为 <em>保留前缀</em> 的词法形式是保留供将来使用的。</p>
 <p>如果输入的源代码在词法上被解释为非原生标识符（或关键字或 <code>_</code>），且紧接着的字符是 <code>#</code>、<code>'</code> 或 <code>&quot;</code> （没有空格），则将其标识为保留前缀。（译者注：例如 prefix#identifier, prefix&quot;string&quot;, prefix'c', 和 prefix#123（其中 prefix可以是任何标识符（但不能是原生标识符））这样词法形式被标识为保留词法，以供将来拓展语法使用）</p>
 <p>请注意，原生标识符、原生字符串字面量和原生字节字符串字面量可能包含 <code>#</code>字符，但不会被解释为包含保留前缀。</p>
-<p>类似地，原生字符串字面量、字节字面量、字节字符串字面量和原生字节字符串字面量中使用的<code>r</code>、<code>b</code> 和 <code>br</code> 前缀也不会解释为保留前缀。</p>
+<p>类似地，原生字符串字面量、字节字面量、字节字符串字面量、原生字节字符串字面量、C语言风格的字符串字面量和原生C语言风格的字符串字面量中使用的<code>r</code>、<code>b</code>、 <code>br</code>、 <code>c</code> 和 <code>cr</code> 前缀也不会解释为保留前缀。</p>
 <blockquote>
 <p><strong>版次差异</strong>：从2021版开始，保留前缀被词法解释器报告为错误（特别是，它们不能再传递给宏了）。</p>
 <p>在2021版之前，保留前缀可以被词法解释器接受并被解释为多个 token（例如，后接 <code>#</code> 的标识符或关键字）。</p>

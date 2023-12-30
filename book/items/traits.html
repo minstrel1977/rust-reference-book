@@ -152,8 +152,8 @@
                         <h1 id="trait"><a class="header" href="#trait">Trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/traits.md">traits.md</a><br />
-commit: d82c9ac4054136efa6e9cc908ca3c589ed862d5a <br />
-本章译文最后维护日期：2023-11-05</p>
+commit: 46ed38d89d162b9bb5f7be2390c17d9ef3f0a985 <br />
+本章译文最后维护日期：2023-12-30</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -213,9 +213,9 @@ trait Example {
 <li>它必须没有任何带泛型的关联类型。</li>
 <li>所有关联函数必须可以从 trait对象调度分派，或者是显式不可调度分派：
 <ul>
-<li>可调度分派函数要求：
+<li>可调度分派函数必须：
 <ul>
-<li>不能有类型参数（尽管生存期参数可以有）</li>
+<li>不能有类型参数（尽管生存期参数可以有）。</li>
 <li>作为方法时，<code>Self</code> 只能出现在<a href="associated-items.html#methods">方法</a>的接受者(receiver)的类型里，其它地方不能使用 <code>Self</code>。</li>
 <li>方法的接受者的类型必须是以下类型之一：
 <ul>
@@ -225,6 +225,12 @@ trait Example {
 <li><a href="../special-types-and-traits.html#rct"><code>Rc&lt;Self&gt;</code></a></li>
 <li><a href="../special-types-and-traits.html#arct"><code>Arc&lt;Self&gt;</code></a></li>
 <li><a href="../special-types-and-traits.html#pinp"><code>Pin&lt;P&gt;</code></a> 当 <code>P</code> 是上面类型中的一种</li>
+</ul>
+</li>
+<li>没有不透明的返回类型；也就是说，
+<ul>
+<li>不能是一个 <code>async fn</code> (这是一个隐形的 <code>Future</code>类型)。</li>
+<li>不能是一个返回位置的 <code>impl Trait</code>类型 (<code>fn example(&amp;self) -&gt; impl Trait</code>)。</li>
 </ul>
 </li>
 <li>没有 <code>where Self: Sized</code>约束（即接受者的类型 <code>Self</code>(例如：<code>self</code>) 不能有 <code>Sized</code>约束）。</li>
