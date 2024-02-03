@@ -1,8 +1,8 @@
 # Tokens
 
 >[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
->commit: ad9a69cc1879796e2ce24ec29080c03df53f4549 \
->本章译文最后维护日期：2023-12-30
+>commit: 52dadd7d14149a2dc39181063cfd343c7ecc3b3d \
+>本章译文最后维护日期：2024-02-03
 
 
 token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：
@@ -162,25 +162,11 @@ blackhole_lit!(1suffix); // OK
 *字符串字面量*是位于两个 `U+0022` （双引号 `"`）字符内的任意 Unicode 字符序列。当它是 `U+0022` 自身时，必须前置*转义*字符 `U+005C`（`\`）。
 
 字符串字面量允许换行书写。
-换行可以用换行符（`U+000A`）表示，也可以用一对回车符换行符（`U+000D`, `U+000A`）的字节序列表示。
-这两种字节序列通常都会被转换为 `U+000A`，但有例外：当换行符前置一个避免转义的字符 `U+005C`（`\`）时，会导致字符 `U+005C`、换行符和下一行开头的所有空白符都被忽略。因此下述示例中，`a` 和 `b` 是一样的：
-这两个字节序列通常都会被转换为 `U+000A`，但作为一个特殊例外，当一个避免转换的 `U+005C`（`\`）出现在换行符之前，则换行符以及紧跟在 ` ` (`U+0020`), `\t` (`U+0009`), `\n` (`U+000A`) 和 `\r` (`U+0000D`)字符之后的所有字符都将被忽略。因此，下面 `a`、`b` 和 `c`是相等的：
+换行可以用换行符（`U+000A`）表示，也可以用一对回车符换行符（`U+000D`, `U+000A`）表示。
+这两种字节序列通常都会被转换为 `U+000A`，
 
-```rust
-let a = "foobar";
-let b = "foo\
-         bar";
-let c = "foo\
-
-     bar";
-
-assert_eq!(a, b);
-assert_eq!(b, c);
-```
-
-> 注意：Rust会跳过额外的换行符（如上面示例中的 `c`）可能会让人感到困惑和意外。也许将来可能会调整此行为。在做出决定之前，建议避免依赖于此，例如使用续行符来跳过多个换行符。
-> 更多信息，请参见[this issue](https://github.com/rust-lang/reference/pull/1042) 。
-
+但当非转义的字符 `U+005C`（`\`）后面紧跟着一个换行符时，换行符并不会出现在字符串中。
+详细信息请参见[字符串接续符转义][String continuation escapes]。
 
 #### Character escapes
 #### 字符转义
@@ -250,7 +236,8 @@ r##"foo #"# bar"##;                // foo #"# bar
 > ASCII_FOR_STRING :\
 > &nbsp;&nbsp; _任何 ASCII 字符(码值位于 0x00 到 0x7F 之间), 排除_ `"`, `\` _和 IsolatedCR_
 
-非原生*字节串字面量*是 ASCII 字符和转义字符组成的字符序列，形式是以字符 `U+0062`（`b`）和字符 `U+0022`（双引号 `"`）组合开头，以字符 `U+0022` 结尾。如果字面量中包含字符 `U+0022`，则必须由前置的 `U+005C`（`\`）_转义_。此外，字节串字面量也可以是*原生字节串字面量*（下面有其定义）。长度为 `n` 的字节串字面量类型为 `&'static [u8; n]`。
+非原生*字节串字面量*是 ASCII 字符和转义字符组成的字符序列，形式是以字符 `U+0062`（`b`）和字符 `U+0022`（双引号 `"`）组合开头，以字符 `U+0022` 结尾。如果字面量中包含字符 `U+0022`，则必须由前置的 `U+005C`（`\`）_转义_。
+或者，字节串字面量也可以是*原生字节串字面量*（下面有其定义）。
 
 一些额外的*转义*可以在字节或非原生字节串字面量中使用，转义以 `U+005C`（`\`）开始，并后跟如下形式之一：
 
@@ -296,17 +283,17 @@ b"\\x52"; br"\x52";                  // \x52
 #### C string literals
 #### C语言风格的字符串字面量
 
-> **<sup>Lexer</sup>**\
+> **<sup>词法</sup>**\
 > C_STRING_LITERAL :\
 > &nbsp;&nbsp; `c"` (\
-> &nbsp;&nbsp; &nbsp;&nbsp; ~\[`"` `\` _IsolatedCR_]\
-> &nbsp;&nbsp; &nbsp;&nbsp; | BYTE_ESCAPE\
-> &nbsp;&nbsp; &nbsp;&nbsp; | UNICODE_ESCAPE\
+> &nbsp;&nbsp; &nbsp;&nbsp; ~\[`"` `\` _IsolatedCR_ _NUL_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | BYTE_ESCAPE _except `\0` or `\x00`_\
+> &nbsp;&nbsp; &nbsp;&nbsp; | UNICODE_ESCAPE _except `\u{0}`, `\u{00}`, …, `\u{000000}`_\
 > &nbsp;&nbsp; &nbsp;&nbsp; | STRING_CONTINUE\
 > &nbsp;&nbsp; )<sup>\*</sup> `"` SUFFIX<sup>?</sup>
 
 _C语言风格的字符串字面量_是通过前面是字符`U+0063` (`c`) 和 `U+0022`（双引号），后面是字符`U+0022` 转义过的 Unicode字符序列。如果字面量中存在字符`U+0022`，则其前面必须用`U+005C` (`\`)字符进行转义。
-或者，C语言风格的字符串字面量可以是下面定义的_原生C语言风格的字符串字面量_。C语言风格的字符串字面量的类型为[`&core::ffi::CStr`][CStr]。
+或者，C语言风格的字符串字面量可以是下面定义的_原生C语言风格的字符串字面量_。
 
 [CStr]: ../core/ffi/struct.CStr.html
 
@@ -319,7 +306,6 @@ C语言风格的字符串由字节`0x00`隐式终止，因此C语言风格的字
 * _空白转义符_是字符`U+006E` (`n`)、`U+0072` (`r`) 或 `U+0074` (`t`) 之一，分别表示字节`0x0A` (ASCII LF)、`0x0D` (ASCII CR) 或 `0x09` (ASCII HT)。
 * _反斜杠转义符_就是字符`U+005C` (`\`)，必须对其进行转义才能表示其ASCII编码的`0x5C`。
 
-token 里允许出现转义序列`\0`、`\x00` 和 `\u{0000}`，但最终将被视为无效而拒绝，因为除了作为隐式终止符，C语言风格的字符串可能不包含字节`0x00`。
 C语言风格的字符串本身表示没有定义编码类型的字节序，但 C语言风格的字符串字面量又可能包含`U+007F`以上的 Unicode字符。这种情况下这些字符将被替换为该字符的UTF-8表示形式的字节。
 
 以下 C语言风格的字符串字面量表达形式等效：
@@ -340,10 +326,10 @@ c"\xC3\xA6";
 > &nbsp;&nbsp; `cr` RAW_C_STRING_CONTENT SUFFIX<sup>?</sup>
 >
 > RAW_C_STRING_CONTENT :\
-> &nbsp;&nbsp; &nbsp;&nbsp; `"` ( ~ _IsolatedCR_ )<sup>* (non-greedy)</sup> `"`\
+> &nbsp;&nbsp; &nbsp;&nbsp; `"` ( ~ _IsolatedCR_ _NUL_ )<sup>* (non-greedy)</sup> `"`\
 > &nbsp;&nbsp; | `#` RAW_C_STRING_CONTENT `#`
 
-原生C语言风格的字符串字面量不处理任何转义。它们以字符`U+0063` (`c`)开头，然后跟`U+0072` (`r`)，然后再跟少于256个的字符`U+0023` (`#`)和一个 `U+0022`（双引号）字符（记作开头引号）。_原生C语言风格的字符串本体_可以包含任何 Unicode字符序列，本体后仅以另一个`U+0022`（双引号）字符结尾，之后再跟在开头引号之前的相同数量的 `U+0023` (`#`)字符。
+原生C语言风格的字符串字面量不处理任何转义。它们以字符`U+0063` (`c`)开头，然后跟`U+0072` (`r`)，然后再跟少于256个的字符`U+0023` (`#`)和一个 `U+0022`（双引号）字符（记作开头引号）。_原生C语言风格的字符串本体_可以包含任何 Unicode字符序列（`U+0000`除外），本体之后以另一个结尾`U+0022`（双引号）字符来结尾，再之后再跟着开头引号之前的相同数量的 `U+0023` (`#`)字符。
 
 原生C语言风格的字符串本体中包含的所有字符都以UTF-8编码形式表示。字符`U+0022`（双引号）（后面跟有至少与用于开始原生C语言风格的字符串字面量的数量相同的 `U+0023` (`#`)字符时除外）或 `U+005C` (`\`) 没有任何特殊含义。
 
@@ -405,7 +391,7 @@ c"\\x52"; cr"\x52";                  // \x52
 
 与其它字面量一样，整型字面量后面可紧跟（没有空格）一个上述的后缀。
 后缀不能以 `e` 或 `E` 开头，因为这将被解析为浮点字面量的指数。
-参见[字面量表达式][literal expressions]以了解这些后缀的功能效果。
+参见[整型字面量表达式][Integer literal expressions]以了解这些后缀的功能效果。
 
 被正确解析为整型字面量的示例：
 
@@ -498,7 +484,7 @@ let horse = example.0b10;  // 错误：没有 `0b10` 字段
 
 如同整型字面量，浮点型字面量也可后跟一个后缀，但在后缀之前，浮点型字面量部分不以 `U+002E`（`.`）结尾。
 如果字面量不包含指数，则后缀不能以 `e`或 `E` 开头。
-参见[字面量表达式][literal expressions]以了解这类后缀的功能效果。
+参见[浮点型字面量表达式][Floating-point literal expressions]以了解这类后缀的功能效果。
 
 各种形式的浮点型字面量示例：
 
@@ -597,7 +583,7 @@ let x: f64 = 2.;
 | `^`    | Caret       | [位和逻辑异或][arith]
 | `!`    | Not         | [位和逻辑非][Negation], [宏调用][macros], [内部属性][attributes], [never型][Never Type], [否定实现][negative impls]
 | `&`    | And         | [位和逻辑与][arith], [借用][Borrow], [引用][References], [引用模式][Reference patterns]
-| <code>\|</code> | Or | [位和逻辑或][arith], [闭包][Closures], [match] 中的模式, [`if let`], 和 [`while let`]
+| <code>\|</code> | Or | [位和逻辑或][arith], [闭包][Closures], [match] 中的模式, [if let], 和 [while let]
 | `&&`   | AndAnd      | [短路与][lazy-bool], [借用][Borrow], [引用][References], [引用模式][Reference patterns]
 | <code>\|\|</code> | OrOr | [短路或][lazy-bool], [闭包][Closures]
 | `<<`   | Shl         | [左移位][arith], [嵌套泛型][generics]
@@ -631,6 +617,7 @@ let x: f64 = 2.;
 | `::`   | PathSep     | [路径分隔符][路径][Paths]
 | `->`   | RArrow      | [函数返回类型][functions], [闭包返回类型][Closures], [数组指针类型][Function pointer type]
 | `=>`   | FatArrow    | [匹配臂][match], [宏][macros]
+| `<-`   | LArrow      | 左箭头符号在Rust 1.0之后就没有再使用过，但它仍然被视为一个单独的 token
 | `#`    | Pound       | [属性][attributes]
 | `$`    | Dollar      | [宏][macros]
 | `?`    | Question    | [问号运算符][question], [非确定性内存宽度][sized], [可匹配空的宏匹配器][macros]
@@ -703,12 +690,14 @@ let x: f64 = 2.;
 [extern crates]: items/extern-crates.md
 [extern]: items/external-blocks.md
 [field]: expressions/field-expr.md
+[Floating-point literal expressions]: expressions/literal-expr.md#floating-point-literal-expressions
 [floating-point types]: types/numeric.md#floating-point-types
 [function pointer type]: types/function-pointer.md
 [functions]: items/functions.md
 [generics]: items/generics.md
 [identifier]: identifiers.md
-[`if let`]: expressions/if-expr.md#if-let-expressions
+[if let]: expressions/if-expr.md#if-let-expressions
+[Integer literal expressions]: expressions/literal-expr.md#integer-literal-expressions
 [keywords]: keywords.md
 [lazy-bool]: expressions/operator-expr.md#lazy-boolean-operators
 [literal expressions]: expressions/literal-expr.md
@@ -727,6 +716,7 @@ let x: f64 = 2.;
 [raw pointers]: types/pointer.md#raw-pointers-const-and-mut
 [references]: types/pointer.md
 [sized]: trait-bounds.md#sized
+[String continuation escapes]: expressions/literal-expr.md#string-continuation-escapes
 [struct expressions]: expressions/struct-expr.md
 [trait bounds]: trait-bounds.md
 [tuple index]: expressions/tuple-expr.md#tuple-indexing-expressions
@@ -736,4 +726,4 @@ let x: f64 = 2.;
 [unary minus operator]: expressions/operator-expr.md#negation-operators
 [use declarations]: items/use-declarations.md
 [use wildcards]: items/use-declarations.md
-[`while let`]: expressions/loop-expr.md#predicate-pattern-loops
+[while let]: expressions/loop-expr.md#predicate-pattern-loops

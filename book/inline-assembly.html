@@ -153,8 +153,8 @@
 <h1 id="内联汇编"><a class="header" href="#内联汇编">内联汇编</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md">behavior-considered-undefined.md</a><br />
-commit: c7690f13fc5b2a18effdb39d77bae2bb1038b0dc <br />
-本章译文最后维护日期：2023-11-05</p>
+commit: 8eda943339b7033205604386472d3e6e1dfa28ed <br />
+本章译文最后维护日期：2024-02-03</p>
 </blockquote>
 <p>Rust 通过 <a href="https://doc.rust-lang.org/core/arch/macro.asm.html"><code>asm!</code></a> 和 <a href="https://doc.rust-lang.org/core/arch/macro.global_asm.html"><code>global_asm!</code></a> 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。</p>
@@ -567,7 +567,7 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 <p>我们使用标志（Flag）技术来进一步影响内联汇编块的行为。
 目前定义了以下可选项（标志）：</p>
 <ul>
-<li><code>pure</code>：此 <code>asm!</code>块没有副作用，其输出仅取决于其直接输入（比如，输入的值本身，而不是它们指向的对象）或从内存读取的值（除非还设置了 <code>nomem</code>可选项）。
+<li><code>pure</code>：此 <code>asm!</code>块没有副作用，且最终必须返回，其输出仅取决于其直接输入（比如，输入的值本身，而不是它们指向的对象）或从内存读取的值（除非还设置了 <code>nomem</code>可选项）。
 这允许编译器执行此 <code>asm!</code>块的次数少于程序中指定的次数（例如，通过将其从循环中提出来），或者如果 <code>asm!</code>块没有输出的情况下，编译器甚至可能完全消除此段 asm代码。
 <code>pure</code>可选项必须与 <code>nomem</code> 或 <code>readonly</code> 可选项组合使用，否则会导致编译期错误。</li>
 <li><code>nomem</code>：此 <code>asm!</code>块不读取或写入任何内存。

@@ -242,3 +242,4 @@ fn foo() -> i32 {
 [type cast operator]: expressions/operator-expr.md#type-cast-expressions
 [`Unsize`]: https://doc.rust-lang.org/std/marker/trait.Unsize.html
 [`CoerceUnsized`]: https://doc.rust-lang.org/std/ops/trait.CoerceUnsized.html
+[method-call expressions]: expressions/method-call-expr.md

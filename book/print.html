@@ -148,7 +148,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2023-12-30</p>
+<p>本书跟随原文截止日期：2024-02-03</p>
 </blockquote>
 <h1 id="前言"><a class="header" href="#前言">前言</a></h1>
 <h2 id="试水版"><a class="header" href="#试水版">试水版</a></h2>
@@ -664,8 +664,8 @@ commit: 716e04f203c10387bd66aa3bcf1663e75ce208cf <br />
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tokens"><a class="header" href="#tokens">Tokens</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/tokens.md">tokens.md</a><br />
-commit: ad9a69cc1879796e2ce24ec29080c03df53f4549 <br />
-本章译文最后维护日期：2023-12-30</p>
+commit: 52dadd7d14149a2dc39181063cfd343c7ecc3b3d <br />
+本章译文最后维护日期：2024-02-03</p>
 </blockquote>
 <p>token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：</p>
 <ul>
@@ -807,26 +807,10 @@ STRING_LITERAL :<br />
 </blockquote>
 <p><em>字符串字面量</em>是位于两个 <code>U+0022</code> （双引号 <code>&quot;</code>）字符内的任意 Unicode 字符序列。当它是 <code>U+0022</code> 自身时，必须前置<em>转义</em>字符 <code>U+005C</code>（<code>\</code>）。</p>
 <p>字符串字面量允许换行书写。
-换行可以用换行符（<code>U+000A</code>）表示，也可以用一对回车符换行符（<code>U+000D</code>, <code>U+000A</code>）的字节序列表示。
-这两种字节序列通常都会被转换为 <code>U+000A</code>，但有例外：当换行符前置一个避免转义的字符 <code>U+005C</code>（<code>\</code>）时，会导致字符 <code>U+005C</code>、换行符和下一行开头的所有空白符都被忽略。因此下述示例中，<code>a</code> 和 <code>b</code> 是一样的：
-这两个字节序列通常都会被转换为 <code>U+000A</code>，但作为一个特殊例外，当一个避免转换的 <code>U+005C</code>（<code>\</code>）出现在换行符之前，则换行符以及紧跟在 <code> </code> (<code>U+0020</code>), <code>\t</code> (<code>U+0009</code>), <code>\n</code> (<code>U+000A</code>) 和 <code>\r</code> (<code>U+0000D</code>)字符之后的所有字符都将被忽略。因此，下面 <code>a</code>、<code>b</code> 和 <code>c</code>是相等的：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let a = &quot;foobar&quot;;
-let b = &quot;foo\
-         bar&quot;;
-let c = &quot;foo\
-
-     bar&quot;;
-
-assert_eq!(a, b);
-assert_eq!(b, c);
-<span class="boring">}
-</span></code></pre></pre>
-<blockquote>
-<p>注意：Rust会跳过额外的换行符（如上面示例中的 <code>c</code>）可能会让人感到困惑和意外。也许将来可能会调整此行为。在做出决定之前，建议避免依赖于此，例如使用续行符来跳过多个换行符。
-更多信息，请参见<a href="https://github.com/rust-lang/reference/pull/1042">this issue</a> 。</p>
-</blockquote>
+换行可以用换行符（<code>U+000A</code>）表示，也可以用一对回车符换行符（<code>U+000D</code>, <code>U+000A</code>）表示。
+这两种字节序列通常都会被转换为 <code>U+000A</code>，</p>
+<p>但当非转义的字符 <code>U+005C</code>（<code>\</code>）后面紧跟着一个换行符时，换行符并不会出现在字符串中。
+详细信息请参见<a href="expressions/literal-expr.html#string-continuation-escapes">字符串接续符转义</a>。</p>
 <h4 id="character-escapes"><a class="header" href="#character-escapes">Character escapes</a></h4>
 <h4 id="字符转义"><a class="header" href="#字符转义">字符转义</a></h4>
 <p>不管是字符字面量，还是非原生字符串字面量，Rust 都为其提供了额外的<em>转义</em>功能。转义以一个 <code>U+005C</code>（<code>\</code>）开始，并后跟如下形式之一：</p>
@@ -886,7 +870,8 @@ BYTE_STRING_LITERAL :<br />
 <p>ASCII_FOR_STRING :<br />
    <em>任何 ASCII 字符(码值位于 0x00 到 0x7F 之间), 排除</em> <code>&quot;</code>, <code>\</code> <em>和 IsolatedCR</em></p>
 </blockquote>
-<p>非原生<em>字节串字面量</em>是 ASCII 字符和转义字符组成的字符序列，形式是以字符 <code>U+0062</code>（<code>b</code>）和字符 <code>U+0022</code>（双引号 <code>&quot;</code>）组合开头，以字符 <code>U+0022</code> 结尾。如果字面量中包含字符 <code>U+0022</code>，则必须由前置的 <code>U+005C</code>（<code>\</code>）<em>转义</em>。此外，字节串字面量也可以是<em>原生字节串字面量</em>（下面有其定义）。长度为 <code>n</code> 的字节串字面量类型为 <code>&amp;'static [u8; n]</code>。</p>
+<p>非原生<em>字节串字面量</em>是 ASCII 字符和转义字符组成的字符序列，形式是以字符 <code>U+0062</code>（<code>b</code>）和字符 <code>U+0022</code>（双引号 <code>&quot;</code>）组合开头，以字符 <code>U+0022</code> 结尾。如果字面量中包含字符 <code>U+0022</code>，则必须由前置的 <code>U+005C</code>（<code>\</code>）<em>转义</em>。
+或者，字节串字面量也可以是<em>原生字节串字面量</em>（下面有其定义）。</p>
 <p>一些额外的<em>转义</em>可以在字节或非原生字节串字面量中使用，转义以 <code>U+005C</code>（<code>\</code>）开始，并后跟如下形式之一：</p>
 <ul>
 <li><em>字节转义</em>以 <code>U+0078</code> (<code>x</code>)开始，后跟恰好两位<em>十六进制数字</em>来表示十六进制值代表的字节。</li>
@@ -926,17 +911,17 @@ b&quot;\\x52&quot;; br&quot;\x52&quot;;                  // \x52
 <h4 id="c-string-literals"><a class="header" href="#c-string-literals">C string literals</a></h4>
 <h4 id="c语言风格的字符串字面量"><a class="header" href="#c语言风格的字符串字面量">C语言风格的字符串字面量</a></h4>
 <blockquote>
-<p><strong><sup>Lexer</sup></strong><br />
+<p><strong><sup>词法</sup></strong><br />
 C_STRING_LITERAL :<br />
    <code>c&quot;</code> (<br />
-      ~[<code>&quot;</code> <code>\</code> <em>IsolatedCR</em>]<br />
-      | BYTE_ESCAPE<br />
-      | UNICODE_ESCAPE<br />
+      ~[<code>&quot;</code> <code>\</code> <em>IsolatedCR</em> <em>NUL</em>]<br />
+      | BYTE_ESCAPE <em>except <code>\0</code> or <code>\x00</code></em><br />
+      | UNICODE_ESCAPE <em>except <code>\u{0}</code>, <code>\u{00}</code>, …, <code>\u{000000}</code></em><br />
       | STRING_CONTINUE<br />
    )<sup>*</sup> <code>&quot;</code> SUFFIX<sup>?</sup></p>
 </blockquote>
 <p><em>C语言风格的字符串字面量_是通过前面是字符<code>U+0063</code> (<code>c</code>) 和 <code>U+0022</code>（双引号），后面是字符<code>U+0022</code> 转义过的 Unicode字符序列。如果字面量中存在字符<code>U+0022</code>，则其前面必须用<code>U+005C</code> (<code>\</code>)字符进行转义。
-或者，C语言风格的字符串字面量可以是下面定义的_原生C语言风格的字符串字面量</em>。C语言风格的字符串字面量的类型为<a href="../core/ffi/struct.CStr.html"><code>&amp;core::ffi::CStr</code></a>。</p>
+或者，C语言风格的字符串字面量可以是下面定义的_原生C语言风格的字符串字面量</em>。</p>
 <p>C语言风格的字符串由字节<code>0x00</code>隐式终止，因此C语言风格的字符串字面量<code>c&quot;&quot;</code>等同于从字节字符串文字<code>b&quot;\x00&quot;</code>来手动构造一个<code>&amp;CStr</code>。除了隐式终止符之外，C语言风格的字符串中不允许再使用字节<code>0x00</code>。</p>
 <p>一些额外的转义符在非原生C语言风格的字符串字面量中可用。转义以<code>U+005C</code> (<code>\</code>)开头，并后继以下形式之一：</p>
 <ul>
@@ -945,8 +930,7 @@ C_STRING_LITERAL :<br />
 <li>_空白转义符_是字符<code>U+006E</code> (<code>n</code>)、<code>U+0072</code> (<code>r</code>) 或 <code>U+0074</code> (<code>t</code>) 之一，分别表示字节<code>0x0A</code> (ASCII LF)、<code>0x0D</code> (ASCII CR) 或 <code>0x09</code> (ASCII HT)。</li>
 <li>_反斜杠转义符_就是字符<code>U+005C</code> (<code>\</code>)，必须对其进行转义才能表示其ASCII编码的<code>0x5C</code>。</li>
 </ul>
-<p>token 里允许出现转义序列<code>\0</code>、<code>\x00</code> 和 <code>\u{0000}</code>，但最终将被视为无效而拒绝，因为除了作为隐式终止符，C语言风格的字符串可能不包含字节<code>0x00</code>。
-C语言风格的字符串本身表示没有定义编码类型的字节序，但 C语言风格的字符串字面量又可能包含<code>U+007F</code>以上的 Unicode字符。这种情况下这些字符将被替换为该字符的UTF-8表示形式的字节。</p>
+<p>C语言风格的字符串本身表示没有定义编码类型的字节序，但 C语言风格的字符串字面量又可能包含<code>U+007F</code>以上的 Unicode字符。这种情况下这些字符将被替换为该字符的UTF-8表示形式的字节。</p>
 <p>以下 C语言风格的字符串字面量表达形式等效：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -965,10 +949,10 @@ c&quot;\xC3\xA6&quot;;
 RAW_C_STRING_LITERAL :<br />
    <code>cr</code> RAW_C_STRING_CONTENT SUFFIX<sup>?</sup></p>
 <p>RAW_C_STRING_CONTENT :<br />
-      <code>&quot;</code> ( ~ <em>IsolatedCR</em> )<sup>* (non-greedy)</sup> <code>&quot;</code><br />
+      <code>&quot;</code> ( ~ <em>IsolatedCR</em> <em>NUL</em> )<sup>* (non-greedy)</sup> <code>&quot;</code><br />
    | <code>#</code> RAW_C_STRING_CONTENT <code>#</code></p>
 </blockquote>
-<p>原生C语言风格的字符串字面量不处理任何转义。它们以字符<code>U+0063</code> (<code>c</code>)开头，然后跟<code>U+0072</code> (<code>r</code>)，然后再跟少于256个的字符<code>U+0023</code> (<code>#</code>)和一个 <code>U+0022</code>（双引号）字符（记作开头引号）。_原生C语言风格的字符串本体_可以包含任何 Unicode字符序列，本体后仅以另一个<code>U+0022</code>（双引号）字符结尾，之后再跟在开头引号之前的相同数量的 <code>U+0023</code> (<code>#</code>)字符。</p>
+<p>原生C语言风格的字符串字面量不处理任何转义。它们以字符<code>U+0063</code> (<code>c</code>)开头，然后跟<code>U+0072</code> (<code>r</code>)，然后再跟少于256个的字符<code>U+0023</code> (<code>#</code>)和一个 <code>U+0022</code>（双引号）字符（记作开头引号）。_原生C语言风格的字符串本体_可以包含任何 Unicode字符序列（<code>U+0000</code>除外），本体之后以另一个结尾<code>U+0022</code>（双引号）字符来结尾，再之后再跟着开头引号之前的相同数量的 <code>U+0023</code> (<code>#</code>)字符。</p>
 <p>原生C语言风格的字符串本体中包含的所有字符都以UTF-8编码形式表示。字符<code>U+0022</code>（双引号）（后面跟有至少与用于开始原生C语言风格的字符串字面量的数量相同的 <code>U+0023</code> (<code>#</code>)字符时除外）或 <code>U+005C</code> (<code>\</code>) 没有任何特殊含义。</p>
 <blockquote>
 <p><strong>版次差异</strong>: 2021版或更高版次可以使用原生C语言风格的字符串字面量。在更低的版次中，<code>cr&quot;&quot;</code>token 会被词法解析器解析为<code>cr &quot;&quot;</code> ，<code>cr#&quot;&quot;#</code> 被解析为 <code>cr #&quot;&quot;#</code>（这是不符合语法的）。</p>
@@ -1019,7 +1003,7 @@ SUFFIX_NO_E<sup>?</sup></p>
 </ul>
 <p>与其它字面量一样，整型字面量后面可紧跟（没有空格）一个上述的后缀。
 后缀不能以 <code>e</code> 或 <code>E</code> 开头，因为这将被解析为浮点字面量的指数。
-参见<a href="expressions/literal-expr.html">字面量表达式</a>以了解这些后缀的功能效果。</p>
+参见<a href="expressions/literal-expr.html#integer-literal-expressions">整型字面量表达式</a>以了解这些后缀的功能效果。</p>
 <p>被正确解析为整型字面量的示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -1108,7 +1092,7 @@ _（紧跟着的不能是 <code>.</code>, <code>_</code> 或者 XID_Start类型�
 </ul>
 <p>如同整型字面量，浮点型字面量也可后跟一个后缀，但在后缀之前，浮点型字面量部分不以 <code>U+002E</code>（<code>.</code>）结尾。
 如果字面量不包含指数，则后缀不能以 <code>e</code>或 <code>E</code> 开头。
-参见<a href="expressions/literal-expr.html">字面量表达式</a>以了解这类后缀的功能效果。</p>
+参见<a href="expressions/literal-expr.html#floating-point-literal-expressions">浮点型字面量表达式</a>以了解这类后缀的功能效果。</p>
 <p>各种形式的浮点型字面量示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -1205,7 +1189,7 @@ LIFETIME_TOKEN :<br />
 <tr><td><code>^</code></td><td>Caret</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">位和逻辑异或</a></td></tr>
 <tr><td><code>!</code></td><td>Not</td><td><a href="expressions/operator-expr.html#negation-operators">位和逻辑非</a>, <a href="macros-by-example.html">宏调用</a>, <a href="attributes.html">内部属性</a>, <a href="types/never.html">never型</a>, <a href="items/implementations.html">否定实现</a></td></tr>
 <tr><td><code>&amp;</code></td><td>And</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">位和逻辑与</a>, <a href="expressions/operator-expr.html#borrow-operators">借用</a>, <a href="types/pointer.html">引用</a>, <a href="patterns.html#reference-patterns">引用模式</a></td></tr>
-<tr><td><code>|</code></td><td>Or</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">位和逻辑或</a>, <a href="expressions/closure-expr.html">闭包</a>, <a href="expressions/match-expr.html">match</a> 中的模式, <a href="expressions/if-expr.html#if-let-expressions"><code>if let</code></a>, 和 <a href="expressions/loop-expr.html#predicate-pattern-loops"><code>while let</code></a></td></tr>
+<tr><td><code>|</code></td><td>Or</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">位和逻辑或</a>, <a href="expressions/closure-expr.html">闭包</a>, <a href="expressions/match-expr.html">match</a> 中的模式, <a href="expressions/if-expr.html#if-let-expressions">if let</a>, 和 <a href="expressions/loop-expr.html#predicate-pattern-loops">while let</a></td></tr>
 <tr><td><code>&amp;&amp;</code></td><td>AndAnd</td><td><a href="expressions/operator-expr.html#lazy-boolean-operators">短路与</a>, <a href="expressions/operator-expr.html#borrow-operators">借用</a>, <a href="types/pointer.html">引用</a>, <a href="patterns.html#reference-patterns">引用模式</a></td></tr>
 <tr><td><code>||</code></td><td>OrOr</td><td><a href="expressions/operator-expr.html#lazy-boolean-operators">短路或</a>, <a href="expressions/closure-expr.html">闭包</a></td></tr>
 <tr><td><code>&lt;&lt;</code></td><td>Shl</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">左移位</a>, <a href="items/generics.html">嵌套泛型</a></td></tr>
@@ -1239,6 +1223,7 @@ LIFETIME_TOKEN :<br />
 <tr><td><code>::</code></td><td>PathSep</td><td>[路径分隔符]<a href="paths.html">路径</a></td></tr>
 <tr><td><code>-&gt;</code></td><td>RArrow</td><td><a href="items/functions.html">函数返回类型</a>, <a href="expressions/closure-expr.html">闭包返回类型</a>, <a href="types/function-pointer.html">数组指针类型</a></td></tr>
 <tr><td><code>=&gt;</code></td><td>FatArrow</td><td><a href="expressions/match-expr.html">匹配臂</a>, <a href="macros-by-example.html">宏</a></td></tr>
+<tr><td><code>&lt;-</code></td><td>LArrow</td><td>左箭头符号在Rust 1.0之后就没有再使用过，但它仍然被视为一个单独的 token</td></tr>
 <tr><td><code>#</code></td><td>Pound</td><td><a href="attributes.html">属性</a></td></tr>
 <tr><td><code>$</code></td><td>Dollar</td><td><a href="macros-by-example.html">宏</a></td></tr>
 <tr><td><code>?</code></td><td>Question</td><td><a href="expressions/operator-expr.html#the-question-mark-operator">问号运算符</a>, <a href="trait-bounds.html#sized">非确定性内存宽度</a>, <a href="macros-by-example.html">可匹配空的宏匹配器</a></td></tr>
@@ -6604,28 +6589,28 @@ let b: &amp;[i32];
 <h1 id="字面量表达式"><a class="header" href="#字面量表达式">字面量表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/literal-expr.md">literal-expr.md</a><br />
-commit: ae1eb71d5ab43a30163c9625823dea8ec332f6c0 <br />
-本章译文最后维护日期：2023-12-30</p>
+commit: deac889efd06a3214da07cbdfc0dec00450f6712 <br />
+本章译文最后维护日期：2024-02-03</p>
 </blockquote>
 <blockquote>
-<p><strong><sup>句法</sup></strong><br />
+<p><strong><sup>词法</sup></strong><br />
 <em>LiteralExpression</em> :<br />
-      <a href="expressions/../tokens.html#character-literals">CHAR_LITERAL</a><br />
-   | <a href="expressions/../tokens.html#string-literals">STRING_LITERAL</a><br />
-   | <a href="expressions/../tokens.html#raw-string-literals">RAW_STRING_LITERAL</a><br />
-   | <a href="expressions/../tokens.html#byte-literals">BYTE_LITERAL</a><br />
-   | <a href="expressions/../tokens.html#byte-string-literals">BYTE_STRING_LITERAL</a><br />
-   | <a href="expressions/../tokens.html#raw-byte-string-literals">RAW_BYTE_STRING_LITERAL</a><br />
-   | <a href="expressions/../tokens.html#c-string-literals">C_STRING_LITERAL</a><br />
-   | <a href="expressions/../tokens.html#raw-c-string-literals">RAW_C_STRING_LITERAL</a><br />
-   | <a href="expressions/../tokens.html#integer-literals">INTEGER_LITERAL</a><br />
-   | <a href="expressions/../tokens.html#floating-point-literals">FLOAT_LITERAL</a><br />
+      [CHAR_LITERAL]<br />
+   | [STRING_LITERAL]<br />
+   | [RAW_STRING_LITERAL]<br />
+   | [BYTE_LITERAL]<br />
+   | [BYTE_STRING_LITERAL]<br />
+   | [RAW_BYTE_STRING_LITERAL]<br />
+   | [C_STRING_LITERAL]<br />
+   | [RAW_C_STRING_LITERAL]<br />
+   | [INTEGER_LITERAL]<br />
+   | [FLOAT_LITERAL]<br />
    | <code>true</code> | <code>false</code>&gt;</p>
 </blockquote>
 <p>字面表达式是由单一 token（而不是一组 token）组成的表达式，它立即和直接表示其表达式求值的值，而不是通过名称或其他求值规则来引用它。
 它直接描述一个数字、字符、字符串或布尔值。</p>
-<p>字面量是<a href="expressions/../const_eval.html#constant-expressions">常量表达式</a>的一种形式，所以其求值（主要）在编译期。</p>
-<p>前面描述的每种词法<a href="expressions/../tokens.html#literals">字面量</a>形式都可以组成一个字面量表达式，比如关键字 <code>true</code> 和 <code>false</code> 也可以组成一个字面量表达式。</p>
+<p>字面量是[常量表达式][constant expression]的一种形式，所以其求值（主要）在编译期。</p>
+<p>前面描述的每种词法[字面量][literal tokens]形式都可以组成一个字面量表达式，比如关键字 <code>true</code> 和 <code>false</code> 也可以组成一个字面量表达式。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>&quot;hello&quot;;   // 字符串类型
@@ -6633,40 +6618,274 @@ commit: ae1eb71d5ab43a30163c9625823dea8ec332f6c0 <br />
 5;         // 整型
 <span class="boring">}
 </span></code></pre></pre>
+<p>在下面的描述中，token 的 <em>字符串表示</em> 是源自输入的字符序列，该字符序列会与<em>词法</em>语法片段中 token 的产生式进行模式匹配。</p>
+<blockquote>
+<p><strong>注意</strong>：此字符串表示从不包括紧跟着 <code>U+000A</code> (LF) 的字符 <code>U+000D</code> (CR)：这一对字符会先被转换为单个字符 <code>U+000A</code> (LF)。</p>
+</blockquote>
+<h2 id="escapes"><a class="header" href="#escapes">Escapes</a></h2>
+<h2 id="转义"><a class="header" href="#转义">转义</a></h2>
+<p>下面对文本字面表达式的描述使用了几种形式的 <em>转义</em>。</p>
+<p>每种形式的转义的特点是：</p>
+<ul>
+<li><em>转义序列</em>: 总是以 <code>U+005C</code> (<code>\</code>) 开头的一段字符序列</li>
+<li><em>转义值</em>: 单个字符或空的字符序列</li>
+</ul>
+<p>在以下关于转义的定义中：</p>
+<ul>
+<li><em>八进制数字</em> 是在 [<code>0</code>-<code>7</code>] 区间内的任何字符。</li>
+<li><em>十六进制数字</em> 是在 [<code>0</code>-<code>9</code>]、[<code>a</code>-<code>f</code>] 或 [<code>A</code>-<code>F</code>] 这三个区间内的任何字符。</li>
+</ul>
+<h3 id="simple-escapes"><a class="header" href="#simple-escapes">Simple escapes</a></h3>
+<h3 id="简单转义"><a class="header" href="#简单转义">简单转义</a></h3>
+<p>下表第一列中出现的每个字符序列都是转义序列。</p>
+<p>在每种情况下，转义值都是第二列中相应条目中给定的字符。</p>
+<div class="table-wrapper"><table><thead><tr><th>转义序列</th><th>转义值</th></tr></thead><tbody>
+<tr><td><code>\0</code></td><td>U+0000 (NUL)</td></tr>
+<tr><td><code>\t</code></td><td>U+0009 (HT)</td></tr>
+<tr><td><code>\n</code></td><td>U+000A (LF)</td></tr>
+<tr><td><code>\r</code></td><td>U+000D (CR)</td></tr>
+<tr><td><code>\&quot;</code></td><td>U+0022 (双引号)</td></tr>
+<tr><td><code>\'</code></td><td>U+0027 (单引号)</td></tr>
+<tr><td><code>\\</code></td><td>U+005C (反斜线)</td></tr>
+</tbody></table>
+</div>
+<h3 id="8-bit-escapes"><a class="header" href="#8-bit-escapes">8-bit escapes</a></h3>
+<h3 id="8bit字符值转义"><a class="header" href="#8bit字符值转义">8bit字符值转义</a></h3>
+<p>这种转义序列由 <code>\x</code> 后跟两个十六进制数字组成。</p>
+<p>转义值是一个字符，其 [Unicode标量值][Unicode scalar value]是将转义序列中的最后两个字符解释为十六进制整数的结果，就好像对这两个字符执行了以16为基数的[<code>u8::from_str_radix</code>]操作。</p>
+<blockquote>
+<p><strong>注意</strong>: 作为结果的转义值因此具有在 [<code>u8</code>][numeric types] 数值区间内的 [Unicode标量值][Unicode scalar value]。</p>
+</blockquote>
+<h3 id="7-bit-escapes"><a class="header" href="#7-bit-escapes">7-bit escapes</a></h3>
+<h3 id="7bit字符值转义"><a class="header" href="#7bit字符值转义">7bit字符值转义</a></h3>
+<p>转义序列由 <code>\x</code> 后跟一个八进制数字和一个十六进制数字组成。
+转义值是一个字符，其[Unicode标量值][Unicode scalar value]是将转义序列中的最后两个字符解释为十六进制整数的结果，就好像对这两个字符执行了以16为基数的[<code>u8::from_str_radix</code>]操作。</p>
+<h3 id="unicode-escapes-1"><a class="header" href="#unicode-escapes-1">Unicode escapes</a></h3>
+<h3 id="unicode字符值转义"><a class="header" href="#unicode字符值转义">Unicode字符值转义</a></h3>
+<p>转义序列由 <code>\u{</code> 后跟一系列字符组成，每个字符都是十六进制数字或 <code>_</code> ，在后跟一个 <code>}</code>。
+转义值是一个字符，其[Unicode标量值][Unicode scalar value]是将转义序列中包含的十六进制数字解释为十六进制整数的结果，就好像对这一段字符执行了以16为基数的[<code>u8::from_str_radix</code>]操作。</p>
+<blockquote>
+<p><strong>注意</strong>: [CHAR_LITERAL] token 或 [STRING_LITERA] token 的词法定义形式确保存在这样的字符。</p>
+</blockquote>
+<h3 id="string-continuation-escapes"><a class="header" href="#string-continuation-escapes">String continuation escapes</a></h3>
+<h3 id="字符串接续符转义"><a class="header" href="#字符串接续符转义">字符串接续符转义</a></h3>
+<p>转义序列由 <code>\</code> 后面紧跟着 <code>U+000A</code> (LF)，以及在下一个非空白符之前的所有后面的空白符组成。
+为此，空白符被限定为 <code>U+0009</code> (HT)、<code>U+000A</code> (LF)、<code>U+000D</code> (CR) 和 <code>U+0020</code> (空格符)。</p>
+<p>转义值是一个空的字符序列。</p>
+<blockquote>
+<p><strong>注意</strong>: 这种转义形式的效果是字符串延续跳过后面的空白符（包括额外的换行符）。
+因此下面 <code>a</code>、 <code>b</code> 和 <code>c</code> 是相等的:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let a = &quot;foobar&quot;;
+let b = &quot;foo\
+         bar&quot;;
+let c = &quot;foo\
+
+     bar&quot;;
+
+assert_eq!(a, b);
+assert_eq!(b, c);
+<span class="boring">}
+</span></code></pre></pre>
+<p>跳过额外的换行符（如上面示例中的变量c 所示）可能会造成潜在混乱和意外。
+这种行为将来可能会进行调整。
+在做出决定之前，建议避免使用带有多个换行符接续符。
+请参阅 <a href="https://github.com/rust-lang/reference/pull/1042">this issue</a>，以了解更多信息。</p>
+</blockquote>
 <h2 id="character-literal-expressions"><a class="header" href="#character-literal-expressions">Character literal expressions</a></h2>
 <h2 id="字符字面量表达式"><a class="header" href="#字符字面量表达式">字符字面量表达式</a></h2>
-<p>字符字面量表达式由单一一个<a href="expressions/../tokens.html#character-literals">字符字面量</a>token 组成。</p>
+<p>字符字面量表达式由单一一个[字符字面量][CHAR_LITERAL]token 组成。</p>
+<p>此表达式的类型是 rust的源语类型 [<code>char</code>][textual types]。</p>
+<p>此类token 不能带有后缀。</p>
+<p>此类token 的 <em>字面内容</em> 是在此token的字符串表示中第一个 <code>U+0027</code> (<code>'</code>) 之后，最后一个 <code>U+0027</code> (<code>'</code>) 之前的字符序列。</p>
+<p>此类字面量表达式的 <em>所表示字符</em> 源自字面内容，具体有如下规则：</p>
+<ul>
+<li>如果字面内容是以下转义序列形式之一，则所表示的字符是转义序列的转义值：
+<ul>
+<li>[简单转义][Simple escapes]</li>
+<li>[7bit转义][7-bit escapes]</li>
+<li>[Unicode转义][Unicode escapes]</li>
+</ul>
+</li>
+<li>否则，所表示的字符是构成字面内容的单个字符。</li>
+</ul>
+<p>表达式的值是与所表示的字符的[Unicode标量值][Unicode scalar value]相对应的 [<code>char</code>][text types]类型。</p>
 <blockquote>
-<p><strong>注意</strong>: 本节还未编写完成。</p>
+<p><strong>注意</strong>: [CHAR_LITERAL] token 的词法定义形式确保会产生单一字符。</p>
 </blockquote>
+<p>字符字面量表达式示例：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>'R';                               // R
+'\'';                              // '
+'\x52';                            // R
+'\u{00E6}';                        // 拉丁文小写字母æ (U+00E6)
+<span class="boring">}
+</span></code></pre></pre>
 <h2 id="string-literal-expressions"><a class="header" href="#string-literal-expressions">String literal expressions</a></h2>
 <h2 id="字符串字面量表达式"><a class="header" href="#字符串字面量表达式">字符串字面量表达式</a></h2>
-<p>字符串字面量表达式由单一一个<a href="expressions/../tokens.html#string-literals">字符串字面量</a>token 或<a href="expressions/../tokens.html#raw-string-literals">原生字符串字面量</a>token 组成。</p>
-<blockquote>
-<p><strong>注意</strong>: 本节还未编写完成。</p>
-</blockquote>
+<p>字符串字面量表达式由单一一个[字符串字面量][STRING_LITERAL]token 或[原生字符串字面量][RAW_STRING_LITERAL]token 组成。</p>
+<p>此类表达式的类型是对原语类型 [<code>str</code>][text types] 的共享引用（带有 <code>static</code>生存期)。
+也就是说，类型是 <code>&amp;'static str</code>。</p>
+<p>此类token 不能带有后缀。</p>
+<p>此类token 的 <em>字面内容</em> 是此token 的字符串表示中第一个 <code>U+0022</code> (<code>&quot;</code>) 之后和最后一个 <code>U+0022</code> (<code>&quot;</code>) 之前的字符序列。</p>
+<p>此字面量表达式的 <em>所表示字符串</em> 源自于字符序列的字面内容，具体有如下规则：</p>
+<ul>
+<li>
+<p>如果 token 是[STRING_LTERAL]词法所限定的，则字面内容中出现的以下任何形式的转义序列都将被转义序列的转义值替换。</p>
+<ul>
+<li>[简单转义][Simple escapes]</li>
+<li>[7bit转义][7-bit escapes]</li>
+<li>[Unicode转义][Unicode escapes]</li>
+<li>[字符串接续符转义][String continuation escapes]</li>
+</ul>
+<p>这些转义替换按从左到右的顺序进行的。
+例如，token <code>&quot;\\x41&quot;</code> 被转换为字符 <code>\</code> <code>x</code> <code>4</code> <code>1</code>。</p>
+</li>
+<li>
+<p>如果 token 是[RAW_STRING_LITERAL]词法所限定的，则所表示的字符串等同于字面内容。</p>
+</li>
+</ul>
+<p>表达式的值是对静态分配的 [<code>str</code>][text types]的引用，该引用包含所表示字符串的 UTF-8编码形式。</p>
+<p>字符串字面量表达式示例：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>&quot;foo&quot;; r&quot;foo&quot;;                     // foo
+&quot;\&quot;foo\&quot;&quot;; r#&quot;&quot;foo&quot;&quot;#;             // &quot;foo&quot;
+
+&quot;foo #\&quot;# bar&quot;;
+r##&quot;foo #&quot;# bar&quot;##;                // foo #&quot;# bar
+
+&quot;\x52&quot;; &quot;R&quot;; r&quot;R&quot;;                 // R
+&quot;\\x52&quot;; r&quot;\x52&quot;;                  // \x52
+<span class="boring">}
+</span></code></pre></pre>
 <h2 id="byte-literal-expressions"><a class="header" href="#byte-literal-expressions">Byte literal expressions</a></h2>
 <h2 id="字节字面量表达式"><a class="header" href="#字节字面量表达式">字节字面量表达式</a></h2>
-<p>字节字面量表达式由单一一个<a href="expressions/../tokens.html#byte-literals">字节字面量</a>token 组成。</p>
+<p>字节字面量表达式由单一一个[字节字面量][BYTE_LITERAL]token 组成。</p>
+<p>此表达式的类型是 rust的源语类型 [<code>u8</code>][numeric types]。</p>
+<p>此类token 不能带有后缀。</p>
+<p>此类token 的 <em>字面内容</em> 是此token 的字符串表示中第一个 <code>U+0027</code> (<code>'</code>) 之后和最后一个 <code>U+0027</code> (<code>'</code>) 之前的字符序列。</p>
+<p>此字面量表达式的 <em>所表示字符</em> 源自于字符的字面内容，具体有如下规则：</p>
+<ul>
+<li>
+<p>如果字面内容是以下转义序列形式之一，则表示的字符是转义序列的转义值：</p>
+<ul>
+<li>[简单转义][Simple escapes]</li>
+<li>[8bit转义][8-bit escapes]</li>
+</ul>
+</li>
+<li>
+<p>否则，所表示的字符是构成字面内容的单个字符。</p>
+</li>
+</ul>
+<p>此类表达式的值是所表示的字符的[Unicode标量值][Unicode scalar value]。</p>
 <blockquote>
-<p><strong>注意</strong>: 本节还未编写完成。</p>
+<p><strong>注意</strong>: [BYTE_LTERAL] token 的词法定义形式确保这些规则始终能生成一个 Unicode标量值在 [<code>u8</code>][numeric types] 数值区间内的单个字符。</p>
 </blockquote>
+<p>字节字面量表达式的示例：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>b'R';                              // 82
+b'\'';                             // 39
+b'\x52';                           // 82
+b'\xA0';                           // 160
+<span class="boring">}
+</span></code></pre></pre>
 <h2 id="byte-string-literal-expressions"><a class="header" href="#byte-string-literal-expressions">Byte string literal expressions</a></h2>
 <h2 id="字节串字面量表达式"><a class="header" href="#字节串字面量表达式">字节串字面量表达式</a></h2>
-<p>字节串字面量表达式由单一一个<a href="expressions/../tokens.html#byte-string-literals">字节串字面量</a>token 或<a href="expressions/../tokens.html#raw-byte-string-literals">原生字节串字面量</a>token 组成。</p>
+<p>字节串字面量表达式由单一一个[字节串字面量][BYTE_STRING_LITERAL]token 或[原生字节串字面量][RAW_BYTE_STRING_LITERAL]token 组成。</p>
+<p>此类表达式的类型是对元素类型为 [<code>u8</code>][numeric-types]的数组的共享引用（带有 <code>static</code>生存期）。
+也就是说，类型是 <code>&amp;'static [u8; N]</code>，其中 <code>N</code> 是下文描述的所表示的字符串的字节数。</p>
+<p>此类token 不能带有后缀。</p>
+<p>此类token 的 <em>字面内容</em> 是此token 的字符串表示中第一个 <code>U+0022</code> (<code>&quot;</code>) 之后和最后一个 <code>U+0022</code> (<code>&quot;</code>) 之前的字符序列。</p>
+<p>此字面量表达式的 <em>所表示字符串</em> 源自于字符序列的字面内容，具体有如下规则：</p>
+<ul>
+<li>
+<p>如果 token 是[BYTE_STRING_LITERAL]词法所限定的，则字面内容中出现的以下任何形式的每个转义序列都将替换为转义序列的转义值。</p>
+<ul>
+<li>[简单转义][Simple escapes]</li>
+<li>[8bit转义][8-bit escapes]</li>
+<li>[字符串接续符转义][String continuation escapes]</li>
+</ul>
+<p>这些转义替换按从左到右的顺序进行的。
+例如，token <code>b&quot;\\x41&quot;</code> 被转换为字符 <code>\</code> <code>x</code> <code>4</code> <code>1</code>。</p>
+</li>
+<li>
+<p>如果 token 是[RAW_BYTE_STRING_LITERAL]词法所限定的，则所表示的字符串等同于字面内容。</p>
+</li>
+</ul>
+<p>表达式的值是对静态分配的数组的引用，该数组包含所表示字符串中字符的[Unicode标量值][Unicode scalar values]，顺序相同。</p>
 <blockquote>
-<p><strong>注意</strong>: 本节还未编写完成。</p>
+<p><strong>注意</strong>: [BYTE_STRING_LITERAL] 和 [RAW_BYTE_STRING_LITERAL] 的词法定义形式确保这些规则生成数组元素值始终在 [<code>u8</code>][numeric types] 数值区间内。</p>
 </blockquote>
+<p>字节串字面量表达式的示例:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>b&quot;foo&quot;; br&quot;foo&quot;;                     // foo
+b&quot;\&quot;foo\&quot;&quot;; br#&quot;&quot;foo&quot;&quot;#;             // &quot;foo&quot;
+
+b&quot;foo #\&quot;# bar&quot;;
+br##&quot;foo #&quot;# bar&quot;##;                 // foo #&quot;# bar
+
+b&quot;\x52&quot;; b&quot;R&quot;; br&quot;R&quot;;                // R
+b&quot;\\x52&quot;; br&quot;\x52&quot;;                  // \x52
+<span class="boring">}
+</span></code></pre></pre>
 <h2 id="c-string-literal-expressions"><a class="header" href="#c-string-literal-expressions">C string literal expressions</a></h2>
 <h2 id="c语言风格的字符串字面量表达式"><a class="header" href="#c语言风格的字符串字面量表达式">C语言风格的字符串字面量表达式</a></h2>
-<p>C语言风格的字符串字面量表达式由单一一个<a href="expressions/../tokens.html#c-string-literals">C语言风格的字符串字面量</a> 或 <a href="expressions/../tokens.html#raw-c-string-literals">原生C语言风格的字符串字面量</a> token 组成。</p>
+<p>C语言风格的字符串字面量表达式由单一一个[C语言风格的字符串字面量][C_STRING_LITERAL] 或 [原生C语言风格的字符串字面量][RAW_C_STRING_LITERAL] token 组成。</p>
+<p>此类表达式的类型是对标准库[CStr]类型的共享引用（带有 <code>static</code>生存期）。
+也就是说，类型是 <code>&amp;'static core::ffi::CStr</code>。</p>
+<p>此类token 不能带有后缀。</p>
+<p>此类token 的 <em>字面内容</em> 是此token 的字符串表示中第一个 <code>U+0022</code> (<code>&quot;</code>) 之后和最后一个 <code>U+0022</code> (<code>&quot;</code>) 之前的字符序列。</p>
+<p>此类字面量表达式的 <em>所表示字节序</em> 源自于字节序列的字面内容，具体有如下规则：</p>
+<ul>
+<li>
+<p>如果 token 是[C_STRING_LITERAL]词法所限定的，则字面内容被视为一系列内容项（下面有罗列），每个内容项要么是除 <code>\</code> 之外的单个 Unicode字符，要么是[转义][escape]。
+内容项序列会被转换为字节序列，具体规则如下所示：</p>
+<ul>
+<li>每个 Unicode字符都有 UTF-8表示形式。</li>
+<li>每个[简单转义][simple escape]都会被转义为其转义值的[Unicode标量值][Unicode scalar value]。</li>
+<li>每个[8bit转义][8-bit escape]都会被转义为一个包含其转义值的[Unicode标量值][Unicode scalar value]的单个字节。</li>
+<li>每个[Unicode转义][unicode escape]都会被转义为其转义值的 UTF-8表示形式。</li>
+<li>每个[字符串接续符转义][string continuation escape]都不会被转义为任何字节。</li>
+</ul>
+</li>
+<li>
+<p>如果 token [RAW_C_STRING_LITERAL] 词法所限定的，则表示的字节是字面内容的 UTF-8编码。</p>
+</li>
+</ul>
 <blockquote>
-<p><strong>注意</strong>: 本节还未编写完成。</p>
+<p><strong>注意</strong>: [C_STRING_LITERAL] 和 [RAW_C_STRING_LITERAL]的词法定义形式确保所表示的字节序不会包含 null字节。</p>
 </blockquote>
+<p>The expression's value is a reference to a statically allocated [CStr] whose array of bytes contains the represented bytes followed by a null byte.
+该表达式的值是对静态分配的 [CStr] 的引用，其字节数组就包含了这个后跟一个 null字节的所表示字节序。</p>
+<p>C语言风格的字符串字面量表达式示例:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>c&quot;foo&quot;; cr&quot;foo&quot;;                     // foo
+c&quot;\&quot;foo\&quot;&quot;; cr#&quot;&quot;foo&quot;&quot;#;             // &quot;foo&quot;
+
+c&quot;foo #\&quot;# bar&quot;;
+cr##&quot;foo #&quot;# bar&quot;##;                 // foo #&quot;# bar
+
+c&quot;\x52&quot;; c&quot;R&quot;; cr&quot;R&quot;;                // R
+c&quot;\\x52&quot;; cr&quot;\x52&quot;;                  // \x52
+
+c&quot;æ&quot;;                                // 拉丁文小写字母æ (U+00E6)
+c&quot;\u{00E6}&quot;;                         // 拉丁文小写字母æ (U+00E6)
+c&quot;\xC3\xA6&quot;;                         // 拉丁文小写字母æ (U+00E6)
+
+c&quot;\xE6&quot;.to_bytes();                  // [230]
+c&quot;\u{00E6}&quot;.to_bytes();              // [195, 166]
+<span class="boring">}
+</span></code></pre></pre>
 <h2 id="integer-literal-expressions"><a class="header" href="#integer-literal-expressions">Integer literal expressions</a></h2>
 <h2 id="整型字面量表达式"><a class="header" href="#整型字面量表达式">整型字面量表达式</a></h2>
-<p>整型字面量表达式由单一一个<a href="expressions/../tokens.html#integer-literals">整型字面量</a>token 组成。</p>
-<p>如果这种 token 带有<a href="expressions/../tokens.html#suffixes">后缀</a>，那这个后缀的名字必须是<a href="expressions/../types/numeric.html">原生整型</a>中的一个：<code>u8</code>, <code>i8</code>, <code>u16</code>, <code>i16</code>, <code>u32</code>, <code>i32</code>, <code>u64</code>, <code>i64</code>, <code>u128</code>, <code>i128</code>, <code>usize</code> 或 <code>isize</code>，同时此后缀名也是此表达式的类型。</p>
+<p>整型字面量表达式由单一一个[整型字面量][INTEGER_LITERAL]token 组成。</p>
+<p>如果这种 token 带有[后缀][suffix]，那这个后缀的名字必须是[原生整型][numeric types]中的一个：<code>u8</code>, <code>i8</code>, <code>u16</code>, <code>i16</code>, <code>u32</code>, <code>i32</code>, <code>u64</code>, <code>i64</code>, <code>u128</code>, <code>i128</code>, <code>usize</code> 或 <code>isize</code>，同时此后缀名也是此表达式的类型。</p>
 <p>如果此 token 没有后缀，此表达式的类型将由下面的类型推断规则来确定:</p>
 <ul>
 <li>
@@ -6721,29 +6940,29 @@ let a: u64 = 123;                  // type u64
 <p>字符串里的下划线都会被删除。</p>
 </li>
 <li>
-<p>字符串被转换为 <code>u128</code>类型的值时，比如使用 <a href="https://doc.rust-lang.org/core/primitive.u128.md#method.from_str_radix"><code>u128::from_str_radix</code></a> 时选的进制数标记。
+<p>字符串被转换为 <code>u128</code>类型的值时，比如使用 [<code>u128::from_str_radix</code>] 时选的进制数标记。
 如果该值不能被表示为 <code>u128</code>，将在编译时报错。</p>
 </li>
 <li>
-<p><code>u128</code>类型的值通过<a href="expressions/operator-expr.html#numeric-cast">数值转换</a>转换为表达式的类型。</p>
+<p><code>u128</code>类型的值通过[数值转换][numeric cast]转换为表达式的类型。</p>
 </li>
 </ul>
 <blockquote>
 <p><strong>注意</strong>: 如果字面量的值不适合表达式的类型，则会对最终强制转换的结果做截断操作。
-<code>rustc</code> 包含一个名为 <code>overflowing_literals</code> 的 <a href="expressions/../attributes/diagnostics.html#lint-check-attributes">lint检查</a>， 默认生效级别为 <code>deny</code>， 这意味着这种情况发生是此表达式会被编译器拒绝。</p>
+<code>rustc</code> 包含一个名为 <code>overflowing_literals</code> 的 [lint检查][lint check]， 默认生效级别为 <code>deny</code>， 这意味着这种情况发生是此表达式会被编译器拒绝。</p>
 </blockquote>
 <blockquote>
-<p><strong>注意</strong>： <code>-1i8</code> 这样的表达式是对 <code>1i8</code> 这个字面量表达式的<a href="expressions/operator-expr.html#negation-operators">取负操作</a>，不是一个单一的整型字面量表达式。
-请参阅<a href="expressions/operator-expr.html#overflow">Overflow</a>，了解有关表示有符号类型的最大负值的说明。</p>
+<p><strong>注意</strong>： <code>-1i8</code> 这样的表达式是对 <code>1i8</code> 这个字面量表达式的[取负操作][negation operator]，不是一个单一的整型字面量表达式。
+请参阅[Overflow]，了解有关表示有符号类型的最大负值的说明。</p>
 </blockquote>
 <h2 id="floating-point-literal-expressions"><a class="header" href="#floating-point-literal-expressions">Floating-point literal expressions</a></h2>
 <h2 id="浮点型字面量表达式"><a class="header" href="#浮点型字面量表达式">浮点型字面量表达式</a></h2>
-<p>浮点型字面量表达式由下面两种形式：<a href="expressions/../tokens.html#floating-point-literals">浮点型字面量</a>token 组成。</p>
+<p>浮点型字面量表达式由下面两种形式：[浮点型字面量][FLOAT_LITERAL]token 组成。</p>
 <ul>
-<li>由单一的<a href="expressions/../tokens.html#floating-point-literals">浮点型字面量</a>token 组成</li>
-<li>由单一的没有后缀和基数指示符的<a href="expressions/../tokens.html#integer-literals">整型字面量</a>token 组成</li>
+<li>由单一的[浮点型字面量][FLOAT_LITERAL]token 组成</li>
+<li>由单一的没有后缀和基数指示符的[整型字面量][INTEGER_LITERAL]token 组成</li>
 </ul>
-<p>如果这种 token 带有<a href="expressions/../tokens.html#suffixes">后缀</a>，那这个后缀的名字必须是<a href="expressions/../types/numeric.html#floating-point-types">原生浮点型</a>中的一个：<code>f32</code> 或 <code>f64</code>，同时此后缀名也是此表达式的类型。</p>
+<p>如果这种 token 带有[后缀][suffix]，那这个后缀的名字必须是[原生浮点型][floating-point types]中的一个：<code>f32</code> 或 <code>f64</code>，同时此后缀名也是此表达式的类型。</p>
 <p>如果这种 token 没有后缀，此表达式的类型将由下面的类型推断规则来确定:</p>
 <ul>
 <li>
@@ -6776,15 +6995,15 @@ let x: f64 = 2.; // type f64
 <p>字符串中的下划线都会被删除。</p>
 </li>
 <li>
-<p>字符串被转换为这类表达式类型时，如同直接调用 <a href="https://doc.rust-lang.org/core/primitive.f32.html#method.from_str"><code>f32::from_str</code></a> 或 <a href="https://doc.rust-lang.org/core/primitive.f64.md#method.from_str"><code>f64::from_str</code></a>。</p>
+<p>字符串被转换为这类表达式类型时，如同直接调用 [<code>f32::from_str</code>] 或 [<code>f64::from_str</code>]。</p>
 </li>
 </ul>
 <blockquote>
-<p><strong>注意</strong>: <code>-1.0</code> 这样的表达式是对 <code>1.0</code> 这个字面量表达式的<a href="expressions/operator-expr.html#negation-operators">取负操作</a>，不是一个单一的浮点型字面量表达式。</p>
+<p><strong>注意</strong>: <code>-1.0</code> 这样的表达式是对 <code>1.0</code> 这个字面量表达式的[取负操作][negation operator]，不是一个单一的浮点型字面量表达式。</p>
 </blockquote>
 <blockquote>
 <p><strong>注意</strong>: <code>inf</code> 和 <code>NaN</code> 不是字面量token。
-<a href="https://doc.rust-lang.org/core/primitive.f32.md#associatedconstant.INFINITY"><code>f32::INFINITY</code></a>, <a href="https://doc.rust-lang.org/core/primitive.f64.md#associatedconstant.INFINITY"><code>f64::INFINITY</code></a>, <a href="https://doc.rust-lang.org/core/primitive.f32.md#associatedconstant.NAN"><code>f32::NAN</code></a> 和 <a href="https://doc.rust-lang.org/core/primitive.f64.md#associatedconstant.NAN"><code>f64::NAN</code></a> 这些常量可被用来替代字面量表达式。</p>
+[<code>f32::INFINITY</code>], [<code>f64::INFINITY</code>], [<code>f32::NAN</code>] 和 [<code>f64::NAN</code>] 这些常量可被用来替代字面量表达式。</p>
 </blockquote>
 <blockquote>
 <p>在 <code>rustc</code> 里，一个足够大的字面量被计算为无穷时将会触发一个叫做 <code>overflowing_literals</code> 的 lint检查。</p>
@@ -6792,10 +7011,53 @@ let x: f64 = 2.; // type f64
 <h2 id="boolean-literal-expressions"><a class="header" href="#boolean-literal-expressions">Boolean literal expressions</a></h2>
 <h2 id="布尔型字面量表达式"><a class="header" href="#布尔型字面量表达式">布尔型字面量表达式</a></h2>
 <p>布尔型字面量表达式由关键字 <code>true</code> 或 <code>false</code> 中的一个组成。</p>
-<p>此类表达式的类型是原生<a href="expressions/../types/boolean.html">布尔型</a>，并且它的值为：</p>
+<p>此类表达式的类型是原生[布尔型][boolean type]，并且它的值为：</p>
 <ul>
 <li>如果关键字是 <code>true</code>，那么值为 true</li>
-<li>如果关键字是 <code>false</code>，那么值为 false</li>
+<li>如果关键字是 <code>false</code>，那么值为 false
+[Escape]: #escapes
+[Simple escape]: #simple-escapes
+[Simple escapes]: #simple-escapes
+[8-bit escape]: #8-bit-escapes
+[8-bit escapes]: #8-bit-escapes
+[7-bit escape]: #7-bit-escapes
+[7-bit escapes]: #7-bit-escapes
+[Unicode escape]: #unicode-escapes
+[Unicode escapes]: #unicode-escapes
+[String continuation escape]: #string-continuation-escapes
+[String continuation escapes]: #string-continuation-escapes
+[boolean type]: ../types/boolean.md
+[constant expression]: ../const_eval.md#constant-expressions
+[CStr]: https://doc.rust-lang.org/core/ffi/struct.CStr.html
+[floating-point types]: ../types/numeric.md#floating-point-types
+[lint check]: ../attributes/diagnostics.md#lint-check-attributes
+[literal tokens]: ../tokens.md#literals
+[numeric cast]: operator-expr.md#numeric-cast
+[numeric types]: ../types/numeric.md
+[suffix]: ../tokens.md#suffixes
+[negation operator]: operator-expr.md#negation-operators
+[overflow]: operator-expr.md#overflow
+[textual types]: ../types/textual.md
+[Unicode scalar value]: http://www.unicode.org/glossary/#unicode_scalar_value
+[Unicode scalar values]: http://www.unicode.org/glossary/#unicode_scalar_value
+[<code>f32::from_str</code>]: https://doc.rust-lang.org/core/primitive.f32.html#method.from_str
+[<code>f32::INFINITY</code>]: https://doc.rust-lang.org/core/primitive.f32.md#associatedconstant.INFINITY
+[<code>f32::NAN</code>]: https://doc.rust-lang.org/core/primitive.f32.md#associatedconstant.NAN
+[<code>f64::from_str</code>]: https://doc.rust-lang.org/core/primitive.f64.md#method.from_str
+[<code>f64::INFINITY</code>]: https://doc.rust-lang.org/core/primitive.f64.md#associatedconstant.INFINITY
+[<code>f64::NAN</code>]: https://doc.rust-lang.org/core/primitive.f64.md#associatedconstant.NAN
+[<code>u8::from_str_radix</code>]: ../../core/primitive.u8.md#method.from_str_radix
+[<code>u128::from_str_radix</code>]: https://doc.rust-lang.org/core/primitive.u128.md#method.from_str_radix
+[CHAR_LITERAL]: ../tokens.md#character-literals
+[STRING_LITERAL]: ../tokens.md#string-literals
+[RAW_STRING_LITERAL]: ../tokens.md#raw-string-literals
+[BYTE_LITERAL]: ../tokens.md#byte-literals
+[BYTE_STRING_LITERAL]: ../tokens.md#byte-string-literals
+[RAW_BYTE_STRING_LITERAL]: ../tokens.md#raw-byte-string-literals
+[C_STRING_LITERAL]: ../tokens.md#c-string-literals
+[RAW_C_STRING_LITERAL]: ../tokens.md#raw-c-string-literals
+[INTEGER_LITERAL]: ../tokens.md#integer-literals
+[FLOAT_LITERAL]: ../tokens.md#floating-point-literals</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="path-expressions"><a class="header" href="#path-expressions">Path expressions</a></h1>
 <h1 id="路径表达式"><a class="header" href="#路径表达式">路径表达式</a></h1>
@@ -11525,7 +11787,7 @@ fn main() {
     bar(&amp;mut 42);
 }
 </code></pre></pre>
-<p>对于方法调用，接受者（<code>self</code>参数）的类型的强转方式不同，有关详细信息，请参阅[方法调用表达式][method-call expressions]的文档。</p>
+<p>对于方法调用，接受者（<code>self</code>参数）的类型的强转方式不同，有关详细信息，请参阅<a href="expressions/method-call-expr.html">方法调用表达式</a>的文档。</p>
 </li>
 <li>
 <p>实例化结构体、联合体或枚举变体的字段。</p>
@@ -13243,8 +13505,8 @@ fn main() {
 <h1 id="内联汇编"><a class="header" href="#内联汇编">内联汇编</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md">behavior-considered-undefined.md</a><br />
-commit: c7690f13fc5b2a18effdb39d77bae2bb1038b0dc <br />
-本章译文最后维护日期：2023-11-05</p>
+commit: 8eda943339b7033205604386472d3e6e1dfa28ed <br />
+本章译文最后维护日期：2024-02-03</p>
 </blockquote>
 <p>Rust 通过 <a href="https://doc.rust-lang.org/core/arch/macro.asm.html"><code>asm!</code></a> 和 <a href="https://doc.rust-lang.org/core/arch/macro.global_asm.html"><code>global_asm!</code></a> 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。</p>
@@ -13657,7 +13919,7 @@ GCC 将根据操作值的类型推断修饰符，而 Rust 默认为完整寄存�
 <p>我们使用标志（Flag）技术来进一步影响内联汇编块的行为。
 目前定义了以下可选项（标志）：</p>
 <ul>
-<li><code>pure</code>：此 <code>asm!</code>块没有副作用，其输出仅取决于其直接输入（比如，输入的值本身，而不是它们指向的对象）或从内存读取的值（除非还设置了 <code>nomem</code>可选项）。
+<li><code>pure</code>：此 <code>asm!</code>块没有副作用，且最终必须返回，其输出仅取决于其直接输入（比如，输入的值本身，而不是它们指向的对象）或从内存读取的值（除非还设置了 <code>nomem</code>可选项）。
 这允许编译器执行此 <code>asm!</code>块的次数少于程序中指定的次数（例如，通过将其从循环中提出来），或者如果 <code>asm!</code>块没有输出的情况下，编译器甚至可能完全消除此段 asm代码。
 <code>pure</code>可选项必须与 <code>nomem</code> 或 <code>readonly</code> 可选项组合使用，否则会导致编译期错误。</li>
 <li><code>nomem</code>：此 <code>asm!</code>块不读取或写入任何内存。
