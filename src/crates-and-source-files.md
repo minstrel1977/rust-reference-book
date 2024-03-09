@@ -1,19 +1,13 @@
 # crate 和源文件
 
 >[crates-and-source-files.md](https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md)\
->commit: c126440392be42d9dd3906478111cc7b52473d89 \
->本章译文最后维护日期：2022-10-22
+>commit: e364b6c6f91a7166ab4ff6a7814bf9a4922c2358 \
+>本章译文最后维护日期：2024-03-09
 
 > **<sup>句法</sup>**\
 > _Crate_ :\
-> &nbsp;&nbsp; UTF8BOM<sup>?</sup>\
-> &nbsp;&nbsp; SHEBANG<sup>?</sup>\
 > &nbsp;&nbsp; [_InnerAttribute_]<sup>\*</sup>\
 > &nbsp;&nbsp; [_Item_]<sup>\*</sup>
-
-> **<sup>词法</sup>**\
-> UTF8BOM : `\uFEFF`\
-> SHEBANG : `#!` \~`\n`<sup>\+</sup>[†](#shebang)
 
 
 > 注意：尽管像任何其他语言一样，Rust 也都可以通过解释器和编译器实现，但现在唯一存在的实现是编译器，并且该语言也是一直被设计为可编译的。因为这些原因，所以本章节所有的讨论都是基于编译器这条路径的。
@@ -30,6 +24,8 @@ Rust 源文件描述了一个模块，其名称和（在当前 crate 的模块�
 
 每个源文件包含一个由零个或多个[程序项][_Item_]定义组成的代码序列，并且这些源文件都可选地从应用于其内部模块的任意数量的[属性][attributes]开始，大部分这些属性都会会影响编译器行为。匿名的 crate 根模块可附带一些应用于整个 crate 的属性。
 
+> **注意**：文件的内容前面可能有一个 [shebang]。
+
 ```rust
 // 指定 crate 名称.
 #![crate_name = "projx"]
@@ -41,25 +37,6 @@ Rust 源文件描述了一个模块，其名称和（在当前 crate 的模块�
 // 这句可以放在任何模块中, 而不是只能放在匿名 crate 模块里。
 #![warn(non_camel_case_types)]
 ```
-## Byte order mark
-## 字节顺序标记(BOM)
-
-可选的[_UTF8字节序标记_][_UTF8 byte order mark_]（UTF8BOM产生式）表示该文件是用 UTF8 编码的。它只能出现在文件的开头，并且编译器会忽略它。
-
-## Shebang
-
-源文件可以有一个[_shebang_]（SHEBANG产生式），它指示操作系统使用什么程序来执行此文件。它本质上是将源文件作为可执行脚本处理。shebang 只能出现在文件的开头（但是要在可选的 _UTF8BOM_ 生产式之后）。它会被编译器忽略。例如：
-
-<!-- ignore: tests don't like shebang -->
-```rust,ignore
-#!/usr/bin/env rustx
-
-fn main() {
-    println!("Hello!");
-}
-```
-
-为了避免与[属性][attribute]混淆， Rust 对 shebang 句法做了一个限制：是 `#!` 字符不能后跟 token `[`，忽略中间的[注释][comments]或[空白符][whitespace]。如果违反此限制，则不会将其视为 shebang，而会将其视为属性的开始。
 
 ## Preludes and `no_std`
 ## 预导入包和 `no_std`
@@ -121,20 +98,17 @@ crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 `_` (U
 [_InnerAttribute_]: attributes.md
 [_Item_]: items.md
 [_MetaNameValueStr_]: attributes.md#meta-item-attribute-syntax
-[_shebang_]: https://en.wikipedia.org/wiki/Shebang_(Unix)
-[_utf8 byte order mark_]: https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8
 [`ExitCode`]: https://doc.rust-lang.org/std/process/struct.ExitCode.html
 [`Infallible`]: https://doc.rust-lang.org/std/convert/enum.Infallible.html
 [`Termination`]: https://doc.rust-lang.org/std/process/trait.Termination.html
 [attribute]: attributes.md
 [attributes]: attributes.md
-[comments]: comments.md
 [function]: items/functions.md
 [module]: items/modules.md
 [module path]: paths.md
+[shebang]: input-format.md#shebang-removal
 [trait or lifetime bounds]: trait-bounds.md
 [where clauses]: items/generics.md#where-clauses
-[whitespace]: whitespace.md
 
 <script>
 (function() {

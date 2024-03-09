@@ -152,21 +152,14 @@
                         <h1 id="crate-和源文件"><a class="header" href="#crate-和源文件">crate 和源文件</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md">crates-and-source-files.md</a><br />
-commit: c126440392be42d9dd3906478111cc7b52473d89 <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: e364b6c6f91a7166ab4ff6a7814bf9a4922c2358 <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>Crate</em> :<br />
-   UTF8BOM<sup>?</sup><br />
-   SHEBANG<sup>?</sup><br />
    <a href="attributes.html"><em>InnerAttribute</em></a><sup>*</sup><br />
    <a href="items.html"><em>Item</em></a><sup>*</sup></p>
-</blockquote>
-<blockquote>
-<p><strong><sup>词法</sup></strong><br />
-UTF8BOM : <code>\uFEFF</code><br />
-SHEBANG : <code>#!</code> ~<code>\n</code><sup>+</sup><a href="#shebang">†</a></p>
 </blockquote>
 <blockquote>
 <p>注意：尽管像任何其他语言一样，Rust 也都可以通过解释器和编译器实现，但现在唯一存在的实现是编译器，并且该语言也是一直被设计为可编译的。因为这些原因，所以本章节所有的讨论都是基于编译器这条路径的。</p>
@@ -177,6 +170,9 @@ SHEBANG : <code>#!</code> ~<code>\n</code><sup>+</sup><a href="#shebang">†</a>
 <p>Rust 编译器总是使用单个源文件作为输入来开启编译过程的，并且总是生成单个输出 crate。对输入源文件的处理可能导致其他源文件作为模块被加载进来。源文件的扩展名为 <code>.rs</code>。</p>
 <p>Rust 源文件描述了一个模块，其名称和（在当前 crate 的模块树中的）位置是从源文件外部定义的：要么通过引用源文件中的显式<a href="items/modules.html">模块(<em>Module</em>)</a>项，要么由 crate 本身的名称定义。每个源文件都是一个模块，但并非每个模块都需要自己的源文件：多个<a href="items/modules.html">模块定义</a>可以嵌套在同一个文件中。</p>
 <p>每个源文件包含一个由零个或多个<a href="items.html">程序项</a>定义组成的代码序列，并且这些源文件都可选地从应用于其内部模块的任意数量的<a href="attributes.html">属性</a>开始，大部分这些属性都会会影响编译器行为。匿名的 crate 根模块可附带一些应用于整个 crate 的属性。</p>
+<blockquote>
+<p><strong>注意</strong>：文件的内容前面可能有一个 <a href="input-format.html#shebang-removal">shebang</a>。</p>
+</blockquote>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 指定 crate 名称.
@@ -190,19 +186,6 @@ SHEBANG : <code>#!</code> ~<code>\n</code><sup>+</sup><a href="#shebang">†</a>
 #![warn(non_camel_case_types)]
 <span class="boring">}
 </span></code></pre></pre>
-<h2 id="byte-order-mark"><a class="header" href="#byte-order-mark">Byte order mark</a></h2>
-<h2 id="字节顺序标记bom"><a class="header" href="#字节顺序标记bom">字节顺序标记(BOM)</a></h2>
-<p>可选的<a href="https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8"><em>UTF8字节序标记</em></a>（UTF8BOM产生式）表示该文件是用 UTF8 编码的。它只能出现在文件的开头，并且编译器会忽略它。</p>
-<h2 id="shebang"><a class="header" href="#shebang">Shebang</a></h2>
-<p>源文件可以有一个<a href="https://en.wikipedia.org/wiki/Shebang_(Unix)"><em>shebang</em></a>（SHEBANG产生式），它指示操作系统使用什么程序来执行此文件。它本质上是将源文件作为可执行脚本处理。shebang 只能出现在文件的开头（但是要在可选的 <em>UTF8BOM</em> 生产式之后）。它会被编译器忽略。例如：</p>
-<!-- ignore: tests don't like shebang -->
-<pre><code class="language-rust ignore">#!/usr/bin/env rustx
-
-fn main() {
-    println!(&quot;Hello!&quot;);
-}
-</code></pre>
-<p>为了避免与<a href="attributes.html">属性</a>混淆， Rust 对 shebang 句法做了一个限制：是 <code>#!</code> 字符不能后跟 token <code>[</code>，忽略中间的<a href="comments.html">注释</a>或<a href="whitespace.html">空白符</a>。如果违反此限制，则不会将其视为 shebang，而会将其视为属性的开始。</p>
 <h2 id="preludes-and-no_std"><a class="header" href="#preludes-and-no_std">Preludes and <code>no_std</code></a></h2>
 <h2 id="预导入包和-no_std"><a class="header" href="#预导入包和-no_std">预导入包和 <code>no_std</code></a></h2>
 <p>本节内容已经移入<a href="names/preludes.html">预导入包那章里</a>了。</p>

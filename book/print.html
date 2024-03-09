@@ -148,7 +148,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2024-02-03</p>
+<p>本书跟随原文截止日期：2024-03-09</p>
 </blockquote>
 <h1 id="前言"><a class="header" href="#前言">前言</a></h1>
 <h2 id="试水版"><a class="header" href="#试水版">试水版</a></h2>
@@ -212,8 +212,7 @@
 </blockquote>
 <h2 id="版权说明"><a class="header" href="#版权说明">版权说明</a></h2>
 <p>Nightly 版本放在国内 Gitee 上，采用 <a href="https://gitee.com/minstrel1977/rust-reference/blob/master/LICENSE">MulanPSL-2.0</a>；stable 版放在 github 上，采用 MIT。</p>
-<!-- 2021-1-5-->
-<!-- checked --><div style="break-before: page; page-break-before: always;"></div><h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <h1 id="介绍"><a class="header" href="#介绍">介绍</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/introduction.md">introduction.md</a><br />
@@ -342,15 +341,45 @@ commit: 4a2bdf896cd2df370a91d14cb8ba04e326cd21db <br />
 本章译文最后维护日期：2020-10-17</p>
 </blockquote>
 <!-- 2020-11-12-->
-<!-- checked --><div style="break-before: page; page-break-before: always;"></div><h1 id="输入格式"><a class="header" href="#输入格式">输入格式</a></h1>
+<!-- checked --><div style="break-before: page; page-break-before: always;"></div><h1 id="input-format"><a class="header" href="#input-format">Input format</a></h1>
+<h1 id="输入格式"><a class="header" href="#输入格式">输入格式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/input-format.md">notation.md</a><br />
-commit: a2405b970b7c8222a483b82213adcb17d646c75d <br />
-本章译文最后维护日期：2020-11-5</p>
+commit: 8ba3c4911446cb390eb0602862caf53fac6da086 <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
-<p>Rust 输入被解释为用 UTF-8 编码的 Unicode 字符序列。</p>
-<!-- 2020-11-12-->
-<!-- checked -->
+<p>本章介绍如何将源文件解释为一系列 token。</p>
+<p>有关程序如何组织成文件的描述，请参见<a href="crates-and-source-files.html">crate 和源文件</a>。</p>
+<h2 id="source-encoding"><a class="header" href="#source-encoding">Source encoding</a></h2>
+<h2 id="源文件编码方式"><a class="header" href="#源文件编码方式">源文件编码方式</a></h2>
+<p>每个源文件都被解释为以 UTF-8编码的 Unicode字符序列。
+如果文件不是有效的 UTF-8编码方式，则报错。</p>
+<h2 id="byte-order-mark-removal"><a class="header" href="#byte-order-mark-removal">Byte order mark removal</a></h2>
+<h2 id="bom移除"><a class="header" href="#bom移除">BOM移除</a></h2>
+<p>如果字符序列中的第一个字符是 <code>U+FEFF</code> (<a href="https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8">BYTE ORDER MARK</a>)，则会将其移除。</p>
+<h2 id="crlf-normalization"><a class="header" href="#crlf-normalization">CRLF normalization</a></h2>
+<h2 id="crlf归一化"><a class="header" href="#crlf归一化">CRLF归一化</a></h2>
+<p><code>U+000D</code>(CR) 后紧跟着 <code>U+000A</code>(LF) 这样的字符对都被一个 <code>U+000A</code>(LF) 所代替。</p>
+<p>其他时候出现的字符<code>U+000D</code>(CR) 则保留在原位（它们被视为<a href="whitespace.html">空白符</a>）。</p>
+<h2 id="shebang-removal"><a class="header" href="#shebang-removal">Shebang removal</a></h2>
+<h2 id="shebang-移除"><a class="header" href="#shebang-移除">Shebang 移除</a></h2>
+<p>如果字符序列以字符 <code>!#</code> 起行，那直到并包括第一个 <code>U+000A</code>(LF) 的字符将被从此字符序列中移除。</p>
+<p>例如，以下文件的第一行将被忽略：</p>
+<!-- ignore: tests don't like shebang -->
+<pre><code class="language-rust ignore">#!/usr/bin/env rustx
+
+fn main() {
+    println!(&quot;Hello!&quot;);
+}
+</code></pre>
+<p>作为例外，如果 <code>#!</code> 字符后面跟着一个 <code>[</code>token（此时需要忽略中间的[comments][注释]或<a href="whitespace.html">空白符</a>），则不会删除任何内容。</p>
+<p>这样可以防止删除了源文件开头的<a href="attributes.html">内部属性</a>。</p>
+<blockquote>
+<p><strong>注意</strong>： 标准库的 <a href="../std/macro.include.html"><code>include!</code></a>宏读取的文件会采用BOM移除、CRLF归一化和 shebang删除的处理方式。但 <a href="../std/macro.include_str.html"><code>include_str!</code></a> 和<a href="../std/macro.include_bytes.html"><code>include_bytes!</code></a>宏没有采用。</p>
+</blockquote>
+<h2 id="tokenization"><a class="header" href="#tokenization">Tokenization</a></h2>
+<h2 id="token化"><a class="header" href="#token化">token化</a></h2>
+<p>源文件被前面步骤处理后的的字符序列将如本章剩余部分所述那样被转换为 token。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="keywords"><a class="header" href="#keywords">Keywords</a></h1>
 <h1 id="关键字"><a class="header" href="#关键字">关键字</a></h1>
 <blockquote>
@@ -532,8 +561,8 @@ NON_KEYWORD_IDENTIFIER | RAW_IDENTIFIER</p>
 <h1 id="注释"><a class="header" href="#注释">注释</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/comments.md">comments.md</a><br />
-commit: b1d0c5bfc737b614c77579c9ac53d6653a6ef6f5 <br />
-本章译文最后维护日期：2023-06-11</p>
+commit: fa56fdba0e9dba35eb29d11c95c7a009ed67cb35 <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>词法分析</sup></strong><br />
@@ -559,7 +588,7 @@ LINE_COMMENT :(译者注：行注释)<br />
    | OUTER_BLOCK_DOC<br />
    | INNER_BLOCK_DOC</p>
 <p><em>IsolatedCR</em> :<br />
-   <em>后面没有跟 <code>\n</code> 的 <code>\r</code></em></p>
+   \r</p>
 </blockquote>
 <h2 id="non-doc-comments"><a class="header" href="#non-doc-comments">Non-doc comments</a></h2>
 <h2 id="非文档型注释"><a class="header" href="#非文档型注释">非文档型注释</a></h2>
@@ -569,7 +598,10 @@ LINE_COMMENT :(译者注：行注释)<br />
 <h2 id="文档型注释"><a class="header" href="#文档型注释">文档型注释</a></h2>
 <p>以<em>三个</em>斜线（<code>///</code>）开始的行文档型注释，以及块文档型注释（<code>/** ... */</code>），均为外部文档型注释。它们被当做 <a href="https://doc.rust-lang.org/rustdoc/the-doc-attribute.html"><code>doc</code>属性</a>的特殊句法解析。也就是说，它们等同于把注释内容写入 <code>#[doc=&quot;...&quot;]</code> 里。例如：<code>/// Foo</code> 等同于 <code>#[doc=&quot;Foo&quot;]</code>，<code>/** Bar */</code> 等同于 <code>#[doc=&quot;Bar&quot;]</code>。</p>
 <p>以 <code>//!</code> 开始的行文档型注释，以及 <code>/*! ... */</code> 形式的块文档型注释属于注释体所在对象的文档型注释，而非注释体之后的程序项的。也就是说，它们等同于把注释内容写入 <code>#![doc=&quot;...&quot;]</code> 里。<code>//!</code> 注释通常用于标注模块位于的文件。</p>
-<p>孤立的 CRs（<code>\r</code>），如果其后没有紧跟有 LF（<code>\n</code>），则不能出现在文档型注释中。</p>
+<p>文档型注释中不允许出现字符<code>U+000D</code>(CR)。</p>
+<blockquote>
+<p><strong>注意</strong>:  <code>U+000D</code>(CR)后直跟<code>U+000A</code>(LF) 的字符序列会预先被转换为 <code>U+000A</code> (LF)。</p>
+</blockquote>
 <h2 id="示例"><a class="header" href="#示例">示例</a></h2>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -664,8 +696,8 @@ commit: 716e04f203c10387bd66aa3bcf1663e75ce208cf <br />
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tokens"><a class="header" href="#tokens">Tokens</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/tokens.md">tokens.md</a><br />
-commit: 52dadd7d14149a2dc39181063cfd343c7ecc3b3d <br />
-本章译文最后维护日期：2024-02-03</p>
+commit: 5afb503a4c1ea3c84370f8f4c08a1cddd1cdf6ad <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <p>token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：</p>
 <ul>
@@ -698,6 +730,9 @@ commit: 52dadd7d14149a2dc39181063cfd343c7ecc3b3d <br />
 <div class="footnote-definition" id="nsets"><sup class="footnote-definition-label">1</sup>
 <p>字面量两侧的 <code>#</code> 数量必须相同。</p>
 </div>
+<blockquote>
+<p><strong>注意</strong>: 字符和字符串字面量token 不会包括 <code>U+000D</code>(CR)后紧跟 <code>U+000A</code>(LF) 的字符序列：这对字符会在编译器读取源文件时被转换为单个 <code>U+000A</code>(LF)字符。</p>
+</blockquote>
 <h4 id="ascii-escapes"><a class="header" href="#ascii-escapes">ASCII escapes</a></h4>
 <h4 id="ascii-转义"><a class="header" href="#ascii-转义">ASCII 转义</a></h4>
 <div class="table-wrapper"><table><thead><tr><th></th><th>名称</th></tr></thead><tbody>
@@ -806,11 +841,10 @@ STRING_LITERAL :<br />
    <code>\</code> <em>后跟</em> \n</p>
 </blockquote>
 <p><em>字符串字面量</em>是位于两个 <code>U+0022</code> （双引号 <code>&quot;</code>）字符内的任意 Unicode 字符序列。当它是 <code>U+0022</code> 自身时，必须前置<em>转义</em>字符 <code>U+005C</code>（<code>\</code>）。</p>
-<p>字符串字面量允许换行书写。
-换行可以用换行符（<code>U+000A</code>）表示，也可以用一对回车符换行符（<code>U+000D</code>, <code>U+000A</code>）表示。
-这两种字节序列通常都会被转换为 <code>U+000A</code>，</p>
-<p>但当非转义的字符 <code>U+005C</code>（<code>\</code>）后面紧跟着一个换行符时，换行符并不会出现在字符串中。
-详细信息请参见<a href="expressions/literal-expr.html#string-continuation-escapes">字符串接续符转义</a>。</p>
+<p>字符串字面量允许使用字符<code>U+000A</code>(LF) 的形式来换行书写。
+但当非转义的字符 <code>U+005C</code>（<code>\</code>）后面紧跟着一个换行符时，换行符并不会出现在字符串中。
+详细信息请参见<a href="expressions/literal-expr.html#string-continuation-escapes">字符串接续符转义</a>。
+字符<code>U+000D</code>(CR) 除了作为这种字符串接续符转义的一部分之外，不能出现在字符串字面量中。</p>
 <h4 id="character-escapes"><a class="header" href="#character-escapes">Character escapes</a></h4>
 <h4 id="字符转义"><a class="header" href="#字符转义">字符转义</a></h4>
 <p>不管是字符字面量，还是非原生字符串字面量，Rust 都为其提供了额外的<em>转义</em>功能。转义以一个 <code>U+005C</code>（<code>\</code>）开始，并后跟如下形式之一：</p>
@@ -831,7 +865,9 @@ RAW_STRING_LITERAL :<br />
       <code>&quot;</code> ( ~ <em>IsolatedCR</em> )<sup>* (非贪婪模式)</sup> <code>&quot;</code><br />
    | <code>#</code> RAW_STRING_CONTENT <code>#</code></p>
 </blockquote>
-<p>原生字符串字面量不做任何转义。它以字符 <code>U+0072</code>（<code>r</code>）后跟小于256个字符 <code>U+0023</code>（<code>#</code>），以及一个字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；中间<em>原生字符串文本主体</em>部分可包含任意的 Unicode 字符序列；再后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。</p>
+<p>原生字符串字面量不做任何转义。它以字符 <code>U+0072</code>（<code>r</code>）后跟小于256个字符 <code>U+0023</code>（<code>#</code>），以及一个字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始。
+中间<em>原生字符串主体</em>部分可包含除了 <code>U+000D</code>(CR) 之外的任意 Unicode 字符序列。
+最后再后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）以及跟与字符串主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）的字符来表示字符串主体的结束。</p>
 <p>所有包含在原生字符串文本主体中的 Unicode 字符都代表他们自身：字符 <code>U+0022</code>（双引号 <code>&quot;</code>）（除非后跟的纯 <code>U+0023</code> (<code>#</code>)字符串与文本主体开始前的对称相等）或字符 <code>U+005C</code>（<code>\</code>）此时都没有特殊含义。</p>
 <p>字符串字面量示例:</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
@@ -872,6 +908,10 @@ BYTE_STRING_LITERAL :<br />
 </blockquote>
 <p>非原生<em>字节串字面量</em>是 ASCII 字符和转义字符组成的字符序列，形式是以字符 <code>U+0062</code>（<code>b</code>）和字符 <code>U+0022</code>（双引号 <code>&quot;</code>）组合开头，以字符 <code>U+0022</code> 结尾。如果字面量中包含字符 <code>U+0022</code>，则必须由前置的 <code>U+005C</code>（<code>\</code>）<em>转义</em>。
 或者，字节串字面量也可以是<em>原生字节串字面量</em>（下面有其定义）。</p>
+<p>字节串字面量允许使用字符<code>U+000A</code>(LF) 的形式来换行书写。
+但当非转义的字符 <code>U+005C</code>（<code>\</code>）后面紧跟着一个换行符时，换行符并不会出现在字符串中。
+详细信息请参见<a href="expressions/literal-expr.html#string-continuation-escapes">字符串接续符转义</a>。
+字符<code>U+000D</code>(CR) 除了作为这种字符串接续符转义的一部分之外，不能出现在字节串字面量中。</p>
 <p>一些额外的<em>转义</em>可以在字节或非原生字节串字面量中使用，转义以 <code>U+005C</code>（<code>\</code>）开始，并后跟如下形式之一：</p>
 <ul>
 <li><em>字节转义</em>以 <code>U+0078</code> (<code>x</code>)开始，后跟恰好两位<em>十六进制数字</em>来表示十六进制值代表的字节。</li>
@@ -886,12 +926,15 @@ BYTE_STRING_LITERAL :<br />
 RAW_BYTE_STRING_LITERAL :<br />
    <code>br</code> RAW_BYTE_STRING_CONTENT SUFFIX<sup>?</sup></p>
 <p>RAW_BYTE_STRING_CONTENT :<br />
-      <code>&quot;</code> ASCII<sup>* (非贪婪模式)</sup> <code>&quot;</code><br />
+      <code>&quot;</code> ASCII_FOR_RAW<sup>* (非贪婪模式)</sup> <code>&quot;</code><br />
    | <code>#</code> RAW_BYTE_STRING_CONTENT <code>#</code></p>
-<p>ASCII :<br />
-   <em>任何 ASCII 字符（0x00 到 0x7F）</em></p>
+<p>ASCII_FOR_RAW :<br />
+   <em>除了 IsolatedCR 外的任何 ASCII 字符（0x00 到 0x7F）</em></p>
 </blockquote>
-<p>原生字节串字面量不做任何转义。它们以字符 <code>U+0062</code>（<code>b</code>）后跟 <code>U+0072</code>（<code>r</code>），再后跟小于256个字符 <code>U+0023</code>（<code>#</code>）及字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；之后是<em>原生字节串文本主体</em>，这部分可包含任意的 ASCII 字符序列；后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。原生字节串字面量不能包含任何非 ASCII 字节。</p>
+<p>原生字节串字面量不做任何转义。它们以字符 <code>U+0062</code>（<code>b</code>）后跟 <code>U+0072</code>（<code>r</code>），再后跟小于256个字符 <code>U+0023</code>（<code>#</code>）及字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始。
+中间是<em>原生字节串主体</em>，这部分可包含除了 <code>U+000D</code>(CR) 外的任意的 ASCII 字符序列。
+最后再后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）以及跟与字符串主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）的字符来表示字符串主体的结束。
+原生字节串字面量不能包含任何非 ASCII 字节。</p>
 <p>原生字节串文本主体中的所有字符都代表它们自身的 ASCII 编码，字符 <code>U+0022</code>（双引号 <code>&quot;</code>）（除非后跟的纯 <code>U+0023</code>（<code>#</code>）字符串与文本主体开始前的对称相等）或字符 <code>U+005C</code>（<code>\</code>）此时都没有特殊含义。</p>
 <p>字节串字面量示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
@@ -923,6 +966,10 @@ C_STRING_LITERAL :<br />
 <p><em>C语言风格的字符串字面量_是通过前面是字符<code>U+0063</code> (<code>c</code>) 和 <code>U+0022</code>（双引号），后面是字符<code>U+0022</code> 转义过的 Unicode字符序列。如果字面量中存在字符<code>U+0022</code>，则其前面必须用<code>U+005C</code> (<code>\</code>)字符进行转义。
 或者，C语言风格的字符串字面量可以是下面定义的_原生C语言风格的字符串字面量</em>。</p>
 <p>C语言风格的字符串由字节<code>0x00</code>隐式终止，因此C语言风格的字符串字面量<code>c&quot;&quot;</code>等同于从字节字符串文字<code>b&quot;\x00&quot;</code>来手动构造一个<code>&amp;CStr</code>。除了隐式终止符之外，C语言风格的字符串中不允许再使用字节<code>0x00</code>。</p>
+<p>C语言风格的字符串字面量允许使用字符<code>U+000A</code>(LF) 的形式来换行书写。
+但当非转义的字符 <code>U+005C</code>（<code>\</code>）后面紧跟着一个换行符时，换行符并不会出现在字符串中。
+详细信息请参见<a href="expressions/literal-expr.html#string-continuation-escapes">字符串接续符转义</a>。
+字符<code>U+000D</code>(CR) 除了作为这种字符串接续符转义的一部分之外，不能出现在C语言风格的字符串字面量中。</p>
 <p>一些额外的转义符在非原生C语言风格的字符串字面量中可用。转义以<code>U+005C</code> (<code>\</code>)开头，并后继以下形式之一：</p>
 <ul>
 <li>一个_字节转义符_以<code>U+0078</code> (<code>x</code>)开头，后面正好跟两个_十六进制数字_。它表示等于所提供的十六进制值的字节序。</li>
@@ -952,8 +999,10 @@ RAW_C_STRING_LITERAL :<br />
       <code>&quot;</code> ( ~ <em>IsolatedCR</em> <em>NUL</em> )<sup>* (non-greedy)</sup> <code>&quot;</code><br />
    | <code>#</code> RAW_C_STRING_CONTENT <code>#</code></p>
 </blockquote>
-<p>原生C语言风格的字符串字面量不处理任何转义。它们以字符<code>U+0063</code> (<code>c</code>)开头，然后跟<code>U+0072</code> (<code>r</code>)，然后再跟少于256个的字符<code>U+0023</code> (<code>#</code>)和一个 <code>U+0022</code>（双引号）字符（记作开头引号）。_原生C语言风格的字符串本体_可以包含任何 Unicode字符序列（<code>U+0000</code>除外），本体之后以另一个结尾<code>U+0022</code>（双引号）字符来结尾，再之后再跟着开头引号之前的相同数量的 <code>U+0023</code> (<code>#</code>)字符。</p>
-<p>原生C语言风格的字符串本体中包含的所有字符都以UTF-8编码形式表示。字符<code>U+0022</code>（双引号）（后面跟有至少与用于开始原生C语言风格的字符串字面量的数量相同的 <code>U+0023</code> (<code>#</code>)字符时除外）或 <code>U+005C</code> (<code>\</code>) 没有任何特殊含义。</p>
+<p>原生C语言风格的字符串字面量不处理任何转义。它们以字符<code>U+0063</code> (<code>c</code>)开头，然后跟<code>U+0072</code> (<code>r</code>)，然后再跟少于256个的字符<code>U+0023</code> (<code>#</code>)和一个 <code>U+0022</code>（双引号）字符（记作开头引号）。
+中间_原生C语言风格的字符串本体_可以包含除 <code>U+0000</code>(NUL) 和 <code>U+000D</code>(CR) 之外的任何 Unicode字符序列。
+最后再后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）以及跟与字符串主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）的字符来表示字符串主体的结束。</p>
+<p>原生C语言风格的字符串本体中包含的所有字符都以 UTF-8编码形式表示。字符<code>U+0022</code>（双引号）（后面跟有至少与用于开始原生C语言风格的字符串字面量的数量相同的 <code>U+0023</code> (<code>#</code>)字符时除外）或 <code>U+005C</code> (<code>\</code>) 没有任何特殊含义。</p>
 <blockquote>
 <p><strong>版次差异</strong>: 2021版或更高版次可以使用原生C语言风格的字符串字面量。在更低的版次中，<code>cr&quot;&quot;</code>token 会被词法解析器解析为<code>cr &quot;&quot;</code> ，<code>cr#&quot;&quot;#</code> 被解析为 <code>cr #&quot;&quot;#</code>（这是不符合语法的）。</p>
 </blockquote>
@@ -1171,10 +1220,13 @@ RESERVED_NUMBER :<br />
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
 LIFETIME_TOKEN :<br />
-      <code>'</code> <a href="identifiers.html">IDENTIFIER_OR_KEYWORD</a><br />
-   | <code>'_</code></p>
+      <code>'</code> <a href="identifiers.html">IDENTIFIER_OR_KEYWORD</a>
+<em>(后面没有紧跟 <code>'</code>)</em><br />
+   | <code>'_</code>
+<em>(后面没有紧跟 <code>'</code>)</em></p>
 <p>LIFETIME_OR_LABEL :<br />
-      <code>'</code> <a href="identifiers.html">NON_KEYWORD_IDENTIFIER</a></p>
+      <code>'</code> <a href="identifiers.html">NON_KEYWORD_IDENTIFIER</a>
+<em>(后面没有紧跟 <code>'</code>)</em></p>
 </blockquote>
 <p>生存期参数和<a href="expressions/loop-expr.html">循环标签</a>使用 LIFETIME_OR_LABEL 类型的 token。（尽管 LIFETIME_OR_LABEL 是 LIFETIME_TOKEN 的子集，但）任何符合 LIFETIME_TOKEN 约定的 token 也都能被上述词法分析规则所接受，比如 LIFETIME_TOKEN 类型的 token 在宏中就可以畅通无阻的使用。</p>
 <h2 id="punctuation"><a class="header" href="#punctuation">Punctuation</a></h2>
@@ -1936,21 +1988,14 @@ fn invoke4() {}
 <div style="break-before: page; page-break-before: always;"></div><h1 id="crate-和源文件"><a class="header" href="#crate-和源文件">crate 和源文件</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md">crates-and-source-files.md</a><br />
-commit: c126440392be42d9dd3906478111cc7b52473d89 <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: e364b6c6f91a7166ab4ff6a7814bf9a4922c2358 <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>Crate</em> :<br />
-   UTF8BOM<sup>?</sup><br />
-   SHEBANG<sup>?</sup><br />
    <a href="attributes.html"><em>InnerAttribute</em></a><sup>*</sup><br />
    <a href="items.html"><em>Item</em></a><sup>*</sup></p>
-</blockquote>
-<blockquote>
-<p><strong><sup>词法</sup></strong><br />
-UTF8BOM : <code>\uFEFF</code><br />
-SHEBANG : <code>#!</code> ~<code>\n</code><sup>+</sup><a href="crates-and-source-files.html#shebang">†</a></p>
 </blockquote>
 <blockquote>
 <p>注意：尽管像任何其他语言一样，Rust 也都可以通过解释器和编译器实现，但现在唯一存在的实现是编译器，并且该语言也是一直被设计为可编译的。因为这些原因，所以本章节所有的讨论都是基于编译器这条路径的。</p>
@@ -1961,6 +2006,9 @@ SHEBANG : <code>#!</code> ~<code>\n</code><sup>+</sup><a href="crates-and-source
 <p>Rust 编译器总是使用单个源文件作为输入来开启编译过程的，并且总是生成单个输出 crate。对输入源文件的处理可能导致其他源文件作为模块被加载进来。源文件的扩展名为 <code>.rs</code>。</p>
 <p>Rust 源文件描述了一个模块，其名称和（在当前 crate 的模块树中的）位置是从源文件外部定义的：要么通过引用源文件中的显式<a href="items/modules.html">模块(<em>Module</em>)</a>项，要么由 crate 本身的名称定义。每个源文件都是一个模块，但并非每个模块都需要自己的源文件：多个<a href="items/modules.html">模块定义</a>可以嵌套在同一个文件中。</p>
 <p>每个源文件包含一个由零个或多个<a href="items.html">程序项</a>定义组成的代码序列，并且这些源文件都可选地从应用于其内部模块的任意数量的<a href="attributes.html">属性</a>开始，大部分这些属性都会会影响编译器行为。匿名的 crate 根模块可附带一些应用于整个 crate 的属性。</p>
+<blockquote>
+<p><strong>注意</strong>：文件的内容前面可能有一个 <a href="input-format.html#shebang-removal">shebang</a>。</p>
+</blockquote>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 指定 crate 名称.
@@ -1974,19 +2022,6 @@ SHEBANG : <code>#!</code> ~<code>\n</code><sup>+</sup><a href="crates-and-source
 #![warn(non_camel_case_types)]
 <span class="boring">}
 </span></code></pre></pre>
-<h2 id="byte-order-mark"><a class="header" href="#byte-order-mark">Byte order mark</a></h2>
-<h2 id="字节顺序标记bom"><a class="header" href="#字节顺序标记bom">字节顺序标记(BOM)</a></h2>
-<p>可选的<a href="https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8"><em>UTF8字节序标记</em></a>（UTF8BOM产生式）表示该文件是用 UTF8 编码的。它只能出现在文件的开头，并且编译器会忽略它。</p>
-<h2 id="shebang"><a class="header" href="#shebang">Shebang</a></h2>
-<p>源文件可以有一个<a href="https://en.wikipedia.org/wiki/Shebang_(Unix)"><em>shebang</em></a>（SHEBANG产生式），它指示操作系统使用什么程序来执行此文件。它本质上是将源文件作为可执行脚本处理。shebang 只能出现在文件的开头（但是要在可选的 <em>UTF8BOM</em> 生产式之后）。它会被编译器忽略。例如：</p>
-<!-- ignore: tests don't like shebang -->
-<pre><code class="language-rust ignore">#!/usr/bin/env rustx
-
-fn main() {
-    println!(&quot;Hello!&quot;);
-}
-</code></pre>
-<p>为了避免与<a href="attributes.html">属性</a>混淆， Rust 对 shebang 句法做了一个限制：是 <code>#!</code> 字符不能后跟 token <code>[</code>，忽略中间的<a href="comments.html">注释</a>或<a href="whitespace.html">空白符</a>。如果违反此限制，则不会将其视为 shebang，而会将其视为属性的开始。</p>
 <h2 id="preludes-and-no_std"><a class="header" href="#preludes-and-no_std">Preludes and <code>no_std</code></a></h2>
 <h2 id="预导入包和-no_std"><a class="header" href="#预导入包和-no_std">预导入包和 <code>no_std</code></a></h2>
 <p>本节内容已经移入<a href="names/preludes.html">预导入包那章里</a>了。</p>
@@ -2049,8 +2084,8 @@ fn main() {
 <h1 id="条件编译"><a class="header" href="#条件编译">条件编译</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md">conditional-compilation.md</a><br />
-commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
-本章译文最后维护日期：2023-08-26</p>
+commit: 2610acf808799cdc1f4fa730ef549bba0402363a <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -2096,7 +2131,7 @@ commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
 <p>警告：任意配置集的配置选项可能与编译器设置集的配置选项设置相同的值。例如，在编译一个 Windows 目标时，可以执行命令行 <code>rustc --cfg &quot;unix&quot; program.rs</code>，这样就同时设置了 <code>unix</code> 和 <code>windows</code> 配置选项。但实际上这样做是不明智的。</p>
 </div>
 <h3 id="target_arch"><a class="header" href="#target_arch"><code>target_arch</code></a></h3>
-<p>键值对选项，用于一次性设置编译目标的 CPU 架构。该值类似于平台的目标三元组(target triple)<sup class="footnote-reference"><a href="#target-triple">1</a></sup>中的第一个元素，但也不完全相同。</p>
+<p>此键值对选项用于一次性设置编译目标的 CPU 架构。该值类似于平台的目标三元组(target triple)<sup class="footnote-reference"><a href="#target-triple">1</a></sup>中的第一个元素，但也不完全相同。</p>
 <p>示例值：</p>
 <ul>
 <li><code>&quot;x86&quot;</code></li>
@@ -2108,7 +2143,7 @@ commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
 <li><code>&quot;aarch64&quot;</code></li>
 </ul>
 <h3 id="target_feature"><a class="header" href="#target_feature"><code>target_feature</code></a></h3>
-<p>键值对选项，用于设置当前编译目标的可用平台特性。</p>
+<p>此键值对选项用于设置当前编译目标的可用平台特性。</p>
 <p>示例值：</p>
 <ul>
 <li><code>&quot;avx&quot;</code></li>
@@ -2121,7 +2156,7 @@ commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
 </ul>
 <p>有关可用特性的更多细节，请参见 <a href="attributes/codegen.html#the-target_feature-attribute"><code>target_feature</code>属性</a>。此外，编译器还为 <code>target_feature</code>选项提供了一个额外的 <code>crt-static</code>特性，它表示需要链接一个可用的<a href="linkage.html#static-and-dynamic-c-runtimes">静态C运行时</a>。</p>
 <h3 id="target_os"><a class="header" href="#target_os"><code>target_os</code></a></h3>
-<p>键值对选项，用于一次性设置编译目标的操作系统类型。该值类似于平台目标三元组中的第二和第三个元素。</p>
+<p>此键值对选项用于一次性设置编译目标的操作系统类型。该值类似于平台目标三元组中的第二和第三个元素。</p>
 <p>示例值：</p>
 <ul>
 <li><code>&quot;windows&quot;</code></li>
@@ -2136,7 +2171,7 @@ commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
 <li><code>&quot;none&quot;</code> (主要用于嵌入式目标架构)</li>
 </ul>
 <h3 id="target_family"><a class="header" href="#target_family"><code>target_family</code></a></h3>
-<p>键值对选项提供了对具体目标平台更通用化的描述，比如编译目标操作系统或架构。可以设置任意数量的键值对。
+<p>此键值对选项提供了对具体目标平台更通用化的描述，比如编译目标操作系统或架构。可以设置任意数量的键值对。
 最多设置一次，用于设置编译目标的操作系统类别。</p>
 <p>示例值：</p>
 <ul>
@@ -2148,7 +2183,7 @@ commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
 <h3 id="unix-和-windows"><a class="header" href="#unix-和-windows"><code>unix</code> 和 <code>windows</code></a></h3>
 <p>如果设置了 <code>target_family = &quot;unix&quot;</code> 则谓词 <code>unix</code> 为真；如果设置了 <code>target_family = &quot;windows&quot;</code> 则谓词 <code>windows</code> 为真。</p>
 <h3 id="target_env"><a class="header" href="#target_env"><code>target_env</code></a></h3>
-<p>键值对选项，用来进一步消除编译目标平台信息与所用 ABI 或 <code>libc</code> 相关的歧义。由于历史原因，仅当实际需要消除歧义时，才将此值定义为非空字符串。因此，例如在许多 GNU 平台上，此值将为空。该值类似于平台目标三元组的第四个元素，但也有区别。一个区别是在嵌入式 ABI 上，比如在目标为嵌入式系统时，<code>gnueabihf</code> 会简单地将 <code>target_env</code> 定义为 <code>&quot;gnu&quot;</code>。</p>
+<p>设置此键值对选项可用于进一步消除编译目标平台上因为要使用特定 ABI 或 <code>libc</code> 而带来的歧义。由于历史原因，仅当实际需要消除歧义时，才将此值定义为非空字符串。因此，例如在许多 GNU 平台上，此值将为空。该值类似于平台目标三元组的第四个元素，但也有区别。一个区别是在嵌入式 ABI 上，比如在目标为嵌入式系统时，<code>gnueabihf</code> 会简单地将 <code>target_env</code> 定义为 <code>&quot;gnu&quot;</code>。</p>
 <p>示例值：</p>
 <ul>
 <li><code>&quot;&quot;</code></li>
@@ -2157,10 +2192,19 @@ commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
 <li><code>&quot;musl&quot;</code></li>
 <li><code>&quot;sgx&quot;</code></li>
 </ul>
+<h3 id="target_abi"><a class="header" href="#target_abi"><code>target_abi</code></a></h3>
+<p>键值对选项是为了设置目标ABI的信息以进一步消除 <code>target_env</code> 可能引起的歧义。由于历史原因，此值仅在实际需要消除歧义时定义为非空字符串。因此，例如，在许多GNU平台上，该值将为空。</p>
+<p>示例值：</p>
+<ul>
+<li><code>&quot;&quot;</code></li>
+<li><code>&quot;llvm&quot;</code></li>
+<li><code>&quot;eabihf&quot;</code></li>
+<li><code>&quot;abi64&quot;</code></li>
+</ul>
 <h3 id="target_endian"><a class="header" href="#target_endian"><code>target_endian</code></a></h3>
-<p>键值对选项，根据编译目标的 CPU 的字节序(endianness)属性一次性设置值为 “little” 或 “big”。</p>
+<p>此键值对选项根据编译目标的 CPU 的字节序(endianness)属性一次性设置值为 “little” 或 “big”。</p>
 <h3 id="target_pointer_width"><a class="header" href="#target_pointer_width"><code>target_pointer_width</code></a></h3>
-<p>键值对选项，用于一次性设置编译目标的指针位宽(pointer width in bits)。</p>
+<p>此键值对选项用于一次性设置编译目标的指针位宽(pointer width in bits)。</p>
 <p>示例值：</p>
 <ul>
 <li><code>&quot;16&quot;</code></li>
@@ -2168,7 +2212,7 @@ commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
 <li><code>&quot;64&quot;</code></li>
 </ul>
 <h3 id="target_vendor"><a class="header" href="#target_vendor"><code>target_vendor</code></a></h3>
-<p>键值对选项，用于一次性设置编译目标的供应商。</p>
+<p>此键值对选项用于一次性设置编译目标的供应商。</p>
 <p>示例值：</p>
 <ul>
 <li><code>&quot;apple&quot;</code></li>
@@ -2177,7 +2221,7 @@ commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
 <li><code>&quot;unknown&quot;</code></li>
 </ul>
 <h3 id="target_has_atomic"><a class="header" href="#target_has_atomic"><code>target_has_atomic</code></a></h3>
-<p>该键值对选项用以设置目标平台上的每个原子操作的位宽，这些原子操作包括原子加载、原子存储、原子比较和原子交换。
+<p>此键值对选项用于设置目标平台上的每个原子操作的位宽，这些原子操作包括原子加载、原子存储、原子比较和原子交换。
 当cfg存在时，<a href="https://doc.rust-lang.org/core/sync/atomic/index.html"><code>core::sync::atomic</code></a> 下所有的稳定版的API 类型都可用来指定相关的原子位宽。</p>
 <p>可能的值有：</p>
 <ul>
@@ -4202,8 +4246,8 @@ impl&lt;T, U&gt; GenericTrait&lt;U&gt; for u32 where U: GenericTrait&lt;T&gt; {}
 <h1 id="外部块"><a class="header" href="#外部块">外部块</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md">external-blocks.md</a><br />
-commit: f0bb14c9bacca5d305e0488c43273ebe22fe928e <br />
-本章译文最后维护日期：2023-08-26</p>
+commit: 31f0c2c9e18044e3b1ba23d02993398546422d9c <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -4283,7 +4327,7 @@ extern &quot;stdcall&quot; { }
 <p>可选的 <code>modifiers</code>参数提供了一种为库指定链接修饰符的方法。
 修饰符被指定为以逗号分隔的字符串，每个修饰符的前缀都是 <code>+</code> 或 <code>-</code>，分别表示修饰符处于启用或禁用状态。
 当前不支持在单个 <code>link</code>属性中指定多个 <code>modifiers</code>参数，或在同一个 <code>modifiers</code>参数中指定多个相同的修饰符。</p>
-<p>例如: <code>#[link(name = &quot;mylib&quot;, kind = &quot;static&quot;, modifiers = &quot;+whole-archive&quot;)</code>.</p>
+<p>例如: <code>#[link(name = &quot;mylib&quot;, kind = &quot;static&quot;, modifiers = &quot;+whole-archive&quot;)]</code>。</p>
 <p>当从主机环境导入 symbols 时，<code>wasm_import_module</code>键可用于为外部(<code>extern</code>)块中的程序项指定 <a href="https://webassembly.github.io/spec/core/syntax/modules.html">WebAssembly模块</a>名称。如果未指定 <code>wasm_import_module</code>，则默认模块名为 <code>env</code>。</p>
 <!-- ignore: requires extern linking -->
 <pre><code class="language-rust ignore">#[link(name = &quot;crypto&quot;)]
@@ -5637,8 +5681,8 @@ let _ = five();
 <h1 id="代码生成属性"><a class="header" href="#代码生成属性">代码生成属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md">codegen.md</a><br />
-commit: 5d015ebbb987bee30a358fd86d28613ad04d9213 <br />
-本章译文最后维护日期：2023-11-05</p>
+commit: db390b7cfe1a476668576d78cf0e13510319bd8e <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <p>下述<a href="attributes/../attributes.html">属性</a>用于控制代码生成。</p>
 <h2 id="optimization-hints"><a class="header" href="#optimization-hints">Optimization hints</a></h2>
@@ -7257,8 +7301,8 @@ fn move_by_block_expression() {
 <h1 id="operator-expressions"><a class="header" href="#operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: ad09bb0675a22cd453cfdec58da24e4c407d15a8 <br />
-本章译文最后维护日期：2023-11-05</p>
+commit: 97c9ad16e565f2d47593a1ac56c806b2892e4223 <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -7707,9 +7751,24 @@ unsafe {
 assert_eq!(values[1], 3);
 <span class="boring">}
 </span></code></pre></pre>
-<h4 id="slice-dst-pointer-to-pointer-cast"><a class="header" href="#slice-dst-pointer-to-pointer-cast">Slice DST pointer to pointer cast</a></h4>
-<h4 id="dst切片指针到指针的强制转换"><a class="header" href="#dst切片指针到指针的强制转换">DST切片指针到指针的强制转换</a></h4>
-<p>对于像 <code>[T]</code> 和 <code>[U]</code> 这样的切片类型，裸指针类型 <code>*const [T]</code>、<code>*mut [T]</code>、<code>*const [U]</code> 和 <code>*mut [U]</code> 会记录切片中的元素数量。这些裸指针类型之间的强制转换也会保留元素的数量。请注意，这种类型的强制转换<em>不</em>一定会保留指针的引用对象的尺寸（例如，将 <code>*const [u16]</code> 强制转换为 <code>*const [u8]</code> 将导致后者只能引用原始大小一半的对象）。这同样适用于 <code>str</code> 和任何尾部字段为不定尺寸（unsized）的切片类型的复合类型，如结构体 <code>Foo(i32, [u8])</code> 或 <code>(u64, Foo)</code>。</p>
+<h4 id="pointer-to-pointer-cast"><a class="header" href="#pointer-to-pointer-cast">Pointer-to-pointer cast</a></h4>
+<h4 id="指针到指针的强制转换"><a class="header" href="#指针到指针的强制转换">指针到指针的强制转换</a></h4>
+<p><code>*const T</code> / <code>*mut T</code> 可以通过以下行为方式强制转换为 <code>*const U</code> / <code>*mut U</code>：</p>
+<ul>
+<li>
+<p>如果 <code>T</code> 和 <code>U</code> 的尺寸都相同，则返回的指针保持不变。</p>
+</li>
+<li>
+<p>如果 <code>T</code> 和 <code>U</code> 都是非固定尺寸(unsized)的，则返回的指针也保持不变。
+这两种情况下需要特别指出的是这些指针的元数据也会被准确地保存了下来。</p>
+<p>例如，从 <code>*const [T]</code>到 <code>*const [U]</code> 的强制转换仍保留了元素的数量。
+因此请注意，这种强制转换不一定保留指针所指向对象的尺寸（例如，将 <code>*const [u16]</code> 强制转换为 <code>*const [u8]</code> 将转换出一个只指向了原始内存宽度一半的裸指针）。
+这同样适用于 <code>str</code> 和任何尾部为非固定尺寸(unsized)的切片类型的复合类型，如 <code>struct Foo(i32, [u8])</code> 或<code>(u64, Foo)</code>。</p>
+</li>
+<li>
+<p>如果 <code>T</code> 非固定尺寸(unsized)的，而 <code>U</code> 是固定尺寸的，则强制转换将丢弃胖指针 <code>T</code> 的所有元数据，并生成由该指针的数据部分组成的瘦指针 <code>U</code>。</p>
+</li>
+</ul>
 <h2 id="赋值表达式"><a class="header" href="#赋值表达式">赋值表达式</a></h2>
 <h2 id="assignment-expressions"><a class="header" href="#assignment-expressions">Assignment expressions</a></h2>
 <blockquote>
@@ -7854,7 +7913,19 @@ fn example() {
 <p>截断，即一个值范围较大的变量A转换为值范围较小的变量B，如果超出范围，则将A减去B的区间长度。例如，128超出了i8类型的范围（-128,127），截断之后的值等于128-256=-128。</p>
 </div>
 <!-- 上面这几个链接从原文来替换时需小心 -->
-<div style="break-before: page; page-break-before: always;"></div><h1 id="grouped-expressions"><a class="header" href="#grouped-expressions">Grouped expressions</a></h1>
+<script>
+(function() {
+    var fragments = {
+        "#slice-dst-pointer-to-pointer-cast": "operator-expr.html#pointer-to-pointer-cast",
+    };
+    var target = fragments[window.location.hash];
+    if (target) {
+        var url = window.location.toString();
+        var base = url.substring(0, url.lastIndexOf('/'));
+        window.location.replace(base + "/" + target);
+    }
+})();
+</script><div style="break-before: page; page-break-before: always;"></div><h1 id="grouped-expressions"><a class="header" href="#grouped-expressions">Grouped expressions</a></h1>
 <h1 id="圆括号表达式分组表达式"><a class="header" href="#圆括号表达式分组表达式">圆括号表达式(分组表达式)</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/grouped-expr.md">grouped-expr.md</a><br />
@@ -9190,8 +9261,8 @@ let mut a = 0;
 <h1 id="模式"><a class="header" href="#模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
-commit: ae1eb71d5ab43a30163c9625823dea8ec332f6c0 <br />
-本章译文最后维护日期：2023-12-30</p>
+commit: 08e5cd4e3c8f6d56d793ac89eb8b9a0841d22f7a <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -9741,7 +9812,7 @@ match a {
    <a href="attributes.html"><em>OuterAttribute</em></a> <sup>*</sup><br />
    <code>..</code></p>
 </blockquote>
-<p>结构体模式匹配与子模式定义的所有条件匹配的结构体值。它也被用来<a href="patterns.html#destructuring">解构</a>结构体。</p>
+<p>结构体模式匹配与子模式定义的所有条件匹配的结构体值/枚举值/联合体值。它也被用来<a href="patterns.html#destructuring">解构</a>结构体值/枚举值/联合体值。</p>
 <p>在结构体模式中，结构体字段需通过名称、索引（对于元组结构体来说）来指代，或者通过使用 <code>..</code> 来忽略：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -9770,9 +9841,21 @@ match a {
     PointTuple {0: 10, ..} =&gt; (),
     PointTuple {..} =&gt; (),
 }
+
+<span class="boring">enum Message {
+</span><span class="boring">    Quit,
+</span><span class="boring">    Move { x: i32, y: i32 },
+</span><span class="boring">}
+</span><span class="boring">let m = Message::Quit;
+</span><span class="boring">
+</span>match m {
+    Message::Quit =&gt; (),
+    Message::Move {x: 10, y: 20} =&gt; (),
+    Message::Move {..} =&gt; (),
+}
 <span class="boring">}
 </span></code></pre></pre>
-<p>如果没使用 <code>..</code>，需要提供所有字段的详尽匹配：</p>
+<p>如果没使用 <code>..</code>，则需要一个用于匹配结构体的结构体模式来指定所有字段：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Struct {
@@ -9791,6 +9874,7 @@ match a {
 }
 <span class="boring">}
 </span></code></pre></pre>
+<p>用于匹配联合体的结构体模式必须且只能指定一个字段（请参阅<a href="items/unions.html#pattern-matching-on-unions">在联合体上使用模式匹配</a>）。</p>
 <p><em><code>ref</code> 和/或 <code>mut</code> IDENTIFIER</em> 这样的句法格式能匹配任意值，并将其绑定到与给定字段同名的变量上。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -9804,7 +9888,7 @@ match a {
 </span>let Struct{a: x, b: y, c: z} = struct_value;          // 解构所有的字段
 <span class="boring">}
 </span></code></pre></pre>
-<p>当一个结构体模式的子模式是可反驳型的，那这个结构体模式就是可反驳型的。</p>
+<p>如果 <em>PathInExpression</em> 被解析为带有多个变体的枚举的构造函数，或者它的一个子模式是可反驳型的，则此结构体模式是可反驳型的。</p>
 <h2 id="tuple-struct-patterns"><a class="header" href="#tuple-struct-patterns">Tuple struct patterns</a></h2>
 <h2 id="元组结构体模式"><a class="header" href="#元组结构体模式">元组结构体模式</a></h2>
 <blockquote>
@@ -9816,7 +9900,8 @@ match a {
 </blockquote>
 <p>元组结构体模式匹配元组结构体值和枚举值，这些值将与该模式的子模式定义的所有条件进行匹配。
 它还被用于<a href="patterns.html#destructuring">解构</a>元组结构体值或枚举值。</p>
-<p>当元组结构体模式的一个子模式是可反驳型的，则该元组结构体模式就是可反驳型的。</p>
+<p>当元组结构体模式的一个子模式是可反驳型的，则该元组结构体模式就是可反驳型的。
+如果 <em>PathInExpression</em> 被解析为带有多个变体的枚举的构造函数，或者它的一个子模式是可反驳型的，则该元组结构体模式是可反驳型的。</p>
 <h2 id="tuple-patterns"><a class="header" href="#tuple-patterns">Tuple patterns</a></h2>
 <h2 id="元组模式"><a class="header" href="#元组模式">元组模式</a></h2>
 <blockquote>
@@ -12856,8 +12941,8 @@ use alloc::rc::Rc;
 <h1 id="路径"><a class="header" href="#路径">路径</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/paths.md">paths.md</a><br />
-commit: e8ddd3cd6bfac1bb58a6890fd217eb031d620773 <br />
-本章译文最后维护日期：2023-12-30</p>
+commit: e33f255728a1b53bfe486f6d8e4a4752ec229c11 <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，<code>::</code> 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">程序项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用程序项。</p>
 <p>仅由标识符段组成的简单路径(simple paths)的两个示例：</p>
@@ -12960,7 +13045,7 @@ S::f();  // 调用固有实现
 <p><em>TypePathSegment</em> :<br />
    <em>PathIdentSegment</em> (<code>::</code><sup>?</sup> (<a href="paths.html#paths-in-expressions"><em>GenericArgs</em></a> | <em>TypePathFn</em>))<sup>?</sup></p>
 <p><em>TypePathFn</em> :<br />
-<code>(</code> <em>TypePathFnInputs</em><sup>?</sup> <code>)</code> (<code>-&gt;</code> <a href="types.html#type-expressions"><em>Type</em></a>)<sup>?</sup></p>
+<code>(</code> <em>TypePathFnInputs</em><sup>?</sup> <code>)</code> (<code>-&gt;</code> <a href="types.html#type-expressions"><em>TypeNoBounds</em></a>)<sup>?</sup></p>
 <p><em>TypePathFnInputs</em> :<br />
 <a href="types.html#type-expressions"><em>Type</em></a> (<code>,</code> <a href="types.html#type-expressions"><em>Type</em></a>)<sup>*</sup> <code>,</code><sup>?</sup></p>
 </blockquote>

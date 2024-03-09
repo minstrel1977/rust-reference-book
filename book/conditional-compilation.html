@@ -153,8 +153,8 @@
 <h1 id="条件编译"><a class="header" href="#条件编译">条件编译</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md">conditional-compilation.md</a><br />
-commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
-本章译文最后维护日期：2023-08-26</p>
+commit: 2610acf808799cdc1f4fa730ef549bba0402363a <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -200,7 +200,7 @@ commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
 <p>警告：任意配置集的配置选项可能与编译器设置集的配置选项设置相同的值。例如，在编译一个 Windows 目标时，可以执行命令行 <code>rustc --cfg &quot;unix&quot; program.rs</code>，这样就同时设置了 <code>unix</code> 和 <code>windows</code> 配置选项。但实际上这样做是不明智的。</p>
 </div>
 <h3 id="target_arch"><a class="header" href="#target_arch"><code>target_arch</code></a></h3>
-<p>键值对选项，用于一次性设置编译目标的 CPU 架构。该值类似于平台的目标三元组(target triple)<sup class="footnote-reference"><a href="#target-triple">1</a></sup>中的第一个元素，但也不完全相同。</p>
+<p>此键值对选项用于一次性设置编译目标的 CPU 架构。该值类似于平台的目标三元组(target triple)<sup class="footnote-reference"><a href="#target-triple">1</a></sup>中的第一个元素，但也不完全相同。</p>
 <p>示例值：</p>
 <ul>
 <li><code>&quot;x86&quot;</code></li>
@@ -212,7 +212,7 @@ commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
 <li><code>&quot;aarch64&quot;</code></li>
 </ul>
 <h3 id="target_feature"><a class="header" href="#target_feature"><code>target_feature</code></a></h3>
-<p>键值对选项，用于设置当前编译目标的可用平台特性。</p>
+<p>此键值对选项用于设置当前编译目标的可用平台特性。</p>
 <p>示例值：</p>
 <ul>
 <li><code>&quot;avx&quot;</code></li>
@@ -225,7 +225,7 @@ commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
 </ul>
 <p>有关可用特性的更多细节，请参见 <a href="attributes/codegen.html#the-target_feature-attribute"><code>target_feature</code>属性</a>。此外，编译器还为 <code>target_feature</code>选项提供了一个额外的 <code>crt-static</code>特性，它表示需要链接一个可用的<a href="linkage.html#static-and-dynamic-c-runtimes">静态C运行时</a>。</p>
 <h3 id="target_os"><a class="header" href="#target_os"><code>target_os</code></a></h3>
-<p>键值对选项，用于一次性设置编译目标的操作系统类型。该值类似于平台目标三元组中的第二和第三个元素。</p>
+<p>此键值对选项用于一次性设置编译目标的操作系统类型。该值类似于平台目标三元组中的第二和第三个元素。</p>
 <p>示例值：</p>
 <ul>
 <li><code>&quot;windows&quot;</code></li>
@@ -240,7 +240,7 @@ commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
 <li><code>&quot;none&quot;</code> (主要用于嵌入式目标架构)</li>
 </ul>
 <h3 id="target_family"><a class="header" href="#target_family"><code>target_family</code></a></h3>
-<p>键值对选项提供了对具体目标平台更通用化的描述，比如编译目标操作系统或架构。可以设置任意数量的键值对。
+<p>此键值对选项提供了对具体目标平台更通用化的描述，比如编译目标操作系统或架构。可以设置任意数量的键值对。
 最多设置一次，用于设置编译目标的操作系统类别。</p>
 <p>示例值：</p>
 <ul>
@@ -252,7 +252,7 @@ commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
 <h3 id="unix-和-windows"><a class="header" href="#unix-和-windows"><code>unix</code> 和 <code>windows</code></a></h3>
 <p>如果设置了 <code>target_family = &quot;unix&quot;</code> 则谓词 <code>unix</code> 为真；如果设置了 <code>target_family = &quot;windows&quot;</code> 则谓词 <code>windows</code> 为真。</p>
 <h3 id="target_env"><a class="header" href="#target_env"><code>target_env</code></a></h3>
-<p>键值对选项，用来进一步消除编译目标平台信息与所用 ABI 或 <code>libc</code> 相关的歧义。由于历史原因，仅当实际需要消除歧义时，才将此值定义为非空字符串。因此，例如在许多 GNU 平台上，此值将为空。该值类似于平台目标三元组的第四个元素，但也有区别。一个区别是在嵌入式 ABI 上，比如在目标为嵌入式系统时，<code>gnueabihf</code> 会简单地将 <code>target_env</code> 定义为 <code>&quot;gnu&quot;</code>。</p>
+<p>设置此键值对选项可用于进一步消除编译目标平台上因为要使用特定 ABI 或 <code>libc</code> 而带来的歧义。由于历史原因，仅当实际需要消除歧义时，才将此值定义为非空字符串。因此，例如在许多 GNU 平台上，此值将为空。该值类似于平台目标三元组的第四个元素，但也有区别。一个区别是在嵌入式 ABI 上，比如在目标为嵌入式系统时，<code>gnueabihf</code> 会简单地将 <code>target_env</code> 定义为 <code>&quot;gnu&quot;</code>。</p>
 <p>示例值：</p>
 <ul>
 <li><code>&quot;&quot;</code></li>
@@ -261,10 +261,19 @@ commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
 <li><code>&quot;musl&quot;</code></li>
 <li><code>&quot;sgx&quot;</code></li>
 </ul>
+<h3 id="target_abi"><a class="header" href="#target_abi"><code>target_abi</code></a></h3>
+<p>键值对选项是为了设置目标ABI的信息以进一步消除 <code>target_env</code> 可能引起的歧义。由于历史原因，此值仅在实际需要消除歧义时定义为非空字符串。因此，例如，在许多GNU平台上，该值将为空。</p>
+<p>示例值：</p>
+<ul>
+<li><code>&quot;&quot;</code></li>
+<li><code>&quot;llvm&quot;</code></li>
+<li><code>&quot;eabihf&quot;</code></li>
+<li><code>&quot;abi64&quot;</code></li>
+</ul>
 <h3 id="target_endian"><a class="header" href="#target_endian"><code>target_endian</code></a></h3>
-<p>键值对选项，根据编译目标的 CPU 的字节序(endianness)属性一次性设置值为 “little” 或 “big”。</p>
+<p>此键值对选项根据编译目标的 CPU 的字节序(endianness)属性一次性设置值为 “little” 或 “big”。</p>
 <h3 id="target_pointer_width"><a class="header" href="#target_pointer_width"><code>target_pointer_width</code></a></h3>
-<p>键值对选项，用于一次性设置编译目标的指针位宽(pointer width in bits)。</p>
+<p>此键值对选项用于一次性设置编译目标的指针位宽(pointer width in bits)。</p>
 <p>示例值：</p>
 <ul>
 <li><code>&quot;16&quot;</code></li>
@@ -272,7 +281,7 @@ commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
 <li><code>&quot;64&quot;</code></li>
 </ul>
 <h3 id="target_vendor"><a class="header" href="#target_vendor"><code>target_vendor</code></a></h3>
-<p>键值对选项，用于一次性设置编译目标的供应商。</p>
+<p>此键值对选项用于一次性设置编译目标的供应商。</p>
 <p>示例值：</p>
 <ul>
 <li><code>&quot;apple&quot;</code></li>
@@ -281,7 +290,7 @@ commit: c83f2ca026f43ba4b9b1c6c42ce28cf61abd891c <br />
 <li><code>&quot;unknown&quot;</code></li>
 </ul>
 <h3 id="target_has_atomic"><a class="header" href="#target_has_atomic"><code>target_has_atomic</code></a></h3>
-<p>该键值对选项用以设置目标平台上的每个原子操作的位宽，这些原子操作包括原子加载、原子存储、原子比较和原子交换。
+<p>此键值对选项用于设置目标平台上的每个原子操作的位宽，这些原子操作包括原子加载、原子存储、原子比较和原子交换。
 当cfg存在时，<a href="https://doc.rust-lang.org/core/sync/atomic/index.html"><code>core::sync::atomic</code></a> 下所有的稳定版的API 类型都可用来指定相关的原子位宽。</p>
 <p>可能的值有：</p>
 <ul>

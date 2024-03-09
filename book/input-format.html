@@ -149,15 +149,45 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="输入格式"><a class="header" href="#输入格式">输入格式</a></h1>
+                        <h1 id="input-format"><a class="header" href="#input-format">Input format</a></h1>
+<h1 id="输入格式"><a class="header" href="#输入格式">输入格式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/input-format.md">notation.md</a><br />
-commit: a2405b970b7c8222a483b82213adcb17d646c75d <br />
-本章译文最后维护日期：2020-11-5</p>
+commit: 8ba3c4911446cb390eb0602862caf53fac6da086 <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
-<p>Rust 输入被解释为用 UTF-8 编码的 Unicode 字符序列。</p>
-<!-- 2020-11-12-->
-<!-- checked -->
+<p>本章介绍如何将源文件解释为一系列 token。</p>
+<p>有关程序如何组织成文件的描述，请参见<a href="crates-and-source-files.html">crate 和源文件</a>。</p>
+<h2 id="source-encoding"><a class="header" href="#source-encoding">Source encoding</a></h2>
+<h2 id="源文件编码方式"><a class="header" href="#源文件编码方式">源文件编码方式</a></h2>
+<p>每个源文件都被解释为以 UTF-8编码的 Unicode字符序列。
+如果文件不是有效的 UTF-8编码方式，则报错。</p>
+<h2 id="byte-order-mark-removal"><a class="header" href="#byte-order-mark-removal">Byte order mark removal</a></h2>
+<h2 id="bom移除"><a class="header" href="#bom移除">BOM移除</a></h2>
+<p>如果字符序列中的第一个字符是 <code>U+FEFF</code> (<a href="https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8">BYTE ORDER MARK</a>)，则会将其移除。</p>
+<h2 id="crlf-normalization"><a class="header" href="#crlf-normalization">CRLF normalization</a></h2>
+<h2 id="crlf归一化"><a class="header" href="#crlf归一化">CRLF归一化</a></h2>
+<p><code>U+000D</code>(CR) 后紧跟着 <code>U+000A</code>(LF) 这样的字符对都被一个 <code>U+000A</code>(LF) 所代替。</p>
+<p>其他时候出现的字符<code>U+000D</code>(CR) 则保留在原位（它们被视为<a href="whitespace.html">空白符</a>）。</p>
+<h2 id="shebang-removal"><a class="header" href="#shebang-removal">Shebang removal</a></h2>
+<h2 id="shebang-移除"><a class="header" href="#shebang-移除">Shebang 移除</a></h2>
+<p>如果字符序列以字符 <code>!#</code> 起行，那直到并包括第一个 <code>U+000A</code>(LF) 的字符将被从此字符序列中移除。</p>
+<p>例如，以下文件的第一行将被忽略：</p>
+<!-- ignore: tests don't like shebang -->
+<pre><code class="language-rust ignore">#!/usr/bin/env rustx
+
+fn main() {
+    println!(&quot;Hello!&quot;);
+}
+</code></pre>
+<p>作为例外，如果 <code>#!</code> 字符后面跟着一个 <code>[</code>token（此时需要忽略中间的[comments][注释]或<a href="whitespace.html">空白符</a>），则不会删除任何内容。</p>
+<p>这样可以防止删除了源文件开头的<a href="attributes.html">内部属性</a>。</p>
+<blockquote>
+<p><strong>注意</strong>： 标准库的 <a href="../std/macro.include.html"><code>include!</code></a>宏读取的文件会采用BOM移除、CRLF归一化和 shebang删除的处理方式。但 <a href="../std/macro.include_str.html"><code>include_str!</code></a> 和<a href="../std/macro.include_bytes.html"><code>include_bytes!</code></a>宏没有采用。</p>
+</blockquote>
+<h2 id="tokenization"><a class="header" href="#tokenization">Tokenization</a></h2>
+<h2 id="token化"><a class="header" href="#token化">token化</a></h2>
+<p>源文件被前面步骤处理后的的字符序列将如本章剩余部分所述那样被转换为 token。</p>
 
                     </main>
 

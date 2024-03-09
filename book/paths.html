@@ -153,8 +153,8 @@
 <h1 id="路径"><a class="header" href="#路径">路径</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/paths.md">paths.md</a><br />
-commit: e8ddd3cd6bfac1bb58a6890fd217eb031d620773 <br />
-本章译文最后维护日期：2023-12-30</p>
+commit: e33f255728a1b53bfe486f6d8e4a4752ec229c11 <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，<code>::</code> 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">程序项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用程序项。</p>
 <p>仅由标识符段组成的简单路径(simple paths)的两个示例：</p>
@@ -257,7 +257,7 @@ S::f();  // 调用固有实现
 <p><em>TypePathSegment</em> :<br />
    <em>PathIdentSegment</em> (<code>::</code><sup>?</sup> (<a href="#paths-in-expressions"><em>GenericArgs</em></a> | <em>TypePathFn</em>))<sup>?</sup></p>
 <p><em>TypePathFn</em> :<br />
-<code>(</code> <em>TypePathFnInputs</em><sup>?</sup> <code>)</code> (<code>-&gt;</code> <a href="types.html#type-expressions"><em>Type</em></a>)<sup>?</sup></p>
+<code>(</code> <em>TypePathFnInputs</em><sup>?</sup> <code>)</code> (<code>-&gt;</code> <a href="types.html#type-expressions"><em>TypeNoBounds</em></a>)<sup>?</sup></p>
 <p><em>TypePathFnInputs</em> :<br />
 <a href="types.html#type-expressions"><em>Type</em></a> (<code>,</code> <a href="types.html#type-expressions"><em>Type</em></a>)<sup>*</sup> <code>,</code><sup>?</sup></p>
 </blockquote>

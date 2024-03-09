@@ -2,8 +2,8 @@
 # 路径
 
 >[paths.md](https://github.com/rust-lang/reference/blob/master/src/paths.md)\
->commit: e8ddd3cd6bfac1bb58a6890fd217eb031d620773 \
->本章译文最后维护日期：2023-12-30
+>commit: e33f255728a1b53bfe486f6d8e4a4752ec229c11 \
+>本章译文最后维护日期：2024-03-09
 
 *路径*是一个或多个由命名空间<span class="parenthetical">限定符(`::`)</span>*逻辑*分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，`::` 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的[程序项][item]或[变量][variable]。如果路径包含多个路径段，则总是引用程序项。
 
@@ -125,7 +125,7 @@ S::f();  // 调用固有实现
 > &nbsp;&nbsp; _PathIdentSegment_ (`::`<sup>?</sup> ([_GenericArgs_] | _TypePathFn_))<sup>?</sup>
 >
 > _TypePathFn_ :\
-> `(` _TypePathFnInputs_<sup>?</sup> `)` (`->` [_Type_])<sup>?</sup>
+> `(` _TypePathFnInputs_<sup>?</sup> `)` (`->` [_TypeNoBounds_])<sup>?</sup>
 >
 > _TypePathFnInputs_ :\
 > [_Type_] (`,` [_Type_])<sup>\*</sup> `,`<sup>?</sup>
@@ -360,6 +360,7 @@ mod without { // crate::without
 [_LiteralExpression_]: expressions/literal-expr.md
 [_SimplePathSegment_]: #simple-paths
 [_Type_]: types.md#type-expressions
+[_TypeNoBounds_]: types.md#type-expressions
 [literal]: expressions/literal-expr.md
 [item]: items.md
 [variable]: variables.md

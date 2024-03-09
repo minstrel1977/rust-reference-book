@@ -2,8 +2,8 @@
 # 代码生成属性
 
 >[codegen.md](https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md)\
->commit: 5d015ebbb987bee30a358fd86d28613ad04d9213 \
->本章译文最后维护日期：2023-11-05
+>commit: db390b7cfe1a476668576d78cf0e13510319bd8e \
+>本章译文最后维护日期：2024-03-09
 
 下述[属性][attributes]用于控制代码生成。
 

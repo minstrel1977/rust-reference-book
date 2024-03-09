@@ -2,8 +2,8 @@
 # 注释
 
 >[comments.md](https://github.com/rust-lang/reference/blob/master/src/comments.md)\
->commit: b1d0c5bfc737b614c77579c9ac53d6653a6ef6f5 \
->本章译文最后维护日期：2023-06-11
+>commit: fa56fdba0e9dba35eb29d11c95c7a009ed67cb35 \
+>本章译文最后维护日期：2024-03-09
 
 > **<sup>词法分析</sup>**\
 > LINE_COMMENT :(译者注：行注释)\
@@ -35,7 +35,7 @@
 > &nbsp;&nbsp; | INNER_BLOCK_DOC
 >
 > _IsolatedCR_ :\
-> &nbsp;&nbsp; _后面没有跟 `\n` 的 `\r`_
+> &nbsp;&nbsp; \\r
 
 ## Non-doc comments
 ## 非文档型注释
@@ -51,7 +51,9 @@ Rust 代码中的注释一般遵循 C++ 风格的行（`//`）和块（`/* ... *
 
 以 `//!` 开始的行文档型注释，以及 `/*! ... */` 形式的块文档型注释属于注释体所在对象的文档型注释，而非注释体之后的程序项的。也就是说，它们等同于把注释内容写入 `#![doc="..."]` 里。`//!` 注释通常用于标注模块位于的文件。
 
-孤立的 CRs（`\r`），如果其后没有紧跟有 LF（`\n`），则不能出现在文档型注释中。
+文档型注释中不允许出现字符`U+000D`(CR)。
+
+> **注意**:  `U+000D`(CR)后直跟`U+000A`(LF) 的字符序列会预先被转换为 `U+000A` (LF)。
 
 ## 示例
 

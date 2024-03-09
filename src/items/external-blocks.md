@@ -2,8 +2,8 @@
 # 外部块
 
 >[external-blocks.md](https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md)\
->commit: f0bb14c9bacca5d305e0488c43273ebe22fe928e \
->本章译文最后维护日期：2023-08-26
+>commit: 31f0c2c9e18044e3b1ba23d02993398546422d9c \
+>本章译文最后维护日期：2024-03-09
 
 > **<sup>句法</sup>**\
 > _ExternBlock_ :\
@@ -100,7 +100,7 @@ extern "C" {
 修饰符被指定为以逗号分隔的字符串，每个修饰符的前缀都是 `+` 或 `-`，分别表示修饰符处于启用或禁用状态。
 当前不支持在单个 `link`属性中指定多个 `modifiers`参数，或在同一个 `modifiers`参数中指定多个相同的修饰符。
 
-例如: `#[link(name = "mylib", kind = "static", modifiers = "+whole-archive")`.
+例如: `#[link(name = "mylib", kind = "static", modifiers = "+whole-archive")]`。
 
 当从主机环境导入 symbols 时，`wasm_import_module`键可用于为外部(`extern`)块中的程序项指定 [WebAssembly模块][WebAssembly module]名称。如果未指定 `wasm_import_module`，则默认模块名为 `env`。
 

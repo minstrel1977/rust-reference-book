@@ -2,8 +2,8 @@
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit: ad09bb0675a22cd453cfdec58da24e4c407d15a8 \
->本章译文最后维护日期：2023-11-05
+>commit: 97c9ad16e565f2d47593a1ac56c806b2892e4223 \
+>本章译文最后维护日期：2024-03-09
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -477,10 +477,19 @@ unsafe {
 assert_eq!(values[1], 3);
 ```
 
-#### Slice DST pointer to pointer cast
-#### DST切片指针到指针的强制转换
+#### Pointer-to-pointer cast
+#### 指针到指针的强制转换
 
-对于像 `[T]` 和 `[U]` 这样的切片类型，裸指针类型 `*const [T]`、`*mut [T]`、`*const [U]` 和 `*mut [U]` 会记录切片中的元素数量。这些裸指针类型之间的强制转换也会保留元素的数量。请注意，这种类型的强制转换*不*一定会保留指针的引用对象的尺寸（例如，将 `*const [u16]` 强制转换为 `*const [u8]` 将导致后者只能引用原始大小一半的对象）。这同样适用于 `str` 和任何尾部字段为不定尺寸（unsized）的切片类型的复合类型，如结构体 `Foo(i32, [u8])` 或 `(u64, Foo)`。
+`*const T` / `*mut T` 可以通过以下行为方式强制转换为 `*const U` / `*mut U`：
+
+- 如果 `T` 和 `U` 的尺寸都相同，则返回的指针保持不变。
+- 如果 `T` 和 `U` 都是非固定尺寸(unsized)的，则返回的指针也保持不变。
+  这两种情况下需要特别指出的是这些指针的元数据也会被准确地保存了下来。
+
+  例如，从 `*const [T]`到 `*const [U]` 的强制转换仍保留了元素的数量。
+  因此请注意，这种强制转换不一定保留指针所指向对象的尺寸（例如，将 `*const [u16]` 强制转换为 `*const [u8]` 将转换出一个只指向了原始内存宽度一半的裸指针）。
+  这同样适用于 `str` 和任何尾部为非固定尺寸(unsized)的切片类型的复合类型，如 `struct Foo(i32, [u8])` 或`(u64, Foo)`。
+- 如果 `T` 非固定尺寸(unsized)的，而 `U` 是固定尺寸的，则强制转换将丢弃胖指针 `T` 的所有元数据，并生成由该指针的数据部分组成的瘦指针 `U`。
 
 ## 赋值表达式
 ## Assignment expressions
@@ -690,3 +699,17 @@ fn example() {
 [_TypeNoBounds_]: ../types.md#type-expressions
 [_RangeExpression_]: ./range-expr.md
 [_UnderscoreExpression_]: ./underscore-expr.md
+
+<script>
+(function() {
+    var fragments = {
+        "#slice-dst-pointer-to-pointer-cast": "operator-expr.html#pointer-to-pointer-cast",
+    };
+    var target = fragments[window.location.hash];
+    if (target) {
+        var url = window.location.toString();
+        var base = url.substring(0, url.lastIndexOf('/'));
+        window.location.replace(base + "/" + target);
+    }
+})();
+</script>

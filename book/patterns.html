@@ -153,8 +153,8 @@
 <h1 id="模式"><a class="header" href="#模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
-commit: ae1eb71d5ab43a30163c9625823dea8ec332f6c0 <br />
-本章译文最后维护日期：2023-12-30</p>
+commit: 08e5cd4e3c8f6d56d793ac89eb8b9a0841d22f7a <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -704,7 +704,7 @@ match a {
    <a href="attributes.html"><em>OuterAttribute</em></a> <sup>*</sup><br />
    <code>..</code></p>
 </blockquote>
-<p>结构体模式匹配与子模式定义的所有条件匹配的结构体值。它也被用来<a href="#destructuring">解构</a>结构体。</p>
+<p>结构体模式匹配与子模式定义的所有条件匹配的结构体值/枚举值/联合体值。它也被用来<a href="#destructuring">解构</a>结构体值/枚举值/联合体值。</p>
 <p>在结构体模式中，结构体字段需通过名称、索引（对于元组结构体来说）来指代，或者通过使用 <code>..</code> 来忽略：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -733,9 +733,21 @@ match a {
     PointTuple {0: 10, ..} =&gt; (),
     PointTuple {..} =&gt; (),
 }
+
+<span class="boring">enum Message {
+</span><span class="boring">    Quit,
+</span><span class="boring">    Move { x: i32, y: i32 },
+</span><span class="boring">}
+</span><span class="boring">let m = Message::Quit;
+</span><span class="boring">
+</span>match m {
+    Message::Quit =&gt; (),
+    Message::Move {x: 10, y: 20} =&gt; (),
+    Message::Move {..} =&gt; (),
+}
 <span class="boring">}
 </span></code></pre></pre>
-<p>如果没使用 <code>..</code>，需要提供所有字段的详尽匹配：</p>
+<p>如果没使用 <code>..</code>，则需要一个用于匹配结构体的结构体模式来指定所有字段：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Struct {
@@ -754,6 +766,7 @@ match a {
 }
 <span class="boring">}
 </span></code></pre></pre>
+<p>用于匹配联合体的结构体模式必须且只能指定一个字段（请参阅<a href="items/unions.html#pattern-matching-on-unions">在联合体上使用模式匹配</a>）。</p>
 <p><em><code>ref</code> 和/或 <code>mut</code> IDENTIFIER</em> 这样的句法格式能匹配任意值，并将其绑定到与给定字段同名的变量上。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -767,7 +780,7 @@ match a {
 </span>let Struct{a: x, b: y, c: z} = struct_value;          // 解构所有的字段
 <span class="boring">}
 </span></code></pre></pre>
-<p>当一个结构体模式的子模式是可反驳型的，那这个结构体模式就是可反驳型的。</p>
+<p>如果 <em>PathInExpression</em> 被解析为带有多个变体的枚举的构造函数，或者它的一个子模式是可反驳型的，则此结构体模式是可反驳型的。</p>
 <h2 id="tuple-struct-patterns"><a class="header" href="#tuple-struct-patterns">Tuple struct patterns</a></h2>
 <h2 id="元组结构体模式"><a class="header" href="#元组结构体模式">元组结构体模式</a></h2>
 <blockquote>
@@ -779,7 +792,8 @@ match a {
 </blockquote>
 <p>元组结构体模式匹配元组结构体值和枚举值，这些值将与该模式的子模式定义的所有条件进行匹配。
 它还被用于<a href="#destructuring">解构</a>元组结构体值或枚举值。</p>
-<p>当元组结构体模式的一个子模式是可反驳型的，则该元组结构体模式就是可反驳型的。</p>
+<p>当元组结构体模式的一个子模式是可反驳型的，则该元组结构体模式就是可反驳型的。
+如果 <em>PathInExpression</em> 被解析为带有多个变体的枚举的构造函数，或者它的一个子模式是可反驳型的，则该元组结构体模式是可反驳型的。</p>
 <h2 id="tuple-patterns"><a class="header" href="#tuple-patterns">Tuple patterns</a></h2>
 <h2 id="元组模式"><a class="header" href="#元组模式">元组模式</a></h2>
 <blockquote>

@@ -153,8 +153,8 @@
 <h1 id="注释"><a class="header" href="#注释">注释</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/comments.md">comments.md</a><br />
-commit: b1d0c5bfc737b614c77579c9ac53d6653a6ef6f5 <br />
-本章译文最后维护日期：2023-06-11</p>
+commit: fa56fdba0e9dba35eb29d11c95c7a009ed67cb35 <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>词法分析</sup></strong><br />
@@ -180,7 +180,7 @@ LINE_COMMENT :(译者注：行注释)<br />
    | OUTER_BLOCK_DOC<br />
    | INNER_BLOCK_DOC</p>
 <p><em>IsolatedCR</em> :<br />
-   <em>后面没有跟 <code>\n</code> 的 <code>\r</code></em></p>
+   \r</p>
 </blockquote>
 <h2 id="non-doc-comments"><a class="header" href="#non-doc-comments">Non-doc comments</a></h2>
 <h2 id="非文档型注释"><a class="header" href="#非文档型注释">非文档型注释</a></h2>
@@ -190,7 +190,10 @@ LINE_COMMENT :(译者注：行注释)<br />
 <h2 id="文档型注释"><a class="header" href="#文档型注释">文档型注释</a></h2>
 <p>以<em>三个</em>斜线（<code>///</code>）开始的行文档型注释，以及块文档型注释（<code>/** ... */</code>），均为外部文档型注释。它们被当做 <a href="https://doc.rust-lang.org/rustdoc/the-doc-attribute.html"><code>doc</code>属性</a>的特殊句法解析。也就是说，它们等同于把注释内容写入 <code>#[doc=&quot;...&quot;]</code> 里。例如：<code>/// Foo</code> 等同于 <code>#[doc=&quot;Foo&quot;]</code>，<code>/** Bar */</code> 等同于 <code>#[doc=&quot;Bar&quot;]</code>。</p>
 <p>以 <code>//!</code> 开始的行文档型注释，以及 <code>/*! ... */</code> 形式的块文档型注释属于注释体所在对象的文档型注释，而非注释体之后的程序项的。也就是说，它们等同于把注释内容写入 <code>#![doc=&quot;...&quot;]</code> 里。<code>//!</code> 注释通常用于标注模块位于的文件。</p>
-<p>孤立的 CRs（<code>\r</code>），如果其后没有紧跟有 LF（<code>\n</code>），则不能出现在文档型注释中。</p>
+<p>文档型注释中不允许出现字符<code>U+000D</code>(CR)。</p>
+<blockquote>
+<p><strong>注意</strong>:  <code>U+000D</code>(CR)后直跟<code>U+000A</code>(LF) 的字符序列会预先被转换为 <code>U+000A</code> (LF)。</p>
+</blockquote>
 <h2 id="示例"><a class="header" href="#示例">示例</a></h2>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

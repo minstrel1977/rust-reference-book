@@ -2,8 +2,8 @@
 # 模式
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
->commit: ae1eb71d5ab43a30163c9625823dea8ec332f6c0 \
->本章译文最后维护日期：2023-12-30
+>commit: 08e5cd4e3c8f6d56d793ac89eb8b9a0841d22f7a \
+>本章译文最后维护日期：2024-03-09
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\
@@ -614,7 +614,7 @@ assert_eq!(a, b);
 [_OuterAttribute_]: attributes.md
 [TUPLE_INDEX]: tokens.md#tuple-index
 
-结构体模式匹配与子模式定义的所有条件匹配的结构体值。它也被用来[解构](#destructuring)结构体。
+结构体模式匹配与子模式定义的所有条件匹配的结构体值/枚举值/联合体值。它也被用来[解构](#destructuring)结构体值/枚举值/联合体值。
 
 在结构体模式中，结构体字段需通过名称、索引（对于元组结构体来说）来指代，或者通过使用 `..` 来忽略：
 
@@ -644,9 +644,21 @@ match t {
     PointTuple {0: 10, ..} => (),
     PointTuple {..} => (),
 }
+
+# enum Message {
+#     Quit,
+#     Move { x: i32, y: i32 },
+# }
+# let m = Message::Quit;
+#
+match m {
+    Message::Quit => (),
+    Message::Move {x: 10, y: 20} => (),
+    Message::Move {..} => (),
+}
 ```
 
-如果没使用 `..`，需要提供所有字段的详尽匹配：
+如果没使用 `..`，则需要一个用于匹配结构体的结构体模式来指定所有字段：
 
 ```rust
 # struct Struct {
@@ -665,6 +677,8 @@ match struct_value {
 }
 ```
 
+用于匹配联合体的结构体模式必须且只能指定一个字段（请参阅[在联合体上使用模式匹配][Pattern matching on unions]）。
+
 _`ref` 和/或 `mut` IDENTIFIER_ 这样的句法格式能匹配任意值，并将其绑定到与给定字段同名的变量上。
 
 ```rust
@@ -678,7 +692,7 @@ _`ref` 和/或 `mut` IDENTIFIER_ 这样的句法格式能匹配任意值，并�
 let Struct{a: x, b: y, c: z} = struct_value;          // 解构所有的字段
 ```
 
-当一个结构体模式的子模式是可反驳型的，那这个结构体模式就是可反驳型的。
+如果 _PathInExpression_ 被解析为带有多个变体的枚举的构造函数，或者它的一个子模式是可反驳型的，则此结构体模式是可反驳型的。
 
 ## Tuple struct patterns
 ## 元组结构体模式
@@ -694,6 +708,7 @@ let Struct{a: x, b: y, c: z} = struct_value;          // 解构所有的字段
 它还被用于[解构](#destructuring)元组结构体值或枚举值。
 
 当元组结构体模式的一个子模式是可反驳型的，则该元组结构体模式就是可反驳型的。
+如果 _PathInExpression_ 被解析为带有多个变体的枚举的构造函数，或者它的一个子模式是可反驳型的，则该元组结构体模式是可反驳型的。
 
 ## Tuple patterns
 ## 元组模式
@@ -869,6 +884,7 @@ _or模式_是能匹配两个或多个并列子模式（例如：`A | B | C`）�
 [literal expression]: expressions/literal-expr.md
 [negating]: expressions/operator-expr.md#negation-operators
 [path]: expressions/path-expr.md
+[pattern matching on unions]: items/unions.md#pattern-matching-on-unions
 [range expressions]: expressions/range-expr.md
 [structs]: items/structs.md
 [tuples]: types/tuple.md

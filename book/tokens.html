@@ -152,8 +152,8 @@
                         <h1 id="tokens"><a class="header" href="#tokens">Tokens</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/tokens.md">tokens.md</a><br />
-commit: 52dadd7d14149a2dc39181063cfd343c7ecc3b3d <br />
-本章译文最后维护日期：2024-02-03</p>
+commit: 5afb503a4c1ea3c84370f8f4c08a1cddd1cdf6ad <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <p>token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：</p>
 <ul>
@@ -186,6 +186,9 @@ commit: 52dadd7d14149a2dc39181063cfd343c7ecc3b3d <br />
 <div class="footnote-definition" id="nsets"><sup class="footnote-definition-label">1</sup>
 <p>字面量两侧的 <code>#</code> 数量必须相同。</p>
 </div>
+<blockquote>
+<p><strong>注意</strong>: 字符和字符串字面量token 不会包括 <code>U+000D</code>(CR)后紧跟 <code>U+000A</code>(LF) 的字符序列：这对字符会在编译器读取源文件时被转换为单个 <code>U+000A</code>(LF)字符。</p>
+</blockquote>
 <h4 id="ascii-escapes"><a class="header" href="#ascii-escapes">ASCII escapes</a></h4>
 <h4 id="ascii-转义"><a class="header" href="#ascii-转义">ASCII 转义</a></h4>
 <div class="table-wrapper"><table><thead><tr><th></th><th>名称</th></tr></thead><tbody>
@@ -294,11 +297,10 @@ STRING_LITERAL :<br />
    <code>\</code> <em>后跟</em> \n</p>
 </blockquote>
 <p><em>字符串字面量</em>是位于两个 <code>U+0022</code> （双引号 <code>&quot;</code>）字符内的任意 Unicode 字符序列。当它是 <code>U+0022</code> 自身时，必须前置<em>转义</em>字符 <code>U+005C</code>（<code>\</code>）。</p>
-<p>字符串字面量允许换行书写。
-换行可以用换行符（<code>U+000A</code>）表示，也可以用一对回车符换行符（<code>U+000D</code>, <code>U+000A</code>）表示。
-这两种字节序列通常都会被转换为 <code>U+000A</code>，</p>
-<p>但当非转义的字符 <code>U+005C</code>（<code>\</code>）后面紧跟着一个换行符时，换行符并不会出现在字符串中。
-详细信息请参见<a href="expressions/literal-expr.html#string-continuation-escapes">字符串接续符转义</a>。</p>
+<p>字符串字面量允许使用字符<code>U+000A</code>(LF) 的形式来换行书写。
+但当非转义的字符 <code>U+005C</code>（<code>\</code>）后面紧跟着一个换行符时，换行符并不会出现在字符串中。
+详细信息请参见<a href="expressions/literal-expr.html#string-continuation-escapes">字符串接续符转义</a>。
+字符<code>U+000D</code>(CR) 除了作为这种字符串接续符转义的一部分之外，不能出现在字符串字面量中。</p>
 <h4 id="character-escapes"><a class="header" href="#character-escapes">Character escapes</a></h4>
 <h4 id="字符转义"><a class="header" href="#字符转义">字符转义</a></h4>
 <p>不管是字符字面量，还是非原生字符串字面量，Rust 都为其提供了额外的<em>转义</em>功能。转义以一个 <code>U+005C</code>（<code>\</code>）开始，并后跟如下形式之一：</p>
@@ -319,7 +321,9 @@ RAW_STRING_LITERAL :<br />
       <code>&quot;</code> ( ~ <em>IsolatedCR</em> )<sup>* (非贪婪模式)</sup> <code>&quot;</code><br />
    | <code>#</code> RAW_STRING_CONTENT <code>#</code></p>
 </blockquote>
-<p>原生字符串字面量不做任何转义。它以字符 <code>U+0072</code>（<code>r</code>）后跟小于256个字符 <code>U+0023</code>（<code>#</code>），以及一个字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；中间<em>原生字符串文本主体</em>部分可包含任意的 Unicode 字符序列；再后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。</p>
+<p>原生字符串字面量不做任何转义。它以字符 <code>U+0072</code>（<code>r</code>）后跟小于256个字符 <code>U+0023</code>（<code>#</code>），以及一个字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始。
+中间<em>原生字符串主体</em>部分可包含除了 <code>U+000D</code>(CR) 之外的任意 Unicode 字符序列。
+最后再后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）以及跟与字符串主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）的字符来表示字符串主体的结束。</p>
 <p>所有包含在原生字符串文本主体中的 Unicode 字符都代表他们自身：字符 <code>U+0022</code>（双引号 <code>&quot;</code>）（除非后跟的纯 <code>U+0023</code> (<code>#</code>)字符串与文本主体开始前的对称相等）或字符 <code>U+005C</code>（<code>\</code>）此时都没有特殊含义。</p>
 <p>字符串字面量示例:</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
@@ -360,6 +364,10 @@ BYTE_STRING_LITERAL :<br />
 </blockquote>
 <p>非原生<em>字节串字面量</em>是 ASCII 字符和转义字符组成的字符序列，形式是以字符 <code>U+0062</code>（<code>b</code>）和字符 <code>U+0022</code>（双引号 <code>&quot;</code>）组合开头，以字符 <code>U+0022</code> 结尾。如果字面量中包含字符 <code>U+0022</code>，则必须由前置的 <code>U+005C</code>（<code>\</code>）<em>转义</em>。
 或者，字节串字面量也可以是<em>原生字节串字面量</em>（下面有其定义）。</p>
+<p>字节串字面量允许使用字符<code>U+000A</code>(LF) 的形式来换行书写。
+但当非转义的字符 <code>U+005C</code>（<code>\</code>）后面紧跟着一个换行符时，换行符并不会出现在字符串中。
+详细信息请参见<a href="expressions/literal-expr.html#string-continuation-escapes">字符串接续符转义</a>。
+字符<code>U+000D</code>(CR) 除了作为这种字符串接续符转义的一部分之外，不能出现在字节串字面量中。</p>
 <p>一些额外的<em>转义</em>可以在字节或非原生字节串字面量中使用，转义以 <code>U+005C</code>（<code>\</code>）开始，并后跟如下形式之一：</p>
 <ul>
 <li><em>字节转义</em>以 <code>U+0078</code> (<code>x</code>)开始，后跟恰好两位<em>十六进制数字</em>来表示十六进制值代表的字节。</li>
@@ -374,12 +382,15 @@ BYTE_STRING_LITERAL :<br />
 RAW_BYTE_STRING_LITERAL :<br />
    <code>br</code> RAW_BYTE_STRING_CONTENT SUFFIX<sup>?</sup></p>
 <p>RAW_BYTE_STRING_CONTENT :<br />
-      <code>&quot;</code> ASCII<sup>* (非贪婪模式)</sup> <code>&quot;</code><br />
+      <code>&quot;</code> ASCII_FOR_RAW<sup>* (非贪婪模式)</sup> <code>&quot;</code><br />
    | <code>#</code> RAW_BYTE_STRING_CONTENT <code>#</code></p>
-<p>ASCII :<br />
-   <em>任何 ASCII 字符（0x00 到 0x7F）</em></p>
+<p>ASCII_FOR_RAW :<br />
+   <em>除了 IsolatedCR 外的任何 ASCII 字符（0x00 到 0x7F）</em></p>
 </blockquote>
-<p>原生字节串字面量不做任何转义。它们以字符 <code>U+0062</code>（<code>b</code>）后跟 <code>U+0072</code>（<code>r</code>），再后跟小于256个字符 <code>U+0023</code>（<code>#</code>）及字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；之后是<em>原生字节串文本主体</em>，这部分可包含任意的 ASCII 字符序列；后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。原生字节串字面量不能包含任何非 ASCII 字节。</p>
+<p>原生字节串字面量不做任何转义。它们以字符 <code>U+0062</code>（<code>b</code>）后跟 <code>U+0072</code>（<code>r</code>），再后跟小于256个字符 <code>U+0023</code>（<code>#</code>）及字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始。
+中间是<em>原生字节串主体</em>，这部分可包含除了 <code>U+000D</code>(CR) 外的任意的 ASCII 字符序列。
+最后再后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）以及跟与字符串主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）的字符来表示字符串主体的结束。
+原生字节串字面量不能包含任何非 ASCII 字节。</p>
 <p>原生字节串文本主体中的所有字符都代表它们自身的 ASCII 编码，字符 <code>U+0022</code>（双引号 <code>&quot;</code>）（除非后跟的纯 <code>U+0023</code>（<code>#</code>）字符串与文本主体开始前的对称相等）或字符 <code>U+005C</code>（<code>\</code>）此时都没有特殊含义。</p>
 <p>字节串字面量示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
@@ -411,6 +422,10 @@ C_STRING_LITERAL :<br />
 <p><em>C语言风格的字符串字面量_是通过前面是字符<code>U+0063</code> (<code>c</code>) 和 <code>U+0022</code>（双引号），后面是字符<code>U+0022</code> 转义过的 Unicode字符序列。如果字面量中存在字符<code>U+0022</code>，则其前面必须用<code>U+005C</code> (<code>\</code>)字符进行转义。
 或者，C语言风格的字符串字面量可以是下面定义的_原生C语言风格的字符串字面量</em>。</p>
 <p>C语言风格的字符串由字节<code>0x00</code>隐式终止，因此C语言风格的字符串字面量<code>c&quot;&quot;</code>等同于从字节字符串文字<code>b&quot;\x00&quot;</code>来手动构造一个<code>&amp;CStr</code>。除了隐式终止符之外，C语言风格的字符串中不允许再使用字节<code>0x00</code>。</p>
+<p>C语言风格的字符串字面量允许使用字符<code>U+000A</code>(LF) 的形式来换行书写。
+但当非转义的字符 <code>U+005C</code>（<code>\</code>）后面紧跟着一个换行符时，换行符并不会出现在字符串中。
+详细信息请参见<a href="expressions/literal-expr.html#string-continuation-escapes">字符串接续符转义</a>。
+字符<code>U+000D</code>(CR) 除了作为这种字符串接续符转义的一部分之外，不能出现在C语言风格的字符串字面量中。</p>
 <p>一些额外的转义符在非原生C语言风格的字符串字面量中可用。转义以<code>U+005C</code> (<code>\</code>)开头，并后继以下形式之一：</p>
 <ul>
 <li>一个_字节转义符_以<code>U+0078</code> (<code>x</code>)开头，后面正好跟两个_十六进制数字_。它表示等于所提供的十六进制值的字节序。</li>
@@ -440,8 +455,10 @@ RAW_C_STRING_LITERAL :<br />
       <code>&quot;</code> ( ~ <em>IsolatedCR</em> <em>NUL</em> )<sup>* (non-greedy)</sup> <code>&quot;</code><br />
    | <code>#</code> RAW_C_STRING_CONTENT <code>#</code></p>
 </blockquote>
-<p>原生C语言风格的字符串字面量不处理任何转义。它们以字符<code>U+0063</code> (<code>c</code>)开头，然后跟<code>U+0072</code> (<code>r</code>)，然后再跟少于256个的字符<code>U+0023</code> (<code>#</code>)和一个 <code>U+0022</code>（双引号）字符（记作开头引号）。_原生C语言风格的字符串本体_可以包含任何 Unicode字符序列（<code>U+0000</code>除外），本体之后以另一个结尾<code>U+0022</code>（双引号）字符来结尾，再之后再跟着开头引号之前的相同数量的 <code>U+0023</code> (<code>#</code>)字符。</p>
-<p>原生C语言风格的字符串本体中包含的所有字符都以UTF-8编码形式表示。字符<code>U+0022</code>（双引号）（后面跟有至少与用于开始原生C语言风格的字符串字面量的数量相同的 <code>U+0023</code> (<code>#</code>)字符时除外）或 <code>U+005C</code> (<code>\</code>) 没有任何特殊含义。</p>
+<p>原生C语言风格的字符串字面量不处理任何转义。它们以字符<code>U+0063</code> (<code>c</code>)开头，然后跟<code>U+0072</code> (<code>r</code>)，然后再跟少于256个的字符<code>U+0023</code> (<code>#</code>)和一个 <code>U+0022</code>（双引号）字符（记作开头引号）。
+中间_原生C语言风格的字符串本体_可以包含除 <code>U+0000</code>(NUL) 和 <code>U+000D</code>(CR) 之外的任何 Unicode字符序列。
+最后再后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）以及跟与字符串主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）的字符来表示字符串主体的结束。</p>
+<p>原生C语言风格的字符串本体中包含的所有字符都以 UTF-8编码形式表示。字符<code>U+0022</code>（双引号）（后面跟有至少与用于开始原生C语言风格的字符串字面量的数量相同的 <code>U+0023</code> (<code>#</code>)字符时除外）或 <code>U+005C</code> (<code>\</code>) 没有任何特殊含义。</p>
 <blockquote>
 <p><strong>版次差异</strong>: 2021版或更高版次可以使用原生C语言风格的字符串字面量。在更低的版次中，<code>cr&quot;&quot;</code>token 会被词法解析器解析为<code>cr &quot;&quot;</code> ，<code>cr#&quot;&quot;#</code> 被解析为 <code>cr #&quot;&quot;#</code>（这是不符合语法的）。</p>
 </blockquote>
@@ -659,10 +676,13 @@ RESERVED_NUMBER :<br />
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
 LIFETIME_TOKEN :<br />
-      <code>'</code> <a href="identifiers.html">IDENTIFIER_OR_KEYWORD</a><br />
-   | <code>'_</code></p>
+      <code>'</code> <a href="identifiers.html">IDENTIFIER_OR_KEYWORD</a>
+<em>(后面没有紧跟 <code>'</code>)</em><br />
+   | <code>'_</code>
+<em>(后面没有紧跟 <code>'</code>)</em></p>
 <p>LIFETIME_OR_LABEL :<br />
-      <code>'</code> <a href="identifiers.html">NON_KEYWORD_IDENTIFIER</a></p>
+      <code>'</code> <a href="identifiers.html">NON_KEYWORD_IDENTIFIER</a>
+<em>(后面没有紧跟 <code>'</code>)</em></p>
 </blockquote>
 <p>生存期参数和<a href="expressions/loop-expr.html">循环标签</a>使用 LIFETIME_OR_LABEL 类型的 token。（尽管 LIFETIME_OR_LABEL 是 LIFETIME_TOKEN 的子集，但）任何符合 LIFETIME_TOKEN 约定的 token 也都能被上述词法分析规则所接受，比如 LIFETIME_TOKEN 类型的 token 在宏中就可以畅通无阻的使用。</p>
 <h2 id="punctuation"><a class="header" href="#punctuation">Punctuation</a></h2>

@@ -153,8 +153,8 @@
 <h1 id="外部块"><a class="header" href="#外部块">外部块</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md">external-blocks.md</a><br />
-commit: f0bb14c9bacca5d305e0488c43273ebe22fe928e <br />
-本章译文最后维护日期：2023-08-26</p>
+commit: 31f0c2c9e18044e3b1ba23d02993398546422d9c <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -234,7 +234,7 @@ extern &quot;stdcall&quot; { }
 <p>可选的 <code>modifiers</code>参数提供了一种为库指定链接修饰符的方法。
 修饰符被指定为以逗号分隔的字符串，每个修饰符的前缀都是 <code>+</code> 或 <code>-</code>，分别表示修饰符处于启用或禁用状态。
 当前不支持在单个 <code>link</code>属性中指定多个 <code>modifiers</code>参数，或在同一个 <code>modifiers</code>参数中指定多个相同的修饰符。</p>
-<p>例如: <code>#[link(name = &quot;mylib&quot;, kind = &quot;static&quot;, modifiers = &quot;+whole-archive&quot;)</code>.</p>
+<p>例如: <code>#[link(name = &quot;mylib&quot;, kind = &quot;static&quot;, modifiers = &quot;+whole-archive&quot;)]</code>。</p>
 <p>当从主机环境导入 symbols 时，<code>wasm_import_module</code>键可用于为外部(<code>extern</code>)块中的程序项指定 <a href="https://webassembly.github.io/spec/core/syntax/modules.html">WebAssembly模块</a>名称。如果未指定 <code>wasm_import_module</code>，则默认模块名为 <code>env</code>。</p>
 <!-- ignore: requires extern linking -->
 <pre><code class="language-rust ignore">#[link(name = &quot;crypto&quot;)]

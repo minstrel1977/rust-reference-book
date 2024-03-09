@@ -153,8 +153,8 @@
 <h1 id="operator-expressions"><a class="header" href="#operator-expressions">Operator expressions</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md">operator-expr.md</a><br />
-commit: ad09bb0675a22cd453cfdec58da24e4c407d15a8 <br />
-本章译文最后维护日期：2023-11-05</p>
+commit: 97c9ad16e565f2d47593a1ac56c806b2892e4223 <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -603,9 +603,24 @@ unsafe {
 assert_eq!(values[1], 3);
 <span class="boring">}
 </span></code></pre></pre>
-<h4 id="slice-dst-pointer-to-pointer-cast"><a class="header" href="#slice-dst-pointer-to-pointer-cast">Slice DST pointer to pointer cast</a></h4>
-<h4 id="dst切片指针到指针的强制转换"><a class="header" href="#dst切片指针到指针的强制转换">DST切片指针到指针的强制转换</a></h4>
-<p>对于像 <code>[T]</code> 和 <code>[U]</code> 这样的切片类型，裸指针类型 <code>*const [T]</code>、<code>*mut [T]</code>、<code>*const [U]</code> 和 <code>*mut [U]</code> 会记录切片中的元素数量。这些裸指针类型之间的强制转换也会保留元素的数量。请注意，这种类型的强制转换<em>不</em>一定会保留指针的引用对象的尺寸（例如，将 <code>*const [u16]</code> 强制转换为 <code>*const [u8]</code> 将导致后者只能引用原始大小一半的对象）。这同样适用于 <code>str</code> 和任何尾部字段为不定尺寸（unsized）的切片类型的复合类型，如结构体 <code>Foo(i32, [u8])</code> 或 <code>(u64, Foo)</code>。</p>
+<h4 id="pointer-to-pointer-cast"><a class="header" href="#pointer-to-pointer-cast">Pointer-to-pointer cast</a></h4>
+<h4 id="指针到指针的强制转换"><a class="header" href="#指针到指针的强制转换">指针到指针的强制转换</a></h4>
+<p><code>*const T</code> / <code>*mut T</code> 可以通过以下行为方式强制转换为 <code>*const U</code> / <code>*mut U</code>：</p>
+<ul>
+<li>
+<p>如果 <code>T</code> 和 <code>U</code> 的尺寸都相同，则返回的指针保持不变。</p>
+</li>
+<li>
+<p>如果 <code>T</code> 和 <code>U</code> 都是非固定尺寸(unsized)的，则返回的指针也保持不变。
+这两种情况下需要特别指出的是这些指针的元数据也会被准确地保存了下来。</p>
+<p>例如，从 <code>*const [T]</code>到 <code>*const [U]</code> 的强制转换仍保留了元素的数量。
+因此请注意，这种强制转换不一定保留指针所指向对象的尺寸（例如，将 <code>*const [u16]</code> 强制转换为 <code>*const [u8]</code> 将转换出一个只指向了原始内存宽度一半的裸指针）。
+这同样适用于 <code>str</code> 和任何尾部为非固定尺寸(unsized)的切片类型的复合类型，如 <code>struct Foo(i32, [u8])</code> 或<code>(u64, Foo)</code>。</p>
+</li>
+<li>
+<p>如果 <code>T</code> 非固定尺寸(unsized)的，而 <code>U</code> 是固定尺寸的，则强制转换将丢弃胖指针 <code>T</code> 的所有元数据，并生成由该指针的数据部分组成的瘦指针 <code>U</code>。</p>
+</li>
+</ul>
 <h2 id="赋值表达式"><a class="header" href="#赋值表达式">赋值表达式</a></h2>
 <h2 id="assignment-expressions"><a class="header" href="#assignment-expressions">Assignment expressions</a></h2>
 <blockquote>
@@ -750,7 +765,19 @@ fn example() {
 <p>截断，即一个值范围较大的变量A转换为值范围较小的变量B，如果超出范围，则将A减去B的区间长度。例如，128超出了i8类型的范围（-128,127），截断之后的值等于128-256=-128。</p>
 </div>
 <!-- 上面这几个链接从原文来替换时需小心 -->
-
+<script>
+(function() {
+    var fragments = {
+        "#slice-dst-pointer-to-pointer-cast": "operator-expr.html#pointer-to-pointer-cast",
+    };
+    var target = fragments[window.location.hash];
+    if (target) {
+        var url = window.location.toString();
+        var base = url.substring(0, url.lastIndexOf('/'));
+        window.location.replace(base + "/" + target);
+    }
+})();
+</script>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
