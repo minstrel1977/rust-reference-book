@@ -2,8 +2,8 @@
 # 生存期(类型参数)省略
 
 >[lifetime-elision.md](https://github.com/rust-lang/reference/blob/master/src/lifetime-elision.md)\
->commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e \
->本章译文最后维护日期：2021-07-31
+>commit: 8c6c7cdc2b3188246747adbb9aa91ef39fd23fcf \
+>本章译文最后维护日期：2024-03-09
 
 Rust 拥有一套允许在多种位置省略生存期的规则，但前提是编译器在这些位置上能推断出合理的默认生存期。
 
@@ -163,10 +163,10 @@ const BITS_N_STRINGS: BitsNStrings<'_> = BitsNStrings {
 # struct Bar;
 # struct Baz;
 # fn somefunc(a: &Foo, b: &Bar, c: &Baz) -> usize {42}
-// 解析为 `fn<'a>(&'a str) -> &'a str`.
+// 解析为 `for<'a> fn(&'a str) -> &'a str`。
 const RESOLVED_SINGLE: fn(&str) -> &str = |x| x;
 
-// 解析为 `Fn<'a, 'b, 'c>(&'a Foo, &'b Bar, &'c Baz) -> usize`.
+// 解析为 `for<'a, 'b, 'c> Fn(&'a Foo, &'b Bar, &'c Baz) -> usize`。
 const RESOLVED_MULTIPLE: &dyn Fn(&Foo, &Bar, &Baz) -> usize = &somefunc;
 ```
 

@@ -5768,7 +5768,7 @@ unsafe fn foo_avx2() {}
 <p><em><strong>注意</strong></em>: 如果要使用的话，<code>paca</code> 和 <code>pacg</code> 这对特性应同时标记为启用或禁用，因为目前 LLVM 将其作为一个特性来实现的。</p>
 </blockquote>
 <div class="table-wrapper"><table><thead><tr><th>特性</th><th>隐式启用</th><th>特性名称</th></tr></thead><tbody>
-<tr><td><code>aes</code></td><td><code>neon</code></td><td>FEAT_AES - 高级 <abbr title="Single Instruction Multiple Data">SIMD</abbr> AES 指令</td></tr>
+<tr><td><code>aes</code></td><td><code>neon</code></td><td>FEAT_AES &amp; FEAT_PMULL - 高级 <abbr title="Single Instruction Multiple Data">SIMD</abbr> AES &amp; PMULL 指令</td></tr>
 <tr><td><code>bf16</code></td><td></td><td>FEAT_BF16 - BFloat16 指令</td></tr>
 <tr><td><code>bti</code></td><td></td><td>FEAT_BTI - 分支目标识别</td></tr>
 <tr><td><code>crc</code></td><td></td><td>FEAT_CRC - CRC32 <em>校验和</em>指令</td></tr>
@@ -5787,14 +5787,14 @@ unsafe fn foo_avx2() {}
 <tr><td><code>jsconv</code></td><td><code>neon</code></td><td>FEAT_JSCVT - JavaScript 转换指令</td></tr>
 <tr><td><code>lse</code></td><td></td><td>FEAT_LSE - Large System Extension</td></tr>
 <tr><td><code>lor</code></td><td></td><td>FEAT_LOR - Limited Ordering Regions extension</td></tr>
-<tr><td><code>mte</code></td><td></td><td>FEAT_MTE - 内存标记扩展</td></tr>
+<tr><td><code>mte</code></td><td></td><td>FEAT_MTE &amp; FEAT_MTE2 - 内存标记扩展</td></tr>
 <tr><td><code>neon</code></td><td></td><td>FEAT_FP &amp; FEAT_AdvSIMD - 浮点和高级SIMD扩展</td></tr>
 <tr><td><code>pan</code></td><td></td><td>FEAT_PAN - Privileged Access-Never extension</td></tr>
 <tr><td><code>paca</code></td><td></td><td>FEAT_PAuth - 指针身份验证（地址身份验证）</td></tr>
 <tr><td><code>pacg</code></td><td></td><td>FEAT_PAuth - 指针身份验证（通用身份验证）</td></tr>
 <tr><td><code>pmuv3</code></td><td></td><td>FEAT_PMUv3 - 性能监视器扩展（v3）</td></tr>
 <tr><td><code>rand</code></td><td></td><td>FEAT_RNG - 随机数发生器</td></tr>
-<tr><td><code>ras</code></td><td></td><td>FEAT_RAS - 可靠性、可用性和可维护性扩展</td></tr>
+<tr><td><code>ras</code></td><td></td><td>FEAT_RAS &amp; FEAT_RASv1p1 - 可靠性、可用性和可维护性扩展</td></tr>
 <tr><td><code>rcpc</code></td><td></td><td>FEAT_LRCPC - Release consistent Processor Consistent</td></tr>
 <tr><td><code>rcpc2</code></td><td><code>rcpc</code></td><td>FEAT_LRCPC2 - 带即时偏移的rcpc</td></tr>
 <tr><td><code>rdm</code></td><td></td><td>FEAT_RDM - Rounding Double Multiply accumulate</td></tr>
@@ -5803,7 +5803,7 @@ unsafe fn foo_avx2() {}
 <tr><td><code>sha3</code></td><td><code>sha2</code></td><td>FEAT_SHA512 &amp; FEAT_SHA3 - 高级 SIMD SHA 指令</td></tr>
 <tr><td><code>sm4</code></td><td><code>neon</code></td><td>FEAT_SM3 &amp; FEAT_SM4 - 高级 SIMD SM3/4 指令</td></tr>
 <tr><td><code>spe</code></td><td></td><td>FEAT_SPE - 统计分析扩展</td></tr>
-<tr><td><code>ssbs</code></td><td></td><td>FEAT_SSBS - Speculative Store Bypass Safe</td></tr>
+<tr><td><code>ssbs</code></td><td></td><td>FEAT_SSBS &amp; FEAT_SSBS2 - Speculative Store Bypass Safe</td></tr>
 <tr><td><code>sve</code></td><td><code>fp16</code></td><td>FEAT_SVE - 可伸缩向量扩展</td></tr>
 <tr><td><code>sve2</code></td><td><code>sve</code></td><td>FEAT_SVE2 - 可伸缩向量扩展2</td></tr>
 <tr><td><code>sve2-aes</code></td><td><code>sve2</code>, <code>aes</code></td><td>FEAT_SVE_AES - SVE AES 指令</td></tr>
@@ -12379,8 +12379,8 @@ let x = (&amp;temp()).use_temp();  // ERROR
 <h1 id="生存期类型参数省略"><a class="header" href="#生存期类型参数省略">生存期(类型参数)省略</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/lifetime-elision.md">lifetime-elision.md</a><br />
-commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
-本章译文最后维护日期：2021-07-31</p>
+commit: 8c6c7cdc2b3188246747adbb9aa91ef39fd23fcf <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <p>Rust 拥有一套允许在多种位置省略生存期的规则，但前提是编译器在这些位置上能推断出合理的默认生存期。</p>
 <h2 id="lifetime-elision-in-functions"><a class="header" href="#lifetime-elision-in-functions">Lifetime elision in functions</a></h2>
@@ -12537,10 +12537,10 @@ const BITS_N_STRINGS: BitsNStrings&lt;'_&gt; = BitsNStrings {
 </span><span class="boring">struct Bar;
 </span><span class="boring">struct Baz;
 </span><span class="boring">fn somefunc(a: &amp;Foo, b: &amp;Bar, c: &amp;Baz) -&gt; usize {42}
-</span>// 解析为 `fn&lt;'a&gt;(&amp;'a str) -&gt; &amp;'a str`.
+</span>// 解析为 `for&lt;'a&gt; fn(&amp;'a str) -&gt; &amp;'a str`。
 const RESOLVED_SINGLE: fn(&amp;str) -&gt; &amp;str = |x| x;
 
-// 解析为 `Fn&lt;'a, 'b, 'c&gt;(&amp;'a Foo, &amp;'b Bar, &amp;'c Baz) -&gt; usize`.
+// 解析为 `for&lt;'a, 'b, 'c&gt; Fn(&amp;'a Foo, &amp;'b Bar, &amp;'c Baz) -&gt; usize`。
 const RESOLVED_MULTIPLE: &amp;dyn Fn(&amp;Foo, &amp;Bar, &amp;Baz) -&gt; usize = &amp;somefunc;
 <span class="boring">}
 </span></code></pre></pre>

@@ -139,7 +139,7 @@ unsafe fn foo_avx2() {}
 
 特性        | 隐式启用 | 特性名称
 ---------------|--------------------|-------------------
-`aes`          | `neon`         | FEAT_AES - 高级 <abbr title="Single Instruction Multiple Data">SIMD</abbr> AES 指令
+`aes`          | `neon`         | FEAT_AES & FEAT_PMULL - 高级 <abbr title="Single Instruction Multiple Data">SIMD</abbr> AES & PMULL 指令
 `bf16`         |                | FEAT_BF16 - BFloat16 指令
 `bti`          |                | FEAT_BTI - 分支目标识别
 `crc`          |                | FEAT_CRC - CRC32 *校验和*指令
@@ -158,14 +158,14 @@ unsafe fn foo_avx2() {}
 `jsconv`       | `neon`         | FEAT_JSCVT - JavaScript 转换指令
 `lse`          |                | FEAT_LSE - Large System Extension
 `lor`          |                | FEAT_LOR - Limited Ordering Regions extension
-`mte`          |                | FEAT_MTE - 内存标记扩展
+`mte`          |                | FEAT_MTE & FEAT_MTE2 - 内存标记扩展
 `neon`         |                | FEAT_FP & FEAT_AdvSIMD - 浮点和高级SIMD扩展
 `pan`          |                | FEAT_PAN - Privileged Access-Never extension
 `paca`         |                | FEAT_PAuth - 指针身份验证（地址身份验证）
 `pacg`         |                | FEAT_PAuth - 指针身份验证（通用身份验证）
 `pmuv3`        |                | FEAT_PMUv3 - 性能监视器扩展（v3）
 `rand`         |                | FEAT_RNG - 随机数发生器
-`ras`          |                | FEAT_RAS - 可靠性、可用性和可维护性扩展
+`ras`          |                | FEAT_RAS & FEAT_RASv1p1 - 可靠性、可用性和可维护性扩展
 `rcpc`         |                | FEAT_LRCPC - Release consistent Processor Consistent
 `rcpc2`        | `rcpc`         | FEAT_LRCPC2 - 带即时偏移的rcpc
 `rdm`          |                | FEAT_RDM - Rounding Double Multiply accumulate
@@ -174,7 +174,7 @@ unsafe fn foo_avx2() {}
 `sha3`         | `sha2`         | FEAT_SHA512 & FEAT_SHA3 - 高级 SIMD SHA 指令
 `sm4`          | `neon`         | FEAT_SM3 & FEAT_SM4 - 高级 SIMD SM3/4 指令
 `spe`          |                | FEAT_SPE - 统计分析扩展
-`ssbs`         |                | FEAT_SSBS - Speculative Store Bypass Safe
+`ssbs`         |                | FEAT_SSBS & FEAT_SSBS2 - Speculative Store Bypass Safe
 `sve`          | `fp16`         | FEAT_SVE - 可伸缩向量扩展
 `sve2`         | `sve`          | FEAT_SVE2 - 可伸缩向量扩展2
 `sve2-aes`     | `sve2`, `aes`  | FEAT_SVE_AES - SVE AES 指令

@@ -153,8 +153,8 @@
 <h1 id="生存期类型参数省略"><a class="header" href="#生存期类型参数省略">生存期(类型参数)省略</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/lifetime-elision.md">lifetime-elision.md</a><br />
-commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
-本章译文最后维护日期：2021-07-31</p>
+commit: 8c6c7cdc2b3188246747adbb9aa91ef39fd23fcf <br />
+本章译文最后维护日期：2024-03-09</p>
 </blockquote>
 <p>Rust 拥有一套允许在多种位置省略生存期的规则，但前提是编译器在这些位置上能推断出合理的默认生存期。</p>
 <h2 id="lifetime-elision-in-functions"><a class="header" href="#lifetime-elision-in-functions">Lifetime elision in functions</a></h2>
@@ -311,10 +311,10 @@ const BITS_N_STRINGS: BitsNStrings&lt;'_&gt; = BitsNStrings {
 </span><span class="boring">struct Bar;
 </span><span class="boring">struct Baz;
 </span><span class="boring">fn somefunc(a: &amp;Foo, b: &amp;Bar, c: &amp;Baz) -&gt; usize {42}
-</span>// 解析为 `fn&lt;'a&gt;(&amp;'a str) -&gt; &amp;'a str`.
+</span>// 解析为 `for&lt;'a&gt; fn(&amp;'a str) -&gt; &amp;'a str`。
 const RESOLVED_SINGLE: fn(&amp;str) -&gt; &amp;str = |x| x;
 
-// 解析为 `Fn&lt;'a, 'b, 'c&gt;(&amp;'a Foo, &amp;'b Bar, &amp;'c Baz) -&gt; usize`.
+// 解析为 `for&lt;'a, 'b, 'c&gt; Fn(&amp;'a Foo, &amp;'b Bar, &amp;'c Baz) -&gt; usize`。
 const RESOLVED_MULTIPLE: &amp;dyn Fn(&amp;Foo, &amp;Bar, &amp;Baz) -&gt; usize = &amp;somefunc;
 <span class="boring">}
 </span></code></pre></pre>

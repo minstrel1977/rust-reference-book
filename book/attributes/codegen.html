@@ -240,7 +240,7 @@ unsafe fn foo_avx2() {}
 <p><em><strong>注意</strong></em>: 如果要使用的话，<code>paca</code> 和 <code>pacg</code> 这对特性应同时标记为启用或禁用，因为目前 LLVM 将其作为一个特性来实现的。</p>
 </blockquote>
 <div class="table-wrapper"><table><thead><tr><th>特性</th><th>隐式启用</th><th>特性名称</th></tr></thead><tbody>
-<tr><td><code>aes</code></td><td><code>neon</code></td><td>FEAT_AES - 高级 <abbr title="Single Instruction Multiple Data">SIMD</abbr> AES 指令</td></tr>
+<tr><td><code>aes</code></td><td><code>neon</code></td><td>FEAT_AES &amp; FEAT_PMULL - 高级 <abbr title="Single Instruction Multiple Data">SIMD</abbr> AES &amp; PMULL 指令</td></tr>
 <tr><td><code>bf16</code></td><td></td><td>FEAT_BF16 - BFloat16 指令</td></tr>
 <tr><td><code>bti</code></td><td></td><td>FEAT_BTI - 分支目标识别</td></tr>
 <tr><td><code>crc</code></td><td></td><td>FEAT_CRC - CRC32 <em>校验和</em>指令</td></tr>
@@ -259,14 +259,14 @@ unsafe fn foo_avx2() {}
 <tr><td><code>jsconv</code></td><td><code>neon</code></td><td>FEAT_JSCVT - JavaScript 转换指令</td></tr>
 <tr><td><code>lse</code></td><td></td><td>FEAT_LSE - Large System Extension</td></tr>
 <tr><td><code>lor</code></td><td></td><td>FEAT_LOR - Limited Ordering Regions extension</td></tr>
-<tr><td><code>mte</code></td><td></td><td>FEAT_MTE - 内存标记扩展</td></tr>
+<tr><td><code>mte</code></td><td></td><td>FEAT_MTE &amp; FEAT_MTE2 - 内存标记扩展</td></tr>
 <tr><td><code>neon</code></td><td></td><td>FEAT_FP &amp; FEAT_AdvSIMD - 浮点和高级SIMD扩展</td></tr>
 <tr><td><code>pan</code></td><td></td><td>FEAT_PAN - Privileged Access-Never extension</td></tr>
 <tr><td><code>paca</code></td><td></td><td>FEAT_PAuth - 指针身份验证（地址身份验证）</td></tr>
 <tr><td><code>pacg</code></td><td></td><td>FEAT_PAuth - 指针身份验证（通用身份验证）</td></tr>
 <tr><td><code>pmuv3</code></td><td></td><td>FEAT_PMUv3 - 性能监视器扩展（v3）</td></tr>
 <tr><td><code>rand</code></td><td></td><td>FEAT_RNG - 随机数发生器</td></tr>
-<tr><td><code>ras</code></td><td></td><td>FEAT_RAS - 可靠性、可用性和可维护性扩展</td></tr>
+<tr><td><code>ras</code></td><td></td><td>FEAT_RAS &amp; FEAT_RASv1p1 - 可靠性、可用性和可维护性扩展</td></tr>
 <tr><td><code>rcpc</code></td><td></td><td>FEAT_LRCPC - Release consistent Processor Consistent</td></tr>
 <tr><td><code>rcpc2</code></td><td><code>rcpc</code></td><td>FEAT_LRCPC2 - 带即时偏移的rcpc</td></tr>
 <tr><td><code>rdm</code></td><td></td><td>FEAT_RDM - Rounding Double Multiply accumulate</td></tr>
@@ -275,7 +275,7 @@ unsafe fn foo_avx2() {}
 <tr><td><code>sha3</code></td><td><code>sha2</code></td><td>FEAT_SHA512 &amp; FEAT_SHA3 - 高级 SIMD SHA 指令</td></tr>
 <tr><td><code>sm4</code></td><td><code>neon</code></td><td>FEAT_SM3 &amp; FEAT_SM4 - 高级 SIMD SM3/4 指令</td></tr>
 <tr><td><code>spe</code></td><td></td><td>FEAT_SPE - 统计分析扩展</td></tr>
-<tr><td><code>ssbs</code></td><td></td><td>FEAT_SSBS - Speculative Store Bypass Safe</td></tr>
+<tr><td><code>ssbs</code></td><td></td><td>FEAT_SSBS &amp; FEAT_SSBS2 - Speculative Store Bypass Safe</td></tr>
 <tr><td><code>sve</code></td><td><code>fp16</code></td><td>FEAT_SVE - 可伸缩向量扩展</td></tr>
 <tr><td><code>sve2</code></td><td><code>sve</code></td><td>FEAT_SVE2 - 可伸缩向量扩展2</td></tr>
 <tr><td><code>sve2-aes</code></td><td><code>sve2</code>, <code>aes</code></td><td>FEAT_SVE_AES - SVE AES 指令</td></tr>
