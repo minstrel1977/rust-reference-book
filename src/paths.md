@@ -2,8 +2,8 @@
 # 路径
 
 >[paths.md](https://github.com/rust-lang/reference/blob/master/src/paths.md)\
->commit: e33f255728a1b53bfe486f6d8e4a4752ec229c11 \
->本章译文最后维护日期：2024-03-09
+>commit: 6c77f499eaf64bd89c29a8932e63a9343ee73663 \
+>本章译文最后维护日期：2024-04-06
 
 *路径*是一个或多个由命名空间<span class="parenthetical">限定符(`::`)</span>*逻辑*分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，`::` 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的[程序项][item]或[变量][variable]。如果路径包含多个路径段，则总是引用程序项。
 
@@ -55,7 +55,7 @@ mod m {
 > &nbsp;&nbsp; | `<` ( _GenericArg_ `,` )<sup>\*</sup> _GenericArg_ `,`<sup>?</sup> `>`
 >
 > _GenericArg_ :\net
-> &nbsp;&nbsp; [_Lifetime_] | [_Type_] | _GenericArgsConst_ | _GenericArgsBinding_
+> &nbsp;&nbsp; [_Lifetime_] | [_Type_] | _GenericArgsConst_ | _GenericArgsBinding_ | _GenericArgsBounds_
 >
 > _GenericArgsConst_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_BlockExpression_]\
@@ -64,7 +64,10 @@ mod m {
 > &nbsp;&nbsp; | [_SimplePathSegment_]
 >
 > _GenericArgsBinding_ :\
-> &nbsp;&nbsp; [IDENTIFIER] `=` [_Type_]
+> &nbsp;&nbsp; [IDENTIFIER] _GenericArgs_<sup>?</sup> `=` [_Type_]
+>
+> _GenericArgsBounds_ :\
+> &nbsp;&nbsp; [IDENTIFIER] _GenericArgs_<sup>?</sup> `:` [_TypeParamBounds_]
 
 表达式中的路径允许指定带有泛型参数的路径。它们在各种[表达式][expressions]和[模式][patterns]中都有使用。
 
@@ -361,6 +364,7 @@ mod without { // crate::without
 [_SimplePathSegment_]: #simple-paths
 [_Type_]: types.md#type-expressions
 [_TypeNoBounds_]: types.md#type-expressions
+[_TypeParamBounds_]: trait-bounds.md
 [literal]: expressions/literal-expr.md
 [item]: items.md
 [variable]: variables.md

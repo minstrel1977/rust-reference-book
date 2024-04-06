@@ -2,8 +2,8 @@
 # 诊断属性
 
 >[diagnostics.md](https://github.com/rust-lang/reference/blob/master/src/attributes/diagnostics.md)\
->commit: fc61be0f7e7bf5bc69c73458ec4314ba4f16a673 \
->本章译文最后维护日期：2023-05-03
+>commit: 52874b8312ccbc28710a2532f82032876a08911b \
+>本章译文最后维护日期：2024-04-06
 
 以下[属性][attributes]用于在编译期间控制或生成诊断消息。
 
@@ -29,7 +29,7 @@ pub mod m1 {
     #[allow(missing_docs)]
     pub fn undocumented_one() -> i32 { 1 }
 
-    // 未提供文档的编码行为在这里将触发编译器告警
+    // 未提供文档的编码行为在这里将触发编译器警告
     #[warn(missing_docs)]
     pub fn undocumented_too() -> i32 { 2 }
 
@@ -50,12 +50,12 @@ pub mod m2 {
         // 这里忽略未提供文档的编码行为
         pub fn undocumented_one() -> i32 { 1 }
 
-        // 尽管上面允许，但未提供文档的编码行为在这里将触发编译器告警
+        // 尽管上面允许，但未提供文档的编码行为在这里将触发编译器警告
         #[warn(missing_docs)]
         pub fn undocumented_two() -> i32 { 2 }
     }
 
-    // 未提供文档的编码行为在这里将触发编译器告警
+    // 未提供文档的编码行为在这里将触发编译器警告
     pub fn undocumented_too() -> i32 { 3 }
 }
 ```
@@ -85,14 +85,14 @@ lint可以被组织成不同命名的组，以便相关lint的等级可以一起
 // 这个禁止动作将覆盖前面 "unused"组中的 "unused_must_use" lint。
 #[deny(unused_must_use)]
 fn example() {
-    // 这里不会生成告警，因为 "unused_variables" lint 在 "unused"组下
+    // 这里不会生成警告，因为 "unused_variables" lint 在 "unused"组下
     let x = 1;
     // 这里会产生报错信息，因为 "unused_must_use" lint 被标记为"deny"，而这行的返回结果未被使用
     std::fs::remove_file("some_file"); // ERROR: unused `Result` that must be used
 }
 ```
 
-有一个名为 “warnings” 的特殊组，它包含 “warn”级别的所有 lint。“warnings”组会忽略属性的顺序，并对实体执行所有告警lint 检查。
+有一个名为 “warnings” 的特殊组，它包含 “warn”级别的所有 lint。“warnings”组会忽略属性的顺序，并对实体执行所有警告lint 检查。
 
 ```rust,compile_fail
 # unsafe fn an_unsafe_fn() {}
@@ -101,7 +101,7 @@ fn example() {
 // unsafe_code lint 默认是 "allow" 的。
 #[warn(unsafe_code)]
 fn example_err() {
-    // 这里会编译报错，因为 `unsafe_code`告警的 lint 被提升为 "deny"级别了。
+    // 这里会编译报错，因为 `unsafe_code`警告的 lint 被提升为 "deny"级别了。
     unsafe { an_unsafe_fn() } // ERROR: usage of `unsafe` block
 }
 ```
@@ -117,7 +117,7 @@ fn example_err() {
 在其他方面，这些工具类lint 就跟像常规的 lint 一样：
 
 ```rust
-// 将 clippy 的整个 `pedantic` lint组设置为告警级别
+// 将 clippy 的整个 `pedantic` lint组设置为警告级别
 #![warn(clippy::pedantic)]
 // 使来自 clippy的 `filter_map` lint 的警告静音
 #![allow(clippy::filter_map)]
@@ -168,9 +168,9 @@ pub fn bar() {}
 ## The `must_use` attribute
 ## `must_use`属性
 
-*`must_use`属性* 用于在值未被“使用”时发出诊断告警。它可以应用于用户定义的复合类型（[结构体(`struct`)][struct]、[枚举(`enum`)][enum] 和 [联合体(`union`)][union]）、[函数][functions]和 [trait][traits]。
+*`must_use`属性* 用于在值未被“使用”时发出诊断警告。它可以应用于用户定义的复合类型（[结构体(`struct`)][struct]、[枚举(`enum`)][enum] 和 [联合体(`union`)][union]）、[函数][functions]和 [trait][traits]。
 
-`must_use`属性可以使用[_MetaNameValueStr_]元项属性句法添加一些附加消息，如 `#[must_use = "example message"]`。该字符串将出现在告警消息里。
+`must_use`属性可以使用[_MetaNameValueStr_]元项属性句法添加一些附加消息，如 `#[must_use = "example message"]`。该字符串将出现在警告消息里。
 
 当用户定义的复合类型上使用了此属性，如果有该类型的[表达式][expression]正好是[表达式语句][expression statement]的表达式，那就违反了 `unused_must_use` 这个 lint。
 
@@ -257,6 +257,78 @@ impl Trait for i32 {
 > let _ = five();
 > ```
 
+## The `diagnostic` tool attribute namespace
+## `diagnostic`属性的命名空间
+
+属性`#[diagnostic]` 的命名空间是影响编译期错误消息的根属性。
+Rust 不保证这些属性提供的提示信息会被使用。
+此命名空间可接受未知属性，但这样可能会触发有属性未被使用这样的警告。
+此外，对已知属性的无效输入通常只是一个警告（有关详细信息，请参阅属性定义）。
+这意味着允许添加或丢弃属性，并在未来更改输入，以允许进行更改，而无需为了保持程序正常工作而不得不选择无意义的属性或选项。
+
+### The `diagnostic::on_unimplemented` attribute
+### `diagnostic::on_unimplemented`属性 
+
+`#[diagnostic::on_unimplemented]`属性会给编译器的一个提示，该提示通常用于要求某trait 必须在场，但使用的具体类型上并未实现此trait 的场景中来生成错误消息。
+该属性应用在[trait申明][trait declaration]上，尽管它放在其他位置上并不会报错。
+该属性使用[_MetaListNameValueStr_]元项属性句法来指定其输入，但该属性的任何格式错误的输入都不会被视为错误，此目的是为了提供向前和向后的兼容性。
+其下的选项具有以下给定的含义：
+
+* `message` — 顶层错误消息的文本模板。
+* `label` — 错误消息中错误代码内联显示的文本标签。
+* `note` — 提供额外的注释。
+
+其中 `note`选项可以出现多次，这将导致编译器发出多条注释消息。
+如果其他选项中的任何一个出现了多次，则相关选项的首次定义会被认定为实际使用的值。
+任何其他情况都会产生 lint 警告。
+对于任何其他不存在的选项，也都会生成 lint 警告。
+
+所有三个选项都接受字符串作为模板格式参数，使用与 [`std::fmt`] 字符串相同的格式进行解释。
+使用给定命名参数的格式参数将被替换为以下文本：
+
+* `{Self}` — 实现 trait 的类型的名称。
+* `{` *GenericParameterName* `}` — 给定泛型参数的泛型参数的类型名。
+
+任何其他格式参数都将生成警告，但会原样包含在字符串中。
+
+无效的格式字符串可能会产生警告，但通常是被允许的，但可能不会按预期显示。
+格式说明符可能会产生警告，但可以会被忽略。
+
+示例：
+
+```rust,compile_fail,E0277
+#[diagnostic::on_unimplemented(
+    message = "My Message for `ImportantTrait<{A}>` implemented for `{Self}`",
+    label = "My Label",
+    note = "Note 1",
+    note = "Note 2"
+)]
+trait ImportantTrait<A> {}
+
+fn use_my_trait(_: impl ImportantTrait<i32>) {}
+
+fn main() {
+    use_my_trait(String::new());
+}
+```
+
+编译器可能会生成如下所示的错误消息：
+
+```text
+error[E0277]: My Message for `ImportantTrait<i32>` implemented for `String`
+  --> src/main.rs:14:18
+   |
+14 |     use_my_trait(String::new());
+   |     ------------ ^^^^^^^^^^^^^ My Label
+   |     |
+   |     required by a bound introduced by this call
+   |
+   = help: the trait `ImportantTrait<i32>` is not implemented for `String`
+   = note: Note 1
+   = note: Note 2
+```
+
+[`std::fmt`]: https://doc.rust-lang.org/std/fmt/index.html
 [Clippy]: https://github.com/rust-lang/rust-clippy
 [_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
 [_MetaListPaths_]: ../attributes.md#meta-item-attribute-syntax

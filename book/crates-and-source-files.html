@@ -152,8 +152,8 @@
                         <h1 id="crate-和源文件"><a class="header" href="#crate-和源文件">crate 和源文件</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md">crates-and-source-files.md</a><br />
-commit: e364b6c6f91a7166ab4ff6a7814bf9a4922c2358 <br />
-本章译文最后维护日期：2024-03-09</p>
+commit: 824b9156b221d6e051cca6f634e28515f30055e6 <br />
+本章译文最后维护日期：2024-04-06</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -203,6 +203,17 @@ commit: e364b6c6f91a7166ab4ff6a7814bf9a4922c2358 <br />
     std::process::ExitCode::SUCCESS
 }
 </code></pre></pre>
+<p><code>main</code>主函数也可以是一个导入项，例如从外部crate 或当前crate 中导入。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>mod foo {
+    pub fn bar() {
+        println!(&quot;Hello, world!&quot;);
+    }
+}
+use foo::bar as main;
+<span class="boring">}
+</span></code></pre></pre>
 <blockquote>
 <p><strong>注意</strong>: 标准库中，实现 <a href="https://doc.rust-lang.org/std/process/trait.Termination.html"><code>Termination</code></a> trait 的类型包括：</p>
 <ul>

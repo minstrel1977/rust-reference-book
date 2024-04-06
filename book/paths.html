@@ -153,8 +153,8 @@
 <h1 id="路径"><a class="header" href="#路径">路径</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/paths.md">paths.md</a><br />
-commit: e33f255728a1b53bfe486f6d8e4a4752ec229c11 <br />
-本章译文最后维护日期：2024-03-09</p>
+commit: 6c77f499eaf64bd89c29a8932e63a9343ee73663 <br />
+本章译文最后维护日期：2024-04-06</p>
 </blockquote>
 <p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，<code>::</code> 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">程序项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用程序项。</p>
 <p>仅由标识符段组成的简单路径(simple paths)的两个示例：</p>
@@ -197,14 +197,16 @@ mod m {
       <code>&lt;</code> <code>&gt;</code><br />
    | <code>&lt;</code> ( <em>GenericArg</em> <code>,</code> )<sup>*</sup> <em>GenericArg</em> <code>,</code><sup>?</sup> <code>&gt;</code></p>
 <p><em>GenericArg</em> :\net
-   <a href="trait-bounds.html"><em>Lifetime</em></a> | <a href="types.html#type-expressions"><em>Type</em></a> | <em>GenericArgsConst</em> | <em>GenericArgsBinding</em></p>
+   <a href="trait-bounds.html"><em>Lifetime</em></a> | <a href="types.html#type-expressions"><em>Type</em></a> | <em>GenericArgsConst</em> | <em>GenericArgsBinding</em> | <em>GenericArgsBounds</em></p>
 <p><em>GenericArgsConst</em> :<br />
       <a href="expressions/block-expr.html"><em>BlockExpression</em></a><br />
    | <a href="expressions/literal-expr.html"><em>LiteralExpression</em></a><br />
    | <code>-</code> <a href="expressions/literal-expr.html"><em>LiteralExpression</em></a><br />
    | <a href="#simple-paths"><em>SimplePathSegment</em></a></p>
 <p><em>GenericArgsBinding</em> :<br />
-   <a href="identifiers.html">IDENTIFIER</a> <code>=</code> <a href="types.html#type-expressions"><em>Type</em></a></p>
+   <a href="identifiers.html">IDENTIFIER</a> <em>GenericArgs</em><sup>?</sup> <code>=</code> <a href="types.html#type-expressions"><em>Type</em></a></p>
+<p><em>GenericArgsBounds</em> :<br />
+   <a href="identifiers.html">IDENTIFIER</a> <em>GenericArgs</em><sup>?</sup> <code>:</code> <a href="trait-bounds.html"><em>TypeParamBounds</em></a></p>
 </blockquote>
 <p>表达式中的路径允许指定带有泛型参数的路径。它们在各种<a href="expressions.html">表达式</a>和<a href="patterns.html">模式</a>中都有使用。</p>
 <p>token <code>::</code> 必须在泛型参数的左尖括号（<code>&lt;</code>）的前面，以避免和小于号操作符产生混淆。这就是俗称的“涡轮鱼(turbofish)”句法。</p>

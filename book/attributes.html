@@ -182,8 +182,8 @@
 <h1 id="属性"><a class="header" href="#属性">属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes.md">attributes.md</a><br />
-commit: 9d351cc1d87816c0550bbf7627baf37bbc33ff27 <br />
-本章译文最后维护日期：2023-11-05</p>
+commit: 5baf87cdd925f4ca569570658d7fe55e783942ce <br />
+本章译文最后维护日期：2024-04-06</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -308,7 +308,7 @@ fn foo() {}
 <p>属性要么是活跃的，要么是惰性的。在属性处理过程中，<em>活跃属性</em>将自己从它们所在的对象上移除，而<em>惰性属性</em>依然保持原位置不变。</p>
 <p><a href="conditional-compilation.html#the-cfg-attribute"><code>cfg</code></a> 和 <a href="conditional-compilation.html#the-cfg_attr-attribute"><code>cfg_attr</code></a> 属性是活跃的。<a href="attributes/testing.html#the-test-attribute"><code>test</code></a>属性在为测试所做的编译形式中是惰性的，在其他编译形式中是活跃的。<a href="procedural-macros.html#attribute-macros">宏属性</a>是活跃的。所有其他属性都是惰性的。</p>
 <h2 id="tool-attributes"><a class="header" href="#tool-attributes">Tool attributes</a></h2>
-<h2 id="外部工具属性"><a class="header" href="#外部工具属性">外部工具属性</a></h2>
+<h2 id="外部工具的属性"><a class="header" href="#外部工具的属性">外部工具的属性</a></h2>
 <p>编译器可能允许和具体外部工具相关联的属性，但这些工具在编译和检查过程中必须存在并驻留在编译器提供的<a href="names/preludes.html#tool-prelude">工具类预导入包</a>下对应的命名空间中（才能让这些属性生效）。这种属性的（命名空间）路径的第一段是工具的名称，后跟一个或多个工具自己解释的附加段。</p>
 <p>当工具在编译期不可用时，该工具的属性将被静默接受而不提示警告。当工具可用时，该工具负责处理和解释这些属性。</p>
 <p>如果使用了 <a href="names/preludes.html#the-no_implicit_prelude-attribute"><code>no_implicit_prelude</code></a>属性，则外部工具属性不可用。</p>
@@ -325,7 +325,7 @@ pub fn f() {}
 <span class="boring">}
 </span></code></pre></pre>
 <blockquote>
-<p>注意: <code>rustc</code> 目前能识别的工具是 “clippy” 和 “rustfmt”。</p>
+<p>注意: <code>rustc</code> 目前能识别 “clippy” 、“rustfmt” 和 &quot;diagnostic&quot; 这些工具。</p>
 </blockquote>
 <h2 id="built-in-attributes-index"><a class="header" href="#built-in-attributes-index">Built-in attributes index</a></h2>
 <h2 id="内置属性的索引表"><a class="header" href="#内置属性的索引表">内置属性的索引表</a></h2>
@@ -364,6 +364,7 @@ pub fn f() {}
 <li><a href="attributes/diagnostics.html#lint-check-attributes"><code>allow</code></a>、<a href="attributes/diagnostics.html#lint-check-attributes"><code>warn</code></a>、<a href="attributes/diagnostics.html#lint-check-attributes"><code>deny</code></a>、<a href="attributes/diagnostics.html#lint-check-attributes"><code>forbid</code></a> — 更改默认的 lint检查级别。</li>
 <li><a href="attributes/diagnostics.html#the-deprecated-attribute"><code>deprecated</code></a> — 生成弃用通知。</li>
 <li><a href="attributes/diagnostics.html#the-must_use-attribute"><code>must_use</code></a> — 为未使用的值生成 lint 提醒。</li>
+<li><a href="attributes/diagnostics.html#the-diagnosticon_unimplemented-attribute"><code>diagnostic::on_unimplemented</code></a> — 如个某个 trait 没有被实现，则提醒编译器发射一个特定的错误消息。</li>
 </ul>
 </li>
 <li>ABI、链接(linking)、符号(symbol)、和 FFI

@@ -148,7 +148,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2024-03-09</p>
+<p>本书跟随原文截止日期：2024-04-06</p>
 </blockquote>
 <h1 id="前言"><a class="header" href="#前言">前言</a></h1>
 <h2 id="试水版"><a class="header" href="#试水版">试水版</a></h2>
@@ -345,8 +345,8 @@ commit: 4a2bdf896cd2df370a91d14cb8ba04e326cd21db <br />
 <h1 id="输入格式"><a class="header" href="#输入格式">输入格式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/input-format.md">notation.md</a><br />
-commit: 8ba3c4911446cb390eb0602862caf53fac6da086 <br />
-本章译文最后维护日期：2024-03-09</p>
+commit: 0b153cb607e981bfa64ec6fcbfc92cefc891d4ed <br />
+本章译文最后维护日期：2024-04-06</p>
 </blockquote>
 <p>本章介绍如何将源文件解释为一系列 token。</p>
 <p>有关程序如何组织成文件的描述，请参见<a href="crates-and-source-files.html">crate 和源文件</a>。</p>
@@ -363,7 +363,7 @@ commit: 8ba3c4911446cb390eb0602862caf53fac6da086 <br />
 <p>其他时候出现的字符<code>U+000D</code>(CR) 则保留在原位（它们被视为<a href="whitespace.html">空白符</a>）。</p>
 <h2 id="shebang-removal"><a class="header" href="#shebang-removal">Shebang removal</a></h2>
 <h2 id="shebang-移除"><a class="header" href="#shebang-移除">Shebang 移除</a></h2>
-<p>如果字符序列以字符 <code>!#</code> 起行，那直到并包括第一个 <code>U+000A</code>(LF) 的字符将被从此字符序列中移除。</p>
+<p>如果字符序列以字符 <code>#!</code> 起行，那直到并包括第一个 <code>U+000A</code>(LF) 的字符将被从此字符序列中移除。</p>
 <p>例如，以下文件的第一行将被忽略：</p>
 <!-- ignore: tests don't like shebang -->
 <pre><code class="language-rust ignore">#!/usr/bin/env rustx
@@ -1768,8 +1768,8 @@ macro_rules! helper {
 <h2 id="过程宏"><a class="header" href="#过程宏">过程宏</a></h2>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/procedural-macros.md">procedural-macros.md</a><br />
-commit: 0e4662dd8cc5a76abd1b5ad54a2599f1bf45b75c <br />
-本章译文最后维护日期：2022-05-12</p>
+commit: a7a86824fa90172340e20053be5e6f217cc466fe <br />
+本章译文最后维护日期：2024-04-06</p>
 </blockquote>
 <p><em>过程宏</em>允许在执行函数时创建句法扩展。过程宏有三种形式:</p>
 <ul>
@@ -1899,8 +1899,8 @@ pub fn return_as_is(_attr: TokenStream, item: TokenStream) -&gt; TokenStream {
 </span>
 #[proc_macro_attribute]
 pub fn show_streams(attr: TokenStream, item: TokenStream) -&gt; TokenStream {
-    println!(&quot;attr: \&quot;{}\&quot;&quot;, attr.to_string());
-    println!(&quot;item: \&quot;{}\&quot;&quot;, item.to_string());
+    println!(&quot;attr: \&quot;{attr}\&quot;&quot;);
+    println!(&quot;item: \&quot;{item}\&quot;&quot;);
     item
 }
 </code></pre>
@@ -1988,8 +1988,8 @@ fn invoke4() {}
 <div style="break-before: page; page-break-before: always;"></div><h1 id="crate-和源文件"><a class="header" href="#crate-和源文件">crate 和源文件</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md">crates-and-source-files.md</a><br />
-commit: e364b6c6f91a7166ab4ff6a7814bf9a4922c2358 <br />
-本章译文最后维护日期：2024-03-09</p>
+commit: 824b9156b221d6e051cca6f634e28515f30055e6 <br />
+本章译文最后维护日期：2024-04-06</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -2039,6 +2039,17 @@ commit: e364b6c6f91a7166ab4ff6a7814bf9a4922c2358 <br />
     std::process::ExitCode::SUCCESS
 }
 </code></pre></pre>
+<p><code>main</code>主函数也可以是一个导入项，例如从外部crate 或当前crate 中导入。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>mod foo {
+    pub fn bar() {
+        println!(&quot;Hello, world!&quot;);
+    }
+}
+use foo::bar as main;
+<span class="boring">}
+</span></code></pre></pre>
 <blockquote>
 <p><strong>注意</strong>: 标准库中，实现 <a href="https://doc.rust-lang.org/std/process/trait.Termination.html"><code>Termination</code></a> trait 的类型包括：</p>
 <ul>
@@ -5065,8 +5076,8 @@ fn main() {
 <h1 id="属性-1"><a class="header" href="#属性-1">属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes.md">attributes.md</a><br />
-commit: 9d351cc1d87816c0550bbf7627baf37bbc33ff27 <br />
-本章译文最后维护日期：2023-11-05</p>
+commit: 5baf87cdd925f4ca569570658d7fe55e783942ce <br />
+本章译文最后维护日期：2024-04-06</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -5191,7 +5202,7 @@ fn foo() {}
 <p>属性要么是活跃的，要么是惰性的。在属性处理过程中，<em>活跃属性</em>将自己从它们所在的对象上移除，而<em>惰性属性</em>依然保持原位置不变。</p>
 <p><a href="conditional-compilation.html#the-cfg-attribute"><code>cfg</code></a> 和 <a href="conditional-compilation.html#the-cfg_attr-attribute"><code>cfg_attr</code></a> 属性是活跃的。<a href="attributes/testing.html#the-test-attribute"><code>test</code></a>属性在为测试所做的编译形式中是惰性的，在其他编译形式中是活跃的。<a href="procedural-macros.html#attribute-macros">宏属性</a>是活跃的。所有其他属性都是惰性的。</p>
 <h2 id="tool-attributes"><a class="header" href="#tool-attributes">Tool attributes</a></h2>
-<h2 id="外部工具属性"><a class="header" href="#外部工具属性">外部工具属性</a></h2>
+<h2 id="外部工具的属性"><a class="header" href="#外部工具的属性">外部工具的属性</a></h2>
 <p>编译器可能允许和具体外部工具相关联的属性，但这些工具在编译和检查过程中必须存在并驻留在编译器提供的<a href="names/preludes.html#tool-prelude">工具类预导入包</a>下对应的命名空间中（才能让这些属性生效）。这种属性的（命名空间）路径的第一段是工具的名称，后跟一个或多个工具自己解释的附加段。</p>
 <p>当工具在编译期不可用时，该工具的属性将被静默接受而不提示警告。当工具可用时，该工具负责处理和解释这些属性。</p>
 <p>如果使用了 <a href="names/preludes.html#the-no_implicit_prelude-attribute"><code>no_implicit_prelude</code></a>属性，则外部工具属性不可用。</p>
@@ -5208,7 +5219,7 @@ pub fn f() {}
 <span class="boring">}
 </span></code></pre></pre>
 <blockquote>
-<p>注意: <code>rustc</code> 目前能识别的工具是 “clippy” 和 “rustfmt”。</p>
+<p>注意: <code>rustc</code> 目前能识别 “clippy” 、“rustfmt” 和 &quot;diagnostic&quot; 这些工具。</p>
 </blockquote>
 <h2 id="built-in-attributes-index"><a class="header" href="#built-in-attributes-index">Built-in attributes index</a></h2>
 <h2 id="内置属性的索引表"><a class="header" href="#内置属性的索引表">内置属性的索引表</a></h2>
@@ -5247,6 +5258,7 @@ pub fn f() {}
 <li><a href="attributes/diagnostics.html#lint-check-attributes"><code>allow</code></a>、<a href="attributes/diagnostics.html#lint-check-attributes"><code>warn</code></a>、<a href="attributes/diagnostics.html#lint-check-attributes"><code>deny</code></a>、<a href="attributes/diagnostics.html#lint-check-attributes"><code>forbid</code></a> — 更改默认的 lint检查级别。</li>
 <li><a href="attributes/diagnostics.html#the-deprecated-attribute"><code>deprecated</code></a> — 生成弃用通知。</li>
 <li><a href="attributes/diagnostics.html#the-must_use-attribute"><code>must_use</code></a> — 为未使用的值生成 lint 提醒。</li>
+<li><a href="attributes/diagnostics.html#the-diagnosticon_unimplemented-attribute"><code>diagnostic::on_unimplemented</code></a> — 如个某个 trait 没有被实现，则提醒编译器发射一个特定的错误消息。</li>
 </ul>
 </li>
 <li>ABI、链接(linking)、符号(symbol)、和 FFI
@@ -5433,8 +5445,8 @@ struct Foo&lt;T&gt; {
 <h1 id="诊断属性"><a class="header" href="#诊断属性">诊断属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/diagnostics.md">diagnostics.md</a><br />
-commit: fc61be0f7e7bf5bc69c73458ec4314ba4f16a673 <br />
-本章译文最后维护日期：2023-05-03</p>
+commit: 52874b8312ccbc28710a2532f82032876a08911b <br />
+本章译文最后维护日期：2024-04-06</p>
 </blockquote>
 <p>以下<a href="attributes/../attributes.html">属性</a>用于在编译期间控制或生成诊断消息。</p>
 <h2 id="lint-check-attributes"><a class="header" href="#lint-check-attributes">Lint check attributes</a></h2>
@@ -5459,7 +5471,7 @@ commit: fc61be0f7e7bf5bc69c73458ec4314ba4f16a673 <br />
     #[allow(missing_docs)]
     pub fn undocumented_one() -&gt; i32 { 1 }
 
-    // 未提供文档的编码行为在这里将触发编译器告警
+    // 未提供文档的编码行为在这里将触发编译器警告
     #[warn(missing_docs)]
     pub fn undocumented_too() -&gt; i32 { 2 }
 
@@ -5480,12 +5492,12 @@ pub mod m2 {
         // 这里忽略未提供文档的编码行为
         pub fn undocumented_one() -&gt; i32 { 1 }
 
-        // 尽管上面允许，但未提供文档的编码行为在这里将触发编译器告警
+        // 尽管上面允许，但未提供文档的编码行为在这里将触发编译器警告
         #[warn(missing_docs)]
         pub fn undocumented_two() -&gt; i32 { 2 }
     }
 
-    // 未提供文档的编码行为在这里将触发编译器告警
+    // 未提供文档的编码行为在这里将触发编译器警告
     pub fn undocumented_too() -&gt; i32 { 3 }
 }
 <span class="boring">}
@@ -5515,14 +5527,14 @@ pub mod m3 {
 // 这个禁止动作将覆盖前面 &quot;unused&quot;组中的 &quot;unused_must_use&quot; lint。
 #[deny(unused_must_use)]
 fn example() {
-    // 这里不会生成告警，因为 &quot;unused_variables&quot; lint 在 &quot;unused&quot;组下
+    // 这里不会生成警告，因为 &quot;unused_variables&quot; lint 在 &quot;unused&quot;组下
     let x = 1;
     // 这里会产生报错信息，因为 &quot;unused_must_use&quot; lint 被标记为&quot;deny&quot;，而这行的返回结果未被使用
     std::fs::remove_file(&quot;some_file&quot;); // ERROR: unused `Result` that must be used
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>有一个名为 “warnings” 的特殊组，它包含 “warn”级别的所有 lint。“warnings”组会忽略属性的顺序，并对实体执行所有告警lint 检查。</p>
+<p>有一个名为 “warnings” 的特殊组，它包含 “warn”级别的所有 lint。“warnings”组会忽略属性的顺序，并对实体执行所有警告lint 检查。</p>
 <pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">unsafe fn an_unsafe_fn() {}
@@ -5531,7 +5543,7 @@ fn example() {
 // unsafe_code lint 默认是 &quot;allow&quot; 的。
 #[warn(unsafe_code)]
 fn example_err() {
-    // 这里会编译报错，因为 `unsafe_code`告警的 lint 被提升为 &quot;deny&quot;级别了。
+    // 这里会编译报错，因为 `unsafe_code`警告的 lint 被提升为 &quot;deny&quot;级别了。
     unsafe { an_unsafe_fn() } // ERROR: usage of `unsafe` block
 }
 <span class="boring">}
@@ -5541,7 +5553,7 @@ fn example_err() {
 <p>可以为 <code>allow</code>、<code>warn</code>、<code>deny</code> 或 <code>forbid</code> 这些调整代码检查级别的 lint属性添加/输入基于特定工具的 lint。注意该工具在当前作用域内可用才会起效。</p>
 <p>工具类lint 只有在相关工具处于活动状态时才会做相应的代码模式检查。如果一个 lint级别属性，如 <code>allow</code>，引用了一个不存在的工具类lint，编译器将不会去警告不存在该 lint类，只有使用了该工具（，才会报告该 lint类不存在）。</p>
 <p>在其他方面，这些工具类lint 就跟像常规的 lint 一样：</p>
-<pre><pre class="playground"><code class="language-rust edition2021">// 将 clippy 的整个 `pedantic` lint组设置为告警级别
+<pre><pre class="playground"><code class="language-rust edition2021">// 将 clippy 的整个 `pedantic` lint组设置为警告级别
 #![warn(clippy::pedantic)]
 // 使来自 clippy的 `filter_map` lint 的警告静音
 #![allow(clippy::filter_map)]
@@ -5587,8 +5599,8 @@ pub fn bar() {}
 <p><a href="https://github.com/rust-lang/rfcs/blob/master/text/1270-deprecation.md">RFC</a> 内有动机说明和更多细节。</p>
 <h2 id="the-must_use-attribute"><a class="header" href="#the-must_use-attribute">The <code>must_use</code> attribute</a></h2>
 <h2 id="must_use属性"><a class="header" href="#must_use属性"><code>must_use</code>属性</a></h2>
-<p><em><code>must_use</code>属性</em> 用于在值未被“使用”时发出诊断告警。它可以应用于用户定义的复合类型（<a href="attributes/../items/structs.html">结构体(<code>struct</code>)</a>、<a href="attributes/../items/enumerations.html">枚举(<code>enum</code>)</a> 和 <a href="attributes/../items/unions.html">联合体(<code>union</code>)</a>）、<a href="attributes/../items/functions.html">函数</a>和 <a href="attributes/../items/traits.html">trait</a>。</p>
-<p><code>must_use</code>属性可以使用<a href="attributes/../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法添加一些附加消息，如 <code>#[must_use = &quot;example message&quot;]</code>。该字符串将出现在告警消息里。</p>
+<p><em><code>must_use</code>属性</em> 用于在值未被“使用”时发出诊断警告。它可以应用于用户定义的复合类型（<a href="attributes/../items/structs.html">结构体(<code>struct</code>)</a>、<a href="attributes/../items/enumerations.html">枚举(<code>enum</code>)</a> 和 <a href="attributes/../items/unions.html">联合体(<code>union</code>)</a>）、<a href="attributes/../items/functions.html">函数</a>和 <a href="attributes/../items/traits.html">trait</a>。</p>
+<p><code>must_use</code>属性可以使用<a href="attributes/../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法添加一些附加消息，如 <code>#[must_use = &quot;example message&quot;]</code>。该字符串将出现在警告消息里。</p>
 <p>当用户定义的复合类型上使用了此属性，如果有该类型的<a href="attributes/../expressions.html">表达式</a>正好是<a href="attributes/../statements.html#expression-statements">表达式语句</a>的表达式，那就违反了 <code>unused_must_use</code> 这个 lint。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -5677,6 +5689,65 @@ let _ = five();
 <span class="boring">}
 </span></code></pre></pre>
 </blockquote>
+<h2 id="the-diagnostic-tool-attribute-namespace"><a class="header" href="#the-diagnostic-tool-attribute-namespace">The <code>diagnostic</code> tool attribute namespace</a></h2>
+<h2 id="diagnostic属性的命名空间"><a class="header" href="#diagnostic属性的命名空间"><code>diagnostic</code>属性的命名空间</a></h2>
+<p>属性<code>#[diagnostic]</code> 的命名空间是影响编译期错误消息的根属性。
+Rust 不保证这些属性提供的提示信息会被使用。
+此命名空间可接受未知属性，但这样可能会触发有属性未被使用这样的警告。
+此外，对已知属性的无效输入通常只是一个警告（有关详细信息，请参阅属性定义）。
+这意味着允许添加或丢弃属性，并在未来更改输入，以允许进行更改，而无需为了保持程序正常工作而不得不选择无意义的属性或选项。</p>
+<h3 id="the-diagnosticon_unimplemented-attribute"><a class="header" href="#the-diagnosticon_unimplemented-attribute">The <code>diagnostic::on_unimplemented</code> attribute</a></h3>
+<h3 id="diagnosticon_unimplemented属性"><a class="header" href="#diagnosticon_unimplemented属性"><code>diagnostic::on_unimplemented</code>属性</a></h3>
+<p><code>#[diagnostic::on_unimplemented]</code>属性会给编译器的一个提示，该提示通常用于要求某trait 必须在场，但使用的具体类型上并未实现此trait 的场景中来生成错误消息。
+该属性应用在<a href="attributes/../items/traits.html">trait申明</a>上，尽管它放在其他位置上并不会报错。
+该属性使用<a href="attributes/../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法来指定其输入，但该属性的任何格式错误的输入都不会被视为错误，此目的是为了提供向前和向后的兼容性。
+其下的选项具有以下给定的含义：</p>
+<ul>
+<li><code>message</code> — 顶层错误消息的文本模板。</li>
+<li><code>label</code> — 错误消息中错误代码内联显示的文本标签。</li>
+<li><code>note</code> — 提供额外的注释。</li>
+</ul>
+<p>其中 <code>note</code>选项可以出现多次，这将导致编译器发出多条注释消息。
+如果其他选项中的任何一个出现了多次，则相关选项的首次定义会被认定为实际使用的值。
+任何其他情况都会产生 lint 警告。
+对于任何其他不存在的选项，也都会生成 lint 警告。</p>
+<p>所有三个选项都接受字符串作为模板格式参数，使用与 <a href="https://doc.rust-lang.org/std/fmt/index.html"><code>std::fmt</code></a> 字符串相同的格式进行解释。
+使用给定命名参数的格式参数将被替换为以下文本：</p>
+<ul>
+<li><code>{Self}</code> — 实现 trait 的类型的名称。</li>
+<li><code>{</code> <em>GenericParameterName</em> <code>}</code> — 给定泛型参数的泛型参数的类型名。</li>
+</ul>
+<p>任何其他格式参数都将生成警告，但会原样包含在字符串中。</p>
+<p>无效的格式字符串可能会产生警告，但通常是被允许的，但可能不会按预期显示。
+格式说明符可能会产生警告，但可以会被忽略。</p>
+<p>示例：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail E0277 edition2021">#[diagnostic::on_unimplemented(
+    message = &quot;My Message for `ImportantTrait&lt;{A}&gt;` implemented for `{Self}`&quot;,
+    label = &quot;My Label&quot;,
+    note = &quot;Note 1&quot;,
+    note = &quot;Note 2&quot;
+)]
+trait ImportantTrait&lt;A&gt; {}
+
+fn use_my_trait(_: impl ImportantTrait&lt;i32&gt;) {}
+
+fn main() {
+    use_my_trait(String::new());
+}
+</code></pre></pre>
+<p>编译器可能会生成如下所示的错误消息：</p>
+<pre><code class="language-text">error[E0277]: My Message for `ImportantTrait&lt;i32&gt;` implemented for `String`
+  --&gt; src/main.rs:14:18
+   |
+14 |     use_my_trait(String::new());
+   |     ------------ ^^^^^^^^^^^^^ My Label
+   |     |
+   |     required by a bound introduced by this call
+   |
+   = help: the trait `ImportantTrait&lt;i32&gt;` is not implemented for `String`
+   = note: Note 1
+   = note: Note 2
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="code-generation-attributes"><a class="header" href="#code-generation-attributes">Code generation attributes</a></h1>
 <h1 id="代码生成属性"><a class="header" href="#代码生成属性">代码生成属性</a></h1>
 <blockquote>
@@ -6633,8 +6704,8 @@ let b: &amp;[i32];
 <h1 id="字面量表达式"><a class="header" href="#字面量表达式">字面量表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/literal-expr.md">literal-expr.md</a><br />
-commit: deac889efd06a3214da07cbdfc0dec00450f6712 <br />
-本章译文最后维护日期：2024-02-03</p>
+commit: 659915cc1169e13329186748e26ec1e5c6a92d4d <br />
+本章译文最后维护日期：2024-04-06</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
@@ -6707,7 +6778,7 @@ commit: deac889efd06a3214da07cbdfc0dec00450f6712 <br />
 <h3 id="unicode-escapes-1"><a class="header" href="#unicode-escapes-1">Unicode escapes</a></h3>
 <h3 id="unicode字符值转义"><a class="header" href="#unicode字符值转义">Unicode字符值转义</a></h3>
 <p>转义序列由 <code>\u{</code> 后跟一系列字符组成，每个字符都是十六进制数字或 <code>_</code> ，在后跟一个 <code>}</code>。
-转义值是一个字符，其[Unicode标量值][Unicode scalar value]是将转义序列中包含的十六进制数字解释为十六进制整数的结果，就好像对这一段字符执行了以16为基数的[<code>u8::from_str_radix</code>]操作。</p>
+转义值是一个字符，其[Unicode标量值][Unicode scalar value]是将转义序列中包含的十六进制数字解释为十六进制整数的结果，就好像对这一段字符执行了以16为基数的[<code>u32::from_str_radix</code>]操作。</p>
 <blockquote>
 <p><strong>注意</strong>: [CHAR_LITERAL] token 或 [STRING_LITERA] token 的词法定义形式确保存在这样的字符。</p>
 </blockquote>
@@ -7090,7 +7161,8 @@ let x: f64 = 2.; // type f64
 [<code>f64::from_str</code>]: https://doc.rust-lang.org/core/primitive.f64.md#method.from_str
 [<code>f64::INFINITY</code>]: https://doc.rust-lang.org/core/primitive.f64.md#associatedconstant.INFINITY
 [<code>f64::NAN</code>]: https://doc.rust-lang.org/core/primitive.f64.md#associatedconstant.NAN
-[<code>u8::from_str_radix</code>]: ../../core/primitive.u8.md#method.from_str_radix
+[<code>u8::from_str_radix</code>]: https://doc.rust-lang.org/core/primitive.u8.md#method.from_str_radix
+[<code>u32::from_str_radix</code>]: https://doc.rust-lang.org/core/primitive.u32.md#method.from_str_radix
 [<code>u128::from_str_radix</code>]: https://doc.rust-lang.org/core/primitive.u128.md#method.from_str_radix
 [CHAR_LITERAL]: ../tokens.md#character-literals
 [STRING_LITERAL]: ../tokens.md#string-literals
@@ -11087,8 +11159,8 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 <h1 id="类型布局"><a class="header" href="#类型布局">类型布局</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-layout.md">type-layout.md</a><br />
-commit: a28f858b55d537143e03c79fd301de7125b56d63 <br />
-本章译文最后维护日期：2023-12-30</p>
+commit: 1c03c9d3b8b26656fae68f071e2bf833b55d5206 <br />
+本章译文最后维护日期：2024-04-06</p>
 </blockquote>
 <p>类型的布局描述类型的内存宽度(size)、对齐量(alignment)和字段(fields)的<em>相对偏移量(relative offsets)</em>。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。</p>
 <p>每次编译都有可能更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。</p>
@@ -11114,7 +11186,7 @@ commit: a28f858b55d537143e03c79fd301de7125b56d63 <br />
 </tbody></table>
 </div>
 <p><code>usize</code> 和 <code>isize</code> 的内存宽度足以包含目标平台上的每个内存地址。例如，在 32-bit 目标上，它们是 4 个字节，而在 64-bit 目标上，它们是 8 个字节。</p>
-<p>大多数原生类型的对齐量通常与它们的内存宽度保持一致，尽管这是特定于平台的行为。比较典型的就是在 x86 平台上，u64 和 f64 都上 32-bit 的对齐量。</p>
+<p>大多数原生类型的对齐量通常与它们的内存宽度保持一致，尽管这是特定于平台的行为。比较典型的就是在许多 32位平台上，<code>u64</code> 和 <code>f64</code> 都是以 32位对齐的。</p>
 <h2 id="pointers-and-references-layout"><a class="header" href="#pointers-and-references-layout">Pointers and References Layout</a></h2>
 <h2 id="指针和引用的布局"><a class="header" href="#指针和引用的布局">指针和引用的布局</a></h2>
 <p>指针和引用具有相同的布局。指针或引用的可变性不会影响其布局。</p>
@@ -12941,8 +13013,8 @@ use alloc::rc::Rc;
 <h1 id="路径"><a class="header" href="#路径">路径</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/paths.md">paths.md</a><br />
-commit: e33f255728a1b53bfe486f6d8e4a4752ec229c11 <br />
-本章译文最后维护日期：2024-03-09</p>
+commit: 6c77f499eaf64bd89c29a8932e63a9343ee73663 <br />
+本章译文最后维护日期：2024-04-06</p>
 </blockquote>
 <p><em>路径</em>是一个或多个由命名空间<span class="parenthetical">限定符(<code>::</code>)</span><em>逻辑</em>分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，<code>::</code> 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的<a href="items.html">程序项</a>或<a href="variables.html">变量</a>。如果路径包含多个路径段，则总是引用程序项。</p>
 <p>仅由标识符段组成的简单路径(simple paths)的两个示例：</p>
@@ -12985,14 +13057,16 @@ mod m {
       <code>&lt;</code> <code>&gt;</code><br />
    | <code>&lt;</code> ( <em>GenericArg</em> <code>,</code> )<sup>*</sup> <em>GenericArg</em> <code>,</code><sup>?</sup> <code>&gt;</code></p>
 <p><em>GenericArg</em> :\net
-   <a href="trait-bounds.html"><em>Lifetime</em></a> | <a href="types.html#type-expressions"><em>Type</em></a> | <em>GenericArgsConst</em> | <em>GenericArgsBinding</em></p>
+   <a href="trait-bounds.html"><em>Lifetime</em></a> | <a href="types.html#type-expressions"><em>Type</em></a> | <em>GenericArgsConst</em> | <em>GenericArgsBinding</em> | <em>GenericArgsBounds</em></p>
 <p><em>GenericArgsConst</em> :<br />
       <a href="expressions/block-expr.html"><em>BlockExpression</em></a><br />
    | <a href="expressions/literal-expr.html"><em>LiteralExpression</em></a><br />
    | <code>-</code> <a href="expressions/literal-expr.html"><em>LiteralExpression</em></a><br />
    | <a href="paths.html#simple-paths"><em>SimplePathSegment</em></a></p>
 <p><em>GenericArgsBinding</em> :<br />
-   <a href="identifiers.html">IDENTIFIER</a> <code>=</code> <a href="types.html#type-expressions"><em>Type</em></a></p>
+   <a href="identifiers.html">IDENTIFIER</a> <em>GenericArgs</em><sup>?</sup> <code>=</code> <a href="types.html#type-expressions"><em>Type</em></a></p>
+<p><em>GenericArgsBounds</em> :<br />
+   <a href="identifiers.html">IDENTIFIER</a> <em>GenericArgs</em><sup>?</sup> <code>:</code> <a href="trait-bounds.html"><em>TypeParamBounds</em></a></p>
 </blockquote>
 <p>表达式中的路径允许指定带有泛型参数的路径。它们在各种<a href="expressions.html">表达式</a>和<a href="patterns.html">模式</a>中都有使用。</p>
 <p>token <code>::</code> 必须在泛型参数的左尖括号（<code>&lt;</code>）的前面，以避免和小于号操作符产生混淆。这就是俗称的“涡轮鱼(turbofish)”句法。</p>

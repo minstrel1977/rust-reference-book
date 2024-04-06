@@ -153,8 +153,8 @@
 <h1 id="类型布局"><a class="header" href="#类型布局">类型布局</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-layout.md">type-layout.md</a><br />
-commit: a28f858b55d537143e03c79fd301de7125b56d63 <br />
-本章译文最后维护日期：2023-12-30</p>
+commit: 1c03c9d3b8b26656fae68f071e2bf833b55d5206 <br />
+本章译文最后维护日期：2024-04-06</p>
 </blockquote>
 <p>类型的布局描述类型的内存宽度(size)、对齐量(alignment)和字段(fields)的<em>相对偏移量(relative offsets)</em>。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。</p>
 <p>每次编译都有可能更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。</p>
@@ -180,7 +180,7 @@ commit: a28f858b55d537143e03c79fd301de7125b56d63 <br />
 </tbody></table>
 </div>
 <p><code>usize</code> 和 <code>isize</code> 的内存宽度足以包含目标平台上的每个内存地址。例如，在 32-bit 目标上，它们是 4 个字节，而在 64-bit 目标上，它们是 8 个字节。</p>
-<p>大多数原生类型的对齐量通常与它们的内存宽度保持一致，尽管这是特定于平台的行为。比较典型的就是在 x86 平台上，u64 和 f64 都上 32-bit 的对齐量。</p>
+<p>大多数原生类型的对齐量通常与它们的内存宽度保持一致，尽管这是特定于平台的行为。比较典型的就是在许多 32位平台上，<code>u64</code> 和 <code>f64</code> 都是以 32位对齐的。</p>
 <h2 id="pointers-and-references-layout"><a class="header" href="#pointers-and-references-layout">Pointers and References Layout</a></h2>
 <h2 id="指针和引用的布局"><a class="header" href="#指针和引用的布局">指针和引用的布局</a></h2>
 <p>指针和引用具有相同的布局。指针或引用的可变性不会影响其布局。</p>

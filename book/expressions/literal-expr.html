@@ -153,8 +153,8 @@
 <h1 id="字面量表达式"><a class="header" href="#字面量表达式">字面量表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/literal-expr.md">literal-expr.md</a><br />
-commit: deac889efd06a3214da07cbdfc0dec00450f6712 <br />
-本章译文最后维护日期：2024-02-03</p>
+commit: 659915cc1169e13329186748e26ec1e5c6a92d4d <br />
+本章译文最后维护日期：2024-04-06</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>词法</sup></strong><br />
@@ -227,7 +227,7 @@ commit: deac889efd06a3214da07cbdfc0dec00450f6712 <br />
 <h3 id="unicode-escapes"><a class="header" href="#unicode-escapes">Unicode escapes</a></h3>
 <h3 id="unicode字符值转义"><a class="header" href="#unicode字符值转义">Unicode字符值转义</a></h3>
 <p>转义序列由 <code>\u{</code> 后跟一系列字符组成，每个字符都是十六进制数字或 <code>_</code> ，在后跟一个 <code>}</code>。
-转义值是一个字符，其[Unicode标量值][Unicode scalar value]是将转义序列中包含的十六进制数字解释为十六进制整数的结果，就好像对这一段字符执行了以16为基数的[<code>u8::from_str_radix</code>]操作。</p>
+转义值是一个字符，其[Unicode标量值][Unicode scalar value]是将转义序列中包含的十六进制数字解释为十六进制整数的结果，就好像对这一段字符执行了以16为基数的[<code>u32::from_str_radix</code>]操作。</p>
 <blockquote>
 <p><strong>注意</strong>: [CHAR_LITERAL] token 或 [STRING_LITERA] token 的词法定义形式确保存在这样的字符。</p>
 </blockquote>
@@ -610,7 +610,8 @@ let x: f64 = 2.; // type f64
 [<code>f64::from_str</code>]: https://doc.rust-lang.org/core/primitive.f64.md#method.from_str
 [<code>f64::INFINITY</code>]: https://doc.rust-lang.org/core/primitive.f64.md#associatedconstant.INFINITY
 [<code>f64::NAN</code>]: https://doc.rust-lang.org/core/primitive.f64.md#associatedconstant.NAN
-[<code>u8::from_str_radix</code>]: ../../core/primitive.u8.md#method.from_str_radix
+[<code>u8::from_str_radix</code>]: https://doc.rust-lang.org/core/primitive.u8.md#method.from_str_radix
+[<code>u32::from_str_radix</code>]: https://doc.rust-lang.org/core/primitive.u32.md#method.from_str_radix
 [<code>u128::from_str_radix</code>]: https://doc.rust-lang.org/core/primitive.u128.md#method.from_str_radix
 [CHAR_LITERAL]: ../tokens.md#character-literals
 [STRING_LITERAL]: ../tokens.md#string-literals

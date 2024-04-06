@@ -3,8 +3,8 @@
 # 属性
 
 >[attributes.md](https://github.com/rust-lang/reference/blob/master/src/attributes.md)\
->commit: 9d351cc1d87816c0550bbf7627baf37bbc33ff27 \
->本章译文最后维护日期：2023-11-05
+>commit: 5baf87cdd925f4ca569570658d7fe55e783942ce \
+>本章译文最后维护日期：2024-04-06
 
 > **<sup>句法</sup>**\
 > _InnerAttribute_ :\
@@ -152,7 +152,7 @@ _MetaListNameValueStr_ | `link(name = "CoreFoundation", kind = "framework")`
 [`cfg`] 和 [`cfg_attr`] 属性是活跃的。[`test`]属性在为测试所做的编译形式中是惰性的，在其他编译形式中是活跃的。[宏属性][Attribute macros]是活跃的。所有其他属性都是惰性的。
 
 ## Tool attributes
-## 外部工具属性
+## 外部工具的属性
 
 编译器可能允许和具体外部工具相关联的属性，但这些工具在编译和检查过程中必须存在并驻留在编译器提供的[工具类预导入包][tool prelude]下对应的命名空间中（才能让这些属性生效）。这种属性的（命名空间）路径的第一段是工具的名称，后跟一个或多个工具自己解释的附加段。
 
@@ -171,7 +171,7 @@ struct S {
 pub fn f() {}
 ```
 
-> 注意: `rustc` 目前能识别的工具是 “clippy” 和 “rustfmt”。
+> 注意: `rustc` 目前能识别 “clippy” 、“rustfmt” 和 "diagnostic" 这些工具。
 
 ## Built-in attributes index
 ## 内置属性的索引表
@@ -198,6 +198,7 @@ pub fn f() {}
   - [`allow`]、[`warn`]、[`deny`]、[`forbid`] — 更改默认的 lint检查级别。
   - [`deprecated`] — 生成弃用通知。
   - [`must_use`] — 为未使用的值生成 lint 提醒。
+  - [`diagnostic::on_unimplemented`] — 如个某个 trait 没有被实现，则提醒编译器发射一个特定的错误消息。
 - ABI、链接(linking)、符号(symbol)、和 FFI
   - [`link`] — 指定要与外部(`extern`)块链接的本地库。
   - [`link_name`] — 指定外部(`extern`)块中的函数或静态项的符号(symbol)名。
@@ -317,3 +318,4 @@ pub fn f() {}
 [closure]: expressions/closure-expr.md
 [function pointer]: types/function-pointer.md
 [variadic functions]: items/external-blocks.html#variadic-functions
+[`diagnostic::on_unimplemented`]: attributes/diagnostics.md#the-diagnosticon_unimplemented-attribute

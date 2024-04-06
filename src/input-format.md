@@ -2,8 +2,8 @@
 # 输入格式
 
 >[notation.md](https://github.com/rust-lang/reference/blob/master/src/input-format.md)\
->commit: 8ba3c4911446cb390eb0602862caf53fac6da086 \
->本章译文最后维护日期：2024-03-09
+>commit: 0b153cb607e981bfa64ec6fcbfc92cefc891d4ed \
+>本章译文最后维护日期：2024-04-06
 
 本章介绍如何将源文件解释为一系列 token。
 
@@ -30,7 +30,7 @@
 ## Shebang removal
 ## Shebang 移除
 
-如果字符序列以字符 `!#` 起行，那直到并包括第一个 `U+000A`(LF) 的字符将被从此字符序列中移除。
+如果字符序列以字符 `#!` 起行，那直到并包括第一个 `U+000A`(LF) 的字符将被从此字符序列中移除。
 
 例如，以下文件的第一行将被忽略：
 

@@ -2,8 +2,8 @@
 # 字面量表达式
 
 >[literal-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/literal-expr.md)\
->commit: deac889efd06a3214da07cbdfc0dec00450f6712 \
->本章译文最后维护日期：2024-02-03
+>commit: 659915cc1169e13329186748e26ec1e5c6a92d4d \
+>本章译文最后维护日期：2024-04-06
 
 > **<sup>词法</sup>**\
 > _LiteralExpression_ :\
@@ -85,7 +85,7 @@
 ### Unicode字符值转义
 
 转义序列由 `\u{` 后跟一系列字符组成，每个字符都是十六进制数字或 `_` ，在后跟一个 `}`。
-转义值是一个字符，其[Unicode标量值][Unicode scalar value]是将转义序列中包含的十六进制数字解释为十六进制整数的结果，就好像对这一段字符执行了以16为基数的[`u8::from_str_radix`]操作。
+转义值是一个字符，其[Unicode标量值][Unicode scalar value]是将转义序列中包含的十六进制数字解释为十六进制整数的结果，就好像对这一段字符执行了以16为基数的[`u32::from_str_radix`]操作。
 
 > **注意**: [CHAR_LITERAL] token 或 [STRING_LITERA] token 的词法定义形式确保存在这样的字符。
 
@@ -452,7 +452,8 @@ let x: f64 = 2.; // type f64
 [`f64::from_str`]: https://doc.rust-lang.org/core/primitive.f64.md#method.from_str
 [`f64::INFINITY`]: https://doc.rust-lang.org/core/primitive.f64.md#associatedconstant.INFINITY
 [`f64::NAN`]: https://doc.rust-lang.org/core/primitive.f64.md#associatedconstant.NAN
-[`u8::from_str_radix`]: ../../core/primitive.u8.md#method.from_str_radix
+[`u8::from_str_radix`]: https://doc.rust-lang.org/core/primitive.u8.md#method.from_str_radix
+[`u32::from_str_radix`]: https://doc.rust-lang.org/core/primitive.u32.md#method.from_str_radix
 [`u128::from_str_radix`]: https://doc.rust-lang.org/core/primitive.u128.md#method.from_str_radix
 [CHAR_LITERAL]: ../tokens.md#character-literals
 [STRING_LITERAL]: ../tokens.md#string-literals

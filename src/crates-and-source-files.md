@@ -1,8 +1,8 @@
 # crate 和源文件
 
 >[crates-and-source-files.md](https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md)\
->commit: e364b6c6f91a7166ab4ff6a7814bf9a4922c2358 \
->本章译文最后维护日期：2024-03-09
+>commit: 824b9156b221d6e051cca6f634e28515f30055e6 \
+>本章译文最后维护日期：2024-04-06
 
 > **<sup>句法</sup>**\
 > _Crate_ :\
@@ -61,6 +61,17 @@ fn main() -> ! {
 fn main() -> impl std::process::Termination {
     std::process::ExitCode::SUCCESS
 }
+```
+
+`main`主函数也可以是一个导入项，例如从外部crate 或当前crate 中导入。
+
+```rust
+mod foo {
+    pub fn bar() {
+        println!("Hello, world!");
+    }
+}
+use foo::bar as main;
 ```
 
 > **注意**: 标准库中，实现 [`Termination`] trait 的类型包括：

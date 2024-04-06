@@ -2,8 +2,8 @@
 # 类型布局
 
 >[type-layout.md](https://github.com/rust-lang/reference/blob/master/src/type-layout.md)\
->commit: a28f858b55d537143e03c79fd301de7125b56d63 \
->本章译文最后维护日期：2023-12-30
+>commit: 1c03c9d3b8b26656fae68f071e2bf833b55d5206 \
+>本章译文最后维护日期：2024-04-06
 
 类型的布局描述类型的内存宽度(size)、对齐量(alignment)和字段(fields)的*相对偏移量(relative offsets)*。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。
 
@@ -39,7 +39,7 @@
 
 `usize` 和 `isize` 的内存宽度足以包含目标平台上的每个内存地址。例如，在 32-bit 目标上，它们是 4 个字节，而在 64-bit 目标上，它们是 8 个字节。
 
-大多数原生类型的对齐量通常与它们的内存宽度保持一致，尽管这是特定于平台的行为。比较典型的就是在 x86 平台上，u64 和 f64 都上 32-bit 的对齐量。
+大多数原生类型的对齐量通常与它们的内存宽度保持一致，尽管这是特定于平台的行为。比较典型的就是在许多 32位平台上，`u64` 和 `f64` 都是以 32位对齐的。
 
 ## Pointers and References Layout
 ## 指针和引用的布局

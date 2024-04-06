@@ -2,8 +2,8 @@
 ## 过程宏
 
 >[procedural-macros.md](https://github.com/rust-lang/reference/blob/master/src/procedural-macros.md)\
->commit: 0e4662dd8cc5a76abd1b5ad54a2599f1bf45b75c \
->本章译文最后维护日期：2022-05-12
+>commit: a7a86824fa90172340e20053be5e6f217cc466fe \
+>本章译文最后维护日期：2024-04-06
 
 *过程宏*允许在执行函数时创建句法扩展。过程宏有三种形式:
 
@@ -183,8 +183,8 @@ pub fn return_as_is(_attr: TokenStream, item: TokenStream) -> TokenStream {
 
 #[proc_macro_attribute]
 pub fn show_streams(attr: TokenStream, item: TokenStream) -> TokenStream {
-    println!("attr: \"{}\"", attr.to_string());
-    println!("item: \"{}\"", item.to_string());
+    println!("attr: \"{attr}\"");
+    println!("item: \"{item}\"");
     item
 }
 ```
