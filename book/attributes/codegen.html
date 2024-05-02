@@ -153,8 +153,8 @@
 <h1 id="代码生成属性"><a class="header" href="#代码生成属性">代码生成属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md">codegen.md</a><br />
-commit: db390b7cfe1a476668576d78cf0e13510319bd8e <br />
-本章译文最后维护日期：2024-03-09</p>
+commit: 5854fcc286557ad3ab34d325073d11d8118096b6 <br />
+本章译文最后维护日期：2024-05-02</p>
 </blockquote>
 <p>下述<a href="../attributes.html">属性</a>用于控制代码生成。</p>
 <h2 id="optimization-hints"><a class="header" href="#optimization-hints">Optimization hints</a></h2>
@@ -316,6 +316,11 @@ unsafe fn foo_avx2() {}
 <h4 id="wasm32-or-wasm64"><a class="header" href="#wasm32-or-wasm64"><code>wasm32</code> or <code>wasm64</code></a></h4>
 <p>在这两个平台下，安全函数和<a href="../unsafe-keyword.html">非安全函数</a>均可启用 <code>#[target_feature]</code>特性。不可能经由 <code>#[target_feature]</code>特性导致未定义行为，因为尝试使用 Wasm引擎不支持的指令将在加载时就失败，而不会有被以不同于编译器预期的方式来解释编译后的代码的风险。</p>
 <div class="table-wrapper"><table><thead><tr><th>特性</th><th>描述</th></tr></thead><tbody>
+<tr><td><code>bulk-memory</code></td><td><a href="https://github.com/WebAssembly/bulk-memory-operations">WebAssembly 大容量内存操作提案</a></td></tr>
+<tr><td><code>extended-const</code></td><td><a href="https://github.com/WebAssembly/extended-const">WebAssembly 扩展常量表达式提案</a></td></tr>
+<tr><td><code>mutable-globals</code></td><td><a href="https://github.com/WebAssembly/mutable-global">WebAssembly 可变全局变量提案</a></td></tr>
+<tr><td><code>nontrapping-fptoint</code></td><td><a href="https://github.com/WebAssembly/nontrapping-float-to-int-conversions">WebAssembly 非捕获式浮点到整型转换提案</a></td></tr>
+<tr><td><code>sign-ext</code></td><td><a href="https://github.com/WebAssembly/sign-extension-ops">WebAssembly 有符号型扩展运算符提案</a></td></tr>
 <tr><td><code>simd128</code></td><td><a href="https://github.com/webassembly/simd">WebAssembly simd 提案</a></td></tr>
 </tbody></table>
 </div>

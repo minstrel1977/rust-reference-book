@@ -2,8 +2,8 @@
 # 特殊类型和 trait
 
 >[special-types-and-traits.md](https://github.com/rust-lang/reference/blob/master/src/special-types-and-traits.md)\
->commit: 50a597cc56af8d9d93e7071a4099480648eb9672 \
->本章译文最后维护日期：2023-01-15
+>commit: 330ef9569444a7414633ba08cf5090da312f1f18 \
+>本章译文最后维护日期：2024-05-02
 
 [标准库][the standard library]中的某些类型和 trait 在 Rust 编译器中也直接能用。本章就阐述了这些类型和 trait 的特殊特性。
 
@@ -69,6 +69,7 @@
 
 * 实现了内置的 `Copy` trait 的类型（见上面）
 * 由 `Clone` 类型的元素组成的[元组][Tuples]
+* [Closures] 仅捕获环境中的 `Clone`类型的值或不捕获值时
 
 ## `Send`
 

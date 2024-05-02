@@ -153,8 +153,8 @@
 <h1 id="调试器属性"><a class="header" href="#调试器属性">调试器属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/debugger.md">debugger.md</a><br />
-commit: 39a0be6dc8210e0f127638ac5cc6820b8ce534df <br />
-本章译文最后维护日期：2023-06-11</p>
+commit: 2d51a2aec405dd54a617f5ee1b27cef326f30ced <br />
+本章译文最后维护日期：2024-05-02</p>
 </blockquote>
 <p>以下<a href="../attributes.html">属性</a>用于在使用 GDB 或 WinDbg 等第三方调试器时增强调试体验。</p>
 <h2 id="the-debugger_visualizer-attribute"><a class="header" href="#the-debugger_visualizer-attribute">The <code>debugger_visualizer</code> attribute</a></h2>
@@ -268,6 +268,30 @@ gdb.current_objfile().pretty_printers.append(lookup)
 <div class="footnote-definition" id="rust-gdb"><sup class="footnote-definition-label">1</sup>
 <p>注意：这里假设你使用的是 <code>rust-gdb</code>脚本，该脚本使用了 <code>String</code>之类的标准库里的类型来配置靓化打印输出。</p>
 </div>
+<h2 id="the-collapse_debuginfo-attribute"><a class="header" href="#the-collapse_debuginfo-attribute">The <code>collapse_debuginfo</code> attribute</a></h2>
+<h2 id="collapse_debuginfo属性"><a class="header" href="#collapse_debuginfo属性"><code>collapse_debuginfo</code>属性</a></h2>
+<p>*<code>collapse_debuginfo</code><a href="../attributes.html">attribute</a>*控制在为调用此宏的代码生成调试信息时，宏定义中的代码位置是否折叠到与宏的调用位置相关联的单个位置。</p>
+<p>该属性使用<a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListIdents</em></a>句法格式来指定其输入，并且只能应用于宏定义。</p>
+<p>该属性可接受的选项有：</p>
+<ul>
+<li><code>#[collapse_debuginfo(yes)]</code> — 调试信息中的代码位置表示的是宏调用点的位置。</li>
+<li><code>#[collapse_debuginfo(no)]</code> — 调试信息中的代码位置表示的不是宏调用点的位置。</li>
+<li><code>#[collapse_debuginfo(external)]</code> — 仅当宏来至于不同的 crate 时，调试信息中的代码位置才表示的是宏调用点的位置。</li>
+</ul>
+<p>没有此属性的宏的默认行为是 <code>external</code>，除非它们是内置宏。内置宏的默认行为是 <code>yes</code>。</p>
+<blockquote>
+<p><strong>注意</strong>: <code>rustc</code> 有一个 <code>-C collapse-macro-debuginfo</code> 命令行选项，用于屏蔽默认折叠行为和 <code>#[collapse_debuginfo]</code>属性。</p>
+</blockquote>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[collapse_debuginfo(yes)]
+macro_rules! example {
+    () =&gt; {
+        println!(&quot;hello!&quot;);
+    };
+}
+<span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 

@@ -2,8 +2,8 @@
 # 调试器属性
 
 >[debugger.md](https://github.com/rust-lang/reference/blob/master/src/attributes/debugger.md)\
->commit: 39a0be6dc8210e0f127638ac5cc6820b8ce534df \
->本章译文最后维护日期：2023-06-11
+>commit: 2d51a2aec405dd54a617f5ee1b27cef326f30ced \
+>本章译文最后维护日期：2024-05-02
 
 以下[属性][attributes]用于在使用 GDB 或 WinDbg 等第三方调试器时增强调试体验。
 
@@ -147,3 +147,31 @@ gdb.current_objfile().pretty_printers.append(lookup)
 [Natvis documentation]: https://docs.microsoft.com/en-us/visualstudio/debugger/create-custom-views-of-native-objects
 [pretty printing documentation]: https://sourceware.org/gdb/onlinedocs/gdb/Pretty-Printing.html
 [_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
+
+## The `collapse_debuginfo` attribute
+## `collapse_debuginfo`属性
+
+*`collapse_debuginfo`[attribute]*控制在为调用此宏的代码生成调试信息时，宏定义中的代码位置是否折叠到与宏的调用位置相关联的单个位置。
+
+该属性使用[_MetaListIdents_]句法格式来指定其输入，并且只能应用于宏定义。
+
+该属性可接受的选项有：
+- `#[collapse_debuginfo(yes)]` — 调试信息中的代码位置表示的是宏调用点的位置。
+- `#[collapse_debuginfo(no)]` — 调试信息中的代码位置表示的不是宏调用点的位置。
+- `#[collapse_debuginfo(external)]` — 仅当宏来至于不同的 crate 时，调试信息中的代码位置才表示的是宏调用点的位置。
+
+没有此属性的宏的默认行为是 `external`，除非它们是内置宏。内置宏的默认行为是 `yes`。
+
+> **注意**: `rustc` 有一个 `-C collapse-macro-debuginfo` 命令行选项，用于屏蔽默认折叠行为和 `#[collapse_debuginfo]`属性。
+
+```rust
+#[collapse_debuginfo(yes)]
+macro_rules! example {
+    () => {
+        println!("hello!");
+    };
+}
+```
+
+[attribute]: ../attributes.md
+[_MetaListIdents_]: ../attributes.md#meta-item-attribute-syntax

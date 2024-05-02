@@ -2,8 +2,8 @@
 # 代码生成属性
 
 >[codegen.md](https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md)\
->commit: db390b7cfe1a476668576d78cf0e13510319bd8e \
->本章译文最后维护日期：2024-03-09
+>commit: 5854fcc286557ad3ab34d325073d11d8118096b6 \
+>本章译文最后维护日期：2024-05-02
 
 下述[属性][attributes]用于控制代码生成。
 
@@ -240,6 +240,7 @@ unsafe fn foo_avx2() {}
 [rv-zksed]: https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zksed.adoc
 [rv-zksh]: https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zksh.adoc
 [rv-zkt]: https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkr.adoc
+[rv-zkt]: https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkt.adoc
 
 #### `wasm32` or `wasm64`
 
@@ -247,8 +248,18 @@ unsafe fn foo_avx2() {}
 
 特性     | 描述
 ------------|-------------------
-`simd128`   | [WebAssembly simd 提案][simd128]
+`bulk-memory`         | [WebAssembly 大容量内存操作提案][bulk-memory]
+`extended-const`      | [WebAssembly 扩展常量表达式提案][extended-const]
+`mutable-globals`     | [WebAssembly 可变全局变量提案][mutable-globals]
+`nontrapping-fptoint` | [WebAssembly 非捕获式浮点到整型转换提案][nontrapping-fptoint]
+`sign-ext`            | [WebAssembly 有符号型扩展运算符提案][sign-ext]
+`simd128`             | [WebAssembly simd 提案][simd128]
 
+[bulk-memory]: https://github.com/WebAssembly/bulk-memory-operations
+[extended-const]: https://github.com/WebAssembly/extended-const
+[mutable-globals]: https://github.com/WebAssembly/mutable-global
+[nontrapping-fptoint]: https://github.com/WebAssembly/nontrapping-float-to-int-conversions
+[sign-ext]: https://github.com/WebAssembly/sign-extension-ops
 [simd128]: https://github.com/webassembly/simd
 
 ### Additional information

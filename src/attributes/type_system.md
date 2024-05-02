@@ -2,8 +2,8 @@
 # 类型系统属性
 
 >[type_system.md](https://github.com/rust-lang/reference/blob/master/src/attributes/type_system.md)\
->commit: bce9bb30bae071776a22ccdb09af1a78bb3aeb63 \
->本章译文最后维护日期：2022-08-20
+>commit: 076a798583ecb450dbb27d46c2e1558228d0fcf1 \
+>本章译文最后维护日期：2024-05-02
 
 以下[属性][attributes]用于改变类型的使用方式。
 
@@ -24,6 +24,12 @@ pub struct Config {
 }
 
 #[non_exhaustive]
+pub struct Token;
+
+#[non_exhaustive]
+pub struct Id(pub u64);
+
+#[non_exhaustive]
 pub enum Error {
     Message(String), // 译者注：此变体为元组变体
     Other,
@@ -37,11 +43,13 @@ pub enum Message {
 
 // 非穷尽结构体可以在定义它的 crate 中正常构建。
 let config = Config { window_width: 640, window_height: 480 };
+let token = Token;
+let id = Id(4);
 
 // 非穷尽结构体可以在定义它的 crate 中进行详尽匹配
-if let Config { window_width, window_height } = config {
-    // ...
-}
+let Config { window_width, window_height } = config;
+let Token = token;
+let Id(id_number) = id;
 
 let error = Error::Other;
 let message = Message::Reaction(3);
@@ -65,18 +73,28 @@ match message {
 非穷尽类型(non-exhaustive types)不能在定义它的 crate 之外构建：
 
 - 非穷尽变体（[结构体(`struct`)][struct]或[枚举变体(`enum` variant)][enum]）不能用 [_StructExpression_]句法（包括[函数式更新(functional update)句法][functional update syntax]）构建。
+- [类单元结构体][struct]隐式定义的同名常量或 [元组结构体][struct]里隐含的和元组结构体同名的构造函数的[可见性][visibility]不大于 `pub(crate)`。
+  也就是说，如果结构的可见性是 `pub`，则这种常量或构造函数的可见性是 `pub(crate)`，否则两类程序项的可见性是相同的（就像没有 `#[non_exhaustive]` 的情况一样）。
 - [枚举(`enum`)][enum]实例能被构建。
+
+当超出其定义的 crate 时，以下构造示例不能编译：
 
 示例：（译者注：本例把上例看成本例的 `upstream` ）
 <!-- ignore: requires external crates -->
 ```rust,ignore
-// `Config`、`Error` `Message`是在上游 crate 中定义的类型，这些类型已被标注为 `#[non_exhaustive]`。
+// 这些类型（`Config`、`Error` `Message`）是在上游 crate 中定义的类型，这些类型已被标注为 `#[non_exhaustive]`。
 use upstream::{Config, Error, Message};
 
 // 不能构造 `Config` 的实例，如果在 `upstream` 的新版本中添加了新字段，则本地编译会失败，因此不允许这样做。
 let config = Config { window_width: 640, window_height: 480 };
 
-// 可以构造 `Error` 的实例，引入的新变体不会导致编译失败。
+// 无法构造 `Token` 的实例；如果添加了新字段，那么它将不再是类单元结构体，因此由它作为类单元结构体创建的同名常量在此crate 外则不再是公共可见的；这段代码无法编译。
+let token = Token;
+
+// 无法构造 `Id` 的实例；如果添加了新字段，则其构造函数签名将发生变化，因此其构造函数在此crate 外不再是公共可见的；这段代码无法编译。
+let id = Id(5);
+
+// 可以构造 `Error` 的实例；引入的新变体不会导致编译失败。
 let error = Error::Message("foo".to_string());
 
 // 无法构造 `Message::Send` 或 `Message::Reaction` 的实例，
@@ -91,13 +109,15 @@ let message = Message::Quit;
 
 在定义所在的 crate 之外对非穷尽类型进行匹配，有如下限制：
 
-- 当模式匹配一个非穷尽变体（[结构体(`struct`)][struct]或[枚举变体(`enum` variant)][enum]）时，必须使用 [_StructPattern_]句法进行匹配，其匹配臂必须有一个为 `..`。元组变体的构造函数的可见性降低为 `min($vis, pub(crate))`。
+- 当模式匹配一个非穷尽变体（[结构体(`struct`)][struct]或[枚举变体(`enum` variant)][enum]）时，必须使用 [_StructPattern_]句法进行匹配，其匹配臂必须有一个为 `..`。元组变体的构造函数的可见性降低的不会比 `pub(crate)` 大。
 - 当模式匹配在一个非穷尽的[枚举(`enum`)][enum]上时，增加对单个变体的匹配无助于匹配臂需满足枚举变体的穷尽性(exhaustiveness)的这一要求。
+
+在定义的 crate 之外时，以下匹配示例不能被编译：
 
 示例：（译者注：可以把上上例看成本例的 `upstream` ）
 <!-- ignore: requires external crates -->
 ```rust, ignore
-// `Config`、`Error` `Message` 是在上游 crate 中定义的类型，这些类型已被标注为 `#[non_exhaustive]`。
+// 这些类型（`Config`、`Error` `Message`）是在上游 crate 中定义的类型，这些类型已被标注为 `#[non_exhaustive]`。
 use upstream::{Config, Error, Message};
 
 // 不包含通配符匹配臂，无法匹配非穷尽枚举。
@@ -111,6 +131,12 @@ match error {
 if let Ok(Config { window_width, window_height }) = config {
     // 加上 `..` 就能编译通过
 }
+
+// 无法匹配非穷尽类单元结构体或元组结构体，除非使用带通配符的语法。
+// 使用 `let Token { .. } = token;` 这样的表达方式则可以通过编译
+let Token = token;
+// 使用 `let Id { 0: id_number, .. } = id;` 这样的表达方式则可以通过编译
+let Id(id_number) = id;
 
 match message {
   // 没有通配符，无法匹配非穷尽（结构体/枚举内的）变体
@@ -141,3 +167,4 @@ let _ = NonExhaustiveEnum::default() as u8;
 [enum]: ../items/enumerations.md
 [functional update syntax]: ../expressions/struct-expr.md#functional-update-syntax
 [struct]: ../items/structs.md
+[visibility]: ../visibility-and-privacy.md

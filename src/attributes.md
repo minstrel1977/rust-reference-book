@@ -3,8 +3,8 @@
 # 属性
 
 >[attributes.md](https://github.com/rust-lang/reference/blob/master/src/attributes.md)\
->commit: 5baf87cdd925f4ca569570658d7fe55e783942ce \
->本章译文最后维护日期：2024-04-06
+>commit: 51817951d0d213a0011f82b62aae02c3b3f2472e \
+>本章译文最后维护日期：2024-05-02
 
 > **<sup>句法</sup>**\
 > _InnerAttribute_ :\
@@ -239,6 +239,7 @@ pub fn f() {}
   - [`non_exhaustive`] — 表明一个类型将来会添加更多的字段/变体。
 - 调试器
   - [`debugger_visualizer`] — 嵌入一个文件，该文件指定类型的调试器输出。
+  - [`collapse_debuginfo`] — 控制宏调用在调试信息中的编码方式。
 
 [Doc comments]: comments.md#doc-comments
 [ECMA-334]: https://www.ecma-international.org/publications-and-standards/standards/ecma-334/
@@ -257,6 +258,7 @@ pub fn f() {}
 [`cfg_attr`]: conditional-compilation.md#the-cfg_attr-attribute
 [`cfg`]: conditional-compilation.md#the-cfg-attribute
 [`cold`]: attributes/codegen.md#the-cold-attribute
+[`collapse_debuginfo`]: attributes/debugger.md#the-collapse_debuginfo-attribute
 [`crate_name`]: crates-and-source-files.md#the-crate_name-attribute
 [`crate_type`]: linkage.md
 [`debugger_visualizer`]: attributes/debugger.md#the-debugger_visualizer-attribute

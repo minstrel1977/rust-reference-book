@@ -148,7 +148,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2024-04-06</p>
+<p>本书跟随原文截止日期：2024-05-02</p>
 </blockquote>
 <h1 id="前言"><a class="header" href="#前言">前言</a></h1>
 <h2 id="试水版"><a class="header" href="#试水版">试水版</a></h2>
@@ -5076,8 +5076,8 @@ fn main() {
 <h1 id="属性-1"><a class="header" href="#属性-1">属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes.md">attributes.md</a><br />
-commit: 5baf87cdd925f4ca569570658d7fe55e783942ce <br />
-本章译文最后维护日期：2024-04-06</p>
+commit: 51817951d0d213a0011f82b62aae02c3b3f2472e <br />
+本章译文最后维护日期：2024-05-02</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -5329,6 +5329,7 @@ pub fn f() {}
 <li>调试器
 <ul>
 <li><a href="attributes/debugger.html#the-debugger_visualizer-attribute"><code>debugger_visualizer</code></a> — 嵌入一个文件，该文件指定类型的调试器输出。</li>
+<li><a href="attributes/debugger.html#the-collapse_debuginfo-attribute"><code>collapse_debuginfo</code></a> — 控制宏调用在调试信息中的编码方式。</li>
 </ul>
 </li>
 </ul>
@@ -5752,8 +5753,8 @@ fn main() {
 <h1 id="代码生成属性"><a class="header" href="#代码生成属性">代码生成属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md">codegen.md</a><br />
-commit: db390b7cfe1a476668576d78cf0e13510319bd8e <br />
-本章译文最后维护日期：2024-03-09</p>
+commit: 5854fcc286557ad3ab34d325073d11d8118096b6 <br />
+本章译文最后维护日期：2024-05-02</p>
 </blockquote>
 <p>下述<a href="attributes/../attributes.html">属性</a>用于控制代码生成。</p>
 <h2 id="optimization-hints"><a class="header" href="#optimization-hints">Optimization hints</a></h2>
@@ -5915,6 +5916,11 @@ unsafe fn foo_avx2() {}
 <h4 id="wasm32-or-wasm64"><a class="header" href="#wasm32-or-wasm64"><code>wasm32</code> or <code>wasm64</code></a></h4>
 <p>在这两个平台下，安全函数和<a href="attributes/../unsafe-keyword.html">非安全函数</a>均可启用 <code>#[target_feature]</code>特性。不可能经由 <code>#[target_feature]</code>特性导致未定义行为，因为尝试使用 Wasm引擎不支持的指令将在加载时就失败，而不会有被以不同于编译器预期的方式来解释编译后的代码的风险。</p>
 <div class="table-wrapper"><table><thead><tr><th>特性</th><th>描述</th></tr></thead><tbody>
+<tr><td><code>bulk-memory</code></td><td><a href="https://github.com/WebAssembly/bulk-memory-operations">WebAssembly 大容量内存操作提案</a></td></tr>
+<tr><td><code>extended-const</code></td><td><a href="https://github.com/WebAssembly/extended-const">WebAssembly 扩展常量表达式提案</a></td></tr>
+<tr><td><code>mutable-globals</code></td><td><a href="https://github.com/WebAssembly/mutable-global">WebAssembly 可变全局变量提案</a></td></tr>
+<tr><td><code>nontrapping-fptoint</code></td><td><a href="https://github.com/WebAssembly/nontrapping-float-to-int-conversions">WebAssembly 非捕获式浮点到整型转换提案</a></td></tr>
+<tr><td><code>sign-ext</code></td><td><a href="https://github.com/WebAssembly/sign-extension-ops">WebAssembly 有符号型扩展运算符提案</a></td></tr>
 <tr><td><code>simd128</code></td><td><a href="https://github.com/webassembly/simd">WebAssembly simd 提案</a></td></tr>
 </tbody></table>
 </div>
@@ -6095,8 +6101,8 @@ f(((((1,), 2), 3), 4));
 <h1 id="类型系统属性"><a class="header" href="#类型系统属性">类型系统属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/type_system.md">type_system.md</a><br />
-commit: bce9bb30bae071776a22ccdb09af1a78bb3aeb63 <br />
-本章译文最后维护日期：2022-08-20</p>
+commit: 076a798583ecb450dbb27d46c2e1558228d0fcf1 <br />
+本章译文最后维护日期：2024-05-02</p>
 </blockquote>
 <p>以下<a href="attributes/../attributes.html">属性</a>用于改变类型的使用方式。</p>
 <h2 id="the-non_exhaustive-attribute"><a class="header" href="#the-non_exhaustive-attribute">The <code>non_exhaustive</code> attribute</a></h2>
@@ -6113,6 +6119,12 @@ pub struct Config {
 }
 
 #[non_exhaustive]
+pub struct Token;
+
+#[non_exhaustive]
+pub struct Id(pub u64);
+
+#[non_exhaustive]
 pub enum Error {
     Message(String), // 译者注：此变体为元组变体
     Other,
@@ -6126,11 +6138,13 @@ pub enum Message {
 
 // 非穷尽结构体可以在定义它的 crate 中正常构建。
 let config = Config { window_width: 640, window_height: 480 };
+let token = Token;
+let id = Id(4);
 
 // 非穷尽结构体可以在定义它的 crate 中进行详尽匹配
-if let Config { window_width, window_height } = config {
-    // ...
-}
+let Config { window_width, window_height } = config;
+let Token = token;
+let Id(id_number) = id;
 
 let error = Error::Other;
 let message = Message::Reaction(3);
@@ -6153,17 +6167,26 @@ match message {
 <p>非穷尽类型(non-exhaustive types)不能在定义它的 crate 之外构建：</p>
 <ul>
 <li>非穷尽变体（<a href="attributes/../items/structs.html">结构体(<code>struct</code>)</a>或<a href="attributes/../items/enumerations.html">枚举变体(<code>enum</code> variant)</a>）不能用 <a href="attributes/../expressions/struct-expr.html"><em>StructExpression</em></a>句法（包括<a href="attributes/../expressions/struct-expr.html#functional-update-syntax">函数式更新(functional update)句法</a>）构建。</li>
+<li><a href="attributes/../items/structs.html">类单元结构体</a>隐式定义的同名常量或 <a href="attributes/../items/structs.html">元组结构体</a>里隐含的和元组结构体同名的构造函数的<a href="attributes/../visibility-and-privacy.html">可见性</a>不大于 <code>pub(crate)</code>。
+也就是说，如果结构的可见性是 <code>pub</code>，则这种常量或构造函数的可见性是 <code>pub(crate)</code>，否则两类程序项的可见性是相同的（就像没有 <code>#[non_exhaustive]</code> 的情况一样）。</li>
 <li><a href="attributes/../items/enumerations.html">枚举(<code>enum</code>)</a>实例能被构建。</li>
 </ul>
+<p>当超出其定义的 crate 时，以下构造示例不能编译：</p>
 <p>示例：（译者注：本例把上例看成本例的 <code>upstream</code> ）</p>
 <!-- ignore: requires external crates -->
-<pre><code class="language-rust ignore">// `Config`、`Error` `Message`是在上游 crate 中定义的类型，这些类型已被标注为 `#[non_exhaustive]`。
+<pre><code class="language-rust ignore">// 这些类型（`Config`、`Error` `Message`）是在上游 crate 中定义的类型，这些类型已被标注为 `#[non_exhaustive]`。
 use upstream::{Config, Error, Message};
 
 // 不能构造 `Config` 的实例，如果在 `upstream` 的新版本中添加了新字段，则本地编译会失败，因此不允许这样做。
 let config = Config { window_width: 640, window_height: 480 };
 
-// 可以构造 `Error` 的实例，引入的新变体不会导致编译失败。
+// 无法构造 `Token` 的实例；如果添加了新字段，那么它将不再是类单元结构体，因此由它作为类单元结构体创建的同名常量在此crate 外则不再是公共可见的；这段代码无法编译。
+let token = Token;
+
+// 无法构造 `Id` 的实例；如果添加了新字段，则其构造函数签名将发生变化，因此其构造函数在此crate 外不再是公共可见的；这段代码无法编译。
+let id = Id(5);
+
+// 可以构造 `Error` 的实例；引入的新变体不会导致编译失败。
 let error = Error::Message(&quot;foo&quot;.to_string());
 
 // 无法构造 `Message::Send` 或 `Message::Reaction` 的实例，
@@ -6177,12 +6200,13 @@ let message = Message::Quit;
 </code></pre>
 <p>在定义所在的 crate 之外对非穷尽类型进行匹配，有如下限制：</p>
 <ul>
-<li>当模式匹配一个非穷尽变体（<a href="attributes/../items/structs.html">结构体(<code>struct</code>)</a>或<a href="attributes/../items/enumerations.html">枚举变体(<code>enum</code> variant)</a>）时，必须使用 <a href="attributes/../patterns.html#struct-patterns"><em>StructPattern</em></a>句法进行匹配，其匹配臂必须有一个为 <code>..</code>。元组变体的构造函数的可见性降低为 <code>min($vis, pub(crate))</code>。</li>
+<li>当模式匹配一个非穷尽变体（<a href="attributes/../items/structs.html">结构体(<code>struct</code>)</a>或<a href="attributes/../items/enumerations.html">枚举变体(<code>enum</code> variant)</a>）时，必须使用 <a href="attributes/../patterns.html#struct-patterns"><em>StructPattern</em></a>句法进行匹配，其匹配臂必须有一个为 <code>..</code>。元组变体的构造函数的可见性降低的不会比 <code>pub(crate)</code> 大。</li>
 <li>当模式匹配在一个非穷尽的<a href="attributes/../items/enumerations.html">枚举(<code>enum</code>)</a>上时，增加对单个变体的匹配无助于匹配臂需满足枚举变体的穷尽性(exhaustiveness)的这一要求。</li>
 </ul>
+<p>在定义的 crate 之外时，以下匹配示例不能被编译：</p>
 <p>示例：（译者注：可以把上上例看成本例的 <code>upstream</code> ）</p>
 <!-- ignore: requires external crates -->
-<pre><code class="language-rust  ignore">// `Config`、`Error` `Message` 是在上游 crate 中定义的类型，这些类型已被标注为 `#[non_exhaustive]`。
+<pre><code class="language-rust  ignore">// 这些类型（`Config`、`Error` `Message`）是在上游 crate 中定义的类型，这些类型已被标注为 `#[non_exhaustive]`。
 use upstream::{Config, Error, Message};
 
 // 不包含通配符匹配臂，无法匹配非穷尽枚举。
@@ -6196,6 +6220,12 @@ match error {
 if let Ok(Config { window_width, window_height }) = config {
     // 加上 `..` 就能编译通过
 }
+
+// 无法匹配非穷尽类单元结构体或元组结构体，除非使用带通配符的语法。
+// 使用 `let Token { .. } = token;` 这样的表达方式则可以通过编译
+let Token = token;
+// 使用 `let Id { 0: id_number, .. } = id;` 这样的表达方式则可以通过编译
+let Id(id_number) = id;
 
 match message {
   // 没有通配符，无法匹配非穷尽（结构体/枚举内的）变体
@@ -6216,8 +6246,8 @@ let _ = NonExhaustiveEnum::default() as u8;
 <h1 id="调试器属性"><a class="header" href="#调试器属性">调试器属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/debugger.md">debugger.md</a><br />
-commit: 39a0be6dc8210e0f127638ac5cc6820b8ce534df <br />
-本章译文最后维护日期：2023-06-11</p>
+commit: 2d51a2aec405dd54a617f5ee1b27cef326f30ced <br />
+本章译文最后维护日期：2024-05-02</p>
 </blockquote>
 <p>以下<a href="attributes/../attributes.html">属性</a>用于在使用 GDB 或 WinDbg 等第三方调试器时增强调试体验。</p>
 <h2 id="the-debugger_visualizer-attribute"><a class="header" href="#the-debugger_visualizer-attribute">The <code>debugger_visualizer</code> attribute</a></h2>
@@ -6331,6 +6361,30 @@ gdb.current_objfile().pretty_printers.append(lookup)
 <div class="footnote-definition" id="rust-gdb"><sup class="footnote-definition-label">1</sup>
 <p>注意：这里假设你使用的是 <code>rust-gdb</code>脚本，该脚本使用了 <code>String</code>之类的标准库里的类型来配置靓化打印输出。</p>
 </div>
+<h2 id="the-collapse_debuginfo-attribute"><a class="header" href="#the-collapse_debuginfo-attribute">The <code>collapse_debuginfo</code> attribute</a></h2>
+<h2 id="collapse_debuginfo属性"><a class="header" href="#collapse_debuginfo属性"><code>collapse_debuginfo</code>属性</a></h2>
+<p>*<code>collapse_debuginfo</code><a href="attributes/../attributes.html">attribute</a>*控制在为调用此宏的代码生成调试信息时，宏定义中的代码位置是否折叠到与宏的调用位置相关联的单个位置。</p>
+<p>该属性使用<a href="attributes/../attributes.html#meta-item-attribute-syntax"><em>MetaListIdents</em></a>句法格式来指定其输入，并且只能应用于宏定义。</p>
+<p>该属性可接受的选项有：</p>
+<ul>
+<li><code>#[collapse_debuginfo(yes)]</code> — 调试信息中的代码位置表示的是宏调用点的位置。</li>
+<li><code>#[collapse_debuginfo(no)]</code> — 调试信息中的代码位置表示的不是宏调用点的位置。</li>
+<li><code>#[collapse_debuginfo(external)]</code> — 仅当宏来至于不同的 crate 时，调试信息中的代码位置才表示的是宏调用点的位置。</li>
+</ul>
+<p>没有此属性的宏的默认行为是 <code>external</code>，除非它们是内置宏。内置宏的默认行为是 <code>yes</code>。</p>
+<blockquote>
+<p><strong>注意</strong>: <code>rustc</code> 有一个 <code>-C collapse-macro-debuginfo</code> 命令行选项，用于屏蔽默认折叠行为和 <code>#[collapse_debuginfo]</code>属性。</p>
+</blockquote>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[collapse_debuginfo(yes)]
+macro_rules! example {
+    () =&gt; {
+        println!(&quot;hello!&quot;);
+    };
+}
+<span class="boring">}
+</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="statements-and-expressions"><a class="header" href="#statements-and-expressions">Statements and expressions</a></h1>
 <h1 id="语句和表达式"><a class="header" href="#语句和表达式">语句和表达式</a></h1>
 <blockquote>
@@ -11159,8 +11213,8 @@ commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e <br />
 <h1 id="类型布局"><a class="header" href="#类型布局">类型布局</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/type-layout.md">type-layout.md</a><br />
-commit: 1c03c9d3b8b26656fae68f071e2bf833b55d5206 <br />
-本章译文最后维护日期：2024-04-06</p>
+commit: a432cf4afdb6f0f452de19c4d123fae81a840d50 <br />
+本章译文最后维护日期：2024-05-02</p>
 </blockquote>
 <p>类型的布局描述类型的内存宽度(size)、对齐量(alignment)和字段(fields)的<em>相对偏移量(relative offsets)</em>。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。</p>
 <p>每次编译都有可能更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。</p>
@@ -11180,13 +11234,16 @@ commit: 1c03c9d3b8b26656fae68f071e2bf833b55d5206 <br />
 <tr><td><code>u32</code> / <code>i32</code></td><td>4</td></tr>
 <tr><td><code>u64</code> / <code>i64</code></td><td>8</td></tr>
 <tr><td><code>u128</code> / <code>i128</code></td><td>16</td></tr>
+<tr><td><code>usize</code> / <code>isize</code></td><td>见下方</td></tr>
 <tr><td><code>f32</code></td><td>4</td></tr>
 <tr><td><code>f64</code></td><td>8</td></tr>
 <tr><td><code>char</code></td><td>4</td></tr>
 </tbody></table>
 </div>
 <p><code>usize</code> 和 <code>isize</code> 的内存宽度足以包含目标平台上的每个内存地址。例如，在 32-bit 目标上，它们是 4 个字节，而在 64-bit 目标上，它们是 8 个字节。</p>
-<p>大多数原生类型的对齐量通常与它们的内存宽度保持一致，尽管这是特定于平台的行为。比较典型的就是在许多 32位平台上，<code>u64</code> 和 <code>f64</code> 都是以 32位对齐的。</p>
+<p>原生类型的对齐量是特定于目标平台的。
+大多数情况下，原生类型的对齐量通常与它们的内存宽度保持一致，但也可以小于。
+特别是，<code>i128</code> 和 <code>u128</code> 通常对齐到 4 或 8 个字节，即使它们的尺寸是 16，并且在许多 32位平台上，<code>i64</code>、<code>u64</code> 和 <code>f64</code> 仅对齐到4个字节，而不是 8 个字节。</p>
 <h2 id="pointers-and-references-layout"><a class="header" href="#pointers-and-references-layout">Pointers and References Layout</a></h2>
 <h2 id="指针和引用的布局"><a class="header" href="#指针和引用的布局">指针和引用的布局</a></h2>
 <p>指针和引用具有相同的布局。指针或引用的可变性不会影响其布局。</p>
@@ -12635,8 +12692,8 @@ const RESOLVED_STATIC: &amp;dyn Fn(&amp;Foo, &amp;Bar) -&gt; &amp;Baz = &amp;som
 <h1 id="特殊类型和-trait"><a class="header" href="#特殊类型和-trait">特殊类型和 trait</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/special-types-and-traits.md">special-types-and-traits.md</a><br />
-commit: 50a597cc56af8d9d93e7071a4099480648eb9672 <br />
-本章译文最后维护日期：2023-01-15</p>
+commit: 330ef9569444a7414633ba08cf5090da312f1f18 <br />
+本章译文最后维护日期：2024-05-02</p>
 </blockquote>
 <p><a href="https://doc.rust-lang.org/std/index.html">标准库</a>中的某些类型和 trait 在 Rust 编译器中也直接能用。本章就阐述了这些类型和 trait 的特殊特性。</p>
 <h2 id="boxt"><a class="header" href="#boxt"><code>Box&lt;T&gt;</code></a></h2>
@@ -12680,6 +12737,7 @@ commit: 50a597cc56af8d9d93e7071a4099480648eb9672 <br />
 <ul>
 <li>实现了内置的 <code>Copy</code> trait 的类型（见上面）</li>
 <li>由 <code>Clone</code> 类型的元素组成的<a href="types/tuple.html">元组</a></li>
+<li><a href="types/closure.html">Closures</a> 仅捕获环境中的 <code>Clone</code>类型的值或不捕获值时</li>
 </ul>
 <h2 id="send"><a class="header" href="#send"><code>Send</code></a></h2>
 <p><a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> trait 表明这种类型的值可以安全地从一个线程发送给另一个线程。</p>
