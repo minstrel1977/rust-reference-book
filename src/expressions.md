@@ -2,8 +2,8 @@
 # 表达式
 
 >[expressions.md](https://github.com/rust-lang/reference/blob/master/src/expressions.md)\
->commit: 1da2af1481643266e4ffb8b66f2f7def5f1d9776 \
->本章译文最后维护日期：2023-07-21
+>commit: 01c8196e0120f0577f6aa05ada9d962f0019a86c \
+>本章译文最后维护日期：2024-05-26
 
 > **<sup>句法</sup>**\
 > _Expression_ :\
@@ -40,6 +40,7 @@
 > &nbsp;&nbsp; [_OuterAttribute_]<sup>\*</sup>[†](#expression-attributes)\
 > &nbsp;&nbsp; (\
 > &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; [_BlockExpression_]\
+> &nbsp;&nbsp; &nbsp;&nbsp; | [_ConstBlockExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_UnsafeBlockExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_LoopExpression_]\
 > &nbsp;&nbsp; &nbsp;&nbsp; | [_IfExpression_]\
@@ -313,6 +314,7 @@ let b: &[i32];
 [_ClosureExpression_]:            expressions/closure-expr.md
 [_ComparisonExpression_]:         expressions/operator-expr.md#comparison-operators
 [_CompoundAssignmentExpression_]: expressions/operator-expr.md#compound-assignment-expressions
+[_ConstBlockExpression_]:         expressions/block-expr.md#const-blocks
 [_ContinueExpression_]:           expressions/loop-expr.md#continue-expressions
 [_FieldExpression_]:              expressions/field-expr.md
 [_GroupedExpression_]:            expressions/grouped-expr.md

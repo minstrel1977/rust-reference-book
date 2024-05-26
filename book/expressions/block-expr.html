@@ -153,8 +153,8 @@
 <h1 id="块表达式"><a class="header" href="#块表达式">块表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/block-expr.md">block-expr.md</a><br />
-commit: 575d859aa0f97f66a587b47c47bf03243765fd5a <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: d33e4b03f0f810a315915412448a1f73c30e0feb <br />
+本章译文最后维护日期：2024-05-26</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -263,6 +263,63 @@ fn move_by_block_expression() {
     async move {
         break; // 错误[E0267]: `break` inside of an `async` block
     }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2 id="const-blocks"><a class="header" href="#const-blocks"><code>const</code> blocks</a></h2>
+<h2 id="const块"><a class="header" href="#const块">Const块</a></h2>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>ConstBlockExpression</em> :<br />
+   <code>const</code> <em>BlockExpression</em></p>
+</blockquote>
+<p><em>Const块</em>是块表达式的变体，其代码主体在编译时而不是在运行时求值。</p>
+<p>Const块允许你直接一个定义常量值，而不必定义新的<a href="../items/constant-items.html">常量项</a>，因此它们有时也称为<em>内连常量</em>。
+Const块还支持类型推理，因此不需要指定类型，这点与<a href="../items/constant-items.html">常量项</a>不同。</p>
+<p>与<a href="../glossary.html#free-item">自由</a>常量项不同，Const块能够引用作用域中的泛型参数。
+它们会被脱糖为作用域中带有泛型参数的常量项（类似于关联常量，但没有与它们关联的 trait 或类型）。
+例如，下面这些代码：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn foo&lt;T&gt;() -&gt; usize {
+    const { std::mem::size_of::&lt;T&gt;() + 1 }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>等价于：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn foo&lt;T&gt;() -&gt; usize {
+    {
+        struct Const&lt;T&gt;(T);
+        impl&lt;T&gt; Const&lt;T&gt; {
+            const CONST: usize = std::mem::size_of::&lt;T&gt;() + 1;
+        }
+        Const::&lt;T&gt;::CONST
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>如果在运行时执行 Const块表达式，则会确保其常量已经被求值，即使其返回值会被忽略：
+If the const block expression is executed at runtime, then the constant is guaranteed to be evaluated, even if its return value is ignored:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn foo&lt;T&gt;() -&gt; usize {
+    // 如果这段代码被执行，那么断言的值肯定是在编译时就被求值了。
+    const { assert!(std::mem::size_of::&lt;T&gt;() &gt; 0); }
+    // Here we can have unsafe code relying on the type being non-zero-sized.
+    // 这里，我们就可以放置一些依赖于非零尺寸类型的 unsafe代码。
+    /* ... */
+    42
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>如果在运行时不会执行 Const块表达式，则编译时可以计算它，也可以不计算它：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>if false {
+    // 在构建程序时，此panic 有可能触发，也有可能不触发。
+    const { panic!(); }
 }
 <span class="boring">}
 </span></code></pre></pre>

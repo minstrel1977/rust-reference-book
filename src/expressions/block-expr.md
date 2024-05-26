@@ -2,8 +2,8 @@
 # 块表达式
 
 >[block-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/block-expr.md)\
->commit: 575d859aa0f97f66a587b47c47bf03243765fd5a \
->本章译文最后维护日期：2022-10-22
+>commit: d33e4b03f0f810a315915412448a1f73c30e0feb \
+>本章译文最后维护日期：2024-05-26
 
 > **<sup>句法</sup>**\
 > _BlockExpression_ :\
@@ -125,6 +125,65 @@ loop {
 }
 ```
 
+
+## `const` blocks
+## Const块
+
+> **<sup>句法</sup>**\
+> _ConstBlockExpression_ :\
+> &nbsp;&nbsp; `const` _BlockExpression_
+
+*Const块*是块表达式的变体，其代码主体在编译时而不是在运行时求值。
+
+Const块允许你直接一个定义常量值，而不必定义新的[常量项][constant items]，因此它们有时也称为*内连常量*。
+Const块还支持类型推理，因此不需要指定类型，这点与[常量项][constant items]不同。
+
+与[自由][free item]常量项不同，Const块能够引用作用域中的泛型参数。
+它们会被脱糖为作用域中带有泛型参数的常量项（类似于关联常量，但没有与它们关联的 trait 或类型）。
+例如，下面这些代码：
+
+```rust
+fn foo<T>() -> usize {
+    const { std::mem::size_of::<T>() + 1 }
+}
+```
+
+等价于：
+
+```rust
+fn foo<T>() -> usize {
+    {
+        struct Const<T>(T);
+        impl<T> Const<T> {
+            const CONST: usize = std::mem::size_of::<T>() + 1;
+        }
+        Const::<T>::CONST
+    }
+}
+```
+
+如果在运行时执行 Const块表达式，则会确保其常量已经被求值，即使其返回值会被忽略：
+If the const block expression is executed at runtime, then the constant is guaranteed to be evaluated, even if its return value is ignored:
+
+```rust
+fn foo<T>() -> usize {
+    // 如果这段代码被执行，那么断言的值肯定是在编译时就被求值了。
+    const { assert!(std::mem::size_of::<T>() > 0); }
+    // Here we can have unsafe code relying on the type being non-zero-sized.
+    // 这里，我们就可以放置一些依赖于非零尺寸类型的 unsafe代码。
+    /* ... */
+    42
+}
+```
+
+如果在运行时不会执行 Const块表达式，则编译时可以计算它，也可以不计算它：
+```rust,compile_fail
+if false {
+    // 在构建程序时，此panic 有可能触发，也有可能不触发。
+    const { panic!(); }
+}
+```
+
 ## `unsafe` blocks
 ## 非安全(`unsafe`)块
 
@@ -189,6 +248,8 @@ fn is_unix_platform() -> bool {
 [array expressions]: array-expr.md
 [call expressions]: call-expr.md
 [capture modes]: ../types/closure.md#capture-modes
+[constant items]: ../items/constant-items.md
+[free item]: ../glossary.md#free-item
 [function]: ../items/functions.md
 [inner attributes]: ../attributes.md
 [method]: ../items/associated-items.md#methods

@@ -153,8 +153,8 @@
 <h1 id="模式"><a class="header" href="#模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
-commit: 08e5cd4e3c8f6d56d793ac89eb8b9a0841d22f7a <br />
-本章译文最后维护日期：2024-03-09</p>
+commit: 95ab92091f775889d150cb9b78c3b36ea650c08d <br />
+本章译文最后维护日期：2024-05-26</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -516,6 +516,10 @@ match tuple {
    | <em>RangeFromPattern</em><br />
    | <em>RangeToInclusivePattern</em><br />
    | <em>ObsoleteRangePattern</em></p>
+<p><em>RangeExclusivePattern</em> :<br />
+      <em>RangePatternBound</em> <code>..</code> <em>RangePatternBound</em></p>
+</blockquote>
+<blockquote>
 <p><em>RangeInclusivePattern</em> :<br />
       <em>RangePatternBound</em> <code>..=</code> <em>RangePatternBound</em></p>
 <p><em>RangeFromPattern</em> :<br />
@@ -537,9 +541,10 @@ match tuple {
 区间模式符号右侧的界限称为<em>上限</em>。
 区间模式可是闭区间或半开区间。</p>
 <p>同时带有下限和上限的区间模式将匹配其两个边界之间的所有值（包括两个边界）。
-它被写为其下限，后跟<code>..=</code>，最后是其上限。
+它被写为其下限，后跟 <code>..</code> 来表示本区间为开区间或 <code>..=</code> 来表示本区间为闭区间，最后是其上限。
 区间模式的类型是其上下限的共同类型。</p>
-<p>例如：模式 <code>'m'..='p'</code> 只匹配 <code>'m'</code>, <code>'n'</code>, <code>'o'</code> 和 <code>'p'</code> 这4个字符。 </p>
+<p>例如：模式 <code>'m'..='p'</code> 只匹配 <code>'m'</code>, <code>'n'</code>, <code>'o'</code> 和 <code>'p'</code> 这4个字符。
+那 <code>'m'..'p'</code> 就只能匹配 <code>'m'</code>, <code>'n'</code> 和 <code>'o'</code>， <code>'p'</code> 被有意的排除在外。</p>
 <p>下限不能比上限大。
 因此在 <code>a..=b</code> 里，必须总是有 a ≤ b。
 比如，<code>10..=0</code> 这样的区间模式是错误的。</p>
@@ -576,7 +581,7 @@ match tuple {
 
 <span class="boring">let ph = 10;
 </span>println!(&quot;{}&quot;, match ph {
-    0..=6 =&gt; &quot;acid&quot;,
+    0..7 =&gt; &quot;acid&quot;,
     7 =&gt; &quot;neutral&quot;,
     8..=14 =&gt; &quot;base&quot;,
     _ =&gt; unreachable!(),
@@ -643,10 +648,6 @@ println!(&quot;{}&quot;, match 0xfacade {
 参见 <a href="https://github.com/rust-lang/rust/issues/41620">issue #41620</a> 以了解更多信息。。</p>
 <blockquote>
 <p><strong>版次差异</strong>：在2021版之前，在带有上下限的区间模式里，可以使用 <code>...</code> 来表达 <code>..=</code> 的语义。</p>
-</blockquote>
-<blockquote>
-<p><strong>注意</strong>: 尽管区间模式使用与<a href="expressions/range-expr.html">区间表达式</a>相同的句法，但没有上下限均不包含的区间模式。
-也就是说，<code>x .. y</code> 和 <code>.. x</code> 都不是有效的区间模式。</p>
 </blockquote>
 <h2 id="reference-patterns"><a class="header" href="#reference-patterns">Reference patterns</a></h2>
 <h2 id="引用模式"><a class="header" href="#引用模式">引用模式</a></h2>

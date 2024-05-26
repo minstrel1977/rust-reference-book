@@ -2,8 +2,8 @@
 # 声明宏
 
 >[macros-by-example.md](https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md)\
->commit: 042cd782ccdd25c266ff5baaead64e814f13a6dd \
->本章译文最后维护日期：2023-05-12
+>commit: 01c8196e0120f0577f6aa05ada9d962f0019a86c \
+>本章译文最后维护日期：2024-05-26
 
 > **<sup>句法</sup>**\
 > _MacroRulesDefinition_ :\
@@ -119,7 +119,8 @@ foo!(3);
 
 因为匹配段类型已在匹配器中指定了，则在转码器中，元变量只简单地用 `$`*名称* 这种形式来指代就行了。元变量最终将被替换为跟它们匹配上的句法元素。元变量关键字 `$crate` 可以用来指代当前的 crate（请参阅后面的[卫生性(hygiene)][Hygiene]章节）。元变量可以被多次转码，也可以完全不转码。
 
-出于向后兼容性的原因，尽管 `_` [也是一个表达式][_UnderscoreExpression_]，`expr`段指示符并不会与单独的下划匹配。但是，`_` 作为子表达式出现时，它却可以与 `expr`段指示符相匹配。
+出于向后兼容性的原因，尽管 `_` [也是一个表达式][_UnderscoreExpression_]，`expr`段指示符并不会与单独的下划线匹配。但是，`_` 作为子表达式出现时，它却可以与 `expr`段指示符相匹配。
+出于相同的原因，`expr`段指示符也不能与独立的[常量块][const block]相匹配，但常量块做为子表达式时是可以与`expr`段指示符匹配的。
 
 > **版次差异**：从 2021版次开始，段指示符`pat` 匹配顶层的or模式（也就是说，它能接受[全部形态的模式][_Pattern_]）。
 >
@@ -382,8 +383,9 @@ macro_rules! helper {
   * 重复元前后内容必须严格匹配匹配器中指定的前后内容。
   * 如果重复元可以匹配零次（`*` 或 `?`），那么它后面的内容必须能够直接跟在它前面的内容后面。
   
-有关更多详细信息，请参阅[正式规范]。
+有关更多详细信息，请参阅[正式规范][formal specification]。
 
+[const block]: expressions/block-expr.md#const-blocks
 [Hygiene]: #hygiene
 [IDENTIFIER]: identifiers.md
 [IDENTIFIER_OR_KEYWORD]: identifiers.md

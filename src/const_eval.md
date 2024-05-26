@@ -2,8 +2,8 @@
 # 常量求值
 
 >[const_eval.md](https://github.com/rust-lang/reference/blob/master/src/const_eval.md)\
->commit:  3d4745b3480bfe80cd4320aeaf8b84394ae49fe0 \
->本章译文最后维护日期：2023-01-15
+>commit:  01c8196e0120f0577f6aa05ada9d962f0019a86c \
+>本章译文最后维护日期：2024-05-26
 
 常量求值是在编译过程中计算[表达式][[expressions]]结果的过程。（不是所有表达式都可以在编译时求值，也就是说）只有全部表达式的某个子集可以在编译时求值。
 
@@ -21,7 +21,7 @@
 * [元组表达式][Tuple expressions]。
 * [数组表达式][Array expressions]。
 * [结构体][Struct]表达式。
-* [块表达式][Block expressions]，包括非安全(`unsafe`)块。
+* [块表达式][Block expressions]，包括`unsafe`块和`const`块。
     * [let语句][let statements]以及类似这样的不可反驳型[模式][patterns]绑定，包括可变绑定。
     * [赋值表达式][assignment expressions]
     * [复合赋值表达式][compound assignment expressions]
@@ -52,6 +52,7 @@
   * [静态项][statics]
   * [枚举判别值][enum discriminants]
 * [常量型泛型实参][const generic argument]
+* [常量块][const block]
 
 ## Const Functions
 ## 常量函数
@@ -84,6 +85,7 @@
 [cast]:                 expressions/operator-expr.md#type-cast-expressions
 [closure expressions]:  expressions/closure-expr.md
 [comparison]:           expressions/operator-expr.md#comparison-operators
+[const block]:          expressions/block-expr.md#const-blocks
 [const functions]:      items/functions.md#const-functions
 [const generic argument]: items/generics.md#const-generics
 [const generic parameters]: items/generics.md#const-generics

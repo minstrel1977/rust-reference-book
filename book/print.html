@@ -148,7 +148,7 @@
                 <div id="content" class="content">
                     <main>
                         <blockquote>
-<p>本书跟随原文截止日期：2024-05-02</p>
+<p>本书跟随原文截止日期：2024-05-26</p>
 </blockquote>
 <h1 id="前言"><a class="header" href="#前言">前言</a></h1>
 <h2 id="试水版"><a class="header" href="#试水版">试水版</a></h2>
@@ -1415,8 +1415,8 @@ example!();
 <h1 id="声明宏"><a class="header" href="#声明宏">声明宏</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md">macros-by-example.md</a><br />
-commit: 042cd782ccdd25c266ff5baaead64e814f13a6dd <br />
-本章译文最后维护日期：2023-05-12</p>
+commit: 01c8196e0120f0577f6aa05ada9d962f0019a86c <br />
+本章译文最后维护日期：2024-05-26</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -1516,7 +1516,8 @@ foo!(3);
 <li><code>literal</code>: 匹配 <code>-</code><sup>?</sup><a href="expressions/literal-expr.html"><em>字面量表达式</em></a></li>
 </ul>
 <p>因为匹配段类型已在匹配器中指定了，则在转码器中，元变量只简单地用 <code>$</code><em>名称</em> 这种形式来指代就行了。元变量最终将被替换为跟它们匹配上的句法元素。元变量关键字 <code>$crate</code> 可以用来指代当前的 crate（请参阅后面的<a href="macros-by-example.html#hygiene">卫生性(hygiene)</a>章节）。元变量可以被多次转码，也可以完全不转码。</p>
-<p>出于向后兼容性的原因，尽管 <code>_</code> <a href="expressions/underscore-expr.html">也是一个表达式</a>，<code>expr</code>段指示符并不会与单独的下划匹配。但是，<code>_</code> 作为子表达式出现时，它却可以与 <code>expr</code>段指示符相匹配。</p>
+<p>出于向后兼容性的原因，尽管 <code>_</code> <a href="expressions/underscore-expr.html">也是一个表达式</a>，<code>expr</code>段指示符并不会与单独的下划线匹配。但是，<code>_</code> 作为子表达式出现时，它却可以与 <code>expr</code>段指示符相匹配。
+出于相同的原因，<code>expr</code>段指示符也不能与独立的<a href="expressions/block-expr.html#const-blocks">常量块</a>相匹配，但常量块做为子表达式时是可以与<code>expr</code>段指示符匹配的。</p>
 <blockquote>
 <p><strong>版次差异</strong>：从 2021版次开始，段指示符<code>pat</code> 匹配顶层的or模式（也就是说，它能接受<a href="patterns.html">全部形态的模式</a>）。</p>
 <p>在 2021版次之前，它和 <code>pat_param</code> 匹配的段是完全一样的（也就是说它至接受<a href="patterns.html">顶层无or模式的模式</a>）。</p>
@@ -1763,7 +1764,7 @@ macro_rules! helper {
 <li>重复元前后内容必须严格匹配匹配器中指定的前后内容。</li>
 <li>如果重复元可以匹配零次（<code>*</code> 或 <code>?</code>），那么它后面的内容必须能够直接跟在它前面的内容后面。</li>
 </ul>
-<p>有关更多详细信息，请参阅[正式规范]。</p>
+<p>有关更多详细信息，请参阅<a href="macro-ambiguity.html">正式规范</a>。</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="procedural-macros"><a class="header" href="#procedural-macros">Procedural Macros</a></h2>
 <h2 id="过程宏"><a class="header" href="#过程宏">过程宏</a></h2>
 <blockquote>
@@ -6512,8 +6513,8 @@ if true {
 <h1 id="表达式"><a class="header" href="#表达式">表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions.md">expressions.md</a><br />
-commit: 1da2af1481643266e4ffb8b66f2f7def5f1d9776 <br />
-本章译文最后维护日期：2023-07-21</p>
+commit: 01c8196e0120f0577f6aa05ada9d962f0019a86c <br />
+本章译文最后维护日期：2024-05-26</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -6549,6 +6550,7 @@ commit: 1da2af1481643266e4ffb8b66f2f7def5f1d9776 <br />
    <a href="attributes.html"><em>OuterAttribute</em></a><sup>*</sup><a href="expressions.html#expression-attributes">†</a><br />
    (<br />
          <a href="expressions/block-expr.html"><em>BlockExpression</em></a><br />
+      | <a href="expressions/block-expr.html#const-blocks"><em>ConstBlockExpression</em></a><br />
       | <a href="expressions/block-expr.html#unsafe-blocks"><em>UnsafeBlockExpression</em></a><br />
       | <a href="expressions/loop-expr.html"><em>LoopExpression</em></a><br />
       | <a href="expressions/if-expr.html#if-expressions"><em>IfExpression</em></a><br />
@@ -7233,8 +7235,8 @@ let x: f64 = 2.; // type f64
 <h1 id="路径表达式"><a class="header" href="#路径表达式">路径表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/path-expr.md">path-expr.md</a><br />
-commit: eb5290329316e96c48c032075f7dbfa56990702b <br />
-本章译文最后维护日期：2021-02-21</p>
+commit: d33e4b03f0f810a315915412448a1f73c30e0feb <br />
+本章译文最后维护日期：2024-05-26</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -7260,12 +7262,13 @@ let push_integer = Vec::&lt;i32&gt;::push;
 let slice_reverse = &lt;[i32]&gt;::reverse;
 <span class="boring">}
 </span></code></pre></pre>
+<p>关联常量的计算处理方式与[<code>const</code>块][<code>const</code>blocks]相同。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="block-expressions"><a class="header" href="#block-expressions">Block expressions</a></h1>
 <h1 id="块表达式"><a class="header" href="#块表达式">块表达式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/expressions/block-expr.md">block-expr.md</a><br />
-commit: 575d859aa0f97f66a587b47c47bf03243765fd5a <br />
-本章译文最后维护日期：2022-10-22</p>
+commit: d33e4b03f0f810a315915412448a1f73c30e0feb <br />
+本章译文最后维护日期：2024-05-26</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -7374,6 +7377,63 @@ fn move_by_block_expression() {
     async move {
         break; // 错误[E0267]: `break` inside of an `async` block
     }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2 id="const-blocks"><a class="header" href="#const-blocks"><code>const</code> blocks</a></h2>
+<h2 id="const块"><a class="header" href="#const块">Const块</a></h2>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>ConstBlockExpression</em> :<br />
+   <code>const</code> <em>BlockExpression</em></p>
+</blockquote>
+<p><em>Const块</em>是块表达式的变体，其代码主体在编译时而不是在运行时求值。</p>
+<p>Const块允许你直接一个定义常量值，而不必定义新的<a href="expressions/../items/constant-items.html">常量项</a>，因此它们有时也称为<em>内连常量</em>。
+Const块还支持类型推理，因此不需要指定类型，这点与<a href="expressions/../items/constant-items.html">常量项</a>不同。</p>
+<p>与<a href="expressions/../glossary.html#free-item">自由</a>常量项不同，Const块能够引用作用域中的泛型参数。
+它们会被脱糖为作用域中带有泛型参数的常量项（类似于关联常量，但没有与它们关联的 trait 或类型）。
+例如，下面这些代码：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn foo&lt;T&gt;() -&gt; usize {
+    const { std::mem::size_of::&lt;T&gt;() + 1 }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>等价于：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn foo&lt;T&gt;() -&gt; usize {
+    {
+        struct Const&lt;T&gt;(T);
+        impl&lt;T&gt; Const&lt;T&gt; {
+            const CONST: usize = std::mem::size_of::&lt;T&gt;() + 1;
+        }
+        Const::&lt;T&gt;::CONST
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>如果在运行时执行 Const块表达式，则会确保其常量已经被求值，即使其返回值会被忽略：
+If the const block expression is executed at runtime, then the constant is guaranteed to be evaluated, even if its return value is ignored:</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn foo&lt;T&gt;() -&gt; usize {
+    // 如果这段代码被执行，那么断言的值肯定是在编译时就被求值了。
+    const { assert!(std::mem::size_of::&lt;T&gt;() &gt; 0); }
+    // Here we can have unsafe code relying on the type being non-zero-sized.
+    // 这里，我们就可以放置一些依赖于非零尺寸类型的 unsafe代码。
+    /* ... */
+    42
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>如果在运行时不会执行 Const块表达式，则编译时可以计算它，也可以不计算它：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>if false {
+    // 在构建程序时，此panic 有可能触发，也有可能不触发。
+    const { panic!(); }
 }
 <span class="boring">}
 </span></code></pre></pre>
@@ -9387,8 +9447,8 @@ let mut a = 0;
 <h1 id="模式"><a class="header" href="#模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
-commit: 08e5cd4e3c8f6d56d793ac89eb8b9a0841d22f7a <br />
-本章译文最后维护日期：2024-03-09</p>
+commit: 95ab92091f775889d150cb9b78c3b36ea650c08d <br />
+本章译文最后维护日期：2024-05-26</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -9750,6 +9810,10 @@ match tuple {
    | <em>RangeFromPattern</em><br />
    | <em>RangeToInclusivePattern</em><br />
    | <em>ObsoleteRangePattern</em></p>
+<p><em>RangeExclusivePattern</em> :<br />
+      <em>RangePatternBound</em> <code>..</code> <em>RangePatternBound</em></p>
+</blockquote>
+<blockquote>
 <p><em>RangeInclusivePattern</em> :<br />
       <em>RangePatternBound</em> <code>..=</code> <em>RangePatternBound</em></p>
 <p><em>RangeFromPattern</em> :<br />
@@ -9771,9 +9835,10 @@ match tuple {
 区间模式符号右侧的界限称为<em>上限</em>。
 区间模式可是闭区间或半开区间。</p>
 <p>同时带有下限和上限的区间模式将匹配其两个边界之间的所有值（包括两个边界）。
-它被写为其下限，后跟<code>..=</code>，最后是其上限。
+它被写为其下限，后跟 <code>..</code> 来表示本区间为开区间或 <code>..=</code> 来表示本区间为闭区间，最后是其上限。
 区间模式的类型是其上下限的共同类型。</p>
-<p>例如：模式 <code>'m'..='p'</code> 只匹配 <code>'m'</code>, <code>'n'</code>, <code>'o'</code> 和 <code>'p'</code> 这4个字符。 </p>
+<p>例如：模式 <code>'m'..='p'</code> 只匹配 <code>'m'</code>, <code>'n'</code>, <code>'o'</code> 和 <code>'p'</code> 这4个字符。
+那 <code>'m'..'p'</code> 就只能匹配 <code>'m'</code>, <code>'n'</code> 和 <code>'o'</code>， <code>'p'</code> 被有意的排除在外。</p>
 <p>下限不能比上限大。
 因此在 <code>a..=b</code> 里，必须总是有 a ≤ b。
 比如，<code>10..=0</code> 这样的区间模式是错误的。</p>
@@ -9810,7 +9875,7 @@ match tuple {
 
 <span class="boring">let ph = 10;
 </span>println!(&quot;{}&quot;, match ph {
-    0..=6 =&gt; &quot;acid&quot;,
+    0..7 =&gt; &quot;acid&quot;,
     7 =&gt; &quot;neutral&quot;,
     8..=14 =&gt; &quot;base&quot;,
     _ =&gt; unreachable!(),
@@ -9877,10 +9942,6 @@ println!(&quot;{}&quot;, match 0xfacade {
 参见 <a href="https://github.com/rust-lang/rust/issues/41620">issue #41620</a> 以了解更多信息。。</p>
 <blockquote>
 <p><strong>版次差异</strong>：在2021版之前，在带有上下限的区间模式里，可以使用 <code>...</code> 来表达 <code>..=</code> 的语义。</p>
-</blockquote>
-<blockquote>
-<p><strong>注意</strong>: 尽管区间模式使用与<a href="expressions/range-expr.html">区间表达式</a>相同的句法，但没有上下限均不包含的区间模式。
-也就是说，<code>x .. y</code> 和 <code>.. x</code> 都不是有效的区间模式。</p>
 </blockquote>
 <h2 id="reference-patterns"><a class="header" href="#reference-patterns">Reference patterns</a></h2>
 <h2 id="引用模式"><a class="header" href="#引用模式">引用模式</a></h2>
@@ -14630,8 +14691,8 @@ commit: a7473287cc6e2fb972165dc5a7ffd26dad1fc907 <br />
 <h1 id="常量求值"><a class="header" href="#常量求值">常量求值</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/const_eval.md">const_eval.md</a><br />
-commit:  3d4745b3480bfe80cd4320aeaf8b84394ae49fe0 <br />
-本章译文最后维护日期：2023-01-15</p>
+commit:  01c8196e0120f0577f6aa05ada9d962f0019a86c <br />
+本章译文最后维护日期：2024-05-26</p>
 </blockquote>
 <p>常量求值是在编译过程中计算[表达式][<a href="expressions.html">expressions</a>]结果的过程。（不是所有表达式都可以在编译时求值，也就是说）只有全部表达式的某个子集可以在编译时求值。</p>
 <h2 id="constant-expressions"><a class="header" href="#constant-expressions">Constant expressions</a></h2>
@@ -14646,7 +14707,7 @@ commit:  3d4745b3480bfe80cd4320aeaf8b84394ae49fe0 <br />
 <li><a href="expressions/tuple-expr.html">元组表达式</a>。</li>
 <li><a href="expressions/array-expr.html">数组表达式</a>。</li>
 <li><a href="expressions/struct-expr.html">结构体</a>表达式。</li>
-<li><a href="expressions/block-expr.html">块表达式</a>，包括非安全(<code>unsafe</code>)块。
+<li><a href="expressions/block-expr.html">块表达式</a>，包括<code>unsafe</code>块和<code>const</code>块。
 <ul>
 <li><a href="statements.html#let-statements">let语句</a>以及类似这样的不可反驳型<a href="patterns.html">模式</a>绑定，包括可变绑定。</li>
 <li><a href="expressions/operator-expr.html#assignment-expressions">赋值表达式</a></li>
@@ -14685,6 +14746,7 @@ commit:  3d4745b3480bfe80cd4320aeaf8b84394ae49fe0 <br />
 </ul>
 </li>
 <li><a href="items/generics.html#const-generics">常量型泛型实参</a></li>
+<li><a href="expressions/block-expr.html#const-blocks">常量块</a></li>
 </ul>
 <h2 id="const-functions-1"><a class="header" href="#const-functions-1">Const Functions</a></h2>
 <h2 id="常量函数-1"><a class="header" href="#常量函数-1">常量函数</a></h2>

@@ -2,8 +2,8 @@
 # 模式
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
->commit: 08e5cd4e3c8f6d56d793ac89eb8b9a0841d22f7a \
->本章译文最后维护日期：2024-03-09
+>commit: 95ab92091f775889d150cb9b78c3b36ea650c08d \
+>本章译文最后维护日期：2024-05-26
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\
@@ -401,6 +401,10 @@ match tuple {
 > &nbsp;&nbsp; | _RangeToInclusivePattern_\
 > &nbsp;&nbsp; | _ObsoleteRangePattern_
 >
+> _RangeExclusivePattern_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _RangePatternBound_ `..` _RangePatternBound_
+
+>
 > _RangeInclusivePattern_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; _RangePatternBound_ `..=` _RangePatternBound_
 >
@@ -427,10 +431,11 @@ match tuple {
 区间模式可是闭区间或半开区间。
 
 同时带有下限和上限的区间模式将匹配其两个边界之间的所有值（包括两个边界）。
-它被写为其下限，后跟`..=`，最后是其上限。
+它被写为其下限，后跟 `..` 来表示本区间为开区间或 `..=` 来表示本区间为闭区间，最后是其上限。
 区间模式的类型是其上下限的共同类型。
 
-例如：模式 `'m'..='p'` 只匹配 `'m'`, `'n'`, `'o'` 和 `'p'` 这4个字符。 
+例如：模式 `'m'..='p'` 只匹配 `'m'`, `'n'`, `'o'` 和 `'p'` 这4个字符。
+那 `'m'..'p'` 就只能匹配 `'m'`, `'n'` 和 `'o'`， `'p'` 被有意的排除在外。
 
 下限不能比上限大。
 因此在 `a..=b` 里，必须总是有 a &le; b。
@@ -475,7 +480,7 @@ let valid_variable = match c {
 
 # let ph = 10;
 println!("{}", match ph {
-    0..=6 => "acid",
+    0..7 => "acid",
     7 => "neutral",
     8..=14 => "base",
     _ => unreachable!(),
@@ -543,9 +548,6 @@ println!("{}", match 0xfacade {
 参见 [issue #41620](https://github.com/rust-lang/rust/issues/41620) 以了解更多信息。。
 
 > **版次差异**：在2021版之前，在带有上下限的区间模式里，可以使用 `...` 来表达 `..=` 的语义。
-
-> **注意**: 尽管区间模式使用与[区间表达式][range expressions]相同的句法，但没有上下限均不包含的区间模式。
-> 也就是说，`x .. y` 和 `.. x` 都不是有效的区间模式。
 
 ## Reference patterns
 ## 引用模式
