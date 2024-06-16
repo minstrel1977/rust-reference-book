@@ -153,8 +153,8 @@
 <h1 id="模式"><a class="header" href="#模式">模式</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
-commit: 95ab92091f775889d150cb9b78c3b36ea650c08d <br />
-本章译文最后维护日期：2024-05-26</p>
+commit: 82517788e162791dad3305a8c8d8d20d49510ad6 <br />
+本章译文最后维护日期：2024-06-15</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -283,9 +283,6 @@ if let (a, 3) = (1, 2) {           // &quot;(a, 3)&quot; 是可反驳型的, 将
 <p><em>字面量模式</em>匹配的值与字面量所创建的值完全相同。
 由于负数不是<a href="expressions/literal-expr.html">字面量</a>，（特设定）字面量模式也接受字面量前的可选负号，它的作用类似于否定运算符。</p>
 <div class="warning">
-<p>浮点字面量目前还可以使用，但是由于它们在数值比较时带来的复杂性，在将来的 Rust 版本中，它们将被禁止用于字面量模式(参见 <a href="https://github.com/rust-lang/rust/issues/41620">issue #41620</a>)。</p>
-</div>
-<div class="warning">
 <p>字面量模式接受 C语言风格的字符串字面量和原始C语言风格的字符串字面量，但 <code>&amp;CStr</code> 没实现结构相等（<code>#[derive(Eq, PartialEq)]</code>），因此 <code>&amp;CStr</code>上的任何此类 <code>match</code> 都将被类型错误所拒绝。</p>
 </div>
 <p>字面量模式总是可以反驳型的。</p>
@@ -312,7 +309,7 @@ if let (a, 3) = (1, 2) {           // &quot;(a, 3)&quot; 是可反驳型的, 将
 <p>标识符模式将它们匹配的值绑定到一个变量上。
 此标识符在该模式中必须是唯一的。
 该变量会在作用域中遮蔽任何同名的变量。
-这种绑定的作用域取决于使用模式的上下文（例如 <code>let</code>绑定或匹配臂(<code>match</code> arm)<sup class="footnote-reference"><a href="#译注1">1</a></sup>）。</p>
+这种绑定的<a href="names/scopes.html">作用域</a>取决于使用模式的上下文（例如 <code>let</code>绑定或匹配臂(<code>match</code> arm)<sup class="footnote-reference"><a href="#译注1">1</a></sup>）。</p>
 <p>标识符模式只能包含一个标识符（也可能前带一个 <code>mut</code>），能匹配任何值，并将其绑定到该标识符上。
 最常见的标识符模式应用场景就是用在变量声明上和用在函数（包括闭包）的参数上。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
@@ -566,6 +563,7 @@ match tuple {
 <p>如果界值被书写为路径形式，则在宏解析之后，路径必须解析为一个 <code>char</code>、整型或浮点型的常量项。</p>
 <p>界值的类型和值取决于它的写入方式。
 如果界值是<a href="expressions/path-expr.html">路径</a>形式，则模式必须能以此路径解析到的此路径所代表的那个<a href="items/constant-items.html">常量</a>的类型和值。
+如果是浮点数区间模式，解析出的常量项不能是一个 <code>NaN</code>。
 如果界值是一个字面量，则界值具有相应的<a href="expressions/literal-expr.html">字面量表达式</a>的类型和值。
 如果字面量前面有一个 <code>-</code> 字符，则界值的类型与相应的<a href="expressions/literal-expr.html">字面量表达式</a>的类型相同，且值为相应字面量表达式的值的<a href="expressions/operator-expr.html#negation-operators">相反数</a> 。</p>
 <p>示例：</p>
@@ -644,8 +642,6 @@ println!(&quot;{}&quot;, match 0xfacade {
 <span class="boring">}
 </span></code></pre></pre>
 <p>当区间模式匹配某固定位宽的整型类型和字符型(<code>char</code>)的整个值域时，此模式是不可反驳型的。例如，<code>0u8..=255u8</code> 是不可反驳型的。某类整型的值区间是从该类型的最小值到该类型最大值的闭区间。字符型(<code>char</code>)的值的区间就是那些包含所有 Unicode 标量值的区间，即 <code>'\u{0000}'..='\u{D7FF}'</code> 和 <code>'\u{E000}'..='\u{10FFFF}'</code>。</p>
-<p>浮点区间模式已弃用，可能会在未来的 Rust 版本中移除。
-参见 <a href="https://github.com/rust-lang/rust/issues/41620">issue #41620</a> 以了解更多信息。。</p>
 <blockquote>
 <p><strong>版次差异</strong>：在2021版之前，在带有上下限的区间模式里，可以使用 <code>...</code> 来表达 <code>..=</code> 的语义。</p>
 </blockquote>
@@ -886,10 +882,27 @@ match v[..] {
 <li>关联常量</li>
 </ul>
 <p>限定路径模式只能指向关联常量。</p>
-<p>常量不能是联合体类型。
-结构体常量和枚举常量必须带有 <code>#[derive(PartialEq, Eq)]</code> 属性（不只是实现）。</p>
 <p>当路径模式指向结构体或枚举变体(枚举只有一个变体)或类型为不可反驳型的常量时，该路径模式是不可反驳型的。
 当路径模式指向的是可反驳型常量或带有多个变体的枚举时，该路径模式是可反驳型的。</p>
+<h3 id="constant-patterns"><a class="header" href="#constant-patterns">Constant patterns</a></h3>
+<h3 id="常量模式"><a class="header" href="#常量模式">常量模式</a></h3>
+<p>当类型为 <code>T</code> 的常量 <code>C</code> 被用作模式时，我们首先检查 <code>T</code> 是否 <code>T: PartialEq</code>。
+此外，我们要求 <code>C</code> 的值 <em>具有（递归）结构相等性（structural equality）</em>，其递归定义如下：</p>
+<ul>
+<li>整型以及 <code>str</code>、<code>bool</code> 和 <code>char</code> 值总是具有结构相等性的。</li>
+<li>如果元组、数组和切片的所有字段/元素都具有结构相等性，则它具有结构相等性。
+（特别是，<code>()</code>和<code>[]</code>总是具有结构相等性。）</li>
+<li>如果引用指向的值具有结构相等性，则该引用具有结构相等性。</li>
+<li>如果 <code>struct</code> 或 <code>enum</code>类型的值通过 <code>#[derive(PartialEq)]</code>属性派生的 <code>PartialEq</code>实例的所有字段（对于枚举：活动变体的所有字段）都具有结构相等性，则它也具有结构相等性。</li>
+<li>如果裸指针被定义为常量整数（然后进行转换/转换），则它具有结构相等性。</li>
+<li>如果浮点值不是 <code>NaN</code>，则它具有结构相等性。</li>
+<li>其他的都不具有结构相等性。</li>
+</ul>
+<p>特别需要指出的是，在构建模式时（即单态化之前），必须知道 <code>C</code> 的值。
+这意味着当涉及泛型参数时，其中的关联常量不能用作模式。</p>
+<p>在确保所有条件都满足之后，常量值被转换为模式，现在它的行为就像直接写入了该模式一样。
+特别需要指出的是，它还完全参与了详尽性检查。
+（对于原始指针，常量是编写此类模式的唯一方式。对于这些类型，只有 <code>_</code> 被认为是详尽的。）</p>
 <h2 id="or-patterns"><a class="header" href="#or-patterns">Or-patterns</a></h2>
 <h2 id="or模式"><a class="header" href="#or模式">or模式</a></h2>
 <p>_or模式_是能匹配两个或多个并列子模式（例如：<code>A | B | C</code>）中的一个的模式。

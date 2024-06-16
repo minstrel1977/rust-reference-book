@@ -2,8 +2,8 @@
 # 语句
 
 >[statements.md](https://github.com/rust-lang/reference/blob/master/src/statements.md)\
->commit: e076c6ed0caa11c33842dc0d22961947c8bf236a \
->本章译文最后维护日期：2022-10-23
+>commit: 82517788e162791dad3305a8c8d8d20d49510ad6 \
+>本章译文最后维护日期：2024-06-15
 
 > **<sup>句法</sup>**\
 > _Statement_ :\
@@ -20,14 +20,19 @@ Rust 有两种语句：[声明语句(declaration statements)](#declaration-state
 ## Declaration statements
 ## 声明语句
 
-*声明语句*是在它自己封闭的语句块的内部引入一个或多个*名称*的语句。声明的名称可以表示新变量或新的[程序项][item]。
+*声明语句*是在它自己封闭的语句块的内部引入一个或多个*名称*的语句。
+声明的名称可以表示新变量或新的[程序项][item]。
 
 这两种声明语句就是程序项声明语句和 let声明语句。
 
 ### Item declarations
 ### 程序项声明语句
 
-*程序项声明语句*的句法形式与[模块][module]中的[程序项声明][item]的句法形式相同。在语句块中声明的程序项会将其作用域限制为包含该语句的块。这类程序项以及在其内声明子项(sub-items)都没有给定的[规范路径][canonical path]。例外的是，只要程序项和 trait（如果有的话）的可见性允许，在（程序项声明语句内定义的和此程序项或 trait 关联的）[实现][implementations]中定义的关联项在外层作用域内仍然是可访问的。除了这些区别外，它与在模块中声明的程序项的意义也是相同的。
+*程序项声明语句*的句法形式与[模块][module]中的[程序项声明][item]的句法形式相同。
+在语句块中声明的程序项会将其[作用域][scope]限制为包含该语句的块。
+这类程序项以及在其内声明子项(sub-items)都没有给定的[规范路径][canonical path]。
+例外的是，只要程序项和 trait（如果有的话）的可见性允许，在（程序项声明语句内定义的和此程序项或 trait 关联的）[实现][implementations]中定义的关联项在外层作用域内仍然是可访问的。
+除了这些区别外，它与在模块中声明的程序项的意义也是相同的。
 
 程序项声明语句不会隐式捕获包含它的函数的泛型参数、参数和局部变量。如下，`inner` 不能访问 `outer_var`。
 
@@ -135,6 +140,7 @@ if true {
 [`cfg`]: conditional-compilation.md
 [the lint check attributes]: attributes/diagnostics.md#lint-check-attributes
 [pattern]: patterns.md
+[scope]: names/scopes.md
 [_BlockExpression_]: expressions/block-expr.md
 [_ExpressionStatement_]: #expression-statements
 [_Expression_]: expressions.md

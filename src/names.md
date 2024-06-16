@@ -2,8 +2,8 @@
 # 名称
 
 >[keywords.md](https://github.com/rust-lang/reference/blob/master/src/names.md)\
->commit: 4aff5bed5eb04411174a7bd7e86975d3eb7b62d5
->本章译文最后维护日期：2022-08-21
+>commit: 77ab06c34e50e9cce04acf979a4402fa01ef48e9
+>本章译文最后维护日期：2024-06-15
 
 *实体(entity)*是一种语言结构，在源程序中可以以某种方式被引用，通常是通过[路径(path)][paths]。实体包括[类型][types]、[程序项][items]、[泛型参数][generic parameters]、[变量绑定][variable bindings]、[循环标签][loop labels]、[生存期][lifetimes]、[字段][fields]、[属性][attributes]和各种[lints]。\
 
@@ -11,7 +11,7 @@
 
 有些实体是在源码中[显式声明的](#explicitly-declared-entities)，有些则[隐式声明](#implicitly-declared-entities)为语言或编译器扩展的一部分。
 
-[*路径*][*Paths*]用于引用实体，该引用的实体可以在其他的作用域内。生存期和循环标签使用一个带有前导单引号的[专用语法来表达][lifetimes-and-loop-labels]。
+[*路径*][*Paths*]用于引用可能在其他的模块或类型内的实体。生存期和循环标签使用一个带有前导单引号的[专用语法来表达][lifetimes-and-loop-labels]。
 
 名称被分隔成不同的[*命名空间*][*namespaces*]，这样允许不同名称空间中的实体拥有相同的名称，且不会发生冲突。
 

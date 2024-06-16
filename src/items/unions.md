@@ -2,13 +2,13 @@
 # 联合体
 
 >[unions.md](https://github.com/rust-lang/reference/blob/master/src/items/unions.md)\
->commit: 945a2bdba17280214f0559eb87078c84dacbbdc0 \
->本章译文最后维护日期：2023-05-03
+>commit: b10666f10f6a731cfffbfc3c42841c59f8f76b58 \
+>本章译文最后维护日期：2024-06-15
 
 > **<sup>句法</sup>**\
 > _Union_ :\
 > &nbsp;&nbsp; `union` [IDENTIFIER]&nbsp;[_GenericParams_]<sup>?</sup> [_WhereClause_]<sup>?</sup>
->   `{`[_StructFields_] `}`
+>   `{`[_StructFields_]<sup>?</sup> `}`
 
 除了用 `union` 代替 `struct`外，联合体声明使用和结构体声明相同的句法。
 
@@ -29,6 +29,8 @@ union MyUnion {
 - 仅包含了以上被允许的联合体字段类型的元组或数组
 
 这个限制专门用来确保联合体的字段永远不需要销毁操作。与结构体和枚举一样，可以对联合体使用 `impl Drop` 来手动定义被销毁时发生的操作。
+
+编译器不接受没有任何字段的联合体，但宏可以接受。
 
 ## Initialization of a union
 ## 联合体的初始化

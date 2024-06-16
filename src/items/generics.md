@@ -2,8 +2,8 @@
 # 类型参数和生存期参数
 
 >[generics.md](https://github.com/rust-lang/reference/blob/master/src/items/generics.md)\
->commit: 8a86959fe961c09f201f1116bcbacf759e0604d4 \
->本章译文最后维护日期：2022-12-04
+>commit: aeda9bc3f65dfce916b1c1e4f1cab5fcddd8cd40 \
+>本章译文最后维护日期：2024-06-15
 
 > **<sup>句法</sup>**\
 > _GenericParams_ :\
@@ -17,13 +17,14 @@
 > &nbsp;&nbsp; [LIFETIME_OR_LABEL]&nbsp;( `:` [_LifetimeBounds_] )<sup>?</sup>
 >
 > _TypeParam_ :\
-> &nbsp;&nbsp; [IDENTIFIER]( `:` [_TypeParamBounds_]<sup>?</sup> )<sup>?</sup> ( `=` [_Type_] )<sup>?</sup>
+> &nbsp;&nbsp; [IDENTIFIER]&nbsp;( `:` [_TypeParamBounds_]<sup>?</sup> )<sup>?</sup> ( `=` [_Type_] )<sup>?</sup>
 >
 > _ConstParam_:\
 > &nbsp;&nbsp; `const` [IDENTIFIER] `:` [_Type_] ( `=` _[Block][block]_ | [IDENTIFIER] | -<sup>?</sup>[LITERAL] )<sup>?</sup>
 
 [函数][Functions]、[类型别名][type aliases]、[结构体][structs]、[枚举][enumerations]、[联合体][unions]、[trait][traits] 和[实现][implementations]可以通过类型参数、常量参数和生存期参数达到*参数化*配置的的效果。这些参数在尖括号<span class="parenthetical">（`<...>`）</span>中列出，通常都是紧跟在程序项名称之后和程序项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 `impl` 之后。
 泛型参数的顺序被严格限定为生存期参数必须在前，然后是类型参数和常量参数混合。
+同一参数名不能在 _GenericParams_ 列表中声明多次。
 
 下面给出一些带类型参数、常量参数和生存期参数的程序项的示例：
 
@@ -36,6 +37,7 @@ struct EitherOrderWorks<const N: bool, U>(U);
 ```
 
 泛型参数在声明它们的程序项定义的范围内有效。它们不是函数体中声明的程序项，这个在[程序项声明][item declarations]中有讲述。
+更多细节请参阅[范型参数的作用域][generic parameter scopes]。
 
 [引用][References]、[裸指针][raw pointers]、[数组][arrays]、[切片][arrays]、[元组][tuples]和[函数指针][function pointers]也有生存期参数或类型参数，但这些程序项不能使用路径句法去引用。
 

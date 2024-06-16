@@ -2,8 +2,8 @@
 # 程序项
 
 >[items.md](https://github.com/rust-lang/reference/blob/master/src/items.md)\
->commit: b0e0ad6490d6517c19546b1023948986578fc378 \
->本章译文最后维护日期：2020-11-8
+>commit: 524b9b1efdfdef603d9617d8e1476b66b99a6349 \
+>本章译文最后维护日期：2024-06-15
 
 > **<sup>句法:<sup>**\
 > _Item_:\
@@ -53,7 +53,14 @@
 * [实现][implementations]
 * [外部块(`extern` blocks)][`extern` blocks]
 
-有些程序项会形成子（数据）项声明的隐式作用域。换句话说，在一个函数或模块中，程序项的声明可以（在许多情况下）与语句、控制块、以及类似的能构成程序项主体的部件混合在一起。这些在作用域内的程序项的意义与在作用域外声明的程序项的意义相同（它仍然是静态项），只是该程序项在模块的命名空间中的*路径名*由封闭它的程序项的名称限定，或该程序项也可能是封闭它的程序项的私有程序项（比如函数的情况）。语法规范指定了子项声明可能出现的合法位置。
+程序项可以声明在[crate的根层][root of the crate]中、[模块][modules]中或一个[块表达式][block expression]中。
+[关联程序项][associated items]，程序项的的一种子集，可以声明在 [traits] 和 [实现][implementations]中。
+外部程序项，程序项的的一种子集，它可以声明在[外部块][`extern` blocks]中。
+
+程序项可以以任意顺序定义，但 [`macro_rules`] 例外，它有自己特有的作用域行为表象。
+程序项名称的[名称解析][Name resolution]规则允许在模块或块中引用程序项的位置之前或之后定义该程序项。
+
+有关程序项的作用域规则的信息，请参阅[程序项作用域][item scopes]章节。
 
 [_ConstantItem_]: items/constant-items.md
 [_Enumeration_]: items/enumerations.md
@@ -74,18 +81,23 @@
 [_Visibility_]: visibility-and-privacy.md
 [`extern crate` declarations]: items/extern-crates.md
 [`extern` blocks]: items/external-blocks.md
+[`macro_rules`]: macros-by-example.md
 [`use` declarations]: items/use-declarations.md
+[associated items]: items/associated-items.md
+[block expression]: expressions/block-expr.md
 [constant items]: items/constant-items.md
 [enumeration definitions]: items/enumerations.md
 [function definitions]: items/functions.md
 [implementations]: items/implementations.md
+[item scopes]: names/scopes.md#item-scopes
 [modules]: items/modules.md
+[name resolution]: names/name-resolution.md
 [paths]: paths.md
+[root of the crate]: crates-and-source-files.md
+[statement]: statements.md
 [static items]: items/static-items.md
 [struct definitions]: items/structs.md
 [trait definitions]: items/traits.md
+[traits]: items/traits.md
 [type definitions]: items/type-aliases.md
 [union definitions]: items/unions.md
-
-<!-- 2020-11-12-->
-<!-- checked -->

@@ -153,8 +153,8 @@
 <h1 id="trait约束和生存期约束"><a class="header" href="#trait约束和生存期约束">trait约束和生存期约束</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md">trait-bounds.md</a><br />
-commit: f24f128949905108723bec0dc129266d04a2c544 <br />
-本章译文最后维护日期：2023-08-26</p>
+commit: 82517788e162791dad3305a8c8d8d20d49510ad6 <br />
+本章译文最后维护日期：2024-06-15</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -271,7 +271,7 @@ fn name_figure&lt;U: Shape&gt;(
 <span class="boring">}
 </span></code></pre></pre>
 </blockquote>
-<p>高阶生存期也可以在 trait 前面指定：唯一的区别是生存期参数的作用域，像下面这样 <code>'a</code> 的作用域只扩展到后面跟的 trait 的末尾，而不是整个约束<sup class="footnote-reference"><a href="#译注4">3</a></sup>。下面这个函数和上一个等价。</p>
+<p>高阶生存期也可以在 trait 前面指定：唯一的区别是生存期参数的<a href="names/scopes.html#higher-ranked-trait-bound-scopes">作用域</a> ，像下面这样 <code>'a</code> 的作用域只扩展到后面跟的 trait 的末尾，而不是整个约束<sup class="footnote-reference"><a href="#译注4">3</a></sup>。下面这个函数和上一个等价。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn call_on_ref_zero&lt;F&gt;(f: F) where F: for&lt;'a&gt; Fn(&amp;'a i32) {

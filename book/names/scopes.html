@@ -153,12 +153,280 @@
 <h1 id="作用域"><a class="header" href="#作用域">作用域</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/names/scopes.md">use-declarations.md</a><br />
-commit: eabdf09207bf3563ae96db9d576de0758c413d5d <br />
-本章译文最后维护日期：2021-1-24</p>
+commit: fe9eec6b3eb3dc4e42d83d40adc2c9a2660ea874 <br />
+本章译文最后维护日期：2024-06-15</p>
 </blockquote>
-<blockquote>
-<p><strong>注意</strong>：这是未来本章内容扩展的占位符。</p>
-</blockquote>
+<p><em>作用域</em>是源文件中的区域，在这个区域中命名的<a href="../names.html">实体</a>可以用该名称来引用。
+下面的部分提供了关于作用域规则和行为的详细信息，这些规则和行为取决于实体的类型及其声明的位置。
+<a href="name-resolution.html">名称解析</a>一章描述了如何将名称解析为实体的过程。
+关于“删除作用域”的更多信息，可以在<a href="../destructors.html">析构函数</a>一章中找到。</p>
+<h2 id="item-scopes"><a class="header" href="#item-scopes">Item scopes</a></h2>
+<h2 id="程序项作用域"><a class="header" href="#程序项作用域">程序项作用域</a></h2>
+<p>在<a href="../items/modules.html">模块</a>中直接声明的<a href="../items.html">程序项</a>的名称具有从模块开始到模块结束的作用域。这些程序项也是模块的成员，可以用以它们的模块名为前导的<a href="../paths.html">路径</a>来引用。</p>
+<p>声明为<a href="../statements.html">语句</a>的程序项的名称具有从该项语句所在的块的开始直到块的结束的作用域。</p>
+<p>在同一模块（或块）内的同一<a href="namespaces.html">命名空间</a>中不可引入重复名称。
+<a href="../items/use-declarations.html"><code>::*</code>式的导入</a> 在处理重复名称和遮蔽方面有特殊的行为，请参阅链接章节来了解更多详细信息。
+模块中的程序项可能会遮蔽掉<a href="#prelude-scopes">预导入包</a>中的程序项。</p>
+<p>外部模块中的程序项名称在内部模块中不起作用。
+<a href="../paths.html">路径</a>可以用来指向另一个模块中的一个程序项。</p>
+<h3 id="associated-item-scopes"><a class="header" href="#associated-item-scopes">Associated item scopes</a></h3>
+<h3 id="关联程序项的作用域"><a class="header" href="#关联程序项的作用域">关联程序项的作用域</a></h3>
+<p><a href="../items/associated-items.html">关联项</a>没有作用域，只能通过使用从它们关联的类型或 trait 名开始的<a href="../paths.html">路径</a>来引用。
+<a href="../items/associated-items.html#methods">方法</a>也可以通过<a href="../expressions/call-expr.html">调用表达式</a>引用。</p>
+<p>与模块或块中的程序项类似，如果在 trait 或实现中引入一个程序项，而该项名与同一命名空间中的trait或impl中的另一个项名重复，则会出现错误。</p>
+<h2 id="pattern-binding-scopes"><a class="header" href="#pattern-binding-scopes">Pattern binding scopes</a></h2>
+<h2 id="模式绑定的符号作用域"><a class="header" href="#模式绑定的符号作用域">模式绑定的（符号）作用域</a></h2>
+<p>局部变量的<a href="../patterns.html">模式</a>绑定的作用域取决于使用它的位置：</p>
+<ul>
+<li>[<code>let</code>语句]这种绑定的作用域从 <code>let</code>语句之后一直到声明它的块的末尾。</li>
+<li><a href="../items/functions.html#function-parameters">函数参数</a>这种绑定的作用域在函数体中。</li>
+<li><a href="../expressions/closure-expr.html">闭包参数</a>这种绑定的作用域在闭包体中。</li>
+<li><a href="../expressions/loop-expr.html#iterator-loops"><code>for</code></a> 和 [<code>whilet</code>] 这种绑定在循环体中。</li>
+<li>[<code>if-let</code>] 这种绑定在后继块中。</li>
+<li>[<code>match</code>arms] 这种绑定在<a href="../expressions/match-expr.html#match-guards">匹配守卫</a>和匹配臂表达式中。</li>
+</ul>
+<p>局部变量的作用域不会扩展到程序项的声明中。</p>
+<!-- Not entirely, see https://github.com/rust-lang/rust/issues/33118 -->
+<h3 id="pattern-binding-shadowing"><a class="header" href="#pattern-binding-shadowing">Pattern binding shadowing</a></h3>
+<h3 id="模式绑定的符号-遮蔽效应"><a class="header" href="#模式绑定的符号-遮蔽效应">模式绑定的（符号） 遮蔽效应</a></h3>
+<p>允许模式绑定遮蔽作用域中的任何名称，但遮蔽以下程序项是错误的：</p>
+<ul>
+<li><a href="../items/generics.html#const-generics">常量泛型参数</a></li>
+<li><a href="../items/static-items.html">静态项</a></li>
+<li><a href="../items/constant-items.html">常量项</a></li>
+<li><a href="../items/structs.html">结构体</a>和<a href="../items/enumerations.html">枚举</a>的构造函数</li>
+</ul>
+<p>下面的示例说明了本地绑定如何遮蔽已声明的程序项：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn shadow_example() {
+    // 由于作用域中还没有局部变量，因此将解析为函数。
+    foo(); // prints `function`
+    let foo = || println!(&quot;closure&quot;);
+    fn foo() { println!(&quot;function&quot;); }
+    // 这解析为本地闭包，因为它遮蔽前面声明的程序项。
+    foo(); // prints `closure`
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2 id="generic-parameter-scopes"><a class="header" href="#generic-parameter-scopes">Generic parameter scopes</a></h2>
+<h2 id="泛型参数的作用域"><a class="header" href="#泛型参数的作用域">泛型参数的作用域</a></h2>
+<p>泛型参数在<a href="../items/generics.html"><em>GenericParams</em></a>列表中声明。
+泛型参数的作用域在包含在声明它的程序项中。</p>
+<p>所有参数都能在泛型参数列表中的作用域内有效，无论它们的声明顺序如何。
+下面展示了一些参数在声明之前可以引用的示例：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 'b在被定义之前就可以被使用
+fn params_scope&lt;'a: 'b, 'b&gt;() {}
+
+<span class="boring">trait SomeTrait&lt;const Z: usize&gt; {}
+</span>// 在声明常量N之前，N就能在 trait约束中使用
+fn f&lt;T: SomeTrait&lt;N&gt;, const N: usize&gt;() {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>泛型参数在类型约束和 where子句的作用域内也算是域内有效的，例如：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">trait SomeTrait&lt;'a, T&gt; {}
+</span>// `SomeTrait` 的 &lt;'a, U&gt; 可以使用 `bounds_scope` 的泛型参数 'a 和 U。
+fn bounds_scope&lt;'a, T: SomeTrait&lt;'a, U&gt;, U&gt;() {}
+
+fn where_scope&lt;'a, T, U&gt;()
+    where T: SomeTrait&lt;'a, U&gt;
+{}
+<span class="boring">}
+</span></code></pre></pre>
+<p>函数内声明的<a href="../items.html">程序项</a>不能从其外部作用域里引用泛型参数。</p>
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn example&lt;T&gt;() {
+    fn inner(x: T) {} // ERROR: can't use generic parameters from outer function
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h3 id="generic-parameter-shadowing"><a class="header" href="#generic-parameter-shadowing">Generic parameter shadowing</a></h3>
+<h3 id="泛型参数的遮蔽效应"><a class="header" href="#泛型参数的遮蔽效应">泛型参数的遮蔽效应</a></h3>
+<p>不能遮蔽泛型参数，但允许在函数中声明的程序项去遮蔽该函数的泛型形参名称。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn example&lt;'a, T, const N: usize&gt;() {
+    // 允许在函数中的声明的程序项在作用域中遮蔽上层泛型参数。
+    fn inner_lifetime&lt;'a&gt;() {} // OK
+    fn inner_type&lt;T&gt;() {} // OK
+    fn inner_const&lt;const N: usize&gt;() {} // OK
+}
+<span class="boring">}
+</span></code></pre></pre>
+<pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait SomeTrait&lt;'a, T, const N: usize&gt; {
+    fn example_lifetime&lt;'a&gt;() {} // ERROR: 'a is already in use
+    fn example_type&lt;T&gt;() {} // ERROR: T is already in use
+    fn example_const&lt;const N: usize&gt;() {} // ERROR: N is already in use
+    fn example_mixed&lt;const T: usize&gt;() {} // ERROR: T is already in use
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h3 id="lifetime-scopes"><a class="header" href="#lifetime-scopes">Lifetime scopes</a></h3>
+<h3 id="生存期的作用域"><a class="header" href="#生存期的作用域">生存期的作用域</a></h3>
+<p>生存期参数在 <a href="../items/generics.html"><em>GenericParams</em></a>列表和<a href="../trait-bounds.html#higher-ranked-trait-bounds">高阶 trait约束</a>中声明</p>
+<p><code>'static</code> 和<a href="../lifetime-elision.html">占位符生存期</a> <code>'_</code> 拥有特殊的意义，不能被声明为参数。</p>
+<h4 id="lifetime-generic-parameter-scopes"><a class="header" href="#lifetime-generic-parameter-scopes">Lifetime generic parameter scopes</a></h4>
+<h4 id="泛型生存期的作用域"><a class="header" href="#泛型生存期的作用域">泛型生存期的作用域</a></h4>
+<p><a href="../items/constant-items.html">常量项</a>和<a href="../items/static-items.html">静态项</a>和<a href="../const_eval.html#const-context">常量上下文</a>只允许 <code>'static</code>生存期引用，因此它们中不能有其他生存期。
+<a href="../items/associated-items.html#associated-constants">关联常量</a>允许引用在其所在的trait或实现中声明的生存期。</p>
+<h4 id="higher-ranked-trait-bound-scopes"><a class="header" href="#higher-ranked-trait-bound-scopes">Higher-ranked trait bound scopes</a></h4>
+<h4 id="高阶-trait约束的作用域"><a class="header" href="#高阶-trait约束的作用域">高阶 trait约束的作用域</a></h4>
+<p>声明为<a href="../trait-bounds.html#higher-ranked-trait-bounds">高阶 trait约束</a>的生存期参数的作用域取决于使用它的场景。</p>
+<ul>
+<li>作为 <a href="../items/generics.html"><em>TypeBoundWhereClauseItem</em></a> 所声明的生存期参数在类型和类型约束的作用域内有效。</li>
+<li>作为 <a href="../trait-bounds.html"><em>TraitBound</em></a> 所声明的生存期参数在此类型约束路径所形成的作用域内有效。</li>
+<li>作为 <a href="../types/function-pointer.html"><em>BareFunctionType</em></a> 所声明的生存期参数在函数参数和返回类型的作用域内有效。</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">trait Trait&lt;'a&gt;{}
+</span>
+fn where_clause&lt;T&gt;()
+    // 'a 在类型和类型约束内都有效
+    where for &lt;'a&gt; &amp;'a T: Trait&lt;'a&gt;
+{}
+
+fn bound&lt;T&gt;()
+    // 'a 只在约束内有效
+    where T: for &lt;'a&gt; Trait&lt;'a&gt;
+{}
+
+<span class="boring">struct Example&lt;'a&gt; {
+</span><span class="boring">    field: &amp;'a u32
+</span><span class="boring">}
+</span>
+// 'a 在函数参数和返回类型的作用域内有效
+type FnExample = for&lt;'a&gt; fn(x: Example&lt;'a&gt;) -&gt; Example&lt;'a&gt;;
+<span class="boring">}
+</span></code></pre></pre>
+<h4 id="impl-trait-restrictions"><a class="header" href="#impl-trait-restrictions">Impl trait restrictions</a></h4>
+<h4 id="impl-trait-时的限制"><a class="header" href="#impl-trait-时的限制">Impl trait 时的限制</a></h4>
+<p><a href="../types/impl-trait.html">Impl trait</a>类型只能引用在函数或实现上声明的生存期。</p>
+<!-- not able to demonstrate the scope error because the compiler panics
+     https://github.com/rust-lang/rust/issues/67830
+-->
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">trait Trait1 {
+</span><span class="boring">    type Item;
+</span><span class="boring">}
+</span><span class="boring">trait Trait2&lt;'a&gt; {}
+</span><span class="boring">
+</span><span class="boring">struct Example;
+</span><span class="boring">
+</span><span class="boring">impl Trait1 for Example {
+</span><span class="boring">    type Item = Element;
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">struct Element;
+</span><span class="boring">impl&lt;'a&gt; Trait2&lt;'a&gt; for Element {}
+</span><span class="boring">
+</span>// 此处的 `impl Trait2` 不允许引用 'b，但允许引用 'a。
+fn foo&lt;'a&gt;() -&gt; impl for&lt;'b&gt; Trait1&lt;Item = impl Trait2&lt;'a&gt;&gt; {
+    // ...
+<span class="boring">   Example
+</span>}
+<span class="boring">}
+</span></code></pre></pre>
+<h2 id="loop-label-scopes"><a class="header" href="#loop-label-scopes">Loop label scopes</a></h2>
+<h2 id="循环标签的作用域"><a class="header" href="#循环标签的作用域">循环标签的作用域</a></h2>
+<p><a href="../expressions/loop-expr.html#loop-labels">循环标签</a>可以由<a href="../expressions/loop-expr.html">循环表达式</a>声明。
+循环标签的作用域是从声明它的地方到循环表达式的末尾。
+循环标签的作用域不会扩展到<a href="../items.html">程序项</a>、<a href="../expressions/closure-expr.html">闭包</a>、<a href="../expressions/block-expr.html#async-blocks">异步块</a>、<a href="../items/generics.html#const-generics">常量实参</a>、<a href="../const_eval.html#const-context">常量上下文</a>和定义 [for循环][<code>for</code>loop]的迭代器表达式。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>'a: for n in 0..3 {
+    if n % 2 == 0 {
+        break 'a;
+    }
+    fn inner() {
+        // 在这使用 'a 会报错。
+        // break 'a;
+    }
+}
+
+// The label is in scope for the expression of `while` loops.
+'a: while break 'a {}         // Loop does not run.
+'a: while let _ = break 'a {} // Loop does not run.
+
+// The label is not in scope in the defining `for` loop:
+'a: for outer in 0..5 {
+    // 这将中断外循环，跳过内循环并停止外循环。T
+    'a: for inner in { break 'a; 0..1 } {
+        println!(&quot;{}&quot;, inner); // 不会执行到这里
+    }
+    println!(&quot;{}&quot;, outer); // 也不会执行到这里
+}
+
+<span class="boring">}
+</span></code></pre></pre>
+<p>循环标签可以遮蔽外部作用域中的同名的标签。
+引用循环标签时引用的是最近定义的那个。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 循环标签遮蔽效果示例。
+'a: for outer in 0..5 {
+    'a: for inner in 0..5 {
+        // 这将终止内部循环，但外部循环将继续运行。
+        break 'a;
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2 id="prelude-scopes"><a class="header" href="#prelude-scopes">Prelude scopes</a></h2>
+<h2 id="预导入包的作用域"><a class="header" href="#预导入包的作用域">预导入包的作用域</a></h2>
+<p><a href="preludes.html">预导入包</a>将实体引入到模块的作用域内。
+实体不是当前模块的成员，但在<a href="name-resolution.html">名称解析</a>期间隐式引入。
+预导入包内实体名称可以被模块中的实体声明所遮蔽。</p>
+<p>预导入包是分层的，因此如果它们中包含了同名的实体，则后相互遮蔽。
+预导入包遮蔽其他预导入包的顺序如下，其中较早导入的程序项可以遮蔽较晚导入的：</p>
+<ol>
+<li><a href="preludes.html#extern-prelude">Extern prelude</a></li>
+<li><a href="preludes.html#tool-prelude">Tool prelude</a></li>
+<li><a href="preludes.html#macro_use-prelude"><code>macro_use</code> prelude</a></li>
+<li><a href="preludes.html#standard-library-prelude">Standard library prelude</a></li>
+<li><a href="preludes.html#language-prelude">Language prelude</a></li>
+</ol>
+<h2 id="macro_rules-scopes"><a class="header" href="#macro_rules-scopes"><code>macro_rules</code> scopes</a></h2>
+<h2 id="声明宏的作用域"><a class="header" href="#声明宏的作用域">声明宏的作用域</a></h2>
+<p><code>macro_rules</code>宏的作用域在<a href="../macros-by-example.html">macros By Example</a>一章中详述。
+声明宏的行为取决于 <a href="../macros-by-example.html#the-macro_use-attribute"><code>macro_use</code></a> 和 [<code>macror_export</code>]属性的使用。</p>
+<h2 id="derive-macro-helper-attributes"><a class="header" href="#derive-macro-helper-attributes">Derive macro helper attributes</a></h2>
+<h2 id="派生宏辅助属性"><a class="header" href="#派生宏辅助属性">派生宏辅助属性</a></h2>
+<p><a href="../procedural-macros.html#derive-macro-helper-attributes">派生宏辅助属性</a>在应用了相应<a href="../attributes/derive.html"><code>derive</code>属性</a>的程序项的作用域内有效。
+这种作用域从 <code>derive</code>属性之后扩展到该程序项的末尾。&lt;！--注：严格来说不完全正确，具体请参阅https://github.com/rust-lang/rust/issues/79202 --&gt;
+辅助对象属性在作用域内会遮蔽同名的其他属性。</p>
+<h2 id="self-scope"><a class="header" href="#self-scope"><code>Self</code> scope</a></h2>
+<h2 id="self作用域"><a class="header" href="#self作用域"><code>Self</code>作用域</a></h2>
+<p>尽管 <a href="../paths.html#self-1"><code>Self</code></a> 是一个具有特殊含义的关键字，但它与名称解析的交互方式类似于普通名称。</p>
+<p><a href="../items/structs.html">struct</a>、<a href="../items/enumerations.html">enum</a>、<a href="../items/unions.html">union</a>、<a href="../items/traits.html">trait</a>或<a href="../items/implementations.html">implementation</a>的定义中的隐式 <code>Self</code>类型被用类似于[泛型参数]（#generic parameter scopes）的方式来处理，并以与泛型类型参数相同的方式来生效作用域。</p>
+<p><a href="../items/implementations.html">implementation</a>中的隐式<code>Self</code>值构造函数在实现的主体代码（实现的<a href="../items/associated-items.html">关联项</a>）的作用域内有效。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Self type within struct definition.
+struct Recursive {
+    f1: Option&lt;Box&lt;Self&gt;&gt;
+}
+
+// Self type within generic parameters.
+struct SelfGeneric&lt;T: Into&lt;Self&gt;&gt;(T);
+
+// Self value constructor within an implementation.
+struct ImplExample();
+impl ImplExample {
+    fn example() -&gt; Self { // Self type
+        Self() // Self value constructor
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 

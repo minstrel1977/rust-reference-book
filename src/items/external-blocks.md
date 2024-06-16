@@ -2,8 +2,8 @@
 # 外部块
 
 >[external-blocks.md](https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md)\
->commit: 31f0c2c9e18044e3b1ba23d02993398546422d9c \
->本章译文最后维护日期：2024-03-09
+>commit: 845baeedae9beb16e98f11fe7173a463e934363e \
+>本章译文最后维护日期：2024-06-15
 
 > **<sup>句法</sup>**\
 > _ExternBlock_ :\
@@ -70,11 +70,12 @@ extern "stdcall" { }
 ## Variadic functions
 ## 可变参数函数
 
-可以在外部块内的函数的参数列表中的一个或多个具名参数后通过引入 `...` 来让该函数成为可变参数函数。注意可变参数`...` 前至少有一个具名参数，并且只能位于参数列表的最后。可变参数可以通过标识符来指定：
+可以在外部块内的函数的参数列表中的一个或多个具名参数后通过引入 `...` 来让该函数成为可变参数函数。可变参数可以以可选的方式通过标识符来指定：
 
 ```rust
 extern "C" {
-    fn foo(x: i32, ...);
+    fn foo(...);
+    fn bar(x: i32, ...);
     fn with_name(format: *const u8, args: ...);
 }
 ```

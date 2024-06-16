@@ -2,8 +2,8 @@
 # 条件编译
 
 >[conditional-compilation.md](https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md)\
->commit: 2610acf808799cdc1f4fa730ef549bba0402363a \
->本章译文最后维护日期：2024-03-09
+>commit: bcd45dd389c8c7a2abfe2bbee800ef8192e729b6 \
+>本章译文最后维护日期：2024-06-15
 
 > **<sup>句法</sup>**\
 > _ConfigurationPredicate_ :\
@@ -142,6 +142,8 @@
 * `"llvm"`
 * `"eabihf"`
 * `"abi64"`
+* `"sim"`
+* `"macabi"`
 
 ### `target_endian`
 

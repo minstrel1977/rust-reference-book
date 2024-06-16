@@ -2,8 +2,8 @@
 # 块表达式
 
 >[block-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/block-expr.md)\
->commit: d33e4b03f0f810a315915412448a1f73c30e0feb \
->本章译文最后维护日期：2024-05-26
+>commit: 82517788e162791dad3305a8c8d8d20d49510ad6 \
+>本章译文最后维护日期：2024-06-15
 
 > **<sup>句法</sup>**\
 > _BlockExpression_ :\
@@ -20,6 +20,7 @@
 *块表达式*或*块*是一个控制流表达式(control flow expression)，同时也是程序项声明和变量声明的匿名空间作用域。
 作为控制流表达式，块按顺序执行其非程序项声明的语句组件，最后执行可选的最终表达式(final expression)。
 作为一个匿名空间作用域，在本块内声明的程序项只在块本身围成的作用域内有效，而块内由 `let`语句声明的变量的作用域为下一条语句到块尾。
+更多细节请参见[作用域][scopes]章节。
 
 块的句法规则为：先是一个 `{`，后跟[内部属性][inner attributes]，再后是任意条[语句][statements]，再后是一个被称为最终操作数（final operand）的可选表达式，最后是一个 `}`。
 
@@ -254,6 +255,7 @@ fn is_unix_platform() -> bool {
 [inner attributes]: ../attributes.md
 [method]: ../items/associated-items.md#methods
 [mutable reference]: ../types/pointer.md#mutables-references-
+[scopes]: ../names/scopes.md
 [shared references]: ../types/pointer.md#shared-references-
 [statement]: ../statements.md
 [statements]: ../statements.md

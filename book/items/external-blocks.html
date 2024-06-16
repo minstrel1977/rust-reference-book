@@ -153,8 +153,8 @@
 <h1 id="外部块"><a class="header" href="#外部块">外部块</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md">external-blocks.md</a><br />
-commit: 31f0c2c9e18044e3b1ba23d02993398546422d9c <br />
-本章译文最后维护日期：2024-03-09</p>
+commit: 845baeedae9beb16e98f11fe7173a463e934363e <br />
+本章译文最后维护日期：2024-06-15</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -209,11 +209,12 @@ extern &quot;stdcall&quot; { }
 </ul>
 <h2 id="variadic-functions"><a class="header" href="#variadic-functions">Variadic functions</a></h2>
 <h2 id="可变参数函数"><a class="header" href="#可变参数函数">可变参数函数</a></h2>
-<p>可以在外部块内的函数的参数列表中的一个或多个具名参数后通过引入 <code>...</code> 来让该函数成为可变参数函数。注意可变参数<code>...</code> 前至少有一个具名参数，并且只能位于参数列表的最后。可变参数可以通过标识符来指定：</p>
+<p>可以在外部块内的函数的参数列表中的一个或多个具名参数后通过引入 <code>...</code> 来让该函数成为可变参数函数。可变参数可以以可选的方式通过标识符来指定：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>extern &quot;C&quot; {
-    fn foo(x: i32, ...);
+    fn foo(...);
+    fn bar(x: i32, ...);
     fn with_name(format: *const u8, args: ...);
 }
 <span class="boring">}

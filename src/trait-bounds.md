@@ -2,8 +2,8 @@
 # trait约束和生存期约束
 
 >[trait-bounds.md](https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md)\
->commit: f24f128949905108723bec0dc129266d04a2c544 \
->本章译文最后维护日期：2023-08-26
+>commit: 82517788e162791dad3305a8c8d8d20d49510ad6 \
+>本章译文最后维护日期：2024-06-15
 
 > **<sup>句法</sup>**\
 > _TypeParamBounds_ :\
@@ -125,7 +125,7 @@ fn call_on_ref_zero<F>(f: F) where for<'a> F: Fn(&'a i32) {
 >}
 >```
 
-高阶生存期也可以在 trait 前面指定：唯一的区别是生存期参数的作用域，像下面这样 `'a` 的作用域只扩展到后面跟的 trait 的末尾，而不是整个约束[^译注4]。下面这个函数和上一个等价。
+高阶生存期也可以在 trait 前面指定：唯一的区别是生存期参数的[作用域][hrtb-scopes] ，像下面这样 `'a` 的作用域只扩展到后面跟的 trait 的末尾，而不是整个约束[^译注4]。下面这个函数和上一个等价。
 
 ```rust
 fn call_on_ref_zero<F>(f: F) where F: for<'a> Fn(&'a i32) {
@@ -218,6 +218,7 @@ impl<'a, T> Trait<'a, T> for &'a T {}
 [`Sized`]: special-types-and-traits.md#sized
 [arrays]: types/array.md
 [associated types]: items/associated-items.md#associated-types
+[hrtb-scopes]: names/scopes.md#higher-ranked-trait-bound-scopes
 [supertraits]: items/traits.md#supertraits
 [generic]: items/generics.md
 [higher-ranked lifetimes]: #higher-ranked-trait-bounds

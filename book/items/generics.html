@@ -153,8 +153,8 @@
 <h1 id="类型参数和生存期参数"><a class="header" href="#类型参数和生存期参数">类型参数和生存期参数</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/generics.md">generics.md</a><br />
-commit: 8a86959fe961c09f201f1116bcbacf759e0604d4 <br />
-本章译文最后维护日期：2022-12-04</p>
+commit: aeda9bc3f65dfce916b1c1e4f1cab5fcddd8cd40 <br />
+本章译文最后维护日期：2024-06-15</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
@@ -166,12 +166,13 @@ commit: 8a86959fe961c09f201f1116bcbacf759e0604d4 <br />
 <p><em>LifetimeParam</em> :<br />
    <a href="../tokens.html#lifetimes-and-loop-labels">LIFETIME_OR_LABEL</a> ( <code>:</code> <a href="../trait-bounds.html"><em>LifetimeBounds</em></a> )<sup>?</sup></p>
 <p><em>TypeParam</em> :<br />
-   <a href="../identifiers.html">IDENTIFIER</a>( <code>:</code> <a href="../trait-bounds.html"><em>TypeParamBounds</em></a><sup>?</sup> )<sup>?</sup> ( <code>=</code> <a href="../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
+   <a href="../identifiers.html">IDENTIFIER</a> ( <code>:</code> <a href="../trait-bounds.html"><em>TypeParamBounds</em></a><sup>?</sup> )<sup>?</sup> ( <code>=</code> <a href="../types.html#type-expressions"><em>Type</em></a> )<sup>?</sup></p>
 <p><em>ConstParam</em>:<br />
    <code>const</code> <a href="../identifiers.html">IDENTIFIER</a> <code>:</code> <a href="../types.html#type-expressions"><em>Type</em></a> ( <code>=</code> <em><a href="../expressions/block-expr.html">Block</a></em> | <a href="../identifiers.html">IDENTIFIER</a> | -<sup>?</sup><a href="../expressions/literal-expr.html">LITERAL</a> )<sup>?</sup></p>
 </blockquote>
 <p><a href="functions.html">函数</a>、<a href="type-aliases.html">类型别名</a>、<a href="structs.html">结构体</a>、<a href="enumerations.html">枚举</a>、<a href="unions.html">联合体</a>、<a href="traits.html">trait</a> 和<a href="implementations.html">实现</a>可以通过类型参数、常量参数和生存期参数达到<em>参数化</em>配置的的效果。这些参数在尖括号<span class="parenthetical">（<code>&lt;...&gt;</code>）</span>中列出，通常都是紧跟在程序项名称之后和程序项的定义之前。对于实现，因为它没有名称，那它们就直接位于关键字 <code>impl</code> 之后。
-泛型参数的顺序被严格限定为生存期参数必须在前，然后是类型参数和常量参数混合。</p>
+泛型参数的顺序被严格限定为生存期参数必须在前，然后是类型参数和常量参数混合。
+同一参数名不能在 <em>GenericParams</em> 列表中声明多次。</p>
 <p>下面给出一些带类型参数、常量参数和生存期参数的程序项的示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -182,7 +183,8 @@ struct InnerArray&lt;T, const N: usize&gt;([T; N]);
 struct EitherOrderWorks&lt;const N: bool, U&gt;(U);
 <span class="boring">}
 </span></code></pre></pre>
-<p>泛型参数在声明它们的程序项定义的范围内有效。它们不是函数体中声明的程序项，这个在<a href="../statements.html#item-declarations">程序项声明</a>中有讲述。</p>
+<p>泛型参数在声明它们的程序项定义的范围内有效。它们不是函数体中声明的程序项，这个在<a href="../statements.html#item-declarations">程序项声明</a>中有讲述。
+更多细节请参阅[范型参数的作用域][generic parameter scopes]。</p>
 <p><a href="../types/pointer.html#shared-references-">引用</a>、<a href="../types/pointer.html#raw-pointers-const-and-mut">裸指针</a>、<a href="../types/array.html">数组</a>、<a href="../types/array.html">切片</a>、<a href="../types/tuple.html">元组</a>和<a href="../types/function-pointer.html">函数指针</a>也有生存期参数或类型参数，但这些程序项不能使用路径句法去引用。</p>
 <h3 id="const-generics"><a class="header" href="#const-generics">Const generics</a></h3>
 <h3 id="常量泛型"><a class="header" href="#常量泛型">常量泛型</a></h3>

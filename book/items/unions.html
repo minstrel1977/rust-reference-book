@@ -153,14 +153,14 @@
 <h1 id="联合体"><a class="header" href="#联合体">联合体</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/items/unions.md">unions.md</a><br />
-commit: 945a2bdba17280214f0559eb87078c84dacbbdc0 <br />
-本章译文最后维护日期：2023-05-03</p>
+commit: b10666f10f6a731cfffbfc3c42841c59f8f76b58 <br />
+本章译文最后维护日期：2024-06-15</p>
 </blockquote>
 <blockquote>
 <p><strong><sup>句法</sup></strong><br />
 <em>Union</em> :<br />
    <code>union</code> <a href="../identifiers.html">IDENTIFIER</a> <a href="generics.html"><em>GenericParams</em></a><sup>?</sup> <a href="generics.html#where-clauses"><em>WhereClause</em></a><sup>?</sup>
-<code>{</code><a href="structs.html"><em>StructFields</em></a> <code>}</code></p>
+<code>{</code><a href="structs.html"><em>StructFields</em></a><sup>?</sup> <code>}</code></p>
 </blockquote>
 <p>除了用 <code>union</code> 代替 <code>struct</code>外，联合体声明使用和结构体声明相同的句法。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
@@ -181,6 +181,7 @@ union MyUnion {
 <li>仅包含了以上被允许的联合体字段类型的元组或数组</li>
 </ul>
 <p>这个限制专门用来确保联合体的字段永远不需要销毁操作。与结构体和枚举一样，可以对联合体使用 <code>impl Drop</code> 来手动定义被销毁时发生的操作。</p>
+<p>编译器不接受没有任何字段的联合体，但宏可以接受。</p>
 <h2 id="initialization-of-a-union"><a class="header" href="#initialization-of-a-union">Initialization of a union</a></h2>
 <h2 id="联合体的初始化"><a class="header" href="#联合体的初始化">联合体的初始化</a></h2>
 <p>可以使用与结构体类型相同的句法创建联合体类型的值，但必须只能指定一个字段：</p>
