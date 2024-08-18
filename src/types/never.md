@@ -2,8 +2,8 @@
 # never类型
 
 >[never.md](https://github.com/rust-lang/reference/blob/master/src/types/never.md)\
->commit: 6eacdb0d8551dcdb9e9782e4abad60ec17ddb214 \
->本章译文最后维护日期：2023-07-21
+>commit: 2d83af6a785893551d6fbe6235f1ffe66bea9eca \
+>本章译文最后维护日期：2024-08-18
 
 > **<sup>句法</sup>**\
 > _NeverType_ : `!`
@@ -19,7 +19,7 @@ fn foo() -> ! {
 ```
 
 ```rust
-extern "C" {
-    pub fn no_return_extern_func() -> !;
+unsafe extern "C" {
+    pub safe fn no_return_extern_func() -> !;
 }
 ```

@@ -1,17 +1,16 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="light" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>诊断 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>诊断 - The Rust Reference</title>
 
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="../favicon.svg">
         <link rel="shortcut icon" href="../favicon.png">
@@ -33,15 +32,16 @@
         <link rel="stylesheet" href="../theme/reference.css">
 
     </head>
-    <body>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -57,50 +57,81 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
-            html.classList.remove('no-js')
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
         </script>
 
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
                 <ol class="chapter"><li class="chapter-item expanded affix "><a href="../翻译说明.html">翻译说明</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">介绍</a></li><li class="chapter-item expanded "><a href="../notation.html"><strong aria-hidden="true">1.</strong> 表义符</a></li><li class="chapter-item expanded "><a href="../lexical-structure.html"><strong aria-hidden="true">2.</strong> 词法结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../input-format.html"><strong aria-hidden="true">2.1.</strong> 输入格式</a></li><li class="chapter-item expanded "><a href="../keywords.html"><strong aria-hidden="true">2.2.</strong> 关键字</a></li><li class="chapter-item expanded "><a href="../identifiers.html"><strong aria-hidden="true">2.3.</strong> 标识符</a></li><li class="chapter-item expanded "><a href="../comments.html"><strong aria-hidden="true">2.4.</strong> 注释</a></li><li class="chapter-item expanded "><a href="../whitespace.html"><strong aria-hidden="true">2.5.</strong> 空白符</a></li><li class="chapter-item expanded "><a href="../tokens.html"><strong aria-hidden="true">2.6.</strong> token</a></li></ol></li><li class="chapter-item expanded "><a href="../macros.html"><strong aria-hidden="true">3.</strong> 宏</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../macros-by-example.html"><strong aria-hidden="true">3.1.</strong> 声明宏</a></li><li class="chapter-item expanded "><a href="../procedural-macros.html"><strong aria-hidden="true">3.2.</strong> 过程宏</a></li></ol></li><li class="chapter-item expanded "><a href="../crates-and-source-files.html"><strong aria-hidden="true">4.</strong> crate 和源文件</a></li><li class="chapter-item expanded "><a href="../conditional-compilation.html"><strong aria-hidden="true">5.</strong> 条件编译</a></li><li class="chapter-item expanded "><a href="../items.html"><strong aria-hidden="true">6.</strong> 程序项</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../items/modules.html"><strong aria-hidden="true">6.1.</strong> 模块</a></li><li class="chapter-item expanded "><a href="../items/extern-crates.html"><strong aria-hidden="true">6.2.</strong> 外部crate</a></li><li class="chapter-item expanded "><a href="../items/use-declarations.html"><strong aria-hidden="true">6.3.</strong> use声明</a></li><li class="chapter-item expanded "><a href="../items/functions.html"><strong aria-hidden="true">6.4.</strong> 函数</a></li><li class="chapter-item expanded "><a href="../items/type-aliases.html"><strong aria-hidden="true">6.5.</strong> 类型别名</a></li><li class="chapter-item expanded "><a href="../items/structs.html"><strong aria-hidden="true">6.6.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="../items/enumerations.html"><strong aria-hidden="true">6.7.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="../items/unions.html"><strong aria-hidden="true">6.8.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="../items/constant-items.html"><strong aria-hidden="true">6.9.</strong> 常量项</a></li><li class="chapter-item expanded "><a href="../items/static-items.html"><strong aria-hidden="true">6.10.</strong> 静态项</a></li><li class="chapter-item expanded "><a href="../items/traits.html"><strong aria-hidden="true">6.11.</strong> trait</a></li><li class="chapter-item expanded "><a href="../items/implementations.html"><strong aria-hidden="true">6.12.</strong> 实现</a></li><li class="chapter-item expanded "><a href="../items/external-blocks.html"><strong aria-hidden="true">6.13.</strong> 外部块</a></li><li class="chapter-item expanded "><a href="../items/generics.html"><strong aria-hidden="true">6.14.</strong> 泛型参数</a></li><li class="chapter-item expanded "><a href="../items/associated-items.html"><strong aria-hidden="true">6.15.</strong> 关联程序项</a></li></ol></li><li class="chapter-item expanded "><a href="../attributes.html"><strong aria-hidden="true">7.</strong> 属性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../attributes/testing.html"><strong aria-hidden="true">7.1.</strong> 测试</a></li><li class="chapter-item expanded "><a href="../attributes/derive.html"><strong aria-hidden="true">7.2.</strong> 派生</a></li><li class="chapter-item expanded "><a href="../attributes/diagnostics.html" class="active"><strong aria-hidden="true">7.3.</strong> 诊断</a></li><li class="chapter-item expanded "><a href="../attributes/codegen.html"><strong aria-hidden="true">7.4.</strong> 代码生成</a></li><li class="chapter-item expanded "><a href="../attributes/limits.html"><strong aria-hidden="true">7.5.</strong> 极限值设置</a></li><li class="chapter-item expanded "><a href="../attributes/type_system.html"><strong aria-hidden="true">7.6.</strong> 类型系统</a></li><li class="chapter-item expanded "><a href="../attributes/debugger.html"><strong aria-hidden="true">7.7.</strong> 调试器</a></li></ol></li><li class="chapter-item expanded "><a href="../statements-and-expressions.html"><strong aria-hidden="true">8.</strong> 语句和表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../statements.html"><strong aria-hidden="true">8.1.</strong> 语句</a></li><li class="chapter-item expanded "><a href="../expressions.html"><strong aria-hidden="true">8.2.</strong> 表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../expressions/literal-expr.html"><strong aria-hidden="true">8.2.1.</strong> 字面量表达式</a></li><li class="chapter-item expanded "><a href="../expressions/path-expr.html"><strong aria-hidden="true">8.2.2.</strong> 路径表达式</a></li><li class="chapter-item expanded "><a href="../expressions/block-expr.html"><strong aria-hidden="true">8.2.3.</strong> 块表达式</a></li><li class="chapter-item expanded "><a href="../expressions/operator-expr.html"><strong aria-hidden="true">8.2.4.</strong> 运算符表达式</a></li><li class="chapter-item expanded "><a href="../expressions/grouped-expr.html"><strong aria-hidden="true">8.2.5.</strong> 分组表达式</a></li><li class="chapter-item expanded "><a href="../expressions/array-expr.html"><strong aria-hidden="true">8.2.6.</strong> 数组和索引表达式</a></li><li class="chapter-item expanded "><a href="../expressions/tuple-expr.html"><strong aria-hidden="true">8.2.7.</strong> 元组和索引表达式</a></li><li class="chapter-item expanded "><a href="../expressions/struct-expr.html"><strong aria-hidden="true">8.2.8.</strong> 结构体表达式</a></li><li class="chapter-item expanded "><a href="../expressions/call-expr.html"><strong aria-hidden="true">8.2.9.</strong> 调用表达式</a></li><li class="chapter-item expanded "><a href="../expressions/method-call-expr.html"><strong aria-hidden="true">8.2.10.</strong> 方法调用表达式</a></li><li class="chapter-item expanded "><a href="../expressions/field-expr.html"><strong aria-hidden="true">8.2.11.</strong> 字段访问表达式</a></li><li class="chapter-item expanded "><a href="../expressions/closure-expr.html"><strong aria-hidden="true">8.2.12.</strong> 闭包表达式</a></li><li class="chapter-item expanded "><a href="../expressions/loop-expr.html"><strong aria-hidden="true">8.2.13.</strong> 循环表达式</a></li><li class="chapter-item expanded "><a href="../expressions/range-expr.html"><strong aria-hidden="true">8.2.14.</strong> 区间表达式</a></li><li class="chapter-item expanded "><a href="../expressions/if-expr.html"><strong aria-hidden="true">8.2.15.</strong> if 和 if let 表达式</a></li><li class="chapter-item expanded "><a href="../expressions/match-expr.html"><strong aria-hidden="true">8.2.16.</strong> 匹配表达式</a></li><li class="chapter-item expanded "><a href="../expressions/return-expr.html"><strong aria-hidden="true">8.2.17.</strong> 返回表达式</a></li><li class="chapter-item expanded "><a href="../expressions/await-expr.html"><strong aria-hidden="true">8.2.18.</strong> 等待(await)表达式</a></li><li class="chapter-item expanded "><a href="../expressions/underscore-expr.html"><strong aria-hidden="true">8.2.19.</strong> 下划线表达式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../patterns.html"><strong aria-hidden="true">9.</strong> 模式</a></li><li class="chapter-item expanded "><a href="../type-system.html"><strong aria-hidden="true">10.</strong> 类型系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types.html"><strong aria-hidden="true">10.1.</strong> 类型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/boolean.html"><strong aria-hidden="true">10.1.1.</strong> 布尔型</a></li><li class="chapter-item expanded "><a href="../types/numeric.html"><strong aria-hidden="true">10.1.2.</strong> 数字型</a></li><li class="chapter-item expanded "><a href="../types/textual.html"><strong aria-hidden="true">10.1.3.</strong> 字符型</a></li><li class="chapter-item expanded "><a href="../types/never.html"><strong aria-hidden="true">10.1.4.</strong> never类型</a></li><li class="chapter-item expanded "><a href="../types/tuple.html"><strong aria-hidden="true">10.1.5.</strong> 元组</a></li><li class="chapter-item expanded "><a href="../types/array.html"><strong aria-hidden="true">10.1.6.</strong> 数组</a></li><li class="chapter-item expanded "><a href="../types/slice.html"><strong aria-hidden="true">10.1.7.</strong> 切片</a></li><li class="chapter-item expanded "><a href="../types/struct.html"><strong aria-hidden="true">10.1.8.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="../types/enum.html"><strong aria-hidden="true">10.1.9.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="../types/union.html"><strong aria-hidden="true">10.1.10.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="../types/function-item.html"><strong aria-hidden="true">10.1.11.</strong> 函数项类型</a></li><li class="chapter-item expanded "><a href="../types/closure.html"><strong aria-hidden="true">10.1.12.</strong> 闭包</a></li><li class="chapter-item expanded "><a href="../types/pointer.html"><strong aria-hidden="true">10.1.13.</strong> 指针型</a></li><li class="chapter-item expanded "><a href="../types/function-pointer.html"><strong aria-hidden="true">10.1.14.</strong> 函数指针</a></li><li class="chapter-item expanded "><a href="../types/trait-object.html"><strong aria-hidden="true">10.1.15.</strong> trait对象</a></li><li class="chapter-item expanded "><a href="../types/impl-trait.html"><strong aria-hidden="true">10.1.16.</strong> 实现trait</a></li><li class="chapter-item expanded "><a href="../types/parameters.html"><strong aria-hidden="true">10.1.17.</strong> 类型参数</a></li><li class="chapter-item expanded "><a href="../types/inferred.html"><strong aria-hidden="true">10.1.18.</strong> 可推断类型</a></li></ol></li><li class="chapter-item expanded "><a href="../dynamically-sized-types.html"><strong aria-hidden="true">10.2.</strong> 动态内存宽度类型(DST)</a></li><li class="chapter-item expanded "><a href="../type-layout.html"><strong aria-hidden="true">10.3.</strong> 类型布局 </a></li><li class="chapter-item expanded "><a href="../interior-mutability.html"><strong aria-hidden="true">10.4.</strong> 内部可变性</a></li><li class="chapter-item expanded "><a href="../subtyping.html"><strong aria-hidden="true">10.5.</strong> 子类型和型变</a></li><li class="chapter-item expanded "><a href="../trait-bounds.html"><strong aria-hidden="true">10.6.</strong> trait约束及其生存期约束</a></li><li class="chapter-item expanded "><a href="../type-coercions.html"><strong aria-hidden="true">10.7.</strong> 类型自动强转</a></li><li class="chapter-item expanded "><a href="../destructors.html"><strong aria-hidden="true">10.8.</strong> 析构函数</a></li><li class="chapter-item expanded "><a href="../lifetime-elision.html"><strong aria-hidden="true">10.9.</strong> 生存期省略</a></li></ol></li><li class="chapter-item expanded "><a href="../special-types-and-traits.html"><strong aria-hidden="true">11.</strong> 特殊类型和 trait</a></li><li class="chapter-item expanded "><a href="../names.html"><strong aria-hidden="true">12.</strong> 名称</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../names/namespaces.html"><strong aria-hidden="true">12.1.</strong> 命名空间</a></li><li class="chapter-item expanded "><a href="../names/scopes.html"><strong aria-hidden="true">12.2.</strong> 作用域</a></li><li class="chapter-item expanded "><a href="../names/preludes.html"><strong aria-hidden="true">12.3.</strong> 预导入包</a></li><li class="chapter-item expanded "><a href="../paths.html"><strong aria-hidden="true">12.4.</strong> 路径</a></li><li class="chapter-item expanded "><a href="../names/name-resolution.html"><strong aria-hidden="true">12.5.</strong> 名称解析</a></li><li class="chapter-item expanded "><a href="../visibility-and-privacy.html"><strong aria-hidden="true">12.6.</strong> 可见性与隐私权</a></li></ol></li><li class="chapter-item expanded "><a href="../memory-model.html"><strong aria-hidden="true">13.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../memory-allocation-and-lifetime.html"><strong aria-hidden="true">13.1.</strong> 内存分配和生存期</a></li><li class="chapter-item expanded "><a href="../variables.html"><strong aria-hidden="true">13.2.</strong> 变量</a></li></ol></li><li class="chapter-item expanded "><a href="../linkage.html"><strong aria-hidden="true">14.</strong> 链接</a></li><li class="chapter-item expanded "><a href="../inline-assembly.html"><strong aria-hidden="true">15.</strong> 内联汇编</a></li><li class="chapter-item expanded "><a href="../unsafety.html"><strong aria-hidden="true">16.</strong> 非安全性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../unsafe-keyword.html"><strong aria-hidden="true">16.1.</strong> T关键字unsafe</a></li><li class="chapter-item expanded "><a href="../behavior-considered-undefined.html"><strong aria-hidden="true">16.2.</strong> 未定义行为</a></li><li class="chapter-item expanded "><a href="../behavior-not-considered-unsafe.html"><strong aria-hidden="true">16.3.</strong> 不被认为是非安全的行为</a></li></ol></li><li class="chapter-item expanded "><a href="../const_eval.html"><strong aria-hidden="true">17.</strong> 常量求值</a></li><li class="chapter-item expanded "><a href="../abi.html"><strong aria-hidden="true">18.</strong> ABI</a></li><li class="chapter-item expanded "><a href="../runtime.html"><strong aria-hidden="true">19.</strong> Rust运行时</a></li><li class="chapter-item expanded "><a href="../appendices.html"><strong aria-hidden="true">20.</strong> 附录</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../macro-ambiguity.html"><strong aria-hidden="true">20.1.</strong> 宏规范</a></li><li class="chapter-item expanded "><a href="../influences.html"><strong aria-hidden="true">20.2.</strong> 影响来源</a></li><li class="chapter-item expanded "><a href="../glossary.html"><strong aria-hidden="true">20.3.</strong> 术语表</a></li><li class="chapter-item expanded "><a href="../本书术语翻译对照表.html"><strong aria-hidden="true">20.4.</strong> 本书术语翻译对照表</a></li></ol></li></ol>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -111,13 +142,13 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title">The Rust Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
+                        <a href="https://github.com/rust-lang/reference/" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                         <a href="https://github.com/rust-lang/reference/edit/master/src/attributes/diagnostics.md" title="Suggest an edit" aria-label="Suggest an edit">
@@ -139,7 +170,7 @@
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -153,20 +184,21 @@
 <h1 id="诊断属性"><a class="header" href="#诊断属性">诊断属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/diagnostics.md">diagnostics.md</a><br />
-commit: 52874b8312ccbc28710a2532f82032876a08911b <br />
-本章译文最后维护日期：2024-04-06</p>
+commit: 62715cf8b4bd3b14d41f06f3d2cec3a42f4b1cd2 <br />
+本章译文最后维护日期：2024-08-17</p>
 </blockquote>
 <p>以下<a href="../attributes.html">属性</a>用于在编译期间控制或生成诊断消息。</p>
 <h2 id="lint-check-attributes"><a class="header" href="#lint-check-attributes">Lint check attributes</a></h2>
 <h2 id="lint检查类属性"><a class="header" href="#lint检查类属性">lint检查类属性</a></h2>
 <p>（译者注：lint在原文里有时当名词用，有时当动词用，本文统一翻译成名词，意思就是一种被命名的 lint检查模式）</p>
-<p>lint检查(lint check)系统命名了一些潜在的不良编码模式，（这些被命名的 lint检查就是一个一个的lint，）例如编写了不可能执行到的代码，就被命名为 unreachable-code lint，编写未提供文档的代码就被命名为 missing_docs lint。<code>allow</code>、<code>warn</code>、<code>deny</code> 和 <code>forbid</code> 这些能调整代码检查级别的属性被称为 lint级别属性，它们使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListPaths</em></a>元项属性句法来指定接受此级别的各种 lint。代码实体应用了这些带了具体 lint 列表的 lint级别属性，编译器或相关代码检查工具就可以结合这两层属性对这段代码执行相应的代码检查和检查报告。</p>
+<p>lint检查(lint check)系统命名了一些潜在的不良编码模式，（这些被命名的 lint检查就是一个一个的lint，）例如编写了不可能执行到的代码，就被命名为 unreachable-code lint，编写未提供文档的代码就被命名为 missing_docs lint。<code>allow</code>、<code>expect</code>、<code>warn</code>、<code>deny</code> 和 <code>forbid</code> 这些能调整代码检查级别的属性被称为 lint级别属性，它们使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListPaths</em></a>元项属性句法来指定接受此级别的各种 lint。代码实体应用了这些带了具体 lint 列表的 lint级别属性，编译器或相关代码检查工具就可以结合这两层属性对这段代码执行相应的代码检查和检查报告。</p>
 <p>对任何名为 <code>C</code> 的 lint 来说：</p>
 <ul>
-<li><code>allow(C)</code> 会压制对 <code>C</code> 的检查，那这样的违规行为就不会被报告，</li>
-<li><code>warn(C)</code> 警告违反 <code>C</code> 的，但继续编译。</li>
-<li><code>deny(C)</code> 遇到违反 <code>C</code> 的情况会触发编译器报错(signals an error)，</li>
-<li><code>forbid(C)</code> 与 <code>deny(C)</code> 相同，但同时会禁止以后再更改 lint级别，</li>
+<li><code>#[allow(C)]</code> 会压制对 <code>C</code> 的检查，那这样的违规行为就不会被报告，</li>
+<li><code>#[expect(C)]</code> 表示预期会发射 lint <code>C</code>。如果此预期没有发生，该属性将抑制 <code>C</code> 的发射或发出警告。</li>
+<li><code>#[warn(C)]</code> 警告违反 <code>C</code> 的，但继续编译。</li>
+<li><code>#[deny(C)]</code> 遇到违反 <code>C</code> 的情况会触发编译器报错(signals an error)，</li>
+<li><code>#[forbid(C)]</code> 与 <code>deny(C)</code> 相同，但同时会禁止以后再更改 lint级别，</li>
 <li></li>
 </ul>
 <blockquote>
@@ -187,8 +219,7 @@ commit: 52874b8312ccbc28710a2532f82032876a08911b <br />
     #[deny(missing_docs)]
     pub fn undocumented_end() -&gt; i32 { 3 }
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Lint属性可以覆盖上一个属性指定的级别，但该级别不能更改禁止性的 Lint。这里的上一个属性是指语法树中更高级别的属性，或者是同一实体上的前一个属性，按从左到右的源代码顺序列出。</p>
 <p>此示例展示了如何使用 <code>allow</code> 和 <code>warn</code> 来打开和关闭一个特定的 lint检查：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
@@ -208,9 +239,8 @@ pub mod m2 {
     // 未提供文档的编码行为在这里将触发编译器警告
     pub fn undocumented_too() -&gt; i32 { 3 }
 }
-<span class="boring">}
-</span></code></pre></pre>
-<p>此示例展示了如何使用 <code>forbid</code> 来禁止对该 lint 使用 <code>allow</code>：</p>
+<span class="boring">}</span></code></pre></pre>
+<p>此示例展示了如何使用 <code>forbid</code> 或 <code>expect</code> 来禁止对该 lint 使用 <code>allow</code>：</p>
 <pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[forbid(missing_docs)]
@@ -220,42 +250,121 @@ pub mod m3 {
     /// 返回 2。
     pub fn undocumented_too() -&gt; i32 { 2 }
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <blockquote>
 <p>注意：<code>rustc</code>允许在<a href="https://doc.rust-lang.org/rustc/lints/levels.html#via-compiler-flag">命令行</a>上设置 lint级别，也支持在<a href="https://doc.rust-lang.org/rustc/lints/levels.html#capping-lints">setting caps</a>中设置 lint报告中的caps。</p>
 </blockquote>
+<h3 id="lint-reasons"><a class="header" href="#lint-reasons">Lint Reasons</a></h3>
+<h3 id="lint-的-reason参数"><a class="header" href="#lint-的-reason参数">lint 的 reason参数</a></h3>
+<p>所有的 lint属性都支持一个附加的 <code>reason</code>参数，以给出上下文中添加某特定属性的原因。如果以给定的级别发射了此 lint，则 reason 的内容将显示为 lint 消息的一部分。</p>
+<pre><pre class="playground"><code class="language-rust edition2015 compile_fail"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 默认情况下允许使用 `keyword_idents`。在这里，我们拒绝它，以避免在更新版本时迁移标识符。
+#![deny(
+    keyword_idents,
+    reason = "we want to avoid these idents to be future compatible"
+)]
+
+// Rust2015版允许使用该名称。为了与未来兼容，我们仍然应尽力于避免这种情况。并且这样做还能避免给最终用户带来困惑。
+fn dyn() {}
+<span class="boring">}</span></code></pre></pre>
+<p>下面是另一个示例，其中允许使用 lint，并给出了原因：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::path::PathBuf;
+
+pub fn get_path() -&gt; PathBuf {
+    // `allow`属性上的 `reason`参数扮演了给读者提供说明文档的作用
+    #[allow(unused_mut, reason = "this is only modified on some platforms")]
+    let mut file_name = PathBuf::from("git");
+
+    #[cfg(target_os = "windows")]
+    file_name.set_extension("exe");
+
+    file_name
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="the-expect-attribute"><a class="header" href="#the-expect-attribute">The <code>#[expect]</code> attribute</a></h3>
+<h3 id="expect属性"><a class="header" href="#expect属性"><code>#[expect]</code>属性</a></h3>
+<p><code>#[expect(C)]</code>属性为 lint <code>C</code> 创建了一个预期lint。如果此预期的发生条件真的被满足，那如果在此相同位置的放置一个 <code>#[warn(C)]</code>属性，则会触发此<code>warn(C)</code>。如果此预期的发生条件未被满足，因为不会发射 lint <code>C</code>，则将在此属性处发射 <code>unfullilled_lint_expectations</code> lint。</p>
+<pre><pre class="playground"><code class="language-rust edition2021">fn main() {
+    // 该`#[expect]`属性创建了一个预期lint，即下面的语句（在lint检查时）会发射 `unused_variables` lint。但此预期lint 的发生条件没被满足， 因为 宏`println!` 使用了 `question`变量。
+    // 因此，将在此属性处发射 `unfulfilled_lint_expectations` lint。
+    #[expect(unused_variables)]
+    let question = "who lives in a pineapple under the sea?";
+    println!("{question}");
+
+    // 因为后面的代码从未使用`answer`变量，所以这个 `#[expect]`属性创建了一个发生条件将被满足的预期lint。那在一般情况下会被发射的 `unused_variables` lint 在此却会被抑制住。也就是 lint检查不会对该语句或属性发射告警。
+    #[expect(unused_variables)]
+    let answer = "SpongeBob SquarePants!";
+}</code></pre></pre>
+<p>预期lint 仅在 lint发射机制抑制了 <code>expect</code>属性限定的lint 被发射出去后才算被满足。如果在作用域内使用其他 lint级别属性（如 <code>allow</code> 或 <code>warn</code>），则 lint发射机制将先相应地处理一遍这些lint，那前面预置的预期lint 的发生条件就不会被满足。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[expect(unused_variables)]
+fn select_song() {
+    // 这将在 `warn`属性定义的 warn级别上发射 `unused_variables`lint。因此此函数上的预期lint 将不会被满足。
+    #[warn(unused_variables)]
+    let song_name = "Crab Rave";
+
+    // `allow`属性已经抑制了 `unused_variables`lint 的发射。所以这里是 `allow`属性被满足，而函数上的预期lint 未被满足。
+    #[allow(unused_variables)]
+    let song_creator = "Noisestorm";
+
+    // 此处的 `expect`属性将抑制此变量的 `unused_variables` lint 的发射。所以函数上的预期lint 未被满足，因为本地的预期lint 的发射已经抑制了 `unused_variables`lint 的发射。
+    #[expect(unused_variables)]
+    let song_version = "Monstercat Release";
+}
+<span class="boring">}</span></code></pre></pre>
+<p>如果 <code>expect</code>属性包含多个 lint，则每个 lint 都要单独计算。对于 lint组，如果组中的一个 lint 被发射，就算此期望lint 被满足：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 该预期lint 将因为函数内有未被使用的变量而被执行，因为函数内发射的 `unused_variables` lint 属于 `unused` lint组。
+#[expect(unused)]
+pub fn thoughts() {
+    let unused = "I'm running out of examples";
+}
+
+pub fn another_example() {
+    // 该属性创建两个预期lint。其中`unused_mut`lint 的发射会被如预期那般被抑制，所一个第一个预期lint 被执行。但同时由于后续代码使用了变量`link`，因此 lint检查机制不会发射 `unused_variables` lint 。因此，后面这个预期lint 将得不到满足，并最终将报告告警信息。
+    #[expect(unused_mut, unused_variables)]
+    let mut link = "https://www.rust-lang.org/";
+
+    println!("Welcome to our community: {link}");
+}
+<span class="boring">}</span></code></pre></pre>
+<blockquote>
+<p>注意：<code>#[expect(unfulfilled_lint_expectations)]</code> 的行为当前定义为始终生成 <code>unfulfilled_lint_expectations</code> lint。</p>
+</blockquote>
 <h3 id="lint-groups"><a class="header" href="#lint-groups">Lint groups</a></h3>
-<h3 id="lint分组"><a class="header" href="#lint分组">lint分组</a></h3>
+<h3 id="lint组"><a class="header" href="#lint组">lint组</a></h3>
 <p>lint可以被组织成不同命名的组，以便相关lint的等级可以一起调整。使用命名组相当于给出该组中的 lint。</p>
 <pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// 这允许 &quot;unused&quot;组下的所有lint。
+</span>// 这允许 "unused"组下的所有lint。
 #[allow(unused)]
-// 这个禁止动作将覆盖前面 &quot;unused&quot;组中的 &quot;unused_must_use&quot; lint。
+// 这个禁止动作将覆盖前面 "unused"组中的 "unused_must_use" lint。
 #[deny(unused_must_use)]
 fn example() {
-    // 这里不会生成警告，因为 &quot;unused_variables&quot; lint 在 &quot;unused&quot;组下
+    // 这里不会生成警告，因为 "unused_variables" lint 在 "unused"组下
     let x = 1;
-    // 这里会产生报错信息，因为 &quot;unused_must_use&quot; lint 被标记为&quot;deny&quot;，而这行的返回结果未被使用
-    std::fs::remove_file(&quot;some_file&quot;); // ERROR: unused `Result` that must be used
+    // 这里会产生报错信息，因为 "unused_must_use" lint 被标记为"deny"，而这行的返回结果未被使用
+    std::fs::remove_file("some_file"); // ERROR: unused `Result` that must be used
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>有一个名为 “warnings” 的特殊组，它包含 “warn”级别的所有 lint。“warnings”组会忽略属性的顺序，并对实体执行所有警告lint 检查。</p>
 <pre><pre class="playground"><code class="language-rust compile_fail edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">unsafe fn an_unsafe_fn() {}
 </span>// 这里的两个属性的前后顺序无所谓
 #[deny(warnings)]
-// unsafe_code lint 默认是 &quot;allow&quot; 的。
+// unsafe_code lint 默认是 "allow" 的。
 #[warn(unsafe_code)]
 fn example_err() {
-    // 这里会编译报错，因为 `unsafe_code`警告的 lint 被提升为 &quot;deny&quot;级别了。
+    // 这里会编译报错，因为 `unsafe_code`警告的 lint 被提升为 "deny"级别了。
     unsafe { an_unsafe_fn() } // ERROR: usage of `unsafe` block
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <h3 id="tool-lint-attributes"><a class="header" href="#tool-lint-attributes">Tool lint attributes</a></h3>
 <h3 id="工具类lint属性"><a class="header" href="#工具类lint属性">工具类lint属性</a></h3>
 <p>可以为 <code>allow</code>、<code>warn</code>、<code>deny</code> 或 <code>forbid</code> 这些调整代码检查级别的 lint属性添加/输入基于特定工具的 lint。注意该工具在当前作用域内可用才会起效。</p>
@@ -274,22 +383,21 @@ fn main() {
 #[allow(clippy::cmp_nan)]
 fn foo() {
     // ...
-}
-</code></pre></pre>
+}</code></pre></pre>
 <blockquote>
-<p>注意：<code>rustc</code> 当前识别的工具类lint 有 &quot;<a href="https://github.com/rust-lang/rust-clippy">clippy</a>&quot; 和 &quot;<a href="https://doc.rust-lang.org/rustdoc/lints.html">rustdoc</a>&quot;。</p>
+<p>注意：<code>rustc</code> 当前识别的工具类lint 有 “<a href="https://github.com/rust-lang/rust-clippy">clippy</a>” 和 “<a href="https://doc.rust-lang.org/rustdoc/lints.html">rustdoc</a>”。</p>
 </blockquote>
 <h2 id="the-deprecated-attribute"><a class="header" href="#the-deprecated-attribute">The <code>deprecated</code> attribute</a></h2>
 <h2 id="deprecated属性"><a class="header" href="#deprecated属性"><code>deprecated</code>属性</a></h2>
 <p><em><code>deprecated</code>属性</em>将程序项标记为已弃用。<code>rustc</code> 将对被 <code>#[deprecated]</code> 限定的程序项的行为发出警告。<code>rustdoc</code> 将特别展示已弃用的程序项，包括展示 <code>since</code> 版本和 <code>note</code> 提示（如果可用）。</p>
 <p><code>deprecated</code>属性有几种形式：</p>
 <ul>
-<li><code>deprecated</code> — 发布一个通用的弃用消息。</li>
-<li><code>deprecated = &quot;message&quot;</code> — 在弃用消息中包含给定的字符串。</li>
+<li><code>deprecated</code> — 发布一个通用的弃用消息。</li>
+<li><code>deprecated = "message"</code> — 在弃用消息中包含给定的字符串。</li>
 <li><a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法形式里带有两个可选字段：
 <ul>
-<li><code>since</code> — 指定程序项被弃用时的版本号。<code>rustc</code> 目前不解释此字符串，但是像 <a href="https://github.com/rust-lang/rust-clippy">Clippy</a> 这样的外部工具可以检查此值的有效性。</li>
-<li><code>note</code> — 指定一个应该包含在弃用消息中的字符串。这通常用于提供关于不推荐的解释和推荐首选替代。</li>
+<li><code>since</code> — 指定程序项被弃用时的版本号。<code>rustc</code> 目前不解释此字符串，但是像 <a href="https://github.com/rust-lang/rust-clippy">Clippy</a> 这样的外部工具可以检查此值的有效性。</li>
+<li><code>note</code> — 指定一个应该包含在弃用消息中的字符串。这通常用于提供关于不推荐的解释和推荐首选替代。</li>
 </ul>
 </li>
 </ul>
@@ -298,17 +406,16 @@ fn foo() {
 <p>这有个例子：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>#[deprecated(since = &quot;5.2.0&quot;, note = &quot;foo was rarely used. Users should instead use bar&quot;)]
+</span>#[deprecated(since = "5.2.0", note = "foo was rarely used. Users should instead use bar")]
 pub fn foo() {}
 
 pub fn bar() {}
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><a href="https://github.com/rust-lang/rfcs/blob/master/text/1270-deprecation.md">RFC</a> 内有动机说明和更多细节。</p>
 <h2 id="the-must_use-attribute"><a class="header" href="#the-must_use-attribute">The <code>must_use</code> attribute</a></h2>
 <h2 id="must_use属性"><a class="header" href="#must_use属性"><code>must_use</code>属性</a></h2>
 <p><em><code>must_use</code>属性</em> 用于在值未被“使用”时发出诊断警告。它可以应用于用户定义的复合类型（<a href="../items/structs.html">结构体(<code>struct</code>)</a>、<a href="../items/enumerations.html">枚举(<code>enum</code>)</a> 和 <a href="../items/unions.html">联合体(<code>union</code>)</a>）、<a href="../items/functions.html">函数</a>和 <a href="../items/traits.html">trait</a>。</p>
-<p><code>must_use</code>属性可以使用<a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法添加一些附加消息，如 <code>#[must_use = &quot;example message&quot;]</code>。该字符串将出现在警告消息里。</p>
+<p><code>must_use</code>属性可以使用<a href="../attributes.html#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a>元项属性句法添加一些附加消息，如 <code>#[must_use = "example message"]</code>。该字符串将出现在警告消息里。</p>
 <p>当用户定义的复合类型上使用了此属性，如果有该类型的<a href="../expressions.html">表达式</a>正好是<a href="../statements.html#expression-statements">表达式语句</a>的表达式，那就违反了 <code>unused_must_use</code> 这个 lint。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -323,8 +430,7 @@ struct MustUse {
 </span><span class="boring">
 </span>// 违反 `unused_must_use` lint。
 MustUse::new();
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>当函数上使用了此属性，如果此函数被当作<a href="../statements.html#expression-statements">表达式语句</a>的<a href="../expressions.html">表达式</a>的<a href="../expressions/call-expr.html">调用表达式</a>，那就违反了 <code>unused_must_use</code> lint。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -333,8 +439,7 @@ fn five() -&gt; i32 { 5i32 }
 
 // 违反 unused_must_use lint。
 five();
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>当在 <a href="../items/traits.html">trait声明</a>中使用了此属性时，如果<a href="../statements.html#expression-statements">表达式语句</a>的<a href="../expressions/call-expr.html">调用表达式</a>返回了此 trait 的 <a href="../types/impl-trait.html">trait实现(impl trait)</a>或 <a href="../types/trait-object.html">trait对象（dyn trait）</a> ，那这种情况也违反 <code>unused_must_use</code> lint。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -348,8 +453,7 @@ fn get_critical() -&gt; impl Critical {
 
 // 违反 `unused_must_use` lint。
 get_critical();
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>当 trait声明中的一函数上使用了此属性时，如果调用表达式是此 trait 的某个实现中的该函数时，该行为同样违反 <code>unused_must_use</code> lint。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -364,8 +468,7 @@ impl Trait for i32 {
 
 // 违反 `unused_must_use` lint。
 5i32.use_me();
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>当在 trait实现里的函数上使用 <code>must_use</code>属性时，此属性将被忽略。</p>
 <blockquote>
 <p>注意：包含了此（属性应用的程序项产生的值）的普通空操作(no-op)表达式不会违反该 lint。例如，将此类值包装在没有实现 <a href="../special-types-and-traits.html#drop"><code>Drop</code></a> 的类型中，然后不使用该类型，并成为未使用的<a href="../expressions/block-expr.html">块表达式</a>的最终表达式(final expression)。</p>
@@ -382,8 +485,7 @@ if true { five() } else { 0i32 };
 match true {
     _ =&gt; five()
 };
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 </blockquote>
 <blockquote>
 <p>注意：当一个必须使用的值被故意丢弃时，使用带有模式 <code>_</code> 的<a href="../statements.html#let-statements">let语句</a>是惯用的方法。</p>
@@ -394,8 +496,7 @@ fn five() -&gt; i32 { 5i32 }
 
 // 不违反 unused_must_use lint。
 let _ = five();
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 </blockquote>
 <h2 id="the-diagnostic-tool-attribute-namespace"><a class="header" href="#the-diagnostic-tool-attribute-namespace">The <code>diagnostic</code> tool attribute namespace</a></h2>
 <h2 id="diagnostic属性的命名空间"><a class="header" href="#diagnostic属性的命名空间"><code>diagnostic</code>属性的命名空间</a></h2>
@@ -430,10 +531,10 @@ Rust 不保证这些属性提供的提示信息会被使用。
 格式说明符可能会产生警告，但可以会被忽略。</p>
 <p>示例：</p>
 <pre><pre class="playground"><code class="language-rust compile_fail E0277 edition2021">#[diagnostic::on_unimplemented(
-    message = &quot;My Message for `ImportantTrait&lt;{A}&gt;` implemented for `{Self}`&quot;,
-    label = &quot;My Label&quot;,
-    note = &quot;Note 1&quot;,
-    note = &quot;Note 2&quot;
+    message = "My Message for `ImportantTrait&lt;{A}&gt;` implemented for `{Self}`",
+    label = "My Label",
+    note = "Note 1",
+    note = "Note 2"
 )]
 trait ImportantTrait&lt;A&gt; {}
 
@@ -441,8 +542,7 @@ fn use_my_trait(_: impl ImportantTrait&lt;i32&gt;) {}
 
 fn main() {
     use_my_trait(String::new());
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>编译器可能会生成如下所示的错误消息：</p>
 <pre><code class="language-text">error[E0277]: My Message for `ImportantTrait&lt;i32&gt;` implemented for `String`
   --&gt; src/main.rs:14:18
@@ -465,7 +565,7 @@ fn main() {
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../attributes/codegen.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../attributes/codegen.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -479,7 +579,7 @@ fn main() {
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../attributes/codegen.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../attributes/codegen.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -489,21 +589,22 @@ fn main() {
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>

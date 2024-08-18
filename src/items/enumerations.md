@@ -2,8 +2,8 @@
 # 枚举
 
 >[enumerations.md](https://github.com/rust-lang/reference/blob/master/src/items/enumerations.md)\
->commit: 4f32346c1ace326fe3d699f20bbd7a77680e830c \
->本章译文最后维护日期：2023-01-15
+>commit: 585407f04bba5d154342ff305b3385bc555d1468 \
+>本章译文最后维护日期：2024-08-17
 
 > **<sup>句法</sup>**\
 > _Enumeration_ :\
@@ -30,6 +30,7 @@
 *枚举*，英文为 *enumeration*，常见其简写形式 *enum*，它同时定义了一个标称型(nominal)[枚举类型][enumerated type]和一组*构造器*，这可用于创建或使用模式来匹配相应枚举类型的值。
 
 枚举使用关键字 `enum` 来声明。
+`enum`声明在其所在的模块或块的[类型命名空间][type namespace]中定义枚举类型。
 
 `enum` 程序项的一个示例和它的使用方法：
 
@@ -66,7 +67,7 @@ enum Fieldless {
 }
 ```
 
-如果无字段枚举枚举的变体全是单元体变体，这类枚举也被称为*<span id="unit-only-enum">单元体枚举</span>*。比如：
+如果无字段枚举枚举的变体全是单元体变体，这类枚举也被称为*<span id="unit-only-enum">纯单元体枚举</span>*。比如：
 
 ```rust
 enum Enum {
@@ -74,6 +75,30 @@ enum Enum {
     Bar = 2,
     Baz = 1,
 }
+```
+
+枚举变体的构造函数类似于[结构体][struct]定义，并且可以用枚举名称中的路径来引用，这些引用可以直接用在 [use声明][use declarations]中。
+每个枚举变体都在[类型命名空间][type namespace]中定义其类型，尽管该类型不能被用作类型识别符。
+类元组和类单元变体也在[值命名空间][value namespace]中定义了其构造函数。
+
+类结构体变体可以用[结构体表达式][struct expression]实例化。
+类元组的变体可以用[调用表达式][call expression]或[结构体表达式][struct expression]实例化。
+类单元变体可以用[路径表达式][path expression]或[结构体表达式][struct expression]实例化。
+例如：
+
+```rust
+enum Examples {
+    UnitLike,
+    TupleLike(i32),
+    StructLike { value: i32 },
+}
+
+use Examples::*; // 为每个变体都创建了别名。
+let x = UnitLike; // 常量项的路径表达式
+let x = UnitLike {}; // 结构体表达式
+let y = TupleLike(123); // 调用表达式
+let y = TupleLike { 0: 123 }; // 使用整型数字作为字段名的结构表达式
+let z = StructLike { value: 123 }; // 结构体表达式
 ```
 
 <span id="custom-discriminant-values-for-fieldless-enumerations"></span>
@@ -282,20 +307,27 @@ enum E {
 }
 ```
 
-[IDENTIFIER]: ../identifiers.md
-[_GenericParams_]: generics.md
-[_WhereClause_]: generics.md#where-clauses
 [_Expression_]: ../expressions.md
-[_TupleFields_]: structs.md
+[_GenericParams_]: generics.md
 [_StructFields_]: structs.md
+[_TupleFields_]: structs.md
 [_Visibility_]: ../visibility-and-privacy.md
-[enumerated type]: ../types/enum.md
+[_WhereClause_]: generics.md#where-clauses
+[`C` representation]: ../type-layout.md#the-c-representation
 [`mem::discriminant`]: https://doc.rust-lang.org/std/mem/fn.discriminant.html
-[never type]: ../types/never.md
-[unit-only]: #unit-only-enum
-[numeric cast]: ../expressions/operator-expr.md#semantics
+[call expression]: ../expressions/call-expr.md
 [constant expression]: ../const_eval.md#constant-expressions
 [default representation]: ../type-layout.md#the-default-representation
-[primitive representation]: ../type-layout.md#primitive-representations
-[`C` representation]: ../type-layout.md#the-c-representation
+[enumerated type]: ../types/enum.md
 [Field-less enums]: #field-less-enum
+[IDENTIFIER]: ../identifiers.md
+[never type]: ../types/never.md
+[numeric cast]: ../expressions/operator-expr.md#semantics
+[path expression]: ../expressions/path-expr.md
+[primitive representation]: ../type-layout.md#primitive-representations
+[struct expression]: ../expressions/struct-expr.md
+[struct]: structs.md
+[type namespace]: ../names/namespaces.md
+[unit-only]: #unit-only-enum
+[use declarations]: use-declarations.md
+[value namespace]: ../names/namespaces.md

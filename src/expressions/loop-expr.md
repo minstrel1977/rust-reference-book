@@ -2,8 +2,8 @@
 # 循环和其他可中断表达式
 
 >[loop-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/loop-expr.md)\
->commit: aa9c70bda63b3ab73b15746609831dafb96f56ff \
->本章译文最后维护日期：2023-05-03
+>commit: 9fd053364c4c4983e30c5edc3a405c0c363bedc4 \
+>本章译文最后维护日期：2024-08-17
 
 > **<sup>句法</sup>**\
 > _LoopExpression_ :\
@@ -216,6 +216,7 @@ assert_eq!(sum, 55);
     break 'a;
 }
 ```
+`'_` 不是一个合法的循环标签。
 
 ## `break` expressions
 ## `break`表达式

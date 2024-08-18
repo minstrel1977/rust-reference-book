@@ -1,8 +1,8 @@
 # Tokens
 
 >[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
->commit: 5afb503a4c1ea3c84370f8f4c08a1cddd1cdf6ad \
->本章译文最后维护日期：2024-03-09
+>commit: 9fd053364c4c4983e30c5edc3a405c0c363bedc4 \
+>本章译文最后维护日期：2024-08-18
 
 
 token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：
@@ -191,6 +191,7 @@ blackhole_lit!(1suffix); // OK
 > &nbsp;&nbsp; | `#` RAW_STRING_CONTENT `#`
 
 原生字符串字面量不做任何转义。它以字符 `U+0072`（`r`）后跟小于256个字符 `U+0023`（`#`），以及一个字符 `U+0022`（双引号 `"`），这样的字符组合开始。
+
 中间*原生字符串主体*部分可包含除了 `U+000D`(CR) 之外的任意 Unicode 字符序列。
 最后再后跟另一个 `U+0022`（双引号 `"`）以及跟与字符串主体前的那段字符组合中的同等数量的 `U+0023`（`#`）的字符来表示字符串主体的结束。
 
@@ -268,6 +269,7 @@ r##"foo #"# bar"##;                // foo #"# bar
 > &nbsp;&nbsp; _除了 IsolatedCR 外的任何 ASCII 字符（0x00 到 0x7F）_
 
 原生字节串字面量不做任何转义。它们以字符 `U+0062`（`b`）后跟 `U+0072`（`r`），再后跟小于256个字符 `U+0023`（`#`）及字符 `U+0022`（双引号 `"`），这样的字符组合开始。
+
 中间是*原生字节串主体*，这部分可包含除了 `U+000D`(CR) 外的任意的 ASCII 字符序列。
 最后再后跟另一个 `U+0022`（双引号 `"`）以及跟与字符串主体前的那段字符组合中的同等数量的 `U+0023`（`#`）的字符来表示字符串主体的结束。
 原生字节串字面量不能包含任何非 ASCII 字节。
@@ -345,6 +347,7 @@ c"\xC3\xA6";
 > &nbsp;&nbsp; | `#` RAW_C_STRING_CONTENT `#`
 
 原生C语言风格的字符串字面量不处理任何转义。它们以字符`U+0063` (`c`)开头，然后跟`U+0072` (`r`)，然后再跟少于256个的字符`U+0023` (`#`)和一个 `U+0022`（双引号）字符（记作开头引号）。
+
 中间_原生C语言风格的字符串本体_可以包含除 `U+0000`(NUL) 和 `U+000D`(CR) 之外的任何 Unicode字符序列。
 最后再后跟另一个 `U+0022`（双引号 `"`）以及跟与字符串主体前的那段字符组合中的同等数量的 `U+0023`（`#`）的字符来表示字符串主体的结束。
 
@@ -584,7 +587,9 @@ let x: f64 = 2.;
 >
 > LIFETIME_OR_LABEL :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `'` [NON_KEYWORD_IDENTIFIER][identifier]
->   _(后面没有紧跟 `'`)_
+>   _(面没有紧跟 `'`)_\
+> &nbsp;&nbsp; | `'_`
+>   _(面没有紧跟 `'`)_
 
 生存期参数和[循环标签][loop labels]使用 LIFETIME_OR_LABEL 类型的 token。（尽管 LIFETIME_OR_LABEL 是 LIFETIME_TOKEN 的子集，但）任何符合 LIFETIME_TOKEN 约定的 token 也都能被上述词法分析规则所接受，比如 LIFETIME_TOKEN 类型的 token 在宏中就可以畅通无阻的使用。
 

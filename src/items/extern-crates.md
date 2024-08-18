@@ -2,8 +2,8 @@
 # 外部crate声明
 
 >[extern-crates.md](https://github.com/rust-lang/reference/blob/master/src/items/extern-crates.md)\
->commit: 8ca80a14d359cc21b0e9c10dde7d45fe1fcb9af8 \
->本章译文最后维护日期：2022-12-04
+>commit: 2aadaad918b1d0a887c6c513a0e9ca49aab1d74e \
+>本章译文最后维护日期：2024-08-15
 
 > **<sup>句法:<sup>**\
 > _ExternCrate_ :\
@@ -15,7 +15,10 @@
 > _AsClause_ :\
 > &nbsp;&nbsp; `as` ( [IDENTIFIER] | `_` )
 
-*外部crate(`extern crate`)声明*指定了对外部 crate 的依赖关系。（这种声明让）外部的 crate 作为外部crate(`extern crate`)声明中提供的[标识符][identifier]被绑定到当前声明的作用域中。此外，如果 `extern crate` 出现在 crate的根模块中，那么此 crate名称也会被添加到[外部预导入包][extern prelude]中，以便使其自动出现在所有模块的作用域中。`as`子句可用于将导入的 crate 绑定到不同的名称上。
+*外部crate(`extern crate`)声明*指定了对外部 crate 的依赖关系。
+（这种声明让）外部的 crate 作为在本地[类型命名空间][type namespace]里定义的[标识符][identifier]被绑定到当前声明所处的作用域中。
+此外，如果 `extern crate` 出现在 crate的根模块中，那么此 crate名称也会被添加到[外部预导入包][extern prelude]中，以便使其自动出现在所有模块的作用域中。
+`as`子句可用于将导入的 crate 绑定到不同的名称上。
 
 外部crate 在编译时被解析为一个特定的 `soname`[^soname]， 并且一个到此 `soname` 的运行时链接会传递给链接器，以便在运行时加载此 `soname`。`soname` 在编译时解析，方法是扫描编译器的库文件路径，匹配外部crate 的 `crate_name`。因为`crate_name` 是在编译时通过可选的 `crate_name`属性声明的，所以如果外部 crate 没有提供 `crate_name`， 则默认拿该外部crate 的 `name`属性值来和外部crate(`extern crate`)声明中的[标识符]绑定。
 
@@ -42,12 +45,6 @@ extern crate std as ruststd; // 使用其他名字去链接 'std'
 extern crate hello_world; // 连字符被替换为下划线
 ```
 
-## Extern Prelude
-## 外部预导入包
-
-本节内容已经移入[预导入包 — 外部预导入包](../names/preludes.md#extern-prelude)中了。
-<!-- 本节是为了让其他资料的链入链接不止于立即失效，一旦其他链接被更新，本节就会删除 -->
-
 ## Underscore Imports
 ## 下划线导入
 
@@ -68,6 +65,7 @@ extern crate hello_world; // 连字符被替换为下划线
 [extern prelude]: ../names/preludes.md#extern-prelude
 [`macro_use` prelude]: ../names/preludes.md#macro_use-prelude
 [`crate_name` attributes]: ../crates-and-source-files.md#the-crate_name-attribute
+[type namespace]: ../names/namespaces.md
 
 <script>
 (function() {

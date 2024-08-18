@@ -2,10 +2,11 @@
 # 路径
 
 >[paths.md](https://github.com/rust-lang/reference/blob/master/src/paths.md)\
->commit: 6c77f499eaf64bd89c29a8932e63a9343ee73663 \
->本章译文最后维护日期：2024-04-06
+>commit: 65c20b18bc2bb07c666f58cb1232276f0835fd1f \
+>本章译文最后维护日期：2024-08-18
 
-*路径*是一个或多个由命名空间<span class="parenthetical">限定符(`::`)</span>*逻辑*分隔的路径段(path segments)组成的序列（译者注：如果只有一个段的话，`::` 不是必须的）。如果路径仅由一个路径段组成，则它引用局部控制域(control scope)内的[程序项][item]或[变量][variable]。如果路径包含多个路径段，则总是引用程序项。
+*路径*是一段由 `::`标记分隔的一个或多个路径段的组成的序列。
+路径用于引用[程序项][items]、值、[类型][types]、[宏][macros]和[属性][attributes]。
 
 仅由标识符段组成的简单路径(simple paths)的两个示例：
 <!-- ignore: syntax fragment -->
@@ -27,7 +28,8 @@ x::y::z;net
 > _SimplePathSegment_ :\
 > &nbsp;&nbsp; [IDENTIFIER] | `super` | `self` | `crate` | `$crate`
 
-简单路径可用于[可见性][visibility]标记、[属性][attributes]、[宏][macros]和 [`use`]程序项中。示例：
+简单路径可用于[可见性][visibility]标记、[属性][attributes]、[宏][mbe]和 [`use`]程序项中。
+示例：
 
 ```rustnet
 use std::io::{self, Write};
@@ -211,9 +213,18 @@ impl S {
 
 ### `Self`
 
-`Self`（首字母大写）用于指代 [trait][traits] 和[实现][implementations]中的类型。
+`Self`（首字母大写）用于指代当前在实现的或定义的类型。它可以用于以下情况：
+
+* 在 [trait] 定义中，它指实现该 trait 的类型。
+* 在 [implementation] 中，它指的是当前正在实现的类型。
+  当为元组或单元[struct]实现时，它还指代[值命名空间][value namespace]中的构造函数。
+* 在 [struct]、[enumeration] 或 [union] 的定义中，它指代正在定义的类型。
+  不允许定义无限递归（必须存在间接引用）。
+
+`Self`的作用域的行为类似于泛型参数；有关详细信息，请参阅 [`Self`scope] 部分。
 
 `Self` 仅可以用作路径的首段，不能有前置 `::`。
+`Self`类型的路径不能包含范型参数（比如 `Self::<i32>` 这种可以）
 
 ```rust
 trait T {
@@ -234,6 +245,19 @@ impl T for S {
     fn f(&self) -> Self::Item {  // `Self::Item` 是类型 `i32`.
         Self::C                  // `Self::C` 是常量值 `9`.
     }
+}
+
+// `Self` 在 trait的泛型作用域内，用以指代实现当前 `Add` trait 的类型。
+trait Add<Rhs = Self> {
+    type Output;
+    // `Self`还可以指代当前实现的类型的关联项。
+    fn add(self, rhs: Rhs) -> Self::Output;
+}
+
+struct NonEmptyList<T> {
+    head: T,
+    // 结构体可以引用自身（只要它不是无限递归的）。
+    tail: Option<Box<Self>>,
 }
 ```
 
@@ -365,19 +389,27 @@ mod without { // crate::without
 [_Type_]: types.md#type-expressions
 [_TypeNoBounds_]: types.md#type-expressions
 [_TypeParamBounds_]: trait-bounds.md
-[literal]: expressions/literal-expr.md
-[item]: items.md
-[variable]: variables.md
 [implementations]: items/implementations.md
+[items]: items.md
+[literal]: expressions/literal-expr.md
 [use declarations]: items/use-declarations.md
 [IDENTIFIER]: identifiers.md
+[`Self` scope]: names/scopes.md#self-scope
 [`use`]: items/use-declarations.md
 [attributes]: attributes.md
+[enumeration]: items/enumerations.md
 [expressions]: expressions.md
 [extern prelude]: names/preludes.md#extern-prelude
+[implementation]: items/implementations.md
 [macro transcribers]: macros-by-example.md
-[macros]: macros-by-example.md
+[macros]: macros.md
+[mbe]: macros-by-example.md
 [patterns]: patterns.md
+[struct]: items/structs.md
 [trait implementations]: items/implementations.md#trait-implementations
+[trait]: items/traits.md
 [traits]: items/traits.md
+[types]: types.md
+[union]: items/unions.md
+[value namespace]: names/namespaces.md
 [visibility]: visibility-and-privacy.md

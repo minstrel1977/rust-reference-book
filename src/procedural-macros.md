@@ -2,8 +2,8 @@
 ## 过程宏
 
 >[procedural-macros.md](https://github.com/rust-lang/reference/blob/master/src/procedural-macros.md)\
->commit: a7a86824fa90172340e20053be5e6f217cc466fe \
->本章译文最后维护日期：2024-04-06
+>commit: 2aadaad918b1d0a887c6c513a0e9ca49aab1d74e \
+>本章译文最后维护日期：2024-08-18
 
 *过程宏*允许在执行函数时创建句法扩展。过程宏有三种形式:
 
@@ -13,7 +13,8 @@
 
 过程宏允许在编译时运行对 Rust 句法进行操作的代码，它可以在消费掉一些 Rust 句法输入的同时产生新的 Rust 句法输出。可以将过程宏想象成是从一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 到另一个 <abbr title="抽象句法树：Abstract Syntax Tree">AST</abbr> 的函数映射。
 
-过程宏必须在 [crate 类型][crate type]为 `proc-macro` 的 crate 中定义。
+过程宏必须在 [crate 类型][crate type]为 `proc-macro` 的 crate 的根层中定义。
+定义过程宏的 crate 中不能直接使用该宏，需要导入到另一个 crate 中才能使用。
 
 > **注意**: 使用 Cargo 时，定义过程宏的 crate 的配置文件里要使用 `proc-macro`键做如下设置：
 >
@@ -52,6 +53,7 @@
 *类函数过程宏*是使用宏调用运算符（`!`）调用的过程宏。
 
 这种宏是由一个带有 `proc_macro`[属性][attribute]和 `(TokenStream) -> TokenStream`签名的 [公有][public]可见性[函数][function]定义。输入 [`TokenStream`] 是由宏调用的定界符界定的内容，输出 [`TokenStream`] 将替换整个宏调用。
+`proc_macro`属性在 crate的根层的[宏命名空间][macro namespace]中定义宏。
 
 例如，下面的宏定义忽略它的输入，并将函数 `answer` 输出到它的作用域。
 
@@ -89,6 +91,7 @@ fn main() {
 *派生宏*为[派生(`derive`)属性][`derive` attribute]定义新输入。这类宏在给定输入[结构体(`struct`)][struct]、[枚举(`enum`)][enum]或[联合体(`union`)][union] token流的情况下创建新[程序项][items]。它们也可以定义[派生宏辅助属性][derive macro helper attributes]。
 
 自定义派生宏由带有 `proc_macro_derive`属性和 `(TokenStream) -> TokenStream`签名的[公有][public]可见性[函数][function]定义。
+`proc_macro_derive`属性在 crate的根层的[宏命名空间][macro namespace]中定义派生宏。
 
 输入 [`TokenStream`] 是带有 `derive` 属性的程序项的 token流。输出 [`TokenStream`] 必须是一组程序项，然后将这组程序项追加到输入 [`TokenStream`] 中的那条程序项所在的[模块][module]或[块][block]中。
 
@@ -158,6 +161,7 @@ struct Struct {
 *属性宏*定义可以附加到[程序项][items]上的新的[外部属性][attributes]，这些程序项包括[外部(`extern`)块][`extern` blocks]、固有[实现][implementations]、trate实现，以及 [trait声明][trait definitions]中的各类程序项。
 
 属性宏由带有 `proc_macro_attribute`[属性][attribute]和 `(TokenStream, TokenStream) -> TokenStream`签名的[公有][public]可见性[函数][function]定义。签名中的第一个 [`TokenStream`] 是属性名称后面的定界 token树(delimited token tree)（不包括外层定界符）。如果该属性作为裸属性(bare attribute)给出，则第一个 [`TokenStream`] 值为空。第二个 [`TokenStream`] 是[程序项][item]的其余部分，包括该程序项的其他[属性][attributes]。输出的 [`TokenStream`] 将此属性宏应用的[程序项][item]替换为任意数量的程序项。
+`proc_macro_attribute`属性在 crate的根层的[宏命名空间][macro namespace]中定义属性宏。
 
 例如，下面这个属性宏接受输入流并按原样返回，实际上对属性并无操作。
 
@@ -286,6 +290,7 @@ token树在过程宏中被定义为：
 [inert]: attributes.md#active-and-inert-attributes
 [item]: items.md
 [items]: items.md
+[macro namespace]: names/namespaces.md
 [module]: items/modules.md
 [patterns]: patterns.md
 [public]: visibility-and-privacy.md

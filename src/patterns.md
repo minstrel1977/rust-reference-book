@@ -2,8 +2,8 @@
 # 模式
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
->commit: 82517788e162791dad3305a8c8d8d20d49510ad6 \
->本章译文最后维护日期：2024-06-15
+>commit: 2aadaad918b1d0a887c6c513a0e9ca49aab1d74e \
+>本章译文最后维护日期：2024-08-18
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\
@@ -174,7 +174,7 @@ for i in -2..5 {
 > _IdentifierPattern_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `ref`<sup>?</sup> `mut`<sup>?</sup> [IDENTIFIER] (`@` [_PatternNoTopAlt_] ) <sup>?</sup>
 
-标识符模式将它们匹配的值绑定到一个变量上。
+标识符模式将它们匹配的值在[值命名空间][value namespace]中绑定到一个变量上。
 此标识符在该模式中必须是唯一的。
 该变量会在作用域中遮蔽任何同名的变量。
 这种绑定的[作用域][scope]取决于使用模式的上下文（例如 `let`绑定或匹配臂(`match` arm)[^译注1]）。
@@ -903,3 +903,4 @@ _or模式_是能匹配两个或多个并列子模式（例如：`A | B | C`）�
 [tuples]: types/tuple.md
 [scrutinee]: glossary.md#scrutinee
 [type coercions]: type-coercions.md
+[value namespace]: names/namespaces.md

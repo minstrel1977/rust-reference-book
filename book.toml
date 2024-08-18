@@ -1,14 +1,13 @@
 [book]
 
-title = "Rust 参考手册 - The Rust Language Reference"
-authors = ["minstrel1977"]
-language = "zh"
-description = "rust reference 中文, Rust 参考手册"
+title = "The Rust Reference"
+author = "The Rust Project Developers"
 
 [output.html]
 additional-css = ["theme/reference.css"]
-git-repository-url = "https://gitee.com/minstrel1977/rust-reference"
+git-repository-url = "https://github.com/rust-lang/reference/"
 edit-url-template = "https://github.com/rust-lang/reference/edit/master/{path}"
+smart-punctuation = true
 
 [output.html.redirect]
 "/expressions/enum-variant-expr.html" = "struct-expr.html"
@@ -17,3 +16,9 @@ edit-url-template = "https://github.com/rust-lang/reference/edit/master/{path}"
 
 [rust]
 edition = "2021"
+
+[preprocessor.spec]
+command = "cargo run --manifest-path mdbook-spec/Cargo.toml"
+
+[build]
+extra-watch-dirs = ["mdbook-spec/src"]

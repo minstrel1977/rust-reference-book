@@ -1,8 +1,8 @@
 # Impl trait
 
 >[impl-object.md](https://github.com/rust-lang/reference/blob/master/src/types/impl-object.md)\
->commit: d82c9ac4054136efa6e9cc908ca3c589ed862d5a \
->本章译文最后维护日期：2023-11-05
+>commit: c8179f610abd82fd4cb517fb5ae8e51a84c89b5e \
+>本章译文最后维护日期：2024-08-18
 
 > **<sup>句法</sup>**\
 > _ImplTraitType_ : `impl` [_TypeParamBounds_]
@@ -52,9 +52,7 @@ fn with_impl_trait(arg: impl Trait) {
 > **注意：**
 >对于函数参数，泛型类型参数和 `impl Trait` 并不完全等价。
 >使用诸如 `<T:Trait>` 之类的泛型参数，调用者可以在调用点使用 [_GenericArgs_]（例如，`foo:：<usize>（1）`）形式来显式指定 `T` 的泛型参数。
->如果 `impl Trait` 是*任意*函数参数的类型，则调用者在调用该函数时不能提供任何泛型参数。这同样适用于返回类型或任何常量泛型的泛型参数。
->
->因此，这样将函数签名从一个变更为另一个，对函数的调用者来说仍可能是一种破坏性的变更。
+> 将参数从一个更改为另一个可能会构成函数调用的破坏性改变，因为这会更改泛型参数的数量。
 
 ## Abstract return types
 ## 抽象返回类型

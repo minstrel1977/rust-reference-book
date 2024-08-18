@@ -2,8 +2,8 @@
 # 预导入包
 
 >[use-declarations.md](https://github.com/rust-lang/reference/blob/master/src/names/preludes.md)\
->commit: 0181f237f508a8109d99db76a4a5ab48d6132b93 \
->本章译文最后维护日期：2022-03-14
+>commit: 62715cf8b4bd3b14d41f06f3d2cec3a42f4b1cd2 \
+>本章译文最后维护日期：2024-08-18
 
 *预导入包*是一组名称的集合，它会自动把这些名称导入到 crate 中的每个模块的作用域中。
 
@@ -86,11 +86,11 @@
 语言预导入包包括语言内置的类型名称和属性名称。语言预导入包总是在当前作用域内有效的。它包括以下内容：
 
 * [类型命名空间][Type namespace]
-    * [布尔型][Boolean type] — `bool`
-    * [文本型][Textual types] — `char` 和 `str`
-    * [整型][Integer types] — `i8`, `i16`, `i32`, `i64`, `i128`, `u8`, `u16`, `u32`, `u64`, `u128`
-    * [和机器平台相关的整型][Machine-dependent integer types] — `usize` 和 `isize`
-    * [浮点型][floating-point types] — `f32` 和 `f64`
+    * [布尔型][Boolean type] --- `bool`
+    * [文本型][Textual types] --- `char` 和 `str`
+    * [整型][Integer types] --- `i8`, `i16`, `i32`, `i64`, `i128`, `u8`, `u16`, `u32`, `u64`, `u128`
+    * [和机器平台相关的整型][Machine-dependent integer types] --- `usize` 和 `isize`
+    * [浮点型][floating-point types] --- `f32` 和 `f64`
 * [宏命名空间][Macro namespace]
     * [内置属性][Built-in attributes]
 

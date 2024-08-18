@@ -2,8 +2,8 @@
 # 链接
 
 >[linkage.md](https://github.com/rust-lang/reference/blob/master/src/linkage.md)\
->commit: 99ed3f87f0c9f1bdb232878d9e360042e43bef4e\
->本章译文最后维护日期：2023-03-04
+>commit: 0b18ee6b6c8be30b8acd152889daf2f51e7f7a11\
+>本章译文最后维护日期：2024-08-18
 
 > 注意：本节更多的是从编译器的角度来描述的，而不是语言。
 
@@ -20,6 +20,11 @@ Rust 编译器支持多种将 crate 链接起来使用的方法，这些链接�
 * `--crate-type=dylib` 或 `#![crate_type = "dylib"]` - 将生成一个动态 Rust库。这与 `lib` 选项的输出类型不同，因为这个选项会强制生成动态库。生成的动态库可以用作其他库和/或可执行文件的依赖。这种输出类型将创建依赖于具体平台的库（Linux 上为 `*.so`，macOS 上为 `*.dylib`、Windows 上为 `*.dll`）。
 
 * `--crate-type=staticlib` 或 `#![crate_type = "staticlib"]` - 将生成一个静态系统库。这个选项与其他选项的库输出的不同之处在于——当前编译器永远不会尝试去链接此 `staticlib` 输出[^译注1]。此选项的目的是创建一个包含所有本地 crate 的代码以及所有上游依赖的静态库。此输出类型将在 Linux、macOS 和 Windows(MinGW) 平台上创建 `*.a` 归档文件(archive)，或者在 Windows(MSVC) 平台上创建 `*.lib` 库文件。在这些情况下，例如将 Rust代码链接到现有的非 Rust应用程序中，推荐使用这种类型，因为它不会动态依赖于其他 Rust 代码。
+
+  请注意，当从某处链接该静态库时，必须手动指定静态库可能具有的任何动态依赖项（例如对系统库的依赖项，或那些构建在 Rust库上被编译为动态库的依赖项）。`--print=native-static-libs`标志可能有助于实现这一点。
+
+  请注意，由于生成的静态库包含所有依赖项（包括标准库）的代码，并且还导出了它们的所有公共符号，因此将静态库链接到可执行文件或共享库可能需要特别注意。如果是共享库，则必须通过例如链接器或符号版本脚本、导出符号列表（macOS）或模块定义文件（Windows）来限制导出符号的列表。
+  此外，可以删除未使用的部分，以删除所有未实际使用的依赖项代码（例如，macOS的`--gc-sections`或`-dead_strip`）。
 
 * `--crate-type=cdylib` 或 `#![crate_type = "cdylib"]` - 将生成一个动态系统库。如果编译输出的动态库要被另一种语言加载使用，请使用这种编译选项。这种选项的输出将在 Linux 上创建 `*.so` 文件，在 macOS 上创建 `*.dylib` 文件，在 Windows 上创建 `*.dll` 文件。
 

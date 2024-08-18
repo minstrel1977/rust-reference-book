@@ -2,8 +2,8 @@
 # 联合体
 
 >[unions.md](https://github.com/rust-lang/reference/blob/master/src/items/unions.md)\
->commit: b10666f10f6a731cfffbfc3c42841c59f8f76b58 \
->本章译文最后维护日期：2024-06-15
+>commit: 2aadaad918b1d0a887c6c513a0e9ca49aab1d74e \
+>本章译文最后维护日期：2024-08-18
 
 > **<sup>句法</sup>**\
 > _Union_ :\
@@ -11,6 +11,7 @@
 >   `{`[_StructFields_]<sup>?</sup> `}`
 
 除了用 `union` 代替 `struct`外，联合体声明使用和结构体声明相同的句法。
+联合体的声明在其所在的模块或块的[类型命名空间][type namespace]中定义给定的名称。
 
 ```rust
 #[repr(C)]
@@ -161,4 +162,5 @@ fn test() {
 [boolean type]: ../types/boolean.md
 [`ManuallyDrop<_>`]: https://doc.rust-lang.org/std/mem/struct.ManuallyDrop.html
 [the C representation]: ../type-layout.md#reprc-unions
+[type namespace]: ../names/namespaces.md
 [undefined behavior]: ../behavior-considered-undefined.html

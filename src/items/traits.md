@@ -1,8 +1,8 @@
 # Trait
 
 >[traits.md](https://github.com/rust-lang/reference/blob/master/src/items/traits.md)\
->commit: 46ed38d89d162b9bb5f7be2390c17d9ef3f0a985 \
->本章译文最后维护日期：2023-12-30
+>commit: 163f7bc1cc436a1bfa8b9327f7e7a076d87b06d9 \
+>本章译文最后维护日期：2024-08-18
 
 > **<sup>句法</sup>**\
 > _Trait_ :\
@@ -19,6 +19,9 @@ _trait_ 描述类型可以实现的抽象接口。这类接口由三种[关联�
 - [函数](associated-items.md#associated-functions-and-methods)
 - [类型](associated-items.md#associated-types)
 - [常量](associated-items.md#associated-constants)
+
+trait声明在它所在的模块或块的[类型命名空间][type namespace]中定义 trait。
+关联项被定义为 trait 在其各自的命名空间中的成员。关联的类型在类型命名空间中定义。关联的常量和关联的函数在值命名空间中定义。
 
 所有 trait 都定义了一个隐式类型参数 `Self` ，它指向“实现此接口的类型”。trait 还可能包含额外的类型参数。这些类型参数，包括 `Self` 在内，都可能会[跟正常类型参数一样][generics]受到其他 trait 的约束。
 
@@ -328,3 +331,4 @@ fn main() {
 [`Rc<Self>`]: ../special-types-and-traits.md#rct
 [`async`]: functions.md#async-functions
 [`const`]: functions.md#const-functions
+[type namespace]: ../names/namespaces.md

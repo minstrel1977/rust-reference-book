@@ -2,8 +2,8 @@
 # 模块
 
 >[modules.md](https://github.com/rust-lang/reference/blob/master/src/items/modules.md)\
->commit: 83f725f1b9dda6166589d7b715b75b7f54143b8e \
->本章译文最后维护日期：2021-07-31
+>commit: 163f7bc1cc436a1bfa8b9327f7e7a076d87b06d9 \
+>本章译文最后维护日期：2024-08-18
 
 
 > **<sup>句法:</sup>**\
@@ -38,7 +38,9 @@ mod math {
 }
 ```
 
-模块和类型共享相同的命名空间。禁止在同一个作用域中声明与此作用域下模块同名的具名类型(named type)：也就是说，类型定义、trait、结构体、枚举、联合体、类型参数或 crate 不能在其作用域中屏蔽此作用域中也生效的模块名称，反之亦然。使用 `use` 引入到当前作用域的程序项也受这个限制。
+模块在它们所在的模块或块的[类型命名空间][type namespace]中定义。
+在模块内的同一命名空间中定义具有相同名称的多个程序项是错误的。
+有关限制和遮蔽行为的更多详细信息，请参阅[作用域章节][scopes chapter]。
 
 在句法上，关键字 `unsafe` 允许出现在关键字 `mod` 之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 `unsafe` 从 token流中移除之前利用此句法来使用此关键字。
 
@@ -121,7 +123,9 @@ mod thread { // 译者注：有模块要内联进来的内联模块
 [attribute]: ../attributes.md
 [items]: ../items.md
 [module path]: ../paths.md
+[scopes chapter]: ../names/scopes.md
 [the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
+[type namespace]: ../names/namespaces.md
 
 <script>
 (function() {

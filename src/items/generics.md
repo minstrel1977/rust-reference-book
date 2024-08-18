@@ -2,8 +2,8 @@
 # 类型参数和生存期参数
 
 >[generics.md](https://github.com/rust-lang/reference/blob/master/src/items/generics.md)\
->commit: aeda9bc3f65dfce916b1c1e4f1cab5fcddd8cd40 \
->本章译文最后维护日期：2024-06-15
+>commit: 5de59db02434e8fb6343efea696d36de0c5e7d4d \
+>本章译文最后维护日期：2024-08-18
 
 > **<sup>句法</sup>**\
 > _GenericParams_ :\
@@ -41,12 +41,13 @@ struct EitherOrderWorks<const N: bool, U>(U);
 
 [引用][References]、[裸指针][raw pointers]、[数组][arrays]、[切片][arrays]、[元组][tuples]和[函数指针][function pointers]也有生存期参数或类型参数，但这些程序项不能使用路径句法去引用。
 
+`'_` 不是一个合法的生存期参数。
+
 ### Const generics
 ### 常量泛型
 
-*常量泛型参数*允许程序项在常量值上泛型化。const标识符为常量参数引入了一个名称，并且该程序项的所有实例必须用给定类型的值去实例化该参数。
-
-<!-- TODO: update above to say "introduces a name in the [value namespace]" once namespaces are added. -->
+*常量泛型参数*允许程序项在常量值上泛型化。
+const标识符为常量参数引入了一个[值命名空间][value namespace]下的名称，并且该程序项的所有实例必须用给定类型的值去实例化该参数。
 
 常量参数类型值允许为：`u8`, `u16`, `u32`, `u64`, `u128`, `usize`, `i8`, `i16`, `i32`, `i64`, `i128`, `isize`, `char` 和 `bool` 这些类型。
 
@@ -242,6 +243,7 @@ struct Foo<#[my_flexible_clone(unbounded)] H> {
 [arrays]: ../types/array.md
 [associated const]: associated-items.md#associated-constants
 [associated type]: associated-items.md#associated-types
+[attributes]: ../attributes.md
 [block]: ../expressions/block-expr.md
 [const contexts]: ../const_eval.md#const-context
 [const expression]: ../const_eval.md#constant-expressions
@@ -267,3 +269,4 @@ struct Foo<#[my_flexible_clone(unbounded)] H> {
 [type]: ../types.md
 [unions]: unions.md
 [attributes]: ../attributes.md
+[value namespace]: ../names/namespaces.md

@@ -2,8 +2,8 @@
 # 函数
 
 >[functions.md](https://github.com/rust-lang/reference/blob/master/src/items/functions.md)\
->commit: 9e6a8c029e142810b0f1dd7421c8aacab399aec6 \
->本章译文最后维护日期：2022-10-22
+>commit: 875b905a389455c5329ae088600c0b5f7222104d \
+>本章译文最后维护日期：2024-08-18
 
 > **<sup>句法</sup>**\
 > _Function_ :\
@@ -13,7 +13,10 @@
 > &nbsp;&nbsp; &nbsp;&nbsp; ( [_BlockExpression_] | `;` )
 >
 > _FunctionQualifiers_ :\
-> &nbsp;&nbsp; `const`<sup>?</sup> `async`[^async-edition]<sup>?</sup> `unsafe`<sup>?</sup> (`extern` _Abi_<sup>?</sup>)<sup>?</sup>
+> &nbsp;&nbsp; `const`<sup>?</sup> `async`[^async-edition]<sup>?</sup> _ItemSafety_<sup>?</sup> (`extern` _Abi_<sup>?</sup>)<sup>?</sup>
+>
+> _ItemSafety_ :\
+> &nbsp;&nbsp; `safe`[^extern-safe] | `unsafe`
 >
 > _Abi_ :\
 > &nbsp;&nbsp; [STRING_LITERAL] | [RAW_STRING_LITERAL]
@@ -44,11 +47,14 @@
 >
 > [^async-edition]: 限定符`async`不能在 2015版中使用。
 >
+> [^extern-safe]: `safe` 函数限定符仅在 `extern`块中的语义上允许使用。
+>
 > [^fn-param-2015]: 在2015版中，只有类型的函数参数只允许出现在[trait项][trait item]的关联函数中。
 
-*函数*由一个[块][block]，以及一个名称、一组参数和一个返回类型组成。
-除了名称，其他的都是可选的。
+*函数*是由一个跟在一个名称、一组参数和一个返回类型的[块][block]（这个块就是函数的*主体*）组成的。
+这里除了名称，其他的都是可选的。
 函数使用关键字 `fn` 声明。
+函数是用关键字 `fn` 声明的，该关键字表明了此给定名称属于它所在的模块或块中的[值命名空间][value namespace]中的。
 函数可以声明一组*输入*[*变量*][variables]作为参数，调用者通过它向函数传递参数，函数完成后，它再将带有*输出*[*类型*][type]的结果值返回给调用者。
 如果返回类型没有显式声明，则默认返回[单元类型][unit type]。
 
@@ -60,6 +66,8 @@ fn answer_to_life_the_universe_and_everything() -> i32 {
     return 42;
 }
 ```
+
+`safe`函数仅在[外部块][`extern`block]中使用时才允许在语义上使用。
 
 ## Function parameters
 ## 函数参数
@@ -77,7 +85,7 @@ fn first((value, _): (i32, i32)) -> i32 { value }
 ## Function body
 ## 函数体
 
-函数的块在概念上被包装进在一个块中，该块绑定该函数的参数模式，然后返回(`return`)该函数的块的值。这意味着如果轮到块的*尾部表达式(tail expression)*被求值计算了，该块将结束，求得的值将被返回给调用者。通常，程序执行时如果流碰到函数体中的显式返回表达式(return expression)，就会截断那个隐式的最终表达式的执行。
+函数的主体在概念上被包装进在一个块中，该块首先绑定该函数的参数模式，然后返回(`return`)该函数的主体的值。这意味着如果轮到块的*尾部表达式(tail expression)*被求值计算了，该块将结束，求得的值将被返回给调用者。通常，程序执行时如果流碰到函数体中的显式返回表达式(return expression)，就会截断那个隐式的最终表达式的执行。
 
 例如，上面例子里函数的行为就像下面被改写的这样:
 
@@ -142,10 +150,12 @@ extern "ABI" fn foo() { /* ... */ }
 
 <!-- ignore: fake ABI -->
 ```rust,ignore
-extern "ABI" {
-  fn foo(); /* no body */
+unsafe extern "ABI" {
+  unsafe fn foo(); /* no body */
+  safe fn bar(); /* no body */
 }
 unsafe { foo() }
+bar();
 ```
 
 当函数的 `FunctionQualifiers` 句法规则中的 `"extern" Abi?*` 选项被省略时，会默认使用 `"Rust"` 类型的 ABI。例如:
@@ -271,7 +281,7 @@ async fn safe_example() {
 ## Attributes on functions
 ## 函数上的属性
 
-在函数上允许使用[外部属性][attributes]，也允许在[函数体][block]中的 `{` 后面直接放置[内部属性][attributes]。
+在函数上允许使用[外部属性][attributes]，也允许在[其主体][block]中的 `{` 后面直接放置[内部属性][attributes]。
 
 下面这个例子显示了一个函数的内部属性。该函数的文档中只会出现单词“Example”。
 
@@ -352,4 +362,6 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [method]: associated-items.md#methods
 [associated function]: associated-items.md#associated-functions-and-methods
 [implementation]: implementations.md
+[value namespace]: ../names/namespaces.md
 [variadic function]: external-blocks.md#variadic-functions
+[`extern` block]: external-blocks.md

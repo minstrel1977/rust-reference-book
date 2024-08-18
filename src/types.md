@@ -3,8 +3,8 @@
 # 类型
 
 >[types.md](https://github.com/rust-lang/reference/blob/master/src/types.md)\
->commit: b5596cb97e4c94237b54639579ad1853d64fe930 \
->本章译文最后维护日期：2022-08-21
+>commit: 62715cf8b4bd3b14d41f06f3d2cec3a42f4b1cd2 \
+>本章译文最后维护日期：2024-08-18
 
 Rust 程序中的每个变量、程序项和值都有一个类型。*值*的*类型*定义了该如何解释用于保存它的内存数据，以及定义了可以对该值执行的操作。
 
@@ -13,10 +13,10 @@ Rust 程序中的每个变量、程序项和值都有一个类型。*值*的*类
 内置类型列表：
 
 * 原生类型(primitive types):
-    * [布尔型(Boolean)][Boolean] — `bool`
-    * [数字类(Numeric)][Numeric] — 整型(integer) 和 浮点型(float)
-    * [文本类(Textual)][Textual] — 字符型(`char`) 和 字符串切片(`str`)
-    * [never类型][Never] — `!` — 没有值的类型
+    * [布尔型(Boolean)][Boolean] --- `bool`
+    * [数字类(Numeric)][Numeric] --- 整型(integer) 和 浮点型(float)
+    * [文本类(Textual)][Textual] --- 字符型(`char`) 和 字符串切片(`str`)
+    * [never类型][Never] --- `!` --- 没有值的类型
 *  序列类型(sequence types)：
     * [元组(Tuple)][Tuple]
     * [数组(Array)][Array]

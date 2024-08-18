@@ -2,8 +2,8 @@
 # 极值设置
 
 >[limits.md](https://github.com/rust-lang/reference/blob/master/src/attributes/limits.md)\
->commit: 064e68d9f878d6e98e12776562fa9306ef851f10 \
->本章译文最后维护日期：2021-10-17
+>commit: 509c06ed650692efb591f9ccb7386174654a081c \
+>本章译文最后维护日期：2024-08-17
 
 以下[属性][attributes]影响部分编译期参数的极限值设置。
 
@@ -39,11 +39,15 @@ a!{}
 ## The `type_length_limit` attribute
 ## `type_length_limit`属性
 
+> **注意**：只有在 nightly版本的 `-Zenforce-type-length-limit`标记被激活时才会被强制执行此极值设定。
+>
+> 更多信息，请参见 <https://github.com/rust-lang/rust/pull/127670>。
+
 *`type_length_limit`属性*限制在单态化过程中构造具体类型时所做的最大类型替换次数。它应用于 [crate] 级别，并使用 [_MetaNameValueStr_]元项属性句法来设置类型替换数量的上限。
 
 > 注意：`rustc` 中这个参数的默认值是 1048576。
 
-```rust,compile_fail,ignore
+```rust,ignore
 #![type_length_limit = "4"]
 
 fn f<T>(x: T) {}

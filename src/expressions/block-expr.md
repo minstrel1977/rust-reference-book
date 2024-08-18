@@ -2,8 +2,8 @@
 # 块表达式
 
 >[block-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/block-expr.md)\
->commit: 82517788e162791dad3305a8c8d8d20d49510ad6 \
->本章译文最后维护日期：2024-06-15
+>commit: 04a0845417fddbbd5cbd453241d51798e70442b3 \
+>本章译文最后维护日期：2024-08-17
 
 > **<sup>句法</sup>**\
 > _BlockExpression_ :\
@@ -192,7 +192,7 @@ if false {
 > _UnsafeBlockExpression_ :\
 > &nbsp;&nbsp; `unsafe` _BlockExpression_
 
-_参见 [`unsafe`块](../unsafe-blocks.md) 以察看更多相关信息_
+_参见 [`unsafe`块][`unsafe` blocks] 以查看更多和 `unsafe` 相关的信息_
 
 可以在代码块前面加上关键字 `unsafe` 以允许[非安全操作][unsafe operations]。
 例如：
@@ -244,6 +244,7 @@ fn is_unix_platform() -> bool {
 [`loop`]: loop-expr.md#infinite-loops
 [`std::ops::Fn`]: https://doc.rust-lang.org/std/ops/trait.Fn.html
 [`std::future::Future`]: https://doc.rust-lang.org/std/future/trait.Future.html
+[`unsafe` blocks]: ../unsafe-keyword.md#unsafe-blocks-unsafe-
 [`while let`]: loop-expr.md#predicate-pattern-loops
 [`while`]: loop-expr.md#predicate-loops
 [array expressions]: array-expr.md

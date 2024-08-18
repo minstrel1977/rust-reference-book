@@ -1,17 +1,16 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="light" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>关联程序项 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>关联程序项 - The Rust Reference</title>
 
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="../favicon.svg">
         <link rel="shortcut icon" href="../favicon.png">
@@ -33,15 +32,16 @@
         <link rel="stylesheet" href="../theme/reference.css">
 
     </head>
-    <body>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -57,50 +57,81 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
-            html.classList.remove('no-js')
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
         </script>
 
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
                 <ol class="chapter"><li class="chapter-item expanded affix "><a href="../翻译说明.html">翻译说明</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">介绍</a></li><li class="chapter-item expanded "><a href="../notation.html"><strong aria-hidden="true">1.</strong> 表义符</a></li><li class="chapter-item expanded "><a href="../lexical-structure.html"><strong aria-hidden="true">2.</strong> 词法结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../input-format.html"><strong aria-hidden="true">2.1.</strong> 输入格式</a></li><li class="chapter-item expanded "><a href="../keywords.html"><strong aria-hidden="true">2.2.</strong> 关键字</a></li><li class="chapter-item expanded "><a href="../identifiers.html"><strong aria-hidden="true">2.3.</strong> 标识符</a></li><li class="chapter-item expanded "><a href="../comments.html"><strong aria-hidden="true">2.4.</strong> 注释</a></li><li class="chapter-item expanded "><a href="../whitespace.html"><strong aria-hidden="true">2.5.</strong> 空白符</a></li><li class="chapter-item expanded "><a href="../tokens.html"><strong aria-hidden="true">2.6.</strong> token</a></li></ol></li><li class="chapter-item expanded "><a href="../macros.html"><strong aria-hidden="true">3.</strong> 宏</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../macros-by-example.html"><strong aria-hidden="true">3.1.</strong> 声明宏</a></li><li class="chapter-item expanded "><a href="../procedural-macros.html"><strong aria-hidden="true">3.2.</strong> 过程宏</a></li></ol></li><li class="chapter-item expanded "><a href="../crates-and-source-files.html"><strong aria-hidden="true">4.</strong> crate 和源文件</a></li><li class="chapter-item expanded "><a href="../conditional-compilation.html"><strong aria-hidden="true">5.</strong> 条件编译</a></li><li class="chapter-item expanded "><a href="../items.html"><strong aria-hidden="true">6.</strong> 程序项</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../items/modules.html"><strong aria-hidden="true">6.1.</strong> 模块</a></li><li class="chapter-item expanded "><a href="../items/extern-crates.html"><strong aria-hidden="true">6.2.</strong> 外部crate</a></li><li class="chapter-item expanded "><a href="../items/use-declarations.html"><strong aria-hidden="true">6.3.</strong> use声明</a></li><li class="chapter-item expanded "><a href="../items/functions.html"><strong aria-hidden="true">6.4.</strong> 函数</a></li><li class="chapter-item expanded "><a href="../items/type-aliases.html"><strong aria-hidden="true">6.5.</strong> 类型别名</a></li><li class="chapter-item expanded "><a href="../items/structs.html"><strong aria-hidden="true">6.6.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="../items/enumerations.html"><strong aria-hidden="true">6.7.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="../items/unions.html"><strong aria-hidden="true">6.8.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="../items/constant-items.html"><strong aria-hidden="true">6.9.</strong> 常量项</a></li><li class="chapter-item expanded "><a href="../items/static-items.html"><strong aria-hidden="true">6.10.</strong> 静态项</a></li><li class="chapter-item expanded "><a href="../items/traits.html"><strong aria-hidden="true">6.11.</strong> trait</a></li><li class="chapter-item expanded "><a href="../items/implementations.html"><strong aria-hidden="true">6.12.</strong> 实现</a></li><li class="chapter-item expanded "><a href="../items/external-blocks.html"><strong aria-hidden="true">6.13.</strong> 外部块</a></li><li class="chapter-item expanded "><a href="../items/generics.html"><strong aria-hidden="true">6.14.</strong> 泛型参数</a></li><li class="chapter-item expanded "><a href="../items/associated-items.html" class="active"><strong aria-hidden="true">6.15.</strong> 关联程序项</a></li></ol></li><li class="chapter-item expanded "><a href="../attributes.html"><strong aria-hidden="true">7.</strong> 属性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../attributes/testing.html"><strong aria-hidden="true">7.1.</strong> 测试</a></li><li class="chapter-item expanded "><a href="../attributes/derive.html"><strong aria-hidden="true">7.2.</strong> 派生</a></li><li class="chapter-item expanded "><a href="../attributes/diagnostics.html"><strong aria-hidden="true">7.3.</strong> 诊断</a></li><li class="chapter-item expanded "><a href="../attributes/codegen.html"><strong aria-hidden="true">7.4.</strong> 代码生成</a></li><li class="chapter-item expanded "><a href="../attributes/limits.html"><strong aria-hidden="true">7.5.</strong> 极限值设置</a></li><li class="chapter-item expanded "><a href="../attributes/type_system.html"><strong aria-hidden="true">7.6.</strong> 类型系统</a></li><li class="chapter-item expanded "><a href="../attributes/debugger.html"><strong aria-hidden="true">7.7.</strong> 调试器</a></li></ol></li><li class="chapter-item expanded "><a href="../statements-and-expressions.html"><strong aria-hidden="true">8.</strong> 语句和表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../statements.html"><strong aria-hidden="true">8.1.</strong> 语句</a></li><li class="chapter-item expanded "><a href="../expressions.html"><strong aria-hidden="true">8.2.</strong> 表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../expressions/literal-expr.html"><strong aria-hidden="true">8.2.1.</strong> 字面量表达式</a></li><li class="chapter-item expanded "><a href="../expressions/path-expr.html"><strong aria-hidden="true">8.2.2.</strong> 路径表达式</a></li><li class="chapter-item expanded "><a href="../expressions/block-expr.html"><strong aria-hidden="true">8.2.3.</strong> 块表达式</a></li><li class="chapter-item expanded "><a href="../expressions/operator-expr.html"><strong aria-hidden="true">8.2.4.</strong> 运算符表达式</a></li><li class="chapter-item expanded "><a href="../expressions/grouped-expr.html"><strong aria-hidden="true">8.2.5.</strong> 分组表达式</a></li><li class="chapter-item expanded "><a href="../expressions/array-expr.html"><strong aria-hidden="true">8.2.6.</strong> 数组和索引表达式</a></li><li class="chapter-item expanded "><a href="../expressions/tuple-expr.html"><strong aria-hidden="true">8.2.7.</strong> 元组和索引表达式</a></li><li class="chapter-item expanded "><a href="../expressions/struct-expr.html"><strong aria-hidden="true">8.2.8.</strong> 结构体表达式</a></li><li class="chapter-item expanded "><a href="../expressions/call-expr.html"><strong aria-hidden="true">8.2.9.</strong> 调用表达式</a></li><li class="chapter-item expanded "><a href="../expressions/method-call-expr.html"><strong aria-hidden="true">8.2.10.</strong> 方法调用表达式</a></li><li class="chapter-item expanded "><a href="../expressions/field-expr.html"><strong aria-hidden="true">8.2.11.</strong> 字段访问表达式</a></li><li class="chapter-item expanded "><a href="../expressions/closure-expr.html"><strong aria-hidden="true">8.2.12.</strong> 闭包表达式</a></li><li class="chapter-item expanded "><a href="../expressions/loop-expr.html"><strong aria-hidden="true">8.2.13.</strong> 循环表达式</a></li><li class="chapter-item expanded "><a href="../expressions/range-expr.html"><strong aria-hidden="true">8.2.14.</strong> 区间表达式</a></li><li class="chapter-item expanded "><a href="../expressions/if-expr.html"><strong aria-hidden="true">8.2.15.</strong> if 和 if let 表达式</a></li><li class="chapter-item expanded "><a href="../expressions/match-expr.html"><strong aria-hidden="true">8.2.16.</strong> 匹配表达式</a></li><li class="chapter-item expanded "><a href="../expressions/return-expr.html"><strong aria-hidden="true">8.2.17.</strong> 返回表达式</a></li><li class="chapter-item expanded "><a href="../expressions/await-expr.html"><strong aria-hidden="true">8.2.18.</strong> 等待(await)表达式</a></li><li class="chapter-item expanded "><a href="../expressions/underscore-expr.html"><strong aria-hidden="true">8.2.19.</strong> 下划线表达式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../patterns.html"><strong aria-hidden="true">9.</strong> 模式</a></li><li class="chapter-item expanded "><a href="../type-system.html"><strong aria-hidden="true">10.</strong> 类型系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types.html"><strong aria-hidden="true">10.1.</strong> 类型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/boolean.html"><strong aria-hidden="true">10.1.1.</strong> 布尔型</a></li><li class="chapter-item expanded "><a href="../types/numeric.html"><strong aria-hidden="true">10.1.2.</strong> 数字型</a></li><li class="chapter-item expanded "><a href="../types/textual.html"><strong aria-hidden="true">10.1.3.</strong> 字符型</a></li><li class="chapter-item expanded "><a href="../types/never.html"><strong aria-hidden="true">10.1.4.</strong> never类型</a></li><li class="chapter-item expanded "><a href="../types/tuple.html"><strong aria-hidden="true">10.1.5.</strong> 元组</a></li><li class="chapter-item expanded "><a href="../types/array.html"><strong aria-hidden="true">10.1.6.</strong> 数组</a></li><li class="chapter-item expanded "><a href="../types/slice.html"><strong aria-hidden="true">10.1.7.</strong> 切片</a></li><li class="chapter-item expanded "><a href="../types/struct.html"><strong aria-hidden="true">10.1.8.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="../types/enum.html"><strong aria-hidden="true">10.1.9.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="../types/union.html"><strong aria-hidden="true">10.1.10.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="../types/function-item.html"><strong aria-hidden="true">10.1.11.</strong> 函数项类型</a></li><li class="chapter-item expanded "><a href="../types/closure.html"><strong aria-hidden="true">10.1.12.</strong> 闭包</a></li><li class="chapter-item expanded "><a href="../types/pointer.html"><strong aria-hidden="true">10.1.13.</strong> 指针型</a></li><li class="chapter-item expanded "><a href="../types/function-pointer.html"><strong aria-hidden="true">10.1.14.</strong> 函数指针</a></li><li class="chapter-item expanded "><a href="../types/trait-object.html"><strong aria-hidden="true">10.1.15.</strong> trait对象</a></li><li class="chapter-item expanded "><a href="../types/impl-trait.html"><strong aria-hidden="true">10.1.16.</strong> 实现trait</a></li><li class="chapter-item expanded "><a href="../types/parameters.html"><strong aria-hidden="true">10.1.17.</strong> 类型参数</a></li><li class="chapter-item expanded "><a href="../types/inferred.html"><strong aria-hidden="true">10.1.18.</strong> 可推断类型</a></li></ol></li><li class="chapter-item expanded "><a href="../dynamically-sized-types.html"><strong aria-hidden="true">10.2.</strong> 动态内存宽度类型(DST)</a></li><li class="chapter-item expanded "><a href="../type-layout.html"><strong aria-hidden="true">10.3.</strong> 类型布局 </a></li><li class="chapter-item expanded "><a href="../interior-mutability.html"><strong aria-hidden="true">10.4.</strong> 内部可变性</a></li><li class="chapter-item expanded "><a href="../subtyping.html"><strong aria-hidden="true">10.5.</strong> 子类型和型变</a></li><li class="chapter-item expanded "><a href="../trait-bounds.html"><strong aria-hidden="true">10.6.</strong> trait约束及其生存期约束</a></li><li class="chapter-item expanded "><a href="../type-coercions.html"><strong aria-hidden="true">10.7.</strong> 类型自动强转</a></li><li class="chapter-item expanded "><a href="../destructors.html"><strong aria-hidden="true">10.8.</strong> 析构函数</a></li><li class="chapter-item expanded "><a href="../lifetime-elision.html"><strong aria-hidden="true">10.9.</strong> 生存期省略</a></li></ol></li><li class="chapter-item expanded "><a href="../special-types-and-traits.html"><strong aria-hidden="true">11.</strong> 特殊类型和 trait</a></li><li class="chapter-item expanded "><a href="../names.html"><strong aria-hidden="true">12.</strong> 名称</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../names/namespaces.html"><strong aria-hidden="true">12.1.</strong> 命名空间</a></li><li class="chapter-item expanded "><a href="../names/scopes.html"><strong aria-hidden="true">12.2.</strong> 作用域</a></li><li class="chapter-item expanded "><a href="../names/preludes.html"><strong aria-hidden="true">12.3.</strong> 预导入包</a></li><li class="chapter-item expanded "><a href="../paths.html"><strong aria-hidden="true">12.4.</strong> 路径</a></li><li class="chapter-item expanded "><a href="../names/name-resolution.html"><strong aria-hidden="true">12.5.</strong> 名称解析</a></li><li class="chapter-item expanded "><a href="../visibility-and-privacy.html"><strong aria-hidden="true">12.6.</strong> 可见性与隐私权</a></li></ol></li><li class="chapter-item expanded "><a href="../memory-model.html"><strong aria-hidden="true">13.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../memory-allocation-and-lifetime.html"><strong aria-hidden="true">13.1.</strong> 内存分配和生存期</a></li><li class="chapter-item expanded "><a href="../variables.html"><strong aria-hidden="true">13.2.</strong> 变量</a></li></ol></li><li class="chapter-item expanded "><a href="../linkage.html"><strong aria-hidden="true">14.</strong> 链接</a></li><li class="chapter-item expanded "><a href="../inline-assembly.html"><strong aria-hidden="true">15.</strong> 内联汇编</a></li><li class="chapter-item expanded "><a href="../unsafety.html"><strong aria-hidden="true">16.</strong> 非安全性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../unsafe-keyword.html"><strong aria-hidden="true">16.1.</strong> T关键字unsafe</a></li><li class="chapter-item expanded "><a href="../behavior-considered-undefined.html"><strong aria-hidden="true">16.2.</strong> 未定义行为</a></li><li class="chapter-item expanded "><a href="../behavior-not-considered-unsafe.html"><strong aria-hidden="true">16.3.</strong> 不被认为是非安全的行为</a></li></ol></li><li class="chapter-item expanded "><a href="../const_eval.html"><strong aria-hidden="true">17.</strong> 常量求值</a></li><li class="chapter-item expanded "><a href="../abi.html"><strong aria-hidden="true">18.</strong> ABI</a></li><li class="chapter-item expanded "><a href="../runtime.html"><strong aria-hidden="true">19.</strong> Rust运行时</a></li><li class="chapter-item expanded "><a href="../appendices.html"><strong aria-hidden="true">20.</strong> 附录</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../macro-ambiguity.html"><strong aria-hidden="true">20.1.</strong> 宏规范</a></li><li class="chapter-item expanded "><a href="../influences.html"><strong aria-hidden="true">20.2.</strong> 影响来源</a></li><li class="chapter-item expanded "><a href="../glossary.html"><strong aria-hidden="true">20.3.</strong> 术语表</a></li><li class="chapter-item expanded "><a href="../本书术语翻译对照表.html"><strong aria-hidden="true">20.4.</strong> 本书术语翻译对照表</a></li></ol></li></ol>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -111,13 +142,13 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title">The Rust Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
+                        <a href="https://github.com/rust-lang/reference/" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                         <a href="https://github.com/rust-lang/reference/edit/master/src/items/associated-items.md" title="Suggest an edit" aria-label="Suggest an edit">
@@ -139,7 +170,7 @@
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -189,8 +220,7 @@ impl Struct {
 
 fn main () {
     let _struct = Struct::new();
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>当关联函数在 trait 上声明时，此函数也可以通过一个指向 trait，再后跟函数名的<a href="../paths.html">路径</a>来调用。当发生这种情况时，可以用 trait 的实际路径和关联函数的标识符按 <code>&lt;_ as Trait&gt;::function_name</code> 这样的形式来组织实际的调用路径。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -207,8 +237,7 @@ let _: f64 = Num::from_i32(42);
 let _: f64 = &lt;_ as Num&gt;::from_i32(42);
 let _: f64 = &lt;f64 as Num&gt;::from_i32(42);
 let _: f64 = f64::from_i32(42);
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <h3 id="methods"><a class="header" href="#methods">Methods</a></h3>
 <h3 id="方法"><a class="header" href="#方法">方法</a></h3>
 <p>如果关联函数的参数列表中的第一个参数名为 <code>self</code><sup class="footnote-reference"><a href="#译者备注2">2</a></sup>，则此关联函数被称为<em>方法</em>，方法可以使用<a href="../expressions/method-call-expr.html">方法调用操作符</a>(<code>.</code>)来调用，例如 <code>x.foo()</code>，也可以使用常用的函数调用形式进行调用。</p>
@@ -246,8 +275,7 @@ impl Example {
     fn nested&lt;'a&gt;(self: &amp;mut &amp;'a Arc&lt;Rc&lt;Box&lt;Alias&gt;&gt;&gt;) {}
     fn via_projection(self: &lt;Example as Trait&gt;::Output) {}
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>（方法的首参）可以在不指定类型的情况下使用简写句法，具体对比如下：</p>
 <div class="table-wrapper"><table><thead><tr><th>简写模式</th><th>等效项</th></tr></thead><tbody>
 <tr><td><code>self</code></td><td><code>self: Self</code></td></tr>
@@ -265,8 +293,7 @@ impl Example {
     fn change(mut self) {}
     fn modify(mut self: Box&lt;Self&gt;) {}
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>以下是一个关于 trait 的方法的例子，现给定如下内容：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -276,8 +303,7 @@ impl Example {
     fn draw(&amp;self, surface: Surface);
     fn bounding_box(&amp;self) -&gt; BoundingBox;
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>这里定义了一个带有两个方法的 trait。当此 trait 被引入当前作用域内后，所有此 trait 的<a href="implementations.html">实现</a>的值都可以调用此 trait 的 <code>draw</code> 和 <code>bounding_box</code> 方法。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -304,8 +330,7 @@ impl Shape for Circle {
 </span><span class="boring">
 </span>let circle_shape = Circle::new();
 let bounding_box = circle_shape.bounding_box();
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <blockquote>
 <p><strong>版次差异</strong>: 在 2015 版中, 使用匿名参数来声明 trait方法是可能的 (例如：<code>fn foo(u8)</code>)。在 2018 版中，这已被弃用，再用会导致编译错误。新版次中所有的参数都必须有参数名。</p>
 </blockquote>
@@ -323,8 +348,7 @@ type Assoc: Bounds;
 type Assoc&lt;Params&gt;;
 type Assoc&lt;Params&gt;: Bounds;
 type Assoc&lt;Params&gt; where WhereBounds;
-type Assoc&lt;Params&gt;: Bounds where WhereBounds;
-</code></pre>
+type Assoc&lt;Params&gt;: Bounds where WhereBounds;</code></pre>
 <p>关联类型里的标识符是其声明的类型的别名的名称；其可选的 trait约束必须由此类型别名的实现(implementations)来履行实现。
 关联类型上有一个隐式的 <a href="../special-types-and-traits.html#sized"><code>Sized</code></a>约束，可以使用 <code>？Sized</code>放宽此约束。</p>
 <p><em>关联类型定义</em>定义了用于在类型上实现特定trait 的类型别名。它们的书写形式类似于<em>关联类型声明</em>，但不能包含类似于上面的 <code>Bounds</code>，并且必须包含一个类似于下面的 <code>Type</code>：</p>
@@ -362,8 +386,7 @@ impl OtherStruct {
 fn main() {
     // 使用 &lt;Struct as AssociatedType&gt;::Assoc 来引用关联类型 OtherStruct
     let _other_struct: OtherStruct = &lt;Struct as AssociatedType&gt;::Assoc::new();
-}
-</code></pre>
+}</code></pre>
 <p>下面是一个带有泛型和 where子句的关联类型的示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2021">struct ArrayLender&lt;'a, T&gt;(&amp;'a mut [T; 16]);
 
@@ -390,8 +413,7 @@ fn borrow&lt;'a, T: Lend&gt;(array: &amp;'a mut T) -&gt; &lt;T as Lend&gt;::Lend
 fn main() {
     let mut array = [0usize; 16];
     let lender = borrow(&amp;mut array);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <h3 id="associated-types-container-example"><a class="header" href="#associated-types-container-example">Associated Types Container Example</a></h3>
 <h3 id="示例展示容器类型的关联类型"><a class="header" href="#示例展示容器类型的关联类型">示例展示容器类型的关联类型</a></h3>
 <p>下面给出一个 <code>Container</code> trait 示例。请注意，该类型可用在方法签名内：</p>
@@ -402,8 +424,7 @@ fn main() {
     fn empty() -&gt; Self;
     fn insert(&amp;mut self, elem: Self::E);
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>为了能让实现类型来实现此 trait，实现类型不仅必须为每个方法提供实现，而且必须指定类型 <code>E</code>。下面是一个为标准库类型 <code>Vec</code> 实现了此 <code>Container</code> 的实现：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -417,8 +438,7 @@ fn main() {
     fn empty() -&gt; Vec&lt;T&gt; { Vec::new() }
     fn insert(&amp;mut self, x: T) { self.push(x); }
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <h3 id="relationship-between-bounds-and-wherebounds"><a class="header" href="#relationship-between-bounds-and-wherebounds">Relationship between <code>Bounds</code> and <code>WhereBounds</code></a></h3>
 <h3 id="bounds-和-wherebounds-之间的关系"><a class="header" href="#bounds-和-wherebounds-之间的关系"><code>Bounds</code> 和 <code>WhereBounds</code> 之间的关系</a></h3>
 <p>在下面这个例子里：</p>
@@ -428,8 +448,7 @@ fn main() {
 </span>trait Example {
     type Output&lt;T&gt;: Ord where T: Debug;
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>假定有一个对关联类型的引用，如 <code>&lt;X as Example&gt;::Output&lt;Y&gt;</code>，关联类型本身必须受 <code>Ord</code> 的约束，而类型<code>Y</code> 必须受 <code>Debug</code> 的约束。</p>
 <h3 id="required-where-clauses-on-generic-associated-types"><a class="header" href="#required-where-clauses-on-generic-associated-types">Required where clauses on generic associated types</a></h3>
 <h3 id="泛型关联类型中的-where子句的前提条件"><a class="header" href="#泛型关联类型中的-where子句的前提条件">泛型关联类型中的 where子句的前提条件</a></h3>
@@ -441,8 +460,7 @@ fn main() {
     type Item&lt;'x&gt; where Self: 'x;
     fn next&lt;'a&gt;(&amp;'a mut self) -&gt; Self::Item&lt;'a&gt;;
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>在上面的 <code>next</code>函数中，我们提供了一个 <code>Self: 'a</code> 子句，因为有 <code>&amp;'a mut self</code> 限制；因此，我们必须在 GAT 本身上写一个等价的约束：<code>where Self: 'x</code>。</p>
 <p>当 trait 中有多个函数使用同一个 GAT 时，则此 GAT 使用这些函数的约束的<em>交集</em>，而不是并集。（译者注：注意生存期的长短关系和父子关系是逆向的）</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
@@ -452,8 +470,7 @@ fn main() {
     fn create_checker&lt;'a&gt;(item: &amp;'a T) -&gt; Self::Checker&lt;'a&gt;;
     fn do_check(checker: Self::Checker&lt;'_&gt;);
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>在本例中，<code>type Checker&lt;'a&gt;;</code> 不需要任何约束。虽然我们知道 <code>create_checker</code> 上有 <code>T: 'a</code>，但我们不知道 <code>do_check</code> 上有什么约束。但是，如果 <code>do_check</code> 被注释掉，则 <code>Checker</code> 上需要做 <code>where T: 'x</code>约束。</p>
 <p>关联类型上的约束还会传播其所需的where子句。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
@@ -463,8 +480,7 @@ fn main() {
     type Iterator&lt;'a&gt;: Iterator&lt;Item = Self::Item&lt;'a&gt;&gt; where Self: 'a;
     fn iter&lt;'a&gt;(&amp;'a self) -&gt; Self::Iterator&lt;'a&gt;;
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>这里， 因为函数<code>iter</code>，<code>Item</code> 需要 <code>where Self: 'a</code>。但是，在 <code>Iterator</code> 中，因为 <code>Item</code> 被用到了，那么 <code>Item</code> 上的 <code>where Self: 'a</code>约束也要在这里声明一遍。</p>
 <p>最后，在 trait 中，明确使用 <code>'static</code> 的 GAT 不需要明确声明其约束条件。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
@@ -473,8 +489,7 @@ fn main() {
     type Y&lt;'a&gt;;
     fn foo(&amp;self) -&gt; Self::Y&lt;'static&gt;;
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <h2 id="associated-constants"><a class="header" href="#associated-constants">Associated Constants</a></h2>
 <h2 id="关联常量"><a class="header" href="#关联常量">关联常量</a></h2>
 <p><em>关联常量</em>是与具体类型关联的<a href="constant-items.html">常量</a>。</p>
@@ -487,13 +502,13 @@ struct GenericStruct&lt;const ID: i32&gt;;
 
 impl Struct {
     // 定义不会立即执行求值操作
-    const PANIC: () = panic!(&quot;compile-time panic&quot;);
+    const PANIC: () = panic!("compile-time panic");
 }
 
 impl&lt;const ID: i32&gt; GenericStruct&lt;ID&gt; {
     // 定义不会立即执行求值操作
     const NON_ZERO: () = if ID == 0 {
-        panic!(&quot;contradiction&quot;)
+        panic!("contradiction")
     };
 }
 
@@ -506,8 +521,7 @@ fn main() {
 
     // 编译错误，因为使用 ID=0 来求值计算 NON_ZERO  
     let _ = GenericStruct::&lt;0&gt;::NON_ZERO;
-}
-</code></pre></pre>
+}</code></pre></pre>
 <h3 id="associated-constants-examples"><a class="header" href="#associated-constants-examples">Associated Constants Examples</a></h3>
 <h3 id="示例展示关联常量"><a class="header" href="#示例展示关联常量">示例展示关联常量</a></h3>
 <p>基本示例：</p>
@@ -523,8 +537,7 @@ impl ConstantId for Struct {
 
 fn main() {
     assert_eq!(1, Struct::ID);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>使用默认值：</p>
 <pre><pre class="playground"><code class="language-rust edition2021">trait ConstantIdDefault {
     const ID: i32 = 1;
@@ -542,8 +555,7 @@ impl ConstantIdDefault for OtherStruct {
 fn main() {
     assert_eq!(1, Struct::ID);
     assert_eq!(5, OtherStruct::ID);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <div class="footnote-definition" id="译者备注1"><sup class="footnote-definition-label">1</sup>
 <p>固有实现中声明和定义是在一起的。</p>
 </div>
@@ -562,7 +574,7 @@ fn main() {
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../attributes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../attributes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -576,7 +588,7 @@ fn main() {
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../attributes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../attributes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -586,21 +598,22 @@ fn main() {
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>

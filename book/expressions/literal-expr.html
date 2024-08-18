@@ -1,17 +1,16 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="light" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>字面量表达式 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>字面量表达式 - The Rust Reference</title>
 
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="../favicon.svg">
         <link rel="shortcut icon" href="../favicon.png">
@@ -33,15 +32,16 @@
         <link rel="stylesheet" href="../theme/reference.css">
 
     </head>
-    <body>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -57,50 +57,81 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
-            html.classList.remove('no-js')
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
         </script>
 
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
                 <ol class="chapter"><li class="chapter-item expanded affix "><a href="../翻译说明.html">翻译说明</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">介绍</a></li><li class="chapter-item expanded "><a href="../notation.html"><strong aria-hidden="true">1.</strong> 表义符</a></li><li class="chapter-item expanded "><a href="../lexical-structure.html"><strong aria-hidden="true">2.</strong> 词法结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../input-format.html"><strong aria-hidden="true">2.1.</strong> 输入格式</a></li><li class="chapter-item expanded "><a href="../keywords.html"><strong aria-hidden="true">2.2.</strong> 关键字</a></li><li class="chapter-item expanded "><a href="../identifiers.html"><strong aria-hidden="true">2.3.</strong> 标识符</a></li><li class="chapter-item expanded "><a href="../comments.html"><strong aria-hidden="true">2.4.</strong> 注释</a></li><li class="chapter-item expanded "><a href="../whitespace.html"><strong aria-hidden="true">2.5.</strong> 空白符</a></li><li class="chapter-item expanded "><a href="../tokens.html"><strong aria-hidden="true">2.6.</strong> token</a></li></ol></li><li class="chapter-item expanded "><a href="../macros.html"><strong aria-hidden="true">3.</strong> 宏</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../macros-by-example.html"><strong aria-hidden="true">3.1.</strong> 声明宏</a></li><li class="chapter-item expanded "><a href="../procedural-macros.html"><strong aria-hidden="true">3.2.</strong> 过程宏</a></li></ol></li><li class="chapter-item expanded "><a href="../crates-and-source-files.html"><strong aria-hidden="true">4.</strong> crate 和源文件</a></li><li class="chapter-item expanded "><a href="../conditional-compilation.html"><strong aria-hidden="true">5.</strong> 条件编译</a></li><li class="chapter-item expanded "><a href="../items.html"><strong aria-hidden="true">6.</strong> 程序项</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../items/modules.html"><strong aria-hidden="true">6.1.</strong> 模块</a></li><li class="chapter-item expanded "><a href="../items/extern-crates.html"><strong aria-hidden="true">6.2.</strong> 外部crate</a></li><li class="chapter-item expanded "><a href="../items/use-declarations.html"><strong aria-hidden="true">6.3.</strong> use声明</a></li><li class="chapter-item expanded "><a href="../items/functions.html"><strong aria-hidden="true">6.4.</strong> 函数</a></li><li class="chapter-item expanded "><a href="../items/type-aliases.html"><strong aria-hidden="true">6.5.</strong> 类型别名</a></li><li class="chapter-item expanded "><a href="../items/structs.html"><strong aria-hidden="true">6.6.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="../items/enumerations.html"><strong aria-hidden="true">6.7.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="../items/unions.html"><strong aria-hidden="true">6.8.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="../items/constant-items.html"><strong aria-hidden="true">6.9.</strong> 常量项</a></li><li class="chapter-item expanded "><a href="../items/static-items.html"><strong aria-hidden="true">6.10.</strong> 静态项</a></li><li class="chapter-item expanded "><a href="../items/traits.html"><strong aria-hidden="true">6.11.</strong> trait</a></li><li class="chapter-item expanded "><a href="../items/implementations.html"><strong aria-hidden="true">6.12.</strong> 实现</a></li><li class="chapter-item expanded "><a href="../items/external-blocks.html"><strong aria-hidden="true">6.13.</strong> 外部块</a></li><li class="chapter-item expanded "><a href="../items/generics.html"><strong aria-hidden="true">6.14.</strong> 泛型参数</a></li><li class="chapter-item expanded "><a href="../items/associated-items.html"><strong aria-hidden="true">6.15.</strong> 关联程序项</a></li></ol></li><li class="chapter-item expanded "><a href="../attributes.html"><strong aria-hidden="true">7.</strong> 属性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../attributes/testing.html"><strong aria-hidden="true">7.1.</strong> 测试</a></li><li class="chapter-item expanded "><a href="../attributes/derive.html"><strong aria-hidden="true">7.2.</strong> 派生</a></li><li class="chapter-item expanded "><a href="../attributes/diagnostics.html"><strong aria-hidden="true">7.3.</strong> 诊断</a></li><li class="chapter-item expanded "><a href="../attributes/codegen.html"><strong aria-hidden="true">7.4.</strong> 代码生成</a></li><li class="chapter-item expanded "><a href="../attributes/limits.html"><strong aria-hidden="true">7.5.</strong> 极限值设置</a></li><li class="chapter-item expanded "><a href="../attributes/type_system.html"><strong aria-hidden="true">7.6.</strong> 类型系统</a></li><li class="chapter-item expanded "><a href="../attributes/debugger.html"><strong aria-hidden="true">7.7.</strong> 调试器</a></li></ol></li><li class="chapter-item expanded "><a href="../statements-and-expressions.html"><strong aria-hidden="true">8.</strong> 语句和表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../statements.html"><strong aria-hidden="true">8.1.</strong> 语句</a></li><li class="chapter-item expanded "><a href="../expressions.html"><strong aria-hidden="true">8.2.</strong> 表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../expressions/literal-expr.html" class="active"><strong aria-hidden="true">8.2.1.</strong> 字面量表达式</a></li><li class="chapter-item expanded "><a href="../expressions/path-expr.html"><strong aria-hidden="true">8.2.2.</strong> 路径表达式</a></li><li class="chapter-item expanded "><a href="../expressions/block-expr.html"><strong aria-hidden="true">8.2.3.</strong> 块表达式</a></li><li class="chapter-item expanded "><a href="../expressions/operator-expr.html"><strong aria-hidden="true">8.2.4.</strong> 运算符表达式</a></li><li class="chapter-item expanded "><a href="../expressions/grouped-expr.html"><strong aria-hidden="true">8.2.5.</strong> 分组表达式</a></li><li class="chapter-item expanded "><a href="../expressions/array-expr.html"><strong aria-hidden="true">8.2.6.</strong> 数组和索引表达式</a></li><li class="chapter-item expanded "><a href="../expressions/tuple-expr.html"><strong aria-hidden="true">8.2.7.</strong> 元组和索引表达式</a></li><li class="chapter-item expanded "><a href="../expressions/struct-expr.html"><strong aria-hidden="true">8.2.8.</strong> 结构体表达式</a></li><li class="chapter-item expanded "><a href="../expressions/call-expr.html"><strong aria-hidden="true">8.2.9.</strong> 调用表达式</a></li><li class="chapter-item expanded "><a href="../expressions/method-call-expr.html"><strong aria-hidden="true">8.2.10.</strong> 方法调用表达式</a></li><li class="chapter-item expanded "><a href="../expressions/field-expr.html"><strong aria-hidden="true">8.2.11.</strong> 字段访问表达式</a></li><li class="chapter-item expanded "><a href="../expressions/closure-expr.html"><strong aria-hidden="true">8.2.12.</strong> 闭包表达式</a></li><li class="chapter-item expanded "><a href="../expressions/loop-expr.html"><strong aria-hidden="true">8.2.13.</strong> 循环表达式</a></li><li class="chapter-item expanded "><a href="../expressions/range-expr.html"><strong aria-hidden="true">8.2.14.</strong> 区间表达式</a></li><li class="chapter-item expanded "><a href="../expressions/if-expr.html"><strong aria-hidden="true">8.2.15.</strong> if 和 if let 表达式</a></li><li class="chapter-item expanded "><a href="../expressions/match-expr.html"><strong aria-hidden="true">8.2.16.</strong> 匹配表达式</a></li><li class="chapter-item expanded "><a href="../expressions/return-expr.html"><strong aria-hidden="true">8.2.17.</strong> 返回表达式</a></li><li class="chapter-item expanded "><a href="../expressions/await-expr.html"><strong aria-hidden="true">8.2.18.</strong> 等待(await)表达式</a></li><li class="chapter-item expanded "><a href="../expressions/underscore-expr.html"><strong aria-hidden="true">8.2.19.</strong> 下划线表达式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../patterns.html"><strong aria-hidden="true">9.</strong> 模式</a></li><li class="chapter-item expanded "><a href="../type-system.html"><strong aria-hidden="true">10.</strong> 类型系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types.html"><strong aria-hidden="true">10.1.</strong> 类型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/boolean.html"><strong aria-hidden="true">10.1.1.</strong> 布尔型</a></li><li class="chapter-item expanded "><a href="../types/numeric.html"><strong aria-hidden="true">10.1.2.</strong> 数字型</a></li><li class="chapter-item expanded "><a href="../types/textual.html"><strong aria-hidden="true">10.1.3.</strong> 字符型</a></li><li class="chapter-item expanded "><a href="../types/never.html"><strong aria-hidden="true">10.1.4.</strong> never类型</a></li><li class="chapter-item expanded "><a href="../types/tuple.html"><strong aria-hidden="true">10.1.5.</strong> 元组</a></li><li class="chapter-item expanded "><a href="../types/array.html"><strong aria-hidden="true">10.1.6.</strong> 数组</a></li><li class="chapter-item expanded "><a href="../types/slice.html"><strong aria-hidden="true">10.1.7.</strong> 切片</a></li><li class="chapter-item expanded "><a href="../types/struct.html"><strong aria-hidden="true">10.1.8.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="../types/enum.html"><strong aria-hidden="true">10.1.9.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="../types/union.html"><strong aria-hidden="true">10.1.10.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="../types/function-item.html"><strong aria-hidden="true">10.1.11.</strong> 函数项类型</a></li><li class="chapter-item expanded "><a href="../types/closure.html"><strong aria-hidden="true">10.1.12.</strong> 闭包</a></li><li class="chapter-item expanded "><a href="../types/pointer.html"><strong aria-hidden="true">10.1.13.</strong> 指针型</a></li><li class="chapter-item expanded "><a href="../types/function-pointer.html"><strong aria-hidden="true">10.1.14.</strong> 函数指针</a></li><li class="chapter-item expanded "><a href="../types/trait-object.html"><strong aria-hidden="true">10.1.15.</strong> trait对象</a></li><li class="chapter-item expanded "><a href="../types/impl-trait.html"><strong aria-hidden="true">10.1.16.</strong> 实现trait</a></li><li class="chapter-item expanded "><a href="../types/parameters.html"><strong aria-hidden="true">10.1.17.</strong> 类型参数</a></li><li class="chapter-item expanded "><a href="../types/inferred.html"><strong aria-hidden="true">10.1.18.</strong> 可推断类型</a></li></ol></li><li class="chapter-item expanded "><a href="../dynamically-sized-types.html"><strong aria-hidden="true">10.2.</strong> 动态内存宽度类型(DST)</a></li><li class="chapter-item expanded "><a href="../type-layout.html"><strong aria-hidden="true">10.3.</strong> 类型布局 </a></li><li class="chapter-item expanded "><a href="../interior-mutability.html"><strong aria-hidden="true">10.4.</strong> 内部可变性</a></li><li class="chapter-item expanded "><a href="../subtyping.html"><strong aria-hidden="true">10.5.</strong> 子类型和型变</a></li><li class="chapter-item expanded "><a href="../trait-bounds.html"><strong aria-hidden="true">10.6.</strong> trait约束及其生存期约束</a></li><li class="chapter-item expanded "><a href="../type-coercions.html"><strong aria-hidden="true">10.7.</strong> 类型自动强转</a></li><li class="chapter-item expanded "><a href="../destructors.html"><strong aria-hidden="true">10.8.</strong> 析构函数</a></li><li class="chapter-item expanded "><a href="../lifetime-elision.html"><strong aria-hidden="true">10.9.</strong> 生存期省略</a></li></ol></li><li class="chapter-item expanded "><a href="../special-types-and-traits.html"><strong aria-hidden="true">11.</strong> 特殊类型和 trait</a></li><li class="chapter-item expanded "><a href="../names.html"><strong aria-hidden="true">12.</strong> 名称</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../names/namespaces.html"><strong aria-hidden="true">12.1.</strong> 命名空间</a></li><li class="chapter-item expanded "><a href="../names/scopes.html"><strong aria-hidden="true">12.2.</strong> 作用域</a></li><li class="chapter-item expanded "><a href="../names/preludes.html"><strong aria-hidden="true">12.3.</strong> 预导入包</a></li><li class="chapter-item expanded "><a href="../paths.html"><strong aria-hidden="true">12.4.</strong> 路径</a></li><li class="chapter-item expanded "><a href="../names/name-resolution.html"><strong aria-hidden="true">12.5.</strong> 名称解析</a></li><li class="chapter-item expanded "><a href="../visibility-and-privacy.html"><strong aria-hidden="true">12.6.</strong> 可见性与隐私权</a></li></ol></li><li class="chapter-item expanded "><a href="../memory-model.html"><strong aria-hidden="true">13.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../memory-allocation-and-lifetime.html"><strong aria-hidden="true">13.1.</strong> 内存分配和生存期</a></li><li class="chapter-item expanded "><a href="../variables.html"><strong aria-hidden="true">13.2.</strong> 变量</a></li></ol></li><li class="chapter-item expanded "><a href="../linkage.html"><strong aria-hidden="true">14.</strong> 链接</a></li><li class="chapter-item expanded "><a href="../inline-assembly.html"><strong aria-hidden="true">15.</strong> 内联汇编</a></li><li class="chapter-item expanded "><a href="../unsafety.html"><strong aria-hidden="true">16.</strong> 非安全性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../unsafe-keyword.html"><strong aria-hidden="true">16.1.</strong> T关键字unsafe</a></li><li class="chapter-item expanded "><a href="../behavior-considered-undefined.html"><strong aria-hidden="true">16.2.</strong> 未定义行为</a></li><li class="chapter-item expanded "><a href="../behavior-not-considered-unsafe.html"><strong aria-hidden="true">16.3.</strong> 不被认为是非安全的行为</a></li></ol></li><li class="chapter-item expanded "><a href="../const_eval.html"><strong aria-hidden="true">17.</strong> 常量求值</a></li><li class="chapter-item expanded "><a href="../abi.html"><strong aria-hidden="true">18.</strong> ABI</a></li><li class="chapter-item expanded "><a href="../runtime.html"><strong aria-hidden="true">19.</strong> Rust运行时</a></li><li class="chapter-item expanded "><a href="../appendices.html"><strong aria-hidden="true">20.</strong> 附录</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../macro-ambiguity.html"><strong aria-hidden="true">20.1.</strong> 宏规范</a></li><li class="chapter-item expanded "><a href="../influences.html"><strong aria-hidden="true">20.2.</strong> 影响来源</a></li><li class="chapter-item expanded "><a href="../glossary.html"><strong aria-hidden="true">20.3.</strong> 术语表</a></li><li class="chapter-item expanded "><a href="../本书术语翻译对照表.html"><strong aria-hidden="true">20.4.</strong> 本书术语翻译对照表</a></li></ol></li></ol>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -111,13 +142,13 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title">The Rust Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
+                        <a href="https://github.com/rust-lang/reference/" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                         <a href="https://github.com/rust-lang/reference/edit/master/src/expressions/literal-expr.md" title="Suggest an edit" aria-label="Suggest an edit">
@@ -139,7 +170,7 @@
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -177,11 +208,10 @@ commit: 659915cc1169e13329186748e26ec1e5c6a92d4d <br />
 <p>前面描述的每种词法[字面量][literal tokens]形式都可以组成一个字面量表达式，比如关键字 <code>true</code> 和 <code>false</code> 也可以组成一个字面量表达式。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>&quot;hello&quot;;   // 字符串类型
+</span>"hello";   // 字符串类型
 '5';       // 字符类型
 5;         // 整型
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>在下面的描述中，token 的 <em>字符串表示</em> 是源自输入的字符序列，该字符序列会与<em>词法</em>语法片段中 token 的产生式进行模式匹配。</p>
 <blockquote>
 <p><strong>注意</strong>：此字符串表示从不包括紧跟着 <code>U+000A</code> (LF) 的字符 <code>U+000D</code> (CR)：这一对字符会先被转换为单个字符 <code>U+000A</code> (LF)。</p>
@@ -208,7 +238,7 @@ commit: 659915cc1169e13329186748e26ec1e5c6a92d4d <br />
 <tr><td><code>\t</code></td><td>U+0009 (HT)</td></tr>
 <tr><td><code>\n</code></td><td>U+000A (LF)</td></tr>
 <tr><td><code>\r</code></td><td>U+000D (CR)</td></tr>
-<tr><td><code>\&quot;</code></td><td>U+0022 (双引号)</td></tr>
+<tr><td><code>\"</code></td><td>U+0022 (双引号)</td></tr>
 <tr><td><code>\'</code></td><td>U+0027 (单引号)</td></tr>
 <tr><td><code>\\</code></td><td>U+005C (反斜线)</td></tr>
 </tbody></table>
@@ -241,17 +271,16 @@ commit: 659915cc1169e13329186748e26ec1e5c6a92d4d <br />
 因此下面 <code>a</code>、 <code>b</code> 和 <code>c</code> 是相等的:</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let a = &quot;foobar&quot;;
-let b = &quot;foo\
-         bar&quot;;
-let c = &quot;foo\
+</span>let a = "foobar";
+let b = "foo\
+         bar";
+let c = "foo\
 
-     bar&quot;;
+     bar";
 
 assert_eq!(a, b);
 assert_eq!(b, c);
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>跳过额外的换行符（如上面示例中的变量c 所示）可能会造成潜在混乱和意外。
 这种行为将来可能会进行调整。
 在做出决定之前，建议避免使用带有多个换行符接续符。
@@ -285,15 +314,14 @@ assert_eq!(b, c);
 '\'';                              // '
 '\x52';                            // R
 '\u{00E6}';                        // 拉丁文小写字母æ (U+00E6)
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <h2 id="string-literal-expressions"><a class="header" href="#string-literal-expressions">String literal expressions</a></h2>
 <h2 id="字符串字面量表达式"><a class="header" href="#字符串字面量表达式">字符串字面量表达式</a></h2>
 <p>字符串字面量表达式由单一一个[字符串字面量][STRING_LITERAL]token 或[原生字符串字面量][RAW_STRING_LITERAL]token 组成。</p>
 <p>此类表达式的类型是对原语类型 [<code>str</code>][text types] 的共享引用（带有 <code>static</code>生存期)。
 也就是说，类型是 <code>&amp;'static str</code>。</p>
 <p>此类token 不能带有后缀。</p>
-<p>此类token 的 <em>字面内容</em> 是此token 的字符串表示中第一个 <code>U+0022</code> (<code>&quot;</code>) 之后和最后一个 <code>U+0022</code> (<code>&quot;</code>) 之前的字符序列。</p>
+<p>此类token 的 <em>字面内容</em> 是此token 的字符串表示中第一个 <code>U+0022</code> (<code>"</code>) 之后和最后一个 <code>U+0022</code> (<code>"</code>) 之前的字符序列。</p>
 <p>此字面量表达式的 <em>所表示字符串</em> 源自于字符序列的字面内容，具体有如下规则：</p>
 <ul>
 <li>
@@ -305,7 +333,7 @@ assert_eq!(b, c);
 <li>[字符串接续符转义][String continuation escapes]</li>
 </ul>
 <p>这些转义替换按从左到右的顺序进行的。
-例如，token <code>&quot;\\x41&quot;</code> 被转换为字符 <code>\</code> <code>x</code> <code>4</code> <code>1</code>。</p>
+例如，token <code>"\\x41"</code> 被转换为字符 <code>\</code> <code>x</code> <code>4</code> <code>1</code>。</p>
 </li>
 <li>
 <p>如果 token 是[RAW_STRING_LITERAL]词法所限定的，则所表示的字符串等同于字面内容。</p>
@@ -315,16 +343,15 @@ assert_eq!(b, c);
 <p>字符串字面量表达式示例：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>&quot;foo&quot;; r&quot;foo&quot;;                     // foo
-&quot;\&quot;foo\&quot;&quot;; r#&quot;&quot;foo&quot;&quot;#;             // &quot;foo&quot;
+</span>"foo"; r"foo";                     // foo
+"\"foo\""; r#""foo""#;             // "foo"
 
-&quot;foo #\&quot;# bar&quot;;
-r##&quot;foo #&quot;# bar&quot;##;                // foo #&quot;# bar
+"foo #\"# bar";
+r##"foo #"# bar"##;                // foo #"# bar
 
-&quot;\x52&quot;; &quot;R&quot;; r&quot;R&quot;;                 // R
-&quot;\\x52&quot;; r&quot;\x52&quot;;                  // \x52
-<span class="boring">}
-</span></code></pre></pre>
+"\x52"; "R"; r"R";                 // R
+"\\x52"; r"\x52";                  // \x52
+<span class="boring">}</span></code></pre></pre>
 <h2 id="byte-literal-expressions"><a class="header" href="#byte-literal-expressions">Byte literal expressions</a></h2>
 <h2 id="字节字面量表达式"><a class="header" href="#字节字面量表达式">字节字面量表达式</a></h2>
 <p>字节字面量表达式由单一一个[字节字面量][BYTE_LITERAL]token 组成。</p>
@@ -355,15 +382,14 @@ r##&quot;foo #&quot;# bar&quot;##;                // foo #&quot;# bar
 b'\'';                             // 39
 b'\x52';                           // 82
 b'\xA0';                           // 160
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <h2 id="byte-string-literal-expressions"><a class="header" href="#byte-string-literal-expressions">Byte string literal expressions</a></h2>
 <h2 id="字节串字面量表达式"><a class="header" href="#字节串字面量表达式">字节串字面量表达式</a></h2>
 <p>字节串字面量表达式由单一一个[字节串字面量][BYTE_STRING_LITERAL]token 或[原生字节串字面量][RAW_BYTE_STRING_LITERAL]token 组成。</p>
 <p>此类表达式的类型是对元素类型为 [<code>u8</code>][numeric-types]的数组的共享引用（带有 <code>static</code>生存期）。
 也就是说，类型是 <code>&amp;'static [u8; N]</code>，其中 <code>N</code> 是下文描述的所表示的字符串的字节数。</p>
 <p>此类token 不能带有后缀。</p>
-<p>此类token 的 <em>字面内容</em> 是此token 的字符串表示中第一个 <code>U+0022</code> (<code>&quot;</code>) 之后和最后一个 <code>U+0022</code> (<code>&quot;</code>) 之前的字符序列。</p>
+<p>此类token 的 <em>字面内容</em> 是此token 的字符串表示中第一个 <code>U+0022</code> (<code>"</code>) 之后和最后一个 <code>U+0022</code> (<code>"</code>) 之前的字符序列。</p>
 <p>此字面量表达式的 <em>所表示字符串</em> 源自于字符序列的字面内容，具体有如下规则：</p>
 <ul>
 <li>
@@ -374,7 +400,7 @@ b'\xA0';                           // 160
 <li>[字符串接续符转义][String continuation escapes]</li>
 </ul>
 <p>这些转义替换按从左到右的顺序进行的。
-例如，token <code>b&quot;\\x41&quot;</code> 被转换为字符 <code>\</code> <code>x</code> <code>4</code> <code>1</code>。</p>
+例如，token <code>b"\\x41"</code> 被转换为字符 <code>\</code> <code>x</code> <code>4</code> <code>1</code>。</p>
 </li>
 <li>
 <p>如果 token 是[RAW_BYTE_STRING_LITERAL]词法所限定的，则所表示的字符串等同于字面内容。</p>
@@ -387,23 +413,22 @@ b'\xA0';                           // 160
 <p>字节串字面量表达式的示例:</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>b&quot;foo&quot;; br&quot;foo&quot;;                     // foo
-b&quot;\&quot;foo\&quot;&quot;; br#&quot;&quot;foo&quot;&quot;#;             // &quot;foo&quot;
+</span>b"foo"; br"foo";                     // foo
+b"\"foo\""; br#""foo""#;             // "foo"
 
-b&quot;foo #\&quot;# bar&quot;;
-br##&quot;foo #&quot;# bar&quot;##;                 // foo #&quot;# bar
+b"foo #\"# bar";
+br##"foo #"# bar"##;                 // foo #"# bar
 
-b&quot;\x52&quot;; b&quot;R&quot;; br&quot;R&quot;;                // R
-b&quot;\\x52&quot;; br&quot;\x52&quot;;                  // \x52
-<span class="boring">}
-</span></code></pre></pre>
+b"\x52"; b"R"; br"R";                // R
+b"\\x52"; br"\x52";                  // \x52
+<span class="boring">}</span></code></pre></pre>
 <h2 id="c-string-literal-expressions"><a class="header" href="#c-string-literal-expressions">C string literal expressions</a></h2>
 <h2 id="c语言风格的字符串字面量表达式"><a class="header" href="#c语言风格的字符串字面量表达式">C语言风格的字符串字面量表达式</a></h2>
 <p>C语言风格的字符串字面量表达式由单一一个[C语言风格的字符串字面量][C_STRING_LITERAL] 或 [原生C语言风格的字符串字面量][RAW_C_STRING_LITERAL] token 组成。</p>
 <p>此类表达式的类型是对标准库[CStr]类型的共享引用（带有 <code>static</code>生存期）。
 也就是说，类型是 <code>&amp;'static core::ffi::CStr</code>。</p>
 <p>此类token 不能带有后缀。</p>
-<p>此类token 的 <em>字面内容</em> 是此token 的字符串表示中第一个 <code>U+0022</code> (<code>&quot;</code>) 之后和最后一个 <code>U+0022</code> (<code>&quot;</code>) 之前的字符序列。</p>
+<p>此类token 的 <em>字面内容</em> 是此token 的字符串表示中第一个 <code>U+0022</code> (<code>"</code>) 之后和最后一个 <code>U+0022</code> (<code>"</code>) 之前的字符序列。</p>
 <p>此类字面量表达式的 <em>所表示字节序</em> 源自于字节序列的字面内容，具体有如下规则：</p>
 <ul>
 <li>
@@ -424,28 +449,27 @@ b&quot;\\x52&quot;; br&quot;\x52&quot;;                  // \x52
 <blockquote>
 <p><strong>注意</strong>: [C_STRING_LITERAL] 和 [RAW_C_STRING_LITERAL]的词法定义形式确保所表示的字节序不会包含 null字节。</p>
 </blockquote>
-<p>The expression's value is a reference to a statically allocated [CStr] whose array of bytes contains the represented bytes followed by a null byte.
+<p>The expression’s value is a reference to a statically allocated [CStr] whose array of bytes contains the represented bytes followed by a null byte.
 该表达式的值是对静态分配的 [CStr] 的引用，其字节数组就包含了这个后跟一个 null字节的所表示字节序。</p>
 <p>C语言风格的字符串字面量表达式示例:</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>c&quot;foo&quot;; cr&quot;foo&quot;;                     // foo
-c&quot;\&quot;foo\&quot;&quot;; cr#&quot;&quot;foo&quot;&quot;#;             // &quot;foo&quot;
+</span>c"foo"; cr"foo";                     // foo
+c"\"foo\""; cr#""foo""#;             // "foo"
 
-c&quot;foo #\&quot;# bar&quot;;
-cr##&quot;foo #&quot;# bar&quot;##;                 // foo #&quot;# bar
+c"foo #\"# bar";
+cr##"foo #"# bar"##;                 // foo #"# bar
 
-c&quot;\x52&quot;; c&quot;R&quot;; cr&quot;R&quot;;                // R
-c&quot;\\x52&quot;; cr&quot;\x52&quot;;                  // \x52
+c"\x52"; c"R"; cr"R";                // R
+c"\\x52"; cr"\x52";                  // \x52
 
-c&quot;æ&quot;;                                // 拉丁文小写字母æ (U+00E6)
-c&quot;\u{00E6}&quot;;                         // 拉丁文小写字母æ (U+00E6)
-c&quot;\xC3\xA6&quot;;                         // 拉丁文小写字母æ (U+00E6)
+c"æ";                                // 拉丁文小写字母æ (U+00E6)
+c"\u{00E6}";                         // 拉丁文小写字母æ (U+00E6)
+c"\xC3\xA6";                         // 拉丁文小写字母æ (U+00E6)
 
-c&quot;\xE6&quot;.to_bytes();                  // [230]
-c&quot;\u{00E6}&quot;.to_bytes();              // [195, 166]
-<span class="boring">}
-</span></code></pre></pre>
+c"\xE6".to_bytes();                  // [230]
+c"\u{00E6}".to_bytes();              // [195, 166]
+<span class="boring">}</span></code></pre></pre>
 <h2 id="integer-literal-expressions"><a class="header" href="#integer-literal-expressions">Integer literal expressions</a></h2>
 <h2 id="整型字面量表达式"><a class="header" href="#整型字面量表达式">整型字面量表达式</a></h2>
 <p>整型字面量表达式由单一一个[整型字面量][INTEGER_LITERAL]token 组成。</p>
@@ -481,8 +505,7 @@ let a: u64 = 123;                  // type u64
 0b1111_1111_1001_0000i64;          // type i64
 
 0usize;                            // type usize
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>而表达式的值由 token 的字符串表示形式来确定，规则如下：</p>
 <ul>
 <li>
@@ -548,8 +571,7 @@ let a: u64 = 123;                  // type u64
 12E+99_f64;      // type f64
 5f32;            // type f32
 let x: f64 = 2.; // type f64
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>而表达式的值由 token 的字符串表示形式来确定，规则如下：</p>
 <ul>
 <li>
@@ -622,7 +644,108 @@ let x: f64 = 2.; // type f64
 [C_STRING_LITERAL]: ../tokens.md#c-string-literals
 [RAW_C_STRING_LITERAL]: ../tokens.md#raw-c-string-literals
 [INTEGER_LITERAL]: ../tokens.md#integer-literals
-[FLOAT_LITERAL]: ../tokens.md#floating-point-literals</li>
+[FLOAT_LITERAL]: ../tokens.md#floating-point-literals
+[asm]: ../inline-assembly.md#asm
+[asm.abi-clobbers]: ../inline-assembly.md#asm.abi-clobbers
+[asm.abi-clobbers.explicit-have-precedence]: ../inline-assembly.md#asm.abi-clobbers.explicit-have-precedence
+[asm.abi-clobbers.intro]: ../inline-assembly.md#asm.abi-clobbers.intro
+[asm.abi-clobbers.many]: ../inline-assembly.md#asm.abi-clobbers.many
+[asm.abi-clobbers.must-specify]: ../inline-assembly.md#asm.abi-clobbers.must-specify
+[asm.abi-clobbers.supported-abis]: ../inline-assembly.md#asm.abi-clobbers.supported-abis
+[asm.directives]: ../inline-assembly.md#asm.directives
+[asm.directives.stateful]: ../inline-assembly.md#asm.directives.stateful
+[asm.directives.subset-supported]: ../inline-assembly.md#asm.directives.subset-supported
+[asm.directives.supported-directives]: ../inline-assembly.md#asm.directives.supported-directives
+[asm.example]: ../inline-assembly.md#asm.example
+[asm.intro]: ../inline-assembly.md#asm.intro
+[asm.operand-type]: ../inline-assembly.md#asm.operand-type
+[asm.operand-type.global_asm-restriction]: ../inline-assembly.md#asm.operand-type.global_asm-restriction
+[asm.operand-type.left-to-right]: ../inline-assembly.md#asm.operand-type.left-to-right
+[asm.operand-type.supported-operands]: ../inline-assembly.md#asm.operand-type.supported-operands
+[asm.operand-type.supported-operands.in]: ../inline-assembly.md#asm.operand-type.supported-operands.in
+[asm.operand-type.supported-operands.inlateout]: ../inline-assembly.md#asm.operand-type.supported-operands.inlateout
+[asm.operand-type.supported-operands.inout]: ../inline-assembly.md#asm.operand-type.supported-operands.inout
+[asm.operand-type.supported-operands.inout-arrow]: ../inline-assembly.md#asm.operand-type.supported-operands.inout-arrow
+[asm.operand-type.supported-operands.lateout]: ../inline-assembly.md#asm.operand-type.supported-operands.lateout
+[asm.operand-type.supported-operands.out]: ../inline-assembly.md#asm.operand-type.supported-operands.out
+[asm.operand-type.supported-operands.sym]: ../inline-assembly.md#asm.operand-type.supported-operands.sym
+[asm.options]: ../inline-assembly.md#asm.options
+[asm.options.checks]: ../inline-assembly.md#asm.options.checks
+[asm.options.checks.mutually-exclusive]: ../inline-assembly.md#asm.options.checks.mutually-exclusive
+[asm.options.checks.noreturn]: ../inline-assembly.md#asm.options.checks.noreturn
+[asm.options.checks.pure]: ../inline-assembly.md#asm.options.checks.pure
+[asm.options.global_asm-restriction]: ../inline-assembly.md#asm.options.global_asm-restriction
+[asm.options.supported-options]: ../inline-assembly.md#asm.options.supported-options
+[asm.options.supported-options.att_syntax]: ../inline-assembly.md#asm.options.supported-options.att_syntax
+[asm.options.supported-options.nomem]: ../inline-assembly.md#asm.options.supported-options.nomem
+[asm.options.supported-options.noreturn]: ../inline-assembly.md#asm.options.supported-options.noreturn
+[asm.options.supported-options.nostack]: ../inline-assembly.md#asm.options.supported-options.nostack
+[asm.options.supported-options.preserves_flags]: ../inline-assembly.md#asm.options.supported-options.preserves_flags
+[asm.options.supported-options.pure]: ../inline-assembly.md#asm.options.supported-options.pure
+[asm.options.supported-options.raw]: ../inline-assembly.md#asm.options.supported-options.raw
+[asm.options.supported-options.readonly]: ../inline-assembly.md#asm.options.supported-options.readonly
+[asm.register-names]: ../inline-assembly.md#asm.register-names
+[asm.register-names.fp-bp-reserved]: ../inline-assembly.md#asm.register-names.fp-bp-reserved
+[asm.register-names.not-for-io]: ../inline-assembly.md#asm.register-names.not-for-io
+[asm.register-names.supported-register-aliases]: ../inline-assembly.md#asm.register-names.supported-register-aliases
+[asm.register-operands]: ../inline-assembly.md#asm.register-operands
+[asm.register-operands.allowed-types]: ../inline-assembly.md#asm.register-operands.allowed-types
+[asm.register-operands.equivalence-to-base-register]: ../inline-assembly.md#asm.register-operands.equivalence-to-base-register
+[asm.register-operands.error-overlapping]: ../inline-assembly.md#asm.register-operands.error-overlapping
+[asm.register-operands.error-two-operands]: ../inline-assembly.md#asm.register-operands.error-two-operands
+[asm.register-operands.register-or-class]: ../inline-assembly.md#asm.register-operands.register-or-class
+[asm.register-operands.separate-input-output]: ../inline-assembly.md#asm.register-operands.separate-input-output
+[asm.register-operands.smaller-value]: ../inline-assembly.md#asm.register-operands.smaller-value
+[asm.register-operands.supported-register-classes]: ../inline-assembly.md#asm.register-operands.supported-register-classes
+[asm.register-operands.value-type-constraints]: ../inline-assembly.md#asm.register-operands.value-type-constraints
+[asm.rules]: ../inline-assembly.md#asm.rules
+[asm.rules.black-box]: ../inline-assembly.md#asm.rules.black-box
+[asm.rules.intro]: ../inline-assembly.md#asm.rules.intro
+[asm.rules.mem-same-as-ffi]: ../inline-assembly.md#asm.rules.mem-same-as-ffi
+[asm.rules.noreturn]: ../inline-assembly.md#asm.rules.noreturn
+[asm.rules.not-exactly-once]: ../inline-assembly.md#asm.rules.not-exactly-once
+[asm.rules.not-successive]: ../inline-assembly.md#asm.rules.not-successive
+[asm.rules.only-on-exit]: ../inline-assembly.md#asm.rules.only-on-exit
+[asm.rules.preserved-registers]: ../inline-assembly.md#asm.rules.preserved-registers
+[asm.rules.preserves_flags]: ../inline-assembly.md#asm.rules.preserves_flags
+[asm.rules.pure]: ../inline-assembly.md#asm.rules.pure
+[asm.rules.reg-not-input]: ../inline-assembly.md#asm.rules.reg-not-input
+[asm.rules.reg-not-output]: ../inline-assembly.md#asm.rules.reg-not-output
+[asm.rules.stack-below-sp]: ../inline-assembly.md#asm.rules.stack-below-sp
+[asm.rules.unwind]: ../inline-assembly.md#asm.rules.unwind
+[asm.rules.x86-df]: ../inline-assembly.md#asm.rules.x86-df
+[asm.rules.x86-prefix-restriction]: ../inline-assembly.md#asm.rules.x86-prefix-restriction
+[asm.rules.x86-x87]: ../inline-assembly.md#asm.rules.x86-x87
+[asm.scope]: ../inline-assembly.md#asm.scope
+[asm.scope.asm]: ../inline-assembly.md#asm.scope.asm
+[asm.scope.global_asm]: ../inline-assembly.md#asm.scope.global_asm
+[asm.scope.intro]: ../inline-assembly.md#asm.scope.intro
+[asm.stable-targets]: ../inline-assembly.md#asm.stable-targets
+[asm.syntax]: ../inline-assembly.md#asm.syntax
+[asm.target-specific-directives]: ../inline-assembly.md#asm.target-specific-directives
+[asm.target-specific-directives.arm-32-bit]: ../inline-assembly.md#asm.target-specific-directives.arm-32-bit
+[asm.target-specific-directives.dwarf-unwinding]: ../inline-assembly.md#asm.target-specific-directives.dwarf-unwinding
+[asm.target-specific-directives.structured-exception-handling]: ../inline-assembly.md#asm.target-specific-directives.structured-exception-handling
+[asm.target-specific-directives.x86]: ../inline-assembly.md#asm.target-specific-directives.x86
+[asm.template-modifiers]: ../inline-assembly.md#asm.template-modifiers
+[asm.template-modifiers.intro]: ../inline-assembly.md#asm.template-modifiers.intro
+[asm.template-modifiers.only-one]: ../inline-assembly.md#asm.template-modifiers.only-one
+[asm.template-modifiers.smaller-value]: ../inline-assembly.md#asm.template-modifiers.smaller-value
+[asm.template-modifiers.supported-modifiers]: ../inline-assembly.md#asm.template-modifiers.supported-modifiers
+[asm.ts-args]: ../inline-assembly.md#asm.ts-args
+[asm.ts-args.at-least-once]: ../inline-assembly.md#asm.ts-args.at-least-once
+[asm.ts-args.before-other-args]: ../inline-assembly.md#asm.ts-args.before-other-args
+[asm.ts-args.llvm-syntax]: ../inline-assembly.md#asm.ts-args.llvm-syntax
+[asm.ts-args.no-implicit]: ../inline-assembly.md#asm.ts-args.no-implicit
+[asm.ts-args.one-or-more]: ../inline-assembly.md#asm.ts-args.one-or-more
+[asm.ts-args.opaque]: ../inline-assembly.md#asm.ts-args.opaque
+[asm.ts-args.order]: ../inline-assembly.md#asm.ts-args.order
+[asm.ts-args.positional-first]: ../inline-assembly.md#asm.ts-args.positional-first
+[asm.ts-args.register-operands]: ../inline-assembly.md#asm.ts-args.register-operands
+[asm.ts-args.syntax]: ../inline-assembly.md#asm.ts-args.syntax
+[asm.validity]: ../inline-assembly.md#asm.validity
+[asm.validity.necessary-but-not-sufficient]: ../inline-assembly.md#asm.validity.necessary-but-not-sufficient
+[asm.validity.non-exhaustive]: ../inline-assembly.md#asm.validity.non-exhaustive</li>
 </ul>
 
                     </main>
@@ -633,7 +756,7 @@ let x: f64 = 2.; // type f64
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../expressions/path-expr.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../expressions/path-expr.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -647,7 +770,7 @@ let x: f64 = 2.; // type f64
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../expressions/path-expr.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../expressions/path-expr.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -657,21 +780,22 @@ let x: f64 = 2.; // type f64
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>

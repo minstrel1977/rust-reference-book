@@ -2,14 +2,16 @@
 # 常量项
 
 >[constant-items.md](https://github.com/rust-lang/reference/blob/master/src/items/constant-items.md)\
->commit: 021889f26215721860a153e692909eda7cfd7a6e \
->本章译文最后维护日期：2023-05-03
+>commit: 2aadaad918b1d0a887c6c513a0e9ca49aab1d74e \
+>本章译文最后维护日期：2024-08-17
 
 > **<sup>句法</sup>**\
 > _ConstantItem_ :\
 > &nbsp;&nbsp; `const` ( [IDENTIFIER] | `_` ) `:` [_Type_] ( `=` [_Expression_] )<sup>?</sup> `;`
 
 *常量项*是一个可选的具名 *[常量值][constant value]*，它与程序中的具体内存位置没有关联。无论常量在哪里使用，它们本质上都是内联的，这意味着当它们被使用时，都是直接被拷贝到相关的上下文中来使用的。这包括使用非拷贝(non-[`Copy`])类型的值和来自外部的 crate 的常量。对相同常量的引用不保证它们引用的是相同的内存地址。
+
+常量声明和其值在在同一个命名空间。
 
 常量必须显式指定数据类型。类型必须具有 `'static`生存期：程序初始化器(initializer)中的任何引用都必须具有 `'static`生存期。
 
@@ -111,6 +113,4 @@ fn unused_generic_function<T>() {
 [_Type_]: ../types.md#type-expressions
 [_Expression_]: ../expressions.md
 [`Copy`]: ../special-types-and-traits.md#copy
-
-<!-- 2021-1-17-->
-<!-- checked -->
+[value namespace]: ../names/namespaces.md

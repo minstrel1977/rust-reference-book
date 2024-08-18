@@ -2,8 +2,8 @@
 # `_`表达式
 
 >[underscore-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit: 7f1e24a45764646504c79176094346eb1925f100 \
->本章译文最后维护日期：2022-12-30
+>commit: 78cd7345599c5ae65f21ac7d3127e7b0d1f6e707 \
+>本章译文最后维护日期：2024-08-17
 
 > **<sup>句法</sup>**\
 > _UnderscoreExpression_ :\
@@ -14,10 +14,25 @@
 
 请注意，这与[通配符模式](../patterns.md#wildcard-pattern)是不同的。
 
-一个 `_`表达式的一个示例：
+`_`表达式的示例：
 
 ```rust
 let p = (1, 2);
 let mut a = 0;
 (_, a) = p;
+
+struct Position {
+    x: u32,
+    y: u32,
+}
+
+Position { x: a, y: _ } = Position{ x: 2, y: 3 };
+
+// 把未使用的结果值赋给 `_` 一般用于声明意图和移除告警used to declare intent and remove a warning
+_ = 2 + 2;
+// 触发 unused_must_use 告警
+// 2 + 2;
+
+// 等效于在let绑定中使用通配符模式。
+let _ = 2 + 2;
 ```

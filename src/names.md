@@ -2,8 +2,8 @@
 # 名称
 
 >[keywords.md](https://github.com/rust-lang/reference/blob/master/src/names.md)\
->commit: 77ab06c34e50e9cce04acf979a4402fa01ef48e9
->本章译文最后维护日期：2024-06-15
+>commit: 62715cf8b4bd3b14d41f06f3d2cec3a42f4b1cd2
+>本章译文最后维护日期：2024-08-18
 
 *实体(entity)*是一种语言结构，在源程序中可以以某种方式被引用，通常是通过[路径(path)][paths]。实体包括[类型][types]、[程序项][items]、[泛型参数][generic parameters]、[变量绑定][variable bindings]、[循环标签][loop labels]、[生存期][lifetimes]、[字段][fields]、[属性][attributes]和各种[lints]。\
 
@@ -58,11 +58,11 @@
 以下实体由语言隐式定义，或由编译器选项和编译器扩展引入：
 
 * [语言预导入包][Language prelude]:
-    * [布尔型][Boolean type] — `bool`
-    * [文本型][Textual types] — `char` and `str`
-    * [整型][Integer types] — `i8`, `i16`, `i32`, `i64`, `i128`, `u8`, `u16`, `u32`, `u64`, `u128`
-    * [和机器平台相关的整型][Machine-dependent integer types] — `usize` and `isize`
-    * [浮点型][floating-point types] — `f32` and `f64`
+    * [布尔型][Boolean type] --- `bool`
+    * [文本型][Textual types] --- `char` and `str`
+    * [整型][Integer types] --- `i8`, `i16`, `i32`, `i64`, `i128`, `u8`, `u16`, `u32`, `u64`, `u128`
+    * [和机器平台相关的整型][Machine-dependent integer types] --- `usize` and `isize`
+    * [浮点型][floating-point types] --- `f32` and `f64`
 * [内置属性][Built-in attributes]
 * [标准库预导入包][Standard library prelude]里的程序项、属性和宏
 * 在根模块下的[标准库][extern-prelude]里的crate

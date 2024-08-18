@@ -2,8 +2,8 @@
 # 调试器属性
 
 >[debugger.md](https://github.com/rust-lang/reference/blob/master/src/attributes/debugger.md)\
->commit: 2d51a2aec405dd54a617f5ee1b27cef326f30ced \
->本章译文最后维护日期：2024-05-02
+>commit: 62715cf8b4bd3b14d41f06f3d2cec3a42f4b1cd2 \
+>本章译文最后维护日期：2024-08-17
 
 以下[属性][attributes]用于在使用 GDB 或 WinDbg 等第三方调试器时增强调试体验。
 
@@ -156,9 +156,9 @@ gdb.current_objfile().pretty_printers.append(lookup)
 该属性使用[_MetaListIdents_]句法格式来指定其输入，并且只能应用于宏定义。
 
 该属性可接受的选项有：
-- `#[collapse_debuginfo(yes)]` — 调试信息中的代码位置表示的是宏调用点的位置。
-- `#[collapse_debuginfo(no)]` — 调试信息中的代码位置表示的不是宏调用点的位置。
-- `#[collapse_debuginfo(external)]` — 仅当宏来至于不同的 crate 时，调试信息中的代码位置才表示的是宏调用点的位置。
+- `#[collapse_debuginfo(yes)]` --- 调试信息中的代码位置表示的是宏调用点的位置。
+- `#[collapse_debuginfo(no)]` --- 调试信息中的代码位置表示的不是宏调用点的位置。
+- `#[collapse_debuginfo(external)]` --- 仅当宏来至于不同的 crate 时，调试信息中的代码位置才表示的是宏调用点的位置。
 
 没有此属性的宏的默认行为是 `external`，除非它们是内置宏。内置宏的默认行为是 `yes`。
 

@@ -2,8 +2,8 @@
 # 类型别名
 
 >[type-aliases.md](https://github.com/rust-lang/reference/blob/master/src/items/type-aliases.md)\
->commit: 3c8acda52ffcf5f7ca410c76f4fddf0e129592e2 \
->本章译文最后维护日期：2022-10-22
+>commit: 163f7bc1cc436a1bfa8b9327f7e7a076d87b06d9 \
+>本章译文最后维护日期：2024-08-18
 
 > **<sup>句法</sup>**\
 > _TypeAlias_ :\
@@ -11,7 +11,9 @@
 >              ( `:` [_TypeParamBounds_] )<sup>?</sup>
 >              [_WhereClause_]<sup>?</sup> ( `=` [_Type_] [_WhereClause_]<sup>?</sup>)<sup>?</sup> `;`
 
-*类型别名*为现有的[类型][type]定义一个新名称。类型别名用关键字 `type` 声明。每个值都是一个唯一的特定的类型，但是可以实现几个不同的 trait，或者兼容几个不同的类型约束。
+*类型别名*在当前模块或代码块的[类型命名空间][type namespace]中为现有的[类型][type]定义一个新名称。
+类型别名用关键字 `type` 声明。
+每个值都是一个唯一的特定的类型，但是可以实现几个不同的 trait，或者可以兼容几个不同的类型约束。
 
 例如，下面将类型 `Point` 定义为类型 `(u8, u8)` 的同义词/别名：
 
@@ -32,7 +34,7 @@ let _ = UseAlias(5); // OK
 let _ = TypeAlias(5); // 无法工作
 ```
 
-类型别名不用作关联类型时，必须包含[_type_]规范，而不能包含[_TypeParamBounds_]规范。
+类型别名不用作[关联类型][associated type]时，必须包含[_type_]规范，而不能包含[_TypeParamBounds_]规范。
 
 类型别名用作 [trait] 中的[关联类型][associated type]时，不能包含[_type_]规范，但可以包括[_TypeParamBounds_]规范。
 
@@ -49,3 +51,4 @@ let _ = TypeAlias(5); // 无法工作
 [trait]: traits.md
 [type]: ../types.md
 [trait impl]: implementations.md#trait-implementations
+[type namespace]: ../names/namespaces.md

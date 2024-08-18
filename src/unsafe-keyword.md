@@ -2,14 +2,14 @@
 # `unsafe`关键字
 
 >[unsafe-keyword.md](https://github.com/rust-lang/reference/blob/master/src/unsafe-keyword.md)\
->commit:  451a8e4542cb6500a7aca9de5902075e6c8ec188 \
->本章译文最后维护日期：2023-07-21
+>commit:  875b905a389455c5329ae088600c0b5f7222104d \
+>本章译文最后维护日期：2024-08-18
 
 `unsafe`关键字可以出现在几个不同的上下文中：
-unsafe函数(`unsafe fn`)、unsafe块(`unsafe {}`)、unsafe traits(`unsafe trait`)，以及 unsafe实现(`unsafe impl`)中。
+unsafe函数(`unsafe fn`)、unsafe块(`unsafe {}`)、unsafe traits(`unsafe trait`)，unsafe实现(`unsafe impl`)，以及 unsafe外部块(`unsafe extern`)中。
 根据它的使用位置以及是否启用了 `unsafe_op_in_unsafe_fn` lint，它扮演着几种不同的角色：
 - 它用于标记*定义*额外安全条款要求（`unsafe fn`、`unsafe trait`）的代码
-- 它用于标记需要*满足*额外安全条款(satisfy)要求的代码（`unsafe {}`、`unsafe impl`、不带[`unsafe_op_in_unsafe_fn`]的`unsafe fn`）
+- 它用于标记需要*满足*额外安全条款(satisfy)要求的代码（`unsafe {}`、`unsafe impl`、不带[`unsafe_op_in_unsafe_fn`]的`unsafe fn`、`unsafe extern`）
 
 接下来会讨论这里的每种情况。
 参见[关键字相关文档][keyword]，那里有一些直观的例子。
@@ -62,3 +62,10 @@ unsafe trait实现是 unsafe trait 的逻辑对偶：在 unsafe trait 里定义�
 [keyword]: https://doc.rust-lang.org/std/keyword.unsafe.html
 [`get_unchecked`]: https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked
 [`unsafe_op_in_unsafe_fn`]: https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#unsafe-op-in-unsafe-fn
+
+## Unsafe external blocks (`unsafe extern`)
+## Unsafe外部块(`unsafe extern`)
+
+声明[外部块][external block]的程序员必须确保其中包含的程序项的签名是正确的。否则可能会导致未定义的行为。`unsafe extern`一词表明该义务已得到履行。
+
+[external block]: items/external-blocks.md

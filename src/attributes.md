@@ -3,8 +3,8 @@
 # 属性
 
 >[attributes.md](https://github.com/rust-lang/reference/blob/master/src/attributes.md)\
->commit: 51817951d0d213a0011f82b62aae02c3b3f2472e \
->本章译文最后维护日期：2024-05-02
+>commit: 5de59db02434e8fb6343efea696d36de0c5e7d4d \
+>本章译文最后维护日期：2024-08-17
 
 > **<sup>句法</sup>**\
 > _InnerAttribute_ :\
@@ -152,13 +152,13 @@ _MetaListNameValueStr_ | `link(name = "CoreFoundation", kind = "framework")`
 [`cfg`] 和 [`cfg_attr`] 属性是活跃的。[`test`]属性在为测试所做的编译形式中是惰性的，在其他编译形式中是活跃的。[宏属性][Attribute macros]是活跃的。所有其他属性都是惰性的。
 
 ## Tool attributes
-## 外部工具的属性
+## 工具类属性
 
-编译器可能允许和具体外部工具相关联的属性，但这些工具在编译和检查过程中必须存在并驻留在编译器提供的[工具类预导入包][tool prelude]下对应的命名空间中（才能让这些属性生效）。这种属性的（命名空间）路径的第一段是工具的名称，后跟一个或多个工具自己解释的附加段。
+编译器可能允许和具体外部工具相关联的属性，但这些工具在编译和检查过程中必须存在并驻留在编译器提供的[工具类预导入包][tool prelude]自身的模块中（才能让这些属性生效）。这种属性的路径的第一段是工具的名称，后跟一个或多个工具自己解释的附加段。
 
 当工具在编译期不可用时，该工具的属性将被静默接受而不提示警告。当工具可用时，该工具负责处理和解释这些属性。
 
-如果使用了 [`no_implicit_prelude`]属性，则外部工具属性不可用。
+如果使用了 [`no_implicit_prelude`]属性，则工具类属性不再可用。
 
 ```rust
 // 告诉rustfmt工具不要格式化以下元素。
@@ -179,67 +179,67 @@ pub fn f() {}
 下面是所有内置属性的索引表：
 
 - 条件编译(Conditional compilation)
-  - [`cfg`] — 控制条件编译。
-  - [`cfg_attr`] — 选择性包含属性。
+  - [`cfg`] --- 控制条件编译。
+  - [`cfg_attr`] --- 选择性包含属性。
 - 测试(Testing)
-  - [`test`] — 将函数标记为测试函数。
-  - [`ignore`] — 禁止测试此函数。
-  - [`should_panic`] — 表示测试应该产生 panic。
+  - [`test`] --- 将函数标记为测试函数。
+  - [`ignore`] --- 禁止测试此函数。
+  - [`should_panic`] --- 表示测试应该产生 panic。
 - 派生(Derive)
-  - [`derive`] — 自动部署 trait实现
-  - [`automatically_derived`] — 用在由 `derive` 创建的实现上的标记。
+  - [`derive`] --- 自动部署 trait实现
+  - [`automatically_derived`] --- 用在由 `derive` 创建的实现上的标记。
 - 宏(Macros)
-  - [`macro_export`] — 导出声明宏（`macro_rules`宏），用于跨 crate 的使用。
-  - [`macro_use`] — 扩展宏可见性，或从其他 crate 导入宏。
-  - [`proc_macro`] — 定义类函数宏。
-  - [`proc_macro_derive`] — 定义派生宏。
-  - [`proc_macro_attribute`] — 定义属性宏。
+  - [`macro_export`] --- 导出声明宏（`macro_rules`宏），用于跨 crate 的使用。
+  - [`macro_use`] --- 扩展宏可见性，或从其他 crate 导入宏。
+  - [`proc_macro`] --- 定义类函数宏。
+  - [`proc_macro_derive`] --- 定义派生宏。
+  - [`proc_macro_attribute`] --- 定义属性宏。
 - 诊断(Diagnostics)
-  - [`allow`]、[`warn`]、[`deny`]、[`forbid`] — 更改默认的 lint检查级别。
-  - [`deprecated`] — 生成弃用通知。
-  - [`must_use`] — 为未使用的值生成 lint 提醒。
-  - [`diagnostic::on_unimplemented`] — 如个某个 trait 没有被实现，则提醒编译器发射一个特定的错误消息。
+  - [`allow`]、[`warn`]、[`deny`]、[`forbid`] --- 更改默认的 lint检查级别。
+  - [`deprecated`] --- 生成弃用通知。
+  - [`must_use`] --- 为未使用的值生成 lint 提醒。
+  - [`diagnostic::on_unimplemented`] --- 如个某个 trait 没有被实现，则提醒编译器发射一个特定的错误消息。
 - ABI、链接(linking)、符号(symbol)、和 FFI
-  - [`link`] — 指定要与外部(`extern`)块链接的本地库。
-  - [`link_name`] — 指定外部(`extern`)块中的函数或静态项的符号(symbol)名。
-  - [`link_ordinal`] — 指定外部(`extern`)块中函数或静态符号的序号。
-  - [`no_link`] — 防止链接外部crate。
-  - [`repr`] — 控制类型的布局。
-  - [`crate_type`] — 指定 crate 的类别(库、可执行文件等)。
-  - [`no_main`] — 禁止发布 `main`符号(symbol)。
-  - [`export_name`] — 指定函数或静态项导出的符号(symbol)名。
-  - [`link_section`] — 指定用于函数或静态项的对象文件的部分。
-  - [`no_mangle`] — 禁用对符号(symbol)名编码。
-  - [`used`] — 强制编译器在输出对象文件中保留静态项。
-  - [`crate_name`] — 指定 crate名。
+  - [`link`] --- 指定要与外部(`extern`)块链接的本地库。
+  - [`link_name`] --- 指定外部(`extern`)块中的函数或静态项的符号(symbol)名。
+  - [`link_ordinal`] --- 指定外部(`extern`)块中函数或静态符号的序号。
+  - [`no_link`] --- 防止链接外部crate。
+  - [`repr`] --- 控制类型的布局。
+  - [`crate_type`] --- 指定 crate 的类别(库、可执行文件等)。
+  - [`no_main`] --- 禁止发布 `main`符号(symbol)。
+  - [`export_name`] --- 指定函数或静态项导出的符号(symbol)名。
+  - [`link_section`] --- 指定用于函数或静态项的对象文件的部分。
+  - [`no_mangle`] --- 禁用对符号(symbol)名编码。
+  - [`used`] --- 强制编译器在输出对象文件中保留静态项。
+  - [`crate_name`] --- 指定 crate名。
 - 代码生成(Code generation)
-  - [`inline`] — 内联代码提示。
-  - [`cold`] — 提示函数不太可能被调用。
-  - [`no_builtins`] — 禁用某些内置函数。
-  - [`target_feature`] — 配置特定于平台的代码生成。
-  - [`track_caller`] - 将父调用位置传递给 `std::panic::Location::caller()`。
-  - [`instruction_set`] - 指定用于生成函数代码的指令集S
+  - [`inline`] --- 内联代码提示。
+  - [`cold`] --- 提示函数不太可能被调用。
+  - [`no_builtins`] --- 禁用某些内置函数。
+  - [`target_feature`] --- 配置特定于平台的代码生成。
+  - [`track_caller`] --- 将父调用位置传递给 `std::panic::Location::caller()`。
+  - [`instruction_set`] --- 指定用于生成函数代码的指令集S
 - 文档(Documentation)
-  - `doc` — 指定文档。更多信息见 [The Rustdoc Book]。[Doc注释][Doc comments]会被转换为 `doc`属性。
+  - `doc` --- 指定文档。更多信息见 [The Rustdoc Book]。[Doc注释][Doc comments]会被转换为 `doc`属性。
 - 预导入包(Preludes)
-  - [`no_std`] — 从预导入包中移除 std。
-  - [`no_implicit_prelude`] — 禁用模块内的预导入包查找。
+  - [`no_std`] --- 从预导入包中移除 std。
+  - [`no_implicit_prelude`] --- 禁用模块内的预导入包查找。
 - 模块(Modules)
-  - [`path`] — 指定模块的源文件名。
+  - [`path`] --- 指定模块的源文件名。
 - 极限值设置(Limits)
-  - [`recursion_limit`] — 设置某些编译时操作的最大递归限制。
-  - [`type_length_limit`] — 设置多态类型(polymorphic type)单态化过程中构造具体类型时所做的最大类型替换次数。
+  - [`recursion_limit`] --- 设置某些编译时操作的最大递归限制。
+  - [`type_length_limit`] --- 设置多态类型(polymorphic type)单态化过程中构造具体类型时所做的最大类型替换次数。
 - 运行时(Runtime)
-  - [`panic_handler`] — 设置处理 panic 的函数。
-  - [`global_allocator`] — 设置全局内存分配器。
-  - [`windows_subsystem`] — 指定要链接的 windows 子系统。
+  - [`panic_handler`] --- 设置处理 panic 的函数。
+  - [`global_allocator`] --- 设置全局内存分配器。
+  - [`windows_subsystem`] --- 指定要链接的 windows 子系统。
 - 特性(Features)
-  - `feature` — 用于启用非稳定的或实验性的编译器特性。参见 [The Unstable Book] 了解在 `rustc` 中实现的特性。
+  - `feature` --- 用于启用非稳定的或实验性的编译器特性。参见 [The Unstable Book] 了解在 `rustc` 中实现的特性。
 - 类型系统(Type System)
-  - [`non_exhaustive`] — 表明一个类型将来会添加更多的字段/变体。
+  - [`non_exhaustive`] --- 表明一个类型将来会添加更多的字段/变体。
 - 调试器
-  - [`debugger_visualizer`] — 嵌入一个文件，该文件指定类型的调试器输出。
-  - [`collapse_debuginfo`] — 控制宏调用在调试信息中的编码方式。
+  - [`debugger_visualizer`] --- 嵌入一个文件，该文件指定类型的调试器输出。
+  - [`collapse_debuginfo`] --- 控制宏调用在调试信息中的编码方式。
 
 [Doc comments]: comments.md#doc-comments
 [ECMA-334]: https://www.ecma-international.org/publications-and-standards/standards/ecma-334/

@@ -2,8 +2,8 @@
 # 元组类型
 
 >[tuple.md](https://github.com/rust-lang/reference/blob/master/src/types/tuple.md)\
->commit: 80f4867bcc2baaa9bcdb650c43276cd98883389c \
->本章译文最后维护日期：2021-07-24
+>commit: 48134441141b6ba5da5b903ce0a3073600906ca6 \
+>本章译文最后维护日期：2024-08-18
 
 > **<sup>句法</sup>**\
 > _TupleType_ :\
@@ -32,6 +32,7 @@
 元组类型的示例：
 
 * `()` (单元)
+* `(i32,)` (一元元组)
 * `(f64, f64)`
 * `(String, i32)`
 * `(i32, String)` (跟前一个示例类型不一样)

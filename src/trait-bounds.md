@@ -2,8 +2,8 @@
 # trait约束和生存期约束
 
 >[trait-bounds.md](https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md)\
->commit: 82517788e162791dad3305a8c8d8d20d49510ad6 \
->本章译文最后维护日期：2024-06-15
+>commit: 9fd053364c4c4983e30c5edc3a405c0c363bedc4 \
+>本章译文最后维护日期：2024-08-18
 
 > **<sup>句法</sup>**\
 > _TypeParamBounds_ :\
@@ -23,8 +23,7 @@
 >
 > _Lifetime_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [LIFETIME_OR_LABEL]\
-> &nbsp;&nbsp; | `'static`\
-> &nbsp;&nbsp; | `'_`
+> &nbsp;&nbsp; | `'static`
 
 [trait][Trait]约束和生存期约束为[泛型程序项][generic]提供了一种方法来限制将哪些类型和生存期可被用作它们的参数。通过 [where子句][where clause]可以为任何泛型提供约束。对于某些常见的情况，也可以使用如下简写形式：
 

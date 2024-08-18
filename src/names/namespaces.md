@@ -2,13 +2,11 @@
 # 命名空间
 
 >[use-declarations.md](https://github.com/rust-lang/reference/blob/master/src/names/namespaces.md)\
->commit: aa9c70bda63b3ab73b15746609831dafb96f56ff \
->本章译文最后维护日期：2023-05-03
+>commit: 9fbd6f05a08334a6cce24c7e2f1d66e800f25add \
+>本章译文最后维护日期：2024-08-18
 
 *命名空间*是已声明的[名称][names]的逻辑分组。根据名称所指的实体类型，名称被分隔到不同的命名空间中。
 名称空间允许一个名称空间中出现的名称与另一个名称空间中的相同，且不会导致冲突。
-
-在命名空间中，名称被组织在不同的层次结构中，层次结构的每一层都有自己的命名实体集合。
 
 程序有几个不同的命名空间，每个名称空间包含不同种类的实体。使用名称时将根据上下文来在不同的命名空间中去查找该名称的声明，[名称解析][name resolution]一章有讲到这些。
 
@@ -36,7 +34,7 @@
     * [泛型常量参数][Generic const parameters]
     * [关联常量声明][Associated const declarations]
     * [关联函数声明][Associated function declarations]
-    * 本地绑定 — [`let`], [`if let`], [`while let`], [`for`], [`match`]臂, [函数参数][function parameters], [闭包参数][closure parameters]
+    * 本地绑定 --- [`let`], [`if let`], [`while let`], [`for`], [`match`]臂, [函数参数][function parameters], [闭包参数][closure parameters]
     * [闭包][closure]捕获的变量
 * 宏命名空间
     * [`macro_rules`声明][`macro_rules` declarations]
@@ -95,7 +93,6 @@ fn example<'Foo>(f: Foo) {
 
 [use声明][use declaration]命名了导入到当前作用域中的实体，但 `use`项本身不属于任何特定的命名空间。相反，它可以在多个名称空间中引入别名，这取决于所导入的程序项类型。
 
-<!-- TODO: describe how `use` works on the use-declarations page, and link to it here. -->
 ## Sub-namespaces
 ## 子命名空间
 

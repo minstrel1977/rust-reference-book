@@ -2,8 +2,8 @@
 # 外部块
 
 >[external-blocks.md](https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md)\
->commit: 845baeedae9beb16e98f11fe7173a463e934363e \
->本章译文最后维护日期：2024-06-15
+>commit: 875b905a389455c5329ae088600c0b5f7222104d \
+>本章译文最后维护日期：2024-08-18
 
 > **<sup>句法</sup>**\
 > _ExternBlock_ :\
@@ -22,23 +22,28 @@
 
 外部块里允许存在两种形式的程序项*声明*：[函数][functions]和[静态项][statics]。只有在非安全(`unsafe`)上下文中才能调用在外部块中声明的函数或访问在外部块中声明的静态项。
 
-在句法上，关键字 `unsafe` 允许出现在关键字 `extern` 之前，但是在语义层面却会被弃用。这种设计允许宏在将关键字 `unsafe` 从 token流中移除之前利用此句法来使用此关键字。
+外部块在其所在模块或块的[值命名空间][value namespace]中定义其函数和静态项。
 
 ## Functions
 ## 函数
 
-外部块中的函数与其他 Rust函数的声明方式相同，但这里的函数不能有函数体，取而代之的是直接以分号结尾。外部块中的函数的参数不允许使用模式，只能使用[标识符(IDENTIFIER)][IDENTIFIER] 或 `_` 。函数限定符（`const`、`async`、`unsafe` 和 `extern`）也不允许在这里使用。
+外部块中的函数与其他 Rust函数的声明方式相同，但这里的函数不能有函数体，取而代之的是直接以分号结尾。参数中不允许使用模式，只能直接使用[标识符][IDENTIFIER]或`_`。允许使用 `safe` 和 `unsafe` 这两个函数限定符，但不允许使用其他函数限定符（例如 `const`、`async`、`extern`）。
 
 外部块中的函数可以被 Rust 代码调用，就跟调用在 Rust 中定义的函数一样。Rust 编译器会自动在 Rust ABI 和外部 ABI 之间进行转换。
 
-在外部块中声明的函数隐式为非安全(`unsafe`)的。当强转为函数指针时，外部块中声明的函数的类型就为 `unsafe extern "abi" for<'l1, ..., 'lm> fn(A1, ..., An) -> R`，其中 `'l1`，…`'lm` 是其生存期参数，`A1`，…，`An` 是该声明的参数的类型，`R` 是该声明的返回类型。
+在外部块中声明的函数隐式为非安全(`unsafe`)的，但 `safe` 限定的函数除外。
+
+当强转为函数指针时，外部块中声明的函数的类型为 `extern "abi" for<'l1, ..., 'lm> fn(A1, ..., An) -> R`，其中 `'l1`，…`'lm` 是其生存期参数，`A1`，…，`An` 是该函数声明的参数的类型，`R` 是该声明的返回类型。
 
 ## Statics
 ## 静态项
 
-[静态项][statics]在外部块内部与在外部块之外的声明方式相同，只是在外部块内部声明的静态项没有对应的初始化表达式。访问外部块中声明的静态项是 `unsafe` 的，不管它是否可变，因为没有任何保证来确保静态项的内存位模式(bit pattern)对声明它的类型是有效的，因为初始化这些静态项的可能是其他的任意外部代码（例如 C）。
+[静态项][statics]在外部块内部与在外部块之外的声明方式相同，只是在外部块内部声明的静态项没有对应的初始化表达式。
+除非在外部块中声明的静态项被限定为 `safe`，否则访问该项是 `unsafe`，无论它是否可变，因为没有任何东西可以保证静态项的内存位模式对于它所声明的类型有效，因为初始化这些静态项的可能是其他的任意外部代码（例如 C）。
 
-就像外部块之外的[静态项][statics]，外部静态项可以是不可变的，也可以是可变的。在执行任何 Rust 代码之前，不可变外部静态项*必须*被初始化。也就是说，对于外部静态项，仅在 Rust 代码读取它之前对它进行初始化是不够的。
+就像外部块之外的[静态项][statics]，外部静态项可以是不可变的，也可以是可变的。
+在执行任何 Rust 代码之前，不可变外部静态项*必须*被初始化。也就是说，对于外部静态项，仅在 Rust 代码读取它之前对它进行初始化是不够的。
+一旦 Rust 代码运行，改变一个不可变的静态项（从Rust内部或外部）就是UB，除非变更发生在 `UnsafeCell` 内的字节上。
 
 ## ABI
 
@@ -46,26 +51,26 @@
 
 ```rust
 // 到 Windows API 的接口。（译者注：指定使用 stdcall调用约定去调用 Windows API）
-extern "stdcall" { }
+unsafe extern "stdcall" { }
 ```
 
 有三个 ABI 字符串是跨平台的，并且保证所有编译器都支持它们：
 
-* `extern "Rust"` -- 在任何 Rust 语言中编写的普通函数 `fn foo()` 默认使用的 ABI。
-* `extern "C"` -- 这等价于 `extern fn foo()`；无论您的 C编译器支持什么默认 ABI。
-* `extern "system"` -- 在 Win32 平台之外，中通常等价于 `extern "C"`。在 Win32 平台上，应该使用`"stdcall"`，或者其他应该使用的 ABI 字符串来链接它们自身的 Windows API。
+* `unsafe extern "Rust"` -- 在任何 Rust 语言中编写的普通函数 `fn foo()` 默认使用的 ABI。
+* `unsafe extern "C"` -- 这等价于 `extern fn foo()`；无论您的 C编译器支持什么默认 ABI。
+* `unsafe extern "system"` -- 在 Win32 平台之外，中通常等价于 `extern "C"`。在 Win32 平台上，应该使用`"stdcall"`，或者其他应该使用的 ABI 字符串来链接它们自身的 Windows API。
 
 还有一些特定于平台的 ABI 字符串：
 
-* `extern "cdecl"` -- 通过 FFI 调用 x86\_32 C 资源所使用的默认调用约定。
-* `extern "stdcall"` -- 通过 FFI 调用 x86\_32架构下的 Win32 API 所使用的默认调用约定 
-* `extern "win64"` -- 通过 FFI 调用 x86\_64 Windows 平台下的 C 资源所使用的默认调用约定。
-* `extern "sysv64"` -- 通过 FFI 调用 非Windows x86\_64 平台下的 C 资源所使用的默认调用约定。
-* `extern "aapcs"` --通过 FFI 调用 ARM 接口所使用的默认调用约定
-* `extern "fastcall"` -- `fastcall` ABI——对应于 MSVC 的`__fastcall` 和 GCC 以及 clang 的 `__attribute__((fastcall))`。
-* `extern "vectorcall"` -- `vectorcall` ABI ——对应于 MSVC 的 `__vectorcall` 和 clang 的 `__attribute__((vectorcall))`。
-* `extern "thiscall"` -- MSVC 下调用 C++ 成员函数的默认约定 -- 对应与 MSVC 下的`__thiscall`，以及 GCC 和 clang 的`__attribute__((thiscall))` 调用约定
-* `extern "efiapi"` -- 调用 [UEFI] 函数所使用的 ABI。
+* `unsafe extern "cdecl"` -- 通过 FFI 调用 x86\_32 C 资源所使用的默认调用约定。
+* `unsafe extern "stdcall"` -- 通过 FFI 调用 x86\_32架构下的 Win32 API 所使用的默认调用约定 
+* `unsafe extern "win64"` -- 通过 FFI 调用 x86\_64 Windows 平台下的 C 资源所使用的默认调用约定。
+* `unsafe extern "sysv64"` -- 通过 FFI 调用 非Windows x86\_64 平台下的 C 资源所使用的默认调用约定。
+* `unsafe extern "aapcs"` --通过 FFI 调用 ARM 接口所使用的默认调用约定
+* `unsafe extern "fastcall"` -- `fastcall` ABI——对应于 MSVC 的`__fastcall` 和 GCC 以及 clang 的 `__attribute__((fastcall))`。
+* `unsafe extern "vectorcall"` -- `vectorcall` ABI ——对应于 MSVC 的 `__vectorcall` 和 clang 的 `__attribute__((vectorcall))`。
+* `unsafe extern "thiscall"` -- MSVC 下调用 C++ 成员函数的默认约定 -- 对应与 MSVC 下的`__thiscall`，以及 GCC 和 clang 的`__attribute__((thiscall))` 调用约定
+* `unsafe extern "efiapi"` -- 调用 [UEFI] 函数所使用的 ABI。
 
 ## Variadic functions
 ## 可变参数函数
@@ -73,10 +78,10 @@ extern "stdcall" { }
 可以在外部块内的函数的参数列表中的一个或多个具名参数后通过引入 `...` 来让该函数成为可变参数函数。可变参数可以以可选的方式通过标识符来指定：
 
 ```rust
-extern "C" {
-    fn foo(...);
-    fn bar(x: i32, ...);
-    fn with_name(format: *const u8, args: ...);
+unsafe extern "C" {
+    safe fn foo(...);
+    unsafe fn bar(x: i32, ...);
+    unsafe fn with_name(format: *const u8, args: ...);
 }
 ```
 
@@ -90,10 +95,10 @@ extern "C" {
 
 *`link`属性*为外部(`extern`)块中的程序项指定编译器应该链接的本地库的名称。它使用 [_MetaListNameValueStr_]元项属性句法指定其输入参数。`name`键指定要链接的本地库的名称。`kind`键是一个可选值，它指定具有以下可选值的库类型：
 
-- `dylib` — 表示要链接的库类型是动态库。如果没有指定 `kind`，这是默认值。
-- `static` — 表示要链接的库类型是静态库。
-- `framework` — 表示要链接的库类型是 macOS 框架。这只对 macOS 目标平台有效。
-- `raw-dylib` — 表示要链接的库类型是动态库，但具体要链接到哪个动态库，链接器会使用本次编译出的库作为导入库来定位识别链接，（相关详细信息，请参阅下面的[`dylib` vs `rawdylib`][`dylib` versus `raw-dylib`]）。此属性仅对 Windows目标平台有效。
+- `dylib` --- 表示要链接的库类型是动态库。如果没有指定 `kind`，这是默认值。
+- `static` --- 表示要链接的库类型是静态库。
+- `framework` --- 表示要链接的库类型是 macOS 框架。这只对 macOS 目标平台有效。
+- `raw-dylib` --- 表示要链接的库类型是动态库，但具体要链接到哪个动态库，链接器会使用本次编译出的库作为导入库来定位识别链接，（相关详细信息，请参阅下面的[`dylib` vs `rawdylib`][`dylib` versus `raw-dylib`]）。此属性仅对 Windows目标平台有效。
 
 如果指定了 `kind`键，则必须有 `name`键。
 
@@ -108,17 +113,17 @@ extern "C" {
 <!-- ignore: requires extern linking -->
 ```rust,ignore
 #[link(name = "crypto")]
-extern {
+unsafe extern {
     // …
 }
 
 #[link(name = "CoreFoundation", kind = "framework")]
-extern {
+unsafe extern {
     // …
 }
 
 #[link(wasm_import_module = "foo")]
-extern {
+unsafe extern {
     // …
 }
 ```
@@ -199,9 +204,9 @@ extern {
 可以在外部(`extern`)块内的程序项声明上指定 *`link_name`属性*，可以用它来指示要为给定函数或静态项导入的具体 symbol。它使用 [_MetaNameValueStr_]元项属性句法指定 symbol 的名称。
 
 ```rust
-extern {
+unsafe extern {
     #[link_name = "actual_symbol_name"]
-    fn name_in_rust();
+    safe fn name_in_rust();
 }
 ```
 此属性和 `link_ordinal`属性同时使用会导致编译器报错。
@@ -220,9 +225,9 @@ extern {
 <!-- ignore: Only works on x86 Windows -->
 ```rust,ignore
 #[link(name = "exporter", kind = "raw-dylib")]
-extern "stdcall" {
+unsafe extern "stdcall" {
     #[link_ordinal(15)]
-    fn imported_function_stdcall(i: i32);
+    safe fn imported_function_stdcall(i: i32);
 }
 ```
 
@@ -257,3 +262,4 @@ extern "stdcall" {
 [`verbatim` documentation for rustc]: https://doc.rust-lang.org/rustc/command-line-arguments.html#linking-modifiers-verbatim
 [`dylib` versus `raw-dylib`]: #dylib-versus-raw-dylib
 [PE Format]: https://learn.microsoft.com/windows/win32/debug/pe-format#import-name-type
+[value namespace]: ../names/namespaces.md

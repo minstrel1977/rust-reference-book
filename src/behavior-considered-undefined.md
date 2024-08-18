@@ -2,8 +2,8 @@
 ## 未定义的行为
 
 >[behavior-considered-undefined.md](https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md)\
->commit: 142b2ed77d33f37a9973772bd95e6144ed9dce43 \
->本章译文最后维护日期：2023-11-05
+>commit: e62b5b8c8f92ba85cbbabe9e6208b44482b3a4a7 \
+>本章译文最后维护日期：2024-08-17
 
 如果 Rust 代码出现了下面列表中的任何行为，则此代码被认为不正确。这包括非安全(`unsafe`)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。
 
@@ -26,7 +26,7 @@
 
   当这些类型的值（`Box<T>`、`&mut T` 和 `&T` 类型的值）被传递给复合类型的（内嵌）成员字段时，所有的这些规则都适用，但注意传递给间接寻址的指针不适用。
 * 修改不可变的字节数据。[常量(`const`)][`const`]项内的所有字节都是不可变的。
-  不可变变量所拥有的字节数据是不可变的，除非这些字节是 [`UnsafeCell<U>`] 的一部分。
+  不可变绑定或不可变`static` 所拥有的字节数据是不可变的，除非这些字节是 [`UnsafeCell<U>`] 的一部分。
   
   此外，共享引用[指向][pointed to]的字节数据是不可变的，包括通过其他引用（共享的和可变的）和 `Box`方式传递过来的；这里传递过来的（也就是传递性）包括那些存储在复合类型成员字段中的各种引用。
 
@@ -35,33 +35,18 @@
 * 通过编译器内部函数(compiler intrinsics)调用未定义行为。[^译注1]
 * 执行基于当前平台不支持的平台特性编译的代码（参见 [`target_feature`]），*除非*此平台特别申明执行带有此特性的代码安全。
 * 用错误的 ABI约定来调用函数，或使用错误的 ABI展开约定来从某函数里发起展开(unwinding)。  
-* 产生非法值(invalid value)，即使在私有字段和本地变量中也是如此。“产生”值发生在这些时候：把值赋给位置表达式、从位置表达式里读取值、传递值给函数/基本运算(primitive operation)或从函数/基本运算中返回值。
-  以下值非法值（相对于它们各自的类型来说）：
-  * 布尔型[`bool`]中除 `false` (`0`) 或 `true` (`1`) 之外的值。
-  * 不包括在该枚举(`enum`)类型定义中的判别值。
-  * 指向为空(null)的函数指针(`fn` pointer)。
-  * 代理码点(Surrogate)或码点大于 `char::MAX` 的字符(`char`)值。
-  * `!`类型的值（任何此类型的值都是非法的）。
-  * 从[未初始化的内存][undef]中，或从字符串切片(`str`)的未初始化部分获取的整数（i*/u*）、浮点值（f*）或裸指针。
-  * 引用或 `Box<T>` （代表的指针）指向了[悬垂(dangling)][dangling]、未对齐或指向非法值。
-  * 宽(wide)引用、`Box<T>` 或原始指针中带有非法元数据(metadata)：
-    * 如果 trait对象(`dyn Trait`)的元数据不是指向 `Trait` 的虚函数表(vtable)（该虚函数表与该指针或引用所指向的实际动态 trait 相匹配）的指针，则 `dyn Trait` 元数据非法。
-    * 如果切片的长度不是有效的 `usize`，则该切片的元数据是非法的（也就是说，不能从它未初始化的内存中读取它）。
-  * 带有非法值的自定义类型的值非法。在标准库中，这条促成了 [`NonNull<T>`] 和 [`NonZero*`] 的出现。
-
-    > **注意**：`rustc` 是使用还未稳定下来的属性 `rustc_layout_scalar_valid_range_*` 来验证这条规则的。
+* 产生[非法值][invalid-values]，即使在私有字段和本地变量中也是如此。“产生”值发生在这些时候：把值赋给位置表达式、从位置表达式里读取值、传递值给函数/基本运算(primitive operation)或从函数/基本运算中返回值。
+  
 * 错误的使用内联汇编，具体细节，参见使用内联汇编编写代码时的相关[规则][rules]。
 * **在[常量上下文](const_eval.md#const-context)中**: 将指向某些以分配对象的指针（引用、原始指针或函数指针）转换或以其他方式重新解释为非指针类型（如整数）。
 “重新解释”是指在不进行强制转换的情况下以整数类型加载指针值，例如通过执行原始指针强制转换或使用联合体（union）。
-
-**注意：** 未初始化的内存对于任何具有有限有效值集的类型来说也隐式非法。也就是说，允许读取未初始化内存的情况只发生在联合体(`union`)内部和“对齐填充区(padding)”里（类型的字段/元素之间的间隙）。
 
 > **注意**：未定义行为影响整个程序。例如，在 C 中调用一个 C函数已经出现了未定义行为，这意味着包含此调用的整个程序都包含了未定义行为。如果 Rust 再通过 FFI 来调用这段 C程序/代码，那这段 Rust 代码也包含了未定义行为。反之亦然。因此 Rust 中的未定义行为会对任何其他通过 FFI 过来调用的代码造成不利影响。
 
 ### Pointed-to bytes
 ### 指向字节数据
 
-指针或引用“指向”的字节数据是由指针值和指针对象类型的尺寸（使用`size_of_val`）来确定的。
+指针或引用“指向”的字节数据是由指针值和指针对象类型的内存宽度（使用`size_of_val`）来确定的。
 
 ### Places based on misaligned pointers
 ### 基于未对齐指针的地址[based on a misaligned pointer]: #places-based-on-misaligned-pointers
@@ -77,11 +62,43 @@
 ### 悬垂指针
 [dangling]: #dangling-pointers
 
-如果引用/指针为空，或者它[指向][points to]的所有字节都不是同一个实时分配(live allocation，也因此它们都必须是*某次*分配)的一部分，那么它就是“悬垂(dangling)”的。
+如果引用/指针[指向][points to]的所有字节不是同一个热分配(live allocation)或同一个热分配的一部分，那么它就是“悬垂(dangling)”的。
 
-如果类型的内存宽度为0，则该指针必定 要么指向某个初始化内存的内部（包括刚好指向分配的最后一个字节之后），要么直接从非零整型字面量来构造而来。
+如果内存宽带为0，则指针通常从不“悬垂”（即使它是空指针）。
 
-请注意，动态内存宽度类型（如切片和字符串）指向其底层的整个数据范围，因此他们的代表长度的元数据永远不要太大，这一点很重要。特别需要注意的是 Rust里，值的动态内存宽度（由`size_of_val` 来确定）不能超过 `isize::MAX`。
+请注意，动态内存宽度类型（如切片和字符串）指向其底层的整个数据范围，因此他们的代表长度的元数据永远不要太大，这一点很重要。特别需要注意的是 Rust里，值的动态内存宽度（由`size_of_val` 来确定）不能超过 `isize::MAX`，因为单次的内存分配不可能分配出大于 `isize::MAX` 的内存宽度。
+
+### Invalid values
+### 非法值
+[invalid-values]: #invalid-values
+
+Rust编译器假设在程序执行期间生成的所有值都是“合法的”，因此生成非法值是立即UB。
+
+值是否合法取决于它们的类型：
+  * 布尔[`bool`]值必须是 `false` (`0`) 或 `true` (`1`)。
+  * 函数指针(`fn` pointer)类型的值必须非空。
+  * `char`值不能是代理码点(Surrogate)（即不能在字符区间`0xD800..=0xDFFF` 内），并且必须等于或小于`char::MAX`。
+  * !`类型的值不能存在。
+  * 整型值（`i*`/`u*`）、浮点值（`f*`）或裸指针必须初始化，即不能从[未初始化内存][undef]中获得。
+  * `str`值被视为`[u8]`，即它必须被初始化。
+  * `enum` 必须具有有效的判别值，并且由该判别值标示的变体的所有字段在其各自的类型下都必须合法。
+  * `struct`、元组和数组要求所有字段/元素在其各自的类型下必须合法。
+  * 对于 `union`，确切的合法性要求尚未确定。
+    显然，所有可以完全在安全代码中创建的值都是合法的。
+    如果联合体具有内存宽度为零的字段，则任何值都合法。
+    进一步的细节[仍在争论中](https://github.com/rust-lang/unsafe-code-guidelines/issues/438)。
+  * 引用或 [`Box<T>`] 必须对齐，不能[悬垂][dangling]，必须指向合法值（对于动态内存宽度的类型，使用由元数据确定的指针对象的实际动态类型）。
+    请注意，最后一点（关于指向合法值）仍然未尽事宜存在一些争论。
+  * 胖引用、[`Box<T>`] 或裸指针的元数据必须与类型尾部那个不定内存宽度的类型相匹配：
+    * `dyn Trait`元数据必须是指向编译器为`Trait`生成的 vtable的指针。
+      （对于裸指针，此要求仍然存在一些争论。）
+    * 切片（`[T]`）的元数据必须是有效的 `usize`。
+      此外，对于胖引用和 [`Box<T>`]，如果切片的元数据使指向值的总内存宽度大于`isize:：MAX`，则切片元数据无效。
+  * 如果类型具有自定义的有效值区间，则合法值必须在该区间内。
+    在标准库中，这条导致了 [`NonNull<T>`] 和 [`NonZero*`] 的出现。
+    > **注意**：`rustc` 是使用还未稳定下来的属性 `rustc_layout_scalar_valid_range_*` 来达成这个目标的。
+
+**注意：** 未初始化的内存对于任何具有有限合法值集的类型来说也隐式非法。也就是说，允许读取未初始化内存的情况只发生在联合体(`union`)内部和“对齐填充区(padding)”里（类型的字段/元素之间的间隙）。
 
 [dangling]: #dangling-pointers
 [`bool`]: types/boolean.md
@@ -93,7 +110,8 @@
 [`UnsafeCell<U>`]: https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html
 [Rustonomicon]: https://doc.rust-lang.org/nomicon/index.html
 [`NonNull<T>`]: https://doc.rust-lang.org/core/ptr/struct.NonNull.html
-[`NonZero*`]: https://doc.rust-lang.org/core/num/index.html
+[`NonZero<T>`]: https://doc.rust-lang.org/std/core/num/struct.NonZero.html
+[`Box<T>`]: https://doc.rust-lang.org/std/alloc/boxed/struct.Box.html
 [place expression context]: expressions.md#place-expressions-and-value-expressions
 [rules]: inline-assembly.md#rules-for-inline-assembly
 [points to]: #pointed-to-bytes

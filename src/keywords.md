@@ -2,8 +2,8 @@
 # 关键字
 
 >[keywords.md](https://github.com/rust-lang/reference/blob/master/src/keywords.md)\
->commit: 089f6e12c2d557b02caf545604db93e20a2c99b3
->本章译文最后维护日期：2023-05-12
+>commit: 00540f1de0d49531fae10637dfdce1ddda846a38
+>本章译文最后维护日期：2024-08-18
 
 Rust 将关键字分为三类：
 
@@ -106,8 +106,8 @@ Rust 将关键字分为三类：
   // error[E0262]: invalid lifetime parameter name: `'static`
   fn invalid_lifetime_parameter<'static>(s: &'static str) -> &'static str { s }
   ```
-* 在 2015 版次中，当 [`dyn`] 用在非 `::` 开头的路径限定的类型前时，它是关键字。
-  
+* 在 2015 版次中，当 [`dyn`] 用在不是 `::`、`<`、生存期、`？`、`for`关键字或左圆括号开头的路径限定的类型前时，它是关键字。
+
   从 2018 版开始，`dyn` 被提升为一个严格关键字。
 
 > **<sup>词法分析</sup>**\
@@ -117,6 +117,7 @@ Rust 将关键字分为三类：
 >
 > **<sup>词法分析 2015</sup>**\
 > KW_DYN            : `dyn`
+* `safe` 用于限定函数和静态项，并且只在[外部块][external blocks]中有意义。
 
 [items]: items.md
 [Variables]: variables.md
@@ -131,3 +132,4 @@ Rust 将关键字分为三类：
 [`dyn`]: types/trait-object.md
 [loop label]: expressions/loop-expr.md#loop-labels
 [generic lifetime parameter]: items/generics.md
+[external blocks]: items/external-blocks.md

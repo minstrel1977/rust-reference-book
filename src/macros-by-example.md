@@ -2,8 +2,8 @@
 # 声明宏
 
 >[macros-by-example.md](https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md)\
->commit: 01c8196e0120f0577f6aa05ada9d962f0019a86c \
->本章译文最后维护日期：2024-05-26
+>commit: 62715cf8b4bd3b14d41f06f3d2cec3a42f4b1cd2 \
+>本章译文最后维护日期：2024-08-18
 
 > **<sup>句法</sup>**\
 > _MacroRulesDefinition_ :\
@@ -135,9 +135,9 @@ foo!(3);
 
 重复运算符为：
 
-- `*` — 表示任意数量的重复元。
-- `+` — 表示至少有一个重复元。
-- `?` — 表示一个可选的匹配段，可以出现零次或一次。
+- `*` --- 表示任意数量的重复元。
+- `+` --- 表示至少有一个重复元。
+- `?` --- 表示一个可选的匹配段，可以出现零次或一次。
 
 因为 `?` 表示最多出现一次，所以它不能与分隔符一起使用。
 

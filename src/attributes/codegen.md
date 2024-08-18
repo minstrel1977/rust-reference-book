@@ -2,8 +2,8 @@
 # 代码生成属性
 
 >[codegen.md](https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md)\
->commit: 5854fcc286557ad3ab34d325073d11d8118096b6 \
->本章译文最后维护日期：2024-05-02
+>commit: 21012e88c9407fb5937fa922e35c3bf59da6ca83 \
+>本章译文最后维护日期：2024-08-17
 
 下述[属性][attributes]用于控制代码生成。
 
@@ -68,33 +68,33 @@ unsafe fn foo_avx2() {}
 
 特性     | 隐式启用 | 描述 | 中文描述
 ------------|--------------------|-------------------|-------------------
-`adx`       |          | [ADX] — Multi-Precision Add-Carry Instruction Extensions | 多精度进位指令扩展
-`aes`       | `sse2`   | [AES] — Advanced Encryption Standard | 高级加密标准
-`avx`       | `sse4.2` | [AVX] — Advanced Vector Extensions | 高级矢量扩展指令集
-`avx2`      | `avx`    | [AVX2] — Advanced Vector Extensions 2 | 高级矢量扩展指令集2
-`bmi1`      |          | [BMI1] — Bit Manipulation Instruction Sets | 位操作指令集
-`bmi2`      |          | [BMI2] — Bit Manipulation Instruction Sets 2 | 位操作指令集2
+`adx`       |          | [ADX] --- Multi-Precision Add-Carry Instruction Extensions | 多精度进位指令扩展
+`aes`       | `sse2`   | [AES] --- Advanced Encryption Standard | 高级加密标准
+`avx`       | `sse4.2` | [AVX] --- Advanced Vector Extensions | 高级矢量扩展指令集
+`avx2`      | `avx`    | [AVX2] --- Advanced Vector Extensions 2 | 高级矢量扩展指令集2
+`bmi1`      |          | [BMI1] --- Bit Manipulation Instruction Sets | 位操作指令集
+`bmi2`      |          | [BMI2] --- Bit Manipulation Instruction Sets 2 | 位操作指令集2
 `cmpxchg16b`|          | [`cmpxchg16b`] - Compares and exchange 16 bytes (128 bits) of data atomically | 原子地比较和交换16字节（128位）的数据
 `f16c`      | `avx`    | [F16C] — 16-bit floating point conversion instructions | 16位浮点转换指令
-`fma`       | `avx`    | [FMA3] — Three-operand fused multiply-add | 三操作乘加指令
-`fxsr`      |          | [`fxsave`] and [`fxrstor`] — Save and restore x87 FPU, MMX Technology, and SSE State | 保存/恢复 x87 FPU、MMX技术，SSE状态
-`lzcnt`     |          | [`lzcnt`] — Leading zeros count  | 前导零计数
+`fma`       | `avx`    | [FMA3] --- Three-operand fused multiply-add | 三操作乘加指令
+`fxsr`      |          | [`fxsave`] and [`fxrstor`] --- Save and restore x87 FPU, MMX Technology, and SSE State | 保存/恢复 x87 FPU、MMX技术，SSE状态
+`lzcnt`     |          | [`lzcnt`] --- Leading zeros count  | 前导零计数
 `movbe`     |          | [`movbe`] - Move data after swapping bytes | 交换字节后移动数据
 `pclmulqdq` | `sse2`   | [`pclmulqdq`] — Packed carry-less multiplication quadword | 压缩的四字（16字节）无进位乘法，主用于加解密处理
-`popcnt`    |          | [`popcnt`] — Count of bits set to 1 | 位1计数，即统计有多少个“为1的位”
-`rdrand`    |          | [`rdrand`] — Read random number | 从芯片上的硬件随机数生成器中获取随机数
-`rdseed`    |          | [`rdseed`] — Read random seed | 从芯片上的硬件随机数生成器中获取为伪随机数生成器设定的种子
-`sha`       | `sse2`   | [SHA] — Secure Hash Algorithm | 安全哈希算法
-`sse`       |          | [SSE] — Streaming <abbr title="Single Instruction Multiple Data">SIMD</abbr> Extensions | 单指令多数据流扩展指令集
-`sse2`      | `sse`    | [SSE2] — Streaming SIMD Extensions 2 | 单指令多数据流扩展指令集2
-`sse3`      | `sse2`   | [SSE3] — Streaming SIMD Extensions 3 | 单指令多数据流扩展指令集3
-`sse4.1`    | `ssse3`  | [SSE4.1] — Streaming SIMD Extensions 4.1 | 单指令多数据流扩展指令集4.1
-`sse4.2`    | `sse4.1` | [SSE4.2] — Streaming SIMD Extensions 4.2 | 单指令多数据流扩展指令集4.2
-`ssse3`     | `sse3`   | [SSSE3] — Supplemental Streaming SIMD Extensions 3 | 增补单指令多数据流扩展指令集3
-`xsave`     |          | [`xsave`] — Save processor extended states | 保存处理器扩展状态
-`xsavec`    |          | [`xsavec`] — Save processor extended states with compaction | 压缩保存处理器扩展状态
-`xsaveopt`  |          | [`xsaveopt`] — Save processor extended states optimized | xsave 指令集的优化版
-`xsaves`    |          | [`xsaves`] — Save processor extended states supervisor | 保存处理器扩展状态监视程序
+`popcnt`    |          | [`popcnt`] --- Count of bits set to 1 | 位1计数，即统计有多少个“为1的位”
+`rdrand`    |          | [`rdrand`] --- Read random number | 从芯片上的硬件随机数生成器中获取随机数
+`rdseed`    |          | [`rdseed`] --- Read random seed | 从芯片上的硬件随机数生成器中获取为伪随机数生成器设定的种子
+`sha`       | `sse2`   | [SHA] --- Secure Hash Algorithm | 安全哈希算法
+`sse`       |          | [SSE] --- Streaming <abbr title="Single Instruction Multiple Data">SIMD</abbr> Extensions | 单指令多数据流扩展指令集
+`sse2`      | `sse`    | [SSE2] --- Streaming SIMD Extensions 2 | 单指令多数据流扩展指令集2
+`sse3`      | `sse2`   | [SSE3] --- Streaming SIMD Extensions 3 | 单指令多数据流扩展指令集3
+`sse4.1`    | `ssse3`  | [SSE4.1] --- Streaming SIMD Extensions 4.1 | 单指令多数据流扩展指令集4.1
+`sse4.2`    | `sse4.1` | [SSE4.2] --- Streaming SIMD Extensions 4.2 | 单指令多数据流扩展指令集4.2
+`ssse3`     | `sse3`   | [SSSE3] --- Supplemental Streaming SIMD Extensions 3 | 增补单指令多数据流扩展指令集3
+`xsave`     |          | [`xsave`] --- Save processor extended states | 保存处理器扩展状态
+`xsavec`    |          | [`xsavec`] --- Save processor extended states with compaction | 压缩保存处理器扩展状态
+`xsaveopt`  |          | [`xsaveopt`] --- Save processor extended states optimized | xsave 指令集的优化版
+`xsaves`    |          | [`xsaves`] --- Save processor extended states supervisor | 保存处理器扩展状态监视程序
 
 <!-- 保持各个链接靠近其表格，便于以后的增删改 -->
 
@@ -195,27 +195,27 @@ unsafe fn foo_avx2() {}
 
 特性     | 隐式启用  | 描述
 ------------|---------------------|-------------------
-`a`         |                     | [A][rv-a] — 原子指令
-`c`         |                     | [C][rv-c] — 压缩指令
-`m`         |                     | [M][rv-m] — 整数乘除法指令
-`zb`        | `zba`, `zbc`, `zbs` | [Zb][rv-zb] — 位操作指令
-`zba`       |                     | [Zba][rv-zb-zba] — 地址生成指令
+`a`         |                     | [A][rv-a] --- 原子指令
+`c`         |                     | [C][rv-c] --- 压缩指令
+`m`         |                     | [M][rv-m] --- 整数乘除法指令
+`zb`        | `zba`, `zbc`, `zbs` | [Zb][rv-zb] --- 位操作指令
+`zba`       |                     | [Zba][rv-zb-zba] --- 地址生成指令
 `zbb`       |                     | [Zbb][rv-zb-zbb] — 基本位操作
-`zbc`       |                     | [Zbc][rv-zb-zbc] — 无进位乘法指令
-`zbkb`      |                     | [Zbkb][rv-zb-zbkb] — 加密算法下的位操作指令
-`zbkc`      |                     | [Zbkc][rv-zb-zbc] — 加密算法下的无进位乘法指令
-`zbkx`      |                     | [Zbkx][rv-zb-zbkx] — 交叉排列 
+`zbc`       |                     | [Zbc][rv-zb-zbc] --- 无进位乘法指令
+`zbkb`      |                     | [Zbkb][rv-zb-zbkb] --- 加密算法下的位操作指令
+`zbkc`      |                     | [Zbkc][rv-zb-zbc] --- 加密算法下的无进位乘法指令
+`zbkx`      |                     | [Zbkx][rv-zb-zbkx] --- 交叉排列 
 `zbs`       |                     | [Zbs][rv-zb-zbs] — 单比特指令
-`zk`        | `zkn`, `zkr`, `zks`, `zkt`, `zbkb`, `zbkc`, `zkbx` | [Zk][rv-zk] — 标量加密
-`zkn`       | `zknd`, `zkne`, `zknh`, `zbkb`, `zbkc`, `zkbx`     | [Zkn][rv-zkn] — NIST算法套件扩展
-`zknd`      |                                                    | [Zknd][rv-zknd] — NIST算法套件: AES解密
-`zkne`      |                                                    | [Zkne][rv-zkne] — NIST算法套件: AES加密
-`zknh`      |                                                    | [Zknh][rv-zknh] — NIST算法套件: 哈希函数指令
-`zkr`       |                                                    | [Zkr][rv-zkr] — 熵源扩展
-`zks`       | `zksed`, `zksh`, `zbkb`, `zbkc`, `zkbx`            | [Zks][rv-zks] — ShangMi算法套件
-`zksed`     |                                                    | [Zksed][rv-zksed] — ShangMi算法套件: SM4分组密码指令
-`zksh`      |                                                    | [Zksh][rv-zksh] — ShangMi算法套件: SM3哈希函数指令
-`zkt`       |                                                    | [Zkt][rv-zkt] — Data Independent Execution Latency Subset
+`zk`        | `zkn`, `zkr`, `zks`, `zkt`, `zbkb`, `zbkc`, `zkbx` | [Zk][rv-zk] --- 标量加密
+`zkn`       | `zknd`, `zkne`, `zknh`, `zbkb`, `zbkc`, `zkbx`     | [Zkn][rv-zkn] --- NIST算法套件扩展
+`zknd`      |                                                    | [Zknd][rv-zknd] --- NIST算法套件: AES解密
+`zkne`      |                                                    | [Zkne][rv-zkne] --- NIST算法套件: AES加密
+`zknh`      |                                                    | [Zknh][rv-zknh] --- NIST算法套件: 哈希函数指令
+`zkr`       |                                                    | [Zkr][rv-zkr] --- 熵源扩展
+`zks`       | `zksed`, `zksh`, `zbkb`, `zbkc`, `zkbx`            | [Zks][rv-zks] --- ShangMi算法套件
+`zksed`     |                                                    | [Zksed][rv-zksed] --- ShangMi算法套件: SM4分组密码指令
+`zksh`      |                                                    | [Zksh][rv-zksh] --- ShangMi算法套件: SM3哈希函数指令
+`zkt`       |                                                    | [Zkt][rv-zkt] --- 数据独立执行延迟子集
 
 <!-- Keep links near each table to make it easier to move and update. -->
 

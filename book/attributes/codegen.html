@@ -1,17 +1,16 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js light">
+<html lang="en" class="light" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>代码生成 - Rust 参考手册 - The Rust Language Reference</title>
+        <title>代码生成 - The Rust Reference</title>
 
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="rust reference 中文, Rust 参考手册">
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="../favicon.svg">
         <link rel="shortcut icon" href="../favicon.png">
@@ -33,15 +32,16 @@
         <link rel="stylesheet" href="../theme/reference.css">
 
     </head>
-    <body>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -57,50 +57,81 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
-            html.classList.remove('no-js')
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
         </script>
 
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
                 <ol class="chapter"><li class="chapter-item expanded affix "><a href="../翻译说明.html">翻译说明</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">介绍</a></li><li class="chapter-item expanded "><a href="../notation.html"><strong aria-hidden="true">1.</strong> 表义符</a></li><li class="chapter-item expanded "><a href="../lexical-structure.html"><strong aria-hidden="true">2.</strong> 词法结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../input-format.html"><strong aria-hidden="true">2.1.</strong> 输入格式</a></li><li class="chapter-item expanded "><a href="../keywords.html"><strong aria-hidden="true">2.2.</strong> 关键字</a></li><li class="chapter-item expanded "><a href="../identifiers.html"><strong aria-hidden="true">2.3.</strong> 标识符</a></li><li class="chapter-item expanded "><a href="../comments.html"><strong aria-hidden="true">2.4.</strong> 注释</a></li><li class="chapter-item expanded "><a href="../whitespace.html"><strong aria-hidden="true">2.5.</strong> 空白符</a></li><li class="chapter-item expanded "><a href="../tokens.html"><strong aria-hidden="true">2.6.</strong> token</a></li></ol></li><li class="chapter-item expanded "><a href="../macros.html"><strong aria-hidden="true">3.</strong> 宏</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../macros-by-example.html"><strong aria-hidden="true">3.1.</strong> 声明宏</a></li><li class="chapter-item expanded "><a href="../procedural-macros.html"><strong aria-hidden="true">3.2.</strong> 过程宏</a></li></ol></li><li class="chapter-item expanded "><a href="../crates-and-source-files.html"><strong aria-hidden="true">4.</strong> crate 和源文件</a></li><li class="chapter-item expanded "><a href="../conditional-compilation.html"><strong aria-hidden="true">5.</strong> 条件编译</a></li><li class="chapter-item expanded "><a href="../items.html"><strong aria-hidden="true">6.</strong> 程序项</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../items/modules.html"><strong aria-hidden="true">6.1.</strong> 模块</a></li><li class="chapter-item expanded "><a href="../items/extern-crates.html"><strong aria-hidden="true">6.2.</strong> 外部crate</a></li><li class="chapter-item expanded "><a href="../items/use-declarations.html"><strong aria-hidden="true">6.3.</strong> use声明</a></li><li class="chapter-item expanded "><a href="../items/functions.html"><strong aria-hidden="true">6.4.</strong> 函数</a></li><li class="chapter-item expanded "><a href="../items/type-aliases.html"><strong aria-hidden="true">6.5.</strong> 类型别名</a></li><li class="chapter-item expanded "><a href="../items/structs.html"><strong aria-hidden="true">6.6.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="../items/enumerations.html"><strong aria-hidden="true">6.7.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="../items/unions.html"><strong aria-hidden="true">6.8.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="../items/constant-items.html"><strong aria-hidden="true">6.9.</strong> 常量项</a></li><li class="chapter-item expanded "><a href="../items/static-items.html"><strong aria-hidden="true">6.10.</strong> 静态项</a></li><li class="chapter-item expanded "><a href="../items/traits.html"><strong aria-hidden="true">6.11.</strong> trait</a></li><li class="chapter-item expanded "><a href="../items/implementations.html"><strong aria-hidden="true">6.12.</strong> 实现</a></li><li class="chapter-item expanded "><a href="../items/external-blocks.html"><strong aria-hidden="true">6.13.</strong> 外部块</a></li><li class="chapter-item expanded "><a href="../items/generics.html"><strong aria-hidden="true">6.14.</strong> 泛型参数</a></li><li class="chapter-item expanded "><a href="../items/associated-items.html"><strong aria-hidden="true">6.15.</strong> 关联程序项</a></li></ol></li><li class="chapter-item expanded "><a href="../attributes.html"><strong aria-hidden="true">7.</strong> 属性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../attributes/testing.html"><strong aria-hidden="true">7.1.</strong> 测试</a></li><li class="chapter-item expanded "><a href="../attributes/derive.html"><strong aria-hidden="true">7.2.</strong> 派生</a></li><li class="chapter-item expanded "><a href="../attributes/diagnostics.html"><strong aria-hidden="true">7.3.</strong> 诊断</a></li><li class="chapter-item expanded "><a href="../attributes/codegen.html" class="active"><strong aria-hidden="true">7.4.</strong> 代码生成</a></li><li class="chapter-item expanded "><a href="../attributes/limits.html"><strong aria-hidden="true">7.5.</strong> 极限值设置</a></li><li class="chapter-item expanded "><a href="../attributes/type_system.html"><strong aria-hidden="true">7.6.</strong> 类型系统</a></li><li class="chapter-item expanded "><a href="../attributes/debugger.html"><strong aria-hidden="true">7.7.</strong> 调试器</a></li></ol></li><li class="chapter-item expanded "><a href="../statements-and-expressions.html"><strong aria-hidden="true">8.</strong> 语句和表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../statements.html"><strong aria-hidden="true">8.1.</strong> 语句</a></li><li class="chapter-item expanded "><a href="../expressions.html"><strong aria-hidden="true">8.2.</strong> 表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../expressions/literal-expr.html"><strong aria-hidden="true">8.2.1.</strong> 字面量表达式</a></li><li class="chapter-item expanded "><a href="../expressions/path-expr.html"><strong aria-hidden="true">8.2.2.</strong> 路径表达式</a></li><li class="chapter-item expanded "><a href="../expressions/block-expr.html"><strong aria-hidden="true">8.2.3.</strong> 块表达式</a></li><li class="chapter-item expanded "><a href="../expressions/operator-expr.html"><strong aria-hidden="true">8.2.4.</strong> 运算符表达式</a></li><li class="chapter-item expanded "><a href="../expressions/grouped-expr.html"><strong aria-hidden="true">8.2.5.</strong> 分组表达式</a></li><li class="chapter-item expanded "><a href="../expressions/array-expr.html"><strong aria-hidden="true">8.2.6.</strong> 数组和索引表达式</a></li><li class="chapter-item expanded "><a href="../expressions/tuple-expr.html"><strong aria-hidden="true">8.2.7.</strong> 元组和索引表达式</a></li><li class="chapter-item expanded "><a href="../expressions/struct-expr.html"><strong aria-hidden="true">8.2.8.</strong> 结构体表达式</a></li><li class="chapter-item expanded "><a href="../expressions/call-expr.html"><strong aria-hidden="true">8.2.9.</strong> 调用表达式</a></li><li class="chapter-item expanded "><a href="../expressions/method-call-expr.html"><strong aria-hidden="true">8.2.10.</strong> 方法调用表达式</a></li><li class="chapter-item expanded "><a href="../expressions/field-expr.html"><strong aria-hidden="true">8.2.11.</strong> 字段访问表达式</a></li><li class="chapter-item expanded "><a href="../expressions/closure-expr.html"><strong aria-hidden="true">8.2.12.</strong> 闭包表达式</a></li><li class="chapter-item expanded "><a href="../expressions/loop-expr.html"><strong aria-hidden="true">8.2.13.</strong> 循环表达式</a></li><li class="chapter-item expanded "><a href="../expressions/range-expr.html"><strong aria-hidden="true">8.2.14.</strong> 区间表达式</a></li><li class="chapter-item expanded "><a href="../expressions/if-expr.html"><strong aria-hidden="true">8.2.15.</strong> if 和 if let 表达式</a></li><li class="chapter-item expanded "><a href="../expressions/match-expr.html"><strong aria-hidden="true">8.2.16.</strong> 匹配表达式</a></li><li class="chapter-item expanded "><a href="../expressions/return-expr.html"><strong aria-hidden="true">8.2.17.</strong> 返回表达式</a></li><li class="chapter-item expanded "><a href="../expressions/await-expr.html"><strong aria-hidden="true">8.2.18.</strong> 等待(await)表达式</a></li><li class="chapter-item expanded "><a href="../expressions/underscore-expr.html"><strong aria-hidden="true">8.2.19.</strong> 下划线表达式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../patterns.html"><strong aria-hidden="true">9.</strong> 模式</a></li><li class="chapter-item expanded "><a href="../type-system.html"><strong aria-hidden="true">10.</strong> 类型系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types.html"><strong aria-hidden="true">10.1.</strong> 类型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/boolean.html"><strong aria-hidden="true">10.1.1.</strong> 布尔型</a></li><li class="chapter-item expanded "><a href="../types/numeric.html"><strong aria-hidden="true">10.1.2.</strong> 数字型</a></li><li class="chapter-item expanded "><a href="../types/textual.html"><strong aria-hidden="true">10.1.3.</strong> 字符型</a></li><li class="chapter-item expanded "><a href="../types/never.html"><strong aria-hidden="true">10.1.4.</strong> never类型</a></li><li class="chapter-item expanded "><a href="../types/tuple.html"><strong aria-hidden="true">10.1.5.</strong> 元组</a></li><li class="chapter-item expanded "><a href="../types/array.html"><strong aria-hidden="true">10.1.6.</strong> 数组</a></li><li class="chapter-item expanded "><a href="../types/slice.html"><strong aria-hidden="true">10.1.7.</strong> 切片</a></li><li class="chapter-item expanded "><a href="../types/struct.html"><strong aria-hidden="true">10.1.8.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="../types/enum.html"><strong aria-hidden="true">10.1.9.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="../types/union.html"><strong aria-hidden="true">10.1.10.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="../types/function-item.html"><strong aria-hidden="true">10.1.11.</strong> 函数项类型</a></li><li class="chapter-item expanded "><a href="../types/closure.html"><strong aria-hidden="true">10.1.12.</strong> 闭包</a></li><li class="chapter-item expanded "><a href="../types/pointer.html"><strong aria-hidden="true">10.1.13.</strong> 指针型</a></li><li class="chapter-item expanded "><a href="../types/function-pointer.html"><strong aria-hidden="true">10.1.14.</strong> 函数指针</a></li><li class="chapter-item expanded "><a href="../types/trait-object.html"><strong aria-hidden="true">10.1.15.</strong> trait对象</a></li><li class="chapter-item expanded "><a href="../types/impl-trait.html"><strong aria-hidden="true">10.1.16.</strong> 实现trait</a></li><li class="chapter-item expanded "><a href="../types/parameters.html"><strong aria-hidden="true">10.1.17.</strong> 类型参数</a></li><li class="chapter-item expanded "><a href="../types/inferred.html"><strong aria-hidden="true">10.1.18.</strong> 可推断类型</a></li></ol></li><li class="chapter-item expanded "><a href="../dynamically-sized-types.html"><strong aria-hidden="true">10.2.</strong> 动态内存宽度类型(DST)</a></li><li class="chapter-item expanded "><a href="../type-layout.html"><strong aria-hidden="true">10.3.</strong> 类型布局 </a></li><li class="chapter-item expanded "><a href="../interior-mutability.html"><strong aria-hidden="true">10.4.</strong> 内部可变性</a></li><li class="chapter-item expanded "><a href="../subtyping.html"><strong aria-hidden="true">10.5.</strong> 子类型和型变</a></li><li class="chapter-item expanded "><a href="../trait-bounds.html"><strong aria-hidden="true">10.6.</strong> trait约束及其生存期约束</a></li><li class="chapter-item expanded "><a href="../type-coercions.html"><strong aria-hidden="true">10.7.</strong> 类型自动强转</a></li><li class="chapter-item expanded "><a href="../destructors.html"><strong aria-hidden="true">10.8.</strong> 析构函数</a></li><li class="chapter-item expanded "><a href="../lifetime-elision.html"><strong aria-hidden="true">10.9.</strong> 生存期省略</a></li></ol></li><li class="chapter-item expanded "><a href="../special-types-and-traits.html"><strong aria-hidden="true">11.</strong> 特殊类型和 trait</a></li><li class="chapter-item expanded "><a href="../names.html"><strong aria-hidden="true">12.</strong> 名称</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../names/namespaces.html"><strong aria-hidden="true">12.1.</strong> 命名空间</a></li><li class="chapter-item expanded "><a href="../names/scopes.html"><strong aria-hidden="true">12.2.</strong> 作用域</a></li><li class="chapter-item expanded "><a href="../names/preludes.html"><strong aria-hidden="true">12.3.</strong> 预导入包</a></li><li class="chapter-item expanded "><a href="../paths.html"><strong aria-hidden="true">12.4.</strong> 路径</a></li><li class="chapter-item expanded "><a href="../names/name-resolution.html"><strong aria-hidden="true">12.5.</strong> 名称解析</a></li><li class="chapter-item expanded "><a href="../visibility-and-privacy.html"><strong aria-hidden="true">12.6.</strong> 可见性与隐私权</a></li></ol></li><li class="chapter-item expanded "><a href="../memory-model.html"><strong aria-hidden="true">13.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../memory-allocation-and-lifetime.html"><strong aria-hidden="true">13.1.</strong> 内存分配和生存期</a></li><li class="chapter-item expanded "><a href="../variables.html"><strong aria-hidden="true">13.2.</strong> 变量</a></li></ol></li><li class="chapter-item expanded "><a href="../linkage.html"><strong aria-hidden="true">14.</strong> 链接</a></li><li class="chapter-item expanded "><a href="../inline-assembly.html"><strong aria-hidden="true">15.</strong> 内联汇编</a></li><li class="chapter-item expanded "><a href="../unsafety.html"><strong aria-hidden="true">16.</strong> 非安全性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../unsafe-keyword.html"><strong aria-hidden="true">16.1.</strong> T关键字unsafe</a></li><li class="chapter-item expanded "><a href="../behavior-considered-undefined.html"><strong aria-hidden="true">16.2.</strong> 未定义行为</a></li><li class="chapter-item expanded "><a href="../behavior-not-considered-unsafe.html"><strong aria-hidden="true">16.3.</strong> 不被认为是非安全的行为</a></li></ol></li><li class="chapter-item expanded "><a href="../const_eval.html"><strong aria-hidden="true">17.</strong> 常量求值</a></li><li class="chapter-item expanded "><a href="../abi.html"><strong aria-hidden="true">18.</strong> ABI</a></li><li class="chapter-item expanded "><a href="../runtime.html"><strong aria-hidden="true">19.</strong> Rust运行时</a></li><li class="chapter-item expanded "><a href="../appendices.html"><strong aria-hidden="true">20.</strong> 附录</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../macro-ambiguity.html"><strong aria-hidden="true">20.1.</strong> 宏规范</a></li><li class="chapter-item expanded "><a href="../influences.html"><strong aria-hidden="true">20.2.</strong> 影响来源</a></li><li class="chapter-item expanded "><a href="../glossary.html"><strong aria-hidden="true">20.3.</strong> 术语表</a></li><li class="chapter-item expanded "><a href="../本书术语翻译对照表.html"><strong aria-hidden="true">20.4.</strong> 本书术语翻译对照表</a></li></ol></li></ol>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -111,13 +142,13 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Rust 参考手册 - The Rust Language Reference</h1>
+                    <h1 class="menu-title">The Rust Reference</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        <a href="https://gitee.com/minstrel1977/rust-reference" title="Git repository" aria-label="Git repository">
+                        <a href="https://github.com/rust-lang/reference/" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                         <a href="https://github.com/rust-lang/reference/edit/master/src/attributes/codegen.md" title="Suggest an edit" aria-label="Suggest an edit">
@@ -139,7 +170,7 @@
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -153,8 +184,8 @@
 <h1 id="代码生成属性"><a class="header" href="#代码生成属性">代码生成属性</a></h1>
 <blockquote>
 <p><a href="https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md">codegen.md</a><br />
-commit: 5854fcc286557ad3ab34d325073d11d8118096b6 <br />
-本章译文最后维护日期：2024-05-02</p>
+commit: 21012e88c9407fb5937fa922e35c3bf59da6ca83 <br />
+本章译文最后维护日期：2024-08-17</p>
 </blockquote>
 <p>下述<a href="../attributes.html">属性</a>用于控制代码生成。</p>
 <h2 id="optimization-hints"><a class="header" href="#optimization-hints">Optimization hints</a></h2>
@@ -187,11 +218,10 @@ commit: 5854fcc286557ad3ab34d325073d11d8118096b6 <br />
 <p><em><code>target_feature</code>[属性]</em> 可应用于函数上，用来为特定的平台架构特性(platform architecture features)启用该函数的代码生成功能。它使用 <a href="../attributes.html#meta-item-attribute-syntax"><em>MetaListNameValueStr</em></a>元项属性句法格式来启用（该平台支持的）特性，但这次要求这个句法里只能有一个 <code>enable</code>键，其对应值是一个逗号分隔的由平台特性名字组成的符串。</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">#[cfg(target_feature = &quot;avx2&quot;)]
-</span>#[target_feature(enable = &quot;avx2&quot;)]
+</span><span class="boring">#[cfg(target_feature = "avx2")]
+</span>#[target_feature(enable = "avx2")]
 unsafe fn foo_avx2() {}
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>每个<a href="../conditional-compilation.html#target_arch">目标架构</a>都有一组可以被启用的特性。为不是当前 crate 的编译目标下的CPU架构指定需启用的特性是错误的。</p>
 <p>调用启用了当前运行代码的平台不支持的特性编译的函数将导致<a href="../behavior-considered-undefined.html">未定义行为</a>，除非此平台明确声明此调用是安全的。</p>
 <p>应用了 <code>target_feature</code> 的函数不会内联到不支持给定特性的上下文中。<code>#[inline(always)]</code> 属性不能与 <code>target_feature</code>属性一起使用。</p>
@@ -202,33 +232,33 @@ unsafe fn foo_avx2() {}
 <p>即便是同为 <code>x86</code> 或 <code>x86_64</code> 平台，并不是所有平台都支持下述特性，而在未启用特定特性的平台下执行带有此平台的特性的代码会导致未定义行为。
 因此在这类平台下，<code>#[target_feature]</code> 只能应用于<a href="../unsafe-keyword.html">非安全(<code>unsafe</code>)函数</a>。</p>
 <div class="table-wrapper"><table><thead><tr><th>特性</th><th>隐式启用</th><th>描述</th><th>中文描述</th></tr></thead><tbody>
-<tr><td><code>adx</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/Intel_ADX">ADX</a> — Multi-Precision Add-Carry Instruction Extensions</td><td>多精度进位指令扩展</td></tr>
-<tr><td><code>aes</code></td><td><code>sse2</code></td><td><a href="https://en.wikipedia.org/wiki/AES_instruction_set">AES</a> — Advanced Encryption Standard</td><td>高级加密标准</td></tr>
-<tr><td><code>avx</code></td><td><code>sse4.2</code></td><td><a href="https://en.wikipedia.org/wiki/Advanced_Vector_Extensions">AVX</a> — Advanced Vector Extensions</td><td>高级矢量扩展指令集</td></tr>
-<tr><td><code>avx2</code></td><td><code>avx</code></td><td><a href="https://en.wikipedia.org/wiki/Advanced_Vector_Extensions#AVX2">AVX2</a> — Advanced Vector Extensions 2</td><td>高级矢量扩展指令集2</td></tr>
-<tr><td><code>bmi1</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets">BMI1</a> — Bit Manipulation Instruction Sets</td><td>位操作指令集</td></tr>
-<tr><td><code>bmi2</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#BMI2">BMI2</a> — Bit Manipulation Instruction Sets 2</td><td>位操作指令集2</td></tr>
+<tr><td><code>adx</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/Intel_ADX">ADX</a> — Multi-Precision Add-Carry Instruction Extensions</td><td>多精度进位指令扩展</td></tr>
+<tr><td><code>aes</code></td><td><code>sse2</code></td><td><a href="https://en.wikipedia.org/wiki/AES_instruction_set">AES</a> — Advanced Encryption Standard</td><td>高级加密标准</td></tr>
+<tr><td><code>avx</code></td><td><code>sse4.2</code></td><td><a href="https://en.wikipedia.org/wiki/Advanced_Vector_Extensions">AVX</a> — Advanced Vector Extensions</td><td>高级矢量扩展指令集</td></tr>
+<tr><td><code>avx2</code></td><td><code>avx</code></td><td><a href="https://en.wikipedia.org/wiki/Advanced_Vector_Extensions#AVX2">AVX2</a> — Advanced Vector Extensions 2</td><td>高级矢量扩展指令集2</td></tr>
+<tr><td><code>bmi1</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets">BMI1</a> — Bit Manipulation Instruction Sets</td><td>位操作指令集</td></tr>
+<tr><td><code>bmi2</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#BMI2">BMI2</a> — Bit Manipulation Instruction Sets 2</td><td>位操作指令集2</td></tr>
 <tr><td><code>cmpxchg16b</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/cmpxchg8b:cmpxchg16b"><code>cmpxchg16b</code></a> - Compares and exchange 16 bytes (128 bits) of data atomically</td><td>原子地比较和交换16字节（128位）的数据</td></tr>
 <tr><td><code>f16c</code></td><td><code>avx</code></td><td><a href="https://en.wikipedia.org/wiki/F16C">F16C</a> — 16-bit floating point conversion instructions</td><td>16位浮点转换指令</td></tr>
-<tr><td><code>fma</code></td><td><code>avx</code></td><td><a href="https://en.wikipedia.org/wiki/FMA_instruction_set">FMA3</a> — Three-operand fused multiply-add</td><td>三操作乘加指令</td></tr>
-<tr><td><code>fxsr</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/fxsave"><code>fxsave</code></a> and <a href="https://www.felixcloutier.com/x86/fxrstor"><code>fxrstor</code></a> — Save and restore x87 FPU, MMX Technology, and SSE State</td><td>保存/恢复 x87 FPU、MMX技术，SSE状态</td></tr>
-<tr><td><code>lzcnt</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/lzcnt"><code>lzcnt</code></a> — Leading zeros count</td><td>前导零计数</td></tr>
+<tr><td><code>fma</code></td><td><code>avx</code></td><td><a href="https://en.wikipedia.org/wiki/FMA_instruction_set">FMA3</a> — Three-operand fused multiply-add</td><td>三操作乘加指令</td></tr>
+<tr><td><code>fxsr</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/fxsave"><code>fxsave</code></a> and <a href="https://www.felixcloutier.com/x86/fxrstor"><code>fxrstor</code></a> — Save and restore x87 FPU, MMX Technology, and SSE State</td><td>保存/恢复 x87 FPU、MMX技术，SSE状态</td></tr>
+<tr><td><code>lzcnt</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/lzcnt"><code>lzcnt</code></a> — Leading zeros count</td><td>前导零计数</td></tr>
 <tr><td><code>movbe</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/movbe"><code>movbe</code></a> - Move data after swapping bytes</td><td>交换字节后移动数据</td></tr>
 <tr><td><code>pclmulqdq</code></td><td><code>sse2</code></td><td><a href="https://www.felixcloutier.com/x86/pclmulqdq"><code>pclmulqdq</code></a> — Packed carry-less multiplication quadword</td><td>压缩的四字（16字节）无进位乘法，主用于加解密处理</td></tr>
-<tr><td><code>popcnt</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/popcnt"><code>popcnt</code></a> — Count of bits set to 1</td><td>位1计数，即统计有多少个“为1的位”</td></tr>
-<tr><td><code>rdrand</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/RdRand"><code>rdrand</code></a> — Read random number</td><td>从芯片上的硬件随机数生成器中获取随机数</td></tr>
-<tr><td><code>rdseed</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/RdRand"><code>rdseed</code></a> — Read random seed</td><td>从芯片上的硬件随机数生成器中获取为伪随机数生成器设定的种子</td></tr>
-<tr><td><code>sha</code></td><td><code>sse2</code></td><td><a href="https://en.wikipedia.org/wiki/Intel_SHA_extensions">SHA</a> — Secure Hash Algorithm</td><td>安全哈希算法</td></tr>
-<tr><td><code>sse</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/Streaming_SIMD_Extensions">SSE</a> — Streaming <abbr title="Single Instruction Multiple Data">SIMD</abbr> Extensions</td><td>单指令多数据流扩展指令集</td></tr>
-<tr><td><code>sse2</code></td><td><code>sse</code></td><td><a href="https://en.wikipedia.org/wiki/SSE2">SSE2</a> — Streaming SIMD Extensions 2</td><td>单指令多数据流扩展指令集2</td></tr>
-<tr><td><code>sse3</code></td><td><code>sse2</code></td><td><a href="https://en.wikipedia.org/wiki/SSE3">SSE3</a> — Streaming SIMD Extensions 3</td><td>单指令多数据流扩展指令集3</td></tr>
-<tr><td><code>sse4.1</code></td><td><code>ssse3</code></td><td><a href="https://en.wikipedia.org/wiki/SSE4#SSE4.1">SSE4.1</a> — Streaming SIMD Extensions 4.1</td><td>单指令多数据流扩展指令集4.1</td></tr>
-<tr><td><code>sse4.2</code></td><td><code>sse4.1</code></td><td><a href="https://en.wikipedia.org/wiki/SSE4#SSE4.2">SSE4.2</a> — Streaming SIMD Extensions 4.2</td><td>单指令多数据流扩展指令集4.2</td></tr>
-<tr><td><code>ssse3</code></td><td><code>sse3</code></td><td><a href="https://en.wikipedia.org/wiki/SSSE3">SSSE3</a> — Supplemental Streaming SIMD Extensions 3</td><td>增补单指令多数据流扩展指令集3</td></tr>
-<tr><td><code>xsave</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/xsave"><code>xsave</code></a> — Save processor extended states</td><td>保存处理器扩展状态</td></tr>
-<tr><td><code>xsavec</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/xsavec"><code>xsavec</code></a> — Save processor extended states with compaction</td><td>压缩保存处理器扩展状态</td></tr>
-<tr><td><code>xsaveopt</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/xsaveopt"><code>xsaveopt</code></a> — Save processor extended states optimized</td><td>xsave 指令集的优化版</td></tr>
-<tr><td><code>xsaves</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/xsaves"><code>xsaves</code></a> — Save processor extended states supervisor</td><td>保存处理器扩展状态监视程序</td></tr>
+<tr><td><code>popcnt</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/popcnt"><code>popcnt</code></a> — Count of bits set to 1</td><td>位1计数，即统计有多少个“为1的位”</td></tr>
+<tr><td><code>rdrand</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/RdRand"><code>rdrand</code></a> — Read random number</td><td>从芯片上的硬件随机数生成器中获取随机数</td></tr>
+<tr><td><code>rdseed</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/RdRand"><code>rdseed</code></a> — Read random seed</td><td>从芯片上的硬件随机数生成器中获取为伪随机数生成器设定的种子</td></tr>
+<tr><td><code>sha</code></td><td><code>sse2</code></td><td><a href="https://en.wikipedia.org/wiki/Intel_SHA_extensions">SHA</a> — Secure Hash Algorithm</td><td>安全哈希算法</td></tr>
+<tr><td><code>sse</code></td><td></td><td><a href="https://en.wikipedia.org/wiki/Streaming_SIMD_Extensions">SSE</a> — Streaming <abbr title="Single Instruction Multiple Data">SIMD</abbr> Extensions</td><td>单指令多数据流扩展指令集</td></tr>
+<tr><td><code>sse2</code></td><td><code>sse</code></td><td><a href="https://en.wikipedia.org/wiki/SSE2">SSE2</a> — Streaming SIMD Extensions 2</td><td>单指令多数据流扩展指令集2</td></tr>
+<tr><td><code>sse3</code></td><td><code>sse2</code></td><td><a href="https://en.wikipedia.org/wiki/SSE3">SSE3</a> — Streaming SIMD Extensions 3</td><td>单指令多数据流扩展指令集3</td></tr>
+<tr><td><code>sse4.1</code></td><td><code>ssse3</code></td><td><a href="https://en.wikipedia.org/wiki/SSE4#SSE4.1">SSE4.1</a> — Streaming SIMD Extensions 4.1</td><td>单指令多数据流扩展指令集4.1</td></tr>
+<tr><td><code>sse4.2</code></td><td><code>sse4.1</code></td><td><a href="https://en.wikipedia.org/wiki/SSE4#SSE4.2">SSE4.2</a> — Streaming SIMD Extensions 4.2</td><td>单指令多数据流扩展指令集4.2</td></tr>
+<tr><td><code>ssse3</code></td><td><code>sse3</code></td><td><a href="https://en.wikipedia.org/wiki/SSSE3">SSSE3</a> — Supplemental Streaming SIMD Extensions 3</td><td>增补单指令多数据流扩展指令集3</td></tr>
+<tr><td><code>xsave</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/xsave"><code>xsave</code></a> — Save processor extended states</td><td>保存处理器扩展状态</td></tr>
+<tr><td><code>xsavec</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/xsavec"><code>xsavec</code></a> — Save processor extended states with compaction</td><td>压缩保存处理器扩展状态</td></tr>
+<tr><td><code>xsaveopt</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/xsaveopt"><code>xsaveopt</code></a> — Save processor extended states optimized</td><td>xsave 指令集的优化版</td></tr>
+<tr><td><code>xsaves</code></td><td></td><td><a href="https://www.felixcloutier.com/x86/xsaves"><code>xsaves</code></a> — Save processor extended states supervisor</td><td>保存处理器扩展状态监视程序</td></tr>
 </tbody></table>
 </div><!-- 保持各个链接靠近其表格，便于以后的增删改 -->
 <h4 id="aarch64"><a class="header" href="#aarch64"><code>aarch64</code></a></h4>
@@ -290,27 +320,27 @@ unsafe fn foo_avx2() {}
 <p>此类目标平台要求 <code>#[target_feature]</code>属性只能应用在 <a href="../unsafe-keyword.html"><code>unsafe</code> 函数</a>上。</p>
 <p>有关这些功能的进一步文档可以在其各自的规范中找到。可以在 <a href="https://github.com/riscv/riscv-isa-manual">RISC-V ISA手册</a>或 <a href="https://github.com/riscv">RISC-V GitHub账户</a>上的手册中参阅相关规范细节。</p>
 <div class="table-wrapper"><table><thead><tr><th>特性</th><th>隐式启用</th><th>描述</th></tr></thead><tbody>
-<tr><td><code>a</code></td><td></td><td><a href="https://github.com/riscv/riscv-isa-manual/blob/de46343a245c6ee1f7b1a40c92fe1a86bd4f4978/src/a-st-ext.adoc">A</a> — 原子指令</td></tr>
-<tr><td><code>c</code></td><td></td><td><a href="https://github.com/riscv/riscv-isa-manual/blob/de46343a245c6ee1f7b1a40c92fe1a86bd4f4978/src/c-st-ext.adoc">C</a> — 压缩指令</td></tr>
-<tr><td><code>m</code></td><td></td><td><a href="https://github.com/riscv/riscv-isa-manual/blob/de46343a245c6ee1f7b1a40c92fe1a86bd4f4978/src/m-st-ext.adoc">M</a> — 整数乘除法指令</td></tr>
-<tr><td><code>zb</code></td><td><code>zba</code>, <code>zbc</code>, <code>zbs</code></td><td><a href="https://github.com/riscv/riscv-bitmanip">Zb</a> — 位操作指令</td></tr>
-<tr><td><code>zba</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zba.adoc">Zba</a> — 地址生成指令</td></tr>
+<tr><td><code>a</code></td><td></td><td><a href="https://github.com/riscv/riscv-isa-manual/blob/de46343a245c6ee1f7b1a40c92fe1a86bd4f4978/src/a-st-ext.adoc">A</a> — 原子指令</td></tr>
+<tr><td><code>c</code></td><td></td><td><a href="https://github.com/riscv/riscv-isa-manual/blob/de46343a245c6ee1f7b1a40c92fe1a86bd4f4978/src/c-st-ext.adoc">C</a> — 压缩指令</td></tr>
+<tr><td><code>m</code></td><td></td><td><a href="https://github.com/riscv/riscv-isa-manual/blob/de46343a245c6ee1f7b1a40c92fe1a86bd4f4978/src/m-st-ext.adoc">M</a> — 整数乘除法指令</td></tr>
+<tr><td><code>zb</code></td><td><code>zba</code>, <code>zbc</code>, <code>zbs</code></td><td><a href="https://github.com/riscv/riscv-bitmanip">Zb</a> — 位操作指令</td></tr>
+<tr><td><code>zba</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zba.adoc">Zba</a> — 地址生成指令</td></tr>
 <tr><td><code>zbb</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbb.adoc">Zbb</a> — 基本位操作</td></tr>
-<tr><td><code>zbc</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbc.adoc">Zbc</a> — 无进位乘法指令</td></tr>
-<tr><td><code>zbkb</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbkb.adoc">Zbkb</a> — 加密算法下的位操作指令</td></tr>
-<tr><td><code>zbkc</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbc.adoc">Zbkc</a> — 加密算法下的无进位乘法指令</td></tr>
-<tr><td><code>zbkx</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbkx.adoc">Zbkx</a> — 交叉排列</td></tr>
+<tr><td><code>zbc</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbc.adoc">Zbc</a> — 无进位乘法指令</td></tr>
+<tr><td><code>zbkb</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbkb.adoc">Zbkb</a> — 加密算法下的位操作指令</td></tr>
+<tr><td><code>zbkc</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbc.adoc">Zbkc</a> — 加密算法下的无进位乘法指令</td></tr>
+<tr><td><code>zbkx</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbkx.adoc">Zbkx</a> — 交叉排列</td></tr>
 <tr><td><code>zbs</code></td><td></td><td><a href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/zbs.adoc">Zbs</a> — 单比特指令</td></tr>
-<tr><td><code>zk</code></td><td><code>zkn</code>, <code>zkr</code>, <code>zks</code>, <code>zkt</code>, <code>zbkb</code>, <code>zbkc</code>, <code>zkbx</code></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zk.adoc">Zk</a> — 标量加密</td></tr>
-<tr><td><code>zkn</code></td><td><code>zknd</code>, <code>zkne</code>, <code>zknh</code>, <code>zbkb</code>, <code>zbkc</code>, <code>zkbx</code></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkn.adoc">Zkn</a> — NIST算法套件扩展</td></tr>
-<tr><td><code>zknd</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zknd.adoc">Zknd</a> — NIST算法套件: AES解密</td></tr>
-<tr><td><code>zkne</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkne.adoc">Zkne</a> — NIST算法套件: AES加密</td></tr>
-<tr><td><code>zknh</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zknh.adoc">Zknh</a> — NIST算法套件: 哈希函数指令</td></tr>
-<tr><td><code>zkr</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkr.adoc">Zkr</a> — 熵源扩展</td></tr>
-<tr><td><code>zks</code></td><td><code>zksed</code>, <code>zksh</code>, <code>zbkb</code>, <code>zbkc</code>, <code>zkbx</code></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zks.adoc">Zks</a> — ShangMi算法套件</td></tr>
-<tr><td><code>zksed</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zksed.adoc">Zksed</a> — ShangMi算法套件: SM4分组密码指令</td></tr>
-<tr><td><code>zksh</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zksh.adoc">Zksh</a> — ShangMi算法套件: SM3哈希函数指令</td></tr>
-<tr><td><code>zkt</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkr.adoc">Zkt</a> — Data Independent Execution Latency Subset</td></tr>
+<tr><td><code>zk</code></td><td><code>zkn</code>, <code>zkr</code>, <code>zks</code>, <code>zkt</code>, <code>zbkb</code>, <code>zbkc</code>, <code>zkbx</code></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zk.adoc">Zk</a> — 标量加密</td></tr>
+<tr><td><code>zkn</code></td><td><code>zknd</code>, <code>zkne</code>, <code>zknh</code>, <code>zbkb</code>, <code>zbkc</code>, <code>zkbx</code></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkn.adoc">Zkn</a> — NIST算法套件扩展</td></tr>
+<tr><td><code>zknd</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zknd.adoc">Zknd</a> — NIST算法套件: AES解密</td></tr>
+<tr><td><code>zkne</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkne.adoc">Zkne</a> — NIST算法套件: AES加密</td></tr>
+<tr><td><code>zknh</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zknh.adoc">Zknh</a> — NIST算法套件: 哈希函数指令</td></tr>
+<tr><td><code>zkr</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkr.adoc">Zkr</a> — 熵源扩展</td></tr>
+<tr><td><code>zks</code></td><td><code>zksed</code>, <code>zksh</code>, <code>zbkb</code>, <code>zbkc</code>, <code>zkbx</code></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zks.adoc">Zks</a> — ShangMi算法套件</td></tr>
+<tr><td><code>zksed</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zksed.adoc">Zksed</a> — ShangMi算法套件: SM4分组密码指令</td></tr>
+<tr><td><code>zksh</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zksh.adoc">Zksh</a> — ShangMi算法套件: SM3哈希函数指令</td></tr>
+<tr><td><code>zkt</code></td><td></td><td><a href="https://github.com/riscv/riscv-crypto/blob/e2dd7d98b7f34d477e38cb5fd7a3af4379525189/doc/scalar/riscv-crypto-scalar-zkr.adoc">Zkt</a> — 数据独立执行延迟子集</td></tr>
 </tbody></table>
 </div><!-- Keep links near each table to make it easier to move and update. -->
 <h4 id="wasm32-or-wasm64"><a class="header" href="#wasm32-or-wasm64"><code>wasm32</code> or <code>wasm64</code></a></h4>
@@ -333,7 +363,7 @@ unsafe fn foo_avx2() {}
 </blockquote>
 <h2 id="the-track_caller-attribute"><a class="header" href="#the-track_caller-attribute">The <code>track_caller</code> attribute</a></h2>
 <h2 id="track_caller属性"><a class="header" href="#track_caller属性"><code>track_caller</code>属性</a></h2>
-<p><code>track_caller</code>属性可以应用于除程序入口函数 <code>fn main</code> 之外的任何带有 <a href="../items/external-blocks.html#abi"><code>&quot;Rust&quot;</code> ABI</a> 的函数。当此属性应用于 trait声明中的函数或方法时，该属性将应用在其所有的实现上。如果 trait 本身提供了带有该属性的默认函数实现，那么该属性也应用于其覆盖实现(override implementations)。</p>
+<p><code>track_caller</code>属性可以应用于除程序入口函数 <code>fn main</code> 之外的任何带有 <a href="../items/external-blocks.html#abi"><code>"Rust"</code> ABI</a> 的函数。当此属性应用于 trait声明中的函数或方法时，该属性将应用在其所有的实现上。如果 trait 本身提供了带有该属性的默认函数实现，那么该属性也应用于其覆盖实现(override implementations)。</p>
 <p>当应用于外部(<code>extern</code>)块中的函数上时，该属性也必须应用于此函数的任何链接实现(linked implementations)上，否则将导致未定义行为。当此属性应用在一个外部(<code>extern</code>)块内可用的函数上时，该外部(<code>extern</code>)块中的对该函数的声明也必须带上此属性，否则将导致未定义行为。</p>
 <h3 id="behavior"><a class="header" href="#behavior">Behavior</a></h3>
 <h3 id="表现"><a class="header" href="#表现">表现</a></h3>
@@ -342,10 +372,9 @@ unsafe fn foo_avx2() {}
 </span><span class="boring">fn main() {
 </span>#[track_caller]
 fn f() {
-    println!(&quot;{}&quot;, std::panic::Location::caller());
+    println!("{}", std::panic::Location::caller());
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <blockquote>
 <p>注意：<code>core</code> 提供了 <a href="https://doc.rust-lang.org/core/panic/struct.Location.html#method.caller"><code>core::panic::Location::caller</code></a> 来观察调用者的位置。它封装(wrap)了由 <code>rustc</code> 实现的内部函数(intrinsic) <a href="https://doc.rust-lang.org/core/intrinsics/fn.caller_location.html"><code>core::intrinsics::caller_location</code></a>。</p>
 </blockquote>
@@ -359,54 +388,51 @@ fn f() {
 </span><span class="boring">fn main() {
 </span><span class="boring">#[track_caller]
 </span><span class="boring">fn f() {
-</span><span class="boring">    println!(&quot;{}&quot;, std::panic::Location::caller());
+</span><span class="boring">    println!("{}", std::panic::Location::caller());
 </span><span class="boring">}
 </span>fn calls_f() {
     f(); // &lt;-- f() 将打印此处的位置信息
 }
-<span class="boring">}
-</span></code></pre></pre>
-<p><code>f</code> 被另一个有此属性限定的函数 <code>g</code> 调用，<code>g</code> 又被 <code>calls_g</code>' 调用，<code>f</code> 和 <code>g</code> 内的代码又同时观察 <code>g</code> 在 <code>calls_g</code> 内的调用位置：</p>
+<span class="boring">}</span></code></pre></pre>
+<p><code>f</code> 被另一个有此属性限定的函数 <code>g</code> 调用，<code>g</code> 又被 <code>calls_g</code>’ 调用，<code>f</code> 和 <code>g</code> 内的代码又同时观察 <code>g</code> 在 <code>calls_g</code> 内的调用位置：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">#[track_caller]
 </span><span class="boring">fn f() {
-</span><span class="boring">    println!(&quot;{}&quot;, std::panic::Location::caller());
+</span><span class="boring">    println!("{}", std::panic::Location::caller());
 </span><span class="boring">}
 </span>#[track_caller]
 fn g() {
-    println!(&quot;{}&quot;, std::panic::Location::caller());
+    println!("{}", std::panic::Location::caller());
     f();
 }
 
 fn calls_g() {
     g(); // &lt;-- g() 将两次打印此处的位置信息，一次是它自己，一次是此 f() 里来的
 }
-<span class="boring">}
-</span></code></pre></pre>
-<p>当<code>g</code> 又被另一个有此属性限定的函数 <code>h</code> 调用，而<code>g</code> 又被 <code>calls_h</code>' 调用，<code>f</code>、<code>g</code> 和 <code>h</code> 内的代码又同时观察 <code>h</code> 在 <code>calls_h</code> 内的调用位置：</p>
+<span class="boring">}</span></code></pre></pre>
+<p>当<code>g</code> 又被另一个有此属性限定的函数 <code>h</code> 调用，而<code>g</code> 又被 <code>calls_h</code>’ 调用，<code>f</code>、<code>g</code> 和 <code>h</code> 内的代码又同时观察 <code>h</code> 在 <code>calls_h</code> 内的调用位置：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">#[track_caller]
 </span><span class="boring">fn f() {
-</span><span class="boring">    println!(&quot;{}&quot;, std::panic::Location::caller());
+</span><span class="boring">    println!("{}", std::panic::Location::caller());
 </span><span class="boring">}
 </span><span class="boring">#[track_caller]
 </span><span class="boring">fn g() {
-</span><span class="boring">    println!(&quot;{}&quot;, std::panic::Location::caller());
+</span><span class="boring">    println!("{}", std::panic::Location::caller());
 </span><span class="boring">    f();
 </span><span class="boring">}
 </span>#[track_caller]
 fn h() {
-    println!(&quot;{}&quot;, std::panic::Location::caller());
+    println!("{}", std::panic::Location::caller());
     g();
 }
 
 fn calls_h() {
     h(); // &lt;-- 将三次打印此处的位置信息，一次是它自己，一次是此 g() 里来，一次是从 f() 里来的
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>以此类推。</p>
 <h3 id="limitations"><a class="header" href="#limitations">Limitations</a></h3>
 <h3 id="限制"><a class="header" href="#限制">限制</a></h3>
@@ -433,19 +459,119 @@ fn calls_h() {
 <h3 id="on-arm"><a class="header" href="#on-arm">On ARM</a></h3>
 <p>在 <code>ARMv4T</code> 和 <code>ARMv5te</code> 架构下， 支持使用:</p>
 <ul>
-<li><code>arm::a32</code> - 生成 A32 &quot;ARM&quot; 指令风格的函数。</li>
-<li><code>arm::t32</code> - 生成 T32 &quot;Thumb&quot; 指令风格的函数</li>
+<li><code>arm::a32</code> - 生成 A32 “ARM” 指令风格的函数。</li>
+<li><code>arm::t32</code> - 生成 T32 “Thumb” 指令风格的函数</li>
 </ul>
 <!-- ignore: arm-only -->
 <pre><code class="language-rust ignore">#[instruction_set(arm::a32)]
 fn foo_arm_code() {}
 
 #[instruction_set(arm::t32)]
-fn bar_thumb_code() {}
-</code></pre>
+fn bar_thumb_code() {}</code></pre>
 <p>使用 <code>instruction_set</code>属性会带来以下副作用：</p>
 <p>*如果将函数的地址作为函数指针，则地址的低位将根据指令集设置为 0（arm）或 1（thumb）。
-*函数中的任何内联程汇编指令都必须使用指定的指令集，而不是目标默认值。</p>
+*函数中的任何内联程汇编指令都必须使用指定的指令集，而不是目标默认值。
+[asm]: ../inline-assembly.md#asm
+[asm.abi-clobbers]: ../inline-assembly.md#asm.abi-clobbers
+[asm.abi-clobbers.explicit-have-precedence]: ../inline-assembly.md#asm.abi-clobbers.explicit-have-precedence
+[asm.abi-clobbers.intro]: ../inline-assembly.md#asm.abi-clobbers.intro
+[asm.abi-clobbers.many]: ../inline-assembly.md#asm.abi-clobbers.many
+[asm.abi-clobbers.must-specify]: ../inline-assembly.md#asm.abi-clobbers.must-specify
+[asm.abi-clobbers.supported-abis]: ../inline-assembly.md#asm.abi-clobbers.supported-abis
+[asm.directives]: ../inline-assembly.md#asm.directives
+[asm.directives.stateful]: ../inline-assembly.md#asm.directives.stateful
+[asm.directives.subset-supported]: ../inline-assembly.md#asm.directives.subset-supported
+[asm.directives.supported-directives]: ../inline-assembly.md#asm.directives.supported-directives
+[asm.example]: ../inline-assembly.md#asm.example
+[asm.intro]: ../inline-assembly.md#asm.intro
+[asm.operand-type]: ../inline-assembly.md#asm.operand-type
+[asm.operand-type.global_asm-restriction]: ../inline-assembly.md#asm.operand-type.global_asm-restriction
+[asm.operand-type.left-to-right]: ../inline-assembly.md#asm.operand-type.left-to-right
+[asm.operand-type.supported-operands]: ../inline-assembly.md#asm.operand-type.supported-operands
+[asm.operand-type.supported-operands.in]: ../inline-assembly.md#asm.operand-type.supported-operands.in
+[asm.operand-type.supported-operands.inlateout]: ../inline-assembly.md#asm.operand-type.supported-operands.inlateout
+[asm.operand-type.supported-operands.inout]: ../inline-assembly.md#asm.operand-type.supported-operands.inout
+[asm.operand-type.supported-operands.inout-arrow]: ../inline-assembly.md#asm.operand-type.supported-operands.inout-arrow
+[asm.operand-type.supported-operands.lateout]: ../inline-assembly.md#asm.operand-type.supported-operands.lateout
+[asm.operand-type.supported-operands.out]: ../inline-assembly.md#asm.operand-type.supported-operands.out
+[asm.operand-type.supported-operands.sym]: ../inline-assembly.md#asm.operand-type.supported-operands.sym
+[asm.options]: ../inline-assembly.md#asm.options
+[asm.options.checks]: ../inline-assembly.md#asm.options.checks
+[asm.options.checks.mutually-exclusive]: ../inline-assembly.md#asm.options.checks.mutually-exclusive
+[asm.options.checks.noreturn]: ../inline-assembly.md#asm.options.checks.noreturn
+[asm.options.checks.pure]: ../inline-assembly.md#asm.options.checks.pure
+[asm.options.global_asm-restriction]: ../inline-assembly.md#asm.options.global_asm-restriction
+[asm.options.supported-options]: ../inline-assembly.md#asm.options.supported-options
+[asm.options.supported-options.att_syntax]: ../inline-assembly.md#asm.options.supported-options.att_syntax
+[asm.options.supported-options.nomem]: ../inline-assembly.md#asm.options.supported-options.nomem
+[asm.options.supported-options.noreturn]: ../inline-assembly.md#asm.options.supported-options.noreturn
+[asm.options.supported-options.nostack]: ../inline-assembly.md#asm.options.supported-options.nostack
+[asm.options.supported-options.preserves_flags]: ../inline-assembly.md#asm.options.supported-options.preserves_flags
+[asm.options.supported-options.pure]: ../inline-assembly.md#asm.options.supported-options.pure
+[asm.options.supported-options.raw]: ../inline-assembly.md#asm.options.supported-options.raw
+[asm.options.supported-options.readonly]: ../inline-assembly.md#asm.options.supported-options.readonly
+[asm.register-names]: ../inline-assembly.md#asm.register-names
+[asm.register-names.fp-bp-reserved]: ../inline-assembly.md#asm.register-names.fp-bp-reserved
+[asm.register-names.not-for-io]: ../inline-assembly.md#asm.register-names.not-for-io
+[asm.register-names.supported-register-aliases]: ../inline-assembly.md#asm.register-names.supported-register-aliases
+[asm.register-operands]: ../inline-assembly.md#asm.register-operands
+[asm.register-operands.allowed-types]: ../inline-assembly.md#asm.register-operands.allowed-types
+[asm.register-operands.equivalence-to-base-register]: ../inline-assembly.md#asm.register-operands.equivalence-to-base-register
+[asm.register-operands.error-overlapping]: ../inline-assembly.md#asm.register-operands.error-overlapping
+[asm.register-operands.error-two-operands]: ../inline-assembly.md#asm.register-operands.error-two-operands
+[asm.register-operands.register-or-class]: ../inline-assembly.md#asm.register-operands.register-or-class
+[asm.register-operands.separate-input-output]: ../inline-assembly.md#asm.register-operands.separate-input-output
+[asm.register-operands.smaller-value]: ../inline-assembly.md#asm.register-operands.smaller-value
+[asm.register-operands.supported-register-classes]: ../inline-assembly.md#asm.register-operands.supported-register-classes
+[asm.register-operands.value-type-constraints]: ../inline-assembly.md#asm.register-operands.value-type-constraints
+[asm.rules]: ../inline-assembly.md#asm.rules
+[asm.rules.black-box]: ../inline-assembly.md#asm.rules.black-box
+[asm.rules.intro]: ../inline-assembly.md#asm.rules.intro
+[asm.rules.mem-same-as-ffi]: ../inline-assembly.md#asm.rules.mem-same-as-ffi
+[asm.rules.noreturn]: ../inline-assembly.md#asm.rules.noreturn
+[asm.rules.not-exactly-once]: ../inline-assembly.md#asm.rules.not-exactly-once
+[asm.rules.not-successive]: ../inline-assembly.md#asm.rules.not-successive
+[asm.rules.only-on-exit]: ../inline-assembly.md#asm.rules.only-on-exit
+[asm.rules.preserved-registers]: ../inline-assembly.md#asm.rules.preserved-registers
+[asm.rules.preserves_flags]: ../inline-assembly.md#asm.rules.preserves_flags
+[asm.rules.pure]: ../inline-assembly.md#asm.rules.pure
+[asm.rules.reg-not-input]: ../inline-assembly.md#asm.rules.reg-not-input
+[asm.rules.reg-not-output]: ../inline-assembly.md#asm.rules.reg-not-output
+[asm.rules.stack-below-sp]: ../inline-assembly.md#asm.rules.stack-below-sp
+[asm.rules.unwind]: ../inline-assembly.md#asm.rules.unwind
+[asm.rules.x86-df]: ../inline-assembly.md#asm.rules.x86-df
+[asm.rules.x86-prefix-restriction]: ../inline-assembly.md#asm.rules.x86-prefix-restriction
+[asm.rules.x86-x87]: ../inline-assembly.md#asm.rules.x86-x87
+[asm.scope]: ../inline-assembly.md#asm.scope
+[asm.scope.asm]: ../inline-assembly.md#asm.scope.asm
+[asm.scope.global_asm]: ../inline-assembly.md#asm.scope.global_asm
+[asm.scope.intro]: ../inline-assembly.md#asm.scope.intro
+[asm.stable-targets]: ../inline-assembly.md#asm.stable-targets
+[asm.syntax]: ../inline-assembly.md#asm.syntax
+[asm.target-specific-directives]: ../inline-assembly.md#asm.target-specific-directives
+[asm.target-specific-directives.arm-32-bit]: ../inline-assembly.md#asm.target-specific-directives.arm-32-bit
+[asm.target-specific-directives.dwarf-unwinding]: ../inline-assembly.md#asm.target-specific-directives.dwarf-unwinding
+[asm.target-specific-directives.structured-exception-handling]: ../inline-assembly.md#asm.target-specific-directives.structured-exception-handling
+[asm.target-specific-directives.x86]: ../inline-assembly.md#asm.target-specific-directives.x86
+[asm.template-modifiers]: ../inline-assembly.md#asm.template-modifiers
+[asm.template-modifiers.intro]: ../inline-assembly.md#asm.template-modifiers.intro
+[asm.template-modifiers.only-one]: ../inline-assembly.md#asm.template-modifiers.only-one
+[asm.template-modifiers.smaller-value]: ../inline-assembly.md#asm.template-modifiers.smaller-value
+[asm.template-modifiers.supported-modifiers]: ../inline-assembly.md#asm.template-modifiers.supported-modifiers
+[asm.ts-args]: ../inline-assembly.md#asm.ts-args
+[asm.ts-args.at-least-once]: ../inline-assembly.md#asm.ts-args.at-least-once
+[asm.ts-args.before-other-args]: ../inline-assembly.md#asm.ts-args.before-other-args
+[asm.ts-args.llvm-syntax]: ../inline-assembly.md#asm.ts-args.llvm-syntax
+[asm.ts-args.no-implicit]: ../inline-assembly.md#asm.ts-args.no-implicit
+[asm.ts-args.one-or-more]: ../inline-assembly.md#asm.ts-args.one-or-more
+[asm.ts-args.opaque]: ../inline-assembly.md#asm.ts-args.opaque
+[asm.ts-args.order]: ../inline-assembly.md#asm.ts-args.order
+[asm.ts-args.positional-first]: ../inline-assembly.md#asm.ts-args.positional-first
+[asm.ts-args.register-operands]: ../inline-assembly.md#asm.ts-args.register-operands
+[asm.ts-args.syntax]: ../inline-assembly.md#asm.ts-args.syntax
+[asm.validity]: ../inline-assembly.md#asm.validity
+[asm.validity.necessary-but-not-sufficient]: ../inline-assembly.md#asm.validity.necessary-but-not-sufficient
+[asm.validity.non-exhaustive]: ../inline-assembly.md#asm.validity.non-exhaustive</p>
 
                     </main>
 
@@ -455,7 +581,7 @@ fn bar_thumb_code() {}
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../attributes/limits.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../attributes/limits.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -469,7 +595,7 @@ fn bar_thumb_code() {}
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../attributes/limits.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../attributes/limits.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -479,21 +605,22 @@ fn bar_thumb_code() {}
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>

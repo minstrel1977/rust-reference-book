@@ -2,19 +2,20 @@
 # Use声明
 
 >[use-declarations.md](https://github.com/rust-lang/reference/blob/master/src/items/use-declarations.md)\
->commit: 868850de68713cb7e1dc2ac8031d8978d801bddf \
->本章译文最后维护日期：2022-06-17
+>commit: 65c20b18bc2bb07c666f58cb1232276f0835fd1f \
+>本章译文最后维护日期：2024-06-18
 
 > **<sup>句法:</sup>**\
 > _UseDeclaration_ :\
 > &nbsp;&nbsp; `use` _UseTree_ `;`
 >
 > _UseTree_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; ([_SimplePath_]<sup>?</sup> `::`)<sup>?</sup> `*`\
+> &nbsp;&nbsp; &nbsp;&nbsp; ([_SimplePath_]<sup>?</sup> `::`)<sup>?</sup> `*`\8
 > &nbsp;&nbsp; | ([_SimplePath_]<sup>?</sup> `::`)<sup>?</sup> `{` (_UseTree_ ( `,`  _UseTree_ )<sup>\*</sup> `,`<sup>?</sup>)<sup>?</sup> `}`\
 > &nbsp;&nbsp; | [_SimplePath_]&nbsp;( `as` ( [IDENTIFIER] | `_` ) )<sup>?</sup>
 
 *use声明*用来创建一个或多个与程序项[路径][path]同义的本地名称绑定。通常使用 `use`声明来缩短引用模块所需的路径。这些声明可以出现在[模块][modules]和[块][blocks]中，但通常在作用域顶部。
+`use`声明有时也被叫做 _导入(import)_ 或则 _再导入(re-export)_。
 
 [path]: ../paths.md
 [modules]: modules.md
@@ -22,7 +23,7 @@
 
 use声明支持多种便捷方法:
 
-* 使用带有花括号的 glob-like(`::`) 句法 `use a::b::{c, d, e::f, g::h::i};` 来同时绑定一个系列有共同前缀的路径。
+* 使用带有花括号的句法格式 `use a::b::{c, d, e::f, g::h::i};` 来同时绑定一个系列有共同前缀的路径。
 * 使用关键字 `self`，例如 `use a::b::{self, c, d::e};`，来同时绑定一系列有共同前缀和共同父模块的路径。
 * 使用句法 `use p::q::r as x;` 将编译目标名称重新绑定为新的本地名称。这种也可以和上面两种方法一起使用：`use a::b::{self as ab, c as abc}`。
 * 使用星号通配符句法 `use a::b::*;` 来绑定与给定前缀匹配的所有路径。
@@ -77,66 +78,190 @@ fn main() {
 ## `use` Paths
 ## `use`路径
 
-> **注意**：本章节内容还不完整。
+`use`项中允许的 [paths] 遵循 [_SimplePath_] 句法，并且类似于表达式中可以使用的路径。
+它们可以为以下对象创建绑定关系：
 
-一些正常和不正常的使用 `use`程序项的例子：
-<!-- 注意: 这个例子在 2015 版或 2018 版都能正常工作。 -->
+* 可命名的[程序项][items]
+* [枚举变体][Enum variants]
+* [内置类型][Built-in types]
+* [属性][Attributes]
+* [派生宏][Derive macros]
+
+`use`项不能导入[关联项][associated items]、[泛型参数][generic parameters]、[局部变量][local variables]、带有[`Self`]的路径或[工具类属性][tool attributes]。更多限制如下所述。
+
+`use`将从导入的实体中为所有[命名空间][namespaces]名称创建绑定，但 `self`导入将仅从类型命名空间导入（如下所述）。
+例如，下面演示了如何在两个命名空间中为相同的名称创建绑定：
 
 ```rust
-# #![allow(unused_imports)]
-use std::path::{self, Path, PathBuf};  // good: std 是一个 crate 名称
-use crate::foo::baz::foobaz;    // good: foo 在当前 crate 的第一层
-
-mod foo {
-
-    pub mod example {
-        pub mod iter {}
-    }
-
-    use crate::foo::example::iter; // good: foo 在当前 crate 的第一层
-//  use example::iter;      // 在 2015 版里不行，2015 版里相对路径必须以 `self` 开头; 2018 版这样写没问题
-    use self::baz::foobaz;  // good: `self` 指的是 'foo' 模块
-    use crate::foo::bar::foobar;   // good: foo 在当前 crate 的第一层
-
-    pub mod bar {
-        pub fn foobar() { }
-    }
-
-    pub mod baz {
-        use super::bar::foobar; // good: `super` 指的是 'foo' 模块
-        pub fn foobaz() { }
-    }
+mod stuff {
+    pub struct Foo(pub i32);
 }
 
-fn main() {}
+// 导入 `Foo`类型和 `Foo'构造函数。
+use stuff::Foo;
+
+fn example() {
+    let ctor = Foo; // 使用值命名空间中的 `Foo`。
+    let x: Foo = ctor(123); // 使用类型命名空间中的 `Foo`。
+}
 ```
-：
-> **版次差异**: 在 2015 版中，`use`路径也允许访问 crate 根模块中的程序项。继续使用上面的例子，那以下 `use`路径的用法在 2015 版中有效，在 2018 版中就无效了:
+
+> **版次差异**: 在2015版中，`use`路径是相对于当前 crate 的根层的。
+> 例如：
 >
 > ```rust,edition2015
-> # mod foo {
-> #     pub mod example { pub mod iter {} }
-> #     pub mod baz { pub fn foobaz() {} }
-> # }
-> use foo::example::iter;
-> use ::foo::baz::foobaz;
-> # fn main() {}
-> ```
->
-> 2015 版不允许用 use声明来引用[外部预导入包][extern prelude]里的 crate。因此，在2015 版中仍然需要使用 [`extern crate`]声明，以便在 use声明中去引用外部 crate。从 2018 版开始，use声明可以像 `extern crate` 一样指定外部 crate 依赖关系。
->
-> 在 2018 版中，如果本地程序项与外部的 crate 名称相同，那么使用该 crate 名称需要一个前导的 `::` 来明确地选择该 crate 名称。这种做法是为了与未来可能发生的更改保持兼容。<!-- uniform_paths future-proofing -->
->
-> ```rust
-> // use std::fs; // 错误, 这样有歧义.
-> use ::std::fs;  // 从`std` crate 里导入, 不是下面这个 mod.
-> use self::std::fs as self_fs;  // 从下面这个 mod 导入.
->
-> mod std {
->     pub mod fs {}
+> mod foo {
+>     pub mod example { pub mod iter {} }
+>     pub mod baz { pub fn foobaz() {} }
 > }
+> mod bar {
+>     // 解析为根层的 `foo`。
+>     use foo::example::iter;
+>     // 前缀`::` 显式表明 `foo` 来至于根层
+>     use ::foo::baz::foobaz;
+> }
+>
 > # fn main() {}
 > ```
+>
+> 2015版不允许使用声明引用[外部预导入包][extern prelude]。
+> 因此，在2015版中，在 `use`声明需要指代外部包时仍然需要 [`extern crate`]声明。
+> 从2018版开始，`use`声明可以像 `extern crate` 能做的那样指定外部包的依赖关系。
+
+## `as` renames
+## `as`改名
+
+`as`关键字可用于更改导入实体的名称。
+
+```rust
+// 为函数`foo` 创建非公有别名 `bar`。
+use inner::foo as bar;
+
+mod inner {
+    pub fn foo() {}
+}
+```
+
+## Brace syntax
+## 大括号句法
+
+大括号可以用在路径的最后一段上，用以从上一段导入多个实体，或者，如果没有上一段，则从当前作用域内导入多个实体。
+可以嵌套大括号，从而创建路径树，其中每一组路径分段都与其父对象进行逻辑组合，以创建完整的路径。
+
+```rust
+// 创建了以下绑定:
+// - `std::collections::BTreeSet`
+// - `std::collections::hash_map`
+// - `std::collections::hash_map::HashMap`
+use std::collections::{BTreeSet, hash_map::{self, HashMap}};
+```
+
+空的大括号不会导入任何内容，尽管前导路径已验证为可访问。
+<!-- This is slightly wrong, see: https://github.com/rust-lang/rust/issues/61826 -->
+
+> **版次差异**: 在2015版中，路径是相对于 crate 的根层的，因此像 `use {foo, bar};` 这样的导入将从 crate 的根层导入名称 `foo` 和 `bar`，而从2018版开始，这些名称与当前作用域相关。
+
+## `self` imports
+## `self`导入
+
+关键字`self` 可以在[大括号句法](#brace-syntax)中使用，以便用父实体自己的名称创建父实体的绑定。
+
+```rust
+mod stuff {
+    pub fn foo() {}
+    pub fn bar() {}
+}
+mod example {
+    // 为 `stuff` 和 `foo` 创建绑定
+    use crate::stuff::{self, foo};
+    pub fn baz() {
+        foo();
+        stuff::bar();
+    }
+}
+# fn main() {}
+```
+
+`self`仅能给父实体的[类型命名空间][type namespace]中的实体创建绑定。
+例如，在下面的示例中，仅导入 `foo`模块：
+
+```rust,compile_fail
+mod bar {
+    pub mod foo {}
+    pub fn foo() {}
+}
+
+// 这仅导入模块`foo`。函数`foo`位于值命名空间中，不会被导入。
+use bar::foo::{self};
+
+fn main() {
+    foo(); //~ 错误 `foo` 是一个模块
+}
+```
+
+> **注意**: `self`可以用作路径的第一段。
+>  `self`作为第一段和其放在 `use`大括号内在逻辑上是相同的；它表示父段为当前模块，或者如果没有父段，则表示当前模块。
+> 有关前导 `self` 含义的详细信息，请参阅路径一章中的[`self`]。
+
+## Glob imports
+## `*`导入
+
+字符`*` 可以用作 `use`路径的最后一段，用于从前一段的实体中导入所有可导入的实体。
+例如：
+
+```rust
+// 给 `bar` 创建了一个非公有的别名。
+use foo::*;
+
+mod foo {
+    fn i_am_private() {}
+    enum Example {
+        V1,
+        V2,
+    }
+    pub fn bar() {
+        // 为枚举变体 `Example` 的 `V1` 和 `V2` 创建了本地别名。
+        use Example::*;
+        let x = V1;
+    }
+}
+```
+
+从[命名空间][namespace]中的全局导入允许被本的程序项或从同一命名空间中的命名导入遮蔽。
+也就是说，如果同一命名空间中的另一程序项已经定义用掉了该名称，则全局导入将被遮蔽。
+例如：
+
+```rust
+// 这将创建到 `clashing::Foo`元组结构体构造函数的绑定，但不会导入其类型，因为这将与此处定义的 `Foo`结构体冲突。
+//
+//注意，这里的定义顺序并不重要。
+use clashing::*;
+struct Foo {
+    field: f32,
+}
+
+fn do_stuff() {
+    // 使用 `clashing::Foo` 的构造函数。
+    let f1 = Foo(123);
+    // 结构表达式使用上面定义的 `Foo`结构体中的类型。
+    let f2 = Foo { field: 1.0 };
+    // 由于全局导入，`Bar`也在当前作用域内。
+    let z = Bar {};
+}
+
+mod clashing {
+    pub struct Foo(pub i32);
+    pub struct Bar {}
+}
+```
+
+`*` cannot be used as the first or intermediate segments.
+`*` cannot be used to import a module's contents into itself (such as `use self::*;`).
+`*` 不能用作路径的第一段或中间段。
+`*` 不能用于将模块的内容导入自身中（例如 `use self::*;`）。
+
+> **版次差异**: 在2015版中，路径是相对于 crate 根层的，因此像 `use *；`这样的导入是有效的，这意味着从 crate 根层导入所有内容。
+> 但这不能用于 crate根层本身。
 
 ## Underscore Imports
 ## 下划线导入
@@ -175,8 +300,92 @@ m!(use std as _;);
 // use std as _;
 ```
 
-[IDENTIFIER]: ../identifiers.md
+## Restrictions
+## 限制
+
+以下是对 `use`声明合法性的限制：
+
+* `use crate;` 必须使用 `as`别名定义来将 crate的根层绑定到的别名上。
+* `use {self};`是错误的；使用 `self` 时必须有前导段。
+* 与任何程序项定义一样，`use`导入不能在模块或代码块中的同一命名空间中创建同名的重复绑定。
+* [`macro_rules`]扩展中不允许带有`$crate`的 `use`路径。
+* `use`路径不能通过[类型别名][type alias]引用枚举变量。例如：
+
+  ```rust,compile_fail
+  enum MyEnum {
+      MyVariant
+  }
+  type TypeAlias = MyEnum;
+
+  use MyEnum::MyVariant; //~ OK
+  use TypeAlias::MyVariant; //~ ERROR
+  ```
+
+## Ambiguities
+## 歧义
+
+> **注意**: 本节还未完成。
+
+当 `use`声明所指的名称不明确时，某些情况会导致错误。当有两个同名的候选名称未解析为同一实体时，会发生这种情况。
+
+只要不使用名称，就允许全局导入导入到同一命名空间中形成的冲突的名称。
+例如：
+
+```rust
+mod foo {
+    pub struct Qux;
+}
+
+mod bar {
+    pub struct Qux;
+}
+
+use foo::*;
+use bar::*; //~ OK, 没有名称冲突
+
+fn main() {
+    // 因为歧义，这里会报错。
+    //let x = Qux;
+}
+```
+
+允许多个全局导入导入相同的名称，并且如果导入的程序项相同（在重新导出后），则允许使用该名称。名称的可见性是导入的有最大可见性的那一个。例如：
+
+```rust
+mod foo {
+    pub struct Qux;
+}
+
+mod bar {
+    pub use super::foo::Qux;
+}
+
+// 它们都导入相同的 `Qux`。`Qux`的可见性是`pub`，因为这是这两个 `use`声明之间的最大可见性。
+pub use bar::*;
+use foo::*;
+
+fn main() {
+    let _: Qux = Qux;
+}
+```
+
 [_SimplePath_]: ../paths.md#simple-paths
 [`extern crate`]: extern-crates.md
+[`macro_rules`]: ../macros-by-example.md
+[`self`]: ../paths.md#self
+[associated items]: associated-items.md
+[Attributes]: ../attributes.md
+[Built-in types]: ../types.md
+[Derive macros]: ../procedural-macros.md#derive-macros
+[Enum variants]: enumerations.md
 [extern prelude]: ../names/preludes.md#extern-prelude
-[path qualifiers]: ../paths.md#path-qualifiers
+[generic parameters]: generics.md
+[IDENTIFIER]: ../identifiers.md
+[items]: ../items.md
+[local variables]: ../variables.md
+[namespace]: ../names/namespaces.md
+[namespaces]: ../names/namespaces.md
+[paths]: ../paths.md
+[tool attributes]: ../attributes.md#tool-attributes
+[type alias]: type-aliases.md
+[type namespace]: ../names/namespaces.md

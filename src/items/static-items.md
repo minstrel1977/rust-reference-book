@@ -2,15 +2,19 @@
 # 静态项
 
 >[static-items.md](https://github.com/rust-lang/reference/blob/master/src/items/static-items.md)\
->commit: bbb69d1e29ff3dc3acaa3f0011bf9b1c9991322c \
->本章译文最后维护日期：2021-07-04
+>commit: 1072b01d42d5eb7503cfa90e2a5d0bc2ee64d5ba \
+>本章译文最后维护日期：2024-08-18
 
 > **<sup>句法</sup>**\
 > _StaticItem_ :\
-> &nbsp;&nbsp; `static` `mut`<sup>?</sup> [IDENTIFIER] `:` [_Type_]
+> &nbsp;&nbsp; [_ItemSafety_]<sup>?</sup>[^extern-safety] `static` `mut`<sup>?</sup> [IDENTIFIER] `:` [_Type_]
 >              ( `=` [_Expression_] )<sup>?</sup> `;`
+>
+> [^extern-safety]: `safe` 和 `unsafe` 函数限定符仅在 `extern`块中的语义上允许使用。
 
 *静态项*类似于[常量项][constant]，除了它在程序中表示一个精确的内存位置。所有对静态项的引用都指向相同的内存位置。静态项拥有 `'static` 生存期，它比 Rust 程序中的所有其他生存期都要长。静态项不会在程序结束时调用析构动作 [`drop`]。
+
+静态项的声明在其所在的模块或块的[值命名空间][value namespace]中定义静态值。
 
 静态初始化器是在编译时求值的[常量表达式][constant expression]。静态初始化器可以引用其他静态项。
 
@@ -22,6 +26,8 @@
 * 常量项不能引用静态项。
 
 必须为自由静态项提供初始化表达式，但在[外部块][external block]中静态项必须省略初始化表达式。
+
+仅当在[外部块][external block]中使用时，语义上才允许使用`safe`和`unsafe`限定符。
 
 ## Statics & generics
 ## 静态项和泛型
@@ -76,21 +82,24 @@ blanket_impl: counter was 1
 尽管有这些缺点，可变静态项仍然非常有用。它们可以与 C库一起使用，也可以在外部(`extern`)块中从 C库中来绑定它。
 
 ```rust
-# fn atomic_add(_: &mut u32, _: u32) -> u32 { 2 }
+# fn atomic_add(_: *mut u32, _: u32) -> u32 { 2 }
 
 static mut LEVELS: u32 = 0;
 
 // 这违反了不共享状态的思想，而且它在内部不能防止竞争，所以这个函数是非安全的(`unsafe`)
-unsafe fn bump_levels_unsafe1() -> u32 {
-    let ret = LEVELS;
-    LEVELS += 1;
-    return ret;
+unsafe fn bump_levels_unsafe() -> u32 {
+    unsafe {
+        let ret = LEVELS;
+        LEVELS += 1;
+        return ret;
+    }
 }
 
-// 这里我们假设有一个返回旧值的 atomic_add 函数，这个函数是“安全的(safe)”，
-// 但是返回值可能不是调用者所期望的，所以它仍然被标记为 `unsafe`
-unsafe fn bump_levels_unsafe2() -> u32 {
-    return atomic_add(&mut LEVELS, 1);
+// 作为 `bump_levels_unsafe` 的替代方法，该函数是安全的，假设我们有一个返回旧值的 atomic_add函数。只有当没有其他代码以非原子方式访问静态项时，该函数才是安全的。如果可以进行这样的访问（例如在 `bump_levels_unsafe` 中），则这需把此函数标记为 `unsafe'，以向调用者表达出它们仍然必须防止并发访问的意思。
+fn bump_levels_safe() -> u32 {
+    unsafe {
+        return atomic_add(std::ptr::addr_of_mut!(LEVELS), 1);
+    }
 }
 ```
 
@@ -113,6 +122,5 @@ unsafe fn bump_levels_unsafe2() -> u32 {
 [IDENTIFIER]: ../identifiers.md
 [_Type_]: ../types.md#type-expressions
 [_Expression_]: ../expressions.md
-
-<!-- 2021-1-17-->
-<!-- checked -->
+[value namespace]: ../names/namespaces.md
+[_ItemSafety_]: functions.md
