@@ -2,8 +2,8 @@
 # 诊断属性
 
 >[diagnostics.md](https://github.com/rust-lang/reference/blob/master/src/attributes/diagnostics.md)\
->commit: 62715cf8b4bd3b14d41f06f3d2cec3a42f4b1cd2 \
->本章译文最后维护日期：2024-08-17
+>commit: 52e0ff3c11260fb86f19e564684c86560eab4ff9 \
+>本章译文最后维护日期：2024-10-13
 
 以下[属性][attributes]用于在编译期间控制或生成诊断消息。
 
@@ -420,7 +420,6 @@ error[E0277]: My Message for `ImportantTrait<i32>` implemented for `String`
    = note: Note 2
 ```
 
-[`std::fmt`]: https://doc.rust-lang.org/std/fmt/index.html
 [Clippy]: https://github.com/rust-lang/rust-clippy
 [_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
 [_MetaListPaths_]: ../attributes.md#meta-item-attribute-syntax

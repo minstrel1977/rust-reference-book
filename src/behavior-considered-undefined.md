@@ -2,30 +2,30 @@
 ## 未定义的行为
 
 >[behavior-considered-undefined.md](https://github.com/rust-lang/reference/blob/master/src/behavior-considered-undefined.md)\
->commit: e62b5b8c8f92ba85cbbabe9e6208b44482b3a4a7 \
->本章译文最后维护日期：2024-08-17
+>commit: d385d421e3f450b2da4aaed4166f59598a26dd2a \
+>本章译文最后维护日期：2024-10-13
 
 如果 Rust 代码出现了下面列表中的任何行为，则此代码被认为不正确。这包括非安全(`unsafe`)块和非安全函数里的代码。非安全只意味着避免出现未定义行为(undefined behavior)的责任在程序员；它没有改变任何关于 Rust 程序必须确保不能写出导致未定义行为的代码的事实。
 
 在编写非安全代码时，确保任何与非安全代码交互的安全代码不会触发下述未定义行为是程序员的责任。对于任何使用非安全代码的安全客户端(safe client)，如果当前条件满足了此非安全代码对于安全条件的要求，那此此非安全代码对于此安全客户端就是*健壮的(sound)*；如果非安全(`unsafe`)代码可以被安全代码滥用以致出现未定义行为，那么此非安全(`unsafe`)代码对这些安全代码来说就是*不健壮的(unsound)*。
 
-<div class="warning">
-***警告：*** 下面的列表并非详尽无遗地罗列了 Rust 中的未定义行为; 以后还有可能增添或删减。
+> [!WARNING]
+>  下面的列表并非详尽无遗地罗列了 Rust 中的未定义行为; 以后还有可能增添或删减。
 对于在非安全代码中什么是允许的和什么是不允许的内容，目前 Rust 还没有正式的语义模型，因此可能会有更多的行为被承认为是不安全的。同时我们还保留着在将来重新定义该列表中的某些行为的权利。换言之，这个列表并没有说在未来的所有 Rust版本中，这里的任何东西都*肯定*是未定义行为（但我们也可能会在未来对这些列表项做出这样的承诺）。
+>
 
-在编写非安全代码之前，请阅读 [Rustonomicon]。
-</div>
+> 在编写非安全代码之前，请阅读 [Rustonomicon]。
 
 * 数据竞争。
 * 存取基于[悬垂][dangling]或[未对齐的指针][based on a misaligned pointer]上的地址。
-* 违反[界内指针算术偏移][offset]要求的地址映射操作。  
+* 违反[界内指针算术偏移](pointer#method.offset)要求的地址映射操作。  
 * 破坏[指针别名规则][pointer aliasing rules]。`Box<T>`、`&mut T` 和 `&T` 遵循 LLVM 的作用域[无别名(noalias)][noalias]模型(scoped noalias model)，除非 `&T` 包含一个 [`UnsafeCell<U>`] 类型。活动的引用和 box类型的智能指针不可为悬垂[dangling]状态。活动持续时间并未明确指定，但存在一些限制条件：
   * 对于引用来说，活动持续时间由借用检查器指定的句法生存期上限来限制；它不能存活得比那个生存期*更长*。
   * 每次将引用或 box类型的智能指针传递给函数或从函数返回时，它都被视为是活动的。
   * 当引用（注意不是 box类型的智能指针！）传递给函数时，它存活的至少与该函数调用一样长，这次同样排除了 `&T` 包含了 [`UnsafeCell<U>`] 的情况。
 
   当这些类型的值（`Box<T>`、`&mut T` 和 `&T` 类型的值）被传递给复合类型的（内嵌）成员字段时，所有的这些规则都适用，但注意传递给间接寻址的指针不适用。
-* 修改不可变的字节数据。[常量(`const`)][`const`]项内的所有字节都是不可变的。
+* 修改不可变的字节数据。[常量(`const`)][`const`]项内或做隐式[常量提升][const-promoted]的表达式内的所有字节都是不可变的。
   不可变绑定或不可变`static` 所拥有的字节数据是不可变的，除非这些字节是 [`UnsafeCell<U>`] 的一部分。
   
   此外，共享引用[指向][pointed to]的字节数据是不可变的，包括通过其他引用（共享的和可变的）和 `Box`方式传递过来的；这里传递过来的（也就是传递性）包括那些存储在复合类型成员字段中的各种引用。
@@ -51,12 +51,12 @@
 ### Places based on misaligned pointers
 ### 基于未对齐指针的地址[based on a misaligned pointer]: #places-based-on-misaligned-pointers
 
-如果地址计算过程中的最后一个`*`操作是在未按其类型对齐的指针上执行的，则称地址“基于未对齐的指针”。（如果位置表达式中没有`*`操作，则是访问局部变量的成员字段，rustc将确保正确对齐。如果有多个`*`，则每个 `*`操作都会导致指针从内存中被解引用出来，并且每个`*`操作都受对齐约束。请注意，由于自动解引用的存在，在 Rust语法中可以省略一些 `*`操作；我们在这里考虑的是全展开形式的位置表达式。）
+如果地址计算过程中的最后一个`*`操作是在未按其类型对齐的指针上执行的，则称地址“基于未对齐的指针”。（如果位置表达式中没有`*`操作，则是访问局部变量的成员字段或访问静态变量(`static`)，rustc将确保适当的对齐方式。如果有多个`*`，则每个 `*`操作都会导致指针被从内存中被解引用出来，并且每个`*`操作都受对齐约束。请注意，由于自动解引用的存在，在 Rust语法中可以省略一些 `*`操作；我们在这里考虑的是全展开形式的位置表达式。）
 
 例如，如果 `ptr` 的类型为 `*const S`，其中 `S` 的对齐方式为 8，则 `ptr` 必须是 8位对齐的，否则 `(*ptr).f` 就是“基于未对齐的指针”。
 即使字段 `f` 的类型是 `u8`（诸如此类对齐量为1的类型），这个要求也是必须的。换句话说，对齐要求是源于被解引用的指针的类型，而不是正在访问的字段的类型。
 
-请注意，只有在加载或存储到基于未对齐指针的地址时才会导致未定义行为。在基于未对齐指针执行 `addr_of`/`addr_of_mut！` 是允许的。在一个地址上执行 `&`/`&mut`操作需要此地址按变量的字段类型进行对齐（否则程序将“产生非法值”），这通常是一个比基于对齐指针的限制更少的要求。如果字段类型可能比包含它的类型（例如 `repr(packed`修饰的变量的字段）更需要对齐，则将导致编译器报错。这意味着基于对齐的指针总是足以确保在其上出现的新引用总是对齐的，虽然这并不总是必要的。
+请注意，只有在加载或存储到基于未对齐指针的地址时才会导致未定义行为。在基于未对齐指针执行 `&raw const`/`&raw mut` 是允许的。在一个地址上执行 `&`/`&mut`操作需要此地址按变量的字段类型进行对齐（否则程序将“产生非法值”），这通常是一个比基于对齐指针的限制更少的要求。如果字段类型可能比包含它的类型（例如 `repr(packed`修饰的变量的字段）更需要对齐，则将导致编译器报错。这意味着基于对齐的指针总是足以确保在其上出现的新引用总是对齐的，虽然这并不总是必要的。
 
 ### Dangling pointers
 ### 悬垂指针
@@ -107,16 +107,15 @@ Rust编译器假设在程序执行期间生成的所有值都是“合法的”�
 [pointer aliasing rules]: http://llvm.org/docs/LangRef.html#pointer-aliasing-rules
 [undef]: http://llvm.org/docs/LangRef.html#undefined-values
 [`target_feature`]: attributes/codegen.md#the-target_feature-attribute
-[`UnsafeCell<U>`]: https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html
-[Rustonomicon]: https://doc.rust-lang.org/nomicon/index.html
-[`NonNull<T>`]: https://doc.rust-lang.org/core/ptr/struct.NonNull.html
-[`NonZero<T>`]: https://doc.rust-lang.org/std/core/num/struct.NonZero.html
-[`Box<T>`]: https://doc.rust-lang.org/std/alloc/boxed/struct.Box.html
+[`UnsafeCell<U>`]: std::cell::UnsafeCell
+[Rustonomicon]: ../nomicon/index.html
+[`NonNull<T>`]: core::ptr::NonNull
+[`NonZero<T>`]: core::num::NonZero
 [place expression context]: expressions.md#place-expressions-and-value-expressions
 [rules]: inline-assembly.md#rules-for-inline-assembly
 [points to]: #pointed-to-bytes
 [pointed to]: #pointed-to-bytes
-[offset]: https://doc.rust-lang.org/std/primitive.pointer.html#method.offset
 [project-field]: expressions/field-expr.md
 [project-tuple]: expressions/tuple-expr.md#tuple-indexing-expressions
 [project-slice]: expressions/array-expr.md#array-and-slice-indexing-expressions
+[const-promoted]: destructors.md#constant-promotion

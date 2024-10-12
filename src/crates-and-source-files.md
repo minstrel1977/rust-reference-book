@@ -1,8 +1,8 @@
 # crate 和源文件
 
 >[crates-and-source-files.md](https://github.com/rust-lang/reference/blob/master/src/crates-and-source-files.md)\
->commit: f0e8b86dfb986ad9f45f7b2f9fde92cd8b32ea24 \
->本章译文最后维护日期：2024-08-17
+>commit: 52e0ff3c11260fb86f19e564684c86560eab4ff9 \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _Crate_ :\
@@ -96,14 +96,14 @@ crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 `_` (U
 
 [^cratesourcefile]: crate 有点类似于 ECMA-335 CLI 模型中的 *assembly*、SML/NJ 编译管理器中的 *library*、Owens 和 Flatt 模块系统中的 *unit*， 或 Mesa 中的 *configuration*。
 
-[Unicode alphanumeric]: https://doc.rust-lang.org/std/primitive.char.html#method.is_alphanumeric
+[Unicode alphanumeric]: char::is_alphanumeric
 [`!`]: types/never.md
 [_InnerAttribute_]: attributes.md
 [_Item_]: items.md
 [_MetaNameValueStr_]: attributes.md#meta-item-attribute-syntax
-[`ExitCode`]: https://doc.rust-lang.org/std/process/struct.ExitCode.html
-[`Infallible`]: https://doc.rust-lang.org/std/convert/enum.Infallible.html
-[`Termination`]: https://doc.rust-lang.org/std/process/trait.Termination.html
+[`ExitCode`]: std::process::ExitCode
+[`Infallible`]: std::convert::Infallible
+[`Termination`]: std::process::Termination
 [attribute]: attributes.md
 [attributes]: attributes.md
 [function]: items/functions.md

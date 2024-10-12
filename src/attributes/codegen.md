@@ -2,8 +2,8 @@
 # 代码生成属性
 
 >[codegen.md](https://github.com/rust-lang/reference/blob/master/src/attributes/codegen.md)\
->commit: 21012e88c9407fb5937fa922e35c3bf59da6ca83 \
->本章译文最后维护日期：2024-08-17
+>commit: 52e0ff3c11260fb86f19e564684c86560eab4ff9 \
+>本章译文最后维护日期：2024-10-13
 
 下述[属性][attributes]用于控制代码生成。
 
@@ -381,10 +381,7 @@ fn calls_h() {
 [undefined behavior]: ../behavior-considered-undefined.md
 [unsafe function]: ../unsafe-keyword.md
 [rust-abi]: ../items/external-blocks.md#abi
-[`core::intrinsics::caller_location`]: https://doc.rust-lang.org/core/intrinsics/fn.caller_location.html
-[`core::panic::Location::caller`]: https://doc.rust-lang.org/core/panic/struct.Location.html#method.caller
-[`Location`]: https://doc.rust-lang.org/core/panic/struct.Location.html
-
+[`Location`]: core::panic::Location
 
 ## The `instruction_set` attribute
 ## `instruction_set`属性

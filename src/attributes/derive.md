@@ -2,8 +2,8 @@
 # 派生
 
 >[derive.md](https://github.com/rust-lang/reference/blob/master/src/attributes/derive.md)\
->commit: ea7ba21c879c5cf58d7a2dffcf74f93a6c0933c4 \
->本章译文最后维护日期：2022-10-22
+>commit: 52e0ff3c11260fb86f19e564684c86560eab4ff9 \
+>本章译文最后维护日期：2024-10-13
 
 *`derive`属性*允许为数据结构自动生成新的[程序项][items]。它使用 [_MetaListPaths_]元项属性句法（为程序项）指定一系列要实现的 trait 或指定要执行的[派生宏][derive macros]的路径。
 
@@ -38,14 +38,9 @@ impl<T: PartialEq> PartialEq for Foo<T> {
 [^or-and]: 原文后半句是："and the type parameter `T` will be given the `PartialEq` or `Clone` constraints for the appropriate `impl`:"，这里译者也搞不清楚为什么 `PartialEq` 和 `Clone` 之间用了"or"，而不是"and"？这里译者就先采用直译。
 
 [_MetaListPaths_]: ../attributes.md#meta-item-attribute-syntax
-[`Clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
-[`PartialEq`]: https://doc.rust-lang.org/std/cmp/trait.PartialEq.html
 [`impl` item]: ../items/implementations.md
 [items]: ../items.md
 [derive macros]: ../procedural-macros.md#derive-macros
 [implementations]: ../items/implementations.md
 [items]: ../items.md
 [procedural macros]: ../procedural-macros.md#derive-macros
-
-<!-- 2020-11-12-->
-<!-- checked -->

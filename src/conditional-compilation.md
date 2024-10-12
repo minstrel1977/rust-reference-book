@@ -2,8 +2,8 @@
 # 条件编译
 
 >[conditional-compilation.md](https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md)\
->commit: 166c05e375531a12497b6e228c64f8b3713e25b2 \
->本章译文最后维护日期：2024-08-17
+>commit: 5cb05674ee383824cb236a58ec6f75bc75d612e1 \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _ConfigurationPredicate_ :\
@@ -53,11 +53,8 @@
 
 > **注意**: 键名为 `feature` 的配置选项一般被 [Cargo][cargo-feature] 约定用于指定编译期（用到的各种编译）选项和可选依赖项。
 
-<div class="warning">
-
-警告：任意配置集的配置选项可能与编译器设置集的配置选项设置相冲突。例如，在编译一个 Windows 目标时，可以执行命令行 `rustc --cfg "unix" program.rs`，这样就同时设置了 `unix` 和 `windows` 配置选项。但实际上这样做是不明智的。
-
-</div>
+> [!WARNING]
+> 任意配置集的配置选项可能与编译器设置集的配置选项设置相冲突。例如，在编译一个 Windows 目标时，可以执行命令行 `rustc --cfg "unix" program.rs`，这样就同时设置了 `unix` 和 `windows` 配置选项。但实际上这样做是不明智的。
 
 ### `target_arch`
 
@@ -176,8 +173,6 @@
 
 此键值对选项用于设置目标平台上的每个原子操作的位宽，这些原子操作包括原子加载、原子存储、原子比较和原子交换。
 当cfg存在时，[`core::sync::atomic`] 下所有的稳定版的API 类型都可用来指定相关的原子位宽。
-
-[`core::sync::atomic`]: https://doc.rust-lang.org/core/sync/atomic/index.html
 
 可能的值有：
 
@@ -344,7 +339,6 @@ Rust 官方对一些平台提供了默认的目标三元组，我们可以通过
 [`cfg`]: #the-cfg-attribute
 [`cfg` macro]: #the-cfg-macro
 [`cfg_attr`]: #the-cfg_attr-attribute
-[`debug_assert!`]: https://doc.rust-lang.org/std/macro.debug_assert.html
 [`target_feature` attribute]: attributes/codegen.md#the-target_feature-attribute
 [attribute]: attributes.md
 [attributes]: attributes.md

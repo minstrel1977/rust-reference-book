@@ -2,8 +2,8 @@
 # 测试类属性
 
 >[testing.md](https://github.com/rust-lang/reference/blob/master/src/attributes/testing.md)\
->commit: c126440392be42d9dd3906478111cc7b52473d89 \
->本章译文最后维护日期：2022-10-22
+>commit: 52e0ff3c11260fb86f19e564684c86560eab4ff9 \
+>本章译文最后维护日期：2024-10-13
 
 以下[属性][attributes]用于指定函数来执行测试。在“测试(test)”模式下编译 crate 可以构建测试函数以及构建用于执行测试（函数）的测试套件(test harness)。启用测试模式还会启用 [`test`条件编译选项][`test` conditional compilation option]。
 
@@ -74,8 +74,8 @@ fn mytest() {
 
 [_MetaListNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
 [_MetaNameValueStr_]: ../attributes.md#meta-item-attribute-syntax
-[`Termination`]: https://doc.rust-lang.org/std/process/trait.Termination.html
-[`report`]: https://doc.rust-lang.org/std/process/trait.Termination.html#tymethod.report
+[`Termination`]: std::process::Termination
+[`report`]: std::process::Termination::report
 [`test` conditional compilation option]: ../conditional-compilation.md#test
 [attributes]: ../attributes.md
-[`ExitCode`]: https://doc.rust-lang.org/std/process/struct.ExitCode.html
+[`ExitCode`]: std::process::ExitCode

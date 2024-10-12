@@ -2,8 +2,8 @@
 # 类型系统属性
 
 >[type_system.md](https://github.com/rust-lang/reference/blob/master/src/attributes/type_system.md)\
->commit: 076a798583ecb450dbb27d46c2e1558228d0fcf1 \
->本章译文最后维护日期：2024-05-02
+>commit: 7c94f299c1d638c036db91df3e8e11c1d172f858 \
+>本章译文最后维护日期：2024-10-13
 
 以下[属性][attributes]用于改变类型的使用方式。
 
@@ -147,12 +147,35 @@ match message {
 }
 ```
 
-也不允许对外部 crate 的非穷尽类型做强转（case）操作。
-```rust, ignore
-use othercrate::NonExhaustiveEnum;
+也不允许在包含任何非穷尽变体的枚举上使用数字转换（`as`）。
 
-// 不能对非本地crate里的非穷尽枚举类型做cast
-let _ = NonExhaustiveEnum::default() as u8;
+例如，可以强制转换以下枚举，因为它不包含任何非穷尽变体：
+
+```rust
+#[non_exhaustive]
+pub enum Example {
+    First,
+    Second
+}
+```
+
+然而，如果枚举甚至仅包含一个非穷尽变体，则强制转换将导致错误。例如此枚举做了如下修改：
+
+```rust
+#[non_exhaustive]
+pub enum EnumWithNonExhaustiveVariants {
+    First,
+    #[non_exhaustive]
+    Second
+}
+```
+
+<!-- ignore: needs multiple crates -->
+```rust,ignore
+use othercrate::EnumWithNonExhaustiveVariants;
+
+// 报错：当非穷尽枚举在别的 crate 中定义时，无法转换此枚举
+let _ = EnumWithNonExhaustiveVariants::First as u8;
 ```
 
 非穷尽类型最好放在下游 crate 里。

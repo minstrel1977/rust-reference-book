@@ -2,8 +2,10 @@
 # 注释
 
 >[comments.md](https://github.com/rust-lang/reference/blob/master/src/comments.md)\
->commit: fa56fdba0e9dba35eb29d11c95c7a009ed67cb35 \
->本章译文最后维护日期：2024-03-09
+>commit: bad7ef114cec9c08dda400ea2da988d07696b066 \
+>本章译文最后维护日期：2024-10-13
+
+r[comments.syntax]
 
 > **<sup>词法分析</sup>**\
 > LINE_COMMENT :(译者注：行注释)\
@@ -40,18 +42,35 @@
 ## Non-doc comments
 ## 非文档型注释
 
+r[comments.normal]
+
 Rust 代码中的注释一般遵循 C++ 风格的行（`//`）和块（`/* ... */`）注释形式，也支持嵌套的块注释。
 
+r[comments.normal.tokenization]
 非文档型注释(Non-doc comments)被解释为某种形式的空白符。
 
 ## Doc comments
 ## 文档型注释
 
-以*三个*斜线（`///`）开始的行文档型注释，以及块文档型注释（`/** ... */`），均为外部文档型注释。它们被当做 [`doc`属性][`doc` attributes]的特殊句法解析。也就是说，它们等同于把注释内容写入 `#[doc="..."]` 里。例如：`/// Foo` 等同于 `#[doc="Foo"]`，`/** Bar */` 等同于 `#[doc="Bar"]`。
+r[comments.doc]
 
-以 `//!` 开始的行文档型注释，以及 `/*! ... */` 形式的块文档型注释属于注释体所在对象的文档型注释，而非注释体之后的程序项的。也就是说，它们等同于把注释内容写入 `#![doc="..."]` 里。`//!` 注释通常用于标注模块位于的文件。
+r[comments.doc.syntax]
+以*三个*斜线（`///`）开始的行文档型注释，以及块文档型注释（`/** ... */`），均为外部文档型注释。它们被当做 [`doc`属性][`doc` attributes]的特殊句法解析。
 
+r[comments.doc.attributes]
+也就是说，它们等同于把注释内容写入 `#[doc="..."]` 里。例如：`/// Foo` 等同于 `#[doc="Foo"]`，`/** Bar */` 等同于 `#[doc="Bar"]`。因此，它们必须出现在那些接受外部属性的代码之前。
+
+r[comments.doc.inner-syntax]
+以 `//!` 开始的行文档型注释，以及 `/*! ... */` 形式的块文档型注释属于注释体所在对象的文档型注释，而非注释体之后的程序项的。
+
+r[comments.doc.inner-attributes]
+也就是说，它们等同于把注释内容写入 `#![doc="..."]` 里。`//!` 注释通常用于标注模块位于的文件。
+
+r[comments.doc.bare-crs]
 文档型注释中不允许出现字符`U+000D`(CR)。
+
+> **注**：正如 `rustdoc` 所预期的那样，文档注释通常包含 Markdown。然而，注释语法不考虑任何嵌套的Markdown语法。
+> ``/** `glob = "*/*.rs";` */`` 在第一个`*/`处终止注释，因此剩余的代码将导致语法错误。与行文档注释相比，这稍微限制了块文档注释的内容。
 
 > **注意**:  `U+000D`(CR)后直跟`U+000A`(LF) 的字符序列会预先被转换为 `U+000A` (LF)。
 

@@ -2,8 +2,8 @@
 # 应用程序二进制接口(ABI)
 
 >[abi.md.md](https://github.com/rust-lang/reference/blob/master/src/abi.md)\
->commit:  e773318a837092d7b5276bbeaf9fda06cca61cee \
->本章译文最后维护日期：2021-1-16
+>commit:  73c11acaf1d161fdf953eeba1be7cd2d0c0a79a8 \
+>本章译文最后维护日期：2024-10-13
 
 本节介绍影响 crate 编译输出的 ABI 的各种特性。
 
@@ -63,15 +63,24 @@ $ nm -C foo.o
 
 此外，就跟[`used`属性](#the-used-attribute)一样，此属性修饰的程序项也将从生成的库或对象文件中公开导出。
 
+此属性是非安全属性，因为非混淆符号可能与另一个同名符号（或已知符号）冲突，从而导致未定义的行为。
+
+```rust
+#[unsafe(no_mangle)]
+extern "C" fn foo() {}
+```
+
 ## The `link_section` attribute
 ## `link_section`属性
 
 `link_section`属性指定了输出对象文件中[函数][function]或[静态项][static]的内容将被放置到的节点位置。它使用 [_MetaNameValueStr_]元项属性句法指定节点名称。
 
+此属性是非安全的，因为它允许用户将数据和代码放入不需要它们的内存代码段中，例如将可变数据放入只读代码段。
+
 <!-- no_run: don't link. The format of the section name is platform-specific. -->
 ```rust,no_run
-#[no_mangle]
-#[link_section = ".example_section"]
+#[unsafe(no_mangle)]
+#[unsafe(link_section = ".example_section")]
 pub static VAR1: u32 = 1;
 ```
 
@@ -80,8 +89,10 @@ pub static VAR1: u32 = 1;
 
 *`export_name`属性*指定将在[函数][function]或[静态项][static]上导出的符号的名称。它使用 [_MetaNameValueStr_]元项属性句法指定符号名。
 
+此属性是非安全的，因为具有自定义名称的符号可能会与另一个具有相同名称的符号（或与已知符号）冲突，从而导致未定义行为。
+
 ```rust
-#[export_name = "exported_symbol_name"]
+#[unsafe(export_name = "exported_symbol_name")]
 pub fn name_in_rust() { }
 ```
 
@@ -93,6 +104,3 @@ pub fn name_in_rust() { }
 [function]: items/functions.md
 [item]: items.md
 [static]: items/static-items.md
-
-<!-- 2021-1-16-->
-<!-- checked -->

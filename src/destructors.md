@@ -2,15 +2,16 @@
 # 析构器
 
 >[destructors.md](https://github.com/rust-lang/reference/blob/master/src/destructors.md)\
->commit: https://doc.rust-lang.org/ \
->本章译文最后维护日期：2023-11-05
+>commit: d2b3d805ddbe6f87f0cf50ee8bd461855c3a8282 \
+>本章译文最后维护日期：2024-10-13
 
-
+r[destructors.intro]
 当一个[初始化][initialized]了的[变量][variable]或[临时变量][temporary]超出[作用域](#drop-scopes)时，其*析构器(destructor)*将运行，或者说它将被*销毁(dropped)*。此外，[赋值][Assignment]操作也会运行其左操作数的析构器（如果它已经初始化了）。如果变量只部分初始化了，则只销毁其已初始化的字段。
 
+r[destructors.operation]
 类型`T` 的析构器由以下内容组成：
 
-1. 如果其有约束 `T: Drop`, 则调用 [`<T as std::ops::Drop>::drop`]
+1. 如果其有约束 `T: Drop`, 则调用 [`<T as std::ops::Drop>::drop`](std::ops::Drop::drop)
 2. 递归运行其所有字段的析构器。
     * [结构体(`struct`)][struct]的字段按其声明顺序被销毁。
     * 活动状态的[枚举变体][enum variant]的字段按其声明顺序销毁。
@@ -20,6 +21,7 @@
     * [trait对象][Trait objects]的销毁会运行其非具名基类(underlying type)的析构器。
     * 其他类型不会导致任何进一步的销毁动作发生。
 
+r[destructors.drop_in_place]
 如果析构器必须手动运行，比如在实现自定义的智能指针时，可以使用标准库函数 [`std::ptr::drop_in_place`]。
 
 举些（析构器的）例子：
@@ -57,34 +59,70 @@ core::mem::forget(partial_move.1);
 ## Drop scopes
 ## 存续作用域
 
+r[destructors.scope]
+
+r[destructors.scope.intro]
 每个变量或临时变量都与一个*存续作用域(drop scope)*[^译注1]相关联。当控制流离开一个存续作用域时，与该作用域关联的所有变量都将按照其声明（对变量而言）或创建（对临时变量而言）的相反顺序销毁。
 
-存续作用域是在将 [`for`]、[`if let`] 和 [`while let`] 这些表达式替换为等效的 [`match`]表达式之后确定的。在确定存续作用域的边界时，不会对重载操作符与内置的操作符做区分[^译注2]，模式的变量[绑定方式(binding modes)][binding modes]也不会影响存续作用域的确定。
+r[destructors.scope.desugaring]
+存续作用域是在将 [`for`]、[`if let`] 和 [`while let`] 这些表达式替换为等效的 [`match`]表达式之后确定的。
 
+r[destructors.scope.operators]
+在确定存续作用域的边界时，不会对重载操作符与内置的操作符做区分[^译注2]，模式的变量[绑定方式(binding modes)][binding modes]也不会影响存续作用域的确定。
+
+r[destructors.scope.list]
 给定一个函数或闭包，存在以下的存续作用域：
 
+r[destructors.scope.function]
 * 整个函数
+
+r[destructors.scope.statement]
 * 每个[语句][statement]
+
+r[destructors.scope.expression]
 * 每个[表达式][expression]
+
+r[destructors.scope.block]
 * 每个块，包括函数体
     * 当在[块表达式][block expression]上时，整个块和整个块表达式的存续作用域是相同的
+
+r[destructors.scope.match-arm]
 * 匹配(`match`)表达式的每条匹配臂(arm)上
 
+r[destructors.scope.nesting]
 存续作用域相互嵌套有如下规则。当同时离开多个作用域时，比如从函数返回时，变量会从内层向外层依次销毁。
 
+r[destructors.scope.nesting.function]
 * 整个函数作用域是最外层的作用域。
+
+r[destructors.scope.nesting.function-body]
 * 函数体块包含在整个函数作用域内。
+
+r[destructors.scope.nesting.expr-statement]
 * 表达式的父作用域是该表达式所在的语句自己构成的作用域。
+
+r[destructors.scope.nesting.let-initializer]
 * [`let`语句][`let` statement]的初始化器(initializer)的父作用域是 `let`语句构成的作用域。
+
+r[destructors.scope.nesting.statement]
 * 语句作用域的父作用域是包含该语句的块作用域。
+
+r[destructors.scope.nesting.match-guard]
 * 匹配守卫(`match` guard)表达式的父作用域是该守卫所在的匹配臂构成的作用域。
+
+r[destructors.scope.nesting.match-arm]
 * 匹配表达式(`match` expression)中 `=>` 之后的表达式e 的父作用域是此表达式e 所在的匹配臂构成的作用域。
+
+r[destructors.scope.nesting.match]
 * 匹配臂的作用域的父作用域是此臂所在的匹配表达式(`match` expression)构成的作用域。
+
+r[destructors.scope.nesting.other]
 * 所有其他作用域的父作用域都是直接封闭该表达式的作用域。
 
 ### Scopes of function parameters
 ### 函数参数的作用域
 
+r[destructors.scope.params]
 函数参数在整个函数体的作用域内有效，因此在对函数求值时，它们是最后被销毁的。实参会在形参引入的模式绑定变量销毁之后销毁。
 
 ```rust
@@ -110,6 +148,9 @@ patterns_in_parameters(
 ### Scopes of local variables
 ### 本地变量的作用域
 
+r[destructors.scope.bindings]
+
+r[destructors.scope.bindings.intro]
 在 `let`语句中声明的局部变量的作用域与包含此 `let`语句的块作用域相关。在匹配(`match`)表达式中声明的局部变量与声明它们的匹配(`match`)臂构成的作用域相关。
 
 ```rust
@@ -126,13 +167,18 @@ let declared_first = PrintOnDrop("在外层作用域内最后销毁");
 let declared_last = PrintOnDrop("在外层作用域内最先销毁");
 ```
 
+r[destructors.scope.bindings.match-pattern-order]
 如果在一个匹配(`match`)表达式的同一个匹配臂中使用了多个模式，则毁顺序不确定。（译者注：这里译者不确定后半句翻译是否准确，这里给出原文：then an unspecified pattern will be used to determine the drop order.）
 
 ### Temporary scopes
 ### 临时作用域
 
+r[destructors.scope.temporary]
+
+r[destructors.scope.temporary.intro]
 表达式的*临时作用域*（那个）用于保存此表达式在[位置上下文][place context]上求出的结果的临时变量的作用域。注意如果此变量被[提升][promoted]了，那此时临时作用域就不存在了。
 
+r[destructors.scope.temporary.enclosing]
 除了[生存期扩展](#Temporary-lifetime-extension)之外，表达式的临时作用域是包含该表达式的最小作用域，临时作用域是以下情况之一：
 
 * 整个函数体。
@@ -189,6 +235,8 @@ match PrintOnDrop("Matched value in final expression") {
 ### Operands
 ### 操作数
 
+r[destructors.scope.operands]
+
 在同一表达式中，在对其他操作数求值时，也会创建临时变量（/作用域）来将已求值的操作数的结果保存起来。临时变量与该操作数所属的表达式的作用域相关。操作数的临时变量一般不用销毁，因为一旦表达式求值，临时变量就被移走了，所以销毁它们没有任何效果和意义，除非整个表达式的某一操作数出现异常，或返回了，或触发了 panic。
 
 ```rust
@@ -216,13 +264,17 @@ loop {
 ### Constant promotion
 ### 常量提升
 
+r[destructors.scope.const-promotion]
+
 当表达式可以被写入到一个常量中，并被被借用时，就会将此值表达式提升到 `'static`插槽(`'static` slot)状态，此时还可以通过此借用的逆操作（解引用）来解出最初写入的表达式，并且也不会改变运行时行为。也就是说，可以在编译时对此提升了的表达式进行求值，这求得的值不具备[内部可变性][interior mutability]或不包含[析构器][destructors]（这些特性在可能的情况下根据具体的值确定，例如 `&None` 的类型总是 `&'static Option<_>`，因为 `&None` 的值是唯一确定的）。
 
 ### Temporary lifetime extension
 ### 临时生存期扩展
 
+r[destructors.scope.lifetime-extension]
 > **注意**：临时生存期扩展的确切规则可能还会改变。这里只描述了当前的行为表现。
 
+r[destructors.scope.lifetime-extension.let]
 `let`语句中表达式的临时作用域有时会*扩展*到包含此 `let`语句的块作用域内。根据某些句法规则，当通常的临时作用域太小时，就会这样做。例如：
 
 ```rust
@@ -231,11 +283,15 @@ let x = &mut 0;
 println!("{}", x);
 ```
 
+r[destructors.scope.lifetime-extension.sub-expressions]
 如果一个[借用][borrow expression]、[解引用][dereference expression]、[字段][field expression]或[元组索引表达式][tuple indexing expression]有一个扩展的临时作用域，那么它们的操作数也会跟着扩展。如果[索引表达式][indexing expression]有扩展的临时作用域，那么被它索引的表达式也会一并扩展作用域。
 
 #### Extending based on patterns
 #### 基于模式的作用域扩展
 
+r[destructors.scope.lifetime-extension.patterns]
+
+r[destructors.scope.lifetime-extension.patterns.extending]
 能扩展临时作用域的*扩展性模式(extending pattern)*是下面任一：
 
 * 通过引用或可变引用来实现变量绑定的[标识符模式][identifier pattern]。
@@ -243,11 +299,13 @@ println!("{}", x);
 
 所以 `ref x`、`V(ref x)` 和 `[ref x, y]` 都是（能扩展临时作用域的）扩展性模式，但是  `x`、`&ref x` 和 `&(ref x,)` 不是。
 
+r[destructors.scope.lifetime-extension.patterns.let]
 如果 `let`语句中的模式是扩展性模式，那么其初始化器表达式中的临时作用域会被扩展。
 
 #### Extending based on expressions
 #### 基于表达式的作用域扩展
 
+r[destructors.scope.lifetime-extension.exprs]
 对于带有初始化器的 let语句来说，能扩展临时作用域的*扩展性表达式(extending expression)*是以下表达式之一：
 
 * 初始化表达式(initializer expression)。
@@ -294,6 +352,7 @@ let x = (&temp()).use_temp();  // ERROR
 ## Not running destructors
 ## 阻断执行析构操作
 
+r[destructors.forget]
 [`std::mem::forget`] 被用来阻断变量的的析构操作，[`std::mem::ManuallyDrop`] 提供了一个包装器(wrapper)来防止变量或字段被自动销毁。
 > 注意：通过 [`std:：mem:：forget`] 或其他方式阻止一个变量的析构操作是安全的，即使此变量的类型不是 `'static`。
 > 除了本文档定义的能确保析构器正常运行的地方之外，类型的可靠性却依赖于析构器的正常执行，那此类型将不那么保险。
@@ -351,8 +410,3 @@ let x = (&temp()).use_temp();  // ERROR
 [`match`]: expressions/match-expr.md
 [`while let`]: expressions/loop-expr.md#predicate-pattern-loops
 [`while`]: expressions/loop-expr.md#predicate-loops
-
-[`<T as std::ops::Drop>::drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html#tymethod.drop
-[`std::ptr::drop_in_place`]: https://doc.rust-lang.org/std/ptr/fn.drop_in_place.html
-[`std::mem::forget`]: https://doc.rust-lang.org/std/mem/fn.forget.html
-[`std::mem::ManuallyDrop`]: https://doc.rust-lang.org/std/mem/struct.ManuallyDrop.html

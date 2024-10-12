@@ -3,8 +3,8 @@
 # 属性
 
 >[attributes.md](https://github.com/rust-lang/reference/blob/master/src/attributes.md)\
->commit: 5de59db02434e8fb6343efea696d36de0c5e7d4d \
->本章译文最后维护日期：2024-08-17
+>commit: f6cd69a89caadd47cfcb32bd6a02830f6d0180a9 \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _InnerAttribute_ :\
@@ -14,7 +14,8 @@
 > &nbsp;&nbsp; `#` `[` _Attr_ `]`
 >
 > _Attr_ :\
-> &nbsp;&nbsp; [_SimplePath_] _AttrInput_<sup>?</sup>
+> &nbsp;&nbsp; &nbsp;&nbsp; [_SimplePath_] _AttrInput_<sup>?</sup>\
+> &nbsp;&nbsp; | `unsafe` `(` [_SimplePath_] _AttrInput_<sup>?</sup> `)`
 >
 > _AttrInput_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [_DelimTokenTree_]\
@@ -25,6 +26,16 @@
 *内部属性(Inner attributes)*以 `#!` 开头的方式编写，应用于它在其中声明的程序项。*外部属性(Outer attributes)*以不后跟感叹号的(`!`)的 `#` 开头的方式编写，应用于属性后面的内容。
 
 属性由指向属性的路径和路径后跟的可选的带定界符的 token树(delimited token tree)（其解释由属性定义）组成。除了宏属性之外，其他属性的输入也允许使用等号(`=`)后跟表达式的格式。更多细节请参见下面的[元项属性句法(meta item syntax)](#meta-item-attribute-syntax)。
+
+有些属性在生效时可能是非安全的。
+为了避免在使用这些属性时出现未定义的行为，程序员必须尽到某些安全义务，而这部分安全工作是编译器无法检查和保证的。
+为了确保这些安全保证已经被做好了，这类属性须被包装在 `unsafe(..)` 中，例如 `#[unsafe(no_mangle)]`。
+
+下面这些属性是非安全的：
+
+* [`export_name`]
+* [`link_section`]
+* [`no_mangle`]
 
 属性可以分为以下几类：
 
