@@ -5,7 +5,7 @@
 >commit: 62715cf8b4bd3b14d41f06f3d2cec3a42f4b1cd2
 >本章译文最后维护日期：2024-08-18
 
-*实体(entity)*是一种语言结构，在源程序中可以以某种方式被引用，通常是通过[路径(path)][paths]。实体包括[类型][types]、[程序项][items]、[泛型参数][generic parameters]、[变量绑定][variable bindings]、[循环标签][loop labels]、[生存期][lifetimes]、[字段][fields]、[属性][attributes]和各种[lints]。\
+*实体(entity)*是一种语言结构，在源程序中可以以某种方式被引用，通常是通过[路径(path)][path]。实体包括[类型][types]、[程序项][items]、[泛型参数][generic parameters]、[变量绑定][variable bindings]、[循环标签][loop labels]、[生存期][lifetimes]、[字段][fields]、[属性][attributes]和各种[lints]。\
 
 *声明(declaration)*是一种句法结构，它可以引入*名称*来引用实体。实体的名称在相关[*作用域(scope)*][*scope*]内有效。作用域是指可以引用该名称的源码区域。
 

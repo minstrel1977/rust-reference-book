@@ -20,7 +20,7 @@
 此外，如果 `extern crate` 出现在 crate的根模块中，那么此 crate名称也会被添加到[外部预导入包][extern prelude]中，以便使其自动出现在所有模块的作用域中。
 `as`子句可用于将导入的 crate 绑定到不同的名称上。
 
-外部crate 在编译时被解析为一个特定的 `soname`[^soname]， 并且一个到此 `soname` 的运行时链接会传递给链接器，以便在运行时加载此 `soname`。`soname` 在编译时解析，方法是扫描编译器的库文件路径，匹配外部crate 的 `crate_name`。因为`crate_name` 是在编译时通过可选的 `crate_name`属性声明的，所以如果外部 crate 没有提供 `crate_name`， 则默认拿该外部crate 的 `name`属性值来和外部crate(`extern crate`)声明中的[标识符]绑定。
+外部crate 在编译时被解析为一个特定的 `soname`[^soname]， 并且一个到此 `soname` 的运行时链接会传递给链接器，以便在运行时加载此 `soname`。`soname` 在编译时解析，方法是扫描编译器的库文件路径，匹配外部crate 的 `crate_name`。因为`crate_name` 是在编译时通过可选的 `crate_name`属性声明的，所以如果外部 crate 没有提供 `crate_name`， 则默认拿该外部crate 的 `name`属性值来和外部crate(`extern crate`)声明中的[标识符][identifier]绑定。
 
 导入 `self` crate 会创建到当前 crate 的绑定。在这种情况下，必须使用 `as`子句指定要绑定到的名称。
 

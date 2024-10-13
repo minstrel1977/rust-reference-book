@@ -2,8 +2,8 @@
 # 等待(await)表达式
 
 >[await-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/await-expr.md)\
->commit: bdaa92848c77f4eaadbab5dc753e0ec0b84c5221 \
->本章译文最后维护日期：2022-08-20
+>commit: 52e0ff3c11260fb86f19e564684c86560eab4ff9 \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _AwaitExpression_ :\
@@ -62,13 +62,13 @@ match operand.into_future() {
 [_Expression_]: ../expressions.md
 [`async fn`]: ../items/functions.md#async-functions
 [`async` block]: block-expr.md#async-blocks
-[`context`]: https://doc.rust-lang.org/std/task/struct.Context.html
-[`future::poll`]: https://doc.rust-lang.org/std/future/trait.Future.html#tymethod.poll
-[`pin::new_unchecked`]: https://doc.rust-lang.org/std/pin/struct.Pin.html#method.new_unchecked
-[`poll::Pending`]: https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Pending
-[`poll::Ready`]: https://doc.rust-lang.org/td/task/enum.Poll.html#variant.Ready
+[`Context`]: std::task::Context
+[`future::poll`]: std::future::Future::poll
+[`pin::new_unchecked`]: std::pin::Pin::new_unchecked
+[`poll::Pending`]: std::task::Poll::Pending
+[`poll::Ready`]: std::task::Poll::Ready
 [async context]: ../expressions/block-expr.md#async-context
-[future]: https://doc.rust-lang.org/std/future/trait.Future.html
-[`IntoFuture`]: https://doc.rust-lang.org/std/future/trait.IntoFuture.html
-[`IntoFuture::into_future`]: https://doc.rust-lang.org/std/future/trait.IntoFuture.html#tymethod.into_future
+[future]: std::future::Future
+[`IntoFuture`]: std::future::IntoFuture
+[`IntoFuture::into_future`]: std::future::IntoFuture::into_future
 

@@ -2,8 +2,8 @@
 # 路径
 
 >[paths.md](https://github.com/rust-lang/reference/blob/master/src/paths.md)\
->commit: 65c20b18bc2bb07c666f58cb1232276f0835fd1f \
->本章译文最后维护日期：2024-08-18
+>commit: 0c7f99ad200c9cb6eb964d00dd55dc2a9384510f \
+>本章译文最后维护日期：2024-10-13
 
 *路径*是一段由 `::`标记分隔的一个或多个路径段的组成的序列。
 路径用于引用[程序项][items]、值、[类型][types]、[宏][macros]和[属性][attributes]。
@@ -221,7 +221,7 @@ impl S {
 * 在 [struct]、[enumeration] 或 [union] 的定义中，它指代正在定义的类型。
   不允许定义无限递归（必须存在间接引用）。
 
-`Self`的作用域的行为类似于泛型参数；有关详细信息，请参阅 [`Self`scope] 部分。
+`Self`的作用域的行为类似于泛型参数；有关详细信息，请参阅 [`Self` scope] 部分。
 
 `Self` 仅可以用作路径的首段，不能有前置 `::`。
 `Self`类型的路径不能包含范型参数（比如 `Self::<i32>` 这种可以）

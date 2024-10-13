@@ -2,12 +2,14 @@
 # 类型布局
 
 >[type-layout.md](https://github.com/rust-lang/reference/blob/master/src/type-layout.md)\
->commit: a432cf4afdb6f0f452de19c4d123fae81a840d50 \
->本章译文最后维护日期：2024-05-02
+>commit: 34aa3622c44cdff543086ae30c850fa1105ccb31 \
+>本章译文最后维护日期：2024-10-13
 
 类型的布局描述类型的内存宽度(size)、对齐量(alignment)和字段(fields)的*相对偏移量(relative offsets)*。对于枚举，其判别值(discriminant)的布局和解释也是类型布局的一部分。
 
 每次编译都有可能更改类型布局。这里我们只阐述当前编译器所保证的内容，而没试图去阐述编译器对此做了什么。
+
+请注意，即使具有相同布局的类型在跨越函数边界传递的方式上也可能不同。有关类型的函数调用ABI兼容性，请参见[这里][fn-abi-compatibility]。
 
 ## Size and Alignment
 ## 内存宽度和对齐量
@@ -210,11 +212,9 @@ for field in struct.fields_in_declaration_order() {
 struct.size = current_offset + padding_needed_for(current_offset, struct.alignment);
 ```
 
-<div class="warning">
+> [!WARNING]
 
-警告:这个伪代码使用了一个简单粗暴的算法，是为了清晰起见，它忽略了溢出问题。要在实际代码中执行内存布局计算，请使用 [`Layout`]。
-
-</div>
+> 这个伪代码使用了一个简单粗暴的算法，是为了清晰起见，它忽略了溢出问题。要在实际代码中执行内存布局计算，请使用 [`Layout`]。
 
 > 注意：此算法可以生成零内存宽度的结构体。在 C 语言中，像 `struct Foo { }` 这样的空结构体声明是非法的。然而，gcc 和 clang 都支持启用此类结构体的选项，并将其内存宽度指定为零。跟 Rust 不同的是 C++ 给空结构体指定的内存宽度为 1，并且除非它们是继承的，否则它们是具有 `[[no_unique_address]]` 属性的字段（在这种情况下，它们不会增大结构体的整体内存宽度）。
 
@@ -252,11 +252,9 @@ assert_eq!(std::mem::size_of::<SizeRoundedUp>(), 12);  // 首先来自于b的内
 
 > 注意：C中的枚举的表形是由枚举的相应实现定义的，所以在 Rust 中，给无字段枚举应用 C表形得到的表型很可能是一个“最佳猜测”。特别是，当使用某些特定命令行参数来编译特定的 C代码时，这可能是不正确的。
 
-<div class="warning">
+> [!WARNING]
 
-警告：C语言中的枚举与 Rust 中的那些应用了 `#[repr(C)]`表型的[无字段枚举][field-less enums]之间有着重要的区别。C语言中的枚举主要是 `typedef` 加上一些具名常量；换句话说，C枚举(`enum`)类型的对象可以包含任何整数值。例如，C枚举通常被用做标志位。相比之下，Rust的[无字段枚举][field-less enums]只能合法地[^译注2]保存判别式的值，其他的都是[未定义行为][undefined behavior]。因此，在 FFI 中使用无字段枚举来建模 C语言中的枚举(`enum`)通常是错误的。
-
-</div>
+> C语言中的枚举与 Rust 中的那些应用了 `#[repr(C)]`表型的[无字段枚举][field-less enums]之间有着重要的区别。C语言中的枚举主要是 `typedef` 加上一些具名常量；换句话说，C枚举(`enum`)类型的对象可以包含任何整数值。例如，C枚举通常被用做标志位。相比之下，Rust的[无字段枚举][field-less enums]只能合法地[^译注2]保存判别式的值，其他的都是[未定义行为][undefined behavior]。因此，在 FFI 中使用无字段枚举来建模 C语言中的枚举(`enum`)通常是错误的。
 
 #### `#[repr(C)]` Enums With Fields
 #### `#[repr(C)]`带字段枚举
@@ -470,21 +468,21 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 > // 或者在类似 `println!` 的情况下使用大括号将其值先做一次复制，再引用。
 > println!("{}", {e.f2});
 > // 或者，如果你真需要用指针，请使用那些不要求对齐的方法进行读取和写入，而不是直接对指针做解引用。
-> let ptr: *const u16 = std::ptr::addr_of!(e.f2);
+> let ptr: *const u16 = &raw const e.f2;
 > let value = unsafe { ptr.read_unaligned() };
-> let mut_ptr: *mut u16 = std::ptr::addr_of_mut!(e.f2);
+> let mut_ptr: *mut u16 = s&raw mut e.f2;
 > unsafe { mut_ptr.write_unaligned(3) }
 > ```
 
 ### The `transparent` Representation
 ### 透明(`transparent`)表形
 
-透明(`transparent`)表型只能在只有一个字段的[结构体(`struct`)][structs]上或只有一个变体的[枚举(`enum`)][enumerations]上使用，这里只有一个字段/变体的意思是：
+透明(`transparent`)表型只能在只有一个成员字段的[结构体(`struct`)][structs]上或只有一个变体的[枚举(`enum`)][enumerations]上使用，这里只有一个字段/变体的意思是：
 
-- 只能有一个非零内存宽度的字段/变体，和
-- 任意数量的内存宽度为零对齐量为1的字段（例如：[`PhantomData<T>`]）
+- 任意数量的内存宽度为零对齐量为1的成员字段（例如：[`PhantomData<T>`]）,和
+- 至多一个其他形式的成员字段。
 
-使用这种表形的结构体和枚举与只有那个非零内存宽度的字段具有相同的布局和 ABI。
+具有该表型的结构体和枚举与此结构体内的那个唯一的非零尺寸非对齐量为1的成员字段具有相同的布局和ABI。当然，如果没有这个成员字段，那这就是个单元结构体。
 
 这与 `C`表形不同，因为带有 `C`表形的结构体将始终拥有 C结构体(`C` `struct`)的ABI，例如，那些只有一个原生类型字段的结构体如果应用了透明表形(`transparent`)，将具有此原生类型字段的ABI。
 
@@ -494,14 +492,15 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 
 [^译注2]: 这里合法的意思是变体的判别值受 `repr(u8)` 这样的表形属性约束，像这个例子中，变体的判别值就只能位于 0~255 之间。 
 
-[`align_of_val`]: https://doc.rust-lang.org/std/mem/fn.align_of_val.html
-[`size_of_val`]: https://doc.rust-lang.org/std/mem/fn.size_of_val.html
-[`align_of`]: https://doc.rust-lang.org/std/mem/fn.align_of.html
-[`size_of`]: https://doc.rust-lang.org/std/mem/fn.size_of.html
-[`Sized`]: https://doc.rust-lang.org/std/marker/trait.Sized.html
-[`Copy`]: https://doc.rust-lang.org/std/marker/trait.Copy.html
+[`align_of_val`]: std::mem::align_of_val
+[`size_of_val`]: std::mem::size_of_val
+[`align_of`]: std::mem::align_of
+[`size_of`]: std::mem::size_of
+[`Sized`]: std::marker::Sized
+[`Copy`]: std::marker::Copy
 [dynamically sized types]: dynamically-sized-types.md
 [field-less enums]: items/enumerations.md#field-less-enum
+[fn-abi-compatibility]: https://doc.rust-lang.org/core/primitive.fn.md#abi-compatibility
 [enumerations]: items/enumerations.md
 [zero-variant enums]: items/enumerations.md#zero-variant-enums
 [undefined behavior]: behavior-considered-undefined.md
@@ -512,4 +511,4 @@ assert_eq!(std::mem::size_of::<Enum16>(), 4);
 [primitive representations]: #primitive-representations
 [structs]: items/structs.md
 [`transparent`]: #the-transparent-representation
-[`Layout`]: https://doc.rust-lang.org/std/alloc/struct.Layout.html
+[`Layout`]: std::alloc::Layout

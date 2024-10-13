@@ -2,8 +2,8 @@
 # 表达式
 
 >[expressions.md](https://github.com/rust-lang/reference/blob/master/src/expressions.md)\
->commit: 01c8196e0120f0577f6aa05ada9d962f0019a86c \
->本章译文最后维护日期：2024-05-26
+>commit: 60ccf42d69d4378437afa9d35b6b95394649735c \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _Expression_ :\
@@ -151,7 +151,7 @@ assert_eq!(
 下面的上下文是*位置表达式*上下文：
 
 * [复合赋值][compound assignment]表达式的左操作数。
-* 一元运算符[借用][borrow]、[address-of][addr-of] 或[解引用][deref]的操作数。
+* 一元运算符[借用][borrow]、[裸借用][raw borrow]或[解引用][deref]的操作数。
 * 字段表达式的操作数。
 * 数组索引表达式的被索引操作数。
 * 任何[隐式借用][implicit borrow]的操作数。
@@ -278,7 +278,6 @@ let b: &[i32];
 
 [assign]:               expressions/operator-expr.md#assignment-expressions
 [borrow]:               expressions/operator-expr.md#borrow-operators
-[addr-of]:              expressions/operator-expr.md#raw-address-of-operators
 [comparison]:           expressions/operator-expr.md#comparison-operators
 [compound assignment]:  expressions/operator-expr.md#compound-assignment-expressions
 [deref]:                expressions/operator-expr.md#the-dereference-operator
@@ -286,7 +285,6 @@ let b: &[i32];
 [destructors]:          destructors.md
 [drop scope]:           destructors.md#drop-scopes
 
-[`Box<T>`]:             ../std/boxed/struct.Box.html
 [`Copy`]:               special-types-and-traits.md#copy
 [`Drop`]:               special-types-and-traits.md#drop
 [`Sized`]:              special-types-and-traits.md#sized
@@ -297,6 +295,7 @@ let b: &[i32];
 [Mutable `static` items]: items/static-items.md#mutable-statics
 [scrutinee]:            glossary.md#scrutinee
 [promoted]:             destructors.md#constant-promotion
+[raw borrow]:           expressions/operator-expr.md#raw-borrow-operators
 [slice]:                types/slice.md
 [statement]:            statements.md
 [static variables]:     items/static-items.md

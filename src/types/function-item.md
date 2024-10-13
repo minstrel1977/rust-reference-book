@@ -2,8 +2,8 @@
 # 函数项类型
 
 >[function-item.md](https://github.com/rust-lang/reference/blob/master/src/types/function-item.md)\
->commit: b0e0ad6490d6517c19546b1023948986578fc378 \
->本章译文最后维护日期：2020-11-14
+>commit: 52e0ff3c11260fb86f19e564684c86560eab4ff9 \
+>本章译文最后维护日期：2024-10-13
 
 当被引用函数项、元组结构体的构造函数或枚举变体的构造函数时，会产生它们的*函数项类型(function item type)*的零内存宽度的值。这种类型（也就是此值）显式地标识了该函数——标识出的内容包括程序项定义时的名字、类型参数，及其定义时的生存期参数（不是后期绑定的生存期参数，后期绑定的生存期参数只在函数被调用时才被赋与）——所以该值不需要包含一个实际的函数指针，当此函数被调用时也不需要一个间接的寻址操作去查找此函数。
 
@@ -38,13 +38,7 @@ let foo_ptr_2 = if want_i32 {
 
 [`Clone`]: ../special-types-and-traits.md#clone
 [`Copy`]: ../special-types-and-traits.md#copy
-[`FnMut`]: https://doc.rust-lang.org/std/ops/trait.FnMut.html
-[`FnOnce`]: https://doc.rust-lang.org/std/ops/trait.FnOnce.html
-[`Fn`]: https://doc.rust-lang.org/std/ops/trait.Fn.html
 [`Send`]: ../special-types-and-traits.md#send
 [`Sync`]: ../special-types-and-traits.md#sync
 [coercion]: ../type-coercions.md
 [function pointers]: function-pointer.md
-
-<!-- 2020-11-12-->
-<!-- checked -->

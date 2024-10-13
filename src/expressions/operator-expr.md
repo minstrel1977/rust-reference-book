@@ -2,8 +2,8 @@
 # Operator expressions
 
 >[operator-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/operator-expr.md)\
->commit: e62b5b8c8f92ba85cbbabe9e6208b44482b3a4a7 \
->本章译文最后维护日期：2024-08-17
+>commit: 5cb05674ee383824cb236a58ec6f75bc75d612e1 \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _OperatorExpression_ :\
@@ -46,6 +46,8 @@
 > _BorrowExpression_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; (`&`|`&&`) [_Expression_]\
 > &nbsp;&nbsp; | (`&`|`&&`) `mut` [_Expression_]
+> &nbsp;&nbsp; | (`&`|`&&`) `raw` `const` [_Expression_]\
+> &nbsp;&nbsp; | (`&`|`&&`) `raw` `mut` [_Expression_]
 
 `&`（共享借用）和 `&mut`（可变借用）运算符是一元前缀运算符。
 当应用于[位置表达式][place expression]上时，此表达式生成指向值所在的内存位置的引用（指针）。
@@ -82,19 +84,19 @@ let a = & & & & mut 10;
 ```
 
 ### 裸地址操作符
-### Raw address-of operators
+### Raw borrow operators
 
-与借用操作符相关的是操作符的*裸地址操作符*，这些操作符不是一级语法，但可以通过宏 [`ptr::addr_of!(expr)`][addr_of] 和 [`ptr::addr_of_mut!(expr)`][addr_of_mut] 暴露出来。
-此表达式`expr`是在位置上下文中求值的。
-`ptr::addr_of!(expr)` 会在给定的位置上创建一个 `*const T`类型的常量裸指针，而` ptr::addr_of_mut!(expr)` 会创建 `*mut T`类型的可变裸指针。
+`&raw const` 和 `&raw mut` 是 *裸借用操作符(raw borrow operators)*。
 
-每当位置表达式的计算结果没有正确对齐或没能存储对其类型来说是有效的值时，或者每当创建引用引入了不正确的别名假设时，必须使用裸地址操作符，不能借用操作符。
-在这些情况下，使用借用操作符将通过创建无效引用而导致[未定义的行为][undefined behavior]，但仍可以使用裸地址操作符来构造出裸指针。
+这些操作符的操作数表达式会在位置表达式上下文中被求值。
+`&raw const expr` 会在给定的位置上创建一个 `*const T`类型的常量裸指针，`&raw mut expr` 会创建 `*mut T`类型的可变裸指针。
+
+每当位置表达式的计算结果没有正确对齐或没能存储对其类型来说是有效的值时，或者每当创建引用引入了不正确的别名假设时，必须使用裸借用操作符，不能使用借用操作符。
+在这些情况下，使用借用操作符工作将导致[未定义的行为][undefined behavior]，但此时裸指针仍能成功构造出。
 
 下面示例通过 `packed`结构创建了指向没有地址对齐的裸指针：
 
 ```rust
-use std::ptr;
 
 #[repr(packed)]
 struct Packed {
@@ -104,14 +106,14 @@ struct Packed {
 
 let packed = Packed { f1: 1, f2: 2 };
 // `&packed.f2` 会创建一个未对齐的引用，这种引用是一种未定义行为！
-let raw_f2 = ptr::addr_of!(packed.f2);
+let raw_f2 = &raw const packed.f2;
 assert_eq!(unsafe { raw_f2.read_unaligned() }, 2);
 ```
 
 以下是创建不包含有效值的指向某个位置的裸指针的示例：
 
 ```rust
-use std::{ptr, mem::MaybeUninit};
+use std::mem::MaybeUninit;
 
 struct Demo {
     field: bool,
@@ -119,7 +121,7 @@ struct Demo {
 
 let mut uninit = MaybeUninit::<Demo>::uninit();
 // `&uninit.as_mut().field` 会创建一个对未初始化为 `bool` 的引用，因此这也是一个未定义行为！
-let f1_ptr = unsafe { ptr::addr_of_mut!((*uninit.as_mut_ptr()).field) };
+let f1_ptr = unsafe { &raw mut (*uninit.as_mut_ptr()).field };
 unsafe { f1_ptr.write(true); }
 let init = unsafe { uninit.assume_init() };
 ```
@@ -367,7 +369,7 @@ fn average(values: &[f64]) -> f64 {
 }
 ```
 
-`as` 可用于显式执行[自动强转(coercions)][coercions]，以及下列形式的强制转换。
+`as` 可用于显式执行[自动强转(coercions)](../type-coercions.md)，以及下列形式的强制转换。
 任何不符合强转规则或不在下表中的转换都会导致编译器报错。
 下表中 `*T` 代表 `*const T` 或 `*mut T`。`m` 引用类型中代表可选的 `mut` 或指针类型中的 `mut` 或 `const`。
 
@@ -455,13 +457,11 @@ fn average(values: &[f64]) -> f64 {
 
 从整数转换为原始指针会将整数解释为内存地址，并生成一个引用该内存地址的指针。
 
-<div class="warning">
+> [!WARNING]
 
-警告：
-这将与 Rust内存模型交互，需要指出的是该模型仍在开发中。
-即便是按位转换后是一个有效的指针，但这种从转换中生成的指针可能会受到一些额外的限制。如果不遵循别名规则，那么解引用这样的指针可能是[未定义行为][undefined behavior]。
-
-</div>
+> 这将与 Rust内存模型交互，需要指出的是该模型仍在开发中。
+> 即便是按位转换后是一个有效的指针，但这种从转换中生成的指针可能会受到一些额外的限制。
+> 如果不遵循别名规则，那么解引用这样的指针可能是[未定义行为][undefined behavior]。
 
 一个常见的健壮的地址转换算法的示例：
 
@@ -513,7 +513,7 @@ assert_eq!(values[1], 3);
 
 > **注意**：此表达式与其他表达式的求值顺序不同，此表达式的右操作数在左操作数之前被求值。
 
-对赋值表达的位置表达式求值时会先[销毁(drop)][drops]此位置（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将赋值值[复制(copy)或移动(move)][either copies or moves]到此位置中。
+对赋值表达的位置表达式求值时会先[销毁(dropping)][dropping]此位置（如果是未初始化的局部变量或未初始化的局部变量的字段则不会启动这步析构操作），然后将赋值值[复制(copy)或移动(move)][either copies or moves]到此位置中。
 
 赋值表达式总是会生成[单元类型值][unit]。
 
@@ -643,21 +643,15 @@ fn example() {
 
 与赋值表达式一样，复合赋值表达式也总是会生成[单元类型值][unit]。
 
-<div class="warning">
+> [!WARNING]
 
-警告：复合赋值表达式的操作数的求值顺序取决于操作数的类型：对于原生类型，右边操作数将首先被求值，而对于非原生类型，左边操作数将首先被求值。
-建议尽量不要编写依赖于复合赋值表达式中操作数的求值顺序的代码。请参阅[这里的测试][this test]以获得使用此依赖项的示例。
-
-</div>
+> 复合赋值表达式的操作数的求值顺序取决于操作数的类型：
+> 对于原生类型，右边操作数将首先被求值，而对于非原生类型，左边操作数将首先被求值。
+> 建议尽量不要编写依赖于复合赋值表达式中操作数的求值顺序的代码。
+> 请参阅[这里的测试][this test]以获得使用此依赖项的示例。
 
 [^译者注]:截断，即一个值范围较大的变量A转换为值范围较小的变量B，如果超出范围，则将A减去B的区间长度。例如，128超出了i8类型的范围（-128,127），截断之后的值等于128-256=-128。
 
-[pointer]: ../types/pointer.md
-[immutable place expression context]: ../expressions.md#mutability
-[coercions]: ../type-coercions.md
-[drops]: ../destructors.md
-[either copies or moves]: ../expressions.md#moved-and-copied-types
-<!-- 上面这几个链接从原文来替换时需小心 -->
 [copies or moves]: ../expressions.md#moved-and-copied-types
 [dropping]: ../destructors.md
 [explicit discriminants]: ../items/enumerations.md#explicit-discriminants
@@ -681,8 +675,6 @@ fn example() {
 [Function pointer]: ../types/function-pointer.md
 [Function item]: ../types/function-item.md
 [undefined behavior]: ../behavior-considered-undefined.md
-[addr_of]: https://doc.rust-lang.org/std/ptr/macro.addr_of.html
-[addr_of_mut]: https://doc.rust-lang.org/std/ptr/macro.addr_of_mut.html
 
 [_BorrowExpression_]: #borrow-operators
 [_DereferenceExpression_]: #the-dereference-operator

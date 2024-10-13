@@ -2,15 +2,15 @@
 # trait约束和生存期约束
 
 >[trait-bounds.md](https://github.com/rust-lang/reference/blob/master/src/trait-bounds.md)\
->commit: 9fd053364c4c4983e30c5edc3a405c0c363bedc4 \
->本章译文最后维护日期：2024-08-18
+>commit: fcacb13cf9eccce3596e11a841bd7d8528a2921c \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _TypeParamBounds_ :\
 > &nbsp;&nbsp; _TypeParamBound_ ( `+` _TypeParamBound_ )<sup>\*</sup> `+`<sup>?</sup>
 >
 > _TypeParamBound_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; _Lifetime_ | _TraitBound_
+> &nbsp;&nbsp; &nbsp;&nbsp; _Lifetime_ | _TraitBound_ | _UseBound_
 >
 > _TraitBound_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `?`<sup>?</sup>
@@ -24,6 +24,21 @@
 > _Lifetime_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; [LIFETIME_OR_LABEL]\
 > &nbsp;&nbsp; | `'static`
+>
+> _UseBound_ :\
+> &nbsp;&nbsp; `use` _UseBoundGenericArgs_
+>
+> _UseBoundGenericArgs_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; `<` `>` \
+> &nbsp;&nbsp; | `<` \
+> &nbsp;&nbsp; &nbsp;&nbsp; ( _UseBoundGenericArg_ `,`)<sup>\*</sup> \
+> &nbsp;&nbsp; &nbsp;&nbsp; _UseBoundGenericArg_ `,`<sup>?</sup> \
+> &nbsp;&nbsp; &nbsp;&nbsp; `>`
+>
+> _UseBoundGenericArg_ :\
+> &nbsp;&nbsp; &nbsp;&nbsp; _Lifetime_ \
+> &nbsp;&nbsp; | [IDENTIFIER][] \
+> &nbsp;&nbsp; | `Self`
 
 [trait][Trait]约束和生存期约束为[泛型程序项][generic]提供了一种方法来限制将哪些类型和生存期可被用作它们的参数。通过 [where子句][where clause]可以为任何泛型提供约束。对于某些常见的情况，也可以使用如下简写形式：
 
@@ -199,7 +214,10 @@ trait Trait<'a, T: 'a> {}
 // 这里能通过编译是因为 self类型 `&'a T` 中隐含了 `T: 'a`的逻辑
 impl<'a, T> Trait<'a, T> for &'a T {}
 ```
+## Use bounds
+## use约束
 
+某些约束列表可以加入一个 `use<..>`约束用以控制 `impl Trait`[abstract return type]捕获具体哪些泛型参数。有关详细信息，请参阅[精确捕获][precise capturing]。
 
 [^译注1]: 译者理解：理解这种关系时，可以把生存期 `'a` 和 `'b` 理解成去引用对象时需传入的参数，给定 `'a: 'b` 和类型 `T`，如果 `'a T`有效，那此时再传入 `'b` 就去引用 `T` 必定有效。
 
@@ -209,18 +227,22 @@ impl<'a, T> Trait<'a, T> for &'a T {}
 
 [^译注4]: 译者理解这句的意思是：如果 `F` 的约束有多个 trait，那这种方式里， `'a` 的作用域只是扩展它后面紧跟的那个 trait 的方法，即 `Fn(&'a i32)` 里。
 
+[IDENTIFIER]: identifiers.html
 [LIFETIME_OR_LABEL]: tokens.md#lifetimes-and-loop-labels
 [_GenericParams_]: items/generics.md
 [_TypePath_]: paths.md#paths-in-types
 [`Clone`]: special-types-and-traits.md#clone
 [`Copy`]: special-types-and-traits.md#copy
 [`Sized`]: special-types-and-traits.md#sized
+
+[abstract return type]: types/impl-trait.md#abstract-return-types
 [arrays]: types/array.md
 [associated types]: items/associated-items.md#associated-types
 [hrtb-scopes]: names/scopes.md#higher-ranked-trait-bound-scopes
 [supertraits]: items/traits.md#supertraits
 [generic]: items/generics.md
 [higher-ranked lifetimes]: #higher-ranked-trait-bounds
+[precise capturing]: types/impl-trait.md#precise-capturing
 [slice]: types/slice.md
 [Trait]: items/traits.md#trait-bounds
 [trait object]: types/trait-object.md

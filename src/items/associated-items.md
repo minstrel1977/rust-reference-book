@@ -2,8 +2,8 @@
 # 关联程序项/关联项
 
 >[associated-items.md](https://github.com/rust-lang/reference/blob/master/src/items/associated-items.md)\
->commit: 6b9e4ffd539af7db5e27b6c829f120f827ef69a4 \
->本章译文最后维护日期：2022-10-22
+>commit: 0c7f99ad200c9cb6eb964d00dd55dc2a9384510f \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _AssociatedItem_ :\
@@ -15,9 +15,9 @@
 
 *关联程序项*是在 [traits] 中声明或在[实现][implementations]中定义的程序项。之所以这样称呼它们，是因为它们是被定义在一个相关联的类型（即实现里指定的类型）上的。关联程序项是那些可在模块中声明的程序项的子集。具体来说，有[关联函数][associated functions]（包括方法）、[关联类型][associated types]和[关联常量][associated constants]。
 
-[关联函数]: #associated-functions-and-methods
-[关联类型]: #associated-types
-[关联常量]: #associated-constants
+[associated functions]: #associated-functions-and-methods
+[associated types]: #associated-types
+[associated constants]: #associated-constants
 
 当关联程序项与被关联程序项在逻辑上相关时，关联程序项就非常有用。例如，`Option` 上的 `is_some` 方法内在逻辑定义上就与 Option枚举类型相关，所以它应该和 Option 关联在一起。
 

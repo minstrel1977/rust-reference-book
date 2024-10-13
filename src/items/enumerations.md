@@ -2,8 +2,8 @@
 # 枚举
 
 >[enumerations.md](https://github.com/rust-lang/reference/blob/master/src/items/enumerations.md)\
->commit: 585407f04bba5d154342ff305b3385bc555d1468 \
->本章译文最后维护日期：2024-08-17
+>commit: 52e0ff3c11260fb86f19e564684c86560eab4ff9 \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _Enumeration_ :\
@@ -185,7 +185,7 @@ enum OverflowingDiscriminantError2 {
 #### Via `mem::discriminant`
 #### 通过 `mem::discriminant`
 
-[`mem::discriminant`] 返回对枚举值的判别值(可用于比较)的不透明引用。但它不能用于获得判别式的值。
+[`std::mem::discriminant`] 返回对枚举值的判别值(可用于比较)的不透明引用。但它不能用于获得判别式的值。
 
 #### 转换
 
@@ -280,7 +280,7 @@ let y: u32 = x; // 类型不匹配错误
 ## Variant visibility
 ## 变体的可见性
 
-依照句法规则，枚举变体是允许有自己的[*可见性(visibility)*][Visibility]限定/注解(annotation)的，但当枚举被（句法分析程序）验证(validate)通过后，可见性注解又被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的程序项使用统一的句法规则进行解析。
+依照句法规则，枚举变体是允许有自己的[*可见性(visibility)*][_Visibility_]限定/注解(annotation)的，但当枚举被（句法分析程序）验证(validate)通过后，可见性注解又被弃用。因此，在源码解析层面，允许跨不同的上下文对其中不同类型的程序项使用统一的句法规则进行解析。
 
 ```rust
 macro_rules! mac_variant {
@@ -314,7 +314,6 @@ enum E {
 [_Visibility_]: ../visibility-and-privacy.md
 [_WhereClause_]: generics.md#where-clauses
 [`C` representation]: ../type-layout.md#the-c-representation
-[`mem::discriminant`]: https://doc.rust-lang.org/std/mem/fn.discriminant.html
 [call expression]: ../expressions/call-expr.md
 [constant expression]: ../const_eval.md#constant-expressions
 [default representation]: ../type-layout.md#the-default-representation

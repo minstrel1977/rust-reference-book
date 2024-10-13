@@ -1,9 +1,8 @@
 # Tokens
 
 >[tokens.md](https://github.com/rust-lang/reference/blob/master/src/tokens.md)\
->commit: 9fd053364c4c4983e30c5edc3a405c0c363bedc4 \
->本章译文最后维护日期：2024-08-18
-
+>commit: 0c7f99ad200c9cb6eb964d00dd55dc2a9384510f \
+>本章译文最后维护日期：2024-10-13
 
 token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：
 
@@ -307,7 +306,7 @@ b"\\x52"; br"\x52";                  // \x52
 _C语言风格的字符串字面量_是通过前面是字符`U+0063` (`c`) 和 `U+0022`（双引号），后面是字符`U+0022` 转义过的 Unicode字符序列。如果字面量中存在字符`U+0022`，则其前面必须用`U+005C` (`\`)字符进行转义。
 或者，C语言风格的字符串字面量可以是下面定义的_原生C语言风格的字符串字面量_。
 
-[CStr]: ../core/ffi/struct.CStr.html
+[CStr]: core::ffi::CStr
 
 C语言风格的字符串由字节`0x00`隐式终止，因此C语言风格的字符串字面量`c""`等同于从字节字符串文字`b"\x00"`来手动构造一个`&CStr`。除了隐式终止符之外，C语言风格的字符串中不允许再使用字节`0x00`。
 
@@ -639,7 +638,7 @@ let x: f64 = 2.;
 | `,`    | Comma       | 各种分隔符
 | `;`    | Semi        | 各种程序项和语句的结束符, [数组类型][Array types]
 | `:`    | Colon       | 各种分隔符
-| `::`   | PathSep     | [路径分隔符][路径][Paths]
+| `::`   | PathSep     | [路径分隔符][Paths]
 | `->`   | RArrow      | [函数返回类型][functions], [闭包返回类型][Closures], [数组指针类型][Function pointer type]
 | `=>`   | FatArrow    | [匹配臂][match], [宏][macros]
 | `<-`   | LArrow      | 左箭头符号在Rust 1.0之后就没有再使用过，但它仍然被视为一个单独的 token

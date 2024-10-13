@@ -2,8 +2,8 @@
 # 指针类型
 
 >[pointer.md](https://github.com/rust-lang/reference/blob/master/src/types/pointer.md)\
->commit: 13b5af85c57df0898f808651f5126c7fe7568349 \
->本章译文最后维护日期：2023-11-05
+>commit: 060d2b35cecf93bfd7fa20faa6c7f9b6aa1bc89f \
+>本章译文最后维护日期：2024-10-13
 
 Rust 中所有的指针都是显式的一等(first-class)值。
 它们可以被移动或复制，存储到其他数据结构中，或从函数中返回。
@@ -48,7 +48,7 @@ Rust 中所有的指针都是显式的一等(first-class)值。
 在比较裸指针时，比较的是它们的地址，而不是它们指向的数据。
 当比较裸指针和[动态内存宽度类型][dynamically sized types]时，还会比较它们指针上的附加/元数据。
 
-可以直接使用 [`core::ptr::addr_of!`] 创建 `*const` 类型的裸指针，通过 [`core::ptr::addr_of_mut!`] 创建 `*mut` 类型的裸指针。
+可以直接使用 `&raw const` 创建 `*const` 类型的裸指针，通过 `&raw mut` 创建 `*mut` 类型的裸指针。
 
 ## Smart Pointers
 ## 智能指针
@@ -69,8 +69,6 @@ Thus, it may not be valid to transmute a pointer or reference type, `P`, to a `[
 
 [^译注1]: 译者理解这里是指 `&mut type` 如果被借出，就成了 `&&mut type`，这样就又成了不可变借用了。
 
-[`core::ptr::addr_of!`]: ../../core/ptr/macro.addr_of.html
-[`core::ptr::addr_of_mut!`]: ../../core/ptr/macro.addr_of_mut.html
 [Interior mutability]: ../interior-mutability.md
 [_Lifetime_]: ../trait-bounds.md
 [_TypeNoBounds_]: ../types.md#type-expressions

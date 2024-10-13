@@ -2,8 +2,8 @@
 # 特殊类型和 trait
 
 >[special-types-and-traits.md](https://github.com/rust-lang/reference/blob/master/src/special-types-and-traits.md)\
->commit: 330ef9569444a7414633ba08cf5090da312f1f18 \
->本章译文最后维护日期：2024-05-02
+>commit: 52e0ff3c11260fb86f19e564684c86560eab4ff9 \
+>本章译文最后维护日期：2024-10-13
 
 [标准库][the standard library]中的某些类型和 trait 在 Rust 编译器中也直接能用。本章就阐述了这些类型和 trait 的特殊特性。
 
@@ -11,7 +11,7 @@
 
 [`Box<T>`] 有一些特殊的特性，Rust 目前还不允许用户定义类型时使用。
 
-* `Box<T>` 的[解引用操作符]会产生一个可从中移出值的内存位置[^译注1]。这（种特殊性）意味着应用在 `Box<T>` 上的 `*`运算符和 `Box<T>` 的析构函数都是语言内置的。
+* `Box<T>` 的[解引用操作符][dereference operator]会产生一个可从中移出值的内存位置[^译注1]。这（种特殊性）意味着应用在 `Box<T>` 上的 `*`运算符和 `Box<T>` 的析构函数都是语言内置的。
 * [方法][Methods]可以使用 `Box<Self>` 作为接受者。
 * `Box<T>` 可以绕过[孤儿规则(orphan rules)][orphan rules]，与 `T` 在同一 crate 中实现同一 trait，其他泛型类型无法绕过。
 
@@ -112,26 +112,15 @@
 
 [^译注3]: 标准库外使用需要打开特性 `#![feature(negative_impls)]`。
 
-[`Arc<Self>`]: https://doc.rust-lang.org/std/sync/struct.Arc.html
-[`Box<T>`]: https://doc.rust-lang.org/std/boxed/struct.Box.html
-[`Clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
-[`Copy`]: https://doc.rust-lang.org/std/marker/trait.Copy.html
-[`Deref`]: https://doc.rust-lang.org/std/ops/trait.Deref.html
-[`DerefMut`]: https://doc.rust-lang.org/std/ops/trait.DerefMut.html
-[`Drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html
-[`Pin<P>`]: https://doc.rust-lang.org/std/pin/struct.Pin.html
-[`Rc<Self>`]: https://doc.rust-lang.org/std/rc/struct.Rc.html
-[`RefUnwindSafe`]: https://doc.rust-lang.org/std/panic/trait.RefUnwindSafe.html
-[`Send`]: https://doc.rust-lang.org/std/marker/trait.Send.html
-[`Sized`]: https://doc.rust-lang.org/std/marker/trait.Sized.html
-[`std::cell::UnsafeCell<T>`]: https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html
-[`std::cmp`]: https://doc.rust-lang.org/std/cmp/index.html
-[`std::marker::PhantomData<T>`]: https://doc.rust-lang.org/std/marker/struct.PhantomData.html
-[`std::ops`]: https://doc.rust-lang.org/std/ops/index.html
-[`Termination`]: https://doc.rust-lang.org/std/process/trait.Termination.html
-[`UnwindSafe`]: https://doc.rust-lang.org/std/panic/trait.UnwindSafe.html
-[`Sync`]: https://doc.rust-lang.org/std/marker/trait.Sync.html
-[`Unpin`]: https://doc.rust-lang.org/std/marker/trait.Unpin.html
+[`Arc<Self>`]: std::sync::Arc
+[`Deref`]: std::ops::Deref
+[`DerefMut`]: std::ops::DerefMut
+[`Pin<P>`]: std::pin::Pin
+[`Rc<Self>`]: std::rc::Rc
+[`RefUnwindSafe`]: std::panic::RefUnwindSafe
+[`Termination`]: std::process::Termination
+[`UnwindSafe`]: std::panic::UnwindSafe
+[`Unpin`]: std::marker::Unpin
 
 [Arrays]: types/array.md
 [associated types]: items/associated-items.md#associated-types
@@ -153,7 +142,7 @@
 [orphan rules]: items/implementations.md#trait-implementation-coherence
 [`static` items]: items/static-items.md
 [test functions]: attributes/testing.md#the-test-attribute
-[the standard library]: https://doc.rust-lang.org/std/index.html
+[the standard library]: std
 [trait object]: types/trait-object.md
 [Tuples]: types/tuple.md
 [Type parameters]: types/parameters.md

@@ -28,7 +28,7 @@ let push_integer = Vec::<i32>::push;
 let slice_reverse = <[i32]>::reverse;
 ```
 
-关联常量的计算处理方式与[`const`块][`const`blocks]相同。
+关联常量的计算处理方式与[`const`块][`const` blocks]相同。
 
 [_PathInExpression_]: ../paths.md#paths-in-expressions
 [_QualifiedPathInExpression_]: ../paths.md#qualified-paths

@@ -2,17 +2,18 @@
 # 介绍
 
 >[introduction.md](https://github.com/rust-lang/reference/blob/master/src/introduction.md)\
->commit: 6ab78176d305f1fe9b5186a940676293c1ad31ef \
->本章译文最后维护日期：2021-06-19
+>commit: e7345c94d528c4c69e11b3966db43d9dcc964638 \
+>本章译文最后维护日期：2024-10-13
 
 本书是 Rust 编程语言的主要参考手册，本书提供了3类资料：
   - 一些章节非正式地介绍了该语言的各种语言结构及其用法。
   - 一些章节非正式地介绍了该语言的内存模型、并发模型、运行时服务、链接模型，以及调试工具。-
   - 附录章节提供了一些对 Rust 语言有影响的编程原理和参考资料。
 
-<div class="warning">
+> [!WARNING]
 
-警告：此书尚未完成，记录 Rust 的所有内容需要花些时间。有关本书未记录的内容，请查阅 [GitHub issues]。
+> 此书尚未完成，记录 Rust 的所有内容需要花些时间。
+> 有关本书未记录的内容，请查阅 [GitHub issues]。
 
 </div>
 
@@ -35,7 +36,7 @@ Rust 每六周发布一种新的版本。
 
 这本书也不作为 Rust 语言发行版中包含的[标准库][standard library]的参考资料。Rust 的库文档是从其源代码文件中提取的文档属性。此外，有许多可能被可能认为是语言自带特性(features)的特性其实都是 Rust 的标准库的特性，所以您要寻找的特性可能在那里，而不是在这里。
 
-类似地，本书通常不能作为记录 rustc 或者 Cargo 细节的工具书。rustc 有自己专门的书 [rustc book]，Cargo 也有一本书 [cargo book]，该书中包含了 Cargo 的[参考手册] [cargo reference]。本书也涉及了少量和它们的相关知识，比如[链接][linkage]的章节，介绍了 rustc 是如何工作的。
+类似地，本书通常不能作为记录 rustc 或者 Cargo 细节的工具书。rustc 有自己专门的书 [rustc book]，Cargo 也有一本书 [cargo book]，该书中包含了 Cargo 的[参考手册][cargo reference]。本书也涉及了少量和它们的相关知识，比如[链接][linkage]的章节，介绍了 rustc 是如何工作的。
 
 本书仅作为稳定版 Rust 的参考资料存在，关于尚在开发中的非稳定特性，请参阅 [Unstable Book]。
 
@@ -75,11 +76,9 @@ Rust编译器（包括 `rustc`）将执行编译优化，但本参考手册不�
 
 * 有关对语言的不健全(sound)行为，或者针对易于混淆的语言特性的警告，记录在特殊的警告框里。
 
-  <div class="warning">
+  > [!WARNING]
 
-  警告：这是一个示例警告。
-
-  </div>
+  > 这是一个示例警告。
 
 * 文本中内联的代码片段在 `<code>` 标签里。
 
@@ -102,16 +101,25 @@ Rust编译器（包括 `rustc`）将执行编译优化，但本参考手册不�
 
   查阅[表义符(notation)][Notation]以获取更多细节。
 
+* 规则标识符出现在用方括号括起的每个语言规则之前。这些标识符提供了一种在语言中引用特定规则的方法。规则标识符使用句点来分隔从最一般到最具体的部分（例如，[destructors.scope.nesting.function-body]）。
+
+  可以单击规则名称以链接到该规则。
+  
+r[example.rule.label]
+
+  > [!WARNING]
+  > 规则的组织方式目前在不断变化。目前，这些标识符名称在各个版本之间并不稳定，如果更改了这些规则，则指向这些规则的链接可能会失败。一旦组织方式稳定下来，我们打算稳定这些，让规则名称的链接不会在版本之间失效。
+
 ## Contributing
 ## 贡献力量
 
 我们欢迎各种形式的贡献。
 
-您可以通过开启议题或向 [Rust 参考手册仓库][the Rust Reference repository]发送 PR 来为本书做出贡献。如果这本书没有回答您的问题，并且您认为它的答案应该在本书的范围内，请不要犹豫，[提交议题][file an issue]或在 [Zulip] 的 `t-lang/doc` 流频道上询问。知道人们最喜欢用这本书来做什么将有助于引导我们的注意力来让这些部分变得更好。我们也希望此手册尽可能地规范，所以如果你看到任何错误或非规范的地方，但没有明确指出，也请[提交议题]。
+您可以通过开启议题或向 [Rust 参考手册仓库][the Rust Reference repository]发送 PR 来为本书做出贡献。如果这本书没有回答您的问题，并且您认为它的答案应该在本书的范围内，请不要犹豫，[提交议题][file an issue]或在 [Zulip] 的 `t-lang/doc` 流频道上询问。知道人们最喜欢用这本书来做什么将有助于引导我们的注意力来让这些部分变得更好。我们也希望此手册尽可能地规范，所以如果你看到任何错误或非规范的地方，但没有明确指出，也请[提交议题][file an issue]。
 
 [book]: https://doc.rust-lang.org/book/index.html
 [github issues]: https://github.com/rust-lang/reference/issues
-[standard library]: https://doc.rust-lang.org/std/index.html
+[standard library]: std
 [the Rust Reference repository]: https://github.com/rust-lang/reference/
 [Unstable Book]: https://doc.rust-lang.org/nightly/unstable-book/
 [_Expression_]: expressions.md

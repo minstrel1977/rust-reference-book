@@ -2,8 +2,8 @@
 # 附录：关于宏随集的二义性的形式化规范
 
 >[macro-ambiguity.md](https://github.com/rust-lang/reference/blob/master/src/macro-ambiguity.md)\
->commit:  6ee9fc95ac3b7df8a01079e13280a283a7a24612 \
->本章译文最后维护日期：2021-07-11
+>commit:  a5f20e3310a8b1051973f2dd14020101597ceefe \
+>本章译文最后维护日期：2024-10-13
 
 本文介绍了下述[声明宏][Macros By Example]规则的正式规范。它们最初是在 [RFC 550] 中指定的（本文的大部分内容都是从其中复制过来的），并在后续的 RFC 中进行了进一步的展开论述。
 
@@ -242,7 +242,7 @@ represent simple nonterminals with the given fragment specifier.
 
   * FOLLOW(pat) = {`=>`, `,`, `=`, `|`, `if`, `in`}`.
 
-  * FOLLOW(expr) = FOLLOW(stmt) =  {`=>`, `,`, `;`}`.
+  * FOLLOW(expr) = FOLLOW(expr_2021) = FOLLOW(stmt) =  {`=>`, `,`, `;`}`.
 
   * FOLLOW(ty) = FOLLOW(path) = {`{`, `[`, `,`, `=>`, `:`, `=`, `>`, `>>`, `;`,
     `|`, `as`, `where`, block nonterminals}.

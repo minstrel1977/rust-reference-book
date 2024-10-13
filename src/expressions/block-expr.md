@@ -2,8 +2,8 @@
 # 块表达式
 
 >[block-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/block-expr.md)\
->commit: 04a0845417fddbbd5cbd453241d51798e70442b3 \
->本章译文最后维护日期：2024-08-17
+>commit: 52e0ff3c11260fb86f19e564684c86560eab4ff9 \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _BlockExpression_ :\
@@ -242,8 +242,6 @@ fn is_unix_platform() -> bool {
 [`cfg`]: ../conditional-compilation.md
 [`for`]: loop-expr.md#iterator-loops
 [`loop`]: loop-expr.md#infinite-loops
-[`std::ops::Fn`]: https://doc.rust-lang.org/std/ops/trait.Fn.html
-[`std::future::Future`]: https://doc.rust-lang.org/std/future/trait.Future.html
 [`unsafe` blocks]: ../unsafe-keyword.md#unsafe-blocks-unsafe-
 [`while let`]: loop-expr.md#predicate-pattern-loops
 [`while`]: loop-expr.md#predicate-loops

@@ -2,8 +2,8 @@
 # 外部块
 
 >[external-blocks.md](https://github.com/rust-lang/reference/blob/master/src/items/external-blocks.md)\
->commit: 875b905a389455c5329ae088600c0b5f7222104d \
->本章译文最后维护日期：2024-08-18
+>commit: 5cb05674ee383824cb236a58ec6f75bc75d612e1 \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _ExternBlock_ :\
@@ -216,11 +216,9 @@ unsafe extern {
 
 *`link_ordinal`属性*可以应用于外部(`extern`)块内的各种声明上，用以给当前编译生成的链接导入库在链接时要使用的数字序号。Windows 上的动态库导出的每个符号都有的唯一编号，当加载库时可以使用相应序号查找对应的符号，而不必按名称查找。
 
-<div class="warning">
+> [!WARNING]
 
-警告：`link_ordinal` 只能在此符号的序号已稳定了的情况下使用：如果在包含某符号的二进制文件构建时，此符号对应的序号未明确设置，则此构建将自动为其分配一个序号，并且在后续的库构建时此序号可能会在二进制文件生成之间还会发生变化。
-
-</div>
+> `link_ordinal` 只能在此符号的序号已稳定了的情况下使用：如果在包含某符号的二进制文件构建时，此符号对应的序号未明确设置，则此构建将自动为其分配一个序号，并且在后续的库构建时此序号可能会在二进制文件生成之间还会发生变化。
 
 <!-- ignore: Only works on x86 Windows -->
 ```rust,ignore

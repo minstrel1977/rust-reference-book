@@ -2,8 +2,8 @@
 # 关键字
 
 >[keywords.md](https://github.com/rust-lang/reference/blob/master/src/keywords.md)\
->commit: 00540f1de0d49531fae10637dfdce1ddda846a38
->本章译文最后维护日期：2024-08-18
+>commit: 0be8c56fadd7307483c54bb787048efa99c8728f
+>本章译文最后维护日期：2024-10-13
 
 Rust 将关键字分为三类：
 
@@ -25,7 +25,7 @@ Rust 将关键字分为三类：
 * [宏占位符][Macro placeholders]
 * [crate][Crates]
 
-> **<sup>词法分析:<sup>**\
+> **<sup>词法分析:</sup>**\
 > KW_AS             : `as`\
 > KW_BREAK          : `break`\
 > KW_CONST          : `const`\

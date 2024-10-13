@@ -2,8 +2,8 @@
 # 内联汇编
 
 >[behavior-considered-undefined.md](https://github.com/rust-lang/reference/blob/master/src/inline-assembly.md)\
->commit: b8cc7336f61395de8034d05ccd50d4a2f21e6237 \
->本章译文最后维护日期：2024-08-17
+>commit: f1a0881bc0007dde9468171dd48bbddbdaddb28c \
+>本章译文最后维护日期：2024-10-13
 
 r[asm]
 
@@ -11,8 +11,8 @@ r[asm.intro]
 Rust 通过 [`asm!`] 和 [`global_asm!`] 这两个宏来提供了对内联汇编的支持。
 它可用于在编译器生成的汇编程序输出中嵌入手写的汇编程序。
 
-[`asm!`]: https://doc.rust-lang.org/core/arch/macro.asm.html
-[`global_asm!`]: https://doc.rust-lang.org/core/arch/macro.global_asm.html
+[`asm!`]: core::arch::asm
+[`global_asm!`]: core::arch::global_asm
 
 r[asm.stable-targets]
 目前对内联汇编的支持在以下目标架构上是稳定的：
@@ -129,7 +129,7 @@ ARM目标架构上，使用 `.syntax unified`模式。
 不符合 GAS语法的汇编代码将导致特定于汇编器的行为。
 对内联汇编使用的指令的进一步的约束在本章后面的[指令支持](#directives-support)章节有详细说明。
 
-[format-syntax]: ../std/fmt/index.html#syntax
+[format-syntax]: std::fmt#syntax
 [rfc-2795]: https://github.com/rust-lang/rfcs/pull/2795
 
 ## Operand type
@@ -499,7 +499,7 @@ r[asm.abi-clobbers.supported-abis]
 | AArch64 | `"C"`, `"system"`, `"efiapi"` | `x[0-17]`, `x18`\*, `x30`, `v[0-31]`, `p[0-15]`, `ffr` |
 | ARM | `"C"`, `"system"`, `"efiapi"`, `"aapcs"` | `r[0-3]`, `r12`, `r14`, `s[0-15]`, `d[0-7]`, `d[16-31]` |
 | RISC-V | `"C"`, `"system"`, `"efiapi"` | `x1`, `x[5-7]`, `x[10-17]`, `x[28-31]`, `f[0-7]`, `f[10-17]`, `f[28-31]`, `v[0-31]` |
-| LoongArch | `"C"`, `"system"`, `"efiapi"` | `$r1`, `$r[4-20]`, `$f[0-23]` |
+| LoongArch | `"C"`, `"system"` | `$r1`, `$r[4-20]`, `$f[0-23]` |
 
 > 注意：
 > - 在 AArch64架构上，如果 `x18` 不是目标架构上的预留寄存器，则它仅被包括在 clobber寄存器列表中。
@@ -521,12 +521,12 @@ r[asm.options.supported-options.pure]
   `pure`可选项必须与 `nomem` 或 `readonly` 可选项组合使用，否则会导致编译期错误。
 
 r[asm.options.supported-options.nomem]
-- `nomem`：此 `asm!`块不读取或写入任何内存。
+- `nomem`：此 `asm!`块不访问 `asm!`块外的任何内存。
   这允许编译器将修改过的全局变量的值缓存在跨当前 `asm!`块的寄存器中，因为它知道当前 `asm!`不会读取或写入它们。
   编译器还假定此 `asm!`块不执行与其他线程的任何类型的同步，例如通过 fence。
 
 r[asm.options.supported-options.readonly]
-- `readonly`：此 `asm!`块不写入任何内存。
+- `readonly`：此 `asm!`块不在 `asm!`块外写入任何内存。
   这允许编译器将未修改的全局变量的值缓存在跨当前 `asm!`块的寄存器中，因为它知道它们不是由当前 `asm!`写入的。
   编译器还假定此 `asm!`块不执行与其他线程的任何类型的同步，例如通过 fence。
 

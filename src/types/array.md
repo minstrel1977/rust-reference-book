@@ -2,8 +2,8 @@
 # 数组类型
 
 >[array.md](https://github.com/rust-lang/reference/blob/master/src/types/array.md)\
->commit: 2f459e22ec30a94bafafe417da4e95044578df73 \
->本章译文最后维护日期：2020-11-14
+>commit: 52e0ff3c11260fb86f19e564684c86560eab4ff9 \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _ArrayType_ :\
@@ -27,9 +27,5 @@ let boxed_array: Box<[i32]> = Box::new([1, 2, 3]);
 
 [_Expression_]: ../expressions.md
 [_Type_]: ../types.md#type-expressions
-[`Vec<T>`]: https://doc.rust-lang.org/std/vec/struct.Vec.html
 [`usize`]: numeric.md#machine-dependent-integer-types
 [constant expression]: ../const_eval.md#constant-expressions
-
-<!-- 2020-11-12-->
-<!-- checked -->

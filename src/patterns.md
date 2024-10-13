@@ -2,8 +2,8 @@
 # 模式
 
 >[patterns.md](https://github.com/rust-lang/reference/blob/master/src/patterns.md)\
->commit: 2aadaad918b1d0a887c6c513a0e9ca49aab1d74e \
->本章译文最后维护日期：2024-08-18
+>commit: 5cb05674ee383824cb236a58ec6f75bc75d612e1 \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _Pattern_ :\
@@ -132,25 +132,12 @@ if let (a, 3) = (1, 2) {           // "(a, 3)" 是可反驳型的, 将不会匹�
 > &nbsp;&nbsp; | `-`<sup>?</sup> [INTEGER_LITERAL]\
 > &nbsp;&nbsp; | `-`<sup>?</sup> [FLOAT_LITERAL]
 
-[CHAR_LITERAL]: tokens.md#character-literals
-[BYTE_LITERAL]: tokens.md#byte-literals
-[STRING_LITERAL]: tokens.md#string-literals
-[RAW_STRING_LITERAL]: tokens.md#raw-string-literals
-[BYTE_STRING_LITERAL]: tokens.md#byte-string-literals
-[RAW_BYTE_STRING_LITERAL]: tokens.md#raw-byte-string-literals
-[C_STRING_LITERAL]: tokens.md#c-string-literals
-[RAW_C_STRING_LITERAL]: tokens.md#raw-c-string-literals
-[INTEGER_LITERAL]: tokens.md#integer-literals
-[FLOAT_LITERAL]: tokens.md#floating-point-literals
-
 *字面量模式*匹配的值与字面量所创建的值完全相同。
 由于负数不是[字面量][literals]，（特设定）字面量模式也接受字面量前的可选负号，它的作用类似于否定运算符。
 
-<div class="warning">
+> [!WARNING]
 
-字面量模式接受 C语言风格的字符串字面量和原始C语言风格的字符串字面量，但 `&CStr` 没实现结构相等（`#[derive(Eq, PartialEq)]`），因此 `&CStr`上的任何此类 `match` 都将被类型错误所拒绝。
-
-</div>
+> 字面量模式接受 C语言风格的字符串字面量和原始C语言风格的字符串字面量，但 `&CStr` 没实现结构相等（`#[derive(Eq, PartialEq)]`），因此 `&CStr`上的任何此类 `match` 都将被类型错误所拒绝。
 
 字面量模式总是可以反驳型的。
 
@@ -415,7 +402,7 @@ match tuple {
 > &nbsp;&nbsp; &nbsp;&nbsp; [CHAR_LITERAL]\
 > &nbsp;&nbsp; | [BYTE_LITERAL]\
 > &nbsp;&nbsp; | `-`<sup>?</sup> [INTEGER_LITERAL]\
-> &nbsp;&nbsp; | `-`<sup>?</sup> [FLOAT_LITERAL]\
+> &nbsp;&nbsp; | `-`<sup>?</sup> [FLOAT_LITERAL] \
 > &nbsp;&nbsp; | [_PathExpression_]
 
 *区间模式*匹配在区间上下边界内界定的标量值。
@@ -904,3 +891,14 @@ _or模式_是能匹配两个或多个并列子模式（例如：`A | B | C`）�
 [scrutinee]: glossary.md#scrutinee
 [type coercions]: type-coercions.md
 [value namespace]: names/namespaces.md
+
+[CHAR_LITERAL]: tokens.md#character-literals
+[BYTE_LITERAL]: tokens.md#byte-literals
+[STRING_LITERAL]: tokens.md#string-literals
+[RAW_STRING_LITERAL]: tokens.md#raw-string-literals
+[BYTE_STRING_LITERAL]: tokens.md#byte-string-literals
+[RAW_BYTE_STRING_LITERAL]: tokens.md#raw-byte-string-literals
+[C_STRING_LITERAL]: tokens.md#c-string-literals
+[RAW_C_STRING_LITERAL]: tokens.md#raw-c-string-literals
+[INTEGER_LITERAL]: tokens.md#integer-literals
+[FLOAT_LITERAL]: tokens.md#floating-point-literals

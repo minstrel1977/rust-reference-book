@@ -2,8 +2,8 @@
 # 预导入包
 
 >[use-declarations.md](https://github.com/rust-lang/reference/blob/master/src/names/preludes.md)\
->commit: 62715cf8b4bd3b14d41f06f3d2cec3a42f4b1cd2 \
->本章译文最后维护日期：2024-08-18
+>commit: 5cb05674ee383824cb236a58ec6f75bc75d612e1 \
+>本章译文最后维护日期：2024-10-13
 
 *预导入包*是一组名称的集合，它会自动把这些名称导入到 crate 中的每个模块的作用域中。
 
@@ -48,7 +48,7 @@
 > 
 > 从 2018 版开始， [use声明][use declarations]可以直接引用外部预导入包里的 crate，所以再在代码里使用 `extern crate` 就会被认为是不规范的。
 
-> **注意**: 随 `rustc` 一起引入的 crate，如 [`alloc`] 和 [`test`]，在使用 Cargo 时不会自动被包含在 `--extern` 命令行参数选项中。即使在 2018 版中，也必须通过外部crate(`extern crate`)声明来把它们引入到当前作用域内。
+> **注意**: 随 `rustc` 一起引入的 crate，如 [`alloc`] 和 [`test`](mod@test)，在使用 Cargo 时不会自动被包含在 `--extern` 命令行参数选项中。即使在 2018 版中，也必须通过外部crate(`extern crate`)声明来把它们引入到当前作用域内。
 >
 > ```rust
 > extern crate alloc;
@@ -74,11 +74,9 @@
 
 > **注意**：当 crate 的目标平台不支持标准库或者故意不使用标准库的功能时，使用核心预导入包而不是标准预导入包是很有用的。此时没有导入的标准库的那些功能主要是动态内存分配（例如：`Box`和' `Vec`）和文件，以及网络功能（例如：`std::fs` 和 `std::io`）。
 
-<div class="warning">
+> [!WARNING]
 
-警告：使用 `no_std` 并不会阻止标准库被链接进来。使用 `extern crate std;` 将 `std` crate 导入仍然有效，相关的依赖项也可以被正常链接进来。
-
-</div>
+> 使用 `no_std` 并不会阻止标准库被链接进来。使用 `extern crate std;` 将 `std` crate 导入仍然有效，相关的依赖项也可以被正常链接进来。
 
 ## Language prelude
 ## 语言预导入包
@@ -113,25 +111,11 @@
 
 > **版次差异**: 在 2015版中，`no_implicit_prelude`属性不会影响[`macro_use`预导入包][`macro_use` prelude]，从标准库导出的所有宏仍然包含在 `macro_use`预导入包中。从 2018版开始，它也会禁止 `macro_use`预导入包生效。
 
-
-[`alloc`]: https://doc.rust-lang.org/alloc/index.html
-[`Box`]: https://doc.rust-lang.org/std/boxed/struct.Box.html
-[`core::prelude::v1`]: https://doc.rust-lang.org/core/prelude/v1/index.html
-[`core::prelude::rust_2015`]: https://doc.rust-lang.org/core/prelude/rust_2015/index.html
-[`core::prelude::rust_2018`]: https://doc.rust-lang.org/core/prelude/rust_2018/index.html
-[`core::prelude::rust_2021`]: https://doc.rust-lang.org/core/prelude/rust_2021/index.html
-[`core`]: https://doc.rust-lang.org/core/index.html
 [`extern crate`]: ../items/extern-crates.md
 [`macro_use` attribute]: ../macros-by-example.md#the-macro_use-attribute
 [`macro_use` prelude]: #macro_use-prelude
 [`no_std` attribute]: #the-no_std-attribute
 [`no_std` attribute]: #the-no_std-attribute
-[`std::prelude::v1`]: https://doc.rust-lang.org/std/prelude/v1/index.html
-[`std::prelude::rust_2015`]: https://doc.rust-lang.org/std/prelude/rust_2015/index.html
-[`std::prelude::rust_2018`]: https://doc.rust-lang.org/std/prelude/rust_2018/index.html
-[`std::prelude::rust_2021`]: https://doc.rust-lang.org/std/prelude/rust_2021/index.html
-[`std`]: https://doc.rust-lang.org/std/index.html
-[`test`]: https://doc.rust-lang.org/test/index.html
 [attribute]: ../attributes.md
 [Boolean type]: ../types/boolean.md
 [Built-in attributes]: ../attributes.md#built-in-attributes-index

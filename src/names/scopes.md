@@ -2,8 +2,8 @@
 # 作用域
 
 >[use-declarations.md](https://github.com/rust-lang/reference/blob/master/src/names/scopes.md)\
->commit: fe9eec6b3eb3dc4e42d83d40adc2c9a2660ea874 \
->本章译文最后维护日期：2024-06-15
+>commit: fcacb13cf9eccce3596e11a841bd7d8528a2921c \
+>本章译文最后维护日期：2024-10-13
 
 *作用域*是源文件中的区域，在这个区域中命名的[实体][entity]可以用该名称来引用。
 下面的部分提供了关于作用域规则和行为的详细信息，这些规则和行为取决于实体的类型及其声明的位置。
@@ -37,12 +37,12 @@
 
 局部变量的[模式][pattern]绑定的作用域取决于使用它的位置：
 
-* [`let`语句]这种绑定的作用域从 `let`语句之后一直到声明它的块的末尾。
+* [`let`语句][`let` statement]这种绑定的作用域从 `let`语句之后一直到声明它的块的末尾。
 * [函数参数][Function parameter]这种绑定的作用域在函数体中。
 * [闭包参数][Closure parameter]这种绑定的作用域在闭包体中。
-* [`for`] 和 [`whilet`] 这种绑定在循环体中。
+* [`for`] 和 [`while let`] 这种绑定在循环体中。
 * [`if-let`] 这种绑定在后继块中。
-* [`match`arms] 这种绑定在[匹配守卫][match guard]和匹配臂表达式中。
+* [`match` arms] 这种绑定在[匹配守卫][match guard]和匹配臂表达式中。
 
 局部变量的作用域不会扩展到程序项的声明中。
 <!-- Not entirely, see https://github.com/rust-lang/rust/issues/33118 -->
@@ -196,7 +196,7 @@ type FnExample = for<'a> fn(x: Example<'a>) -> Example<'a>;
 # impl<'a> Trait2<'a> for Element {}
 #
 // 此处的 `impl Trait2` 不允许引用 'b，但允许引用 'a。
-fn foo<'a>() -> impl for<'b> Trait1<Item = impl Trait2<'a>> {
+fn foo<'a>() -> impl for<'b> Trait1<Item = impl Trait2<'a> + use<'a>> {
     // ...
 #    Example
 }
@@ -207,7 +207,7 @@ fn foo<'a>() -> impl for<'b> Trait1<Item = impl Trait2<'a>> {
 
 [循环标签][Loop labels]可以由[循环表达式][loop expression]声明。
 循环标签的作用域是从声明它的地方到循环表达式的末尾。
-循环标签的作用域不会扩展到[程序项][items]、[闭包][closures]、[异步块][async blocks]、[常量实参][const arguments]、[常量上下文][const contexts]和定义 [for循环][`for`loop]的迭代器表达式。
+循环标签的作用域不会扩展到[程序项][items]、[闭包][closures]、[异步块][async blocks]、[常量实参][const arguments]、[常量上下文][const contexts]和定义 [for循环][`for` loop]的迭代器表达式。
 
 ```rust
 'a: for n in 0..3 {
@@ -268,7 +268,7 @@ fn foo<'a>() -> impl for<'b> Trait1<Item = impl Trait2<'a>> {
 ## 声明宏的作用域
 
 `macro_rules`宏的作用域在[macros By Example]一章中详述。
-声明宏的行为取决于 [`macro_use`] 和 [`macror_export`]属性的使用。
+声明宏的行为取决于 [`macro_use`] 和 [`macro_export`]属性的使用。
 
 ## Derive macro helper attributes
 ## 派生宏辅助属性
@@ -282,7 +282,7 @@ fn foo<'a>() -> impl for<'b> Trait1<Item = impl Trait2<'a>> {
 
 尽管 [`Self`] 是一个具有特殊含义的关键字，但它与名称解析的交互方式类似于普通名称。
 
-[struct]、[enum]、[union]、[trait]或[implementation]的定义中的隐式 `Self`类型被用类似于[泛型参数]（#generic parameter scopes）的方式来处理，并以与泛型类型参数相同的方式来生效作用域。
+[struct]、[enum]、[union]、[trait]或[implementation]的定义中的隐式 `Self`类型被用类似于[泛型参数](#generic-parameter-scopes)的方式来处理，并以与泛型类型参数相同的方式来生效作用域。
 
 [implementation]中的隐式`Self`值构造函数在实现的主体代码（实现的[关联项][associated items]）的作用域内有效。
 

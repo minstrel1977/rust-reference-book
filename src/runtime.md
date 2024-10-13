@@ -2,8 +2,8 @@
 # Rust运行时
 
 >[abi.md.md](https://github.com/rust-lang/reference/blob/master/src/abi.md)\
->commit:  32fc50e5d211a6a02f874d7e6ae29b4a344f3bdb \
->本章译文最后维护日期：2022-07-17
+>commit:  52e0ff3c11260fb86f19e564684c86560eab4ff9 \
+>本章译文最后维护日期：2024-10-13
 
 本节介绍 Rust运行时的某些方面的特性。
 
@@ -69,14 +69,11 @@ fn panic(info: &PanicInfo) -> ! {
 ```
 
 [_MetaNameValueStr_]: attributes.md#meta-item-attribute-syntax
-[`GlobalAlloc`]: https://doc.rust-lang.org/alloc/alloc/trait.GlobalAlloc.html
-[`PanicInfo`]: https://doc.rust-lang.org/core/panic/struct.PanicInfo.html
+[`GlobalAlloc`]: alloc::alloc::GlobalAlloc
+[`PanicInfo`]: core::panic::PanicInfo
 [abort]: https://doc.rust-lang.org/book/ch09-01-unrecoverable-errors-with-panic.html
 [attribute]: attributes.md
 [crate types]: linkage.md
-[set_hook]: https://doc.rust-lang.org/std/panic/fn.set_hook.html
+[set_hook]: std::panic::set_hook
 [static item]: items/static-items.md
 [subsystem]: https://msdn.microsoft.com/en-us/library/fcc1zstk.aspx
-
-<!-- 2020-11-12-->
-<!-- checked -->

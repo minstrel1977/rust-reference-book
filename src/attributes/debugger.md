@@ -86,7 +86,7 @@ GDB 支持使用一个结构化的 Python脚本，称为 *靓化打印输出（p
 在 GDB 下调试二进制文件时，嵌入式的靓化打印输出不会被自动加载。
 有两种方法可以启用自动加载的嵌入的式靓化打印输出：
 1.使用额外的参数启动 GDB，将文件夹或二进制文件显式地添加到自动加载安全路径：`GDB-iex“add auto-load safe path path path/to/binary”path/to/binary`
-有关更多信息，请参阅GDB的[自动加载文档]。
+有关更多信息，请参阅GDB的[帮助文档][auto-loading documentation]。
 1.在 `$HOME/.config/gdb` 下创建一个名为 `gdbinit` 的文件（如果该文件夹还不存在，则可能需要创建该文件夹）。在该文件中添加以下行：`add-auto-load-safe-path path/to/binary`
 。
 这些脚本是使用 `gdb_script_file`键嵌入的，该键是相对于 crate源文件的路径。

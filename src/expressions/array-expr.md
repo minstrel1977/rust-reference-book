@@ -2,8 +2,8 @@
 # 数组和数组索引表达式
 
 >[array-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/array-expr.md)\
->commit: 15049771545fb6cebec0753fe72d761ede2d0e57 \
->本章译文最后维护日期：2022-08-20
+>commit: 52e0ff3c11260fb86f19e564684c86560eab4ff9 \
+>本章译文最后维护日期：2024-10-13
 
 ## Array expressions
 ## 数组表达式
@@ -89,8 +89,8 @@ arr[10];                  // 告警：索引越界
 数组和切片以外的类型可以通过实现 [Index] trait 和 [IndexMut] trait 来达成数组索引表达式的效果。
 
 [`Copy`]: ../special-types-and-traits.md#copy
-[IndexMut]: ../../std/ops/trait.IndexMut.html
-[Index]: ../../std/ops/trait.Index.html
+[IndexMut]: std::ops::IndexMut
+[Index]: std::ops::Index
 [_Expression_]: ../expressions.md
 [array]: ../types/array.md
 [constant expression]: ../const_eval.md#constant-expressions

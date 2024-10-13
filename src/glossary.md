@@ -55,7 +55,7 @@ Combinators are higher-order functions that apply only functions and earlier def
 
 ### Crate
 
-crate 是编译和链接的最小单元。[crate的类型][types of crates]有多种，如常见的库或可执行文件。crate 可以链接和引用其他被称为外部crate 的库crate。crate是一个自包含的[模块][modules]树，此树从一个未命名模块（此模块一般称为此crate的根模块）开始。crate内的[程序项]可以通过在根模块中将其标记为公有(pub)来让其对其他 crate 可见（注意在标记公有的过程中也要让此程序项的完整路径公有）。
+crate 是编译和链接的最小单元。[crate的类型][types of crates]有多种，如常见的库或可执行文件。crate 可以链接和引用其他被称为外部crate 的库crate。crate是一个自包含的[模块][modules]树，此树从一个未命名模块（此模块一般称为此crate的根模块）开始。crate内的[程序项][items]可以通过在根模块中将其标记为公有(pub)来让其对其他 crate 可见（注意在标记公有的过程中也要让此程序项的完整路径公有）。
 [查看更多][crate]。\
 A crate is the unit of compilation and linking. There are different [types of crates], such as libraries or executables. Crates may link and refer to other library crates, called external crates. A crate has a self-contained tree of [modules], starting from an unnamed root module called the crate root. [Items] may be made visible to other crates by marking them as public in the crate root, including through [paths] of public modules.
 [More][crate].
@@ -89,7 +89,7 @@ For example, `2 + (3 * 4)` is an expression that returns the value 14.
 ### Free item
 ### 自由程序项
 
-不是任何[实现][implementation][item]的成员的[程序项]，如*自由函数*或*自由常量*。自由程序项是与[关联程序项][associated item]相对的概念。\
+一个[程序项][items]它不是任何[实现][implementation]的成员时，它就是自由程序项，如*自由函数*或*自由常量*。自由程序项是与[关联程序项][associated item]相对的概念。\
 An [item] that is not a member of an [implementation], such as a *free function* or a *free const*. Contrast to an [associated item].
 
 ### Fundamental traits
@@ -200,7 +200,7 @@ Types that can be referred to by a path directly. Specifically [enums], [structs
 ### Object safe traits
 ### 对象安全trait
 
-可以用作 [trait对象]的 [trait][Traits]。只有遵循特定[规则][object safety]的 trait 才是对象安全的。\
+可以用作 [trait对象][trait objects]的 [trait][Traits]。只有遵循特定[规则][object safety]的 trait 才是对象安全的。\
 [Traits] that can be used as [trait objects]. Only traits that follow specific [rules][object safety] are object safe.
 
 ### Path

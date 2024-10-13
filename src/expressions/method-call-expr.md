@@ -2,8 +2,8 @@
 # 方法调用表达式
 
 >[method-call-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/method-call-expr.md)\
->commit: e4964a0a951ec7b468992acac50645b443ee4f1d \
->本章译文最后维护日期：2022-03-14
+>commit: 5cb05674ee383824cb236a58ec6f75bc75d612e1 \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _MethodCallExpression_ :\
@@ -69,19 +69,15 @@ let log_pi = pi.unwrap_or(1.0).log(2.72);
 
 > **版次差异**：在 2021 版次之前，在查找可用的方法时，如果候选的接受者类型是一个[数组类型][array type]，由标准库提供的 [`IntoIterator`] trait 提供的方法会被忽略。
 
-<div class="warning">
+> [!WARNING]
 
-***警告：*** 对于 [trait对象][trait objects]，如果有一个与 trait方法同名的固有方法，那么当尝试在方法调用表达式(method call expression)中调用该方法时，将编译报错。
-此时，可以使用[消除函数调用歧义的句法][disambiguating function call syntax]来明确调用语义。
-在 trait对象上使用消除函数调用歧义的句法，将只能调用 trait方法，无法调用固有方法。
-所以只要不在 trait对象上定义和 trait方法同名的固有方法就不会碰到这种麻烦。
-
-</div>
+> 对于 [trait对象][trait objects]，如果有一个与 trait方法同名的固有方法，那么当尝试在方法调用表达式(method call expression)中调用该方法时，将编译报错。
+> 此时，可以使用[消除函数调用歧义的句法][disambiguating function call syntax]来明确调用语义。
+> 在 trait对象上使用消除函数调用歧义的句法，将只能调用 trait方法，无法调用固有方法。
+> 所以只要不在 trait对象上定义和 trait方法同名的固有方法就不会碰到这种麻烦。
 
 [^译者注]：这个应该跟后面说的方法名歧义了一样，如果类型 `T` 的两个 trait 都有调用的那个方法，那此方法的调用者类型就不能确定了，就需要消歧。
 
-[trait object]: ../types/trait-object.md
-<!-- 上面这几个链接从原文来替换时需小心 -->
 [_CallParams_]: call-expr.md
 [_Expression_]: ../expressions.md
 [_PathExprSegment_]: ../paths.md#paths-in-expressions
@@ -93,4 +89,4 @@ let log_pi = pi.unwrap_or(1.0).log(2.72);
 [dereference]: operator-expr.md#the-dereference-operator
 [methods]: ../items/associated-items.md#methods
 [unsized coercion]: ../type-coercions.md#unsized-coercions
-[`IntoIterator`]: https://doc.rust-lang.org/std/iter/trait.IntoIterator.html
+[`IntoIterator`]: std::iter::IntoIterator

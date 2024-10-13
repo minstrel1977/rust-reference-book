@@ -2,9 +2,12 @@
 # 声明宏
 
 >[macros-by-example.md](https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md)\
->commit: 62715cf8b4bd3b14d41f06f3d2cec3a42f4b1cd2 \
->本章译文最后维护日期：2024-08-18
+>commit: e4ba8b0e94c884729999ec609026d26f9dedc860 \
+>本章译文最后维护日期：2024-10-13
 
+r[macro.decl]
+
+r[macro.decl.syntax]
 > **<sup>句法</sup>**\
 > _MacroRulesDefinition_ :\
 > &nbsp;&nbsp; `macro_rules` `!` [IDENTIFIER] _MacroRulesDef_
@@ -32,7 +35,7 @@
 > &nbsp;&nbsp; | `$` `(` _MacroMatch_<sup>+</sup> `)` _MacroRepSep_<sup>?</sup> _MacroRepOp_
 >
 > _MacroFragSpec_ :\
-> &nbsp;&nbsp; &nbsp;&nbsp; `block` | `expr` | `ident` | `item` | `lifetime` | `literal`\
+> &nbsp;&nbsp; &nbsp;&nbsp; `block` | `expr` | `expr_2021` | `ident` | `item` | `lifetime` | `literal`\
 > &nbsp;&nbsp; | `meta` | `pat` | `pat_param` | `path` | `stmt` | `tt` | `ty` | `vis`
 >
 > _MacroRepSep_ :\
@@ -44,6 +47,7 @@
 > _MacroTranscriber_ :\
 > &nbsp;&nbsp; [_DelimTokenTree_]
 
+r[macro.decl.intro]
 `macro_rules` 允许用户以声明性的(declarative)方式定义句法扩展。我们称这种扩展形式为“声明宏（macros by example）”或简称“宏”。
 
 每个声明宏都有一个名称和一条或多条*规则*。每条规则都有两部分：一个*匹配器(matcher)*，描述它匹配的句法；一个*转码器(transcriber)*，描述成功匹配后将执行的替代调用句法。匹配器和转码器都必须由定界符(delimiter)包围。宏可以扩展为表达式、语句、程序项（包括 trait、impl 和外来程序项）、类型或模式。
@@ -51,7 +55,13 @@
 ## Transcribing
 ## 转码
 
-当宏被调用时，宏扩展器(macro expander)按名称查找宏调用，并依次尝试此宏中的每条宏规则。宏会根据第一个成功的匹配进行转码；如果当前转码结果导致错误，不会再尝试进行后续匹配。在匹配时，不会执行预判；如果编译器不能明确地确定如何一个 token 一个 token 地解析宏调用，则会报错。在下面的示例中，编译器不会越过标识符，去提前查看后跟的 token 是 `)`，尽管这能帮助它明确地解析调用：
+r[macro.decl.transcription]
+
+r[macro.decl.transcription.intro]
+当宏被调用时，宏扩展器(macro expander)按名称查找宏调用，并依次尝试此宏中的每条宏规则。宏会根据第一个成功的匹配进行转码；如果当前转码结果导致错误，不会再尝试进行后续匹配。
+
+r[macro.decl.transcription.lookahead]
+在匹配时，不会执行预判；如果编译器不能明确地确定如何一个 token 一个 token 地解析宏调用，则会报错。在下面的示例中，编译器不会越过标识符，去提前查看后跟的 token 是 `)`，尽管这能帮助它明确地解析调用：
 
 ```rust,compile_fail
 macro_rules! ambiguity {
@@ -61,11 +71,14 @@ macro_rules! ambiguity {
 ambiguity!(error); // 错误: 局部歧义(local ambiguity)
 ```
 
+r[macro.decl.transcription.syntax]
 在匹配器和转码器中，token `$` 用于从宏引擎中调用特殊行为（下文[元变量][Metavariables]和[重复元][Repetitions]中有详述）。不属于此类调用的 token 将按字面意义进行匹配和转码，除了一个例外。这个例外是匹配器的外层定界符将匹配任何一对定界符。因此，比如匹配器 `(())` 将匹配 `{()}`，而 `{{}}` 不行。字符 `$` 不能按字面意义匹配或转码。
 
 
 ### Forwarding a matched fragment
 ### 转发匹配段
+
+r[macro.decl.transcription.fragment]
 
 当将当前匹配的匹配段转发给另一个声明宏时，第二个宏中的匹配器看到的将是此匹配段类型的不透明抽象句法树(opaque AST)。第二个宏不能使用字面量token 来匹配匹配器中的这个匹配段，唯一可看到/使用的就是此匹配段类型一样的匹配段选择器(fragment specifier)。但匹配段类型 `ident`、`lifetime`、和 `tt` 是几个例外，它们*可以*通过字面量token 进行匹配。下面示例展示了这一限制：（译者注：匹配段选择器和匹配段，以及宏中各部件的定义可以凑合着看看译者未能翻译完成的[宏定义规范](macro-ambiguity.md)）
 
@@ -100,14 +113,21 @@ foo!(3);
 ## Metavariables
 ## 元变量
 
-在匹配器中，`$`*名称*`:`*匹配段选择器* 这种句法格式匹配符合指定句法类型的 Rust 句法段，并将其绑定到元变量 `$`*名称* 上。有效的匹配段选择器包括：
+r[macro.decl.meta]
+
+r[macro.decl.meta.intro]
+在匹配器中，`$`*名称*`:`*匹配段选择器* 这种句法格式匹配符合指定句法类型的 Rust 句法段，并将其绑定到元变量 `$`*名称* 上。
+
+r[macro.decl.meta.specifier]
+有效的匹配段选择器包括：
 
   * `item`: [_程序项_][_Item_]
   * `block`: [_块表达式_][_BlockExpression_]
   * `stmt`: [_语句_][_Statement_]，注意此选择器不匹配句尾的分号（如果匹配器中提供了分号，会被当做分隔符），但碰到分号是自身的一部分的程序项语句的情况又会匹配。
   * `pat_param`: [顶层无or模式的模式][_PatternNoTopAlt_]
   * `pat`: 目前至少可以匹配任意[顶层无or模式的模式][_PatternNoTopAlt_]， 具体匹配细节或许更依赖于具体的版次
-  * `expr`: [_表达式_][_Expression_]
+  * `expr`: 除 [_下划线表达式_][_UnderscoreExpression_] 和 [_常量块表达式_][_ConstBlockExpression_] (参见 [macro.decl.meta.expr-underscore]) 之外的[_表达式_][_Expression_]
+  * `expr_2021`: 同 `expr` (see [macro.decl.meta.edition2021])
   * `ty`: [_类型_][_Type_]
   * `ident`: [标识符或关键字][IDENTIFIER_OR_KEYWORD]或[裸标识符][RAW_IDENTIFIER]
   * `path`: [_类型表达式_][_TypePath_] 形式的路径
@@ -117,30 +137,47 @@ foo!(3);
   * `vis`: 可能为空的[_可见性_][_Visibility_]限定符
   * `literal`: 匹配 `-`<sup>?</sup>[_字面量表达式_][_LiteralExpression_]
 
-因为匹配段类型已在匹配器中指定了，则在转码器中，元变量只简单地用 `$`*名称* 这种形式来指代就行了。元变量最终将被替换为跟它们匹配上的句法元素。元变量关键字 `$crate` 可以用来指代当前的 crate（请参阅后面的[卫生性(hygiene)][Hygiene]章节）。元变量可以被多次转码，也可以完全不转码。
+r[macro.decl.meta.transcription]
+因为匹配段类型已在匹配器中指定了，则在转码器中，元变量只简单地用 `$`*名称* 这种形式来指代就行了。元变量最终将被替换为跟它们匹配上的句法元素。
 
+r[macro.decl.meta.dollar-crate]
+元变量关键字 `$crate` 可以用来指代当前的 crate（请参阅后面的[卫生性(hygiene)][Hygiene]章节）。元变量可以被多次转码，也可以完全不转码。
+
+r[macro.decl.meta.expr-underscore]
 出于向后兼容性的原因，尽管 `_` [也是一个表达式][_UnderscoreExpression_]，`expr`段指示符并不会与单独的下划线匹配。但是，`_` 作为子表达式出现时，它却可以与 `expr`段指示符相匹配。
 出于相同的原因，`expr`段指示符也不能与独立的[常量块][const block]相匹配，但常量块做为子表达式时是可以与`expr`段指示符匹配的。
 
+r[macro.decl.meta.edition2021]
 > **版次差异**：从 2021版次开始，段指示符`pat` 匹配顶层的or模式（也就是说，它能接受[全部形态的模式][_Pattern_]）。
 >
 > 在 2021版次之前，它和 `pat_param` 匹配的段是完全一样的（也就是说它至接受[顶层无or模式的模式][_PatternNoTopAlt_]）。
 >
 > 相关版次为 `macro_rules!`定义的有效版次。
+>
+> `expr_2021`段指示符的存在是为了维护与2024之前的版次的向后兼容性。
 
 ## Repetitions
 ## 重复元
 
-在匹配器和转码器中，重复元被表示为：将需要重复的 token 放在 `$(`…`)` 内，然后后跟一个重复运算符(repetition operator)，这两者之间可以放置一个可选的分隔符(separator token)。分隔符可以是除定界符或重复运算符之外的任何 token，其中分号(`;`)和逗号(`,`)最常见。例如： `$( $i:ident ),*` 表示用逗号分隔的任何数量的标识符。嵌套的重复元是合法的。
+r[macro.decl.repetition]
 
+r[macro.decl.repetition.intro]
+在匹配器和转码器中，重复元被表示为：将需要重复的 token 放在 `$(`…`)` 内，然后后跟一个重复运算符(repetition operator)，这两者之间可以放置一个可选的分隔符(separator token)。
+
+r[macro.decl.repetition.separator]
+分隔符可以是除定界符或重复运算符之外的任何 token，其中分号(`;`)和逗号(`,`)最常见。例如： `$( $i:ident ),*` 表示用逗号分隔的任何数量的标识符。嵌套的重复元是合法的。
+
+r[macro.decl.repetition.operators]
 重复运算符为：
 
 - `*` --- 表示任意数量的重复元。
 - `+` --- 表示至少有一个重复元。
 - `?` --- 表示一个可选的匹配段，可以出现零次或一次。
 
+r[macro.decl.repetition.optional-restriction]
 因为 `?` 表示最多出现一次，所以它不能与分隔符一起使用。
 
+r[macro.decl.repetition.fragment]
 通过分隔符的分隔，重复的匹配段都会被匹配和转码为指定的数量的匹配段。元变量就和这些每个段中的重复元相匹配。例如，之前示例中的 `$( $i:ident ),*` 将 `$i` 去匹配列表中的所有标识符。
 
 在转码过程中，重复元会受到额外的限制，以便于编译器知道该如何正确地扩展它们：
@@ -151,8 +188,12 @@ foo!(3);
 ## Scoping, Exporting, and Importing
 ## 作用域、导出以及导入
 
+r[macro.decl.scope]
+
+r[macro.decl.scope.intro]
 由于历史原因，声明宏的作用域并不完全像各种程序项那样工作。宏有两种形式的作用域：文本作用域(textual scope)和基于路径的作用域(path-based scope)。文本作用域基于宏在源文件中（定义和使用所）出现的顺序，或是跨多个源文件出现的顺序，文本作用域是默认的作用域。（后本节面将进一步解释这个。）基于路径的作用域与其他程序项作用域的运行方式相同。宏的作用域、导出和导入主要由其属性控制。
 
+r[macro.decl.scope.unqualified]
 当声明宏被非限定标识符(unqualified identifier)（非多段路径段组成的限定性路径）调用时，会首先在文本作用域中查找。如果文本作用域中没有任何结果，则继续在基于路径的作用域中查找。如果宏的名称由路径限定，则只在基于路径的作用域中查找。
 
 <!-- ignore: requires external crates -->
@@ -170,6 +211,9 @@ self::lazy_static!{} // 忽略文本作用域查找，直接使用基于路径�
 ### Textual Scope
 ### 文本作用域
 
+r[macro.decl.scope.textual]
+
+r[macro.decl.scope.textual.intro]
 文本作用域很大程度上取决于宏本身在源文件中的出现顺序，其工作方式与用 `let`语句声明的局部变量的作用域类似，只不过它可以直接位于模块下。当使用 `macro_rules!` 定义宏时，宏在定义之后进入其作用域（请注意，这不影响宏在定义中递归调用自己，因为宏调用的入口还是在定义之后的某次调用点上，此点开始的宏名称递归查找一定有效），在封闭它的作用域（通常是模块）结束时离开。文本作用域可以覆盖/进入子模块，甚至跨越多个文件：
 
 <!-- ignore: requires external modules -->
@@ -193,6 +237,7 @@ mod has_macro {
 m!{} // OK: m 在上层模块文件 src/lib.rs 中声明后使用
 ```
 
+r[macro.decl.scope.textual.shadow]
 多次定义宏并不报错；除非超出作用域，否则最近的宏声明将屏蔽前一个。
 
 ```rust
@@ -238,6 +283,9 @@ fn foo() {
 ### The `macro_use` attribute
 ### `macro_use`属性
 
+r[macro.decl.scope.macro_use]
+
+r[macro.decl.scope.macro_use.mod-decl]
 *`macro_use`属性*有两种用途。首先，它可以通过作用于模块的方式让模块内的宏的作用域在模块关闭时不结束：
 
 ```rust
@@ -251,6 +299,7 @@ mod inner {
 m!();
 ```
 
+r[macro.decl.scope.macro_use.prelude]
 其次，它可以用于从另一个 crate 里来导入宏，方法是将它附加到当前 crate 根模块中的 `extern crate` 声明前。以这种方式导入的宏会被导入到[`macro_use`预导入包][`macro_use` prelude]里，而不是直接文本导入，这意味着它们可以被任何其他同名宏屏蔽。虽然可以在导入语句之前使用 `#[macro_use]` 导入宏，但如果发生冲突，则最后导入的宏将胜出。可以使用可选的 [_MetaListIdents_]元项属性句法指定要导入的宏列表；当将 `#[macro_use]` 应用于模块上时，则不支持此指定操作。
 
 <!-- ignore: requires external crates -->
@@ -262,11 +311,15 @@ lazy_static!{}
 // self::lazy_static!{} // 报错: lazy_static 没在 `self` 中定义
 ```
 
+r[macro.decl.scope.macro_use.export]
 要用 `#[macro_use]` 导入宏必须先使用 `#[macro_export]` 导出，下文会有讲解。
 
 ### Path-Based Scope
 ### 基于路径的作用域
 
+r[macro.decl.scope.path]
+
+r[macro.decl.scope.path.intro]
 默认情况下，宏没有基于路径的作用域。但是如果该宏带有 `#[macro_export]` 属性，则相当于它在当前 crate 的根作用域的顶部被声明，它通常可以这样引用：
 
 ```rust
@@ -286,11 +339,15 @@ mod mac {
 }
 ```
 
+r[macro.decl.scope.path.export]
 标有 `#[macro_export]` 的宏始终是 `pub` 的，以便可以通过路径或前面所述的 `#[macro_use]` 方式让其他 crate 来引用。
 
 ## Hygiene
 ## 卫生性
 
+r[macro.decl.hygiene]
+
+r[macro.decl.hygiene.intro]
 默认情况下，宏中引用的所有标识符都按原样展开，并在宏的调用位置上去查找。如果宏引用的程序项或宏不在调用位置的作用域内，则这可能会导致问题。为了解决这个问题，可以替代在路径的开头使用元变量 `$crate`，强制在定义宏的 crate 中进行查找。
 
 <!-- ignore: requires external crates -->
@@ -329,6 +386,7 @@ pub mod inner {
 }
 ```
 
+r[macro.decl.hygiene.vis]
 此外，尽管 `$crate` 允许宏在扩展时引用其自身 crate 中的程序项，但它的使用对可见性没有影响（，或者说它的使用仍受可见性条件的约束）。引用的程序项或宏必须仍然在调用位置处可见。在下面的示例中，任何试图从此 crate 外部调用 `call_foo!()` 的行为都将失败，因为 `foo()` 不是公有的。
 
 ```rust
@@ -359,23 +417,40 @@ macro_rules! helper {
 
 ## Follow-set Ambiguity Restrictions
 ## 随集歧义限制（译者注：该节还需要继续校对打磨，主要难点还是因为附录的宏定义规范译者还没有能全部搞懂）
+r[macro.decl.follow-set]
 
-宏系统使用的解析器相当强大，但是为了防止其在 Rust 的当前或未来版本中出现二义性解析，因此对它做出了限制。特别地，在消除二义性展开的基本规则之外又增加了一条：元变量匹配的非终结符(nonterminal)必须后跟一个已经确定为可以用来安全分隔匹配段的分隔符。
+r[macro.decl.follow-set.intro]
+宏系统使用的解析器相当强大，但是为了防止其在 Rust 的当前或未来版本中出现二义性解析，因此对它做出了限制。
+
+r[macro.decl.follow-set.token-restriction]
+Rust特地在消除二义性展开的基本规则之外又增加了一条：元变量匹配的非终结符(nonterminal)必须后跟一个已经确定为可以用来安全分隔匹配段的分隔符。
 
 例如，像 `$i:expr [ , ]` 这样的宏匹配器在现今的 Rust 中理论上是可以接受的，因为现在 `[,]` 不可能是合法表达式的一部分，因此解析始终是明确的。但是，由于 `[` 可以开始一个尾随表达式(trailing expressions)，因此 `[` 不是一个可以安全排除在表达式后面出现的字符。如果在接下来的 Rust 版本中接受了 `[,]`，那么这个匹配器就会产生歧义或是错误解析，破坏正常代码。但是，像`$i:expr,` 或 `$i:expr;` 这样的匹配符始终是合法的，因为 `,` 和`;` 是合法的表达式分隔符。目前规范中的规则是：（译者注：下面的规则不是绝对的，因为宏的基础理论还在发展中。）
 
+r[macro.decl.follow-set.token-expr-stmt]
   * `expr` 和 `stmt` 只能后跟一个： `=>`、`,`、`;`。
+
+r[macro.decl.follow-set.token-pat_param]
   * `pat_param` 只能后跟一个： `=>`、`,`、`=`、`|`、`if` 或 `in`。
+
+r[macro.decl.follow-set.token-pat]
   * `pat` 只能后跟一个： `=>`, `,`, `=`, `if` 或 `in`。
+
+r[macro.decl.follow-set.token-path-ty]
   * `path` 和 `ty` 只能后跟一个： `=>`、`,`、`=`、`|`、`;`、`:`、`>`、`>>`、`[`、`{`、`as`、`where`、块(`block`)型非终结符(block nonterminals)。
+
+r[macro.decl.follow-set.token-vis]
   * `vis` 只能后跟一个：`,`、非原生字符串 `priv` 以外的任何标识符和关键字、可以表示类型开始的任何 token、`ident`或`ty`或`path`型非终结符。    
     
     （译者注：可以表示类型开始的 token 有：{`(`, `[`, `!`, `\*`,`&`, `&&`, `?`, 生存期, `>`, `>>`, `::`, 非关键字标识符, `super`,`self`, `Self`, `extern`, `crate`, `$crate`, `_`, `for`, `impl`, `fn`, `unsafe`,`typeof`, `dyn`}。注意这个列表也不一定全。）
-  
+
+r[macro.decl.follow-set.token-other]
   * 其它所有的匹配段选择器没有限制。
 
+r[macro.decl.follow-set.edition2021]
 > **Edition Differences**: 在2021版次之前，`pat` 也可后跟 `|`。
 
+r[macro.decl.follow-set.repetition]
 当涉及到重复元时，随集歧义限制适用于所有可能的展开次数，注意需将重复元中的分隔符考虑在内。这意味着：
 
   * 如果重复元包含分隔符，则分隔符必须能够跟随重复元的内容重复。
@@ -395,6 +470,7 @@ macro_rules! helper {
 [Repetitions]: #repetitions
 [_Attr_]: attributes.md
 [_BlockExpression_]: expressions/block-expr.md
+[_ConstBlockExpression_]: expressions/block-expr.md#const-blocks
 [_DelimTokenTree_]: macros.md
 [_Expression_]: expressions.md
 [_Item_]: items.md

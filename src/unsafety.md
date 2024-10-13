@@ -2,8 +2,8 @@
 # 非安全性
 
 >[unsafety.md](https://github.com/rust-lang/reference/blob/master/src/unsafety.md)\
->commit:  875b905a389455c5329ae088600c0b5f7222104d \
->本章译文最后维护日期：2024-08-18
+>commit:  5bbf37952fe1673dd9134880d21ff48ad04c54e1 \
+>本章译文最后维护日期：2024-10-13
 
 非安全操作(Unsafe operations)是那些可能潜在地违反 Rust 静态语义里的和内存安全保障相关的操作。
 
@@ -14,6 +14,7 @@
 - 调用一个非安全(unsafe)函数（包括外部函数和和内部函数(intrinsic)）。
 - 实现[非安全(unsafe) trait][unsafe trait].
 - 声明一个 [`extern`]块.
+- 为程序项应用[非安全属性][unsafe attribute]。
 
 [`extern`]: items/external-blocks.md
 [`union`]: items/unions.md
@@ -21,3 +22,4 @@
 [external]: items/external-blocks.md
 [raw pointer]: types/pointer.md
 [unsafe trait]: items/traits.md#unsafe-traits
+[unsafe attribute]: attributes.md

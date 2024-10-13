@@ -90,7 +90,7 @@ use foo::bar as main;
 #![crate_name = "mycrate"]
 ```
 
-crate 名称不能为空，且只能包含 [Unicode字母数字]或字符 `_` (U+005F)。
+crate 名称不能为空，且只能包含 [Unicode字母数字][Unicode alphanumeric]或字符 `_` (U+005F)。
 
 [^phase-distinction]: 这种区别也存在于解释器中。静态检查，如语法分析、类型检查和 lint检查，都应该在程序执行之前进行，而不要去管程序何时执行。
 

@@ -2,8 +2,8 @@
 # 函数
 
 >[functions.md](https://github.com/rust-lang/reference/blob/master/src/items/functions.md)\
->commit: 875b905a389455c5329ae088600c0b5f7222104d \
->本章译文最后维护日期：2024-08-18
+>commit: e271d9c9f39431ad93fa27586d11ddd6a1ee3b92 \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _Function_ :\
@@ -67,7 +67,7 @@ fn answer_to_life_the_universe_and_everything() -> i32 {
 }
 ```
 
-`safe`函数仅在[外部块][`extern`block]中使用时才允许在语义上使用。
+`safe`函数仅在[外部块][`extern` block]中使用时才允许在语义上使用。
 
 ## Function parameters
 ## 函数参数
@@ -177,7 +177,7 @@ extern "Rust" fn foo() {}
 extern "C" fn new_i32() -> i32 { 0 }
 
 // 使用 "stdcall" ABI声明一个函数
-# #[cfg(target_arch = "x86_64")]
+# #[cfg(any(windows, target_arch = "x86"))]
 extern "stdcall" fn new_i32_stdcall() -> i32 { 0 }
 ```
 
@@ -204,7 +204,7 @@ let fptr: extern "C" fn() -> i32 = new_i32;
 
 使用关键字 `const` 限定的函数是[常量(const)函数][const functions]，[元组结构体][tuple struct]构造函数和[元组变体][tuple variant]构造函数也是如此。可以在[常量上下文][const contexts]中调用*常量函数*。
 
-常量函数可以使用 [`extern`]函数修饰符来修饰，但只能使用 `"Rust"` 和 `"C"` ABI。
+常量函数可以使用 [`extern`]函数修饰符来修饰。
 
 常量函数不允许是 [async](#async-functions)类型的，
 
@@ -357,7 +357,7 @@ fn foo_oof(#[some_inert_attribute] arg: u8) {
 [`export_name`]: ../abi.md#the-export_name-attribute
 [`link_section`]: ../abi.md#the-link_section-attribute
 [`no_mangle`]: ../abi.md#the-no_mangle-attribute
-[built-in attributes]: ../attributes.html#built-in-attributes-index
+[built-in attributes]: ../attributes.md#built-in-attributes-index
 [trait item]: traits.md
 [method]: associated-items.md#methods
 [associated function]: associated-items.md#associated-functions-and-methods

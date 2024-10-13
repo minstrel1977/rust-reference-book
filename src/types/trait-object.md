@@ -2,8 +2,8 @@
 # trait对象
 
 >[trait-object.md](https://github.com/rust-lang/reference/blob/master/src/types/trait-object.md)\
->commit: 364066f09c801acd45c656a345301f8cdb1e5870 \
->本章译文最后维护日期：2022-08-21
+>commit: 0c7f99ad200c9cb6eb964d00dd55dc2a9384510f \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _TraitObjectType_ :\

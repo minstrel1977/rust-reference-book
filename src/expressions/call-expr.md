@@ -2,8 +2,8 @@
 # 调用表达式
 
 >[call-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/call-expr.md)\
->commit: 9b4969786f828fbe0bf818547ef6549f029899a9 \
->本章译文最后维护日期：2023-06-11
+>commit: 52e0ff3c11260fb86f19e564684c86560eab4ff9 \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _CallExpression_ :\
@@ -92,11 +92,8 @@ fn main() {
 
 [RFC 132]: https://github.com/rust-lang/rfcs/blob/master/text/0132-ufcs.md
 [_Expression_]: ../expressions.md
-[`default()`]: https://doc.rust-lang.org/std/default/trait.Default.html#tymethod.default
-[`size_of()`]: https://doc.rust-lang.org/std/mem/fn.size_of.html
-[`std::ops::FnMut`]: https://doc.rust-lang.org/std/ops/trait.FnMut.html
-[`std::ops::FnOnce`]: https://doc.rust-lang.org/std/ops/trait.FnOnce.html
-[`std::ops::Fn`]: https://doc.rust-lang.org/std/ops/trait.Fn.html
+[`default()`]: std::default::Default::default
+[`size_of()`]: std::mem::size_of
 [automatically dereferenced]: field-expr.md#automatic-dereferencing
 [fully-qualified syntax]: ../paths.md#qualified-paths
 [non-function types]: ../types/function-item.md

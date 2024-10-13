@@ -2,8 +2,8 @@
 # 字面量表达式
 
 >[literal-expr.md](https://github.com/rust-lang/reference/blob/master/src/expressions/literal-expr.md)\
->commit: 659915cc1169e13329186748e26ec1e5c6a92d4d \
->本章译文最后维护日期：2024-04-06
+>commit: 52e0ff3c11260fb86f19e564684c86560eab4ff9 \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>词法</sup>**\
 > _LiteralExpression_ :\
@@ -434,7 +434,7 @@ let x: f64 = 2.; // type f64
 [String continuation escapes]: #string-continuation-escapes
 [boolean type]: ../types/boolean.md
 [constant expression]: ../const_eval.md#constant-expressions
-[CStr]: https://doc.rust-lang.org/core/ffi/struct.CStr.html
+[CStr]: core::ffi::CStr
 [floating-point types]: ../types/numeric.md#floating-point-types
 [lint check]: ../attributes/diagnostics.md#lint-check-attributes
 [literal tokens]: ../tokens.md#literals
@@ -447,14 +447,7 @@ let x: f64 = 2.; // type f64
 [Unicode scalar value]: http://www.unicode.org/glossary/#unicode_scalar_value
 [Unicode scalar values]: http://www.unicode.org/glossary/#unicode_scalar_value
 [`f32::from_str`]: https://doc.rust-lang.org/core/primitive.f32.html#method.from_str
-[`f32::INFINITY`]: https://doc.rust-lang.org/core/primitive.f32.md#associatedconstant.INFINITY
-[`f32::NAN`]: https://doc.rust-lang.org/core/primitive.f32.md#associatedconstant.NAN
-[`f64::from_str`]: https://doc.rust-lang.org/core/primitive.f64.md#method.from_str
-[`f64::INFINITY`]: https://doc.rust-lang.org/core/primitive.f64.md#associatedconstant.INFINITY
-[`f64::NAN`]: https://doc.rust-lang.org/core/primitive.f64.md#associatedconstant.NAN
-[`u8::from_str_radix`]: https://doc.rust-lang.org/core/primitive.u8.md#method.from_str_radix
-[`u32::from_str_radix`]: https://doc.rust-lang.org/core/primitive.u32.md#method.from_str_radix
-[`u128::from_str_radix`]: https://doc.rust-lang.org/core/primitive.u128.md#method.from_str_radix
+[`f64::from_str`]: https://doc.rust-lang.org/core/primitive.f64.html#method.from_str
 [CHAR_LITERAL]: ../tokens.md#character-literals
 [STRING_LITERAL]: ../tokens.md#string-literals
 [RAW_STRING_LITERAL]: ../tokens.md#raw-string-literals

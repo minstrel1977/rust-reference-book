@@ -2,8 +2,8 @@
 # 布尔型
 
 >[boolean.md](https://github.com/rust-lang/reference/blob/master/src/types/boolean.md)\
->commit: d3a66eb69892b25794b2d82a1249ec01d8ead9f1 \
->本章译文最后维护日期：2023-11-05
+>commit: 52e0ff3c11260fb86f19e564684c86560eab4ff9 \
+>本章译文最后维护日期：2024-10-13
 
 ```rust
 let b: bool = true;
@@ -26,7 +26,7 @@ let b: bool = true;
 
 和其他所有的原语类型一样，布尔型[实现][p-impl]了 [`Clone`][p-clone]、[`Copy`][p-copy]、[`Sized`][p-sized]、[`Send`][p-send] 和 [`Sync`][p-sync] 这些 [traits][p-traits]。
 
-> **注意**: 参见[标准库文档][std]中的相关操作运算。
+> **注意**: 参见[标准库文档](bool)中的相关操作运算。
 
 ## Operations on boolean values
 ## 布尔运算
@@ -119,6 +119,5 @@ Rust会保证 `bool`类型的单个字节被初始化（换句话说，`transmut
 [p-sync]: ../special-types-and-traits.md#sync
 [p-traits]: ../items/traits.md
 [size and alignment]: ../type-layout.md#size-and-alignment
-[std]: ../../std/primitive.bool.html
 [undefined behavior]: ../behavior-considered-undefined.md
 [while expressions]: ../expressions/loop-expr.md#predicate-loops

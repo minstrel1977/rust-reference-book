@@ -2,9 +2,12 @@
 # 可见性与隐私权
 
 >[visibility-and-privacy.md](https://github.com/rust-lang/reference/blob/master/src/visibility-and-privacy.md)\
->commit: ece3e184c0beeadba97c78eed9005533c3874e43 \
->本章译文最后维护日期：2022-08-21
+>commit: 67426bc9fb4cfca9c050dbaf413693ca4069009b \
+>本章译文最后维护日期：2024-10-13
 
+r[vis]
+
+r[vis.syntax]
 > **<sup>句法<sup>**\
 > _Visibility_ :\
 > &nbsp;&nbsp; &nbsp;&nbsp; `pub`\
@@ -13,12 +16,16 @@
 > &nbsp;&nbsp; | `pub` `(` `super` `)`\
 > &nbsp;&nbsp; | `pub` `(` `in` [_SimplePath_] `)`
 
+r[vis.intro]
 这两个术语经常互换使用，它们试图表达的是对“这个地方能使用这个程序项吗？”这个问题的回答。
 
+r[vis.name-hierarchy]
 Rust 的名称解析是在命名空间的层级结构的全局层（即最顶层）上运行的。此层级结构中的每个级别都可以看作是某个程序项。这些程序项就是我们前面提到的那些程序项之一（注意这也包括外部crate）。声明或定义一个新模块可以被认为是在定义的位置向此层次结构中插入一个新的（层级）树。
 
+r[vis.privacy]
 为了控制接口是否可以被跨模块使用，Rust 会检查每个程序项的使用，来看看它是否被允许使用。此处就是生成隐私告警的地方，或者说是提示：“you used a private item of another module and weren't allowed to.”的地方。（译者注：这句提示可以翻译为：您使用了另一个模块的私有程序项，但不允许这样做。）
 
+r[vis.default]
 默认情况下，Rust 中的所有内容都是*私有的*，但有两个例外：`pub` trait 中的关联程序项默认为公有的；`pub` 枚举中的枚举变体也默认为公有的。当一个程序项被声明为 `pub` 时，它可以被认为是外部世界能以访问的。例如：
 
 ```rust
@@ -38,6 +45,7 @@ pub enum State {
 }
 ```
 
+r[vis.access]
 依据程序项是公有的还是私有的，Rust 分两种情况来访问数据：
 
 1. 如果某个程序项是公有的，那么如果可以从外部的某一模块 `m` 访问到该程序项的所有祖先模块，则一定可以从这个模块 `m` 中访问到该程序项。甚至还可以通过重导出来命名该程序项。具体见后文。
@@ -52,7 +60,10 @@ pub enum State {
 
 * 在为模块编写单元测试时，通常的习惯做法是给要测试的模块加一个命名为 `mod test` 的直接子模块。这个模块可以通过第二种情况访问父模块的任何程序项，这意味着内部实现细节也可以从这个子模块里进行无缝地测试。
 
-在第二种情况下，我们提到了当前模块及其后代“可以访问”私有项，但是访问一个程序项的确切含义取决于该项是什么。例如，访问一个模块意味着要查看它的内部（以导入更多的程序项）；访问一个函数意味着它被调用了。此外，路径表达式和导入语句也被视为访问一个程序项，但只有当访问目标位于当前可见的作用域内时，它们才算是有效的数据访问。
+在第二种情况下，我们提到了当前模块及其后代“可以访问”私有项，但是访问一个程序项的确切含义取决于该项是什么。
+
+r[vis.usage]
+例如，访问一个模块意味着要查看它的内部（以导入更多的程序项）；访问一个函数意味着它被调用了。此外，路径表达式和导入语句也被视为访问一个程序项，但只有当访问目标位于当前可见的作用域内时，它们才算是有效的数据访问。
 
 下面是一段示例程序，它例证了上述三种情况：
 
@@ -103,13 +114,26 @@ pub mod submodule {
 
 ## `pub(in path)`, `pub(crate)`, `pub(super)`, and `pub(self)`
 
+r[vis.scoped]
+
+r[vis.scoped.intro]
 除了公有和私有之外，Rust 还允许用户（用关键字 `pub` ）声明仅在给定作用域内可见的程序项。声明形式的限制规则如下：
 
-- `pub(in path)` 使一个程序项在提供的 `path` 中可见。`path` 必须是声明其可见性的程序项的祖先模块。
+r[vis.scoped.in]
+- `pub(in path)` 使一个程序项在提供的 `path` 中可见。
+  `path` 必须是一个简单路径，它被解析为正在声明可见性的程序项的祖先模块。
+  `path` 中的每个标识符都必须直接指代某个模块（而不是通过 `use`语句引入的名称）。
+
+r[vis.scoped.crate]
 - `pub(crate)` 使一个程序项在当前 crate 中可见。
+
+r[vis.scoped.super]
 - `pub(super)` 使一个程序项对父模块可见。这相当于 `pub(in super)`。
+
+r[vis.scoped.self]
 - `pub(self)` 使一个程序项对当前模块可见。这相当于 `pub(in self)` 或者根本不使用 `pub`。
 
+r[vis.scoped.edition2018]
 > **版次差异**: 从 2018版开始，`pub(in path)` 的路径必须以 `crate`、`self`或`super`开头。2015版还可以使用以 `::` 开头的路径，或以根模块下的模块名的开头的路径。
 
 这里是一些示例：
@@ -168,6 +192,9 @@ fn main() { bar() }
 ## Re-exporting and Visibility
 ## 重导出和可见性
 
+r[vis.reexports]
+
+r[vis.reexports.intro]
 Rust 允许使用指令 `pub use` 公开重导出程序项。因为这是一个公有指令，所以允许通过上面的规则验证后在当前模块中使用该程序项。重导出本质上允许使用公有方式访问重导出的程序项的内部。例如，下面程序是有效的：
 
 ```rust
@@ -184,9 +211,7 @@ mod implementation {
 
 这意味着任何外部 crate，只要引用 `implementation::api::f` 都将收到违反隐私的错误报告，而使用路径 `api::f` 则被允许。
 
+r[vis.reexports.private-item]
 当重导出私有程序项时，可以认为它允许通过重导出短路了“隐私链(privacy chain)”，而不是像通常那样通过命名空间层次结构来传递“隐私链”。
 
 [_SimplePath_]: paths.md#simple-paths
-
-<!-- 2020-11-12-->
-<!-- checked -->

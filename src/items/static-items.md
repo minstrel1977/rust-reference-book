@@ -2,8 +2,8 @@
 # 静态项
 
 >[static-items.md](https://github.com/rust-lang/reference/blob/master/src/items/static-items.md)\
->commit: 1072b01d42d5eb7503cfa90e2a5d0bc2ee64d5ba \
->本章译文最后维护日期：2024-08-18
+>commit: 060d2b35cecf93bfd7fa20faa6c7f9b6aa1bc89f \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _StaticItem_ :\
@@ -98,7 +98,7 @@ unsafe fn bump_levels_unsafe() -> u32 {
 // 作为 `bump_levels_unsafe` 的替代方法，该函数是安全的，假设我们有一个返回旧值的 atomic_add函数。只有当没有其他代码以非原子方式访问静态项时，该函数才是安全的。如果可以进行这样的访问（例如在 `bump_levels_unsafe` 中），则这需把此函数标记为 `unsafe'，以向调用者表达出它们仍然必须防止并发访问的意思。
 fn bump_levels_safe() -> u32 {
     unsafe {
-        return atomic_add(std::ptr::addr_of_mut!(LEVELS), 1);
+        return atomic_add(&raw mut LEVELS, 1);
     }
 }
 ```

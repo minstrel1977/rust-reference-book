@@ -2,8 +2,8 @@
 # 联合体
 
 >[unions.md](https://github.com/rust-lang/reference/blob/master/src/items/unions.md)\
->commit: 2aadaad918b1d0a887c6c513a0e9ca49aab1d74e \
->本章译文最后维护日期：2024-08-18
+>commit: 52e0ff3c11260fb86f19e564684c86560eab4ff9 \
+>本章译文最后维护日期：2024-10-13
 
 > **<sup>句法</sup>**\
 > _Union_ :\
@@ -157,10 +157,8 @@ fn test() {
 [_GenericParams_]: generics.md
 [_WhereClause_]: generics.md#where-clauses
 [_StructFields_]: structs.md
-[`transmute`]: https://doc.rust-lang.org/std/mem/fn.transmute.html
-[`Copy`]: https://doc.rust-lang.org/std/marker/trait.Copy.html
+[`transmute`]: std::mem::transmute
 [boolean type]: ../types/boolean.md
-[`ManuallyDrop<_>`]: https://doc.rust-lang.org/std/mem/struct.ManuallyDrop.html
 [the C representation]: ../type-layout.md#reprc-unions
 [type namespace]: ../names/namespaces.md
-[undefined behavior]: ../behavior-considered-undefined.html
+[undefined behavior]: ../behavior-considered-undefined.md
